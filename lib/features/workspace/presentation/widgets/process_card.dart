@@ -63,6 +63,7 @@ class ProcessCard extends StatelessWidget {
   /// #1329 — switch a whole process, or one subprocess, on or off: the
   /// host opens the one preview-and-apply sheet. Null keeps the card
   /// read-only.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   /// Keys for the subprocess rows, so a search hit can scroll to one.
@@ -240,6 +241,7 @@ class _Detail extends StatelessWidget {
   final ProcessStatus status;
   final Map<String, GlobalKey> subprocessKeys;
   final ValueChanged<WorkspaceFeature> onOpenFeature;
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   @override
@@ -430,26 +432,22 @@ class _ChangeActions extends StatelessWidget {
         spacing: AppSpacing.sm,
         children: [
           if (canSwitchOn)
-            compact
-                ? TextButton(
+            if (compact) TextButton(
                     key: ValueKey('$keyPrefix-on-$id'),
                     onPressed: () => onChange(true),
                     child: Text(on),
-                  )
-                : FilledButton.tonalIcon(
+                  ) else FilledButton.tonalIcon(
                     key: ValueKey('$keyPrefix-on-$id'),
                     onPressed: () => onChange(true),
                     icon: const Icon(Icons.toggle_on_outlined),
                     label: Text(on),
                   ),
           if (canSwitchOff)
-            compact
-                ? TextButton(
+            if (compact) TextButton(
                     key: ValueKey('$keyPrefix-off-$id'),
                     onPressed: () => onChange(false),
                     child: Text(off),
-                  )
-                : OutlinedButton.icon(
+                  ) else OutlinedButton.icon(
                     key: ValueKey('$keyPrefix-off-$id'),
                     onPressed: () => onChange(false),
                     icon: const Icon(Icons.toggle_off_outlined),

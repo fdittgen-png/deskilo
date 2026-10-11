@@ -24,7 +24,7 @@ class FakeCalendarRepository implements CalendarRepository {
   final List<DataAccessEntry> log = [];
   Map<String, dynamic> export = const {};
   bool erased = false;
-  Object? failure;
+  Exception? failure;
 
   @override
   Future<CalendarPage> fetchItems(String workspaceId, CalendarQuery query) async {

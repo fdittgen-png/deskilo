@@ -19,7 +19,7 @@ Future<void> scheduleCheckInReminders(
 ) async {
   try {
     await service.rescheduleCheckInReminders(reminders);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'notifications',
       'check-in reminder reschedule failed — ${reminders.length} pending',

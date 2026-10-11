@@ -1,45 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
-import '../../core/l10n/lexicon.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../core/notifications/reminder_sync.dart';
-import '../../core/trace/trace_logger.dart';
-
 import 'package:intl/intl.dart';
 
 import '../../core/badge/app_badge.dart';
 import '../../core/i18n/format_controller.dart';
-import '../../core/motion/motion.dart';
-import '../../core/realtime/realtime_providers.dart';
-import '../../core/notifications/notification_providers.dart';
-import '../../core/push/push_providers.dart';
-import '../../core/storage/note_seen_store.dart';
-import '../../core/time/work_hours.dart';
 import '../../core/i18n/workspace_currency.dart';
+import '../../core/l10n/lexicon.dart';
+import '../../core/motion/motion.dart';
+import '../../core/notifications/notification_providers.dart';
+import '../../core/notifications/reminder_sync.dart';
+import '../../core/push/push_providers.dart';
+import '../../core/realtime/realtime_providers.dart';
+import '../../core/storage/note_seen_store.dart';
+import '../../core/time/clock.dart';
+import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_time.dart';
-import '../../features/events/providers/event_providers.dart';
+import '../../core/trace/trace_logger.dart';
 import '../../features/events/providers/attention_providers.dart';
+import '../../features/events/providers/event_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/presentation/widgets/space_scan.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
-import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/app_localizations_en.dart';
+import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer.dart';
 import 'shell_slot.dart';
-import '../../core/time/clock.dart';
-import 'shell_bar_visibility.dart';
 import 'shell_title_bar.dart';
 import 'space_chip.dart';
 
@@ -49,7 +47,7 @@ Future<Set<String>> _mutedConversationIds(WidgetRef ref) async {
   try {
     final list = await ref.read(conversationsProvider.future);
     return {for (final c in list) if (c.muted) c.id};
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('inbox', 'muted conversations unavailable',
         error: e, stackTrace: st);
     return const {};
@@ -86,15 +84,16 @@ class ShellScreen extends ConsumerWidget {
     // every screen under the shell. Watching it here is what sets
     // Intl.defaultLocale (#701) and WorkspaceTime.displayMode; nothing
     // below has to know.
-    ref.watch(appFormatProvider);
+    ref
+      ..watch(appFormatProvider)
 
     // Fire-and-forget push start (#72); no-op while Firebase is unconfigured.
-    ref.watch(pushBootstrapProvider);
+      ..watch(pushBootstrapProvider)
 
     // Push-driven freshness (#413): DB changes invalidate their cached
     // providers on every device, this one included — no restarts, no
     // manual refresh.
-    ref.watch(realtimeInvalidatorProvider);
+      ..watch(realtimeInvalidatorProvider);
 
     // App-icon badge (#426) + notification mirror (#432): launchers
     // like One UI ignore app-set badge numbers and count ACTIVE
@@ -104,9 +103,9 @@ class ShellScreen extends ConsumerWidget {
     ref.listen(myPendingEventsProvider, (_, next) {
       final pending = next.value;
       if (pending == null) return;
-      ref.read(appBadgeProvider).update(
-          pending.length + (ref.read(unreadNoteCountProvider).value ?? 0));
-      ref.read(notificationServiceProvider).syncPendingNotifications([
+      unawaited(ref.read(appBadgeProvider).update(
+          pending.length + (ref.read(unreadNoteCountProvider).value ?? 0)));
+      unawaited(ref.read(notificationServiceProvider).syncPendingNotifications([
         for (final e in pending)
           (
             id: e.id,
@@ -114,7 +113,7 @@ class ShellScreen extends ConsumerWidget {
             body: l10n?.pushPendingBody ??
                 'Someone needs your confirmation.',
           ),
-      ]);
+      ]));
     });
 
     // Member notes (#456/#464): every note for me that this DEVICE has
@@ -172,7 +171,7 @@ class ShellScreen extends ConsumerWidget {
             }
           }
           if (newest != null) await store.writeNotified(newest);
-        } catch (e, st) {
+        } on Object catch (e, st) {
           // A missed local announcement is not worth a crash; the note
           // is still in the inbox and on the badge.
           TraceLogger.instance.warn('inbox', 'note announcement failed',
@@ -188,7 +187,7 @@ class ShellScreen extends ConsumerWidget {
       if (unread == null) return;
       final pending =
           ref.read(myPendingEventsProvider).value?.length ?? 0;
-      ref.read(appBadgeProvider).update(pending + unread);
+      unawaited(ref.read(appBadgeProvider).update(pending + unread));
     });
 
     // Day-based booking windows anchor to the WORKSPACE clock — install
@@ -247,7 +246,7 @@ class ShellScreen extends ConsumerWidget {
           ref.read(notificationServiceProvider),
           reminders,
         );
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // The two provider reads and the reminder build. The schedule
         // itself traces its own failure and never throws.
         TraceLogger.instance.warn(

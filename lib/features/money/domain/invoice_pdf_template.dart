@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:collection';
 
-
-import 'address_window.dart';
 import '../../../core/data/json_reader.dart';
+import 'address_window.dart';
 
 /// Owner-written invoice report template (#454, rebuilt as a banded
 /// reporting tool in #470): three LIQUID bands — [header] above

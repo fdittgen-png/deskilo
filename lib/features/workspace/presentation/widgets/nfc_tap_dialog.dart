@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import '../../../../core/trace/trace_logger.dart';
-
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// always stopped, whether the user taps a card or cancels.
@@ -33,7 +33,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
             Navigator.of(context).pop(uid);
           },
         );
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // The dialog stays open with its hint; the member can still type
         // the uid — the failure is on the record.
         TraceLogger.instance.warn('nfc', 'tag read failed',

@@ -383,7 +383,7 @@ class ConnectedInstallations {
   ) async {
     try {
       await _write(source, {...record, 'quarantined': true}, epoch: epoch);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The refusal stands either way; a quarantine that could not be
       // saved is asked again (and refused again) on the next use.
       TraceLogger.instance.warn('connections', 'quarantine not saved',
@@ -409,7 +409,7 @@ class ConnectedInstallations {
       _unsaved.remove(source);
     } on ConnectionFailure {
       rethrow;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       _unsaved.add(source);
       TraceLogger.instance.warn(
         'connections',
@@ -432,7 +432,7 @@ class ConnectedInstallations {
         }
       });
       return null;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       final failure = classifyConnectionError(e, source: source);
       TraceLogger.instance.log(
         TraceLevel.info,

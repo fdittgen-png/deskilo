@@ -4,7 +4,6 @@
 // identity form, shown as managed on its page, handed over through a
 // bound invitation (the sheet prefilled from the identity), and the
 // handover revocable.
-import '../../helpers/settings_sections.dart';
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
@@ -15,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 /// #1561 — an identity read the test holds open, so the edit form is
 /// driven in the state the app really opens in: the screen mounted, the
@@ -24,7 +24,7 @@ class _GatedIdentity extends FakeWorkspaceRepository {
   _GatedIdentity() : super.withWorkspace();
 
   Completer<void> gate = Completer<void>();
-  Object? failWith;
+  Exception? failWith;
   int reads = 0;
 
   @override

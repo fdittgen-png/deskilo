@@ -36,7 +36,7 @@ class LegendProfileTile extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setLegendProfile(workspace.id, profile);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('workspace', 'set legend profile failed',
           error: e, stackTrace: st);
     }

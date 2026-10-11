@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/files/xlsx.dart';
+import '../../../core/i18n/currencies.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../money/domain/invoice.dart';
 import '../../money/domain/ledger_entry.dart';
@@ -11,7 +12,6 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
-import '../../../core/i18n/currencies.dart';
 
 /// The data export's workbook (#395): one tab per dataset, one row per
 /// record, every stored detail a client may read.
@@ -185,9 +185,7 @@ List<XlsxSheet> buildWorkspaceExcelExport({
         if (event.type == EventType.payment)
           [
             'pending', memberName[event.subjectMemberId],
-            event.payload['amount_cents'] is int
-                ? major(event.payload['amount_cents'] as int)
-                : null,
+            if (event.payload['amount_cents'] is int) major(event.payload['amount_cents'] as int) else null,
             workspace.currencyCode,
             event.payload['period'], null, event.createdAt,
             event.payload['note'], null, null,
@@ -216,12 +214,10 @@ List<XlsxSheet> buildWorkspaceExcelExport({
           [
             'pending', memberName[event.subjectMemberId],
             event.payload['name'],
-            event.payload['price_cents'] is int
-                ? major((event.payload['price_cents'] as int) *
+            if (event.payload['price_cents'] is int) major((event.payload['price_cents'] as int) *
                     (event.payload['quantity'] is int
                         ? event.payload['quantity'] as int
-                        : 1))
-                : null,
+                        : 1)) else null,
             workspace.currencyCode, event.payload['period'],
             event.createdAt,
           ],
@@ -240,7 +236,7 @@ List<XlsxSheet> buildWorkspaceExcelExport({
         [
           i.number, memberName[i.memberId], i.period, i.issuedAt,
           major(i.totalCents), i.currency, i.voidedAt,
-          i.replacesNumber.isEmpty ? null : i.replacesNumber, i.detailed,
+          if (i.replacesNumber.isEmpty) null else i.replacesNumber, i.detailed,
           transmissionsByInvoice[i.id],
         ],
     ]),

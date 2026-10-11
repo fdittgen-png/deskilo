@@ -9,8 +9,8 @@
 import 'dart:async';
 
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
+import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/pending_approval_screen.dart';
@@ -128,8 +128,9 @@ Future<RecipeRun> ownerFirstBooking(
         .toList();
     // The task is the booking the repository holds — not a card that
     // went away, not a sheet that closed.
-    probe.authorize('a first booking in the new space', booked.length == 1);
-    probe.forbid('more than one booking for one confirm', booked.length > 1);
+    probe
+      ..authorize('a first booking in the new space', booked.length == 1)
+      ..forbid('more than one booking for one confirm', booked.length > 1);
     run.finalState['bookings'] = '${booked.length}';
   } on RecipeStopped catch (stop) {
     run.stoppedAt = stop.step;
@@ -213,12 +214,13 @@ Future<RecipeRun> pendingLeaveReturn(WidgetTester tester) async {
     shellSeen |= probe.shows(find.byType(ShellBottomBar));
 
     probe.authorize('back in the waiting room', probe.location == '/pending');
-    probe.authorize(
+    probe
+      ..authorize(
       'the request given up at the database',
       identity.capabilities.eligibility.name == 'notRequested',
-    );
-    probe.forbid('a workspace screen shown to a pending member', shellSeen);
-    probe.forbid(
+    )
+      ..forbid('a workspace screen shown to a pending member', shellSeen)
+      ..forbid(
       'the membership changed by leaving',
       ws.myMember.status != MemberStatus.pending,
     );
@@ -308,13 +310,14 @@ Future<RecipeRun> wizardKeyboardBackEdit(
       () => probe.shows(find.byType(ShellBottomBar)),
     );
     final created = ws.workspaces;
-    probe.authorize(
+    probe
+      ..authorize(
       'one space with both answers',
       created.length == 1 &&
           created.single.name == 'Kraftwerk Coworking' &&
           created.single.currencyCode == 'CHF',
-    );
-    probe.forbid(
+    )
+      ..forbid(
       'a creation sent before confirm, or twice',
       ws.createRequests.length != 1,
     );

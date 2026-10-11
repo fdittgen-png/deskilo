@@ -85,8 +85,9 @@ int run(List<String> args) {
     final r = Process.runSync(parts.first, parts.skip(1).toList());
     stdout.write(r.stdout);
     if (r.exitCode != 0) {
-      stderr.write(r.stderr);
-      stderr.writeln('preflight: ${s.command} failed (${r.exitCode})');
+      stderr
+        ..write(r.stderr)
+        ..writeln('preflight: ${s.command} failed (${r.exitCode})');
       return 2;
     }
   }

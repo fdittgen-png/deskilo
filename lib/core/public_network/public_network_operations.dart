@@ -143,11 +143,9 @@ abstract final class PublicNetworkOperations {
     mutation: PublicMutation.read,
     features: [],
     rpc: 'public_network_descriptor',
-    params: {},
     output: 'PublicNetworkDescriptor',
     cardinality: PublicCardinality.one,
     versions: [1],
-    requires: [],
   );
 
   /// List the other installations registered in this installation's public directory.
@@ -165,7 +163,6 @@ abstract final class PublicNetworkOperations {
     output: 'DirectorySource',
     cardinality: PublicCardinality.many,
     versions: [1],
-    requires: [],
     baseline: true,
   );
 
@@ -185,7 +182,6 @@ abstract final class PublicNetworkOperations {
     output: 'PublicWorkspaceCard',
     cardinality: PublicCardinality.many,
     versions: [1],
-    requires: [],
     baseline: true,
   );
 
@@ -205,7 +201,6 @@ abstract final class PublicNetworkOperations {
     output: 'PublicWorkspaceCard',
     cardinality: PublicCardinality.zeroOrOne,
     versions: [1],
-    requires: [],
     baseline: true,
   );
 
@@ -222,7 +217,6 @@ abstract final class PublicNetworkOperations {
     output: 'PublicationPage',
     cardinality: PublicCardinality.one,
     versions: [1],
-    requires: [],
     baseline: true,
   );
 
@@ -240,7 +234,6 @@ abstract final class PublicNetworkOperations {
     output: 'PublicWorkspaceDocument',
     cardinality: PublicCardinality.one,
     versions: [1],
-    requires: [],
     baseline: true,
   );
 
@@ -256,8 +249,6 @@ abstract final class PublicNetworkOperations {
     params: {'p_workspace': 'uuid', 'p_fields': 'text[]'},
     output: 'PublicationPage',
     cardinality: PublicCardinality.one,
-    versions: [],
-    requires: [],
   );
 
   /// A signed-in account registers another installation's public endpoint in this directory, after an anonymous probe of that endpoint.
@@ -272,7 +263,6 @@ abstract final class PublicNetworkOperations {
     params: {'p_origin': 'text', 'p_key': 'text'},
     cardinality: PublicCardinality.none,
     versions: [1],
-    requires: [],
     baseline: true,
     unlabelled: 1,
     revalidated: true,
@@ -290,7 +280,6 @@ abstract final class PublicNetworkOperations {
     params: {'p_workspace': 'uuid'},
     cardinality: PublicCardinality.none,
     versions: [1],
-    requires: [],
     baseline: true,
     unlabelled: 1,
     revalidated: true,

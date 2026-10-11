@@ -7,14 +7,14 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../feature_copy.dart';
+import '../feature_names.dart';
 import '../widgets/feature_capability_list.dart';
 import '../widgets/feature_maturity_badge.dart';
 import '../widgets/feature_switch_flow.dart';
 import '../widgets/features_filter_bar.dart';
 import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
-import '../feature_copy.dart';
-import '../feature_names.dart';
 
 /// Owner-only feature management (#146). #1327 — it opens on the process
 /// overview; one switch per registry feature is the second view, kept

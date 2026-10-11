@@ -3,10 +3,10 @@
 // #881 — payment conditions: the workspace's default, a member's own
 // keys on top; printed as the effective ones; changed only by a
 // validated request from an authorised admin, read-only for the member.
-import '../../helpers/settings_sections.dart';
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/presentation/screens/my_payment_terms_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -16,7 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
+import '../../helpers/settings_sections.dart';
 
 void main() {
   group('the value', () {

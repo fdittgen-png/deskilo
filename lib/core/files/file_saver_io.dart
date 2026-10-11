@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -38,7 +38,7 @@ Future<String?> saveToDownloads({
         'mimeType': mimeTypeFor(fileName),
       });
       if (path != null) return path;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Channel missing (old binary) or MediaStore refusal — fall back to
       // the legacy app dir rather than losing the file.
       TraceLogger.instance.error('files', 'downloads save failed',
@@ -68,12 +68,12 @@ Future<String> writeFileAtomically(File target, List<int> bytes) async {
     }
     await part.rename(target.path);
     return target.path;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('files', 'atomic write failed', error: e, stackTrace: st);
     try {
       if (part.existsSync()) await part.delete();
-    } catch (e2, st2) {
+    } on Object catch (e2, st2) {
       TraceLogger.instance.warn('files', 'temporary file not removed',
           error: e2, stackTrace: st2);
     }
@@ -102,7 +102,7 @@ Future<SaveOutcome> saveToDownloadsTyped({
           'mimeType': mimeTypeFor(fileName),
         });
         if (path != null) return SavedFile(path);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.error('files', 'downloads save failed',
             error: e, stackTrace: st);
       }
@@ -113,7 +113,7 @@ Future<SaveOutcome> saveToDownloadsTyped({
       if (downloads != null) return SavedFile(await write(downloads));
     }
     return SavedPrivately(await write(await getApplicationDocumentsDirectory()));
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('files', 'typed save failed', error: e, stackTrace: st);
     return const SaveFailed();
@@ -153,7 +153,7 @@ Future<int> migrateLegacyExports({
         await entry.delete();
         moved++;
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('files', 'legacy export migration failed',
           error: e, stackTrace: st);
     }

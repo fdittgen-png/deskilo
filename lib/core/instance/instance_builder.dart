@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'dart:math';
+
+import 'package:meta/meta.dart';
 
 import 'instance_bundle.dart';
 import 'management_api.dart';

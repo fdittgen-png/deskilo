@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../../../../core/files/file_names.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/share/file_sharer.dart';
@@ -15,36 +15,35 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/files/file_names.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_pdf_template.dart';
-import '../../domain/report_kind.dart';
-import '../report_layout_design_actions.dart';
-import 'report_layout_panel.dart';
-import 'report_texts_panel.dart';
-import 'report_layout_preview_dialog.dart';
-import '../report_design_actions.dart';
-import '../report_kind_labels.dart';
 import '../../domain/invoice_report.dart';
+import '../../domain/report_kind.dart';
+import '../../domain/report_template_assembly.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_documents.dart';
 import '../report_defaults.dart';
+import '../report_design_actions.dart';
 import '../report_edit_history.dart';
+import '../report_kind_labels.dart';
+import '../report_layout_design_actions.dart';
 import '../screens/report_editor_screen.dart';
-import 'report_image_picker.dart';
-import 'template_live_data.dart';
+import 'report_editor_dialogs.dart';
 import 'report_history_controls.dart';
+import 'report_image_picker.dart';
+import 'report_layout_panel.dart';
+import 'report_layout_preview_dialog.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
 import 'report_preview.dart';
-import 'report_editor_dialogs.dart';
 import 'report_template_toolbar.dart';
-import '../../domain/report_template_assembly.dart';
+import 'report_texts_panel.dart';
+import 'template_live_data.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -404,7 +403,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       await ref
           .read(moneyRepositoryProvider)
           .setInvoicePdfTemplate(workspace.id, _assemble(levels));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'set invoice template failed',
           error: e, stackTrace: st);
       if (!mounted) return;
@@ -551,7 +550,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           mimeType: 'application/pdf',
         );
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'template pdf failed',
           error: e, stackTrace: st);
       if (mounted) {

@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/money_face.dart';
-
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/money_face.dart';
 
 part 'money_face_controller.g.dart';
 

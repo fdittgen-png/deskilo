@@ -81,7 +81,6 @@ Future<void> showLayoutQuickPreview(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 child: InteractiveViewer(
                   minScale: 0.4,
-                  maxScale: 2.5,
                   constrained: false,
                   child: LayoutPageView(
                     document: document,

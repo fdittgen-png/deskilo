@@ -17,9 +17,10 @@
 // repository handed in, so the rules below are exercised without a
 // screen.
 import 'package:meta/meta.dart';
+
+import '../../../core/time/date_text.dart';
 import '../domain/money_repository.dart';
 import '../domain/payment_method.dart';
-import '../../../core/time/date_text.dart';
 
 /// What happened to a payment somebody tried to register.
 sealed class RecordPaymentOutcome {

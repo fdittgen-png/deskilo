@@ -86,8 +86,9 @@ void main() {
     final token = c.attempt(RecorderActions.confirmBooking,
         payload: {'for_whom': 'self'});
     final result = runCommand();
-    c.outcome(token, RecorderOutcomes.bookingConfirmed);
-    c.outcome(token, RecorderOutcomes.bookingRefused); // a duplicate answer
+    c
+      ..outcome(token, RecorderOutcomes.bookingConfirmed)
+      ..outcome(token, RecorderOutcomes.bookingRefused); // a duplicate answer
     expect(result, 'booked');
     expect(commandRuns, 1);
     final steps = c.snapshot!.steps;
@@ -105,7 +106,7 @@ void main() {
     Object? caught;
     try {
       throw StateError('server said no');
-    } catch (e) {
+    } on Object catch (e) {
       caught = e;
       c.outcome(token, RecorderOutcomes.bookingUnknown);
     }
@@ -116,11 +117,13 @@ void main() {
   test('pause leaves a visible gap; resume opens a new segment', () async {
     await c.start(scope: canaryScope);
     clock.tick();
-    c.record(RecorderActions.openReserve);
-    c.pause();
+    c
+      ..record(RecorderActions.openReserve)
+      ..pause();
     clock.tick();
-    c.record(RecorderActions.selectDate, payload: {'date_relation': 'today'});
-    c.resume();
+    c
+      ..record(RecorderActions.selectDate, payload: {'date_relation': 'today'})
+      ..resume();
     clock.tick();
     c.record(RecorderActions.selectPeriod, payload: {'period': 'morning'});
     final r = (await c.stop())!;
@@ -174,8 +177,9 @@ void main() {
     expect(elsewhere, isNot(canaryScope));
     c.scopeChanged(canaryScope); // the same scope changes nothing
     expect(c.state, RecorderState.recording);
-    c.scopeChanged(elsewhere);
-    c.record(RecorderActions.selectDate, payload: {'date_relation': 'today'});
+    c
+      ..scopeChanged(elsewhere)
+      ..record(RecorderActions.selectDate, payload: {'date_relation': 'today'});
     final r = (await c.stop())!;
     expect(r.endReason, RecordingEndReason.scopeChanged);
     expect(r.completeness, Completeness.partial);
@@ -198,10 +202,11 @@ void main() {
       clock.tick(1000);
       c.record(RecorderActions.changeBookingField, target: 'time');
     }
-    c.record(RecorderActions.changeBookingField, target: 'repeat');
+    c
+      ..record(RecorderActions.changeBookingField, target: 'repeat')
     // Two command attempts are two attempts, however fast.
-    c.attempt(RecorderActions.confirmBooking);
-    c.attempt(RecorderActions.confirmBooking);
+      ..attempt(RecorderActions.confirmBooking)
+      ..attempt(RecorderActions.confirmBooking);
     final steps = c.snapshot!.steps;
     expect(steps.length, 5);
     expect(steps.where((s) => s.isAttempt).map((s) => s.op), ['op1', 'op2']);
@@ -209,18 +214,20 @@ void main() {
 
   test('the recorder\'s own controls are never recorded', () async {
     await c.start(scope: canaryScope);
-    c.record(RecorderActions.recorderControl);
-    c.unrecorded(surface: RecorderSurfaces.recorderControls);
+    c
+      ..record(RecorderActions.recorderControl)
+      ..unrecorded(surface: RecorderSurfaces.recorderControls);
     expect(c.snapshot!.steps, isEmpty);
   });
 
   test('protected and unknown surfaces leave markers, not contents',
       () async {
     await c.start(scope: canaryScope);
-    c.excluded(ProtectedSurface.payment);
-    c.excluded(ProtectedSurface.payment);
-    c.record('payments.enter_card', payload: {'card': kCanaryIban});
-    c.unrecorded(surface: 'somewhere.$kCanaryUrl');
+    c
+      ..excluded(ProtectedSurface.payment)
+      ..excluded(ProtectedSurface.payment)
+      ..record('payments.enter_card', payload: {'card': kCanaryIban})
+      ..unrecorded(surface: 'somewhere.$kCanaryUrl');
     final steps = c.snapshot!.steps;
     expect(steps.map((s) => s.kind),
         [StepKind.excluded, StepKind.unrecorded]);
@@ -230,8 +237,9 @@ void main() {
 
   test('a note is the person\'s own, bounded and labelled', () async {
     await c.start(scope: canaryScope, title: '  Book\u0000 a desk  ');
-    c.annotate('x' * 2000);
-    c.annotate('   ');
+    c
+      ..annotate('x' * 2000)
+      ..annotate('   ');
     final r = c.snapshot!;
     expect(r.title, 'Book  a desk');
     expect(r.steps.single.kind, StepKind.annotation);

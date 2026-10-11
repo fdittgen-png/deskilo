@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -8,10 +10,10 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/member_note_refs.dart';
-import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/presentation/widgets/member_note_actions.dart';
 import '../../../workspace/presentation/widgets/member_note_sheet.dart';
 import '../../../workspace/presentation/widgets/note_check.dart';
+import '../../../workspace/presentation/widgets/open_conversation.dart';
 
 /// One member note in the Messages inbox (#460, #523): direction +
 /// sender or recipient, a 64-CHARACTER PREVIEW, and when it was sent.
@@ -118,10 +120,10 @@ class NoteRow extends ConsumerWidget {
       onTap: () {
         final partner = _counterpartId(sentByMe);
         if (!note.isBroadcast && partner != null) {
-          openDirectConversation(context, ref, memberId: partner);
+          unawaited(openDirectConversation(context, ref, memberId: partner));
           return;
         }
-        showMemberNoteSheet(
+        unawaited(showMemberNoteSheet(
           context,
           ref,
           note: note,
@@ -131,7 +133,7 @@ class NoteRow extends ConsumerWidget {
           onDelete: canDelete
               ? () => deleteMemberNoteGuarded(context, ref, note)
               : null,
-        );
+        ));
       },
     );
     return Dismissible(

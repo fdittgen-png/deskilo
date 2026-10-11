@@ -53,7 +53,12 @@ void main() {
         final out = _Output();
         final err = _Output();
         expect(
-          await runSupportDoctor(() async => throw failure, out: out, err: err),
+          await runSupportDoctor(
+            () async =>
+                failure is Error ? throw failure : throw failure as Exception,
+            out: out,
+            err: err,
+          ),
           1,
         );
         expect(err.text.toString(), 'support_unavailable\n');

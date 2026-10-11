@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/data/system_columns.dart';
 import 'billing_rules.dart';
 import 'invoice_clauses.dart';
 import 'vat_rate.dart';
-import '../../../core/data/system_columns.dart';
 
 part 'invoice.freezed.dart';
 

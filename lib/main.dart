@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'core/data/system_columns.dart';
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'dart:async';
 
 import 'app/app.dart';
 import 'app/app_initializer.dart';
 import 'app/bootstrap.dart';
 import 'app/server_choice_app.dart';
-import 'features/workspace/providers/workspace_providers.dart';
+import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
 import 'core/notifications/deferred_notification_service.dart';
 import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
 import 'core/trace/trace_hooks.dart';
-import 'core/trace/trace_provider_observer.dart';
 import 'core/trace/trace_logger.dart';
+import 'core/trace/trace_provider_observer.dart';
+import 'features/workspace/providers/workspace_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +57,7 @@ Future<void> main() async {
     debugPrint('Supabase initialization failed: $e\n$st');
     trace.error('boot', 'Supabase initialization failed',
         error: e, stackTrace: st);
-    throw e;
+    Error.throwWithStackTrace(e, st);
   }));
   // One-time repair (Downloads pass): exports saved by older builds sit
   // in the hidden app dir — move them into the visible Downloads. Fire

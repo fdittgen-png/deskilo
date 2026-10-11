@@ -56,7 +56,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
     TaskOutputResult result;
     try {
       result = await generator.generate(request);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'output ${generator.id} failed (${e.runtimeType})',

@@ -148,8 +148,7 @@ void main() {
       final store = _seeded(temp);
       await store.put('k', {'a': 1}, ttl: const Duration(minutes: 5));
       // Corrupt the file on disk.
-      final file = temp.listSync().whereType<File>().single;
-      file.writeAsStringSync('{not json');
+      temp.listSync().whereType<File>().single.writeAsStringSync('{not json');
       expect(await store.get('k'), isNull);
       expect(temp.listSync().whereType<File>(), isEmpty);
     });

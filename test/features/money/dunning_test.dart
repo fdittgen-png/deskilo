@@ -5,9 +5,9 @@
 // generated through the banded report engine.
 import 'dart:typed_data';
 
+import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:flutter/material.dart';
-import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -15,12 +15,11 @@ import '../../helpers/navigation.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 void main() {
-  final issued = DateTime.utc(2026, 7, 1);
+  final issued = DateTime.utc(2026, 7);
 
   group('dueReminderLevel (#472)', () {
     const rules = DunningRules(
       levels: 2,
-      firstAfterDays: 14,
       betweenDays: 7,
     );
 

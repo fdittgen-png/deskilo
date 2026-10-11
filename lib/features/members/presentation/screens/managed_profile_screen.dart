@@ -17,11 +17,11 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../profile/presentation/widgets/personal_info_form.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/managed_access_editor.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 
 class ManagedProfileScreen extends ConsumerStatefulWidget {
   const ManagedProfileScreen({super.key, this.memberId});
@@ -65,8 +65,9 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     if (!mounted) return;
     setState(() => _saving = false);
     if (!ok) return;
-    ref.invalidate(workspaceMembersProvider);
-    ref.invalidate(memberNamesProvider);
+    ref
+      ..invalidate(workspaceMembersProvider)
+      ..invalidate(memberNamesProvider);
     // #1561 — and the identity itself, or the member page it returns to
     // keeps printing the address that was just replaced.
     if (editing != null) ref.invalidate(managedIdentityProvider(editing));

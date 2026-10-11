@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import 'calendar_item_row.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The horizontal filter row above the feed.
 class CalendarKindChips extends StatelessWidget {

@@ -8,13 +8,13 @@
 // still appears. The whole level heads the list where the level rail
 // offers it: bookable as a whole and the grant or admin role.
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
-import 'package:deskilo/features/plan/domain/level.dart';
-import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
+import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/seat_list_view.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';

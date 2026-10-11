@@ -4,9 +4,9 @@
 // `workspace_status` (0167) returns it: what was invoiced, collected,
 // reimbursed and shared out, and the same per member. Computed in the
 // database so the screen and the printed report read one set of numbers.
-import 'expense_repartition.dart';
-import 'accounting_amount.dart';
 import '../../../core/data/json_reader.dart';
+import 'accounting_amount.dart';
+import 'expense_repartition.dart';
 
 class WorkspaceStatus {
   const WorkspaceStatus({

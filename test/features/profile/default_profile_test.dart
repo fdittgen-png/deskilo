@@ -8,12 +8,12 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import '../../helpers/mock_providers.dart';
 
 FakeWorkspaceRepository _twoWorkspaces() {

@@ -4,14 +4,14 @@
 // a refusal is a refusal rather than a button that appears not to have
 // been pressed. Both rules lived on a wizard's State, where nothing
 // could state them.
+import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/workspace/application/start_workspace.dart';
+import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
-import 'package:deskilo/core/backend/backend_settings.dart';
-import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
-import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<({StartOutcome outcome, String? workspaceId})> _create(
@@ -47,9 +47,9 @@ void main() {
 
     test('a retry after a FAILURE still leaves one workspace', () async {
       final repo = FakeWorkspaceRepository()
-        ..createFailure = StateError('the response never came back');
+        ..createFailure = Exception('the response never came back');
       final before = repo.workspaces.length;
-      await expectLater(_create(repo), throwsStateError);
+      await expectLater(_create(repo), throwsException);
       final retry = await _create(repo);
       expect(retry.outcome, StartOutcome.created);
       expect(repo.workspaces.length, before + 1,
@@ -60,7 +60,7 @@ void main() {
         () async {
       final repo = FakeWorkspaceRepository();
       final before = repo.workspaces.length;
-      await _create(repo, requestId: 'req-1');
+      await _create(repo);
       await _create(repo, requestId: 'req-2');
       expect(repo.workspaces.length, before + 2,
           reason: 'minting a fresh id per attempt is the bug the shared '

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-
-import '../../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/workspace.dart';
+import '../../../workspace/presentation/widgets/workspace_avatar.dart';
 
 /// #987 — a workspace and its twin as ONE card: the name once, two
 /// chips (DEV · PROD) to switch sides, the active side marked. The
@@ -38,6 +38,7 @@ class WorkspacePairCard extends StatelessWidget {
     final prodActive = activeId == prod.id;
     final active = devActive || prodActive;
     final theme = Theme.of(context);
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     Widget environment(Workspace workspace, bool selected, String label, String key) => Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: SizedBox(width: double.infinity, child: OutlinedButton(

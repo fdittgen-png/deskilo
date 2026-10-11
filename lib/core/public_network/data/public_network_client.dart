@@ -59,7 +59,7 @@ class PublicNetworkNegotiator {
     final PublicServerProfile profile;
     try {
       profile = await (_profiles[origin] ??= _read(origin, key));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       _profiles.remove(origin)?.ignore();
       TraceLogger.instance.warn(
         'public_network',

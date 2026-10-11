@@ -72,7 +72,6 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
           child: InlineBanner(
             key: const ValueKey('template-detail-unavailable'),
             icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.error,
             text: l10n?.compareUnavailable ?? 'These templates could not be read to compare them. Nothing is claimed either way.',
           ),
         ),

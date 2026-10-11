@@ -23,10 +23,10 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../helpers/settings_sections.dart';
 import 'package:go_router/go_router.dart';
 
 import '../helpers/mock_providers.dart';
+import '../helpers/settings_sections.dart';
 
 const _ordinaryMember = Member(
   id: 'member-1',

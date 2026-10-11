@@ -7,8 +7,8 @@ import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 
-import 'money_repository.dart';
 import '../../time/date_text.dart';
+import 'money_repository.dart';
 
 WorkspaceStatus demoWorkspaceStatus(
   FakeMoneyRepository money,

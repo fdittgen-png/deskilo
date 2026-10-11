@@ -1,38 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/material.dart';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/calendar_days.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_declaration_report.dart';
-import '../invoice_documents.dart';
-import '../report_layout_actions.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
-import '../report_actions.dart';
-import '../../../workspace/domain/workspace_feature.dart';
+import '../invoice_documents.dart';
 import '../recapitulative_actions.dart';
-import '../../../../core/time/calendar_days.dart';
+import '../report_actions.dart';
+import '../report_layout_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
 import '../widgets/vat_tax_point_notice.dart';

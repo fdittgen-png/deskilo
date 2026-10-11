@@ -5,11 +5,10 @@
 // Documents face and sees who can look; an owner (or finance admin)
 // proposes it from the member's sheet; it goes through validation;
 // the feed narrates it. The server side (0137) has its own harness.
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
+import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +21,9 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/money_faces.dart' show face, pumpFaces;
+import '../../helpers/settings_sections.dart';
 import '../members/members_screen_test.dart' show openSheet, pumpMembers;
-import '../../helpers/screens/money_faces.dart' show pumpFaces, face;
 
 final _deal = PriceNegotiation(
   defaultFeeCents: 25000,
@@ -31,7 +31,7 @@ final _deal = PriceNegotiation(
   active: NegotiationDeal(
     feeCents: 15000,
     discountPercent: 10,
-    validFrom: DateTime(2026, 5, 1),
+    validFrom: DateTime(2026, 5),
     status: 'active',
   ),
 );
@@ -229,7 +229,7 @@ void main() {
         subscriptionPct: 60,
         previousSubscriptionPct: 50,
         items: {'services': {'service-coffee': 100}},
-        validFrom: DateTime(2026, 5, 1),
+        validFrom: DateTime(2026, 5),
         status: 'active',
       ),
     );
@@ -286,7 +286,7 @@ void main() {
       defaultOverageFeeCents: 1200,
       active: NegotiationDeal(
         items: {'services': {'service-coffee': 100}},
-        validFrom: DateTime(2026, 5, 1),
+        validFrom: DateTime(2026, 5),
         status: 'active',
       ),
     );

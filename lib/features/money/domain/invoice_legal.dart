@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'vat_tax_point.dart';
 import '../../../core/data/json_reader.dart';
+import 'vat_tax_point.dart';
 
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
 /// compliant professional invoice must (or may) print beyond the 0069

@@ -68,8 +68,9 @@ void main() {
     expect(fields.text('name'), 'Ana');
     fields['city'].text = 'Lyon';
     expect(fields.values, {'name': 'Ana', 'city': 'Lyon'});
-    fields.dispose();
-    fields.dispose(); // a second call is harmless
+    fields
+      ..dispose()
+      ..dispose(); // a second call is harmless
   });
 
   testWidgets('a field shows its error under itself', (tester) async {

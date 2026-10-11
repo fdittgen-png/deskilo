@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,8 +9,8 @@ import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/secondary_federation.dart';
 import '../../../core/links/link_launcher.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
@@ -16,9 +18,9 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connect_with_identity_sheet.dart';
+import 'messenger/inquiry_sheet.dart';
 import 'space_offers.dart';
 import 'workspace_feedback.dart';
-import 'messenger/inquiry_sheet.dart';
 
 class PublicWorkspaceView extends ConsumerWidget {
   const PublicWorkspaceView({
@@ -56,8 +58,9 @@ class PublicWorkspaceView extends ConsumerWidget {
       ),
     );
     if (connected) {
-      ref.invalidate(connectedSourcesProvider);
-      ref.invalidate(publicDirectoryProvider);
+      ref
+        ..invalidate(connectedSourcesProvider)
+        ..invalidate(publicDirectoryProvider);
     }
     return connected ? _Connection.now : _Connection.none;
   }
@@ -123,7 +126,7 @@ class PublicWorkspaceView extends ConsumerWidget {
       onPressed: () {
         final uri = Uri.tryParse(workspace.text(field));
         if (uri != null && uri.scheme == 'https' && uri.userInfo.isEmpty) {
-          ref.read(linkLauncherProvider)(uri);
+          unawaited(ref.read(linkLauncherProvider)(uri));
         }
       },
     );

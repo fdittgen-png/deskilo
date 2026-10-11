@@ -18,9 +18,9 @@
 // Pure Dart: no Flutter, no l10n — the pipeline runs in CI and from a
 // bare `dart run`.
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:io';
 import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:image/image.dart' as img;
 
@@ -387,7 +387,7 @@ int _frame(_Args a) {
 
 int _redact(_Args a) {
   final path = a.required('file');
-  var im = _load(path);
+  final im = _load(path);
   for (final spec in a.options('rect')) {
     final r = _rect(spec);
     final patch = img.pixelate(

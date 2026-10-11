@@ -7,9 +7,9 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/rights_request.dart';
 import '../providers/profile_providers.dart';
-import '../../../core/trace/trace_logger.dart';
 
 /// A random v4 UUID for one submission: a retry after a lost answer
 /// sends the same id and gets the same request back.
@@ -54,7 +54,7 @@ Future<ErasurePreview?> previewErasureOrNull(
 ) async {
   try {
     return await _previewErasure(ref, workspaceId);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('privacy', 'erasure preview unavailable',
         error: e, stackTrace: st);
     return null;

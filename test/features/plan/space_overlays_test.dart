@@ -45,7 +45,6 @@ Reservation _r({
     Reservation(
       id: 'res-1',
       workspaceId: 'ws-1',
-      seatId: null,
       officeId: officeId,
       deskId: deskId,
       levelId: levelId,

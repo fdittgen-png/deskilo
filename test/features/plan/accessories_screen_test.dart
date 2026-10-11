@@ -5,15 +5,14 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/presentation/screens/accessories_screen.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/plan/domain/accessory.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_money_repository.dart';

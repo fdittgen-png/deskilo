@@ -24,6 +24,7 @@ import 'fixtures/recording_fixtures.dart';
 class _Flag extends Notifier<bool> {
   @override
   bool build() => true;
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void set(bool v) => state = v;
 }
 

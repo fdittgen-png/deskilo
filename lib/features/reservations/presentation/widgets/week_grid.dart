@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/time/date_text.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -13,16 +17,12 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
-import 'booking_range_text.dart';
-import '../../providers/reservation_providers.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../providers/browsed_level.dart';
-import '../../../../core/theme/app_typography.dart';
-import '../../../../core/time/date_text.dart';
+import '../../providers/reservation_providers.dart';
+import 'booking_range_text.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.

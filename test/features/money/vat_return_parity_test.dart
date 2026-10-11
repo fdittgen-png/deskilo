@@ -100,10 +100,7 @@ InvoiceMatch _paid(String id, int cents, DateTime on) => InvoiceMatch(
         SettledSource(
           invoiceId: 'F-G',
           number: 'F-G',
-          period: null,
-          kind: InvoiceKind.full,
           totalCents: 2400,
-          lines: [],
         ),
       ],
     ),

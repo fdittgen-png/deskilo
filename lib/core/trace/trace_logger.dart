@@ -204,7 +204,7 @@ class TraceLogger {
       try {
         final file = await _file();
         if (file.existsSync()) return prefix + await file.readAsString();
-      } catch (e, st) {
+      } on Object catch (e, st) {
         _disableFile(e, st);
       }
     }
@@ -232,7 +232,7 @@ class TraceLogger {
       if (_fileDisabled || _directoryProvider == null) return;
       try {
         await task();
-      } catch (e, st) {
+      } on Object catch (e, st) {
         _disableFile(e, st);
       }
     });

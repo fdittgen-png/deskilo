@@ -9,6 +9,8 @@
 // recordings already on this device never does, so switching the
 // feature off never strands a person's own files.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,9 +40,9 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
   void initState() {
     super.initState();
     // The indicator starts listening from here on, never before.
-    Future.microtask(() {
+    unawaited(Future.microtask(() {
       if (mounted) ref.read(recorderOpenedProvider.notifier).open();
-    });
+    }));
   }
 
   Future<void> _start() async {

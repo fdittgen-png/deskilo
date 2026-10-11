@@ -4,7 +4,6 @@
 // owner/admins, applies to EVERY member. The switch is an admin
 // affordance; plain members inherit the state without seeing it.
 
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/section_jump.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<FakeWorkspaceRepository> _pumpSettings(
   WidgetTester tester, {

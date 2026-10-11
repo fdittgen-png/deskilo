@@ -35,8 +35,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final router = GoRouter.of(tester.element(find.byType(Scaffold).first));
-      router.go('/me?tab=messages');
+      final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
+        ..go('/me?tab=messages');
       await tester.pumpAndSettle();
       final workspace = container.read(activeWorkspaceIdProvider).value;
       final session = container.read(guideSessionProvider.notifier);

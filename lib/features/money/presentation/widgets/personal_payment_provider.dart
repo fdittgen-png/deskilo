@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,7 +45,7 @@ class PersonalPaymentProvider extends ConsumerWidget {
         onChanged: preferences.hasValue
             ? (selected) {
                 if (selected == null) return;
-                runGuarded(
+                unawaited(runGuarded(
                   context,
                   domain: 'payments',
                   message: 'save preferred payment provider failed',
@@ -54,7 +56,7 @@ class PersonalPaymentProvider extends ConsumerWidget {
                       ref.read(personalSettingsProvider.notifier).save({
                         PersonalPreference.paymentProvider: selected,
                       }, workspaceOnly: false),
-                );
+                ));
               }
             : null,
       ),

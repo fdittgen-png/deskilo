@@ -16,9 +16,9 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
   bool loopbackAllowed = false;
 
   /// The next workspace switch is refused as stale (DK409).
-  Object? workspaceSwitchError;
+  Exception? workspaceSwitchError;
   EndpointProbe probe = EndpointProbe.missing;
-  Object? grantError;
+  Exception? grantError;
   final calls = <String>[];
 
   @override

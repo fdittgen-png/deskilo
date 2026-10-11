@@ -22,10 +22,10 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
 import 'action_registry.dart';
+import 'recording_reference.dart';
 import 'safe_payload.dart';
 import 'step_values.dart';
 import 'task_recording.dart';
-import 'recording_reference.dart';
 
 part 'task_recording_decoder.dart';
 

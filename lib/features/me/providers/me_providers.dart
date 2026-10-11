@@ -63,7 +63,7 @@ Future<List<LinkedServerSpaces>> linkedServerSpaces(Ref ref) async {
             key: source.endpoint.key,
             spaces: await repository.spacesOn(url),
           );
-        } catch (e, st) {
+        } on Object catch (e, st) {
           TraceLogger.instance.warn('me', 'linked server spaces unavailable',
               error: e, stackTrace: st);
           return LinkedServerSpaces(

@@ -5,16 +5,17 @@
 // Moved out of test/helpers/mock_providers.dart so Demo can mount them;
 // the suite reaches them through the same import as before.
 
-import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
-import 'package:deskilo/features/workspace/domain/workspace_import.dart';
-import 'dart:typed_data' show Uint8List;
-import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'dart:async';
+import 'dart:typed_data' show Uint8List;
+
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
+import 'package:deskilo/features/workspace/domain/workspace_import.dart';
+import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 
 /// In-memory [CacheStore] so widget tests never touch the filesystem.
 class InMemoryCacheStore implements CacheStore {

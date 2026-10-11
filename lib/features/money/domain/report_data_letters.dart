@@ -9,6 +9,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
@@ -20,7 +21,6 @@ import 'report_data.dart';
 import 'report_facts.dart';
 import 'report_strings.dart';
 import 'statement.dart';
-import '../../../core/time/date_text.dart';
 
 /// The statement data model (#476): the member's monthly summary as
 /// report lines — subscription, overage, supplements, services,
@@ -296,7 +296,7 @@ Map<String, Object?> workspaceReportData(
   final plans = facts.plans;
   final hours = facts.hours;
   final dayNames = DateFormat.E(strings.dateLocale);
-  final monday = DateTime(2024, 1, 1); // a Monday — weekday names only.
+  final monday = DateTime(2024); // a Monday — weekday names only.
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
     'workspace_address': workspace?.address ?? '',

@@ -10,8 +10,8 @@
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/action_registry.dart';
-import '../../guide/task_guide.dart';
 import '../../domain/recording_reference.dart';
+import '../../guide/task_guide.dart';
 import '../recorder_labels.dart';
 import '../ui_labels.g.dart';
 

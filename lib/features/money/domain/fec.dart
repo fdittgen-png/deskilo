@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
-import 'expense_repartition.dart';
-import 'invoice.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
+import 'expense_repartition.dart';
+import 'invoice.dart';
 import 'ledger_entry.dart';
 import 'vat_regime.dart';
 import 'vat_tax_point.dart';

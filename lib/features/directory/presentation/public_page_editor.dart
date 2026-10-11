@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,8 +8,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'public_workspace_view.dart';
@@ -116,8 +118,9 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     if (!mounted || _workspace != workspace || _account != account) return;
     setState(() => _busy = false);
     if (ok) {
-      ref.invalidate(publicDirectoryProvider);
-      ref.invalidate(currentWorkspaceProvider);
+      ref
+        ..invalidate(publicDirectoryProvider)
+        ..invalidate(currentWorkspaceProvider);
       await Navigator.of(context).push(
         MaterialPageRoute<void>(
           builder: (_) => PublicWorkspaceView(
@@ -238,7 +241,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     }
     if (_workspace != null && owner && !_loaded && !_failed && !_loading) {
       _loading = true;
-      Future.microtask(() => _load(workspace!.id));
+      unawaited(Future.microtask(() => _load(workspace!.id)));
     }
     final labels = {
       'description': l?.portalDescription ?? 'Description',

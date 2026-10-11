@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
-
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/vat/supply_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
@@ -17,7 +18,6 @@ import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
-import '../../../../core/vat/supply_class.dart';
 
 /// Owner-only consumable-service catalog editor (#123): name and price
 /// are configurable; services are deactivated, never deleted (bill lines
@@ -39,7 +39,7 @@ class ServicesScreen extends ConsumerWidget {
     List<VatRate> rates;
     try {
       rates = await ref.read(vatRatesProvider.future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('money', 'vat rates fetch failed', error: e, stackTrace: st);
       rates = const [];

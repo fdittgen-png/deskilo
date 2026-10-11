@@ -111,7 +111,7 @@ void main() {
     final csv = buildAccountantCsv(
       invoices: s.money.invoices,
       matches: const {},
-      generatedAt: DateTime(2026, 9, 1),
+      generatedAt: DateTime(2026, 9),
       workspaceName: 'Test Space',
     );
     expect(csv, isNot(contains(settlement.number)));

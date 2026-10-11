@@ -6,17 +6,17 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_catalogue.dart';
 import '../../domain/vat_rate.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
@@ -135,7 +135,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       return;
     }
     final now = ref.read(clockProvider).now();
-    final nextMonth = DateTime(now.year, now.month + 1, 1);
+    final nextMonth = DateTime(now.year, now.month + 1);
     final percent = TextEditingController();
     final date = TextEditingController(
         text: nextMonth.toIso8601String().substring(0, 10));
@@ -359,7 +359,6 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               key: ValueKey('vat-rate-$index'),
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: TextField(

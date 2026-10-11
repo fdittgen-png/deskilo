@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/app_info.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import 'settings_section_header.dart';
-import '../../../../core/theme/app_typography.dart';
 
 // About-section facts (#560): proper nouns and URLs, identical in every
 // UI language — consts like the endonyms, not l10n keys.

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -15,7 +16,6 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/package.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
-import '../../../../core/format/cents.dart';
 
 /// #739 — the member's own prices against the workspace tariff, on the
 /// Documents face: what everyone pays, what I pay, since when — and who
@@ -299,7 +299,6 @@ Future<void> showPriceNegotiationSheet(
             ),
             items: [
               DropdownMenuItem<int?>(
-                value: null,
                 child: Text(l10n?.negotiationKeepCurrent ?? 'Keep current'),
               ),
               for (final v in options)

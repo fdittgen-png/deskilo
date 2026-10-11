@@ -124,7 +124,7 @@ final class ShellBarHiddenProvider
   ShellBarHidden create() => ShellBarHidden();
 }
 
-String _$shellBarHiddenHash() => r'1b9fea1a78be6ff0be35a156848a245251381bc1';
+String _$shellBarHiddenHash() => r'6cee212f7d3fbf702074ddd90d21f9a40110b9ad';
 
 /// The swiped-away state. Loading reads as SHOWN: the safe state, since
 /// it is the one that carries its own way out.
@@ -191,7 +191,7 @@ final class ShellSwipeCoachSeenProvider
 }
 
 String _$shellSwipeCoachSeenHash() =>
-    r'bdf9d0d487fbd4c3c5b9dcb5be97b1072cfb9ca7';
+    r'0519586efa3fb7e2a4ca6f419a88aeed8e2ac030';
 
 /// Whether the swipe coach mark has been shown (#1173).
 ///

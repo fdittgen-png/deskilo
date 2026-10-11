@@ -6,10 +6,10 @@ import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../money/providers/money_providers.dart';
 import '../application/set_member_subscription.dart';
 import '../domain/member.dart';
 import '../domain/overage_policy.dart';
-import '../../money/providers/money_providers.dart';
 import '../providers/workspace_providers.dart';
 
 /// Sets a member's subscription (#128): an offered level, a negotiated

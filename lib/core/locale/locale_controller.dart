@@ -2,8 +2,9 @@
 import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../storage/prefs_stores.dart';
+
 import '../../features/profile/providers/profile_providers.dart';
+import '../storage/prefs_stores.dart';
 import '../trace/trace_logger.dart';
 
 part 'locale_controller.g.dart';
@@ -49,7 +50,7 @@ class LocaleController extends _$LocaleController {
           .read(profileRepositoryProvider)
           .setPreferredLocale(locale?.languageCode ?? '');
       ref.invalidate(myProfileProvider);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
           'profile', 'preferred locale save failed',
           error: e, stackTrace: st);

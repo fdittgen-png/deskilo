@@ -44,7 +44,7 @@ enum ReportFieldGroup {
 @visibleForTesting
 ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       // #880 — the owner's own texts.
-      String f when f.startsWith('text.') => ReportFieldGroup.texts,
+      final String f when f.startsWith('text.') => ReportFieldGroup.texts,
       'number' ||
       'period_month' ||
       'period_year' ||
@@ -113,7 +113,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_basis_note' =>
         ReportFieldGroup.vat,
       'site_name' || 'site_address' || 'usage_sites' => ReportFieldGroup.sites,
-      String f when f.startsWith('status_') && f != 'status_members' =>
+      final String f when f.startsWith('status_') && f != 'status_members' =>
         ReportFieldGroup.status,
       'lines' ||
       'vat' ||

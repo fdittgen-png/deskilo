@@ -5,8 +5,8 @@
 // theirs and cannot change them; an authorised admin REQUESTS a change
 // that goes through validation (payment_terms_change) — mirrored by
 // `effective_payment_terms` / `payment_terms_clean` in SQL (0154).
-import 'invoice_legal.dart';
 import '../../../core/data/json_reader.dart';
+import 'invoice_legal.dart';
 
 class PaymentTerms {
   const PaymentTerms({

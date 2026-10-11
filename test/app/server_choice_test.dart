@@ -82,7 +82,7 @@ void main() {
   group('whether the first start asks', () {
     test('a build with a default never asks', () async {
       expect(
-        await needsServerChoice(hasDefault: true, readStored: () async => null),
+        await needsServerChoice(readStored: () async => null),
         isFalse,
       );
     });

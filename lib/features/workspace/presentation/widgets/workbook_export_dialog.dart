@@ -100,7 +100,7 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
       outcome = _Outcome(path: path);
     } on WorkbookCancelled {
       outcome = const _Outcome(cancelled: true);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: handed to the caller, which reports it with context.
       outcome = _Outcome(error: e, stack: st);
     }

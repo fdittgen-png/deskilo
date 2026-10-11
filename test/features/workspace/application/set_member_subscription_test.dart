@@ -56,7 +56,7 @@ void main() {
       );
       expect(repo.myMember.subscriptionPct, before);
       expect(
-        await command.set(_member(repo, pct: 50), 0),
+        await command.set(_member(repo), 0),
         SubscriptionChange.saved,
       );
       expect(repo.myMember.subscriptionPct, 0);

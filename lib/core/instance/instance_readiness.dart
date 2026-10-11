@@ -7,8 +7,8 @@
 // reads. The wizard shows the verdict and runs nothing when the answer is
 // "needs attention".
 import 'instance_builder.dart';
-import 'instance_doctor.dart';
 import 'instance_bundle.dart';
+import 'instance_doctor.dart';
 import 'management_api.dart';
 
 enum InstanceReadinessVerdict {

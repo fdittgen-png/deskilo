@@ -7,6 +7,8 @@
 // said honestly: the image could not be CONFIRMED as saved. "Try again"
 // reruns the SAME write: for an illustration image the same operation id
 // (#2012 B), so a retry after a lost answer converges on one image.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -24,7 +26,7 @@ Future<void> runPlanMediaWrite(
   busy.value = true;
   try {
     await write();
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.error('editor', trace, error: e, stackTrace: st);
     if (!context.mounted) return;
     final l10n = AppLocalizations.of(context);
@@ -39,13 +41,13 @@ Future<void> runPlanMediaWrite(
         label: l10n?.commonRetry ?? 'Try again',
         onPressed: () {
           if (!context.mounted) return;
-          runPlanMediaWrite(
+          unawaited(runPlanMediaWrite(
             context,
             busy: busy,
             trace: trace,
             write: write,
             onDone: onDone,
-          );
+          ));
         },
       ),
     );

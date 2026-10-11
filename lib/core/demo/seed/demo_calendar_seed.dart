@@ -4,8 +4,8 @@
 // so the demo builds it from the session's records: every booking,
 // check-in, invoice, payment, due date, scheduled expense and decision
 // lands on the day it happened.
-import '../../calendar/calendar_item.dart';
 import '../../../features/reservations/domain/reservation.dart';
+import '../../calendar/calendar_item.dart';
 import '../data/calendar_repository.dart';
 import '../data/event_repository.dart';
 import '../data/money_repository.dart';

@@ -142,7 +142,7 @@ void main() {
     final old = RecorderStore(
         backend: backend,
         namespace: canaryNamespace,
-        clock: FixedClock(DateTime.utc(2026, 8, 1)));
+        clock: FixedClock(DateTime.utc(2026, 8)));
     final c = fixtureController(old, StepClock());
     await c.start(scope: canaryScope);
     await c.stop();

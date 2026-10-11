@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_push/deskilo_push.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -8,11 +9,9 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
 import '../trace/trace_logger.dart';
-import 'package:deskilo_push/deskilo_push.dart';
-
 import 'push_endpoint_repository.dart';
-import 'push_service.dart';
 import 'push_opt_out.dart';
+import 'push_service.dart';
 
 part 'push_providers.g.dart';
 
@@ -58,7 +57,7 @@ Future<PushService?> pushBootstrap(Ref ref) async {
   AppLocalizations? l10n;
   try {
     l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('push l10n lookup failed, using fallback: $e\n$st');
     // Benign: the hard-coded English fallback strings below take over.
     TraceLogger.instance.warn('push', 'l10n lookup failed, using fallback',

@@ -2,15 +2,16 @@
 // #1661: actual independently authenticated local PostgREST -> repository ->
 // workbook -> saved bytes. Started by test/helpers/workbook_provenance_runtime.py;
 // opt-in, never a fake substitute for the two-installation check.
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:deskilo/features/workspace/application/template_workbook.dart';
+import 'package:deskilo/features/workspace/data/supabase_workbook_origin_repository.dart';
+import 'package:deskilo/features/workspace/data/supabase_workspace_repository.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:deskilo/features/workspace/application/template_workbook.dart';
-import 'package:deskilo/features/workspace/data/supabase_workspace_repository.dart';
-import 'package:deskilo/features/workspace/data/supabase_workbook_origin_repository.dart';
-import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 
 class HeldNativeRead extends SupabaseWorkspaceRepository {
   HeldNativeRead(super._client);

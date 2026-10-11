@@ -23,21 +23,21 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/task_recording.dart';
+import '../../export/task_document.dart' show recordingRevision;
 import '../../guide/guide_compiler.dart';
-import 'guide_draft_screen.dart';
+import '../../offline/offline_card.dart';
+import '../../package/storyboard_review.dart';
+import '../../package/task_output.dart';
 import '../../package/task_package.dart';
+import '../../storyboard/storyboard.dart';
+import '../../storyboard/storyboard_builder.dart';
+import '../../storyboard/storyboard_pictures.dart';
+import '../../storyboard/storyboard_preview.dart';
 import '../recorder_labels.dart';
 import '../recording_export.dart';
 import '../widgets/recording_steps_view.dart';
 import '../widgets/task_outputs_section.dart';
-import '../../package/task_output.dart';
-import '../../offline/offline_card.dart';
-import '../../storyboard/storyboard.dart';
-import '../../storyboard/storyboard_builder.dart';
-import '../../storyboard/storyboard_pictures.dart';
-import '../../export/task_document.dart' show recordingRevision;
-import '../../package/storyboard_review.dart';
-import '../../storyboard/storyboard_preview.dart';
+import 'guide_draft_screen.dart';
 
 class TaskWorkbenchScreen extends ConsumerStatefulWidget {
   const TaskWorkbenchScreen({super.key});
@@ -70,7 +70,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
           extensions: workbenchExtensions,
         ),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('recorder', 'picker failed', stackTrace: st);
       return;
     }
@@ -83,7 +83,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
       } else {
         result = openTaskFile(await file.readAsBytes());
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'task file not read (${e.runtimeType})',
@@ -124,7 +124,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     Storyboard board;
     try {
       board = _storyboard ?? buildStoryboard(copy, l10n);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'storyboard not built (${e.runtimeType})',
@@ -162,7 +162,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
         AppSnack.info(context, l10n.taskWorkbenchStoryboardRestored);
         return result.storyboard;
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'storyboard not restored (${e.runtimeType})',

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_spacing.dart';
+
 import '../../../../core/motion/motion.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
@@ -46,6 +48,7 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
     await Scrollable.ensureVisible(context,
       duration: motionDuration(context, MotionTokens.standard));
   }
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> reveal(FormFieldState<Object?> field, bool wasClosed) async {
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted || !field.mounted) return;

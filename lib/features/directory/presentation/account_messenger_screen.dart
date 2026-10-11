@@ -9,8 +9,8 @@ import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/directory_providers.dart';
-import 'account_thread.dart';
 import 'account_messenger_sections.dart';
+import 'account_thread.dart';
 
 /// Person-to-person messages, on this server and every connected one.
 ///

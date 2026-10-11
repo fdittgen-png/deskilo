@@ -227,8 +227,9 @@ void main() {
         token: token,
       ); // nothing waits
       expect(run.statusOf('g6'), GuideStepStatus.pending);
-      run.stop();
-      run.onAction(RecorderActions.selectDate);
+      run
+        ..stop()
+        ..onAction(RecorderActions.selectDate);
       expect(run.statusOf('g2'), GuideStepStatus.pending);
       expect(run.state, GuideRunState.stopped);
     });

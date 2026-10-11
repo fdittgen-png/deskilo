@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/reservation_repository.dart';
-import '../../../../core/time/workspace_time.dart';
 
 /// Outcome of a series booking (spec §5.2): how many instances landed and
 /// which dates were skipped (already taken / closed / blocked / over

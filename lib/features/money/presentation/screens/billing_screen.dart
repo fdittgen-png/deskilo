@@ -9,16 +9,16 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/fee_band.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
-import '../../providers/money_providers.dart';
 import '../../domain/vat_rate.dart';
+import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
-import '../widgets/vat_rate_field.dart';
 import '../widgets/carnets_editor.dart';
-import '../../../workspace/domain/workspace_feature.dart';
+import '../widgets/vat_rate_field.dart';
 
 /// Owner-only billing editor (#128, ADR 0008): the fee bands pricing the
 /// percentage subscriptions, and the subscription levels members may pick
@@ -307,8 +307,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     _pkgDays.clear();
     _pkgPrice.clear();
     setState(() => _pkgVatRateId = '');
-    ref.invalidate(allPackagesProvider);
-    ref.invalidate(packagesProvider);
+    ref
+      ..invalidate(allPackagesProvider)
+      ..invalidate(packagesProvider);
     if (!mounted) return;
     _showSaved();
   }
@@ -322,8 +323,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     )) {
       return;
     }
-    ref.invalidate(allPackagesProvider);
-    ref.invalidate(packagesProvider);
+    ref
+      ..invalidate(allPackagesProvider)
+      ..invalidate(packagesProvider);
   }
 
   // ---- build --------------------------------------------------------------
@@ -386,7 +388,6 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
       key: ObjectKey(draft),
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: 72,
@@ -714,7 +715,6 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ],
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               flex: 3,

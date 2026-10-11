@@ -11,10 +11,10 @@
 // another server, another account or another day is dropped unread. It
 // carries the intent's own fields and nothing else — the intent type
 // refuses credentials at construction, so there is nothing here to leak.
-import 'package:meta/meta.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../core/backend/backend_settings.dart';

@@ -75,7 +75,7 @@ void main() {
       orientation: SeatOrientation.n,
       chair: '',
       amenities: const [],
-      blockedFrom: DateTime.utc(2026, 7, 1),
+      blockedFrom: DateTime.utc(2026, 7),
       blockedTo: DateTime.utc(2026, 7, 10),
     );
 

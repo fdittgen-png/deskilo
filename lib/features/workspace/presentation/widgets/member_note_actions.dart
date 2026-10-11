@@ -29,7 +29,7 @@ Future<bool> sendMemberNoteGuarded(
           toMemberId: toMemberId,
           body: trimmed,
         );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('workspace', 'send member note failed', error: e, stackTrace: st);
     if (!context.mounted) return false;
@@ -64,7 +64,7 @@ Future<void> deleteMemberNoteGuarded(
   if (!context.mounted) return;
   try {
     await ref.read(workspaceRepositoryProvider).deleteMemberNote(note.id);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.error('workspace', 'delete member note failed',
         error: e, stackTrace: st);
     if (!context.mounted) return;

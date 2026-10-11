@@ -123,7 +123,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
         _busy = false;
       });
       // ignore: unused_catch_stack
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: export failures intentionally retain no raw error/path.
       if (!mounted || generation != _generation) return;
       setState(() {
@@ -151,7 +151,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
         fileName: 'deskilo-support.json',
       );
       // ignore: unused_catch_stack
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: no filesystem paths/provider errors in support output.
     }
     if (!mounted || generation != _generation) return;

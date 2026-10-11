@@ -47,6 +47,7 @@ class FeatureCapabilityList extends StatelessWidget {
   /// filtering: somebody who typed a name is past being introduced.
   final bool showHint;
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(WorkspaceFeature feature, bool value) onChanged;
 
   /// #1850 — the maturity ledger the badges read.

@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
+import '../../../core/time/clock.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../reservations/domain/reservation.dart';
@@ -10,7 +11,6 @@ import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_status.dart';
-import '../../../core/time/clock.dart';
 
 part 'directory_providers.g.dart';
 

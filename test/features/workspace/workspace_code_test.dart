@@ -2,7 +2,6 @@
 //
 // The workspace code screen: member and single-use admin invites, and a
 // validated new workspace ID.
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<FakeWorkspaceRepository> pumpWorkspaceCode(WidgetTester tester) async {
   final workspace = FakeWorkspaceRepository.withWorkspace();

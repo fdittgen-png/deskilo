@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Every process and subprocess has localized, business-readable copy.
 import 'dart:io';
-import '../../../tool/build_process_labels.dart';
-import 'package:flutter_test/flutter_test.dart';
+
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/process_names.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../../tool/build_process_labels.dart';
 
 void main() {
   test('label lookup is generated from registry and English copy', () {

@@ -101,7 +101,7 @@ class _InstanceConsoleTileState extends ConsumerState<_InstanceConsoleTile> {
   Future<bool> _isOperator() async {
     try {
       return await ref.read(assistantAccessProvider).instanceOverview() != null;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('mcp', 'instance console not offered',
           error: e, stackTrace: st);
       return false;

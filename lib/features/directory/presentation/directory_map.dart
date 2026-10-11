@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_radius.dart';
-import '../domain/public_workspace.dart';
-import '../domain/directory_location.dart';
-import '../providers/directory_location_providers.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../l10n/app_localizations.dart';
+import '../domain/directory_location.dart';
+import '../domain/public_workspace.dart';
+import '../providers/directory_location_providers.dart';
 
 /// Sparkilo's selected pill/list relationship, representing workspaces instead
 /// of fuel stations. No location permission or background tracking is needed.
@@ -171,7 +171,6 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
             defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           ),
           userAgentPackageName: 'org.deskilo.app',
-          maxNativeZoom: 19,
         ),
         MarkerClusterLayerWidget(
           options: MarkerClusterLayerOptions(

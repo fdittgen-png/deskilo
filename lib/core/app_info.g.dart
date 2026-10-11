@@ -50,4 +50,4 @@ final class AppVersionProvider
   }
 }
 
-String _$appVersionHash() => r'451751069a7c9f99a7552b953f612bb0b9b19cd9';
+String _$appVersionHash() => r'5b35716f9db62e098d78ec292ff512a32d958e2b';

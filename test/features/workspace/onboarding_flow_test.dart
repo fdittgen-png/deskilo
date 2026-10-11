@@ -78,7 +78,7 @@ void main() {
   testWidgets('#1303 — a retry after a failed creation sends the SAME '
       'request id, so the server can answer with one workspace', (tester) async {
     final repo = await pumpWithoutWorkspace(tester)
-      ..createFailure = StateError('the response was lost');
+      ..createFailure = Exception('the response was lost');
 
     await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
 
@@ -316,7 +316,7 @@ void main() {
         'offers to create without one', (tester) async {
       final repo = await pumpWithoutWorkspace(tester)
         ..createFailure =
-            StateError('not supported: this server has no entity forms');
+            Exception('not supported: this server has no entity forms');
       await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
       await useSuggested(tester);
       await tester.tap(find.text('Create workspace'));

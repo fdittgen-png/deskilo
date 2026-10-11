@@ -4,43 +4,45 @@
 // Demo environment can run the real app against it. The suite reaches it
 // through the same import as before.
 
-import 'dart:typed_data' show Uint8List;
 import 'dart:async';
-import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
-import 'package:deskilo/features/profile/domain/personal_info.dart';
+import 'dart:typed_data' show Uint8List;
+
 import 'package:deskilo/core/time/work_hours.dart';
-import 'package:deskilo/features/workspace/domain/conversation.dart';
-import 'package:deskilo/features/workspace/domain/member_note.dart';
+import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
-import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
-import 'package:deskilo/features/workspace/domain/public_holidays.dart';
-import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
+import 'package:deskilo/features/workspace/domain/feature_flags_write.dart';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
+import 'package:deskilo/features/workspace/domain/managed_access.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
+import 'package:deskilo/features/workspace/domain/member_note.dart';
+import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
-import 'package:deskilo/features/workspace/domain/feature_flags_write.dart';
-import 'package:deskilo/features/workspace/domain/workspace.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
-import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
-import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
-import 'fixture_clock.dart';
-import 'package:deskilo/features/workspace/domain/workspace_document.dart';
-import 'package:deskilo/features/workspace/domain/managed_access.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
-import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
+import 'package:deskilo/features/workspace/domain/public_holidays.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/template_publication.dart';
 import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
+import 'package:deskilo/features/workspace/domain/workspace_document.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_overview.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
 import '../../time/date_text.dart';
+import 'fixture_clock.dart';
 
 /// In-memory [WorkspaceRepository] for tests.
 class FakeWorkspaceRepository implements WorkspaceRepository {
@@ -75,6 +77,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Workspace-wide dev mode (#419): mirrors the 0081 column + RPC.
   /// Admin-gated like the server; [applyDevMode] seeds the initial state.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void applyDevMode(bool enabled) {
     for (var i = 0; i < workspaces.length; i++) {
       workspaces[i] = workspaces[i].copyWith(devMode: enabled);
@@ -149,7 +152,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// #1650 — when set, [fetchMyWorkspaces] throws it: a server that could
   /// not answer, as opposed to one that answered "none".
-  Object? fetchFailure;
+  Exception? fetchFailure;
 
   @override
   Future<List<Workspace>> fetchMyWorkspaces() async {
@@ -256,7 +259,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   final createdByRequest = <String, String>{};
 
   /// #1303 — the next creation throws this once (a lost response, say).
-  Object? createFailure;
+  Exception? createFailure;
 
   /// #917 — the last environment written, for assertions.
   String? lastEnvironment;
@@ -904,8 +907,8 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     final stored = workspaces[i].rolePermissions[role] as List<Object?>?;
     final current = <String>[
       for (final p in stored ?? const <Object?>[]) '$p',
-    ];
-    current.remove(permission);
+    ]
+      ..remove(permission);
     if (enabled) current.add(permission);
     current.sort();
     workspaces[i] = workspaces[i].copyWith(rolePermissions: {
@@ -932,7 +935,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     // Server contract (0058): active co-owners also become admins.
     Member patch(Member m) => m.copyWith(
         coOwner: status,
-        isAdmin: status == CoOwnerStatus.active ? true : m.isAdmin);
+        isAdmin: status == CoOwnerStatus.active || m.isAdmin);
     if (myMember.id == memberId) {
       myMember = patch(myMember);
       return;
@@ -1751,7 +1754,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   /// #1451 — every Save sent as one command, and a conflict to raise next.
   final settingsSaves = <WorkspaceSettingsSave>[];
   bool settingsConflictNext = false;
-  Object? settingsFailure;
+  Exception? settingsFailure;
 
   @override
   Future<Workspace> saveWorkspaceSettings(

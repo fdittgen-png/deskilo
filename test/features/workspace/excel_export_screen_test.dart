@@ -5,7 +5,6 @@
 // tile), and tapping it hands the saver a real workbook — proven by
 // unzipping what was saved, the same bar a spreadsheet reader applies.
 
-import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -20,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 /// #1310 S0 — an ADMIN whose role row does not carry exportData. An owner
 /// holds every permission by construction, so the permission can only be

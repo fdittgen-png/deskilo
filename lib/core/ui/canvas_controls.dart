@@ -490,14 +490,10 @@ class _ZoomCluster extends StatelessWidget {
         children: [
           button(Icons.add, atMax ? null : onIn, 'canvas-zoom-in',
               l10n?.a11yZoomIn ?? 'Zoom in'),
-          horizontal
-              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
-              : Divider(height: 1, color: scheme.outlineVariant),
+          if (horizontal) VerticalDivider(width: 1, color: scheme.outlineVariant) else Divider(height: 1, color: scheme.outlineVariant),
           button(Icons.remove, atMin ? null : onOut, 'canvas-zoom-out',
               l10n?.a11yZoomOut ?? 'Zoom out'),
-          horizontal
-              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
-              : Divider(height: 1, color: scheme.outlineVariant),
+          if (horizontal) VerticalDivider(width: 1, color: scheme.outlineVariant) else Divider(height: 1, color: scheme.outlineVariant),
           button(Icons.center_focus_strong_outlined, onReset,
               'canvas-zoom-reset',
               l10n?.a11yRecentre ?? 'Fit the plan to the screen'),

@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -18,12 +20,10 @@ import '../../domain/booking_error_text.dart';
 import '../../domain/booking_gate.dart';
 import '../../domain/reservation.dart';
 import '../../domain/space_act.dart';
-import '../booking_gate_scope.dart';
 import '../../providers/reservation_providers.dart';
+import '../booking_gate_scope.dart';
 import 'message_reserver.dart';
 import 'space_act_form.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/trace/act_trace.dart';
 
 /// #622 — the authenticated act sheet: scanning a seat's QR card (or
 /// tapping its chair's NFC tag, or picking it in a desk/office space
@@ -154,7 +154,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           granularity: _granularity,
         ),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'reservations',
         'space act failed',

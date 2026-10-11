@@ -557,16 +557,14 @@ String render(List<TestFileEntry> entries) {
     ..writeln('Every test file, classified for reliability and regression value (#1334). '
         'The classification is a function of each file — its header, its assertions, '
         'what it reads — so the rules below are the review surface, not the rows.')
-    ..writeln();
+    ..writeln()
 
   // Totals are printed by the tool, never committed: a count here changed
   // in every pull request that added a test, so any two such pull requests
   // conflicted on this one line and each merge forced a rebase of the rest.
-  b.writeln('Totals by layer and by action: run the tool — they are printed, '
+    ..writeln('Totals by layer and by action: run the tool — they are printed, '
       'not committed, so two pull requests that each add a test do not '
-      'conflict here.');
-
-  b
+      'conflict here.')
     ..writeln()
     ..writeln('## Rules')
     ..writeln()

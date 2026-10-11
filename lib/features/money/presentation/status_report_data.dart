@@ -10,9 +10,9 @@ import '../../../core/i18n/money_format.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/report_data.dart';
 import '../domain/workspace_status.dart';
 import 'report_strings_l10n.dart';
-import '../domain/report_data.dart';
 
 Map<String, Object?> workspaceStatusReportData(
   BuildContext context,

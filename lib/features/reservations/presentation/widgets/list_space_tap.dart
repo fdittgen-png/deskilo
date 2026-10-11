@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,7 +38,7 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
   if (!me.canReserveLevel && !ref.watch(actsForReservationsProvider) && roster.isEmpty) return null;
   return (deskId, officeId) {
     final desk = plan.desks.where((d) => d.id == deskId).firstOrNull;
-    showSpaceSheet(
+    unawaited(showSpaceSheet(
       context,
       members: roster,
       kind: desk != null
@@ -51,7 +53,7 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
       desk: desk,
       plan: plan,
       initialWindow: (start: window.start, end: window.end),
-    );
+    ));
   };
 }
 

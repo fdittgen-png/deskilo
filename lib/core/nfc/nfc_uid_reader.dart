@@ -63,7 +63,7 @@ class NfcUidReader {
         NfcAvailability.disabled => NfcStatus.off,
         _ => NfcStatus.unsupported,
       };
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('nfc availability check failed: $e\n$st');
       TraceLogger.instance
           .error('nfc', 'availability check failed', error: e, stackTrace: st);
@@ -90,7 +90,7 @@ class NfcUidReader {
     try {
       await _startSession(onUid);
       return true;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('nfc start failed, retrying: $e\n$st');
       TraceLogger.instance
           .error('nfc', 'start failed, retrying', error: e, stackTrace: st);
@@ -98,7 +98,7 @@ class NfcUidReader {
       try {
         await _startSession(onUid);
         return true;
-      } catch (e, st) {
+      } on Object catch (e, st) {
         debugPrint('nfc start retry failed: $e\n$st');
         TraceLogger.instance
             .error('nfc', 'start retry failed', error: e, stackTrace: st);
@@ -139,7 +139,7 @@ class NfcUidReader {
     if (kIsWeb) return webNfcStop();
     try {
       await NfcManager.instance.stopSession();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: stopping an already-stopped session is benign.
       debugPrint('nfc stop ignored: $e\n$st');
     }

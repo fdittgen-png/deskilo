@@ -90,7 +90,6 @@ void main() {
     final a = tax(
       eur('100.00'),
       TaxTreatment.taxed,
-      authority: 'FR',
       rate: '20',
     );
     final b = tax(
@@ -132,7 +131,7 @@ void main() {
   });
 
   test('the tax point: invoice date, or only once paid on the cash basis', () {
-    final issued = DateTime.utc(2026, 9, 1);
+    final issued = DateTime.utc(2026, 9);
     final paid = DateTime.utc(2026, 10, 15);
     expect(
       taxDueOn(TaxPointBasis.invoice, issuedOn: issued, paidOn: paid),

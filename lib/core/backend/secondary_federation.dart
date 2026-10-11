@@ -239,7 +239,6 @@ class SecondaryFederation implements IdentityConnector {
       target.key,
       httpClient: OriginOnlyClient(origin, transport()),
       authOptions: AuthClientOptions(
-        authFlowType: AuthFlowType.pkce,
         autoRefreshToken: false,
         pkceAsyncStorage: flow == null
             ? null
@@ -274,7 +273,7 @@ class SecondaryFederation implements IdentityConnector {
     final CanonicalIdentity? identity;
     try {
       identity = await _canonicalIdentityOf(active);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'connections',
         'own identity unreadable',
@@ -489,7 +488,7 @@ class SecondaryFederation implements IdentityConnector {
         stackTrace: stack,
       );
       outcome = _failed(pending, federationFailureFromCode(error.code));
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: network/provider payloads may contain credentials.
       TraceLogger.instance.warn(
         'connections',
@@ -501,8 +500,8 @@ class SecondaryFederation implements IdentityConnector {
       // A session this device does not keep must not stay alive here.
       if (!keep && client.auth.currentSession != null) {
         try {
-          await client.auth.signOut(scope: SignOutScope.local);
-        } catch (error, stack) {
+          await client.auth.signOut();
+        } on Object catch (error, stack) {
           // trace-exempt: report only that cleanup could not be confirmed.
           TraceLogger.instance.warn(
             'connections',
@@ -554,7 +553,7 @@ class SecondaryFederation implements IdentityConnector {
         guard.origin,
         purpose: 'connect.$flow',
       ).removeItem(key: 'supabase.auth.token-code-verifier');
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: no persisted callback secrets in diagnostic payloads.
       TraceLogger.instance.warn(
         'connections',

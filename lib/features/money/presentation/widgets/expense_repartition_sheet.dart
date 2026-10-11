@@ -7,9 +7,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -17,14 +19,12 @@ import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/book_repartition.dart';
 import '../../domain/expense_repartition.dart';
 import '../../providers/expense_repartition_providers.dart';
-import '../../application/book_repartition.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'wizard_scaffold.dart';
-import '../../../../core/format/cents.dart';
-import '../../../../core/time/date_text.dart';
 
 /// Opens the repartition assistant (kept under its historical name).
 Future<void> showExpenseRepartitionSheet(
@@ -59,7 +59,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
 
   static String _shift(String period, int months) {
     final parts = period.split('-');
-    final d = DateTime(int.parse(parts[0]), int.parse(parts[1]) + months, 1);
+    final d = DateTime(int.parse(parts[0]), int.parse(parts[1]) + months);
     return _current(d);
   }
 

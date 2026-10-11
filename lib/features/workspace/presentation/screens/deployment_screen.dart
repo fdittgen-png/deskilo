@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -183,7 +185,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     }
     if (!_loaded) {
       _loaded = true;
-      Future<void>.microtask(() => _load(workspace));
+      unawaited(Future<void>.microtask(() => _load(workspace)));
     }
     final twin = _twinOf(workspace);
     final perms = ref.watch(myPermissionsProvider);

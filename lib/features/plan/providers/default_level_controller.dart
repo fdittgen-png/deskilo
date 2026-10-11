@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../core/trace/trace_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import 'floor_plan_providers.dart';
 
@@ -60,7 +59,7 @@ class SelectedLevelId extends _$SelectedLevelId {
     if (workspace == null) return;
     try {
       await ref.read(defaultLevelStoreProvider).write(workspace.id, levelId);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The choice is already shown; only its persistence failed — the
       // next launch falls back to the first level, and the trace says why.
       TraceLogger.instance.warn('plan', 'default level write failed',

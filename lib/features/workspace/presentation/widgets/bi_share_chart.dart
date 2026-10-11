@@ -50,7 +50,7 @@ class BiShareBreakdown extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final colors = [
       for (var i = 0; i < shares.length; i++)
-        shares[i].isOther ? scheme.outline : _biPartColor(scheme, i),
+        if (shares[i].isOther) scheme.outline else _biPartColor(scheme, i),
     ];
     final ring = SizedBox(
       width: 150,
@@ -122,7 +122,6 @@ class BiShareBreakdown extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) => box.maxWidth > 420
           ? Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [ring, const SizedBox(width: AppSpacing.lg), Expanded(child: legend)],
             )
           : Column(

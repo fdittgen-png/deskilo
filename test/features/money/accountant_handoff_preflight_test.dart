@@ -15,7 +15,7 @@ Invoice _inv(String id, {String currency = 'EUR'}) => Invoice(
   workspaceId: 'ws',
   memberId: 'm',
   number: 'INV-$id',
-  issuedAt: DateTime.utc(2026, 3, 1),
+  issuedAt: DateTime.utc(2026, 3),
   title: 'March',
   lines: const [InvoiceLine(label: 'Desk', amountCents: 5000)],
   totalCents: 5000,

@@ -29,7 +29,6 @@ Future<FakeProfileRepository> _pump(WidgetTester tester) async {
         privacyAcceptedVersion: kPrivacyPolicyVersion,
       ),
     ],
-    accepted: true,
   );
   tester.view.physicalSize = const Size(800, 2400);
   tester.view.devicePixelRatio = 1;

@@ -1,41 +1,41 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
+
+import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/expense_schedule.dart';
-import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/usage_record.dart';
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
-import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
-import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/price_negotiation.dart';
-import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
+import 'package:deskilo/features/money/domain/expense_repartition.dart';
+import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
+import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
-import 'package:deskilo/core/vat/supply_class.dart';
+import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
-
-import 'fixture_clock.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo/features/money/domain/usage_record.dart';
+import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
-
-import 'event_repository.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
-import 'workspace_status_computation.dart';
+
 import '../../../features/money/domain/reminder_evidence.dart';
 import '../../time/date_text.dart';
+import 'event_repository.dart';
+import 'fixture_clock.dart';
+import 'workspace_status_computation.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -1073,7 +1073,6 @@ class FakeMoneyRepository implements MoneyRepository {
         creditsCents: 0,
         balanceCents: 0,
         overagePolicy: statement.overagePolicy,
-        overageRateCents: 0,
       );
     }
     return statements[period] ?? statement.copyWith(period: period);
@@ -1086,7 +1085,7 @@ class FakeMoneyRepository implements MoneyRepository {
   /// When set, [fetchMemberAccount] throws it — models a refused RPC
   /// (`not your account`) or a dead network, so a screen's error state
   /// can be exercised.
-  Object? accountFailure;
+  Exception? accountFailure;
 
   @override
   Future<MemberAccount> fetchMemberAccount(String memberId) async {
@@ -1459,8 +1458,7 @@ class FakeMoneyRepository implements MoneyRepository {
     }
     vatRates = [
       for (var i = 0; i < rates.length; i++)
-        rates[i].id.isEmpty
-            ? VatRate(
+        if (rates[i].id.isEmpty) VatRate(
                 id: 'vat-${i + 1}',
                 label: rates[i].label,
                 percent: rates[i].percent,
@@ -1473,8 +1471,7 @@ class FakeMoneyRepository implements MoneyRepository {
                 validFrom: rates[i].validFrom,
                 validTo: rates[i].validTo,
                 supersedesId: rates[i].supersedesId,
-              )
-            : rates[i],
+              ) else rates[i],
     ];
   }
 
@@ -1677,7 +1674,7 @@ class FakeMoneyRepository implements MoneyRepository {
       title: s.title, description: s.description, amountCents: s.amountCents,
       startsOn: s.startsOn, endsOn: s.endsOn, unit: s.unit, every: s.every,
       repeatCount: s.repeatCount, status: ScheduleStatus.ended,
-      occurrencesDone: s.occurrencesDone, nextDue: null,
+      occurrencesDone: s.occurrencesDone,
     );
   }
 

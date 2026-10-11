@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/theme/seat_legend_profile.dart';
+import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// #814 — the seat states, named. The plan, the day, the week and the

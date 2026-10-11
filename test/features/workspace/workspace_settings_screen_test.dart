@@ -2,14 +2,12 @@
 //
 // Workspace settings seed from the workspace and save identity, languages,
 // invitation templates and currency (#486, #711).
-import '../../helpers/settings_sections.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
-import '../../helpers/fake_money_repository.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/presentation/screens/workspace_settings_screen.dart';
@@ -18,9 +16,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
+import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/workspace_settings_groups.dart';
 import '../../helpers/section_jump.dart';
+import '../../helpers/settings_sections.dart';
+import '../../helpers/workspace_settings_groups.dart';
 
 /// #1563 — the new-member defaults are read separately from the workspace
 /// row, so the form can render — and save — before they arrive. This fake

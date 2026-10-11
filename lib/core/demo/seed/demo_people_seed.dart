@@ -105,7 +105,6 @@ void seedDemoFields(FakeWorkspaceFields fields) {
       },
       personalData: false,
       visibility: WorkspaceFieldVisibility.managers,
-      sortOrder: 0,
     ),
     WorkspaceField(
       id: 'demo-field-newsletter',
@@ -187,7 +186,6 @@ void seedDemoDocuments(FakeWorkspaceRepository workspaces) {
       id: 'demo-doc-insurance',
       workspaceId: 'ws-1',
       title: 'Insurance certificate',
-      category: 'other',
       url: 'https://example.test/atelier/insurance.pdf',
       minRole: 'admin',
     ),

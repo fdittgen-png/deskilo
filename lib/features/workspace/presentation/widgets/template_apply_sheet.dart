@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'local_setup_views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/workspace_providers.dart';
-import '../../domain/workspace_feature.dart';
 import '../../../../core/ids/request_id.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/apply_template.dart';
 import '../../domain/template_preview.dart';
 import '../../domain/template_process_view.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_template.dart';
+import '../../providers/workspace_providers.dart';
 import '../feature_names.dart';
 import '../process_names.dart';
+import 'local_setup_views.dart';
 import 'template_group_label.dart';
 
 /// #1280 S2 — flow B: apply a template to a workspace that already runs.

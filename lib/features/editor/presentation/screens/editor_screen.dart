@@ -7,13 +7,13 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/level.dart';
-import '../delete_confirm_text.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../delete_confirm_text.dart';
 
 Future<String?> _promptName(
   BuildContext context, {

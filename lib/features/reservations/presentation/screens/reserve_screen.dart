@@ -1,73 +1,74 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../../core/l10n/lexicon.dart';
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/backend/backend_settings.dart';
-import '../../application/getting_started_hint.dart';
-import '../getting_started_facts.dart';
-import '../../../workspace/domain/booking_policies.dart';
-import '../../../workspace/domain/workspace.dart';
+import '../../../../core/help/help_blocker.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/work_hours.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/day_timeline.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
-import '../reserve_seat_actions.dart';
-import '../space_subjects.dart';
-import '../widgets/getting_started_card.dart';
-import '../widgets/reserve_canvas.dart';
-import '../widgets/reserve_view_menu.dart';
-import '../widgets/reserve_hub_layout.dart';
-import '../widgets/list_space_tap.dart';
-import '../widgets/seat_list_view.dart';
-import '../widgets/stale_availability_banner.dart';
 import '../../../plan/providers/default_level_controller.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
-import '../../../workspace/domain/booking_granularity.dart';
-import '../../../workspace/domain/member.dart';
-import '../../domain/week_tap_window.dart';
-import '../../../workspace/domain/workspace_availability.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/default_booking_period.dart';
-import '../../domain/reservation.dart';
-import '../../providers/default_period_controller.dart';
-import '../../providers/reservation_providers.dart';
-import '../../domain/space_code.dart';
-import '../widgets/booking_controls.dart';
-import '../widgets/booking_window_summary.dart';
-import '../widgets/booking_sheet.dart';
-import '../widgets/space_scan.dart';
-import '../widgets/reservation_detail_sheet.dart';
-import '../widgets/month_grid.dart';
-import '../widgets/seat_legend.dart';
-import '../widgets/week_grid.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/help/help_blocker.dart';
-import '../booking_gate_scope.dart';
-import '../../../../core/time/work_hours.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../workspace/domain/next_open_day.dart';
-import '../../providers/browsed_level.dart';
 import '../../../task_recorder/application/booking_observation.dart'
     show dateRelation, dayValues, periodOf, periodValues, resourceValues;
 import '../../../task_recorder/domain/action_registry.dart'
     show RecorderActions;
 import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/booking_policies.dart';
+import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/next_open_day.dart';
+import '../../../workspace/domain/workspace.dart';
+import '../../../workspace/domain/workspace_availability.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/getting_started_hint.dart';
+import '../../domain/default_booking_period.dart';
+import '../../domain/reservation.dart';
+import '../../domain/space_code.dart';
+import '../../domain/week_tap_window.dart';
+import '../../providers/browsed_level.dart';
+import '../../providers/default_period_controller.dart';
+import '../../providers/reservation_providers.dart';
+import '../booking_gate_scope.dart';
+import '../getting_started_facts.dart';
+import '../reserve_seat_actions.dart';
+import '../space_subjects.dart';
+import '../widgets/booking_controls.dart';
+import '../widgets/booking_sheet.dart';
+import '../widgets/booking_window_summary.dart';
+import '../widgets/getting_started_card.dart';
+import '../widgets/list_space_tap.dart';
+import '../widgets/month_grid.dart';
 import '../widgets/pending_booking_banner.dart';
+import '../widgets/reservation_detail_sheet.dart';
+import '../widgets/reserve_canvas.dart';
+import '../widgets/reserve_hub_layout.dart';
+import '../widgets/reserve_view_menu.dart';
+import '../widgets/seat_legend.dart';
+import '../widgets/seat_list_view.dart';
+import '../widgets/space_scan.dart';
+import '../widgets/stale_availability_banner.dart';
+import '../widgets/week_grid.dart';
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
@@ -191,9 +192,9 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     _today = WorkspaceTime.dateOf(now);
     _selectedDay = _today;
     // #1865 — the task recorder notes that the form was entered.
-    Future.microtask(() {
+    unawaited(Future.microtask(() {
       if (mounted) recordTaskStep(ref, RecorderActions.openReserve);
-    });
+    }));
     // A focus request may already be pending when this screen is first
     // built — the ref.listen in build only catches later ones. Post-frame
     // so applying it never mutates a provider during build.
@@ -517,7 +518,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     try {
       reservations =
           await ref.read(reservationsForDayProvider(dayKeyOf(from)).future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('focus window resolution failed: $e\n$st');
       TraceLogger.instance.error(
         'reservations',
@@ -967,7 +968,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                         final plan =
                             ref.read(floorPlanProvider(level.id)).value;
                         final window = _effectiveWindow(_granularity);
-                        showSpaceSheet(
+                        unawaited(showSpaceSheet(
                           context,
                           kind: SpaceKind.level,
                           level: level,
@@ -979,7 +980,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                           // silently degraded to "book this floor for
                           // myself".
                           members: spaceAssignmentCandidates(ref),
-                        );
+                        ));
                       },
                     )
                   : null,
@@ -1017,7 +1018,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                     recordTaskStep(ref, RecorderActions.selectResource, // #1865
                         payload: const {'view_mode': 'list', 'resource_kind': 'desk'},
                         values: resourceValues(seat.name));
-                    onSeatTap(plan, seat, reservations, window);
+                    unawaited(onSeatTap(plan, seat, reservations, window));
                   },
                   onSpaceTap: listSpaceTap(context, ref,
                       level: level, plan: plan, window: window),
@@ -1041,7 +1042,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                   recordTaskStep(ref, RecorderActions.selectResource, // #1865
                       payload: const {'view_mode': 'plan', 'resource_kind': 'desk'},
                       values: resourceValues(seat.name));
-                  onSeatTap(plan, seat, reservations, window);
+                  unawaited(onSeatTap(plan, seat, reservations, window));
                 },
               ),
             // #2011 — the floor plan could not be read: say so and offer
@@ -1051,7 +1052,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 child: InlineBanner(
                   key: const ValueKey('reserve-plan-unavailable'),
                   icon: Icons.cloud_off_outlined,
-                  severity: InlineBannerSeverity.error,
                   text: l10n?.workspaceGenericError ??
                       'Something went wrong. Please try again.',
                   actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
@@ -1187,7 +1187,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
           current: _effectiveWindow(_granularity),
           defaultEndFor: _defaultEndFor,
         );
-        bookingSheet(seat, byId.values.toList(), window);
+        unawaited(bookingSheet(seat, byId.values.toList(), window));
       },
     );
   }

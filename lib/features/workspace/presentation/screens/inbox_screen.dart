@@ -6,12 +6,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
-import '../../../events/presentation/screens/events_screen.dart';
-import '../../domain/workspace_feature.dart';
-import '../../../events/providers/attention_providers.dart';
-import '../../../directory/providers/messenger_providers.dart';
-import '../../providers/workspace_providers.dart';
 import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
+import '../../../directory/providers/messenger_providers.dart';
+import '../../../events/presentation/screens/events_screen.dart';
+import '../../../events/providers/attention_providers.dart';
+import '../../domain/workspace_feature.dart';
+import '../../providers/workspace_providers.dart';
 import '../widgets/application_requests_entry.dart';
 
 part 'inbox_screen.g.dart';

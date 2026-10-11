@@ -1,37 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/controls_feed_body.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/domain/payment_method.dart';
+import '../../../money/presentation/payment_method_labels.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../money/domain/payment_method.dart';
-import '../../../money/presentation/payment_method_labels.dart';
 import '../../domain/event_decision.dart';
 import '../../domain/notification_feed.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
-import '../../providers/event_providers.dart';
 import '../../providers/attention_providers.dart';
+import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
 import '../feed_notes.dart';
+import '../widgets/note_row.dart';
 import '../widgets/pending_decisions_section.dart';
 import '../widgets/validation_trail.dart';
-import '../widgets/note_row.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// ONE mixed date-sorted feed below (#581) — messages and workspace
@@ -95,10 +97,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     _seenThisShowing.addAll(categories);
     if (categories.contains(NotificationCategory.messages) &&
         ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.memberNotifications)) {
-      ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+      unawaited(ref.read(unreadNoteCountProvider.notifier).markAllSeen());
     }
-    if (filter.categories.isEmpty) ref.read(eventsSeenCutoffProvider.notifier).markOpened();
-    ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit);
+    if (filter.categories.isEmpty) unawaited(ref.read(eventsSeenCutoffProvider.notifier).markOpened());
+    unawaited(ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit));
   }
 
 

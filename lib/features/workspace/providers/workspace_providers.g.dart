@@ -188,7 +188,7 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'11572777c00137223a96da5357a820aeb210be14';
+String _$activeWorkspaceIdHash() => r'6408d4d527aa4efc4f14410ef274c5cfb793b2e3';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins (#322; server-first since #458, so a fresh install
@@ -263,7 +263,7 @@ final class DefaultWorkspaceIdProvider
 }
 
 String _$defaultWorkspaceIdHash() =>
-    r'67bfd6c5a540a2fc6f5049e5bbb3c864bb50c12c';
+    r'51838dc9397a98cb84c315a4d3a8f682d247644a';
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
@@ -1139,7 +1139,7 @@ final class UnreadNoteCountProvider
   UnreadNoteCount create() => UnreadNoteCount();
 }
 
-String _$unreadNoteCountHash() => r'cce3ecd7115d752d28443cfe63bd94fde8b2dfa3';
+String _$unreadNoteCountHash() => r'45e5cad597e012586f41558211327f67141b6438';
 
 /// Unread member notes (#464, reworked #539): the bell and the
 /// app-icon badge count [unreadNoteIds]. Direct notes clear when their

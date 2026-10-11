@@ -230,7 +230,7 @@ class SupabaseRealtimeSync implements RealtimeSync {
     supervisor.start();
     controller.onCancel = () {
       supervisor.dispose();
-      controller.close();
+      unawaited(controller.close());
     };
     return controller.stream;
   }

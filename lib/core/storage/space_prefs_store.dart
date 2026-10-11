@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// How the spaces of Me › Home are sorted. [byHand] is the order the person
@@ -90,8 +90,8 @@ class SpacePrefs {
       return i < 0 ? order.length : i;
     }
 
-    final indexed = [for (var i = 0; i < keys.length; i++) (i, keys[i])];
-    indexed.sort((a, b) {
+    final indexed = [for (var i = 0; i < keys.length; i++) (i, keys[i])]
+      ..sort((a, b) {
       final byOrder = rank(a.$2).compareTo(rank(b.$2));
       return byOrder != 0 ? byOrder : a.$1.compareTo(b.$1);
     });

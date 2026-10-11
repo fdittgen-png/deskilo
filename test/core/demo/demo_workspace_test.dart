@@ -6,6 +6,8 @@
 // wired to them: a screen INSIDE the Demo scope reads the fixture, a tap
 // on Reset replaces the scope, and the screen that comes back is reading
 // the canonical dataset again without anyone telling it to refresh.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
@@ -28,7 +30,7 @@ class _LevelsState extends ConsumerState<_Levels> {
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   Future<void> _load() async {

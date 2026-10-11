@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1653: one creation stays visible while pending; timeout/disposal never cancel it.
 import 'dart:async';
+
 import 'package:deskilo/core/ui/wizard_navigation.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/presentation/screens/onboarding_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../helpers/mock_providers.dart';
 
 class HeldCreation extends FakeWorkspaceRepository {

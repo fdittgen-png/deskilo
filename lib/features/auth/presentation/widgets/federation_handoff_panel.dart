@@ -268,7 +268,6 @@ class _Failure extends StatelessWidget {
           child: InlineBanner(
             key: ValueKey('federation-failure-${failure.name}'),
             icon: Icons.error_outline,
-            severity: InlineBannerSeverity.error,
             text: text,
           ),
         ),

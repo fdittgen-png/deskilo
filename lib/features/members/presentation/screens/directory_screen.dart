@@ -5,21 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../member_profile_link.dart';
-import '../widgets/member_contact_card.dart';
-import 'member_page.dart';
-import '../widgets/member_money_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
@@ -32,9 +31,10 @@ import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
+import '../member_profile_link.dart';
+import '../widgets/member_contact_card.dart';
+import '../widgets/member_money_card.dart';
+import 'member_page.dart';
 
 /// Member directory (#224, epic #222): every member sees the workspace's
 /// ACTIVE members (alphabetical) with live indicators, and a WhatsApp
@@ -113,7 +113,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
   /// "Show on plan" jump (#422 — opening the sheet directly discarded
   /// the popped target and the button silently did nothing here).
   void _openReservation(BuildContext context, Reservation reservation) {
-    showReservationDetail(context, ref, reservation);
+    unawaited(showReservationDetail(context, ref, reservation));
   }
 
   Future<void> _openLink(BuildContext context, WidgetRef ref, Uri uri) async {
@@ -121,7 +121,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     try {
       final handled = await ref.read(linkLauncherProvider)(uri);
       if (!handled) throw StateError('no handler for $uri');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('whatsapp launch failed: $e\n$st');
       TraceLogger.instance.error(
         'members',

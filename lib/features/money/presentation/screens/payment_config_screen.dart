@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../payment_provider_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
@@ -13,6 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_provider.dart';
 import '../../providers/money_providers.dart';
+import '../payment_provider_labels.dart';
 
 /// Owner-only online-payment configuration (migration 0047): enter each
 /// provider's server credentials from the app instead of the CLI. Secrets
@@ -36,7 +38,7 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
     // Post-frame: _load reads AppLocalizations (via runGuarded), which
     // needs an established inherited context.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _load();
+      if (mounted) unawaited(_load());
     });
   }
 

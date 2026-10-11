@@ -104,7 +104,6 @@ void main() {
       EventDecision(
         id: 'd1',
         eventId: 'evt-1',
-        memberId: null,
         accept: true,
         decidedBySystem: true,
         decidedAt: DateTime.utc(2026, 3, 12, 14, 5),

@@ -81,7 +81,7 @@ void main() {
       const march = BiQueryContext(
         period: BiPeriodRef.fixed(BiPeriod(BiGrain.month, 2026, 3)),
       );
-      expect(march.current(DateTime(2027, 8, 1)).wire, '2026-03');
+      expect(march.current(DateTime(2027, 8)).wire, '2026-03');
     });
 
     test('quarters and years shift across the year boundary', () {

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/event_decision.dart';
 import '../../../events/presentation/event_labels.dart';
@@ -17,7 +18,6 @@ import '../../providers/workspace_providers.dart';
 import '../reference_locale.dart';
 import 'note_record_open.dart';
 import 'ref_picker_sheet.dart';
-import '../../../../core/time/date_text.dart';
 
 /// What a record reference of one kind can point at.
 ///

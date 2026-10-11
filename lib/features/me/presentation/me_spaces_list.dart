@@ -4,7 +4,6 @@
 // (Favorites and Other are always there, the rest are mine), searchable and
 // sortable, and — in my own order — movable by holding a space for a second.
 import 'package:flutter/material.dart';
-import '../../workspace/domain/workspace.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
@@ -16,11 +15,12 @@ import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
+import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
+import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../providers/space_prefs_provider.dart';
 import 'me_space_card.dart';
-import '../../workspace/presentation/widgets/brand_swatch.dart';
 import 'me_workspace_row.dart';
 import 'space_row_controls.dart';
 
@@ -320,9 +320,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       detail: {
         for (final space in group)
           if (_memberOf(space) case final member?)
-            member.status == MemberStatus.pending
-                ? (l10n?.meSpacePending ?? 'Waiting for approval')
-                : memberRoleLabel(l10n, member),
+            if (member.status == MemberStatus.pending) (l10n?.meSpacePending ?? 'Waiting for approval') else memberRoleLabel(l10n, member),
       }.join(' · '),
       actions: [
         // A space without a production side keeps development at the right.

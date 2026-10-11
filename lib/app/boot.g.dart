@@ -53,4 +53,4 @@ final class BootReadyProvider
   }
 }
 
-String _$bootReadyHash() => r'677e46ba47260a262f6b7591eab42b3a7e84bc26';
+String _$bootReadyHash() => r'64243e4e927292795ab3a8c107897df11bf7d712';

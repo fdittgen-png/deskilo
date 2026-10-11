@@ -131,9 +131,10 @@ Future<int> run(List<String> argv) async {
           return 2;
         }
         await builder.configureAuth(ref);
-        stdout.writeln('site URL:      ${InstanceAuthConfig.siteUrl}');
-        stdout.writeln('redirect URLs: ${InstanceAuthConfig.redirectAllowList}');
-        stdout.writeln('sign-in settings applied to $ref');
+        stdout
+          ..writeln('site URL:      ${InstanceAuthConfig.siteUrl}')
+          ..writeln('redirect URLs: ${InstanceAuthConfig.redirectAllowList}')
+          ..writeln('sign-in settings applied to $ref');
         return 0;
       case 'doctor':
         final ref = args.option('ref');
@@ -210,9 +211,10 @@ Future<int> _install(InstanceBuilder builder, String ref, int? skip) async {
   });
   await builder.configureAuth(ref);
   final endpoint = await builder.endpointOf(ref);
-  stdout.writeln('ready: ${endpoint.url}');
-  stdout.writeln('publishable key: ${endpoint.key}');
-  stdout.writeln('deskilo://server?url=${Uri.encodeQueryComponent(endpoint.url)}&key=${Uri.encodeQueryComponent(endpoint.key)}');
+  stdout
+    ..writeln('ready: ${endpoint.url}')
+    ..writeln('publishable key: ${endpoint.key}')
+    ..writeln('deskilo://server?url=${Uri.encodeQueryComponent(endpoint.url)}&key=${Uri.encodeQueryComponent(endpoint.key)}');
   return 0;
 }
 

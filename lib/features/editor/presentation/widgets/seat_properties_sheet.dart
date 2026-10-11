@@ -1,26 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/floor_plan.dart';
+import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../plan/domain/floor_plan_rules.dart';
 import 'placement_problem.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 /// One seat's properties (#1216, extracted from the level canvas).
 ///
@@ -156,7 +158,7 @@ Future<void> showSeatPropertiesSheet(
                     key: const ValueKey('seat-add-accessories'),
                     onPressed: () {
                       Navigator.of(context).pop(false);
-                      context.push('/accessories');
+                      unawaited(context.push('/accessories'));
                     },
                     icon: const Icon(Icons.add, size: 18),
                     label: Text(
@@ -205,7 +207,7 @@ Future<void> showSeatPropertiesSheet(
                             final ok = await nfcReader.startRead(
                               onUid: (uid) {
                                 nfcUid.text = uid;
-                                nfcReader.stop();
+                                unawaited(nfcReader.stop());
                               },
                             );
                             if (!ok && context.mounted) {

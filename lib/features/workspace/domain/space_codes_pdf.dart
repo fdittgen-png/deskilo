@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'dart:typed_data';
 
+import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import '../../money/domain/report_flow_page.dart';
 
-import 'badge_pdf.dart' show badgeCardWidth, badgeCardHeight;
+import '../../money/domain/report_flow_page.dart';
+import 'badge_pdf.dart' show badgeCardHeight, badgeCardWidth;
 
 /// One printable space card: the QR payload plus its labels.
 /// [contextLines] are the owner-selected information lines (#584) —
@@ -144,7 +144,6 @@ Future<Uint8List> buildSpaceCodesPdf({
         ),
         padding: const pw.EdgeInsets.all(_cardPadding),
         child: pw.Row(
-          crossAxisAlignment: pw.CrossAxisAlignment.center,
           children: [
             pw.BarcodeWidget(
               barcode: pw.Barcode.qrCode(),

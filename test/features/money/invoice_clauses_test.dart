@@ -67,7 +67,7 @@ Invoice _invoice({
   workspaceId: 'ws-1',
   memberId: 'm1',
   number: number,
-  issuedAt: DateTime(2026, 7, 1),
+  issuedAt: DateTime(2026, 7),
   title: '2026-07',
   lines: const [InvoiceLine(label: 'Desk', amountCents: 12000)],
   totalCents: 12000,
@@ -361,7 +361,7 @@ void main() {
       for (final (level, kind) in [(1, 'r1'), (2, 'r2'), (3, 'r3')]) {
         final data = reminderReportData(
           _en,
-          ReminderFacts(now: DateTime(2026, 8, 1), workspace: _workspace('FR')),
+          ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
           invoice,
           level: level,
         );
@@ -387,7 +387,7 @@ void main() {
       );
       final data = reminderReportData(
         _en,
-        ReminderFacts(now: DateTime(2026, 8, 1), workspace: _workspace('FR')),
+        ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
         invoice,
         level: 2,
       );

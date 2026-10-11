@@ -125,7 +125,7 @@ void main() {
     testWidgets('memberships unavailable: the chooser with a retry, never '
         'onboarding', (tester) async {
       final workspace = FakeWorkspaceRepository.withWorkspace()
-        ..fetchFailure = StateError('server down');
+        ..fetchFailure = Exception('server down');
       final router = await pumpApp(tester, workspace: workspace);
       expect(router.state.uri.toString(), '/profiles');
       expect(find.byKey(const ValueKey('profiles-unavailable')),

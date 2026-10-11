@@ -119,7 +119,7 @@ void _pairing() {
         WorkspaceOverview(
             id: 'p', name: 'zemare', environment: 'prod', pairId: 'pair-1'),
         WorkspaceOverview(
-            id: 'd', name: 'zemare', environment: 'dev', pairId: 'pair-1'),
+            id: 'd', name: 'zemare', pairId: 'pair-1'),
       ]);
       expect(groups, hasLength(1), reason: 'one space, not two');
       expect(groups.single.map((w) => w.id), ['d', 'p'],
@@ -137,9 +137,9 @@ void _pairing() {
     test('two different pairs do not merge', () {
       final groups = groupedOverviews(const [
         WorkspaceOverview(
-            id: 'a1', name: 'A', environment: 'dev', pairId: 'pair-a'),
+            id: 'a1', name: 'A', pairId: 'pair-a'),
         WorkspaceOverview(
-            id: 'b1', name: 'B', environment: 'dev', pairId: 'pair-b'),
+            id: 'b1', name: 'B', pairId: 'pair-b'),
         WorkspaceOverview(
             id: 'a2', name: 'A', environment: 'prod', pairId: 'pair-a'),
       ]);
@@ -153,7 +153,7 @@ void _pairing() {
       // side that is there.
       final groups = groupedOverviews(const [
         WorkspaceOverview(
-            id: 'd', name: 'zemare', environment: 'dev', pairId: 'pair-1'),
+            id: 'd', name: 'zemare', pairId: 'pair-1'),
       ]);
       expect(groups, hasLength(1));
       expect(groups.single, hasLength(1));

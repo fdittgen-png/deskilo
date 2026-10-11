@@ -76,9 +76,7 @@ String render(
     ..writeln()
     ..writeln('`test/lint/layering_test.dart` holds each feature\'s number '
         'as a ceiling that may only fall.')
-    ..writeln();
-
-  b
+    ..writeln()
     ..writeln('## Cross-feature imports, by direction')
     ..writeln()
     ..writeln('The direction is the dependency: `a -> b` means files in '
@@ -100,9 +98,8 @@ String render(
   for (final c in cycles) {
     b.writeln('- `$c`');
   }
-  b.writeln();
-
   b
+    ..writeln()
     ..writeln('## Hand-written files over 600 lines')
     ..writeln()
     ..writeln('The budget line of `test/lint/file_length_test.dart`. A '

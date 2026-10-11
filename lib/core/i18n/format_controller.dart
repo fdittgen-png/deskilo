@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:intl/intl.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/profile/providers/personal_preferences_providers.dart';
 import '../../features/profile/providers/profile_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -11,7 +12,6 @@ import '../locale/locale_controller.dart';
 import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
-import '../../features/profile/providers/personal_preferences_providers.dart';
 
 part 'format_controller.g.dart';
 

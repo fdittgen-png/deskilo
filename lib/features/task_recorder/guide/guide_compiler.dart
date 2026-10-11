@@ -21,8 +21,8 @@
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
-import 'task_guide.dart';
 import 'guide_destination.dart';
+import 'task_guide.dart';
 
 /// The outcomes of [action] that complete a guided command step.
 Set<String> successOutcomes(

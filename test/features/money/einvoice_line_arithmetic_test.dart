@@ -10,11 +10,11 @@
 // A strict EN 16931 validator rejects that (BR-CO-… line arithmetic),
 // and since #568 the same XML also goes straight to the customer, so a
 // malformed document reaches two audiences.
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
-import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_ubl.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
@@ -81,7 +81,6 @@ void main() {
       invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
-      iban: '',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
     ));
     final line = doc.findAllElements('cac:InvoiceLine').first;
@@ -101,7 +100,6 @@ void main() {
       invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
-      iban: '',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
     ));
     final line = doc

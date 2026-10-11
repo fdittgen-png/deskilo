@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
-import '../application/getting_started_hint.dart';
 import '../../workspace/presentation/widgets/workspace_readiness_card.dart';
+import '../application/getting_started_hint.dart';
 
 /// Localized wording for the existing hint model; it creates no business facts.
 abstract final class GettingStartedCopy {

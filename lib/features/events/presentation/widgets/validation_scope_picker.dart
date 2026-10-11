@@ -22,6 +22,7 @@ class ValidationScopePicker extends StatelessWidget {
   final List<({String id, String name})> people;
   final Set<String> selected;
   final ValueChanged<String> onScope;
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(String id, bool selected) onToggle;
 
   @override

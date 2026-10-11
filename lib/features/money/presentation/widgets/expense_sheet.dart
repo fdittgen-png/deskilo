@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -11,7 +12,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/format/cents.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
@@ -110,7 +110,7 @@ Future<void> showExpenseSheet(
               .read(expensesProvider)
               .submit(workspace.id, draft());
           return reason(outcome);
-        } catch (e, st) {
+        } on Object catch (e, st) {
           TraceLogger.instance.warn(
             'money',
             'submit expense failed',
@@ -179,7 +179,6 @@ Future<void> showExpenseSheet(
               ),
               items: [
                 DropdownMenuItem<ServiceItem?>(
-                  value: null,
                   child: Text(l10n?.expenseSupplyNewItem ?? 'New item'),
                 ),
                 for (final item in existing)

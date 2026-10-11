@@ -11,14 +11,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../core/time/clock.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/report_data.dart';
 import '../domain/usage_record.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'report_strings_l10n.dart';
-import '../domain/report_data.dart';
 
 Map<String, Object?> usageReportData(
   BuildContext context,

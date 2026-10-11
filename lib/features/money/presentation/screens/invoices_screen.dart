@@ -1,33 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../my_finances_route.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_proforma.dart';
 import '../invoice_status.dart';
-import '../widgets/recapitulative_notice.dart';
+import '../my_finances_route.dart';
 import '../widgets/dunning_rules_dialog.dart';
-import '../widgets/settlement_sheet.dart';
 import '../widgets/expense_repartition_sheet.dart';
-import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_detail_sheet.dart';
 import '../widgets/invoice_form_sheet.dart';
-import '../widgets/invoicing_dashboard.dart';
 import '../widgets/invoice_journey_view.dart';
 import '../widgets/invoice_process_sheet.dart';
 import '../widgets/invoice_stage_strip.dart';
-import '../../../../core/ui/app_tab_bar.dart';
+import '../widgets/invoice_template_sheet.dart';
+import '../widgets/invoicing_dashboard.dart';
+import '../widgets/recapitulative_notice.dart';
+import '../widgets/settlement_sheet.dart';
 
 /// The invoicing HUB (field request: "the user sees what to invoice, what
 /// to remind, what has been invoiced") — three tabs over one archive:

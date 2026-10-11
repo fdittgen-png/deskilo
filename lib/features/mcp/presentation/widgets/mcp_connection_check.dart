@@ -77,7 +77,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
     ref.invalidate(myMcpUsageProvider);
     try {
       return await ref.read(myMcpUsageProvider.future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // A failed read is one missed poll, not the end of the test.
       TraceLogger.instance.warn(
         'mcp',
@@ -166,7 +166,6 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
           _Phase.timedOut => InlineBanner(
             key: const ValueKey('mcp-connect-test-timeout'),
             icon: Icons.help_outline,
-            severity: InlineBannerSeverity.error,
             text:
                 l10n?.mcpConnectTestTimeout ??
                 'No call arrived yet. Check that the connector is added, that '

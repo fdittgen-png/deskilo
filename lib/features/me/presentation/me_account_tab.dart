@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/motion/motion.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/motion/motion.dart';
 import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';

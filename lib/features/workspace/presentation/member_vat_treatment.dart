@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/help/help_anchors.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
-import '../domain/member.dart';
-import '../providers/workspace_providers.dart';
 import '../../../core/vat/place_of_supply.dart';
 import '../../../core/vat/supply_class.dart';
 import '../../../core/vat/vat_treatment.dart';
+import '../../../l10n/app_localizations.dart';
+import '../domain/member.dart';
+import '../providers/workspace_providers.dart';
 
 /// #985 — the counterparty dimension of VAT: who [member] is for tax.
 String vatTreatmentName(AppLocalizations? l10n, VatTreatment t) => switch (t) {

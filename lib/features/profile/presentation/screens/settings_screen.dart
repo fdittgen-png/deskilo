@@ -1,55 +1,57 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../../core/l10n/lexicon.dart';
+import 'dart:async';
+
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/route_classes.dart';
 import '../../../../app/shell/shell_drawer.dart' show navigationDefaultProvider;
+import '../../../../core/country/country_catalog.dart';
+import '../../../../core/files/file_picker.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/help/help_hint_providers.dart';
+import '../../../../core/i18n/regional_formats_section.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/privacy/recording_banner.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
+import '../../../auth/presentation/widgets/badge_pin_tile.dart';
+import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
+import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
-import '../../../auth/presentation/widgets/badge_pin_tile.dart';
+import '../../../workspace/presentation/country_names.dart';
+import '../../../workspace/presentation/widgets/instance_owner_tile.dart';
 import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/profile.dart';
-import '../../providers/profile_providers.dart';
-import '../widgets/settings_advanced_section.dart';
-import '../widgets/settings_about_section.dart';
-import '../widgets/settings_workspace_sections.dart';
-import '../widgets/settings_task_section.dart';
-import '../../../../l10n/app_localizations_en.dart';
-import 'package:file_selector/file_selector.dart';
-import '../../../../app/route_classes.dart';
-import '../../../../core/files/file_picker.dart';
-import '../../../../core/help/help_hint_providers.dart';
-import '../../../../core/i18n/regional_formats_section.dart';
-import '../../../../core/navigation/navigation_style.dart';
-import '../../../../core/privacy/recording_banner.dart';
-import '../../../../core/country/country_catalog.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
-import '../../../workspace/presentation/widgets/instance_owner_tile.dart';
-import '../../../members/providers/directory_providers.dart';
-import '../../../workspace/presentation/country_names.dart';
 import '../../domain/personal_preferences.dart';
+import '../../domain/profile.dart';
 import '../../providers/personal_appearance_providers.dart';
 import '../../providers/personal_preferences_providers.dart';
+import '../../providers/profile_providers.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/preference_scope_controls.dart';
+import '../widgets/settings_about_section.dart';
+import '../widgets/settings_advanced_section.dart';
+import '../widgets/settings_task_section.dart';
+import '../widgets/settings_workspace_sections.dart';
 import '../widgets/whatsapp_dialog.dart';
-import '../../../../core/ui/app_tab_bar.dart';
 
-part '../widgets/account_settings_tiles.dart';
 part '../widgets/account_settings_dialogs.dart';
+part '../widgets/account_settings_tiles.dart';
 
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
@@ -98,7 +100,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (confirmed != true || !context.mounted) return;
     try {
       await ref.read(workspaceRepositoryProvider).unsetMyKiosk(workspaceId);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('kiosk revert failed: $e\n$st');
       TraceLogger.instance.error(
         'workspace',
@@ -308,9 +310,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           'default-period-${period?.wire ?? 'none'}',
                         ),
                         onPressed: () {
-                          ref
+                          unawaited(ref
                               .read(defaultPeriodProvider.notifier)
-                              .select(period);
+                              .select(period));
                           Navigator.of(dialogContext).pop();
                         },
                         child: Text(label),
@@ -410,7 +412,7 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
       if (!mounted) return;
       Navigator.of(context).pop();
       AppSnack.success(context, l10n?.profileStatusSaved ?? 'Status saved');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('status save failed: $e\n$st');
       TraceLogger.instance.error(
         'profile',

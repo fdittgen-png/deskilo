@@ -6,6 +6,8 @@
 // sees exactly which dates would become closure days, and confirms. The
 // server decides the dates and the refusals; this sheet only renders the
 // answer and sends it back with `apply: true`.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +88,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
       );
       if (!mounted) return;
       setState(() => _preview = preview);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('preview public holidays failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'preview public holidays failed',
           error: e, stackTrace: st);
@@ -121,7 +123,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
             '${result.created} closure days created',
       );
       Navigator.of(context).pop();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('apply public holidays failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'apply public holidays failed',
           error: e, stackTrace: st);
@@ -140,7 +142,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
       _year += by;
       _preview = null;
     });
-    _load();
+    unawaited(_load());
   }
 
   @override

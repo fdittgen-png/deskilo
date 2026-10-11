@@ -26,7 +26,7 @@ class SupportEvidence {
     try {
       value = jsonDecode(source);
       // ignore: unused_catch_stack
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: malformed evidence is unavailable; source/errors are private.
       return null;
     }

@@ -8,24 +8,22 @@
 // the navigator, by route (app/shell/layer_chrome.dart), so every page
 // pushed from here wears it too.
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/shell/shell_drawer.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../workspace/application/pending_invitation.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../app/shell/shell_drawer.dart';
-import '../../profile/presentation/widgets/personal_avatar.dart';
-
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../directory/providers/messenger_providers.dart';
+import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
+import '../../workspace/application/pending_invitation.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import 'me_account_tab.dart';
@@ -63,7 +61,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   void initState() {
     super.initState();
-    _offerKeptInvitation();
+    unawaited(_offerKeptInvitation());
     _badgeRefresh = Timer.periodic(const Duration(seconds: 30), (_) {
       if (mounted && !_visited.contains(MeTab.messages)) ref.invalidate(unifiedInboxProvider);
     });
@@ -85,10 +83,11 @@ class _MeShellState extends ConsumerState<MeShell> {
       final text = await invitations.offeredOn(active);
       if (!mounted || text == null || _tab != MeTab.home) return;
       if (GoRouter.of(context).state.uri.path != '/me') return;
-      arrived.markOfferedOn(active.url);
-      arrived.hold(text);
+      arrived
+        ..markOfferedOn(active.url)
+        ..hold(text);
       context.go('/onboarding?join=1');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'workspace',
         'kept invitation unreadable',
@@ -167,7 +166,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                           title: Text(l10n?.taskWizardTitle ?? 'Task wizard'),
                           onTap: () {
                             if (!permanent) Navigator.of(context).pop();
-                            context.push(taskWizardRoute);
+                            unawaited(context.push(taskWizardRoute));
                           },
                         ),
                       // Me is the profile button at the top right already.

@@ -2,7 +2,6 @@
 //
 // #916 — importing a workspace XML previews first, applies configuration
 // before the plan, and maps each refusal to its own message.
-import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
@@ -27,6 +26,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 import '../../helpers/workspace_settings_groups.dart';
 
 /// Import boundary fake (fakes over mocks): records calls, optionally
@@ -35,7 +35,7 @@ class RecordingImportRepository implements WorkspaceImportRepository {
   final calls = <(String workspaceId, WorkspaceXmlData data)>[];
 
   /// When set, [importFloorPlan] throws it instead of recording.
-  Object? error;
+  Exception? error;
 
   @override
   Future<void> importFloorPlan(String workspaceId, WorkspaceXmlData data) async {

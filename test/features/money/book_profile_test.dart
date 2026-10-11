@@ -28,7 +28,7 @@ BookProfile profile({
   fiscalYearStartMonth: month,
   fiscalYearStartDay: day,
   basis: basis,
-  effectiveFrom: from ?? DateTime.utc(2026, 1, 1),
+  effectiveFrom: from ?? DateTime.utc(2026),
   revision: 1,
 );
 
@@ -74,66 +74,65 @@ void main() {
   group('fiscal year', () {
     test('a calendar fiscal year', () {
       final y = fiscalYearOf(profile(), DateTime(2026, 9, 30));
-      expect((y.start, y.end), (DateTime(2026, 1, 1), DateTime(2026, 12, 31)));
+      expect((y.start, y.end), (DateTime(2026), DateTime(2026, 12, 31)));
       expect(y.label, '2026');
     });
 
     test('a year from 1 July spans two calendar years', () {
-      final p = profile(month: 7, day: 1);
+      final p = profile(month: 7);
       final before = fiscalYearOf(p, DateTime(2026, 6, 30));
-      final after = fiscalYearOf(p, DateTime(2026, 7, 1));
+      final after = fiscalYearOf(p, DateTime(2026, 7));
       expect(
         (before.start, before.end),
-        (DateTime(2025, 7, 1), DateTime(2026, 6, 30)),
+        (DateTime(2025, 7), DateTime(2026, 6, 30)),
       );
       expect(
         (after.start, after.end),
-        (DateTime(2026, 7, 1), DateTime(2027, 6, 30)),
+        (DateTime(2026, 7), DateTime(2027, 6, 30)),
       );
       expect(after.label, '2026/27');
     });
 
     test('the day is a calendar date: 23:30 on 30 June is still June', () {
-      final p = profile(month: 7, day: 1);
+      final p = profile(month: 7);
       expect(
         fiscalYearOf(p, DateTime(2026, 6, 30, 23, 30)).start,
-        DateTime(2025, 7, 1),
+        DateTime(2025, 7),
       );
     });
 
     test('a year ending in a leap February keeps the 29th', () {
-      final y = fiscalYearOf(profile(month: 3, day: 1), DateTime(2027, 6, 1));
+      final y = fiscalYearOf(profile(month: 3), DateTime(2027, 6));
       expect(y.end, DateTime(2028, 2, 29));
     });
   });
 
   group('which profile is in force', () {
     final versions = [
-      profile(id: 'a', issuer: 'site-fr', from: DateTime.utc(2025, 1, 1)),
+      profile(id: 'a', from: DateTime.utc(2025)),
       profile(
         id: 'b',
-        issuer: 'site-fr',
         authority: BookAuthority.externalBook,
         external: 'Pennylane',
-        from: DateTime.utc(2026, 7, 1),
+        from: DateTime.utc(2026, 7),
       ),
       profile(
         id: 'c',
         issuer: 'site-ch',
         currency: 'CHF',
-        from: DateTime.utc(2025, 1, 1),
+        from: DateTime.utc(2025),
       ),
     ];
 
     test('the latest version effective by the day, for that issuer only', () {
       expect(profileOn(versions, 'site-fr', DateTime(2026, 6, 30))?.id, 'a');
-      expect(profileOn(versions, 'site-fr', DateTime(2026, 7, 1))?.id, 'b');
-      expect(profileOn(versions, 'site-ch', DateTime(2026, 7, 1))?.id, 'c');
+      expect(profileOn(versions, 'site-fr', DateTime(2026, 7))?.id, 'b');
+      expect(profileOn(versions, 'site-ch', DateTime(2026, 7))?.id, 'c');
     });
 
     test('before any version, and for an unknown issuer, there is none', () {
       expect(profileOn(versions, 'site-fr', DateTime(2024, 12, 31)), isNull);
-      expect(profileOn(versions, 'site-de', DateTime(2026, 1, 1)), isNull);
+      expect(profileOn(versions, 'site-de', DateTime(2026)), isNull);
     });
   });
 
