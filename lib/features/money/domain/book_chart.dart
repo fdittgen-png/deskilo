@@ -14,6 +14,7 @@
 // bank are mapped for its first day. The server enforces the same rules
 // (0338).
 
+import '../../../core/data/json_reader.dart';
 import 'coa_preview.dart';
 import 'vat_regime.dart';
 
@@ -66,17 +67,21 @@ class BookAccount {
     required this.revision,
   });
 
-  factory BookAccount.fromJson(Map<String, Object?> json) => BookAccount(
-    id: '${json['id']}',
-    workspaceId: '${json['workspace_id']}',
-    issuerSiteId: '${json['issuer_site_id']}',
-    code: '${json['code']}',
-    name: '${json['name']}',
-    type: AccountType.values.byName('${json['account_type']}'),
-    isPosting: json['is_posting'] == true,
-    origin: AccountOrigin.values.byName('${json['origin']}'),
-    revision: json['revision']! as int,
-  );
+  /// #2387 — read through [JsonReader].
+  factory BookAccount.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'book_accounts');
+    return BookAccount(
+      id: r.stringOr('id'),
+      workspaceId: r.string('workspace_id'),
+      issuerSiteId: r.string('issuer_site_id'),
+      code: r.string('code'),
+      name: r.string('name'),
+      type: AccountType.values.byName(r.string('account_type')),
+      isPosting: r.boolOr('is_posting', false),
+      origin: AccountOrigin.values.byName(r.string('origin')),
+      revision: r.integer('revision'),
+    );
+  }
 
   /// Empty for an account not saved yet.
   final String id;
@@ -117,15 +122,19 @@ class BookMapping {
     required this.revision,
   });
 
-  factory BookMapping.fromJson(Map<String, Object?> json) => BookMapping(
-    id: '${json['id']}',
-    workspaceId: '${json['workspace_id']}',
-    issuerSiteId: '${json['issuer_site_id']}',
-    role: BookRole.fromWire(json['role'] as String?),
-    accountId: '${json['account_id']}',
-    effectiveFrom: DateTime.parse('${json['effective_from']}'),
-    revision: json['revision']! as int,
-  );
+  /// #2387 — read through [JsonReader].
+  factory BookMapping.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'book_mappings');
+    return BookMapping(
+      id: r.stringOr('id'),
+      workspaceId: r.string('workspace_id'),
+      issuerSiteId: r.string('issuer_site_id'),
+      role: BookRole.fromWire(r.stringOrNull('role')),
+      accountId: r.string('account_id'),
+      effectiveFrom: r.dateTime('effective_from'),
+      revision: r.integer('revision'),
+    );
+  }
 
   final String id;
   final String workspaceId;

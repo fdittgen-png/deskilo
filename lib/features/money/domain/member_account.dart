@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 
 /// One open invoice as the account view lists it (#512): what the
 /// document asks, what validated instalments covered, what remains.
@@ -25,23 +26,27 @@ class MemberAccount {
     required this.netPositionCents,
   });
 
-  factory MemberAccount.fromJson(Map<String, dynamic> json) => MemberAccount(
-        creditCents: json['credit_cents'] as int? ?? 0,
-        openInvoices: [
-          for (final row in (json['open_invoices'] as List? ?? const []))
-            (
-              invoiceId: row['invoice_id'] as String,
-              number: row['number'] as String,
-              period: row['period'] as String? ?? '',
-              totalCents: row['total_cents'] as int,
-              paidCents: row['paid_cents'] as int? ?? 0,
-              remainingCents: row['remaining_cents'] as int,
-            ),
-        ],
-        openTotalCents: json['open_total_cents'] as int? ?? 0,
-        refundsDueCents: json['refunds_due_cents'] as int? ?? 0,
-        netPositionCents: json['net_position_cents'] as int? ?? 0,
-      );
+  /// #2387 — read through [JsonReader]; the context names the RPC.
+  factory MemberAccount.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'member_account');
+    return MemberAccount(
+      creditCents: r.intOrNull('credit_cents') ?? 0,
+      openInvoices: r.objects(
+        'open_invoices',
+        (row) => (
+          invoiceId: row.string('invoice_id'),
+          number: row.string('number'),
+          period: row.stringOr('period'),
+          totalCents: row.integer('total_cents'),
+          paidCents: row.intOrNull('paid_cents') ?? 0,
+          remainingCents: row.integer('remaining_cents'),
+        ),
+      ),
+      openTotalCents: r.intOrNull('open_total_cents') ?? 0,
+      refundsDueCents: r.intOrNull('refunds_due_cents') ?? 0,
+      netPositionCents: r.intOrNull('net_position_cents') ?? 0,
+    );
+  }
 
   /// Unconsumed, un-baked ledger credits — money the member has "on
   /// account", spendable on any outstanding invoice (imputation).

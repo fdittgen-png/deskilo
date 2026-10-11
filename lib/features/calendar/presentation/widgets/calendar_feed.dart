@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -214,15 +215,15 @@ class CalendarFeed extends ConsumerWidget {
 
   String _header(
     AppLocalizations? l10n,
-    dynamic format,
+    AppFormat format,
     DateTime day,
   ) {
     final noon = WorkspaceTime.at(day.year, day.month, day.day, 12);
     // #1175 — ONE formatter. `AppFormat.shortDate` is `DateFormat.MMMEd`,
     // and the E in MMMEd is already the weekday, so prefixing `EEEE` made
     // every header read "Sunday Sun 13 Sept" — in all five languages.
-    final date = format.shortDate(noon) as String;
-    if (!relative || today == null) return format.shortDate(noon) as String;
+    final date = format.shortDate(noon);
+    if (!relative || today == null) return date;
     return switch (relativeDayOf(day, today!)) {
       RelativeDay.today => '${l10n?.calendarToday ?? 'Today'} · $date',
       RelativeDay.tomorrow => '${l10n?.calendarTomorrow ?? 'Tomorrow'} · $date',

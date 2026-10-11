@@ -240,6 +240,18 @@ release; it says nothing about a customer's hooks, clients, audience,
 mail delivery or IdP. Only `mcp-inspect` against that target does, and
 only `mcp-pilot` there proves one real read-only call.
 
+**The endpoint is stateless (#2393).** Every MCP request is one POST and
+one JSON answer: no `Mcp-Session-Id`, no stream held open, no request
+from the server to the client. That is why a sensitive write stops at
+`requires_confirmation` and is confirmed in the DesKilo app (native
+confirmation) instead of an elicitation round-trip. Arguments are checked
+against the contract's schema before the database (`error.fields`); a
+bearer is verified against the project's published keys before Auth is
+asked; a rate limit is also an HTTP 429 with `Retry-After`. The token is
+not yet bound to the resource by audience (RFC 8707): until the
+authorization server emits it, the installation id and the epoch header
+are the binding.
+
 ## Disaster runbook
 
 **"Nobody can sign in."** Run the doctor. If it says the Site URL is
