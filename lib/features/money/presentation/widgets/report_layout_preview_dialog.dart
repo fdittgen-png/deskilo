@@ -34,7 +34,7 @@ Future<void> showLayoutQuickPreview(
   } on LayoutException catch (e, st) {
     // trace-exempt: an unreadable layout is shown to the designer with
     // its element path — the same words `check` prints — not traced.
-    assert(st.toString().isNotEmpty);
+    assert(st.toString().isNotEmpty, 'a caught error has a stack');
     if (!context.mounted) return;
     await showDialog<void>(
       context: context,

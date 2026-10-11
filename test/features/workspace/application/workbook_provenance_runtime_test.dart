@@ -13,7 +13,7 @@ import 'package:deskilo/features/workspace/data/supabase_workbook_origin_reposit
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 
 class HeldNativeRead extends SupabaseWorkspaceRepository {
-  HeldNativeRead(super.client);
+  HeldNativeRead(super._client);
   final read = Completer<void>();
   final release = Completer<void>();
   @override

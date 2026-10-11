@@ -33,16 +33,16 @@ typedef ScreenPump = Future<void> Function(WidgetTester tester);
 
 /// Adding a screen is a line, the same as in `test/a11y/`.
 final Map<String, ScreenPump> _screens = {
-  'Reserve hub': (t) => pumpHub(t),
-  'Money faces': (t) => pumpFaces(t),
-  'Invoices': (t) => pumpInvoices(t),
-  'Alerts': (t) => pumpEvents(t),
-  'Validation rules': (t) => pumpValidationSettings(t),
-  'Features': (t) => pumpFeatures(t),
+  'Reserve hub': pumpHub,
+  'Money faces': pumpFaces,
+  'Invoices': pumpInvoices,
+  'Alerts': pumpEvents,
+  'Validation rules': pumpValidationSettings,
+  'Features': pumpFeatures,
   // #1327 — the view the screen opens on.
   'Process overview': (t) => pumpFeatures(t, switches: false),
-  'Accessories': (t) => pumpAccessories(t),
-  'Level canvas': (t) => pumpCanvas(t),
+  'Accessories': pumpAccessories,
+  'Level canvas': pumpCanvas,
 };
 
 /// German first: the longest of the five, and the one a developer

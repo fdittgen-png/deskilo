@@ -82,7 +82,7 @@ Future<ReportLayoutFile?> importReportLayout(
   } on ReportDesignException catch (e, st) {
     // trace-exempt: a refused file is the user's to see, not a fault to
     // trace — the reason is shown in the snack, in their language.
-    assert(st.toString().isNotEmpty);
+    assert(st.toString().isNotEmpty, 'a caught error has a stack');
     if (context.mounted) {
       AppSnack.error(context, reportDesignErrorText(l10n, e.error));
     }

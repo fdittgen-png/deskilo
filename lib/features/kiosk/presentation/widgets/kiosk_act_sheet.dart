@@ -252,7 +252,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
       _cameraMode = false;
     });
     final started =
-        await widget.reader.startRead(onUid: (uid) => _submit(uid));
+        await widget.reader.startRead(onUid: _submit);
     if (!mounted || started) return;
     setState(() {
       _nfc = _NfcUiState.failed;

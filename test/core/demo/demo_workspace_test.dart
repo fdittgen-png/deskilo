@@ -61,7 +61,7 @@ void main() {
     await tester.pumpAndSettle();
     final canonical = root.read(demoSessionControllerProvider).fixture;
     expect(find.textContaining('levels: '), findsOneWidget);
-    final before = (tester.widget<Text>(find.textContaining('levels: ')).data)!;
+    final before = tester.widget<Text>(find.textContaining('levels: ')).data!;
 
     // A visitor changes something.
     await canonical.floorPlan.createLevel('ws-1', 'Mezzanine', 9);

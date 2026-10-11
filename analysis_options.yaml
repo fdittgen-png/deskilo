@@ -43,3 +43,33 @@ linter:
     # keeps the other half: a public declaration has a reader outside its
     # file, or says @visibleForTesting.
     - library_private_types_in_public_api
+    # #2389 — the stricter rules measured at 0–20 violations on master:
+    # turned on with their fixes so they stay at zero. The staged ones
+    # (directives_ordering, avoid_catches_without_on_clauses, cascade and
+    # redundant-argument rules, discarded_futures, …) follow in their own
+    # slices, and the four with sites in the task recorder wait for the
+    # work in progress there (#2310).
+    - avoid_slow_async_io
+    - avoid_unnecessary_containers
+    - avoid_void_async
+    - deprecated_member_use_from_same_package
+    - eol_at_end_of_file
+    - invalid_case_patterns
+    - join_return_with_assignment
+    - matching_super_parameters
+    - no_leading_underscores_for_local_identifiers
+    - no_literal_bool_comparisons
+    - prefer_asserts_with_message
+    - prefer_const_constructors_in_immutables
+    - prefer_const_literals_to_create_immutables
+    - sized_box_shrink_expand
+    - type_annotate_public_apis
+    - unnecessary_breaks
+    - unnecessary_lambdas
+    - unnecessary_null_checks
+    - unnecessary_parenthesis
+    - unreachable_from_main
+    - use_colored_box
+    - use_decorated_box
+    - use_enums
+    - use_super_parameters

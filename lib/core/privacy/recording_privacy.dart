@@ -138,7 +138,7 @@ RecordingPerson recordingPersonFor(String key) {
     postalCode: locality[0],
     city: locality[1],
     // ARCEP reserves 06 39 98 xx xx for fiction; it can never ring.
-    phone: '+33639980${(100 + _fnv1a(key, 5) % 900)}',
+    phone: '+33639980${100 + _fnv1a(key, 5) % 900}',
   );
 }
 

@@ -154,8 +154,8 @@ DateTime _weekDay(int index) {
 
 /// Fill color of one half-slot cell (null = empty outline slot).
 Color? _cellFill(WidgetTester tester, Key key) {
-  final container = tester.widget<Container>(find.byKey(key));
-  return (container.decoration as BoxDecoration?)?.color;
+  final cell = tester.widget<DecoratedBox>(find.byKey(key));
+  return (cell.decoration as BoxDecoration).color;
 }
 
 /// Theme brightness the grid renders under (drives SeatStateColors.of).

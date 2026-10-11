@@ -10,7 +10,7 @@ class FakeInstanceRepository implements InstanceRepository {
   InstanceResponsibles current;
   final delegated = <String>[];
   final withdrawn = <String>[];
-  var claims = 0;
+  int claims = 0;
   DelegationOutcome nextDelegation = DelegationOutcome.delegated;
 
   @override
