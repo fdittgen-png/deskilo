@@ -106,32 +106,6 @@ Future<List<ConversationParticipant>> conversationParticipants(
           .fetchParticipants(conversationId),
     );
 
-/// The direct conversation with one member, resolved by the server
-/// (#702) — `direct_conversation` returns the existing thread or opens
-/// one on first use.
-///
-/// A read that can WRITE, deliberately: "the conversation with Ana" has
-/// to name a row before a thread can render, and a pair who have never
-/// spoken has no row yet. The alternative is a screen that shows an
-/// empty thread with no id and cannot send anything from it.
-@riverpod
-Future<String?> directConversationId(Ref ref, String memberId) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight.
-  final repository = ref.watch(workspaceRepositoryProvider);
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return null;
-  return traced(
-    'messaging',
-    'direct conversation',
-    () => repository.openDirectConversation(
-          workspace.id,
-          otherMemberId: memberId,
-        ),
-  );
-}
-
 /// Full-text search over messages I can see (#687).
 ///
 /// Keyed by the query string, so Riverpod caches per term and typing
@@ -152,20 +126,6 @@ Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
           query,
         ),
   );
-}
-
-/// Re-reads everything a sent or received message can change: the list
-/// (order, preview, unread) and the open thread.
-///
-/// One function because they always move together — a refresh that
-/// updated the thread and not the list is how a conversation shows a new
-/// message inside and a stale preview outside.
-void invalidateConversations(Ref ref, {String? conversationId}) {
-  ref.invalidate(conversationsProvider);
-  ref.invalidate(archivedConversationsProvider);
-  if (conversationId != null) {
-    ref.invalidate(conversationMessagesProvider(conversationId));
-  }
 }
 
 /// `now` for relative timestamps in the list, read once per build rather

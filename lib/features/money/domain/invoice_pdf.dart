@@ -172,7 +172,7 @@ Future<Uint8List> buildInvoicePdf({
   String facturXml = '',
 
   /// Owner report bands (#454/#470), already rendered by
-  /// `renderInvoiceReport`. Null = the built-in layout. PDF only — the
+  /// `renderReportBands`. Null = the built-in layout. PDF only — the
   /// XML never carries them; the void banner/watermark, signature,
   /// annex and page numbers stay non-templated regardless.
   InvoiceReport? report,

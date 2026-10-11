@@ -124,10 +124,6 @@ ReportBands bandsOf(InvoicePdfTemplate template, ReportKind kind) =>
         template.reminderBands(level) ?? ReportBands.empty,
     };
 
-/// #875 — the positioned layout of [kind], or null when it uses bands.
-String? layoutOf(InvoicePdfTemplate template, ReportKind kind) =>
-    template.layoutFor(kind.id);
-
 /// [template] with [kind]'s positioned layout replaced; an empty
 /// [xml] removes it, and the kind falls back to its bands.
 InvoicePdfTemplate withLayout(

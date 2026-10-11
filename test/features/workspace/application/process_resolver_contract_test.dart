@@ -173,7 +173,11 @@ void main() {
   group('idempotence and determinism', () {
     test('reapplying an intent changes nothing, for every subprocess',
         () {
-      for (final key in allSubprocessKeys()) {
+      final keys = [
+        for (final process in workspaceProcesses)
+          for (final subprocess in process.subprocesses) subprocess.key,
+      ];
+      for (final key in keys) {
         final first = resolveActivation(
           active: const {},
           subprocessKeys: [key],

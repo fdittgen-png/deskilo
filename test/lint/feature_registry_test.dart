@@ -100,8 +100,12 @@ void main() {
 
 void _tierPins() {
   test('every feature declares a tier, and the split is pinned', () {
-    final core = featuresOfTier(FeatureTier.core).toSet();
-    final platform = featuresOfTier(FeatureTier.platform).toSet();
+    Set<WorkspaceFeature> ofTier(FeatureTier tier) => {
+          for (final entry in featureManifest.values)
+            if (entry.tier == tier) entry.feature,
+        };
+    final core = ofTier(FeatureTier.core);
+    final platform = ofTier(FeatureTier.platform);
     expect(core.intersection(platform), isEmpty);
     expect(core.union(platform), WorkspaceFeature.values.toSet(),
         reason: 'every feature is in exactly one tier');

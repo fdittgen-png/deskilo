@@ -20,7 +20,7 @@ void main() {
     // 85.60 × 53.98 mm in PDF points.
     expect(badgeCardWidth, closeTo(85.6 * PdfPageFormat.mm, 0.01));
     expect(badgeCardHeight, closeTo(53.98 * PdfPageFormat.mm, 0.01));
-    expect(badgeSheetCount, 10);
+    expect(badgeSheetColumns * badgeSheetRows, 10);
     // The grid must fit A4 inside the 10 mm margins.
     const printable = 190 * PdfPageFormat.mm;
     expect(badgeSheetColumns * badgeCardWidth, lessThan(printable));

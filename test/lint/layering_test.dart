@@ -372,7 +372,7 @@ Iterable<File> _allSourceFiles() =>
 /// to map it to something a person can read — which is an infrastructure
 /// detail with a one-line answer, and the answer now lives in
 /// `lib/core/data/server_error.dart`. Route a file through
-/// `serverErrorMessage` / `isDatabaseError` / `isAuthError` and delete
+/// `serverErrorMessage` / `serverErrorCode` / `isAuthError` and delete
 /// its line here.
 /// Where the backend legitimately lives: the client itself, the realtime
 /// subscription, the push endpoint registry and the boot sequence that
@@ -555,7 +555,7 @@ void main() {
     }
     expect(violations, isEmpty,
         reason: 'these name a Supabase type outside data/. Use '
-            'serverErrorMessage / isDatabaseError / isAuthError from '
+            'serverErrorMessage / serverErrorCode / isAuthError from '
             'lib/core/data/server_error.dart:\n${violations.join('\n')}');
 
     final gone = _backendTypeOutsideData

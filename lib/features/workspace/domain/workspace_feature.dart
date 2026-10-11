@@ -1568,35 +1568,6 @@ List<WorkspaceFeature> dependentFeatures(WorkspaceFeature feature) => [
           candidate,
     ];
 
-/// The flag map to write when the owner flips [feature] to [value]
-/// (#800), given the currently stored set [raw].
-///
-/// Turning a feature ON turns its whole requirement chain on with it.
-/// Before this, a switch could be flipped on and simply not work,
-/// because something above it was off — the owner saw a green switch and
-/// a feature that was not there.
-///
-/// Turning one OFF leaves its dependants stored exactly as configured.
-/// They are already ineffective ([effectiveFeatures] drops them), and
-/// erasing the choices would mean the owner has to rebuild the subtree
-/// by hand after switching the parent back on.
-Map<WorkspaceFeature, bool> featureFlagsAfterToggle({
-  required Set<WorkspaceFeature> raw,
-  required WorkspaceFeature feature,
-  required bool value,
-}) {
-  final next = {
-    for (final known in featureManifest.keys) known: raw.contains(known),
-  };
-  next[feature] = value;
-  if (value) {
-    for (final required in requirementChain(feature)) {
-      next[required] = true;
-    }
-  }
-  return next;
-}
-
 /// What ONE toggle writes (#963): the feature itself and, when it goes
 /// on, everything it needs — nothing else. The row is merged on the
 /// server, so a screen holding an older copy of the row cannot undo a
@@ -1610,7 +1581,7 @@ Map<WorkspaceFeature, bool> featureFlagsToggleDelta({
         for (final required in requirementChain(feature)) required: true,
     };
 
-/// The features [featureFlagsAfterToggle] would switch on ALONGSIDE
+/// The features [featureFlagsToggleDelta] would switch on ALONGSIDE
 /// [feature] — empty when its chain is already on. The UI names them, so
 /// enabling one thing never silently changes another.
 List<WorkspaceFeature> alsoEnabledWith({
@@ -1648,10 +1619,3 @@ Map<String, bool> defaultFeatureFlagsForNewWorkspace({
         entry.feature.dbKey: entry.tier == FeatureTier.core && entry.defaultOn,
       if (withTwin) WorkspaceFeature.environmentPairs.dbKey: true,
     };
-
-/// The features of one tier, in registry order — the Features screen
-/// renders them under their own heading.
-List<WorkspaceFeature> featuresOfTier(FeatureTier tier) => [
-      for (final entry in featureManifest.values)
-        if (entry.tier == tier) entry.feature,
-    ];

@@ -100,11 +100,6 @@ void main() {
     expect(rankAttention([one]), hasLength(1));
   });
 
-  test('nothing waiting is an answer, not an empty list', () {
-    expect(nothingNeedsYou(const []), isTrue);
-    expect(nothingNeedsYou([_item(AttentionKind.money)]), isFalse);
-  });
-
   test('every kind the document lists has a rank', () {
     // The enum IS the ranking, so a signal added to the design without
     // a place in the order fails here rather than landing at the end by

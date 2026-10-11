@@ -20,7 +20,6 @@ void main() {
     expect(mention.name, 'Ana Lima');
     expect(notePlainText(body), 'see @Ana Lima at noon');
     expect(notePreview(body), 'see @Ana Lima at noon');
-    expect(mentionedIds(body), {_ana});
   });
 
   test('a bracket in a name cannot break the token', () {

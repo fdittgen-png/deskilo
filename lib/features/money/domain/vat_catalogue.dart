@@ -175,11 +175,6 @@ const Map<String, List<({String label, double percent, VatGroup group})>>
   // so. The owner types the local combined rate.
 };
 
-/// Whether a country's usual rates are known — the seed button only shows
-/// when there is something to seed.
-bool hasVatCatalogue(String countryCode) =>
-    _catalogue.containsKey(countryCode.toUpperCase());
-
 /// The country's usual rates as editable [VatRate]s, standard first and
 /// marked as the default.
 /// Every country the catalogue knows.

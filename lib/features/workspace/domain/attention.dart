@@ -113,10 +113,3 @@ List<Attention> rankAttention(Iterable<Attention> items) {
   });
   return ranked;
 }
-
-/// Whether anything needs this person at all.
-///
-/// Its own function because the empty state is a real answer and not an
-/// absence: the surface says *nothing needs you* and gets out of the
-/// way, rather than showing an empty list somebody has to interpret.
-bool nothingNeedsYou(Iterable<Attention> items) => items.isEmpty;

@@ -8,6 +8,8 @@ import 'package:deskilo/features/workspace/application/pending_invitation.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/in_memory_fakes.dart';
+
 const _here = BackendEndpoint(
   'https://here.example.org',
   'sb_publishable_here_key_0001',
