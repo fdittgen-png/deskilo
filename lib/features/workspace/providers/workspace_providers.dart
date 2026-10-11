@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../application/start_conversation.dart';
 import '../application/start_workspace.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -167,13 +166,6 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
   return workspaces.where((w) => w.id == chosenId).firstOrNull ??
       workspaces.first;
 }
-
-/// #1449 — the decisions behind starting a conversation: whether picking
-/// a second person makes it a group, and that a name already taken is a
-/// correction rather than a failure.
-@riverpod
-Conversations startConversationCommand(Ref ref) =>
-    Conversations(ref.watch(workspaceRepositoryProvider));
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.

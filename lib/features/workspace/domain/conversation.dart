@@ -147,11 +147,6 @@ class ConversationParticipant {
   bool get isActive => leftAt == null;
 }
 
-/// Shared with `create_group_conversation` (0126); pinned by test.
-abstract final class ConversationRules {
-  static const int maxTitleLength = 80;
-}
-
 /// A timestamp that cannot throw.
 ///
 /// The epoch is a deliberate choice for the unparseable case: it sorts

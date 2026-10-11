@@ -66,53 +66,6 @@ final class ConversationsProvider
 
 String _$conversationsHash() => r'a3c53e6d340c2840c6b517d6f68f4508f2c3557f';
 
-/// #821 — the archived threads, on demand (the Archived filter).
-
-@ProviderFor(archivedConversations)
-final archivedConversationsProvider = ArchivedConversationsProvider._();
-
-/// #821 — the archived threads, on demand (the Archived filter).
-
-final class ArchivedConversationsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Conversation>>,
-          List<Conversation>,
-          FutureOr<List<Conversation>>
-        >
-    with
-        $FutureModifier<List<Conversation>>,
-        $FutureProvider<List<Conversation>> {
-  /// #821 — the archived threads, on demand (the Archived filter).
-  ArchivedConversationsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'archivedConversationsProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$archivedConversationsHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<List<Conversation>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<Conversation>> create(Ref ref) {
-    return archivedConversations(ref);
-  }
-}
-
-String _$archivedConversationsHash() =>
-    r'87a51664276ce4e1d65f3adec8a33eadc780fa8a';
-
 /// #821 — the composer's unsent text per conversation, kept for the
 /// session so a thread closed mid-sentence reopens on that sentence.
 
@@ -511,55 +464,3 @@ final class MessageSearchFamily extends $Family
   @override
   String toString() => r'messageSearchProvider';
 }
-
-/// `now` for relative timestamps in the list, read once per build rather
-/// than per row — twenty rows asking the clock separately can straddle a
-/// minute boundary and render two different "now"s.
-
-@ProviderFor(conversationNow)
-final conversationNowProvider = ConversationNowProvider._();
-
-/// `now` for relative timestamps in the list, read once per build rather
-/// than per row — twenty rows asking the clock separately can straddle a
-/// minute boundary and render two different "now"s.
-
-final class ConversationNowProvider
-    extends $FunctionalProvider<DateTime, DateTime, DateTime>
-    with $Provider<DateTime> {
-  /// `now` for relative timestamps in the list, read once per build rather
-  /// than per row — twenty rows asking the clock separately can straddle a
-  /// minute boundary and render two different "now"s.
-  ConversationNowProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'conversationNowProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$conversationNowHash();
-
-  @$internal
-  @override
-  $ProviderElement<DateTime> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  DateTime create(Ref ref) {
-    return conversationNow(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(DateTime value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<DateTime>(value),
-    );
-  }
-}
-
-String _$conversationNowHash() => r'546a174fe5cf7b075122743cca5919a046a673eb';

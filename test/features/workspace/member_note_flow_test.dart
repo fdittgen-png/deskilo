@@ -12,7 +12,6 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
-import '../../helpers/workspace_chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -117,54 +116,31 @@ MemberNote _noteFromAna(String body, {String id = 'note-in'}) => MemberNote(
       createdAt: DateTime.utc(2026, 5, 12, 9),
     );
 
-/// Opens the thread with Ana through the MESSAGING CENTRE (#687).
+/// Opens the thread with Ana (#687).
 ///
 /// Named for what it does rather than where it goes: these tests are
-/// about the conversation — previews, references, receipts, delete — and
-/// only the route to it changed when messages left the events inbox.
-Future<void> _openEvents(WidgetTester tester) async {
-  await openWorkspaceChats(tester);
-  await tester.pumpAndSettle();
-  final row = find.byKey(const ValueKey('conversation-conv-ana'));
-  if (row.evaluate().isNotEmpty) {
-    await tester.tap(row);
-    await tester.pumpAndSettle();
-  }
-}
+/// about the conversation — references, receipts, delete — and only the
+/// route to it changed when messages left the events inbox, then again
+/// when the workspace conversation list left the app (#2383).
+Future<void> _openEvents(WidgetTester tester) =>
+    openWorkspaceConversation(tester, 'conv-ana');
 
 void main() {
   testWidgets(
-      'the row PREVIEWS; the thread has the whole message (#523/#687)',
+      'the thread has the whole message (#523/#687)',
       (tester) async {
     const long = 'The projector in the main room keeps dropping the '
         'signal every ten minutes, can someone have a look at the cable?';
     await _pump(tester, notes: [_noteFromAna(long)]);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-
-    // #687 — the row truncates at the width AVAILABLE (maxLines +
-    // ellipsis) rather than at a guessed 64 characters, which is the
-    // better mechanism for the same #523 intent: a preview on the list,
-    // the whole thing in the thread. A hard character count either
-    // wasted a wide row or overflowed a narrow one.
-    final preview = tester.widget<Text>(
-      find.descendant(
-        of: find.byKey(const ValueKey('conversation-conv-ana')),
-        matching: find.text(long),
-      ),
-    );
-    expect(preview.maxLines, 1);
-    expect(preview.overflow, TextOverflow.ellipsis);
-
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    // The list preview truncates (the Me messenger's row, tested in
+    // unified_inbox_test.dart); the thread never does.
+    await _openEvents(tester);
     // The CONVERSATION opens and shows the COMPLETE message as a
     // bubble, with the shared composer ready to reply to Ana.
     expect(
         find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
-    // Scoped to the THREAD: the list row behind the sheet holds the same
-    // text, truncated — an unscoped finder matches both and proves
-    // nothing about which one is showing the whole message.
+    // Scoped to the THREAD, so the finder says which surface shows the
+    // whole message.
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('conversation-thread')),
@@ -184,23 +160,7 @@ void main() {
       _noteFromAna('Still need [res:res-link-1|A1 · tomorrow]? '
           'Else I take [space:seat:seat-4|A1] 😀'),
     ]);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-
-    // #687 — the LIST preview reads labels, never raw tokens. Markup
-    // leaking into someone's inbox is what `notePlainText` exists to
-    // prevent, and the new row had to be taught it too.
-    expect(
-      find.descendant(
-        of: find.byKey(const ValueKey('conversation-conv-ana')),
-        matching: find.textContaining('Still need A1 · tomorrow?'),
-      ),
-      findsOneWidget,
-    );
-    expect(find.textContaining('[res:'), findsNothing);
-
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    await _openEvents(tester);
 
     // Links are REAL widgets (field-report fix): plain taps hit them.
     await tester.tap(find.text('A1 · tomorrow'));
@@ -224,11 +184,6 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('space-show-plan')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-thread')), findsNothing);
-    // The conversation list is a pushed page in this harness; leave it.
-    if (find.byType(WorkspaceChatList).evaluate().isNotEmpty) {
-      Navigator.of(tester.element(find.byType(WorkspaceChatList))).pop();
-      await tester.pumpAndSettle();
-    }
     expect(
         find.byKey(const ValueKey('reserve-plan-view')), findsOneWidget);
   });
@@ -368,23 +323,13 @@ void main() {
       // From Ana to me, unread — Events opening must stamp it.
       _noteFromAna('Hello!'),
     ]);
-    // #687 — the LIST first: opening the messaging centre must not read
-    // anything. Only opening the conversation does. That was #539's
-    // point when the intermediate surface was the events inbox, and it
-    // survives the move — a list you glance at is not a message you
-    // read.
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
+    // Nothing is read before the conversation opens: a list you glance
+    // at is not a message you read (#539).
     expect(
       workspace.memberNotes.singleWhere((n) => n.id == 'note-in').readAt,
       isNull,
     );
-    // The row says so: an unread count, and the name in a heavier weight.
-    expect(find.byKey(const ValueKey('conversation-unread-conv-ana')),
-        findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    await _openEvents(tester);
 
     // In the thread: my delivered bubble grey, my read one blue,
     // received ones no check at all.

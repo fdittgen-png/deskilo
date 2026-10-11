@@ -238,12 +238,12 @@ void main() {
     expect(notifications.shown, hasLength(1));
   });
 
-  testWidgets('REPLY AND DELETE (#467/#687): the row opens the thread, '
+  testWidgets('REPLY AND DELETE (#467/#687): the thread opens, '
       'the composer sends, a long-press deletes', (tester) async {
     // The swipe gestures lived on the events-inbox row and retired with
     // it: the centre lists CONVERSATIONS, and a swipe there would mean
-    // something else. Both capabilities survive — tapping a row opens
-    // the thread, long-pressing a bubble deletes the message.
+    // something else. Both capabilities survive — the thread opens by
+    // conversation id, long-pressing a bubble deletes the message.
     final workspace = FakeWorkspaceRepository.withWorkspace()
       ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
       ..otherMembers.add(
@@ -285,11 +285,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
     expect(find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
 
     // Reply from the thread's own composer.

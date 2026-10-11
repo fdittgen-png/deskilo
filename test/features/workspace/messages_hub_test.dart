@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #821 — the Messages tab reworked: filter chips over the list, a
-// long-press menu (pin, mute, mark unread, archive) that writes a
-// preference and reorders the list, the thread as a PAGE with day
+// #821 — the Messages tab reworked: the thread as a PAGE with day
 // separators and a draft that survives leaving, one attach button in the
-// composer, the alerts face named for what it holds, a person opened on
-// a tap from the new-conversation sheet, and a muted conversation that
-// the announcer keeps quiet.
+// composer, the alerts face named for what it holds, and a muted
+// conversation that the announcer keeps quiet. The list's filter chips
+// and long-press menu live on in the Me messenger and are tested there
+// (`unified_inbox_test.dart`); the workspace list they were built on is
+// gone (#2383).
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
@@ -109,18 +109,6 @@ Future<FakeWorkspaceRepository> _pump(
   return workspace;
 }
 
-Finder _row(String id) => find.byKey(ValueKey('conversation-$id'));
-
-Future<void> _menu(WidgetTester tester, String id, String item) async {
-  // Let the previous action's snack go, so it cannot sit over the sheet.
-  await tester.pump(const Duration(seconds: 5));
-  await tester.pumpAndSettle();
-  await tester.longPress(_row(id));
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('conversation-menu-$item')));
-  await tester.pumpAndSettle();
-}
-
 Finder get _daySeparators => find.byWidgetPredicate((w) {
       final key = w.key;
       return key is ValueKey<String> &&
@@ -128,87 +116,17 @@ Finder get _daySeparators => find.byWidgetPredicate((w) {
     });
 
 void main() {
-  testWidgets('the alerts face is named for what it holds, and the chips '
-      'narrow the list to unread or archived', (tester) async {
+  testWidgets('the alerts face is named for what it holds', (tester) async {
     await _pump(tester);
     await openAlertsTab(tester);
     expect(find.text('Alerts'), findsWidgets);
     expect(find.text('Events'), findsNothing);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    expect(_row('conv-ana'), findsOneWidget);
-    expect(_row('conv-bob'), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('inbox-filter-unread')));
-    await tester.pumpAndSettle();
-    expect(_row('conv-ana'), findsOneWidget);
-    expect(_row('conv-bob'), findsNothing);
-
-    await tester.tap(find.byKey(const ValueKey('inbox-filter-archived')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('conversation-list-no-archived')),
-        findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('inbox-filter-all')));
-    await tester.pumpAndSettle();
-    expect(_row('conv-bob'), findsOneWidget);
-  });
-
-  testWidgets('long-press: pin lifts a row to the top, mute marks it, '
-      'mark-unread and archive write through and the list follows',
-      (tester) async {
-    final workspace = await _pump(tester);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    // Newest first: Ana above Bob.
-    expect(tester.getTopLeft(_row('conv-ana')).dy,
-        lessThan(tester.getTopLeft(_row('conv-bob')).dy));
-
-    await _menu(tester, 'conv-bob', 'pin');
-    expect(workspace.prefsWrites.last.id, 'conv-bob');
-    expect(workspace.prefsWrites.last.pinned, isTrue);
-    expect(find.byKey(const ValueKey('conversation-pinned-conv-bob')),
-        findsOneWidget);
-    // Pinned wins over newest.
-    expect(tester.getTopLeft(_row('conv-bob')).dy,
-        lessThan(tester.getTopLeft(_row('conv-ana')).dy));
-
-    await _menu(tester, 'conv-bob', 'mute');
-    expect(workspace.prefsWrites.last.muted, isTrue);
-    expect(find.byKey(const ValueKey('conversation-muted-conv-bob')),
-        findsOneWidget);
-
-    // A READ conversation offers "mark as unread"; an unread one does not.
-    await _menu(tester, 'conv-bob', 'unread');
-    expect(workspace.unreadMarks, ['conv-bob']);
-    await tester.longPress(_row('conv-ana'));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('conversation-menu-unread')),
-        findsNothing);
-    await tester.tap(find.byKey(const ValueKey('conversation-menu-archive')));
-    await tester.pumpAndSettle();
-    expect(workspace.prefsWrites.last.id, 'conv-ana');
-    expect(workspace.prefsWrites.last.archived, isTrue);
-    expect(_row('conv-ana'), findsNothing);
-
-    // The archive filter shows it, and the same menu restores it.
-    await tester.tap(find.byKey(const ValueKey('inbox-filter-archived')));
-    await tester.pumpAndSettle();
-    expect(_row('conv-ana'), findsOneWidget);
-    await _menu(tester, 'conv-ana', 'archive');
-    expect(workspace.prefsWrites.last.archived, isFalse);
-    await tester.tap(find.byKey(const ValueKey('inbox-filter-all')));
-    await tester.pumpAndSettle();
-    expect(_row('conv-ana'), findsOneWidget);
   });
 
   testWidgets('a conversation opens as a PAGE with day separators, and '
       'what was typed survives leaving and coming back', (tester) async {
     await _pump(tester);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    await tester.tap(_row('conv-ana'));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
     expect(find.byKey(const ValueKey('conversation-page')), findsOneWidget);
     expect(find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     // Two messages on two days → two separators, and the old date is
@@ -234,10 +152,8 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('conversation-back')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-page')), findsNothing);
-    expect(_row('conv-ana'), findsOneWidget);
 
-    await tester.tap(_row('conv-ana'));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
     final field = tester
         .widget<TextField>(find.byKey(const ValueKey('member-note-body')));
     expect(field.controller?.text, 'on my way');
@@ -246,37 +162,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('conversation-back')));
     await tester.pumpAndSettle();
-    await tester.tap(_row('conv-ana'));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
     expect(
         tester
             .widget<TextField>(find.byKey(const ValueKey('member-note-body')))
             .controller
             ?.text,
         isEmpty);
-  });
-
-  testWidgets('the new-conversation sheet opens a person on a tap; the '
-      'Group switch is the way to a named group', (tester) async {
-    await _pump(tester);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('new-conversation')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('new-conversation-group-switch')),
-        findsOneWidget);
-    // No start button in the one-to-one mode: the row IS the button.
-    expect(find.byKey(const ValueKey('new-conversation-start')), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('new-conversation-group-switch')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('new-conversation-start')), findsOneWidget);
-    expect(find.byKey(const ValueKey('new-group-name')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('new-conversation-group-switch')));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(const ValueKey('new-conversation-member-3')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('conversation-page')), findsOneWidget);
   });
 
   testWidgets('a MUTED conversation is not announced; another one is',
@@ -294,11 +186,7 @@ void main() {
     await _pump(tester, flags: const {'messagesHub': false});
     await openAlertsTab(tester);
     expect(find.text('Events'), findsWidgets);
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('inbox-filter-unread')), findsNothing);
-    await tester.tap(_row('conv-ana'));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
     expect(find.byKey(const ValueKey('conversation-page')), findsNothing);
     expect(find.byKey(const ValueKey('conversation-thread')), findsOneWidget);
     expect(find.byKey(const ValueKey('composer-attach')), findsNothing);

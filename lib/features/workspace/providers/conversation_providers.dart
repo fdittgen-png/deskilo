@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/time/clock.dart';
 import '../../../core/trace/traced.dart';
 import '../domain/conversation.dart';
 import '../domain/member_note.dart';
@@ -29,18 +28,6 @@ Future<List<Conversation>> conversations(Ref ref) async {
           workspace.id,
         ),
   );
-}
-
-/// #821 — the archived threads, on demand (the Archived filter).
-@riverpod
-Future<List<Conversation>> archivedConversations(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const [];
-  final all = await ref.watch(workspaceRepositoryProvider).fetchConversations(
-        workspace.id,
-        includeArchived: true,
-      );
-  return [for (final c in all) if (c.isArchived) c];
 }
 
 /// #821 — the composer's unsent text per conversation, kept for the
@@ -127,9 +114,3 @@ Future<List<MemberNote>> messageSearch(Ref ref, String query) async {
         ),
   );
 }
-
-/// `now` for relative timestamps in the list, read once per build rather
-/// than per row — twenty rows asking the clock separately can straddle a
-/// minute boundary and render two different "now"s.
-@riverpod
-DateTime conversationNow(Ref ref) => ref.watch(clockProvider).now();
