@@ -4,6 +4,7 @@
 // installation's, and the space's own supplement. What a recipient's
 // region or transfer mechanism is may be `unknown`; the app says so
 // rather than filling it in.
+import '../../../core/data/json_reader.dart';
 
 /// One recipient of personal data named by a notice.
 class PrivacyRecipient {
@@ -17,16 +18,15 @@ class PrivacyRecipient {
     required this.essential,
   });
 
-  factory PrivacyRecipient.fromJson(Map<String, dynamic> json) =>
-      PrivacyRecipient(
-        name: json['name'] as String? ?? '',
-        role: json['role'] as String? ?? '',
-        purpose: json['purpose'] as String? ?? '',
-        legalBasis: json['legal_basis'] as String? ?? '',
-        region: json['region'] as String? ?? '',
-        transferMechanism: json['transfer_mechanism'] as String? ?? 'unknown',
-        essential: json['essential'] as bool? ?? true,
-      );
+  factory PrivacyRecipient._read(JsonReader r) => PrivacyRecipient(
+    name: r.stringOr('name'),
+    role: r.stringOr('role'),
+    purpose: r.stringOr('purpose'),
+    legalBasis: r.stringOr('legal_basis'),
+    region: r.stringOr('region'),
+    transferMechanism: r.stringOr('transfer_mechanism', 'unknown'),
+    essential: r.boolOr('essential', true),
+  );
 
   final String name;
   final String role;
@@ -50,23 +50,23 @@ class PrivacyNotice {
     required this.recipients,
   });
 
-  factory PrivacyNotice.fromJson(Map<String, dynamic> json) {
-    final manifest = Map<String, dynamic>.from(
-      json['manifest'] as Map? ?? const {},
+  /// #2387 — read through [JsonReader]; [context] names the RPC.
+  factory PrivacyNotice._read(JsonReader r) {
+    final manifest = JsonReader(
+      r.objectOrEmpty('manifest'),
+      context: '${r.context}.manifest',
     );
-    final controller = Map<String, dynamic>.from(
-      manifest['controller'] as Map? ?? const {},
+    final controller = JsonReader(
+      manifest.objectOrEmpty('controller'),
+      context: '${manifest.context}.controller',
     );
     return PrivacyNotice(
-      version: json['version'] as String,
-      controllerName: controller['name'] as String? ?? '',
-      controllerContact: controller['contact'] as String? ?? '',
-      rightsContact: manifest['rights_contact'] as String? ?? '',
-      retention: manifest['retention'] as String? ?? '',
-      recipients: [
-        for (final r in (manifest['recipients'] as List? ?? const []))
-          PrivacyRecipient.fromJson(Map<String, dynamic>.from(r as Map)),
-      ],
+      version: r.string('version'),
+      controllerName: controller.stringOr('name'),
+      controllerContact: controller.stringOr('contact'),
+      rightsContact: manifest.stringOr('rights_contact'),
+      retention: manifest.stringOr('retention'),
+      recipients: manifest.objects('recipients', PrivacyRecipient._read),
     );
   }
 
@@ -88,26 +88,29 @@ class PrivacyNotices {
     this.acknowledgedVersions = const {},
   });
 
+  /// #2387 — read through [JsonReader]; [context] names the RPC.
   factory PrivacyNotices.fromJson(
     Map<String, dynamic> json, {
     String? workspaceId,
-  }) => PrivacyNotices(
-    workspaceId: workspaceId,
-    installation: json['installation'] is Map
-        ? PrivacyNotice.fromJson(
-            Map<String, dynamic>.from(json['installation'] as Map),
-          )
-        : null,
-    workspace: json['workspace'] is Map
-        ? PrivacyNotice.fromJson(
-            Map<String, dynamic>.from(json['workspace'] as Map),
-          )
-        : null,
-    acknowledgedVersions: {
-      for (final a in (json['acknowledged'] as List? ?? const []))
-        '${(a as Map)['workspace_id'] ?? ''}:${a['version']}',
-    },
-  );
+    String context = 'current_privacy_notice',
+  }) {
+    final r = JsonReader(json, context: context);
+    final installation = r.objectOrNull('installation');
+    final workspace = r.objectOrNull('workspace');
+    return PrivacyNotices(
+      workspaceId: workspaceId,
+      installation: installation == null
+          ? null
+          : PrivacyNotice._read(installation),
+      workspace: workspace == null ? null : PrivacyNotice._read(workspace),
+      acknowledgedVersions: {
+        ...r.objects(
+          'acknowledged',
+          (a) => '${a.stringOr('workspace_id')}:${a.string('version')}',
+        ),
+      },
+    );
+  }
 
   static const none = PrivacyNotices();
 
