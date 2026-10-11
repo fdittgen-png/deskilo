@@ -37,7 +37,7 @@ void main() {
       1,
     );
     final value = jsonDecode(out.text.toString()) as Map<String, dynamic>;
-    expect(value['checks']['schema'], 'attention');
+    expect((value['checks'] as Map)['schema'], 'attention');
     expect(out.text.toString(), isNot(contains('private')));
     expect(err.text.isEmpty, isTrue);
   });

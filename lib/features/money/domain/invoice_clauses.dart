@@ -35,6 +35,7 @@ import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
 import 'vat_compliance.dart';
+import '../../../core/data/json_reader.dart';
 
 /// Whether the customer acts as a business or as a consumer. Stated by
 /// the seller (`members.customer_capacity`, the workspace default in
@@ -183,27 +184,26 @@ class LegalClauseSnapshot {
 
   bool get onPaymentBasis => vatExigibility == 'payment';
 
-  factory LegalClauseSnapshot.fromJson(Map<dynamic, dynamic> json) =>
-      LegalClauseSnapshot(
-        schema: (json['schema'] as num?)?.toInt() ?? 1,
-        sellerKind: json['seller_kind'] as String? ?? '',
-        sellerCountry: json['seller_country'] as String? ?? '',
-        buyerCountry: json['buyer_country'] as String? ?? '',
-        buyerCapacity: CustomerCapacity.fromWire(
-          json['buyer_capacity'] as String?,
-        ),
-        capacitySource: json['capacity_source'] as String? ?? 'none',
-        termsSource: json['terms_source'] as String? ?? 'workspace',
-        clauses: PaymentTerms.fromJson(
-          json['clauses'] as Map? ?? const <String, Object?>{},
-        ),
-        legalForm: json['legal_form'] as String? ?? '',
-        registration: json['registration'] as String? ?? '',
-        insurance: json['insurance'] as String? ?? '',
-        specialMentions: json['special_mentions'] as String? ?? '',
-        vatExigibility: json['vat_exigibility'] as String? ?? 'invoice',
-        fingerprint: json['fingerprint'] as String? ?? '',
-      );
+  factory LegalClauseSnapshot.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'legal_clause_snapshot');
+    return LegalClauseSnapshot(
+      schema: r.intOrNull('schema') ?? 1,
+      sellerKind: r.stringOr('seller_kind'),
+      sellerCountry: r.stringOr('seller_country'),
+      buyerCountry: r.stringOr('buyer_country'),
+      buyerCapacity:
+          CustomerCapacity.fromWire(r.stringOrNull('buyer_capacity')),
+      capacitySource: r.stringOr('capacity_source', 'none'),
+      termsSource: r.stringOr('terms_source', 'workspace'),
+      clauses: PaymentTerms.fromJson(r.objectOrEmpty('clauses')),
+      legalForm: r.stringOr('legal_form'),
+      registration: r.stringOr('registration'),
+      insurance: r.stringOr('insurance'),
+      specialMentions: r.stringOr('special_mentions'),
+      vatExigibility: r.stringOr('vat_exigibility', 'invoice'),
+      fingerprint: r.stringOr('fingerprint'),
+    );
+  }
 
   /// The same facts read from the LIVE settings — for documents that are
   /// not an issued invoice (statements, letters, previews). The member's

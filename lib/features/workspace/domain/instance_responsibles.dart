@@ -6,6 +6,8 @@
 // owner sees the account ids needed to withdraw a delegation; the server
 // decides that, this only reads what it sent.
 
+import '../../../core/data/json_reader.dart';
+
 /// What the signed-in person is for the installation.
 enum InstanceRole { owner, delegate }
 
@@ -70,20 +72,21 @@ class InstanceResponsibles {
   /// an e-mail address are dropped rather than shown blank.
   factory InstanceResponsibles.fromJson(Object? json) {
     if (json is! Map) return unavailable;
-    List<InstanceResponsible> people(Object? v) => [
-      for (final x in (v is List ? v : const []))
-        ?InstanceResponsible.tryParse(x),
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'instance_responsibles');
+    List<InstanceResponsible> people(String key) => [
+      for (final x in r.listOrAbsent(key)) ?InstanceResponsible.tryParse(x),
     ];
     return InstanceResponsibles(
-      installationId: '${json['installation_id'] ?? ''}',
-      you: switch (json['you']) {
+      installationId: r.textOrAbsent('installation_id') ?? '',
+      you: switch (r.textOrAbsent('you')) {
         'owner' => InstanceRole.owner,
         'delegate' => InstanceRole.delegate,
         _ => null,
       },
-      claimable: json['claimable'] == true,
-      owners: people(json['owners']),
-      delegates: people(json['delegates']),
+      claimable: r.isTrue('claimable'),
+      owners: people('owners'),
+      delegates: people('delegates'),
     );
   }
 }

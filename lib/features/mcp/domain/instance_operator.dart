@@ -11,6 +11,7 @@
 // latest endpoint probe.
 
 import 'mcp_onboarding.dart';
+import '../../../core/data/json_reader.dart';
 
 class InstanceMember {
   const InstanceMember({
@@ -25,12 +26,15 @@ class InstanceMember {
   final bool me;
   final bool canProvision;
 
-  factory InstanceMember.fromJson(Map<String, dynamic> j) => InstanceMember(
-    userId: j['user_id'] as String,
-    name: j['name'] as String? ?? '',
-    me: j['me'] == true,
-    canProvision: j['can_provision'] == true,
-  );
+  factory InstanceMember.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'instance_member');
+    return InstanceMember(
+      userId: r.string('user_id'),
+      name: r.stringOr('name'),
+      me: r.boolOr('me', false),
+      canProvision: r.boolOr('can_provision', false),
+    );
+  }
 }
 
 /// An assistant's OAuth client: `waiting` (registered itself, not yet
@@ -59,19 +63,17 @@ class InstanceClient {
 
   bool get approved => status == 'active';
 
-  factory InstanceClient.fromJson(Map<String, dynamic> j) => InstanceClient(
-    clientId: j['client_id'] as String,
-    name: j['name'] as String? ?? '',
-    status: j['status'] as String? ?? 'waiting',
-    registeredAt: DateTime.tryParse(j['registered_at'] as String? ?? ''),
-    family: j['family'] is String ? j['family'] as String : null,
-    redirectHosts: [
-      for (final h in j['redirect_hosts'] is List
-          ? j['redirect_hosts'] as List
-          : const [])
-        '$h',
-    ],
-  );
+  factory InstanceClient.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'instance_client');
+    return InstanceClient(
+      clientId: r.string('client_id'),
+      name: r.stringOr('name'),
+      status: r.stringOr('status', 'waiting'),
+      registeredAt: r.dateTimeOrNull('registered_at'),
+      family: r.textOrAbsent('family'),
+      redirectHosts: [for (final h in r.listOrAbsent('redirect_hosts')) '$h'],
+    );
+  }
 }
 
 /// An active assistant-access grant, as the console lists it.
@@ -96,15 +98,17 @@ class InstanceEligibleUser {
   final bool selfGrant;
   final bool me;
 
-  factory InstanceEligibleUser.fromJson(Map<String, dynamic> j) =>
-      InstanceEligibleUser(
-        userId: j['user_id'] as String,
-        name: j['name'] as String? ?? '',
-        expiresAt: DateTime.tryParse(j['expires_at'] as String? ?? ''),
-        grantedByOperator: j['granted_by'] == 'operator',
-        selfGrant: j['self_grant'] == true,
-        me: j['me'] == true,
-      );
+  factory InstanceEligibleUser.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'instance_eligible_user');
+    return InstanceEligibleUser(
+      userId: r.string('user_id'),
+      name: r.stringOr('name'),
+      expiresAt: r.dateTimeOrNull('expires_at'),
+      grantedByOperator: r.stringOrNull('granted_by') == 'operator',
+      selfGrant: r.boolOr('self_grant', false),
+      me: r.boolOr('me', false),
+    );
+  }
 }
 
 class InstanceMcpOverview {
@@ -152,29 +156,29 @@ class InstanceMcpOverview {
   bool get ready => blockers.isEmpty;
 
   factory InstanceMcpOverview.fromJson(Map<String, dynamic> j) {
-    List<Map<String, dynamic>> rows(String key) => [
-      for (final r in (j[key] as List? ?? const []))
-        Map<String, dynamic>.from(r as Map),
-    ];
+    final r = JsonReader(j, context: 'instance_mcp_overview');
     return InstanceMcpOverview(
-      enabled: j['enabled'] == true,
-      blockers: [for (final b in (j['blockers'] as List? ?? const [])) '$b'],
-      secondFactor: j['second_factor'] == true,
-      administrators: rows('administrators')
-          .map(InstanceMember.fromJson)
-          .toList(),
-      candidates: rows('candidates').map(InstanceMember.fromJson).toList(),
-      clients: rows('clients').map(InstanceClient.fromJson).toList(),
-      allowLoopbackClients: j['allow_loopback_clients'] == true,
-      endpoint: McpEndpointInfo.fromJson(j['endpoint']),
-      endpointProbe: j['endpoint_probe'] == null
+      enabled: r.boolOr('enabled', false),
+      blockers: [for (final b in r.list('blockers')) '$b'],
+      secondFactor: r.boolOr('second_factor', false),
+      administrators: r.objects(
+        'administrators',
+        (row) => InstanceMember.fromJson(row.json),
+      ),
+      candidates:
+          r.objects('candidates', (row) => InstanceMember.fromJson(row.json)),
+      clients: r.objects('clients', (row) => InstanceClient.fromJson(row.json)),
+      allowLoopbackClients: r.boolOr('allow_loopback_clients', false),
+      endpoint: McpEndpointInfo.fromJson(r.json['endpoint']),
+      endpointProbe: r.json['endpoint_probe'] == null
           ? EndpointProbe.missing
-          : EndpointProbe.fromJson(j['endpoint_probe']),
-      eligibleUsers: rows('eligible_users')
-          .map(InstanceEligibleUser.fromJson)
-          .toList(),
-      operatorGrantAvailable: j['operator_grant_available'] == true,
-      googleSession: j['google_session'] == true,
+          : EndpointProbe.fromJson(r.json['endpoint_probe']),
+      eligibleUsers: r.objects(
+        'eligible_users',
+        (row) => InstanceEligibleUser.fromJson(row.json),
+      ),
+      operatorGrantAvailable: r.boolOr('operator_grant_available', false),
+      googleSession: r.boolOr('google_session', false),
     );
   }
 }

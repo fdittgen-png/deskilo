@@ -12,6 +12,8 @@
 // changes until someone narrows it. `can_manage_managed_profile` (0161)
 // is the same rule in SQL and is what actually decides; this mirror
 // exists so the app can show and edit it, never so it can grant.
+import '../../../core/data/json_reader.dart';
+
 class ManagedAccess {
   const ManagedAccess({
     this.roles = const {},
@@ -60,15 +62,15 @@ class ManagedAccess {
   ManagedAccess get reset => ManagedAccess.unnarrowed;
 
   factory ManagedAccess.fromJson(Map<String, dynamic> json) {
-    final roles = json['roles'];
+    final r = JsonReader(json, context: 'managed_access');
+    final roles = r.json['roles'];
+    final members = r.json['members'];
     return ManagedAccess(
-      roles: roles is List ? {for (final r in roles) '$r'} : const {},
-      memberIds: json['members'] is List
-          ? {for (final m in json['members'] as List) '$m'}
-          : const {},
+      roles: {for (final role in r.listOrAbsent('roles')) '$role'},
+      memberIds: {for (final m in r.listOrAbsent('members')) '$m'},
       // A rule exists the moment either key is present: an EMPTY roles
       // list is a statement ("no role, only these people"), not silence.
-      narrowed: roles is List || json['members'] is List,
+      narrowed: roles is List || members is List,
     );
   }
 

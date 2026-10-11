@@ -156,7 +156,7 @@ void main() {
     expect(months.length, 15);
     for (final e in _report.entries) {
       expect(months[e.key], e.value, reason: e.key);
-      expect((months[e.key] as List)[1], (months[e.key] as List)[0] * 2,
+      expect((months[e.key] as List)[1], ((months[e.key] as List)[0] as num) * 2,
           reason: '${e.key}: a half-day is half a day whatever the '
               'subscription');
     }

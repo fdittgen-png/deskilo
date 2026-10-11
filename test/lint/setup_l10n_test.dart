@@ -207,9 +207,9 @@ void main() {
       test('every process and subprocess reads in $locale exactly as the app '
           'names it', () {
         final l10n = lookupAppLocalizations(Locale(locale));
-        final processes = resource[locale]['process'] as Map<String, dynamic>;
-        final subprocesses =
-            resource[locale]['subprocess'] as Map<String, dynamic>;
+        final strings = resource[locale] as Map;
+        final processes = strings['process'] as Map<String, dynamic>;
+        final subprocesses = strings['subprocess'] as Map<String, dynamic>;
         final wrong = <String>[];
         for (final p in workspaceProcesses) {
           final copy = processCopy(l10n, p.key);
@@ -310,7 +310,8 @@ void main() {
       test('every WorkspaceFeature reads in $locale exactly as the app '
           'names and describes it', () {
         final l10n = lookupAppLocalizations(Locale(locale));
-        final features = resource[locale]['feature'] as Map<String, dynamic>;
+        final features =
+            (resource[locale] as Map)['feature'] as Map<String, dynamic>;
         expect(
           features.keys.toSet(),
           WorkspaceFeature.values.map((f) => f.name).toSet(),

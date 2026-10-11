@@ -171,16 +171,16 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:169` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:170` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:171` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:196` | label | Taux normal 20 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:204` | label | Taux réduit 5,5 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:210` | label | Taux réduit 10 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:216` | label | Taux particulier 2,1 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:222` | label | Autre taux ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:228` | label | Opérations non imposées / taux 0 | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:239` | label | Umsätze 19 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:245` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:251` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:257` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:199` | label | Taux normal 20 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:207` | label | Taux réduit 5,5 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:213` | label | Taux réduit 10 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:219` | label | Taux particulier 2,1 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:225` | label | Autre taux ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:231` | label | Opérations non imposées / taux 0 | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:242` | label | Umsätze 19 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:248` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:254` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:260` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:191` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals

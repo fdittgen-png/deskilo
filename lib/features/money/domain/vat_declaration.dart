@@ -4,6 +4,7 @@ import 'package:xml/xml.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/json_reader.dart';
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
@@ -36,15 +37,17 @@ class VatDeclarationLine {
         'invoice_count': invoiceCount,
       };
 
-  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) =>
-      VatDeclarationLine(
-        percent: (json['percent'] as num).toDouble(),
-        category: json['category'] as String? ?? '',
-        grossCents: (json['gross_cents'] as num?)?.toInt() ?? 0,
-        netCents: (json['net_cents'] as num).toInt(),
-        vatCents: (json['vat_cents'] as num).toInt(),
-        invoiceCount: (json['invoice_count'] as num?)?.toInt() ?? 0,
-      );
+  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'vat_declaration_line');
+    return VatDeclarationLine(
+      percent: r.number('percent'),
+      category: r.stringOr('category'),
+      grossCents: r.intOrNull('gross_cents') ?? 0,
+      netCents: r.integer('net_cents'),
+      vatCents: r.integer('vat_cents'),
+      invoiceCount: r.intOrNull('invoice_count') ?? 0,
+    );
+  }
 }
 
 /// A periodic VAT declaration (0107): the per-rate output-VAT summary of

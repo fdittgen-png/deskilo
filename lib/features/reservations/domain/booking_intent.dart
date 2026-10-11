@@ -9,6 +9,7 @@
 // Pure Dart: the ledger is a value, the store a string, the scope a pair
 // of ids. Nothing here knows how the sheet looks or how the RPC is named.
 import 'dart:convert';
+import '../../../core/data/json_reader.dart';
 
 /// Where an intent is valid: one account on one server. An intent made
 /// under another login or against another installation is never shown,
@@ -267,23 +268,23 @@ class RequestOutcome {
 
   factory RequestOutcome.fromJson(Object? json) {
     if (json is! Map) return unavailable;
-    final status = switch (json['status']) {
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'request_outcome');
+    final status = switch (r.textOrAbsent('status')) {
       'committed' => RequestOutcomeStatus.committed,
       'in_progress' => RequestOutcomeStatus.inProgress,
       'absent' => RequestOutcomeStatus.absent,
       _ => RequestOutcomeStatus.unavailable,
     };
-    if (status == RequestOutcomeStatus.committed &&
-        json['reservation_id'] is! String) {
+    final reservationId = r.textOrAbsent('reservation_id');
+    if (status == RequestOutcomeStatus.committed && reservationId == null) {
       return unavailable;
     }
     return RequestOutcome(
       status: status,
-      reservationId: json['reservation_id'] as String?,
-      reservationStatus: json['reservation_status'] as String?,
-      retentionDays: json['retention_days'] is int
-          ? json['retention_days'] as int
-          : 90,
+      reservationId: reservationId,
+      reservationStatus: r.textOrAbsent('reservation_status'),
+      retentionDays: r.intOrAbsent('retention_days') ?? 90,
     );
   }
 }
