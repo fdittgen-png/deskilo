@@ -134,6 +134,8 @@ McpTargetEvidence readyEvidence({
       {
         'issuer': fixtureAuthUrl,
         'jwks_uri': '$fixtureAuthUrl/.well-known/jwks.json',
+        'code_challenge_methods_supported': ['S256'],
+        'registration_endpoint': '$fixtureAuthUrl/oauth/clients/register',
       },
   jwks:
       jwks ??
