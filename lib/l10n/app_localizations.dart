@@ -3667,6 +3667,12 @@ abstract class AppLocalizations {
   /// **'Revenue'**
   String get bookRoleRevenue;
 
+  /// #2357 input VAT: bookRoleVatInput
+  ///
+  /// In en, this message translates to:
+  /// **'Input VAT'**
+  String get bookRoleVatInput;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -8124,6 +8130,12 @@ abstract class AppLocalizations {
   /// **'Enter an amount above zero.'**
   String get expenseInvalidAmount;
 
+  /// #2357 input VAT: expenseInvalidDeductible
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a share between 0 and 100.'**
+  String get expenseInvalidDeductible;
+
   /// #1449 expense_rules
   ///
   /// In en, this message translates to:
@@ -8183,6 +8195,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
+
+  /// #2357 input VAT: expenseVatDeductible
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible share (%)'**
+  String get expenseVatDeductible;
+
+  /// #2357 input VAT: the deductible VAT an expense makes
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible VAT: {amount}'**
+  String expenseVatDeductibleAmount(String amount);
+
+  /// #2357 input VAT: expenseVatDeductibleHint
+  ///
+  /// In en, this message translates to:
+  /// **'100 % unless part of the expense is private or serves an exempt activity.'**
+  String get expenseVatDeductibleHint;
+
+  /// #2357 input VAT: expenseVatNone
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get expenseVatNone;
+
+  /// #2357 input VAT: expenseVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT on this expense'**
+  String get expenseVatRate;
 
   /// #669 - accounting export formats
   ///
@@ -8783,6 +8825,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Import public holidays'**
   String get featureHolidayImportTitle;
+
+  /// #2357 input VAT: featureInputVatDesc
+  ///
+  /// In en, this message translates to:
+  /// **'An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.'**
+  String get featureInputVatDesc;
+
+  /// #2357 input VAT: featureInputVatTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Input VAT'**
+  String get featureInputVatTitle;
 
   /// #977 instance wizard: featureInstanceWizard
   ///
@@ -32270,6 +32324,12 @@ abstract class AppLocalizations {
   /// **'A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.'**
   String get vatDeclCorrectionsNote;
 
+  /// #2357 input VAT: vatDeclCredit
+  ///
+  /// In en, this message translates to:
+  /// **'VAT credit'**
+  String get vatDeclCredit;
+
   /// Disclaimer at the bottom of the declaration PDF
   ///
   /// In en, this message translates to:
@@ -32300,6 +32360,12 @@ abstract class AppLocalizations {
   /// **'Prepare'**
   String get vatDeclGenerate;
 
+  /// #2357 input VAT: vatDeclInputVat
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible VAT'**
+  String get vatDeclInputVat;
+
   /// Invoice-count column
   ///
   /// In en, this message translates to:
@@ -32323,6 +32389,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Net base'**
   String get vatDeclNet;
+
+  /// #2357 input VAT: vatDeclPayable
+  ///
+  /// In en, this message translates to:
+  /// **'VAT payable'**
+  String get vatDeclPayable;
 
   /// PDF button on a declaration card
   ///

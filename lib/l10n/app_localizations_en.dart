@@ -2095,6 +2095,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookRoleRevenue => 'Revenue';
 
   @override
+  String get bookRoleVatInput => 'Input VAT';
+
+  @override
   String get bookRoleVatOutput => 'Output VAT';
 
   @override
@@ -4666,6 +4669,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseInvalidAmount => 'Enter an amount above zero.';
 
   @override
+  String get expenseInvalidDeductible => 'Enter a share between 0 and 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Enter at least one unit.';
 
   @override
@@ -4697,6 +4703,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Prefilled from amount ÷ quantity; round up if you like.';
+
+  @override
+  String get expenseVatDeductible => 'Deductible share (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'Deductible VAT: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % unless part of the expense is private or serves an exempt activity.';
+
+  @override
+  String get expenseVatNone => 'No VAT';
+
+  @override
+  String get expenseVatRate => 'VAT on this expense';
 
   @override
   String get exportClaimExchange =>
@@ -5053,6 +5077,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Import public holidays';
+
+  @override
+  String get featureInputVatDesc =>
+      'An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.';
+
+  @override
+  String get featureInputVatTitle => 'Input VAT';
 
   @override
   String get featureInstanceWizard => 'Instance wizard';
@@ -18689,6 +18720,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.';
 
   @override
+  String get vatDeclCredit => 'VAT credit';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
 
@@ -18706,6 +18740,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclGenerate => 'Prepare';
 
   @override
+  String get vatDeclInputVat => 'Deductible VAT';
+
+  @override
   String get vatDeclInvoices => 'Invoices';
 
   @override
@@ -18717,6 +18754,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Net base';
+
+  @override
+  String get vatDeclPayable => 'VAT payable';
 
   @override
   String get vatDeclPdf => 'PDF';

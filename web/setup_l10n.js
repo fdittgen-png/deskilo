@@ -1132,6 +1132,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "EU sales list",
     "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice."
+   ],
+   "inputVat": [
+    "Input VAT",
+    "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only."
    ]
   },
   "process": {
@@ -2483,6 +2487,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Déclaration européenne de services",
     "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis."
+   ],
+   "inputVat": [
+    "TVA déductible",
+    "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée."
    ]
   },
   "process": {
@@ -3834,6 +3842,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Zusammenfassende Meldung",
     "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis."
+   ],
+   "inputVat": [
+    "Vorsteuer",
+    "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer."
    ]
   },
   "process": {
@@ -5185,6 +5197,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Declaración recapitulativa (modelo 349)",
     "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso."
+   ],
+   "inputVat": [
+    "IVA soportado",
+    "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido."
    ]
   },
   "process": {
@@ -6536,6 +6552,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Elenchi riepilogativi (Intrastat servizi)",
     "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso."
+   ],
+   "inputVat": [
+    "IVA a credito",
+    "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito."
    ]
   },
   "process": {

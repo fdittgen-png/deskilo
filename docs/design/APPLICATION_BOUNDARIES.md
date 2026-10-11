@@ -180,6 +180,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/workspace/domain/workspace_feature.dart`
 - `lib/features/workspace/domain/workspace_repository.dart`
 - `lib/features/workspace/domain/workspace_xml.dart`
+- `lib/features/workspace/presentation/feature_copy.dart`
 - `lib/features/workspace/presentation/member_admin_actions.dart`
 - `lib/features/workspace/presentation/screens/availability_screen.dart`
 - `lib/features/workspace/presentation/screens/onboarding_screen.dart`

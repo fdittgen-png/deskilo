@@ -1219,6 +1219,10 @@
   "bookRoleCustomers": "Clienti (crediti)",
   "bookRoleExpenses": "Costi",
   "bookRoleRevenue": "Ricavi",
+  "bookRoleVatInput": "IVA a credito",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "IVA a debito",
   "bookSaveFailed": "Il libro non è stato salvato. Controlli la connessione e riprovi.",
   "bookSaved": "Libro salvato",
@@ -3158,6 +3162,10 @@
   "expenseCategoryOther": "Altro",
   "expenseCategorySupplies": "Materiale",
   "expenseInvalidAmount": "Inserisca un importo maggiore di zero.",
+  "expenseInvalidDeductible": "Inserisca una quota tra 0 e 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Inserisca almeno un'unità.",
   "expenseInvalidUnitPrice": "Inserisca un prezzo unitario valido o lo lasci vuoto.",
   "expenseMissingSupplyName": "Dia un nome al nuovo articolo.",
@@ -3168,6 +3176,31 @@
   "expenseSupplyToggle": "È una scorta per lo spazio",
   "expenseSupplyUnitPrice": "Prezzo unitario (quanto costa un consumo)",
   "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotondi se vuole.",
+  "expenseVatDeductible": "Quota detraibile (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleAmount": "IVA detraibile: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatDeductibleHint": "100 % salvo che una parte della spesa sia privata o serva un'attività esente.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "Senza IVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "IVA su questa spesa",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "Perché il suo commercialista lo importi e lo verifichi — non è una dichiarazione.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3402,6 +3435,14 @@
   "featureHolidayImportTitle": "Importa i giorni festivi",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "IVA a credito",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Assistente istanza",
   "@featureInstanceWizard": {
@@ -11476,6 +11517,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "Credito IVA",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Generata dalle fatture emesse del periodo. Verificare con la contabilità prima dell’invio — un aiuto alla dichiarazione, non consulenza fiscale.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11496,6 +11541,10 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
+  "vatDeclInputVat": "IVA detraibile",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
   "vatDeclInvoices": "Fatture",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
@@ -11511,6 +11560,10 @@
   "vatDeclNet": "Imponibile",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "IVA a debito netta",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {

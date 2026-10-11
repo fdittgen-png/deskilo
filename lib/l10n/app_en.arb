@@ -2452,6 +2452,10 @@
   "@bookRoleRevenue": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleVatInput": "Input VAT",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "Output VAT",
   "@bookRoleVatOutput": {
     "description": "#1869 B chart of accounts"
@@ -5582,6 +5586,10 @@
   "@expenseInvalidAmount": {
     "description": "#1449 expense_rules"
   },
+  "expenseInvalidDeductible": "Enter a share between 0 and 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Enter at least one unit.",
   "@expenseInvalidSupplyQuantity": {
     "description": "#1449 expense_rules"
@@ -5601,6 +5609,31 @@
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "expenseVatDeductible": "Deductible share (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleAmount": "Deductible VAT: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatDeductibleHint": "100 % unless part of the expense is private or serves an exempt activity.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "No VAT",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "VAT on this expense",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "For your accountant to import and review — not a filing.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -5983,6 +6016,14 @@
   "featureHolidayImportTitle": "Import public holidays",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "Input VAT",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Instance wizard",
   "@featureInstanceWizard": {
@@ -21275,6 +21316,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "VAT credit",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -21295,6 +21340,10 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
+  "vatDeclInputVat": "Deductible VAT",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
   "vatDeclInvoices": "Invoices",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
@@ -21310,6 +21359,10 @@
   "vatDeclNet": "Net base",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "VAT payable",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {
