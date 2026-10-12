@@ -1,36 +1,30 @@
-DesKilo gestisce tutta la vita di un piccolo spazio di coworking auto-organizzato: le postazioni, chi siede dove, quanto deve ciascuno e le fatture di fine mese. Senza fogli di calcolo né discussioni su chi ha pagato cosa.
+Il tuo spazio di coworking, gestito insieme. Prenota una postazione su una piantina dal vivo, dai a ogni membro lo stesso conto trasparente che vedono gli amministratori e lascia che le persone scelte dalla tua community approvino ciò che conta. Software libero (AGPL-3.0), in beta e pronto per un pilota.
 
-LO SPAZIO
-• Disegna il tuo spazio su una griglia: piani, uffici, scrivanie, postazioni prenotabili
-• Tocca una postazione sulla piantina in tempo reale per entrare: mai una doppia prenotazione
-• Prenota in anticipo, una volta o in serie, e scorri il tempo su qualsiasi momento
-• Prenota una stanza intera, o un piano intero, se lo spazio funziona così
-• Scansiona il QR di uno spazio per prenotarlo dalla porta
+PROVALO PRIMA DI INSTALLARE
+• Demo nel browser: apri www.deskilo.org e tocca «Prova la demo» — nessun account, e nulla di ciò che fai lì lascia il tuo dispositivo
+• Guida utente in italiano, inglese, francese, tedesco e spagnolo, ogni schermata spiegata passo dopo passo: www.deskilo.org/guide/it.html
+• Guida di avvio per un piccolo spazio, dalla piantina al primo invito: www.deskilo.org/guide/setup-it.html
 
-LA COMUNITÀ
-• Elenco dei membri con chi è presente oggi
-• Inviti via link o QR; le richieste di adesione vengono confermate, mai in silenzio
-• Tutto ciò che un amministratore fa per te richiede la tua conferma
-• Un tablet a muro in modalità chiosco registra gli ingressi con badge, QR o fotocamera
+DOVE POSSO LAVORARE?
+• Una piantina dal vivo mostra ogni postazione e chi la occupa, per qualsiasi giorno
+• Prenota una mezza giornata, una postazione o una sala intera, una volta o in serie, poi fai il check-in alla porta
+• Entra scansionando il QR code dello spazio; codici postazione stampati, badge NFC e modalità kiosk per un tablet a parete
 
-I SOLDI
-• Piani con quote a mezze giornate; l'eccedenza si applica secondo le fasce che imposti
-• Un estratto conto trasparente per ogni membro: quota, utilizzo, servizi, pagamenti
-• Spese comuni: compra il caffè e te lo ritrovi accreditato sul prossimo estratto
-• Carnet di giornate per i membri occasionali
-• Pagamento online con PayPal, Stripe, Mollie o Wero, se lo spazio lo attiva
+QUANTO DEVO?
+• Un conto trasparente per membro: abbonamento, uso extra, spese condivise e pagamenti
+• Piani, quote, pacchetti giornalieri e regole di superamento diventano un estratto mensile
+• Fatture con numerazione progressiva, note di credito, solleciti e IVA, emesse nell'app per spazi in Francia e Germania; esportazioni contabili per il tuo commercialista
 
-LE CARTE
-• Fatture mensili derivate da ciò che è realmente accaduto, mai digitate a mano
-• Firmate e immutabili: un errore si corregge con una sostitutiva e restano entrambe
-• IVA, se la applichi: aliquote per servizio e la ripartizione su ogni documento
-• Fatture elettroniche EN 16931 (UBL, CII e Factur-X) per clienti aziendali e pubblici
-• Esportazioni contabili che il tuo commercialista già legge: SAF-T e il FEC francese
+CHI DECIDE?
+• Ruoli e regole di approvazione scelti dalla tua community
+• Ciò che un amministratore fa a tuo nome attende la tua conferma, e ogni decisione conserva la sua cronologia
 
-OVUNQUE
-Lo stesso account su Android, iPhone, iPad, Mac, Windows e nel browser. Una postazione prenotata dal telefono compare un secondo dopo sul tablet a muro.
+TRA GLI SPAZI
+• Un solo «Io» per tutti gli spazi di un server, con preferiti e il tuo ordine
+• Scopri: un elenco e una mappa condivisi dove gli spazi pubblicano una pagina pubblica di proposito
+• Messenger: conversazioni private e gruppi; scegli tu chi vede il tuo nome, i tuoi contatti e la tua presenza
 
-PRIVACY
-Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessun SDK di terze parti. Il backend è Supabase nell'UE e puoi ospitarlo tu. DesKilo è open source con licenza AGPL-3.0: tutto quanto sopra si legge nel codice.
+I TUOI DATI, LA TUA SCELTA
+Usa il server di riferimento condiviso oppure ospita tu stesso il backend sul tuo Supabase. Nessun tracciamento, nessuna analisi, nessuna pubblicità. Disponibile su Android, iPhone, Windows, macOS e nel browser, in cinque lingue.
 
-GDPR: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi può vedere i tuoi dati, chi ha avuto accesso, esportazione, cancellazione.
+GDPR: dati ospitati nell'UE sul deployment di riferimento, accesso limitato per ruolo e applicato sul server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione.
