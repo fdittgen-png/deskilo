@@ -5272,6 +5272,7 @@
     "description": "#669 - accounting export formats"
   },
   "invoiceExportFec": "FEC (Francia, exigido en una inspección)",
+  "invoiceExportFrEReporting": "E-reporting Francia (B2C, internacional, pagos)",
   "invoiceExportSafT": "SAF-T (XML, internacional)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {

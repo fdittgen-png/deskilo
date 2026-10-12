@@ -120,6 +120,13 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     state: QualificationState.implemented,
     obligations: {},
   ),
+  // The flows' structure; a plateforme agréée maps it, and the live
+  // round-trip waits on a sandbox.
+  'fr_ereporting': AccountingCapability(
+    formatId: 'fr_ereporting',
+    state: QualificationState.implemented,
+    specification: 'DGFiP e-reporting flows 10.1-10.4 (structure only)',
+  ),
   'bundle': AccountingCapability(
     formatId: 'bundle',
     state: QualificationState.implemented,

@@ -13782,6 +13782,12 @@ abstract class AppLocalizations {
   /// **'FEC (France, required in an audit)'**
   String get invoiceExportFec;
 
+  /// #2358 - France e-reporting export
+  ///
+  /// In en, this message translates to:
+  /// **'France e-reporting (B2C, international, payments)'**
+  String get invoiceExportFrEReporting;
+
   /// Export chooser: the OECD audit file (0074)
   ///
   /// In en, this message translates to:

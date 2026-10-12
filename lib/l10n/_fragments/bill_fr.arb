@@ -120,6 +120,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportFrEReporting": "E-reporting (ventes aux particuliers, international, encaissements)",
   "exportClaimRegulatory": "Le format que votre administration fiscale demande.",
   "@exportClaimRegulatory": {
     "description": "#669 - accounting export formats"

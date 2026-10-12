@@ -5272,6 +5272,7 @@
     "description": "#669 - accounting export formats"
   },
   "invoiceExportFec": "FEC (France, exigé en cas de contrôle)",
+  "invoiceExportFrEReporting": "E-reporting (ventes aux particuliers, international, encaissements)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
