@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-// Serves public/ — the DesKilo web app at the root, with the welcome page, user guide, setup guide
-// and setup questionnaire beside it. Plain Node, no dependencies, so `npm install` has nothing to fetch.
+// Serves public/ — the DesKilo welcome page as the landing page, the web app under /app/, and the user
+// guide, setup guide and setup questionnaire beside them. Plain Node, no dependencies, so `npm install` has nothing to fetch.
 'use strict';
 const http = require('node:http');
 const fs = require('node:fs');
@@ -9,7 +9,8 @@ const zlib = require('node:zlib');
 
 const ROOT = path.join(__dirname, 'public');
 const HAS_APP = fs.existsSync(path.join(ROOT, 'index.html'));
-const HOME = '/welcome/'; // where `/` goes when the package carries pages only
+const HOME = '/welcome/#top'; // the landing page: `/` always goes here, never straight into the app
+const APP = '/app'; // the web app is served under /app/ from the same files (Flutter built with --base-href /app/)
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.mjs': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.txt': 'text/plain; charset=utf-8',
@@ -65,21 +66,30 @@ const server = http.createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return send(req, res, 405, { Allow: 'GET, HEAD' }, 'Method not allowed');
   const url = new URL(req.url, 'http://localhost');
   if (url.pathname === '/healthz') return send(req, res, 200, { 'Content-Type': 'text/plain' }, 'ok');
-  if (url.pathname === '/' && !HAS_APP) return send(req, res, 302, { Location: HOME + url.search }, '');
+  // A fragment in Location is honoured by browsers: the landing page opens at its top.
+  if (url.pathname === '/') return send(req, res, 302, { Location: HOME }, '');
 
-  let file = resolveFile(url.pathname);
+  // /app/<x> is public/<x>: the app's files live at the package root, beside the pages, once.
+  let pathname = url.pathname;
+  const inApp = HAS_APP && (pathname === APP || pathname.startsWith(APP + '/'));
+  if (inApp) {
+    if (pathname === APP) return send(req, res, 301, { Location: APP + '/' + url.search }, '');
+    pathname = pathname.slice(APP.length);
+  }
+
+  let file = resolveFile(pathname);
   if (!file) return send(req, res, 400, { 'Content-Type': 'text/plain' }, 'Bad request');
   let stat = fs.statSync(file, { throwIfNoEntry: false });
   if (stat?.isDirectory()) {
-    if (!url.pathname.endsWith('/')) return send(req, res, 301, { Location: url.pathname + '/' + url.search }, '');
+    if (!pathname.endsWith('/')) return send(req, res, 301, { Location: (inApp ? APP : '') + pathname + '/' + url.search }, '');
     file = path.join(file, 'index.html');
     stat = fs.statSync(file, { throwIfNoEntry: false });
   }
   if (stat?.isFile()) return serveFile(req, res, file, stat);
 
-  // The app routes in the browser (/money, /reserve…): a path with no file extension that is not a
-  // file belongs to the app, so a reload or a shared deep link opens it. A missing asset stays a 404.
-  if (HAS_APP && !path.extname(url.pathname)) {
+  // The app routes in the browser (/app/money…): inside /app/, a path with no file extension that is
+  // not a file belongs to the app, so a reload or a shared deep link opens it. A missing asset stays a 404.
+  if (inApp && !path.extname(pathname)) {
     const index = path.join(ROOT, 'index.html');
     return serveFile(req, res, index, fs.statSync(index));
   }
@@ -89,4 +99,4 @@ const server = http.createServer((req, res) => {
 });
 
 // Passenger (cPanel / GoDaddy) hands the port over in PORT or intercepts listen().
-server.listen(process.env.PORT || 3000, () => console.log(`DesKilo site on ${server.address().port}${HAS_APP ? ' (web app at /)' : ''}`));
+server.listen(process.env.PORT || 3000, () => console.log(`DesKilo site on ${server.address().port}${HAS_APP ? ' (landing page at /, web app at /app/)' : ''}`));

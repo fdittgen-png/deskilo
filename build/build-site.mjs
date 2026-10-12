@@ -7,10 +7,10 @@
 //     SITE_URL=https://www.example.com node build/build-site.mjs --web ../deskilo/build/web
 //
 //   --src <dir>   a DesKilo checkout (needs web/ and assets/help/images/)
-//   --web <dir>   a Flutter web build (built with --base-href /): the app is the site's
-//                 home, and the welcome page, guides and setup pages are already in it
+//   --web <dir>   a Flutter web build (built with --base-href /app/): the app is served
+//                 under /app/, and the welcome page, guides and setup pages are already in it
 //   SITE_URL      where THIS site will live, no trailing slash. Empty = relative
-//   APP_URL       where the web app lives (default: SITE_URL/ with --web, else GitHub Pages)
+//   APP_URL       where the web app lives (default: SITE_URL/app/ with --web, else GitHub Pages)
 //   SOURCE_SHA    the DesKilo commit, recorded in public/BUILD.txt
 //
 // What it does: copies the welcome page, the user guide, the setup guide, the
@@ -31,7 +31,7 @@ const srcArg = flag('--src');
 if (!webArg && !srcArg) { console.error('usage: build-site.mjs (--web <flutter web build> | --src <deskilo checkout>)'); process.exit(2); }
 const siteUrl = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
 const PAGES = 'https://fdittgen-png.github.io/deskilo/';
-const appUrl = (process.env.APP_URL ?? (webArg ? `${siteUrl}/` : PAGES)).replace(/\/*$/, '/');
+const appUrl = (process.env.APP_URL ?? (webArg ? `${siteUrl}/app/` : PAGES)).replace(/\/*$/, '/');
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });

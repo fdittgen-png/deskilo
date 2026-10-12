@@ -1,15 +1,16 @@
 # DesKilo site — Node.js package for GoDaddy
 
-The DesKilo **web app at the root** (`/`), with the welcome page, the five-language
-user guide, the setup guide, the setup questionnaire, the evaluation page, the privacy
-page and the API docs beside it — served by a dependency-free Node.js server
+The DesKilo **welcome page as the landing page** (`/` goes to `/welcome/#top`), the **web
+app under `/app/`**, and the five-language user guide, the setup guide, the setup
+questionnaire, the evaluation page, the privacy page and the API docs beside them — served by a dependency-free Node.js server
 (`server.js`). `public/` is committed, so the host needs no build step and
 `npm install` downloads nothing.
 
 | URL | What |
 |---|---|
-| `/` | the web app (any path the app routes, e.g. `/money`, opens it too) |
-| `/welcome/` | the advertising page |
+| `/` | redirects to `/welcome/#top` — the landing page never opens the app directly |
+| `/welcome/` | the advertising page; its demo and sign-in buttons open the app |
+| `/app/` | the web app (any path under it the app routes, e.g. `/app/money`, opens it too) |
 | `/guide/en.html` (`fr` `de` `es` `it`) | the user guide |
 | `/guide/setup-en.html` (…) | the setup guide |
 | `/setup.html` | the setup questionnaire |
@@ -19,7 +20,7 @@ page and the API docs beside it — served by a dependency-free Node.js server
 ## Updating the package (CI)
 
 Run **Publish · GoDaddy site package** (Actions tab, or
-`gh workflow run godaddy-site.yml`). It builds the web app from `master` (or the ref you
+`gh workflow run godaddy-site.yml`). It builds the web app (base href `/app/`) from `master` (or the ref you
 give), assembles `public/`, commits it to this branch and attaches
 `deskilo-site.zip` to the rolling release `godaddy-site`. Nothing else is needed.
 
@@ -51,9 +52,9 @@ links may refuse the new domain.
 ```sh
 # pages only, from a checkout of the repository
 SITE_URL=https://www.deskilo.org node build/build-site.mjs --src ../deskilo
-# pages and the web app, from `flutter build web --base-href /`
+# pages and the web app, from `flutter build web --base-href /app/`
 SITE_URL=https://www.deskilo.org node build/build-site.mjs --web ../deskilo/build/web
-PORT=4000 npm start        # then open http://localhost:4000
+PORT=4000 npm start        # then open http://localhost:4000 (the landing page) and /app/
 ```
 
 `SITE_URL` makes the absolute links (share previews, cross-links) point at this domain.
