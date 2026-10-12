@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert' show utf8;
+
+import 'package:crypto/crypto.dart';
 import 'package:xml/xml.dart';
 
 import '../../../core/money/money_text.dart';
@@ -380,13 +383,13 @@ String _progressive(String given, String number) {
     '',
   );
   if (clean.isNotEmpty && clean.length <= 10) return clean;
-  // FNV-1a over the number: stable across runs, ten base-36 characters.
-  var hash = 0xcbf29ce484222325;
-  for (final unit in number.codeUnits) {
-    hash = (hash ^ unit) * 0x100000001b3;
-  }
-  final text = hash.toUnsigned(52).toRadixString(36).toUpperCase();
-  return text.length > 10 ? text.substring(0, 10) : text;
+  // The SHA-256 of the number: stable across runs and identical on the
+  // web, where integers above 2^53 do not exist.
+  return sha256
+      .convert(utf8.encode(number))
+      .toString()
+      .substring(0, 10)
+      .toUpperCase();
 }
 
 String _date(DateTime value) => value.toIso8601String().split('T').first;
