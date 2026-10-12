@@ -56,7 +56,11 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: xmllint
-        run: sudo apt-get install -y --no-install-recommends libxml2-utils
+        run: |
+          command -v xmllint || {
+            sudo apt-get update -q
+            sudo apt-get install -y --no-install-recommends libxml2-utils
+          }
       - run: flutter pub get
       - name: Build one sample per format
         env:
