@@ -32450,6 +32450,18 @@ abstract class AppLocalizations {
   /// **'Draft'**
   String get vatDeclDraft;
 
+  /// #2357 VAT filing files: vatDeclEdiTva
+  ///
+  /// In en, this message translates to:
+  /// **'EDI-TVA file (CA3)'**
+  String get vatDeclEdiTva;
+
+  /// #2357 VAT filing files: vatDeclElster
+  ///
+  /// In en, this message translates to:
+  /// **'ELSTER file (UStVA)'**
+  String get vatDeclElster;
+
   /// Empty state of the declarations list
   ///
   /// In en, this message translates to:
@@ -32461,6 +32473,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filed'**
   String get vatDeclFiled;
+
+  /// #2357 VAT filing files: vatDeclFilingPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  String get vatDeclFilingPeriod;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.'**
+  String get vatDeclFilingTaxNumber;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumberField
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get vatDeclFilingTaxNumberField;
 
   /// Generate-declaration button
   ///

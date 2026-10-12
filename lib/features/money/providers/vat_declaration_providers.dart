@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/files/file_saver.dart';
+import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/save_vat_filing_file.dart';
 import '../domain/vat_declaration.dart';
+import '../domain/vat_filing_files.dart';
 import 'money_providers.dart';
 
 part 'vat_declaration_providers.g.dart';
@@ -16,4 +20,26 @@ Future<List<VatDeclaration>> vatDeclarations(Ref ref) async {
   return ref
       .watch(moneyRepositoryProvider)
       .fetchVatDeclarations(workspace.id);
+}
+
+/// #2357 — saving the filing file of a return, for the space as it is.
+@riverpod
+SaveVatFilingFile saveVatFilingFile(Ref ref) {
+  final w = ref.watch(currentWorkspaceProvider).value;
+  final clock = ref.watch(clockProvider);
+  return SaveVatFilingFile(
+    ref.watch(fileSaverProvider),
+    clock.now,
+    party: w == null
+        ? null
+        : VatFilingParty(
+            countryCode: w.countryCode,
+            name: w.name,
+            street: w.street,
+            postalCode: w.postalCode,
+            city: w.city,
+            vatId: w.vatId,
+            legalId: w.legalId,
+          ),
+  );
 }

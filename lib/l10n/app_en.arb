@@ -21426,6 +21426,14 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
+  "vatDeclEdiTva": "EDI-TVA file (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "ELSTER file (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
   "vatDeclEmpty": "No declarations yet — pick a period and generate the first one.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
@@ -21433,6 +21441,18 @@
   "vatDeclFiled": "Filed",
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Tax number (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
   "vatDeclGenerate": "Prepare",
   "@vatDeclGenerate": {

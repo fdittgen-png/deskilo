@@ -19014,11 +19014,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclDraft => 'Brouillon';
 
   @override
+  String get vatDeclEdiTva => 'Fichier EDI-TVA (CA3)';
+
+  @override
+  String get vatDeclElster => 'Fichier ELSTER (UStVA)';
+
+  @override
   String get vatDeclEmpty =>
       'Aucune déclaration — choisissez une période et générez la première.';
 
   @override
   String get vatDeclFiled => 'Déposée';
+
+  @override
+  String get vatDeclFilingPeriod =>
+      'Une déclaration ELSTER anticipée couvre un mois ou un trimestre ; la déclaration annuelle se dépose à part.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Saisissez le numéro fiscal : la Steuernummer pour ELSTER, le SIREN (ou un numéro de TVA FR) pour l\'EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Numéro fiscal (Steuernummer)';
 
   @override
   String get vatDeclGenerate => 'Préparer';
