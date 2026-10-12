@@ -4531,6 +4531,7 @@ Map<String, _Getter> _part20() => {
   'repartitionFiled': (l) => l.repartitionFiled,
   'reportDesignerDiscard': (l) => l.reportDesignerDiscard,
   'reportFieldMeaningClientMemberNumber': (l) => l.reportFieldMeaningClientMemberNumber,
+  'reportFieldMeaningDeclarationNote': (l) => l.reportFieldMeaningDeclarationNote,
   'reportFieldMeaningIban': (l) => l.reportFieldMeaningIban,
   'reportFieldMeaningPaymentTermsSource': (l) => l.reportFieldMeaningPaymentTermsSource,
   'reportFieldMeaningPeriodYear': (l) => l.reportFieldMeaningPeriodYear,

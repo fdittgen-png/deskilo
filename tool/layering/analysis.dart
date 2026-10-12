@@ -81,7 +81,11 @@ Map<String, List<String>> repositoryReadsByFeature(Iterable<File> files) {
     if (!repositoryUse.hasMatch(withoutComments(file.readAsStringSync()))) {
       continue;
     }
-    (found[feature] ??= []).add(file.path);
+    // #2386 — a part file is its library: a screen split across part
+    // files is still one presentation file reaching a repository.
+    final list = found[feature] ??= [];
+    final library = libraryPathOf(file);
+    if (!list.contains(library)) list.add(library);
   }
   for (final list in found.values) {
     list.sort();
@@ -143,3 +147,22 @@ Iterable<File> handWrittenDartFiles(String root) => Directory(root)
     .whereType<File>()
     .where((f) => f.path.endsWith('.dart'))
     .where((f) => !isGenerated(f.path));
+
+/// The library [file] belongs to: itself, or the file its `part of`
+/// names (#2386).
+String libraryPathOf(File file) {
+  final m = RegExp(r"^part of '([^']+)';", multiLine: true)
+      .firstMatch(file.readAsStringSync());
+  if (m == null) return file.path;
+  final dir = file.parent.path;
+  final parts = [...dir.split('/'), ...m.group(1)!.split('/')];
+  final out = <String>[];
+  for (final p in parts) {
+    if (p == '..') {
+      out.removeLast();
+    } else if (p != '.') {
+      out.add(p);
+    }
+  }
+  return out.join('/');
+}
