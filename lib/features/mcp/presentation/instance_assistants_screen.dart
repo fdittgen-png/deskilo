@@ -17,7 +17,6 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
-import '../../../core/ui/labeled_rows.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/instance_operator.dart';
@@ -25,6 +24,7 @@ import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import 'eligibility_review_screen.dart' show SecondFactorSheet;
+import 'widgets/instance_assistant_sections.dart';
 import 'widgets/instance_console_sections.dart';
 
 class InstanceAssistantsScreen extends ConsumerStatefulWidget {
@@ -242,242 +242,24 @@ class _InstanceAssistantsScreenState
                   onCheck: o.secondFactor && !_busy ? _checkServer : null,
                 ),
                 const Divider(height: AppSpacing.xl),
-                _runtime(l10n, o),
+                InstanceRuntimeSection(
+                  o: o,
+                  busy: _busy,
+                  change: _change,
+                  onTurnOn: () => _turnOn(l10n),
+                ),
                 const Divider(height: AppSpacing.xl),
-                _administrators(l10n, o),
+                InstanceAdministratorsSection(o: o, busy: _busy, change: _change),
                 const Divider(height: AppSpacing.xl),
                 InstanceAccessSection(
                   overview: o,
                   onGrant: o.secondFactor && !_busy ? _grant : null,
                 ),
                 const Divider(height: AppSpacing.xl),
-                _clients(l10n, o),
-                _loopback(l10n, o),
+                InstanceClientsSection(o: o, busy: _busy, change: _change),
+                InstanceLoopbackSwitch(o: o, busy: _busy, change: _change),
               ],
             ),
-    );
-  }
-
-  Widget _heading(String text) => SectionHeading(text);
-
-  Widget _runtime(AppLocalizations l10n, InstanceMcpOverview o) {
-    final can = o.secondFactor && !_busy;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _heading(
-          l10n.instanceRuntimeTitle,
-        ),
-        ListTile(
-          key: ValueKey('instance-runtime-${o.enabled ? 'on' : 'off'}'),
-          contentPadding: EdgeInsets.zero,
-          leading: Icon(
-            o.enabled ? Icons.toggle_on : Icons.toggle_off_outlined,
-          ),
-          title: Text(
-            o.enabled
-                ? (l10n.instanceRuntimeOn)
-                : (l10n.instanceRuntimeOff),
-          ),
-        ),
-        if (!o.enabled && !endpointReady(o.endpointProbe))
-          Text(
-            key: const ValueKey('instance-turn-on-needs-probe'),
-            l10n.instanceTurnOnNeedsProbe,
-          ),
-        if (!o.enabled && o.blockers.isNotEmpty)
-          Text(
-            key: const ValueKey('instance-blockers'),
-            '${l10n.instanceBlockers} '
-            '${o.blockers.map((b) => _blocker(l10n, b)).join(', ')}',
-          ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: o.enabled
-              ? OutlinedButton(
-                  key: const ValueKey('instance-turn-off'),
-                  onPressed: can
-                      ? () => _change(
-                          'runtime off failed',
-                          () => ref
-                              .read(assistantAccessProvider)
-                              .setRuntime(enabled: false),
-                        )
-                      : null,
-                  child: Text(l10n.instanceTurnOff),
-                )
-              : FilledButton(
-                  key: const ValueKey('instance-turn-on'),
-                  // #2145 — Turn on needs a fresh check of the deployed
-                  // endpoint (0360); the check comes first.
-                  onPressed: can && o.ready && endpointReady(o.endpointProbe)
-                      ? () => _turnOn(l10n)
-                      : null,
-                  child: Text(
-                    l10n.instanceTurnOn,
-                  ),
-                ),
-        ),
-      ],
-    );
-  }
-
-  String _blocker(AppLocalizations l10n, String code) => switch (code) {
-    'no_database_administrator' =>
-      l10n.instanceBlockerNoAdmin,
-    _ => code,
-  };
-
-  Widget _administrators(AppLocalizations l10n, InstanceMcpOverview o) {
-    final can = o.secondFactor && !_busy;
-    String name(InstanceMember m) =>
-        m.me ? '${m.name} (${l10n.instanceYou})' : m.name;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _heading(l10n.instanceAdminsTitle),
-        Text(
-          l10n.instanceAdminsHelp,
-        ),
-        for (final a in o.administrators)
-          ListTile(
-            key: ValueKey('instance-admin-${a.userId}'),
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.admin_panel_settings_outlined),
-            title: Text(name(a)),
-            trailing: TextButton(
-              key: ValueKey('instance-remove-${a.userId}'),
-              onPressed: can
-                  ? () => _change(
-                      'remove administrator failed',
-                      () => ref
-                          .read(assistantAccessProvider)
-                          .revokeAdministrator(a.userId),
-                    )
-                  : null,
-              child: Text(l10n.instanceRemoveAdmin),
-            ),
-          ),
-        if (o.candidates.isEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.sm),
-            child: Text(
-              key: const ValueKey('instance-no-candidates'),
-              l10n.instanceNoCandidates,
-            ),
-          ),
-        for (final c in o.candidates)
-          ListTile(
-            key: ValueKey('instance-candidate-${c.userId}'),
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.person_outline),
-            title: Text(name(c)),
-            trailing: OutlinedButton(
-              key: ValueKey('instance-make-admin-${c.userId}'),
-              onPressed: can
-                  ? () => _change(
-                      'make administrator failed',
-                      () => ref
-                          .read(assistantAccessProvider)
-                          .grantAdministrator(c.userId),
-                    )
-                  : null,
-              child: Text(l10n.instanceMakeAdmin),
-            ),
-          ),
-      ],
-    );
-  }
-
-  /// #2145 — the family a client was recognised as, by its exact
-  /// redirects (0359); null for anything else.
-  String? _family(AppLocalizations l10n, String? family) => switch (family) {
-    'claude' => l10n.instanceFamilyClaude,
-    'chatgpt' => l10n.instanceFamilyChatgpt,
-    'loopback' =>
-      l10n.instanceFamilyLoopback,
-    _ => null,
-  };
-
-  /// #2145 — one audited switch for assistants that answer on the
-  /// person's own computer (Claude Code, Cursor, VS Code).
-  Widget _loopback(AppLocalizations l10n, InstanceMcpOverview o) =>
-      SwitchListTile(
-        key: ValueKey(
-          'instance-loopback-${o.allowLoopbackClients ? 'on' : 'off'}',
-        ),
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          l10n.instanceLoopbackTitle,
-        ),
-        subtitle: Text(
-          l10n.instanceLoopbackHelp,
-        ),
-        value: o.allowLoopbackClients,
-        onChanged: o.secondFactor && !_busy
-            ? (on) => _change(
-                'loopback switch failed',
-                () => ref
-                    .read(mcpOnboardingCommandsProvider)
-                    .allowLoopbackClients(on),
-              )
-            : null,
-      );
-
-  Widget _clients(AppLocalizations l10n, InstanceMcpOverview o) {
-    final can = o.secondFactor && !_busy;
-    String status(InstanceClient c) => switch (c.status) {
-      'active' => l10n.instanceClientApproved,
-      'revoked' => l10n.instanceClientBlocked,
-      _ => l10n.instanceClientWaiting,
-    };
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _heading(l10n.instanceClientsTitle),
-        Text(
-          l10n.instanceClientsHelp,
-        ),
-        for (final c in o.clients)
-          ListTile(
-            key: ValueKey('instance-client-${c.clientId}-${c.status}'),
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.smart_toy_outlined),
-            title: Text(c.name),
-            subtitle: Text(
-              [
-                status(c),
-                ?_family(l10n, c.family),
-                if (c.redirectHosts.isNotEmpty) c.redirectHosts.join(', '),
-              ].join(' · '),
-            ),
-            trailing: c.approved
-                ? TextButton(
-                    key: ValueKey('instance-block-${c.clientId}'),
-                    onPressed: can
-                        ? () => _change(
-                            'block client failed',
-                            () => ref
-                                .read(assistantAccessProvider)
-                                .setClient(c.clientId, active: false),
-                          )
-                        : null,
-                    child: Text(l10n.instanceBlock),
-                  )
-                : OutlinedButton(
-                    key: ValueKey('instance-approve-${c.clientId}'),
-                    onPressed: can
-                        ? () => _change(
-                            'approve client failed',
-                            () => ref
-                                .read(assistantAccessProvider)
-                                .setClient(c.clientId, active: true),
-                          )
-                        : null,
-                    child: Text(l10n.instanceApprove),
-                  ),
-          ),
-      ],
     );
   }
 }
