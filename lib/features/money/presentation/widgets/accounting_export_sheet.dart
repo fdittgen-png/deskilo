@@ -146,6 +146,7 @@ class _FormatTile extends StatelessWidget {
         'accountant_csv' =>
           l10n.invoiceExportAccountantCsv,
         'audit_trail' => l10n.invoiceExportAuditTrail,
+        'fr_ereporting' => l10n.invoiceExportFrEReporting,
         'bundle' => l10n.invoiceExportBundle,
         _ => format.id,
       };

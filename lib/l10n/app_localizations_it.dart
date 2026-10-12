@@ -8139,6 +8139,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportFec => 'FEC (Francia, richiesto in caso di verifica)';
 
   @override
+  String get invoiceExportFrEReporting =>
+      'E-reporting Francia (B2C, internazionale, pagamenti)';
+
+  @override
   String get invoiceExportSafT => 'SAF-T (XML, internazionale)';
 
   @override

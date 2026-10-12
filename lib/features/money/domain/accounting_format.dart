@@ -208,9 +208,21 @@ const archiveBundleFormat = AccountingFormat(
   needsLegalId: true,
 );
 
+/// #2358 — France's e-reporting: the B2C and international transactions
+/// and the payment data of the month's last invoiced period, in the
+/// structure of the DGFiP flows 10.1-10.4. The plateforme agréée maps it;
+/// the file is never presented as the filing itself.
+const _frEReportingFormat = AccountingFormat(
+  id: 'fr_ereporting',
+  claim: FormatClaim.subset,
+  countries: {'FR'},
+  extension: 'xml',
+);
+
 @visibleForTesting
 const List<AccountingFormat> accountingFormats = [
   fecFormat,
+  _frEReportingFormat,
   safTPtFormat,
   _datevFormat,
   _sageFormat,

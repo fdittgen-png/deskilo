@@ -120,6 +120,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportFrEReporting": "E-reporting Francia (B2C, internazionale, pagamenti)",
   "exportClaimRegulatory": "Il formato richiesto dalla sua amministrazione fiscale.",
   "@exportClaimRegulatory": {
     "description": "#669 - accounting export formats"

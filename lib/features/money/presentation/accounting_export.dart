@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../reservations/providers/reservation_providers.dart';
@@ -20,6 +21,7 @@ import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
 import '../domain/fec.dart';
+import '../domain/fr_ereporting.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/saf_t.dart';
@@ -420,6 +422,34 @@ Future<void> exportAccountingFile(
             fileName: archiveBundleFileName(company.legalId, year, development: development),
           );
         },
+      );
+    case 'fr_ereporting':
+      // #2358 — the month of the latest invoice: transactions on the
+      // invoice date, payments on receipts (the French default) unless
+      // the workspace opted for the débits.
+      final last = invoices.map((i) => i.issuedAt).reduce(
+            (a, b) => a.isAfter(b) ? a : b,
+          );
+      final month = WorkspaceTime.dateOf(last);
+      await runGuarded(
+        context,
+        domain: 'money',
+        message: 'France e-reporting export failed',
+        action: () async => save(
+          frEReport(
+            exported,
+            start: DateTime(month.year, month.month),
+            end: DateTime(month.year, month.month + 1, 0),
+            matches: matches,
+            instalments: await repo.fetchInvoiceInstalments(workspace.id),
+            onReceipts: workspaceTaxPointBasis(
+              workspace.invoiceLegal,
+              workspace.countryCode,
+            ).onReceipts,
+            currency: workspace.currencyCode,
+          ).toXml(),
+          named('e-reporting'),
+        ),
       );
     case 'audit_trail':
       await runGuarded(

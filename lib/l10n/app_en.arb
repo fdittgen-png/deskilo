@@ -9333,6 +9333,10 @@
   "@invoiceExportFec": {
     "description": "Export chooser: the French audit file (0075)"
   },
+  "invoiceExportFrEReporting": "France e-reporting (B2C, international, payments)",
+  "@invoiceExportFrEReporting": {
+    "description": "#2358 - France e-reporting export"
+  },
   "invoiceExportSafT": "SAF-T (XML, international)",
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
