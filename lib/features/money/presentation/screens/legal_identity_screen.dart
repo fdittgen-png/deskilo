@@ -11,7 +11,6 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -101,7 +100,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     setState(() => _saving = true);
@@ -109,8 +108,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       context,
       domain: 'money',
       message: 'legal identity save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       // The ORDER is the decision and it lives in the command (#1449):
       // the template first, because a stray window is cosmetic and a
       // stray identity is an invoice that contradicts itself.
@@ -153,7 +151,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     if (!mounted) return;
     AppSnack.success(
       context,
-      l10n?.legalIdentitySaved ?? 'Legal identity saved.',
+      l10n.legalIdentitySaved,
     );
   }
 
@@ -167,7 +165,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     required String anchor,
     String? hint,
   }) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: TextField(
@@ -182,7 +180,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           helperMaxLines: 3,
           counterText: '',
           suffixIcon: HelpDot(
-            l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+            l10n.helpTopicLegalIdentity,
             anchor: anchor,
           ),
         ),
@@ -192,13 +190,13 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final rates = ref.watch(vatRatesProvider).value ?? const [];
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.legalIdentityTitle ?? 'Legal identity'),
+          title: Text(l10n.legalIdentityTitle),
         ),
         body: const LoadingView(),
       );
@@ -238,16 +236,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n?.legalIdentityTitle ?? 'Legal identity & e-invoicing',
+          l10n.legalIdentityTitle,
         ),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.legalIdentityIntro ??
-                'What an EN 16931 e-invoice must state about you. Invoices '
-                    'already issued keep the identity they were signed with.',
+            l10n.legalIdentityIntro,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -263,37 +259,33 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                   DropdownMenuItem(
                     value: VatRegime.notSubject,
                     child: Text(
-                      l10n?.legalIdentityRegimeNotSubject ??
-                          'Outside the scope of VAT',
+                      l10n.legalIdentityRegimeNotSubject,
                     ),
                   ),
                   DropdownMenuItem(
                     value: VatRegime.exempt,
                     child: Text(
-                      l10n?.legalIdentityRegimeExempt ??
-                          'VAT-exempt (small-business scheme)',
+                      l10n.legalIdentityRegimeExempt,
                     ),
                   ),
                   DropdownMenuItem(
                     value: VatRegime.vatRegistered,
                     child: Text(
-                      l10n?.legalIdentityRegimeVatRegistered ??
-                          'VAT-registered (charges VAT)',
+                      l10n.legalIdentityRegimeVatRegistered,
                     ),
                   ),
                 ],
                 onChanged: (value) =>
                     setState(() => _regime = value ?? _regime),
                 decoration: InputDecoration(
-                  labelText: l10n?.legalIdentityRegime ?? 'VAT regime',
+                  labelText: l10n.legalIdentityRegime,
                   helperMaxLines: 3,
-                  helperText: l10n?.legalIdentityRegimeHint ??
-                      'The regime decides which number the norm requires.',
+                  helperText: l10n.legalIdentityRegimeHint,
                 ),
               ),
             ),
             HelpDot(
-              l10n?.helpTopicVat ?? 'VAT',
+              l10n.helpTopicVat,
               anchor: HelpAnchor.moneyVatRegime,
             ),
           ]),
@@ -305,13 +297,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               key: const ValueKey('legal-identity-reverse-charge'),
               contentPadding: EdgeInsets.zero,
               value: _reverseCharge,
-              title: Text(l10n?.reverseChargeTitle ??
-                  'Reverse charge for EU businesses'),
-              subtitle: Text(l10n?.reverseChargeSubtitle ??
-                  'A customer with a VAT number in another member state '
-                      'is invoiced without tax and self-assesses it '
-                      '(art. 196). Turn it off if you never invoice '
-                      'businesses abroad.'),
+              title: Text(l10n.reverseChargeTitle),
+              subtitle: Text(l10n.reverseChargeSubtitle),
               onChanged: (v) => setState(() => _reverseCharge = v),
             ),
           // #896/#2355 — when the tax falls due, as the country allows.
@@ -348,21 +335,13 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             InlineBanner(
               key: const ValueKey('legal-identity-association-regime'),
               icon: Icons.info_outline,
-              text: l10n?.legalIdentityAssociationRegime ??
-                  'A non-profit association with no trading activity is '
-                      'not subject to VAT: choose "Outside the scope of '
-                      'VAT", not "Exempt". The exempt scheme requires a '
-                      'VAT number you do not have, and the e-invoice '
-                      'would be rejected.',
+              text: l10n.legalIdentityAssociationRegime,
             ),
           if (_regime == VatRegime.vatRegistered && rates.isEmpty)
             InlineBanner(
               key: const ValueKey('legal-identity-vat-warning'),
               icon: Icons.warning_amber_outlined,
-              text: l10n?.legalIdentityVatWarning ??
-                  'This space charges VAT but has no default rate in force: '
-                      'no invoice can be issued until you add one. Rates are '
-                      'edited with “VAT management” switched on.',
+              text: l10n.legalIdentityVatWarning,
             ),
           if (_regime == VatRegime.vatRegistered &&
               ref
@@ -373,12 +352,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.percent),
             title: HelpDotTitle(
-              l10n?.vatRatesTile ?? 'VAT rates',
-              l10n?.helpTopicVat ?? 'VAT',
+              l10n.vatRatesTile,
+              l10n.helpTopicVat,
               anchor: HelpAnchor.moneyVatRates,
             ),
             subtitle: rates.isEmpty
-                ? Text(l10n?.vatEmpty ?? 'No rate yet — invoices show no VAT.')
+                ? Text(l10n.vatEmpty)
                 : Text(rates
                     .map((rate) => '${rate.label} '
                         '(${rate.percent == rate.percent.roundToDouble() ? rate.percent.toStringAsFixed(0) : rate.percent})')
@@ -396,13 +375,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               key: const ValueKey('legal-identity-vat-account'),
               controller: _vatAccount,
               decoration: InputDecoration(
-                labelText: l10n?.vatAccountField ?? 'VAT account',
+                labelText: l10n.vatAccountField,
                 helperMaxLines: 3,
-                helperText: l10n?.vatAccountHint ??
-                    'Where the accounting export books collected VAT. '
-                        'Empty = 445710.',
+                helperText: l10n.vatAccountHint,
                 suffixIcon: HelpDot(
-                  l10n?.helpTopicVat ?? 'VAT',
+                  l10n.helpTopicVat,
                   anchor: HelpAnchor.moneyVatAccount,
                 ),
               ),
@@ -416,9 +393,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               controller: _vatId,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
-                labelText: l10n?.legalIdentityVatId ?? 'VAT number',
+                labelText: l10n.legalIdentityVatId,
                 suffixIcon: HelpDot(
-                  l10n?.helpTopicVat ?? 'VAT',
+                  l10n.helpTopicVat,
                   anchor: HelpAnchor.moneyVatNumber,
                 ),
               ),
@@ -428,11 +405,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               key: const ValueKey('legal-identity-legal-id'),
               controller: _legalId,
               decoration: InputDecoration(
-                labelText: l10n?.legalIdentityLegalId ??
-                    'Company registration number',
+                labelText: l10n.legalIdentityLegalId,
                 suffixIcon:
                     HelpDot(
-                      l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                      l10n.helpTopicLegalIdentity,
                       anchor: HelpAnchor.legalLegalId,
                     ),
               ),
@@ -443,17 +419,13 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             controller: _reason,
             maxLines: 2,
             decoration: InputDecoration(
-              labelText: l10n?.legalIdentityExemptionReason ??
-                  'Why no VAT is charged',
+              labelText: l10n.legalIdentityExemptionReason,
               helperMaxLines: 4,
               helperText: _sellerKind == 'association'
-                  ? (l10n?.invoiceLegalAssociationReasonHint ??
-                      'e.g. "TVA non applicable, art. 293 B du CGI" — or '
-                          '"Exonération de TVA, art. 261, 7-1° du CGI" '
-                          'for services to members')
+                  ? (l10n.invoiceLegalAssociationReasonHint)
                   : null,
               suffixIcon: HelpDot(
-                l10n?.helpTopicVat ?? 'VAT',
+                l10n.helpTopicVat,
                 anchor: HelpAnchor.moneyVatExemptionReason,
               ),
             ),
@@ -463,10 +435,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             key: const ValueKey('legal-identity-street'),
             controller: _street,
             decoration: InputDecoration(
-              labelText: l10n?.legalIdentityStreet ?? 'Street',
+              labelText: l10n.legalIdentityStreet,
               suffixIcon:
                   HelpDot(
-                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    l10n.helpTopicLegalIdentity,
                     anchor: HelpAnchor.legalAddress,
                   ),
             ),
@@ -479,9 +451,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 key: const ValueKey('legal-identity-postal-code'),
                 controller: _postalCode,
                 decoration: InputDecoration(
-                  labelText: l10n?.legalIdentityPostalCode ?? 'Post code',
+                  labelText: l10n.legalIdentityPostalCode,
                   suffixIcon: HelpDot(
-                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    l10n.helpTopicLegalIdentity,
                     anchor: HelpAnchor.legalAddress,
                   ),
                 ),
@@ -493,9 +465,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 key: const ValueKey('legal-identity-city'),
                 controller: _city,
                 decoration: InputDecoration(
-                  labelText: l10n?.legalIdentityCity ?? 'City',
+                  labelText: l10n.legalIdentityCity,
                   suffixIcon: HelpDot(
-                    l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+                    l10n.helpTopicLegalIdentity,
                     anchor: HelpAnchor.legalAddress,
                   ),
                 ),
@@ -509,8 +481,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.cloud_upload_outlined),
             title: HelpDotTitle(
-              l10n?.einvoiceConfigTitle ?? 'E-invoicing platform',
-              l10n?.helpTopicEinvoice ?? 'e-invoice',
+              l10n.einvoiceConfigTitle,
+              l10n.helpTopicEinvoice,
               anchor: HelpAnchor.einvoiceOverview,
             ),
             trailing: const Icon(Icons.chevron_right),
@@ -519,15 +491,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           const SizedBox(height: AppSpacing.lg),
           // #480 — the statutory mention lines the documents print.
           Text(
-            l10n?.invoiceLegalSection ?? 'Invoice mentions',
+            l10n.invoiceLegalSection,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            l10n?.invoiceLegalIntro ??
-                'The statutory lines printed on invoices and reminders. '
-                    'The payment clauses fall back to legal defaults when '
-                    'left empty.',
+            l10n.invoiceLegalIntro,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -544,12 +513,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                   ButtonSegment(
                     value: '',
                     label: Text(
-                        l10n?.invoiceLegalKindCompany ?? 'Company / business'),
+                        l10n.invoiceLegalKindCompany),
                   ),
                   ButtonSegment(
                     value: 'association',
-                    label: Text(l10n?.invoiceLegalKindAssociation ??
-                        'Association (non-profit)'),
+                    label: Text(l10n.invoiceLegalKindAssociation),
                   ),
                 ],
                 selected: {_sellerKind},
@@ -558,15 +526,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               ),
             ),
             HelpDot(
-              l10n?.helpTopicLegalIdentity ?? 'Legal identity',
+              l10n.helpTopicLegalIdentity,
               anchor: HelpAnchor.legalSellerKind,
             ),
           ]),
           const SizedBox(height: AppSpacing.md),
           // #1916 — the customers' capacity decides the clauses, not the
           // seller's legal form; a member's own capacity wins.
-          Text(l10n?.invoiceLegalCustomerCapacityField ??
-              'Default customer capacity'),
+          Text(l10n.invoiceLegalCustomerCapacityField),
           const SizedBox(height: AppSpacing.xs),
           SegmentedButton<String>(
             key: const ValueKey('legal-identity-capacity'),
@@ -574,7 +541,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               for (final wire in const ['', 'business', 'consumer'])
                 ButtonSegment(
                   value: wire,
-                  label: Text(customerCapacityName(l10n ?? englishL10n, wire)),
+                  label: Text(customerCapacityName(l10n, wire)),
                 ),
             ],
             selected: {_customerCapacity},
@@ -583,8 +550,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            l10n?.invoiceLegalCustomerCapacityHint ??
-                'Decides which payment clauses an invoice prints.',
+            l10n.invoiceLegalCustomerCapacityHint,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -593,61 +559,59 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           _mentionField(
             'legal-identity-legal-form',
             _legalForm,
-            l10n?.invoiceLegalFormField ?? 'Legal form & capital',
+            l10n.invoiceLegalFormField,
             hint: _sellerKind == 'association'
-                ? (l10n?.invoiceLegalFormHintAssociation ??
-                    'e.g. Association loi 1901')
-                : l10n?.invoiceLegalFormHint,
+                ? (l10n.invoiceLegalFormHintAssociation)
+                : l10n.invoiceLegalFormHint,
             anchor: HelpAnchor.legalForm,
           ),
           _mentionField(
             'legal-identity-registration',
             _registration,
-            l10n?.invoiceLegalRegistrationField ?? 'Trade register',
+            l10n.invoiceLegalRegistrationField,
             hint: _sellerKind == 'association'
-                ? (l10n?.invoiceLegalRegistrationHintAssociation ??
-                    'e.g. RNA W123456789 · SIRET if assigned')
-                : l10n?.invoiceLegalRegistrationHint,
+                ? (l10n.invoiceLegalRegistrationHintAssociation)
+                : l10n.invoiceLegalRegistrationHint,
             anchor: HelpAnchor.legalRegistration,
           ),
           _mentionField(
             'legal-identity-payment-terms',
             _paymentTerms,
-            l10n?.invoiceLegalPaymentTermsField ?? 'Payment terms',
-            hint: l10n?.invoiceLegalPaymentTermsDefault,
+            l10n.invoiceLegalPaymentTermsField,
+            hint: l10n.invoiceLegalPaymentTermsDefault,
             anchor: HelpAnchor.legalPaymentTerms,
           ),
           _mentionField(
             'legal-identity-late-penalty',
             _latePenalty,
-            l10n?.invoiceLegalLatePenaltyField ?? 'Late-payment penalty',
-            hint: l10n?.invoiceLegalLatePenaltyDefault,
+            l10n.invoiceLegalLatePenaltyField,
+            hint: l10n.invoiceLegalLatePenaltyDefault,
             anchor: HelpAnchor.legalLatePenalty,
           ),
           _mentionField(
             'legal-identity-recovery',
             _recovery,
-            l10n?.invoiceLegalRecoveryField ?? 'Recovery indemnity',
-            hint: l10n?.invoiceLegalRecoveryDefault,
+            l10n.invoiceLegalRecoveryField,
+            hint: l10n.invoiceLegalRecoveryDefault,
             anchor: HelpAnchor.legalRecovery,
           ),
           _mentionField(
             'legal-identity-escompte',
             _escompte,
-            l10n?.invoiceLegalEscompteField ?? 'Early-payment discount',
-            hint: l10n?.invoiceLegalEscompteDefault,
+            l10n.invoiceLegalEscompteField,
+            hint: l10n.invoiceLegalEscompteDefault,
             anchor: HelpAnchor.legalEscompte,
           ),
           _mentionField(
             'legal-identity-insurance',
             _insurance,
-            l10n?.invoiceLegalInsuranceField ?? 'Professional insurance',
+            l10n.invoiceLegalInsuranceField,
             anchor: HelpAnchor.legalInsurance,
           ),
           _mentionField(
             'legal-identity-special',
             _special,
-            l10n?.invoiceLegalSpecialField ?? 'Special mentions',
+            l10n.invoiceLegalSpecialField,
             anchor: HelpAnchor.legalSpecialMentions,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -668,7 +632,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           FilledButton(
             key: const ValueKey('legal-identity-save'),
             onPressed: _saving ? null : _save,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),

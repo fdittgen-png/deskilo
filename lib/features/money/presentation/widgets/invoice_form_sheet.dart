@@ -10,11 +10,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -41,7 +41,7 @@ Future<void> showInvoiceIssueSheet(
   String? memberId,
   String? period,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final members = (await ref.read(workspaceMembersProvider.future))
@@ -54,7 +54,7 @@ Future<void> showInvoiceIssueSheet(
   // One instant for the whole sheet: the month ceiling and the default
   // period must not straddle a midnight (or month) tick.
   final now = ref.read(clockProvider).now();
-  final result = await showModalBottomSheet<
+  final result = await showAppSheet<
       ({String memberId, String period, bool detailed,
         String buyerReference, String purchaseOrder})>(
     context: context,
@@ -110,21 +110,18 @@ Future<void> showInvoiceIssueSheet(
     AppSnack.error(
       context,
       e.toString().contains('already invoiced')
-          ? (l10n?.invoiceAlreadyInvoiced ??
-              'This month is already invoiced for this member.')
+          ? (l10n.invoiceAlreadyInvoiced)
           : e.toString().contains('invoice_feature_disabled')
-              ? (l10n?.invoiceFeatureDisabled ?? AppLocalizationsEn().invoiceFeatureDisabled)
+              ? (l10n.invoiceFeatureDisabled)
           : e.toString().contains('invoice_essentials_missing')
-              ? (l10n?.invoiceEssentialsRefused ??
-                  'The invoice was not issued: required details are missing.')
-              : (l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.'),
+              ? (l10n.invoiceEssentialsRefused)
+              : (l10n.workspaceGenericError),
     );
     return;
   }
   ref.invalidate(invoicesProvider);
   if (!context.mounted) return;
-  AppSnack.success(context, l10n?.invoiceIssued ?? 'Invoice issued.');
+  AppSnack.success(context, l10n.invoiceIssued);
 }
 
 /// The issue form (0062): member + month, and a read-only PREVIEW of the
@@ -148,7 +145,7 @@ class _InvoiceForm extends StatefulWidget {
   /// #870 — an association collects a participation.
   final bool association;
 
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
   final List<({String id, String name})> members;
   final MoneyFormat currency;
   final Future<({List<InvoiceLine> lines, int totalCents})> Function(
@@ -254,7 +251,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final replacesNumber = widget.replacesNumber;
     final replacesBanner = replacesNumber == null
         ? null
-        : '${l10n?.invoicePdfReplaces ?? 'Replaces'} $replacesNumber';
+        : '${l10n.invoicePdfReplaces} $replacesNumber';
     final monthLabel = DateFormat.yMMMM(
       Localizations.maybeLocaleOf(context)?.toString(),
     ).format(_month);
@@ -264,7 +261,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final lines = preview?.lines ?? const <InvoiceLine>[];
 
     return SheetShell(
-      title: l10n?.invoiceCreate ?? 'New invoice',
+      title: l10n.invoiceCreate,
       children: [
         if (replacesBanner != null) ...[
           const SizedBox(height: 8),
@@ -295,7 +292,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             unawaited(_load());
           },
           decoration: InputDecoration(
-            labelText: l10n?.invoiceMemberLabel ?? 'Member',
+            labelText: l10n.invoiceMemberLabel,
           ),
         ),
         const SizedBox(height: 8),
@@ -327,9 +324,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           InlineBanner(
             key: const ValueKey('invoice-running-month-banner'),
             icon: Icons.hourglass_bottom_outlined,
-            text: l10n?.invoiceRunningMonth ??
-                'This month is still running — its positions can still '
-                    'change, and a month can only be invoiced once.',
+            text: l10n.invoiceRunningMonth,
             severity: InlineBannerSeverity.info,
           ),
         const SizedBox(height: 8),
@@ -338,8 +333,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              l10n?.invoicePickMember ??
-                  'Pick a member to see what their month tracked.',
+              l10n.invoicePickMember,
               key: const ValueKey('invoice-pick-member'),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
@@ -354,8 +348,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              l10n?.invoiceNothingToInvoice ??
-                  'Nothing tracked for this month — nothing to invoice.',
+              l10n.invoiceNothingToInvoice,
               key: const ValueKey('invoice-preview-empty'),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -368,7 +361,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               child: Row(
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
-                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n ?? englishL10n), line,
+                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n), line,
                       association: widget.association, period: _period))),
                   Text(widget.currency.formatMinor(line.amountCents)),
                 ],
@@ -393,7 +386,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 child: Row(children: [
                   Expanded(
                     child: Text(
-                      '${l10n?.vatPdfVat ?? 'VAT'} '
+                      '${l10n.vatPdfVat} '
                       '${total.percent == total.percent.roundToDouble() ? total.percent.toStringAsFixed(0) : total.percent} %',
                       style: TextStyle(color: Theme.of(context).hintColor),
                     ),
@@ -411,7 +404,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 child: Text(
                   // 0063 — the invoice nets consumptions against payments:
                   // the total IS the balance due (solde).
-                  l10n?.invoiceBalance ?? 'Balance due',
+                  l10n.invoiceBalance,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -431,9 +424,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           value: _detailed,
           onChanged: (value) => setState(() => _detailed = value),
           title: Text(
-            l10n?.invoiceDetailedToggle ??
-                'Include the detailed annex (check-ins, services, '
-                    'payments)',
+            l10n.invoiceDetailedToggle,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -446,7 +437,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           value: _publicBuyer,
           onChanged: (value) => setState(() => _publicBuyer = value),
           title: Text(
-            l10n?.invoicePublicBuyer ?? 'Public-sector buyer (Chorus Pro)',
+            l10n.invoicePublicBuyer,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -455,9 +446,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           key: const ValueKey('invoice-form-purchase-order'),
           controller: _purchaseOrder,
           decoration: InputDecoration(
-            labelText: l10n?.invoicePurchaseOrder ?? 'Engagement number',
-            helperText: l10n?.invoicePurchaseOrderHint ??
-                'Public-sector buyer (Chorus Pro): the numéro d\'engagement.',
+            labelText: l10n.invoicePurchaseOrder,
+            helperText: l10n.invoicePurchaseOrderHint,
             helperMaxLines: 2,
           ),
         ),
@@ -466,9 +456,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           key: const ValueKey('invoice-form-buyer-reference'),
           controller: _buyerReference,
           decoration: InputDecoration(
-            labelText: l10n?.invoiceBuyerReference ?? 'Service code',
-            helperText: l10n?.invoiceBuyerReferenceHint ??
-                'Public-sector buyer (Chorus Pro): the code service exécutant.',
+            labelText: l10n.invoiceBuyerReference,
+            helperText: l10n.invoiceBuyerReferenceHint,
             helperMaxLines: 2,
           ),
         ),
@@ -477,10 +466,10 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             key: const ValueKey('invoice-missing-essentials'),
             icon: Icons.rule_folder_outlined,
             text: '${_missing.contains('invoice_feature_disabled')
-                ? l10n?.invoiceIssuingUnavailable ?? AppLocalizationsEn().invoiceIssuingUnavailable
+                ? l10n.invoiceIssuingUnavailable
                 : _missing.contains('vat_treatment_unreviewed')
-                ? l10n?.invoiceExternalIssuingTitle ?? AppLocalizationsEn().invoiceExternalIssuingTitle
-                : l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
+                ? l10n.invoiceExternalIssuingTitle
+                : l10n.invoiceMissingTitle}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
           ),
         const SizedBox(height: 4),
@@ -497,7 +486,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                     purchaseOrder:
                         _publicBuyer ? _purchaseOrder.text.trim() : '',
                   )),
-          child: Text(l10n?.invoiceIssue ?? 'Issue invoice'),
+          child: Text(l10n.invoiceIssue),
         ),
       ],
     );
@@ -505,38 +494,25 @@ class _InvoiceFormState extends State<_InvoiceForm> {
 }
 
 /// #1916 — the words for one missing essential (stable server keys, 0365).
-String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
-      'invoice_feature_disabled' => l10n?.invoiceFeatureDisabled ??
-          AppLocalizationsEn().invoiceFeatureDisabled,
-      'seller_address' => l10n?.invoiceMissingSellerAddress ??
-          "The workspace's postal address (street or city)",
-      'seller_vat_id' => l10n?.invoiceMissingSellerVatId ??
-          "The workspace's VAT identification number",
-      'exemption_reason' => l10n?.invoiceMissingExemptionReason ??
-          'The legal basis for the VAT exemption',
+String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'invoice_feature_disabled' => l10n.invoiceFeatureDisabled,
+      'seller_address' => l10n.invoiceMissingSellerAddress,
+      'seller_vat_id' => l10n.invoiceMissingSellerVatId,
+      'exemption_reason' => l10n.invoiceMissingExemptionReason,
       'buyer_name' =>
-        l10n?.invoiceMissingBuyerName ?? "The member's name or company",
-      'buyer_address' => l10n?.invoiceMissingBuyerAddress ??
-          "The member's postal address (a business customer needs one)",
-      'buyer_vat_id' => l10n?.invoiceMissingBuyerVatId ??
-          "The member's VAT number (needed for reverse charge)",
-      'seller_country_unsupported' => l10n?.invoiceMissingSellerCountry ??
-          'The workspace country must be France or Germany for issuing '
-              'here — other countries are issued outside the app',
-      'vat_rate_unresolved' => l10n?.invoiceMissingVatRate ??
-          "A VAT rate in force for the workspace's default rate (it would "
-              'bill 0 %)',
-      'vat_line_zero_unexplained' => l10n?.invoiceMissingVatZeroLine ??
-          AppLocalizationsEn().invoiceMissingVatZeroLine,
-      'vat_charged_not_registered' => l10n?.invoiceMissingVatNotRegistered ??
-          AppLocalizationsEn().invoiceMissingVatNotRegistered,
-      'vat_treatment_unreviewed' => l10n?.invoiceMissingVatTreatment ??
-          AppLocalizationsEn().invoiceMissingVatTreatment,
+        l10n.invoiceMissingBuyerName,
+      'buyer_address' => l10n.invoiceMissingBuyerAddress,
+      'buyer_vat_id' => l10n.invoiceMissingBuyerVatId,
+      'seller_country_unsupported' => l10n.invoiceMissingSellerCountry,
+      'vat_rate_unresolved' => l10n.invoiceMissingVatRate,
+      'vat_line_zero_unexplained' => l10n.invoiceMissingVatZeroLine,
+      'vat_charged_not_registered' => l10n.invoiceMissingVatNotRegistered,
+      'vat_treatment_unreviewed' => l10n.invoiceMissingVatTreatment,
       // #2354 — a general service to a customer abroad: business or not.
       'vies_unverified' =>
-        (l10n ?? lookupAppLocalizations(const Locale('en'))).invoiceMissingVies,
+        l10n.invoiceMissingVies,
       'buyer_capacity_unknown' =>
-        (l10n ?? lookupAppLocalizations(const Locale('en')))
+        l10n
             .invoiceMissingBuyerCapacity,
       _ => key,
     };

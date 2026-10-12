@@ -6,7 +6,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 
 ## HARD RULES
 
-1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations` with a defensive English fallback. English (`en`) is the canonical locale — every key must exist there. FR, DE, ES and IT are maintained launch locales: every new key needs all five translations in the same PR. Enforced by a lint test with a ratchet-to-zero baseline.
+1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations`, read as `context.l10n.key` — never null: without delegates it reads the English ARB, so there is no Dart-side English fallback (#2388; `test/lint/no_nullable_l10n_test.dart`). English (`en`) is the canonical locale — every key must exist there. FR, DE, ES and IT are maintained launch locales: every new key needs all five translations in the same PR. Enforced by a lint test with a ratchet-to-zero baseline.
 2. **Never develop without a GitHub issue.** Work larger than one PR is split into finite checkpoints that are already stated in the issue (or its approved breakdown); do not run a recursive decomposition pass. See [Ready, Done and closure](#ready-done-and-closure).
 3. **Clean codegen before push.** After touching any freezed class or `@riverpod` annotation: `dart run build_runner build --delete-conflicting-outputs` from clean; commit the generated files; zero drift on push.
 4. **Locale key parity.** The key-parity test fails CI if any locale is missing keys vs. `app_en.arb`.

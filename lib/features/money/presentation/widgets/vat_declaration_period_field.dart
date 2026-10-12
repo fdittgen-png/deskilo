@@ -16,10 +16,10 @@ import '../vat_tax_point_labels.dart';
 
 /// The period's length, as an owner reads it.
 String vatDeclarationPeriodName(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   VatDeclarationPeriod period,
 ) {
-  final words = vatWords(l10n ?? englishL10n);
+  final words = vatWords(l10n);
   return switch (period) {
     VatDeclarationPeriod.month => words.vatDeclPeriodMonth,
     VatDeclarationPeriod.quarter => words.vatDeclPeriodQuarter,
@@ -28,13 +28,13 @@ String vatDeclarationPeriodName(
 }
 
 /// One filing period: « September 2026 », « Q3 2026 », « 2026 ».
-String vatFilingPeriodLabel(AppLocalizations? l10n, VatFilingPeriod period) {
+String vatFilingPeriodLabel(AppLocalizations l10n, VatFilingPeriod period) {
   final start = period.start;
   final months =
       (period.end.year - start.year) * 12 + period.end.month - start.month + 1;
   if (months >= 12) return '${start.year}';
   if (months == 3) return 'Q${(start.month - 1) ~/ 3 + 1} ${start.year}';
-  return DateFormat.yMMMM(l10n?.localeName).format(start);
+  return DateFormat.yMMMM(l10n.localeName).format(start);
 }
 
 /// The field; the screen shows it while VAT declarations are on.
@@ -50,8 +50,8 @@ class VatDeclarationPeriodField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final words = vatWords(l10n ?? englishL10n);
+    final l10n = context.l10n;
+    final words = vatWords(l10n);
     final field = DropdownButtonFormField<VatDeclarationPeriod>(
       key: const ValueKey('legal-identity-declaration-period'),
       initialValue: value,

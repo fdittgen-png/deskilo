@@ -4,19 +4,13 @@
 // which is never null: without delegates it reads the English ARB. The
 // nullable lookup made every string be written twice — `l10n?.key ??
 // 'English'` — and the English in Dart drifted from the ARB. A nullable
-// lookup (`AppLocalizations.of(context)`, `l10n?.`) fails here; the count
-// of the ones not yet moved only goes down.
+// lookup (`AppLocalizations.of(context)`, `l10n?.`) fails here.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// Nullable lookups left in hand-written lib/ (6 557 `l10n?.` before the
-/// sweep; these sit in files an open branch was changing at the time,
-/// three of them added by the VAT work merged meanwhile).
-const _budget = 551;
-
 void main() {
-  test('no nullable l10n lookup (ratchet)', () {
+  test('no nullable l10n lookup', () {
     final nullable = RegExp(r'\bl10n\?\.|AppLocalizations\.of\(');
     final hits = scanLines(
       handWrittenDartFiles('lib')
@@ -24,18 +18,11 @@ void main() {
       nullable.hasMatch,
     ).where((h) => !RegExp(r':\d+: ///').hasMatch(h)).toList();
     expect(
-      hits.length,
-      lessThanOrEqualTo(_budget),
+      hits,
+      isEmpty,
       reason:
           'read strings through context.l10n (never null):\n'
           '${hits.join('\n')}',
-    );
-    expect(
-      hits.length,
-      _budget,
-      reason:
-          'fewer nullable lookups than the budget: lower _budget to '
-          '${hits.length}',
     );
   });
 }
