@@ -93,6 +93,9 @@ class FakeMoneyRepository implements MoneyRepository {
 
   /// #922 — what the last issue carried, for assertions.
   String lastBuyerReference = '';
+
+  /// #2440 — the correction reason of the last issue, for tests.
+  String lastCorrectionReason = '';
   String lastPurchaseOrder = '';
 
   /// #802 — when the two automatic invoice runs happen.
@@ -409,8 +412,8 @@ class FakeMoneyRepository implements MoneyRepository {
   @override Future<void> setRepartitionRule(String workspaceId, RepartitionRule rule) => _setRepartitionRuleImpl(workspaceId, rule);
   @override Future<int> sweepBillingInvoices(String workspaceId) => _sweepBillingInvoicesImpl(workspaceId);
   List<InvoiceLine> derivedLines(String memberId, String period) => _derivedLinesImpl(memberId, period);
-  @override Future<List<String>> invoiceIssueReadiness({required String workspaceId, required String memberId, required String period, InvoiceKind kind = InvoiceKind.full, String? replacesId}) => _invoiceIssueReadinessImpl(workspaceId: workspaceId, memberId: memberId, period: period, kind: kind, replacesId: replacesId);
-  @override Future<String> createInvoice({required String workspaceId, required String memberId, required String period, String? replacesId, bool detailed = false, InvoiceKind kind = InvoiceKind.full, String buyerReference = '', String purchaseOrder = ''}) => _createInvoiceImpl(workspaceId: workspaceId, memberId: memberId, period: period, replacesId: replacesId, detailed: detailed, kind: kind, buyerReference: buyerReference, purchaseOrder: purchaseOrder);
+  @override Future<List<String>> invoiceIssueReadiness({required String workspaceId, required String memberId, required String period, InvoiceKind kind = InvoiceKind.full, String? replacesId, String correctionReason = ''}) => _invoiceIssueReadinessImpl(workspaceId: workspaceId, memberId: memberId, period: period, kind: kind, replacesId: replacesId, correctionReason: correctionReason);
+  @override Future<String> createInvoice({required String workspaceId, required String memberId, required String period, String? replacesId, bool detailed = false, InvoiceKind kind = InvoiceKind.full, String buyerReference = '', String purchaseOrder = '', String correctionReason = ''}) => _createInvoiceImpl(workspaceId: workspaceId, memberId: memberId, period: period, replacesId: replacesId, detailed: detailed, kind: kind, buyerReference: buyerReference, purchaseOrder: purchaseOrder, correctionReason: correctionReason);
   @override Future<void> voidInvoice(String invoiceId) => _voidInvoiceImpl(invoiceId);
   @override Future<void> remindInvoice(String invoiceId) => _remindInvoiceImpl(invoiceId);
   @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _fetchReminderEvidenceImpl(invoiceId);

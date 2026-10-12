@@ -8050,6 +8050,27 @@ class AppLocalizationsDe extends AppLocalizations {
       'Öffentlicher Auftraggeber (Chorus Pro): der code service exécutant.';
 
   @override
+  String get invoiceCorrectionReason => 'Grund der Berichtigung';
+
+  @override
+  String get invoiceCorrectionReasonR1 =>
+      'R1 - Rechtsirrtum, Art. 80 Abs. 1, 2 und 6 des Mehrwertsteuergesetzes';
+
+  @override
+  String get invoiceCorrectionReasonR2 =>
+      'R2 - Insolvenzverfahren, Art. 80 Abs. 3';
+
+  @override
+  String get invoiceCorrectionReasonR3 =>
+      'R3 - uneinbringliche Forderungen, Art. 80 Abs. 4';
+
+  @override
+  String get invoiceCorrectionReasonR4 => 'R4 - sonstige Gründe';
+
+  @override
+  String get invoiceCorrectionReasonR5 => 'R5 - vereinfachte Rechnungen';
+
+  @override
   String invoiceCountShown(int count) {
     return '$count Rechnungen';
   }
@@ -8504,6 +8525,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceMissingBuyerVatId =>
       'Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)';
+
+  @override
+  String get invoiceMissingCorrectionReason =>
+      'Der Berichtigungsgrund (RD 1619/2012 Art. 15): unten R1 bis R5 wählen';
 
   @override
   String get invoiceMissingExemptionReason =>

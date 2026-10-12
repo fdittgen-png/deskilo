@@ -297,6 +297,10 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     // Null on pre-0069 documents.
     InvoiceParty? sellerParty,
     InvoiceParty? buyerParty,
+
+    /// #2440 — RD 1619/2012 art. 15: why a Spanish seller corrected a
+    /// document (R1-R5), frozen with the parties; empty elsewhere.
+    @Default('') String correctionReason,
     // 0072 — the VAT breakdown as issued, one entry per rate. Empty on
     // pre-0072 invoices and on workspaces that charge no VAT.
     @Default([]) List<InvoiceVatTotal> vatTotals,
@@ -481,6 +485,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       final Map<dynamic, dynamic> buyer => InvoiceParty.fromSnapshot(buyer),
       _ => null,
     },
+    correctionReason:
+        (row['parties'] as Map?)?['correction_reason'] as String? ?? '',
     attendance: [
       for (final entry
           in ((row['details'] as Map?)?['attendance'] as List? ?? const []))

@@ -55,5 +55,33 @@
   "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingCorrectionReason": "The reason for the correction (RD 1619/2012 art. 15): choose R1 to R5 below",
+  "@invoiceMissingCorrectionReason": {
+    "description": "#2440: invoiceMissingCorrectionReason"
+  },
+  "invoiceCorrectionReason": "Reason for the correction",
+  "@invoiceCorrectionReason": {
+    "description": "#2440: invoiceCorrectionReason"
+  },
+  "invoiceCorrectionReasonR1": "R1 - error founded in law, art. 80 one, two and six of the VAT law",
+  "@invoiceCorrectionReasonR1": {
+    "description": "#2440: invoiceCorrectionReasonR1"
+  },
+  "invoiceCorrectionReasonR2": "R2 - insolvency proceedings, art. 80 three",
+  "@invoiceCorrectionReasonR2": {
+    "description": "#2440: invoiceCorrectionReasonR2"
+  },
+  "invoiceCorrectionReasonR3": "R3 - bad debts, art. 80 four",
+  "@invoiceCorrectionReasonR3": {
+    "description": "#2440: invoiceCorrectionReasonR3"
+  },
+  "invoiceCorrectionReasonR4": "R4 - other causes",
+  "@invoiceCorrectionReasonR4": {
+    "description": "#2440: invoiceCorrectionReasonR4"
+  },
+  "invoiceCorrectionReasonR5": "R5 - simplified invoices",
+  "@invoiceCorrectionReasonR5": {
+    "description": "#2440: invoiceCorrectionReasonR5"
   }
 }

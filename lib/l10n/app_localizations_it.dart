@@ -8038,6 +8038,27 @@ class AppLocalizationsIt extends AppLocalizations {
       'Acquirente pubblico (Chorus Pro): il code service exécutant.';
 
   @override
+  String get invoiceCorrectionReason => 'Motivo della rettifica';
+
+  @override
+  String get invoiceCorrectionReasonR1 =>
+      'R1 - errore fondato in diritto, art. 80 uno, due e sei della legge sull\'IVA';
+
+  @override
+  String get invoiceCorrectionReasonR2 =>
+      'R2 - procedura concorsuale, art. 80 tre';
+
+  @override
+  String get invoiceCorrectionReasonR3 =>
+      'R3 - crediti inesigibili, art. 80 quattro';
+
+  @override
+  String get invoiceCorrectionReasonR4 => 'R4 - altre cause';
+
+  @override
+  String get invoiceCorrectionReasonR5 => 'R5 - fatture semplificate';
+
+  @override
   String invoiceCountShown(int count) {
     return '$count fatture';
   }
@@ -8493,6 +8514,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceMissingBuyerVatId =>
       'La partita IVA del socio (necessaria per il reverse charge)';
+
+  @override
+  String get invoiceMissingCorrectionReason =>
+      'Il motivo della rettifica (RD 1619/2012, art. 15): scelga da R1 a R5 qui sotto';
 
   @override
   String get invoiceMissingExemptionReason =>

@@ -39,7 +39,7 @@ const int _budget = 500; // 2026-10-11 #2386: 600→500 for new files; the files
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
-  'lib/features/money/domain/invoice.dart': 512, // 2026-10-11 #2358: the party's electronic address, its scheme and the country subdivision (BT-34/49, BT-39/54), which Peppol, XRechnung and CIUS-RO require.
+  'lib/features/money/domain/invoice.dart': 518, // 2026-10-12 #2440: the Spanish correction reason (R1-R5) frozen in the parties. 2026-10-11 #2358: the party's electronic address, its scheme and the country subdivision (BT-34/49, BT-39/54), which Peppol, XRechnung and CIUS-RO require.
   // 600→630 (2026-09-20): #1514 — the recording seam. Three of the six
   // providers that answer with a person live here, and each pays four
   // lines: the flag read hoisted above the await (#1218), the
@@ -264,7 +264,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/money_repository.dart': 605, // 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/money_repository.dart': 610, // 2026-10-12 #2440: createInvoice and invoiceIssueReadiness take the correction reason. 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -278,7 +278,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 576, // 2026-10-11 #2357 557→576: the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 542, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 546, // 2026-10-12 #2440: the correction reason joins readiness and the result (the field itself is its own file). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/providers/money_providers.dart': 588, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

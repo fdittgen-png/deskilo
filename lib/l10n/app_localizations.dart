@@ -13728,6 +13728,42 @@ abstract class AppLocalizations {
   /// **'Public-sector buyer (Chorus Pro): the code service exécutant.'**
   String get invoiceBuyerReferenceHint;
 
+  /// #2440: invoiceCorrectionReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the correction'**
+  String get invoiceCorrectionReason;
+
+  /// #2440: invoiceCorrectionReasonR1
+  ///
+  /// In en, this message translates to:
+  /// **'R1 - error founded in law, art. 80 one, two and six of the VAT law'**
+  String get invoiceCorrectionReasonR1;
+
+  /// #2440: invoiceCorrectionReasonR2
+  ///
+  /// In en, this message translates to:
+  /// **'R2 - insolvency proceedings, art. 80 three'**
+  String get invoiceCorrectionReasonR2;
+
+  /// #2440: invoiceCorrectionReasonR3
+  ///
+  /// In en, this message translates to:
+  /// **'R3 - bad debts, art. 80 four'**
+  String get invoiceCorrectionReasonR3;
+
+  /// #2440: invoiceCorrectionReasonR4
+  ///
+  /// In en, this message translates to:
+  /// **'R4 - other causes'**
+  String get invoiceCorrectionReasonR4;
+
+  /// #2440: invoiceCorrectionReasonR5
+  ///
+  /// In en, this message translates to:
+  /// **'R5 - simplified invoices'**
+  String get invoiceCorrectionReasonR5;
+
   /// Archive: how many invoices the current filters show
   ///
   /// In en, this message translates to:
@@ -14495,6 +14531,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The member\'s VAT number (needed for reverse charge)'**
   String get invoiceMissingBuyerVatId;
+
+  /// #2440: invoiceMissingCorrectionReason
+  ///
+  /// In en, this message translates to:
+  /// **'The reason for the correction (RD 1619/2012 art. 15): choose R1 to R5 below'**
+  String get invoiceMissingCorrectionReason;
 
   /// #1916 invoice essentials: invoiceMissingExemptionReason
   ///

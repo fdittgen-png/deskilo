@@ -280,6 +280,7 @@ class InvoiceVatTotal {
     required this.grossCents,
     required this.netCents,
     required this.vatCents,
+    this.exemptionReason = '',
   });
 
   final double percent;
@@ -287,6 +288,11 @@ class InvoiceVatTotal {
   final int grossCents;
   final int netCents;
   final int vatCents;
+
+  /// #2440 — BT-120 of this category: the reason of the seller's own
+  /// exempt (E) rate, frozen with the total at issue. Empty when none
+  /// was attributable; documents then fall back to the seller's text.
+  final String exemptionReason;
 
   factory InvoiceVatTotal.fromJson(Map<dynamic, dynamic> json) {
     final r = JsonReader.of(json, context: 'invoice_vat_total');
@@ -296,6 +302,7 @@ class InvoiceVatTotal {
       grossCents: r.intOrNull('gross_cents') ?? 0,
       netCents: r.intOrNull('net_cents') ?? 0,
       vatCents: r.intOrNull('vat_cents') ?? 0,
+      exemptionReason: r.stringOr('exemption_reason'),
     );
   }
 }

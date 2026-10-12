@@ -251,8 +251,12 @@ String buildInvoiceUbl({
               if (exemptionCode.isNotEmpty) {
                 cbc('TaxExemptionReasonCode', exemptionCode);
               }
-              if (exemptionText.isNotEmpty) {
-                cbc('TaxExemptionReason', exemptionText);
+              // #2440 — BT-120 per category: the rate's own reason first.
+              final reason = total.exemptionReason.isNotEmpty
+                  ? total.exemptionReason
+                  : exemptionText;
+              if (reason.isNotEmpty) {
+                cbc('TaxExemptionReason', reason);
               }
             }
             builder.element('cac:TaxScheme', nest: () {

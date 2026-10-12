@@ -48,6 +48,10 @@ Map<String, Object?> legalMentionData(
   bool reverseCharged = false,
   /// #985 — the counterparty's category when it decided (G, E).
   String counterpartyCategory = '',
+
+  /// #2440 — BT-120 per VAT category: the distinct reasons the exempt
+  /// subtotals froze, in order.
+  List<String> rateExemptionReasons = const [],
   // #881 — the member's own conditions on top of the workspace's.
   PaymentTerms? memberTerms,
   /// #1916 — the invoice's legal facts as frozen at issue.
@@ -119,7 +123,11 @@ Map<String, Object?> legalMentionData(
             : counterpartyCategory == 'E' &&
                     (buyer?.taxExemptionReason.trim().isNotEmpty ?? false)
                 ? buyer!.taxExemptionReason.trim()
-                : orDefault(
+                // #2440 — BT-120 per VAT category: each exempt subtotal
+                // states its own rate's reason, once.
+                : rateExemptionReasons.isNotEmpty
+                    ? rateExemptionReasons.join('\n')
+                    : orDefault(
             seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
             defaultExemptionMention(
               seller?.country ?? workspace?.countryCode ?? '',
@@ -228,6 +236,10 @@ Map<String, Object?> invoiceReportData(
     clientName: clientNameOf(invoice),
     reverseCharged: invoice.isReverseCharged,
     counterpartyCategory: invoice.counterpartyCategory,
+    rateExemptionReasons: {
+      for (final t in invoice.vatTotals)
+        if (t.exemptionReason.isNotEmpty) t.exemptionReason,
+    }.toList(),
     memberTerms: memberTerms,
     frozen: invoice.legalClauses,
     legacy: isLegacyInvoice(invoice),
@@ -245,6 +257,7 @@ Map<String, Object?> invoiceReportData(
         .fold(0, (sum, t) => sum + t.grossCents),
     correction: invoice.isCreditNote || invoice.replacesNumber.isNotEmpty,
     rectifies: invoice.replacesNumber,
+    correctionReason: invoice.correctionReason,
   );
   return <String, Object?>{
     'workspace': invoice.workspaceName,

@@ -14,6 +14,7 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
     InvoiceKind kind = InvoiceKind.full,
     String buyerReference = '',
     String purchaseOrder = '',
+    String correctionReason = '',
   }) async {
     // #982 — a replacement is a correction of a document of record and
     // issues directly; a new invoice goes through the policy, which
@@ -28,6 +29,7 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
         'p_buyer_reference': buyerReference,
         'p_purchase_order': purchaseOrder,
         'p_kind': kind.name,
+        'p_correction_reason': correctionReason,
       });
       return id as String;
     }
@@ -50,9 +52,11 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
     required String period,
     InvoiceKind kind = InvoiceKind.full,
     String? replacesId,
+    String correctionReason = '',
   }) async {
     final answer = await _client.rpc<dynamic>('invoice_issue_readiness', params: {
       'p_replaces': replacesId,
+      'p_correction_reason': correctionReason,
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
       'p_period': period,

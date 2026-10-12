@@ -373,5 +373,10 @@ extension _FakeMoneyRepositoryPart1 on FakeMoneyRepository {
     required String period,
     InvoiceKind kind = InvoiceKind.full,
     String? replacesId,
-  }) async => invoiceMissing;
+    String correctionReason = '',
+  }) async => [
+        for (final key in invoiceMissing)
+          // #2440 — the server stops asking once a reason is given.
+          if (key != 'correction_reason' || correctionReason.isEmpty) key,
+      ];
 }

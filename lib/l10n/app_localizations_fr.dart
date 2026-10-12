@@ -8056,6 +8056,27 @@ class AppLocalizationsFr extends AppLocalizations {
       'Acheteur public (Chorus Pro) : le code service exécutant.';
 
   @override
+  String get invoiceCorrectionReason => 'Motif de la rectification';
+
+  @override
+  String get invoiceCorrectionReasonR1 =>
+      'R1 - erreur fondée en droit, art. 80 un, deux et six de la loi sur la TVA';
+
+  @override
+  String get invoiceCorrectionReasonR2 =>
+      'R2 - procédure collective, art. 80 trois';
+
+  @override
+  String get invoiceCorrectionReasonR3 =>
+      'R3 - créances irrécouvrables, art. 80 quatre';
+
+  @override
+  String get invoiceCorrectionReasonR4 => 'R4 - autres causes';
+
+  @override
+  String get invoiceCorrectionReasonR5 => 'R5 - factures simplifiées';
+
+  @override
   String invoiceCountShown(int count) {
     return '$count factures';
   }
@@ -8509,6 +8530,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingBuyerVatId =>
       'Le numéro de TVA du membre (requis pour l\'autoliquidation)';
+
+  @override
+  String get invoiceMissingCorrectionReason =>
+      'Le motif de la rectification (RD 1619/2012, art. 15) : choisissez R1 à R5 ci-dessous';
 
   @override
   String get invoiceMissingExemptionReason =>

@@ -5273,6 +5273,30 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCorrectionReason": "Motivo della rettifica",
+  "@invoiceCorrectionReason": {
+    "description": "#2440: invoiceCorrectionReason"
+  },
+  "invoiceCorrectionReasonR1": "R1 - errore fondato in diritto, art. 80 uno, due e sei della legge sull'IVA",
+  "@invoiceCorrectionReasonR1": {
+    "description": "#2440: invoiceCorrectionReasonR1"
+  },
+  "invoiceCorrectionReasonR2": "R2 - procedura concorsuale, art. 80 tre",
+  "@invoiceCorrectionReasonR2": {
+    "description": "#2440: invoiceCorrectionReasonR2"
+  },
+  "invoiceCorrectionReasonR3": "R3 - crediti inesigibili, art. 80 quattro",
+  "@invoiceCorrectionReasonR3": {
+    "description": "#2440: invoiceCorrectionReasonR3"
+  },
+  "invoiceCorrectionReasonR4": "R4 - altre cause",
+  "@invoiceCorrectionReasonR4": {
+    "description": "#2440: invoiceCorrectionReasonR4"
+  },
+  "invoiceCorrectionReasonR5": "R5 - fatture semplificate",
+  "@invoiceCorrectionReasonR5": {
+    "description": "#2440: invoiceCorrectionReasonR5"
+  },
   "invoiceCountShown": "{count} fatture",
   "@invoiceCountShown": {
     "placeholders": {
@@ -5669,6 +5693,10 @@
   "invoiceMissingBuyerVatId": "La partita IVA del socio (necessaria per il reverse charge)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingCorrectionReason": "Il motivo della rettifica (RD 1619/2012, art. 15): scelga da R1 a R5 qui sotto",
+  "@invoiceMissingCorrectionReason": {
+    "description": "#2440: invoiceMissingCorrectionReason"
   },
   "invoiceMissingExemptionReason": "Il fondamento giuridico dell'esenzione IVA",
   "@invoiceMissingExemptionReason": {
