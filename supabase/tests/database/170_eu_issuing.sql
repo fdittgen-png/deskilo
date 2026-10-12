@@ -87,7 +87,12 @@ end;
 $issue$;
 
 -- ── every member state ────────────────────────────────────────────────
-select is(pg_temp.issue(c.cc, c.cur), '', c.cc || ': issued, Z line, ' || c.cur || ', seller country frozen')
+-- Italy, Spain, Poland and Romania route every invoice through a national
+-- channel the app does not speak yet (#2358, 0410): refused, by name.
+select is(pg_temp.issue(c.cc, c.cur),
+          case when c.cc in ('IT','ES','PL','RO') then 'refused: seller_country_unsupported' else '' end,
+          c.cc || case when c.cc in ('IT','ES','PL','RO') then ': waits for its national e-invoicing channel'
+                       else ': issued, Z line, ' || c.cur || ', seller country frozen' end)
   from (values ('AT','EUR'),('BE','EUR'),('BG','EUR'),('CY','EUR'),('CZ','CZK'),('DE','EUR'),
                ('DK','DKK'),('EE','EUR'),('ES','EUR'),('FI','EUR'),('FR','EUR'),('GR','EUR'),
                ('HR','EUR'),('HU','HUF'),('IE','EUR'),('IT','EUR'),('LT','EUR'),('LU','EUR'),
@@ -113,9 +118,9 @@ select is(pg_temp.missing(pg_temp.seller('DE','EUR','exempt','','12/345/67890', 
 select ok('buyer_tax_id' = any(pg_temp.missing(
           pg_temp.seller('ES','EUR','vat_registered','ESB12345678','B12345678', 'business', tag => '-b2b'))),
           'Spain: a business customer without its NIF is refused');
-select is(pg_temp.missing(pg_temp.seller('ES','EUR','vat_registered','ESB12345678','B12345678', 'business',
-          'B87654321', tag => '-nif')),
-          '{}'::text[], 'Spain: with the customer''s NIF it issues');
+select ok(not ('buyer_tax_id' = any(pg_temp.missing(pg_temp.seller('ES','EUR','vat_registered','ESB12345678','B12345678', 'business',
+          'B87654321', tag => '-nif')))),
+          'Spain: the customer''s NIF satisfies the rule (issuing waits for Verifactu)');
 select ok('buyer_tax_id' = any(pg_temp.missing(
           pg_temp.seller('IT','EUR','vat_registered','IT12345678901','RSSMRA80A01H501U', tag => '-cf'))),
           'Italy: a customer in Italy without codice fiscale is refused');

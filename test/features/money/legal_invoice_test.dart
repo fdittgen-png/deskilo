@@ -8,6 +8,7 @@
 // modalités de règlement, mentions particulières).
 
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/features/money/domain/einvoice_mandates.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
@@ -72,7 +73,7 @@ void main() {
       latePenalty: 'Late interest at the statutory rate.',
       recoveryIndemnity: 'Fixed recovery indemnity: €40.',
     );
-    for (final country in euMemberStates) {
+    for (final country in euMemberStates.difference(nationalChannelRequired)) {
       test(country, () {
         LegalClauseSnapshot snap(CustomerCapacity capacity) =>
             LegalClauseSnapshot(
@@ -97,8 +98,9 @@ void main() {
         expect(reverseChargeMention(country), contains('196'));
       });
     }
-    test('outside the Union nothing is automatic', () {
-      for (final country in ['CH', 'NO', 'GB', 'US']) {
+    test('outside the Union, and where a national e-invoicing channel is '
+        'still missing (#2358), nothing is automatic', () {
+      for (final country in ['CH', 'NO', 'GB', 'US', ...nationalChannelRequired]) {
         expect(
           legalProfileOf(LegalClauseSnapshot(
             sellerCountry: country,

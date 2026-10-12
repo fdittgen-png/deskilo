@@ -23,7 +23,8 @@
 //     needs review: it may not override consumer protection.
 //   * Capacity not stated — no automatic clause; the owner's texts print
 //     and are flagged for review.
-//   * Any other EU member state (#2356) — Directive 2011/7/EU gives every
+//   * Any other EU member state (#2356; Italy, Spain, Poland and Romania
+//     wait for their national e-invoicing channel, #2358) — Directive 2011/7/EU gives every
 //     member state the €40 recovery indemnity and statutory interest
 //     between businesses, by law, without making them an invoice mention:
 //     the owner's texts print, as for Germany; a consumer never gets the
@@ -37,6 +38,7 @@
 import 'package:meta/meta.dart';
 
 import '../../../core/data/json_reader.dart';
+import 'einvoice_mandates.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
@@ -254,7 +256,11 @@ class LegalClauseSnapshot {
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  if (!isEuCountry(country)) return LegalProfile.unsupported;
+  // #2358 — a national clearance channel the app does not speak yet.
+  if (!isEuCountry(country) ||
+      nationalChannelRequired.contains(euCountryCode(country))) {
+    return LegalProfile.unsupported;
+  }
   return switch ((country, snapshot.buyerCapacity)) {
     ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
     ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
