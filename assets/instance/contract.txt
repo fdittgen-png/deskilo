@@ -2026,6 +2026,7 @@ trigger events.events_apply_stock CREATE TRIGGER events_apply_stock AFTER UPDATE
 trigger events.events_apply_usage CREATE TRIGGER events_apply_usage AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_usage_decision()
 trigger events.events_apply_validated_0181 CREATE TRIGGER events_apply_validated_0181 AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_validated_decision_0181()
 trigger events.events_notify_pending CREATE TRIGGER events_notify_pending AFTER INSERT OR UPDATE OF status, actor_member_id ON public.events FOR EACH ROW EXECUTE FUNCTION notify_pending_event()
+trigger events.expense_event_schedule_vat CREATE TRIGGER expense_event_schedule_vat BEFORE INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION expense_event_schedule_vat()
 trigger events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger expense_occurrences.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_occurrences FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger expense_repartitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_repartitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
