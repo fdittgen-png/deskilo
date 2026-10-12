@@ -70,7 +70,10 @@ const WIKI = { 'Setup-Guide': 'setup-en.html', 'Guide-de-demarrage': 'setup-fr.h
   'Guia-de-puesta-en-marcha': 'setup-es.html', 'Guida-di-avvio': 'setup-it.html' };
 const WIKI_LINK = new RegExp(`(href=")(${Object.keys(WIKI).join('|')})(?=[#"])`, 'g');
 let rewritten = 0;
-for (const f of walk(out).filter((p) => textual.test(p) || textualJs(p))) {
+// The app's offline snapshot (task_tool_manifest) pins a checksum for these: they are never touched.
+const pinned = (p) => { const r = relative(out, p).split('\\').join('/');
+  return /^(assets|canvaskit|icons)\//.test(r) || ['index.html', 'manifest.json', 'version.json', 'flutter_bootstrap.js', 'flutter.js'].includes(r); };
+for (const f of walk(out).filter((p) => (textual.test(p) || textualJs(p)) && !pinned(p))) {
   const before = readFileSync(f, 'utf8');
   const after = before.replace(OURS, `${siteUrl}/`).replace(APP, appUrl).replace(WIKI_LINK, (_, h, n) => h + WIKI[n]);
   if (after !== before) { writeFileSync(f, after); rewritten++; }
