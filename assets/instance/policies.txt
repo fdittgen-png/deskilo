@@ -57,6 +57,8 @@ public.desks.desks_write_sites
 public.desks.mcp_delegated_deny
 public.directory_people.mcp_delegated_deny
 public.einvoice_credentials.mcp_delegated_deny
+public.einvoice_inbox.einvoice_inbox_select
+public.einvoice_inbox.mcp_delegated_deny
 public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
 public.events.events_select

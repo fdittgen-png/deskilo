@@ -7093,6 +7093,114 @@ abstract class AppLocalizations {
   /// **'E-invoicing address'**
   String get eInvoiceIdentityTitle;
 
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Add a supplier invoice (XML)'**
+  String get eInvoiceInboxAdd;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} from {supplier} added.'**
+  String eInvoiceInboxAdded(String number, String supplier);
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier invoice yet.'**
+  String get eInvoiceInboxEmpty;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoices your suppliers send you. Add the XML file (UBL or CII), then match it to an expense that was filed, or reject it.'**
+  String get eInvoiceInboxIntro;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Match to an expense'**
+  String get eInvoiceInboxMatch;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Matched.'**
+  String get eInvoiceInboxMatched;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice lacks a required field ({field}).'**
+  String eInvoiceInboxMissingField(String field);
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'No filed expense has this amount.'**
+  String get eInvoiceInboxNoCandidate;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get eInvoiceInboxReason;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'A rejection needs a reason.'**
+  String get eInvoiceInboxReasonNeeded;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'The inbox refused this (the document may already be there, or you may not decide here).'**
+  String get eInvoiceInboxRefused;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get eInvoiceInboxReject;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected.'**
+  String get eInvoiceInboxRejected;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Matched to an expense'**
+  String get eInvoiceInboxStatusMatched;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'To decide'**
+  String get eInvoiceInboxStatusReceived;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get eInvoiceInboxStatusRejected;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoices'**
+  String get eInvoiceInboxTitle;
+
+  /// #2358 supplier e-invoice inbox
+  ///
+  /// In en, this message translates to:
+  /// **'This file is not a UBL or CII invoice the inbox can read.'**
+  String get eInvoiceInboxUnreadable;
+
   /// #2358 mandate duty
   ///
   /// In en, this message translates to:

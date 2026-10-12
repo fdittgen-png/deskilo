@@ -263,6 +263,10 @@ const Map<String, String> _notExported = {
   'vat_declarations':
       'a filed declaration is a document, produced by the VAT report '
           'rather than carried as rows',
+  'einvoice_inbox':
+      '#2358 — supplier invoices received as XML; the document is the '
+          'supplier\'s, kept as received, and the expense it matched is '
+          'exported itself',
   'vat_return_entries':
       '#2357 — what a filed VAT return declared, per document; it belongs '
           'to the filing on this server and is recomputed from nothing a '

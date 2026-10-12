@@ -4067,6 +4067,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eInvoiceIdentityTitle => 'E-invoicing address';
 
   @override
+  String get eInvoiceInboxAdd => 'Add a supplier invoice (XML)';
+
+  @override
+  String eInvoiceInboxAdded(String number, String supplier) {
+    return 'Invoice $number from $supplier added.';
+  }
+
+  @override
+  String get eInvoiceInboxEmpty => 'No supplier invoice yet.';
+
+  @override
+  String get eInvoiceInboxIntro =>
+      'E-invoices your suppliers send you. Add the XML file (UBL or CII), then match it to an expense that was filed, or reject it.';
+
+  @override
+  String get eInvoiceInboxMatch => 'Match to an expense';
+
+  @override
+  String get eInvoiceInboxMatched => 'Matched.';
+
+  @override
+  String eInvoiceInboxMissingField(String field) {
+    return 'The invoice lacks a required field ($field).';
+  }
+
+  @override
+  String get eInvoiceInboxNoCandidate => 'No filed expense has this amount.';
+
+  @override
+  String get eInvoiceInboxReason => 'Reason';
+
+  @override
+  String get eInvoiceInboxReasonNeeded => 'A rejection needs a reason.';
+
+  @override
+  String get eInvoiceInboxRefused =>
+      'The inbox refused this (the document may already be there, or you may not decide here).';
+
+  @override
+  String get eInvoiceInboxReject => 'Reject';
+
+  @override
+  String get eInvoiceInboxRejected => 'Rejected.';
+
+  @override
+  String get eInvoiceInboxStatusMatched => 'Matched to an expense';
+
+  @override
+  String get eInvoiceInboxStatusReceived => 'To decide';
+
+  @override
+  String get eInvoiceInboxStatusRejected => 'Rejected';
+
+  @override
+  String get eInvoiceInboxTitle => 'Supplier invoices';
+
+  @override
+  String get eInvoiceInboxUnreadable =>
+      'This file is not a UBL or CII invoice the inbox can read.';
+
+  @override
   String get eInvoiceMandateEReporting =>
       'sales to consumers and abroad, and the payments of services, must be e-reported';
 

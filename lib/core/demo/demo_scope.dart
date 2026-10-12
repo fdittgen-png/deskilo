@@ -3,6 +3,7 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/einvoice_inbox_repository.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
@@ -40,6 +41,7 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
+import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
@@ -171,6 +173,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
+      eInvoiceInboxRepositoryProvider
+          .overrideWithValue(FakeEInvoiceInboxRepository()), // #2358
       // #1869 — book profiles in memory.
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
       creditRepositoryProvider.overrideWithValue(fixture.credits),

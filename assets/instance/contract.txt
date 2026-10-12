@@ -203,6 +203,26 @@ constraint einvoice_credentials.einvoice_credentials_provider_check CHECK ((prov
 constraint einvoice_credentials.einvoice_credentials_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint einvoice_credentials.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint einvoice_credentials.system_company_present CHECK ((company_id IS NOT NULL))
+constraint einvoice_inbox.einvoice_inbox_check CHECK (((status = 'matched'::text) = (matched_event_id IS NOT NULL)))
+constraint einvoice_inbox.einvoice_inbox_check1 CHECK (((status = 'received'::text) = (decided_at IS NULL)))
+constraint einvoice_inbox.einvoice_inbox_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint einvoice_inbox.einvoice_inbox_decided_by_fkey FOREIGN KEY (decided_by) REFERENCES members(id)
+constraint einvoice_inbox.einvoice_inbox_document_hash_check CHECK ((document_hash ~ '^[0-9a-f]{64}$'::text))
+constraint einvoice_inbox.einvoice_inbox_document_type_check CHECK (((char_length(document_type) >= 1) AND (char_length(document_type) <= 10)))
+constraint einvoice_inbox.einvoice_inbox_invoice_number_check CHECK (((char_length(invoice_number) >= 1) AND (char_length(invoice_number) <= 200)))
+constraint einvoice_inbox.einvoice_inbox_matched_event_id_fkey FOREIGN KEY (matched_event_id) REFERENCES events(id)
+constraint einvoice_inbox.einvoice_inbox_pkey PRIMARY KEY (id)
+constraint einvoice_inbox.einvoice_inbox_reject_reason_check CHECK ((char_length(reject_reason) <= 500))
+constraint einvoice_inbox.einvoice_inbox_source_xml_check CHECK (((char_length(source_xml) >= 1) AND (char_length(source_xml) <= 5000000)))
+constraint einvoice_inbox.einvoice_inbox_status_check CHECK ((status = ANY (ARRAY['received'::text, 'matched'::text, 'rejected'::text])))
+constraint einvoice_inbox.einvoice_inbox_supplier_endpoint_check CHECK ((char_length(supplier_endpoint) <= 300))
+constraint einvoice_inbox.einvoice_inbox_supplier_name_check CHECK (((char_length(supplier_name) >= 1) AND (char_length(supplier_name) <= 300)))
+constraint einvoice_inbox.einvoice_inbox_supplier_vat_id_check CHECK ((char_length(supplier_vat_id) <= 40))
+constraint einvoice_inbox.einvoice_inbox_syntax_check CHECK ((syntax = ANY (ARRAY['ubl'::text, 'cii'::text])))
+constraint einvoice_inbox.einvoice_inbox_workspace_id_document_hash_key UNIQUE (workspace_id, document_hash)
+constraint einvoice_inbox.einvoice_inbox_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint einvoice_inbox.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint einvoice_inbox.system_company_present CHECK ((company_id IS NOT NULL))
 constraint event_decisions.event_decisions_decision_check CHECK ((decision = ANY (ARRAY['accept'::text, 'reject'::text])))
 constraint event_decisions.event_decisions_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 constraint event_decisions.event_decisions_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE RESTRICT
@@ -1319,6 +1339,7 @@ routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void
 routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:7b9035a41e2d
 routine public.einvoice_credentials_resolved(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:77e05a44c17e
+routine public.einvoice_match_candidates(p_inbox_id uuid) -> TABLE(event_id uuid, filed_on date, category text, note text, amount_cents bigint, status text) | function | definer | stable | exec:authenticated,service_role | body:6bb909710ea4
 routine public.einvoice_secret_name(p_workspace_id uuid, p_key text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:45f8d16fc252
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c92d49ab02ea
 routine public.einvoice_store_secret(p_workspace_id uuid, p_key text, p_value text) -> jsonb | function | definer | volatile | exec:service_role | body:2634c7338831
@@ -1382,6 +1403,7 @@ routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text)
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
 routine public.in_conversation(p_conversation_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c271785e5044
+routine public.ingest_einvoice(p_workspace_id uuid, p_syntax text, p_xml text, p_parsed jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:90329d3c43ba
 routine public.inquiry_host(p_workspace uuid, p_user uuid) -> boolean | function | definer | stable | exec:service_role | body:b153f3a286dd
 routine public.inquiry_messages(p_inquiry uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6d8c7427f02e
 routine public.inquiry_messages_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:3a994c33a046
@@ -1460,6 +1482,7 @@ routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | define
 routine public.mark_member_notes_read(p_workspace_id uuid, p_from_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d0a83c717a6
 routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | function | definer | volatile | exec:service_role | body:75d9d37905a1
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:a65d618c53b6
+routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
 routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
@@ -1727,6 +1750,7 @@ routine public.refresh_public_workspace_card(p_workspace uuid) -> void | functio
 routine public.register_my_nfc_badge(p_workspace_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:741684565a6f
 routine public.register_nfc_badge(p_workspace_id uuid, p_member_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:4939d344b76b
 routine public.register_public_directory(p_origin text, p_key text) -> void | function | definer | volatile | exec:authenticated,service_role | body:8e68c4d88fab
+routine public.reject_einvoice(p_inbox_id uuid, p_reason text) -> void | function | definer | volatile | exec:authenticated,service_role | body:c64009f0d506
 routine public.release_dunning_hold(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:2de18bb4860c
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
 routine public.reminder_attempts_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:aef59fb23b5d
@@ -2020,6 +2044,7 @@ trigger desks.analytics_seat_history CREATE TRIGGER analytics_seat_history AFTER
 trigger desks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.desks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger directory_people.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.directory_people FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger einvoice_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_credentials FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger einvoice_inbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_inbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()

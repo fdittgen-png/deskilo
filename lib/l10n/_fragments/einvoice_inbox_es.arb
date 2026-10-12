@@ -1,0 +1,88 @@
+{
+  "@@locale": "es",
+  "eInvoiceInboxTitle": "Facturas de proveedores",
+  "@eInvoiceInboxTitle": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxIntro": "Las facturas electrónicas que sus proveedores le envían. Añada el archivo XML (UBL o CII) y concílielo con un gasto registrado, o recházelo.",
+  "@eInvoiceInboxIntro": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdd": "Añadir una factura de proveedor (XML)",
+  "@eInvoiceInboxAdd": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxEmpty": "Aún no hay facturas de proveedores.",
+  "@eInvoiceInboxEmpty": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusReceived": "Por decidir",
+  "@eInvoiceInboxStatusReceived": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusMatched": "Conciliada con un gasto",
+  "@eInvoiceInboxStatusMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusRejected": "Rechazada",
+  "@eInvoiceInboxStatusRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatch": "Conciliar con un gasto",
+  "@eInvoiceInboxMatch": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReject": "Rechazar",
+  "@eInvoiceInboxReject": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxNoCandidate": "Ningún gasto registrado tiene este importe.",
+  "@eInvoiceInboxNoCandidate": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReason": "Motivo",
+  "@eInvoiceInboxReason": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReasonNeeded": "Un rechazo necesita un motivo.",
+  "@eInvoiceInboxReasonNeeded": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdded": "Factura {number} de {supplier} añadida.",
+  "@eInvoiceInboxAdded": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxUnreadable": "Este archivo no es una factura UBL o CII que la bandeja pueda leer.",
+  "@eInvoiceInboxUnreadable": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMissingField": "A la factura le falta un campo obligatorio ({field}).",
+  "@eInvoiceInboxMissingField": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxRefused": "La bandeja lo ha rechazado (puede que el documento ya esté, o que no pueda decidir aquí).",
+  "@eInvoiceInboxRefused": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatched": "Conciliada.",
+  "@eInvoiceInboxMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRejected": "Rechazada.",
+  "@eInvoiceInboxRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  }
+}

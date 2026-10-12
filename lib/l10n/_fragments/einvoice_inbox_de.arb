@@ -1,0 +1,88 @@
+{
+  "@@locale": "de",
+  "eInvoiceInboxTitle": "Lieferantenrechnungen",
+  "@eInvoiceInboxTitle": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxIntro": "E-Rechnungen, die Ihre Lieferanten Ihnen schicken. Fügen Sie die XML-Datei (UBL oder CII) hinzu und ordnen Sie sie einer erfassten Ausgabe zu oder lehnen Sie sie ab.",
+  "@eInvoiceInboxIntro": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdd": "Lieferantenrechnung hinzufügen (XML)",
+  "@eInvoiceInboxAdd": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxEmpty": "Noch keine Lieferantenrechnung.",
+  "@eInvoiceInboxEmpty": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusReceived": "Zu entscheiden",
+  "@eInvoiceInboxStatusReceived": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusMatched": "Einer Ausgabe zugeordnet",
+  "@eInvoiceInboxStatusMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusRejected": "Abgelehnt",
+  "@eInvoiceInboxStatusRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatch": "Einer Ausgabe zuordnen",
+  "@eInvoiceInboxMatch": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReject": "Ablehnen",
+  "@eInvoiceInboxReject": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxNoCandidate": "Keine erfasste Ausgabe hat diesen Betrag.",
+  "@eInvoiceInboxNoCandidate": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReason": "Grund",
+  "@eInvoiceInboxReason": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReasonNeeded": "Eine Ablehnung braucht einen Grund.",
+  "@eInvoiceInboxReasonNeeded": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdded": "Rechnung {number} von {supplier} hinzugefügt.",
+  "@eInvoiceInboxAdded": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxUnreadable": "Diese Datei ist keine UBL- oder CII-Rechnung, die der Eingang lesen kann.",
+  "@eInvoiceInboxUnreadable": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMissingField": "In der Rechnung fehlt ein Pflichtfeld ({field}).",
+  "@eInvoiceInboxMissingField": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxRefused": "Der Eingang hat das abgelehnt (das Dokument ist vielleicht schon da, oder Sie dürfen hier nicht entscheiden).",
+  "@eInvoiceInboxRefused": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatched": "Zugeordnet.",
+  "@eInvoiceInboxMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRejected": "Abgelehnt.",
+  "@eInvoiceInboxRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  }
+}
