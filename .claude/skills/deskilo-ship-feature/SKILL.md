@@ -34,7 +34,8 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
 ## 1. The flag ritual (every functionality, forever — AGENT_RULES "Feature management")
 Edit ALL of these in the same commit:
 1. `lib/features/workspace/domain/workspace_feature.dart` — enum value
-   (append at the end) + `featureManifest` entry (`requires:`, default).
+   (append at the end) + `featureManifest` entry (`requires:`, default) — the
+   entries live in `feature_manifest_partN.dart` beside it (#2386): append to the last part.
 2. `feature_names.dart` — label; `features_screen.dart` — description.
 3. ARB fragments: keys `featureXxx`, `featureXxxDesc` + the feature's strings (§2 Strings).
 4. `web/setup.html` — a FEATURES line `['key',0|1],` (no label: name and
@@ -77,7 +78,7 @@ needs the deployment entity registry (reference.md "Flags").
   `dart run tool/build_arb.dart && flutter gen-l10n` and commit both outputs (CI's
   l10n gate rebuilds from the fragments). No `{` in message text unless it is an ICU
   placeholder. `Text` literals are read by `tool/l10n_audit` (#2055, wrapped lines
-  included): only `l10n?.x ?? 'English'` or a literal made of interpolations passes.
+  included): only `context.l10n.x` (never null, #2388 — no Dart-side English) or a literal made of interpolations passes.
   Reach for `MaterialLocalizations` before inventing a key for a generic action.
 - **Codegen.** A freezed class or a `@riverpod` provider body change changes its
   `.g.dart`: `dart run build_runner build --delete-conflicting-outputs`, commit the

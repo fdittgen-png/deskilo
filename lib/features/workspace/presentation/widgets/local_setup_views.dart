@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
@@ -12,25 +13,23 @@ import '../../providers/local_setup_providers.dart';
 import 'workspace_readiness_card.dart';
 
 /// #1657 — a validation event type, as its label, from its stored word.
-String eventTypeWord(AppLocalizations? l10n, String dbName) =>
+String eventTypeWord(AppLocalizations l10n, String dbName) =>
     eventTypeLabel(l10n, EventType.fromDb(dbName));
 
-String localSlotLabel(AppLocalizations? l10n, LocalSlotKind kind,
+String localSlotLabel(AppLocalizations l10n, LocalSlotKind kind,
         [String? eventType]) =>
     switch (kind) {
       LocalSlotKind.legalIdentity =>
-        l10n?.localSlotLegalIdentity ??
-            'Your legal identity and address (for invoices)',
+        l10n.localSlotLegalIdentity,
       LocalSlotKind.paymentDetails =>
-        l10n?.localSlotPaymentDetails ?? 'How members pay you (bank details)',
+        l10n.localSlotPaymentDetails,
       LocalSlotKind.paymentProvider =>
-        l10n?.localSlotPaymentProvider ?? 'An online payment provider',
+        l10n.localSlotPaymentProvider,
       LocalSlotKind.einvoicePlatform =>
-        l10n?.localSlotEinvoicePlatform ?? 'Your e-invoicing platform account',
-      LocalSlotKind.site => l10n?.localSlotSite ?? 'At least one site',
-      LocalSlotKind.namedValidators => l10n?.localSlotNamedValidators(
-              eventTypeLabel(l10n, EventType.fromDb(eventType ?? ''))) ??
-          'Who validates ${eventType ?? ''}',
+        l10n.localSlotEinvoicePlatform,
+      LocalSlotKind.site => l10n.localSlotSite,
+      LocalSlotKind.namedValidators => l10n.localSlotNamedValidators(
+              eventTypeLabel(l10n, EventType.fromDb(eventType ?? ''))),
       LocalSlotKind.unknown => '',
     };
 
@@ -42,7 +41,7 @@ class TemplateLocalNeedsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final needs =
         ref.watch(templateLocalNeedsProvider(templateId)).value ??
         const <LocalSlot>[];
@@ -57,8 +56,7 @@ class TemplateLocalNeedsView extends ConsumerWidget {
       children: [
         const SizedBox(height: AppSpacing.sm),
         Text(
-          l10n?.localNeedsTitle ??
-              'You will add these yourself; a template never carries them:',
+          l10n.localNeedsTitle,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         for (final s in shown)
@@ -70,7 +68,7 @@ class TemplateLocalNeedsView extends ConsumerWidget {
             title: Text(localSlotLabel(l10n, s.kind, s.eventType)),
             subtitle: s.required
                 ? null
-                : Text(l10n?.localSlotRecommended ?? 'Recommended'),
+                : Text(l10n.localSlotRecommended),
           ),
       ],
     );
@@ -86,7 +84,7 @@ class LocalReadinessCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final gaps =
         ref.watch(workspaceLocalGapsProvider(workspaceId)).value ??
         const <LocalSlot>[];
@@ -100,7 +98,7 @@ class LocalReadinessCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.localGapsTitle ?? 'To finish setting up this space',
+              l10n.localGapsTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             for (final s in gaps)
@@ -113,11 +111,11 @@ class LocalReadinessCard extends ConsumerWidget {
                 title: Text(localSlotLabel(l10n, s.kind, s.eventType)),
                 subtitle: s.required
                     ? null
-                    : Text(l10n?.localSlotRecommended ?? 'Recommended'),
+                    : Text(l10n.localSlotRecommended),
                 trailing: TextButton(
                   key: ValueKey('local-setup-open-${s.route}'),
                   onPressed: () => context.push(s.route),
-                  child: Text(l10n?.localSlotOpen ?? 'Set up'),
+                  child: Text(l10n.localSlotOpen),
                 ),
               ),
           ],

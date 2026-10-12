@@ -7,10 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/help/guide_site.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/motion/motion.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
@@ -54,8 +53,8 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final words = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final words = l10n;
     final labels = [(0, words.uxProfileSection), (2, words.uxPreferencesSection),
       (3, words.uxAdvancedSection), (1, words.uxPrivacySection)];
     final scheme = Theme.of(context).colorScheme;
@@ -94,7 +93,7 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
           _header(words.uxPreferencesSection, 2),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
           door('me-activity', Icons.account_balance_wallet_outlined,
-              l10n?.financesTitle ?? 'Finances',
+              l10n.financesTitle,
               '/account-activity'),
           _header(words.uxAdvancedSection, 3),
           // The task wizard: recording, guides and tools in one place.
@@ -102,21 +101,21 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
               .watch(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.taskRecorder))
             door('me-task-wizard', Icons.assistant_navigation,
-                l10n?.taskWizardTitle ?? 'Task wizard', taskWizardRoute),
-          SettingsSectionHeader(l10n?.meGroupWorkspaces ?? 'My workspaces'),
+                l10n.taskWizardTitle, taskWizardRoute),
+          SettingsSectionHeader(l10n.meGroupWorkspaces),
           door('me-workspaces', Icons.workspaces_outline,
-              l10n?.meGroupWorkspaces ?? 'My workspaces', '/profiles'),
+              l10n.meGroupWorkspaces, '/profiles'),
           SettingsSectionHeader(
-              l10n?.meGroupInstallations ?? 'Connected installations'),
+              l10n.meGroupInstallations),
           door('me-servers', Icons.dns_outlined,
-              l10n?.meWhereSpacesLive ?? 'Where my spaces live', '/connections'),
+              l10n.meWhereSpacesLive, '/connections'),
           ...accountSettingsTiles(context, ref,
               only: AccountTileGroup.installations),
           const Divider(),
           ListTile(
             key: const ValueKey('me-help'),
             leading: const Icon(Icons.help_outline),
-            title: Text(l10n?.helpTitle ?? 'Help'),
+            title: Text(l10n.helpTitle),
             trailing: const Icon(Icons.open_in_new),
             onTap: () => openGuide(ref, context),
           ),
@@ -125,13 +124,13 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
           const LinkedVisibilityCard(),
           const BlockedPeopleCard(),
           door('me-privacy', Icons.shield_outlined,
-              l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
+              l10n.privacyTitle, '/privacy'),
           const Divider(),
           ListTile(
             key: const ValueKey('me-sign-out'),
             leading: Icon(Icons.logout, color: scheme.error),
             title: Text(
-              l10n?.authSignOut ?? 'Sign out',
+              l10n.authSignOut,
               style: TextStyle(color: scheme.error),
             ),
             onTap: () => signOutAndForget(ref),

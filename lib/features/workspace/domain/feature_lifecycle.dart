@@ -24,7 +24,7 @@ import 'workspace_feature.dart';
 
 /// Bumped when the meaning of a stored value changes. A reader that meets
 /// a version it does not know treats every entry as unreviewed.
-const int featureAssessmentSchemaVersion = 1;
+const int _featureAssessmentSchemaVersion = 1;
 
 /// The review axis. Declared in increasing order of assurance.
 enum FeatureMaturity { unreviewed, alpha, beta, stable }
@@ -37,7 +37,7 @@ enum FeatureLifecycle { active, deprecated, retired }
 /// [FeatureMaturity.unreviewed], never an assurance it did not state.
 FeatureMaturity featureMaturityFromName(String? name, {int? schemaVersion}) {
   if (schemaVersion != null &&
-      schemaVersion != featureAssessmentSchemaVersion) {
+      schemaVersion != _featureAssessmentSchemaVersion) {
     return FeatureMaturity.unreviewed;
   }
   for (final m in FeatureMaturity.values) {

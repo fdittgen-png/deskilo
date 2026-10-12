@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/presentation/widgets/member_note_actions.dart';
@@ -47,16 +47,14 @@ class NoteRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final sentByMe = note.fromMemberId == myMemberId;
     final title = sentByMe
         ? (note.isBroadcast
-            ? (l10n?.memberNoteToAllAdmins ?? 'To all admins')
-            : (l10n?.memberNoteTo(names[note.toMemberId] ?? '') ??
-                'To ${names[note.toMemberId] ?? ''}'))
-        : (l10n?.memberNoteReceived(names[note.fromMemberId] ?? '') ??
-            'Message from ${names[note.fromMemberId] ?? ''}');
+            ? (l10n.memberNoteToAllAdmins)
+            : (l10n.memberNoteTo(names[note.toMemberId] ?? '')))
+        : (l10n.memberNoteReceived(names[note.fromMemberId] ?? ''));
     final when = DateFormat.MMMd()
         .add_Hm()
         .format(note.createdAt.toLocal());

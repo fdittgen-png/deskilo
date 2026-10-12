@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
@@ -91,14 +91,13 @@ Future<void> openSpaceById(
   required SpaceKind kind,
   required String id,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final resolved = await resolveSpaceById(ref, kind, id);
   if (!context.mounted) return;
   if (resolved == null) {
     AppSnack.error(
       context,
-      l10n?.spaceScanUnknown ??
-          'This code does not match any space here anymore.',
+      l10n.spaceScanUnknown,
     );
     return;
   }
@@ -127,7 +126,7 @@ Future<void> openReservationById(
   WidgetRef ref,
   String reservationId,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final reservation = await ref
       .read(reservationRepositoryProvider)
       .fetchById(reservationId);
@@ -135,7 +134,7 @@ Future<void> openReservationById(
   if (reservation == null) {
     AppSnack.error(
       context,
-      l10n?.noteRefGone ?? 'This reservation no longer exists.',
+      l10n.noteRefGone,
     );
     return;
   }

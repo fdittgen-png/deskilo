@@ -15,7 +15,7 @@ import '../domain/booking_success_text.dart';
 /// in `domain/`, which is pure Dart; only the snack lives here.
 void announceBooking(
   BuildContext context,
-  AppLocalizations? l10n, {
+  AppLocalizations l10n, {
   required bool checkedIn,
   required DateTime start,
   required DateTime end,
@@ -41,7 +41,7 @@ void announceBooking(
         ? null
         : SnackBarAction(
             key: const ValueKey('booking-feedback-open-details'),
-            label: l10n?.bookingOpenDetails ?? 'Details',
+            label: l10n.bookingOpenDetails,
             onPressed: onOpen,
           ),
   );

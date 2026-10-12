@@ -8,12 +8,12 @@ import 'package:go_router/go_router.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/secondary_federation.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
@@ -68,19 +68,16 @@ class PublicWorkspaceView extends ConsumerWidget {
   /// #1834 — connecting is not asking to join: a request made right after
   /// connecting is confirmed once more, with the space's name.
   Future<bool> _confirmApply(BuildContext context) async {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             key: const ValueKey('identity-connect-confirm-apply'),
             title: Text(
-              l?.identityConnectConfirmApply(workspace.name) ??
-                  'Send your membership request to ${workspace.name}?',
+              l.identityConnectConfirmApply(workspace.name),
             ),
             content: Text(
-              l?.identityConnectConfirmApplyBody ??
-                  'You are connected now. The space reviews your request; '
-                      'nothing else is shared.',
+              l.identityConnectConfirmApplyBody,
             ),
             actions: [
               TextButton(
@@ -93,7 +90,7 @@ class PublicWorkspaceView extends ConsumerWidget {
               FilledButton(
                 key: const ValueKey('identity-connect-send'),
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l?.identityConnectSend ?? 'Send request'),
+                child: Text(l.identityConnectSend),
               ),
             ],
           ),
@@ -103,7 +100,7 @@ class PublicWorkspaceView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     // #1847 — the card is read again from its installation, anonymously:
     // what the owner publishes NOW, and nothing to act on once withdrawn.
     // A preview of one's own page, or a source that cannot be reached,
@@ -134,7 +131,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          preview ? (l?.portalPreview ?? 'External view') : workspace.name,
+          preview ? (l.portalPreview) : workspace.name,
         ),
       ),
       body: ListView(
@@ -161,14 +158,13 @@ class PublicWorkspaceView extends ConsumerWidget {
               padding: AppSpacing.smAll,
               child: Text(
                 key: const ValueKey('public-workspace-withdrawn'),
-                l?.portalNoLongerPublished ??
-                    'This workspace is no longer published.',
+                l.portalNoLongerPublished,
               ),
             ),
           Text(switch (workspace.text('host_type')) {
-            'association' => l?.portalAssociation ?? 'Association',
-            'company' => l?.portalCompany ?? 'Company',
-            _ => l?.portalPerson ?? 'Private host',
+            'association' => l.portalAssociation,
+            'company' => l.portalCompany,
+            _ => l.portalPerson,
           }),
           for (final field in [
             'description',
@@ -183,16 +179,16 @@ class PublicWorkspaceView extends ConsumerWidget {
                 child: SelectableText(workspace.text(field)),
               ),
           if (workspace.text('website').isNotEmpty)
-            link('website', l?.portalWebsite ?? 'Website'),
+            link('website', l.portalWebsite),
           if (workspace.text('plan_url').isNotEmpty)
-            link('plan_url', l?.portalPublicPlan ?? 'Public floor plan'),
+            link('plan_url', l.portalPublicPlan),
           for (final contact in workspace.contacts)
             ListTile(
               title: Text(contact['name'] as String? ?? ''),
               subtitle: Text(
                 contact['owner'] == true
-                    ? (l?.portalOwner ?? 'Owner')
-                    : (l?.portalAdmin ?? 'Administrator'),
+                    ? (l.portalOwner)
+                    : (l.portalAdmin),
               ),
               trailing:
                   !withdrawn &&
@@ -200,7 +196,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                       contact['user_id'] is String
                   ? IconButton(
                       key: ValueKey('public-workspace-chat-${contact['user_id']}'),
-                      tooltip: l?.portalChat ?? 'Chat',
+                      tooltip: l.portalChat,
                       icon: const Icon(Icons.chat_outlined),
                       onPressed: preview
                           ? null
@@ -236,7 +232,7 @@ class PublicWorkspaceView extends ConsumerWidget {
             OutlinedButton.icon(
               key: const ValueKey('write-to-hosts'),
               icon: const Icon(Icons.contact_support_outlined),
-              label: Text(l?.messengerWriteToHosts ?? 'Write to the hosts'),
+              label: Text(l.messengerWriteToHosts),
               onPressed: () async {
                 if (await _connected(
                           context,
@@ -274,8 +270,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                   domain: 'workspace',
                   message: 'request public workspace profile failed',
                   errorText:
-                      l?.portalActionFailed ??
-                      'Could not save this change. Please try again.',
+                      l.portalActionFailed,
                   action: () async {
                     try {
                       await ref.read(directoryActionsProvider).apply(workspace);
@@ -296,8 +291,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                       SnackBar(
                         key: const ValueKey('action-not-negotiated'),
                         content: Text(
-                          l?.portalActionNotNegotiated ??
-                              'This action is not available between this app and that server. Updating the app may help.',
+                          l.portalActionNotNegotiated,
                         ),
                       ),
                     );
@@ -308,7 +302,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        l?.portalRequestSent ?? 'Request sent. The workspace will review your profile.',
+                        l.portalRequestSent,
                       ),
                     ),
                   );

@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../invoice_journey.dart';
 import 'invoice_journey_view.dart';
 
@@ -12,7 +13,7 @@ import 'invoice_journey_view.dart';
 /// sides, reachable from the issuers' hub and from a member's Invoices
 /// face, so the two never learn two different processes.
 Future<void> showInvoiceProcessSheet(BuildContext context) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -25,52 +26,32 @@ class _ProcessBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final steps = <(InvoiceStep, IconData, String, String)>[
       (
         InvoiceStep.issued,
         Icons.receipt_long_outlined,
-        l10n?.journeyHowIssuedWorkspace ??
-            "Issues the invoice from the month's tracked data — numbered, "
-                'signed, immutable — and shares the PDF or sends the '
-                'e-invoice.',
-        l10n?.journeyHowIssuedMember ??
-            'Finds it on the Invoices face: positions, balance, due date.',
+        l10n.journeyHowIssuedWorkspace,
+        l10n.journeyHowIssuedMember,
       ),
       (
         InvoiceStep.payment,
         Icons.payments_outlined,
-        l10n?.journeyHowPaymentWorkspace ??
-            'Waits for the money. Past the term it sends the reminder '
-                'levels it configured — by hand or automatically.',
-        l10n?.journeyHowPaymentMember ??
-            'Pays online (settled at once) or by transfer, then records '
-                'the payment so the workspace knows.',
+        l10n.journeyHowPaymentWorkspace,
+        l10n.journeyHowPaymentMember,
       ),
       (
         InvoiceStep.confirmation,
         Icons.fact_check_outlined,
-        l10n?.journeyHowConfirmationWorkspace ??
-            'Another admin confirms the declared payment; the issuer then '
-                'matches the registered payment to the invoice (Mark as '
-                'paid) — a validation rule may hand the match to the '
-                'validators. Paid more? A credit note. Paid less? '
-                'Partially paid, the rest owed until paid or written off.',
-        l10n?.journeyHowConfirmationMember ??
-            'Nothing to do — unless the workspace recorded the payment '
-                'for them: then they confirm it in Events.',
+        l10n.journeyHowConfirmationWorkspace,
+        l10n.journeyHowConfirmationMember,
       ),
       (
         InvoiceStep.closed,
         Icons.inventory_2_outlined,
-        l10n?.journeyHowClosedWorkspace ??
-            'Paid, remainder cancelled or refunded: the invoice moves to '
-                'the archive. A wrong invoice is marked erroneous and '
-                'replaced — before payment, never after.',
-        l10n?.journeyHowClosedMember ??
-            'The month reads settled and the invoice stays readable '
-                'forever: quick view, PDF, share.',
+        l10n.journeyHowClosedWorkspace,
+        l10n.journeyHowClosedMember,
       ),
     ];
     return SafeArea(
@@ -90,14 +71,12 @@ class _ProcessBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n?.journeyHowTitle ?? 'How invoicing works',
+                l10n.journeyHowTitle,
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                l10n?.journeyHowIntro ??
-                    'Four steps, the same for every invoice. Each one says '
-                        'whose move it is.',
+                l10n.journeyHowIntro,
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
@@ -126,13 +105,12 @@ class _ProcessBody extends StatelessWidget {
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             _Side(
-                              label: l10n?.journeyHowWorkspaceLabel ??
-                                  'Workspace',
+                              label: l10n.journeyHowWorkspaceLabel,
                               text: workspace,
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             _Side(
-                              label: l10n?.journeyHowMemberLabel ?? 'Member',
+                              label: l10n.journeyHowMemberLabel,
                               text: member,
                             ),
                           ],

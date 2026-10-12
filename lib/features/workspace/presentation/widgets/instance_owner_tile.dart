@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/instance_responsibles.dart';
@@ -22,19 +24,19 @@ class InstanceOwnerTile extends ConsumerWidget {
     if (info == null || info.installationId.isEmpty) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final subtitle = info.claimable
-        ? (l10n?.instanceClaimTitle ?? 'Take ownership')
+        ? (l10n.instanceClaimTitle)
         : info.owners.isEmpty
-        ? (l10n?.instanceOwnerNone ?? 'No instance owner is set yet.')
+        ? (l10n.instanceOwnerNone)
         : info.owners.map((o) => o.name).join(', ');
     return ListTile(
       key: const ValueKey('instance-owner-tile'),
       leading: const Icon(Icons.verified_user_outlined),
-      title: Text(l10n?.instanceOwnerTitle ?? 'Instance owner'),
+      title: Text(l10n.instanceOwnerTitle),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => showModalBottomSheet<void>(
+      onTap: () => showAppSheet<void>(
         context: context,
         isScrollControlled: true,
         showDragHandle: true,
@@ -62,7 +64,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
     super.dispose();
   }
 
-  AppLocalizations? get _l10n => AppLocalizations.of(context);
+  AppLocalizations get _l10n => context.l10n;
 
   Future<void> _run(String message, Future<void> Function() action) async {
     if (_busy) return;
@@ -91,11 +93,11 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          l10n?.instanceDelegateWithdrawTitle ?? 'Withdraw this delegation?',
+          l10n.instanceDelegateWithdrawTitle,
         ),
         content: Text(
           '${who.name} · ${who.email}\n'
-          '${l10n?.instanceDelegateWithdrawBody ?? 'They lose access to the installation-wide setup immediately.'}',
+          '${l10n.instanceDelegateWithdrawBody}',
         ),
         actions: [
           TextButton(
@@ -106,7 +108,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
           FilledButton(
             key: const ValueKey('instance-withdraw-confirm'),
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text(l10n?.instanceDelegateWithdrawConfirm ?? 'Withdraw'),
+            child: Text(l10n.instanceDelegateWithdrawConfirm),
           ),
         ],
       ),
@@ -118,7 +120,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
       if (mounted) {
         setState(
           () => _outcome =
-              _l10n?.instanceDelegationWithdrawn ?? 'Delegation withdrawn.',
+              _l10n.instanceDelegationWithdrawn,
         );
       }
     });
@@ -130,29 +132,25 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
     if (!mounted) return;
     setState(
       () => _outcome = claimed
-          ? (_l10n?.instanceClaimDone ?? 'You are now the instance owner.')
-          : (_l10n?.instanceClaimFailed ?? 'Ownership could not be taken.'),
+          ? (_l10n.instanceClaimDone)
+          : (_l10n.instanceClaimFailed),
     );
   });
 
   String _outcomeText(DelegationOutcome outcome) {
     final l10n = _l10n;
     return switch (outcome) {
-      DelegationOutcome.delegated => l10n?.instanceDelegated ?? 'Delegated.',
+      DelegationOutcome.delegated => l10n.instanceDelegated,
       DelegationOutcome.unchanged =>
-        l10n?.instanceDelegateUnchanged ?? 'This person already is a delegate.',
+        l10n.instanceDelegateUnchanged,
       DelegationOutcome.noAccount =>
-        l10n?.instanceDelegateNoAccount ??
-            'No account uses this e-mail address.',
+        l10n.instanceDelegateNoAccount,
       DelegationOutcome.unconfirmed =>
-        l10n?.instanceDelegateUnconfirmed ??
-            'This account has not confirmed its e-mail address yet.',
+        l10n.instanceDelegateUnconfirmed,
       DelegationOutcome.alreadyOwner =>
-        l10n?.instanceDelegateAlreadyOwner ??
-            'The owner does not need a delegation.',
+        l10n.instanceDelegateAlreadyOwner,
       DelegationOutcome.unavailable =>
-        l10n?.instanceDelegateUnavailable ??
-            'This server cannot delegate yet.',
+        l10n.instanceDelegateUnavailable,
     };
   }
 
@@ -161,7 +159,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
     if (!mounted) return;
     AppSnack.success(
       context,
-      _l10n?.instanceOwnerCopied ?? 'E-mail address copied.',
+      _l10n.instanceOwnerCopied,
     );
   }
 
@@ -182,7 +180,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
         children: [
           IconButton(
             key: ValueKey('instance-copy-$keyId'),
-            tooltip: l10n?.instanceOwnerCopyEmail ?? 'Copy e-mail address',
+            tooltip: l10n.instanceOwnerCopyEmail,
             icon: const Icon(Icons.copy_outlined),
             onPressed: () => _copy(who.email),
           ),
@@ -214,18 +212,17 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                l10n?.instanceOwnerTitle ?? 'Instance owner',
+                l10n.instanceOwnerTitle,
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               Text(
-                l10n?.instanceOwnerHelp ??
-                    'This installation is shared by all its workspaces. The instance owner answers for it: contact them about anything that concerns the whole installation, such as assistants.',
+                l10n.instanceOwnerHelp,
               ),
               const SizedBox(height: 8),
               if (info.owners.isEmpty)
                 Text(
-                  l10n?.instanceOwnerNone ?? 'No instance owner is set yet.',
+                  l10n.instanceOwnerNone,
                   key: const ValueKey('instance-owner-none'),
                 ),
               for (var i = 0; i < info.owners.length; i++)
@@ -235,10 +232,8 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     info.isOwner
-                        ? (l10n?.instanceYouAreOwner ??
-                              'You are the instance owner.')
-                        : (l10n?.instanceYouAreDelegate ??
-                              'You are a delegate of the instance owner.'),
+                        ? (l10n.instanceYouAreOwner)
+                        : (l10n.instanceYouAreDelegate),
                     key: const ValueKey('instance-you'),
                     style: theme.textTheme.labelLarge,
                   ),
@@ -246,37 +241,35 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
               if (info.claimable) ...[
                 const Divider(),
                 Text(
-                  l10n?.instanceClaimTitle ?? 'Take ownership',
+                  l10n.instanceClaimTitle,
                   style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  l10n?.instanceClaimBody ??
-                      'You created this instance and no owner has been set. Taking ownership makes you the person who answers for it.',
+                  l10n.instanceClaimBody,
                 ),
                 const SizedBox(height: 8),
                 FilledButton(
                   key: const ValueKey('instance-claim'),
                   onPressed: _busy ? null : _claim,
-                  child: Text(l10n?.instanceClaimButton ?? 'Take ownership'),
+                  child: Text(l10n.instanceClaimButton),
                 ),
               ],
               if (info.owners.isNotEmpty) ...[
                 const Divider(),
                 Text(
-                  l10n?.instanceDelegatesTitle ?? 'Delegates',
+                  l10n.instanceDelegatesTitle,
                   style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  l10n?.instanceDelegatesHelp ??
-                      'A delegate can run the installation-wide setup for assistants. Delegates cannot delegate further and see no other workspace.',
+                  l10n.instanceDelegatesHelp,
                 ),
                 if (info.delegates.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      l10n?.instanceDelegatesNone ?? 'No delegates.',
+                      l10n.instanceDelegatesNone,
                       key: const ValueKey('instance-delegates-none'),
                     ),
                   ),
@@ -288,8 +281,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                         ? IconButton(
                             key: ValueKey('instance-withdraw-$i'),
                             tooltip:
-                                l10n?.instanceDelegateWithdraw ??
-                                'Withdraw the delegation',
+                                l10n.instanceDelegateWithdraw,
                             icon: const Icon(Icons.person_remove_outlined),
                             onPressed: _busy
                                 ? null
@@ -307,8 +299,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                   autofillHints: const [AutofillHints.email],
                   decoration: InputDecoration(
                     labelText:
-                        l10n?.instanceDelegateFieldLabel ??
-                        'E-mail address of an account',
+                        l10n.instanceDelegateFieldLabel,
                     border: const OutlineInputBorder(),
                   ),
                   onSubmitted: (_) => _busy ? null : _delegate(),
@@ -317,7 +308,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
                 FilledButton.tonal(
                   key: const ValueKey('instance-delegate-add'),
                   onPressed: _busy ? null : _delegate,
-                  child: Text(l10n?.instanceDelegateAdd ?? 'Delegate the role'),
+                  child: Text(l10n.instanceDelegateAdd),
                 ),
               ],
               if (_outcome != null) ...[

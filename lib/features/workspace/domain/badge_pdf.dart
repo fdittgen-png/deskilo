@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+
 import '../../money/domain/report_flow_page.dart';
 
 /// Credit-card badge dimensions (ISO/IEC 7810 ID-1: 85.60 × 53.98 mm).
@@ -11,7 +13,9 @@ const double badgeCardHeight = 53.98 * PdfPageFormat.mm;
 
 /// Cards per A4 sheet: 2 columns × 5 rows — the standard badge-sheet
 /// layout (fits 2×85.6 mm + gutters across, 5×53.98 mm + gutters down).
+@visibleForTesting
 const int badgeSheetColumns = 2;
+@visibleForTesting
 const int badgeSheetRows = 5;
 
 /// Printable badge sheet (0043 UX pass, A4 revision): the one-time badge

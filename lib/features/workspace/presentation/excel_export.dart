@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/schema_version.dart';
 import '../../../core/files/file_saver.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../events/providers/event_providers.dart';
 import '../../money/providers/money_providers.dart';
@@ -34,13 +34,13 @@ Future<void> exportWorkspaceExcel(
   WidgetRef ref,
   Workspace workspace,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   await runGuarded(
     context,
     domain: 'workspace',
     message: 'excel data export failed',
     errorText:
-        l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       final levels = await ref.read(levelsProvider.future);
       final plans = <String, FloorPlan>{
@@ -137,11 +137,11 @@ Future<void> exportWorkspaceExcel(
       }
       if (!context.mounted) return;
       if (path == null) {
-        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+        AppSnack.error(context, l10n.commonSaveFailed);
       } else {
         AppSnack.success(
           context,
-          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          l10n.commonSavedTo(path),
         );
       }
     },

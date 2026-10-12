@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/instance/instance_builder.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// One long-running wizard step (#977): what it does, its progress, and
 /// the one button that starts, resumes or shows it done.
@@ -37,7 +37,7 @@ class InstanceRunStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final p = progress;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,8 +51,7 @@ class InstanceRunStep extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: Text(l10n?.instanceProgress(p.done, p.total, p.current) ??
-                '${p.done} / ${p.total} · ${p.current}'),
+            child: Text(l10n.instanceProgress(p.done, p.total, p.current)),
           ),
         ],
         FilledButton.icon(
@@ -60,10 +59,10 @@ class InstanceRunStep extends StatelessWidget {
           onPressed: busy || done ? null : onRun,
           icon: Icon(done ? Icons.check_circle_outline : startIcon),
           label: Text(done
-              ? (l10n?.commonDone ?? 'Done')
+              ? (l10n.commonDone)
               : retry
-                  ? (l10n?.instanceRetry ?? 'Retry from where it stopped')
-                  : (startLabel ?? l10n?.commonStart ?? 'Start')),
+                  ? (l10n.instanceRetry)
+                  : (startLabel ?? l10n.commonStart)),
         ),
       ],
     );

@@ -11,9 +11,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../plan/domain/seat.dart';
 import '../../domain/place_feedback.dart';
 import '../../domain/seat_state_logic.dart';
@@ -72,7 +73,7 @@ Future<SeatDayPick?> showSeatDaySheet(
   required DateTime dayEnd,
   required DateTime now,
 }) =>
-    showModalBottomSheet<SeatDayPick>(
+    showAppSheet<SeatDayPick>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _SeatDaySheet(
@@ -104,7 +105,7 @@ class _SeatDaySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final hm = appFormatOf(context); // #1150
     final gaps = seatDayGaps(
@@ -126,10 +127,10 @@ class _SeatDaySheet extends StatelessWidget {
         '${hm.time(start)} – '
         '${hm.time(end)}';
     String phaseOf(DateTime start, DateTime end) => end.isBefore(now)
-        ? (l10n?.seatDayPast ?? 'Done')
+        ? (l10n.seatDayPast)
         : start.isAfter(now)
-            ? (l10n?.seatDayAhead ?? 'Ahead')
-            : (l10n?.seatDayNow ?? 'Now');
+            ? (l10n.seatDayAhead)
+            : (l10n.seatDayNow);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -139,12 +140,11 @@ class _SeatDaySheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.seatDayTitle(seat.name) ?? 'Seat ${seat.name} today',
+              l10n.seatDayTitle(seat.name),
               style: theme.textTheme.titleMedium,
             ),
             Text(
-              l10n?.seatDaySubtitle ??
-                  'Who has this seat, and when. Tap a free stretch to take it.',
+              l10n.seatDaySubtitle,
               style: theme.textTheme.bodySmall,
             ),
             PlaceFeedbackBar(kind: PlaceKind.seat, id: seat.id),
@@ -161,9 +161,9 @@ class _SeatDaySheet extends StatelessWidget {
                   ),
                   title: Text(when(booking.start, booking.end)),
                   subtitle: Text(booking.isMine
-                      ? (l10n?.seatDayMine ?? 'You')
+                      ? (l10n.seatDayMine)
                       : (names[booking.memberId] ??
-                          (l10n?.seatDaySomeone ?? 'A member'))),
+                          (l10n.seatDaySomeone))),
                   trailing: Text(phaseOf(booking.start, booking.end),
                       style: theme.textTheme.labelSmall),
                   onTap: () =>
@@ -178,7 +178,7 @@ class _SeatDaySheet extends StatelessWidget {
                       color: SeatStateColors.of(SeatState.free,
                           brightness: theme.brightness)),
                   title: Text(when(row.start, row.end)),
-                  subtitle: Text(l10n?.seatDayFree ?? 'Free — book it'),
+                  subtitle: Text(l10n.seatDayFree),
                   onTap: () => Navigator.of(context)
                       .pop(SeatDayGap(row.start, row.end)),
                 ),

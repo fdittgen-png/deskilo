@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/context_l10n.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart' show ShellBarMetrics;
 import 'shell_destinations.dart';
@@ -62,7 +62,7 @@ class ShellCenterButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final hidden = ref.watch(shellBarHiddenProvider).value ?? false;
     // #1322 — full screen takes the bell away with the title bar, so the
     // one piece of chrome left on screen carries its count: choosing more
@@ -104,8 +104,8 @@ class ShellCenterButton extends ConsumerWidget {
         SemanticsService.sendAnnouncement(
           View.of(context),
           hidden
-              ? (l10n?.shellBarShownAnnounce ?? 'Navigation bar shown')
-              : (l10n?.shellBarHiddenAnnounce ?? 'Navigation bar hidden'),
+              ? (l10n.shellBarShownAnnounce)
+              : (l10n.shellBarHiddenAnnounce),
           Directionality.of(context),
         ),
       );
@@ -167,14 +167,14 @@ class ShellCenterButton extends ConsumerWidget {
     return Semantics(
       label: pending == 0
           ? label
-          : '$label, ${l10n?.shellPendingDecisions(pending) ?? '$pending awaiting your decision'}',
+          : '$label, ${l10n.shellPendingDecisions(pending)}',
       button: true,
       selected: selected,
       // Exposed to TalkBack and switch access as an ACTION, so somebody
       // who cannot perform a drag can still bring a hidden bar back.
       hint: hidden
-          ? (l10n?.shellBarShowHint ?? 'Long-press to show the navigation bar')
-          : (l10n?.shellBarHideHint ?? 'Long-press for a full-screen view'),
+          ? (l10n.shellBarShowHint)
+          : (l10n.shellBarHideHint),
       onLongPress: () => unawaited(toggleBar()),
       excludeSemantics: true,
       child: Tooltip(

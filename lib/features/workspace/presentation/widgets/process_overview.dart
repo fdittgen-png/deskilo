@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -100,16 +101,16 @@ class _ProcessOverviewState extends State<ProcessOverview> {
       activate: activate,
     );
     if (written == null || !context.mounted) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     AppSnack.success(
       context,
-      l10n?.processApplied(written) ?? '$written features changed.',
+      l10n.processApplied(written),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final statuses = processStatuses(widget.raw);
     final visible = {
       for (final status in statuses)
@@ -126,7 +127,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
           ? EmptyState(
               key: const ValueKey('process-no-match'),
               icon: Icons.search_off_outlined,
-              title: l10n?.featuresNoMatch ?? 'No feature matches that.',
+              title: l10n.featuresNoMatch,
             )
           : ListView(
               key: const ValueKey('process-hits'),
@@ -138,7 +139,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
       body = EmptyState(
         key: const ValueKey('process-filter-empty'),
         icon: Icons.filter_alt_off_outlined,
-        title: l10n?.processFilterEmpty ?? 'No process matches this filter.',
+        title: l10n.processFilterEmpty,
       );
     } else {
       body = SingleChildScrollView(
@@ -194,7 +195,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
               isDense: true,
               prefixIcon: const Icon(Icons.search),
               labelText:
-                  l10n?.processSearchLabel ?? 'Search processes and features',
+                  l10n.processSearchLabel,
               suffixIcon: _search.text.isEmpty
                   ? null
                   : IconButton(
@@ -233,9 +234,9 @@ class _ProcessOverviewState extends State<ProcessOverview> {
     );
   }
 
-  String _filterLabel(AppLocalizations? l10n, ProcessFilter filter) =>
+  String _filterLabel(AppLocalizations l10n, ProcessFilter filter) =>
       switch (filter) {
-        ProcessFilter.all => l10n?.processFilterAll ?? 'All',
+        ProcessFilter.all => l10n.processFilterAll,
         ProcessFilter.active => processStateLabel(l10n, ProcessState.active),
         ProcessFilter.available => processStateLabel(
           l10n,

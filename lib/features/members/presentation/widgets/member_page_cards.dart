@@ -26,45 +26,45 @@ class _HeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final brightness = theme.brightness;
     final online = presence.kind == DirectoryPresenceKind.online;
     final chips = <Widget>[
       if (member.isOwner)
-        _Chip(l10n?.memberRoleOwner ?? 'Owner',
+        _Chip(l10n.memberRoleOwner,
             foreground: theme.colorScheme.onPrimary,
             background: theme.colorScheme.primary),
       if (member.isAdmin && !member.isOwner)
-        _Chip(l10n?.memberRoleAdmin ?? 'Administrator',
+        _Chip(l10n.memberRoleAdmin,
             foreground: theme.colorScheme.primary, outlined: true),
       if (member.coOwner == CoOwnerStatus.active)
-        _Chip(l10n?.memberCoOwnerChip ?? 'Co-owner',
+        _Chip(l10n.memberCoOwnerChip,
             foreground: theme.colorScheme.primary, outlined: true),
       if (member.coOwner == CoOwnerStatus.passive)
-        _Chip(l10n?.memberCoOwnerPassiveChip ?? 'Successor',
+        _Chip(l10n.memberCoOwnerPassiveChip,
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
       if (member.isKiosk)
-        _Chip(l10n?.memberKioskLabel ?? 'Kiosk',
+        _Chip(l10n.memberKioskLabel,
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
       if (member.isManaged)
-        _Chip(l10n?.managedProfileChip ?? 'Managed',
+        _Chip(l10n.managedProfileChip,
             foreground: theme.colorScheme.tertiary, outlined: true),
       if (member.status == MemberStatus.pending)
-        _Chip(l10n?.memberStatusPending ?? 'Pending',
+        _Chip(l10n.memberStatusPending,
             foreground: theme.colorScheme.onError,
             background: theme.colorScheme.error),
       if (member.status == MemberStatus.paused)
-        _Chip(l10n?.memberStatusPaused ?? 'Paused',
+        _Chip(l10n.memberStatusPaused,
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
       if (member.status == MemberStatus.exited)
-        _Chip(l10n?.memberStatusExited ?? 'Exited',
+        _Chip(l10n.memberStatusExited,
             foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
     ];
     final presenceText = online
-        ? (l10n?.directoryOnline ?? 'Online')
+        ? (l10n.directoryOnline)
         : presence.lastSeenAt == null
-            ? (l10n?.memberPageNeverSeen ?? 'Not seen yet')
+            ? (l10n.memberPageNeverSeen)
             : relativeLastSeen(l10n, now, presence.lastSeenAt!);
     final joined = member.joinedAt;
     return Card(
@@ -106,7 +106,7 @@ class _HeaderCard extends StatelessWidget {
                 children: [
                   Text(
                     isSelf
-                        ? (l10n?.memberPageYou(name) ?? '$name (you)')
+                        ? (l10n.memberPageYou(name))
                         : name,
                     style: theme.textTheme.titleLarge,
                   ),
@@ -155,9 +155,8 @@ class _HeaderCard extends StatelessWidget {
                   ),
                   if (joined != null)
                     Text(
-                      l10n?.memberPageSince(
-                              DateFormat.yMMMd().format(joined.toLocal())) ??
-                          'Member since ${DateFormat.yMMMd().format(joined.toLocal())}',
+                      l10n.memberPageSince(
+                              DateFormat.yMMMd().format(joined.toLocal())),
                       key: const ValueKey('member-page-since'),
                       style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant),
@@ -190,37 +189,34 @@ class _NowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final success = AppStatusColors.successOf(theme.brightness);
     final (IconData icon, Color color, String line) = switch (info) {
       CheckedInNow(:final reservation) => (
           Icons.event_available,
           success,
-          l10n?.memberPageCheckedIn(
+          l10n.memberPageCheckedIn(
                   reservation.spaceNameFrom(targets),
-                  appFormatOf(context).time(reservation.startsAt)) ??
-              'Checked in · ${reservation.spaceNameFrom(targets)} · since ${appFormatOf(context).time(reservation.startsAt)}',
+                  appFormatOf(context).time(reservation.startsAt)),
         ),
       ReservedNow(:final reservation) => (
           Icons.event_seat_outlined,
           theme.colorScheme.primary,
-          l10n?.memberPageReservedNow(
+          l10n.memberPageReservedNow(
                   reservation.spaceNameFrom(targets),
-                  appFormatOf(context).time(reservation.endsAt)) ??
-              'Reserved now · ${reservation.spaceNameFrom(targets)} · until ${appFormatOf(context).time(reservation.endsAt)}',
+                  appFormatOf(context).time(reservation.endsAt)),
         ),
       UpcomingReservation(:final reservation) => (
           Icons.event_outlined,
           theme.colorScheme.onSurfaceVariant,
-          l10n?.memberPageNext(_MemberPageBody.bookingLabel(appFormatOf(context),
-                  reservation, reservation.spaceNameFrom(targets))) ??
-              'Next: ${_MemberPageBody.bookingLabel(appFormatOf(context), reservation, reservation.spaceNameFrom(targets))}',
+          l10n.memberPageNext(_MemberPageBody.bookingLabel(appFormatOf(context),
+                  reservation, reservation.spaceNameFrom(targets))),
         ),
       null => (
           Icons.event_busy_outlined,
           theme.colorScheme.onSurfaceVariant,
-          l10n?.directoryNoUpcoming ?? 'No upcoming reservations',
+          l10n.directoryNoUpcoming,
         ),
     };
     final rest = info == null
@@ -233,7 +229,7 @@ class _NowCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n?.memberPageNowHeading ?? 'Right now',
+            Text(l10n.memberPageNowHeading,
                 style: theme.textTheme.titleSmall),
             const SizedBox(height: AppSpacing.xs),
             InkWell(

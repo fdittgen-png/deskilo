@@ -94,7 +94,6 @@ import 'package:deskilo/features/reservations/domain/reservation_repository.dart
 import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
-import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/application/creation_intent.dart';
@@ -136,6 +135,7 @@ import 'fake_realtime_sync.dart';
 import 'fake_reservation_repository.dart';
 import 'in_memory_default_level_store.dart';
 import 'in_memory_fakes.dart';
+import 'memory_recorder_log_backend.dart';
 import 'test_clock.dart';
 
 export 'package:deskilo/core/demo/data/auth_repository.dart';

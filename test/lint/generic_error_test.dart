@@ -110,8 +110,9 @@ void main() {
     final problems = <String>[];
     final seen = <String>{};
     for (final file in handWrittenDartFiles('lib')) {
+      if (isPartFile(file)) continue; // #2386 — counted with its library
       final n = 'workspaceGenericError'
-          .allMatches(file.readAsStringSync())
+          .allMatches(readLibrary(file))
           .length;
       if (n == 0) continue;
       seen.add(file.path);

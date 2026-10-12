@@ -51,7 +51,7 @@ void main() {
           .readAsStringSync();
       final open = source.substring(source.indexOf('showConversationThread'));
       expect(open.indexOf('markConversationRead'),
-          lessThan(open.indexOf('showModalBottomSheet')));
+          lessThan(open.indexOf('showAppSheet')));
     });
   });
 }

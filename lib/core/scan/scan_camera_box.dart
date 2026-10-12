@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_radius.dart';
 import '../trace/act_trace.dart';
 import 'front_camera.dart';
@@ -68,7 +68,7 @@ class _ScanCameraBoxState extends ConsumerState<ScanCameraBox> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // Watched: flipping rebuilds the scanner with the other lens.
     final builder = ref.watch(qrScanWidgetBuilderProvider);
     final lens = ref.watch(frontCameraScanProvider);
@@ -127,8 +127,7 @@ class _ScanCameraBoxState extends ConsumerState<ScanCameraBox> {
               right: 4,
               child: IconButton.filledTonal(
                 key: const ValueKey('scan-flip-camera'),
-                tooltip: l10n?.settingsFrontCamera ??
-                    'Scan with the front camera',
+                tooltip: l10n.settingsFrontCamera,
                 icon: const Icon(Icons.flip_camera_android_outlined),
                 onPressed: () => ref
                     .read(frontCameraScanProvider.notifier)

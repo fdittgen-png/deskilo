@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/work_hours_reset.dart';
 import '../../domain/work_hours_provenance.dart';
 import '../../providers/workspace_providers.dart';
@@ -21,17 +21,16 @@ class WorkHoursProvenanceRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final provenance = ref.watch(workHoursProvenanceProvider).value;
     if (provenance == null) return const SizedBox.shrink();
     final label = switch (provenance.origin) {
       WorkHoursOrigin.productDefault =>
-        l10n?.provenanceProductDefault ?? 'Product default',
-      WorkHoursOrigin.template => l10n?.provenanceFromTemplate(
-              provenance.templateName ?? '') ??
-          'From template «${provenance.templateName ?? ''}»',
+        l10n.provenanceProductDefault,
+      WorkHoursOrigin.template => l10n.provenanceFromTemplate(
+              provenance.templateName ?? ''),
       WorkHoursOrigin.workspace =>
-        l10n?.provenanceWorkspaceSetting ?? 'Workspace setting',
+        l10n.provenanceWorkspaceSetting,
     };
     return Padding(
       padding: AppSpacing.lgH,
@@ -53,14 +52,14 @@ class WorkHoursProvenanceRow extends ConsumerWidget {
             TextButton(
               key: const ValueKey('work-hours-reset-template'),
               onPressed: () => _reset(context, ref, provenance, toTemplate: true),
-              child: Text(l10n?.provenanceResetToTemplate ?? 'Reset to template'),
+              child: Text(l10n.provenanceResetToTemplate),
             ),
           if (provenance.canResetToDefault)
             TextButton(
               key: const ValueKey('work-hours-reset-default'),
               onPressed: () => _reset(context, ref, provenance, toTemplate: false),
               child: Text(
-                  l10n?.provenanceResetToDefault ?? 'Reset to product default'),
+                  l10n.provenanceResetToDefault),
             ),
         ],
       ),

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -59,7 +60,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       _failure = null;
       _outcome = null;
     });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await ref.read(activeBackendProvider.future);
       final check = await ref
@@ -73,7 +74,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
           error: e, stackTrace: st);
       if (!mounted) return;
       setState(
-        () => _failure = l10n?.invitationCheckFailed ?? 'The invitation could not be checked — status not updated. Nothing was changed; try again.',
+        () => _failure = l10n.invitationCheckFailed,
       );
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -112,7 +113,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       _busy = true;
       _failure = null;
     });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     InvitationAnswer? refused;
     final opened = await _open(() async {
       final answer = await ref
@@ -131,7 +132,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       if (refused != null) {
         _outcome = refused;
       } else if (!opened) {
-        _failure = l10n?.invitationJoinUnconfirmed ?? 'The result could not be confirmed. Join again to check — the invitation is not used twice.';
+        _failure = l10n.invitationJoinUnconfirmed;
       }
     });
   }
@@ -155,7 +156,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final check = _check;
     final outcome = _outcome ?? check?.answer;
     final Widget body;
@@ -170,8 +171,8 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       );
     } else if (check.kind == InvitationCheckKind.unreadable) {
       body = _message(switch (check.invitation.problem) {
-        InvitationProblem.unsupportedVersion => l10n?.invitationNewerVersion ?? 'This invitation was made by a newer version of DesKilo. Update the app, then open it again.',
-        _ => l10n?.invitationBadServer ?? 'The server in this invitation is not valid. Ask for a new invitation.',
+        InvitationProblem.unsupportedVersion => l10n.invitationNewerVersion,
+        _ => l10n.invitationBadServer,
       }, const ValueKey('invitation-unreadable'));
     } else if (check.kind == InvitationCheckKind.otherServer) {
       body = _otherServer(l10n, check.invitation);
@@ -220,7 +221,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       invitation.target?.endpoint.host ?? _active?.host ?? '';
 
   Widget _reviewCard(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     InvitationCheck check,
     InvitationAnswer answer,
   ) {
@@ -232,8 +233,8 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
       profile?.fullName ?? '',
     ].firstWhere((s) => s.trim().isNotEmpty, orElse: () => '');
     final environment = switch (answer.environment) {
-      'dev' => l10n?.invitationEnvironmentTest ?? 'Test workspace',
-      'prod' => l10n?.invitationEnvironmentProduction ?? 'Production workspace',
+      'dev' => l10n.invitationEnvironmentTest,
+      'prod' => l10n.invitationEnvironmentProduction,
       _ => null,
     };
     return Card(
@@ -244,7 +245,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.invitationReviewTitle ?? 'Check before you join',
+              l10n.invitationReviewTitle,
               style: theme.textTheme.labelLarge,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -259,43 +260,40 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
             if (environment != null) _row(Icons.layers_outlined, environment),
             _row(
               Icons.dns_outlined,
-              l10n?.invitationServerRow(_host(check.invitation)) ??
-                  'Server: ${_host(check.invitation)}',
+              l10n.invitationServerRow(_host(check.invitation)),
             ),
             if (label != null)
               Padding(
                 padding: const EdgeInsets.only(left: 28),
                 child: Text(
-                  l10n?.invitationServerLabel(label) ??
-                      'Named “$label” by whoever shared it',
+                  l10n.invitationServerLabel(label),
                   style: theme.textTheme.bodySmall,
                 ),
               ),
             if (account.isNotEmpty)
               _row(
                 Icons.person_outline,
-                l10n?.invitationJoiningAs(account) ?? 'Joining as $account',
+                l10n.invitationJoiningAs(account),
               ),
             _row(Icons.badge_outlined, switch (answer.offeredRole) {
               InviteRole.admin =>
-                l10n?.invitationRoleAdmin ?? 'Offered role: administrator',
+                l10n.invitationRoleAdmin,
               InviteRole.user =>
-                l10n?.invitationRoleMember ?? 'Offered role: member',
+                l10n.invitationRoleMember,
               null =>
-                l10n?.invitationRoleUnknown ?? 'Offered role: not known yet',
+                l10n.invitationRoleUnknown,
             }),
             _row(
               Icons.how_to_reg_outlined,
               answer.requiresApproval == true
-                  ? l10n?.invitationApprovalRequired ?? 'An administrator approves new members before the workspace opens.'
-                  : l10n?.invitationApprovalUnknown ??
-                        'Whether an administrator must approve is not known.',
+                  ? l10n.invitationApprovalRequired
+                  : l10n.invitationApprovalUnknown,
             ),
             const SizedBox(height: AppSpacing.md),
             FilledButton(
               key: const ValueKey('invitation-join'),
               onPressed: _busy ? null : _join,
-              child: Text(l10n?.invitationJoinButton ?? 'Join workspace'),
+              child: Text(l10n.invitationJoinButton),
             ),
             const SizedBox(height: AppSpacing.xs),
             Wrap(
@@ -305,13 +303,13 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
                   key: const ValueKey('invitation-change-account'),
                   onPressed: _busy ? null : () => signOutAndForget(ref),
                   child: Text(
-                    l10n?.invitationChangeAccount ?? 'Change account',
+                    l10n.invitationChangeAccount,
                   ),
                 ),
                 TextButton(
                   key: const ValueKey('invitation-cancel'),
                   onPressed: _busy ? null : _back,
-                  child: Text(l10n?.commonCancel ?? 'Cancel'),
+                  child: Text(l10n.commonCancel),
                 ),
               ],
             ),
@@ -335,89 +333,82 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
             key: const ValueKey('invitation-another'),
             onPressed: _busy ? null : _back,
             child: Text(
-              AppLocalizations.of(context)?.invitationCheckAnother ??
-                  'Use another invitation',
+              context.l10n.invitationCheckAnother,
             ),
           ),
         ],
       );
 
-  Widget _otherServer(AppLocalizations? l10n, InvitationDescriptor invitation) {
+  Widget _otherServer(AppLocalizations l10n, InvitationDescriptor invitation) {
     final host = invitation.target!.endpoint.host;
     final active = _active?.host ?? '';
     final label = invitation.target!.label;
     return _message(
       [
-        l10n?.invitationOtherServer(host) ??
-            'This invitation is for another server: $host.',
+        l10n.invitationOtherServer(host),
         if (label != null)
-          l10n?.invitationServerLabel(label) ??
-              'Named “$label” by whoever shared it',
-        l10n?.invitationThisDevice(active) ??
-            'This device uses $active. An invitation is only checked on its own server.',
+          l10n.invitationServerLabel(label),
+        l10n.invitationThisDevice(active),
       ].join('\n'),
       const ValueKey('invitation-other-server'),
       actions: [
         FilledButton(
           key: const ValueKey('invitation-use-server'),
           onPressed: _busy ? null : () => _useServer(invitation),
-          child: Text(l10n?.invitationUseServer ?? 'Use this server'),
+          child: Text(l10n.invitationUseServer),
         ),
       ],
     );
   }
 
-  Widget _result(AppLocalizations? l10n, InvitationAnswer answer) {
+  Widget _result(AppLocalizations l10n, InvitationAnswer answer) {
     final name = answer.workspaceName ?? '';
     final host = _active?.host ?? '';
     return switch (answer.state) {
       InvitationState.alreadyMember ||
       InvitationState.joinedActive ||
       InvitationState.joinedPending when answer.opensWorkspace => _message(
-        l10n?.invitationAlreadyMember(name) ??
-            'You are already a member of $name.',
+        l10n.invitationAlreadyMember(name),
         const ValueKey('invitation-already-member'),
         actions: [
           FilledButton(
             key: const ValueKey('invitation-continue'),
             onPressed: _busy ? null : () => _continue(answer.workspaceId!),
             child: Text(
-              l10n?.invitationContinue ?? 'Continue to this workspace',
+              l10n.invitationContinue,
             ),
           ),
         ],
       ),
       InvitationState.paused => _message(
-        l10n?.invitationPaused(name) ??
-            'Your membership in $name is paused. Only an administrator there can resume it.',
+        l10n.invitationPaused(name),
         const ValueKey('invitation-paused'),
       ),
       InvitationState.expired => _message(
-        l10n?.invitationExpired ?? 'This invitation has expired. Ask the person who sent it for a new one.',
+        l10n.invitationExpired,
         const ValueKey('invitation-expired'),
       ),
       InvitationState.revoked => _message(
-        l10n?.invitationRevoked ?? 'This workspace code was replaced. Ask the person who sent it for the current one.',
+        l10n.invitationRevoked,
         const ValueKey('invitation-revoked'),
       ),
       InvitationState.wrongAccount => _message(
-        l10n?.invitationWrongAccount ?? 'This invitation was already used by another account. If it was meant for you, sign in with that account.',
+        l10n.invitationWrongAccount,
         const ValueKey('invitation-wrong-account'),
         actions: [
           FilledButton.tonal(
             key: const ValueKey('invitation-switch-account'),
             onPressed: _busy ? null : () => signOutAndForget(ref),
-            child: Text(l10n?.invitationChangeAccount ?? 'Change account'),
+            child: Text(l10n.invitationChangeAccount),
           ),
         ],
       ),
       InvitationState.invalid => _message(
-        l10n?.invitationInvalid(host) ??
-            'No workspace on $host knows this invitation. Check it, or ask the organizer for their server link.',
+        l10n.invitationInvalid(host),
         const ValueKey('invitation-invalid'),
       ),
       _ => _message(
-        l10n?.invitationUnknownAnswer ?? 'The server gave an answer this version of the app cannot read. Nothing was changed.',
+        l10n.invitationUnknownAnswer,
         const ValueKey('invitation-unknown'),
       ),
     };

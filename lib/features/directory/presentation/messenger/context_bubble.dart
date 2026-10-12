@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/widgets/member_note_body.dart';
 import '../../../workspace/presentation/widgets/note_check.dart';
 import '../../domain/message_marks.dart';
@@ -46,7 +46,7 @@ class ContextBubble extends ConsumerWidget {
         notice: notice,
       );
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final mine = message.mine;
     final fg = mine
@@ -63,7 +63,7 @@ class ContextBubble extends ConsumerWidget {
         ? null
         : IconButton(
             key: ValueKey('context-actions-${message.id}'),
-            tooltip: l10n?.messengerMessageActions ?? 'Message actions',
+            tooltip: l10n.messengerMessageActions,
             visualDensity: VisualDensity.compact,
             iconSize: 18,
             color: theme.colorScheme.onSurfaceVariant,
@@ -143,7 +143,7 @@ class ContextBubble extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 4),
                     child: Text(
-                      l10n?.messengerEdited ?? 'edited',
+                      l10n.messengerEdited,
                       key: ValueKey('context-edited-${message.id}'),
                       style: theme.textTheme.labelSmall?.copyWith(color: muted),
                     ),
@@ -163,8 +163,8 @@ class ContextBubble extends ConsumerWidget {
                     ),
                     size: 14,
                     semanticLabel: read
-                        ? (l10n?.messengerRead ?? 'Read')
-                        : (l10n?.messengerDelivered ?? 'Delivered'),
+                        ? (l10n.messengerRead)
+                        : (l10n.messengerDelivered),
                     color: read ? noteReadBlue : muted,
                   ),
                 ],

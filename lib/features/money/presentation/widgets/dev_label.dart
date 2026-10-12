@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// A development space's name with DEV beside it, in the development
 /// colour: test data must never read as production in Me.
@@ -15,7 +15,7 @@ class DevLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final tone = AppEnvironmentColors.developmentOf(theme.brightness);
     final style = (small ? theme.textTheme.bodySmall : theme.textTheme.bodyMedium)
@@ -40,7 +40,7 @@ class DevLabel extends StatelessWidget {
             borderRadius: AppRadius.smAll,
           ),
           child: Text(
-            l10n?.profilesPairDev ?? 'DEV',
+            l10n.profilesPairDev,
             style: theme.textTheme.labelSmall?.strong.copyWith(color: tone),
           ),
         ),

@@ -21,23 +21,23 @@ import '../domain/invoice_pdf_template.dart';
 /// the app keeps no ledger, and a preview that read as authoritative
 /// would be worse than none — an accountant who assumes it is real books
 /// against numbers nobody chose.
-ReportBands defaultCoaBands(AppLocalizations? l10n) => ReportBands(
+ReportBands defaultCoaBands(AppLocalizations l10n) => ReportBands(
       header: '''
-# ${l10n?.reportCoaTitle ?? 'Chart of accounts — preview'}
+# ${l10n.reportCoaTitle}
 > {{ workspace }}
 > {{ coa_chart_name }} ({{ coa_chart_code }}) · {{ country }}
 > {{ issued }}
 ---''',
       body: '''
-${l10n?.reportCoaIntro ?? 'A suggestion, not your accounting. These are the accounts a bookkeeper in your country would usually use for a space like yours.'}
+${l10n.reportCoaIntro}
 
-## ${l10n?.reportCoaAccounts ?? 'Suggested accounts'}
-= ${l10n?.reportCoaNumber ?? 'Account'} | ${l10n?.reportCoaLabel ?? 'Name'}
+## ${l10n.reportCoaAccounts}
+= ${l10n.reportCoaNumber} | ${l10n.reportCoaLabel}
 {% for a in coa_accounts %}{{ a.number }} | {{ a.label }}
 > {{ a.note }}
 {% endfor %}''',
       footer: '''
-> ${l10n?.reportCoaDisclaimer ?? 'Preview only. DesKilo does not keep a ledger and does not do your accounting — your accountant\'s chart always wins.'}''',
+> ${l10n.reportCoaDisclaimer}''',
     );
 
 /// #671 — the badge sheet, moved into report management.
@@ -46,31 +46,27 @@ ${l10n?.reportCoaIntro ?? 'A suggestion, not your accounting. These are the acco
 /// own wording, and it is edited where every other printable is. The
 /// CARDS themselves are laid out by the renderer — a template cannot
 /// place a barcode — so the bands are what surrounds them.
-ReportBands defaultBadgeSheetBands(AppLocalizations? l10n) => ReportBands(
+ReportBands defaultBadgeSheetBands(AppLocalizations l10n) => ReportBands(
       header: '''
-# ${l10n?.reportBadgesTitle ?? 'Member badges'}
+# ${l10n.reportBadgesTitle}
 > {{ workspace }}
 > {{ issued }}
 ---''',
-      body: l10n?.reportBadgesIntro ??
-          'Cut along the lines. Each card carries one member\'s badge '
-              'code — present it at the kiosk to check in.',
+      body: l10n.reportBadgesIntro,
       footer: '''
-> ${l10n?.reportBadgesFooter ?? 'A lost badge should be revoked in Members & plans, not just replaced.'}''',
+> ${l10n.reportBadgesFooter}''',
     );
 
 /// #671 — the space QR cards, likewise. Ten credit-card codes per A4.
-ReportBands defaultSpaceCodesBands(AppLocalizations? l10n) => ReportBands(
+ReportBands defaultSpaceCodesBands(AppLocalizations l10n) => ReportBands(
       header: '''
-# ${l10n?.reportSpaceCodesTitle ?? 'Space codes'}
+# ${l10n.reportSpaceCodesTitle}
 > {{ workspace }}
 > {{ issued }}
 ---''',
-      body: l10n?.reportSpaceCodesIntro ??
-          'One card per seat, table, room and floor. Stick each card on '
-              'its space: scanning it opens the same sheet the kiosk shows.',
+      body: l10n.reportSpaceCodesIntro,
       // A stale card is the failure mode that matters here: it sends
       // whoever scans it to the wrong space, silently.
       footer: '''
-> ${l10n?.reportSpaceCodesFooter ?? 'A card that no longer matches its space misleads whoever scans it — reprint the sheet after moving or renaming a space.'}''',
+> ${l10n.reportSpaceCodesFooter}''',
     );

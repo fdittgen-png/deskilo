@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
 import 'context_labels.dart';
@@ -18,7 +19,7 @@ Future<InboxEntry?> pickForwardTarget(
   required String source,
   required MessageContextKind fromKind,
   required String fromContextId,
-}) => showModalBottomSheet<InboxEntry>(
+}) => showAppSheet<InboxEntry>(
   context: context,
   isScrollControlled: true,
   builder: (_) => _ForwardTargetSheet(
@@ -41,7 +42,7 @@ class _ForwardTargetSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final inbox = ref.watch(unifiedInboxProvider);
     final servers = ref.watch(serverLabelsProvider).value ?? const {};
     return SafeArea(
@@ -60,14 +61,12 @@ class _ForwardTargetSheet extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    l10n?.messengerForwardTitle ?? 'Forward to',
+                    l10n.messengerForwardTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    l10n?.messengerForwardExplain ??
-                        'Everyone in the original conversation, the author '
-                            'first, is told who forwarded it, when, and where to.',
+                    l10n.messengerForwardExplain,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -86,7 +85,7 @@ class _ForwardTargetSheet extends ConsumerWidget {
                     return Padding(
                       padding: AppSpacing.lgAll,
                       child: Text(
-                        l10n?.messengerForwardNoTargets ?? 'No other conversation on this server to forward into.',
+                        l10n.messengerForwardNoTargets,
                         key: const ValueKey('forward-no-targets'),
                       ),
                     );
@@ -109,7 +108,7 @@ class _ForwardTargetSheet extends ConsumerWidget {
                   child: TextButton(
                     key: const ValueKey('forward-target-sheet-retry'),
                     onPressed: () => ref.invalidate(unifiedInboxProvider),
-                    child: Text(l10n?.commonRetry ?? 'Try again'),
+                    child: Text(l10n.commonRetry),
                   ),
                 ),
                 _ => const LoadingView(),

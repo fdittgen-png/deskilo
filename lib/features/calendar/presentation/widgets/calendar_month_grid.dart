@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/date_text.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'calendar_item_row.dart';
 
 /// #818 — the month as a SELECTOR with a glance: one compact cell per
@@ -169,7 +169,7 @@ class CalendarLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final style = Theme.of(context).textTheme.labelSmall;
     return Padding(
@@ -200,7 +200,7 @@ class CalendarLegend extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.xs),
-              Text(l10n?.calendarClosedDay ?? 'Closed', style: style),
+              Text(l10n.calendarClosedDay, style: style),
             ]),
         ],
       ),

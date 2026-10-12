@@ -12,8 +12,8 @@
 // nobody holds.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_role.dart';
 import '../screens/roles_screen_labels.dart';
@@ -105,7 +105,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -125,11 +125,8 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                   controller: _key,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: l10n?.roleEditorKey ?? 'Key',
-                    helperText: l10n?.roleEditorKeyHelp ??
-                        'Lower-case letters, digits and underscores. It '
-                            'never changes: the people who hold the role '
-                            'point at it.',
+                    labelText: l10n.roleEditorKey,
+                    helperText: l10n.roleEditorKeyHelp,
                     helperMaxLines: 3,
                   ),
                   onChanged: (_) => setState(() {}),
@@ -143,7 +140,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                     controller: _names[locale],
                     decoration: InputDecoration(
                       labelText:
-                          l10n?.roleEditorNameFor(locale) ?? 'Name ($locale)',
+                          l10n.roleEditorNameFor(locale),
                     ),
                     onChanged: (_) => setState(() {}),
                   ),
@@ -152,10 +149,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.sm),
                   child: Text(
-                    l10n?.roleBuiltInNote ??
-                        'Built in. What it may do is set in Roles; it is '
-                            "given on each member's page and takes effect "
-                            'once validated.',
+                    l10n.roleBuiltInNote,
                     key: RoleEditorSheet.builtInNoteKey,
                     style: theme.textTheme.bodyMedium,
                   ),
@@ -164,14 +158,14 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
               SwitchListTile(
                 key: const ValueKey('role-editor-sheet-editor-active'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(l10n?.roleEditorActive ?? 'In use'),
+                title: Text(l10n.roleEditorActive),
                 value: _active,
                 onChanged:
                     widget.saving ? null : (on) => setState(() => _active = on),
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.roleEditorPermissions ?? 'What it adds',
+                l10n.roleEditorPermissions,
                 style: theme.textTheme.labelLarge,
               ),
               // Chosen, never typed: 0247 validates every one against the
@@ -203,7 +197,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
               FilledButton(
                 key: RoleEditorSheet.saveKey,
                 onPressed: _canSave ? () => widget.onSave(_draft) : null,
-                child: Text(l10n?.roleEditorSave ?? 'Save the role'),
+                child: Text(l10n.roleEditorSave),
               ),
             ],
           ),

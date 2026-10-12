@@ -15,8 +15,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/files/file_picker.dart';
 import '../../../core/files/file_saver.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/report_design_file.dart';
 import '../domain/report_kind.dart';
 import '../domain/report_layout_file.dart';
@@ -32,7 +32,7 @@ Future<String?> exportReportLayout(
   required DateTime exportedAt,
   Map<String, String> texts = const {},
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final content = buildReportLayoutFile(
     kind: kind,
     language: language,
@@ -52,9 +52,9 @@ Future<String?> exportReportLayout(
   );
   if (!context.mounted) return path;
   if (path == null) {
-    AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+    AppSnack.error(context, l10n.commonSaveFailed);
   } else {
-    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
+    AppSnack.success(context, l10n.commonSavedTo(path));
   }
   return path;
 }
@@ -67,9 +67,9 @@ Future<ReportLayoutFile?> importReportLayout(
   required ReportKind kind,
   required int reminderLevels,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final file = await ref.read(filePickerProvider)(XTypeGroup(
-    label: l10n?.reportLayoutFileTypeLabel ?? 'XML',
+    label: l10n.reportLayoutFileTypeLabel,
     extensions: const ['xml'],
     mimeTypes: const ['application/xml', 'text/xml'],
   ));

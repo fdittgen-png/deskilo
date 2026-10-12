@@ -27,7 +27,7 @@ class SpaceScanSheet extends StatefulWidget {
   /// #814 — the browser build has no camera scanner; the sheet says so
   /// instead of silently showing a typed field alone.
   final bool explainNoCamera;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
 
   /// #585 — when the device can read NFC, a chair-tag tap resolves to
   /// its seat exactly like scanning the seat's QR card. Null hides the
@@ -98,13 +98,11 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
     return SheetShell(
-      title: l10n?.spaceScanTitle ?? 'Scan a space code',
+      title: l10n.spaceScanTitle,
       children: [
         const SizedBox(height: 8),
         Text(
-          l10n?.spaceScanHint ??
-              'Point the camera at a desk, office or level card — or '
-                  'type its code.',
+          l10n.spaceScanHint,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (widget.nfc != null) ...[
@@ -116,8 +114,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  l10n?.spaceScanNfcHint ??
-                      "…or hold the phone to a chair's NFC tag.",
+                  l10n.spaceScanNfcHint,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -128,8 +125,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              l10n?.spaceScanUnknownTag ??
-                  'This tag is not linked to any chair.',
+              l10n.spaceScanUnknownTag,
               key: const ValueKey('space-scan-unknown-tag'),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,
@@ -140,10 +136,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              l10n?.scanCameraWebUnavailable ??
-                  'Camera scanning is not available in the browser — type '
-                      'the code, or hold an NFC tag to the device (Chrome '
-                      'on Android).',
+              l10n.scanCameraWebUnavailable,
               key: const ValueKey('space-scan-no-camera'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -164,10 +157,9 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           controller: _controller,
           autofocus: widget.scanBuilder == null,
           decoration: InputDecoration(
-            labelText: l10n?.spaceScanField ?? 'Code',
+            labelText: l10n.spaceScanField,
             errorText: _invalid
-                ? (l10n?.spaceScanInvalid ??
-                    'Not a space code of this workspace.')
+                ? (l10n.spaceScanInvalid)
                 : null,
           ),
           onSubmitted: _submit,
@@ -176,7 +168,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
         FilledButton(
           key: const ValueKey('space-scan-submit'),
           onPressed: () => _submit(_controller.text),
-          child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
+          child: Text(l10n.kioskBadgeConfirm),
         ),
       ],
     );

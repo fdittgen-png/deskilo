@@ -48,7 +48,7 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
   final String workspaceId;
   final String memberId;
   final String name;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
 
   /// Mints a badge for the subject; returns the one-time token.
   final Future<IssuedBadge> Function() issue;
@@ -117,8 +117,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge list failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         all = await ref
             .read(workspaceRepositoryProvider)
@@ -139,8 +138,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge issue failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         issued = await widget.issue();
       },
@@ -162,8 +160,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge PDF export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         // #671 — the sheet's wording is the workspace's own now, edited
         // in report management like every other printable.
@@ -182,11 +179,11 @@ class _BadgeManagerDialogState
           workspaceName: workspaceName,
           memberName: widget.name,
           token: issued.token,
-          hint: l10n?.kioskPresentBadge ?? 'Present your badge',
+          hint: l10n.kioskPresentBadge,
           baseFont: pw.Font.ttf(regular),
           boldFont: pw.Font.ttf(bold),
           coverContinuation: cover.continuation,
-          pageLabel: l10n?.invoicePdfPage ?? 'Page',
+          pageLabel: l10n.invoicePdfPage,
           coverHeader: cover.header,
           coverBody: cover.body,
           coverFooter: cover.footer,
@@ -200,12 +197,12 @@ class _BadgeManagerDialogState
         if (path == null) {
           AppSnack.error(
             context,
-            l10n?.commonSaveFailed ?? 'Could not save.',
+            l10n.commonSaveFailed,
           );
         } else {
           AppSnack.success(
             context,
-            l10n?.commonSavedTo(path) ?? 'Saved to $path',
+            l10n.commonSavedTo(path),
           );
         }
       },
@@ -233,8 +230,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'nfc badge registration failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         try {
           await widget.registerNfc(uid);
@@ -254,14 +250,13 @@ class _BadgeManagerDialogState
     if (duplicate) {
       AppSnack.error(
         context,
-        l10n?.badgeCardAlreadyRegistered ??
-            'That card is already registered.',
+        l10n.badgeCardAlreadyRegistered,
       );
       return;
     }
     AppSnack.success(
       context,
-      l10n?.badgeCardRegistered ?? 'Card registered.',
+      l10n.badgeCardRegistered,
     );
     unawaited(_load());
   }
@@ -272,8 +267,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge revoke failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => widget.revoke(badge.id),
     )) {
       return;
@@ -289,19 +283,18 @@ class _BadgeManagerDialogState
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.memberNoteDelete ?? 'Delete'),
-        content: Text(l10n?.badgeDeleteConfirm ??
-            'Delete this revoked badge for good?'),
+        title: Text(l10n.memberNoteDelete),
+        content: Text(l10n.badgeDeleteConfirm),
         actions: [
           TextButton(
             key: const ValueKey('badge-manager-dialog-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('badge-delete-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.memberNoteDelete ?? 'Delete'),
+            child: Text(l10n.memberNoteDelete),
           ),
         ],
       ),
@@ -311,8 +304,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge delete failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => widget.delete(badge.id),
     );
   }
@@ -336,8 +328,7 @@ class _BadgeManagerDialogState
       context,
       domain: 'workspace',
       message: 'badge auth toggle failed',
-      errorText: l10n?.badgeAuthNeedsPin ??
-          'Set a sign-in PIN first — a badge alone must never be enough.',
+      errorText: l10n.badgeAuthNeedsPin,
       action: () => arm(badge.id, enabled),
     );
     if (mounted) setState(() => _busy = false);
@@ -360,7 +351,7 @@ class _BadgeManagerDialogState
       ),
       title: Text(
         badge.label.isEmpty
-            ? (l10n?.badgeDefaultLabel ?? 'Badge')
+            ? (l10n.badgeDefaultLabel)
             : badge.label,
       ),
       // #1178 — every unnamed badge read "Badge", so `Revoke` sat
@@ -368,15 +359,14 @@ class _BadgeManagerDialogState
       // the issue date says WHICH one.
       subtitle: Text(
         badge.isActive
-            ? (l10n?.badgeIssuedOn(_day(context, badge.createdAt)) ??
-                'Issued ${_day(context, badge.createdAt)}')
-            : (l10n?.badgeRevoked ?? 'Revoked'),
+            ? (l10n.badgeIssuedOn(_day(context, badge.createdAt)))
+            : (l10n.badgeRevoked),
       ),
       trailing: badge.isActive
           ? TextButton(
               key: ValueKey('badge-manager-dialog-revoke-${badge.id}'),
               onPressed: () => _revoke(badge),
-              child: Text(l10n?.badgeRevoke ?? 'Revoke'),
+              child: Text(l10n.badgeRevoke),
             )
           : null,
     );
@@ -389,7 +379,7 @@ class _BadgeManagerDialogState
           key: ValueKey('badge-auth-${badge.id}'),
           contentPadding: EdgeInsets.zero,
           value: badge.authEnabled,
-          title: Text(l10n?.badgeAuthEnabledLabel ?? 'Signs me in'),
+          title: Text(l10n.badgeAuthEnabledLabel),
           onChanged: _busy ? null : (value) => _setAuth(badge, value, arm),
         ),
       ]);
@@ -447,8 +437,7 @@ class _BadgeManagerDialogState
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    l10n?.badgeTokenOnce ??
-                        'Save this QR now — it is shown only once.',
+                    l10n.badgeTokenOnce,
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
@@ -467,7 +456,7 @@ class _BadgeManagerDialogState
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            l10n?.badgeNone ?? 'No badges yet.',
+                            l10n.badgeNone,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -480,10 +469,7 @@ class _BadgeManagerDialogState
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4),
                           child: Text(
-                            l10n?.badgeAuthEnabledHint ??
-                                'Off by default: a badge that checks you '
-                                    'in does not log you in until you say '
-                                    'so.',
+                            l10n.badgeAuthEnabledHint,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -500,7 +486,7 @@ class _BadgeManagerDialogState
     final badges = _badges;
     return AlertDialog(
       title: Text(
-        l10n?.memberBadgesTitle(widget.name) ?? 'Badges — ${widget.name}',
+        l10n.memberBadgesTitle(widget.name),
       ),
       // #1178 — an unbounded Column of badge rows overflowed the dialog
       // and painted itself OVER the actions: "Close" landed on a switch
@@ -542,7 +528,7 @@ class _BadgeManagerDialogState
         TextButton(
           key: const ValueKey('badge-manager-dialog-close'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonClose ?? 'Close'),
+          child: Text(l10n.commonClose),
         ),
         // Download & print the one-time QR as a badge card (UX pass).
         if (issued != null)
@@ -550,14 +536,14 @@ class _BadgeManagerDialogState
             key: const ValueKey('badge-save-pdf'),
             onPressed: () => _savePdf(issued),
             icon: const Icon(Icons.picture_as_pdf_outlined),
-            label: Text(l10n?.badgeSavePdf ?? 'Save as PDF'),
+            label: Text(l10n.badgeSavePdf),
           ),
         if (issued == null && _nfcAvailable)
           OutlinedButton.icon(
             key: const ValueKey('badge-register-nfc-button'),
             onPressed: _registerNfc,
             icon: const Icon(Icons.contactless_outlined),
-            label: Text(l10n?.badgeRegisterCard ?? 'Register card'),
+            label: Text(l10n.badgeRegisterCard),
           ),
         // #604 — QR badge issuance rides its own flag beside nfcBadges.
         if (issued == null &&
@@ -568,7 +554,7 @@ class _BadgeManagerDialogState
             key: const ValueKey('badge-issue-button'),
             onPressed: _issue,
             icon: const Icon(Icons.qr_code_2_outlined),
-            label: Text(l10n?.badgeIssue ?? 'New badge'),
+            label: Text(l10n.badgeIssue),
           ),
       ],
     );

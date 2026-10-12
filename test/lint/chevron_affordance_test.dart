@@ -6,8 +6,9 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
-String _read(String path) => File(path).readAsStringSync();
+String _read(String path) => readLibrary(File(path)); // #2386 — with its parts
 
 void main() {
   test('a row that PRODUCES a file carries no chevron', () {

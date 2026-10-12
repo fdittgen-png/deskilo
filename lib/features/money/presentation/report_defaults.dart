@@ -24,18 +24,18 @@ export 'report_sample_data.dart';
 /// The seller's statutory identity block, shared by every preset's
 /// header: name, legal form & capital, address, trade register and VAT
 /// number — each line only when the workspace declared it.
-String _sellerBlock(AppLocalizations? l10n) => '''
+String _sellerBlock(AppLocalizations l10n) => '''
 {{ workspace }}
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
 > {{ workspace_address }}
 {% if site_name != "" %}> {{ site_name }} — {{ site_address }}{% endif %}
 {% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
-{% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}''';
+{% if seller_vat_id != "" %}> ${l10n.legalIdentityVatId}: {{ seller_vat_id }}{% endif %}''';
 
 /// The statutory payment-clause footer every invoice-like document must
 /// carry: payment terms + escompte, penalty + recovery indemnity, then
 /// the optional insurance and special-regime mentions.
-String _legalFooter(AppLocalizations? l10n) => '''
+String _legalFooter(AppLocalizations l10n) => '''
 > {{ payment_terms }}{% if escompte != "" %} — {{ escompte }}{% endif %}
 {% if late_penalty != "" %}> {{ late_penalty }}{% endif %}
 {% if recovery_indemnity != "" %}> {{ recovery_indemnity }}{% endif %}
@@ -45,7 +45,7 @@ String _legalFooter(AppLocalizations? l10n) => '''
 /// The built-in invoice layout as editable bands — the CLASSIC preset,
 /// legally complete (#480).
 @visibleForTesting
-InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
+InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations l10n) {
   final classic = _invoicePresetBands(l10n, 'classic');
   return InvoicePdfTemplate(
     header: classic.header,
@@ -54,9 +54,9 @@ InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
   );
 }
 
-ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
+ReportBands _invoicePresetBands(AppLocalizations l10n, String id) {
   final title =
-      '{% if credit_note %}${l10n?.invoicePdfCreditNote ?? 'Credit note'}{% elsif proforma %}${l10n?.invoicePdfProforma ?? 'Proforma'}{% else %}${l10n?.invoicePdfTitle ?? 'Invoice'}{% endif %}';
+      '{% if credit_note %}${l10n.invoicePdfCreditNote}{% elsif proforma %}${l10n.invoicePdfProforma}{% else %}${l10n.invoicePdfTitle}{% endif %}';
   // Row 1 of the facture layout (#482): brand left, document title +
   // reference/date block right.
   final brandRow = '''
@@ -66,12 +66,12 @@ ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
 |||
 ## $title
 {{ number }}
-> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} · {{ issued_by }}
-{% if due_date != "" %}> ${l10n?.invoicePdfDueOn ?? 'Due on'} {{ due_date }}
-{% endif %}{% if purchase_order != "" %}> ${l10n?.invoicePdfPurchaseOrder ?? 'Order'} {{ purchase_order }}
-{% endif %}{% if buyer_reference != "" %}> ${l10n?.invoicePdfBuyerReference ?? 'Service'} {{ buyer_reference }}
+> ${l10n.invoicePdfIssuedOn} {{ issued }} · {{ issued_by }}
+{% if due_date != "" %}> ${l10n.invoicePdfDueOn} {{ due_date }}
+{% endif %}{% if purchase_order != "" %}> ${l10n.invoicePdfPurchaseOrder} {{ purchase_order }}
+{% endif %}{% if buyer_reference != "" %}> ${l10n.invoicePdfBuyerReference} {{ buyer_reference }}
 {% endif %}
-{% if replaces != "" %}> ${l10n?.invoicePdfReplaces ?? 'Replaces'} {{ replaces }}{% endif %}
+{% if replaces != "" %}> ${l10n.invoicePdfReplaces} {{ replaces }}{% endif %}
 :::''';
   // Row 2: seller coordinates left, client box right.
   final addressRow = '''
@@ -79,28 +79,28 @@ ReportBands _invoicePresetBands(AppLocalizations? l10n, String id) {
 {{ workspace }}
 > {{ workspace_address }}
 {% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
-{% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}
+{% if seller_vat_id != "" %}> ${l10n.legalIdentityVatId}: {{ seller_vat_id }}{% endif %}
 |||
-${l10n?.invoicePdfBilledTo ?? 'Billed to'}
+${l10n.invoicePdfBilledTo}
 {{ member }}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
 {% if client_legal_id != "" %}> {{ client_legal_id }}{% endif %}
-{% if client_member_number != "" %}> ${l10n?.memberNumberLabel ?? 'Member no.'}: {{ client_member_number }}{% endif %}
-{% if client_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ client_vat_id }}{% endif %}
+{% if client_member_number != "" %}> ${l10n.memberNumberLabel}: {{ client_member_number }}{% endif %}
+{% if client_vat_id != "" %}> ${l10n.legalIdentityVatId}: {{ client_vat_id }}{% endif %}
 > {{ period }}
 :::''';
   // The line table with its column headers, then the right-aligned
   // totals block (empty first column pushes it right, like the model).
   final lineTable =
-      '= ${l10n?.invoicePdfDescription ?? 'Description'} | ${l10n?.reportColUnitPrice ?? 'Unit price'} | ${l10n?.reportColQty ?? 'Qty'} | ${l10n?.reportColTotal ?? 'Total'}\n'
+      '= ${l10n.invoicePdfDescription} | ${l10n.reportColUnitPrice} | ${l10n.reportColQty} | ${l10n.reportColTotal}\n'
       '{% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.amount }}\n'
       '{% endfor %}';
   final totalsBlock = '''
 :::
 |||
-${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
-{% if has_vat %}{% for v in vat %}${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} | {{ v.amount }}
-{% endfor %}{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}
+${l10n.vatPdfNet} | {{ net_total }}
+{% if has_vat %}{% for v in vat %}${l10n.vatPdfVat} {{ v.rate }} | {{ v.amount }}
+{% endfor %}{% endif %}= ${l10n.invoiceBalance} | {{ total }}
 :::''';
   const mentions = '''
 {% if exemption_reason != "" %}> {{ exemption_reason }}
@@ -114,7 +114,7 @@ $brandRow
 ---
 $addressRow''',
         body: '''
-{% for line in lines %}{{ line.label }}{% if line.vat_rate != "" %} · ${l10n?.vatPdfVat ?? 'VAT'} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
+{% for line in lines %}{{ line.label }}{% if line.vat_rate != "" %} · ${l10n.vatPdfVat} {{ line.vat_rate }}{% endif %} | {{ line.amount }}
 {% endfor %}---
 $totalsBlock
 $mentions''',
@@ -127,17 +127,17 @@ $brandRow
 ---
 $addressRow''',
         body: '''
-= ${l10n?.invoicePdfDescription ?? 'Description'} | ${l10n?.reportColUnitPrice ?? 'Unit price'} | ${l10n?.reportColQty ?? 'Qty'} | ${l10n?.vatPdfNet ?? 'Net'} | ${l10n?.vatPdfVat ?? 'VAT'} | ${l10n?.reportColTotal ?? 'Total'}
+= ${l10n.invoicePdfDescription} | ${l10n.reportColUnitPrice} | ${l10n.reportColQty} | ${l10n.vatPdfNet} | ${l10n.vatPdfVat} | ${l10n.reportColTotal}
 {% for line in lines %}{{ line.label }} | {{ line.unit_price }} | {{ line.qty }} | {{ line.net }} | {{ line.vat_rate }} | {{ line.amount }}
 {% endfor %}---
 :::
 |||
-${l10n?.invoicePdfCharges ?? 'Charges'} | {{ charges }}
-${l10n?.invoicePdfPayments ?? 'Payments'} | {{ payments }}
-${l10n?.vatPdfNet ?? 'Net'} | {{ net_total }}
-{% if has_vat %}{% for v in vat %}${l10n?.vatPdfVat ?? 'VAT'} {{ v.rate }} | {{ v.amount }}
-{% endfor %}${l10n?.vatPdfVat ?? 'VAT'} | {{ vat_total }}
-{% endif %}= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}
+${l10n.invoicePdfCharges} | {{ charges }}
+${l10n.invoicePdfPayments} | {{ payments }}
+${l10n.vatPdfNet} | {{ net_total }}
+{% if has_vat %}{% for v in vat %}${l10n.vatPdfVat} {{ v.rate }} | {{ v.amount }}
+{% endfor %}${l10n.vatPdfVat} | {{ vat_total }}
+{% endif %}= ${l10n.invoiceBalance} | {{ total }}
 :::
 $mentions''',
         footer: _legalFooter(l10n),
@@ -150,16 +150,16 @@ $mentions''',
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
 > {{ workspace_address }}
 {% if seller_registration != "" %}> {{ seller_registration }}{% endif %}
-{% if seller_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ seller_vat_id }}{% endif %}
+{% if seller_vat_id != "" %}> ${l10n.legalIdentityVatId}: {{ seller_vat_id }}{% endif %}
 |||
 {{ member }}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
-{% if client_vat_id != "" %}> ${l10n?.legalIdentityVatId ?? 'VAT number'}: {{ client_vat_id }}{% endif %}
+{% if client_vat_id != "" %}> ${l10n.legalIdentityVatId}: {{ client_vat_id }}{% endif %}
 
 > {{ issued }}
 :::''',
         body: '''
-## ${l10n?.reportSubject ?? 'Subject'}: $title {{ number }} — {{ period }}
+## ${l10n.reportSubject}: $title {{ number }} — {{ period }}
 
 {{ member }},
 
@@ -169,7 +169,7 @@ $mentions''',
         footer: '''
 ${_legalFooter(l10n)}
 
-${l10n?.reportRegards ?? 'Kind regards'},
+${l10n.reportRegards},
 {{ issued_by }}''',
       );
     default: // classic — the built-in default, the facture layout.
@@ -192,31 +192,27 @@ $mentions''',
 /// read firmer and carry the level number. All content is template
 /// language over the reminder data — the owner edits any level
 /// independently in the report editor.
-ReportBands defaultReminderBands(int level, AppLocalizations? l10n) =>
+ReportBands defaultReminderBands(int level, AppLocalizations l10n) =>
     _reminderPresetBands(level, l10n, 'classic');
 
-String _reminderTitle(int level, AppLocalizations? l10n) => level <= 1
-    ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
-    : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
+String _reminderTitle(int level, AppLocalizations l10n) => level <= 1
+    ? (l10n.reminderPdfTitleFriendly)
+    : '${l10n.reminderPdfTitleFirm} $level';
 
-String _reminderOpening(int level, AppLocalizations? l10n) => level <= 1
-    ? (l10n?.reminderPdfOpeningFriendly ??
-        'this is a friendly reminder that the invoice below is still '
-            'open. Perhaps it simply slipped through — no worries.')
-    : (l10n?.reminderPdfOpeningFirm ??
-        'despite our previous reminder, the invoice below remains '
-            'unpaid. Please settle the amount without delay.');
+String _reminderOpening(int level, AppLocalizations l10n) => level <= 1
+    ? (l10n.reminderPdfOpeningFriendly)
+    : (l10n.reminderPdfOpeningFirm);
 
 ReportBands _reminderPresetBands(
-    int level, AppLocalizations? l10n, String id) {
+    int level, AppLocalizations l10n, String id) {
   final title = _reminderTitle(level, l10n);
   final opening = _reminderOpening(level, l10n);
   final invoiceRecap = '''
-## ${l10n?.invoicePdfTitle ?? 'Invoice'}
-{{ number }} · ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }} | {{ total }}
-> ${l10n?.reminderPdfDaysOpen ?? 'Open for'} {{ days_open }} ${l10n?.reminderPdfDays ?? 'days'} · ${l10n?.reminderPdfLevelLabel ?? 'Reminder level'} {{ reminder_level }}''';
+## ${l10n.invoicePdfTitle}
+{{ number }} · ${l10n.invoicePdfIssuedOn} {{ issued }} | {{ total }}
+> ${l10n.reminderPdfDaysOpen} {{ days_open }} ${l10n.reminderPdfDays} · ${l10n.reminderPdfLevelLabel} {{ reminder_level }}''';
   final closing =
-      '> ${l10n?.reminderPdfClosing ?? 'If you have already paid, please disregard this letter.'}';
+      '> ${l10n.reminderPdfClosing}';
   // A reminder cites the statutory late-payment clauses (#480) — on the
   // firm levels they are the point of the letter.
   // Guarded (#484): an association prints none of these by default.
@@ -229,8 +225,8 @@ ReportBands _reminderPresetBands(
         header: '# $title',
         body: '''
 {{ member }} — {{ number }} ({{ issued }})
-> ${l10n?.reminderPdfDaysOpen ?? 'Open for'} {{ days_open }} ${l10n?.reminderPdfDays ?? 'days'}
-= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+> ${l10n.reminderPdfDaysOpen} {{ days_open }} ${l10n.reminderPdfDays}
+= ${l10n.invoiceBalance} | {{ total }}''',
         footer: '$clauses\n$closing',
       );
     case 'verbose':
@@ -250,7 +246,7 @@ $invoiceRecap
 ---
 > {{ payment_terms }}
 $clauses
-= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}''',
         footer: closing,
       );
     case 'formal':
@@ -263,7 +259,7 @@ ${_sellerBlock(l10n)}
 
 > {{ reminder_date }}''',
         body: '''
-## ${l10n?.reportSubject ?? 'Subject'}: $title — ${l10n?.invoicePdfTitle ?? 'Invoice'} {{ number }}
+## ${l10n.reportSubject}: $title — ${l10n.invoicePdfTitle} {{ number }}
 
 {{ member }},
 
@@ -272,11 +268,11 @@ $opening
 {{ number }} · {{ issued }} | {{ total }}
 ---
 $clauses
-= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}''',
         footer: '''
 $closing
 
-${l10n?.reportRegards ?? 'Kind regards'},
+${l10n.reportRegards},
 {{ workspace }}''',
       );
     default: // classic
@@ -294,7 +290,7 @@ $opening
 $invoiceRecap
 ---
 $clauses
-= ${l10n?.invoiceBalance ?? 'Balance due'} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}''',
         footer: closing,
       );
   }
@@ -302,13 +298,13 @@ $clauses
 
 /// The built-in member-statement document (#476) as editable bands —
 /// the CLASSIC preset.
-ReportBands _defaultStatementBands(AppLocalizations? l10n) =>
+ReportBands _defaultStatementBands(AppLocalizations l10n) =>
     _statementPresetBands(l10n, 'classic');
 
-ReportBands _statementPresetBands(AppLocalizations? l10n, String id) {
+ReportBands _statementPresetBands(AppLocalizations l10n, String id) {
   const lines = '{% for line in lines %}'
       '{{ line.label }} | {{ line.amount }}\n{% endfor %}';
-  final balance = '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}';
+  final balance = '= ${l10n.billBalance} | {{ total }}';
   switch (id) {
     case 'simple':
       return ReportBands(
@@ -318,15 +314,15 @@ ReportBands _statementPresetBands(AppLocalizations? l10n, String id) {
     case 'verbose':
       return ReportBands(
         header: '''
-# ${l10n?.billPdfTitle ?? 'Statement'} — {{ period }}
+# ${l10n.billPdfTitle} — {{ period }}
 ${_sellerBlock(l10n)}
 > {{ member }}
 ---''',
         body: '''
-## ${l10n?.invoicePdfDescription ?? 'Description'}
+## ${l10n.invoicePdfDescription}
 $lines---
-${l10n?.invoicePdfCharges ?? 'Charges'} | {{ charges }}
-${l10n?.invoicePdfPayments ?? 'Payments'} | {{ payments }}
+${l10n.invoicePdfCharges} | {{ charges }}
+${l10n.invoicePdfPayments} | {{ payments }}
 $balance''',
       );
     case 'formal':
@@ -338,20 +334,20 @@ ${_sellerBlock(l10n)}
 
 > {{ period }}''',
         body: '''
-## ${l10n?.reportSubject ?? 'Subject'}: ${l10n?.billPdfTitle ?? 'Statement'} — {{ period }}
+## ${l10n.reportSubject}: ${l10n.billPdfTitle} — {{ period }}
 
 {{ member }},
 
 $lines---
 $balance''',
         footer: '''
-${l10n?.reportRegards ?? 'Kind regards'},
+${l10n.reportRegards},
 {{ workspace }}''',
       );
     default: // classic
       return ReportBands(
         header: '''
-# ${l10n?.billPdfTitle ?? 'Statement'} — {{ period }}
+# ${l10n.billPdfTitle} — {{ period }}
 {{ workspace }}
 > {{ member }}
 ---''',
@@ -361,40 +357,40 @@ ${l10n?.reportRegards ?? 'Kind regards'},
 }
 
 /// The FINANCIAL AGREEMENT document (#494) as editable bands.
-ReportBands _defaultAgreementBands(AppLocalizations? l10n) =>
+ReportBands _defaultAgreementBands(AppLocalizations l10n) =>
     _simpleDocPresetBands(
-        l10n, 'classic', l10n?.reportDocAgreement ?? 'Financial agreement',
+        l10n, 'classic', l10n.reportDocAgreement,
         subtitle: '{{ member }}');
 
 /// The MONTHLY PAYMENTS document (#494) as editable bands.
-ReportBands _defaultPaymentsBands(AppLocalizations? l10n) =>
+ReportBands _defaultPaymentsBands(AppLocalizations l10n) =>
     _simpleDocPresetBands(
-        l10n, 'classic', l10n?.reportDocPayments ?? 'Payments report',
+        l10n, 'classic', l10n.reportDocPayments,
         subtitle: '{{ member }} — {{ period }}',
         // #955 — the period's payments and the balance are two figures;
         // the template names both, and pending payments apart from
         // pending expense submissions.
         totalsLine:
-            '= ${l10n?.reportPaymentsPeriodTotal ?? 'Payments this period'} | {{ validated_total }}\n'
-            '{% if pending_payments_total != "" %}${l10n?.reportPendingPayments ?? 'Pending payments'} | {{ pending_payments_total }}\n{% endif %}'
-            '{% if pending_expenses_total != "" %}${l10n?.reportPendingExpenses ?? 'Pending expenses'} | {{ pending_expenses_total }}\n{% endif %}'
-            '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}');
+            '= ${l10n.reportPaymentsPeriodTotal} | {{ validated_total }}\n'
+            '{% if pending_payments_total != "" %}${l10n.reportPendingPayments} | {{ pending_payments_total }}\n{% endif %}'
+            '{% if pending_expenses_total != "" %}${l10n.reportPendingExpenses} | {{ pending_expenses_total }}\n{% endif %}'
+            '= ${l10n.billBalance} | {{ total }}');
 
 /// The WORKSPACE STATUS (#934): what the workspace invoiced, collected,
 /// reimbursed and shared out over a range of months, then the same per
 /// member. Owners and admins only; the numbers are the database's.
-ReportBands _defaultStatusBands(AppLocalizations? l10n) => ReportBands(
+ReportBands _defaultStatusBands(AppLocalizations l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 > {{ workspace_address }}
 > {{ issued }}
 
-## ${l10n?.reportDocStatus ?? 'Workspace status'} — {{ status_from }} → {{ status_to }}''',
+## ${l10n.reportDocStatus} — {{ status_from }} → {{ status_to }}''',
       body: '''
 {% for line in lines %}{{ line.label }} | {{ line.amount }}
-{% endfor %}= ${l10n?.statusNet ?? 'Net'} | {{ status_net }}
+{% endfor %}= ${l10n.statusNet} | {{ status_net }}
 
-### ${l10n?.statusMembers ?? 'Members'}
+### ${l10n.statusMembers}
 {% for m in status_members %}{{ m.number }} {{ m.name }} ({{ m.pct }} %) | {{ m.invoiced }} / {{ m.paid }}
 {% endfor %}''',
       footer: '> {{ workspace }}',
@@ -404,20 +400,20 @@ ReportBands _defaultStatusBands(AppLocalizations? l10n) => ReportBands(
 /// for, what was actually consumed, what is left or exceeded — and the
 /// records behind the numbers. Sent to the member at month end.
 @visibleForTesting
-ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
+ReportBands defaultUsageBands(AppLocalizations l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 > {{ workspace_address }}
 > {{ issued }}
 ---
-# ${l10n?.reportDocUsage ?? 'Consumption report'}
+# ${l10n.reportDocUsage}
 > {{ member }} — {{ period }}''',
       body: '''
 {% for line in lines %}{{ line.label }} | {{ line.amount }}
 {% endfor %}
-{% if usage_overage != "" %}> ${l10n?.usageReportOverage ?? 'Overage carried to the next invoice'} : {{ usage_overage }}{% endif %}
+{% if usage_overage != "" %}> ${l10n.usageReportOverage} : {{ usage_overage }}{% endif %}
 
-## ${l10n?.usageReportRecordsHeading ?? 'What was consumed'}
+## ${l10n.usageReportRecordsHeading}
 {% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}
 {% endfor %}''',
       footer: _legalFooter(l10n),
@@ -427,28 +423,28 @@ ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
 /// subtotals per rate and category, the period totals — what the
 /// accountant reconciles against the declaration boxes.
 @visibleForTesting
-ReportBands defaultVatBands(AppLocalizations? l10n) => ReportBands(
+ReportBands defaultVatBands(AppLocalizations l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 > {{ workspace_address }}
 > {{ issued }}
 ---
-# ${l10n?.reportDocVat ?? 'VAT report'}
+# ${l10n.reportDocVat}
 > {{ vat_period }}
 > {{ vat_basis_note }}''',
       body: '''
-## ${l10n?.vatReportPositions ?? 'Positions'}
+## ${l10n.vatReportPositions}
 {% for p in vat_positions %}{{ p.number }} · {{ p.date }} · {{ p.customer }}{% if p.reverses != "" %} ⟲ {{ p.reverses }}{% endif %} | {{ p.rate }} {{ p.category }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}
 {% endfor %}
-## ${l10n?.vatReportByRate ?? 'Totals per rate'}
+## ${l10n.vatReportByRate}
 {% for t in vat_rate_totals %}{{ t.rate }} {{ t.category }} · {{ t.count }} | {{ t.net }} | {{ t.vat }} | {{ t.gross }}
 {% endfor %}---
-= ${l10n?.vatReportTotals ?? 'Period totals'} | {{ vat_period_net }} | {{ vat_period_vat }} | {{ vat_period_gross }}''',
+= ${l10n.vatReportTotals} | {{ vat_period_net }} | {{ vat_period_vat }} | {{ vat_period_gross }}''',
       footer: _legalFooter(l10n),
     );
 
 /// The WORKSPACE REPORT document (#494) as editable bands.
-ReportBands _defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
+ReportBands _defaultWorkspaceBands(AppLocalizations l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
@@ -460,10 +456,10 @@ ReportBands _defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
 > {{ members_count }} · {{ levels_count }} / {{ offices_count }} / {{ desks_count }} / {{ seats_count }}
 > {{ open_days }} · {{ work_hours }}
 
-## ${l10n?.reportSectionFeatures ?? 'Features'}
+## ${l10n.reportSectionFeatures}
 {% for f in features %}{{ f.label }}
 {% endfor %}
-## ${l10n?.reportSectionPrices ?? 'Prices'}
+## ${l10n.reportSectionPrices}
 {% for line in lines %}{{ line.label }} | {{ line.amount }}
 {% endfor %}''',
       footer: _legalFooter(l10n),
@@ -473,14 +469,14 @@ ReportBands _defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
 /// title + recipient, the lines, an optional totals row, the legal
 /// footer. [totalsLine] defaults to the plain balance row.
 ReportBands _simpleDocPresetBands(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String id,
   String title, {
   required String subtitle,
   String? totalsLine,
 }) {
   final totals =
-      totalsLine ?? '= ${l10n?.billBalance ?? 'Balance'} | {{ total }}';
+      totalsLine ?? '= ${l10n.billBalance} | {{ total }}';
   const lines = '{% for line in lines %}'
       '{{ line.label }} | {{ line.amount }}\n{% endfor %}';
   switch (id) {
@@ -508,14 +504,14 @@ ${_sellerBlock(l10n)}
 
 > {{ issued }}''',
         body: '''
-## ${l10n?.reportSubject ?? 'Subject'}: $title
+## ${l10n.reportSubject}: $title
 
 {{ member }},
 
 $lines---
 $totals''',
         footer: '''
-${l10n?.reportRegards ?? 'Kind regards'},
+${l10n.reportRegards},
 {{ workspace }}''',
       );
     default: // classic
@@ -550,11 +546,11 @@ class ReportPreset {
 @visibleForTesting
 const List<String> reportPresetIds = ['classic', 'simple', 'verbose', 'formal'];
 
-String _presetName(String id, AppLocalizations? l10n) => switch (id) {
-      'simple' => l10n?.reportPresetSimple ?? 'Simple',
-      'verbose' => l10n?.reportPresetVerbose ?? 'Detailed',
-      'formal' => l10n?.reportPresetFormalLetter ?? 'Formal letter',
-      _ => l10n?.reportPresetClassic ?? 'Classic',
+String _presetName(String id, AppLocalizations l10n) => switch (id) {
+      'simple' => l10n.reportPresetSimple,
+      'verbose' => l10n.reportPresetVerbose,
+      'formal' => l10n.reportPresetFormalLetter,
+      _ => l10n.reportPresetClassic,
     };
 
 /// Presets for a STRING document id (#476/#480): 'invoice', 'proforma',
@@ -562,7 +558,7 @@ String _presetName(String id, AppLocalizations? l10n) => switch (id) {
 /// invoice presets (its `{% if proforma %}` branches flip the title).
 /// Every document offers the same four: Classic · Simple · Verbose ·
 /// Formal.
-List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
+List<ReportPreset> presetsForDoc(String docId, AppLocalizations l10n) {
   // #1154 — the kind registry decides what [docId] is; the old ladder
   // read anything it did not know as a reminder level (#864's finding,
   // surviving here). An unknown id now gets EMPTY bands, which the
@@ -574,7 +570,7 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
         ReportStatementSlot() => _statementPresetBands(l10n, id),
         // #494 — the further documents share the letter shape.
         ReportDocSlot(key: 'agreement') => _simpleDocPresetBands(
-            l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
+            l10n, id, l10n.reportDocAgreement,
             subtitle: '{{ member }}'),
         ReportDocSlot(key: 'payments') => _defaultPaymentsBands(l10n),
         ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
@@ -593,7 +589,7 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
     if (kind != null)
       ReportPreset(
         id: 'professional',
-        name: l10n?.reportPresetProfessional ?? 'Professional',
+        name: l10n.reportPresetProfessional,
         bands: defaultBandsForDoc(docId, l10n),
       ),
     for (final id in reportPresetIds)
@@ -603,14 +599,14 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
 
 /// The default bands for a STRING document id (#476) — what Reset
 /// inserts and what an uncustomized document renders with.
-ReportBands defaultBandsForDoc(String docId, AppLocalizations? l10n) {
+ReportBands defaultBandsForDoc(String docId, AppLocalizations l10n) {
   final kind = reportKindById(docId, reminderLevels: kMaxReminderLevels);
   if (kind == null) return ReportBands.empty;
   return professionalReportBands(
     kind: kind, content: _completeBandsForDoc(docId, l10n), l10n: l10n);
 }
 
-ReportBands _completeBandsForDoc(String docId, AppLocalizations? l10n) =>
+ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
     switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
       ReportRootSlot() || ReportProformaSlot() =>
         defaultInvoiceTemplate(l10n).invoiceBands,
@@ -620,8 +616,8 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations? l10n) =>
       ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
       ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
       ReportDocSlot(key: 'status') => _defaultStatusBands(l10n),
-      ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n?.biPdfTitle ?? 'Business analytics'),
-      ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration'),
+      ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n.biPdfTitle),
+      ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n.workspaceConfigPdfTitle),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),

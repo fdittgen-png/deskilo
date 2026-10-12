@@ -8,7 +8,7 @@
 // learns the shape once. Steps own their content; this owns the chrome.
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../motion/motion.dart';
 import '../theme/app_spacing.dart';
 import 'edge_fade_scroll.dart';
@@ -74,7 +74,7 @@ class WizardScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final last = index >= steps.length - 1;
     final content = animateStep
@@ -145,7 +145,7 @@ class WizardScaffold extends StatelessWidget {
                 TextButton.icon(
                   key: const ValueKey('wizard-back'),
                   icon: const Icon(Icons.chevron_left),
-                  label: Text(l10n?.wizardBack ?? 'Back'),
+                  label: Text(l10n.wizardBack),
                   onPressed: index == 0 ? null : onBack,
                 ),
                 Text([index + 1, steps.length].join(' / '),
@@ -157,7 +157,7 @@ class WizardScaffold extends StatelessWidget {
                     // word. `Back ‹` already reads correctly.
                     iconAlignment: IconAlignment.end,
                     icon: const Icon(Icons.chevron_right),
-                    label: Text(l10n?.wizardNext ?? 'Next'),
+                    label: Text(l10n.wizardNext),
                     onPressed: nextEnabled ? onNext : null,
                   )
                 else if (onFinish != null)
@@ -165,9 +165,9 @@ class WizardScaffold extends StatelessWidget {
                     key: finishKey ?? const ValueKey('wizard-finish'),
                     icon: SizedBox(width: 24, height: 24, child: busy
                         ? CircularProgressIndicator(strokeWidth: 2,
-                            semanticsLabel: l10n?.wizardSubmitting ?? 'Submitting')
+                            semanticsLabel: l10n.wizardSubmitting)
                         : const Icon(Icons.check)),
-                    label: Text(finishLabel ?? (l10n?.wizardFinish ?? 'Finish')),
+                    label: Text(finishLabel ?? (l10n.wizardFinish)),
                     onPressed: finishEnabled ? onFinish : null,
                   ),
               ]),

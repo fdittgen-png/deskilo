@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 
 import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/management_api.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'instance_doctor_panel.dart';
 
 /// Where a personal access token is created, and revoked.
@@ -62,7 +62,7 @@ class InstanceDoneStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final e = endpoint;
     final (api, ref) = (this.api, projectRef);
     final keyPreview =
@@ -70,25 +70,19 @@ class InstanceDoneStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        WizardText(l10n?.instanceDoneIntro ??
-            'The instance is ready. Use it on this device, then share the '
-                'server QR from the Server screen so members join the same '
-                'one.'),
+        WizardText(l10n.instanceDoneIntro),
         if (e != null) ...[
-          CopyableLink(e.url, label: l10n?.commonCopy ?? 'Copy'),
+          CopyableLink(e.url, label: l10n.commonCopy),
           WizardText(keyPreview, style: const TextStyle(fontFamily: 'monospace')),
         ],
         if (api != null && ref != null) ...[
-          WizardText(l10n?.instanceDoctorIntro ??
-              'Before this device uses it, the security check must pass: an '
-                  'alarm keeps the button off until it is fixed.'),
+          WizardText(l10n.instanceDoctorIntro),
           InstanceDoctorPanel(api: api, projectRef: ref, onChecked: onChecked),
         ],
         const SizedBox(height: AppSpacing.sm),
         // #1308 S4 — the token reaches the whole account until revoked.
-        WizardText(l10n?.instanceRevokeToken ??
-            'You can revoke the access token now: DesKilo kept no copy.'),
-        CopyableLink(supabaseTokensUrl, label: l10n?.commonCopy ?? 'Copy'),
+        WizardText(l10n.instanceRevokeToken),
+        CopyableLink(supabaseTokensUrl, label: l10n.commonCopy),
       ],
     );
   }

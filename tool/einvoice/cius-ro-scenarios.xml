@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later
+
+  #2358 — a KoSIT scenario for CIUS-RO documents. ANAF publishes the
+  CIUS-RO business rules behind its validation web service only, so this
+  runs what is publicly pinned: the UBL 2.1 schema and the CEN EN 16931
+  schematron of the XRechnung bundle (tool/einvoice/validate.sh copies
+  this file into that bundle and runs it from there). A CIUS-RO document
+  is an EN 16931 document first; this proves that much.
+-->
+<scenarios xmlns="http://www.xoev.de/de/validator/framework/1/scenarios"
+  frameworkVersion="1.0.0">
+  <name>CIUS-RO (UBL 2.1 + EN 16931)</name>
+  <author>DesKilo</author>
+  <date>2026-10-11</date>
+  <description>
+    <p>UBL 2.1 Invoice schema and the CEN EN 16931 schematron, for
+      documents claiming CIUS-RO 1.0.1.</p>
+  </description>
+  <scenario>
+    <name>CIUS-RO (UBL Invoice)</name>
+    <description>
+      <p>UBL 2.1 Invoice schema and the EN 16931 schematron.</p>
+    </description>
+    <namespace prefix="cbc">urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2</namespace>
+    <namespace prefix="invoice">urn:oasis:names:specification:ubl:schema:xsd:Invoice-2</namespace>
+    <namespace prefix="rep">http://www.xoev.de/de/validator/varl/1</namespace>
+    <match>exists(/invoice:Invoice/cbc:CustomizationID[ . = 'urn:cen.eu:en16931:2017#compliant#urn:efactura.mfinante.ro:CIUS-RO:1.0.1'])</match>
+    <validateWithXmlSchema>
+      <resource>
+        <name>XML Schema for UBL 2.1 Invoice</name>
+        <location>resources/ubl/2.1/xsd/maindoc/UBL-Invoice-2.1.xsd</location>
+      </resource>
+    </validateWithXmlSchema>
+    <validateWithSchematron>
+      <resource>
+        <name>Schematron rules for EN16931 (UBL)</name>
+        <location>resources/ubl/2.1/xsl/EN16931-UBL-validation.xsl</location>
+      </resource>
+    </validateWithSchematron>
+    <createReport>
+      <resource>
+        <name>Validation report</name>
+        <location>resources/default-report.xsl</location>
+      </resource>
+    </createReport>
+    <acceptMatch>/rep:report/rep:assessment[1]/rep:accept[1]</acceptMatch>
+  </scenario>
+  <noScenarioReport>
+    <resource>
+      <name>Default Report</name>
+      <location>resources/default-report.xsl</location>
+    </resource>
+  </noScenarioReport>
+</scenarios>

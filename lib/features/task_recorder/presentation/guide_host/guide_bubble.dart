@@ -7,8 +7,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// Diameter of the circle: above the 48 dp touch target.
 const double guideBubbleSize = 56;
@@ -44,11 +44,10 @@ class GuideBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final label =
-        l10n?.guideHostRestore(current, total) ??
-        'Show the guide (step $current of $total)';
+        l10n.guideHostRestore(current, total);
     final at = clamp(position);
     return Positioned(
       left: at.dx,

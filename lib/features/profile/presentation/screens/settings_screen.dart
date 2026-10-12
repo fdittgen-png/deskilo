@@ -14,16 +14,17 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/i18n/regional_formats_section.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
 import '../../../members/providers/directory_providers.dart';
@@ -72,27 +73,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     WidgetRef ref,
     String workspaceId,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.kioskRevertTitle ?? 'Kiosk device'),
+        title: Text(l10n.kioskRevertTitle),
         content: Text(
-          l10n?.kioskRevertDesc ??
-              'This profile is set up as the workspace kiosk. Revert it '
-                  'to a regular member to stop the kiosk question at '
-                  'start.',
+          l10n.kioskRevertDesc,
         ),
         actions: [
           TextButton(
             key: const ValueKey('kiosk-revert-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('kiosk-revert-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member'),
+            child: Text(l10n.memberUnmakeKiosk),
           ),
         ],
       ),
@@ -111,8 +109,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -122,13 +119,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (!context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.kioskRevertDone ?? 'This profile is a regular member again.',
+      l10n.kioskRevertDone,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final myProfile = ref.watch(myProfileProvider).value;
     final myMember = ref.watch(myMemberProvider).value;
     final canAdminister =
@@ -139,7 +136,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final devMode = ref.watch(devModeProvider).value ?? false;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final labels = l10n ?? AppLocalizationsEn();
+    final labels = l10n;
     final workspaceTiles = workspaceSettingsTiles(context, ref, l10n: l10n,
       canAdminister: canAdminister, perms: perms, features: features,
       isOwner: myMember?.isOwner ?? false,
@@ -155,8 +152,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       appBar: AppBar(
         title: Text(showsMemberAccountMenu(
                 features: features, permissions: perms)
-            ? (l10n?.memberAccountTitle ?? 'My account')
-            : (l10n?.settingsTitle ?? 'Settings')),
+            ? (l10n.memberAccountTitle)
+            : (l10n.settingsTitle)),
       ),
       body: Column(children: [
         if (workspaceTiles.isNotEmpty) AppTabBar(barKey: const ValueKey('settings-scope'),
@@ -169,7 +166,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ListTile(
             key: const ValueKey('settings-space-back-to-me'),
             leading: const Icon(Icons.switch_account_outlined),
-            title: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
+            title: Text(l10n.spaceBackToMe),
             onTap: () => context.go('/me'),
           ),
           SettingsTaskSection(id: 'account', title: labels.settingsSectionAccount,
@@ -193,13 +190,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   List<Widget> _membershipTiles(
     BuildContext context,
     WidgetRef ref, {
-    required AppLocalizations? l10n,
+    required AppLocalizations l10n,
     required Profile? myProfile,
     required Member? myMember,
     required Set<WorkspaceFeature> features,
   }) =>
       [
-          SettingsTaskSection(id: 'membership', title: (l10n ?? AppLocalizationsEn()).settingsSectionMembership, children: [
+          SettingsTaskSection(id: 'membership', title: l10n.settingsSectionMembership, children: [
           // #2085 — what my roles give me here, every member included.
           if (features.contains(WorkspaceFeature.roleAssignment) &&
               myMember != null &&
@@ -208,7 +205,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ListTile(
               key: const ValueKey('settings-what-you-can-do'),
               leading: const Icon(Icons.verified_user_outlined),
-              title: Text(l10n?.whatYouCanDoTitle ?? 'What you can do here'),
+              title: Text(l10n.whatYouCanDoTitle),
               onTap: () => context.push('/settings/what-you-can-do'),
             ),
           // #662 — the member's own half of badge sign-in: the card and
@@ -220,7 +217,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 const Expanded(child: MyBadgeTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                HelpDot(l10n.helpHintBadgesTopic,
                   anchor: HelpAnchor.profileBadge,
                 ),
               ],
@@ -228,7 +225,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 const Expanded(child: BadgePinTile()),
-                HelpDot(l10n?.helpHintBadgesTopic ?? 'NFC badges',
+                HelpDot(l10n.helpHintBadgesTopic,
                   anchor: HelpAnchor.profileBadgePin,
                 ),
               ],
@@ -241,14 +238,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             key: const ValueKey('settings-profile-status-title'),
             leading: const Icon(Icons.mood_outlined),
             title: HelpDotTitle(
-              l10n?.profileStatusTitle ?? 'Status',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+              l10n.profileStatusTitle,
+              l10n.helpTopicSettings,
               anchor: HelpAnchor.profileStatus,
             ),
             subtitle: Text(
               (myProfile?.hasStatus ?? false)
                   ? myProfile!.statusText
-                  : (l10n?.profileStatusNone ?? 'No status'),
+                  : (l10n.profileStatusNone),
             ),
             onTap: () => showDialog<void>(
               context: context,
@@ -265,42 +262,42 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               key: const ValueKey('settings-default-period'),
               leading: const Icon(Icons.schedule_outlined),
               title: HelpDotTitle(
-                l10n?.defaultPeriodTitle ?? 'Default booking period',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
+                l10n.defaultPeriodTitle,
+                l10n.helpTopicSettings,
                 anchor: HelpAnchor.profileDefaultPeriod,
               ),
               subtitle: Text(switch (ref.watch(defaultPeriodProvider).value) {
                 DefaultBookingPeriod.morning =>
-                  lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
+                  lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
                 DefaultBookingPeriod.afternoon =>
-                  lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
+                  lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
                 DefaultBookingPeriod.fullDay =>
-                  lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
-                null => l10n?.defaultPeriodNone ?? 'No preference (full day)',
+                  lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip),
+                null => l10n.defaultPeriodNone,
               }),
               onTap: () => showDialog<void>(
                 context: context,
                 builder: (dialogContext) => SimpleDialog(
                   title: Text(
-                    l10n?.defaultPeriodTitle ?? 'Default booking period',
+                    l10n.defaultPeriodTitle,
                   ),
                   children: [
                     for (final (period, label) in [
                       (
                         null,
-                        l10n?.defaultPeriodNone ?? 'No preference (full day)',
+                        l10n.defaultPeriodNone,
                       ),
                       (
                         DefaultBookingPeriod.morning,
-                        lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
+                        lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
                       ),
                       (
                         DefaultBookingPeriod.afternoon,
-                        lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
+                        lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
                       ),
                       (
                         DefaultBookingPeriod.fullDay,
-                        lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
+                        lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip),
                       ),
                     ])
                       SimpleDialogOption(
@@ -329,13 +326,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               key: const ValueKey('settings-payment-terms'),
               leading: const Icon(Icons.request_quote_outlined),
               title: HelpDotTitle(
-                l10n?.paymentTermsTitle ?? 'Payment conditions',
-                l10n?.helpTopicSettings ?? 'Settings & profile',
+                l10n.paymentTermsTitle,
+                l10n.helpTopicSettings,
                 anchor: HelpAnchor.profilePaymentTerms,
               ),
               subtitle: Text(myMember.paymentTerms == null
-                  ? (l10n?.paymentTermsInherited ?? 'Workspace default')
-                  : (l10n?.paymentTermsOverridden ?? "Member's own")),
+                  ? (l10n.paymentTermsInherited)
+                  : (l10n.paymentTermsOverridden)),
               onTap: () => context.push('/settings/payment-terms'),
             ),
           // #500 — the document library: everyone sees it (their role
@@ -344,7 +341,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ListTile(
               key: const ValueKey('settings-documents'),
               leading: const Icon(Icons.folder_open_outlined),
-              title: Text(l10n?.documentsTitle ?? 'Documents'),
+              title: Text(l10n.documentsTitle),
               onTap: () => context.push('/documents'),
             ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):
@@ -354,12 +351,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ListTile(
               key: const ValueKey('settings-kiosk-revert'),
               leading: const Icon(Icons.tablet_mac_outlined),
-              title: Text(l10n?.kioskRevertTitle ?? 'Kiosk device'),
+              title: Text(l10n.kioskRevertTitle),
               subtitle: Text(
-                l10n?.kioskRevertDesc ??
-                    'This profile is set up as the workspace kiosk. '
-                        'Revert it to a regular member to stop the kiosk '
-                        'question at start.',
+                l10n.kioskRevertDesc,
               ),
               onTap: () => _revertKiosk(context, ref, me.workspaceId),
             ),
@@ -400,7 +394,7 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     try {
       await ref
@@ -409,7 +403,7 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
       ref.invalidate(myProfileProvider);
       if (!mounted) return;
       Navigator.of(context).pop();
-      AppSnack.success(context, l10n?.profileStatusSaved ?? 'Status saved');
+      AppSnack.success(context, l10n.profileStatusSaved);
     } on Object catch (e, st) {
       debugPrint('status save failed: $e\n$st');
       TraceLogger.instance.error(
@@ -422,27 +416,25 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
       setState(() => _saving = false);
       AppSnack.error(
         context,
-        l10n?.profileStatusSaveFailed ?? 'Could not save the status',
+        l10n.profileStatusSaveFailed,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.profileStatusTitle ?? 'Status'),
+      title: Text(l10n.profileStatusTitle),
       content: TextField(
         controller: _controller,
         autofocus: true,
         maxLength: StatusTextRules.maxLength,
         decoration: InputDecoration(
-          labelText: l10n?.profileStatusFieldLabel ?? 'Status',
-          hintText: l10n?.profileStatusHint ?? 'In a call · back at 14:00',
+          labelText: l10n.profileStatusFieldLabel,
+          hintText: l10n.profileStatusHint,
           helperText:
-              l10n?.profileStatusHelper ??
-              'Optional. Visible to members of your workspaces in the '
-                  'member directory. Leave empty to clear it.',
+              l10n.profileStatusHelper,
           helperMaxLines: 3,
         ),
       ),
@@ -450,12 +442,12 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
         TextButton(
           key: const ValueKey('settings-cancel'),
           onPressed: _saving ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('settings-save'),
           onPressed: _saving ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

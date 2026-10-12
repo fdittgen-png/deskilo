@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/seat.dart';
@@ -32,7 +33,7 @@ Future<String?> showMySeatSheet(
   required bool deletionRequestable,
   BookingGranularity? granularity,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   // #490 — the window opens on the WORKSPACE clock. #636: the instant
   // comes from the reservation's OWN rule, so the tile never announces
   // a time the gate does not use (it hard-coded 15 minutes while the
@@ -45,7 +46,7 @@ Future<String?> showMySeatSheet(
       opensWall.day != nowWall.day;
   final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity));
   final opensOn = DateFormat.MMMd().format(opensWall);
-  return showModalBottomSheet<String>(
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(
@@ -54,7 +55,7 @@ Future<String?> showMySeatSheet(
           ListTile(
             title: Text(
               seat.name.isEmpty
-                  ? (l10n?.planYourSeat ?? 'Your seat')
+                  ? (l10n.planYourSeat)
                   : seat.name,
             ),
             subtitle: Text(
@@ -70,14 +71,14 @@ Future<String?> showMySeatSheet(
             ListTile(
               key: ValueKey('check-in-sheets-plan-check-out-button-${granularity?.name}'),
               leading: const Icon(Icons.logout),
-              title: Text(l10n?.planCheckOutButton ?? 'Check out'),
+              title: Text(l10n.planCheckOutButton),
               onTap: () => Navigator.of(context).pop('checkout'),
             )
           else if (mine.checkInWindowOpen(now, granularity: granularity))
             ListTile(
               key: ValueKey('check-in-sheets-plan-check-in-button-${granularity?.name}'),
               leading: const Icon(Icons.login),
-              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in')),
+              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n.planCheckInButton)),
               onTap: () => Navigator.of(context).pop('checkin'),
             )
           else
@@ -86,17 +87,13 @@ Future<String?> showMySeatSheet(
             ListTile(
               enabled: false,
               leading: const Icon(Icons.login),
-              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in')),
+              title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n.planCheckInButton)),
               subtitle: Text(
                 now.isBefore(mine.startsAt)
                     ? (opensOnAnotherDay
-                        ? (l10n?.planCheckInOpensOn(opensOn) ??
-                              'Check-in opens on $opensOn')
-                        : (l10n?.planCheckInOpensAt(opensAt) ??
-                              'Check-in opens at $opensAt'))
-                    : (l10n?.planCheckInOverError ??
-                          'This reservation is over — check-in is no '
-                              'longer possible.'),
+                        ? (l10n.planCheckInOpensOn(opensOn))
+                        : (l10n.planCheckInOpensAt(opensAt)))
+                    : (l10n.planCheckInOverError),
               ),
             ),
           if (cancellable)
@@ -104,7 +101,7 @@ Future<String?> showMySeatSheet(
               key: ValueKey('check-in-sheets-plan-cancel-reservation-button-${granularity?.name}'),
               leading: const Icon(Icons.cancel_outlined),
               title: Text(
-                l10n?.planCancelReservationButton ?? 'Cancel reservation',
+                l10n.planCancelReservationButton,
               ),
               onTap: () => Navigator.of(context).pop('cancel'),
             )
@@ -113,7 +110,7 @@ Future<String?> showMySeatSheet(
               key: ValueKey('check-in-sheets-request-deletion-button-${granularity?.name}'),
               leading: const Icon(Icons.delete_outline),
               title: Text(
-                l10n?.reservationDeleteRequestButton ?? 'Request deletion',
+                l10n.reservationDeleteRequestButton,
               ),
               onTap: () => Navigator.of(context).pop('requestDeletion'),
             ),
@@ -141,9 +138,9 @@ Future<String?> showCheckInOtherSheet(
   bool offerMessage = false,
   bool offerCheckOut = false,
 }) {
-  final l10n = AppLocalizations.of(context);
-  final reservedBy = l10n?.planReservedBy(name) ?? 'Reserved by $name';
-  return showModalBottomSheet<String>(
+  final l10n = context.l10n;
+  final reservedBy = l10n.planReservedBy(name);
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       // Scrolls, never clips: the #622 message tile can push the sheet
@@ -165,7 +162,7 @@ Future<String?> showCheckInOtherSheet(
               ListTile(
                 key: const ValueKey('check-in-sheets-check-in-for'),
                 leading: const Icon(Icons.login),
-                title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
+                title: Text(l10n.planCheckInFor(name)),
                 onTap: () => Navigator.of(context).pop('checkin'),
               ),
             // #814 — the `admin_check_out` policy (0116) was enforced
@@ -175,7 +172,7 @@ Future<String?> showCheckInOtherSheet(
               ListTile(
                 key: const ValueKey('admin-check-out'),
                 leading: const Icon(Icons.logout),
-                title: Text(l10n?.planCheckOutFor(name) ?? 'Check out $name'),
+                title: Text(l10n.planCheckOutFor(name)),
                 onTap: () => Navigator.of(context).pop('checkout'),
               ),
             if (offerMessage)
@@ -183,7 +180,7 @@ Future<String?> showCheckInOtherSheet(
                 key: const ValueKey('admin-message-reserver'),
                 leading: const Icon(Icons.chat_outlined),
                 title: Text(
-                  l10n?.spaceMessageReserver(name) ?? 'Message $name',
+                  l10n.spaceMessageReserver(name),
                 ),
                 onTap: () => Navigator.of(context).pop('message'),
               ),
@@ -191,11 +188,10 @@ Future<String?> showCheckInOtherSheet(
               key: const ValueKey('check-in-sheets-overrule-remove'),
               leading: const Icon(Icons.person_remove_outlined),
               title: Text(
-                l10n?.planOverruleRemove ?? 'Remove reservation (overrule)',
+                l10n.planOverruleRemove,
               ),
               subtitle: Text(
-                l10n?.planOverruleHint(name) ??
-                    '$name and all admins will be notified.',
+                l10n.planOverruleHint(name),
               ),
               onTap: () => Navigator.of(context).pop('remove'),
             ),

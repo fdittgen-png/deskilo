@@ -14,8 +14,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_policies.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -45,13 +45,13 @@ class LegendProfileTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
           title:
-              Text(l10n?.legendProfileTitle ?? 'What the plan tells apart'),
+              Text(l10n.legendProfileTitle),
         ),
         RadioGroup<LegendProfile>(
           key: groupKey,
@@ -63,18 +63,14 @@ class LegendProfileTile extends ConsumerWidget {
               RadioListTile<LegendProfile>(
                 key: fullKey,
                 value: LegendProfile.full,
-                title: Text(l10n?.legendProfileFull ?? 'Every state'),
-                subtitle: Text(l10n?.legendProfileFullDesc ??
-                    'Free · Reserved · Checked in · Mine · Blocked — you '
-                        'can see who has arrived.'),
+                title: Text(l10n.legendProfileFull),
+                subtitle: Text(l10n.legendProfileFullDesc),
               ),
               RadioListTile<LegendProfile>(
                 key: simpleKey,
                 value: LegendProfile.simple,
-                title: Text(l10n?.legendProfileSimple ?? 'Fewer states'),
-                subtitle: Text(l10n?.legendProfileSimpleDesc ??
-                    'Free · Reserved · Mine · Unavailable. A booked seat '
-                        'and one somebody has checked into look the same.'),
+                title: Text(l10n.legendProfileSimple),
+                subtitle: Text(l10n.legendProfileSimpleDesc),
               ),
             ],
           ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -23,7 +23,7 @@ class McpSettingsTiles extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final on = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.mcpAccess);
@@ -43,7 +43,7 @@ class McpSettingsTiles extends ConsumerWidget {
           ListTile(
             key: const ValueKey('settings-assistants'),
             leading: const Icon(Icons.smart_toy_outlined),
-            title: Text(l10n?.mcpAssistantsTitle ?? 'Assistants'),
+            title: Text(l10n.mcpAssistantsTitle),
             onTap: () => context.push('/assistants'),
           ),
         // #2145 — the journey to a first call, for every member here.
@@ -51,7 +51,7 @@ class McpSettingsTiles extends ConsumerWidget {
           ListTile(
             key: const ValueKey('settings-connect-assistant'),
             leading: const Icon(Icons.add_link),
-            title: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),
+            title: Text(l10n.mcpConnectTitle),
             onTap: () => context.push(connectAssistantRoute),
           ),
         // #1827 — offered before mcpAccess is on: that is its second step.
@@ -59,14 +59,14 @@ class McpSettingsTiles extends ConsumerWidget {
           ListTile(
             key: const ValueKey('settings-assistant-setup'),
             leading: const Icon(Icons.checklist_outlined),
-            title: Text(l10n?.assistantSetupTitle ?? 'Assistant setup'),
+            title: Text(l10n.assistantSetupTitle),
             onTap: () => context.push('/settings/assistant-setup'),
           ),
         if (on && manages)
           ListTile(
             key: const ValueKey('settings-assistant-policy'),
             leading: const Icon(Icons.admin_panel_settings_outlined),
-            title: Text(l10n?.mcpPolicyTitle ?? 'Assistant access'),
+            title: Text(l10n.mcpPolicyTitle),
             onTap: () => context.push('/settings/assistants'),
           ),
         // #1827 B — only the instance operator gets an answer here.
@@ -75,7 +75,7 @@ class McpSettingsTiles extends ConsumerWidget {
           ListTile(
             key: const ValueKey('settings-assistant-review'),
             leading: const Icon(Icons.how_to_reg_outlined),
-            title: Text(l10n?.mcpReviewTitle ?? 'Assistant approvals'),
+            title: Text(l10n.mcpReviewTitle),
             onTap: () => context.push('/database/assistant-approvals'),
           ),
       ],
@@ -110,14 +110,14 @@ class _InstanceConsoleTileState extends ConsumerState<_InstanceConsoleTile> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return FutureBuilder<bool>(
       future: _operator,
       builder: (context, snap) => snap.data == true
           ? ListTile(
               key: const ValueKey('settings-instance-assistants'),
               leading: const Icon(Icons.settings_input_antenna),
-              title: Text(l10n?.instanceTitle ?? 'Installation: assistants'),
+              title: Text(l10n.instanceTitle),
               // #2145 — unread installation notices (a waiting assistant,
               // a grant) on the tile that opens them.
               trailing: _NoticeBadge(

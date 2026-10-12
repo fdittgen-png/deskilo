@@ -6,26 +6,26 @@ import '../../domain/messenger.dart';
 
 /// #1824 — the words and the glyph that name a conversation's context,
 /// the same in the inbox, the forward picker and the thread header.
-String contextLabel(AppLocalizations? l10n, InboxEntry entry) {
+String contextLabel(AppLocalizations l10n, InboxEntry entry) {
   final space = entry.workspaceName;
   return switch (entry.kind) {
     MessageContextKind.space =>
-      l10n?.messengerContextSpace(space) ?? 'In $space',
+      l10n.messengerContextSpace(space),
     MessageContextKind.account =>
-      l10n?.messengerContextAccount ?? 'Person to person',
+      l10n.messengerContextAccount,
     MessageContextKind.accountGroup =>
-      l10n?.messengerContextGroup ?? 'Group',
+      l10n.messengerContextGroup,
     MessageContextKind.inquiryOut =>
-      l10n?.messengerContextInquiryOut(space) ?? 'Your inquiry to $space',
+      l10n.messengerContextInquiryOut(space),
     MessageContextKind.inquiryIn =>
-      l10n?.messengerContextInquiryIn(space) ?? 'Inquiry to $space',
+      l10n.messengerContextInquiryIn(space),
   };
 }
 
 /// The label plus the server, which is named only when it is not this
 /// one — a person should not need to know where a space is hosted.
 String contextSubtitle(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   InboxEntry entry,
   Map<String, String> servers,
 ) {
@@ -33,7 +33,7 @@ String contextSubtitle(
   if (!entry.isRemote) return label;
   final server = servers[entry.source] ?? Uri.tryParse(entry.source)?.host;
   if (server == null || server.isEmpty) return label;
-  return '$label · ${l10n?.messengerOnServer(server) ?? 'on $server'}';
+  return '$label · ${l10n.messengerOnServer(server)}';
 }
 
 IconData contextIcon(MessageContextKind kind) => switch (kind) {

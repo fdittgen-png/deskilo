@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 import '../../../core/time/date_text.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 
 /// THE booking-success → user-message mapper (#663), the counterpart of
 /// `bookingErrorText`.
@@ -22,7 +21,7 @@ import '../../../l10n/app_localizations_en.dart';
 /// Shared rather than pasted, for the reason `bookingErrorText` gives in
 /// its own header: the same switch lived on four screens and drifted.
 String bookingSuccessText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale, {
   required bool checkedIn,
   required DateTime start,
@@ -46,10 +45,9 @@ String bookingSuccessText(
   if (checkedIn) {
     // A check-in is happening NOW, so only the end matters.
     if (space.isEmpty) {
-      return l10n?.bookingCheckedInUntil(until) ?? 'Checked in until $until.';
+      return l10n.bookingCheckedInUntil(until);
     }
-    return l10n?.bookingCheckedInAtUntil(space, until) ??
-        'Checked in at $space until $until.';
+    return l10n.bookingCheckedInAtUntil(space, until);
   }
 
   // A reservation may be for another day, so it carries its date. Same
@@ -65,15 +63,15 @@ String bookingSuccessText(
   // for an upcoming booking the plan rightly does not show as one.
   if (now != null && !end.isAfter(now)) {
     // English from the catalogue itself, not a second copy inline.
-    final words = l10n ?? AppLocalizationsEn();
+    final words = l10n;
     return space.isEmpty
         ? words.bookingRecordedPastWhen(when)
         : words.bookingRecordedPastSpaceWhen(space, when);
   }
   if (space.isEmpty) {
-    return l10n?.bookingReservedWhen(when) ?? 'Reserved: $when.';
+    return l10n.bookingReservedWhen(when);
   }
-  return l10n?.bookingReservedSpaceWhen(space, when) ?? 'Reserved $space: $when.';
+  return l10n.bookingReservedSpaceWhen(space, when);
 }
 
 /// Hours:minutes, falling back to a plain 24-hour clock when the locale

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -28,7 +28,7 @@ Future<void> runAdminSeatActions(
   bool offerMessage = false,
   bool offerCheckOut = false,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final action = await showCheckInOtherSheet(
     context,
     seat: seat,
@@ -74,8 +74,7 @@ Future<void> runAdminSeatActions(
       bookingErrorText(
         l10n,
         e,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
         stepMinutes: stepMinutes,
       ),
       replace: true,
@@ -85,8 +84,7 @@ Future<void> runAdminSeatActions(
   if (action == 'remove' && context.mounted) {
     AppSnack.success(
       context,
-      l10n?.planOverruleDone(name) ??
-          'Reservation removed — $name was notified.',
+      l10n.planOverruleDone(name),
       replace: true,
     );
   }

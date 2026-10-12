@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -70,7 +70,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     // The RAW stored set, not the effective one: a child's saved choice
     // must survive its parent being switched off (and its switch must
@@ -87,8 +87,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
       if (raw.contains(entry.feature) != entry.defaultOn) changedCount++;
       final requires = entry.requires == null
           ? null
-          : (l10n?.featureRequires(featureName(l10n, entry.requires!)) ??
-              'Requires ${featureName(l10n, entry.requires!)}');
+          : (l10n.featureRequires(featureName(l10n, entry.requires!)));
       if (_changedOnly && raw.contains(entry.feature) == entry.defaultOn) {
         continue;
       }
@@ -107,7 +106,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.featuresTitle ?? 'Features'),
+        title: Text(l10n.featuresTitle),
         actions: const [HelpDot('Features', anchor: HelpAnchor.featuresSwitch)],
       ),
       body: workspace == null

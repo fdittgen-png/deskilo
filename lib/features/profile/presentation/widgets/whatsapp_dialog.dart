@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/profile.dart';
 import '../../providers/profile_providers.dart';
 
@@ -38,7 +38,7 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     try {
       await ref
@@ -49,7 +49,7 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
       Navigator.of(context).pop();
       AppSnack.success(
         context,
-        l10n?.whatsappSaved ?? 'WhatsApp number saved',
+        l10n.whatsappSaved,
       );
     } on Object catch (e, st) {
       debugPrint('WhatsApp save failed: $e\n$st');
@@ -59,26 +59,24 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
       setState(() => _saving = false);
       AppSnack.error(
         context,
-        l10n?.whatsappSaveFailed ?? 'Could not save the WhatsApp number',
+        l10n.whatsappSaveFailed,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.whatsappTitle ?? 'WhatsApp'),
+      title: Text(l10n.whatsappTitle),
       content: TextField(
         controller: _controller,
         autofocus: true,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
-          labelText: l10n?.whatsappFieldLabel ?? 'WhatsApp number',
-          hintText: l10n?.whatsappHint ?? '+33612345678',
-          helperText: l10n?.whatsappHelper ??
-              'Optional. Visible to members of your workspaces. '
-                  'Leave empty to stop sharing it.',
+          labelText: l10n.whatsappFieldLabel,
+          hintText: l10n.whatsappHint,
+          helperText: l10n.whatsappHelper,
           helperMaxLines: 3,
         ),
       ),
@@ -87,12 +85,12 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
           key: const ValueKey('whatsapp-dialog-cancel'),
           onPressed:
               _saving ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('whatsapp-dialog-save'),
           onPressed: _saving ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

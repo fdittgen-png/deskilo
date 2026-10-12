@@ -9,7 +9,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 /// Below this width the pair folds into an overflow menu.
 ///
@@ -37,9 +37,9 @@ class ReportHistoryControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final undoLabel = l10n?.reportDesignerUndo ?? 'Undo';
-    final redoLabel = l10n?.reportDesignerRedo ?? 'Redo';
+    final l10n = context.l10n;
+    final undoLabel = l10n.reportDesignerUndo;
+    final redoLabel = l10n.reportDesignerRedo;
 
     if (MediaQuery.sizeOf(context).width >= _kNarrowAppBar) {
       return Row(mainAxisSize: MainAxisSize.min, children: [

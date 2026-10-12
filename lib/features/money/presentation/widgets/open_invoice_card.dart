@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -126,7 +126,7 @@ class FoldedSourceRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.textTheme.bodySmall
         ?.copyWith(color: theme.colorScheme.onSurfaceVariant);
@@ -150,10 +150,8 @@ class FoldedSourceRow extends ConsumerWidget {
           ].join(' · ')),
           subtitle: Text(
             paid
-                ? (l10n?.settlementPaidThrough(settlement.number) ??
-                    'Paid through ${settlement.number}')
-                : (l10n?.settlementFoldedIn(settlement.number) ??
-                    'Regrouped in ${settlement.number}'),
+                ? (l10n.settlementPaidThrough(settlement.number))
+                : (l10n.settlementFoldedIn(settlement.number)),
             key: ValueKey('$keyPrefix-status-${source.invoiceId}'),
             style: muted,
           ),
@@ -162,7 +160,7 @@ class FoldedSourceRow extends ConsumerWidget {
               : IconButton(
                   key: ValueKey('$keyPrefix-pdf-${source.invoiceId}'),
                   icon: const Icon(Icons.picture_as_pdf_outlined),
-                  tooltip: l10n?.settlementSourcePdf ?? 'PDF (regrouped)',
+                  tooltip: l10n.settlementSourcePdf,
                   onPressed: () => downloadInvoicePdf(context, ref, full!),
                 ),
         ),
@@ -191,7 +189,7 @@ class OpenInvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final invoice = entry.invoice;
     final id = invoice.id;
@@ -208,19 +206,19 @@ class OpenInvoiceCard extends StatelessWidget {
       InvoiceMove.issuerRefunds => _Primary(
           key: 'invoice-refund-$id',
           icon: Icons.currency_exchange,
-          label: l10n?.invoiceRefundButton ?? 'Record the refund',
+          label: l10n.invoiceRefundButton,
           onPressed: () => actions.onRefund(entry),
         ),
       InvoiceMove.issuerMatchesPayment => _Primary(
           key: 'invoice-match-$id',
           icon: Icons.price_check_outlined,
-          label: l10n?.invoiceMatchAction ?? 'Mark as paid',
+          label: l10n.invoiceMatchAction,
           onPressed: () => actions.onMatch(entry),
         ),
       InvoiceMove.adminConfirmsPayment => _Primary(
           key: 'invoice-events-$id',
           icon: Icons.how_to_vote_outlined,
-          label: l10n?.journeyPrimaryConfirmInEvents ?? 'Open Events',
+          label: l10n.journeyPrimaryConfirmInEvents,
           onPressed: () => actions.onEvents(entry),
         ),
       InvoiceMove.memberPays ||
@@ -228,7 +226,7 @@ class OpenInvoiceCard extends StatelessWidget {
         _Primary(
           key: 'invoice-remind-$id',
           icon: Icons.notification_important,
-          label: l10n?.journeyPrimaryRemind(due) ?? 'Send reminder $due',
+          label: l10n.journeyPrimaryRemind(due),
           onPressed: () => actions.onRemind(entry),
         ),
       _ => null,
@@ -267,28 +265,28 @@ class OpenInvoiceCard extends StatelessWidget {
         icon(
           key: 'invoice-void-open-$id',
           icon: Icons.block_outlined,
-          tooltip: l10n?.invoiceVoidAction ?? 'Mark erroneous',
+          tooltip: l10n.invoiceVoidAction,
           onPressed: () => actions.onVoid(entry),
         ),
       if (!creditNote && !standingPartial && !pendingMatch)
         icon(
           key: 'invoice-proforma-$id',
           icon: Icons.description_outlined,
-          tooltip: l10n?.invoiceProformaAction ?? 'Proforma invoice',
+          tooltip: l10n.invoiceProformaAction,
           onPressed: () => actions.onProforma(entry),
         ),
       if (!creditNote && !pendingMatch && !isPrimary('invoice-remind-$id'))
         icon(
           key: 'invoice-remind-$id',
           icon: Icons.notifications_outlined,
-          tooltip: l10n?.invoiceRemindAction ?? 'Send a reminder',
+          tooltip: l10n.invoiceRemindAction,
           onPressed: () => actions.onRemind(entry),
         ),
       if (!creditNote && !pendingMatch && !isPrimary('invoice-match-$id'))
         icon(
           key: 'invoice-match-$id',
           icon: Icons.price_check_outlined,
-          tooltip: l10n?.invoiceMatchAction ?? 'Mark as paid',
+          tooltip: l10n.invoiceMatchAction,
           onPressed: () => actions.onMatch(entry),
           tonal: primary == null,
         ),
@@ -298,21 +296,21 @@ class OpenInvoiceCard extends StatelessWidget {
             key: ValueKey('invoice-writeoff-pending-$id'),
             avatar: const Icon(Icons.how_to_vote_outlined, size: 18),
             label: Text(
-              l10n?.invoiceMatchPendingBadge ?? 'Awaiting validation',
+              l10n.invoiceMatchPendingBadge,
             ),
           )
         else
           icon(
             key: 'invoice-writeoff-$id',
             icon: Icons.money_off_csred_outlined,
-            tooltip: l10n?.invoiceWriteoffButton ?? 'Cancel outstanding amount',
+            tooltip: l10n.invoiceWriteoffButton,
             onPressed: () => actions.onWriteoff(entry),
           ),
       if (creditNote && !isPrimary('invoice-refund-$id'))
         icon(
           key: 'invoice-refund-$id',
           icon: Icons.currency_exchange,
-          tooltip: l10n?.invoiceRefundButton ?? 'Record the refund',
+          tooltip: l10n.invoiceRefundButton,
           onPressed: () => actions.onRefund(entry),
           tonal: true,
         ),
@@ -321,7 +319,7 @@ class OpenInvoiceCard extends StatelessWidget {
           key: ValueKey('invoice-match-pending-$id'),
           avatar: const Icon(Icons.how_to_vote_outlined, size: 18),
           label: Text(
-            l10n?.invoiceMatchPendingBadge ?? 'Awaiting validation',
+            l10n.invoiceMatchPendingBadge,
           ),
         ),
     ];
@@ -329,10 +327,10 @@ class OpenInvoiceCard extends StatelessWidget {
     // The figure the move is about, beside the actions: what is left on
     // a partial, what the workspace pays back on a credit note.
     final figure = creditNote
-        ? '${l10n?.invoiceRefundLabel ?? 'To refund'}: '
+        ? '${l10n.invoiceRefundLabel}: '
             '${currency.formatMinor(-invoice.totalCents)}'
         : standingPartial
-            ? '${l10n?.invoiceRemainingLabel ?? 'Remaining'}: '
+            ? '${l10n.invoiceRemainingLabel}: '
                 '${currency.formatMinor(journey.remainingCents)}'
             : null;
 
@@ -378,12 +376,11 @@ class OpenInvoiceCard extends StatelessWidget {
                 TextSpan(style: muted, children: [
                   TextSpan(text: dateFormat.format(invoice.issuedAt)),
                   const TextSpan(text: ' · '),
-                  TextSpan(text: l10n?.invoiceOpenAge(days) ?? '${days}d'),
+                  TextSpan(text: l10n.invoiceOpenAge(days)),
                   if (journey.reminderCount > 0) ...[
                     const TextSpan(text: ' · '),
                     TextSpan(
-                      text: l10n?.invoiceRemindedBadge(journey.reminderCount) ??
-                          'Reminded ×${journey.reminderCount}',
+                      text: l10n.invoiceRemindedBadge(journey.reminderCount),
                     ),
                   ],
                 ]),
@@ -407,7 +404,7 @@ class OpenInvoiceCard extends StatelessWidget {
                       color: theme.colorScheme.error,
                     ),
                     label: Text(
-                      l10n?.dunningDueChip(due) ?? 'Reminder $due due',
+                      l10n.dunningDueChip(due),
                     ),
                   ),
                 ),

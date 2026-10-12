@@ -43,12 +43,12 @@ import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'storyboard_review.dart';
 
-const String taskPackageFormat = 'deskilo.task-package';
+const String _taskPackageFormat = 'deskilo.task-package';
 
 /// The newest package version this build writes and reads. Version 2
 /// (#1876) adds the optional reviewed storyboard; a package without one
 /// is still written as version 1, so older readers keep reading it.
-const int taskPackageVersion = 2;
+const int _taskPackageVersion = 2;
 const String taskPackageExtension = '.deskilo-task.zip';
 
 const String _manifestPath = 'manifest.json';
@@ -57,7 +57,7 @@ const String _transcriptPath = 'transcript.md';
 const String _storyboardPath = 'storyboard.json';
 
 /// The media a package may carry, by extension.
-const Map<String, String> taskPackageMediaTypes = {
+const Map<String, String> _taskPackageMediaTypes = {
   'png': 'image/png',
   'jpg': 'image/jpeg',
   'jpeg': 'image/jpeg',
@@ -107,7 +107,7 @@ class TaskPackageAsset {
   final Uint8List bytes;
 
   String get mediaType =>
-      taskPackageMediaTypes[path.substring(path.lastIndexOf('.') + 1)]!;
+      _taskPackageMediaTypes[path.substring(path.lastIndexOf('.') + 1)]!;
 }
 
 /// A package read back. Always an untrusted private draft.
@@ -205,8 +205,8 @@ Uint8List writeTaskPackage(
     'bytes': bytes.length,
   };
   final manifest = {
-    'format': taskPackageFormat,
-    'package_version': storyboardBytes == null ? 1 : taskPackageVersion,
+    'format': _taskPackageFormat,
+    'package_version': storyboardBytes == null ? 1 : _taskPackageVersion,
     'product': 'deskilo',
     'recording': {
       ...entry(_recordingPath, recordingBytes),
@@ -391,11 +391,11 @@ TaskPackageReadResult _readManifest(
   if (json is! Map || !json.keys.every(rootKeys.contains)) {
     return refuse(TaskPackageIssueCode.badManifest);
   }
-  if (json['format'] != taskPackageFormat) {
+  if (json['format'] != _taskPackageFormat) {
     return refuse(TaskPackageIssueCode.badManifest);
   }
   final version = json['package_version'];
-  if (version is! int || version < 1 || version > taskPackageVersion) {
+  if (version is! int || version < 1 || version > _taskPackageVersion) {
     return refuse(TaskPackageIssueCode.unsupportedVersion);
   }
 

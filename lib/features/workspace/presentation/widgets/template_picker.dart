@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/workspace_providers.dart';
 import 'template_gallery.dart';
 
@@ -39,13 +39,13 @@ class TemplatePicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final async = ref.watch(workspaceTemplatesProvider);
     final templates = async.value ?? const [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n?.onboardingStartFrom ?? 'Start from',
+        Text(l10n.onboardingStartFrom,
             style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: AppSpacing.sm),
         SizedBox(
@@ -56,9 +56,8 @@ class TemplatePicker extends ConsumerWidget {
                   child: InlineBanner(
                     key: const ValueKey('template-picker-failed'),
                     icon: Icons.cloud_off_outlined,
-                    text: l10n?.templatesLoadFailed ??
-                        'The templates could not be loaded.',
-                    actionLabel: l10n?.commonRetry ?? 'Retry',
+                    text: l10n.templatesLoadFailed,
+                    actionLabel: l10n.commonRetry,
                     onAction: () => ref.invalidate(workspaceTemplatesProvider),
                   ),
                 )
@@ -68,7 +67,7 @@ class TemplatePicker extends ConsumerWidget {
             key: const ValueKey('template-picker-onboarding-start-from'),
             sections: [
               TemplateGallerySection(
-                title: l10n?.onboardingStartFrom ?? 'Start from',
+                title: l10n.onboardingStartFrom,
                 templates: templates,
               ),
             ],
@@ -91,14 +90,12 @@ class TemplatesFailedNotice extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(workspaceTemplatesProvider);
     if (!async.hasError || async.hasValue) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return InlineBanner(
       key: const ValueKey('onboarding-confirm-templates-failed'),
       icon: Icons.cloud_off_outlined,
       text:
-          l10n?.onboardingTemplatesFailedEmpty ??
-          'The templates could not be loaded, so this space would start '
-              'empty. Go back to try again.',
+          l10n.onboardingTemplatesFailedEmpty,
     );
   }
 }

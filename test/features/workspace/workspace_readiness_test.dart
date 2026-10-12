@@ -5,6 +5,7 @@
 // up, and say nothing at all when the Get started help is switched off.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_readiness_card.dart';
@@ -263,9 +264,9 @@ void main() {
     expect(s[1].reason, 'stale_export');
     expect(s[1].blocking, isFalse, reason: 'stale evidence is shown, not demanded');
     expect(s[2].recordedAt, isNull);
-    expect(readinessReasonLabel(null, 'recent_export'),
+    expect(readinessReasonLabel(englishL10n, 'recent_export'),
         'A recent export is on record');
-    expect(readinessReasonLabel(null, 'stale_export'),
+    expect(readinessReasonLabel(englishL10n, 'stale_export'),
         'The last recorded export is more than 90 days old');
   });
 

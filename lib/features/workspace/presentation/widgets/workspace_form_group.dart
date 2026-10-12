@@ -3,10 +3,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
@@ -130,7 +130,7 @@ class WorkspaceSettingsSaveBar extends StatelessWidget {
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
           onPressed: busy ? null : () { FocusScope.of(context).unfocus(); onSave(); },
           icon: Icon(busy ? Icons.hourglass_top : Icons.save_outlined),
-          label: Text(AppLocalizations.of(context)?.commonSave ?? 'Save'))),
+          label: Text(context.l10n.commonSave))),
       ]))),
   );
 }

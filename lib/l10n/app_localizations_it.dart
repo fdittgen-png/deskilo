@@ -3966,6 +3966,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dunningSettingsTitle => 'Regole di sollecito';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'l’indirizzo elettronico del cliente (BT-49) nel suo profilo';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'un riferimento dell’acquirente o un numero d’ordine';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'la partita IVA o il codice fiscale del cliente';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'il Leitweg-ID del cliente come riferimento dell’acquirente';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'il conto bancario dello spazio (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'l’e-mail e il telefono di contatto dello spazio';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'l’indirizzo elettronico dello spazio (BT-34) nella sua identità legale';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'la partita IVA dello spazio';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'il distretto (județ) di ogni indirizzo rumeno';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Prima di inviare tramite $channel, aggiunga:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Manca il SIREN dell\'acquirente. Una piattaforma francese instrada in base ad esso: lo inserisca nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.';
 
@@ -3976,6 +4016,40 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'Dal $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'ogni fattura deve essere registrata in un registro concatenato (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'ogni impresa deve emettere fatture elettroniche';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'le grandi e medie imprese devono emettere fatture elettroniche';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'ogni impresa deve poter ricevere fatture elettroniche';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Dal $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle =>
+      'Obblighi di fatturazione elettronica nel Suo paese:';
 
   @override
   String get editorAccessoriesLabel => 'Accessori';
@@ -7835,10 +7909,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady =>
-      'Pronto — questo file soddisfa la EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'Condividi fattura elettronica (XML)';
 
   @override
@@ -7860,6 +7930,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Un access point la consegna al cliente — nessuna piattaforma pubblica nel percorso.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Pronto — non manca nulla di ciò che la EN 16931 richiede, e questo formato supera il validatore ufficiale ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>
@@ -14755,6 +14830,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Vero su una nota di credito';
+
+  @override
+  String get reportFieldMeaningDeclarationNote =>
+      'L\'avvertenza della dichiarazione: verificare prima dell\'invio';
 
   @override
   String get reportFieldMeaningDueDate => 'La data di scadenza';

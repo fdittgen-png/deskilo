@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -52,7 +53,7 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (!on || !may || workspace == null) return const SizedBox.shrink();
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
     final provider = seatCapacityMonthProvider(
@@ -75,7 +76,7 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
               children: [
                 Expanded(
                   child: Text(
-                    l10n?.capacityKpiTitle ?? 'Seat utilisation',
+                    l10n.capacityKpiTitle,
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
@@ -118,11 +119,10 @@ class _Failure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (forbidden) {
       return Text(
-        l10n?.capacityKpiForbidden ??
-            'You may not read the capacity figures of this workspace.',
+        l10n.capacityKpiForbidden,
         key: const ValueKey('capacity-kpi-forbidden'),
       );
     }
@@ -130,14 +130,13 @@ class _Failure extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          l10n?.capacityKpiUnavailable ??
-              'The seat utilisation could not be computed.',
+          l10n.capacityKpiUnavailable,
           key: const ValueKey('capacity-kpi-unavailable'),
         ),
         TextButton(
           key: const ValueKey('capacity-kpi-retry'),
           onPressed: onRetry,
-          child: Text(l10n?.capacityKpiRetry ?? 'Try again'),
+          child: Text(l10n.capacityKpiRetry),
         ),
       ],
     );
@@ -151,7 +150,7 @@ class _Figure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
     final ratio = kpi.utilisation;
@@ -183,7 +182,7 @@ class _Figure extends StatelessWidget {
         ExpansionTile(
           key: const ValueKey('capacity-kpi-explain'),
           tilePadding: EdgeInsets.zero,
-          title: Text(l10n?.capacityKpiExplain ?? 'How is this computed?'),
+          title: Text(l10n.capacityKpiExplain),
           children: [
             for (final line in details)
               Align(
@@ -212,21 +211,20 @@ String _since(SeatCapacityKpi kpi, String locale) {
 /// Web-BI module (#1923) prints the same line.
 String capacityKpiRatioLine(
   SeatCapacityKpi kpi,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale,
 ) {
   if (!kpi.hasValue) return '';
   final hours = _hours(locale);
   final reserved = hours.format(kpi.reservedSeatHours);
   final offered = hours.format(kpi.offeredSeatHours);
-  return l10n?.capacityKpiRatio(reserved, offered) ??
-      '$reserved of $offered seat-hours reserved';
+  return l10n.capacityKpiRatio(reserved, offered);
 }
 
 /// What the figure cannot know or does not count, shown beside it.
 List<String> capacityKpiNotes(
   SeatCapacityKpi kpi,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale,
 ) {
   final sinceLabel = _since(kpi, locale);
@@ -235,32 +233,24 @@ List<String> capacityKpiNotes(
   return <String>[
     if (kpi.quality.contains(KpiQuality.unavailable) ||
         kpi.quality.contains(KpiQuality.forbidden))
-      l10n?.capacityKpiUnavailable ?? 'The seat utilisation could not be computed.'
+      l10n.capacityKpiUnavailable
     else if (notRecorded)
-      l10n?.capacityKpiNotRecorded(sinceLabel) ??
-          'This period lies before the workspace’s history began on '
-              '$sinceLabel; there is nothing recorded to count.'
+      l10n.capacityKpiNotRecorded(sinceLabel)
     else if (ratio == null)
-      l10n?.capacityKpiUndefined ??
-          'No seat time was offered in this period, so there is no '
-              'utilisation to show.',
+      l10n.capacityKpiUndefined,
     if (kpi.hasValue && kpi.quality.contains(KpiQuality.knownZero))
-      l10n?.capacityKpiKnownZero ?? 'Measured: nothing was reserved.',
+      l10n.capacityKpiKnownZero,
     if (!notRecorded && kpi.reasons.contains('history_not_recorded_before'))
-      l10n?.capacityKpiHistorySince(sinceLabel) ??
-          'Counted from $sinceLabel, when this workspace’s history '
-              'began; earlier time is not known and not counted.',
+      l10n.capacityKpiHistorySince(sinceLabel),
     if (kpi.reasons.contains('unattributed_reservations'))
-      l10n?.capacityKpiUnattributed ??
-          'Some reservations in this period point to a place that no '
-              'longer exists; they are not counted.',
+      l10n.capacityKpiUnattributed,
   ];
 }
 
 /// How the figure is made, for the explanation.
 List<String> capacityKpiDetails(
   SeatCapacityKpi kpi,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale,
 ) {
   if (!kpi.hasValue) return capacityKpiNotes(kpi, l10n, locale);
@@ -271,37 +261,24 @@ List<String> capacityKpiDetails(
       .add_Hm()
       .format(WorkspaceTime.wall(kpi.computedAt));
   return <String>[
-    l10n?.capacityKpiDefinition ??
-        'Reserved seat-hours inside the opening hours, divided by offered '
-            'seat-hours.',
-    l10n?.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)) ??
-        'Physical capacity: ${hours.format(kpi.physicalSeatHours)} '
-            'seat-hours',
+    l10n.capacityKpiDefinition,
+    l10n.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)),
     if (kpi.reservedOutsideOfferedSeatHours > 0)
-      l10n?.capacityKpiOutside(
+      l10n.capacityKpiOutside(
             hours.format(kpi.reservedOutsideOfferedSeatHours),
-          ) ??
-          'Reserved outside the offered hours: '
-              '${hours.format(kpi.reservedOutsideOfferedSeatHours)} '
-              'seat-hours, not in the ratio',
+          ),
     if (kpi.overlappingSeatHours > 0)
-      l10n?.capacityKpiOverlap(hours.format(kpi.overlappingSeatHours)) ??
-          'Claimed twice at the same time: '
-              '${hours.format(kpi.overlappingSeatHours)} seat-hours, '
-              'counted once',
+      l10n.capacityKpiOverlap(hours.format(kpi.overlappingSeatHours)),
     if (kpi.roomsWithoutSeats > 0)
-      l10n?.capacityKpiRooms(
+      l10n.capacityKpiRooms(
             '${kpi.roomsWithoutSeats}',
             hours.format(kpi.reservedRoomHours),
             hours.format(kpi.offeredRoomHours),
-          ) ??
-          'Rooms without seats: ${kpi.roomsWithoutSeats}',
+          ),
     if (kpi.reasons.contains('rooms_current_structure'))
-      l10n?.capacityKpiRoomsToday ??
-          'Rooms without seats are read as they are today.',
+      l10n.capacityKpiRoomsToday,
     if (since != null)
-      l10n?.capacityKpiHistory(sinceLabel) ??
-          'History recorded since $sinceLabel',
-    l10n?.capacityKpiAsOf(computed) ?? 'Computed $computed',
+      l10n.capacityKpiHistory(sinceLabel),
+    l10n.capacityKpiAsOf(computed),
   ];
 }

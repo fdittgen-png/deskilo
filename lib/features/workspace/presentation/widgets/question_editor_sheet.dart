@@ -13,51 +13,50 @@
 // field is simply not offered when editing an existing question.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_field.dart';
 import 'workspace_fields_section.dart';
 
 /// The label of [type], in the reader's language.
-String questionTypeLabel(AppLocalizations? l10n, WorkspaceFieldType type) =>
+String questionTypeLabel(AppLocalizations l10n, WorkspaceFieldType type) =>
     switch (type) {
-      WorkspaceFieldType.text => l10n?.questionTypeText ?? 'A short answer',
+      WorkspaceFieldType.text => l10n.questionTypeText,
       WorkspaceFieldType.longText =>
-        l10n?.questionTypeLongText ?? 'A long answer',
+        l10n.questionTypeLongText,
       WorkspaceFieldType.integer =>
-        l10n?.questionTypeInteger ?? 'A whole number',
-      WorkspaceFieldType.decimal => l10n?.questionTypeDecimal ?? 'A number',
-      WorkspaceFieldType.date => l10n?.questionTypeDate ?? 'A date',
-      WorkspaceFieldType.boolean => l10n?.questionTypeBoolean ?? 'Yes or no',
+        l10n.questionTypeInteger,
+      WorkspaceFieldType.decimal => l10n.questionTypeDecimal,
+      WorkspaceFieldType.date => l10n.questionTypeDate,
+      WorkspaceFieldType.boolean => l10n.questionTypeBoolean,
       WorkspaceFieldType.singleChoice =>
-        l10n?.questionTypeSingleChoice ?? 'One of a list',
+        l10n.questionTypeSingleChoice,
       WorkspaceFieldType.multiChoice =>
-        l10n?.questionTypeMultiChoice ?? 'Several of a list',
+        l10n.questionTypeMultiChoice,
     };
 
 String _visibilityLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   WorkspaceFieldVisibility visibility,
 ) =>
     switch (visibility) {
       WorkspaceFieldVisibility.self =>
-        l10n?.questionEditorVisibilitySelf ?? 'Only the member',
+        l10n.questionEditorVisibilitySelf,
       WorkspaceFieldVisibility.managers =>
-        l10n?.questionEditorVisibilityManagers ??
-            'The member, and whoever may see personal data',
+        l10n.questionEditorVisibilityManagers,
       WorkspaceFieldVisibility.members =>
-        l10n?.questionEditorVisibilityMembers ?? 'Every member of the space',
+        l10n.questionEditorVisibilityMembers,
     };
 
-String _contextLabel(AppLocalizations? l10n, WorkspaceFieldContext context) =>
+String _contextLabel(AppLocalizations l10n, WorkspaceFieldContext context) =>
     switch (context) {
       WorkspaceFieldContext.profile =>
-        l10n?.questionEditorContextProfile ?? "A member's own information",
+        l10n.questionEditorContextProfile,
       WorkspaceFieldContext.managedMember =>
-        l10n?.questionEditorContextManaged ??
-            "A managed member's information",
+        l10n.questionEditorContextManaged,
       WorkspaceFieldContext.joinRequest =>
-        l10n?.questionEditorContextJoin ?? 'When joining',
+        l10n.questionEditorContextJoin,
     };
 
 /// Edits [initial], or defines a new question when it is null.
@@ -203,7 +202,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -223,10 +222,8 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   controller: _key,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: l10n?.questionEditorKey ?? 'Key',
-                    helperText: l10n?.questionEditorKeyHelp ??
-                        'Lower-case letters, digits and underscores. It '
-                            'never changes: the answers point at it.',
+                    labelText: l10n.questionEditorKey,
+                    helperText: l10n.questionEditorKeyHelp,
                     helperMaxLines: 3,
                   ),
                   onChanged: (_) => setState(() {}),
@@ -236,7 +233,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                 key: QuestionEditorSheet.typeKey,
                 initialValue: _type,
                 decoration: InputDecoration(
-                  labelText: l10n?.questionEditorType ?? 'Answer type',
+                  labelText: l10n.questionEditorType,
                 ),
                 items: [
                   for (final type in WorkspaceFieldType.values)
@@ -258,7 +255,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                     controller: _labels[locale],
                     decoration: InputDecoration(
                       labelText:
-                          l10n?.questionEditorLabelFor(locale) ?? 'Label ($locale)',
+                          l10n.questionEditorLabelFor(locale),
                     ),
                     onChanged: (_) => setState(() {}),
                   ),
@@ -270,7 +267,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   maxLines: 4,
                   decoration: InputDecoration(
                     labelText:
-                        l10n?.questionEditorChoices ?? 'Choices, one per line',
+                        l10n.questionEditorChoices,
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
@@ -281,16 +278,15 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: _isTextual
-                        ? (l10n?.questionEditorMaxLength ??
-                            'Longest answer (characters)')
-                        : (l10n?.questionEditorMax ?? 'Largest number'),
+                        ? (l10n.questionEditorMaxLength)
+                        : (l10n.questionEditorMax),
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
               SwitchListTile(
                 key: const ValueKey('question-editor-sheet-editor-required'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(l10n?.questionEditorRequired ?? 'Must be answered'),
+                title: Text(l10n.questionEditorRequired),
                 value: _required,
                 onChanged: widget.saving
                     ? null
@@ -300,22 +296,15 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                 key: QuestionEditorSheet.personalSwitchKey,
                 contentPadding: EdgeInsets.zero,
                 title:
-                    Text(l10n?.questionEditorPersonal ?? 'This is personal data'),
+                    Text(l10n.questionEditorPersonal),
                 // #1912 — the switch no longer exempts an answer from
                 // export or erasure: an answer is stored against a member,
                 // so it is personal whatever the switch says, and the
                 // subtitle says so in both positions.
                 subtitle: Text(
                   _personal
-                      ? (l10n?.questionEditorPersonalHelp ??
-                          'Every answer is stored against a member, so it is '
-                              'personal data: carried in their data export '
-                              'and erased when they leave.')
-                      : (l10n?.questionEditorNotPersonalWarning ??
-                          'Still personal: the answer is linked to a member, '
-                              'so it is exported and erased with the '
-                              'membership whatever this switch says. Only a '
-                              'documented retention hold can keep it.'),
+                      ? (l10n.questionEditorPersonalHelp)
+                      : (l10n.questionEditorNotPersonalWarning),
                   key: _personal
                       ? null
                       : QuestionEditorSheet.notPersonalWarningKey,
@@ -328,14 +317,14 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
               SwitchListTile(
                 key: const ValueKey('question-editor-sheet-editor-active'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(l10n?.questionEditorActive ?? 'Asked now'),
+                title: Text(l10n.questionEditorActive),
                 value: _active,
                 onChanged:
                     widget.saving ? null : (on) => setState(() => _active = on),
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.questionEditorVisibility ?? 'Who can see the answer',
+                l10n.questionEditorVisibility,
                 style: theme.textTheme.labelLarge,
               ),
               for (final visibility in WorkspaceFieldVisibility.values)
@@ -353,7 +342,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                 ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.questionEditorContexts ?? 'Where it is asked',
+                l10n.questionEditorContexts,
                 style: theme.textTheme.labelLarge,
               ),
               // Wrap, not Row: three contexts do not fit one 360 dp line.
@@ -379,7 +368,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
-                l10n?.questionEditorPreview ?? 'How it will look',
+                l10n.questionEditorPreview,
                 style: theme.textTheme.labelLarge,
               ),
               // The SAME widget the identity form uses, so the owner is
@@ -397,7 +386,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                 key: QuestionEditorSheet.saveKey,
                 onPressed: _canSave ? () => widget.onSave(_draft) : null,
                 child: Text(
-                  l10n?.questionEditorSave ?? 'Save the question',
+                  l10n.questionEditorSave,
                 ),
               ),
             ],

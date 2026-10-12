@@ -8,9 +8,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/country_names.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
@@ -163,7 +163,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final value = _value;
     final previewLines = [
@@ -174,16 +174,14 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       ),
     ].where((l) => l.isNotEmpty).join('\n');
     final preview = previewLines.isEmpty
-        ? (l10n?.personalInfoNone ?? 'Not filled in yet')
+        ? (l10n.personalInfoNone)
         : previewLines;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           widget.intro ??
-              l10n?.personalInfoSubtitle ??
-              'Printed on your invoices and letters. Your family name is '
-                  'written in capitals, as on official mail.',
+              l10n.personalInfoSubtitle,
           style: theme.textTheme.bodyMedium,
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -193,15 +191,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             key: const ValueKey('personal-info-courtesy'),
             initialValue: _courtesy,
             decoration: InputDecoration(
-              labelText: l10n?.courtesyLabel ?? 'Form of address',
+              labelText: l10n.courtesyLabel,
               helperMaxLines: 3,
               helperText: widget.managed
-                  ? (l10n?.courtesyHintManaged ??
-                      'Printed before their name on documents. "None" '
-                          'prints the name alone.')
-                  : (l10n?.courtesyHint ??
-                      'Printed before your name on documents. "None" '
-                          'prints the name alone.'),
+                  ? (l10n.courtesyHintManaged)
+                  : (l10n.courtesyHint),
               border: const OutlineInputBorder(),
             ),
             items: [
@@ -219,27 +213,27 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         _field(
           _first,
           'first-name',
-          l10n?.personalInfoFirstName ?? 'First name',
+          l10n.personalInfoFirstName,
           type: TextInputType.name,
           autofill: const [AutofillHints.givenName],
         ),
         _field(
           _last,
           'last-name',
-          l10n?.personalInfoLastName ?? 'Family name',
+          l10n.personalInfoLastName,
           type: TextInputType.name,
           autofill: const [AutofillHints.familyName],
         ),
         _field(
           _company,
           'company',
-          l10n?.personalInfoCompany ?? 'Company (optional)',
+          l10n.personalInfoCompany,
           autofill: const [AutofillHints.organizationName],
         ),
         _field(
           _street,
           'street',
-          l10n?.personalInfoStreet ?? 'Street and number',
+          l10n.personalInfoStreet,
           type: TextInputType.streetAddress,
           autofill: const [AutofillHints.streetAddressLine1],
         ),
@@ -250,7 +244,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               child: _field(
                 _postal,
                 'postal-code',
-                l10n?.personalInfoPostalCode ?? 'Postal code',
+                l10n.personalInfoPostalCode,
                 capitalization: TextCapitalization.characters,
                 autocorrect: false,
                 autofill: const [AutofillHints.postalCode],
@@ -261,7 +255,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               child: _field(
                 _city,
                 'city',
-                l10n?.personalInfoCity ?? 'City',
+                l10n.personalInfoCity,
                 autofill: const [AutofillHints.addressCity],
               ),
             ),
@@ -273,7 +267,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             key: const ValueKey('personal-info-country'),
             initialValue: _country,
             decoration: InputDecoration(
-              labelText: l10n?.personalInfoCountry ?? 'Country',
+              labelText: l10n.personalInfoCountry,
               border: const OutlineInputBorder(),
             ),
             items: [
@@ -291,7 +285,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         _field(
           _phone,
           'phone',
-          l10n?.personalInfoPhone ?? 'Telephone',
+          l10n.personalInfoPhone,
           type: TextInputType.phone,
           capitalization: TextCapitalization.none,
           autocorrect: false,
@@ -300,7 +294,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         _field(
           _email,
           'email',
-          l10n?.personalInfoEmail ?? 'E-mail for documents',
+          l10n.personalInfoEmail,
           type: TextInputType.emailAddress,
           capitalization: TextCapitalization.none,
           autocorrect: false,
@@ -309,21 +303,21 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         _field(
           _vat,
           'vat-id',
-          l10n?.personalInfoVatId ?? 'VAT number (optional)',
+          l10n.personalInfoVatId,
           capitalization: TextCapitalization.characters,
           autocorrect: false,
         ),
         _field(
           _legal,
           'legal-id',
-          l10n?.personalInfoLegalId ?? 'Company / registration id (optional)',
+          l10n.personalInfoLegalId,
           capitalization: TextCapitalization.characters,
           autocorrect: false,
         ),
         // The block exactly as the envelope window and the invoice will
         // print it — so what the person sees here is what gets posted.
         Text(
-          l10n?.personalInfoPreview ?? 'On your documents',
+          l10n.personalInfoPreview,
           style: theme.textTheme.labelLarge,
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -342,7 +336,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         FilledButton(
           key: const ValueKey('personal-info-save'),
           onPressed: widget.saving ? null : () => widget.onSave(_value),
-          child: Text(l10n?.personalInfoSave ?? 'Save'),
+          child: Text(l10n.personalInfoSave),
         ),
       ],
     );

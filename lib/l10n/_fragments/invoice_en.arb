@@ -538,10 +538,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Ready — this file satisfies EN 16931.",
-  "@invoiceEInvoiceReady": {
-    "description": "E-invoice sheet: the file satisfies the norm"
-  },
   "invoiceEInvoiceBlockedTitle": "A validator would reject this file:",
   "@invoiceEInvoiceBlockedTitle": {
     "description": "E-invoice sheet: header above the fatal gaps"

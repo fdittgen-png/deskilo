@@ -4,6 +4,7 @@
 // of the transaction (the seller's country) and the customer's stated
 // capacity, frozen at issue; never by the reader's language or the
 // seller's legal form.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
@@ -338,7 +339,7 @@ void main() {
   group('reminders', () {
     String letter(Map<String, Object?> data, String kind) {
       final report = renderReportBands(
-        bands: defaultBandsForDoc(kind, null),
+        bands: defaultBandsForDoc(kind, englishL10n),
         data: data,
       )!;
       return [

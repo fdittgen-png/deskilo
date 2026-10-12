@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -40,7 +41,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
   Future<void> _save(PersonalInfo info) async {
     // #1514 — this form was prefilled from the recording seam.
     if (refusedWhileRecording(context, ref)) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     setState(() => _saving = true);
@@ -52,8 +53,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
       domain: 'workspace',
       message: 'managed profile save failed',
       errorText:
-          l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
       action: () async {
         if (editing == null) {
           createdId = await repository.createManagedMember(workspace.id, info);
@@ -74,8 +74,8 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     AppSnack.success(
       context,
       editing == null
-          ? (l10n?.managedProfileCreated ?? 'Managed profile created')
-          : (l10n?.managedProfileSaved ?? 'Identity saved'),
+          ? (l10n.managedProfileCreated)
+          : (l10n.managedProfileSaved),
     );
     if (createdId != null) {
       // Straight to the member page: the next step is the handover.
@@ -91,7 +91,7 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
   /// form opened on `PersonalInfo.empty` while the read is in flight
   /// saves blanks over a complete identity.
   Widget _form(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     PersonalInfo initial,
     String workspaceCountry,
   ) =>
@@ -101,15 +101,13 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
         initial: initial,
         workspaceCountry: workspaceCountry,
         saving: _saving,
-        intro: l10n?.managedProfileIntro ??
-            'This person has no account yet. You book, invoice and '
-                'manage for them; hand the profile over when they join.',
+        intro: l10n.managedProfileIntro,
         onSave: _save,
       );
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final members = ref.watch(workspaceMembersProvider).value ?? const [];
     final existing = members.where((m) => m.id == widget.memberId).firstOrNull;
     final workspaceCountry =
@@ -128,10 +126,8 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
         icon: Icons.cloud_off_outlined,
         // A known refusal says so; anything else is a fault worth retrying.
         text: knownRefusalText(l10n, read.error!) ??
-            l10n?.managedProfileIdentityUnavailable ??
-            'These details could not be read, so there is nothing to '
-                'edit yet. Nothing has been changed.',
-        actionLabel: l10n?.commonRetry ?? 'Try again',
+            l10n.managedProfileIdentityUnavailable,
+        actionLabel: l10n.commonRetry,
         onAction: () => ref.invalidate(managedIdentityProvider(editing!)),
       );
     } else if (value == null) {
@@ -139,16 +135,14 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
     } else if (value.refused) {
       slot = InlineBanner(
         icon: Icons.lock_outline,
-        text: l10n?.refusalPermission ??
-            'You do not have the permission for this. An owner of the '
-                'space can grant it in Role management.',
+        text: l10n.refusalPermission,
       );
     } else {
       slot = _form(l10n, value.identity, workspaceCountry);
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.managedProfileTitle ?? 'Managed profile'),
+        title: Text(l10n.managedProfileTitle),
       ),
       body: SingleChildScrollView(
         padding: AppSpacing.gutterAll,

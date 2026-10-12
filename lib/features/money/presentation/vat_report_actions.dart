@@ -11,9 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
 import '../domain/invoice_legal.dart';
@@ -76,7 +76,7 @@ Map<String, Object?> _vatReportData(
   WidgetRef ref,
   VatReport report,
 ) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   final locale = Localizations.maybeLocaleOf(context)?.toString();
@@ -157,13 +157,13 @@ Future<void> showVatReport(
   required DateTime start,
   required DateTime end,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final report = await _loadVatReport(ref, start: start, end: end);
   if (!context.mounted) return;
   final data = _vatReportData(context, ref, report);
   final rendered =
       renderLetterDoc(context, ref, docId: 'vat', data: data);
-  final title = l10n?.reportDocVat ?? 'VAT report';
+  final title = l10n.reportDocVat;
   await runReportActions(
     context,
     ref,

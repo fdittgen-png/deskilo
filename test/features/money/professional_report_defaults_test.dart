@@ -3,6 +3,7 @@
 // information are the contract; owner designs must continue to win.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
@@ -51,16 +52,16 @@ void main() {
   });
 
   test('all variants retain payment and consumption-specific sections', () {
-    for (final preset in presetsForDoc('payments', null)) {
+    for (final preset in presetsForDoc('payments', englishL10n)) {
       expect(preset.bands.body, contains('validated_total'));
       expect(preset.bands.body, contains('pending_payments_total'));
     }
-    for (final preset in presetsForDoc('usage', null)) {
+    for (final preset in presetsForDoc('usage', englishL10n)) {
       expect(preset.bands.body, contains('usage_records'));
     }
     for (final kind in ['workspace', 'usage', 'vat', 'payments', 'status']) {
       expect(
-        defaultBandsForDoc(kind, null).footer,
+        defaultBandsForDoc(kind, englishL10n).footer,
         isNot(contains('late_penalty')),
         reason: kind,
       );
@@ -104,7 +105,7 @@ void main() {
     'professional FR and DE invoice PDFs place recipient on the correct side',
     () async {
       final data = {
-        ...sampleReportData(null),
+        ...sampleReportData(englishL10n),
         'client_name': 'EXAMPLE RECIPIENT',
         'client_address': '18 Example Street\n12345 Example City',
       };

@@ -2693,6 +2693,51 @@
   "dunningLevels": "Anzahl der Mahnstufen",
   "dunningSaved": "Mahnregeln gespeichert.",
   "dunningSettingsTitle": "Mahnregeln",
+  "eInvoiceChannelGapBuyerEndpoint": "die elektronische Adresse des Kunden (BT-49) in seinem Profil",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "eine Käuferreferenz oder eine Bestellnummer",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "die USt-IdNr. oder Steuernummer des Kunden",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "die Leitweg-ID des Kunden als Käuferreferenz",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "das Bankkonto des Space (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "Kontakt-E-Mail und Telefon des Space",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerEndpoint": "die elektronische Adresse des Space (BT-34) in seiner rechtlichen Identität",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "die USt-IdNr. des Space",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "den Kreis (județ) jeder rumänischen Adresse",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapsTitle": "Bevor Sie über {channel} senden, ergänzen Sie:",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2704,6 +2749,54 @@
   "eInvoiceGapMixedNotSubjectLines": "Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceMandateEReporting": "Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateFrom": "Ab {date}: {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateInvoiceRecords": "jede Rechnung muss in einem verketteten Register erfasst werden (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "jedes Unternehmen muss E-Rechnungen ausstellen",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "große Unternehmen (Umsatz über 800 000 €) müssen E-Rechnungen ausstellen",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateReceiveAll": "jedes Unternehmen muss E-Rechnungen empfangen können",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateSince": "Seit {date}: {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateTitle": "E-Rechnungspflichten in Ihrem Land:",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
   },
   "editorAccessoriesLabel": "Zubehör",
   "editorAddLevel": "Etage hinzufügen",
@@ -4997,13 +5090,21 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Bereit — diese Datei erfüllt EN 16931.",
   "invoiceEInvoiceShare": "E-Rechnung teilen (XML)",
   "invoiceEInvoiceStaleIdentity": "Ihre rechtliche Identität ist jetzt vollständig, diese Rechnung wurde aber vorher signiert und behält, womit sie ausgestellt wurde. Als fehlerhaft markieren und eine Ersatzrechnung ausstellen, damit sie die neue Identität trägt.",
   "invoiceEInvoiceTransportAccredited": "Eine zugelassene Plattform übermittelt die Rechnung und meldet die Daten an die Finanzverwaltung.",
   "invoiceEInvoiceTransportBilateral": "Kein Kanal ist vorgeschrieben: E-Mail, Portal oder Peppol — wie mit dem Kunden vereinbart.",
   "invoiceEInvoiceTransportClearance": "Die nationale Plattform erhält die Rechnung zuerst und leitet sie weiter — ein direkter Versand an den Kunden ist nicht möglich.",
   "invoiceEInvoiceTransportPeppol": "Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.",
+  "invoiceEInvoiceValidated": "Bereit — nichts, was EN 16931 verlangt, fehlt, und dieses Format besteht den offiziellen Validator ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceEssentialsRefused": "Die Rechnung wurde nicht ausgestellt: Pflichtangaben fehlen.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
@@ -9252,6 +9353,7 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "Der Hinweis der Erklärung: vor der Abgabe prüfen",
   "reportFieldMeaningDueDate": "Das Fälligkeitsdatum",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"

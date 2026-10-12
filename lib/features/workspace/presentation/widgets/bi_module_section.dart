@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -37,19 +38,19 @@ class BiModuleView {
     required this.details,
   });
 
-  final String Function(AppLocalizations? l10n) title;
+  final String Function(AppLocalizations l10n) title;
 
   /// The figure, or a dash when it is undefined.
   final String Function(num? value, String locale, String? currency) value;
 
   /// The figure's two sides ("25 of 100 seat-hours reserved").
-  final String Function(BiMeasure m, AppLocalizations? l10n, String locale)
+  final String Function(BiMeasure m, AppLocalizations l10n, String locale)
   basis;
 
   /// What the current figure cannot know or does not count.
   final List<String> Function(
     BiMeasure m,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     String locale,
   )
   notes;
@@ -57,7 +58,7 @@ class BiModuleView {
   /// How it is computed.
   final List<String> Function(
     BiMeasure m,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     String locale,
   )
   details;
@@ -85,26 +86,22 @@ String _moneyCell(num? v, String locale, String? currency) =>
 
 List<String> _financeNotes(
   BiMeasure m,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   bool invoiced,
 ) => [
   if (m.reasons.contains('currency_mix'))
-    l10n?.biFinanceCurrencyMix ??
-        'This period holds amounts in another currency; amounts in '
-            'different currencies are not added, so none is shown.',
+    l10n.biFinanceCurrencyMix,
   if (m.reasons.contains('amount_not_exact'))
-    l10n?.biFinanceNotExact ??
-        'An amount is too large to show exactly, so it is not shown.',
+    l10n.biFinanceNotExact,
   if (m.reasons.contains('period_not_over'))
-    l10n?.biFinancePartial ??
-        'The period is not over: these figures will still change.',
+    l10n.biFinancePartial,
   if (m.quality.contains(KpiQuality.knownZero))
-    if (invoiced) l10n?.biFinanceInvoicedZero ?? 'Measured: nothing was invoiced.' else l10n?.biFinanceCollectedZero ?? 'Measured: nothing was collected.',
+    if (invoiced) l10n.biFinanceInvoicedZero else l10n.biFinanceCollectedZero,
 ];
 
 List<String> _financeDetails(
   BiMeasure m,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale,
   bool invoiced,
 ) {
@@ -113,32 +110,21 @@ List<String> _financeDetails(
   final date = DateFormat.yMd(locale);
   return [
     if (invoiced)
-      l10n?.biFinanceInvoicedDefinition ??
-          'Invoices of these months, voided ones and settlements left out '
-              '(a settlement regroups invoices already counted); positive '
-              'totals only.'
+      l10n.biFinanceInvoicedDefinition
     else
-      l10n?.biFinanceCollectedDefinition ??
-          'Payments matched to invoices, by the month of the match on the '
-              'workspace clock.',
-    l10n?.biFinanceNotProfit ??
-        'Not a profit: no cost is in this figure, and the two figures are '
-            'not subtracted from each other.',
-    l10n?.biFinanceSameAsReport ??
-        'The same rules as the workspace status report, computed once on '
-            'the server.',
+      l10n.biFinanceCollectedDefinition,
+    l10n.biFinanceNotProfit,
+    l10n.biFinanceSameAsReport,
     if (k.lastChangeAt case final last?)
-      l10n?.biFinanceLastChange(date.format(WorkspaceTime.wall(last))) ??
-          'Last change to the source: ${date.format(WorkspaceTime.wall(last))}',
-    l10n?.biFinanceComputed(date.format(WorkspaceTime.wall(k.computedAt))) ??
-        'Computed ${date.format(WorkspaceTime.wall(k.computedAt))}',
+      l10n.biFinanceLastChange(date.format(WorkspaceTime.wall(last))),
+    l10n.biFinanceComputed(date.format(WorkspaceTime.wall(k.computedAt))),
   ];
 }
 
 /// The views of the registered modules (conformance-tested).
 final biModuleViews = <String, BiModuleView>{
   'capacity.seat_utilisation': BiModuleView(
-    title: (l10n) => l10n?.capacityKpiTitle ?? 'Seat utilisation',
+    title: (l10n) => l10n.capacityKpiTitle,
     value: _percentCell,
     basis: (m, l10n, locale) => switch (_seat(m)) {
       final k? => capacityKpiRatioLine(k, l10n, locale),
@@ -154,29 +140,25 @@ final biModuleViews = <String, BiModuleView>{
     },
   ),
   'finance.invoiced': BiModuleView(
-    title: (l10n) => l10n?.biFinanceInvoiced ?? 'Invoiced',
+    title: (l10n) => l10n.biFinanceInvoiced,
     value: _moneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
-        l10n?.biFinanceInvoicedBasis(
+        l10n.biFinanceInvoicedBasis(
               '${k.invoices}',
               _moneyCell(k.creditNotesMinor, locale, k.currency),
-            ) ??
-            'From ${k.invoices} invoices; credit notes '
-                '${_moneyCell(k.creditNotesMinor, locale, k.currency)}, shown '
-                'apart',
+            ),
       null => '',
     },
     notes: (m, l10n, locale) => _financeNotes(m, l10n, true),
     details: (m, l10n, locale) => _financeDetails(m, l10n, locale, true),
   ),
   'finance.collected': BiModuleView(
-    title: (l10n) => l10n?.biFinanceCollected ?? 'Collected',
+    title: (l10n) => l10n.biFinanceCollected,
     value: _moneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
-        l10n?.biFinanceCollectedBasis('${k.matches}') ??
-            'From ${k.matches} payments matched to invoices',
+        l10n.biFinanceCollectedBasis('${k.matches}'),
       null => '',
     },
     notes: (m, l10n, locale) => _financeNotes(m, l10n, false),
@@ -189,7 +171,7 @@ final biModuleViews = <String, BiModuleView>{
 /// "+150,00 € (+12.5 %)"; "—" when it is undefined.
 String biChangeLabel(
   BiChange c,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String locale, {
   String Function(num value)? format,
 }) {
@@ -204,7 +186,7 @@ String biChangeLabel(
   );
   if (c.points case final p?) {
     final s = '${sign(p)}${one.format(p)}';
-    return l10n?.biChangePoints(s) ?? '$s pp';
+    return l10n.biChangePoints(s);
   }
   final relative = c.relative == null
       ? null
@@ -227,7 +209,7 @@ class BiModuleSection extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final view = biModuleViews[module.id];
     if (workspace == null || view == null) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final unsupported = module.unsupported(query);
     final provider = biModuleResultProvider(workspace.id, module.id, query);
@@ -246,7 +228,7 @@ class BiModuleSection extends ConsumerWidget {
               if (unsupported.isEmpty)
                 IconButton(
                   key: const ValueKey('bi-refresh'),
-                  tooltip: l10n?.biRefresh ?? 'Refresh data',
+                  tooltip: l10n.biRefresh,
                   onPressed: result is AsyncLoading ? null : () => ref.invalidate(provider),
                   icon: const Icon(Icons.refresh),
                 ),
@@ -263,22 +245,20 @@ class BiModuleSection extends ConsumerWidget {
                 BiRefused(:final reasons, :final groupBudgetExceeded) =>
                   _refusal(l10n, reasons, groupBudgetExceeded),
                 KpiForbidden() => Text(
-                  l10n?.biForbidden ??
-                      'You may not read this analysis in this workspace.',
+                  l10n.biForbidden,
                   key: const ValueKey('bi-forbidden'),
                 ),
                 _ => Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      l10n?.biUnavailable ??
-                          'This analysis could not be computed.',
+                      l10n.biUnavailable,
                       key: const ValueKey('bi-unavailable'),
                     ),
                     TextButton(
                       key: const ValueKey('bi-retry'),
                       onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n?.capacityKpiRetry ?? 'Try again'),
+                      child: Text(l10n.capacityKpiRetry),
                     ),
                   ],
                 ),
@@ -292,22 +272,19 @@ class BiModuleSection extends ConsumerWidget {
   }
 
   Widget _refusal(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Set<BiUnsupported> reasons,
     bool budget,
   ) => Text(
     [
       if (reasons.contains(BiUnsupported.grain))
-        l10n?.biRefusedGrain ??
-            'This analysis is not offered for that period length.',
+        l10n.biRefusedGrain,
       if (reasons.contains(BiUnsupported.comparison))
-        l10n?.biRefusedComparison ??
-            'This analysis cannot make that comparison.',
+        l10n.biRefusedComparison,
       if (reasons.contains(BiUnsupported.grouping))
-        l10n?.biRefusedGrouping ?? 'This analysis cannot be grouped that way.',
+        l10n.biRefusedGrouping,
       if (budget)
-        l10n?.biRefusedBudget('$biGroupBudget') ??
-            'There are more than $biGroupBudget groups; choose no grouping.',
+        l10n.biRefusedBudget('$biGroupBudget'),
     ].join(' '),
     key: const ValueKey('bi-refused'),
   );
@@ -328,7 +305,7 @@ class _Result extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
     final agg = module.aggregation;
@@ -347,21 +324,15 @@ class _Result extends ConsumerWidget {
     final notes = <String>[
       ...view.notes(total.current, l10n, locale),
       if (compared != null && compared.quality.contains(KpiQuality.notRecorded))
-        l10n?.biComparedNotRecorded(comparedLabel, since(compared)) ??
-            '$comparedLabel was not recorded (history begins ${since(compared)}); '
-                'there is no comparison.'
+        l10n.biComparedNotRecorded(comparedLabel, since(compared))
       else if (compared != null &&
           compared.quality.contains(KpiQuality.partial))
-        l10n?.biComparedPartial(comparedLabel) ??
-            '$comparedLabel is only partly recorded.',
+        l10n.biComparedPartial(comparedLabel),
       if (compared != null && [...total.current.quality, ...compared.quality]
           .any((q) => q == KpiQuality.partial || q == KpiQuality.stale))
-        l10n?.biComparisonUnqualified ??
-            'Change unavailable: one period has partial or out-of-date data.',
+        l10n.biComparisonUnqualified,
       if (exposureDiffers(total))
-        l10n?.biExposureDiffers ??
-            'The two periods do not offer the same base; the ratio accounts '
-                'for it, the hours do not compare directly.',
+        l10n.biExposureDiffers,
     ];
     final drill = module.drill;
     final mayDrill =
@@ -388,7 +359,7 @@ class _Result extends ConsumerWidget {
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
           Text(
-            l10n?.biComparedLine(
+            l10n.biComparedLine(
                   comparedLabel,
                   view.value(compared.value(agg), locale, result.currency),
                   biChangeLabel(
@@ -397,9 +368,7 @@ class _Result extends ConsumerWidget {
                     locale,
                     format: amount,
                   ),
-                ) ??
-                '$comparedLabel: ${view.value(compared.value(agg), locale, result.currency)} '
-                    '(${biChangeLabel(changeOf(total, agg), l10n, locale, format: amount)})',
+                ),
             key: const ValueKey('bi-compared'),
           ),
         ],
@@ -425,7 +394,7 @@ class _Result extends ConsumerWidget {
         ExpansionTile(
           key: const ValueKey('bi-explain'),
           tilePadding: EdgeInsets.zero,
-          title: Text(l10n?.capacityKpiExplain ?? 'How is this computed?'),
+          title: Text(l10n.capacityKpiExplain),
           children: [
             for (final line in view.details(total.current, l10n, locale))
               Align(
@@ -441,13 +410,11 @@ class _Result extends ConsumerWidget {
           if (mayDrill) TextButton.icon(
                   key: const ValueKey('bi-drill'),
                   icon: const Icon(Icons.open_in_new),
-                  label: Text(l10n?.biOpenSource ?? 'Open the source'),
+                  label: Text(l10n.biOpenSource),
                   // push: Back returns to this page and its address.
                   onPressed: () => context.push(drill.route),
                 ) else Text(
-                  l10n?.biSourceRestricted ??
-                      'The source records are shown only to those who '
-                          'manage them.',
+                  l10n.biSourceRestricted,
                   key: const ValueKey('bi-drill-restricted'),
                   style: small,
                 ),

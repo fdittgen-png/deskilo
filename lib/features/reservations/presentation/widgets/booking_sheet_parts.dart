@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// #2016 — Reserve (the default) or Check in now in the booking sheet: an
 /// explicit choice, never inferred from how the sheet was opened.
@@ -21,7 +21,7 @@ class BookingModeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return SegmentedButton<bool>(
       key: const ValueKey('booking-mode'),
       showSelectedIcon: false,
@@ -33,7 +33,7 @@ class BookingModeSelector extends StatelessWidget {
             lexiconText(
               context,
               key: 'planReserveButton',
-              fallback: l10n?.planReserveButton ?? 'Reserve',
+              fallback: l10n.planReserveButton,
             ),
           ),
         ),
@@ -41,7 +41,7 @@ class BookingModeSelector extends StatelessWidget {
           value: true,
           label: Text(
             key: const ValueKey('booking-mode-check-in'),
-            l10n?.bookingModeCheckInNow ?? 'Check in now',
+            l10n.bookingModeCheckInNow,
           ),
         ),
       ],
@@ -60,8 +60,7 @@ class BookingOverlapNotice extends StatelessWidget {
     padding: const EdgeInsets.only(top: 8),
     child: Text(
       key: const ValueKey('booking-overlap'),
-      AppLocalizations.of(context)?.bookingOverlapsAnother ??
-          'The seat is already booked during part of this time.',
+      context.l10n.bookingOverlapsAnother,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
         color: Theme.of(context).colorScheme.error,
       ),

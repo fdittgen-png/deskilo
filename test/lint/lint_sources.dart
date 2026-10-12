@@ -80,3 +80,19 @@ int lineCountOf(File file) {
   if (bytes.last != 0x0A) count++;
   return count;
 }
+
+/// #2386 — true for a `part of` file: its text belongs to its library,
+/// which [readLibrary] reads whole.
+bool isPartFile(File file) =>
+    RegExp(r'^part of ', multiLine: true).hasMatch(headOf(file, bytes: 4096));
+
+/// [file]'s text with the text of every part it names appended (#2386): a
+/// screen split across part files is still one screen to a lint.
+String readLibrary(File file) {
+  final text = file.readAsStringSync();
+  final parts = RegExp(r"^part '([^']+)';", multiLine: true).allMatches(text);
+  return [
+    text,
+    for (final m in parts) File('${file.parent.path}/${m.group(1)}').readAsStringSync(),
+  ].join('\n');
+}

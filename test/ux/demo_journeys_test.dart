@@ -18,6 +18,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
@@ -76,7 +77,7 @@ Future<void> becomePersona(WidgetTester tester, DemoPersona persona) async {
     }
     await tester.tap(find.byKey(DemoControls.viewAsKey));
     await tester.pumpAndSettle();
-    if (find.text(DemoControls.personaLabel(null, persona))
+    if (find.text(DemoControls.personaLabel(englishL10n, persona))
         .evaluate()
         .isNotEmpty) {
       return;

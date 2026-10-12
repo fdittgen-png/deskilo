@@ -14,10 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/recording_edit.dart';
 import '../../domain/stored_recording.dart';
 import '../../domain/task_recording.dart';
@@ -68,7 +68,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
       context,
       ref,
       bytes: recordingExportBytes(
-        AppLocalizations.of(context),
+        context.l10n,
         export,
         package: package,
       ),
@@ -80,9 +80,9 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
   /// #1866 — the same edited copy as a Word document; the saver's
   /// answer is reported as it is, and a refusal saves nothing.
   Future<void> _saveWord() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final export = _export;
-    if (export == null || l10n == null) return;
+    if (export == null) return;
     final result = await ref.read(taskDocxExporterProvider).save(export, l10n);
     if (!mounted) return;
     switch (result) {
@@ -100,14 +100,12 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
   }
 
   Future<void> _delete() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         content: Text(
-          l10n?.taskRecorderDeleteConfirm ??
-              'Delete this recording from this device? Files you exported are '
-                  'not affected, and nothing in the workspace changes.',
+          l10n.taskRecorderDeleteConfirm,
         ),
         actions: [
           TextButton(
@@ -118,7 +116,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
           FilledButton(
             key: const ValueKey('task-recording-delete-confirm'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.taskRecorderDelete ?? 'Delete from this device'),
+            child: Text(l10n.taskRecorderDelete),
           ),
         ],
       ),
@@ -139,18 +137,18 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final source = _source;
     final export = _export;
     final title =
-        source?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
+        source?.title ?? (l10n.taskRecorderUntitled);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
         actions: [
           IconButton(
             key: const ValueKey('task-recording-delete'),
-            tooltip: l10n?.taskRecorderDelete ?? 'Delete from this device',
+            tooltip: l10n.taskRecorderDelete,
             icon: const Icon(Icons.delete_outline),
             onPressed: _delete,
           ),
@@ -160,8 +158,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
           ? Padding(
               padding: AppSpacing.gutterAll,
               child: Text(
-                l10n?.taskRecorderUnreadable ??
-                    'This recording cannot be read. You can delete it.',
+                l10n.taskRecorderUnreadable,
               ),
             )
           : ListView(
@@ -183,8 +180,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   key: const ValueKey('task-recording-preview'),
                   tilePadding: EdgeInsets.zero,
                   title: Text(
-                    l10n?.taskRecorderExportPreview ??
-                        'What the file will contain',
+                    l10n.taskRecorderExportPreview,
                   ),
                   children: [
                     SelectableText(
@@ -200,7 +196,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   key: const ValueKey('task-recording-export'),
                   onPressed: _save,
                   icon: const Icon(Icons.download),
-                  label: Text(l10n?.taskRecorderExport ?? 'Export a file'),
+                  label: Text(l10n.taskRecorderExport),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton.icon(
@@ -208,7 +204,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   onPressed: () => _save(package: true),
                   icon: const Icon(Icons.inventory_2_outlined),
                   label: Text(
-                    l10n?.taskRecorderExportPackage ?? 'Export a task package',
+                    l10n.taskRecorderExportPackage,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -217,7 +213,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
                   onPressed: _saveWord,
                   icon: const Icon(Icons.description_outlined),
                   label: Text(
-                    l10n?.taskExportWordButton ?? 'Export as Word document',
+                    l10n.taskExportWordButton,
                   ),
                 ),
               ],

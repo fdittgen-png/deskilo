@@ -145,7 +145,7 @@ TaskAttempt? recordTaskAttempt(
 /// error. The value or the error goes back to the caller unchanged, so
 /// a guarded caller (runGuarded's snack, its bool) behaves as before;
 /// with no recording, [command] simply runs.
-Future<T> observeTaskCommand<T>(
+Future<T> _observeTaskCommand<T>(
   TaskAttempt? attempt,
   Future<T> Function() command, {
   required String done,
@@ -175,7 +175,7 @@ Future<T> observeTaskCommand<T>(
 Future<T> observeTaskSetting<T>(
   TaskAttempt? attempt,
   Future<T> Function() command,
-) => observeTaskCommand(
+) => _observeTaskCommand(
   attempt,
   command,
   done: RecorderOutcomes.settingSaved,

@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../l10n/app_localizations.dart';
+import '../../../core/l10n/context_l10n.dart';
 
 class AccountPortalEntry extends StatelessWidget {
   const AccountPortalEntry({super.key});
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     return PopupMenuButton<String>(
       key: const ValueKey('account-portal-entry-portal-discover'),
-      tooltip: l?.portalDiscover ?? 'Find a workspace',
+      tooltip: l.portalDiscover,
       icon: const Icon(Icons.public),
       // #1823 — Me is the account's home: gone to, not stacked.
       onSelected: (path) =>
@@ -20,23 +20,23 @@ class AccountPortalEntry extends StatelessWidget {
         PopupMenuItem(
           key: const ValueKey('portal-open-me'),
           value: '/me',
-          child: Text(l?.portalOpenMe ?? 'Me: my account and my spaces'),
+          child: Text(l.portalOpenMe),
         ),
         PopupMenuItem(
           value: '/discover',
-          child: Text(l?.portalDiscover ?? 'Find a workspace'),
+          child: Text(l.portalDiscover),
         ),
         PopupMenuItem(
           value: '/account-messages',
-          child: Text(l?.portalMessenger ?? 'Account messenger'),
+          child: Text(l.portalMessenger),
         ),
         PopupMenuItem(
           value: '/connections',
-          child: Text(l?.portalConnections ?? 'Connected servers'),
+          child: Text(l.portalConnections),
         ),
         PopupMenuItem(
           value: '/account-activity',
-          child: Text(l?.accountActivityTitle ?? 'My consumption and payments'),
+          child: Text(l.accountActivityTitle),
         ),
       ],
     );

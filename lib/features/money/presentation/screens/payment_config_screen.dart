@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -50,8 +51,7 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
       context,
       domain: 'payments',
       message: 'payment config load failed',
-      errorText: AppLocalizations.of(context)?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: context.l10n.workspaceGenericError,
       action: () async {
         status = await ref
             .read(moneyRepositoryProvider)
@@ -65,11 +65,11 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final status = _status;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.payConfigTitle ?? 'Online payments'),
+        title: Text(l10n.payConfigTitle),
       ),
       body: status == null
           ? const LoadingView()
@@ -77,11 +77,7 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
-                  l10n?.payConfigIntro ??
-                      'Enter each payment provider you want to offer. '
-                          'Keys are stored securely on the server and never '
-                          'shown again. See '
-                          'docs/design/payments-integration.md.',
+                  l10n.payConfigIntro,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -145,21 +141,21 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
     super.dispose();
   }
 
-  String _fieldLabel(AppLocalizations? l10n, String key) => switch (key) {
-        'client_id' => l10n?.payFieldClientId ?? 'Client ID',
-        'secret' => l10n?.payFieldSecret ?? 'Secret',
-        'env' => l10n?.payFieldEnv ?? 'Environment',
-        'webhook_id' => l10n?.payFieldWebhookId ?? 'Webhook ID',
-        'return_url' => l10n?.payFieldReturnUrl ?? 'Return URL',
-        'secret_key' => l10n?.payFieldSecretKey ?? 'Secret key',
+  String _fieldLabel(AppLocalizations l10n, String key) => switch (key) {
+        'client_id' => l10n.payFieldClientId,
+        'secret' => l10n.payFieldSecret,
+        'env' => l10n.payFieldEnv,
+        'webhook_id' => l10n.payFieldWebhookId,
+        'return_url' => l10n.payFieldReturnUrl,
+        'secret_key' => l10n.payFieldSecretKey,
         'webhook_secret' =>
-          l10n?.payFieldWebhookSecret ?? 'Webhook signing secret',
-        'api_key' => l10n?.payFieldApiKey ?? 'API key',
+          l10n.payFieldWebhookSecret,
+        'api_key' => l10n.payFieldApiKey,
         _ => key,
       };
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final config = {
@@ -171,8 +167,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       context,
       domain: 'payments',
       message: 'payment config save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(moneyRepositoryProvider).setPaymentCredentials(
             workspace.id,
             widget.provider,
@@ -182,7 +177,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       return;
     }
     if (!mounted) return;
-    AppSnack.success(context, l10n?.payConfigSaved ?? 'Saved.');
+    AppSnack.success(context, l10n.payConfigSaved);
     // Clear the secret fields again (never re-shown) and reload the status.
     for (final field in paymentProviderFields[widget.provider]!) {
       if (field.secret) _controllers[field.key]!.clear();
@@ -191,15 +186,14 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
   }
 
   Future<void> _remove() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     if (!await runGuarded(
       context,
       domain: 'payments',
       message: 'payment config clear failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(moneyRepositoryProvider)
           .clearPaymentProvider(workspace.id, widget.provider),
@@ -207,13 +201,13 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       return;
     }
     if (!mounted) return;
-    AppSnack.success(context, l10n?.payConfigRemoved ?? 'Removed.');
+    AppSnack.success(context, l10n.payConfigRemoved);
     await widget.onChanged();
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Card(
       child: Padding(
@@ -230,14 +224,14 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                   ),
                 ),
                 HelpDot(
-                  l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
+                  l10n.helpHintMoneyPaymentsTip3Topic,
                   anchor: HelpAnchor.paymentsProvider,
                 ),
                 Chip(
                   label: Text(
                     widget.status.configured
-                        ? (l10n?.payConfigConfigured ?? 'Configured')
-                        : (l10n?.payConfigNotConfigured ?? 'Not configured'),
+                        ? (l10n.payConfigConfigured)
+                        : (l10n.payConfigNotConfigured),
                     // The tinted chip must carry the container's
                     // on-color (contrast, field report — the container
                     // stays light in the dark theme).
@@ -288,8 +282,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                           helperText: field.secret &&
                                   widget.status.secretKeysSet
                                       .contains(field.key)
-                              ? (l10n?.payConfigSecretSet ??
-                                  'Set — leave blank to keep')
+                              ? (l10n.payConfigSecretSet)
                               : null,
                         ),
                       ),
@@ -301,7 +294,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                   TextButton(
                     key: const ValueKey('payment-config-pay-config-remove'),
                     onPressed: _remove,
-                    child: Text(l10n?.payConfigRemove ?? 'Remove'),
+                    child: Text(l10n.payConfigRemove),
                   ),
                 const Spacer(),
                 FilledButton(
@@ -309,7 +302,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                     'pay-save-${widget.provider.wireName}',
                   ),
                   onPressed: _save,
-                  child: Text(l10n?.commonSave ?? 'Save'),
+                  child: Text(l10n.commonSave),
                 ),
               ],
             ),

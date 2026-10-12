@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/files/file_names.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
@@ -58,7 +58,7 @@ Future<void> exportAccountingFile(
   List<Invoice> invoices, {
   required String label,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final words = reportStringsOf(l10n);
   final association = ref.read(sellerIsAssociationProvider);
   final workspace = ref.read(currentWorkspaceProvider).value;
@@ -66,8 +66,7 @@ Future<void> exportAccountingFile(
   if (invoices.isEmpty) {
     AppSnack.info(
       context,
-      l10n?.invoiceAccountingExportEmpty ??
-          'Nothing to export for this period.',
+      l10n.invoiceAccountingExportEmpty,
     );
     return;
   }
@@ -93,9 +92,7 @@ Future<void> exportAccountingFile(
       company.legalId.replaceAll(RegExp('[^0-9]'), '').isEmpty) {
     AppSnack.error(
       context,
-      l10n?.fecMissingSiren ??
-          'This export is named after your registration number — fill it '
-              'in under Legal identity first.',
+      l10n.fecMissingSiren,
     );
     return;
   }
@@ -124,9 +121,7 @@ Future<void> exportAccountingFile(
   if (development) {
     AppSnack.info(
       context,
-      l10n?.accountingExportDevelopment ??
-          'Development workspace: the file is marked DEV and is not the '
-              'real books.',
+      l10n.accountingExportDevelopment,
     );
   }
   final year = invoices
@@ -157,8 +152,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'FEC export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => save(
           buildFecFile(
             invoices: exported,
@@ -167,14 +161,14 @@ Future<void> exportAccountingFile(
             accounts: accounts,
             lineText: (line) => invoiceLineText(words, line,
                 association: association),
-            customersLabel: l10n?.fecAccountCustomers ?? 'Clients',
-            revenueLabel: l10n?.fecAccountRevenue ?? 'Ventes',
-            bankLabel: l10n?.fecAccountBank ?? 'Banque',
-            vatLabel: l10n?.fecAccountVat ?? 'TVA collectée',
+            customersLabel: l10n.fecAccountCustomers,
+            revenueLabel: l10n.fecAccountRevenue,
+            bankLabel: l10n.fecAccountBank,
+            vatLabel: l10n.fecAccountVat,
             ledger: ledger,
             memberNames: memberNames,
             repartitions: repartitions,
-            expensesLabel: l10n?.fecAccountExpenses ?? 'Achats et charges',
+            expensesLabel: l10n.fecAccountExpenses,
             taxPoints: taxPoints,
             vatPendingLabel: vatWords(l10n).fecAccountVatPending,
           ),
@@ -194,8 +188,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'DATEV export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => save(
           buildDatevFile(
             invoices: exported,
@@ -224,8 +217,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'Sage export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => save(
           buildSageFile(
             invoices: exported,
@@ -281,8 +273,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'accounting export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => save(
           buildSafTFile(
             invoices: exported,
@@ -293,7 +284,7 @@ Future<void> exportAccountingFile(
             createdAt: now,
             lineText: (line) => invoiceLineText(words, line,
                 association: association),
-            fallbackDescription: l10n?.invoicesTitle ?? 'Invoice',
+            fallbackDescription: l10n.invoicesTitle,
             profile:
                 portugal ? SafTProfile.portugal : SafTProfile.generic,
             ledgerAccounts: ledger,
@@ -307,8 +298,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'accountant CSV export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () async {
           // #1640 — the file and its report are built first, shown, and
           // saved only on an explicit Save with nothing blocking.
@@ -343,9 +333,7 @@ Future<void> exportAccountingFile(
                   accountantSourceDigest(exported, matches)) {
             AppSnack.error(
               context,
-              l10n?.handoffChanged ??
-                  'The invoices changed while you were reviewing. Export '
-                      'again to see the current books.',
+              l10n.handoffChanged,
             );
             return;
           }
@@ -371,8 +359,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'archive bundle failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () async {
           final yearInvoices = [
             for (final i in exported)
@@ -439,8 +426,7 @@ Future<void> exportAccountingFile(
         context,
         domain: 'money',
         message: 'audit trail export failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () async {
           // The ledger is fetched HERE rather than read from a cached
           // provider: a trail assembled from a stale cache would be

@@ -25,11 +25,11 @@ import 'settings_task_section.dart';
 List<Widget> advancedSettingsTiles(
     BuildContext context,
     WidgetRef ref, {
-    required AppLocalizations? l10n,
+    required AppLocalizations l10n,
     required bool devMode,
   }) =>
       [
-          SettingsTaskSection(id: 'advanced', title: l10n?.settingsSectionAdvanced ?? 'Advanced', initiallyExpanded: false, children: [
+          SettingsTaskSection(id: 'advanced', title: l10n.settingsSectionAdvanced, initiallyExpanded: false, children: [
           // #780 — which Supabase instance this device talks to: the
           // app's own by default, a community's own project if they
           // run one. Device-level, so it sits above the push state.
@@ -44,14 +44,12 @@ List<Widget> advancedSettingsTiles(
             key: const ValueKey('settings-front-camera'),
             secondary: const Icon(Icons.camera_front_outlined),
             title: HelpDotTitle(
-              l10n?.settingsFrontCamera ?? 'Scan with the front camera',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+              l10n.settingsFrontCamera,
+              l10n.helpTopicSettings,
               anchor: HelpAnchor.profileFrontCamera,
             ),
             subtitle: Text(
-              l10n?.settingsFrontCameraDesc ??
-                  'Badges are read with the screen-side camera — turn '
-                      'off to use the back camera.',
+              l10n.settingsFrontCameraDesc,
             ),
             value: ref.watch(frontCameraScanProvider).value ?? true,
             onChanged: (v) =>
@@ -63,10 +61,9 @@ List<Widget> advancedSettingsTiles(
             SwitchListTile(
               key: const ValueKey('settings-advanced-section-developer-mode'),
               secondary: const Icon(Icons.developer_mode_outlined),
-              title: Text(l10n?.developerMode ?? 'Developer mode'),
+              title: Text(l10n.developerMode),
               subtitle: Text(
-                l10n?.developerModeWorkspaceHint ??
-                    'Applies to every member of this workspace.',
+                l10n.developerModeWorkspaceHint,
               ),
               value: devMode,
               onChanged: (v) => setWorkspaceDevMode(ref, v),
@@ -75,7 +72,7 @@ List<Widget> advancedSettingsTiles(
             ListTile(
               key: const ValueKey('settings-advanced-section-developer-title'),
               leading: const Icon(Icons.receipt_long_outlined),
-              title: Text(l10n?.developerTitle ?? 'Developer'),
+              title: Text(l10n.developerTitle),
               onTap: () => context.push('/developer'),
             ),
           ]),

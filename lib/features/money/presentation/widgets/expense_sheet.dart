@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -26,16 +27,16 @@ Future<void> showExpenseSheet(
   WidgetRef ref,
   MoneyFormat currency,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
   const categories = ['coffee', 'supplies', 'equipment', 'other'];
   String categoryLabel(String key) => switch (key) {
-    'coffee' => l10n?.expenseCategoryCoffee ?? 'Coffee & kitchen',
-    'supplies' => l10n?.expenseCategorySupplies ?? 'Supplies',
-    'equipment' => l10n?.expenseCategoryEquipment ?? 'Equipment',
-    _ => l10n?.expenseCategoryOther ?? 'Other',
+    'coffee' => l10n.expenseCategoryCoffee,
+    'supplies' => l10n.expenseCategorySupplies,
+    'equipment' => l10n.expenseCategoryEquipment,
+    _ => l10n.expenseCategoryOther,
   };
 
   // The form's text, created on demand and disposed with the sheet.
@@ -96,14 +97,13 @@ Future<void> showExpenseSheet(
   String? reason(ExpenseOutcome outcome) => switch (outcome) {
     ExpenseOutcome.submitted => null,
     ExpenseOutcome.invalidAmount =>
-      l10n?.expenseInvalidAmount ?? 'Enter an amount above zero.',
+      l10n.expenseInvalidAmount,
     ExpenseOutcome.missingSupplyName =>
-      l10n?.expenseMissingSupplyName ?? 'Name the new item.',
+      l10n.expenseMissingSupplyName,
     ExpenseOutcome.invalidSupplyQuantity =>
-      l10n?.expenseInvalidSupplyQuantity ?? 'Enter at least one unit.',
+      l10n.expenseInvalidSupplyQuantity,
     ExpenseOutcome.invalidUnitPrice =>
-      l10n?.expenseInvalidUnitPrice ??
-          'Enter a valid unit price, or leave it empty.',
+      l10n.expenseInvalidUnitPrice,
     ExpenseOutcome.invalidDeductible =>
       vatWords(l10n).expenseInvalidDeductible,
   };
@@ -117,14 +117,13 @@ Future<void> showExpenseSheet(
     ExpenseOutcome.invalidDeductible => 'deductible',
   };
   final failed =
-      l10n?.workspaceGenericError ??
-      'Something went wrong. Please try again.';
+      l10n.workspaceGenericError;
 
   final submitted = await showAppFormSheet(
     context,
     AppFormSheet(
-      title: l10n?.moneySubmitExpense ?? 'Submit an expense',
-      submitLabel: l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+      title: l10n.moneySubmitExpense,
+      submitLabel: l10n.moneySubmitPayment,
       submitKey: const ValueKey('expense-submit'),
       errorKey: const ValueKey('expense-problem'),
       onDispose: fields.dispose,
@@ -153,7 +152,7 @@ Future<void> showExpenseSheet(
         AppTextField(
           controller: fields['amount'],
           fieldKey: 'amount',
-          label: l10n?.moneyAmountLabel ?? 'Amount',
+          label: l10n.moneyAmountLabel,
           suffixText: currency.currencyName,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           autofocus: true,
@@ -163,7 +162,7 @@ Future<void> showExpenseSheet(
           key: const ValueKey('expense-sheet-money-expense-category-label'),
           initialValue: category,
           decoration: InputDecoration(
-            labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',
+            labelText: l10n.moneyExpenseCategoryLabel,
           ),
           items: [
             for (final key in categories)
@@ -177,7 +176,7 @@ Future<void> showExpenseSheet(
         const FormGap(),
         AppTextField(
           controller: fields['description'],
-          label: l10n?.moneyDescriptionLabel ?? 'Description',
+          label: l10n.moneyDescriptionLabel,
         ),
         if (vatPercents.isNotEmpty) ...[
           const FormGap(),
@@ -228,13 +227,10 @@ Future<void> showExpenseSheet(
             key: const ValueKey('expense-supply-toggle'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              l10n?.expenseSupplyToggle ?? 'This is a supply for the space',
+              l10n.expenseSupplyToggle,
             ),
             subtitle: Text(
-              l10n?.expenseSupplyHint ??
-                  'Coffee capsules, vacuum bags… Once validated, the '
-                      'item goes on the shelf as a consumable service: '
-                      'members who use it pay for it.',
+              l10n.expenseSupplyHint,
             ),
             value: isSupply,
             onChanged: (v) {
@@ -248,11 +244,11 @@ Future<void> showExpenseSheet(
               key: const ValueKey('expense-supply-item'),
               initialValue: supplyItem,
               decoration: InputDecoration(
-                labelText: l10n?.expenseSupplyItem ?? 'Item',
+                labelText: l10n.expenseSupplyItem,
               ),
               items: [
                 DropdownMenuItem<ServiceItem?>(
-                  child: Text(l10n?.expenseSupplyNewItem ?? 'New item'),
+                  child: Text(l10n.expenseSupplyNewItem),
                 ),
                 for (final item in existing)
                   DropdownMenuItem<ServiceItem?>(
@@ -271,7 +267,7 @@ Future<void> showExpenseSheet(
                 key: const ValueKey('expense-supply-name'),
                 controller: fields['supplyName'],
                 fieldKey: 'supplyName',
-                label: l10n?.expenseSupplyNewItem ?? 'New item',
+                label: l10n.expenseSupplyNewItem,
               ),
             ],
             const FormGap(),
@@ -283,7 +279,7 @@ Future<void> showExpenseSheet(
                     controller: fields['supplyQuantity'],
                     fieldKey: 'supplyQuantity',
                     keyboardType: TextInputType.number,
-                    label: l10n?.expenseSupplyQuantity ?? 'Quantity',
+                    label: l10n.expenseSupplyQuantity,
                     onChanged: (_) {
                       prefillUnit();
                       refresh();
@@ -300,13 +296,10 @@ Future<void> showExpenseSheet(
                       decimal: true,
                     ),
                     label:
-                        l10n?.expenseSupplyUnitPrice ??
-                        'Unit price (what a consumption costs)',
+                        l10n.expenseSupplyUnitPrice,
                     suffixText: currency.currencyName,
                     helper:
-                        l10n?.expenseSupplyUnitPriceHint ??
-                        'Prefilled from amount ÷ quantity; round up '
-                            'if you like.',
+                        l10n.expenseSupplyUnitPriceHint,
                   ),
                 ),
               ],
@@ -319,19 +312,19 @@ Future<void> showExpenseSheet(
   if (!submitted || !context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.moneyExpensePending ?? 'Expense submitted — waiting for approval.',
+    l10n.moneyExpensePending,
   );
   ref.invalidate(eventsProvider);
 }
 
 /// « 20 % », in the reader's number format.
-String _percentLabel(AppLocalizations? l10n, double percent) =>
-    '${NumberFormat.decimalPattern(l10n?.localeName).format(percent)} %';
+String _percentLabel(AppLocalizations l10n, double percent) =>
+    '${NumberFormat.decimalPattern(l10n.localeName).format(percent)} %';
 
 /// #2357 — the hint, and once amount and share are typed, the deductible
 /// VAT they make (`vatInputSplit`, the server's rounding).
 String _deductibleHelper(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   MoneyFormat currency,
   String amount,
   double percent,

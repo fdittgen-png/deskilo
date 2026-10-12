@@ -14,13 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/demo/presentation/demo_workspace.dart';
+import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/status_colors.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
-import '../../l10n/app_localizations_en.dart';
 
 /// Keeps the active workspace's environment visible. Demo has its own
 /// persistent strip; Me and the unloaded state have no workspace context.
@@ -53,7 +52,7 @@ class _DevelopmentStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #917 — orange, the same orange the workspace switcher paints on a
     // development space, so the two agree at a glance.
     final ink = development ? AppEnvironmentColors.developmentOf(
@@ -77,8 +76,8 @@ class _DevelopmentStrip extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
-                  development ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint
-                      : '${(l10n ?? AppLocalizationsEn()).uxRealWorkspace} · ${(l10n ?? AppLocalizationsEn()).uxRealSpaceHint}',
+                  development ? l10n.uxTestSpaceHint
+                      : '${l10n.uxRealWorkspace} · ${l10n.uxRealSpaceHint}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

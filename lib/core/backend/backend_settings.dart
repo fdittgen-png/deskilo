@@ -515,83 +515,58 @@ BackendProbeReport classifyProbeError(PostgrestException e) {
 }
 
 /// What a connection test found, as the one sentence the Server screen shows.
-String backendProbeText(AppLocalizations? l10n, BackendProbeResult result) =>
+String backendProbeText(AppLocalizations l10n, BackendProbeResult result) =>
     switch (result) {
       BackendProbeResult.ok =>
-        l10n?.backendTestOk ?? 'Reached it — the app\'s schema is there.',
-      BackendProbeResult.unreachable => l10n?.backendTestUnreachable ??
-          'Could not reach that address. Check the URL and your network.',
-      BackendProbeResult.badKey => l10n?.backendTestBadKey ??
-          'Reached it, but the key was refused. Copy the publishable key '
-              'again from Project Settings → API keys.',
-      BackendProbeResult.schemaMissing => l10n?.backendTestSchemaMissing ??
-          'Reached it, but the DesKilo tables are missing — run the '
-              'migrations from supabase/migrations on that project first.',
-      BackendProbeResult.behind => l10n?.backendTestBehind ??
-          'Reached it, but its DesKilo schema is older than this app needs. '
-              'Update the server before using it.',
-      BackendProbeResult.ahead => l10n?.backendTestAhead ??
-          'Reached it. Its schema is newer than this app — it works, and a '
-              'newer app is available.',
-      BackendProbeResult.attention => l10n?.backendTestAttention ??
-          'Reached it, but the answer could not be classified. Check the '
-              'server before using it.',
+        l10n.backendTestOk,
+      BackendProbeResult.unreachable => l10n.backendTestUnreachable,
+      BackendProbeResult.badKey => l10n.backendTestBadKey,
+      BackendProbeResult.schemaMissing => l10n.backendTestSchemaMissing,
+      BackendProbeResult.behind => l10n.backendTestBehind,
+      BackendProbeResult.ahead => l10n.backendTestAhead,
+      BackendProbeResult.attention => l10n.backendTestAttention,
     };
 
 /// #1651 — the facets, as one short line under the sentence.
-String backendProbeFacetsText(AppLocalizations? l10n, BackendProbeReport r) {
+String backendProbeFacetsText(AppLocalizations l10n, BackendProbeReport r) {
   String facet(ProbeFacet f) => switch (f) {
-        ProbeFacet.yes => l10n?.backendFacetYes ?? 'yes',
-        ProbeFacet.no => l10n?.backendFacetNo ?? 'no',
-        ProbeFacet.unknown => l10n?.backendFacetUnknown ?? 'unknown',
+        ProbeFacet.yes => l10n.backendFacetYes,
+        ProbeFacet.no => l10n.backendFacetNo,
+        ProbeFacet.unknown => l10n.backendFacetUnknown,
       };
   final version = switch (r.compatibility) {
-    SchemaCompatibility.current => l10n?.backendVersionShortCurrent ?? 'current',
-    SchemaCompatibility.behind => l10n?.backendVersionShortBehind ?? 'older',
-    SchemaCompatibility.ahead => l10n?.backendVersionShortAhead ?? 'newer',
+    SchemaCompatibility.current => l10n.backendVersionShortCurrent,
+    SchemaCompatibility.behind => l10n.backendVersionShortBehind,
+    SchemaCompatibility.ahead => l10n.backendVersionShortAhead,
     SchemaCompatibility.unknown || null =>
-      l10n?.backendFacetUnknown ?? 'unknown',
+      l10n.backendFacetUnknown,
   };
-  return l10n?.backendFacets(
+  return l10n.backendFacets(
         facet(r.reachable),
         facet(r.keyAccepted),
         facet(r.schemaRecognised),
         version,
-      ) ??
-      'Reached: ${facet(r.reachable)} · Key accepted: ${facet(r.keyAccepted)}'
-          ' · Schema: ${facet(r.schemaRecognised)} · Version: $version';
+      );
 }
 
 /// One sentence per refusal — the UI never says "invalid input", and
 /// never repeats what was pasted.
-String backendErrorText(AppLocalizations? l10n, BackendEndpointError error) =>
+String backendErrorText(AppLocalizations l10n, BackendEndpointError error) =>
     switch (error) {
       BackendEndpointError.urlEmpty =>
-        l10n?.backendErrorUrlEmpty ?? 'Enter the project URL.',
+        l10n.backendErrorUrlEmpty,
       BackendEndpointError.urlNotHttps =>
-        l10n?.backendErrorUrlNotHttps ?? 'The URL must start with https://.',
+        l10n.backendErrorUrlNotHttps,
       BackendEndpointError.urlNoHost =>
-        l10n?.backendErrorUrlNoHost ?? 'That is not a complete address.',
-      BackendEndpointError.urlNotCanonical => l10n?.backendErrorUrlNotCanonical ??
-          'Use only the project\'s address (https://host), without a path, '
-              'a query or credentials.',
+        l10n.backendErrorUrlNoHost,
+      BackendEndpointError.urlNotCanonical => l10n.backendErrorUrlNotCanonical,
       BackendEndpointError.keyEmpty =>
-        l10n?.backendErrorKeyEmpty ?? 'Enter the publishable key.',
-      BackendEndpointError.keyNotSupabase => l10n?.backendErrorKeyNotSupabase ??
-          'That is not a Supabase publishable key (sb_publishable_…).',
-      BackendEndpointError.keySecret => l10n?.backendErrorKeySecret ??
-          'That is a secret key, not a publishable one. Never share it: '
-              'rotate it in Project Settings → API keys, then paste the '
-              'publishable key here.',
+        l10n.backendErrorKeyEmpty,
+      BackendEndpointError.keyNotSupabase => l10n.backendErrorKeyNotSupabase,
+      BackendEndpointError.keySecret => l10n.backendErrorKeySecret,
       BackendEndpointError.keyPersonalToken =>
-        l10n?.backendErrorKeyPersonalToken ??
-            'That is a personal access token. It stays with its owner — '
-                'paste the project\'s publishable key here.',
-      BackendEndpointError.keyUserToken => l10n?.backendErrorKeyUserToken ??
-          'That is a session or identity token, not a project key. Paste '
-              'the project\'s publishable key here.',
+        l10n.backendErrorKeyPersonalToken,
+      BackendEndpointError.keyUserToken => l10n.backendErrorKeyUserToken,
       BackendEndpointError.keyConnectionString =>
-        l10n?.backendErrorKeyConnectionString ??
-            'That is a database connection string. It never leaves the '
-                'server — paste the project\'s publishable key here.',
+        l10n.backendErrorKeyConnectionString,
     };

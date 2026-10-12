@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'visibility_card.dart';
@@ -31,7 +31,7 @@ class LinkedVisibilityCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sources = ref.watch(connectedSourcesProvider).value ?? const [];
     if (sources.isEmpty) return const SizedBox.shrink();
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     return Card(
       key: const ValueKey('me-linked-visibility-card'),
       margin: AppSpacing.gutterAll,
@@ -55,7 +55,7 @@ class LinkedVisibilityCard extends ConsumerWidget {
                   leading: const Icon(Icons.dns_outlined),
                   title: Text(words.visibilityOnServer(host)),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => showModalBottomSheet<void>(
+                  onTap: () => showAppSheet<void>(
                     context: context,
                     isScrollControlled: true,
                     builder: (_) =>
@@ -87,7 +87,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
     VisibilityField field,
     FieldAudience current,
   ) async {
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     final picked = await showDialog<VisibilityAudience>(
       context: context,
       builder: (dialog) => SimpleDialog(
@@ -129,7 +129,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     final read = ref.watch(linkedVisibilityProvider(source));
     return SafeArea(
       child: ListView(

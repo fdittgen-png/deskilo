@@ -13,21 +13,12 @@ bool _auditOn(WidgetRef ref) => ref
     .read(enabledFeaturesSyncProvider)
     .contains(WorkspaceFeature.planObjectDelete);
 
-String deleteElementConfirmText(WidgetRef ref, AppLocalizations? l10n) =>
+String deleteElementConfirmText(WidgetRef ref, AppLocalizations l10n) =>
     _auditOn(ref)
-        ? (l10n?.editorDeleteElementConfirmAudit ??
-            'Delete this element? Anything placed on it is removed too. '
-                'Bookings that reference it keep a text snapshot for '
-                'audits; open bookings are cancelled.')
-        : (l10n?.editorDeleteElementConfirm ??
-            'Delete this element? Anything placed on it is removed too.');
+        ? (l10n.editorDeleteElementConfirmAudit)
+        : (l10n.editorDeleteElementConfirm);
 
-String deleteLevelConfirmText(WidgetRef ref, AppLocalizations? l10n) =>
+String deleteLevelConfirmText(WidgetRef ref, AppLocalizations l10n) =>
     _auditOn(ref)
-        ? (l10n?.editorDeleteLevelConfirmAudit ??
-            'Delete this level? All offices, desks and seats on it are '
-                'removed. Bookings that reference them keep a text '
-                'snapshot for audits; open bookings are cancelled.')
-        : (l10n?.editorDeleteLevelConfirm ??
-            'Delete this level? All offices, desks and seats on it are '
-                'removed.');
+        ? (l10n.editorDeleteLevelConfirmAudit)
+        : (l10n.editorDeleteLevelConfirm);

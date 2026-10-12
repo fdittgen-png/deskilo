@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/mcp_usage.dart';
 import '../../providers/mcp_providers.dart';
 import '../mcp_operation_labels.dart';
@@ -24,7 +24,7 @@ class McpWorkspaceUsageCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final usage = ref.watch(mcpWorkspaceUsageProvider(workspaceId));
     return Card(
       key: const ValueKey('mcp-usage-workspace'),
@@ -35,7 +35,7 @@ class McpWorkspaceUsageCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.mcpUsageWorkspaceTitle ?? 'Assistant use, last 30 days',
+              l10n.mcpUsageWorkspaceTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -43,7 +43,7 @@ class McpWorkspaceUsageCard extends ConsumerWidget {
               loading: () => const LinearProgressIndicator(),
               error: (e, _) => Text(
                 key: const ValueKey('mcp-usage-workspace-unavailable'),
-                l10n?.mcpUsageUnavailable ?? 'Usage could not be loaded.',
+                l10n.mcpUsageUnavailable,
               ),
               data: (u) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,7 +78,7 @@ class McpMyUsageSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final usage = ref.watch(myMcpUsageProvider);
     final format = DateFormat.yMd(
       Localizations.maybeLocaleOf(context)?.toString(),
@@ -88,7 +88,7 @@ class McpMyUsageSection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.mcpUsageMineTitle ?? 'Your assistant use today',
+          l10n.mcpUsageMineTitle,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -96,7 +96,7 @@ class McpMyUsageSection extends ConsumerWidget {
           loading: () => const LinearProgressIndicator(),
           error: (e, _) => Text(
             key: const ValueKey('mcp-usage-mine-unavailable'),
-            l10n?.mcpUsageUnavailable ?? 'Usage could not be loaded.',
+            l10n.mcpUsageUnavailable,
           ),
           data: (clients) => clients.isEmpty
               ? Column(
@@ -104,8 +104,7 @@ class McpMyUsageSection extends ConsumerWidget {
                   children: [
                     Text(
                       key: const ValueKey('mcp-usage-mine-none'),
-                      l10n?.mcpUsageNone ??
-                          'No assistant has used your access yet.',
+                      l10n.mcpUsageNone,
                     ),
                     const McpUsageFigures(counts: McpUsageCounts.zero),
                   ],
@@ -128,10 +127,9 @@ class McpMyUsageSection extends ConsumerWidget {
                               McpUsageFigures(counts: c.today),
                               if (c.lastUsedAt != null)
                                 Text(
-                                  l10n?.mcpUsageLastUsed(
+                                  l10n.mcpUsageLastUsed(
                                         format.format(c.lastUsedAt!.toLocal()),
-                                      ) ??
-                                      'Last used ${format.format(c.lastUsedAt!.toLocal())}',
+                                      ),
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                             ],
@@ -155,7 +153,7 @@ class McpUsageFigures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     Widget figure(String key, int value, String label) => Padding(
       padding: const EdgeInsets.only(
@@ -177,18 +175,18 @@ class McpUsageFigures extends StatelessWidget {
         figure(
           'requests',
           counts.requests,
-          l10n?.mcpUsageRequests ?? 'Requests',
+          l10n.mcpUsageRequests,
         ),
         figure(
           'refusals',
           counts.refusals,
-          l10n?.mcpUsageRefusals ?? 'Refused',
+          l10n.mcpUsageRefusals,
         ),
-        figure('applied', counts.applied, l10n?.mcpUsageApplied ?? 'Applied'),
+        figure('applied', counts.applied, l10n.mcpUsageApplied),
         figure(
           'pending',
           counts.pendingValidation,
-          l10n?.mcpUsagePending ?? 'Awaiting validation',
+          l10n.mcpUsagePending,
         ),
       ],
     );

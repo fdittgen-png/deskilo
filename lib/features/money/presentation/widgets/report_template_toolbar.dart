@@ -6,9 +6,9 @@
 // the editor passes what is selected and is called back.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/report_template_assembly.dart';
 import '../report_defaults.dart';
 import '../report_design_actions.dart';
@@ -36,7 +36,7 @@ class ReportTemplateLanguageChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return EdgeFadeScroll(
       child: Row(
         children: [
@@ -45,7 +45,7 @@ class ReportTemplateLanguageChips extends StatelessWidget {
             child: ChoiceChip(
               key: const ValueKey('invoice-template-lang-default'),
               label: Text(
-                l10n?.reportTemplateLangDefault ?? 'Default (all languages)',
+                l10n.reportTemplateLangDefault,
               ),
               selected: selected.isEmpty,
               onSelected: (_) => onSelect(''),
@@ -67,9 +67,8 @@ class ReportTemplateLanguageChips extends StatelessWidget {
                       )
                     : null,
                 tooltip: overridden(lang)
-                    ? (l10n?.reportTemplateLangOverridden ?? 'Own template')
-                    : (l10n?.reportTemplateLangInherits ??
-                          'Inherits the default'),
+                    ? (l10n.reportTemplateLangOverridden)
+                    : (l10n.reportTemplateLangInherits),
                 label: Text(lang.toUpperCase()),
                 selected: selected == lang,
                 onSelected: (_) => onSelect(lang),
@@ -80,8 +79,7 @@ class ReportTemplateLanguageChips extends StatelessWidget {
               key: const ValueKey('invoice-template-clear-overlay'),
               icon: const Icon(Icons.layers_clear_outlined, size: 18),
               label: Text(
-                l10n?.reportTemplateClearOverlay ??
-                    'Use the default for this language',
+                l10n.reportTemplateClearOverlay,
               ),
               onPressed: onClear,
             ),
@@ -141,7 +139,7 @@ class ReportMarkupBands extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     Widget band(
       TextEditingController controller,
       String label, {
@@ -168,19 +166,18 @@ class ReportMarkupBands extends StatelessWidget {
       children: [
         band(
           header,
-          l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
+          l10n.invoiceTemplateHeaderLabel,
           key: 'invoice-template-header',
         ),
         band(
           body,
-          l10n?.invoiceTemplateBodyLabel ?? 'Body band (the invoice lines)',
+          l10n.invoiceTemplateBodyLabel,
           key: 'invoice-template-body',
           minLines: 5,
         ),
         band(
           footer,
-          l10n?.invoiceTemplateFooterLabel ??
-              'Footer band (payment terms, legal mentions)',
+          l10n.invoiceTemplateFooterLabel,
           key: 'invoice-template-footer',
         ),
       ],
@@ -220,7 +217,7 @@ class ReportTemplateActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Wrap(
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.xs,
@@ -240,7 +237,7 @@ class ReportTemplateActions extends StatelessWidget {
           ],
           child: TextButton.icon(
             icon: const Icon(Icons.auto_awesome_outlined),
-            label: Text(l10n?.invoiceTemplatePresets ?? 'Templates'),
+            label: Text(l10n.invoiceTemplatePresets),
             // The menu opens from the surrounding button.
             onPressed: null,
           ),
@@ -248,13 +245,13 @@ class ReportTemplateActions extends StatelessWidget {
         OutlinedButton.icon(
           key: const ValueKey('invoice-template-image'),
           icon: const Icon(Icons.image_outlined),
-          label: Text(l10n?.reportInsertImage ?? 'Insert image'),
+          label: Text(l10n.reportInsertImage),
           onPressed: busy ? null : onInsertImage,
         ),
         OutlinedButton.icon(
           key: const ValueKey('invoice-template-quick-preview'),
           icon: const Icon(Icons.bolt_outlined),
-          label: Text(l10n?.invoiceTemplateQuickPreview ?? 'Quick preview'),
+          label: Text(l10n.invoiceTemplateQuickPreview),
           onPressed: busy ? null : onQuickPreview,
         ),
         PopupMenuButton<bool>(
@@ -265,17 +262,17 @@ class ReportTemplateActions extends StatelessWidget {
             PopupMenuItem(
               key: const ValueKey('invoice-template-download'),
               value: true,
-              child: Text(l10n?.invoiceTemplateDownload ?? 'Download PDF'),
+              child: Text(l10n.invoiceTemplateDownload),
             ),
             PopupMenuItem(
               key: const ValueKey('invoice-template-share'),
               value: false,
-              child: Text(l10n?.invoiceTemplateShare ?? 'Share PDF'),
+              child: Text(l10n.invoiceTemplateShare),
             ),
           ],
           child: OutlinedButton.icon(
             icon: const Icon(Icons.picture_as_pdf_outlined),
-            label: Text(l10n?.invoiceTemplatePreview ?? 'Preview'),
+            label: Text(l10n.invoiceTemplatePreview),
             onPressed: null,
           ),
         ),
@@ -290,14 +287,14 @@ class ReportTemplateActions extends StatelessWidget {
         TextButton.icon(
           key: const ValueKey('invoice-template-reset'),
           icon: const Icon(Icons.restart_alt),
-          label: Text(l10n?.invoiceTemplateReset ?? 'Reset to default'),
+          label: Text(l10n.invoiceTemplateReset),
           onPressed: busy ? null : onReset,
         ),
         if (showSave)
           FilledButton(
             key: const ValueKey('invoice-template-save'),
             onPressed: busy ? null : onSave,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
       ],
     );

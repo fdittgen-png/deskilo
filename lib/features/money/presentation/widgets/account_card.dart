@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/member_account.dart';
 
 /// #512 — the member's REAL position, above the per-month bill: months
@@ -25,7 +24,7 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final currency = moneyFormat(currencyCode);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
@@ -64,27 +63,27 @@ class AccountCard extends StatelessWidget {
       );
     }
 
-    final labels = l10n ?? AppLocalizationsEn();
+    final labels = l10n;
     final detail = Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.accountCardTitle ?? 'Your account',
+              l10n.accountCardTitle,
               style: theme.textTheme.titleSmall
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             if (account.creditCents != 0)
               row(
-                l10n?.accountCredit ?? 'Credit on account',
+                l10n.accountCredit,
                 '+${currency.formatMinor(account.creditCents)}',
                 color: scheme.primary,
               ),
             if (account.refundsDueCents != 0)
               row(
-                l10n?.accountRefundDue ?? 'Refund due from the workspace',
+                l10n.accountRefundDue,
                 '+${currency.formatMinor(account.refundsDueCents)}',
                 color: scheme.primary,
               ),
@@ -93,15 +92,14 @@ class AccountCard extends StatelessWidget {
                 open.number,
                 '-${currency.formatMinor(open.remainingCents)}',
                 detail: open.paidCents > 0
-                    ? (l10n?.accountOpenPartial(
-                            open.period, currency.formatMinor(open.paidCents)) ??
-                        '${open.period} · ${currency.formatMinor(open.paidCents)} paid')
+                    ? (l10n.accountOpenPartial(
+                            open.period, currency.formatMinor(open.paidCents)))
                     : open.period,
                 color: scheme.error,
               ),
             const Divider(height: 12),
             row(
-              l10n?.accountNet ?? 'Net position',
+              l10n.accountNet,
               currency.formatMinor(net),
               color: netColor,
               bold: true,
@@ -110,9 +108,7 @@ class AccountCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  l10n?.accountImputationHint ??
-                      'Your credit can settle open invoices — the '
-                          'workspace applies it when matching payments.',
+                  l10n.accountImputationHint,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: scheme.onSurfaceVariant),
                 ),

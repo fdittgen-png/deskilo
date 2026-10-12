@@ -12,6 +12,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/time/clock.dart';
@@ -61,15 +62,14 @@ class _VatDeclarationsScreenState
   int _periodIndex = 0;
 
   Future<void> _generate(VatFilingPeriod period) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     await runGuarded(
       context,
       domain: 'money',
       message: 'vat declaration generate failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         // #2357 — the server computes the return (0402: the tax points
         // of the accountant's view, settlements allocated to their
@@ -85,7 +85,7 @@ class _VatDeclarationsScreenState
   }
 
   /// #896 — one sentence naming the basis this workspace declares on.
-  String _basisNote(AppLocalizations? l10n) {
+  String _basisNote(AppLocalizations l10n) {
     final workspace = ref.read(currentWorkspaceProvider).value;
     return vatTaxPointBasisNote(
         l10n,
@@ -94,32 +94,32 @@ class _VatDeclarationsScreenState
   }
 
   Map<String, Object?> _reportData(VatDeclaration declaration) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    final dateFormat = DateFormat.yMMMd(l10n?.localeName);
+    final dateFormat = DateFormat.yMMMd(l10n.localeName);
     return vatDeclarationReportData(
       declaration: declaration,
       workspaceName: workspace?.name ?? '',
       vatId: workspace?.vatId ?? '',
       countryCode: workspace?.countryCode ?? '',
       disclaimer: '${_basisNote(l10n)} '
-          '${l10n?.vatDeclDisclaimer ?? "Verify against your accounting before filing."}',
+          '${l10n.vatDeclDisclaimer}',
       statusLabel: _statusLabel(l10n, declaration),
-      rate: (value) => '${NumberFormat.decimalPattern(l10n?.localeName).format(value)} %',
+      rate: (value) => '${NumberFormat.decimalPattern(l10n.localeName).format(value)} %',
       lineNote: (line) => _lineNote(l10n, line),
-      money: moneyFormat(declaration.currency, locale: l10n?.localeName).formatMinor,
+      money: moneyFormat(declaration.currency, locale: l10n.localeName).formatMinor,
       date: dateFormat.format,
     );
   }
 
   Future<({Uint8List bytes, String fileName})> _buildPdf(
       VatDeclaration declaration) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final data = _reportData(declaration);
     final report = renderLetterDoc(context, ref,
         docId: 'vat_declaration', data: data);
     final pdf = await letterDocPdf(context, ref,
-        title: l10n?.vatDeclTitle ?? 'VAT declaration',
+        title: l10n.vatDeclTitle,
         report: report, data: data,
         layoutXml: letterLayoutXml(ref, docId: 'vat_declaration', l10n: l10n));
     final start =
@@ -128,14 +128,13 @@ class _VatDeclarationsScreenState
   }
 
   Future<void> _exportXml(VatDeclaration declaration) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     await runGuarded(
       context,
       domain: 'money',
       message: 'vat declaration xml export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         final xml = vatDeclarationXml(
           declaration: declaration,
@@ -152,7 +151,7 @@ class _VatDeclarationsScreenState
         if (!mounted) return;
         AppSnack.success(
           context,
-          l10n?.commonSavedTo(path ?? '') ?? 'Saved to $path',
+          l10n.commonSavedTo(path ?? ''),
           replace: true,
         );
       },
@@ -162,7 +161,7 @@ class _VatDeclarationsScreenState
   /// #2357 — what a line is beside its rate: « Deductible VAT » for an
   /// expense's VAT, « Correction of September 2026 » for a correction of
   /// a filed return; '' for the period's own sales.
-  String _lineNote(AppLocalizations? l10n, VatDeclarationLine line) {
+  String _lineNote(AppLocalizations l10n, VatDeclarationLine line) {
     final words = vatWords(l10n);
     final start = line.correctsStart;
     final end = line.correctsEnd;
@@ -177,15 +176,15 @@ class _VatDeclarationsScreenState
     ].join(' · ');
   }
 
-  String _statusLabel(AppLocalizations? l10n, VatDeclaration declaration) =>
+  String _statusLabel(AppLocalizations l10n, VatDeclaration declaration) =>
       declaration.isFiled
-          ? (l10n?.vatDeclFiled ?? 'Filed')
+          ? (l10n.vatDeclFiled)
           : declaration.isPrepared
-              ? (l10n?.vatDeclPrepared ?? 'Prepared')
-              : (l10n?.vatDeclDraft ?? 'Draft');
+              ? (l10n.vatDeclPrepared)
+              : (l10n.vatDeclDraft);
 
   Future<void> _markFiled(VatDeclaration declaration) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #2357 — filed with the authority's receipt reference, or not at all.
     final receipt = await showDialog<String>(
       context: context,
@@ -196,8 +195,7 @@ class _VatDeclarationsScreenState
       context,
       domain: 'money',
       message: 'vat declaration mark filed failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(vatDeclarationCommandProvider)
           .fileByHand(declaration.id, receipt: receipt.trim()),
@@ -207,7 +205,7 @@ class _VatDeclarationsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final regime = vatRegimeFromWire(workspace?.vatRegime ?? '');
@@ -224,7 +222,7 @@ class _VatDeclarationsScreenState
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(key: const ValueKey('vat-declarations-back-button'), onPressed: () => context.go('/money')),
-        title: Text(l10n?.vatDeclScreenTitle ?? 'Preparation of the VAT return'),
+        title: Text(l10n.vatDeclScreenTitle),
       ),
       body: regime != VatRegime.vatRegistered
           ? Padding(
@@ -232,9 +230,7 @@ class _VatDeclarationsScreenState
               child: InlineBanner(
                 key: const ValueKey('vat-decl-regime-gate'),
                 icon: Icons.gavel_outlined,
-                text: l10n?.vatDeclRegimeGate ??
-                    'Declarations exist only under the VAT-registered '
-                        'regime — configure it under VAT settings.',
+                text: l10n.vatDeclRegimeGate,
               ),
             )
           : ListView(
@@ -270,7 +266,7 @@ class _VatDeclarationsScreenState
                         key: const ValueKey('vat-decl-period'),
                         initialValue: _periodIndex,
                         decoration: InputDecoration(
-                          labelText: l10n?.vatDeclPeriod ?? 'Period',
+                          labelText: l10n.vatDeclPeriod,
                           border: const OutlineInputBorder(),
                         ),
                         items: [
@@ -284,7 +280,7 @@ class _VatDeclarationsScreenState
                             () => _periodIndex = value ?? 0),
                       ),
                     ),
-                    HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                    HelpDot(l10n.helpTopicVat,
                       anchor: HelpAnchor.moneyVatDeclaration,
                     ),
                     const SizedBox(width: AppSpacing.sm),
@@ -293,7 +289,7 @@ class _VatDeclarationsScreenState
                       onPressed: () => _generate(period),
                       icon: const Icon(Icons.calculate_outlined),
                       label: Text(
-                          l10n?.vatDeclGenerate ?? 'Generate'),
+                          l10n.vatDeclGenerate),
                     ),
                   ],
                 ),
@@ -312,14 +308,14 @@ class _VatDeclarationsScreenState
                         onPressed: () => showVatReport(context, ref,
                             start: period.start, end: period.end),
                         icon: const Icon(Icons.summarize_outlined),
-                        label: Text(l10n?.vatReportPdf ?? 'VAT report (PDF)'),
+                        label: Text(l10n.vatReportPdf),
                       ),
                       OutlinedButton.icon(
                         key: const ValueKey('vat-report-csv'),
                         onPressed: () => saveVatReportCsv(context, ref,
                             start: period.start, end: period.end),
                         icon: const Icon(Icons.table_view_outlined),
-                        label: Text(l10n?.vatReportCsv ?? 'VAT report (CSV)'),
+                        label: Text(l10n.vatReportCsv),
                       ),
                     ],
                   ),
@@ -342,8 +338,7 @@ class _VatDeclarationsScreenState
                                     ?.currencyCode ??
                                 'EUR'),
                         icon: const Icon(Icons.public_outlined),
-                        label: Text((l10n ??
-                                lookupAppLocalizations(const Locale('en')))
+                        label: Text(l10n
                             .recapCsv),
                       ),
                     ),
@@ -354,9 +349,7 @@ class _VatDeclarationsScreenState
                       when declarations.isEmpty =>
                     EmptyState(
                       icon: Icons.receipt_long_outlined,
-                      title: l10n?.vatDeclEmpty ??
-                          'No declarations yet — pick a period and '
-                              'generate the first one.',
+                      title: l10n.vatDeclEmpty,
                     ),
                   AsyncData(value: final declarations) => Column(
                       children: [
@@ -402,9 +395,9 @@ class _VatDeclarationsScreenState
                                       '${line.isCorrection || line.isInput ? '${_lineNote(l10n, line)} · ' : ''}'
                                       '${_pctLabel(line.percent)}'
                                       '${line.category.isEmpty ? '' : ' ${line.category}'} · '
-                                      '${l10n?.vatDeclNet ?? 'Net base'} '
+                                      '${l10n.vatDeclNet} '
                                       '${centsToMajor(line.netCents)} ${declaration.currency} · '
-                                      '${l10n?.vatDeclVat ?? 'VAT'} '
+                                      '${l10n.vatDeclVat} '
                                       '${centsToMajor(line.vatCents)} ${declaration.currency}',
                                       style:
                                           theme.textTheme.bodySmall,
@@ -417,12 +410,12 @@ class _VatDeclarationsScreenState
                                     ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '${l10n?.vatDeclTotals ?? 'Totals'}: '
+                                    '${l10n.vatDeclTotals}: '
                                     '${centsToMajor(declaration.totalNetCents)} ${declaration.currency} · '
-                                    '${l10n?.vatDeclVat ?? 'VAT'} '
+                                    '${l10n.vatDeclVat} '
                                     '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
                                     '${declaration.invoiceCount} '
-                                    '${l10n?.vatDeclInvoices ?? 'Invoices'}',
+                                    '${l10n.vatDeclInvoices}',
                                     style: theme.textTheme.bodyMedium
                                         ?.copyWith(
                                             fontWeight:
@@ -459,7 +452,7 @@ class _VatDeclarationsScreenState
                                             Icons.picture_as_pdf_outlined,
                                             size: 18),
                                         label: Text(
-                                            l10n?.vatDeclPdf ?? 'PDF'),
+                                            l10n.vatDeclPdf),
                                         onPressed: () async {
                                           await warmLetterDocProviders(ref, 'vat_declaration');
                                           if (!context.mounted) return;
@@ -482,8 +475,7 @@ class _VatDeclarationsScreenState
                                         icon: const Icon(
                                             Icons.code_outlined,
                                             size: 18),
-                                        label: Text(l10n?.vatDeclXml ??
-                                            'XML export'),
+                                        label: Text(l10n.vatDeclXml),
                                         onPressed: () =>
                                             _exportXml(declaration),
                                       ),
@@ -495,8 +487,7 @@ class _VatDeclarationsScreenState
                                               Icons.task_alt_outlined,
                                               size: 18),
                                           label: Text(
-                                              l10n?.vatDeclMarkFiled ??
-                                                  'Mark as filed'),
+                                              l10n.vatDeclMarkFiled),
                                           onPressed: () =>
                                               _markFiled(declaration),
                                         ),
@@ -509,8 +500,7 @@ class _VatDeclarationsScreenState
                       ],
                     ),
                   AsyncError() => Text(
-                      l10n?.workspaceGenericError ??
-                          'Something went wrong. Please try again.',
+                      l10n.workspaceGenericError,
                     ),
                   _ => const LoadingView(),
                 },
@@ -529,7 +519,7 @@ String _pctLabel(double percent) => percent == percent.roundToDouble()
 class _MarkFiledDialog extends StatefulWidget {
   const _MarkFiledDialog({required this.l10n});
 
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
 
   @override
   State<_MarkFiledDialog> createState() => _MarkFiledDialogState();
@@ -548,21 +538,18 @@ class _MarkFiledDialogState extends State<_MarkFiledDialog> {
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
     return AlertDialog(
-      title: Text(l10n?.vatDeclMarkFiled ?? 'Mark as filed'),
+      title: Text(l10n.vatDeclMarkFiled),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n?.vatDeclMarkFiledConfirm ??
-              'Confirm that you filed this return yourself with the tax '
-                  'authority and enter the receipt reference it gave you.'),
+          Text(l10n.vatDeclMarkFiledConfirm),
           const SizedBox(height: AppSpacing.md),
           AppTextField(
             key: const ValueKey('vat-decl-receipt'),
             controller: _receipt,
             autofocus: true,
-            label: l10n?.vatDeclReceipt ??
-                'Receipt reference from the tax authority',
+            label: l10n.vatDeclReceipt,
             onChanged: (_) => setState(() {}),
           ),
         ],
@@ -571,14 +558,14 @@ class _MarkFiledDialogState extends State<_MarkFiledDialog> {
         TextButton(
           key: const ValueKey('vat-declarations-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('vat-decl-filed-confirm'),
           onPressed: _receipt.text.trim().isEmpty
               ? null
               : () => Navigator.of(context).pop(_receipt.text.trim()),
-          child: Text(l10n?.vatDeclMarkFiled ?? 'Mark as filed'),
+          child: Text(l10n.vatDeclMarkFiled),
         ),
       ],
     );

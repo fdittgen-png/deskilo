@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/payment_instructions.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -57,14 +57,13 @@ class _PaymentMethodsScreenState
   }
 
   Future<void> _save(String workspaceId) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'payment instructions save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         await ref.read(workspaceRepositoryProvider).setPaymentInstructions(
               workspaceId,
@@ -85,7 +84,7 @@ class _PaymentMethodsScreenState
         if (!mounted) return;
         AppSnack.success(
           context,
-          l10n?.workspaceSettingsSaved ?? 'Workspace saved.',
+          l10n.workspaceSettingsSaved,
         );
       },
     );
@@ -94,13 +93,13 @@ class _PaymentMethodsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-              l10n?.paymentInstructionsTitle ?? 'Payment instructions'),
+              l10n.paymentInstructionsTitle),
         ),
         body: const LoadingView(),
       );
@@ -136,10 +135,10 @@ class _PaymentMethodsScreenState
     return Scaffold(
       appBar: AppBar(
         title:
-            Text(l10n?.paymentInstructionsTitle ?? 'Payment instructions'),
+            Text(l10n.paymentInstructionsTitle),
         actions: [
           HelpDot(
-            l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+            l10n.helpHintMoneyPaymentsTopic,
             anchor: HelpAnchor.paymentsMethods,
           ),
         ],
@@ -148,24 +147,22 @@ class _PaymentMethodsScreenState
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.paymentInstructionsHelper ??
-                'Shown to members on an unpaid statement. Leave empty '
-                    'to show nothing.',
+            l10n.paymentInstructionsHelper,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
           ),
           const SizedBox(height: AppSpacing.lg),
           field('workspaceSettingsIban', _iban,
-              l10n?.paymentInstructionsIbanTitle ?? 'IBAN'),
+              l10n.paymentInstructionsIbanTitle),
           // #711 — the fields a non-IBAN country needs, labelled by the
           // workspace's banking scheme: "Sort code" in London, "Routing
           // number" in New York, "Transit · institution" in Toronto.
           // All optional; the how-to-pay card prints what is filled.
           field('workspaceSettingsBankName', _bankName,
-              l10n?.paymentBankNameLabel ?? 'Bank name'),
+              l10n.paymentBankNameLabel),
           field('workspaceSettingsAccountNumber', _accountNumber,
-              l10n?.paymentAccountNumberLabel ?? 'Account number'),
+              l10n.paymentAccountNumberLabel),
           field(
               'workspaceSettingsBankCode',
               _bankCode,
@@ -173,32 +170,28 @@ class _PaymentMethodsScreenState
                 CountryCatalog.byCode(
                         ref.watch(currentWorkspaceProvider).value?.countryCode ?? '')
                     .scheme,
-                sortCode: l10n?.paymentSortCodeLabel ?? 'Sort code',
-                routingNumber: l10n?.paymentRoutingNumberLabel ?? 'Routing number',
+                sortCode: l10n.paymentSortCodeLabel,
+                routingNumber: l10n.paymentRoutingNumberLabel,
                 transitNumber:
-                    l10n?.paymentTransitNumberLabel ?? 'Transit · institution',
-                bankCode: l10n?.paymentBankCodeLabel ?? 'Bank code',
+                    l10n.paymentTransitNumberLabel,
+                bankCode: l10n.paymentBankCodeLabel,
               )),
           field('workspaceSettingsBic', _bic,
-              l10n?.paymentBicLabel ?? 'BIC / SWIFT'),
+              l10n.paymentBicLabel),
           field('workspaceSettingsPaypalMe', _paypalMe,
-              l10n?.paymentInstructionsPaypalLabel ??
-                  'PayPal.me link or handle'),
+              l10n.paymentInstructionsPaypalLabel),
           field('workspaceSettingsWero', _wero,
-              l10n?.paymentInstructionsWeroLabel ?? 'Wero phone number'),
+              l10n.paymentInstructionsWeroLabel),
           field('workspaceSettingsLydia', _lydia,
-              l10n?.paymentInstructionsLydiaLabel ??
-                  'Lydia phone number or username'),
+              l10n.paymentInstructionsLydiaLabel),
           field('workspaceSettingsWise', _wise,
-              l10n?.paymentInstructionsWiseLabel ??
-                  'Wisetag or Wise payment link'),
+              l10n.paymentInstructionsWiseLabel),
           field('workspaceSettingsReference', _reference,
-              l10n?.paymentInstructionsReferenceLabel ??
-                  'Payment reference hint'),
+              l10n.paymentInstructionsReferenceLabel),
           FilledButton(
             key: const ValueKey('payment-methods-save'),
             onPressed: _busy ? null : () => _save(workspace.id),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),

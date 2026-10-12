@@ -6,69 +6,56 @@ import '../application/getting_started_hint.dart';
 /// Localized wording for the existing hint model; it creates no business facts.
 abstract final class GettingStartedCopy {
   static String standing(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     MembershipStanding standing,
   ) => switch (standing) {
     MembershipStanding.owner =>
-      l10n?.gettingStartedStandingOwner ??
-          'You are an owner of this workspace.',
+      l10n.gettingStartedStandingOwner,
     MembershipStanding.administrator =>
-      l10n?.gettingStartedStandingAdmin ?? 'You are an administrator here.',
-    _ => l10n?.gettingStartedStandingMember ?? 'You are a member here.',
+      l10n.gettingStartedStandingAdmin,
+    _ => l10n.gettingStartedStandingMember,
   };
 
-  static String reason(AppLocalizations? l10n, GettingStartedHint hint) =>
+  static String reason(AppLocalizations l10n, GettingStartedHint hint) =>
       switch (hint.reason) {
         GettingStartedReason.readyToBook =>
-          l10n?.gettingStartedReadyToBook ??
-              'The workspace is open on this day. Pick a time and a space '
-                  'on the plan — nothing is booked until you confirm.',
+          l10n.gettingStartedReadyToBook,
         GettingStartedReason.closedToday =>
-          l10n?.gettingStartedClosedToday ??
-              'The workspace is closed on the selected day. Choose another '
-                  'day to see what is free.',
+          l10n.gettingStartedClosedToday,
         GettingStartedReason.noSpaces =>
-          l10n?.gettingStartedNoSpaces ??
-              'Nothing can be booked here yet. Your membership shows what '
-                  'your access includes.',
+          l10n.gettingStartedNoSpaces,
         GettingStartedReason.availabilityUnknown =>
-          l10n?.gettingStartedAvailabilityUnknown ??
-              'Availability could not be loaded. The help explains how '
-                  'booking works here.',
+          l10n.gettingStartedAvailabilityUnknown,
         GettingStartedReason.membershipUnknown =>
-          l10n?.gettingStartedMembershipUnknown ??
-              'Your membership could not be loaded right now. The help '
-                  'explains how this workspace works.',
+          l10n.gettingStartedMembershipUnknown,
         GettingStartedReason.booked =>
-          l10n?.gettingStartedBooked(
+          l10n.gettingStartedBooked(
                 bookingState(l10n, hint.booking!.state),
-              ) ??
-              'Your booking is ${bookingState(l10n, hint.booking!.state)}.',
+              ),
         GettingStartedReason.setupIncomplete => () {
           final area = hint.setupStep?.area;
           final step = area == null
-              ? (l10n?.readinessTitle ?? 'Setting up this space')
+              ? (l10n.readinessTitle)
               : readinessAreaLabel(l10n, area);
-          return l10n?.gettingStartedSetupIncomplete(step) ??
-              'Before anyone can book here: $step.';
+          return l10n.gettingStartedSetupIncomplete(step);
         }(),
         GettingStartedReason.loading ||
         GettingStartedReason.pendingAdmission => '',
       };
 
-  static String booking(AppLocalizations? l10n, BookingEvidence b) =>
+  static String booking(AppLocalizations l10n, BookingEvidence b) =>
       [if (b.spaceName.trim().isNotEmpty) b.spaceName,
         bookingState(l10n, b.state)].join(' · ');
 
   /// The real state name, in the reader's language; an unknown wire
   /// value is shown as it came rather than guessed at.
-  static String bookingState(AppLocalizations? l10n, String state) =>
+  static String bookingState(AppLocalizations l10n, String state) =>
       switch (state) {
-        'reserved' => l10n?.gettingStartedStateReserved ?? state,
-        'checkedIn' => l10n?.gettingStartedStateCheckedIn ?? state,
-        'completed' => l10n?.gettingStartedStateCompleted ?? state,
-        'cancelled' => l10n?.gettingStartedStateCancelled ?? state,
-        'released' => l10n?.gettingStartedStateReleased ?? state,
+        'reserved' => l10n.gettingStartedStateReserved,
+        'checkedIn' => l10n.gettingStartedStateCheckedIn,
+        'completed' => l10n.gettingStartedStateCompleted,
+        'cancelled' => l10n.gettingStartedStateCancelled,
+        'released' => l10n.gettingStartedStateReleased,
         _ => state,
       };
 }
