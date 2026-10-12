@@ -246,11 +246,11 @@ List<String> nationalInvoiceMentions({
   return [
     if (country == 'IT' && currency.toUpperCase() == 'EUR' && untaxedCents > 7747)
       'Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.',
-    if (country == 'ES' && correction)
-      rectifies.trim().isEmpty
-          ? 'Factura rectificativa (art. 15 del RD 1619/2012).'
-          : 'Factura rectificativa (art. 15 del RD 1619/2012) de la factura '
-              '${rectifies.trim()}.',
+    if (country == 'ES' && correction && rectifies.trim().isEmpty)
+      'Factura rectificativa (art. 15 del RD 1619/2012).'
+    else if (country == 'ES' && correction)
+      'Factura rectificativa (art. 15 del RD 1619/2012) de la factura '
+          '${rectifies.trim()}.',
     if (country == 'FR' && regime == VatRegime.vatRegistered)
       "Catégorie de l'opération : prestation de services.",
   ];
