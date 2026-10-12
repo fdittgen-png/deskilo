@@ -12344,6 +12344,10 @@
   "@visitStatusRequested": {
     "description": "#1835 visit status"
   },
+  "welcomeLinkAction": "Che cos’è DesKilo?",
+  "@welcomeLinkAction": {
+    "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"
+  },
   "whatTheyCanDoTitle": "Cosa può fare qui {name}",
   "@whatTheyCanDoTitle": {
     "description": "#2085 giving roles: whatTheyCanDoTitle",

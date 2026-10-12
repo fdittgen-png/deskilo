@@ -33698,6 +33698,12 @@ abstract class AppLocalizations {
   /// **'Requested'**
   String get visitStatusRequested;
 
+  /// #2459 sign-in form: opens the public welcome page, beside the demo link
+  ///
+  /// In en, this message translates to:
+  /// **'What is DesKilo?'**
+  String get welcomeLinkAction;
+
   /// #2085 giving roles: whatTheyCanDoTitle
   ///
   /// In en, this message translates to:

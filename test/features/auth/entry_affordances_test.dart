@@ -123,7 +123,8 @@ void main() {
       (tester) async {
     // The sign-in step, not the layout: the phone width is the locale
     // cases' business, and at 360×640 the submit sits under the fold.
-    final router = await pump(tester, size: const Size(400, 800));
+    // #2459: 900 high — the form gained the welcome link's row.
+    final router = await pump(tester, size: const Size(400, 900));
     await tester.tap(find.byKey(const ValueKey('auth-join')));
     await tester.pumpAndSettle();
     // Back to sign-in: an existing account may hold the invitation too.

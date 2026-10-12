@@ -246,7 +246,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/auth/data/supabase_auth_repository.dart': 581, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/auth/presentation/screens/auth_screen.dart': 590, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/auth/presentation/screens/auth_screen.dart': 595, // 2026-10-12 #2459: +5 for the welcome link (import + the Wrap beside Discover); was 590 (2026-10-11 #2386: the budget fell 600→500; this file was within the old one).
 
   'lib/features/directory/data/supabase_messenger_repository.dart': 507, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

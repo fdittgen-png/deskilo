@@ -19511,6 +19511,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visitStatusRequested => 'Requested';
 
   @override
+  String get welcomeLinkAction => 'What is DesKilo?';
+
+  @override
   String whatTheyCanDoTitle(String name) {
     return 'What $name can do here';
   }
