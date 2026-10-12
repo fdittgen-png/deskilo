@@ -14,7 +14,9 @@ extension _FakeMoneyRepositoryPart2 on FakeMoneyRepository {
     InvoiceKind kind = InvoiceKind.full,
     String buyerReference = '',
     String purchaseOrder = '',
+    String correctionReason = '',
   }) async {
+    lastCorrectionReason = correctionReason;
     lastBuyerReference = buyerReference;
     lastPurchaseOrder = purchaseOrder;
     // Server contract (0067/0142): one ACTIVE invoice per member, month

@@ -236,6 +236,10 @@ abstract class MoneyRepository {
     /// Frozen on the document; empty for everyone else.
     String buyerReference = '',
     String purchaseOrder = '',
+
+    /// #2440 — RD 1619/2012 art. 15: why a Spanish seller corrects a
+    /// document (R1-R5). Ignored for every other seller.
+    String correctionReason = '',
   });
 
   /// What [createInvoice] would issue for [period], without issuing
@@ -256,6 +260,7 @@ abstract class MoneyRepository {
     required String period,
     InvoiceKind kind = InvoiceKind.full,
     String? replacesId,
+    String correctionReason = '',
   });
 
   /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole

@@ -49,5 +49,33 @@
   "invoiceMissingNationalCurrency": "El IVA en la moneda nacional: un vendedor de un Estado miembro fuera del euro factura aquí el IVA en su propia moneda (art. 230 de la Directiva del IVA)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingCorrectionReason": "El motivo de la rectificación (RD 1619/2012, art. 15): elija de R1 a R5 abajo",
+  "@invoiceMissingCorrectionReason": {
+    "description": "#2440: invoiceMissingCorrectionReason"
+  },
+  "invoiceCorrectionReason": "Motivo de la rectificación",
+  "@invoiceCorrectionReason": {
+    "description": "#2440: invoiceCorrectionReason"
+  },
+  "invoiceCorrectionReasonR1": "R1 - error fundado en derecho, art. 80 uno, dos y seis de la ley del IVA",
+  "@invoiceCorrectionReasonR1": {
+    "description": "#2440: invoiceCorrectionReasonR1"
+  },
+  "invoiceCorrectionReasonR2": "R2 - concurso de acreedores, art. 80 tres",
+  "@invoiceCorrectionReasonR2": {
+    "description": "#2440: invoiceCorrectionReasonR2"
+  },
+  "invoiceCorrectionReasonR3": "R3 - créditos incobrables, art. 80 cuatro",
+  "@invoiceCorrectionReasonR3": {
+    "description": "#2440: invoiceCorrectionReasonR3"
+  },
+  "invoiceCorrectionReasonR4": "R4 - resto de causas",
+  "@invoiceCorrectionReasonR4": {
+    "description": "#2440: invoiceCorrectionReasonR4"
+  },
+  "invoiceCorrectionReasonR5": "R5 - facturas simplificadas",
+  "@invoiceCorrectionReasonR5": {
+    "description": "#2440: invoiceCorrectionReasonR5"
   }
 }

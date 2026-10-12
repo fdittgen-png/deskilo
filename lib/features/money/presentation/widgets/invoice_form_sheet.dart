@@ -23,6 +23,7 @@ import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../report_strings_l10n.dart';
+import 'invoice_correction_reason_field.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -56,7 +57,7 @@ Future<void> showInvoiceIssueSheet(
   final now = ref.read(clockProvider).now();
   final result = await showAppSheet<
       ({String memberId, String period, bool detailed,
-        String buyerReference, String purchaseOrder})>(
+        String buyerReference, String purchaseOrder, String correctionReason})>(
     context: context,
     isScrollControlled: true,
     builder: (context) => _InvoiceForm(
@@ -73,11 +74,13 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
       ),
-      readiness: (memberId, period) => repo.invoiceIssueReadiness(
+      readiness: (memberId, period, correctionReason) =>
+          repo.invoiceIssueReadiness(
         workspaceId: workspace.id,
         memberId: memberId,
         period: period,
         replacesId: replaces?.id,
+        correctionReason: correctionReason,
       ),
       // Only preselect a member the dropdown actually offers — the wrong
       // invoice may target a member who has left since.
@@ -101,6 +104,7 @@ Future<void> showInvoiceIssueSheet(
           detailed: result.detailed,
           buyerReference: result.buyerReference,
           purchaseOrder: result.purchaseOrder,
+          correctionReason: result.correctionReason,
         );
   } on Object catch (e, st) {
     TraceLogger.instance
@@ -152,8 +156,8 @@ class _InvoiceForm extends StatefulWidget {
       String memberId, String period) preview;
 
   /// #1916 — what the server would refuse to issue for, as stable keys.
-  final Future<List<String>> Function(String memberId, String period)
-      readiness;
+  final Future<List<String>> Function(
+      String memberId, String period, String correctionReason) readiness;
   final String? initialMemberId;
   final String initialPeriod;
 
@@ -183,6 +187,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   // #1916 — the essentials the server would refuse to issue without.
   List<String> _missing = const [];
   bool _loading = false;
+  // #2440 — RD 1619/2012 art. 15 (R1-R5); asked only when the server
+  // names it as missing, so no country is guessed here.
+  String _correctionReason = '';
 
   @override
   void initState() {
@@ -204,7 +211,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       final result = await widget.preview(memberId, period);
       var missing = const <String>[];
       try {
-        missing = await widget.readiness(memberId, period);
+        missing = await widget.readiness(memberId, period, _correctionReason);
       } on Object catch (e, st) {
         // Advisory: the server still refuses an incomplete issue.
         TraceLogger.instance.error('money', 'invoice readiness failed',
@@ -228,6 +235,12 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         _loading = false;
       });
     }
+  }
+
+  // #2440 — the reason joins the readiness question; the preview reloads.
+  void _setCorrectionReason(String? reason) {
+    _correctionReason = reason ?? '';
+    unawaited(_load());
   }
 
   void _shiftMonth(int delta) {
@@ -461,6 +474,14 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             helperMaxLines: 2,
           ),
         ),
+        if (lines.isNotEmpty &&
+            (_missing.contains('correction_reason') ||
+                _correctionReason.isNotEmpty))
+          InvoiceCorrectionReasonField(
+            key: const ValueKey('invoice-correction-reason-field'),
+            value: _correctionReason,
+            onChanged: _setCorrectionReason,
+          ),
         if (_missing.isNotEmpty && lines.isNotEmpty)
           InlineBanner(
             key: const ValueKey('invoice-missing-essentials'),
@@ -485,6 +506,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                         _publicBuyer ? _buyerReference.text.trim() : '',
                     purchaseOrder:
                         _publicBuyer ? _purchaseOrder.text.trim() : '',
+                    correctionReason: _correctionReason,
                   )),
           child: Text(l10n.invoiceIssue),
         ),
@@ -508,6 +530,8 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'seller_tax_number' => l10n.invoiceMissingSellerTaxNumber,
       'buyer_tax_id' => l10n.invoiceMissingBuyerTaxId,
       'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
+      // #2440 — RD 1619/2012 art. 15.
+      'correction_reason' => l10n.invoiceMissingCorrectionReason,
       'vat_rate_unresolved' => l10n.invoiceMissingVatRate,
       'vat_line_zero_unexplained' => l10n.invoiceMissingVatZeroLine,
       'vat_charged_not_registered' => l10n.invoiceMissingVatNotRegistered,

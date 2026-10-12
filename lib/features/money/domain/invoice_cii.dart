@@ -262,8 +262,12 @@ String buildInvoiceCii({
           builder.element('ram:ApplicableTradeTax', nest: () {
             money('CalculatedAmount', total.vatCents);
             ram('TypeCode', 'VAT');
-            if (total.category != 'S' && exemptionText.isNotEmpty) {
-              ram('ExemptionReason', exemptionText);
+            if (total.category != 'S') {
+              // #2440 — BT-120 per category: the rate's own reason first.
+              final reason = total.exemptionReason.isNotEmpty
+                  ? total.exemptionReason
+                  : exemptionText;
+              if (reason.isNotEmpty) ram('ExemptionReason', reason);
             }
             money('BasisAmount', total.netCents);
             ram('CategoryCode', total.category);

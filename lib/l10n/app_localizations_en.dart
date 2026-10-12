@@ -7982,6 +7982,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'Public-sector buyer (Chorus Pro): the code service exécutant.';
 
   @override
+  String get invoiceCorrectionReason => 'Reason for the correction';
+
+  @override
+  String get invoiceCorrectionReasonR1 =>
+      'R1 - error founded in law, art. 80 one, two and six of the VAT law';
+
+  @override
+  String get invoiceCorrectionReasonR2 =>
+      'R2 - insolvency proceedings, art. 80 three';
+
+  @override
+  String get invoiceCorrectionReasonR3 => 'R3 - bad debts, art. 80 four';
+
+  @override
+  String get invoiceCorrectionReasonR4 => 'R4 - other causes';
+
+  @override
+  String get invoiceCorrectionReasonR5 => 'R5 - simplified invoices';
+
+  @override
   String invoiceCountShown(int count) {
     return '$count invoices';
   }
@@ -8425,6 +8445,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceMissingBuyerVatId =>
       'The member\'s VAT number (needed for reverse charge)';
+
+  @override
+  String get invoiceMissingCorrectionReason =>
+      'The reason for the correction (RD 1619/2012 art. 15): choose R1 to R5 below';
 
   @override
   String get invoiceMissingExemptionReason =>

@@ -5273,6 +5273,30 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCorrectionReason": "Grund der Berichtigung",
+  "@invoiceCorrectionReason": {
+    "description": "#2440: invoiceCorrectionReason"
+  },
+  "invoiceCorrectionReasonR1": "R1 - Rechtsirrtum, Art. 80 Abs. 1, 2 und 6 des Mehrwertsteuergesetzes",
+  "@invoiceCorrectionReasonR1": {
+    "description": "#2440: invoiceCorrectionReasonR1"
+  },
+  "invoiceCorrectionReasonR2": "R2 - Insolvenzverfahren, Art. 80 Abs. 3",
+  "@invoiceCorrectionReasonR2": {
+    "description": "#2440: invoiceCorrectionReasonR2"
+  },
+  "invoiceCorrectionReasonR3": "R3 - uneinbringliche Forderungen, Art. 80 Abs. 4",
+  "@invoiceCorrectionReasonR3": {
+    "description": "#2440: invoiceCorrectionReasonR3"
+  },
+  "invoiceCorrectionReasonR4": "R4 - sonstige Gründe",
+  "@invoiceCorrectionReasonR4": {
+    "description": "#2440: invoiceCorrectionReasonR4"
+  },
+  "invoiceCorrectionReasonR5": "R5 - vereinfachte Rechnungen",
+  "@invoiceCorrectionReasonR5": {
+    "description": "#2440: invoiceCorrectionReasonR5"
+  },
   "invoiceCountShown": "{count} Rechnungen",
   "@invoiceCountShown": {
     "placeholders": {
@@ -5668,6 +5692,10 @@
   "invoiceMissingBuyerVatId": "Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
+  },
+  "invoiceMissingCorrectionReason": "Der Berichtigungsgrund (RD 1619/2012 Art. 15): unten R1 bis R5 wählen",
+  "@invoiceMissingCorrectionReason": {
+    "description": "#2440: invoiceMissingCorrectionReason"
   },
   "invoiceMissingExemptionReason": "Die Rechtsgrundlage der Umsatzsteuerbefreiung",
   "@invoiceMissingExemptionReason": {

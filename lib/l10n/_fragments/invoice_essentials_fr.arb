@@ -49,5 +49,33 @@
   "invoiceMissingNationalCurrency": "La TVA dans la monnaie nationale : un vendeur d'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingCorrectionReason": "Le motif de la rectification (RD 1619/2012, art. 15) : choisissez R1 à R5 ci-dessous",
+  "@invoiceMissingCorrectionReason": {
+    "description": "#2440: invoiceMissingCorrectionReason"
+  },
+  "invoiceCorrectionReason": "Motif de la rectification",
+  "@invoiceCorrectionReason": {
+    "description": "#2440: invoiceCorrectionReason"
+  },
+  "invoiceCorrectionReasonR1": "R1 - erreur fondée en droit, art. 80 un, deux et six de la loi sur la TVA",
+  "@invoiceCorrectionReasonR1": {
+    "description": "#2440: invoiceCorrectionReasonR1"
+  },
+  "invoiceCorrectionReasonR2": "R2 - procédure collective, art. 80 trois",
+  "@invoiceCorrectionReasonR2": {
+    "description": "#2440: invoiceCorrectionReasonR2"
+  },
+  "invoiceCorrectionReasonR3": "R3 - créances irrécouvrables, art. 80 quatre",
+  "@invoiceCorrectionReasonR3": {
+    "description": "#2440: invoiceCorrectionReasonR3"
+  },
+  "invoiceCorrectionReasonR4": "R4 - autres causes",
+  "@invoiceCorrectionReasonR4": {
+    "description": "#2440: invoiceCorrectionReasonR4"
+  },
+  "invoiceCorrectionReasonR5": "R5 - factures simplifiées",
+  "@invoiceCorrectionReasonR5": {
+    "description": "#2440: invoiceCorrectionReasonR5"
   }
 }

@@ -241,17 +241,35 @@ List<String> nationalInvoiceMentions({
   required int untaxedCents,
   required bool correction,
   String rectifies = '',
+  String correctionReason = '',
 }) {
   final country = euCountryCode(sellerCountry);
+  final reason = _spanishCorrectionReasonText(correctionReason);
   return [
     if (country == 'IT' && currency.toUpperCase() == 'EUR' && untaxedCents > 7747)
       'Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.',
     if (country == 'ES' && correction && rectifies.trim().isEmpty)
-      'Factura rectificativa (art. 15 del RD 1619/2012).'
+      'Factura rectificativa (art. 15 del RD 1619/2012)'
+          '${reason.isEmpty ? '.' : '. Motivo: $reason.'}'
     else if (country == 'ES' && correction)
       'Factura rectificativa (art. 15 del RD 1619/2012) de la factura '
-          '${rectifies.trim()}.',
+          '${rectifies.trim()}${reason.isEmpty ? '.' : '. Motivo: $reason.'}',
     if (country == 'FR' && regime == VatRegime.vatRegistered)
       "Catégorie de l'opération : prestation de services.",
   ];
 }
+
+/// #2440 — the correction codes of RD 1619/2012 art. 15 (AEAT TipoFactura
+/// R1-R5), as the Spanish mention words them. Empty for anything else.
+const spanishCorrectionReasonCodes = ['R1', 'R2', 'R3', 'R4', 'R5'];
+
+String _spanishCorrectionReasonText(String code) =>
+    switch (code.trim().toUpperCase()) {
+      'R1' => 'R1, error fundado en derecho y causas del art. 80 uno, dos '
+          'y seis de la Ley 37/1992',
+      'R2' => 'R2, concurso de acreedores (art. 80 tres de la Ley 37/1992)',
+      'R3' => 'R3, créditos incobrables (art. 80 cuatro de la Ley 37/1992)',
+      'R4' => 'R4, resto de causas',
+      'R5' => 'R5, factura simplificada',
+      _ => '',
+    };
