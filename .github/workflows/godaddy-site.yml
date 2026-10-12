@@ -160,6 +160,8 @@ jobs:
         if: inputs.push == true
         env:
           GH_TOKEN: ${{ github.token }}
+          # this job's working directory is not a clone (the branch is in site/)
+          GH_REPO: ${{ github.repository }}
           SOURCE_SHA: ${{ needs.build.outputs.sha }}
         run: |
           set -euo pipefail
