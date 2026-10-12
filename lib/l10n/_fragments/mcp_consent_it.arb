@@ -12,42 +12,5 @@
   "mcpConsentConnected": "Collegato. Ritorno all'assistente.",
   "mcpConsentDenied": "Rifiutato. L'assistente non ottiene nulla.",
   "mcpConsentPartial": "L'assistente è stato approvato ma il collegamento non è ancora utilizzabile. Si colleghi di nuovo dall'assistente.",
-  "mcpConsentRequested": "Approvazione richiesta. Un amministratore del database la esaminerà.",
-  "mcpOpListWorkspaces": "Vedere quali spazi può usare",
-  "mcpOpCapabilities": "Vedere cosa può fare lì",
-  "mcpOpAvailability": "Vedere i posti liberi",
-  "mcpOpMyReservations": "Vedere le sue prenotazioni",
-  "mcpOpMyStatement": "Vedere il suo estratto conto",
-  "mcpOpMemberStatement": "Vedere l'estratto conto di un membro",
-  "mcpOpMyInvoices": "Vedere le sue fatture",
-  "mcpOpCreateReservation": "Prenotare un posto per Lei",
-  "mcpOpUpdateReservation": "Modificare le sue prenotazioni",
-  "mcpOpCheckIn": "Registrare il suo arrivo",
-  "mcpOpCheckOut": "Registrare la sua uscita",
-  "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione già iniziata",
-  "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
-  "mcpOpGetValidation": "Leggere una richiesta di convalida",
-  "mcpOpCancelReservation": "Annullare le sue prenotazioni non ancora iniziate",
-  "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
-  },
-  "mcpOpGetPlace": "Descrivere un luogo e mostrarlo su richiesta",
-  "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
-  },
-  "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
-  },
-  "mcpOpListMyFavorites": "I suoi posti preferiti",
-  "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
-  },
-  "mcpOpSetFavorite": "Segnare posti come preferiti",
-  "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
-  },
-  "mcpOpRatePlace": "Valutare i posti",
-  "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
-  }
+  "mcpConsentRequested": "Approvazione richiesta. Un amministratore del database la esaminerà."
 }

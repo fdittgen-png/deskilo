@@ -6585,24 +6585,15 @@
   "mcpNextUnavailable": "Der Server konnte nicht antworten. Es wird nichts angenommen; versuchen Sie es später erneut.",
   "mcpOpAvailability": "Freie Plätze sehen",
   "mcpOpCancelReservation": "Ihre noch nicht begonnenen Buchungen stornieren",
-  "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpCapabilities": "Sehen, was er dort tun darf",
   "mcpOpCheckIn": "Sie einchecken",
   "mcpOpCheckOut": "Sie auschecken",
   "mcpOpCreateReservation": "Einen Platz für Sie buchen",
   "mcpOpGetPlace": "Einen Ort beschreiben und auf Wunsch zeigen",
-  "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
   "mcpOpInvoiceIssue": "Rechnung ausstellen",
   "mcpOpInvoiceVoid": "Rechnung stornieren",
   "mcpOpListMyFavorites": "Ihre Lieblingsplätze",
-  "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
   "mcpOpMemberStatement": "Den Kontoauszug eines Mitglieds sehen",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
@@ -6611,19 +6602,10 @@
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
   "mcpOpRatePlace": "Plätze bewerten",
-  "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpRefund": "Rechnung erstatten",
   "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
-  "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
   "mcpOpSetFavorite": "Plätze als Favoriten markieren",
-  "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
   "mcpOpUpdateReservation": "Ihre Reservierungen ändern",
   "mcpOverviewTitle": "Weitere verbundene Datenbanken",

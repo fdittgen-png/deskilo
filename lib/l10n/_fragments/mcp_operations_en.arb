@@ -1,0 +1,102 @@
+{
+  "mcpOpListWorkspaces": "See which workspaces it may use",
+  "@mcpOpListWorkspaces": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_workspaces)"
+  },
+  "mcpOpCapabilities": "See what it may do there",
+  "@mcpOpCapabilities": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_capabilities)"
+  },
+  "mcpOpAvailability": "See free places",
+  "@mcpOpAvailability": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_availability)"
+  },
+  "mcpOpMyReservations": "See your reservations",
+  "@mcpOpMyReservations": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_reservations)"
+  },
+  "mcpOpGetPlace": "Describe a place, and show it when you ask",
+  "@mcpOpGetPlace": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_place)"
+  },
+  "mcpOpListMyFavorites": "Your favourite places",
+  "@mcpOpListMyFavorites": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_favorites)"
+  },
+  "mcpOpMyStatement": "See your account statement",
+  "@mcpOpMyStatement": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_my_statement)"
+  },
+  "mcpOpMemberStatement": "See a member's account statement",
+  "@mcpOpMemberStatement": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_member_statement)"
+  },
+  "mcpOpMyInvoices": "See your invoices",
+  "@mcpOpMyInvoices": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_invoices)"
+  },
+  "mcpOpCreateReservation": "Book a place for you",
+  "@mcpOpCreateReservation": {
+    "description": "#2394 generated from contracts/mcp/operations.json (create_reservation)"
+  },
+  "mcpOpUpdateReservation": "Change your reservations",
+  "@mcpOpUpdateReservation": {
+    "description": "#2394 generated from contracts/mcp/operations.json (update_reservation)"
+  },
+  "mcpOpCheckIn": "Check you in",
+  "@mcpOpCheckIn": {
+    "description": "#2394 generated from contracts/mcp/operations.json (check_in)"
+  },
+  "mcpOpCheckOut": "Check you out",
+  "@mcpOpCheckOut": {
+    "description": "#2394 generated from contracts/mcp/operations.json (check_out)"
+  },
+  "mcpOpCancelReservation": "Cancel your bookings that have not started",
+  "@mcpOpCancelReservation": {
+    "description": "#2394 generated from contracts/mcp/operations.json (cancel_reservation)"
+  },
+  "mcpOpSetFavorite": "Mark places as favourites",
+  "@mcpOpSetFavorite": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
+  },
+  "mcpOpRatePlace": "Rate places",
+  "@mcpOpRatePlace": {
+    "description": "#2394 generated from contracts/mcp/operations.json (rate_place)"
+  },
+  "mcpOpReservationDeletion": "Ask to delete a booking that has started",
+  "@mcpOpReservationDeletion": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_reservation_deletion)"
+  },
+  "mcpOpInvoiceIssue": "Issue an invoice",
+  "@mcpOpInvoiceIssue": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_issue)"
+  },
+  "mcpOpInvoiceVoid": "Void an invoice",
+  "@mcpOpInvoiceVoid": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_void)"
+  },
+  "mcpOpRefund": "Refund an invoice",
+  "@mcpOpRefund": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_refund)"
+  },
+  "mcpOpMemberStatus": "Change a member's status",
+  "@mcpOpMemberStatus": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_member_status_change)"
+  },
+  "mcpOpSubscription": "Change a member's subscription share",
+  "@mcpOpSubscription": {
+    "description": "#2394 generated from contracts/mcp/operations.json (request_subscription_change)"
+  },
+  "mcpOpPendingValidations": "See pending validation requests",
+  "@mcpOpPendingValidations": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_pending_validations)"
+  },
+  "mcpOpGetValidation": "Read a validation request",
+  "@mcpOpGetValidation": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_validation)"
+  },
+  "mcpOpRespond": "Answer a validation request",
+  "@mcpOpRespond": {
+    "description": "#2394 generated from contracts/mcp/operations.json (respond_to_validation)"
+  }
+}

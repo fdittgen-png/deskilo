@@ -20,7 +20,22 @@ const generatedPaths = (
   openapi: 'contracts/mcp/generated/openapi.json',
   // #1629 — the same document, served beside the self-hosted Swagger UI.
   webOpenapi: 'web/api/openapi.json',
+  // #2394 — each operation's label in the person's language, and the
+  // function that reads it.
+  labels: 'lib/features/mcp/presentation/mcp_operation_text.g.dart',
+  // #2394 — the operation enum and the envelope model, beside the specs.
+  dartTypes: 'lib/core/mcp/mcp_contract.g.dart',
 );
+
+/// #2394 — the languages every operation label is written in.
+const mcpLabelLocales = ['en', 'fr', 'de', 'es', 'it'];
+
+/// #2394 — the ARB fragment carrying the operation labels for [locale].
+String mcpLabelFragmentPath(String locale) =>
+    'lib/l10n/_fragments/mcp_operations_$locale.arb';
+
+/// `get_my_statement` -> `getMyStatement`, the generated enum value.
+String mcpEnumName(String id) => camelCase(id);
 
 /// #1610/#1612 — the catalogue as the database reads it: the statement a
 /// migration carries verbatim (see mcp_contract_test), so the dispatcher
@@ -574,6 +589,8 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     ..writeln()
     ..writeln("import 'mcp_spec.dart';")
     ..writeln()
+    ..writeln("export 'mcp_contract.g.dart';")
+    ..writeln()
     ..writeln('/// The contract version these specs were generated from.')
     ..writeln('const int mcpContractVersion = ${contract['version']};')
     ..writeln()
@@ -634,6 +651,137 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   }
   dart.writeln('};');
 
+  final types = StringBuffer()
+    ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
+    ..writeln('//')
+    ..writeln('// $_header')
+    ..writeln()
+    ..writeln("import 'mcp_operations.dart';")
+    ..writeln("import 'mcp_spec.dart';")
+    ..writeln()
+    ..writeln('/// #2394 — every catalogued operation by name; `id` is its wire name.')
+    ..writeln('enum McpOperationId {');
+  for (final op in ops) {
+    types.writeln("  ${mcpEnumName(op['id'] as String)}('${op['id']}'),");
+  }
+  types
+    ..writeln('  ;')
+    ..writeln()
+    ..writeln('  const McpOperationId(this.id);')
+    ..writeln()
+    ..writeln('  /// The operation\'s wire name, as the facade and the policy store it.')
+    ..writeln('  final String id;')
+    ..writeln()
+    ..writeln('  /// Its catalogue entry.')
+    ..writeln('  McpOperationSpec get spec => mcpOperations[id]!;')
+    ..writeln()
+    ..writeln('  /// The operation named [id], or null for a name the contract lacks.')
+    ..writeln('  static McpOperationId? of(String id) => _byId[id];')
+    ..writeln()
+    ..writeln('  static final Map<String, McpOperationId> _byId = {')
+    ..writeln('    for (final o in McpOperationId.values) o.id: o,')
+    ..writeln('  };')
+    ..writeln('}')
+    ..writeln()
+    ..writeln('/// #2394 — one answer of the facade, read the way the contract defines')
+    ..writeln('/// it: schema version ${contract['version']}, a known status and operation, and pending')
+    ..writeln('/// never mistaken for done. Anything else is refused, never guessed at.')
+    ..writeln('class McpEnvelope {')
+    ..writeln('  const McpEnvelope._({')
+    ..writeln('    required this.status,')
+    ..writeln('    required this.operation,')
+    ..writeln('    required this.requestId,')
+    ..writeln('    this.workspaceId,')
+    ..writeln('    this.eventId,')
+    ..writeln('    this.data = const {},')
+    ..writeln('    this.errorCode,')
+    ..writeln('    this.errorFields = const {},')
+    ..writeln('  });')
+    ..writeln()
+    ..writeln('  final String status;')
+    ..writeln('  final McpOperationId operation;')
+    ..writeln('  final String requestId;')
+    ..writeln('  final String? workspaceId;')
+    ..writeln('  final String? eventId;')
+    ..writeln('  final Map<String, Object?> data;')
+    ..writeln('  final String? errorCode;')
+    ..writeln('  final Map<String, String> errorFields;')
+    ..writeln()
+    ..writeln('  /// The effect happened.')
+    ..writeln("  bool get completed => status == 'completed';")
+    ..writeln()
+    ..writeln('  /// Recorded, but the people the workspace named still have to decide:')
+    ..writeln('  /// NOT an effect.')
+    ..writeln("  bool get pendingValidation => status == 'pending_validation';")
+    ..writeln()
+    ..writeln('  /// Waiting for the person to confirm in the DesKilo app.')
+    ..writeln("  bool get needsConfirmation => status == 'requires_confirmation';")
+    ..writeln()
+    ..writeln('  /// Parses [json]; throws [FormatException] for an unknown schema')
+    ..writeln('  /// version, status or operation, or a missing required field.')
+    ..writeln('  static McpEnvelope parse(Map<String, Object?> json) {')
+    ..writeln("    if (json['schema_version'] != mcpContractVersion) {")
+    ..writeln("      throw FormatException('unsupported MCP envelope version \${json['schema_version']}');")
+    ..writeln('    }')
+    ..writeln("    final status = json['status'];")
+    ..writeln('    if (status is! String || !mcpStatuses.contains(status)) {')
+    ..writeln("      throw FormatException('unknown MCP status \$status');")
+    ..writeln('    }')
+    ..writeln("    final operation = McpOperationId.of('\${json['operation']}');")
+    ..writeln("    final requestId = json['request_id'];")
+    ..writeln('    if (operation == null || requestId is! String) {')
+    ..writeln("      throw const FormatException('an MCP envelope names its operation and request');")
+    ..writeln('    }')
+    ..writeln("    final error = json['error'];")
+    ..writeln("    final fields = error is Map ? error['fields'] : null;")
+    ..writeln('    return McpEnvelope._(')
+    ..writeln('      status: status,')
+    ..writeln('      operation: operation,')
+    ..writeln('      requestId: requestId,')
+    ..writeln("      workspaceId: json['workspace_id'] as String?,")
+    ..writeln("      eventId: json['event_id'] as String?,")
+    ..writeln("      data: json['data'] is Map ? Map<String, Object?>.from(json['data'] as Map) : const {},")
+    ..writeln("      errorCode: error is Map ? error['code'] as String? : null,")
+    ..writeln('      errorFields: fields is Map ? {for (final e in fields.entries) \'\${e.key}\': \'\${e.value}\'} : const {},')
+    ..writeln('    );')
+    ..writeln('  }')
+    ..writeln('}');
+
+  // #2394 — the labels: one ARB fragment per language, and their reader.
+  final arb = <String, String>{};
+  for (final locale in mcpLabelLocales) {
+    final m = <String, Object?>{};
+    for (final op in ops) {
+      final label = Map<String, dynamic>.from(op['label'] as Map);
+      m[label['key'] as String] = label[locale];
+      if (locale == 'en') {
+        m['@${label['key']}'] = {'description': '#2394 generated from contracts/mcp/operations.json (${op['id']})'};
+      }
+    }
+    arb[mcpLabelFragmentPath(locale)] = prettyJson(m);
+  }
+  final labels = StringBuffer()
+    ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
+    ..writeln('//')
+    ..writeln('// $_header')
+    ..writeln()
+    ..writeln("import '../../../core/mcp/mcp_operations.dart';")
+    ..writeln("import '../../../l10n/app_localizations.dart';")
+    ..writeln()
+    ..writeln('/// What each MCP operation does, in the person\'s language: the consent')
+    ..writeln('/// screen lists them, the confirmation screen names the one asked.')
+    ..writeln('String mcpOperationLabel(AppLocalizations l10n, String op) =>')
+    ..writeln('    switch (McpOperationId.of(op)) {');
+  for (final op in ops) {
+    final label = Map<String, dynamic>.from(op['label'] as Map);
+    labels
+      ..writeln('      McpOperationId.${mcpEnumName(op['id'] as String)} =>')
+      ..writeln('        l10n.${label['key']},');
+  }
+  labels
+    ..writeln('      null => op,')
+    ..writeln('    };');
+
   final openapi = {
     'x-generated': _header,
     'openapi': '3.1.0',
@@ -681,5 +829,8 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     generatedPaths.dart: dart.toString(),
     generatedPaths.openapi: prettyJson(openapi),
     generatedPaths.webOpenapi: prettyJson(openapi),
+    generatedPaths.labels: labels.toString(),
+    generatedPaths.dartTypes: types.toString(),
+    ...arb,
   };
 }

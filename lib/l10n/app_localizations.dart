@@ -17502,151 +17502,151 @@ abstract class AppLocalizations {
   /// **'The server could not answer. Nothing is assumed; try again later.'**
   String get mcpNextUnavailable;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_availability)
   ///
   /// In en, this message translates to:
   /// **'See free places'**
   String get mcpOpAvailability;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (cancel_reservation)
   ///
   /// In en, this message translates to:
   /// **'Cancel your bookings that have not started'**
   String get mcpOpCancelReservation;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_capabilities)
   ///
   /// In en, this message translates to:
   /// **'See what it may do there'**
   String get mcpOpCapabilities;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (check_in)
   ///
   /// In en, this message translates to:
   /// **'Check you in'**
   String get mcpOpCheckIn;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (check_out)
   ///
   /// In en, this message translates to:
   /// **'Check you out'**
   String get mcpOpCheckOut;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (create_reservation)
   ///
   /// In en, this message translates to:
   /// **'Book a place for you'**
   String get mcpOpCreateReservation;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_place)
   ///
   /// In en, this message translates to:
   /// **'Describe a place, and show it when you ask'**
   String get mcpOpGetPlace;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_validation)
   ///
   /// In en, this message translates to:
   /// **'Read a validation request'**
   String get mcpOpGetValidation;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_invoice_issue)
   ///
   /// In en, this message translates to:
   /// **'Issue an invoice'**
   String get mcpOpInvoiceIssue;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_invoice_void)
   ///
   /// In en, this message translates to:
   /// **'Void an invoice'**
   String get mcpOpInvoiceVoid;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_favorites)
   ///
   /// In en, this message translates to:
   /// **'Your favourite places'**
   String get mcpOpListMyFavorites;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_workspaces)
   ///
   /// In en, this message translates to:
   /// **'See which workspaces it may use'**
   String get mcpOpListWorkspaces;
 
-  /// #2391 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_member_statement)
   ///
   /// In en, this message translates to:
   /// **'See a member\'s account statement'**
   String get mcpOpMemberStatement;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_member_status_change)
   ///
   /// In en, this message translates to:
   /// **'Change a member\'s status'**
   String get mcpOpMemberStatus;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_invoices)
   ///
   /// In en, this message translates to:
   /// **'See your invoices'**
   String get mcpOpMyInvoices;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_reservations)
   ///
   /// In en, this message translates to:
   /// **'See your reservations'**
   String get mcpOpMyReservations;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_my_statement)
   ///
   /// In en, this message translates to:
   /// **'See your account statement'**
   String get mcpOpMyStatement;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_pending_validations)
   ///
   /// In en, this message translates to:
   /// **'See pending validation requests'**
   String get mcpOpPendingValidations;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (rate_place)
   ///
   /// In en, this message translates to:
   /// **'Rate places'**
   String get mcpOpRatePlace;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_refund)
   ///
   /// In en, this message translates to:
   /// **'Refund an invoice'**
   String get mcpOpRefund;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (request_reservation_deletion)
   ///
   /// In en, this message translates to:
   /// **'Ask to delete a booking that has started'**
   String get mcpOpReservationDeletion;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (respond_to_validation)
   ///
   /// In en, this message translates to:
   /// **'Answer a validation request'**
   String get mcpOpRespond;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (set_favorite)
   ///
   /// In en, this message translates to:
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_subscription_change)
   ///
   /// In en, this message translates to:
   /// **'Change a member\'s subscription share'**
   String get mcpOpSubscription;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (update_reservation)
   ///
   /// In en, this message translates to:
   /// **'Change your reservations'**

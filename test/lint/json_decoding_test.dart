@@ -15,7 +15,7 @@ import 'lint_sources.dart';
 /// Raw `json['…']` read lines left in hand-written lib/ (473 when the
 /// reader landed, 441 after the money rows, 245 once every fromJson read
 /// through it).
-const _rawReadBudget = 245;
+const _rawReadBudget = 236;
 
 /// Lines naming `dynamic` in hand-written lib/ (728 in the review of
 /// #2381, 684 once every fromJson read through JsonReader, 688 when #2386
