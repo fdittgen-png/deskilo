@@ -1,0 +1,149 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Publish · GoDaddy site package
+
+# Builds the web app and assembles the whole www.deskilo.org site as a Node.js package:
+# the app at the root, with the welcome page, the user guide, the setup guide and the
+# setup questionnaire beside it, served by a dependency-free server.
+#
+#   gh workflow run godaddy-site.yml                    # build from master, update the branch
+#   gh workflow run godaddy-site.yml -f push=false      # build only: the zip as an artifact
+#
+# The result lands in two places, both always current:
+#   * the branch `hosting/godaddy` (protected, must be kept) — GoDaddy's Node.js tool deploys it;
+#   * `deskilo-site.zip` on the rolling pre-release `godaddy-site` — unzip it on the host.
+# The package's own files (server.js, build/build-site.mjs, README) live on that branch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA of DesKilo to build
+        required: false
+        default: master
+      site_url:
+        description: Where the site lives (absolute links point here), no trailing slash
+        required: false
+        default: https://www.deskilo.org
+      push:
+        description: Commit the package to the hosting/godaddy branch and the release
+        required: false
+        type: boolean
+        default: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+  SITE_BRANCH: hosting/godaddy
+  SITE_RELEASE: godaddy-site
+
+permissions:
+  contents: write
+
+# A package build someone started is never cancelled by another; it queues.
+concurrency:
+  group: godaddy-site
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Pin the source
+        id: source
+        env:
+          REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$(jq -rn --arg r "${REF:-master}" '$r|@uri')" --jq .sha)
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::'$REF' did not resolve to a commit (got '$sha')"; exit 1; }
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Building $sha"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.source.outputs.sha }}
+          path: src
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SITE_BRANCH }}
+          path: site
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Build the web app
+        working-directory: src
+        # --pwa-strategy=none: no offline-first service worker serving the PREVIOUS build after a
+        # deploy. --base-href /: the app is the site's home, not a sub-path.
+        run: |
+          flutter pub get
+          flutter build web --release --no-web-resources-cdn --pwa-strategy=none --base-href /
+          dart run tool/task_tool_manifest.dart
+
+      - name: Assemble the package
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SITE_URL: ${{ inputs.site_url }}
+        run: |
+          set -euo pipefail
+          node site/build/build-site.mjs --web src/build/web
+          rm -f deskilo-site.zip
+          (cd site && zip -qr ../deskilo-site.zip server.js package.json README.md public)
+          ls -lh deskilo-site.zip
+          echo "### Package" >> "$GITHUB_STEP_SUMMARY"
+          echo "Built from \`$SOURCE_SHA\`, $(du -sh site/public | cut -f1) unpacked, $(du -h deskilo-site.zip | cut -f1) zipped." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke-test the package
+        run: |
+          set -euo pipefail
+          (cd site && PORT=4999 node server.js & echo $! > /tmp/site.pid)
+          sleep 2
+          for path in / /welcome/ /guide/en.html /guide/setup-en.html /setup.html /main.dart.js /money /healthz; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:4999$path")
+            echo "$path -> $code"
+            [ "$code" = 200 ] || { echo "::error::$path answered $code"; kill "$(cat /tmp/site.pid)"; exit 1; }
+          done
+          kill "$(cat /tmp/site.pid)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deskilo-site-${{ steps.source.outputs.sha }}
+          path: deskilo-site.zip
+          retention-days: 30
+
+      - name: Commit the package to the branch
+        if: inputs.push == true
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          set -euo pipefail
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "the package is unchanged — nothing to commit"; exit 0; fi
+          git commit -q -m "site: build from ${SOURCE_SHA:0:8}"
+          git push origin "HEAD:$SITE_BRANCH"
+
+      - name: Attach the zip to the rolling release
+        if: inputs.push == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          set -euo pipefail
+          notes="The current GoDaddy package: the web app, the welcome page, the guides and the setup guide as a Node.js app. Built from ${SOURCE_SHA}. Unzip it into the application root and restart; the branch ${SITE_BRANCH} carries the same files."
+          if gh release view "$SITE_RELEASE" >/dev/null 2>&1; then
+            gh release edit "$SITE_RELEASE" --notes "$notes" --prerelease --latest=false
+          else
+            gh release create "$SITE_RELEASE" --target "$SITE_BRANCH" --title "GoDaddy site package" \
+              --notes "$notes" --prerelease --latest=false
+          fi
+          gh release upload "$SITE_RELEASE" deskilo-site.zip --clobber
