@@ -2504,7 +2504,7 @@ Ha pagato qualcosa per lo spazio e vuole che lo spazio Le rimborsi la somma.
 
 - Vede «Spesa inviata — in attesa di approvazione». La spesa conta solo dopo la conferma.
 - Una scorta confermata va a scaffale come servizio: i membri che la usano la pagano.
-- In uno spazio soggetto IVA con **IVA a credito** attivata, scelga l'**IVA su questa spesa** e la **Quota detraibile (%)** — 100 % salvo che una parte della spesa sia privata o serva un'attività esente. Una volta approvata la spesa, la sua IVA detraibile è sottratta nella dichiarazione IVA del mese dell'approvazione.
+- In uno spazio soggetto IVA con **IVA a credito** attivata, scelga l'**IVA su questa spesa** e la **Quota detraibile (%)** — 100 % salvo che una parte della spesa sia privata o serva un'attività esente. Una volta approvata la spesa, la sua IVA detraibile è sottratta nella dichiarazione IVA del mese dell'approvazione. Attivi **Un bene strumentale** per un'attrezzatura che lo spazio conserva e ammortizza: la sua IVA è dichiarata su una riga propria. Una spesa programmata chiede lo stesso una volta, e ogni scadenza lo riporta.
 - Le spese ricorrenti hanno una porta a parte, **Spese programmate**, accanto a questo pulsante.
 
 **Vedi anche:** [Approvare o rifiutare una spesa](help:user.money.expense.approve)

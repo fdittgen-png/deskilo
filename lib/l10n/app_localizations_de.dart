@@ -4817,6 +4817,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.';
 
   @override
+  String get expenseVatAsset => 'Ein Anlagegut';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Eine Ausstattung, die der Bereich behält und abschreibt (ein Laptop, Möbel): Ihre Vorsteuer wird getrennt vom Rest erklärt.';
+
+  @override
   String get expenseVatDeductible => 'Abziehbarer Anteil (%)';
 
   @override
@@ -15873,6 +15880,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get scheduleValidationHint =>
       'Der Plan geht zuerst an die Validierer. Jede Fälligkeit wird Ihnen dann vorgelegt: zu diesem Betrag bestätigt zählt sie sofort; ein anderer Betrag erklärt sich und wird erneut validiert.';
+
+  @override
+  String get scheduleVatInvalid =>
+      'Geben Sie einen abziehbaren Anteil zwischen 0 und 100 ein.';
 
   @override
   String get scheduleWeekly => 'wöchentlich';

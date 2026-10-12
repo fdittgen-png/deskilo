@@ -264,7 +264,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/money_repository.dart': 587, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/money_repository.dart': 594, // 2026-10-11 #2357 587→594: setExpenseScheduleVat, the VAT a schedule's occurrences carry. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -276,7 +276,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/screens/vat_screen.dart': 567, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 557, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 576, // 2026-10-11 #2357 557→576: the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 542, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

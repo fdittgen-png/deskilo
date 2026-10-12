@@ -770,8 +770,6 @@ const Set<String> uiKeys = {
   'expense-supply-quantity',
   'expense-supply-toggle',
   'expense-supply-unit',
-  'expense-vat-deductible',
-  'expense-vat-rate',
   'export-accounts-dialogs-cancel',
   'export-accounts-dialogs-cancel-2',
   'export-accounts-dialogs-cancel-3',
@@ -3097,6 +3095,9 @@ const List<String> uiKeyPatterns = [
   '{}-to-chip',
   '{}-token-{}',
   '{}-type-{}',
+  '{}-vat-asset',
+  '{}-vat-deductible',
+  '{}-vat-rate',
 ];
 
 /// The literal messages of every runGuarded call.
@@ -4617,6 +4618,8 @@ const Set<String> uiLabelKeys = {
   'expenseSupplyToggle',
   'expenseSupplyUnitPrice',
   'expenseSupplyUnitPriceHint',
+  'expenseVatAsset',
+  'expenseVatAssetHint',
   'expenseVatDeductible',
   'expenseVatDeductibleHint',
   'expenseVatNone',
@@ -7436,6 +7439,7 @@ const Set<String> uiLabelKeys = {
   'scheduleUnitWeeks',
   'scheduleUnitYears',
   'scheduleValidationHint',
+  'scheduleVatInvalid',
   'scheduleWeekly',
   'scheduleYearly',
   'scheduledAwaitingTitle',

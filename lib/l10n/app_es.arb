@@ -3269,6 +3269,14 @@
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
+  "expenseVatAsset": "Un bien de inversión",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Un equipo que el espacio conserva y amortiza (un portátil, mobiliario): su IVA se declara aparte del resto.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
   "expenseVatDeductible": "Parte deducible (%)",
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
@@ -10346,6 +10354,10 @@
   "scheduleUnitYears": "años",
   "scheduleUntil": "hasta {date}",
   "scheduleValidationHint": "La programación pasa primero por los validadores. Cada vencimiento se le presenta después: confirmado a este importe cuenta de inmediato; un importe distinto se explica y vuelve a validarse.",
+  "scheduleVatInvalid": "Introduzca una parte deducible entre 0 y 100.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
+  },
   "scheduleWeekly": "semanal",
   "scheduleYearly": "anual",
   "scheduledAwaitingTitle": "Gastos programados por confirmar",

@@ -2614,7 +2614,7 @@ You paid something for the space and you want the workspace to reimburse you.
 
 - You see "Expense submitted — waiting for approval". The expense counts only once it is confirmed.
 - A confirmed supply goes on the shelf as a service: members who use it pay for it.
-- In a VAT-registered space with **Input VAT** switched on, choose the **VAT on this expense** and the **Deductible share (%)** — 100 % unless part of the expense is private or serves an exempt activity. Once the expense is approved, its deductible VAT is subtracted on the VAT return of the month it was approved.
+- In a VAT-registered space with **Input VAT** switched on, choose the **VAT on this expense** and the **Deductible share (%)** — 100 % unless part of the expense is private or serves an exempt activity. Once the expense is approved, its deductible VAT is subtracted on the VAT return of the month it was approved. Turn on **A fixed asset** for equipment the space keeps and depreciates: its VAT is declared on its own line (CA3 line 19). A scheduled expense asks the same once, and every occurrence carries it.
 - Recurring costs have their own door, **Scheduled expenses**, next to this button.
 
 **See also:** [Approve or decline an expense](#approve-or-decline-an-expense)

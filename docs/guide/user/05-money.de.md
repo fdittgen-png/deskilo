@@ -278,7 +278,7 @@ Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen 
 
 - Sie sehen „Ausgabe eingereicht – wartet auf Genehmigung“. Die Ausgabe zählt erst, wenn sie bestätigt ist.
 - Ein bestätigter Vorrat kommt als Service ins Regal: Mitglieder, die ihn nutzen, bezahlen dafür.
-- In einem umsatzsteuerpflichtigen Bereich mit eingeschalteter **Vorsteuer** wählen Sie **Umsatzsteuer auf diese Ausgabe** und den **Abziehbaren Anteil (%)** — 100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit. Sobald die Ausgabe genehmigt ist, wird ihre abziehbare Vorsteuer in der Umsatzsteuererklärung des Genehmigungsmonats abgezogen.
+- In einem umsatzsteuerpflichtigen Bereich mit eingeschalteter **Vorsteuer** wählen Sie **Umsatzsteuer auf diese Ausgabe** und den **Abziehbaren Anteil (%)** — 100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit. Sobald die Ausgabe genehmigt ist, wird ihre abziehbare Vorsteuer in der Umsatzsteuererklärung des Genehmigungsmonats abgezogen. Schalten Sie **Ein Anlagegut** für eine Ausstattung ein, die der Bereich behält und abschreibt: ihre Vorsteuer wird in einer eigenen Zeile erklärt. Eine geplante Ausgabe fragt dasselbe einmal, und jede Fälligkeit übernimmt es.
 - Wiederkehrende Kosten haben einen eigenen Zugang, **Geplante Ausgaben**, neben dieser Schaltfläche.
 
 **Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](help:user.money.expense.approve)

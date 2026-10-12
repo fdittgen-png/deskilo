@@ -451,6 +451,13 @@ abstract class MoneyRepository {
   /// Ends a schedule (the member's own, or with approveExpenses).
   Future<void> cancelExpenseSchedule(String scheduleId);
 
+  /// #2357 — the VAT every occurrence of a schedule carries ({percent,
+  /// deductible_pct, asset}); null clears it.
+  Future<void> setExpenseScheduleVat(
+    String scheduleId,
+    Map<String, Object?>? vat,
+  );
+
   /// Materialises every due occurrence (any active member; the morning
   /// cron is the other clock). Returns how many it created.
   Future<int> sweepExpenseSchedules(String workspaceId);

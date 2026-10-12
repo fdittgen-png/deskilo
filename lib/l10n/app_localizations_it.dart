@@ -4806,6 +4806,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Precompilato con importo ÷ quantità; arrotondi se vuole.';
 
   @override
+  String get expenseVatAsset => 'Un bene strumentale';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Un\'attrezzatura che lo spazio conserva e ammortizza (un portatile, dei mobili): la sua IVA è dichiarata a parte dal resto.';
+
+  @override
   String get expenseVatDeductible => 'Quota detraibile (%)';
 
   @override
@@ -15851,6 +15858,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get scheduleValidationHint =>
       'La programmazione passa prima dai validatori. Ogni scadenza le viene poi presentata: confermata a questo importo conta subito; un importo diverso si spiega e torna in validazione.';
+
+  @override
+  String get scheduleVatInvalid =>
+      'Inserisca una quota detraibile tra 0 e 100.';
 
   @override
   String get scheduleWeekly => 'settimanale';
