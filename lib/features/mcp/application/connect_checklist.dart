@@ -27,6 +27,24 @@ enum ConnectState {
   unavailable,
 }
 
+/// Where the whole list stands, read by the screen, the recorder and the
+/// readiness report instead of each re-deriving it from the rows. The
+/// transitions are explicit: the phase is the state of the FIRST row not
+/// done (a row below a pending one is `blocked`, never the phase).
+enum ConnectPhase {
+  /// Every row is done: the assistant can be connected.
+  ready,
+
+  /// The person looking takes the next step now.
+  needsYou,
+
+  /// Someone else acts before the next step.
+  waitingForOthers,
+
+  /// The server could not be asked, or answered something unreadable.
+  unavailable,
+}
+
 enum ConnectActor { you, workspaceAdmin, databaseAdministrator, operator }
 
 /// The one thing the row offers. `none` when nothing can be done here.
@@ -77,6 +95,14 @@ class ConnectChecklist {
   /// The first row not done, or null when everything is.
   ConnectItem? get next =>
       items.where((i) => i.state != ConnectState.done).firstOrNull;
+
+  /// Where the list stands as a whole.
+  ConnectPhase get phase => switch (next?.state) {
+    null || ConnectState.done => ConnectPhase.ready,
+    ConnectState.todo => ConnectPhase.needsYou,
+    ConnectState.waiting || ConnectState.blocked => ConnectPhase.waitingForOthers,
+    ConnectState.unavailable => ConnectPhase.unavailable,
+  };
 
   /// Whether the approval is close enough to its end to say so.
   bool get accessExpiresSoon {
