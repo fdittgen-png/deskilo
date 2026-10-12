@@ -39,4 +39,6 @@ domain; `APP_URL` moves the "open the app" links if you host the Flutter build
 elsewhere. The build fails if any relative link or image does not resolve.
 `public/BUILD.txt` records which master commit the site was built from.
 
+`npm run build` is deliberately a no-op (the host runs it on deploy and `public/` is already built); the real rebuild is `npm run refresh`.
+
 Local check: `PORT=4000 npm start`, then open `http://localhost:4000`.
