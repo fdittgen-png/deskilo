@@ -4093,6 +4093,68 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eInvoiceIdentityTitle => 'E-Rechnungsadresse';
 
   @override
+  String get eInvoiceInboxAdd => 'Lieferantenrechnung hinzufügen (XML)';
+
+  @override
+  String eInvoiceInboxAdded(String number, String supplier) {
+    return 'Rechnung $number von $supplier hinzugefügt.';
+  }
+
+  @override
+  String get eInvoiceInboxEmpty => 'Noch keine Lieferantenrechnung.';
+
+  @override
+  String get eInvoiceInboxIntro =>
+      'E-Rechnungen, die Ihre Lieferanten Ihnen schicken. Fügen Sie die XML-Datei (UBL oder CII) hinzu und ordnen Sie sie einer erfassten Ausgabe zu oder lehnen Sie sie ab.';
+
+  @override
+  String get eInvoiceInboxMatch => 'Einer Ausgabe zuordnen';
+
+  @override
+  String get eInvoiceInboxMatched => 'Zugeordnet.';
+
+  @override
+  String eInvoiceInboxMissingField(String field) {
+    return 'In der Rechnung fehlt ein Pflichtfeld ($field).';
+  }
+
+  @override
+  String get eInvoiceInboxNoCandidate =>
+      'Keine erfasste Ausgabe hat diesen Betrag.';
+
+  @override
+  String get eInvoiceInboxReason => 'Grund';
+
+  @override
+  String get eInvoiceInboxReasonNeeded => 'Eine Ablehnung braucht einen Grund.';
+
+  @override
+  String get eInvoiceInboxRefused =>
+      'Der Eingang hat das abgelehnt (das Dokument ist vielleicht schon da, oder Sie dürfen hier nicht entscheiden).';
+
+  @override
+  String get eInvoiceInboxReject => 'Ablehnen';
+
+  @override
+  String get eInvoiceInboxRejected => 'Abgelehnt.';
+
+  @override
+  String get eInvoiceInboxStatusMatched => 'Einer Ausgabe zugeordnet';
+
+  @override
+  String get eInvoiceInboxStatusReceived => 'Zu entscheiden';
+
+  @override
+  String get eInvoiceInboxStatusRejected => 'Abgelehnt';
+
+  @override
+  String get eInvoiceInboxTitle => 'Lieferantenrechnungen';
+
+  @override
+  String get eInvoiceInboxUnreadable =>
+      'Diese Datei ist keine UBL- oder CII-Rechnung, die der Eingang lesen kann.';
+
+  @override
   String get eInvoiceMandateEReporting =>
       'Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden';
 

@@ -14,6 +14,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/einvoice_inbox_section.dart';
 import '../widgets/einvoice_provider_section.dart';
 
 /// Where the workspace's invoices are POSTED (0073) — owner-only.
@@ -419,6 +420,16 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                         color: Theme.of(context).colorScheme.error,
                       ),
                     ),
+                  ),
+                ],
+                // #2358 — the supplier invoices that reached the space.
+                if (ref
+                        .watch(enabledFeaturesSyncProvider)
+                        .contains(WorkspaceFeature.einvoiceCustomerDelivery) &&
+                    ref.watch(currentWorkspaceProvider).value != null) ...[
+                  const SizedBox(height: AppSpacing.xl),
+                  EInvoiceInboxSection(
+                    workspaceId: ref.watch(currentWorkspaceProvider).value!.id,
                   ),
                 ],
               ],

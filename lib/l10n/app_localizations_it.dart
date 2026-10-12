@@ -4083,6 +4083,68 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eInvoiceIdentityTitle => 'Indirizzo di fatturazione elettronica';
 
   @override
+  String get eInvoiceInboxAdd => 'Aggiungi una fattura fornitore (XML)';
+
+  @override
+  String eInvoiceInboxAdded(String number, String supplier) {
+    return 'Fattura $number di $supplier aggiunta.';
+  }
+
+  @override
+  String get eInvoiceInboxEmpty => 'Ancora nessuna fattura fornitore.';
+
+  @override
+  String get eInvoiceInboxIntro =>
+      'Le fatture elettroniche che i fornitori le inviano. Aggiunga il file XML (UBL o CII), poi lo abbini a una spesa registrata oppure lo respinga.';
+
+  @override
+  String get eInvoiceInboxMatch => 'Abbina a una spesa';
+
+  @override
+  String get eInvoiceInboxMatched => 'Abbinata.';
+
+  @override
+  String eInvoiceInboxMissingField(String field) {
+    return 'Alla fattura manca un campo obbligatorio ($field).';
+  }
+
+  @override
+  String get eInvoiceInboxNoCandidate =>
+      'Nessuna spesa registrata ha questo importo.';
+
+  @override
+  String get eInvoiceInboxReason => 'Motivo';
+
+  @override
+  String get eInvoiceInboxReasonNeeded => 'Un rifiuto richiede un motivo.';
+
+  @override
+  String get eInvoiceInboxRefused =>
+      'La casella l’ha rifiutato (il documento potrebbe essere già presente, o qui non può decidere).';
+
+  @override
+  String get eInvoiceInboxReject => 'Respingi';
+
+  @override
+  String get eInvoiceInboxRejected => 'Respinta.';
+
+  @override
+  String get eInvoiceInboxStatusMatched => 'Abbinata a una spesa';
+
+  @override
+  String get eInvoiceInboxStatusReceived => 'Da decidere';
+
+  @override
+  String get eInvoiceInboxStatusRejected => 'Respinta';
+
+  @override
+  String get eInvoiceInboxTitle => 'Fatture dei fornitori';
+
+  @override
+  String get eInvoiceInboxUnreadable =>
+      'Questo file non è una fattura UBL o CII che la casella possa leggere.';
+
+  @override
   String get eInvoiceMandateEReporting =>
       'le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi';
 

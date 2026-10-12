@@ -4696,6 +4696,91 @@
   "@eInvoiceIdentityTitle": {
     "description": "#2358 legal identity: the e-invoicing address section"
   },
+  "eInvoiceInboxAdd": "Add a supplier invoice (XML)",
+  "@eInvoiceInboxAdd": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdded": "Invoice {number} from {supplier} added.",
+  "@eInvoiceInboxAdded": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxEmpty": "No supplier invoice yet.",
+  "@eInvoiceInboxEmpty": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxIntro": "E-invoices your suppliers send you. Add the XML file (UBL or CII), then match it to an expense that was filed, or reject it.",
+  "@eInvoiceInboxIntro": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatch": "Match to an expense",
+  "@eInvoiceInboxMatch": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatched": "Matched.",
+  "@eInvoiceInboxMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMissingField": "The invoice lacks a required field ({field}).",
+  "@eInvoiceInboxMissingField": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxNoCandidate": "No filed expense has this amount.",
+  "@eInvoiceInboxNoCandidate": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReason": "Reason",
+  "@eInvoiceInboxReason": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReasonNeeded": "A rejection needs a reason.",
+  "@eInvoiceInboxReasonNeeded": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRefused": "The inbox refused this (the document may already be there, or you may not decide here).",
+  "@eInvoiceInboxRefused": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReject": "Reject",
+  "@eInvoiceInboxReject": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRejected": "Rejected.",
+  "@eInvoiceInboxRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusMatched": "Matched to an expense",
+  "@eInvoiceInboxStatusMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusReceived": "To decide",
+  "@eInvoiceInboxStatusReceived": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusRejected": "Rejected",
+  "@eInvoiceInboxStatusRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxTitle": "Supplier invoices",
+  "@eInvoiceInboxTitle": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxUnreadable": "This file is not a UBL or CII invoice the inbox can read.",
+  "@eInvoiceInboxUnreadable": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
   "eInvoiceMandateEReporting": "sales to consumers and abroad, and the payments of services, must be e-reported",
   "@eInvoiceMandateEReporting": {
     "description": "#2358 mandate duty"

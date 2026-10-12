@@ -4091,6 +4091,68 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eInvoiceIdentityTitle => 'Adresse de facturation électronique';
 
   @override
+  String get eInvoiceInboxAdd => 'Ajouter une facture fournisseur (XML)';
+
+  @override
+  String eInvoiceInboxAdded(String number, String supplier) {
+    return 'Facture $number de $supplier ajoutée.';
+  }
+
+  @override
+  String get eInvoiceInboxEmpty => 'Aucune facture fournisseur pour l’instant.';
+
+  @override
+  String get eInvoiceInboxIntro =>
+      'Les factures électroniques que vos fournisseurs vous envoient. Ajoutez le fichier XML (UBL ou CII), puis rapprochez-la d’une dépense saisie, ou rejetez-la.';
+
+  @override
+  String get eInvoiceInboxMatch => 'Rapprocher d’une dépense';
+
+  @override
+  String get eInvoiceInboxMatched => 'Rapprochée.';
+
+  @override
+  String eInvoiceInboxMissingField(String field) {
+    return 'Il manque un champ obligatoire à la facture ($field).';
+  }
+
+  @override
+  String get eInvoiceInboxNoCandidate =>
+      'Aucune dépense saisie n’a ce montant.';
+
+  @override
+  String get eInvoiceInboxReason => 'Motif';
+
+  @override
+  String get eInvoiceInboxReasonNeeded => 'Un rejet demande un motif.';
+
+  @override
+  String get eInvoiceInboxRefused =>
+      'La boîte l’a refusé (le document y est peut-être déjà, ou vous ne pouvez pas décider ici).';
+
+  @override
+  String get eInvoiceInboxReject => 'Rejeter';
+
+  @override
+  String get eInvoiceInboxRejected => 'Rejetée.';
+
+  @override
+  String get eInvoiceInboxStatusMatched => 'Rapprochée d’une dépense';
+
+  @override
+  String get eInvoiceInboxStatusReceived => 'À traiter';
+
+  @override
+  String get eInvoiceInboxStatusRejected => 'Rejetée';
+
+  @override
+  String get eInvoiceInboxTitle => 'Factures fournisseurs';
+
+  @override
+  String get eInvoiceInboxUnreadable =>
+      'Ce fichier n’est pas une facture UBL ou CII que la boîte peut lire.';
+
+  @override
   String get eInvoiceMandateEReporting =>
       'les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)';
 

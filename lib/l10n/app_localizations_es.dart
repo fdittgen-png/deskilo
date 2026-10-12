@@ -4085,6 +4085,68 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eInvoiceIdentityTitle => 'Dirección de facturación electrónica';
 
   @override
+  String get eInvoiceInboxAdd => 'Añadir una factura de proveedor (XML)';
+
+  @override
+  String eInvoiceInboxAdded(String number, String supplier) {
+    return 'Factura $number de $supplier añadida.';
+  }
+
+  @override
+  String get eInvoiceInboxEmpty => 'Aún no hay facturas de proveedores.';
+
+  @override
+  String get eInvoiceInboxIntro =>
+      'Las facturas electrónicas que sus proveedores le envían. Añada el archivo XML (UBL o CII) y concílielo con un gasto registrado, o recházelo.';
+
+  @override
+  String get eInvoiceInboxMatch => 'Conciliar con un gasto';
+
+  @override
+  String get eInvoiceInboxMatched => 'Conciliada.';
+
+  @override
+  String eInvoiceInboxMissingField(String field) {
+    return 'A la factura le falta un campo obligatorio ($field).';
+  }
+
+  @override
+  String get eInvoiceInboxNoCandidate =>
+      'Ningún gasto registrado tiene este importe.';
+
+  @override
+  String get eInvoiceInboxReason => 'Motivo';
+
+  @override
+  String get eInvoiceInboxReasonNeeded => 'Un rechazo necesita un motivo.';
+
+  @override
+  String get eInvoiceInboxRefused =>
+      'La bandeja lo ha rechazado (puede que el documento ya esté, o que no pueda decidir aquí).';
+
+  @override
+  String get eInvoiceInboxReject => 'Rechazar';
+
+  @override
+  String get eInvoiceInboxRejected => 'Rechazada.';
+
+  @override
+  String get eInvoiceInboxStatusMatched => 'Conciliada con un gasto';
+
+  @override
+  String get eInvoiceInboxStatusReceived => 'Por decidir';
+
+  @override
+  String get eInvoiceInboxStatusRejected => 'Rechazada';
+
+  @override
+  String get eInvoiceInboxTitle => 'Facturas de proveedores';
+
+  @override
+  String get eInvoiceInboxUnreadable =>
+      'Este archivo no es una factura UBL o CII que la bandeja pueda leer.';
+
+  @override
   String get eInvoiceMandateEReporting =>
       'las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse';
 

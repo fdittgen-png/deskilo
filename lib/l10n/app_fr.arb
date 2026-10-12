@@ -2830,6 +2830,91 @@
   "@eInvoiceIdentityTitle": {
     "description": "#2358 legal identity: the e-invoicing address section"
   },
+  "eInvoiceInboxAdd": "Ajouter une facture fournisseur (XML)",
+  "@eInvoiceInboxAdd": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxAdded": "Facture {number} de {supplier} ajoutée.",
+  "@eInvoiceInboxAdded": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxEmpty": "Aucune facture fournisseur pour l’instant.",
+  "@eInvoiceInboxEmpty": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxIntro": "Les factures électroniques que vos fournisseurs vous envoient. Ajoutez le fichier XML (UBL ou CII), puis rapprochez-la d’une dépense saisie, ou rejetez-la.",
+  "@eInvoiceInboxIntro": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatch": "Rapprocher d’une dépense",
+  "@eInvoiceInboxMatch": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMatched": "Rapprochée.",
+  "@eInvoiceInboxMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxMissingField": "Il manque un champ obligatoire à la facture ({field}).",
+  "@eInvoiceInboxMissingField": {
+    "description": "#2358 supplier e-invoice inbox",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxNoCandidate": "Aucune dépense saisie n’a ce montant.",
+  "@eInvoiceInboxNoCandidate": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReason": "Motif",
+  "@eInvoiceInboxReason": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReasonNeeded": "Un rejet demande un motif.",
+  "@eInvoiceInboxReasonNeeded": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRefused": "La boîte l’a refusé (le document y est peut-être déjà, ou vous ne pouvez pas décider ici).",
+  "@eInvoiceInboxRefused": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxReject": "Rejeter",
+  "@eInvoiceInboxReject": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxRejected": "Rejetée.",
+  "@eInvoiceInboxRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusMatched": "Rapprochée d’une dépense",
+  "@eInvoiceInboxStatusMatched": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusReceived": "À traiter",
+  "@eInvoiceInboxStatusReceived": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxStatusRejected": "Rejetée",
+  "@eInvoiceInboxStatusRejected": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxTitle": "Factures fournisseurs",
+  "@eInvoiceInboxTitle": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
+  "eInvoiceInboxUnreadable": "Ce fichier n’est pas une facture UBL ou CII que la boîte peut lire.",
+  "@eInvoiceInboxUnreadable": {
+    "description": "#2358 supplier e-invoice inbox"
+  },
   "eInvoiceMandateEReporting": "les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)",
   "@eInvoiceMandateEReporting": {
     "description": "#2358 mandate duty"
