@@ -131,12 +131,13 @@ select is(public.mcp_workspace_context(current_setting('t.ws')::uuid)
 
 -- The facade: the statement needs no member id and names its currency;
 -- capabilities carry the context; the create branch records provenance.
-select ok(position($$v_args ? 'member_id' and public.mcp_uuid_arg(v_args, 'member_id')$$ in
-            pg_get_functiondef('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure)) > 0
-       and position('mcp_workspace_context(p_workspace_id)' in
-            pg_get_functiondef('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure)) > 0
+-- #2392 — each in its operation's handler.
+select ok(position($$p_args ? 'member_id' and public.mcp_uuid_arg(p_args, 'member_id')$$ in
+            pg_get_functiondef('public.mcp_op_get_my_statement(public.mcp_call_context, jsonb)'::regprocedure)) > 0
+       and position('mcp_workspace_context(c.workspace_id)' in
+            pg_get_functiondef('public.mcp_op_get_capabilities(public.mcp_call_context, jsonb)'::regprocedure)) > 0
        and position($$jsonb_build_object('currency'$$ in
-            pg_get_functiondef('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure)) > 0,
+            pg_get_functiondef('public.mcp_statement_outcome(public.mcp_call_context, uuid, jsonb)'::regprocedure)) > 0,
   'statement and capabilities are patched');
 
 -- Provenance: once per booking, whoever replays it.

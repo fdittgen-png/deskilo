@@ -403,14 +403,15 @@ select ok(exists (select 1 from outputs, jsonb_array_elements(body->'data'->'ite
   'the seat is still there, by reference');
 
 -- ── 10. fault sensitivity: each check removed must be seen ───────────
+-- #2392 — the gates live in mcp_authorize; the facade only composes them.
 reset role;
-select is(pg_temp.inject('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure,
+select is(pg_temp.inject('public.mcp_authorize(uuid, uuid, text)'::regprocedure,
   'if p_installation_id is distinct from public.installation_id() then', 'if false then'),
   'injected', 'fault: the installation check removed');
 select isnt(coalesce(pg_temp.call('a2', 'claude-1632', current_setting('t.a')::uuid, 'get_capabilities', '{}', null,
   current_setting('t.d2')::uuid)->'error'->>'code', 'served'), 'wrong_installation', 'the D2 probe sees it');
 select pg_temp.restore();
-select is(pg_temp.inject('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure,
+select is(pg_temp.inject('public.mcp_authorize(uuid, uuid, text)'::regprocedure,
   'if v_grant.id is null then', 'if false then'), 'injected', 'fault: the eligibility check removed');
 insert into public.mcp_connections (installation_id, local_user_id, binding_id, client_id)
 select public.installation_id(), local_user_id, id, 'claude-1632' from public.identity_bindings
@@ -421,12 +422,12 @@ select id, current_setting('t.a')::uuid, array['get_capabilities'], 'own'
 select isnt(pg_temp.says('a8', 'claude-1632', 'a'), 'not_eligible', 'the never-approved probe sees it');
 select pg_temp.restore();
 select is(pg_temp.says('a8', 'claude-1632', 'a'), 'not_eligible', 'restored: never approved is refused');
-select is(pg_temp.inject('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure,
+select is(pg_temp.inject('public.mcp_authorize(uuid, uuid, text)'::regprocedure,
   'if v_scope.connection_id is null or not (p_operation = any (v_scope.operations)) then', 'if false then'),
   'injected', 'fault: the consent check removed');
 select isnt(pg_temp.says('a2', 'claude-1632', 'u'), 'no_consent', 'the unconsented probe sees it');
 select pg_temp.restore();
-select is(pg_temp.inject('public.mcp_execute_v1(uuid, uuid, text, jsonb, uuid)'::regprocedure,
+select is(pg_temp.inject('public.mcp_authorize(uuid, uuid, text)'::regprocedure,
   'where connection_id = v_connection.id and workspace_id = p_workspace_id and revoked_at is null',
   'where connection_id = v_connection.id and revoked_at is null'),
   'injected', 'fault: the consent''s workspace check dropped');
