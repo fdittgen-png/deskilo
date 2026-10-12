@@ -7,7 +7,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "node build/build-site.mjs --src ../deskilo"
+    "build": "node -e \"console.log('public/ is prebuilt - nothing to build')\"",
+    "refresh": "node build/build-site.mjs --src ../deskilo"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }
