@@ -11,6 +11,7 @@ String mcpOperationLabel(AppLocalizations l10n, String op) => switch (op) {
   'list_my_reservations' =>
     l10n.mcpOpMyReservations,
   'get_my_statement' => l10n.mcpOpMyStatement,
+  'get_member_statement' => l10n.mcpOpMemberStatement,
   'list_my_invoices' => l10n.mcpOpMyInvoices,
   'create_reservation' =>
     l10n.mcpOpCreateReservation,

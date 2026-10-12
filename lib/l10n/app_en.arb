@@ -11812,13 +11812,17 @@
   "@mcpFieldNameSample": {
     "description": "#1809 mcp_disclosure"
   },
-  "mcpGroupFinancial": "Financial requests",
+  "mcpGroupFinancial": "Finances",
   "@mcpGroupFinancial": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpGroupMembership": "Membership requests",
   "@mcpGroupMembership": {
     "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupOther": "Other operations needing a permission",
+  "@mcpGroupOther": {
+    "description": "#2391 mcp_settings"
   },
   "mcpGroupOwn": "Own bookings and account",
   "@mcpGroupOwn": {
@@ -11923,6 +11927,10 @@
   "mcpOpListWorkspaces": "See which workspaces it may use",
   "@mcpOpListWorkspaces": {
     "description": "#1615 mcp_consent"
+  },
+  "mcpOpMemberStatement": "See a member's account statement",
+  "@mcpOpMemberStatement": {
+    "description": "#2391 mcp_consent"
   },
   "mcpOpMemberStatus": "Change a member's status",
   "@mcpOpMemberStatus": {

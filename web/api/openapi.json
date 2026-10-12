@@ -65,6 +65,7 @@
                           "deskilo_get_place",
                           "deskilo_list_my_favorites",
                           "deskilo_get_my_statement",
+                          "deskilo_get_member_statement",
                           "deskilo_list_my_invoices",
                           "deskilo_create_reservation",
                           "deskilo_update_reservation",
@@ -1185,6 +1186,7 @@
               "get_place",
               "list_my_favorites",
               "get_my_statement",
+              "get_member_statement",
               "list_my_invoices",
               "create_reservation",
               "update_reservation",
@@ -1321,6 +1323,19 @@
             "type": "string",
             "format": "uuid",
             "description": "Optional: only places in this office (an office_id from an earlier answer)."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "seat",
+              "desk",
+              "office",
+              "level"
+            ],
+            "description": "Optional: only places of this kind (seat, or a desk, office or level booked as a whole).",
+            "examples": [
+              "desk"
+            ]
           },
           "cursor": {
             "type": "string",
@@ -1498,6 +1513,44 @@
           "period"
         ],
         "x-operation": "get_my_statement",
+        "x-rpc": "member_statement",
+        "x-handler": true
+      },
+      "GetMemberStatementInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The member whose statement to read: a member_id of this workspace.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000d1"
+            ]
+          },
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "The month, as YYYY-MM.",
+            "examples": [
+              "2026-09"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id",
+          "member_id",
+          "period"
+        ],
+        "x-operation": "get_member_statement",
         "x-rpc": "member_statement",
         "x-handler": true
       },

@@ -10,29 +10,40 @@
 // from; the save goes there through that target's client. A retry of the
 // unchanged draft keeps its id; a draft changed after a failed save is a
 // new intent with a new id; a double tap joins the save in flight.
+import 'package:meta/meta.dart';
+
 import '../../../core/ids/request_id.dart';
 import '../../../core/mcp/mcp_operations.dart';
+import '../../../core/mcp/mcp_spec.dart' show McpOperationSpec;
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_context.dart';
 import 'mcp_commands.dart';
 
-/// How the policy screen groups operations: by the process they belong to.
-enum McpOperationGroup { own, financial, membership, validations }
-
-McpOperationGroup mcpOperationGroup(String op) {
-  if (const {
-    'list_pending_validations',
-    'get_validation',
-    'respond_to_validation',
-  }.contains(op)) {
-    return McpOperationGroup.validations;
-  }
-  return switch (mcpOperations[op]?.permission) {
-    'issueInvoices' => McpOperationGroup.financial,
-    'manageMembers' || 'manageBilling' => McpOperationGroup.membership,
-    _ => McpOperationGroup.own,
-  };
+/// #2391 — the process groups the policy screen shows, read from the
+/// contract (`McpOperationSpec.group`): `own` first, then each group in
+/// the order the catalogue first names it. An operation with a permission
+/// the contract gives no group gets a group of its own, never `own`.
+abstract final class McpOperationGroups {
+  static const own = 'own';
+  static const financial = 'financial';
+  static const membership = 'membership';
+  static const validations = 'validations';
 }
+
+@visibleForTesting
+List<String> mcpOperationGroupsOf(Iterable<McpOperationSpec> specs) => {
+  McpOperationGroups.own,
+  for (final spec in specs)
+    if (spec.dispatch) spec.group,
+}.toList();
+
+/// The groups of every catalogued operation, in screen order.
+final List<String> mcpOperationGroups = mcpOperationGroupsOf(
+  mcpOperations.values,
+);
+
+String mcpOperationGroup(String op) =>
+    mcpOperations[op]?.group ?? McpOperationGroups.own;
 
 /// What one save sends, frozen when it is sent.
 class McpPolicyPayload {

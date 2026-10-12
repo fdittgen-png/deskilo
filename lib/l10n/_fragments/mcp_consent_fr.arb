@@ -18,6 +18,7 @@
   "mcpOpAvailability": "Voir les places libres",
   "mcpOpMyReservations": "Voir vos réservations",
   "mcpOpMyStatement": "Voir votre relevé de compte",
+  "mcpOpMemberStatement": "Voir le relevé de compte d'un membre",
   "mcpOpMyInvoices": "Voir vos factures",
   "mcpOpCreateReservation": "Réserver une place pour vous",
   "mcpOpUpdateReservation": "Modifier vos réservations",

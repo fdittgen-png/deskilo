@@ -240,7 +240,7 @@ const Map<String, int> _baseline = {
 
   'lib/core/instance/mcp_readiness_checks.dart': 554, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/core/mcp/mcp_operations.dart': 543, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/core/mcp/mcp_operations.dart': 588, // #2386: the budget fell 600→500. #2391: get_member_statement and each operation's group are generated here.
 
   'lib/core/ui/canvas_controls.dart': 504, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

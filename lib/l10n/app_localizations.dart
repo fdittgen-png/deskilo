@@ -17403,7 +17403,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Financial requests'**
+  /// **'Finances'**
   String get mcpGroupFinancial;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -17411,6 +17411,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Membership requests'**
   String get mcpGroupMembership;
+
+  /// #2391 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Other operations needing a permission'**
+  String get mcpGroupOther;
 
   /// #1626 #1627 #1628 mcp_settings
   ///
@@ -17567,6 +17573,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See which workspaces it may use'**
   String get mcpOpListWorkspaces;
+
+  /// #2391 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See a member\'s account statement'**
+  String get mcpOpMemberStatement;
 
   /// #1619 mcp_confirmation
   ///

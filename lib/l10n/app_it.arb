@@ -6566,8 +6566,9 @@
   "mcpEligibleYes": "Questo database le consente di usare gli assistenti.",
   "mcpFieldName": "Nomi degli spazi e dei posti",
   "mcpFieldNameSample": "Scrivania finestra 12",
-  "mcpGroupFinancial": "Richieste finanziarie",
+  "mcpGroupFinancial": "Finanze",
   "mcpGroupMembership": "Richieste di iscrizione",
+  "mcpGroupOther": "Altre operazioni che richiedono un permesso",
   "mcpGroupOwn": "Prenotazioni e conto personali",
   "mcpGroupValidations": "Convalide",
   "mcpIdentityConflict": "Un altro account detiene già questa identità qui: un amministratore della base può risolverlo.",
@@ -6603,6 +6604,7 @@
     "description": "#2185 mcp_consent"
   },
   "mcpOpListWorkspaces": "Vedere quali spazi può usare",
+  "mcpOpMemberStatement": "Vedere l'estratto conto di un membro",
   "mcpOpMemberStatus": "Modificare lo stato di un membro",
   "mcpOpMyInvoices": "Vedere le sue fatture",
   "mcpOpMyReservations": "Vedere le sue prenotazioni",

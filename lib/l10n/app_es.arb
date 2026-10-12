@@ -6566,8 +6566,9 @@
   "mcpEligibleYes": "Esta base de datos le permite usar asistentes.",
   "mcpFieldName": "Nombres de espacios y puestos",
   "mcpFieldNameSample": "Escritorio ventana 12",
-  "mcpGroupFinancial": "Solicitudes financieras",
+  "mcpGroupFinancial": "Finanzas",
   "mcpGroupMembership": "Solicitudes de membresía",
+  "mcpGroupOther": "Otras operaciones que requieren un permiso",
   "mcpGroupOwn": "Reservas y cuenta propias",
   "mcpGroupValidations": "Validaciones",
   "mcpIdentityConflict": "Otra cuenta ya tiene esta identidad aquí: un administrador de la base puede resolverlo.",
@@ -6603,6 +6604,7 @@
     "description": "#2185 mcp_consent"
   },
   "mcpOpListWorkspaces": "Ver qué espacios puede usar",
+  "mcpOpMemberStatement": "Ver el estado de cuenta de un miembro",
   "mcpOpMemberStatus": "Cambiar el estado de un miembro",
   "mcpOpMyInvoices": "Ver sus facturas",
   "mcpOpMyReservations": "Ver sus reservas",

@@ -10185,10 +10185,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpFieldNameSample => 'Window desk 12';
 
   @override
-  String get mcpGroupFinancial => 'Financial requests';
+  String get mcpGroupFinancial => 'Finances';
 
   @override
   String get mcpGroupMembership => 'Membership requests';
+
+  @override
+  String get mcpGroupOther => 'Other operations needing a permission';
 
   @override
   String get mcpGroupOwn => 'Own bookings and account';
@@ -10280,6 +10283,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpListWorkspaces => 'See which workspaces it may use';
+
+  @override
+  String get mcpOpMemberStatement => 'See a member\'s account statement';
 
   @override
   String get mcpOpMemberStatus => 'Change a member\'s status';

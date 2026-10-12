@@ -63,7 +63,8 @@ values (current_setting('deskilo.av.ws')::uuid, current_setting('deskilo.av.riva
         current_setting('deskilo.av.from')::timestamptz + interval '4 hours');
 select isnt(pg_temp.bookable(), null, 'a seat another member holds answers the engine''s refusal');
 
-select ok(position('mcp_seat_bookable' in pg_get_functiondef('public.mcp_read_v1(uuid, public.members, text, jsonb)'::regprocedure)) > 0,
+-- #2391 — every kind of place, seats included, asks mcp_place_bookable.
+select ok(position('mcp_place_bookable' in pg_get_functiondef('public.mcp_read_v1(uuid, public.members, text, jsonb)'::regprocedure)) > 0,
   'get_availability asks the engine');
 
 select * from finish();

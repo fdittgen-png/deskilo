@@ -55,6 +55,13 @@ const _reviewed = {
   // filters and an id-true cursor. pgTAP 144 drives availability paging,
   // the filters and the engine verdict.
   'mcp_read_v1@0358',
+  // #2391/0411 restates mcp_read_v1 whole again from the LIVE dev body
+  // (pg_get_functiondef, 0358's text): every branch verbatim except the
+  // validation rows (own rows only under an `own` ceiling) and
+  // availability over the four kinds, whose verdict moves from
+  // mcp_seat_bookable to mcp_place_bookable (the same engine probe for any
+  // kind). pgTAP 170 drives both; 129 pins the engine call.
+  'mcp_read_v1@0411',
   // #2137/0361 restates create_invitation from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored patch (environments,
   // handover, prod access) is carried; the one change is that a member
