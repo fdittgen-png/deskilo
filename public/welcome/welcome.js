@@ -6,7 +6,7 @@
 
   var root = document.documentElement;
   var LANGS = ['en', 'fr', 'de', 'es', 'it'];
-  var GUIDE = '/guide/';
+  var GUIDE = 'https://www.deskilo.org/guide/';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dict = window.DESKILO_I18N || {};
 
