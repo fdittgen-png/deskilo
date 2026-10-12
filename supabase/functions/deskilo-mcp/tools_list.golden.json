@@ -29,7 +29,7 @@
       "readOnlyHint": true,
       "openWorldHint": false
     },
-    "input": "f0680d724eef157a",
+    "input": "1c61336bbcd30b9c",
     "output": "ef2b826d64d7f55b"
   },
   "list_my_reservations": {
@@ -75,6 +75,17 @@
     },
     "input": "5ebe45b8fe31ec9a",
     "output": "086ebde4829d9b59"
+  },
+  "get_member_statement": {
+    "name": "deskilo_get_member_statement",
+    "title": "A member's monthly statement",
+    "annotations": {
+      "title": "A member's monthly statement",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "44e0fee0cbf4bf98",
+    "output": "336734e3ef864da2"
   },
   "list_my_invoices": {
     "name": "deskilo_list_my_invoices",

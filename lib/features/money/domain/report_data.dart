@@ -125,6 +125,7 @@ Map<String, Object?> legalMentionData(
               seller?.country ?? workspace?.countryCode ?? '',
               vatRegimeFromWire(
                   seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
+              vatId: seller?.vatId ?? workspace?.vatId ?? '',
             ),
           ),
     // #886 — the client as the postal standard prints them: the full
@@ -218,6 +219,33 @@ Map<String, Object?> invoiceReportData(
   ).isAssociation;
   String rate(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+  final legalData = legalMentionData(
+    strings,
+    workspace,
+    seller: invoice.sellerParty,
+    buyer: invoice.buyerParty,
+    clientAddress: clientAddressOf(invoice, workspace, strings),
+    clientName: clientNameOf(invoice),
+    reverseCharged: invoice.isReverseCharged,
+    counterpartyCategory: invoice.counterpartyCategory,
+    memberTerms: memberTerms,
+    frozen: invoice.legalClauses,
+    legacy: isLegacyInvoice(invoice),
+    memberCapacity: memberCapacity,
+  );
+  // #2356 — what the seller's own law adds (IT stamp duty, ES correcting
+  // invoice, FR category of the operation), after the owner's mentions.
+  final national = nationalInvoiceMentions(
+    sellerCountry: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
+    regime: vatRegimeFromWire(
+        invoice.sellerParty?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
+    currency: invoice.currency,
+    untaxedCents: invoice.vatTotals
+        .where((t) => t.vatCents == 0 && t.category != 'AE')
+        .fold(0, (sum, t) => sum + t.grossCents),
+    correction: invoice.isCreditNote || invoice.replacesNumber.isNotEmpty,
+    rectifies: invoice.replacesNumber,
+  );
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
@@ -292,20 +320,12 @@ Map<String, Object?> invoiceReportData(
           'amount': currency.formatMinor(t.vatCents),
         },
     ],
-    ...legalMentionData(
-      strings,
-      workspace,
-      seller: invoice.sellerParty,
-      buyer: invoice.buyerParty,
-      clientAddress: clientAddressOf(invoice, workspace, strings),
-      clientName: clientNameOf(invoice),
-      reverseCharged: invoice.isReverseCharged,
-      counterpartyCategory: invoice.counterpartyCategory,
-      memberTerms: memberTerms,
-      frozen: invoice.legalClauses,
-      legacy: isLegacyInvoice(invoice),
-      memberCapacity: memberCapacity,
-    ),
+    ...legalData,
+    if (national.isNotEmpty)
+      'special_mentions': [
+        '${legalData['special_mentions'] ?? ''}'.trim(),
+        ...national,
+      ].where((m) => m.isNotEmpty).join('\n'),
   };
 }
 

@@ -33,13 +33,6 @@ const Map<String, String> _allowed = {
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
   'lib/features/money/domain/verifactu.dart::verifactuRecordXml':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
-  // MCP, app side: wired in by the server issue or deleted there.
-  'lib/core/instance/mcp_readiness.dart::verifyMcpReadinessReport':
-      '#2394 — the readiness report verifier',
-  'lib/core/mcp/mcp_envelope.dart::McpEnvelopeView':
-      '#2394 — the envelope, generated from the contract there',
-  'lib/core/mcp/mcp_spec.dart::validateMcpInput':
-      '#2394 — the shared validator the client never runs yet',
 
   // Domain rules the app was meant to use and does not yet.
   'lib/features/money/domain/accounting_amount.dart::settleForeign':

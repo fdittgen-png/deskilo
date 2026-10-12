@@ -1,0 +1,1 @@
+Prenota una postazione su una piantina dal vivo, un conto trasparente per ogni membro. Prova la demo nel browser su www.deskilo.org, senza account.

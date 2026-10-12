@@ -36,6 +36,7 @@ import '../invoice_documents.dart';
 import '../recapitulative_actions.dart';
 import '../report_actions.dart';
 import '../report_layout_actions.dart';
+import '../vat_filing_file_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
 import '../widgets/vat_declaration_period_field.dart';
@@ -479,6 +480,14 @@ class _VatDeclarationsScreenState
                                         onPressed: () =>
                                             _exportXml(declaration),
                                       ),
+                                      // #2357 — the file the channel files.
+                                      if (vatFilingFileLabel(l10n, ref.watch(saveVatFilingFileProvider).country) case final label?)
+                                        OutlinedButton.icon(
+                                          key: ValueKey('vat-decl-filing-${declaration.id}'),
+                                          icon: const Icon(Icons.upload_file_outlined, size: 18),
+                                          label: Text(label),
+                                          onPressed: () => exportVatFilingFile(context, ref.read(saveVatFilingFileProvider), declaration),
+                                        ),
                                       if (declaration.isPrepared)
                                         OutlinedButton.icon(
                                           key: ValueKey(

@@ -4885,6 +4885,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Prefilled from amount ÷ quantity; round up if you like.';
 
   @override
+  String get expenseVatAsset => 'A fixed asset';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.';
+
+  @override
   String get expenseVatDeductible => 'Deductible share (%)';
 
   @override
@@ -8351,6 +8358,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMissingBuyerName => 'The member\'s name or company';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'The member\'s VAT number (needed for reverse charge)';
 
@@ -8359,12 +8370,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'The legal basis for the VAT exemption';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'The workspace\'s postal address (street or city)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'The workspace country must be France or Germany for issuing here — other countries are issued outside the app';
+      'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -10281,10 +10300,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpFieldNameSample => 'Window desk 12';
 
   @override
-  String get mcpGroupFinancial => 'Financial requests';
+  String get mcpGroupFinancial => 'Finances';
 
   @override
   String get mcpGroupMembership => 'Membership requests';
+
+  @override
+  String get mcpGroupOther => 'Other operations needing a permission';
 
   @override
   String get mcpGroupOwn => 'Own bookings and account';
@@ -10376,6 +10398,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpListWorkspaces => 'See which workspaces it may use';
+
+  @override
+  String get mcpOpMemberStatement => 'See a member\'s account statement';
 
   @override
   String get mcpOpMemberStatus => 'Change a member\'s status';
@@ -15819,6 +15844,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.';
 
   @override
+  String get scheduleVatInvalid =>
+      'Enter a deductible share between 0 and 100.';
+
+  @override
   String get scheduleWeekly => 'weekly';
 
   @override
@@ -18926,11 +18955,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclDraft => 'Draft';
 
   @override
+  String get vatDeclEdiTva => 'EDI-TVA file (CA3)';
+
+  @override
+  String get vatDeclElster => 'ELSTER file (UStVA)';
+
+  @override
   String get vatDeclEmpty =>
       'No declarations yet — pick a period and generate the first one.';
 
   @override
   String get vatDeclFiled => 'Filed';
+
+  @override
+  String get vatDeclFilingPeriod =>
+      'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Tax number (Steuernummer)';
 
   @override
   String get vatDeclGenerate => 'Prepare';

@@ -46,14 +46,15 @@ class ConsentClient {
   /// `chatgpt`, `loopback`), when the server knows one.
   final String? family;
 
-  static ConsentClient? fromJson(Object? json) {
-    if (json is! Map || json['client_id'] is! String) return null;
+  static ConsentClient? fromReader(JsonReader r) {
+    final clientId = r.textOrAbsent('client_id');
+    if (clientId == null) return null;
     return ConsentClient(
-      clientId: json['client_id'] as String,
-      name: json['name'] is String ? json['name'] as String : '',
-      status: McpClientApproval.parse(json['status']),
-      redirectHost: json['redirect_host'] as String?,
-      family: json['family'] is String ? json['family'] as String : null,
+      clientId: clientId,
+      name: r.textOrAbsent('name') ?? '',
+      status: McpClientApproval.parse(r.textOrAbsent('status')),
+      redirectHost: r.textOrAbsent('redirect_host'),
+      family: r.textOrAbsent('family'),
     );
   }
 }
@@ -72,9 +73,8 @@ class ConsentDecider {
   /// The decision is the caller's own (they are that operator).
   final bool me;
 
-  static ConsentDecider? fromJson(Object? json) {
-    if (json is! Map) return null;
-    final kind = switch (json['kind']) {
+  static ConsentDecider? fromReader(JsonReader r) {
+    final kind = switch (r.textOrAbsent('kind')) {
       'operator' => McpDeciderKind.operator,
       'admin' => McpDeciderKind.admin,
       _ => null,
@@ -82,8 +82,8 @@ class ConsentDecider {
     if (kind == null) return null;
     return ConsentDecider(
       kind: kind,
-      displayName: json['display_name'] as String?,
-      me: json['me'] == true,
+      displayName: r.textOrAbsent('display_name'),
+      me: r.isTrue('me'),
     );
   }
 }
@@ -105,8 +105,8 @@ class ConsentStatus {
     final r = JsonReader.of(json, context: 'consent_status');
     return ConsentStatus(
       eligibility: r.textOrAbsent('eligibility') ?? 'unknown',
-      client: ConsentClient.fromJson(r.json['client']),
-      decider: ConsentDecider.fromJson(r.json['decider']),
+      client: ConsentClient.fromReader(r.objectOrAbsent('client')),
+      decider: ConsentDecider.fromReader(r.objectOrAbsent('decider')),
     );
   }
 }
@@ -125,12 +125,13 @@ class McpEndpointInfo {
   final String? metadataUrl;
   final McpEndpointSource source;
 
-  factory McpEndpointInfo.fromJson(Object? json) {
-    if (json is! Map) {
-      return const McpEndpointInfo(source: McpEndpointSource.unknown);
-    }
-    // Fail-closed (#2387): a malformed field reads as absent.
-    final r = JsonReader.of(json, context: 'mcp_endpoint');
+  factory McpEndpointInfo.fromJson(Object? json) =>
+      McpEndpointInfo.fromReader(
+        JsonReader.orEmpty(json, context: 'mcp_endpoint'),
+      );
+
+  // Fail-closed (#2387): a malformed field reads as absent.
+  factory McpEndpointInfo.fromReader(JsonReader r) {
     final resource = r.textOrAbsent('resource');
     return McpEndpointInfo(
       resource: resource != null && resource.startsWith('https://')
@@ -200,7 +201,7 @@ class EndpointProbe {
     // Fail-closed (#2387): a malformed field reads as absent.
     final r = JsonReader.of(json, context: 'endpoint_probe');
     return EndpointProbe(
-      state: EndpointProbeState.parse(r.json['state']),
+      state: EndpointProbeState.parse(r.textOrAbsent('state')),
       reason: r.textOrAbsent('reason'),
       endpointUrl: r.textOrAbsent('endpoint_url'),
       publishedResource: r.textOrAbsent('published_resource'),
@@ -234,18 +235,18 @@ class InstanceNotice {
   bool get unread => readAt == null;
 
   static InstanceNotice? fromJson(Object? json) {
-    if (json is! Map || json['id'] is! String || json['kind'] is! String) {
-      return null;
-    }
+    // Fail-closed (#2387): a notice without an id or kind is left out.
+    final r = JsonReader.orEmpty(json, context: 'instance_notice');
+    final id = r.textOrAbsent('id');
+    final kind = r.textOrAbsent('kind');
+    if (id == null || kind == null) return null;
     return InstanceNotice(
-      id: json['id'] as String,
-      kind: json['kind'] as String,
-      subject: '${json['subject'] ?? ''}',
-      payload: json['payload'] is Map
-          ? Map<String, dynamic>.from(json['payload'] as Map)
-          : const {},
-      createdAt: DateTime.tryParse('${json['created_at'] ?? ''}'),
-      readAt: DateTime.tryParse('${json['read_at'] ?? ''}'),
+      id: id,
+      kind: kind,
+      subject: r.textOrAbsent('subject') ?? '',
+      payload: r.objectOrAbsent('payload').json,
+      createdAt: DateTime.tryParse(r.textOrAbsent('created_at') ?? ''),
+      readAt: DateTime.tryParse(r.textOrAbsent('read_at') ?? ''),
     );
   }
 }

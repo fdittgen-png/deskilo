@@ -411,10 +411,20 @@ platform :ios do
   end
 
   desc "Push the App Store listing (text + URLs) from fastlane/metadata/ios."
-  desc "Text only: no binary, no screenshots, nothing submitted for review —"
-  desc "so it is safe to re-run at any time. Five locales, the same five the"
-  desc "app itself speaks."
+  desc "Text and the iPhone screenshots (fastlane/screenshots/ios/<locale>):"
+  desc "no binary, nothing submitted for review — so it is safe to re-run at"
+  desc "any time. Five locales, the same five the app itself speaks."
   lane :upload_metadata do
+    # App Review wants a contact phone; it is a secret, so it exists only on
+    # the runner (never committed): deliver reads review_information/*.txt.
+    phone = ENV["BETA_CONTACT_PHONE"].to_s.strip
+    UI.user_error!("BETA_CONTACT_PHONE is not set") if phone.empty?
+    review_dir = ["../fastlane", "../../fastlane", "fastlane"]
+      .map { |d| File.expand_path("#{d}/metadata/ios/review_information", Dir.pwd) }
+      .find { |d| Dir.exist?(d) }
+    UI.user_error!("review_information folder not found from #{Dir.pwd}") if review_dir.nil?
+    File.write(File.join(review_dir, "phone_number.txt"), phone)
+
     deliver(
       api_key: asc_api_key,
       app_identifier: "de.deskilo.app",
@@ -422,7 +432,10 @@ platform :ios do
       # would read every directory here as a locale, so iOS gets its own.
       metadata_path: "../fastlane/metadata/ios",
       skip_binary_upload: true,
-      skip_screenshots: true,
+      # The welcome page's tour, framed per language (1290x2796, iPhone 6.9").
+      screenshots_path: "../fastlane/screenshots/ios",
+      skip_screenshots: false,
+      overwrite_screenshots: true,
       skip_app_version_update: true,
       # Never opens a review submission, and never asks a question a CI
       # runner cannot answer.

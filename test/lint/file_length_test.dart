@@ -240,7 +240,7 @@ const Map<String, int> _baseline = {
 
   'lib/core/instance/mcp_readiness_checks.dart': 554, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/core/mcp/mcp_operations.dart': 543, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/core/mcp/mcp_operations.dart': 590, // #2394: +2, it re-exports the generated enum and envelope. #2386: the budget fell 600→500. #2391: get_member_statement and each operation's group are generated here.
 
   'lib/core/ui/canvas_controls.dart': 504, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -264,7 +264,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/money_repository.dart': 598, // 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/money_repository.dart': 605, // 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -276,7 +276,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/screens/vat_screen.dart': 567, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 557, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 576, // 2026-10-11 #2357 557→576: the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 542, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

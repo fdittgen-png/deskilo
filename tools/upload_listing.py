@@ -141,7 +141,7 @@ def main() -> int:
             packageName=args.package, editId=edit_id,
             body={
                 "contactEmail": "fdittgen@gmail.com",
-                "contactWebsite": "https://github.com/fdittgen-png/deskilo",
+                "contactWebsite": "https://www.deskilo.org",
                 "defaultLanguage": "en-US",
             },
         ),

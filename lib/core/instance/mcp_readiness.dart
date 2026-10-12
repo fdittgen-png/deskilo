@@ -20,7 +20,7 @@
 // A report is bound to the project ref, the installation id and the epoch it
 // was measured on, and carries a digest of its own checks. A report for one
 // target never certifies another, and a report whose status was edited no
-// longer verifies (`verifyMcpReadinessReport`).
+// longer verifies (`verifyMcpReadinessReport`, test/helpers).
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -178,40 +178,4 @@ String canonicalJson(Object? value) {
     _ => v,
   };
   return jsonEncode(sort(value));
-}
-
-/// Why [report] may not be relied on for the target named, or null when it
-/// is intact, about that exact target, and says it is ready.
-///
-/// A report is OUTPUT: the enable command never reads one (it measures
-/// again), so this exists for whoever consumes an exported report.
-String? verifyMcpReadinessReport(
-  Map<String, Object?> report, {
-  required String ref,
-  required String installationId,
-  required int epoch,
-}) {
-  final digest = report['digest'];
-  final body = Map<String, Object?>.of(report)..remove('digest');
-  if (digest is! String || _mcpReportDigest(body) != digest) {
-    return 'report_tampered';
-  }
-  final binding = body['binding'];
-  if (binding is! Map ||
-      binding['ref'] != ref ||
-      binding['installation_id'] != installationId ||
-      binding['epoch'] != epoch) {
-    return 'report_for_other_target';
-  }
-  final checks = body['checks'];
-  final areas = body['areas'];
-  if (checks is! List || areas is! Map) return 'report_tampered';
-  // The status is recomputed from the checks, never read from the report.
-  final allPass =
-      checks.isNotEmpty &&
-      checks.every((c) => c is Map && c['outcome'] == CheckOutcome.pass.name) &&
-      ReadinessArea.values.every(
-        (a) => areas[a.name] == CheckOutcome.pass.name,
-      );
-  return allPass ? null : 'report_not_ready';
 }

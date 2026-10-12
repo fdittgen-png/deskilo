@@ -15,14 +15,14 @@ import 'lint_sources.dart';
 /// Raw `json['…']` read lines left in hand-written lib/ (473 when the
 /// reader landed, 441 after the money rows, 245 once every fromJson read
 /// through it).
-const _rawReadBudget = 245;
+const _rawReadBudget = 207;
 
 /// Lines naming `dynamic` in hand-written lib/ (728 in the review of
 /// #2381, 684 once every fromJson read through JsonReader, 688 when #2386
 /// split the demo repositories: four forwarders repeat a signature). Most are
 /// `Map<String, dynamic>` signatures of the decoders; they go as the
 /// signatures move to `Map<String, Object?>`.
-const _dynamicBudget = 688;
+const _dynamicBudget = 687;
 
 void main() {
   final files = handWrittenDartFiles('lib').toList();

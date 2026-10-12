@@ -89,7 +89,7 @@ class ActionConfirmation {
     final preview = r.objectOrAbsent('preview');
     return ActionConfirmation(
       id: id,
-      status: ConfirmationStatus.fromWire(r.json['status']),
+      status: ConfirmationStatus.fromWire(r.textOrAbsent('status')),
       operation: r.textOrAbsent('operation') ?? '',
       workspaceName: r.textOrAbsent('workspace_name') ?? '',
       clientName: r.textOrAbsent('client_name') ?? '',

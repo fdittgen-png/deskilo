@@ -1,0 +1,32 @@
+Il tuo spazio di coworking, gestito insieme. Prenota una postazione su una piantina dal vivo, dai a ogni membro lo stesso conto trasparente che vedono gli amministratori e lascia che le persone scelte dalla tua community approvino ciò che conta. Software libero (AGPL-3.0), in beta e pronto per un pilota.
+
+PROVALO PRIMA DI INSTALLARE
+• Demo nel browser: apri www.deskilo.org e tocca «Prova la demo» — nessun account, e nulla di ciò che fai lì lascia il tuo dispositivo
+• Guida utente in italiano, inglese, francese, tedesco e spagnolo, ogni schermata spiegata passo dopo passo: www.deskilo.org/guide/it.html
+• Guida di avvio per un piccolo spazio, dalla piantina al primo invito: www.deskilo.org/guide/setup-it.html
+
+DOVE POSSO LAVORARE?
+• Una piantina dal vivo mostra ogni postazione e chi la occupa, per qualsiasi giorno
+• Prenota una mezza giornata, una postazione o una sala intera, una volta o in serie, poi fai il check-in alla porta
+• Entra scansionando il QR code dello spazio; codici postazione stampati, badge NFC e modalità kiosk per un tablet a parete
+
+QUANTO DEVO?
+• Un conto trasparente per membro: abbonamento, uso extra, spese condivise e pagamenti
+• Piani, quote, pacchetti giornalieri e regole di superamento diventano un estratto mensile
+• Fatture con numerazione progressiva, note di credito, solleciti e IVA, emesse nell'app per spazi in Francia e Germania; esportazioni contabili per il tuo commercialista
+
+CHI DECIDE?
+• Ruoli e regole di approvazione scelti dalla tua community
+• Ciò che un amministratore fa a tuo nome attende la tua conferma, e ogni decisione conserva la sua cronologia
+
+TRA GLI SPAZI
+• Un solo «Io» per tutti gli spazi di un server, con preferiti e il tuo ordine
+• Scopri: un elenco e una mappa condivisi dove gli spazi pubblicano una pagina pubblica di proposito
+• Messenger: conversazioni private e gruppi; scegli tu chi vede il tuo nome, i tuoi contatti e la tua presenza
+
+I TUOI DATI, LA TUA SCELTA
+Usa il server di riferimento condiviso oppure ospita tu stesso il backend sul tuo Supabase. Nessun tracciamento, nessuna analisi, nessuna pubblicità. Disponibile su Android, iPhone, Windows, macOS e nel browser, in cinque lingue.
+
+GDPR: dati ospitati nell'UE sul deployment di riferimento, accesso limitato per ruolo e applicato sul server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione.
+
+COSTO: il software è gratuito, con tutte le funzioni, anche sul vostro server. L’hosting sul deployment di riferimento è gratuito per tutti fino al 31 dicembre 2027; dal 1° gennaio 2028 resta gratuito fino a cinque abbonati attivi (otto per le organizzazioni non profit) e a pagamento oltre, da circa 29 € al mese. La fatturazione avviene fuori dall’app.

@@ -8,11 +8,12 @@
 // that the answer carries only fields the contract classifies. It never
 // calls anything that writes, and it keeps no field VALUE: the verdict is
 // codes and counts.
+import '../mcp/mcp_operations.dart';
 import 'mcp_readiness.dart';
 
 /// The one operation the pilot calls: read-only, workspace-scoped, and
 /// answering the caller's own capabilities rather than anybody's data.
-const mcpPilotOperation = 'get_capabilities';
+final mcpPilotOperation = McpOperationId.getCapabilities.id;
 
 /// Checks over what the endpoint answered. [toolsList] and [call] are the
 /// decoded JSON-RPC responses (null = no answer).

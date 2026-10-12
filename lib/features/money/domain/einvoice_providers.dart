@@ -14,7 +14,7 @@ const Map<String, List<String>> eInvoiceProviderFields = {
   'ro_efactura': ['base_url', 'cif', 'access_token'],
 };
 
-/// The fields that are secrets: typed, stored in Vault (0410), never shown
+/// The fields that are secrets: typed, stored in Vault (0414), never shown
 /// again — the screen only says that one is set.
 const eInvoiceSecretFields = {
   'auth_value',

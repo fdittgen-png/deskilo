@@ -52,5 +52,17 @@
         "type": "String"
       }
     }
+  },
+  "expenseVatAsset": "A fixed asset",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
+  "scheduleVatInvalid": "Enter a deductible share between 0 and 100.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
   }
 }

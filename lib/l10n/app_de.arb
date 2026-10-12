@@ -3406,6 +3406,14 @@
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "expenseVatAsset": "Ein Anlagegut",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Eine Ausstattung, die der Bereich behält und abschreibt (ein Laptop, Möbel): Ihre Vorsteuer wird getrennt vom Rest erklärt.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
   "expenseVatDeductible": "Abziehbarer Anteil (%)",
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
@@ -5568,6 +5576,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "Die Steuerkennung des Mitglieds: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -5576,11 +5588,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "Die Mehrwertsteuer in Landeswährung: ein Verkäufer aus einem Mitgliedstaat außerhalb des Euro stellt die Steuer hier in seiner eigenen Währung in Rechnung (Art. 230 MwStSystRL)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "Die Postanschrift des Arbeitsbereichs (Straße oder Ort)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -6691,8 +6711,9 @@
   "mcpEligibleYes": "Diese Datenbank erlaubt Ihnen, Assistenten zu nutzen.",
   "mcpFieldName": "Namen von Workspaces und Plätzen",
   "mcpFieldNameSample": "Fensterplatz 12",
-  "mcpGroupFinancial": "Finanzanfragen",
+  "mcpGroupFinancial": "Finanzen",
   "mcpGroupMembership": "Mitgliedschaftsanfragen",
+  "mcpGroupOther": "Weitere Vorgänge mit Berechtigung",
   "mcpGroupOwn": "Eigene Buchungen und Konto",
   "mcpGroupValidations": "Freigaben",
   "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.",
@@ -6709,44 +6730,27 @@
   "mcpNextUnavailable": "Der Server konnte nicht antworten. Es wird nichts angenommen; versuchen Sie es später erneut.",
   "mcpOpAvailability": "Freie Plätze sehen",
   "mcpOpCancelReservation": "Ihre noch nicht begonnenen Buchungen stornieren",
-  "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpCapabilities": "Sehen, was er dort tun darf",
   "mcpOpCheckIn": "Sie einchecken",
   "mcpOpCheckOut": "Sie auschecken",
   "mcpOpCreateReservation": "Einen Platz für Sie buchen",
   "mcpOpGetPlace": "Einen Ort beschreiben und auf Wunsch zeigen",
-  "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
   "mcpOpInvoiceIssue": "Rechnung ausstellen",
   "mcpOpInvoiceVoid": "Rechnung stornieren",
   "mcpOpListMyFavorites": "Ihre Lieblingsplätze",
-  "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
+  "mcpOpMemberStatement": "Den Kontoauszug eines Mitglieds sehen",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
   "mcpOpMyStatement": "Ihren Kontoauszug sehen",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
   "mcpOpRatePlace": "Plätze bewerten",
-  "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpRefund": "Rechnung erstatten",
   "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
-  "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
   "mcpOpSetFavorite": "Plätze als Favoriten markieren",
-  "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
   "mcpOpUpdateReservation": "Ihre Reservierungen ändern",
   "mcpOverviewTitle": "Weitere verbundene Datenbanken",
@@ -10503,6 +10507,10 @@
   "scheduleUnitYears": "Jahre",
   "scheduleUntil": "bis {date}",
   "scheduleValidationHint": "Der Plan geht zuerst an die Validierer. Jede Fälligkeit wird Ihnen dann vorgelegt: zu diesem Betrag bestätigt zählt sie sofort; ein anderer Betrag erklärt sich und wird erneut validiert.",
+  "scheduleVatInvalid": "Geben Sie einen abziehbaren Anteil zwischen 0 und 100 ein.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
+  },
   "scheduleWeekly": "wöchentlich",
   "scheduleYearly": "jährlich",
   "scheduledAwaitingTitle": "Geplante Ausgaben zur Bestätigung",
@@ -11783,6 +11791,14 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
+  "vatDeclEdiTva": "EDI-TVA-Datei (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "ELSTER-Datei (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
   "vatDeclEmpty": "Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
@@ -11790,6 +11806,18 @@
   "vatDeclFiled": "Abgegeben",
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclFilingPeriod": "Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Geben Sie die Steuernummer ein: die Steuernummer für ELSTER, die SIREN (oder eine französische USt-IdNr.) für EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Steuernummer",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
   "vatDeclGenerate": "Vorbereiten",
   "@vatDeclGenerate": {

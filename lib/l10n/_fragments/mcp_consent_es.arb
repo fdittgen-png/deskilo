@@ -12,41 +12,5 @@
   "mcpConsentConnected": "Conectado. Volviendo al asistente.",
   "mcpConsentDenied": "Rechazado. El asistente no obtiene nada.",
   "mcpConsentPartial": "El asistente fue aprobado pero la conexión aún no se puede usar. Vuelva a conectar desde el asistente.",
-  "mcpConsentRequested": "Aprobación solicitada. Un administrador de la base de datos la revisará.",
-  "mcpOpListWorkspaces": "Ver qué espacios puede usar",
-  "mcpOpCapabilities": "Ver qué puede hacer allí",
-  "mcpOpAvailability": "Ver plazas libres",
-  "mcpOpMyReservations": "Ver sus reservas",
-  "mcpOpMyStatement": "Ver su estado de cuenta",
-  "mcpOpMyInvoices": "Ver sus facturas",
-  "mcpOpCreateReservation": "Reservar una plaza por usted",
-  "mcpOpUpdateReservation": "Cambiar sus reservas",
-  "mcpOpCheckIn": "Registrar su entrada",
-  "mcpOpCheckOut": "Registrar su salida",
-  "mcpOpReservationDeletion": "Pedir la eliminación de una reserva ya iniciada",
-  "mcpOpPendingValidations": "Ver solicitudes de validación pendientes",
-  "mcpOpGetValidation": "Leer una solicitud de validación",
-  "mcpOpCancelReservation": "Cancelar sus reservas que aún no han empezado",
-  "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
-  },
-  "mcpOpGetPlace": "Describir un lugar y mostrarlo si lo pide",
-  "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
-  },
-  "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
-  },
-  "mcpOpListMyFavorites": "Sus lugares favoritos",
-  "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
-  },
-  "mcpOpSetFavorite": "Marcar lugares como favoritos",
-  "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
-  },
-  "mcpOpRatePlace": "Valorar lugares",
-  "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
-  }
+  "mcpConsentRequested": "Aprobación solicitada. Un administrador de la base de datos la revisará."
 }

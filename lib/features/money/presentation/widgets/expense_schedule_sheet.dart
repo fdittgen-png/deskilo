@@ -21,6 +21,7 @@ import '../../application/schedule_expense.dart';
 import '../../domain/expense_schedule.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/money_providers.dart';
+import 'expense_vat_fields.dart';
 
 /// #767 — the localized wording of one recurrence rule: "every 2 weeks,
 /// 12 times", "monthly until 31.12.2026", "every 10 days".
@@ -224,6 +225,10 @@ Future<bool> _showCreateExpenseScheduleSheet(
   var startsOn = now;
   DateTime? endsOn;
   final topic = l10n.helpTopicScheduledExpenses;
+  // #2357 — the VAT every occurrence will carry.
+  final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
+  if (!context.mounted) return false;
+  final vat = ExpenseVatChoice(TextEditingController(text: '100'));
 
   final submitted = await showAppSheet<bool>(
     context: context,
@@ -260,6 +265,15 @@ Future<bool> _showCreateExpenseScheduleSheet(
             decoration: InputDecoration(
               labelText: l10n.moneyDescriptionLabel,
             ),
+          ),
+          ...expenseVatFields(
+            l10n: l10n,
+            currency: currency,
+            percents: vatPercents,
+            choice: vat,
+            amount: amount.text,
+            refresh: () => setSheetState(() {}),
+            keyPrefix: 'schedule',
           ),
           const SizedBox(height: 12),
           ListTile(
@@ -362,6 +376,10 @@ Future<bool> _showCreateExpenseScheduleSheet(
         context, l10n.scheduleMissingFields);
     return false;
   }
+  if (!vat.shareValid) {
+    AppSnack.error(context, l10n.scheduleVatInvalid);
+    return false;
+  }
   final ok = await runGuarded(
     context,
     domain: 'money',
@@ -378,6 +396,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
           repeatCount: int.tryParse(times.text),
           endsOn: endsOn,
           description: description.text.trim(),
+          vat: vat.payload,
         ),
   );
   if (!ok || !context.mounted) return false;

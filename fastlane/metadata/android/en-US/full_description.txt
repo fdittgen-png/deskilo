@@ -1,19 +1,34 @@
-DesKilo is a free, libre app for coworking communities and the people who move between them: desk booking, one transparent money ledger — and a private-by-default social network of spaces.
+Your coworking space, run together. Book a desk on a live floor plan, give every member the same transparent account the admins see, and let the people your community names approve what matters. Free and open source (AGPL-3.0), in beta and ready for a pilot.
 
-SPACES
-• Draw your workspace on a grid: levels, offices, desks and bookable seats
-• Tap a seat on the live floor plan to check in; reserve ahead, once or as a series
-• Calendar of your bookings and your alerts; admins see everyone's
-• Membership plans, quotas, one transparent ledger per member, community expenses, invoices
-• Everything an admin does for you needs your confirmation
+TRY IT BEFORE YOU INSTALL
+• Demo in your browser: open www.deskilo.org and tap "Try the demo" — no account needed, and nothing you do there leaves your device
+• User guide in English, French, German, Spanish and Italian, every screen explained step by step: www.deskilo.org/guide/en.html
+• Setup guide for a small space, from the floor plan to the first invitation: www.deskilo.org/guide/setup-en.html
 
-YOU, ACROSS SPACES
-• One personal account (Me) for every space you belong to
+WHERE CAN I WORK?
+• A live floor plan shows every desk and who holds it, for any day
+• Book a half-day, a desk or a whole room, once or as a series, then check in at the door
+• Join by scanning the space's QR code; printed desk codes, NFC badges and a kiosk mode for a wall tablet
+
+WHAT DO I OWE?
+• One transparent account per member: subscription, extra use, shared expenses and payments
+• Plans, allowances, day packages and overage rules become one monthly statement
+• Invoices with gapless numbering, credit notes, reminders and VAT, issued in the app for spaces in France and Germany; accounting exports for your accountant
+
+WHO DECIDES?
+• Roles and approval rules your community chooses
+• Whatever an admin does on your behalf waits for your confirmation, and every decision keeps its history
+
+ACROSS SPACES
+• One "Me" for every space on a server, with favourites and your own order
 • Discover: a shared directory and map where spaces publish a public page on purpose
-• Messenger: private conversations and groups, with references to bookings and invoices where both of you belong
-• Requests from people outside your reach, a block list, and a visibility matrix: you choose who sees your name, bio, contact details and presence
+• Messenger: private conversations and groups; you choose who sees your name, contact details and presence
 
 YOUR DATA, YOUR CHOICE
-Self-host the backend on your own Supabase instance, or use the reference deployment operated by Florian DITTGEN, which also hosts the global directory. The F-Droid build starts without a server and asks which one to use: the reference deployment, an existing server, or a new one it sets up for you. AGPL-3.0-licensed free software.
+Use the shared reference server, or host the backend yourself on your own Supabase. No tracking, no analytics, no advertising. Available on Android, iPhone, Windows, macOS and in a browser, in five languages.
 
-GDPR: EU-hosted data on the reference deployment, no tracking or advertising, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure. In the store builds, push notifications use Firebase Cloud Messaging; the F-Droid build has no push service.
+GDPR: EU-hosted data on the reference deployment, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
+
+The F-Droid build starts without a server and asks which one to use; it has no push service. The store builds use Firebase Cloud Messaging for push notifications.
+
+COST: the software is free, with every feature, also on your own server. Hosting on the reference deployment is free for everyone until 31 December 2027; from 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that, from about €29 a month. Billing happens outside the app.

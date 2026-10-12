@@ -52,5 +52,17 @@
         "type": "String"
       }
     }
+  },
+  "expenseVatAsset": "Une immobilisation",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Un équipement que l'espace garde et amortit (un ordinateur, du mobilier) : sa TVA est déclarée à part du reste.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
+  "scheduleVatInvalid": "Saisissez une part déductible entre 0 et 100.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
   }
 }

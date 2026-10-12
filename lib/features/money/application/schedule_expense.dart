@@ -95,9 +95,10 @@ class ExpenseSchedules {
     int? repeatCount,
     DateTime? endsOn,
     String description = '',
+    Map<String, Object?>? vat,
   }) async {
     if (!isSchedulable(title: title, amountCents: amountCents)) return false;
-    await _money.createExpenseSchedule(
+    final id = await _money.createExpenseSchedule(
       workspaceId: workspaceId,
       title: title.trim(),
       amountCents: amountCents!,
@@ -108,6 +109,8 @@ class ExpenseSchedules {
       endsOn: endsOn,
       description: description,
     );
+    // #2357 — the VAT every occurrence carries.
+    if (vat != null) await _money.setExpenseScheduleVat(id, vat);
     return true;
   }
 

@@ -152,6 +152,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) => _fetchExpenseSchedulesImpl(workspaceId);
   @override Future<String> createExpenseSchedule({required String workspaceId, required String title, required int amountCents, required DateTime startsOn, required ScheduleUnit unit, int every = 1, int? repeatCount, DateTime? endsOn, String description = ''}) => _createExpenseScheduleImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, startsOn: startsOn, unit: unit, every: every, repeatCount: repeatCount, endsOn: endsOn, description: description);
   @override Future<void> cancelExpenseSchedule(String scheduleId) => _cancelExpenseScheduleImpl(scheduleId);
+  @override Future<void> setExpenseScheduleVat(String scheduleId, Map<String, Object?>? vat) => _client.rpc<void>('set_expense_schedule_vat', params: {'p_schedule_id': scheduleId, 'p_vat': vat});
   @override Future<int> sweepExpenseSchedules(String workspaceId) => _sweepExpenseSchedulesImpl(workspaceId);
   @override Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId) => _fetchExpenseOccurrencesImpl(workspaceId);
   @override Future<void> confirmExpenseOccurrence({required String occurrenceId, required int amountCents, String reason = '', String? note}) => _confirmExpenseOccurrenceImpl(occurrenceId: occurrenceId, amountCents: amountCents, reason: reason, note: note);

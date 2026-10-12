@@ -5839,6 +5839,14 @@
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "expenseVatAsset": "A fixed asset",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
   "expenseVatDeductible": "Deductible share (%)",
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
@@ -9658,6 +9666,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "The member's tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "The member's VAT number (needed for reverse charge)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -9666,11 +9678,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "The workspace country must be France or Germany for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "The workspace's VAT identification number",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -11937,13 +11957,17 @@
   "@mcpFieldNameSample": {
     "description": "#1809 mcp_disclosure"
   },
-  "mcpGroupFinancial": "Financial requests",
+  "mcpGroupFinancial": "Finances",
   "@mcpGroupFinancial": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpGroupMembership": "Membership requests",
   "@mcpGroupMembership": {
     "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupOther": "Other operations needing a permission",
+  "@mcpGroupOther": {
+    "description": "#2391 mcp_settings"
   },
   "mcpGroupOwn": "Own bookings and account",
   "@mcpGroupOwn": {
@@ -12003,99 +12027,103 @@
   },
   "mcpOpAvailability": "See free places",
   "@mcpOpAvailability": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_availability)"
   },
   "mcpOpCancelReservation": "Cancel your bookings that have not started",
   "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (cancel_reservation)"
   },
   "mcpOpCapabilities": "See what it may do there",
   "@mcpOpCapabilities": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_capabilities)"
   },
   "mcpOpCheckIn": "Check you in",
   "@mcpOpCheckIn": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (check_in)"
   },
   "mcpOpCheckOut": "Check you out",
   "@mcpOpCheckOut": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (check_out)"
   },
   "mcpOpCreateReservation": "Book a place for you",
   "@mcpOpCreateReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (create_reservation)"
   },
   "mcpOpGetPlace": "Describe a place, and show it when you ask",
   "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_place)"
   },
   "mcpOpGetValidation": "Read a validation request",
   "@mcpOpGetValidation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_validation)"
   },
   "mcpOpInvoiceIssue": "Issue an invoice",
   "@mcpOpInvoiceIssue": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_issue)"
   },
   "mcpOpInvoiceVoid": "Void an invoice",
   "@mcpOpInvoiceVoid": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_void)"
   },
   "mcpOpListMyFavorites": "Your favourite places",
   "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_favorites)"
   },
   "mcpOpListWorkspaces": "See which workspaces it may use",
   "@mcpOpListWorkspaces": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_workspaces)"
+  },
+  "mcpOpMemberStatement": "See a member's account statement",
+  "@mcpOpMemberStatement": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_member_statement)"
   },
   "mcpOpMemberStatus": "Change a member's status",
   "@mcpOpMemberStatus": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_member_status_change)"
   },
   "mcpOpMyInvoices": "See your invoices",
   "@mcpOpMyInvoices": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_invoices)"
   },
   "mcpOpMyReservations": "See your reservations",
   "@mcpOpMyReservations": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_reservations)"
   },
   "mcpOpMyStatement": "See your account statement",
   "@mcpOpMyStatement": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_my_statement)"
   },
   "mcpOpPendingValidations": "See pending validation requests",
   "@mcpOpPendingValidations": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_pending_validations)"
   },
   "mcpOpRatePlace": "Rate places",
   "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (rate_place)"
   },
   "mcpOpRefund": "Refund an invoice",
   "@mcpOpRefund": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_refund)"
   },
   "mcpOpReservationDeletion": "Ask to delete a booking that has started",
   "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_reservation_deletion)"
   },
   "mcpOpRespond": "Answer a validation request",
   "@mcpOpRespond": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (respond_to_validation)"
   },
   "mcpOpSetFavorite": "Mark places as favourites",
   "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
   "mcpOpSubscription": "Change a member's subscription share",
   "@mcpOpSubscription": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_subscription_change)"
   },
   "mcpOpUpdateReservation": "Change your reservations",
   "@mcpOpUpdateReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (update_reservation)"
   },
   "mcpOverviewTitle": "Other connected databases",
   "@mcpOverviewTitle": {
@@ -18162,6 +18190,10 @@
   "scheduleUnitYears": "years",
   "scheduleUntil": "until {date}",
   "scheduleValidationHint": "The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.",
+  "scheduleVatInvalid": "Enter a deductible share between 0 and 100.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
+  },
   "scheduleWeekly": "weekly",
   "scheduleYearly": "yearly",
   "scheduledAwaitingTitle": "Scheduled expenses awaiting you",
@@ -21579,6 +21611,14 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
+  "vatDeclEdiTva": "EDI-TVA file (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "ELSTER file (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
   "vatDeclEmpty": "No declarations yet — pick a period and generate the first one.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
@@ -21586,6 +21626,18 @@
   "vatDeclFiled": "Filed",
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Tax number (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
   "vatDeclGenerate": "Prepare",
   "@vatDeclGenerate": {

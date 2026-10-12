@@ -1,19 +1,34 @@
-DesKilo è un'app libera e gratuita per le community di coworking e per le persone che si spostano tra di loro: prenotazione di postazioni, un registro economico trasparente — e un social network di spazi, privato per impostazione predefinita.
+Il tuo spazio di coworking, gestito insieme. Prenota una postazione su una piantina dal vivo, dai a ogni membro lo stesso conto trasparente che vedono gli amministratori e lascia che le persone scelte dalla tua community approvino ciò che conta. Software libero (AGPL-3.0), in beta e pronto per un pilota.
 
-GLI SPAZI
-• Disegna il tuo spazio su una griglia: piani, uffici, scrivanie e posti prenotabili
-• Tocca un posto sulla pianta in tempo reale per fare il check-in; prenota in anticipo, una volta o in serie
-• Calendario delle tue prenotazioni e dei tuoi avvisi; gli amministratori vedono quelli di tutti
-• Piani di abbonamento, quote, un registro trasparente per socio, spese comuni, fatture
-• Tutto ciò che un amministratore fa per te richiede la tua conferma
+PROVALO PRIMA DI INSTALLARE
+• Demo nel browser: apri www.deskilo.org e tocca «Prova la demo» — nessun account, e nulla di ciò che fai lì lascia il tuo dispositivo
+• Guida utente in italiano, inglese, francese, tedesco e spagnolo, ogni schermata spiegata passo dopo passo: www.deskilo.org/guide/it.html
+• Guida di avvio per un piccolo spazio, dalla piantina al primo invito: www.deskilo.org/guide/setup-it.html
 
-TU, TRA GLI SPAZI
-• Un account personale (Io) per tutti i tuoi spazi
-• Scopri: una rubrica condivisa e una mappa in cui gli spazi pubblicano una pagina pubblica per scelta
-• Messaggi: conversazioni private e gruppi, con riferimenti a prenotazioni e fatture quando appartenete entrambi allo spazio
-• Richieste da persone fuori dalla tua cerchia, elenco dei bloccati e matrice di visibilità: scegli tu chi vede il tuo nome, il tuo profilo, i tuoi contatti e la tua presenza
+DOVE POSSO LAVORARE?
+• Una piantina dal vivo mostra ogni postazione e chi la occupa, per qualsiasi giorno
+• Prenota una mezza giornata, una postazione o una sala intera, una volta o in serie, poi fai il check-in alla porta
+• Entra scansionando il QR code dello spazio; codici postazione stampati, badge NFC e modalità kiosk per un tablet a parete
+
+QUANTO DEVO?
+• Un conto trasparente per membro: abbonamento, uso extra, spese condivise e pagamenti
+• Piani, quote, pacchetti giornalieri e regole di superamento diventano un estratto mensile
+• Fatture con numerazione progressiva, note di credito, solleciti e IVA, emesse nell'app per spazi in Francia e Germania; esportazioni contabili per il tuo commercialista
+
+CHI DECIDE?
+• Ruoli e regole di approvazione scelti dalla tua community
+• Ciò che un amministratore fa a tuo nome attende la tua conferma, e ogni decisione conserva la sua cronologia
+
+TRA GLI SPAZI
+• Un solo «Io» per tutti gli spazi di un server, con preferiti e il tuo ordine
+• Scopri: un elenco e una mappa condivisi dove gli spazi pubblicano una pagina pubblica di proposito
+• Messenger: conversazioni private e gruppi; scegli tu chi vede il tuo nome, i tuoi contatti e la tua presenza
 
 I TUOI DATI, LA TUA SCELTA
-Ospita il backend sulla tua istanza Supabase, oppure usa l'installazione di riferimento gestita da Florian DITTGEN, che ospita anche la rubrica globale. La versione F-Droid si avvia senza server e chiede quale usare: l'installazione di riferimento, un server esistente o uno nuovo che configura per te. Software libero con licenza AGPL-3.0.
+Usa il server di riferimento condiviso oppure ospita tu stesso il backend sul tuo Supabase. Nessun tracciamento, nessuna analisi, nessuna pubblicità. Disponibile su Android, iPhone, Windows, macOS e nel browser, in cinque lingue.
 
-GDPR: dati ospitati nell'UE sull'installazione di riferimento, nessun tracciamento né pubblicità, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione. Nelle versioni degli store, le notifiche push usano Firebase Cloud Messaging; la versione F-Droid non ha alcun servizio push.
+GDPR: dati ospitati nell'UE sul deployment di riferimento, accesso limitato per ruolo e applicato sul server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione.
+
+La versione F-Droid parte senza server e chiede quale usare; non ha un servizio push. Le versioni degli store usano Firebase Cloud Messaging per le notifiche push.
+
+COSTO: il software è gratuito, con tutte le funzioni, anche sul vostro server. L’hosting sul deployment di riferimento è gratuito per tutti fino al 31 dicembre 2027; dal 1° gennaio 2028 resta gratuito fino a cinque abbonati attivi (otto per le organizzazioni non profit) e a pagamento oltre, da circa 29 € al mese. La fatturazione avviene fuori dall’app.

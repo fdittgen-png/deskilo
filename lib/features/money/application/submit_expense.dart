@@ -46,6 +46,7 @@ class ExpenseDraft {
     this.supplyUnitPrice = '',
     this.vatPercent,
     this.deductible = '100',
+    this.asset = false,
   });
 
   final String amount;
@@ -67,13 +68,20 @@ class ExpenseDraft {
   /// The share of that VAT the space may deduct, in percent, as typed.
   final String deductible;
 
+  /// #2357 — the expense bought a fixed asset (CA3 line 19).
+  final bool asset;
+
   double? get deductiblePct =>
       double.tryParse(deductible.trim().replaceAll(',', '.'));
 
   /// The VAT payload the RPC takes, or null for an expense without VAT.
   Map<String, Object?>? get vat => (vatPercent ?? 0) <= 0
       ? null
-      : {'percent': vatPercent, 'deductible_pct': deductiblePct};
+      : {
+          'percent': vatPercent,
+          'deductible_pct': deductiblePct,
+          if (asset) 'asset': true,
+        };
 
   int? get amountCents => parseCentsInput(amount);
   int? get quantity => int.tryParse(supplyQuantity.trim());

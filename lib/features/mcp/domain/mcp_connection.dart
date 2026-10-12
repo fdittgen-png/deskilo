@@ -58,21 +58,22 @@ class ConsentOptions {
     final r = JsonReader.of(json, context: 'consent_options');
     return ConsentOptions(
       eligible: r.textOrAbsent('eligibility') == 'eligible',
-      workspaces: [
-        for (final w in r.listOrAbsent('workspaces'))
-          if (w is Map && w['workspace_id'] is String)
-            ConsentWorkspace(
-              id: w['workspace_id'] as String,
-              name: JsonReader.of(w).textOrAbsent('name') ?? '',
-              operations: [
-                for (final o in JsonReader.of(w).listOrAbsent('operations'))
-                  '$o',
-              ],
-              optionalFields: mcpKnownOptionalFields(w['optional_fields']),
-            ),
-      ],
+      workspaces: workspacesFrom(r.listOrAbsent('workspaces')),
     );
   }
+
+  /// The workspaces of a consent answer; one without an id is left out.
+  static List<ConsentWorkspace> workspacesFrom(List<Object?> rows) => [
+    for (final raw in rows)
+      if (JsonReader.orEmpty(raw, context: 'consent_workspace') case final w
+          when w.textOrAbsent('workspace_id') != null)
+        ConsentWorkspace(
+          id: w.textOrAbsent('workspace_id')!,
+          name: w.textOrAbsent('name') ?? '',
+          operations: [for (final o in w.listOrAbsent('operations')) '$o'],
+          optionalFields: mcpKnownOptionalFields(w.listOrAbsent('optional_fields')),
+        ),
+  ];
 }
 
 class McpConnectionInfo {
@@ -102,17 +103,23 @@ class McpConnectionInfo {
   );
 
   static List<McpConnectionInfo> listFromJson(Object? json) => [
-    for (final c in json is List ? json : const [])
-      if (c is Map && c['client_id'] is String)
-        McpConnectionInfo(
-          clientId: c['client_id'] as String,
-          clientName: '${c['client_name'] ?? c['client_id']}',
-          connectedAt: DateTime.tryParse('${c['connected_at']}')?.toUtc(),
-          workspaces: ConsentOptions.fromJson({
-            'workspaces': c['workspaces'],
-          }).workspaces,
-        ),
+    for (final raw in json is List ? json : const [])
+      ?_fromRow(raw),
   ];
+
+  // Fail-closed (#2387): a row without a client id is left out.
+  static McpConnectionInfo? _fromRow(Object? raw) {
+    final c = JsonReader.orEmpty(raw, context: 'mcp_connection');
+    final id = c.textOrAbsent('client_id');
+    if (id == null) return null;
+    return McpConnectionInfo(
+      clientId: id,
+      clientName: c.textOrAbsent('client_name') ?? id,
+      connectedAt: DateTime.tryParse(c.textOrAbsent('connected_at') ?? '')
+          ?.toUtc(),
+      workspaces: ConsentOptions.workspacesFrom(c.listOrAbsent('workspaces')),
+    );
+  }
 }
 
 /// #1631 — what one revocation ended, as the server answered it: the
@@ -134,17 +141,14 @@ class McpRevocation {
   final bool connectionEnded;
 
   static McpRevocation fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
-    final installation = m['installation_id'];
-    final workspaces = m['workspaces'];
-    final connections = m['connections'];
+    final m = JsonReader.orEmpty(json, context: 'mcp_revocation');
     return McpRevocation(
-      installationId: installation is String ? installation.toLowerCase() : null,
+      installationId: m.textOrAbsent('installation_id')?.toLowerCase(),
       workspaces: {
-        for (final w in workspaces is List ? workspaces : const <Object?>[])
+        for (final w in m.listOrAbsent('workspaces'))
           if (w is String) w,
       },
-      connectionEnded: connections is num && connections > 0,
+      connectionEnded: (m.intOrAbsent('connections') ?? 0) > 0,
     );
   }
 }

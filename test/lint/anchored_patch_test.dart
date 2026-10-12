@@ -55,6 +55,13 @@ const _reviewed = {
   // filters and an id-true cursor. pgTAP 144 drives availability paging,
   // the filters and the engine verdict.
   'mcp_read_v1@0358',
+  // #2391/0411 restates mcp_read_v1 whole again from the LIVE dev body
+  // (pg_get_functiondef, 0358's text): every branch verbatim except the
+  // validation rows (own rows only under an `own` ceiling) and
+  // availability over the four kinds, whose verdict moves from
+  // mcp_seat_bookable to mcp_place_bookable (the same engine probe for any
+  // kind). pgTAP 170 drives both; 129 pins the engine call.
+  'mcp_read_v1@0411',
   // #2137/0361 restates create_invitation from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored patch (environments,
   // handover, prod access) is carried; the one change is that a member
@@ -151,7 +158,42 @@ const _reviewed = {
   'create_workspace@0202',
 };
 
+/// #2392 — from the facade's restatement on, an MCP function changes by
+/// a whole new definition (a new `mcp_op_<id>` for a new operation), never
+/// by an anchored patch of its live text. [sources] maps a migration's
+/// four-digit number to its text; answers the offending numbers.
+List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0412'}) => [
+  for (final e in sources.entries)
+    if (e.key.compareTo(since) >= 0 &&
+        RegExp(r"pg_get_functiondef\(\s*'public\.mcp_|proname\s*=\s*'mcp_")
+            .hasMatch(e.value))
+      e.key,
+]..sort();
+
 void main() {
+  test('#2392 no migration anchors a patch into an mcp_ function', () {
+    final sources = {
+      for (final f in Directory('supabase/migrations')
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.sql')))
+        f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
+    };
+    expect(mcpAnchorPatches(sources), isEmpty,
+        reason: 'An MCP operation is a catalogue entry and its own '
+            'mcp_op_<id> function; gates change in a whole mcp_authorize.');
+  });
+
+  test('#2392 the MCP anchor guard can fail', () {
+    const fixture = '''
+select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uuid, text)'::regprocedure),
+  'if v_grant.id is null then', 'if false then');''';
+    expect(mcpAnchorPatches({'0500': fixture, '0300': fixture}), ['0500']);
+    expect(mcpAnchorPatches({'0500': "select proname = 'mcp_execute_v1'"}), ['0500']);
+    expect(mcpAnchorPatches({'0500': 'create or replace function public.mcp_op_x(c public.mcp_call_context, p_args jsonb)'}),
+        isEmpty);
+  });
+
   test('no migration re-creates a function a later-unreviewed patch owns',
       () {
     final files = Directory('supabase/migrations')

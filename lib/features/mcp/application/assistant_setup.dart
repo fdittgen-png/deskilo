@@ -91,7 +91,7 @@ Set<String> recommendedMcpOperations(Iterable<String> available) => {
   for (final op in available)
     if (mcpOperations[op] case final spec?)
       if (spec.dispatch &&
-          mcpOperationGroup(op) == McpOperationGroup.own &&
+          mcpOperationGroup(op) == McpOperationGroups.own &&
           (spec.scope == McpScope.own ||
               (spec.authority == McpAuthority.member &&
                   spec.mutation == McpMutation.read)))

@@ -29,8 +29,9 @@ on:
       upload_metadata:
         description: >-
           Push the App Store listing text (five locales, URLs, categories)
-          from fastlane/metadata/ios. Text only — no binary, no
-          screenshots, nothing submitted for review. Safe to re-run.
+          from fastlane/metadata/ios, and the iPhone screenshots from
+          fastlane/screenshots/ios. No binary, nothing submitted for
+          review. Safe to re-run.
         required: false
         type: boolean
         default: false

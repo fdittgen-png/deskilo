@@ -1,19 +1,34 @@
-DesKilo ist eine freie, kostenlose App für Coworking-Communities und die Menschen, die zwischen ihnen wechseln: Arbeitsplatzbuchung, ein transparentes Geldkonto — und ein standardmäßig privates soziales Netzwerk der Spaces.
+Euer Coworking-Space, gemeinsam geführt. Bucht einen Platz auf einem Live-Raumplan, gebt jedem Mitglied dasselbe transparente Konto, das auch die Admins sehen, und lasst die von eurer Community bestimmten Personen entscheiden, was zählt. Freie Software (AGPL-3.0), in der Beta und bereit für einen Pilotbetrieb.
 
-SPACES
-• Zeichnen Sie Ihren Space auf einem Raster: Etagen, Büros, Tische und buchbare Plätze
-• Tippen Sie auf dem Live-Plan einen Platz an, um einzuchecken; im Voraus buchen, einmalig oder als Serie
-• Kalender Ihrer Buchungen und Hinweise; Admins sehen alle
-• Mitgliedschaften, Kontingente, ein transparentes Konto pro Mitglied, Gemeinschaftsausgaben, Rechnungen
-• Alles, was ein Admin für Sie tut, braucht Ihre Bestätigung
+ERST AUSPROBIEREN, DANN INSTALLIEREN
+• Demo im Browser: www.deskilo.org öffnen und „Demo ausprobieren“ antippen — kein Konto nötig, und nichts, was ihr dort tut, verlässt euer Gerät
+• Benutzerhandbuch auf Deutsch, Englisch, Französisch, Spanisch und Italienisch, jeder Bildschirm Schritt für Schritt erklärt: www.deskilo.org/guide/de.html
+• Einrichtungsanleitung für einen kleinen Space, vom Raumplan bis zur ersten Einladung: www.deskilo.org/guide/setup-de.html
 
-SIE, ÜBER SPACES HINWEG
-• Ein persönliches Konto (Ich) für alle Ihre Spaces
+WO KANN ICH ARBEITEN?
+• Ein Live-Raumplan zeigt jeden Platz und wer ihn hat, für jeden Tag
+• Halbtag, Platz oder ganzen Raum buchen, einmalig oder als Serie, dann an der Tür einchecken
+• Per QR-Code des Space beitreten; gedruckte Platzcodes, NFC-Ausweise und ein Kiosk-Modus für ein Wand-Tablet
+
+WAS SCHULDE ICH?
+• Ein transparentes Konto pro Mitglied: Abo, Mehrnutzung, gemeinsame Ausgaben und Zahlungen
+• Tarife, Kontingente, Tagespakete und Überschreitungsregeln werden zu einer Monatsabrechnung
+• Rechnungen mit lückenloser Nummerierung, Gutschriften, Mahnungen und MwSt., in der App erstellt für Spaces in Frankreich und Deutschland; Buchhaltungsexporte für eure Buchhaltung
+
+WER ENTSCHEIDET?
+• Rollen und Freigaberegeln, die eure Community festlegt
+• Was ein Admin in eurem Namen tut, wartet auf eure Bestätigung, und jede Entscheidung behält ihren Verlauf
+
+ÜBER SPACES HINWEG
+• Ein „Ich“ für alle Spaces eines Servers, mit Favoriten und eigener Reihenfolge
 • Entdecken: ein gemeinsames Verzeichnis mit Karte, in dem Spaces bewusst eine öffentliche Seite veröffentlichen
-• Nachrichten: private Unterhaltungen und Gruppen, mit Verweisen auf Buchungen und Rechnungen, wenn Sie beide zum Space gehören
-• Anfragen von Personen außerhalb Ihres Kreises, eine Sperrliste und eine Sichtbarkeitsmatrix: Sie bestimmen, wer Ihren Namen, Ihr Profil, Ihre Kontaktdaten und Ihre Anwesenheit sieht
+• Messenger: private Unterhaltungen und Gruppen; ihr bestimmt, wer euren Namen, Kontaktdaten und eure Anwesenheit sieht
 
-IHRE DATEN, IHRE WAHL
-Betreiben Sie das Backend selbst auf Ihrer eigenen Supabase-Instanz oder nutzen Sie die Referenzinstallation von Florian DITTGEN, die auch das globale Verzeichnis hostet. Die F-Droid-Version startet ohne Server und fragt, welcher verwendet werden soll: die Referenzinstallation, ein bestehender Server oder ein neuer, den sie für Sie einrichtet. Freie Software unter AGPL-3.0.
+EURE DATEN, EURE WAHL
+Nutzt den gemeinsamen Referenzserver oder hostet das Backend selbst auf eurem eigenen Supabase. Kein Tracking, keine Analyse, keine Werbung. Verfügbar für Android, iPhone, Windows, macOS und im Browser, in fünf Sprachen.
 
-DSGVO: Daten auf der Referenzinstallation in der EU, kein Tracking, keine Werbung, Zugriff nach Rolle und serverseitig durchgesetzt. Ihre Rechte sind Schaltflächen unter Einstellungen → Datenschutz & Daten: wer Ihre Daten sieht, wer zugegriffen hat, Export, Löschung. In den Store-Versionen nutzen Push-Benachrichtigungen Firebase Cloud Messaging; die F-Droid-Version hat keinen Push-Dienst.
+DSGVO: Daten auf der Referenz-Installation in der EU gehostet, Zugriff nach Rolle begrenzt und serverseitig durchgesetzt. Eure Rechte sind Schaltflächen unter Einstellungen → Datenschutz & Daten: wer eure Daten sehen kann, wer zugegriffen hat, Export, Löschung.
+
+Die F-Droid-Version startet ohne Server und fragt, welchen sie nutzen soll; sie hat keinen Push-Dienst. Die Store-Versionen nutzen Firebase Cloud Messaging für Push-Benachrichtigungen.
+
+KOSTEN: Die Software ist kostenlos, mit allen Funktionen, auch auf einem eigenen Server. Das Hosting auf dem Referenz-Deployment ist für alle bis zum 31. Dezember 2027 kostenlos; ab dem 1. Januar 2028 bleibt es bis fünf aktive Abonnenten kostenlos (acht für gemeinnützige Organisationen) und kostet darüber, ab etwa 29 € im Monat. Die Abrechnung erfolgt außerhalb der App.

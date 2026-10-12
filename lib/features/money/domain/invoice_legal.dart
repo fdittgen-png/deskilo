@@ -122,7 +122,7 @@ class InvoiceLegal {
 
   /// #2358 — the space's electronic address on the e-invoicing networks
   /// (BT-34) and its EAS scheme: frozen as the seller's `endpoint_id` /
-  /// `endpoint_scheme` on every invoice (0410).
+  /// `endpoint_scheme` on every invoice (0414).
   final String einvoiceEndpointId;
   final String einvoiceEndpointScheme;
 

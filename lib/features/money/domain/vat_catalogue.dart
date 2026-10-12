@@ -175,6 +175,18 @@ const Map<String, List<({String label, double percent, VatGroup group})>>
   // so. The owner types the local combined rate.
 };
 
+/// #2356 — the day a rate that moved took its current value, so the
+/// seeded rate is a dated version (0182) and not a timeless number: the
+/// change after it is a new version, never an edit. Only the rates that
+/// moved recently are dated; the rest stand since 1900-01-01.
+final Map<String, Map<double, String>> _since = {
+  'EE': {24: '2025-07-01'},
+  'FI': {25.5: '2024-09-01', 13.5: '2025-01-01'},
+  'RO': {21: '2025-08-01', 11: '2025-08-01'},
+  'SK': {23: '2025-01-01', 19: '2025-01-01', 5: '2025-01-01'},
+  'CH': {8.1: '2024-01-01', 3.8: '2024-01-01', 2.6: '2024-01-01'},
+};
+
 /// The country's usual rates as editable [VatRate]s, standard first and
 /// marked as the default.
 /// Every country the catalogue knows.
@@ -191,6 +203,8 @@ List<VatRate> vatCatalogueFor(String countryCode) => [
           category: rate.group.category,
           groupKey: rate.group.wire,
           outsideBase: rate.group.outsideBase,
+          validFrom:
+              _since[countryCode.toUpperCase()]?[rate.percent] ?? '1900-01-01',
         ),
     ];
 
@@ -208,7 +222,9 @@ String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase(
         'Canada taxes by province: keep the line for yours (GST, HST, or '
             'GST+PST/QST) and delete the rest.',
       'CH' =>
-        'The 3.8 % special rate applies to accommodation only.',
+        'The 3.8 % special rate applies to accommodation only. If the vote '
+            'of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: '
+            'change them by law then.',
       _ => null,
     };
 

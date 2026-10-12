@@ -8502,6 +8502,18 @@ abstract class AppLocalizations {
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
 
+  /// #2357 input VAT: expenseVatAsset
+  ///
+  /// In en, this message translates to:
+  /// **'A fixed asset'**
+  String get expenseVatAsset;
+
+  /// #2357 input VAT: expenseVatAssetHint
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.'**
+  String get expenseVatAssetHint;
+
   /// #2357 input VAT: expenseVatDeductible
   ///
   /// In en, this message translates to:
@@ -14358,6 +14370,12 @@ abstract class AppLocalizations {
   /// **'The member\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #2356: invoiceMissingBuyerTaxId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
+  String get invoiceMissingBuyerTaxId;
+
   /// #1916 invoice essentials: invoiceMissingBuyerVatId
   ///
   /// In en, this message translates to:
@@ -14370,6 +14388,12 @@ abstract class AppLocalizations {
   /// **'The legal basis for the VAT exemption'**
   String get invoiceMissingExemptionReason;
 
+  /// #2356: invoiceMissingNationalCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
+  String get invoiceMissingNationalCurrency;
+
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
   /// In en, this message translates to:
@@ -14379,8 +14403,14 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be France or Germany for issuing here — other countries are issued outside the app'**
+  /// **'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
+
+  /// #2356: invoiceMissingSellerTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
+  String get invoiceMissingSellerTaxNumber;
 
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
@@ -17583,7 +17613,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Financial requests'**
+  /// **'Finances'**
   String get mcpGroupFinancial;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -17591,6 +17621,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Membership requests'**
   String get mcpGroupMembership;
+
+  /// #2391 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Other operations needing a permission'**
+  String get mcpGroupOther;
 
   /// #1626 #1627 #1628 mcp_settings
   ///
@@ -17676,145 +17712,151 @@ abstract class AppLocalizations {
   /// **'The server could not answer. Nothing is assumed; try again later.'**
   String get mcpNextUnavailable;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_availability)
   ///
   /// In en, this message translates to:
   /// **'See free places'**
   String get mcpOpAvailability;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (cancel_reservation)
   ///
   /// In en, this message translates to:
   /// **'Cancel your bookings that have not started'**
   String get mcpOpCancelReservation;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_capabilities)
   ///
   /// In en, this message translates to:
   /// **'See what it may do there'**
   String get mcpOpCapabilities;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (check_in)
   ///
   /// In en, this message translates to:
   /// **'Check you in'**
   String get mcpOpCheckIn;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (check_out)
   ///
   /// In en, this message translates to:
   /// **'Check you out'**
   String get mcpOpCheckOut;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (create_reservation)
   ///
   /// In en, this message translates to:
   /// **'Book a place for you'**
   String get mcpOpCreateReservation;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_place)
   ///
   /// In en, this message translates to:
   /// **'Describe a place, and show it when you ask'**
   String get mcpOpGetPlace;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_validation)
   ///
   /// In en, this message translates to:
   /// **'Read a validation request'**
   String get mcpOpGetValidation;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_invoice_issue)
   ///
   /// In en, this message translates to:
   /// **'Issue an invoice'**
   String get mcpOpInvoiceIssue;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_invoice_void)
   ///
   /// In en, this message translates to:
   /// **'Void an invoice'**
   String get mcpOpInvoiceVoid;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_favorites)
   ///
   /// In en, this message translates to:
   /// **'Your favourite places'**
   String get mcpOpListMyFavorites;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_workspaces)
   ///
   /// In en, this message translates to:
   /// **'See which workspaces it may use'**
   String get mcpOpListWorkspaces;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (get_member_statement)
+  ///
+  /// In en, this message translates to:
+  /// **'See a member\'s account statement'**
+  String get mcpOpMemberStatement;
+
+  /// #2394 generated from contracts/mcp/operations.json (request_member_status_change)
   ///
   /// In en, this message translates to:
   /// **'Change a member\'s status'**
   String get mcpOpMemberStatus;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_invoices)
   ///
   /// In en, this message translates to:
   /// **'See your invoices'**
   String get mcpOpMyInvoices;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_my_reservations)
   ///
   /// In en, this message translates to:
   /// **'See your reservations'**
   String get mcpOpMyReservations;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (get_my_statement)
   ///
   /// In en, this message translates to:
   /// **'See your account statement'**
   String get mcpOpMyStatement;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (list_pending_validations)
   ///
   /// In en, this message translates to:
   /// **'See pending validation requests'**
   String get mcpOpPendingValidations;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (rate_place)
   ///
   /// In en, this message translates to:
   /// **'Rate places'**
   String get mcpOpRatePlace;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_refund)
   ///
   /// In en, this message translates to:
   /// **'Refund an invoice'**
   String get mcpOpRefund;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (request_reservation_deletion)
   ///
   /// In en, this message translates to:
   /// **'Ask to delete a booking that has started'**
   String get mcpOpReservationDeletion;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (respond_to_validation)
   ///
   /// In en, this message translates to:
   /// **'Answer a validation request'**
   String get mcpOpRespond;
 
-  /// #2185 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (set_favorite)
   ///
   /// In en, this message translates to:
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
 
-  /// #1619 mcp_confirmation
+  /// #2394 generated from contracts/mcp/operations.json (request_subscription_change)
   ///
   /// In en, this message translates to:
   /// **'Change a member\'s subscription share'**
   String get mcpOpSubscription;
 
-  /// #1615 mcp_consent
+  /// #2394 generated from contracts/mcp/operations.json (update_reservation)
   ///
   /// In en, this message translates to:
   /// **'Change your reservations'**
@@ -27332,6 +27374,12 @@ abstract class AppLocalizations {
   /// **'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.'**
   String get scheduleValidationHint;
 
+  /// #2357 input VAT: scheduleVatInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a deductible share between 0 and 100.'**
+  String get scheduleVatInvalid;
+
   /// No description provided for @scheduleWeekly.
   ///
   /// In en, this message translates to:
@@ -32672,6 +32720,18 @@ abstract class AppLocalizations {
   /// **'Draft'**
   String get vatDeclDraft;
 
+  /// #2357 VAT filing files: vatDeclEdiTva
+  ///
+  /// In en, this message translates to:
+  /// **'EDI-TVA file (CA3)'**
+  String get vatDeclEdiTva;
+
+  /// #2357 VAT filing files: vatDeclElster
+  ///
+  /// In en, this message translates to:
+  /// **'ELSTER file (UStVA)'**
+  String get vatDeclElster;
+
   /// Empty state of the declarations list
   ///
   /// In en, this message translates to:
@@ -32683,6 +32743,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filed'**
   String get vatDeclFiled;
+
+  /// #2357 VAT filing files: vatDeclFilingPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  String get vatDeclFilingPeriod;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.'**
+  String get vatDeclFilingTaxNumber;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumberField
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get vatDeclFilingTaxNumberField;
 
   /// Generate-declaration button
   ///

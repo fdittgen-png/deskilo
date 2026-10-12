@@ -63,6 +63,11 @@ class JsonReader {
     throw JsonShapeException(context, '', 'object', _typeOf(raw));
   }
 
+  /// [raw] as a reader, or an empty one when it is not an object: for the
+  /// fail-closed decoders, which then read every field as absent.
+  factory JsonReader.orEmpty(Object? raw, {String context = 'row'}) =>
+      JsonReader.of(raw is Map ? raw : const <String, Object?>{}, context: context);
+
   final Map<String, Object?> json;
 
   /// The RPC or table the row came from, for the error message.

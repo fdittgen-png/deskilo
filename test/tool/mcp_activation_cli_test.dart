@@ -17,6 +17,7 @@ import '../../tool/instance/mcp_activation.dart';
 import '../../tool/instance/mcp_collect.dart';
 import '../helpers/fake_supabase_management.dart';
 import '../helpers/mcp_cli_fakes.dart';
+import '../helpers/mcp_report_verifier.dart';
 import '../helpers/mcp_target_fixture.dart';
 
 class _Out implements IOSink {
