@@ -8310,6 +8310,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il nome o la ragione sociale del socio';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'L\'identificativo fiscale del membro: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'La partita IVA del socio (necessaria per il reverse charge)';
 
@@ -8318,12 +8322,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il fondamento giuridico dell\'esenzione IVA';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'L\'IVA nella valuta nazionale: un venditore di uno Stato membro fuori dall\'euro fattura qui l\'IVA nella propria valuta (art. 230 della direttiva IVA)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'L\'indirizzo postale dello spazio (via o città)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall\'app';
+      'Il paese dello spazio deve essere uno Stato membro dell\'Unione europea per emettere qui — gli altri paesi si emettono fuori dall\'app';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -10264,10 +10276,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpFieldNameSample => 'Scrivania finestra 12';
 
   @override
-  String get mcpGroupFinancial => 'Richieste finanziarie';
+  String get mcpGroupFinancial => 'Finanze';
 
   @override
   String get mcpGroupMembership => 'Richieste di iscrizione';
+
+  @override
+  String get mcpGroupOther => 'Altre operazioni che richiedono un permesso';
 
   @override
   String get mcpGroupOwn => 'Prenotazioni e conto personali';
@@ -10359,6 +10374,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpOpListWorkspaces => 'Vedere quali spazi può usare';
+
+  @override
+  String get mcpOpMemberStatement => 'Vedere l\'estratto conto di un membro';
 
   @override
   String get mcpOpMemberStatus => 'Modificare lo stato di un membro';
@@ -18994,11 +19012,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclDraft => 'Bozza';
 
   @override
+  String get vatDeclEdiTva => 'File EDI-TVA (CA3)';
+
+  @override
+  String get vatDeclElster => 'File ELSTER (UStVA)';
+
+  @override
   String get vatDeclEmpty =>
       'Nessuna dichiarazione — scelga un periodo e generi la prima.';
 
   @override
   String get vatDeclFiled => 'Presentata';
+
+  @override
+  String get vatDeclFilingPeriod =>
+      'Una dichiarazione anticipata ELSTER copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Inserisca il numero fiscale: la Steuernummer per ELSTER, il SIREN (o una partita IVA FR) per EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Numero fiscale (Steuernummer)';
 
   @override
   String get vatDeclGenerate => 'Prepara';

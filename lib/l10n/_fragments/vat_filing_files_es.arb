@@ -1,0 +1,23 @@
+{
+  "@@locale": "es",
+  "vatDeclElster": "Archivo ELSTER (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
+  "vatDeclEdiTva": "Archivo EDI-TVA (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclFilingPeriod": "Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Introduzca el número fiscal: la Steuernummer para ELSTER, el SIREN (o un número de IVA FR) para EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Número fiscal (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  }
+}

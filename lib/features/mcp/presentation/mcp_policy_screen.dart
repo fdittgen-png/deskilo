@@ -204,7 +204,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
               ? null
               : (v) => setState(() => draft.targetCeiling = v.first),
         ),
-        for (final group in McpOperationGroup.values)
+        for (final group in mcpOperationGroups)
           ..._group(l10n, policy, draft, group),
         ..._disclosure(l10n, policy, draft),
         if (added.isNotEmpty && policy.revision > 0) ...[
@@ -230,7 +230,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
     AppLocalizations l10n,
     McpPolicy policy,
     McpPolicyDraft draft,
-    McpOperationGroup group,
+    String group,
   ) {
     final ops = [
       for (final op in policy.available)
@@ -238,13 +238,13 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
     ];
     if (ops.isEmpty) return const [];
     final title = switch (group) {
-      McpOperationGroup.own => l10n.mcpGroupOwn,
-      McpOperationGroup.financial =>
-        l10n.mcpGroupFinancial,
-      McpOperationGroup.membership =>
+      McpOperationGroups.own => l10n.mcpGroupOwn,
+      McpOperationGroups.financial => l10n.mcpGroupFinancial,
+      McpOperationGroups.membership =>
         l10n.mcpGroupMembership,
-      McpOperationGroup.validations =>
+      McpOperationGroups.validations =>
         l10n.mcpGroupValidations,
+      _ => l10n.mcpGroupOther,
     };
     return [
       const SizedBox(height: AppSpacing.md),

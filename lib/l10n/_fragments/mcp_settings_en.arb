@@ -47,9 +47,13 @@
   "@mcpGroupOwn": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpGroupFinancial": "Financial requests",
+  "mcpGroupFinancial": "Finances",
   "@mcpGroupFinancial": {
     "description": "#1626 #1627 #1628 mcp_settings"
+  },
+  "mcpGroupOther": "Other operations needing a permission",
+  "@mcpGroupOther": {
+    "description": "#2391 mcp_settings"
   },
   "mcpGroupMembership": "Membership requests",
   "@mcpGroupMembership": {

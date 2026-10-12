@@ -56,3 +56,55 @@ final class VatDeclarationsProvider
 }
 
 String _$vatDeclarationsHash() => r'00dd7b8463c8147ef26e527bb5e36f40f2bef799';
+
+/// #2357 — saving the filing file of a return, for the space as it is.
+
+@ProviderFor(saveVatFilingFile)
+final saveVatFilingFileProvider = SaveVatFilingFileProvider._();
+
+/// #2357 — saving the filing file of a return, for the space as it is.
+
+final class SaveVatFilingFileProvider
+    extends
+        $FunctionalProvider<
+          SaveVatFilingFile,
+          SaveVatFilingFile,
+          SaveVatFilingFile
+        >
+    with $Provider<SaveVatFilingFile> {
+  /// #2357 — saving the filing file of a return, for the space as it is.
+  SaveVatFilingFileProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'saveVatFilingFileProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$saveVatFilingFileHash();
+
+  @$internal
+  @override
+  $ProviderElement<SaveVatFilingFile> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  SaveVatFilingFile create(Ref ref) {
+    return saveVatFilingFile(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SaveVatFilingFile value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SaveVatFilingFile>(value),
+    );
+  }
+}
+
+String _$saveVatFilingFileHash() => r'156cd96245abccf20f91c64e837abb004711f61e';

@@ -1,0 +1,23 @@
+{
+  "@@locale": "de",
+  "vatDeclElster": "ELSTER-Datei (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
+  "vatDeclEdiTva": "EDI-TVA-Datei (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclFilingPeriod": "Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Geben Sie die Steuernummer ein: die Steuernummer für ELSTER, die SIREN (oder eine französische USt-IdNr.) für EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Steuernummer",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  }
+}

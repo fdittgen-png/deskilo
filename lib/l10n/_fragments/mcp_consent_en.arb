@@ -80,6 +80,10 @@
   "@mcpOpMyStatement": {
     "description": "#1615 mcp_consent"
   },
+  "mcpOpMemberStatement": "See a member's account statement",
+  "@mcpOpMemberStatement": {
+    "description": "#2391 mcp_consent"
+  },
   "mcpOpMyInvoices": "See your invoices",
   "@mcpOpMyInvoices": {
     "description": "#1615 mcp_consent"

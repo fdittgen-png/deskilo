@@ -14172,6 +14172,12 @@ abstract class AppLocalizations {
   /// **'The member\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #2356: invoiceMissingBuyerTaxId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
+  String get invoiceMissingBuyerTaxId;
+
   /// #1916 invoice essentials: invoiceMissingBuyerVatId
   ///
   /// In en, this message translates to:
@@ -14184,6 +14190,12 @@ abstract class AppLocalizations {
   /// **'The legal basis for the VAT exemption'**
   String get invoiceMissingExemptionReason;
 
+  /// #2356: invoiceMissingNationalCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
+  String get invoiceMissingNationalCurrency;
+
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
   /// In en, this message translates to:
@@ -14193,8 +14205,14 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be France or Germany for issuing here — other countries are issued outside the app'**
+  /// **'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
+
+  /// #2356: invoiceMissingSellerTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
+  String get invoiceMissingSellerTaxNumber;
 
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
@@ -17397,7 +17415,7 @@ abstract class AppLocalizations {
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
-  /// **'Financial requests'**
+  /// **'Finances'**
   String get mcpGroupFinancial;
 
   /// #1626 #1627 #1628 mcp_settings
@@ -17405,6 +17423,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Membership requests'**
   String get mcpGroupMembership;
+
+  /// #2391 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Other operations needing a permission'**
+  String get mcpGroupOther;
 
   /// #1626 #1627 #1628 mcp_settings
   ///
@@ -17561,6 +17585,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See which workspaces it may use'**
   String get mcpOpListWorkspaces;
+
+  /// #2391 mcp_consent
+  ///
+  /// In en, this message translates to:
+  /// **'See a member\'s account statement'**
+  String get mcpOpMemberStatement;
 
   /// #1619 mcp_confirmation
   ///
@@ -32468,6 +32498,18 @@ abstract class AppLocalizations {
   /// **'Draft'**
   String get vatDeclDraft;
 
+  /// #2357 VAT filing files: vatDeclEdiTva
+  ///
+  /// In en, this message translates to:
+  /// **'EDI-TVA file (CA3)'**
+  String get vatDeclEdiTva;
+
+  /// #2357 VAT filing files: vatDeclElster
+  ///
+  /// In en, this message translates to:
+  /// **'ELSTER file (UStVA)'**
+  String get vatDeclElster;
+
   /// Empty state of the declarations list
   ///
   /// In en, this message translates to:
@@ -32479,6 +32521,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filed'**
   String get vatDeclFiled;
+
+  /// #2357 VAT filing files: vatDeclFilingPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  String get vatDeclFilingPeriod;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.'**
+  String get vatDeclFilingTaxNumber;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumberField
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get vatDeclFilingTaxNumberField;
 
   /// Generate-declaration button
   ///

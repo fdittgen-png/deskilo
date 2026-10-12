@@ -1400,7 +1400,7 @@ routine public.invitation_preview(p_code text) -> jsonb | function | definer | s
 routine public.invitation_state(p_code text) -> jsonb | function | definer | stable | exec:service_role | body:acc7d077ddfe
 routine public.invoice_dunning_state(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8eea512e46f5
 routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:service_role | body:4ee14bd0651f
-routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:026a009142d7
+routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:6cb628978407
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:9fada5418c56
 routine public.invoice_issuing_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | invoker | stable | exec:service_role | body:789ffb6de6d5
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
@@ -1462,13 +1462,16 @@ routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | defin
 routine public.may_view_member_finances(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:642867c71724
 routine public.may_view_member_negotiations(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b55728ee95bd
 routine public.mcp_apply_period(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:8bf6ff02c7d6
+routine public.mcp_authorize(p_installation_id uuid, p_workspace_id uuid, p_operation text) -> mcp_call_context | function | definer | volatile | exec:service_role | body:f9eb58e55dee
 routine public.mcp_booking_period_minutes(p_workspace_id uuid) -> TABLE(work_start integer, half_boundary integer, work_end integer, tz text) | function | definer | stable | exec:service_role | body:c70d64aa15e3
 routine public.mcp_booking_periods(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:f19a7f8584b1
+routine public.mcp_capability_refusal(p_workspace_id uuid, p_operation text, p_policy_operations text[], p_scope_operations text[], p_ceiling text) -> text | function | invoker | stable | exec:service_role | body:b7838f83f29c
 routine public.mcp_clean_optional_fields(p_fields text[]) -> text[] | function | invoker | immutable | exec:service_role | body:35d1c041733f
 routine public.mcp_client_arrival(p_client_id text, p_name text, p_redirect_uri text) -> text | function | definer | volatile | exec:service_role | body:45acc1ba49dd
 routine public.mcp_client_family(p_redirect_uris text) -> text | function | invoker | immutable | exec:service_role | body:d26372c28661
 routine public.mcp_client_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:92da466c0c69
 routine public.mcp_client_status(p_client_id text) -> text | function | definer | stable | exec:service_role | body:944995134ecd
+routine public.mcp_confirm(c mcp_call_context, p_request_id uuid, p_digest text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:83fdda1fb3d7
 routine public.mcp_confirm_action(p_confirmation_id uuid, p_accept boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2149d8cadb49
 routine public.mcp_consent_options(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fb230168f4f0
 routine public.mcp_cursor(p_operation text, p_workspace_id uuid, p_at timestamp with time zone, p_id uuid) -> text | function | invoker | immutable | exec:service_role | body:e6596d42e119
@@ -1483,7 +1486,7 @@ routine public.mcp_endpoint_configured() -> jsonb | function | definer | stable 
 routine public.mcp_endpoint_probe_settle() -> jsonb | function | definer | volatile | exec:service_role | body:7757ed779c6a
 routine public.mcp_endpoint_resolved() -> jsonb | function | definer | stable | exec:service_role | body:12aa66258d76
 routine public.mcp_envelope(p_request_id uuid, p_operation text, p_workspace_id uuid, p_status text, p_data jsonb, p_code text, p_fields jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:6ec6a7b31d23
-routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:551cba5b1bb4
+routine public.mcp_execute_v1(p_installation_id uuid, p_workspace_id uuid, p_operation text, p_arguments jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d19f82aa3257
 routine public.mcp_facade_guard_status() -> jsonb | function | definer | stable | exec:service_role | body:748551105071
 routine public.mcp_favorites_v1(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:3118f5029045
 routine public.mcp_finalize_connection(p_authorization_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1ca1288e8ec8
@@ -1491,16 +1494,47 @@ routine public.mcp_get_action_confirmation(p_confirmation_id uuid) -> jsonb | fu
 routine public.mcp_google_session() -> boolean | function | definer | stable | exec:authenticated,service_role | body:a6894391266b
 routine public.mcp_google_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:2e72d95cdb7f
 routine public.mcp_has_google_identity() -> boolean | function | definer | stable | exec:authenticated,service_role | body:1ab87e419ad4
+routine public.mcp_idempotent(c mcp_call_context, p_request_id uuid, p_digest text) -> jsonb | function | definer | volatile | exec:service_role | body:4cc872975cb3
 routine public.mcp_invalidate_consent(p_user uuid, p_client text, p_workspace uuid, p_reason text, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:3d26fc1f6b81
+routine public.mcp_invoice_outcome(p_result jsonb, p_data jsonb, p_invoice_id uuid, p_must_read_back boolean) -> jsonb | function | definer | volatile | exec:service_role | body:fca22501b4d8
 routine public.mcp_invoice_view(p_invoice_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:10e6845f4369
 routine public.mcp_is_delegated() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:6c3314325efe
 routine public.mcp_limit_retry_after(p_workspace_id uuid, p_client text, p_mutation boolean) -> integer | function | invoker | volatile | exec:service_role | body:1ed13d447619
+routine public.mcp_member_outcome(p_status text, p_data jsonb, p_member_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:ee7587699da9
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:663b8ba8ea38
+routine public.mcp_op_cancel_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3750646c95fe
+routine public.mcp_op_check_in(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:31473771b784
+routine public.mcp_op_check_out(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3d30234d6be4
+routine public.mcp_op_create_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:8a13f4c06f5f
+routine public.mcp_op_get_availability(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:156c91f6a9e7
+routine public.mcp_op_get_capabilities(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:129fb9b2fcdd
+routine public.mcp_op_get_member_statement(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:841067649fe5
+routine public.mcp_op_get_my_statement(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:5fc3df2ca3c6
+routine public.mcp_op_get_place(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:70380d90b3bb
+routine public.mcp_op_get_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:f6374a1f86f5
+routine public.mcp_op_list_my_favorites(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d7499ca9384e
+routine public.mcp_op_list_my_invoices(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:493917fb1749
+routine public.mcp_op_list_my_reservations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:2b2e5924064e
+routine public.mcp_op_list_pending_validations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:7dce789802fb
+routine public.mcp_op_rate_place(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:08cc81c40eb4
+routine public.mcp_op_request_invoice_issue(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:6a36e6f379d8
+routine public.mcp_op_request_invoice_void(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:833a1cbda4d3
+routine public.mcp_op_request_member_status_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:c35f353b4365
+routine public.mcp_op_request_refund(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:1fbeb4e5626e
+routine public.mcp_op_request_reservation_deletion(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:91f33a871cd9
+routine public.mcp_op_request_subscription_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ac638c874781
+routine public.mcp_op_respond_to_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:77f4a4942b8f
+routine public.mcp_op_set_favorite(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d4e9976095ff
+routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4d8f5efc61f1
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
+routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
+routine public.mcp_outcome_of(p_sqlstate text, p_message text) -> jsonb | function | invoker | immutable | exec:service_role | body:c6bfbd2fca2f
+routine public.mcp_own_reservation(c mcp_call_context, p_args jsonb, OUT reservation_id uuid, OUT refusal jsonb) -> record | function | definer | volatile | exec:service_role | body:a0bd1d90a37e
 routine public.mcp_person_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:59b1d5d4237b
+routine public.mcp_place_bookable(p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> text | function | invoker | volatile | exec:service_role | body:8ea02a8891dc
 routine public.mcp_place_feedback_write(p_workspace uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:f7ce9133e6e0
 routine public.mcp_place_label(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> text | function | invoker | stable | exec:service_role | body:33fbfa755fb6
 routine public.mcp_place_v1(p_workspace_id uuid, p_member members, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:26a398b788f0
@@ -1509,17 +1543,20 @@ routine public.mcp_pre_request() -> void | function | invoker | stable | exec:an
 routine public.mcp_prepare_connection(p_client_id text, p_authorization_id text, p_scopes jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1b1fe1858a7f
 routine public.mcp_project_data(p_operation text, p_value jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8ad7149f3904
 routine public.mcp_project_data(p_operation text, p_value jsonb, p_optional text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:5cf4a9f851a4
-routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e21e7953a323
+routine public.mcp_read_outcome(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:6ebe0b692f82
+routine public.mcp_read_v1(p_workspace_id uuid, p_member members, p_operation text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:b1c4a9315774
 routine public.mcp_record_reservation_origin(p_reservation_id uuid, p_workspace_id uuid, p_member_id uuid, p_client_id text, p_request_id uuid) -> void | function | definer | volatile | exec:service_role | body:45cfd77f07c4
 routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
 routine public.mcp_registered_redirects(p_client_id text) -> text | function | definer | stable | exec:service_role | body:206024ad6b6a
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
 routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
 routine public.mcp_reservation_digest(p_reservation_id uuid) -> text | function | invoker | stable | exec:service_role | body:c6a60b1858ba
+routine public.mcp_reservation_outcome(p_status text, p_reservation_id uuid, p_data jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a59509379176
 routine public.mcp_reservation_view(p_reservation_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:57557dcc51c6
 routine public.mcp_runtime_epoch_mismatch() -> boolean | function | definer | stable | exec:authenticated,service_role | body:882f15e26ec8
 routine public.mcp_seat_bookable(p_workspace_id uuid, p_seat_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> text | function | invoker | volatile | exec:service_role | body:4d8030814a4f
 routine public.mcp_set_endpoint_internal(p_url text, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:2ba4c6d41a5a
+routine public.mcp_statement_outcome(c mcp_call_context, p_member_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dce6b454c6ad
 routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:0ae374a4bff6
 routine public.mcp_time_arg(p_args jsonb, p_key text) -> timestamp with time zone | function | invoker | immutable | exec:service_role | body:3fcf56ea5f3e
 routine public.mcp_usage_cleanup(p_keep_days integer) -> integer | function | invoker | volatile | exec:service_role | body:c9dd4854acb4

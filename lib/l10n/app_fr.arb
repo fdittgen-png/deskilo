@@ -5439,6 +5439,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "L'identifiant fiscal du membre : le NIF d'un client professionnel en Espagne, le codice fiscale ou la partita IVA d'un client en Italie, le SIREN d'un client professionnel en France",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "Le numéro de TVA du membre (requis pour l'autoliquidation)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -5447,11 +5451,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "La TVA dans la monnaie nationale : un vendeur d'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "L'adresse postale de l'espace (rue ou ville)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Le pays de l'espace doit être la France ou l'Allemagne pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'espace (le champ d'immatriculation porte la Steuernummer ou le NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -6562,8 +6574,9 @@
   "mcpEligibleYes": "Cette base vous autorise à utiliser des assistants.",
   "mcpFieldName": "Noms des espaces et des places",
   "mcpFieldNameSample": "Bureau fenêtre 12",
-  "mcpGroupFinancial": "Demandes financières",
+  "mcpGroupFinancial": "Finances",
   "mcpGroupMembership": "Demandes d'adhésion",
+  "mcpGroupOther": "Autres opérations soumises à une permission",
   "mcpGroupOwn": "Réservations et compte personnels",
   "mcpGroupValidations": "Validations",
   "mcpIdentityConflict": "Un autre compte détient déjà cette identité ici — un administrateur de la base peut résoudre cela.",
@@ -6599,6 +6612,7 @@
     "description": "#2185 mcp_consent"
   },
   "mcpOpListWorkspaces": "Voir les espaces qu'il peut utiliser",
+  "mcpOpMemberStatement": "Voir le relevé de compte d'un membre",
   "mcpOpMemberStatus": "Modifier le statut d'un membre",
   "mcpOpMyInvoices": "Voir vos factures",
   "mcpOpMyReservations": "Voir vos réservations",
@@ -11642,6 +11656,14 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
+  "vatDeclEdiTva": "Fichier EDI-TVA (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "Fichier ELSTER (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
   "vatDeclEmpty": "Aucune déclaration — choisissez une période et générez la première.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
@@ -11649,6 +11671,18 @@
   "vatDeclFiled": "Déposée",
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclFilingPeriod": "Une déclaration ELSTER anticipée couvre un mois ou un trimestre ; la déclaration annuelle se dépose à part.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Saisissez le numéro fiscal : la Steuernummer pour ELSTER, le SIREN (ou un numéro de TVA FR) pour l'EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Numéro fiscal (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
   "vatDeclGenerate": "Préparer",
   "@vatDeclGenerate": {

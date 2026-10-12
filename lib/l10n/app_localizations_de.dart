@@ -8323,6 +8323,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'Die Steuerkennung des Mitglieds: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)';
 
@@ -8331,12 +8335,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Rechtsgrundlage der Umsatzsteuerbefreiung';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'Die Mehrwertsteuer in Landeswährung: ein Verkäufer aus einem Mitgliedstaat außerhalb des Euro stellt die Steuer hier in seiner eigenen Währung in Rechnung (Art. 230 MwStSystRL)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+      'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -10275,10 +10287,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpFieldNameSample => 'Fensterplatz 12';
 
   @override
-  String get mcpGroupFinancial => 'Finanzanfragen';
+  String get mcpGroupFinancial => 'Finanzen';
 
   @override
   String get mcpGroupMembership => 'Mitgliedschaftsanfragen';
+
+  @override
+  String get mcpGroupOther => 'Weitere Vorgänge mit Berechtigung';
 
   @override
   String get mcpGroupOwn => 'Eigene Buchungen und Konto';
@@ -10371,6 +10386,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpOpListWorkspaces =>
       'Sehen, welche Arbeitsbereiche er nutzen darf';
+
+  @override
+  String get mcpOpMemberStatement => 'Den Kontoauszug eines Mitglieds sehen';
 
   @override
   String get mcpOpMemberStatus => 'Status eines Mitglieds ändern';
@@ -19016,11 +19034,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclDraft => 'Entwurf';
 
   @override
+  String get vatDeclEdiTva => 'EDI-TVA-Datei (CA3)';
+
+  @override
+  String get vatDeclElster => 'ELSTER-Datei (UStVA)';
+
+  @override
   String get vatDeclEmpty =>
       'Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.';
 
   @override
   String get vatDeclFiled => 'Abgegeben';
+
+  @override
+  String get vatDeclFilingPeriod =>
+      'Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Geben Sie die Steuernummer ein: die Steuernummer für ELSTER, die SIREN (oder eine französische USt-IdNr.) für EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Steuernummer';
 
   @override
   String get vatDeclGenerate => 'Vorbereiten';

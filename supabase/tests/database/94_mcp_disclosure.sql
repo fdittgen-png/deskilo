@@ -152,8 +152,8 @@ select ok(exists (select 1 from jsonb_array_elements(pg_temp.avail('a')->'data'-
                    where r->>'seat_id' = current_setting('t.seat')
                      and r->>'name' = (select name from public.seats where id = current_setting('t.seat')::uuid)),
   'with the maximum, the policy and the consent, the seat''s own name is sent');
-select is(pg_temp.named('a'), (select count(*)::integer from public.seats where workspace_id = current_setting('t.a')::uuid),
-  'every seat in the answer carries it');
+select is(pg_temp.named('a'), jsonb_array_length(pg_temp.avail('a')->'data'->'items'),
+  'every place in the answer (seats, and desks, offices and levels booked as a whole) carries it');
 
 -- 4. B: only its policy lacks the field.
 select is(pg_temp.named('b'), 0, 'workspace A''s policy never discloses in workspace B');
