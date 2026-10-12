@@ -15,7 +15,7 @@
 --                      handler -> ledger) -> usage note -> envelope; it
 --                      names no operation
 --
--- Every envelope is the one 0406 answered: the matrix (169) and the
+-- Every envelope is the one 0406 answered: the matrix (170) and the
 -- conformance journey (97) run unchanged against this body. A new operation
 -- is additive from here: a catalogue entry, one mcp_op_<id> in its own
 -- migration, its pgTAP, its coverage row; anchored patches on mcp_*
