@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/i18n/format_prefs.dart';
+import '../domain/personal_info.dart';
+import '../domain/privacy_notice.dart';
 import '../domain/profile.dart';
 import '../domain/profile_projection.dart';
-import '../domain/personal_info.dart';
 import '../domain/profile_repository.dart';
-import '../domain/privacy_notice.dart';
 import '../domain/rights_request.dart';
 
 class SupabaseProfileRepository implements ProfileRepository {

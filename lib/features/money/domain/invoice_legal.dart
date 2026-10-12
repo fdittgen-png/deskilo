@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
+import 'vat_declaration_period.dart';
 import 'vat_tax_point.dart';
 
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
@@ -15,6 +17,7 @@ class InvoiceLegal {
     this.customerCapacity = '',
     this.reverseChargeOptIn = true,
     this.vatTaxPoint,
+    this.declarationPeriod,
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -51,6 +54,15 @@ class InvoiceLegal {
   /// still written beside it for a non-default choice, because the SQL
   /// snapshot freezes that key on every issued invoice (0349, 0401).
   final VatTaxPointOption? vatTaxPoint;
+
+  /// #2357 — how often the VAT return is filed; null when the workspace
+  /// never chose ([VatDeclarationPeriod.fallback] then applies). Stored
+  /// as `vat_declaration_period`.
+  final VatDeclarationPeriod? declarationPeriod;
+
+  /// The period the declarations screen offers.
+  VatDeclarationPeriod get filingPeriod =>
+      declarationPeriod ?? VatDeclarationPeriod.fallback;
 
   /// The basis a seller in [country] declares on.
   VatTaxPointBasis taxPointBasis(String country) =>
@@ -106,29 +118,35 @@ class InvoiceLegal {
   /// Client-side cap per field — these are printed lines, not essays.
   static const int maxFieldLength = 300;
 
-  factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
-        sellerKind: json['seller_kind'] as String? ?? '',
-        customerCapacity: switch (json['customer_capacity']) {
-          final String c when c == 'business' || c == 'consumer' => c,
-          _ => '',
-        },
-        reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
-        vatTaxPoint:
-            VatTaxPointOption.fromWire(json['vat_tax_point'] as String?) ??
-                switch (json['vat_exigibility']) {
-                  'invoice' => VatTaxPointOption.invoice,
-                  'payment' => VatTaxPointOption.cash,
-                  _ => null,
-                },
-        legalForm: json['legal_form'] as String? ?? '',
-        registration: json['registration'] as String? ?? '',
-        paymentTerms: json['payment_terms'] as String? ?? '',
-        latePenalty: json['late_penalty'] as String? ?? '',
-        recoveryIndemnity: json['recovery_indemnity'] as String? ?? '',
-        escompte: json['escompte'] as String? ?? '',
-        insurance: json['insurance'] as String? ?? '',
-        specialMentions: json['special_mentions'] as String? ?? '',
-      );
+  factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'invoice_legal');
+    return InvoiceLegal(
+      sellerKind: r.stringOr('seller_kind'),
+      customerCapacity: switch (r.stringOrNull('customer_capacity')) {
+        final String c when c == 'business' || c == 'consumer' => c,
+        _ => '',
+      },
+      reverseChargeOptIn: r.boolOr('reverse_charge', true),
+      vatTaxPoint:
+          VatTaxPointOption.fromWire(r.stringOrNull('vat_tax_point')) ??
+              switch (r.stringOrNull('vat_exigibility')) {
+                'invoice' => VatTaxPointOption.invoice,
+                'payment' => VatTaxPointOption.cash,
+                _ => null,
+              },
+      declarationPeriod: VatDeclarationPeriod.fromWire(
+        r.stringOrNull('vat_declaration_period'),
+      ),
+      legalForm: r.stringOr('legal_form'),
+      registration: r.stringOr('registration'),
+      paymentTerms: r.stringOr('payment_terms'),
+      latePenalty: r.stringOr('late_penalty'),
+      recoveryIndemnity: r.stringOr('recovery_indemnity'),
+      escompte: r.stringOr('escompte'),
+      insurance: r.stringOr('insurance'),
+      specialMentions: r.stringOr('special_mentions'),
+    );
+  }
 
   Map<String, Object?> toJson() => {
         'seller_kind': sellerKind,
@@ -136,6 +154,7 @@ class InvoiceLegal {
         'reverse_charge': reverseChargeOptIn,
         'vat_tax_point': ?vatTaxPoint?.name,
         'vat_exigibility': ?_legacyExigibility(vatTaxPoint),
+        'vat_declaration_period': ?declarationPeriod?.name,
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -153,6 +172,7 @@ class InvoiceLegal {
       other.customerCapacity == customerCapacity &&
       other.reverseChargeOptIn == reverseChargeOptIn &&
       other.vatTaxPoint == vatTaxPoint &&
+      other.declarationPeriod == declarationPeriod &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -163,7 +183,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(vatTaxPoint, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
+  int get hashCode => Object.hash(vatTaxPoint, declarationPeriod, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

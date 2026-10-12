@@ -69,7 +69,7 @@ class PushService {
         memberIds: await _myMemberIds(),
         endpoint: url,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('push endpoint save failed: $e\n$st');
       TraceLogger.instance.error('push', 'push endpoint save failed',
           error: e, stackTrace: st);
@@ -87,7 +87,7 @@ class PushService {
     if (endpoint == null) return;
     try {
       await _repository.removeEndpoint(endpoint);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('push endpoint removal failed: $e\n$st');
       TraceLogger.instance.error('push', 'push endpoint removal failed',
           error: e, stackTrace: st);
@@ -105,7 +105,7 @@ class PushService {
       if (decoded is Map<String, dynamic> && decoded['kind'] is String) {
         kind = decoded['kind'] as String;
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('push payload undecodable, generic ping kept: $e\n$st');
       // Tolerated by design: the generic pending ping still fires below.
       TraceLogger.instance.warn(

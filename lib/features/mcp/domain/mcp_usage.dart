@@ -4,6 +4,8 @@
 // (0300): a person's own assistants today, and a workspace's last 30 days
 // for its owner. No argument, result or member identity ever reaches here.
 
+import '../../../core/data/json_reader.dart';
+
 int _int(Object? v) => v is int ? v : (v is num ? v.toInt() : 0);
 
 /// Counts for one slice of usage: every answered call, the refused ones
@@ -27,12 +29,17 @@ class McpUsageCounts {
   factory McpUsageCounts.fromJson(
     Map<Object?, Object?> m, {
     String? requestsKey,
-  }) => McpUsageCounts(
-    requests: _int(m[requestsKey ?? 'requests']),
-    refusals: _int(m['refusals']),
-    applied: _int(m['applied']),
-    pendingValidation: _int(m['pending_validation']),
-  );
+  }) {
+    // Fail-closed (#2387): a count that is not a number reads as 0.
+    final r = JsonReader.of(m, context: 'mcp_usage_counts');
+    int count(String key) => _int(r.json[key]);
+    return McpUsageCounts(
+      requests: count(requestsKey ?? 'requests'),
+      refusals: count('refusals'),
+      applied: count('applied'),
+      pendingValidation: count('pending_validation'),
+    );
+  }
 
   McpUsageCounts operator +(McpUsageCounts o) => McpUsageCounts(
     requests: requests + o.requests,
@@ -96,16 +103,21 @@ class McpWorkspaceUsage {
   }
 
   factory McpWorkspaceUsage.fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
+    // Fail-closed (#2387): a malformed field reads as absent, and a row
+    // without an operation is left out.
+    final r = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'mcp_workspace_usage',
+    );
     return McpWorkspaceUsage(
-      workspaceId: '${m['workspace_id'] ?? ''}',
+      workspaceId: r.textOrAbsent('workspace_id') ?? '',
       rows: [
-        for (final r in m['rows'] is List ? m['rows'] as List : const [])
-          if (r is Map && r['operation'] is String)
+        for (final row in r.listOrAbsent('rows'))
+          if (row is Map && row['operation'] is String)
             (
-              day: DateTime.tryParse('${r['day']}'),
-              operation: r['operation'] as String,
-              counts: McpUsageCounts.fromJson(r),
+              day: DateTime.tryParse('${row['day']}'),
+              operation: row['operation'] as String,
+              counts: McpUsageCounts.fromJson(row),
             ),
       ],
     );

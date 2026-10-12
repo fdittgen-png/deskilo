@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../workspace/presentation/widgets/workspace_reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/widgets/environment_tile.dart';
+import '../../../workspace/presentation/widgets/workspace_reports.dart';
 import 'settings_task_section.dart';
 
 /// #1307 S3 — what used to be one Administration block, split by the
@@ -25,7 +24,7 @@ import 'settings_task_section.dart';
 List<Widget> workspaceSettingsTiles(
   BuildContext context,
   WidgetRef ref, {
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
   required bool canAdminister,
   required Set<WorkspacePermission> perms,
   required Set<WorkspaceFeature> features,
@@ -36,27 +35,27 @@ List<Widget> workspaceSettingsTiles(
     if (workspaceReportsAvailable(features, perms, isAdmin: canAdminister))
       ListTile(key: const ValueKey('settings-reports'),
         leading: const Icon(Icons.summarize_outlined),
-        title: Text((l10n ?? AppLocalizationsEn()).uxReportsTitle),
+        title: Text(l10n.uxReportsTitle),
         onTap: () => context.push('/reports')),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(
         key: const ValueKey('settings-workspace-sections-workspace-settings-title'),
         leading: const Icon(Icons.business_outlined),
-        title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
+        title: Text(l10n.workspaceSettingsTitle),
         onTap: () => context.push('/workspace-settings'),
       ),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(
         key: const ValueKey('settings-workspace-sections-availability-title'),
         leading: const Icon(Icons.event_busy_outlined),
-        title: Text(l10n?.availabilityTitle ?? 'Availability'),
+        title: Text(l10n.availabilityTitle),
         onTap: () => context.push('/availability'),
       ),
     if (perms.contains(WorkspacePermission.manageBilling))
       ListTile(
         key: const ValueKey('settings-workspace-sections-billing-title'),
         leading: const Icon(Icons.payments_outlined),
-        title: Text(l10n?.billingTitle ?? 'Billing'),
+        title: Text(l10n.billingTitle),
         onTap: () => context.push('/billing'),
       ),
     if (perms.contains(WorkspacePermission.manageServices) &&
@@ -64,7 +63,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-services-title'),
         leading: const Icon(Icons.local_cafe_outlined),
-        title: Text(l10n?.servicesTitle ?? 'Services'),
+        title: Text(l10n.servicesTitle),
         onTap: () => context.push('/services'),
       ),
     // Accessory catalog (#167): owner AND admins, per the epic #163
@@ -75,7 +74,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-accessories-title'),
         leading: const Icon(Icons.devices_other_outlined),
-        title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
+        title: Text(l10n.accessoriesTitle),
         onTap: () => context.push('/accessories'),
       ),
     // #2301: invoice operations and Reports have distinct destinations.
@@ -84,7 +83,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-billing-reports'),
         leading: const Icon(Icons.receipt_long_outlined),
-        title: Text(l10n?.invoicesManage ?? 'Manage invoices'),
+        title: Text(l10n.invoicesManage),
         onTap: () => context.push('/invoices'),
       ),
     // #925 — one screen for every number series.
@@ -93,10 +92,9 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-number-sequences'),
         leading: const Icon(Icons.format_list_numbered_outlined),
-        title: Text(l10n?.numberSequencesTitle ?? 'Number sequences'),
+        title: Text(l10n.numberSequencesTitle),
         subtitle: Text(
-          l10n?.numberSequencesSubtitle ??
-              'How invoices and credit notes are numbered.',
+          l10n.numberSequencesSubtitle,
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () => context.push('/settings/number-sequences'),
@@ -106,14 +104,14 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-payment-methods'),
         leading: const Icon(Icons.account_balance_wallet_outlined),
-        title: Text(l10n?.paymentInstructionsTitle ?? 'Payment instructions'),
+        title: Text(l10n.paymentInstructionsTitle),
         onTap: () => context.push('/payment-methods'),
       ),
     if (perms.contains(WorkspacePermission.manageValidation))
       ListTile(
         key: const ValueKey('settings-workspace-sections-validation-title'),
         leading: const Icon(Icons.fact_check_outlined),
-        title: Text(l10n?.validationTitle ?? 'Validation rules'),
+        title: Text(l10n.validationTitle),
         onTap: () => context.push('/validation'),
       ),
     // The Features entry is always reachable to whoever configures the
@@ -122,7 +120,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-features-title'),
         leading: const Icon(Icons.toggle_on_outlined),
-        title: Text(l10n?.featuresTitle ?? 'Features'),
+        title: Text(l10n.featuresTitle),
         onTap: () => context.push('/features'),
       ),
   ];
@@ -135,7 +133,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-members-title'),
         leading: const Icon(Icons.group_outlined),
-        title: Text(l10n?.membersTitle ?? 'Members & plans'),
+        title: Text(l10n.membersTitle),
         onTap: () => context.push('/members'),
       ),
     if (perms.contains(WorkspacePermission.manageIntegrations) &&
@@ -143,7 +141,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-pay-config-title'),
         leading: const Icon(Icons.credit_card_outlined),
-        title: Text(l10n?.payConfigTitle ?? 'Online payments'),
+        title: Text(l10n.payConfigTitle),
         onTap: () => context.push('/payment-config'),
       ),
     if (perms.contains(WorkspacePermission.operateKiosk) &&
@@ -151,7 +149,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-nfc-config-title'),
         leading: const Icon(Icons.contactless_outlined),
-        title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
+        title: Text(l10n.nfcConfigTitle),
         onTap: () => context.push('/nfc-config'),
       ),
     // #945 — the workspace's sites, for those who manage them.
@@ -160,9 +158,8 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-sites'),
         leading: const Icon(Icons.location_city_outlined),
-        title: Text(l10n?.sitesTitle ?? 'Sites'),
-        subtitle: Text(l10n?.sitesSubtitle ??
-            'Addresses, the levels at each, and who calls which home'),
+        title: Text(l10n.sitesTitle),
+        subtitle: Text(l10n.sitesSubtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () => context.push('/settings/sites'),
       ),
@@ -170,7 +167,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-workspace-sections-workspace-code-title'),
         leading: const Icon(Icons.qr_code_2),
-        title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
+        title: Text(l10n.workspaceCodeTitle),
         onTap: () => context.push('/workspace-code'),
       ),
   ];
@@ -182,7 +179,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-roles'),
         leading: const Icon(Icons.admin_panel_settings_outlined),
-        title: Text(l10n?.rolesTitle ?? 'Roles'),
+        title: Text(l10n.rolesTitle),
         onTap: () => context.push('/roles'),
       ),
     // #990 — deploying between the two sides of the pair: the question the
@@ -193,7 +190,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-deployment'),
         leading: const Icon(Icons.rocket_launch_outlined),
-        title: Text(l10n?.deploymentTitle ?? 'Deployment'),
+        title: Text(l10n.deploymentTitle),
         onTap: () => context.push('/deployment'),
       ),
     // #917 — is this space real? Owner-only, as
@@ -206,9 +203,9 @@ List<Widget> workspaceSettingsTiles(
       : [SettingsTaskSection(id: id, title: title, initiallyExpanded: id == 'workspace', children: tiles)];
 
   return [
-    ...section('workspace', l10n?.settingsSectionWorkspace ?? 'This workspace', workspace),
+    ...section('workspace', l10n.settingsSectionWorkspace, workspace),
     ...section(
-        'administration', l10n?.settingsSectionAdministration ?? 'Administration', administration),
-    ...section('governance', l10n?.settingsSectionGovernance ?? 'Governance', governance),
+        'administration', l10n.settingsSectionAdministration, administration),
+    ...section('governance', l10n.settingsSectionGovernance, governance),
   ];
 }

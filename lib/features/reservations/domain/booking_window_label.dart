@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../plan/domain/half_day_windows.dart';
-
 import '../../../core/time/workspace_time.dart';
+import '../../plan/domain/half_day_windows.dart';
 
 /// What a booking range IS, for display: a full-day booking must read
 /// "Full day", never the meaningless "00:00 – 00:00" a naive time

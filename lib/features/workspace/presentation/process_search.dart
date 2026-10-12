@@ -53,7 +53,7 @@ class ProcessSearchHit {
 /// order, each level before the levels beneath it. An empty query finds
 /// nothing: the overview shows its cards instead.
 List<ProcessSearchHit> searchProcesses(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   String query, {
   List<WorkspaceProcess> processes = workspaceProcesses,
 }) {

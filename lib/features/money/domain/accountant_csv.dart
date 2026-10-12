@@ -144,12 +144,12 @@ String buildAccountantCsv({
         for (final total in invoice.vatTotals)
           '${total.percent.toStringAsFixed(2)}%',
       ].join(' ')),
-      invoice.isVoided ? 'voided' : 'issued',
+      if (invoice.isVoided) 'voided' else 'issued',
       day(invoice.voidedAt),
       _accountantCsvText(invoice.voidedByName),
       _accountantCsvText(invoice.replacesNumber),
-      match == null ? '' : minorToText(match.paidCents, invoice.currency),
-      match == null ? '' : day(match.matchedAt),
+      if (match == null) '' else minorToText(match.paidCents, invoice.currency),
+      if (match == null) '' else day(match.matchedAt),
       // The pending/confirmed distinction is exported rather than
       // filtered. The mapped formats drop pending settlements because
       // posting them would put unagreed money in a ledger; here there is

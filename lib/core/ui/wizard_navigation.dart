@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 
 /// Connects the existing router's exit callback to the mounted flow.
 class WizardNavigationController {
@@ -59,18 +61,18 @@ class _WizardNavigationState extends State<WizardNavigation> {
     if (widget.onStepBack != null) { widget.onStepBack!(); return false; }
     if (!widget.hasDraft) { _leaving = true; return true; }
     _asking = true;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final leave = await showDialog<bool>(context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.reportDesignerDiscardTitle ?? 'Leave without saving?'),
+        title: Text(l10n.reportDesignerDiscardTitle),
         content: Text(widget.discardMessage),
         actions: [
           TextButton(key: const ValueKey('wizard-keep-draft'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.reportDesignerKeepEditing ?? 'Keep editing')),
+            child: Text(l10n.reportDesignerKeepEditing)),
           TextButton(key: const ValueKey('wizard-discard-draft'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.reportDesignerDiscard ?? 'Discard')),
+            child: Text(l10n.reportDesignerDiscard)),
         ],
       ));
     _asking = false;
@@ -80,7 +82,7 @@ class _WizardNavigationState extends State<WizardNavigation> {
   @override
   Widget build(BuildContext context) => PopScope<Object?>(
     canPop: !widget.busy && widget.onStepBack == null && !widget.hasDraft,
-    onPopInvokedWithResult: (didPop, _) { if (!didPop) _back(); },
+    onPopInvokedWithResult: (didPop, _) { if (!didPop) unawaited(_back()); },
     child: CallbackShortcuts(bindings: {
       const SingleActivator(LogicalKeyboardKey.escape): _back,
     }, child: widget.builder(_back)),

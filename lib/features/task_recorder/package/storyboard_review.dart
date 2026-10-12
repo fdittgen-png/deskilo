@@ -22,8 +22,8 @@ import 'dart:convert';
 import '../../../core/trace/trace_logger.dart';
 import '../storyboard/storyboard.dart';
 
-const String storyboardReviewFormat = 'deskilo.task-storyboard-review';
-const int storyboardReviewVersion = 1;
+const String _storyboardReviewFormat = 'deskilo.task-storyboard-review';
+const int _storyboardReviewVersion = 1;
 
 /// One frame's decisions.
 class FrameReview {
@@ -70,8 +70,8 @@ class StoryboardReview {
   );
 
   Map<String, Object?> toJson() => {
-    'format': storyboardReviewFormat,
-    'version': storyboardReviewVersion,
+    'format': _storyboardReviewFormat,
+    'version': _storyboardReviewVersion,
     'source_revision': sourceRevision,
     'frames': [
       for (final f in frames)
@@ -104,8 +104,8 @@ class StoryboardReview {
     const rootKeys = {'format', 'version', 'source_revision', 'frames'};
     if (json is! Map ||
         !json.keys.every(rootKeys.contains) ||
-        json['format'] != storyboardReviewFormat ||
-        json['version'] != storyboardReviewVersion) {
+        json['format'] != _storyboardReviewFormat ||
+        json['version'] != _storyboardReviewVersion) {
       return null;
     }
     final revision = json['source_revision'];

@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../motion/motion.dart';
 import '../theme/app_radius.dart';
 
@@ -439,7 +439,7 @@ class _ZoomCluster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #1235 — three icon-only squares that a screen reader read out as
     // "button", "button", "button". The name is what makes them usable.
     Widget button(
@@ -489,18 +489,14 @@ class _ZoomCluster extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           button(Icons.add, atMax ? null : onIn, 'canvas-zoom-in',
-              l10n?.a11yZoomIn ?? 'Zoom in'),
-          horizontal
-              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
-              : Divider(height: 1, color: scheme.outlineVariant),
+              l10n.a11yZoomIn),
+          if (horizontal) VerticalDivider(width: 1, color: scheme.outlineVariant) else Divider(height: 1, color: scheme.outlineVariant),
           button(Icons.remove, atMin ? null : onOut, 'canvas-zoom-out',
-              l10n?.a11yZoomOut ?? 'Zoom out'),
-          horizontal
-              ? VerticalDivider(width: 1, color: scheme.outlineVariant)
-              : Divider(height: 1, color: scheme.outlineVariant),
+              l10n.a11yZoomOut),
+          if (horizontal) VerticalDivider(width: 1, color: scheme.outlineVariant) else Divider(height: 1, color: scheme.outlineVariant),
           button(Icons.center_focus_strong_outlined, onReset,
               'canvas-zoom-reset',
-              l10n?.a11yRecentre ?? 'Fit the plan to the screen'),
+              l10n.a11yRecentre),
         ],
       ),
     );

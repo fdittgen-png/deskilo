@@ -3,7 +3,6 @@
 // App-start validation per role (#87): the app must reach the shell for
 // every role defined on the workspace membership (owner / admin / worker),
 // showing exactly the affordances that role grants (spec §2).
-import '../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
 import '../helpers/navigation.dart';
+import '../helpers/settings_sections.dart';
 
 Member member({required bool isAdmin, required bool isOwner}) => Member(
       id: 'member-1',

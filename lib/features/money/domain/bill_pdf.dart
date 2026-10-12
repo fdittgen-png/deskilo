@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-import '../../../core/i18n/money_format.dart';
 
 import 'package:intl/intl.dart';
-import 'invoice_pdf.dart';
-import 'invoice_report.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/i18n/money_format.dart';
 import '../../events/domain/workspace_event.dart';
 import 'bill_sections.dart';
+import 'invoice_pdf.dart';
+import 'invoice_report.dart';
 import 'ledger_entry.dart';
 import 'statement.dart';
 
@@ -153,14 +153,14 @@ InvoiceReport buildBillReport({
       if (sections.serviceEntries.isNotEmpty) ...[
         ReportSubheading(strings.services),
         for (final entry in sections.serviceEntries)
-          ReportTableRow([entry.description.isEmpty ? strings.serviceFallback : entry.description,
+          ReportTableRow([if (entry.description.isEmpty) strings.serviceFallback else entry.description,
             charge(entry.amountCents)]),
         ReportTableRow([strings.servicesTotal, charge(sections.servicesTotalCents)], bold: true),
       ],
       if (sections.packageEntries.isNotEmpty) ...[
         ReportSubheading(strings.packages),
         for (final entry in sections.packageEntries)
-          ReportTableRow([entry.description.isEmpty ? strings.packages : entry.description,
+          ReportTableRow([if (entry.description.isEmpty) strings.packages else entry.description,
             charge(entry.amountCents)]),
       ],
       if (sections.openPositions.isNotEmpty) ...[
@@ -168,7 +168,7 @@ InvoiceReport buildBillReport({
         ReportMuted(strings.pendingBadge),
         for (final position in sections.openPositions)
           ReportTableRow([_openPositionLabel(strings, position.event),
-            position.isCredit ? credit(position.amountCents) : charge(position.amountCents)]),
+            if (position.isCredit) credit(position.amountCents) else charge(position.amountCents)]),
       ],
       if (sections.creditEntries.isNotEmpty) ...[
         ReportSubheading(strings.paymentsCredits),
@@ -179,7 +179,7 @@ InvoiceReport buildBillReport({
       ],
       const ReportDivider(),
       ReportTableRow([strings.balance,
-        statement.isSettled ? strings.settled : strings.outstanding,
+        if (statement.isSettled) strings.settled else strings.outstanding,
         currency.formatMinor(statement.balanceCents)], bold: true),
     ],
     footer: const [],

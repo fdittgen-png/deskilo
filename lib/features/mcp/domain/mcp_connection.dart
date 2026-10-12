@@ -4,6 +4,7 @@
 // may offer it (per workspace, per operation), and the connections that
 // exist. The assistant never widens its own consent: every call here runs
 // from the app's own session.
+import '../../../core/data/json_reader.dart';
 import 'mcp_admin.dart' show mcpKnownOptionalFields;
 import 'mcp_context.dart';
 import 'mcp_usage.dart';
@@ -52,19 +53,20 @@ class ConsentOptions {
     if (json is! Map) {
       return const ConsentOptions(eligible: false, workspaces: []);
     }
+    // Fail-closed (#2387): a malformed field reads as absent, and a
+    // workspace without an id is left out.
+    final r = JsonReader.of(json, context: 'consent_options');
     return ConsentOptions(
-      eligible: json['eligibility'] == 'eligible',
+      eligible: r.textOrAbsent('eligibility') == 'eligible',
       workspaces: [
-        for (final w
-            in json['workspaces'] is List
-                ? json['workspaces'] as List
-                : const [])
+        for (final w in r.listOrAbsent('workspaces'))
           if (w is Map && w['workspace_id'] is String)
             ConsentWorkspace(
               id: w['workspace_id'] as String,
-              name: '${w['name'] ?? ''}',
+              name: JsonReader.of(w).textOrAbsent('name') ?? '',
               operations: [
-                for (final o in (w['operations'] as List? ?? const [])) '$o',
+                for (final o in JsonReader.of(w).listOrAbsent('operations'))
+                  '$o',
               ],
               optionalFields: mcpKnownOptionalFields(w['optional_fields']),
             ),

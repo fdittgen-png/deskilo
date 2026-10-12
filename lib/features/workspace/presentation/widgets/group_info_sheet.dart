@@ -2,18 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../reservations/providers/reservation_providers.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../directory/domain/group_details.dart';
-import '../../domain/conversation.dart';
-import '../../domain/member.dart';
-import '../../../members/presentation/member_profile_link.dart';
-import '../../providers/conversation_providers.dart';
-import '../../providers/workspace_providers.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
+import '../../../members/presentation/member_profile_link.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../domain/conversation.dart';
+import '../../domain/member.dart';
+import '../../providers/conversation_providers.dart';
+import '../../providers/workspace_providers.dart';
 import 'conversation_avatar.dart';
 
 /// A group's roster (#687): who is in it, who runs it, and the ways in
@@ -28,7 +29,7 @@ Future<void> showGroupInfoSheet(
   WidgetRef ref, {
   required Conversation conversation,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _GroupInfoSheet(conversation: conversation),
@@ -41,7 +42,7 @@ class _GroupInfoSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
@@ -86,14 +87,13 @@ class _GroupInfoSheet extends ConsumerWidget {
                   children: [
                     Text(
                       conversation.title ??
-                          (l10n?.conversationGroupInfo ?? 'Group'),
+                          (l10n.conversationGroupInfo),
                       style: theme.textTheme.titleMedium,
                     ),
                     Text(
-                      l10n?.conversationMemberCount(
+                      l10n.conversationMemberCount(
                             ordered.where((p) => p.isActive).length,
-                          ) ??
-                          '${ordered.length} members',
+                          ),
                       style: theme.textTheme.bodySmall,
                     ),
                   ],
@@ -102,7 +102,7 @@ class _GroupInfoSheet extends ConsumerWidget {
               if (iAmAdmin)
                 IconButton(
                   key: const ValueKey('group-rename'),
-                  tooltip: l10n?.groupRename ?? 'Rename group',
+                  tooltip: l10n.groupRename,
                   icon: const Icon(Icons.edit_outlined),
                   onPressed: () => _rename(context, ref),
                 ),
@@ -121,7 +121,7 @@ class _GroupInfoSheet extends ConsumerWidget {
               title: Text(
                 (details?.description.isNotEmpty ?? false)
                     ? details!.description
-                    : (l10n?.groupDescriptionAdd ?? 'Add a description'),
+                    : (l10n.groupDescriptionAdd),
                 style: (details?.description.isNotEmpty ?? false)
                     ? null
                     : theme.textTheme.bodyMedium
@@ -133,9 +133,8 @@ class _GroupInfoSheet extends ConsumerWidget {
             SwitchListTile(
               key: const ValueKey('group-announce-only'),
               secondary: const Icon(Icons.campaign_outlined),
-              title: Text(l10n?.groupAnnounceOnly ?? 'Only admins can post'),
-              subtitle: Text(l10n?.groupAnnounceOnlyHint ??
-                  'Everyone reads; only admins write.'),
+              title: Text(l10n.groupAnnounceOnly),
+              subtitle: Text(l10n.groupAnnounceOnlyHint),
               value: details?.announceOnly ?? false,
               onChanged: (value) => _setDetails(
                 context,
@@ -148,7 +147,7 @@ class _GroupInfoSheet extends ConsumerWidget {
             ListTile(
               key: const ValueKey('group-add-people'),
               leading: const Icon(Icons.person_add_outlined),
-              title: Text(l10n?.conversationAddPeople ?? 'Add people'),
+              title: Text(l10n.conversationAddPeople),
               onTap: () => _addPeople(context, ref, roster),
             ),
           const Divider(height: 1),
@@ -174,9 +173,9 @@ class _GroupInfoSheet extends ConsumerWidget {
                       memberId: p.memberId,
                     ),
                     subtitle: !p.isActive
-                        ? Text(l10n?.conversationLeft ?? 'Left')
+                        ? Text(l10n.conversationLeft)
                         : p.isAdmin
-                            ? Text(l10n?.conversationAdmin ?? 'Admin')
+                            ? Text(l10n.conversationAdmin)
                             : null,
                     // An admin cannot remove THEMSELVES here — that is
                     // leaving, and leaving carries the last-admin rule.
@@ -187,8 +186,8 @@ class _GroupInfoSheet extends ConsumerWidget {
                             IconButton(
                               key: ValueKey('group-admin-${p.memberId}'),
                               tooltip: p.isAdmin
-                                  ? (l10n?.groupRemoveAdmin ?? 'Remove admin')
-                                  : (l10n?.groupMakeAdmin ?? 'Make admin'),
+                                  ? (l10n.groupRemoveAdmin)
+                                  : (l10n.groupMakeAdmin),
                               icon: Icon(p.isAdmin
                                   ? Icons.shield
                                   : Icons.shield_outlined),
@@ -200,7 +199,7 @@ class _GroupInfoSheet extends ConsumerWidget {
                               onPressed: () =>
                                   _remove(context, ref, p.memberId),
                               child:
-                                  Text(l10n?.conversationRemove ?? 'Remove'),
+                                  Text(l10n.conversationRemove),
                             ),
                           ])
                         : null,
@@ -217,7 +216,7 @@ class _GroupInfoSheet extends ConsumerWidget {
               onPressed: () => _leave(context, ref),
               icon: Icon(Icons.logout, color: theme.colorScheme.error),
               label: Text(
-                l10n?.conversationLeave ?? 'Leave group',
+                l10n.conversationLeave,
                 style: TextStyle(color: theme.colorScheme.error),
               ),
             ),
@@ -232,7 +231,7 @@ class _GroupInfoSheet extends ConsumerWidget {
     WidgetRef ref,
     List<ConversationParticipant> roster,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final names = ref.read(memberNamesProvider).value ?? const {};
     final present = {for (final p in roster) if (p.isActive) p.memberId};
     final candidates = [
@@ -244,7 +243,7 @@ class _GroupInfoSheet extends ConsumerWidget {
           m,
     ]..sort((a, b) => (names[a.id] ?? '').compareTo(names[b.id] ?? ''));
 
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       builder: (context) => SafeArea(
         child: candidates.isEmpty
@@ -253,7 +252,7 @@ class _GroupInfoSheet extends ConsumerWidget {
             ? Padding(
                 padding: AppSpacing.lgAll,
                 child: Text(
-                  l10n?.newConversationNoMembers ?? 'Nobody else here yet.',
+                  l10n.newConversationNoMembers,
                 ),
               )
             : ListView(
@@ -278,8 +277,7 @@ class _GroupInfoSheet extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'add participant failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .addParticipant(conversation.id, picked),
@@ -292,13 +290,12 @@ class _GroupInfoSheet extends ConsumerWidget {
     WidgetRef ref,
     String memberId,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'remove participant failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .removeParticipant(conversation.id, memberId),
@@ -307,29 +304,27 @@ class _GroupInfoSheet extends ConsumerWidget {
   }
 
   Future<void> _leave(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // Confirmed, like every other irreversible-feeling action here, and
     // the wording says what actually HAPPENS: "leave" alone reads like
     // it might delete the group for everyone.
     final go = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.conversationLeave ?? 'Leave group'),
+        title: Text(l10n.conversationLeave),
         content: Text(
-          l10n?.conversationLeaveConfirm ??
-              'Leave this group? You stop receiving its messages; what '
-                  'you already sent stays.',
+          l10n.conversationLeaveConfirm,
         ),
         actions: [
           TextButton(
             key: const ValueKey('group-info-sheet-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('group-leave-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.conversationLeave ?? 'Leave group'),
+            child: Text(l10n.conversationLeave),
           ),
         ],
       ),
@@ -339,8 +334,7 @@ class _GroupInfoSheet extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'leave conversation failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .leaveConversation(conversation.id),
@@ -392,10 +386,10 @@ class _GroupInfoSheet extends ConsumerWidget {
   }
 
   Future<void> _rename(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final title = await _ask(
       context,
-      title: l10n?.groupRenameTitle ?? 'Group name',
+      title: l10n.groupRenameTitle,
       initial: conversation.title ?? '',
       maxLength: 60,
       fieldKey: const ValueKey('group-rename-field'),
@@ -405,8 +399,7 @@ class _GroupInfoSheet extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'rename group failed',
-      errorText: l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: l10n.portalActionFailed,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .setConversationMeta(conversation.id, title: title.trim()),
@@ -419,10 +412,10 @@ class _GroupInfoSheet extends ConsumerWidget {
     WidgetRef ref,
     ConversationDetails? details,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final text = await _ask(
       context,
-      title: l10n?.groupDescriptionTitle ?? 'Group description',
+      title: l10n.groupDescriptionTitle,
       initial: details?.description ?? '',
       maxLength: 500,
       maxLines: 5,
@@ -443,13 +436,12 @@ class _GroupInfoSheet extends ConsumerWidget {
     required String description,
     required bool announceOnly,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'group details failed',
-      errorText: l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: l10n.portalActionFailed,
       action: () => ref.read(messengerActionsProvider()).setConversationDetails(
             conversation.id,
             description: description,
@@ -465,13 +457,12 @@ class _GroupInfoSheet extends ConsumerWidget {
     String memberId,
     bool admin,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'set participant admin failed',
-      errorText: l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: l10n.portalActionFailed,
       action: () => ref
           .read(messengerActionsProvider())
           .setParticipantAdmin(conversation.id, memberId, admin: admin),

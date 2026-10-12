@@ -6,13 +6,13 @@
 // easier to demonstrate as one bundle named after the entity and the
 // year — and marked DEV for a development workspace, which is never the
 // real books.
-import '../../../core/money/money_text.dart';
-import '../../../core/text/csv.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
 import 'invoice.dart';
 
 /// `<SIREN>-<year>-archive.zip`, `DEV-` first for a development workspace.
@@ -41,7 +41,7 @@ String buildInvoiceRegisterCsv(
         // #1077 — the document's own currency decides the grain.
         minorToText(i.totalCents, i.currency),
         i.currency,
-        i.isVoided ? 'voided' : (i.isCreditNote ? 'credit_note' : 'issued'),
+        if (i.isVoided) 'voided' else if (i.isCreditNote) 'credit_note' else 'issued',
         csvCell(i.replacesNumber, quoteEmpty: true),
         integrity[i.id] ?? '',
       ].join(';'),

@@ -2,20 +2,20 @@
 //
 // Developer mode: the trace list newest first, level filters, export to a
 // .log file, and clear.
-import '../../helpers/settings_sections.dart';
+import 'dart:typed_data';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'dart:typed_data';
-
-import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 TraceLogger seededLogger() {
   final logger = TraceLogger()
@@ -215,6 +215,7 @@ void main() {
     /// hold every permission by construction, and developer mode is an
     /// admin affordance (#419), so the admin row is where this rule can
     /// be seen at all — and an admin is who reaches for a bulk export.
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     FakeWorkspaceRepository adminWith(bool exportData) {
       final workspace = FakeWorkspaceRepository.withWorkspace();
       workspace.myMember = workspace.myMember.copyWith(isOwner: false);

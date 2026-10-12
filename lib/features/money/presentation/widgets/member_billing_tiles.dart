@@ -2,16 +2,17 @@
 //
 // #2354 — the money tiles a member's page shows in its billing group:
 // the member page imports this one file.
-export 'member_carnet_tile.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vies_check.dart';
 import '../../providers/vies_providers.dart';
+
+export 'member_carnet_tile.dart';
 
 /// #2354 — on a member's page, for whoever issues invoices: the last
 /// check of the member's VAT number against VIES, and checking it again.
@@ -45,8 +46,7 @@ class ViesCheckTile extends ConsumerWidget {
 
   Future<void> _open(BuildContext context, WidgetRef ref) async {
     final l10n =
-        AppLocalizations.of(context) ??
-        lookupAppLocalizations(const Locale('en'));
+        context.l10n;
     final check = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -82,8 +82,7 @@ class ViesCheckTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n =
-        AppLocalizations.of(context) ??
-        lookupAppLocalizations(const Locale('en'));
+        context.l10n;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final check = ref.watch(memberViesCheckProvider(memberId)).value;
     return ListTile(

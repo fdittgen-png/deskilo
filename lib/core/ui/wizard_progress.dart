@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
-import 'wizard_scaffold.dart';
 import 'wizard_form_layout.dart';
+import 'wizard_scaffold.dart';
 
 enum WizardStepState { available, completed, skipped, unavailable }
 
@@ -19,11 +19,11 @@ class WizardProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     String status(int i) => switch (states[i]) {
-      WizardStepState.completed => l10n?.wizardStepCompleted ?? 'Completed',
-      WizardStepState.skipped => l10n?.wizardStepSkipped ?? 'Skipped — suggested settings',
-      WizardStepState.unavailable => l10n?.wizardStepUnavailable ?? 'Not available yet',
+      WizardStepState.completed => l10n.wizardStepCompleted,
+      WizardStepState.skipped => l10n.wizardStepSkipped,
+      WizardStepState.unavailable => l10n.wizardStepUnavailable,
       WizardStepState.available => '',
     };
     IconData icon(int i) => switch (states[i]) {

@@ -34,6 +34,7 @@
  "optHoursDefaultMax": "{n} heures (défaut max.)",
  "vatPeriodMonth": "Mensuelle",
  "vatPeriodQuarter": "Trimestrielle",
+ "vatPeriodAnnual": "Annuelle",
  "envDev": "Développement — pour essayer : l'app l'annonce partout et filigrane chaque document",
  "envProd": "Production — les factures qui en sortent sont réellement dues",
  "numDateNone": "Aucune",
@@ -528,6 +529,7 @@
  "cfgNotRegistered": "Sans objet tant que l'espace n'est pas assujetti.",
  "cfgVatDeclMonthly": "Déclaration mensuelle.",
  "cfgVatDeclQuarterly": "Déclaration trimestrielle.",
+ "cfgVatDeclAnnual": "Déclaration annuelle.",
  "cfgCustomerService": "Service client : {url}",
  "cfgCustomerServiceTodo": "Service de remise au client à configurer dans l'app.",
  "cfgPlanObjectDelete": "Suppression d'objets du plan encore référencés (substitution d'audit).",
@@ -605,7 +607,6 @@
  "todoInviteMembers": "Invitez depuis l'app les {n} personnes listées à l'étape des membres (Membres → Inviter un membre) : le fichier garde la liste pour mémoire seulement.",
  "todoInviteNobody": "Invitez vos premiers membres depuis l'app (Membres → Inviter un membre).",
  "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
- "todoVatPeriod": "Choisissez la périodicité de la déclaration de TVA ({period}) dans l'app en préparant la première déclaration.",
  "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
  "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
  "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."

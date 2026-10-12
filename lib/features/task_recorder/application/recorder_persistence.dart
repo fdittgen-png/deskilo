@@ -25,7 +25,7 @@ extension _RecorderPersistence on RecorderController {
       }
       try {
         await write(writer);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn(
           'recorder',
           'write failed (${e.runtimeType}); recording stopped',
@@ -65,7 +65,7 @@ extension _RecorderPersistence on RecorderController {
   Future<void> _drain() async {
     try {
       await _chain;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'drain failed (${e.runtimeType})',
@@ -77,7 +77,7 @@ extension _RecorderPersistence on RecorderController {
   void _guard(void Function() body) {
     try {
       body();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The recorder failing is never the task failing.
       TraceLogger.instance.warn(
         'recorder',
@@ -87,7 +87,7 @@ extension _RecorderPersistence on RecorderController {
       _writeFailed = true;
       try {
         _end(RecordingEndReason.storageFailed);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn(
           'recorder',
           'could not end the recording (${e.runtimeType})',

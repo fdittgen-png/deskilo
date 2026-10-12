@@ -5,12 +5,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/entry_intents.dart';
 import '../../../../app/route_classes.dart';
+import '../../../../core/help/guide_site.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/privacy_notice_view.dart';
 
@@ -33,7 +34,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final profileAsync = ref.watch(myProfileProvider);
     final profile = profileAsync.value;
@@ -47,7 +48,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
     final unavailable = profileAsync.hasError && !profileAsync.isLoading;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.consentTitle ?? 'Your data, your rights'),
+        title: Text(l10n.consentTitle),
         automaticallyImplyLeading: widget.review,
       ),
       body: SafeArea(
@@ -58,10 +59,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
               padding: AppSpacing.lgAll,
               children: [
                 Text(
-                  l10n?.consentIntro ??
-                      'Before you use DesKilo, here is what the app does '
-                          'with your data, who can see it and what you can '
-                          'do about it. Two minutes; it is all there is.',
+                  l10n.consentIntro,
                   style: theme.textTheme.bodyLarge,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -75,7 +73,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                 // installation: the controller and every recipient.
                 if (notice != null) ...[
                   Text(
-                    l10n?.privacyNoticeTitle ?? 'Who processes your data',
+                    l10n.privacyNoticeTitle,
                     style: theme.textTheme.titleMedium,
                   ),
                   const SizedBox(height: 4),
@@ -83,18 +81,16 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   const SizedBox(height: AppSpacing.md),
                 ],
                 Text(
-                  '${l10n?.consentVersion ?? 'Version'} $requiredVersion',
+                  '${l10n.consentVersion} $requiredVersion',
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
                 if (widget.review && acceptedAt != null)
                   Text(
-                    l10n?.consentAcceptedOn(
+                    l10n.consentAcceptedOn(
                             MaterialLocalizations.of(context)
                                 .formatMediumDate(acceptedAt.toLocal()),
-                            profile?.privacyAcceptedVersion ?? '') ??
-                        'Accepted on ${acceptedAt.toLocal()} '
-                            '(${profile?.privacyAcceptedVersion})',
+                            profile?.privacyAcceptedVersion ?? ''),
                     key: const ValueKey('consent-accepted-on'),
                     style: theme.textTheme.bodySmall
                         ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -107,21 +103,20 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                     key: const ValueKey('consent-rights'),
                     onPressed: () => context.push('/privacy'),
                     icon: const Icon(Icons.gavel_outlined, size: 18),
-                    label: Text(l10n?.privacyNoticeRightsRoute ??
-                        'Your rights and the contact'),
+                    label: Text(l10n.privacyNoticeRightsRoute),
                   ),
                   TextButton.icon(
                     key: const ValueKey('consent-help'),
-                    onPressed: () => context.push('/help?topic=Privacy'),
+                    onPressed: () => openGuide(ref, context, anchor: 'user.privacy.consent'),
                     icon: const Icon(Icons.help_outline, size: 18),
-                    label: Text(l10n?.consentReadInHelp ?? 'Read in the help'),
+                    label: Text(l10n.consentReadInHelp),
                   ),
                   TextButton.icon(
                     key: const ValueKey('consent-wiki'),
                     onPressed: () =>
                         ref.read(linkLauncherProvider)(Uri.parse(kPrivacyGuideUrl)),
                     icon: const Icon(Icons.open_in_new, size: 18),
-                    label: Text(l10n?.consentReadOnWiki ?? 'Read in the online guide'),
+                    label: Text(l10n.consentReadOnWiki),
                   ),
                 ]),
               ],
@@ -131,10 +126,8 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
             InlineBanner(
               key: const ValueKey('consent-unavailable'),
               icon: Icons.cloud_off_outlined,
-              text: l10n?.consentUnavailable ??
-                  'Your account could not be loaded, so there is nothing '
-                      'to accept yet.',
-              actionLabel: l10n?.commonRetry ?? 'Try again',
+              text: l10n.consentUnavailable,
+              actionLabel: l10n.commonRetry,
               onAction: () => ref.invalidate(myProfileProvider),
             )
           else if (!widget.review)
@@ -150,16 +143,14 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                       key: const ValueKey('consent-checkbox'),
                       contentPadding: EdgeInsets.zero,
                       controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(l10n?.consentCheckbox ??
-                          'I have read this and I accept how DesKilo '
-                              'handles my data.'),
+                      title: Text(l10n.consentCheckbox),
                       value: _accepted,
                       onChanged: (v) => setState(() => _accepted = v ?? false),
                     ),
                     FilledButton(
                       key: const ValueKey('consent-accept'),
                       onPressed: _accepted ? _accept : null,
-                      child: Text(l10n?.consentAccept ?? 'Accept and continue'),
+                      child: Text(l10n.consentAccept),
                     ),
                   ],
                 ),
@@ -171,13 +162,12 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
   }
 
   Future<void> _accept() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'privacy',
       message: 'accept privacy policy failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       // #1914 — the version the server publishes, which is what this
       // screen shows; the shipped one only when the server has none.
       action: () => ref

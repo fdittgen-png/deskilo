@@ -1219,6 +1219,10 @@
   "bookRoleCustomers": "Clientes (cuentas por cobrar)",
   "bookRoleExpenses": "Gastos",
   "bookRoleRevenue": "Ingresos",
+  "bookRoleVatInput": "IVA soportado",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "IVA repercutido",
   "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.",
   "bookSaved": "Libro guardado",
@@ -2689,6 +2693,51 @@
   "dunningLevels": "Número de niveles de recordatorio",
   "dunningSaved": "Reglas de recordatorio guardadas.",
   "dunningSettingsTitle": "Reglas de recordatorio",
+  "eInvoiceChannelGapBuyerEndpoint": "la dirección electrónica del cliente (BT-49) en su perfil",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "una referencia del comprador o un número de pedido",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "el NIF-IVA o el código fiscal del cliente",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "el Leitweg-ID del cliente como referencia del comprador",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "la cuenta bancaria del espacio (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "el correo y el teléfono de contacto del espacio",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerEndpoint": "la dirección electrónica del espacio (BT-34) en su identidad legal",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "el NIF-IVA del espacio",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "el distrito (județ) de cada dirección rumana",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapsTitle": "Antes de enviar por {channel}, añada:",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2700,6 +2749,54 @@
   "eInvoiceGapMixedNotSubjectLines": "Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceMandateEReporting": "las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateFrom": "A partir del {date}: {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateInvoiceRecords": "cada factura debe registrarse en un registro encadenado (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "toda empresa debe emitir facturas electrónicas",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "las grandes y medianas empresas deben emitir facturas electrónicas",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateReceiveAll": "toda empresa debe poder recibir facturas electrónicas",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateSince": "Desde el {date}: {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateTitle": "Obligaciones de facturación electrónica en su país:",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
   },
   "editorAccessoriesLabel": "Accesorios",
   "editorAddLevel": "Añadir planta",
@@ -3158,6 +3255,10 @@
   "expenseCategoryOther": "Otro",
   "expenseCategorySupplies": "Material",
   "expenseInvalidAmount": "Introduzca un importe mayor que cero.",
+  "expenseInvalidDeductible": "Introduzca una parte entre 0 y 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Introduzca al menos una unidad.",
   "expenseInvalidUnitPrice": "Introduzca un precio unitario válido o déjelo vacío.",
   "expenseMissingSupplyName": "Ponga nombre al nuevo artículo.",
@@ -3168,6 +3269,31 @@
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
+  "expenseVatDeductible": "Parte deducible (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleAmount": "IVA deducible: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatDeductibleHint": "100 % salvo que parte del gasto sea privada o sirva a una actividad exenta.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "Sin IVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "IVA de este gasto",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "Para que su asesor lo importe y lo revise — no es una declaración.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3402,6 +3528,14 @@
   "featureHolidayImportTitle": "Importar días festivos",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "IVA soportado",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Asistente de instancia",
   "@featureInstanceWizard": {
@@ -4956,13 +5090,21 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Listo — este archivo cumple EN 16931.",
   "invoiceEInvoiceShare": "Compartir factura electrónica (XML)",
   "invoiceEInvoiceStaleIdentity": "Su identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márquela como errónea y emita una sustitución para que lleve la nueva identidad.",
   "invoiceEInvoiceTransportAccredited": "Una plataforma autorizada transporta la factura y comunica los datos a la administración tributaria por usted.",
   "invoiceEInvoiceTransportBilateral": "Ningún canal es obligatorio: correo, un portal o Peppol — lo que acuerdes con el cliente.",
   "invoiceEInvoiceTransportClearance": "La plataforma nacional recibe la factura primero y la reenvía — enviarla directamente al cliente no es posible.",
   "invoiceEInvoiceTransportPeppol": "Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.",
+  "invoiceEInvoiceValidated": "Listo — no falta nada de lo que exige la EN 16931, y este formato supera el validador oficial ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceEssentialsRefused": "La factura no se emitió: faltan datos obligatorios.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
@@ -5289,6 +5431,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "El identificador fiscal del miembro: el NIF de un cliente empresarial en España, el codice fiscale o la partita IVA de un cliente en Italia, el SIREN de un cliente empresarial en Francia",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "El número de IVA del miembro (necesario para la inversión del sujeto pasivo)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -5297,11 +5443,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "El IVA en la moneda nacional: un vendedor de un Estado miembro fuera del euro factura aquí el IVA en su propia moneda (art. 230 de la Directiva del IVA)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "La dirección postal del espacio (calle o ciudad)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "El país del espacio debe ser Francia o Alemania para emitir aquí — los demás países se emiten fuera de la aplicación",
+  "invoiceMissingSellerCountry": "El país del espacio debe ser un Estado miembro de la Unión Europea para emitir aquí — los demás países se emiten fuera de la aplicación",
+  "invoiceMissingSellerTaxNumber": "El número de IVA o el NIF del espacio (el campo de registro lleva el NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "El número de identificación fiscal (IVA) del espacio",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -7257,6 +7411,7 @@
   "notifUngroup": "Desagrupar",
   "notificationsSystemOff": "Android está bloqueando las notificaciones de DesKilo",
   "notificationsSystemOffHint": "Permítalas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.",
+  "numberSequenceCreditNoteUnsaved": "Aún sin guardar: mientras esta serie no se guarde, los abonos toman números de factura.",
   "numberSequenceDateNone": "Ninguna",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -8716,6 +8871,10 @@
   },
   "refusalPermission": "No tiene permiso para esto. Un propietario del espacio puede concederlo en Gestión de roles.",
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
+  "refusalVatRateVersioned": "Este tipo ya figura en facturas emitidas, así que su porcentaje se mantiene. Use «Cambio por ley» para fijar el nuevo valor a partir de una fecha. No se ha guardado nada.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
+  },
   "regionalClock": "Reloj",
   "@regionalClock": {
     "description": "#711 - globalization"
@@ -9196,6 +9355,7 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "La advertencia de la declaración: verificar antes de presentar",
   "reportFieldMeaningDueDate": "La fecha de vencimiento",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"
@@ -11459,6 +11619,23 @@
   "@vatDeclBoxes": {
     "description": "Header of the official-box mapping (CA3/UStVA)"
   },
+  "vatDeclCorrectionOf": "Corrección de {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Una declaración presentada nunca cambia. Lo que cambió después en un periodo presentado — una factura anulada, un pago registrado tarde — se declara aquí como corrección de esa declaración.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  },
+  "vatDeclCredit": "IVA a compensar",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11466,6 +11643,14 @@
   "vatDeclDraft": "Borrador",
   "@vatDeclDraft": {
     "description": "Draft status chip"
+  },
+  "vatDeclEdiTva": "Archivo EDI-TVA (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "Archivo ELSTER (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
   },
   "vatDeclEmpty": "Aún no hay declaraciones — elija un periodo y genere la primera.",
   "@vatDeclEmpty": {
@@ -11475,9 +11660,25 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingPeriod": "Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Introduzca el número fiscal: la Steuernummer para ELSTER, el SIREN (o un número de IVA FR) para EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Número fiscal (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  },
   "vatDeclGenerate": "Preparar",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
+  },
+  "vatDeclInputVat": "IVA deducible",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
   },
   "vatDeclInvoices": "Facturas",
   "@vatDeclInvoices": {
@@ -11495,6 +11696,10 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclPayable": "IVA a ingresar",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {
     "description": "PDF button on a declaration card"
@@ -11502,6 +11707,35 @@
   "vatDeclPeriod": "Periodo",
   "@vatDeclPeriod": {
     "description": "Filing-period label"
+  },
+  "vatDeclPeriodAnnual": "Anual",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodField": "Periodo de declaración del IVA",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodHint": "Con qué frecuencia presenta usted la declaración. La pantalla de la declaración del IVA solo ofrece periodos de esta duración.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodMonth": "Mensual",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodNote": "Periodo de declaración: {period}. Puede cambiarlo en Identidad legal y facturación electrónica.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclPeriodQuarter": "Trimestral",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
   },
   "vatDeclPrepared": "Preparada",
   "@vatDeclPrepared": {

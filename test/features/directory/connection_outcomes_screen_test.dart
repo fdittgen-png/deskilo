@@ -8,6 +8,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/directory/presentation/connection_outcome_text.dart';
 import 'package:deskilo/features/directory/presentation/connections_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -133,13 +134,13 @@ void main() {
 
   test('every outcome has a sentence and exactly one recovery', () {
     for (final reason in ConnectionFailureReason.values) {
-      final text = connectionFailureText(null, ConnectionFailure('s', reason));
+      final text = connectionFailureText(englishL10n, ConnectionFailure('s', reason));
       expect(text, isNotEmpty, reason: reason.name);
       connectionRecovery(reason); // total: a switch the compiler checks
     }
     expect(
       connectionFailureText(
-        null,
+        englishL10n,
         ConnectionFailure(
           's',
           ConnectionFailureReason.unavailable,

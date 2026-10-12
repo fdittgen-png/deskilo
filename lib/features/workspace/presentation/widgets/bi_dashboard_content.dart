@@ -9,10 +9,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_analysis.dart';
-import '../../domain/bi_report_content.dart';
 import '../../domain/bi_composition.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
+import '../../domain/bi_report_content.dart';
 import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import 'bi_module_section.dart' show BiModuleView, biChangeLabel;
@@ -45,7 +45,7 @@ BiDashboardContent biDashboardContent({
   required BiResult result,
   required BiSeries series,
   required BiDashboardExtras extras,
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
   required String locale,
   required DateTime from,
   required DateTime to,
@@ -57,9 +57,9 @@ BiDashboardContent biDashboardContent({
   String changeText(BiChange c) =>
       biChangeLabel(c, l10n, locale, format: format);
   String kindLabel(BiBarKind k) => switch (k) {
-    BiBarKind.current => l10n?.biKindCurrent ?? 'Now',
-    BiBarKind.previous => l10n?.biKindPrevious ?? 'Previous period',
-    BiBarKind.yearAgo => l10n?.biKindYearAgo ?? 'Same period last year',
+    BiBarKind.current => l10n.biKindCurrent,
+    BiBarKind.previous => l10n.biKindPrevious,
+    BiBarKind.yearAgo => l10n.biKindYearAgo,
   };
 
   final current = series.current;
@@ -95,7 +95,7 @@ BiDashboardContent biDashboardContent({
           direction: directionOf(against(past)),
           label:
               '${provisional ? '≈ ' : ''}${changeText(against(past))} '
-              '${kind == BiBarKind.previous ? (l10n?.biVsPrevious ?? 'vs previous period') : (l10n?.biVsYearAgo ?? 'vs last year')}',
+              '${kind == BiBarKind.previous ? (l10n.biVsPrevious) : (l10n.biVsYearAgo)}',
         ),
   ];
   final lead = [
@@ -112,10 +112,10 @@ BiDashboardContent biDashboardContent({
     final words = changeText(lead.$2);
     narrative = switch (directionOf(lead.$2)) {
       BiDirection.up =>
-        l10n?.biNarrativeUp(label, words) ?? 'Higher than $label ($words).',
+        l10n.biNarrativeUp(label, words),
       BiDirection.down =>
-        l10n?.biNarrativeDown(label, words) ?? 'Lower than $label ($words).',
-      _ => l10n?.biNarrativeFlat(label) ?? 'About the same as $label.',
+        l10n.biNarrativeDown(label, words),
+      _ => l10n.biNarrativeFlat(label),
     };
   }
 
@@ -154,12 +154,12 @@ BiDashboardContent biDashboardContent({
       '${NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: 1).format(v)} h';
   final compositions = <BiCompositionContent>[];
   final detail = result.total.current.detail;
-  final compositionTitle = l10n?.biCompositionTitle ?? 'What it is made of';
+  final compositionTitle = l10n.biCompositionTitle;
   if (detail is SeatCapacityKpi) {
     final labels = SeatTimeLabels(
-      reserved: l10n?.biSeatReserved ?? 'Reserved',
-      free: l10n?.biSeatFree ?? 'Free during opening hours',
-      closed: l10n?.biSeatClosed ?? 'Outside opening hours',
+      reserved: l10n.biSeatReserved,
+      free: l10n.biSeatFree,
+      closed: l10n.biSeatClosed,
     );
     final parts = seatTimeComposition(detail, labels);
     if (parts != null) {
@@ -172,7 +172,7 @@ BiDashboardContent biDashboardContent({
           formatShare: share,
           centreValue: share(reserved?.share ?? 0),
           centreLabel:
-              '${labels.reserved} · ${l10n?.biSeatCentre ?? 'of all seat time'}',
+              '${labels.reserved} · ${l10n.biSeatCentre}',
         ),
       );
     }
@@ -182,17 +182,17 @@ BiDashboardContent biDashboardContent({
         : sharesOf(
             rows,
             labelOf: (r) => r.label ?? r.key,
-            otherLabel: l10n?.biRemainder ?? 'Other',
+            otherLabel: l10n.biRemainder,
           );
     if (byLevel != null) {
       compositions.add(
         BiCompositionContent(
-          title: l10n?.biShareByLevel ?? 'Reserved time by level',
+          title: l10n.biShareByLevel,
           shares: byLevel,
           formatValue: hours,
           formatShare: share,
           centreValue: hours(byLevel.fold<num>(0, (a, s) => a + s.value)),
-          centreLabel: l10n?.biSeatReserved ?? 'Reserved',
+          centreLabel: l10n.biSeatReserved,
         ),
       );
     }
@@ -202,16 +202,15 @@ BiDashboardContent biDashboardContent({
       final parts = collectionComposition(
         invoiced: inv.invoicedMinor,
         collected: detail.collectedMinor,
-        collectedLabel: l10n?.biCollectionCollected ?? 'Collected',
-        outstandingLabel: l10n?.biCollectionOutstanding ?? 'Still to collect',
+        collectedLabel: l10n.biCollectionCollected,
+        outstandingLabel: l10n.biCollectionOutstanding,
       );
       if (parts == null) {
         compositions.add(
           BiCompositionContent(
             title: compositionTitle,
             none:
-                l10n?.biCollectionNoComposition ??
-                "The amounts collected here include earlier invoices, so they are not a part of this period's invoiced total.",
+                l10n.biCollectionNoComposition,
           ),
         );
       } else {
@@ -224,7 +223,7 @@ BiDashboardContent biDashboardContent({
             formatShare: share,
             centreValue: share(collected?.share ?? 0),
             centreLabel:
-                '${l10n?.biCollectionCollected ?? 'Collected'} · ${l10n?.biCollectionCentre ?? 'of what was invoiced'}',
+                '${l10n.biCollectionCollected} · ${l10n.biCollectionCentre}',
           ),
         );
       }
@@ -244,31 +243,27 @@ BiDashboardContent biDashboardContent({
     notes: view.notes(result.total.current, l10n, locale),
     narrative: narrative,
     provisionalNote: chips.isNotEmpty && provisional
-        ? l10n?.biProvisionalNote ??
-              'Provisional: the period is not over, so this change is an estimate.'
+        ? l10n.biProvisionalNote
         : null,
     runRate: rate == null
         ? null
-        : l10n?.biRunRate(format(rate.projected)) ??
-              'At the pace so far, this period would end at about ${format(rate.projected)}.',
+        : l10n.biRunRate(format(rate.projected)),
     projectionBasis: forecast != null
-        ? (l10n?.biProjectionBasis(forecast.basis) ??
-              'A straight line through the last ${forecast.basis} complete periods, carried forward. An estimate, not a promise.')
-        : (l10n?.biProjectionNotEnough(series.history.length, need) ??
-              'Not enough history to project yet: ${series.history.length} complete periods so far, $need needed.'),
+        ? (l10n.biProjectionBasis(forecast.basis))
+        : (l10n.biProjectionNotEnough(series.history.length, need)),
     projectionNext: next == null
         ? null
         : '${periodLabel(next.period)}: ${format(next.value)} '
-              '(${format(next.low)} – ${format(next.high)}) · ${l10n?.biProjectionLabel ?? 'Estimate'}',
+              '(${format(next.low)} – ${format(next.high)}) · ${l10n.biProjectionLabel}',
     format: format,
     periodLabel: periodLabel,
     shortLabel: (p) => _biShortPeriodLabel(p, locale),
     kindLabel: kindLabel,
-    projectedLabel: l10n?.biProjectionLabel ?? 'Estimate',
-    noDataLabel: l10n?.biNoDataLabel ?? 'no data',
-    partialLabel: l10n?.biRunningLabel ?? 'running',
-    noComparisonLabel: l10n?.biDeltaNone ?? 'No comparison yet',
-    evolutionTitle: l10n?.biEvolutionTitle ?? 'Evolution',
-    compareTitle: l10n?.biCompareTitle ?? 'Compared with the past',
+    projectedLabel: l10n.biProjectionLabel,
+    noDataLabel: l10n.biNoDataLabel,
+    partialLabel: l10n.biRunningLabel,
+    noComparisonLabel: l10n.biDeltaNone,
+    evolutionTitle: l10n.biEvolutionTitle,
+    compareTitle: l10n.biCompareTitle,
   );
 }

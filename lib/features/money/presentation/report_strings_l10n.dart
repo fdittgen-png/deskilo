@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/widgets.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/report_strings.dart';
 
@@ -8,8 +9,7 @@ import '../domain/report_strings.dart';
 /// Every value here is exactly the `l10n?.x ?? 'default'` the builders
 /// used to compute inline, so a rendered document is byte-identical
 /// before and after the seam.
-ReportStrings reportStringsOf(AppLocalizations? l10n, {String? dateLocale}) {
-  if (l10n == null) return ReportStrings(dateLocale: dateLocale);
+ReportStrings reportStringsOf(AppLocalizations l10n, {String? dateLocale}) {
   return ReportStrings(
     localeName: l10n.localeName,
     dateLocale: dateLocale,
@@ -52,6 +52,6 @@ ReportStrings reportStringsFor(
   String? localeName,
 }) =>
     reportStringsOf(
-      l10n ?? AppLocalizations.of(context),
+      l10n ?? context.l10n,
       dateLocale: localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
     );

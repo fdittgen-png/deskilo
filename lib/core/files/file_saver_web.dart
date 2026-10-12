@@ -28,8 +28,9 @@ Future<String?> saveToDownloads({
     // Off-layout: the anchor exists only to be clicked.
     ..style.display = 'none';
   web.document.body!.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
+  anchor
+    ..click()
+    ..remove();
   // The object URL pins the blob in memory until it is revoked.
   web.URL.revokeObjectURL(url);
   return fileName;

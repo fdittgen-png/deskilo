@@ -9,18 +9,21 @@
 // recordings already on this device never does, so switching the
 // feature off never strands a person's own files.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
 import '../../domain/stored_recording.dart';
 import '../../domain/task_recording.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
+import '../recorder_pages.dart';
 import 'recording_review_screen.dart';
 
 class TaskRecorderScreen extends ConsumerStatefulWidget {
@@ -38,13 +41,13 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
   void initState() {
     super.initState();
     // The indicator starts listening from here on, never before.
-    Future.microtask(() {
+    unawaited(Future.microtask(() {
       if (mounted) ref.read(recorderOpenedProvider.notifier).open();
-    });
+    }));
   }
 
   Future<void> _start() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scope = ref.read(recorderScopeProvider);
     final started =
         scope != null &&
@@ -60,8 +63,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
     if (!mounted || started) return;
     AppSnack.error(
       context,
-      l10n?.taskRecorderStartFailed ??
-          'The recording could not start on this device.',
+      l10n.taskRecorderStartFailed,
     );
   }
 
@@ -85,7 +87,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final controller = ref.watch(recorderControllerProvider);
     ref.watch(recorderStatusProvider);
     final state = controller.state;
@@ -94,7 +96,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
     final live =
         state == RecorderState.recording || state == RecorderState.paused;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.taskRecorderTitle ?? 'Task recorder')),
+      appBar: AppBar(title: Text(l10n.taskRecorderTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
@@ -113,10 +115,9 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
             _Disclosure(
               canStart: signedIn && available,
               reason: !signedIn
-                  ? (l10n?.taskRecorderSignedOut ?? 'Sign in to record a task.')
+                  ? (l10n.taskRecorderSignedOut)
                   : !available
-                  ? (l10n?.taskRecorderUnavailable ??
-                        'Recording is not switched on in this workspace.')
+                  ? (l10n.taskRecorderUnavailable)
                   : null,
               captureValues: _captureValues,
               onCaptureValues: (v) => setState(() => _captureValues = v),
@@ -124,7 +125,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
             ),
           const SizedBox(height: AppSpacing.xl),
           Text(
-            l10n?.taskRecorderMyRecordings ?? 'My recordings on this device',
+            l10n.taskRecorderMyRecordings,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const _RecordingsList(),
@@ -151,21 +152,17 @@ class _Disclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     const limits = RecordingLimits();
-    final title = l10n?.taskRecorderDisclosureTitle ?? 'Before you record';
+    final title = l10n.taskRecorderDisclosureTitle;
     final body =
-        l10n?.taskRecorderDisclosureBody ??
-        'The recorder notes the steps you take on this workspace\'s '
-            'screens on this device only. Nothing is uploaded.';
+        l10n.taskRecorderDisclosureBody;
     final limitText =
-        l10n?.taskRecorderLimits(
+        l10n.taskRecorderLimits(
           limits.maxSteps,
           limits.maxDuration.inMinutes,
           limits.retention.inDays,
-        ) ??
-        'Up to ${limits.maxSteps} steps or ${limits.maxDuration.inMinutes} '
-            'minutes per recording.';
+        );
     final why = reason;
     return Card(
       child: Padding(
@@ -189,15 +186,10 @@ class _Disclosure extends StatelessWidget {
               key: const ValueKey('task-recorder-capture-values'),
               contentPadding: EdgeInsets.zero,
               title: Text(
-                l10n?.taskRecorderCaptureValues ??
-                    'Capture values (for issue reports)',
+                l10n.taskRecorderCaptureValues,
               ),
               subtitle: Text(
-                l10n?.taskRecorderCaptureValuesHint ??
-                    'Also keeps what you type and choose so a developer can '
-                        'reproduce the problem from the file. Passwords, '
-                        'payment details, e-mail addresses, phone numbers and '
-                        'other personal contact data are never kept.',
+                l10n.taskRecorderCaptureValuesHint,
               ),
               value: captureValues,
               onChanged: canStart ? onCaptureValues : null,
@@ -207,7 +199,7 @@ class _Disclosure extends StatelessWidget {
               key: const ValueKey('task-recorder-start'),
               onPressed: canStart ? onStart : null,
               icon: const Icon(Icons.fiber_manual_record),
-              label: Text(l10n?.taskRecorderStart ?? 'Start recording'),
+              label: Text(l10n.taskRecorderStart),
             ),
           ],
         ),
@@ -239,11 +231,11 @@ class _LiveControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final heading = paused
-        ? (l10n?.taskRecorderPaused ?? 'Paused')
-        : (l10n?.taskRecorderRecording ?? 'Recording');
-    final count = l10n?.taskRecorderStepCount(steps) ?? '$steps steps';
+        ? (l10n.taskRecorderPaused)
+        : (l10n.taskRecorderRecording);
+    final count = l10n.taskRecorderStepCount(steps);
     return Card(
       child: Padding(
         padding: AppSpacing.lgAll,
@@ -260,7 +252,7 @@ class _LiveControls extends StatelessWidget {
                   children: [
                     const Icon(Icons.data_object, size: 18),
                     const SizedBox(width: AppSpacing.xs),
-                    Text(l10n?.taskRecorderValuesOn ?? 'Values are being captured'),
+                    Text(l10n.taskRecorderValuesOn),
                   ],
                 ),
               ),
@@ -275,27 +267,27 @@ class _LiveControls extends StatelessWidget {
                   icon: Icon(paused ? Icons.play_arrow : Icons.pause),
                   label: Text(
                     paused
-                        ? (l10n?.taskRecorderResume ?? 'Resume')
-                        : (l10n?.taskRecorderPause ?? 'Pause'),
+                        ? (l10n.taskRecorderResume)
+                        : (l10n.taskRecorderPause),
                   ),
                 ),
                 FilledButton.icon(
                   key: const ValueKey('task-recorder-stop'),
                   onPressed: onStop,
                   icon: const Icon(Icons.stop),
-                  label: Text(l10n?.taskRecorderStop ?? 'Stop'),
+                  label: Text(l10n.taskRecorderStop),
                 ),
                 OutlinedButton.icon(
                   key: const ValueKey('task-recorder-note'),
                   onPressed: onNote,
                   icon: const Icon(Icons.edit_note),
-                  label: Text(l10n?.taskRecorderAddNote ?? 'Add a note'),
+                  label: Text(l10n.taskRecorderAddNote),
                 ),
                 TextButton.icon(
                   key: const ValueKey('task-recorder-discard'),
                   onPressed: onDiscard,
                   icon: const Icon(Icons.delete_outline),
-                  label: Text(l10n?.taskRecorderDiscard ?? 'Discard'),
+                  label: Text(l10n.taskRecorderDiscard),
                 ),
               ],
             ),
@@ -311,14 +303,14 @@ class _RecordingsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final recordings =
         ref.watch(myRecordingsProvider).value ?? const <StoredRecording>[];
     if (recordings.isEmpty) {
       return EmptyState(
         icon: Icons.history,
         title:
-            l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
+            l10n.taskRecorderNoRecordings,
       );
     }
     return Column(
@@ -336,14 +328,13 @@ class _RecordingTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final recording = stored.recording;
     final title =
-        recording?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task');
+        recording?.title ?? (l10n.taskRecorderUntitled);
     final subtitle = recording == null
-        ? (l10n?.taskRecorderUnreadable ??
-              'This recording cannot be read. You can delete it.')
-        : '${l10n?.taskRecorderStepCount(recording.steps.length) ?? '${recording.steps.length} steps'}'
+        ? (l10n.taskRecorderUnreadable)
+        : '${l10n.taskRecorderStepCount(recording.steps.length)}'
               ' · ${completenessLabel(l10n, recording.completeness)}';
     return ListTile(
       key: ValueKey('task-recording-${stored.id}'),
@@ -353,10 +344,9 @@ class _RecordingTile extends ConsumerWidget {
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => RecordingReviewScreen(stored: stored),
-          ),
+        await recordingReviewPage.open<void>(
+          context,
+          RecordingReviewScreen(stored: stored),
         );
         ref.invalidate(myRecordingsProvider);
       },
@@ -384,10 +374,10 @@ class _NoteDialogState extends State<_NoteDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.taskRecorderAddNote ?? 'Add a note'),
+      title: Text(l10n.taskRecorderAddNote),
       content: TextField(
         key: const ValueKey('task-recorder-note-field'),
         controller: _text,
@@ -396,8 +386,7 @@ class _NoteDialogState extends State<_NoteDialog> {
         maxLength: const RecordingLimits().maxNoteLength,
         decoration: InputDecoration(
           hintText:
-              l10n?.taskRecorderNoteHint ??
-              'Your own words, kept as you write them',
+              l10n.taskRecorderNoteHint,
         ),
       ),
       actions: [

@@ -23,6 +23,7 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/png_chunks.dart';
 import '../fixtures/recording_fixtures.dart';
 
 AppLocalizations _l(String code) => lookupAppLocalizations(Locale(code));
@@ -31,7 +32,7 @@ Future<(int, int, ByteData)> _decode(Uint8List png) async {
   final codec = await ui.instantiateImageCodec(png);
   final frame = await codec.getNextFrame();
   final image = frame.image;
-  final data = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+  final data = (await image.toByteData())!;
   final size = (image.width, image.height, data);
   image.dispose();
   codec.dispose();

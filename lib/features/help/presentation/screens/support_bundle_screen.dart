@@ -10,9 +10,9 @@ import '../../../../core/demo/demo_entry.dart';
 import '../../../../core/diagnostics/support_bundle.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/instance/schema_compatibility.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -56,8 +56,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
       _bundle = null;
       _context = null;
       _notice =
-          AppLocalizations.of(context)?.supportChanged ??
-          'The context changed. Prepare a new preview.';
+          context.l10n.supportChanged;
     });
   }
 
@@ -123,14 +122,13 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
         _busy = false;
       });
       // ignore: unused_catch_stack
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: export failures intentionally retain no raw error/path.
       if (!mounted || generation != _generation) return;
       setState(() {
         _busy = false;
         _notice =
-            AppLocalizations.of(context)?.supportFailed ??
-            'Could not prepare support details. Try again.';
+            context.l10n.supportFailed;
       });
     }
   }
@@ -151,7 +149,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
         fileName: 'deskilo-support.json',
       );
       // ignore: unused_catch_stack
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: no filesystem paths/provider errors in support output.
     }
     if (!mounted || generation != _generation) return;
@@ -159,18 +157,18 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
       _invalidate();
       return;
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() {
       _busy = false;
       _notice = path == null
-          ? l10n?.commonSaveFailed ?? 'Could not save the file.'
-          : l10n?.supportSaved ?? 'Saved locally';
+          ? l10n.commonSaveFailed
+          : l10n.supportSaved;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final container = ProviderScope.containerOf(context, listen: false);
     // Invalidate on each transition, including A -> B -> A while preparing.
     if (container.exists(authStateProvider)) {
@@ -187,17 +185,17 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
     final demo = ref.watch(demoEntryProvider);
     final bundle = _bundle;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.supportTitle ?? 'Support details')),
+      appBar: AppBar(title: Text(l10n.supportTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.supportPrivacy ?? 'Only local diagnostic counts are included. Shared files cannot be revoked.',
+              l10n.supportPrivacy,
             ),
             if (demo)
-              Text(l10n?.supportDemo ?? 'Demo: simulated local context'),
+              Text(l10n.supportDemo),
             const SizedBox(height: 16),
             DropdownButton<int>(
               key: const ValueKey('support-window'),
@@ -206,11 +204,11 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
               items: [
                 DropdownMenuItem(
                   value: 1,
-                  child: Text(l10n?.supportHour ?? 'Last hour'),
+                  child: Text(l10n.supportHour),
                 ),
                 DropdownMenuItem(
                   value: 24,
-                  child: Text(l10n?.supportDay ?? 'Last 24 hours'),
+                  child: Text(l10n.supportDay),
                 ),
               ],
               onChanged: _busy
@@ -224,15 +222,14 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
             FilledButton(
               key: const ValueKey('support-prepare'),
               onPressed: _busy ? null : _prepare,
-              child: Text(l10n?.supportPrepare ?? 'Prepare preview'),
+              child: Text(l10n.supportPrepare),
             ),
             if (_busy) const LinearProgressIndicator(),
             if (_notice != null)
               Text(_notice!, key: const ValueKey('support-notice')),
             if (bundle != null) ...[
               Text(
-                l10n?.supportSize(bundle.bytes.length) ??
-                    'Preview: ${bundle.bytes.length} bytes',
+                l10n.supportSize(bundle.bytes.length),
               ),
               SelectableText(
                 bundle.preview,
@@ -241,7 +238,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
               FilledButton(
                 key: const ValueKey('support-save'),
                 onPressed: _busy ? null : _save,
-                child: Text(l10n?.commonSave ?? 'Save'),
+                child: Text(l10n.commonSave),
               ),
             ],
             TextButton(
@@ -251,7 +248,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
                 _bundle = null;
                 Navigator.of(context).pop();
               },
-              child: Text(l10n?.commonCancel ?? 'Cancel'),
+              child: Text(l10n.commonCancel),
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'accounting_amount.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
@@ -26,6 +27,7 @@ enum VatGroup {
   /// the standard rate — a group because the accountant books it apart.
   excise('excise', 'S', false);
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   const VatGroup(this.wire, this.category, this.outsideBase);
   final String wire;
 
@@ -286,14 +288,16 @@ class InvoiceVatTotal {
   final int netCents;
   final int vatCents;
 
-  factory InvoiceVatTotal.fromJson(Map<dynamic, dynamic> json) =>
-      InvoiceVatTotal(
-        percent: (json['percent'] as num?)?.toDouble() ?? 0,
-        category: json['category'] as String? ?? 'S',
-        grossCents: (json['gross_cents'] as num?)?.toInt() ?? 0,
-        netCents: (json['net_cents'] as num?)?.toInt() ?? 0,
-        vatCents: (json['vat_cents'] as num?)?.toInt() ?? 0,
-      );
+  factory InvoiceVatTotal.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'invoice_vat_total');
+    return InvoiceVatTotal(
+      percent: r.doubleOrNull('percent') ?? 0,
+      category: r.stringOr('category', 'S'),
+      grossCents: r.intOrNull('gross_cents') ?? 0,
+      netCents: r.intOrNull('net_cents') ?? 0,
+      vatCents: r.intOrNull('vat_cents') ?? 0,
+    );
+  }
 }
 
 /// Builds the breakdown from lines the same way the server does — used for

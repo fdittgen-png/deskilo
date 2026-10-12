@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/seat_state_colors.dart';
 
 /// An opaque identifier survives photos and dark mode. At distant zoom only
 /// the state symbol remains; the full name is always available in semantics.
@@ -47,9 +47,10 @@ void drawSeatIdentifier(
     width,
     height,
   );
-  canvas.save();
-  canvas.clipRect(rect);
-  canvas.drawRRect(
+  canvas
+    ..save()
+    ..clipRect(rect)
+    ..drawRRect(
     RRect.fromRectAndRadius(badge, const Radius.circular(3)),
     Paint()..color = Colors.white,
   );

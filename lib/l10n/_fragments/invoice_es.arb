@@ -275,7 +275,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Listo — este archivo cumple EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validador rechazaría este archivo:",
   "invoiceEInvoiceIncompleteTitle": "Válido, pero los perfiles nacionales estrictos piden además:",
   "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añada sus tipos de IVA y vuelva a emitirla.",

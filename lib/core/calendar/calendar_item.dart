@@ -1,3 +1,4 @@
+import '../data/json_reader.dart';
 import '../data/system_columns.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -172,17 +173,16 @@ class CalendarPage {
   final List<CalendarItem> items;
   final Set<CalendarKind> locked;
 
-  factory CalendarPage.fromJson(Map<String, dynamic> json) => CalendarPage(
-        subjectMemberId: json['subject_member_id'] as String? ?? '',
-        items: [
-          for (final row in (json['items'] as List? ?? const []))
-            CalendarItem.fromRow(Map<String, dynamic>.from(row as Map)),
-        ],
-        locked: {
-          for (final k in (json['locked'] as List? ?? const []))
-            ?CalendarKind.fromWire(k as String?),
-        },
-      );
+  factory CalendarPage.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'calendar_page');
+    return CalendarPage(
+      subjectMemberId: r.stringOr('subject_member_id'),
+      items: r.objects('items', (row) => CalendarItem.fromRow(row.json)),
+      locked: {
+        for (final k in r.strings('locked')) ?CalendarKind.fromWire(k),
+      },
+    );
+  }
 
   static const empty = CalendarPage(subjectMemberId: '', items: [], locked: {});
 }

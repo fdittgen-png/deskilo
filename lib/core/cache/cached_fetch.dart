@@ -52,7 +52,7 @@ Future<T> cachedFetch<T>({
     if (hit != null && !hit.isExpired) {
       try {
         return parse(hit.payload);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // #1849 — an entry the current code cannot read is dropped, and the
         // read goes to the network; it never stays to fail every time.
         TraceLogger.instance.warn('cache', 'unreadable cache entry $key dropped',
@@ -64,7 +64,7 @@ Future<T> cachedFetch<T>({
   final Object? raw;
   try {
     raw = await fetchRaw();
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // #1849 — only a transient outage may be answered from the cache; a
     // denial quarantines what this key held, and an unclassified failure is
     // surfaced instead of quietly granting protected stale access.
@@ -79,7 +79,7 @@ Future<T> cachedFetch<T>({
             // #1305 S3 — a screen showing this can say it is not live.
             StaleReads.instance.served(key, stale.storedAt);
             return value;
-          } catch (parseError, parseSt) {
+          } on Object catch (parseError, parseSt) {
             TraceLogger.instance.warn('cache', 'stale entry $key unreadable',
                 error: parseError.runtimeType, stackTrace: parseSt);
             await fenced.invalidatePrefix(key);

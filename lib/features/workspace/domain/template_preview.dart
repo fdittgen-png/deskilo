@@ -7,6 +7,8 @@
 // change-set is the one the apply will perform, so a preview drawn from
 // anything else could promise a change that does not happen.
 import 'package:meta/meta.dart';
+
+import '../../../core/data/json_reader.dart';
 import 'workspace_feature.dart';
 
 /// The groups a template is applied by — the only vocabulary the UI shows
@@ -146,24 +148,29 @@ class TemplatePreview {
       ].fold(0, (a, b) => a + b);
 
   factory TemplatePreview.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_preview');
     final groups = <TemplateGroupPreview>[
-      for (final raw in json['groups'] as List? ?? const <Object?>[])
-        if (raw is Map)
-          TemplateGroupPreview(
-            group: TemplateGroup.fromWire(raw['group'] as String?),
-            wire: raw['group'] as String? ?? '',
-            state: TemplateGroupState.fromWire(raw['state'] as String?),
-            itemCount: (raw['items'] as List?)?.length ?? 0,
-            reason: raw['reason'] as String?,
-            customized: raw['customized'] == true,
-            featureChanges: featureChangesOf(raw['items'] as List?),
-          ),
+      for (final raw in r.list('groups'))
+        if (raw is Map) _groupPreview(JsonReader.of(raw, context: r.context)),
     ];
     return TemplatePreview(
       compatibility:
-          TemplateCompatibility.fromWire(json['compatibility'] as String?),
-      reason: json['reason'] as String?,
+          TemplateCompatibility.fromWire(r.stringOrNull('compatibility')),
+      reason: r.stringOrNull('reason'),
       groups: groups,
+    );
+  }
+
+  static TemplateGroupPreview _groupPreview(JsonReader g) {
+    final items = g.json['items'];
+    return TemplateGroupPreview(
+      group: TemplateGroup.fromWire(g.stringOrNull('group')),
+      wire: g.stringOr('group'),
+      state: TemplateGroupState.fromWire(g.stringOrNull('state')),
+      itemCount: g.list('items').length,
+      reason: g.stringOrNull('reason'),
+      customized: g.boolOr('customized', false),
+      featureChanges: featureChangesOf(items is List ? items : null),
     );
   }
 }

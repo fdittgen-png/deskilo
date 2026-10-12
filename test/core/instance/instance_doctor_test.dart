@@ -107,7 +107,7 @@ void main() {
       // 2026-09-07 to 09: three created, zero confirmed. This is the
       // invariant that broke, and the one nothing was watching.
       final findings =
-          InstanceDoctor.checkSignups(counts(created7d: 3, confirmed7d: 0));
+          InstanceDoctor.checkSignups(counts(created7d: 3));
       final finding = named(findings, 'Nobody has confirmed');
       expect(finding.level, DoctorLevel.alarm);
       expect(finding.detail, contains('3 signed up, 0 confirmed'));
@@ -177,7 +177,7 @@ void main() {
           'mailer_autoconfirm': false,
         }),
         ...InstanceDoctor.checkSignups(
-            counts(created7d: 3, confirmed7d: 0, stuck: 3, oldestStuckHours: 72)),
+            counts(created7d: 3, stuck: 3, oldestStuckHours: 72)),
       ];
       expect(hasProblem(findings), isTrue);
       final report = doctorReport('zwzbynivewivvjmripeb', findings);
@@ -320,8 +320,8 @@ void _probeIsolation() {
         ..authConfigValue = healthyConfig()
         ..failQueryContaining = 'supabase_migrations'
         ..failMessage =
-            'relation "supabase_migrations.schema_migrations" does not exist';
-      api.onQuery = (ref, sql) => sql == InstanceDoctor.securityHealthSql
+            'relation "supabase_migrations.schema_migrations" does not exist'
+        ..onQuery = (ref, sql) => sql == InstanceDoctor.securityHealthSql
           ? [
               {
                 'tables_without_rls': 'invoices',

@@ -7,45 +7,48 @@
 // one.
 import 'dart:async';
 import 'dart:typed_data';
-import '../../../core/i18n/money_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 import '../../../core/files/file_names.dart';
+import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/locale/report_language.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
+import '../../plan/providers/accessory_providers.dart';
+import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
-import '../domain/payment_terms.dart';
+import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/invoice_legal.dart';
-import '../domain/invoice.dart';
-import '../domain/invoice_pdf.dart';
-import '../domain/invoice_cii.dart';
 import '../domain/address_window.dart';
-import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
-import '../domain/invoice_report.dart';
-import 'report_layout_actions.dart';
-import 'report_layout_defaults.dart';
-import '../providers/money_providers.dart';
-import 'invoice_status.dart';
-import 'report_defaults.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_cii.dart';
+import '../domain/invoice_legal.dart';
 import '../domain/invoice_line_text.dart';
+import '../domain/invoice_pdf.dart';
+import '../domain/invoice_pdf_template.dart';
+import '../domain/invoice_report.dart';
+import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
-import 'report_facts_of.dart';
-import 'report_strings_l10n.dart';
+import '../providers/money_providers.dart';
+import 'invoice_status.dart';
 import 'period_label.dart';
-import '../../plan/providers/accessory_providers.dart';
-import '../../plan/providers/floor_plan_providers.dart';
-import '../../workspace/domain/member.dart';
-import '../../../core/locale/report_language.dart';
+import 'report_defaults.dart';
+import 'report_facts_of.dart';
+import 'report_layout_actions.dart';
+import 'report_layout_defaults.dart';
+import 'report_strings_l10n.dart';
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
@@ -61,7 +64,7 @@ Future<Map<String, Uint8List>> resolveReportImages(
     try {
       final bytes = await ref.read(reportImageBytesProvider(name).future);
       if (bytes != null) images[name] = bytes;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
         'report image fetch failed',
@@ -126,7 +129,7 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
   Future<void> quiet(Future<void> Function() load) async {
     try {
       await load();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
         'letter-doc provider warm failed',
@@ -178,7 +181,7 @@ InvoiceReport renderLetterDoc(
   String language = '',
 }) {
   final l10n = language.isEmpty
-      ? AppLocalizations.of(context)
+      ? context.l10n
       : l10nForLanguage(language);
   final template = invoicePdfTemplateFor(ref).forLocale(language);
   final bands = template.docBands(docId) ?? defaultBandsForDoc(docId, l10n);
@@ -193,7 +196,7 @@ InvoiceReport renderLetterDoc(
 /// report and a reminder all say it the same way.
 String developmentMark(BuildContext context, WidgetRef ref) =>
     (ref.read(currentWorkspaceProvider).value?.isDevelopment ?? false)
-        ? (AppLocalizations.of(context)?.developmentWatermark ?? 'DEVELOPMENT')
+        ? (context.l10n.developmentWatermark)
         : '';
 
 /// The PDF of a rendered letter document (#494).
@@ -208,7 +211,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   String? layoutXml,
   Map<String, Object?> data = const {},
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   // #917 — read before the first await: the context must not be used
   // across an async gap, and the answer cannot change mid-render.
   final mark = developmentMark(context, ref);
@@ -220,7 +223,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
       data: data,
       what: title,
       documentTitle: title,
-      pageLabel: l10n?.invoicePdfPage ?? 'Page',
+      pageLabel: l10n.invoicePdfPage,
       font: font,
       image: (name) => layoutImage(ref, name),
       // #917 — a report from a rehearsal space says so, like its
@@ -235,7 +238,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   final bytes = await buildBandedLetterPdf(
     report: report,
     reportImages: images,
-    pageLabel: l10n?.invoicePdfPage ?? 'Page',
+    pageLabel: l10n.invoicePdfPage,
     documentTitle: title,
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
     boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
@@ -276,7 +279,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // ref pass memberCapacityFor(ref, invoice.memberId).
   String? memberCapacity,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
@@ -292,14 +295,13 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         dateLabel: dateFormat.format(source.issuedAt),
         periodLabel: invoicePeriodLabel(context, source),
         watermark:
-            l10n?.invoicePdfSettledIn(invoice.number) ??
-            'Regrouped in ${invoice.number}',
+            l10n.invoicePdfSettledIn(invoice.number),
       ),
   ];
   final voidedAt = invoice.voidedAt;
   final voidedLabel = voidedAt == null
       ? ''
-      : '${l10n?.invoicePdfVoided ?? 'ERRONEOUS — voided on'} '
+      : '${l10n.invoicePdfVoided} '
             '${dateFormat.format(voidedAt)}';
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
@@ -324,42 +326,42 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final strings = InvoicePdfStrings(
     // #508 — a NEGATIVE document is titled as the credit note it is.
     invoiceTitle: invoice.totalCents < 0
-        ? (l10n?.invoicePdfCreditNote ?? 'Credit note')
-        : (l10n?.invoicePdfTitle ?? 'Invoice'),
-    issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
-    issuedBy: l10n?.invoicePdfIssuedBy ?? 'Issued by',
-    billedTo: l10n?.invoicePdfBilledTo ?? 'Billed to',
-    total: l10n?.invoiceBalance ?? 'Balance due',
-    signature: l10n?.invoicePdfSignature ?? 'Digital signature (SHA-256)',
+        ? (l10n.invoicePdfCreditNote)
+        : (l10n.invoicePdfTitle),
+    issuedOn: l10n.invoicePdfIssuedOn,
+    issuedBy: l10n.invoicePdfIssuedBy,
+    billedTo: l10n.invoicePdfBilledTo,
+    total: l10n.invoiceBalance,
+    signature: l10n.invoicePdfSignature,
     voided: voidedLabel,
     // The archive row's own word for it — one term, everywhere.
-    voidedWatermark: l10n?.invoiceVoidedChip ?? 'Erroneous',
-    proforma: l10n?.invoicePdfProforma ?? 'Proforma',
-    copy: l10n?.invoicePdfCopy ?? 'Copy',
+    voidedWatermark: l10n.invoiceVoidedChip,
+    proforma: l10n.invoicePdfProforma,
+    copy: l10n.invoicePdfCopy,
     // #831 — a regrouped source says where it went.
     settledIn: settledIn,
     // #917 — a document printed by a development workspace says so
     // across the page, above every other stamp it could carry.
     development: workspace?.isDevelopment ?? false
-        ? (l10n?.developmentWatermark ?? 'DEVELOPMENT')
+        ? (l10n.developmentWatermark)
         : '',
-    replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
-    description: l10n?.invoicePdfDescription ?? 'Description',
-    charges: l10n?.invoicePdfCharges ?? 'Charges',
-    payments: l10n?.invoicePdfPayments ?? 'Payments',
-    net: l10n?.vatPdfNet ?? 'Net',
-    vat: l10n?.vatPdfVat ?? 'VAT',
-    annex: l10n?.invoicePdfAnnex ?? 'Annex — details',
-    attendance: l10n?.invoicePdfAttendance ?? 'Check-ins',
-    activity: l10n?.invoicePdfActivity ?? 'Bookings & payments',
-    reserved: l10n?.invoicePdfReserved ?? 'reserved',
-    page: l10n?.invoicePdfPage ?? 'Page',
+    replaces: l10n.invoicePdfReplaces,
+    description: l10n.invoicePdfDescription,
+    charges: l10n.invoicePdfCharges,
+    payments: l10n.invoicePdfPayments,
+    net: l10n.vatPdfNet,
+    vat: l10n.vatPdfVat,
+    annex: l10n.invoicePdfAnnex,
+    attendance: l10n.invoicePdfAttendance,
+    activity: l10n.invoicePdfActivity,
+    reserved: l10n.invoicePdfReserved,
+    page: l10n.invoicePdfPage,
   );
   // A proforma is named after what it covers — it has no number to be
   // filed under, and must never sit in a folder looking like the invoice.
   final stem = proforma
       ? safeFileSlug(
-          '${l10n?.invoicePdfProforma ?? 'proforma'} '
+          '${l10n.invoicePdfProforma} '
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
@@ -378,14 +380,14 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
                     kindId: 'invoice',
                     countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
                     letterStandard: letterStandard,
-                    l10n: AppLocalizations.of(context),
+                    l10n: context.l10n,
                   ))
             : resolveLayoutXmlFor(
                 template: template,
                 kindId: 'invoice',
                     countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
                 letterStandard: letterStandard,
-                l10n: AppLocalizations.of(context),
+                l10n: context.l10n,
               ))
       : null;
   if (layoutXml != null) {
@@ -465,7 +467,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   required String iban,
 }) async {
   final association = ref.read(sellerIsAssociationProvider);
-  final words = reportStringsOf(AppLocalizations.of(context));
+  final words = reportStringsOf(context.l10n);
   final xml = buildInvoiceCii(
     invoice: invoice,
     seller: seller,
@@ -548,11 +550,11 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
     language = '';
   }
   final l10n = language.isEmpty
-      ? AppLocalizations.of(context)
+      ? context.l10n
       : l10nForLanguage(language);
   final title = level <= 1
-      ? (l10n?.reminderPdfTitleFriendly ?? 'Payment reminder')
-      : '${l10n?.reminderPdfTitleFirm ?? 'Reminder'} $level';
+      ? (l10n.reminderPdfTitleFriendly)
+      : '${l10n.reminderPdfTitleFirm} $level';
   final data = reminderReportData(
     reportStringsFor(context,
         l10n: l10n, localeName: language.isEmpty ? null : language),
@@ -567,7 +569,7 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   final report =
       (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
       renderReportBands(bands: fallback, data: texted)!;
-  final pageLabel = l10n?.invoicePdfPage ?? 'Page';
+  final pageLabel = l10n.invoicePdfPage;
   final mark = developmentMark(context, ref);
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
@@ -591,12 +593,12 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
 /// '' for every other document.
 String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
   if (!invoice.isFolded) return '';
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final number = settledByNumberOf(
     invoice,
     ref.read(invoicesProvider).value ?? const [],
   );
-  return l10n?.invoicePdfSettledIn(number) ?? 'Regrouped in $number';
+  return l10n.invoicePdfSettledIn(number);
 }
 
 /// #837 — the invoices [invoice] regrouped, resolved from the archive in

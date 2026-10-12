@@ -6,8 +6,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import '../../features/plan/providers/floor_plan_providers.dart';
-import '../trace/trace_logger.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../trace/trace_logger.dart';
+import '../ui/app_durations.dart';
 import 'invalidation_map.dart';
 import 'realtime_sync.dart';
 
@@ -20,7 +21,7 @@ RealtimeSync realtimeSync(Ref ref) =>
 /// How long changes are coalesced before invalidating (#413): a burst
 /// (a series booking writes dozens of rows) becomes one refetch.
 @visibleForTesting
-const kRealtimeDebounce = Duration(milliseconds: 300);
+const kRealtimeDebounce = AppDurations.realtimeDebounce;
 
 /// Watches app lifecycle for the invalidator: while the app was
 /// backgrounded the realtime socket may have been paused by the OS with
@@ -47,7 +48,7 @@ class ResumeResyncObserver with WidgetsBindingObserver {
 @Riverpod(keepAlive: true)
 class RealtimeInvalidator extends _$RealtimeInvalidator {
   StreamSubscription<String>? _sub;
-  Timer? _debounce;
+  Timer? _batchWindow;
   ResumeResyncObserver? _observer;
   final _pending = <String>{};
 
@@ -75,7 +76,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     if (workspace == null) return;
     _observer = ResumeResyncObserver(() {
       _pending.add(kResyncSignal);
-      _debounce ??= Timer(kRealtimeDebounce, _flush);
+      _batchWindow ??= Timer(kRealtimeDebounce, _flush);
     });
     WidgetsBinding.instance.addObserver(_observer!);
     _sub = ref
@@ -83,17 +84,17 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
         .watch(workspace.id)
         .listen((table) {
       _pending.add(table);
-      _debounce ??= Timer(kRealtimeDebounce, _flush);
+      _batchWindow ??= Timer(kRealtimeDebounce, _flush);
     });
   }
 
   /// Releases everything a previous build installed. Idempotent — the
   /// dispose callback and the next build both call it.
   void _teardown() {
-    _sub?.cancel();
+    unawaited(_sub?.cancel());
     _sub = null;
-    _debounce?.cancel();
-    _debounce = null;
+    _batchWindow?.cancel();
+    _batchWindow = null;
     // #2019 — signals collected for the old channel never flush into the
     // next workspace's batch.
     _pending.clear();
@@ -105,7 +106,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   }
 
   void _flush() {
-    _debounce = null;
+    _batchWindow = null;
     final tables = Set.of(_pending);
     _pending.clear();
     if (!ref.mounted) return;
@@ -136,7 +137,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     if (entries.any((e) => e.bustsPlanCache)) {
       try {
         await ref.read(floorPlanRepositoryProvider).invalidateCache();
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // A cache that refuses to clear must not stop the repaint — the
         // refetch may still be network-true.
         TraceLogger.instance.warn(

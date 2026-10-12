@@ -22,6 +22,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:meta/meta.dart';
 
 import '../../../../core/trace/trace_logger.dart';
 import '../../storyboard/png_safety.dart';
@@ -171,6 +172,7 @@ class DocxDocument {
 }
 
 /// One package relationship.
+@visibleForTesting
 class DocxRelationship {
   const DocxRelationship(this.id, this.type, this.target);
 
@@ -196,6 +198,7 @@ final _internalTarget = RegExp(r'^[A-Za-z0-9_\-]+(/[A-Za-z0-9_\-]+)*\.[a-z]+$');
 
 /// The relationships part for [rels]. Refuses any target that is not a
 /// plain path inside the package.
+@visibleForTesting
 String docxRelationshipsXml(List<DocxRelationship> rels) {
   final out = StringBuffer('$_xmlHead<Relationships xmlns="$_pkgRelNs">');
   for (final r in rels) {
@@ -225,6 +228,7 @@ final _notXml = RegExp(
 /// [value] made safe for XML text and attributes: escaped, and without
 /// the characters XML 1.0 cannot carry (control characters, lone
 /// surrogates).
+@visibleForTesting
 String escapeXml(String value) => value
     .replaceAll(_notXml, '')
     .replaceAll('&', '&amp;')
@@ -375,7 +379,7 @@ String _document(DocxDocument doc, List<(Uint8List, int, int)> media) {
   var image = 0;
   for (final block in doc.blocks) {
     switch (block) {
-      case DocxParagraph p:
+      case final DocxParagraph p:
         final pPr = StringBuffer('<w:pStyle w:val="${p.style.id}"/>');
         if (p.keepWithNext) pPr.write('<w:keepNext/>');
         body.write('<w:p><w:pPr>$pPr</w:pPr>');
@@ -389,7 +393,7 @@ String _document(DocxDocument doc, List<(Uint8List, int, int)> media) {
         body.write(_runs(p.runs));
         if (mark != null) body.write('<w:bookmarkEnd w:id="${bookmarkId++}"/>');
         body.write('</w:p>');
-      case DocxImage i:
+      case final DocxImage i:
         final (_, width, height) = media[image++];
         body.write(
           '<w:p><w:pPr><w:pStyle w:val="Illustration"/>'

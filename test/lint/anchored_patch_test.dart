@@ -29,6 +29,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #2356/0407 restates set_vat_rates from the LIVE dev definition
+  // (pg_get_functiondef): 0170's anchored group_key / outside_base /
+  // exemption_reason columns and 0180's has_permission('manageBilling')
+  // are carried verbatim; the change is the DKV01 refusal of a new percent
+  // on a rate in force while an invoice was issued. pgTAP 169 saves rates.
+  'set_vat_rates@0407',
   // #2357/0402 restates mark_vat_declaration_submitted from the LIVE dev
   // definition (pg_get_functiondef): 0165's anchored DECL- number draw
   // (next_document_number when number = '') is carried verbatim; the
@@ -36,6 +42,12 @@ const _reviewed = {
   // prepared-only rule, the recompute check and the writer token.
   // pgTAP 166 files a return and asserts its DECL- number.
   'mark_vat_declaration_submitted@0402',
+  // #2357/0406 restates it again from 0402's body (the LIVE dev
+  // definition, md5-checked before the apply): 0165's DECL- draw is still
+  // carried verbatim; the additions are the overlap refusal and the
+  // vat_return_entries insert. pgTAP 166 and 169 file returns and assert
+  // the number and the recorded entries.
+  'mark_vat_declaration_submitted@0406',
   // #2145/0358 restates mcp_read_v1 whole. The LIVE dev body is 0275's
   // with 0345's one anchored change (free = mcp_seat_bookable(...) is
   // null), comments and blank lines aside; the new body keeps that verdict
@@ -43,13 +55,13 @@ const _reviewed = {
   // filters and an id-true cursor. pgTAP 144 drives availability paging,
   // the filters and the engine verdict.
   'mcp_read_v1@0358',
-  // #2391/0406 restates mcp_read_v1 whole again from the LIVE dev body
+  // #2391/0411 restates mcp_read_v1 whole again from the LIVE dev body
   // (pg_get_functiondef, 0358's text): every branch verbatim except the
   // validation rows (own rows only under an `own` ceiling) and
   // availability over the four kinds, whose verdict moves from
   // mcp_seat_bookable to mcp_place_bookable (the same engine probe for any
   // kind). pgTAP 170 drives both; 129 pins the engine call.
-  'mcp_read_v1@0406',
+  'mcp_read_v1@0411',
   // #2137/0361 restates create_invitation from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored patch (environments,
   // handover, prod access) is carried; the one change is that a member
@@ -150,7 +162,7 @@ const _reviewed = {
 /// a whole new definition (a new `mcp_op_<id>` for a new operation), never
 /// by an anchored patch of its live text. [sources] maps a migration's
 /// four-digit number to its text; answers the offending numbers.
-List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0407'}) => [
+List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0412'}) => [
   for (final e in sources.entries)
     if (e.key.compareTo(since) >= 0 &&
         RegExp(r"pg_get_functiondef\(\s*'public\.mcp_|proname\s*=\s*'mcp_")

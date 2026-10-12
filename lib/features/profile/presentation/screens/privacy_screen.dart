@@ -9,22 +9,22 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../calendar/providers/calendar_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/rights_requests.dart';
+import '../widgets/erasure_preview_view.dart';
 import '../widgets/privacy_choice_tiles.dart';
 import '../widgets/rights_requests_tile.dart';
-import '../widgets/erasure_preview_view.dart';
-import '../../application/rights_requests.dart';
 
 /// The policy the store listings, the README and the help all point at.
 const _kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
@@ -41,24 +41,20 @@ class PrivacyScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final features = ref.watch(enabledFeaturesSyncProvider);
     final exportOn = features.contains(WorkspaceFeature.memberDataExport);
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.privacyTitle ?? 'Privacy & data')),
+      appBar: AppBar(title: Text(l10n.privacyTitle)),
       body: ListView(children: [
         const HelpHint(HelpHintId.privacy),
         Padding(
           padding: AppSpacing.lgAll,
           child: Text(
-            l10n?.privacyIntro ??
-                'Your data is never tracked or sold, and is readable only by '
-                    'the roles the rules below name; where it is hosted is in '
-                    "this installation's privacy notice. These are your rights "
-                    'under the GDPR — each one is a button.',
+            l10n.privacyIntro,
             style: theme.textTheme.bodyMedium,
           ),
         ),
@@ -66,13 +62,11 @@ class PrivacyScreen extends ConsumerWidget {
           key: const ValueKey('privacy-who-can-see'),
           leading: const Icon(Icons.shield_outlined),
           title: HelpDotTitle(
-            l10n?.privacyWhoCanSee ?? 'Who can see my data',
-            l10n?.helpHintPrivacyTopic ?? 'Privacy',
+            l10n.privacyWhoCanSee,
+            l10n.helpHintPrivacyTopic,
             anchor: HelpAnchor.privacyVisibility,
           ),
-          subtitle: Text(l10n?.privacyWhoCanSeeHint ??
-              'The rule per category, the people it names today, and who '
-                  'actually looked.'),
+          subtitle: Text(l10n.privacyWhoCanSeeHint),
           onTap: () => showAccessSheet(context, ref),
         ),
         if (exportOn)
@@ -80,12 +74,11 @@ class PrivacyScreen extends ConsumerWidget {
             key: const ValueKey('privacy-export'),
             leading: const Icon(Icons.download_outlined),
             title: HelpDotTitle(
-              l10n?.privacyExport ?? 'Export my data',
-              l10n?.helpHintPrivacyTopic ?? 'Privacy',
+              l10n.privacyExport,
+              l10n.helpHintPrivacyTopic,
               anchor: HelpAnchor.privacyExport,
             ),
-            subtitle: Text(l10n?.privacyExportHint ??
-                'Everything you are the subject of, as one JSON file (art. 20).'),
+            subtitle: Text(l10n.privacyExportHint),
             onTap: () => _export(context, ref),
           ),
         if (exportOn)
@@ -98,18 +91,14 @@ class PrivacyScreen extends ConsumerWidget {
             // hand-rolled Row that drifted the dot to the far right when
             // the title wrapped is not needed.
             title: HelpDotTitle(
-              l10n?.privacyErase ?? 'Leave this workspace and erase my data',
-              l10n?.helpHintPrivacyTopic ?? 'Privacy',
+              l10n.privacyErase,
+              l10n.helpHintPrivacyTopic,
               anchor: HelpAnchor.privacyErase,
               style: TextStyle(color: theme.colorScheme.error),
             ),
             subtitle: Text(isOwner
-                ? (l10n?.privacyEraseOwner ??
-                    'An owner hands the workspace over first (Members & plans → Co-ownership).')
-                : (l10n?.privacyEraseHint ??
-                    'Cancels your bookings, blanks your messages, clears your '
-                        'profile. Accounting records stay under the legal '
-                        'retention, by id, not by name (art. 17).')),
+                ? (l10n.privacyEraseOwner)
+                : (l10n.privacyEraseHint)),
             enabled: !isOwner,
             onTap: isOwner ? null : () => _erase(context, ref),
           ),
@@ -125,19 +114,18 @@ class PrivacyScreen extends ConsumerWidget {
           key: const ValueKey('privacy-consent'),
           leading: const Icon(Icons.fact_check_outlined),
           title: HelpDotTitle(
-            l10n?.consentTitle ?? 'Your data, your rights',
-            l10n?.helpHintPrivacyTopic ?? 'Privacy',
+            l10n.consentTitle,
+            l10n.helpHintPrivacyTopic,
             anchor: HelpAnchor.privacyConsent,
           ),
-          subtitle: Text(l10n?.consentReviewHint ??
-              'The text you accepted, with the date — read it again anytime.'),
+          subtitle: Text(l10n.consentReviewHint),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push('/consent?review=1'),
         ),
         ListTile(
           key: const ValueKey('privacy-policy'),
           leading: const Icon(Icons.policy_outlined),
-          title: Text(l10n?.privacyPolicy ?? 'Privacy policy'),
+          title: Text(l10n.privacyPolicy),
           subtitle: const Text(_kPrivacyPolicyUrl),
           trailing: const Icon(Icons.open_in_new, size: 18),
           onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_kPrivacyPolicyUrl)),
@@ -147,7 +135,7 @@ class PrivacyScreen extends ConsumerWidget {
   }
 
   Future<void> _export(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     Map<String, dynamic>? data;
@@ -155,8 +143,7 @@ class PrivacyScreen extends ConsumerWidget {
       context,
       domain: 'privacy',
       message: 'export my data failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         data = await ref.read(calendarRepositoryProvider).exportMyData(workspace.id);
       },
@@ -170,12 +157,12 @@ class PrivacyScreen extends ConsumerWidget {
       bytes: bytes,
       fileName: 'deskilo-my-data-${now.toIso8601String().substring(0, 10)}.json',
       mimeType: 'application/json',
-      text: l10n?.privacyExportShareText ?? 'My DesKilo data export',
+      text: l10n.privacyExportShareText,
     );
   }
 
   Future<void> _erase(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     // #1915 — say what goes and what stays before anything is asked.
@@ -183,19 +170,18 @@ class PrivacyScreen extends ConsumerWidget {
     if (!context.mounted) return;
     // Irreversible — typed confirmation, like the workspace reset.
     final controller = TextEditingController();
-    final phrase = l10n?.privacyEraseConfirmPhrase ?? 'ERASE';
+    final phrase = l10n.privacyEraseConfirmPhrase;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.privacyErase ?? 'Leave this workspace and erase my data'),
+        title: Text(l10n.privacyErase),
         content: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
           if (preview != null) ...[
             ErasurePreviewView(preview: preview),
             const SizedBox(height: AppSpacing.md),
           ],
-          Text(l10n?.privacyEraseConfirmHint(phrase) ??
-              'This cannot be undone. Type $phrase to confirm.'),
+          Text(l10n.privacyEraseConfirmHint(phrase)),
           const SizedBox(height: AppSpacing.md),
           TextField(
             key: const ValueKey('privacy-erase-phrase'),
@@ -208,7 +194,7 @@ class PrivacyScreen extends ConsumerWidget {
           TextButton(
             key: const ValueKey('privacy-directory-close'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.directoryClose ?? 'Close'),
+            child: Text(l10n.directoryClose),
           ),
           FilledButton(
             key: const ValueKey('privacy-erase-confirm'),
@@ -217,7 +203,7 @@ class PrivacyScreen extends ConsumerWidget {
             ),
             onPressed: () => Navigator.of(dialogContext)
                 .pop(controller.text.trim() == phrase),
-            child: Text(l10n?.privacyEraseConfirmButton ?? 'Erase'),
+            child: Text(l10n.privacyEraseConfirmButton),
           ),
         ],
       ),
@@ -227,13 +213,12 @@ class PrivacyScreen extends ConsumerWidget {
       context,
       domain: 'privacy',
       message: 'erase my membership failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () =>
           ref.read(calendarRepositoryProvider).eraseMyMembership(workspace.id),
     );
     if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n?.privacyErased ?? 'Your data has been erased.');
+    AppSnack.success(context, l10n.privacyErased);
     await signOutAndForget(ref);
     if (context.mounted) context.go('/auth');
   }

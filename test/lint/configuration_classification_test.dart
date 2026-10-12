@@ -121,7 +121,7 @@ Set<String> classifiedNames() {
     if (!line.startsWith('|')) continue;
     final cells = line.split('|').map((c) => c.trim()).toList();
     if (cells.length < 3) continue;
-    var first = cells[1]
+    final first = cells[1]
         .replaceAll(RegExp(r'\([^)]*\)'), ' ')
         .replaceAll('`', ' ')
         .replaceAll('*', ' ');

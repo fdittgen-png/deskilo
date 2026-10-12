@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
 import '../../l10n/app_localizations.dart';
-import '../../l10n/app_localizations_en.dart';
 import '../data/server_error.dart';
 
 /// #1305 S2 — the refusals every surface can meet, whatever it was doing.
@@ -28,6 +27,10 @@ enum KnownRefusal {
   /// #2332 (0399, DK423) — the currency or country of a space that has
   /// already issued a document or recorded money.
   moneyLocaleLocked,
+
+  /// #2356 (DKV01) — a new percent on a VAT rate already on issued
+  /// invoices: the change is a new version from a date.
+  vatRateVersioned,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -75,6 +78,7 @@ KnownRefusal? knownRefusalOf(Object error) {
   // revoked grant, which never carries one of our sentences.
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
   if (serverErrorCode(error) == 'DK423') return KnownRefusal.moneyLocaleLocked;
+  if (serverErrorCode(error) == 'DKV01') return KnownRefusal.vatRateVersioned;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -91,18 +95,15 @@ KnownRefusal? knownRefusalOf(Object error) {
 
 /// The sentence for [error] when it is a known refusal, else null — the
 /// caller keeps its own text for everything else.
-String? knownRefusalText(AppLocalizations? l10n, Object error) =>
+String? knownRefusalText(AppLocalizations l10n, Object error) =>
     switch (knownRefusalOf(error)) {
-      KnownRefusal.permission => l10n?.refusalPermission ??
-          'You do not have the permission for this. An owner of the space '
-              'can grant it in Role management.',
-      KnownRefusal.session => l10n?.refusalSession ??
-          'Your session has ended. Sign in again, then retry.',
-      KnownRefusal.alreadyDecided => l10n?.refusalAlreadyDecided ??
-          'Someone has already decided this. The list shows the outcome.',
-      KnownRefusal.changedMeanwhile => l10n?.refusalChangedMeanwhile ??
-          'This changed in the meantime. Reopen it to see where it stands.',
+      KnownRefusal.permission => l10n.refusalPermission,
+      KnownRefusal.session => l10n.refusalSession,
+      KnownRefusal.alreadyDecided => l10n.refusalAlreadyDecided,
+      KnownRefusal.changedMeanwhile => l10n.refusalChangedMeanwhile,
       KnownRefusal.moneyLocaleLocked =>
-        (l10n ?? AppLocalizationsEn()).refusalMoneyLocaleLocked,
+        l10n.refusalMoneyLocaleLocked,
+      KnownRefusal.vatRateVersioned =>
+        l10n.refusalVatRateVersioned,
       null => null,
     };

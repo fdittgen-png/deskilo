@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:xml/xml.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
-import 'package:xml/xml.dart';
-
 import 'e_invoice_totals.dart';
+import 'einvoice_format.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -50,7 +51,15 @@ String buildInvoiceUbl({
   required String Function(InvoiceLine line) lineText,
   /// BT-84, the account the payer must transfer to; '' = omit the group.
   String iban = '',
+  /// #2358 — the profile the document claims. Every element a profile
+  /// adds is emitted for that profile only: the bare EN 16931 file stays
+  /// byte-identical to what was always downloaded.
+  UblProfile profile = UblProfile.en16931,
+  /// BT-9 / BT-20 — when the money is due and on what terms (BR-CO-25).
+  DateTime? dueDate,
+  String paymentTerms = '',
 }) {
+  final profiled = profile != UblProfile.en16931;
   // #1077 — the currency's own grain, not the euro's.
   String amount(int minor) => minorToText(minor, invoice.currency);
   // #1154 — the totals rule lives once, in e_invoice_totals.dart.
@@ -81,16 +90,17 @@ String buildInvoiceUbl({
   final issueDate = invoice.issuedAt.toIso8601String().split('T').first;
   final currency = invoice.currency;
 
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element(docName, nest: () {
-    builder.namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2');
-    builder.namespace(
+    builder
+      ..namespace(
+        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2')
+      ..namespace(
         'urn:oasis:names:specification:ubl:schema:xsd:'
         'CommonBasicComponents-2',
-        'cbc');
-    builder.namespace(
+        'cbc')
+      ..namespace(
         'urn:oasis:names:specification:ubl:schema:xsd:'
         'CommonAggregateComponents-2',
         'cac');
@@ -106,9 +116,15 @@ String buildInvoiceUbl({
     void money(String name, int cents) =>
         cbc(name, amount(cents), {'currencyID': currency});
 
-    cbc('CustomizationID', 'urn:cen.eu:en16931:2017');
+    cbc('CustomizationID', profile.customizationId);
+    if (profile.profileId.isNotEmpty) cbc('ProfileID', profile.profileId);
     cbc('ID', invoice.number);
     cbc('IssueDate', issueDate);
+    // BT-9 — the schema places it right after the issue date, on an
+    // invoice only (a credit note states no due date there).
+    if (profiled && !creditNote && dueDate != null) {
+      cbc('DueDate', dueDate.toIso8601String().split('T').first);
+    }
     // 380 = commercial invoice; 384 = corrective (a replacement);
     // 381 = credit note — a document that gives money back (#894).
     if (creditNote) {
@@ -148,12 +164,22 @@ String buildInvoiceUbl({
     void party(String aggregate, InvoiceParty p, {required bool isSeller}) {
       builder.element('cac:$aggregate', nest: () {
         builder.element('cac:Party', nest: () {
+          // BT-34 / BT-49 — the electronic address comes first in the
+          // party; Peppol and XRechnung route by it.
+          if (profiled && p.endpointId.isNotEmpty) {
+            cbc('EndpointID', p.endpointId,
+                {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
+          }
           builder.element('cac:PostalAddress', nest: () {
             if (p.street.isNotEmpty) {
               cbc('StreetName', p.street.replaceAll('\n', ', '));
             }
             if (p.city.isNotEmpty) cbc('CityName', p.city);
             if (p.postalCode.isNotEmpty) cbc('PostalZone', p.postalCode);
+            // BT-39 / BT-54 — CIUS-RO requires the county.
+            if (profiled && p.subdivision.isNotEmpty) {
+              cbc('CountrySubentity', p.subdivision);
+            }
             builder.element('cac:Country', nest: () {
               cbc('IdentificationCode', p.country.toUpperCase());
             });
@@ -175,6 +201,17 @@ String buildInvoiceUbl({
             // BT-30 — with BT-31 absent this is what satisfies BR-CO-26.
             if (p.legalId.isNotEmpty) cbc('CompanyID', p.legalId);
           });
+          // BG-6 — the seller's contact; XRechnung makes all three
+          // mandatory (BR-DE-2/5/6/7).
+          if (profiled && isSeller &&
+              (p.email.isNotEmpty || p.phone.isNotEmpty)) {
+            builder.element('cac:Contact', nest: () {
+              final name = p.person.isNotEmpty ? p.person : invoice.issuerName;
+              if (name.isNotEmpty) cbc('Name', name);
+              if (p.phone.isNotEmpty) cbc('Telephone', p.phone);
+              if (p.email.isNotEmpty) cbc('ElectronicMail', p.email);
+            });
+          }
         });
       });
     }
@@ -189,6 +226,11 @@ String buildInvoiceUbl({
         builder.element('cac:PayeeFinancialAccount', nest: () {
           cbc('ID', iban.replaceAll(' ', ''));
         });
+      });
+    }
+    if (profiled && paymentTerms.isNotEmpty) {
+      builder.element('cac:PaymentTerms', nest: () {
+        cbc('Note', paymentTerms);
       });
     }
 
@@ -253,7 +295,11 @@ String buildInvoiceUbl({
       // negative QUANTITY at a positive price.
       final quantity = lineNet < 0 ? -units : units;
       final unitCents = lineNet.abs() ~/ units;
-      final lineCategory = line.vatPercent > 0 ? 'S' : category;
+      // #2356 — the category the server froze on the line wins (a Z
+      // zero-rated line of a VAT-registered seller); an older line derives it.
+      final lineCategory = line.vatCategory.isNotEmpty
+          ? line.vatCategory
+          : line.vatPercent > 0 ? 'S' : category;
       builder.element('cac:${docName}Line', nest: () {
         cbc('ID', '${i + 1}');
         cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',

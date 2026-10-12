@@ -2,18 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
-import '../workbook_labels.dart';
-import '../widgets/workbook_export_dialog.dart';
 import '../../domain/template_capabilities.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
+import '../widgets/workbook_export_dialog.dart';
+import '../workbook_labels.dart';
 
 /// #1660 — up to four shortlisted templates, side by side, from their
 /// inspected settings (#1655/#1659): every field, not only what is on.
@@ -51,7 +52,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
         ref.read(templateWorkbookExportProvider),
         [for (final t in widget.templates) t.id],
         now: ref.read(clockProvider).now(),
-        labels: workbookLabels(AppLocalizations.of(context)),
+        labels: workbookLabels(context.l10n),
       ),
     );
     if (!mounted) return;
@@ -63,16 +64,16 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ids = widget.templates.map((t) => t.id).join(',');
     final comparison = ref.watch(templateComparisonProvider(ids));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.compareTitle ?? 'Compare templates'),
+        title: Text(l10n.compareTitle),
         actions: [
           IconButton(
             key: const ValueKey('compare-export'),
-            tooltip: l10n?.compareExport ?? 'Export to Excel',
+            tooltip: l10n.compareExport,
             icon: const Icon(Icons.table_view_outlined),
             onPressed: _exporting ? null : _export,
           ),
@@ -85,8 +86,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
           child: InlineBanner(
             key: const ValueKey('compare-unavailable'),
             icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.error,
-            text: l10n?.compareUnavailable ?? 'These templates could not be read to compare them. Nothing is claimed either way.',
+            text: l10n.compareUnavailable,
           ),
         ),
         data: (rows) => LayoutBuilder(
@@ -116,12 +116,12 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                           ButtonSegment(
                             value: true,
                             label: Text(
-                              l10n?.compareDifferences ?? 'Differences',
+                              l10n.compareDifferences,
                             ),
                           ),
                           ButtonSegment(
                             value: false,
-                            label: Text(l10n?.compareAll ?? 'All settings'),
+                            label: Text(l10n.compareAll),
                           ),
                         ],
                         selected: {_differencesOnly},
@@ -133,7 +133,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                         key: const ValueKey('compare-search'),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.search),
-                          hintText: l10n?.compareSearch ?? 'Find a setting',
+                          hintText: l10n.compareSearch,
                         ),
                         onChanged: (v) =>
                             setState(() => _filter = v.trim().toLowerCase()),
@@ -162,11 +162,10 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                       ],
                       const SizedBox(height: AppSpacing.sm),
                       Text(
-                        l10n?.compareCount(
+                        l10n.compareCount(
                               '${shown.length}',
                               '${rows.length}',
-                            ) ??
-                            '${shown.length} of ${rows.length} settings',
+                            ),
                         key: const ValueKey('compare-count'),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
@@ -179,7 +178,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                   child: shown.isEmpty
                       ? Center(
                           child: Text(
-                            l10n?.compareNothing ?? 'No setting differs.',
+                            l10n.compareNothing,
                           ),
                         )
                       : ListView.separated(
@@ -242,7 +241,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
 
   Widget _row(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ComparisonRow r,
     List<int> columns,
   ) {
@@ -264,8 +263,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
                 Text(r.path, style: theme.textTheme.bodyMedium),
                 if (r.difference == ComparisonDifference.notComparable)
                   Text(
-                    l10n?.compareCurrencies ??
-                        'Different currencies: not comparable',
+                    l10n.compareCurrencies,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.error,
                     ),
@@ -289,19 +287,19 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
 
 /// A cell in words: its value, or why there is none — never "false"
 /// for something the template does not say.
-String comparisonCellText(AppLocalizations? l10n, ComparisonCell c) =>
+String comparisonCellText(AppLocalizations l10n, ComparisonCell c) =>
     switch (c.disposition) {
       TemplateFieldDisposition.present => switch (c.value) {
-        true => l10n?.compareYes ?? 'Yes',
-        false => l10n?.compareNo ?? 'No',
+        true => l10n.compareYes,
+        false => l10n.compareNo,
         null => '—',
         // #1660 — an empty value is a value, not a blank cell that reads
         // like a missing one; a map reads as its entries, in key order.
-        final String v when v.trim().isEmpty => l10n?.compareEmpty ?? 'Empty',
+        final String v when v.trim().isEmpty => l10n.compareEmpty,
         final List<Object?> list when list.isEmpty =>
-          l10n?.compareEmpty ?? 'Empty',
+          l10n.compareEmpty,
         final Map<Object?, Object?> map when map.isEmpty =>
-          l10n?.compareEmpty ?? 'Empty',
+          l10n.compareEmpty,
         final List<Object?> list => list.join(', '),
         final Map<Object?, Object?> map => (map.entries.toList()
               ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
@@ -311,13 +309,13 @@ String comparisonCellText(AppLocalizations? l10n, ComparisonCell c) =>
       },
       TemplateFieldDisposition.absent => switch (c.absent) {
         TemplateAbsentMeaning.inherit =>
-          l10n?.compareInherits ?? 'Keeps the space\'s own',
+          l10n.compareInherits,
         TemplateAbsentMeaning.productDefault ||
         TemplateAbsentMeaning.registryDefault =>
-          l10n?.compareDefault ?? 'Default',
-        TemplateAbsentMeaning.required => l10n?.compareLocal ?? 'Set locally',
-        _ => l10n?.compareMissing ?? 'Not in this template',
+          l10n.compareDefault,
+        TemplateAbsentMeaning.required => l10n.compareLocal,
+        _ => l10n.compareMissing,
       },
-      TemplateFieldDisposition.unknown => l10n?.compareUnknown ?? 'Unknown',
-      _ => l10n?.compareNotCarried ?? 'Not carried',
+      TemplateFieldDisposition.unknown => l10n.compareUnknown,
+      _ => l10n.compareNotCarried,
     };

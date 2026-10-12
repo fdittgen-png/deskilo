@@ -45,8 +45,8 @@ BookingRecovery _recovery(
 );
 
 FakeReservationRepository _repo() {
-  final repo = FakeReservationRepository(myMemberId: 'member-1');
-  repo.allowPastBookings = true;
+  final repo = FakeReservationRepository()
+    ..allowPastBookings = true;
   return repo;
 }
 

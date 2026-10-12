@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/federation_handoff_controller.dart';
 import '../../domain/federation_port.dart';
 
@@ -80,7 +80,7 @@ class _FederationHandoffSectionState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final handoff = ref.watch(federationHandoffControllerProvider);
     final mine = handoff.link == widget.link;
     final stage = mine ? handoff.stage : null;
@@ -97,14 +97,12 @@ class _FederationHandoffSectionState
           onPressed: handoff.busy
               ? null
               : () => unawaited(_controller.start(link: widget.link)),
-          child: Text(l10n?.federationContinue ?? 'Continue with Deskilo'),
+          child: Text(l10n.federationContinue),
         ),
         if (destination != null) ...[
           const SizedBox(height: AppSpacing.xs),
           Text(
-            l10n?.federationPurpose(destination.server) ??
-                'Your browser confirms your Deskilo account, then brings '
-                    'you back to ${destination.server}.',
+            l10n.federationPurpose(destination.server),
             key: const ValueKey('federation-purpose'),
             style: theme.textTheme.bodySmall,
             textAlign: TextAlign.center,
@@ -112,12 +110,12 @@ class _FederationHandoffSectionState
           TextButton(
             key: const ValueKey('federation-details'),
             onPressed: () => setState(() => _details = !_details),
-            child: Text(l10n?.federationDetails ?? 'Technical details'),
+            child: Text(l10n.federationDetails),
           ),
           if (_details)
             SelectableText(
-              '${l10n?.federationDetailServer(destination.server) ?? 'Server: ${destination.server}'}\n'
-              '${l10n?.federationDetailAuthority(destination.authority) ?? 'Identity authority: ${destination.authority}'}',
+              '${l10n.federationDetailServer(destination.server)}\n'
+              '${l10n.federationDetailAuthority(destination.authority)}',
               key: const ValueKey('federation-detail-lines'),
               style: theme.textTheme.bodySmall,
               textAlign: TextAlign.center,
@@ -159,14 +157,14 @@ class _Stage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final label = switch (stage) {
       FederationStage.opening =>
-        l10n?.federationStageOpening ?? 'Opening sign-in…',
+        l10n.federationStageOpening,
       FederationStage.waiting =>
-        l10n?.federationStageWaiting ?? 'Waiting for sign-in in your browser…',
+        l10n.federationStageWaiting,
       FederationStage.completing =>
-        l10n?.federationStageCompleting ?? 'Completing sign-in…',
+        l10n.federationStageCompleting,
     };
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -187,7 +185,7 @@ class _Stage extends StatelessWidget {
           TextButton(
             key: const ValueKey('federation-cancel'),
             onPressed: onCancel,
-            child: Text(l10n?.federationCancel ?? 'Cancel'),
+            child: Text(l10n.federationCancel),
           ),
       ],
     );
@@ -210,31 +208,24 @@ class _Failure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final text = switch (failure) {
       FederationFailure.wrongAccount =>
-        l10n?.federationFailureWrongAccount ??
-            'Your browser signed in with a different Deskilo account.',
+        l10n.federationFailureWrongAccount,
       FederationFailure.unlinkedAccount =>
-        l10n?.federationFailureUnlinked ??
-            'This Deskilo account matches an account here that is not '
-                'linked to it yet.',
+        l10n.federationFailureUnlinked,
       FederationFailure.incompatibleServer =>
-        l10n?.federationFailureIncompatible ??
-            'This server does not accept this Deskilo sign-in.',
+        l10n.federationFailureIncompatible,
       FederationFailure.providerMissing =>
-        l10n?.federationFailureProviderMissing ??
-            'Deskilo sign-in is not set up on this server.',
+        l10n.federationFailureProviderMissing,
       FederationFailure.network =>
-        l10n?.federationFailureNetwork ?? 'The server could not be reached.',
+        l10n.federationFailureNetwork,
       FederationFailure.refused =>
-        l10n?.federationFailureRefused ??
-            'The sign-in was cancelled or refused in the browser.',
+        l10n.federationFailureRefused,
       FederationFailure.expired =>
-        l10n?.federationFailureExpired ??
-            'This sign-in has expired. Start it again.',
+        l10n.federationFailureExpired,
       FederationFailure.browserUnavailable =>
-        l10n?.federationFailureBrowser ?? 'The browser could not be opened.',
+        l10n.federationFailureBrowser,
     };
     // Each failure has its own next step. None of them is "create another
     // account": a failed federation is never repaired with a new password.
@@ -243,8 +234,7 @@ class _Failure extends StatelessWidget {
         onUseExistingAccount == null
             ? null
             : (
-                l10n?.federationActionExistingAccount ??
-                    'Sign in to my existing account',
+                l10n.federationActionExistingAccount,
                 onUseExistingAccount!,
                 'federation-existing-account',
               ),
@@ -252,12 +242,12 @@ class _Failure extends StatelessWidget {
         onReviewServer == null
             ? null
             : (
-                l10n?.federationActionReviewServer ?? 'Review server',
+                l10n.federationActionReviewServer,
                 onReviewServer!,
                 'federation-review-server',
               ),
       FederationFailure.providerMissing => null,
-      _ => (l10n?.federationRetry ?? 'Try again', onRetry, 'federation-retry'),
+      _ => (l10n.federationRetry, onRetry, 'federation-retry'),
     };
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -268,7 +258,6 @@ class _Failure extends StatelessWidget {
           child: InlineBanner(
             key: ValueKey('federation-failure-${failure.name}'),
             icon: Icons.error_outline,
-            severity: InlineBannerSeverity.error,
             text: text,
           ),
         ),
@@ -285,7 +274,7 @@ class _Failure extends StatelessWidget {
             TextButton(
               key: const ValueKey('federation-close'),
               onPressed: onClose,
-              child: Text(l10n?.federationClose ?? 'Close'),
+              child: Text(l10n.federationClose),
             ),
           ],
         ),

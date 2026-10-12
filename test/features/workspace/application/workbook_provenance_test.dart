@@ -1,20 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1661: source provenance cannot be inferred from a template UUID or name.
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:archive/archive.dart';
+import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
+import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/files/xlsx.dart';
+import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/workspace/application/template_compare.dart';
 import 'package:deskilo/features/workspace/application/template_workbook.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:archive/archive.dart';
-import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
-import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/workspace/domain/workbook_origin.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/features/workspace/application/template_compare.dart';
-import 'package:deskilo/core/files/file_saver.dart';
-import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import '../../../helpers/mock_providers.dart';
 
 const inspection = TemplateInspection(

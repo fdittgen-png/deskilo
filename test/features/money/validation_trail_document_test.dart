@@ -86,7 +86,7 @@ void main() {
 
   testWidgets('a document nothing had to release shows no trail at all',
       (tester) async {
-    final money = await seededMoney(matched: true);
+    final money = await seededMoney();
     await pumpInvoices(tester, money: money, events: FakeEventRepository());
     await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
     await tester.pumpAndSettle();

@@ -22,10 +22,10 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/recorder_controller.dart';
 import '../data/guide_store.dart';
-import '../domain/stored_guide.dart';
 import '../data/recorder_log_backends.dart';
 import '../data/recorder_store.dart';
 import '../domain/recording_sink.dart';
+import '../domain/stored_guide.dart';
 import '../domain/task_recording.dart';
 import '../export/output_registry.dart';
 import '../package/task_output.dart';
@@ -98,7 +98,7 @@ bool taskRecorderAvailable(Ref ref) => ref
     .contains(WorkspaceFeature.taskRecorder);
 
 /// The platform family a recording names. Never a device model.
-RecordingPlatform currentRecordingPlatform() {
+RecordingPlatform _currentRecordingPlatform() {
   if (kIsWeb) return RecordingPlatform.web;
   return switch (defaultTargetPlatform) {
     TargetPlatform.android => RecordingPlatform.android,
@@ -115,7 +115,7 @@ RecordingPlatform currentRecordingPlatform() {
 RecorderController recorderController(Ref ref) {
   final controller = RecorderController(
     sink: _AccountSink(() => ref.read(recorderStoreProvider)),
-    platform: currentRecordingPlatform(),
+    platform: _currentRecordingPlatform(),
   );
   ref
     ..listen(recorderScopeProvider, (_, next) => controller.scopeChanged(next))

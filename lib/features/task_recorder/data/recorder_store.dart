@@ -45,14 +45,16 @@
 
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/recording_sink.dart';
 import '../domain/stored_recording.dart';
-
-export '../domain/stored_recording.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+
+export '../domain/stored_recording.dart';
 
 /// Byte-level persistence the store appends to.
 abstract interface class RecorderLogBackend {
@@ -70,38 +72,15 @@ abstract interface class RecorderLogBackend {
   Future<void> delete(String key);
 }
 
-/// Logs in memory: tests, and a device with no usable storage.
-class MemoryRecorderLogBackend implements RecorderLogBackend {
-  final Map<String, StringBuffer> logs = {};
-
-  @override
-  Future<void> append(String key, String text) async =>
-      (logs[key] ??= StringBuffer()).write(text);
-
-  @override
-  Future<void> replace(String key, String text) async =>
-      logs[key] = StringBuffer(text);
-
-  @override
-  Future<String?> read(String key) async => logs[key]?.toString();
-
-  @override
-  Future<List<String>> keys(String prefix) async =>
-      logs.keys.where((k) => k.startsWith(prefix)).toList()..sort();
-
-  @override
-  Future<void> delete(String key) async => logs.remove(key);
-}
-
 /// The log line format version.
-const int recorderLogVersion = 1;
+const int _recorderLogVersion = 1;
 
 /// Store keys only ever contain these characters.
 final RegExp recorderKeyPattern = RegExp(r'^tr1\.[0-9a-f]{32}\.[0-9a-f]{32}$');
 
 /// Thrown by a writer whose recording outgrew the store's bound.
-class RecorderStoreFull implements Exception {
-  const RecorderStoreFull();
+class _RecorderStoreFull implements Exception {
+  const _RecorderStoreFull();
 }
 
 class RecorderStore implements RecordingSink {
@@ -138,7 +117,7 @@ class RecorderStore implements RecordingSink {
     final key = _key(header.id);
     final line = jsonEncode({
       't': 'h',
-      'v': recorderLogVersion,
+      'v': _recorderLogVersion,
       'id': header.id,
       'created': _clock.now().millisecondsSinceEpoch,
       'scope': header.scopeDigest,
@@ -212,7 +191,7 @@ class RecorderStore implements RecordingSink {
     final String? text;
     try {
       text = await _backend.read(key);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'could not read a recording (${e.runtimeType})',
@@ -226,6 +205,7 @@ class RecorderStore implements RecordingSink {
 
 /// Reads a log back, recovering what a crash left. Pure: tests feed it
 /// truncated and corrupted logs directly.
+@visibleForTesting
 StoredRecording recoverRecordingLog(
   String id,
   String text, {
@@ -247,7 +227,7 @@ StoredRecording recoverRecordingLog(
   }
   if (head is! Map ||
       head['t'] != 'h' ||
-      head['v'] != recorderLogVersion ||
+      head['v'] != _recorderLogVersion ||
       head['id'] != id ||
       head['created'] is! int) {
     return unreadable;
@@ -373,7 +353,7 @@ class _StoreWriter implements RecordingWriter {
 
   Future<void> _append(List<Map<String, Object?>> entries) async {
     final text = entries.map((e) => '${jsonEncode(e)}\n').join();
-    if (_written + text.length > _bound) throw const RecorderStoreFull();
+    if (_written + text.length > _bound) throw const _RecorderStoreFull();
     await _store._backend.append(_key, text);
     _written += text.length;
   }

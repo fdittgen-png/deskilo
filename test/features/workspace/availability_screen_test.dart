@@ -5,12 +5,12 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
-import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
+import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -57,13 +57,15 @@ void main() {
   });
 
   test('a stale channel reporting late changes nothing', () async {
-    supervisor.start();
-    supervisor.onStatus('ch-1', RealtimeSubscribeStatus.channelError, 'x');
+    supervisor
+      ..start()
+      ..onStatus('ch-1', RealtimeSubscribeStatus.channelError, 'x');
     await Future<void>.delayed(Duration.zero);
     expect(supervisor.current, 'ch-2');
 
-    supervisor.onStatus('ch-1', RealtimeSubscribeStatus.closed);
-    supervisor.onStatus('ch-1', RealtimeSubscribeStatus.subscribed);
+    supervisor
+      ..onStatus('ch-1', RealtimeSubscribeStatus.closed)
+      ..onStatus('ch-1', RealtimeSubscribeStatus.subscribed);
     await Future<void>.delayed(Duration.zero);
     expect(supervisor.current, 'ch-2', reason: 'ch-1 is history');
     expect(supervisor.attempt, 1);
@@ -72,8 +74,9 @@ void main() {
 
   test('a re-join after an outage asks for one resync; the first join '
       'does not', () async {
-    supervisor.start();
-    supervisor.onStatus('ch-1', RealtimeSubscribeStatus.subscribed);
+    supervisor
+      ..start()
+      ..onStatus('ch-1', RealtimeSubscribeStatus.subscribed);
     expect(resyncs, 0);
     expect(supervisor.everJoined, isTrue);
 
@@ -97,8 +100,7 @@ void main() {
         delays.add(attempt);
         return Duration.zero;
       },
-    );
-    supervisor.start();
+    )..start();
     for (var i = 1; i <= 3; i++) {
       supervisor.onStatus('ch-$i', RealtimeSubscribeStatus.closed);
       await Future<void>.delayed(Duration.zero);
@@ -111,9 +113,10 @@ void main() {
 
   test('dispose removes the live channel and stops the reconnects',
       () async {
-    supervisor.start();
-    supervisor.onStatus('ch-1', RealtimeSubscribeStatus.closed);
-    supervisor.dispose();
+    supervisor
+      ..start()
+      ..onStatus('ch-1', RealtimeSubscribeStatus.closed)
+      ..dispose();
     await Future<void>.delayed(Duration.zero);
     expect(created, 1, reason: 'the pending reconnect was cancelled');
     supervisor.start();

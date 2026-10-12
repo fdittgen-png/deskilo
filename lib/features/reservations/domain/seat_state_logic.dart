@@ -3,14 +3,15 @@
 // Pure seat-state computation (spec §4.1) — drives the live floor plan AND
 // the time scroller: pass any instant, get the plan at that moment.
 import 'package:meta/meta.dart';
+
+import '../../../core/theme/seat_legend_profile.dart';
 import '../../../core/theme/seat_state_colors.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/seat.dart';
-import '../../../core/theme/seat_legend_profile.dart';
 import 'reservation.dart';
 
 export '../../../core/theme/seat_state_colors.dart'
-    show SeatState, SeatDayPhase;
+    show SeatDayPhase, SeatState;
 
 /// Whether [r] covers [seat] — directly (seat_id), as part of a
 /// whole-desk (desk_id), whole-office (office_id via [officeId]) or

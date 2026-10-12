@@ -14,7 +14,7 @@ class SupabaseOAuthConsentRepository implements OAuthConsentRepository {
   Future<T> _guard<T>(Future<T> Function() operation) async {
     try {
       return await operation();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Auth errors may quote redirect codes. Keep the type and call stack,
       // never the response, request URI or exception message.
       TraceLogger.instance.error('auth', 'OAuth consent request failed',

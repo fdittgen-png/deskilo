@@ -37,7 +37,7 @@ void main() {
       1,
     );
     final value = jsonDecode(out.text.toString()) as Map<String, dynamic>;
-    expect(value['checks']['schema'], 'attention');
+    expect((value['checks'] as Map)['schema'], 'attention');
     expect(out.text.toString(), isNot(contains('private')));
     expect(err.text.isEmpty, isTrue);
   });
@@ -53,7 +53,12 @@ void main() {
         final out = _Output();
         final err = _Output();
         expect(
-          await runSupportDoctor(() async => throw failure, out: out, err: err),
+          await runSupportDoctor(
+            () async =>
+                failure is Error ? throw failure : throw failure as Exception,
+            out: out,
+            err: err,
+          ),
           1,
         );
         expect(err.text.toString(), 'support_unavailable\n');

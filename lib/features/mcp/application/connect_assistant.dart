@@ -66,7 +66,7 @@ class ConnectAssistant {
     final redirect = await _repository.approve(request.authorizationId);
     try {
       await _repository.finalize(request.authorizationId);
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: traced by the provider's onFinalizeFailed (TraceLogger).
       // The approval stands and the caller says the connection is not
       // usable yet; the failure itself is recorded, not swallowed.

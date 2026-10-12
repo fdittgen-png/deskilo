@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../widgets/connected_activity.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../providers/account_activity_providers.dart';
+import '../widgets/connected_activity.dart';
 import '../widgets/personal_payment_provider.dart';
 
 /// Personal history is independent of whichever workspace happens to be open.
@@ -34,7 +33,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
       _account = account;
       _pages.clear();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final provider = accountActivityProvider(_kind, before: _pages.lastOrNull);
     final rows = ref.watch(provider);
     return Scaffold(
@@ -42,13 +41,13 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
         actions: [
           IconButton(
             key: const ValueKey('account-activity-portal-connections'),
-            tooltip: l10n?.portalConnections ?? 'Connected servers',
+            tooltip: l10n.portalConnections,
             onPressed: () => context.push('/connections'),
             icon: const Icon(Icons.dns_outlined),
           ),
         ],
         title: Text(
-          l10n?.accountActivityTitle ?? 'My consumption and payments',
+          l10n.accountActivityTitle,
         ),
       ),
       body: account == null
@@ -66,11 +65,11 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                           value: kind,
                           child: Text(switch (kind) {
                             AccountActivityKind.invoices =>
-                              l10n?.invoicesTitle ?? 'Invoices',
+                              l10n.invoicesTitle,
                             AccountActivityKind.payments =>
-                              l10n?.accountPaymentsTitle ?? 'Payments',
+                              l10n.accountPaymentsTitle,
                             AccountActivityKind.usage =>
-                              l10n?.usageTitle ?? 'Usage',
+                              l10n.usageTitle,
                           }),
                         ),
                     ],
@@ -100,7 +99,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                             kind: _kind,
                           ),
                           Text(
-                            l10n?.accountActivityScope ?? 'All your profiles on this server, including previous memberships. Currencies are shown separately.',
+                            l10n.accountActivityScope,
                           ),
                           if (_kind == AccountActivityKind.payments)
                             const PersonalPaymentProvider(),
@@ -108,8 +107,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                             Padding(
                               padding: AppSpacing.mdAll,
                               child: Text(
-                                l10n?.accountActivityEmpty ??
-                                    'No records to display.',
+                                l10n.accountActivityEmpty,
                               ),
                             ),
                           for (final entry in entries)
@@ -131,8 +129,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                           moneyFormat(entry.currency)
                                               .formatMinor(amount),
                                         if (entry.minutes case final minutes?)
-                                          l10n?.accountUsageMinutes(minutes) ??
-                                              '$minutes minutes',
+                                          l10n.accountUsageMinutes(minutes),
                                       ]
                                       .where((value) => value.isNotEmpty)
                                       .join(' · '),
@@ -174,7 +171,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                           key: const ValueKey('account-activity-failed'),
                           onPressed: () => ref.invalidate(provider),
                           child: Text(
-                            l10n?.accountActivityFailed ?? 'Could not load your financial history. Tap to retry.',
+                            l10n.accountActivityFailed,
                           ),
                         ),
                       ],
@@ -192,15 +189,15 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
     );
   }
 
-  String _status(AppLocalizations? l10n, String status) => switch (status) {
-    'created' => l10n?.payOnlinePendingTitle ?? 'Online payment pending',
-    'failed' => l10n?.payOnlineFailedTitle ?? 'Online payment failed',
-    'confirmed' => l10n?.accountPaymentConfirmed ?? 'Payment confirmed',
-    'voided' => l10n?.accountInvoiceVoided ?? 'Invoice voided',
+  String _status(AppLocalizations l10n, String status) => switch (status) {
+    'created' => l10n.payOnlinePendingTitle,
+    'failed' => l10n.payOnlineFailedTitle,
+    'confirmed' => l10n.accountPaymentConfirmed,
+    'voided' => l10n.accountInvoiceVoided,
     'regrouped' =>
-      l10n?.accountInvoiceRegrouped ?? 'Included in a settlement invoice',
-    'issued' => l10n?.accountInvoiceIssued ?? 'Invoice issued',
-    'corrected' => l10n?.accountUsageCorrected ?? 'Corrected billable usage',
+      l10n.accountInvoiceRegrouped,
+    'issued' => l10n.accountInvoiceIssued,
+    'corrected' => l10n.accountUsageCorrected,
     _ => '',
   };
 }

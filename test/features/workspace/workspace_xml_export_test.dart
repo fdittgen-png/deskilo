@@ -2,7 +2,6 @@
 //
 // #1012 — exporting the workspace XML saves a file, leaves a trace, offers
 // Share, and reports a failed save.
-import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -10,16 +9,17 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
+import 'package:deskilo/features/workspace/providers/workspace_import_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/features/workspace/domain/workspace_import.dart';
-import 'package:deskilo/features/workspace/providers/workspace_import_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 import '../../helpers/workspace_settings_groups.dart';
 
 Future<void> pumpWorkspaceSettings(

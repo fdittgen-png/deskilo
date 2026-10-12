@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -55,7 +57,7 @@ class CalendarFeed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final format = ref.watch(appFormatProvider);
     final byDay = <DateTime, List<CalendarItem>>{};
@@ -74,7 +76,7 @@ class CalendarFeed extends ConsumerWidget {
       return EmptyState(
         icon: Icons.event_available_outlined,
         title: emptyTitle ??
-            (l10n?.calendarNothingHere ?? 'Nothing on these dates.'),
+            (l10n.calendarNothingHere),
       );
     }
     return RefreshIndicator(
@@ -92,13 +94,11 @@ class CalendarFeed extends ConsumerWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
-                    l10n?.calendarLockedKinds(
+                    l10n.calendarLockedKinds(
                           page.locked
                               .map((k) => calendarKindLabel(l10n, k))
                               .join(', '),
-                        ) ??
-                        'Not visible to you for this member: '
-                            '${page.locked.map((k) => calendarKindLabel(l10n, k)).join(', ')}',
+                        ),
                     key: const ValueKey('calendar-locked'),
                     style: theme.textTheme.bodySmall,
                   ),
@@ -117,7 +117,7 @@ class CalendarFeed extends ConsumerWidget {
               padding: AppSpacing.lgAll,
               child: Text(
                 emptyTitle ??
-                    (l10n?.calendarNothingHere ?? 'Nothing on these dates.'),
+                    (l10n.calendarNothingHere),
                 key: const ValueKey('calendar-empty-line'),
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -167,7 +167,7 @@ class CalendarFeed extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Text(
-                  l10n?.calendarDayEmpty ?? 'Nothing on this day.',
+                  l10n.calendarDayEmpty,
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -198,7 +198,7 @@ class CalendarFeed extends ConsumerWidget {
         c.day.day == day.day);
   }
 
-  String _closedText(AppLocalizations? l10n, DateTime day) {
+  String _closedText(AppLocalizations l10n, DateTime day) {
     final reason = closures
         .where((c) =>
             c.day.year == day.year &&
@@ -207,27 +207,27 @@ class CalendarFeed extends ConsumerWidget {
         .map((c) => c.reason)
         .firstOrNull;
     if (reason == null || reason.trim().isEmpty) {
-      return l10n?.calendarClosedDay ?? 'Closed';
+      return l10n.calendarClosedDay;
     }
-    return l10n?.calendarClosedDayReason(reason) ?? 'Closed — $reason';
+    return l10n.calendarClosedDayReason(reason);
   }
 
   String _header(
-    AppLocalizations? l10n,
-    dynamic format,
+    AppLocalizations l10n,
+    AppFormat format,
     DateTime day,
   ) {
     final noon = WorkspaceTime.at(day.year, day.month, day.day, 12);
     // #1175 — ONE formatter. `AppFormat.shortDate` is `DateFormat.MMMEd`,
     // and the E in MMMEd is already the weekday, so prefixing `EEEE` made
     // every header read "Sunday Sun 13 Sept" — in all five languages.
-    final date = format.shortDate(noon) as String;
-    if (!relative || today == null) return format.shortDate(noon) as String;
+    final date = format.shortDate(noon);
+    if (!relative || today == null) return date;
     return switch (relativeDayOf(day, today!)) {
-      RelativeDay.today => '${l10n?.calendarToday ?? 'Today'} · $date',
-      RelativeDay.tomorrow => '${l10n?.calendarTomorrow ?? 'Tomorrow'} · $date',
+      RelativeDay.today => '${l10n.calendarToday} · $date',
+      RelativeDay.tomorrow => '${l10n.calendarTomorrow} · $date',
       RelativeDay.yesterday =>
-        '${l10n?.calendarYesterday ?? 'Yesterday'} · $date',
+        '${l10n.calendarYesterday} · $date',
       null => date,
     };
   }

@@ -124,7 +124,7 @@ void main() {
 
   testWidgets('the quote chip can be cancelled without sending',
       (tester) async {
-    await pumpThread(tester, [note(id: 'note-1', body: 'hello')]);
+    await pumpThread(tester, [note(id: 'note-1')]);
     await swipe(tester, 'note-1', 250);
     expect(find.byKey(const ValueKey('composer-quote')), findsOneWidget);
 

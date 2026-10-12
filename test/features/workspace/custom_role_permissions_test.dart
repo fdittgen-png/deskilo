@@ -91,7 +91,7 @@ void main() {
         status: MemberStatus.active,
       );
       expect(
-        effectivePermissions(owner, on, custom: const {}),
+        effectivePermissions(owner, on),
         WorkspacePermission.values.toSet(),
       );
     });

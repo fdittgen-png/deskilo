@@ -12,13 +12,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// Raw `json['…']` reads left in hand-written lib/ (473 lines when the reader
-/// landed).
-const _rawReadBudget = 473;
+/// Raw `json['…']` read lines left in hand-written lib/ (473 when the
+/// reader landed, 441 after the money rows, 245 once every fromJson read
+/// through it).
+const _rawReadBudget = 245;
 
-/// `factory X.fromJson` in files that do not read through JsonReader (78
-/// when the reader landed).
-const _handFromJsonBudget = 78;
+/// Lines naming `dynamic` in hand-written lib/ (728 in the review of
+/// #2381, 684 once every fromJson read through JsonReader, 688 when #2386
+/// split the demo repositories: four forwarders repeat a signature). Most are
+/// `Map<String, dynamic>` signatures of the decoders; they go as the
+/// signatures move to `Map<String, Object?>`.
+const _dynamicBudget = 688;
 
 void main() {
   final files = handWrittenDartFiles('lib').toList();
@@ -56,25 +60,44 @@ void main() {
     );
   });
 
-  test('hand fromJson factories only go down (ratchet)', () {
-    final factory = RegExp(r'factory\s+\w+\.fromJson\b');
-    final hand = scanLines(
-      files.where(
-        (f) => !f.readAsStringSync().contains('core/data/json_reader.dart'),
-      ),
-      factory.hasMatch,
-    );
+  test('every fromJson reads through JsonReader', () {
+    // The body of a factory runs to its closing brace at member
+    // indentation; generated (`_$XFromJson`) decoders pass too.
+    final factory = RegExp(r'factory\s+(\w+)\.fromJson\(');
+    final hand = <String>[];
+    for (final file in files) {
+      final text = file.readAsStringSync();
+      for (final m in factory.allMatches(text)) {
+        final end = text.indexOf('\n  }\n', m.start);
+        final body = text.substring(m.start, end < 0 ? text.length : end);
+        if (!body.contains('JsonReader') && !body.contains(r'_$')) {
+          hand.add('${file.path}: ${m.group(1)}.fromJson');
+        }
+      }
+    }
     expect(
-      hand.length,
-      lessThanOrEqualTo(_handFromJsonBudget),
-      reason: 'read the row through JsonReader:\n${hand.join('\n')}',
-    );
-    expect(
-      hand.length,
-      _handFromJsonBudget,
+      hand,
+      isEmpty,
       reason:
-          'fewer hand factories than the budget: lower '
-          '_handFromJsonBudget to ${hand.length} so the win stays',
+          'read the row through JsonReader (lib/core/data/json_reader.dart):'
+          '\n${hand.join('\n')}',
+    );
+  });
+
+  test('the dynamic budget only goes down (ratchet)', () {
+    final dynamicWord = RegExp(r'\bdynamic\b');
+    final count = scanLines(files, dynamicWord.hasMatch).length;
+    expect(
+      count,
+      lessThanOrEqualTo(_dynamicBudget),
+      reason: 'type it: JsonReader for a row, Object? for an unknown',
+    );
+    expect(
+      count,
+      _dynamicBudget,
+      reason:
+          'fewer dynamic lines than the budget: lower _dynamicBudget to '
+          '$count so the win stays',
     );
   });
 }

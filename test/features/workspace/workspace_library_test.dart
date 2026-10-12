@@ -9,12 +9,12 @@
 // really does start from a template.
 import 'dart:async';
 
-import 'package:deskilo/features/workspace/domain/template_inspection.dart';
-import 'package:deskilo/features/workspace/domain/template_outline.dart';
-import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/local_setup.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
+import 'package:deskilo/features/workspace/domain/template_outline.dart';
+import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,7 +71,6 @@ void main() {
         id: 'tpl-mine',
         key: 'mine',
         name: 'Mine',
-        visibility: TemplateVisibility.private,
         ownerWorkspaceId: 'ws-1',
       ));
       workspace.templateInspections['tpl-mine'] = const TemplateInspection(

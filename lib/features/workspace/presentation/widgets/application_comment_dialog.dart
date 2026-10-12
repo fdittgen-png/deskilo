@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 class ApplicationCommentDialog extends StatefulWidget {
   const ApplicationCommentDialog({super.key});
@@ -19,10 +19,10 @@ class _CommentState extends State<ApplicationCommentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
       scrollable: true,
-      title: Text(l10n?.memberRejectJoin ?? 'Reject membership'),
+      title: Text(l10n.memberRejectJoin),
       content: TextField(
         controller: _comment,
         maxLength: 4000,
@@ -31,20 +31,19 @@ class _CommentState extends State<ApplicationCommentDialog> {
         key: const ValueKey('application-decision-comment'),
         decoration: InputDecoration(
           labelText:
-              l10n?.applicationDecisionComment ??
-              'Comment visible to the applicant',
+              l10n.applicationDecisionComment,
         ),
       ),
       actions: [
         TextButton(
           key: const ValueKey('application-comment-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('application-comment-dialog-member-reject-join'),
           onPressed: () => Navigator.of(context).pop(_comment.text.trim()),
-          child: Text(l10n?.memberRejectJoin ?? 'Reject membership'),
+          child: Text(l10n.memberRejectJoin),
         ),
       ],
     );

@@ -6,17 +6,18 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/time/clock.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/vat_catalogue.dart';
 import '../../domain/vat_rate.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
@@ -124,34 +125,30 @@ class _VatScreenState extends ConsumerState<VatScreen> {
   /// closes on that date, the successor opens on it, the family link
   /// carries the items along, and the star moves with the family.
   Future<void> _changeByLaw(int index) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final draft = _drafts[index];
     if (draft.rate.id.isEmpty) {
       AppSnack.error(
         context,
-        l10n?.vatChangeNeedsSave ??
-            'Save the rate first; then change it by law.',
+        l10n.vatChangeNeedsSave,
       );
       return;
     }
     final now = ref.read(clockProvider).now();
-    final nextMonth = DateTime(now.year, now.month + 1, 1);
+    final nextMonth = DateTime(now.year, now.month + 1);
     final percent = TextEditingController();
     final date = TextEditingController(
         text: nextMonth.toIso8601String().substring(0, 10));
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.vatChangeByLaw ?? 'Change by law'),
+        title: Text(l10n.vatChangeByLaw),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.vatChangeByLawExplainer ??
-                  'A new value from a date: the old value stays on every '
-                      'supply before it, the new one applies from that day. '
-                      'Nothing is re-pointed.',
+              l10n.vatChangeByLawExplainer,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -161,7 +158,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: l10n?.vatNewPercent ?? 'New rate %',
+                labelText: l10n.vatNewPercent,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -170,7 +167,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               controller: date,
               decoration: InputDecoration(
                 labelText:
-                    l10n?.vatEffectiveDate ?? 'Effective date (YYYY-MM-DD)',
+                    l10n.vatEffectiveDate,
               ),
             ),
           ],
@@ -179,12 +176,12 @@ class _VatScreenState extends ConsumerState<VatScreen> {
           TextButton(
             key: ValueKey('vat-cancel-$index'),
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('vat-law-confirm'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -202,9 +199,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         day.compareTo(draft.validFrom) <= 0) {
       AppSnack.error(
         context,
-        l10n?.vatChangeInvalid ??
-            'A percentage between 0 and 99.99 and a date after the '
-                'rate\'s start are needed.',
+        l10n.vatChangeInvalid,
       );
       return;
     }
@@ -232,7 +227,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
 
@@ -248,8 +243,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
           percent > 99.99) {
         AppSnack.error(
           context,
-          l10n?.vatRateIncomplete ??
-              'Every rate needs a name and a percentage between 0 and 99.99.',
+          l10n.vatRateIncomplete,
         );
         return;
       }
@@ -274,7 +268,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     if (rates.isNotEmpty && _default < 0) {
       AppSnack.error(
         context,
-        l10n?.vatNeedsDefault ?? 'Mark exactly one rate as the default.',
+        l10n.vatNeedsDefault,
       );
       return;
     }
@@ -284,8 +278,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       context,
       domain: 'money',
       message: 'vat rates save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () =>
           ref.read(moneyRepositoryProvider).setVatRates(workspace.id, rates),
     );
@@ -294,19 +287,19 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     if (!saved) return;
     ref.invalidate(vatRatesProvider);
     if (!mounted) return;
-    AppSnack.success(context, l10n?.vatSaved ?? 'VAT rates saved.');
+    AppSnack.success(context, l10n.vatSaved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final groupsOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.vatGroups);
     final historyOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.vatRateHistory);
     final ratesAsync = ref.watch(vatRatesProvider);
-    final title = Text(l10n?.vatTitle ?? 'VAT');
+    final title = Text(l10n.vatTitle);
     if (workspace == null || ratesAsync.isLoading) {
       return Scaffold(
         appBar: AppBar(title: title),
@@ -327,11 +320,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.vatIntro ??
-                'Prices in DesKilo include VAT. Adding rates changes '
-                    'nothing about what members pay — the tax is extracted '
-                    'from the price you already charge and shown on the '
-                    'invoice.',
+            l10n.vatIntro,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -340,17 +329,14 @@ class _VatScreenState extends ConsumerState<VatScreen> {
             InlineBanner(
               key: const ValueKey('vat-regime-hint'),
               icon: Icons.info_outline,
-              text: l10n?.vatRegimeHint ??
-                  'This workspace is not declared VAT-registered, so '
-                      'invoices show no VAT. Change that under Legal '
-                      'identity.',
+              text: l10n.vatRegimeHint,
             ),
           const SizedBox(height: AppSpacing.md),
           if (_drafts.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
               child: Text(
-                l10n?.vatEmpty ?? 'No rate yet — invoices show no VAT.',
+                l10n.vatEmpty,
                 key: const ValueKey('vat-empty'),
               ),
             ),
@@ -359,7 +345,6 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               key: ValueKey('vat-rate-$index'),
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: TextField(
@@ -367,9 +352,9 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       controller: draft.label,
                       maxLength: 60,
                       decoration: InputDecoration(
-                        labelText: l10n?.vatRateLabelField ?? 'Name',
+                        labelText: l10n.vatRateLabelField,
                         counterText: '',
-                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                        suffixIcon: HelpDot(l10n.helpTopicVat,
                             anchor: HelpAnchor.moneyVatRates),
                       ),
                     ),
@@ -388,9 +373,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: l10n?.vatRatePercentField ?? 'Rate %',
-                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
-                            anchor: HelpAnchor.moneyVatRates),
+                        labelText: l10n.vatRatePercentField,
                       ),
                     ),
                   ),
@@ -403,10 +386,10 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                         initialValue: draft.group,
                         isExpanded: true,
                         decoration: InputDecoration(
-                          labelText: l10n?.vatGroupLabel ?? 'Group',
+                          labelText: l10n.vatGroupLabel,
                           // #1016 — the group is its own documented
                           // object, and its own paragraph in the guide.
-                          suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                          suffixIcon: HelpDot(l10n.helpTopicVat,
                               anchor: HelpAnchor.moneyVatGroups),
                         ),
                         items: [
@@ -425,7 +408,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   if (historyOn)
                     IconButton(
                       key: ValueKey('vat-rate-law-$index'),
-                      tooltip: l10n?.vatChangeByLaw ?? 'Change by law',
+                      tooltip: l10n.vatChangeByLaw,
                       icon: const Icon(Icons.update_outlined),
                       onPressed: () => _changeByLaw(index),
                     ),
@@ -433,9 +416,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   // one" at a glance and stays one tap either way.
                   IconButton(
                     key: ValueKey('vat-rate-default-$index'),
-                    tooltip: l10n?.vatRateDefaultTooltip ??
-                        'Default rate — used by subscriptions and by '
-                            'anything without its own rate',
+                    tooltip: l10n.vatRateDefaultTooltip,
                     icon: Icon(
                       index == _default ? Icons.star : Icons.star_border,
                       color: index == _default
@@ -446,7 +427,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   ),
                   IconButton(
                     key: ValueKey('vat-rate-remove-$index'),
-                    tooltip: l10n?.vatRateRemoveTooltip ?? 'Remove',
+                    tooltip: l10n.vatRateRemoveTooltip,
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _remove(index),
                   ),
@@ -464,17 +445,15 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                     [
                       draft.label.text,
                       if (draft.validFrom != '1900-01-01')
-                        '${l10n?.vatSince ?? 'since'} ${draft.validFrom}',
+                        '${l10n.vatSince} ${draft.validFrom}',
                       if (draft.validTo != null)
-                        '${l10n?.vatUntil ?? 'until'} ${draft.validTo}',
+                        '${l10n.vatUntil} ${draft.validTo}',
                     ].join(' · '),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
           Text(
-            l10n?.vatKeptRate ??
-                'A rate still used by an invoice or a service is kept, '
-                    'deactivated.',
+            l10n.vatKeptRate,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -489,7 +468,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   child: TextField(
                     controller: draft.exemption,
                     decoration: InputDecoration(
-                      labelText: '${draft.label.text} · ${l10n?.vatExemptionReasonField ?? 'Exemption reason'}',
+                      labelText: '${draft.label.text} · ${l10n.vatExemptionReasonField}',
                     ),
                   ),
                 ),
@@ -499,7 +478,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n?.vatGroupExamples ?? 'What falls in each group',
+                  Text(l10n.vatGroupExamples,
                       style: Theme.of(context).textTheme.titleSmall),
                   for (final line in [
                     for (final e in vatGroupExamples(workspace.countryCode))
@@ -515,7 +494,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
               key: const ValueKey('vat-add-rate'),
               onPressed: () => _add(const VatRate(label: '', percent: 0)),
               icon: const Icon(Icons.add),
-              label: Text(l10n?.vatAddRate ?? 'Add a rate'),
+              label: Text(l10n.vatAddRate),
             ),
             // Only where the app actually knows the country's rates, and
             // only as a first draft the owner then edits.
@@ -528,7 +507,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                   }
                 },
                 child: Text(
-                  '${l10n?.vatSeed ?? 'Use the usual rates'} '
+                  '${l10n.vatSeed} '
                   '(${catalogue.map((r) => '${_percentText(r.percent)} %').join(', ')})',
                 ),
               ),
@@ -556,8 +535,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                 onPressed: () => context.go('/vat-declarations'),
                 icon: const Icon(Icons.receipt_long_outlined),
                 label: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text(l10n?.vatDeclTitle ?? 'VAT declaration'),
-                  HelpDot(l10n?.helpTopicVat ?? 'VAT',
+                  Text(l10n.vatDeclTitle),
+                  HelpDot(l10n.helpTopicVat,
                       anchor: HelpAnchor.moneyVatDeclaration),
                 ]),
               ),
@@ -566,7 +545,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
           FilledButton(
             key: const ValueKey('vat-save'),
             onPressed: _saving ? null : _save,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -575,14 +554,14 @@ class _VatScreenState extends ConsumerState<VatScreen> {
 }
 
 /// #947 — the group's name in the reader's language.
-String _vatGroupName(AppLocalizations? l10n, VatGroup g) => switch (g) {
-      VatGroup.standard => l10n?.vatGroupStandard ?? 'Standard',
-      VatGroup.intermediate => l10n?.vatGroupIntermediate ?? 'Intermediate',
-      VatGroup.reduced => l10n?.vatGroupReduced ?? 'Reduced',
-      VatGroup.superReduced => l10n?.vatGroupSuperReduced ?? 'Super-reduced',
-      VatGroup.zero => l10n?.vatGroupZero ?? 'Zero rate',
-      VatGroup.exempt => l10n?.vatGroupExempt ?? 'Exempt',
-      VatGroup.notSubject => l10n?.vatGroupNotSubject ?? 'Not subject',
-      VatGroup.deposit => l10n?.vatGroupDeposit ?? 'Deposit (outside VAT)',
-      VatGroup.excise => l10n?.vatGroupExcise ?? 'Excise-bearing',
+String _vatGroupName(AppLocalizations l10n, VatGroup g) => switch (g) {
+      VatGroup.standard => l10n.vatGroupStandard,
+      VatGroup.intermediate => l10n.vatGroupIntermediate,
+      VatGroup.reduced => l10n.vatGroupReduced,
+      VatGroup.superReduced => l10n.vatGroupSuperReduced,
+      VatGroup.zero => l10n.vatGroupZero,
+      VatGroup.exempt => l10n.vatGroupExempt,
+      VatGroup.notSubject => l10n.vatGroupNotSubject,
+      VatGroup.deposit => l10n.vatGroupDeposit,
+      VatGroup.excise => l10n.vatGroupExcise,
     };

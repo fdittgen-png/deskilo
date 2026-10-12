@@ -5,6 +5,7 @@
 // theirs and cannot change them; an authorised admin REQUESTS a change
 // that goes through validation (payment_terms_change) — mirrored by
 // `effective_payment_terms` / `payment_terms_clean` in SQL (0154).
+import '../../../core/data/json_reader.dart';
 import 'invoice_legal.dart';
 
 class PaymentTerms {
@@ -30,12 +31,15 @@ class PaymentTerms {
     keyPaymentTerms, keyEscompte, keyLatePenalty, keyRecoveryIndemnity,
   ];
 
-  factory PaymentTerms.fromJson(Map<dynamic, dynamic> json) => PaymentTerms(
-        paymentTerms: json[keyPaymentTerms] as String? ?? '',
-        escompte: json[keyEscompte] as String? ?? '',
-        latePenalty: json[keyLatePenalty] as String? ?? '',
-        recoveryIndemnity: json[keyRecoveryIndemnity] as String? ?? '',
-      );
+  factory PaymentTerms.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'payment_terms');
+    return PaymentTerms(
+      paymentTerms: r.stringOr(keyPaymentTerms),
+      escompte: r.stringOr(keyEscompte),
+      latePenalty: r.stringOr(keyLatePenalty),
+      recoveryIndemnity: r.stringOr(keyRecoveryIndemnity),
+    );
+  }
 
   /// The workspace's conditions as [PaymentTerms].
   factory PaymentTerms.ofLegal(InvoiceLegal legal) => PaymentTerms(

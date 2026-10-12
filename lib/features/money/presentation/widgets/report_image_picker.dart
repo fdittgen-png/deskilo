@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
 
@@ -35,7 +35,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
   bool _uploading = false;
 
   Future<void> _upload(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final pick = ref.read(filePickerProvider);
@@ -45,11 +45,10 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
       context,
       domain: 'money',
       message: 'report image upload failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         final file = await pick(XTypeGroup(
-          label: l10n?.profilePhotoFileType ?? 'Image',
+          label: l10n.profilePhotoFileType,
           extensions: const ['jpg', 'jpeg', 'png', 'webp'],
           mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
         ));
@@ -72,8 +71,9 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
           },
         );
         if (!context.mounted) return;
-        ref.invalidate(reportImageBytesProvider(name));
-        ref.invalidate(reportImagesProvider);
+        ref
+          ..invalidate(reportImageBytesProvider(name))
+          ..invalidate(reportImagesProvider);
       },
     );
     if (!context.mounted) return;
@@ -82,11 +82,11 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final library = ref.watch(reportImagesProvider);
     final images = library.value ?? const [];
     return AlertDialog(
-      title: Text(l10n?.reportImagesTitle ?? 'Report images'),
+      title: Text(l10n.reportImagesTitle),
       content: SizedBox(
         width: 360,
         child: library.isLoading
@@ -96,13 +96,10 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
                     key: const ValueKey('report-images-retry'),
                     onPressed: () => ref.invalidate(reportImagesProvider),
                     icon: const Icon(Icons.refresh),
-                    label: Text(l10n?.reportImagesLoadFailed ??
-                        'Could not load report images. Try again.'),
+                    label: Text(l10n.reportImagesLoadFailed),
                   )
             : images.isEmpty
-            ? Text(l10n?.reportImagesEmpty ??
-                'No image yet — upload your logo, a stamp or a '
-                    'signature and reference it with ![name].')
+            ? Text(l10n.reportImagesEmpty)
             : ListView(
                 shrinkWrap: true,
                 children: [
@@ -137,13 +134,13 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
         TextButton.icon(
           key: const ValueKey('report-image-upload'),
           icon: const Icon(Icons.upload_outlined),
-          label: Text(l10n?.reportImageUpload ?? 'Upload image'),
+          label: Text(l10n.reportImageUpload),
           onPressed: _uploading ? null : () => _upload(context, ref),
         ),
         TextButton(
           key: const ValueKey('report-image-picker-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
       ],
     );

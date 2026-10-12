@@ -14,6 +14,21 @@
 /// (the RPC or table the row came from), the key, the expected type and
 /// what arrived — the line a trace needs. The `…Or` readers are for the
 /// fields the wire may legitimately omit, and say so at the call site.
+///
+/// **The policy, decided once (#2387):**
+/// - A row refuses a shape it does not expect: a missing required field,
+///   or ANY field of the wrong type (also an optional one), is a
+///   [JsonShapeException], never a silent default.
+/// - An enum value read off the wire goes through the enum's `fromWire`;
+///   an unknown value is refused where a wrong reading would be unsafe
+///   (`TaxTreatment`, `BookAuthority`) and traced with a safe fallback
+///   where a newer server may widen the set (`enumOr`, #1148) — the
+///   enum's own `fromWire` says which.
+/// - The **fail-closed** reads ([textOrAbsent], [isTrue], [intOrAbsent],
+///   [listOrAbsent], [objectOrAbsent]) are for the few decoders whose
+///   answer guards a door — consent, identity, MCP policy, invitations:
+///   there a malformed field reads as absent, which those decoders map to
+///   the safe state (unavailable, not eligible, unknown). Never for a row.
 library;
 
 /// A row did not have the shape its decoder expects.
@@ -74,11 +89,36 @@ class JsonReader {
     return _shape(key, 'String?');
   }
 
+  /// A required integer (Postgres numbers arrive as int or double).
+  int integer(String key) {
+    final value = json[key];
+    return value is num ? value.toInt() : _shape(key, 'int');
+  }
+
   /// A nullable integer (Postgres numbers arrive as int or double).
   int? intOrNull(String key) {
     final value = json[key];
     if (value == null) return null;
     return value is num ? value.toInt() : _shape(key, 'int?');
+  }
+
+  /// A required decimal (a rate).
+  double number(String key) {
+    final value = json[key];
+    return value is num ? value.toDouble() : _shape(key, 'num');
+  }
+
+  /// A required number, integer or decimal as it arrived (a weight).
+  num numeric(String key) {
+    final value = json[key];
+    return value is num ? value : _shape(key, 'num');
+  }
+
+  /// A nullable number, integer or decimal as it arrived.
+  num? numOrNull(String key) {
+    final value = json[key];
+    if (value == null) return null;
+    return value is num ? value : _shape(key, 'num?');
   }
 
   /// A nullable decimal (an average, a ratio).
@@ -89,6 +129,7 @@ class JsonReader {
   }
 
   /// A boolean the wire may omit: [fallback] then.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   bool boolOr(String key, bool fallback) {
     final value = json[key];
     if (value == null) return fallback;
@@ -132,6 +173,13 @@ class JsonReader {
     return _shape(key, 'object?');
   }
 
+  /// A JSON array the wire may omit: empty then; its elements unread.
+  List<Object?> list(String key) {
+    final value = json[key];
+    if (value == null) return const [];
+    return value is List ? value : _shape(key, 'List?');
+  }
+
   /// A JSON array of strings the wire may omit: empty then.
   List<String> strings(String key) {
     final value = json[key];
@@ -152,6 +200,39 @@ class JsonReader {
     return [
       for (final item in value) decode(JsonReader.of(item, context: context)),
     ];
+  }
+
+  // Fail-closed reads — see the library comment: for the decoders whose
+  // safe reading of a malformed field is "absent". Never for a row.
+
+  /// The text at [key] if it is a string; absent (null) otherwise.
+  String? textOrAbsent(String key) {
+    final value = json[key];
+    return value is String ? value : null;
+  }
+
+  /// True only when [key] holds `true`; anything else reads as false.
+  bool isTrue(String key) => json[key] == true;
+
+  /// The integer at [key] if it is one; absent (null) otherwise.
+  int? intOrAbsent(String key) {
+    final value = json[key];
+    return value is int ? value : null;
+  }
+
+  /// The array at [key] if it is one; empty otherwise.
+  List<Object?> listOrAbsent(String key) {
+    final value = json[key];
+    return value is List ? value : const [];
+  }
+
+  /// The object at [key] if it is one, as a reader; empty otherwise.
+  JsonReader objectOrAbsent(String key) {
+    final value = json[key];
+    return JsonReader(
+      value is Map ? Map<String, Object?>.from(value) : const {},
+      context: '$context.$key',
+    );
   }
 }
 

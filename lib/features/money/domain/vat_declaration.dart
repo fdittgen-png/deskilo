@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:xml/xml.dart';
 
-import 'invoice.dart';
-import 'vat_tax_point.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
+import 'invoice.dart';
+import 'vat_form_catalogue.dart';
+import 'vat_forms.dart';
+import 'vat_tax_point.dart';
+
+export 'vat_forms.dart' show VatFormBox;
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
@@ -15,6 +20,10 @@ class VatDeclarationLine {
     required this.vatCents,
     required this.invoiceCount,
     this.category = '',
+    this.corrects = '',
+    this.correctsStart,
+    this.correctsEnd,
+    this.direction = 'output',
   });
 
   final double percent;
@@ -27,6 +36,22 @@ class VatDeclarationLine {
   final int vatCents;
   final int invoiceCount;
 
+  /// #2357 (0406) — a CORRECTION line: what changed, after it was filed,
+  /// in the return [corrects] names (its period [correctsStart] ..
+  /// [correctsEnd]). '' on the period's own lines.
+  final String corrects;
+  final DateTime? correctsStart;
+  final DateTime? correctsEnd;
+
+  /// Whether this line corrects an earlier, filed return.
+  bool get isCorrection => corrects.isNotEmpty;
+
+  /// #2357 — 'output' (VAT collected on sales) or 'input' (deductible VAT
+  /// on expenses: [vatCents] is the deductible share, [netCents] the
+  /// expense's base).
+  final String direction;
+  bool get isInput => direction == 'input';
+
   Map<String, dynamic> toJson() => {
         'percent': percent,
         if (category.isNotEmpty) 'category': category,
@@ -34,18 +59,34 @@ class VatDeclarationLine {
         'net_cents': netCents,
         'vat_cents': vatCents,
         'invoice_count': invoiceCount,
+        if (isInput) 'direction': 'input',
+        if (isCorrection) ...{
+          'correction': true,
+          'corrects': corrects,
+          'corrects_start': ?_day(correctsStart),
+          'corrects_end': ?_day(correctsEnd),
+        },
       };
 
-  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) =>
-      VatDeclarationLine(
-        percent: (json['percent'] as num).toDouble(),
-        category: json['category'] as String? ?? '',
-        grossCents: (json['gross_cents'] as num?)?.toInt() ?? 0,
-        netCents: (json['net_cents'] as num).toInt(),
-        vatCents: (json['vat_cents'] as num).toInt(),
-        invoiceCount: (json['invoice_count'] as num?)?.toInt() ?? 0,
-      );
+  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) {
+    final row = JsonReader.of(json, context: 'vat_declarations.lines');
+    final correction = row.boolOr('correction', false);
+    return VatDeclarationLine(
+      percent: row.doubleOrNull('percent') ?? 0,
+      category: row.stringOr('category'),
+      grossCents: row.intOrNull('gross_cents') ?? 0,
+      netCents: row.intOrNull('net_cents') ?? 0,
+      vatCents: row.intOrNull('vat_cents') ?? 0,
+      invoiceCount: row.intOrNull('invoice_count') ?? 0,
+      corrects: correction ? row.stringOr('corrects') : '',
+      correctsStart: correction ? row.dateTimeOrNull('corrects_start') : null,
+      correctsEnd: correction ? row.dateTimeOrNull('corrects_end') : null,
+      direction: row.stringOr('direction') == 'input' ? 'input' : 'output',
+    );
+  }
 }
+
+String? _day(DateTime? day) => day?.toIso8601String().substring(0, 10);
 
 /// A periodic VAT declaration (0107): the per-rate output-VAT summary of
 /// one filing period. #2357 (0402): the server computes the figures
@@ -145,163 +186,20 @@ List<VatDeclarationLine> computeVatDeclarationLines(
     vatDeclarationLinesOf(
         vatTaxPointLedger(invoices), periodStart, periodEnd);
 
-/// One box of a country's official return form the declaration lines map
-/// onto (#534) — e.g. CA3 line 08 or UStVA Kennzahl 81.
-class VatFormBox {
-  const VatFormBox({
-    required this.code,
-    required this.label,
-    required this.netCents,
-    required this.vatCents,
-  });
-
-  final String code;
-  final String label;
-  final int netCents;
-  final int vatCents;
-}
-
 /// Maps declaration lines onto the country's official form boxes, so the
 /// owner copies numbers straight onto the EFI/ELSTER screen (or the file
-/// their EDI partner uploads).
-///
-///  * FR — CA3 (form 3310): base+VAT per rate on lines 08 (20 %),
-///    09 (5,5 %), 9B (10 %), 11 (2,1 %); everything else on line 14
-///    ("opérations imposables à un autre taux").
-///  * DE — UStVA (USt 1 A): Kz 81 (19 %) / Kz 86 (7 %) carry the NET
-///    base, the tax computes on the form; other rates on Kz 35/36.
-///  * Anywhere else — a generic per-rate listing, one box per rate.
+/// their EDI partner uploads). #2357 — the forms are data, per country
+/// and year (`vat_form_catalogue.dart`), rounded as each form rounds;
+/// [periodEnd] picks the layout in force (the latest when null).
 List<VatFormBox> vatFormBoxes(
   String countryCode,
-  List<VatDeclarationLine> lines,
-) {
-  final code = countryCode.toUpperCase();
-  // #2357 — the server keeps the categories of one rate apart (0 % AE, E
-  // and Z are three lines); the boxes still sum them per rate until the
-  // form mappings read the category.
-  final byRate = _perRate(lines);
-  VatDeclarationLine? at(double percent) =>
-      byRate.where((l) => l.percent == percent).firstOrNull;
-  List<VatDeclarationLine> others(Set<double> named) =>
-      [for (final l in byRate) if (!named.contains(l.percent)) l];
-
-  switch (code) {
-    case 'FR':
-      final named = {20.0, 10.0, 5.5, 2.1, 0.0};
-      final rest = others(named);
-      return [
-        if (at(20.0) case final l?)
-          VatFormBox(
-              code: '08',
-              label: 'Taux normal 20 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        // #2357 — 3310-CA3-SD: line 09 is the 5,5 % rate (code 0105) and
-        // line 9B the 10 % rate (code 0151); they were swapped.
-        if (at(5.5) case final l?)
-          VatFormBox(
-              code: '09',
-              label: 'Taux réduit 5,5 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(10.0) case final l?)
-          VatFormBox(
-              code: '9B',
-              label: 'Taux réduit 10 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(2.1) case final l?)
-          VatFormBox(
-              code: '11',
-              label: 'Taux particulier 2,1 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        for (final l in rest)
-          VatFormBox(
-              code: '14',
-              label: 'Autre taux ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(0.0) case final l?)
-          VatFormBox(
-              code: '05',
-              label: 'Opérations non imposées / taux 0',
-              netCents: l.netCents,
-              vatCents: 0),
-      ];
-    case 'DE':
-      final named = {19.0, 7.0, 0.0};
-      final rest = others(named);
-      return [
-        if (at(19.0) case final l?)
-          VatFormBox(
-              code: 'Kz 81',
-              label: 'Umsätze 19 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(7.0) case final l?)
-          VatFormBox(
-              code: 'Kz 86',
-              label: 'Umsätze 7 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        for (final l in rest)
-          VatFormBox(
-              code: 'Kz 35',
-              label: 'Andere Steuersätze ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(0.0) case final l?)
-          VatFormBox(
-              code: 'Kz 48',
-              label: 'Nicht steuerbare / 0 %-Umsätze',
-              netCents: l.netCents,
-              vatCents: 0),
-      ];
-    default:
-      return [
-        for (final l in byRate)
-          VatFormBox(
-              code: _pct(l.percent),
-              label: l.percent == 0
-                  ? '0 % / out of scope'
-                  : 'Rate ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-      ];
-  }
-}
-
-/// [lines] summed per rate, in their first appearance's order.
-List<VatDeclarationLine> _perRate(List<VatDeclarationLine> lines) {
-  final out = <double, VatDeclarationLine>{};
-  for (final l in lines) {
-    final seen = out[l.percent];
-    out[l.percent] = seen == null
-        ? VatDeclarationLine(
-            percent: l.percent,
-            grossCents: l.grossCents,
-            netCents: l.netCents,
-            vatCents: l.vatCents,
-            invoiceCount: l.invoiceCount,
-          )
-        : VatDeclarationLine(
-            percent: l.percent,
-            grossCents: seen.grossCents + l.grossCents,
-            netCents: seen.netCents + l.netCents,
-            vatCents: seen.vatCents + l.vatCents,
-            invoiceCount: seen.invoiceCount + l.invoiceCount,
-          );
-  }
-  return out.values.toList();
-}
-
-String _pct(double percent) {
-  final text = percent == percent.roundToDouble()
-      ? percent.toStringAsFixed(0)
-      : percent.toString();
-  return '$text %';
-}
+  List<VatDeclarationLine> lines, {
+  DateTime? periodEnd,
+}) => fillVatForm(
+  vatFormSpecFor(countryCode, periodEnd ?? DateTime(9999)) ??
+      genericVatForm(lines),
+  lines,
+);
 
 /// The machine-readable export (#534): a compact self-describing XML any
 /// EDI partner, accountant tool or spreadsheet can ingest. Amounts in
@@ -314,19 +212,21 @@ String vatDeclarationXml({
   required String vatId,
   required String countryCode,
 }) {
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element('vat-declaration', nest: () {
     builder.attribute('schema', 'deskilo-vat-1');
     builder.element('seller', nest: () {
-      builder.element('name', nest: workspaceName);
-      builder.element('vat-id', nest: vatId);
-      builder.element('country', nest: countryCode.toUpperCase());
+      builder
+        ..element('name', nest: workspaceName)
+        ..element('vat-id', nest: vatId)
+        ..element('country', nest: countryCode.toUpperCase());
     });
     builder.element('period', nest: () {
-      builder.element('start',
-          nest: declaration.periodStart.toIso8601String().substring(0, 10));
-      builder.element('end',
+      builder
+        ..element('start',
+          nest: declaration.periodStart.toIso8601String().substring(0, 10))
+        ..element('end',
           nest: declaration.periodEnd.toIso8601String().substring(0, 10));
     });
     builder.element('currency', nest: declaration.currency);
@@ -337,58 +237,55 @@ String vatDeclarationXml({
           if (line.category.isNotEmpty) {
             builder.attribute('category', line.category);
           }
-          builder.element('net-cents', nest: line.netCents.toString());
-          builder.element('vat-cents', nest: line.vatCents.toString());
-          builder.element('invoice-count',
+          if (line.isInput) builder.attribute('direction', 'input');
+          if (line.isCorrection) {
+            builder
+              ..attribute('correction', 'true')
+              ..attribute('corrects', line.corrects);
+            if (_day(line.correctsStart) case final start?) {
+              builder.attribute('corrects-start', start);
+            }
+            if (_day(line.correctsEnd) case final end?) {
+              builder.attribute('corrects-end', end);
+            }
+          }
+          builder
+            ..element('net-cents', nest: line.netCents.toString())
+            ..element('vat-cents', nest: line.vatCents.toString())
+            ..element('invoice-count',
               nest: line.invoiceCount.toString());
         });
       }
     });
     builder.element('boxes', nest: () {
-      for (final box in vatFormBoxes(countryCode, declaration.lines)) {
+      for (final box in vatFormBoxes(countryCode, declaration.lines,
+          periodEnd: declaration.periodEnd)) {
         builder.element('box', nest: () {
-          builder.attribute('code', box.code);
-          builder.attribute('label', box.label);
-          builder.element('net-cents', nest: box.netCents.toString());
-          builder.element('vat-cents', nest: box.vatCents.toString());
+          builder
+            ..attribute('code', box.code)
+            ..attribute('label', box.label);
+          if (box.hasBase && box.baseKey.isNotEmpty) {
+            builder.attribute('base-key', box.baseKey);
+          }
+          if (box.hasTax && box.taxKey.isNotEmpty) {
+            builder.attribute('tax-key', box.taxKey);
+          }
+          if (box.hasBase) {
+            builder.element('net-cents', nest: box.netCents.toString());
+          }
+          if (box.hasTax) {
+            builder.element('vat-cents', nest: box.vatCents.toString());
+          }
         });
       }
     });
     builder.element('totals', nest: () {
-      builder.element('net-cents',
-          nest: declaration.totalNetCents.toString());
-      builder.element('vat-cents',
+      builder
+        ..element('net-cents',
+          nest: declaration.totalNetCents.toString())
+        ..element('vat-cents',
           nest: declaration.totalVatCents.toString());
     });
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
-}
-
-/// Filing periods (#534): month or quarter, walked backwards from [now].
-/// (France: réel normal files monthly, réel simplifié yearly with
-/// acomptes; Germany: monthly or quarterly by tax volume — the owner
-/// picks what their regime requires.)
-List<({DateTime start, DateTime end, bool isQuarter})> vatFilingPeriods(
-  DateTime now, {
-  int monthsBack = 12,
-}) {
-  final periods = <({DateTime start, DateTime end, bool isQuarter})>[];
-  for (var i = 0; i < monthsBack; i++) {
-    final start = DateTime(now.year, now.month - i);
-    periods.add((
-      start: start,
-      end: DateTime(start.year, start.month + 1, 0),
-      isQuarter: false,
-    ));
-  }
-  final quarterStartMonth = ((now.month - 1) ~/ 3) * 3 + 1;
-  for (var i = 0; i < 4; i++) {
-    final start = DateTime(now.year, quarterStartMonth - 3 * i);
-    periods.add((
-      start: start,
-      end: DateTime(start.year, start.month + 3, 0),
-      isQuarter: true,
-    ));
-  }
-  return periods;
 }

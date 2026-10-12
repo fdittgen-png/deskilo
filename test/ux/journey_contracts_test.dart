@@ -27,13 +27,13 @@ import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
-import '../helpers/mock_providers.dart';
 import '../features/workspace/onboarding_flow_test.dart'
     show pumpWithoutWorkspace;
+import '../helpers/mock_providers.dart';
 
 /// Jumps the create wizard to a named step, the way its stepper header
 /// lets a member jump once the first two steps are filled in.
@@ -61,7 +61,7 @@ void main() {
         'response, and no second call makes one behind their back',
         (tester) async {
       final repo = await pumpWithoutWorkspace(tester)
-        ..createFailure = StateError('the response was lost');
+        ..createFailure = Exception('the response was lost');
 
       await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
       // #1636 — one test workspace is the default; nothing to untick.

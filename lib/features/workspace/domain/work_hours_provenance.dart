@@ -2,6 +2,7 @@
 //
 // #1307 S4 — where the working day came from (`work_hours_provenance`,
 // 0244): the product's defaults, a template, or this workspace.
+import '../../../core/data/json_reader.dart';
 import '../../../core/time/work_hours.dart';
 
 enum WorkHoursOrigin {
@@ -42,14 +43,13 @@ class WorkHoursProvenance {
   bool get canResetToDefault => origin != WorkHoursOrigin.productDefault;
 
   factory WorkHoursProvenance.fromJson(Map<String, dynamic> json) {
-    final template = json['template'] as Map?;
-    final values = template?['values'] as Map?;
+    final r = JsonReader(json, context: 'work_hours_provenance');
+    final template = r.objectOrNull('template');
+    final values = template?.objectOrNull('values');
     return WorkHoursProvenance(
-      origin: WorkHoursOrigin.fromWire(json['state'] as String?),
-      templateName: template?['name'] as String?,
-      templateHours: values == null
-          ? null
-          : WorkHours.fromRules(Map<String, dynamic>.from(values)),
+      origin: WorkHoursOrigin.fromWire(r.stringOrNull('state')),
+      templateName: template?.stringOrNull('name'),
+      templateHours: values == null ? null : WorkHours.fromRules(values.json),
     );
   }
 }

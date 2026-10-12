@@ -13,9 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/real_async.dart';
-
 import '../../helpers/mock_providers.dart';
+import '../../helpers/real_async.dart';
 
 Future<Uint8List> _png(int size) async {
   final recorder = ui.PictureRecorder();

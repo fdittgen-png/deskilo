@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../calendar_view.dart';
 
 /// The calendar hub's view switcher and its Today button.
@@ -48,7 +48,7 @@ class CalendarViewBar extends StatelessWidget {
   // ── flag ON: the views ─────────────────────────────────────────────
   @override
     Widget build(BuildContext context) {
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       return Padding(
         padding: const EdgeInsets.fromLTRB(
             AppSpacing.sm, AppSpacing.xs, AppSpacing.sm, 0),
@@ -79,20 +79,20 @@ class CalendarViewBar extends StatelessWidget {
                     ButtonSegment(
                       value: CalendarView.agenda,
                       icon: const Icon(Icons.view_agenda_outlined),
-                      label: labelFor(CalendarView.agenda, l10n?.calendarViewAgenda ?? 'Agenda'),
-                      tooltip: l10n?.calendarViewAgenda ?? 'Agenda',
+                      label: labelFor(CalendarView.agenda, l10n.calendarViewAgenda),
+                      tooltip: l10n.calendarViewAgenda,
                     ),
                     ButtonSegment(
                       value: CalendarView.week,
                       icon: const Icon(Icons.view_week_outlined),
-                      label: labelFor(CalendarView.week, l10n?.calendarViewWeek ?? 'Week'),
-                      tooltip: l10n?.calendarViewWeek ?? 'Week',
+                      label: labelFor(CalendarView.week, l10n.calendarViewWeek),
+                      tooltip: l10n.calendarViewWeek,
                     ),
                     ButtonSegment(
                       value: CalendarView.month,
                       icon: const Icon(Icons.calendar_month_outlined),
-                      label: labelFor(CalendarView.month, l10n?.calendarViewMonth ?? 'Month'),
-                      tooltip: l10n?.calendarViewMonth ?? 'Month',
+                      label: labelFor(CalendarView.month, l10n.calendarViewMonth),
+                      tooltip: l10n.calendarViewMonth,
                     ),
                     if (alertsAvailable)
                       ButtonSegment(
@@ -103,11 +103,11 @@ class CalendarViewBar extends StatelessWidget {
                                 child: const Icon(Icons.notifications_outlined),
                               )
                             : const Icon(Icons.notifications_outlined),
-                        label: labelFor(_alerts, l10n?.calendarViewAlerts ?? 'Alerts'),
-                        tooltip: l10n?.calendarViewAlerts ?? 'Alerts',
+                        label: labelFor(_alerts, l10n.calendarViewAlerts),
+                        tooltip: l10n.calendarViewAlerts,
                       ),
                   ],
-                  selected: {alertsSelected ? _alerts : view},
+                  selected: {if (alertsSelected) _alerts else view},
                   onSelectionChanged: (s) {
                     final next = s.first;
                     if (next == _alerts) {
@@ -122,7 +122,7 @@ class CalendarViewBar extends StatelessWidget {
           ),
           IconButton(
             key: const ValueKey('calendar-today'),
-            tooltip: l10n?.calendarToday ?? 'Today',
+            tooltip: l10n.calendarToday,
             icon: const Icon(Icons.today_outlined),
             onPressed: onToday,
           ),

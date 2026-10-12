@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -60,19 +61,18 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmation = ref.watch(
       actionConfirmationProvider(widget.confirmationId),
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.mcpConfirmTitle ?? 'Confirm an assistant request'),
+        title: Text(l10n.mcpConfirmTitle),
       ),
       body: confirmation.when(
         loading: () => const LoadingView(),
         error: (e, _) => _message(
-          l10n?.mcpConfirmUnavailable ??
-              'This request could not be loaded. Try again from the link.',
+          l10n.mcpConfirmUnavailable,
           Icons.cloud_off_outlined,
         ),
         data: (c) => ListView(
@@ -87,9 +87,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
             if (_answered == null && c.status.answerable) ...[
               const SizedBox(height: AppSpacing.lg),
               Text(
-                l10n?.mcpConfirmConsequence ??
-                    'Confirming lets the assistant send this exact request once. '
-                        'The workspace\'s own validation rules still apply.',
+                l10n.mcpConfirmConsequence,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -99,7 +97,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
                     child: OutlinedButton(
                       key: const ValueKey('mcp-confirm-decline'),
                       onPressed: _busy ? null : () => _respond(c, false),
-                      child: Text(l10n?.mcpConfirmDecline ?? 'Decline'),
+                      child: Text(l10n.mcpConfirmDecline),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.md),
@@ -107,7 +105,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
                     child: FilledButton(
                       key: const ValueKey('mcp-confirm-accept'),
                       onPressed: _busy ? null : () => _respond(c, true),
-                      child: Text(l10n?.mcpConfirmAccept ?? 'Confirm'),
+                      child: Text(l10n.mcpConfirmAccept),
                     ),
                   ),
                 ],
@@ -128,40 +126,35 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
     ),
   );
 
-  Widget _resultBanner(AppLocalizations? l10n, ConfirmationStatus status) {
+  Widget _resultBanner(AppLocalizations l10n, ConfirmationStatus status) {
     final (text, icon, severity) = switch (status) {
       ConfirmationStatus.acknowledged || ConfirmationStatus.consumed => (
-        l10n?.mcpConfirmDone ??
-            'Confirmed. The assistant can now send the request.',
+        l10n.mcpConfirmDone,
         Icons.check_circle_outline,
         InlineBannerSeverity.info,
       ),
       ConfirmationStatus.declined => (
-        l10n?.mcpConfirmDeclined ?? 'Declined. Nothing was done.',
+        l10n.mcpConfirmDeclined,
         Icons.block,
         InlineBannerSeverity.info,
       ),
       ConfirmationStatus.expired => (
-        l10n?.mcpConfirmExpired ??
-            'This request expired. Ask the assistant to send it again.',
+        l10n.mcpConfirmExpired,
         Icons.timer_off_outlined,
         InlineBannerSeverity.error,
       ),
       ConfirmationStatus.targetChanged || ConfirmationStatus.revoked => (
-        l10n?.mcpConfirmStale ??
-            'This request no longer matches the current data or your access. '
-                'Nothing was done.',
+        l10n.mcpConfirmStale,
         Icons.sync_problem_outlined,
         InlineBannerSeverity.error,
       ),
       ConfirmationStatus.notFound => (
-        l10n?.mcpConfirmNotFound ?? 'There is no such request for you.',
+        l10n.mcpConfirmNotFound,
         Icons.search_off,
         InlineBannerSeverity.error,
       ),
       _ => (
-        l10n?.mcpConfirmUnavailable ??
-            'This request could not be loaded. Try again from the link.',
+        l10n.mcpConfirmUnavailable,
         Icons.cloud_off_outlined,
         InlineBannerSeverity.error,
       ),
@@ -174,7 +167,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
     );
   }
 
-  List<Widget> _details(AppLocalizations? l10n, ActionConfirmation c) {
+  List<Widget> _details(AppLocalizations l10n, ActionConfirmation c) {
     final format = ref.watch(appFormatProvider);
     final target = c.target;
     final args = c.arguments;
@@ -196,18 +189,15 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
     };
     final change = switch (c.operation) {
       'request_member_status_change' =>
-        l10n?.mcpConfirmNewStatus('${args['status']}') ??
-            'New status: ${args['status']}',
+        l10n.mcpConfirmNewStatus('${args['status']}'),
       'request_subscription_change' =>
-        l10n?.mcpConfirmNewShare('${args['pct']}') ??
-            'New subscription share: ${args['pct']} %',
+        l10n.mcpConfirmNewShare('${args['pct']}'),
       'respond_to_validation' =>
         args['accept'] == true
-            ? (l10n?.mcpConfirmApprove ?? 'Your answer: approve')
-            : (l10n?.mcpConfirmRefuse ?? 'Your answer: refuse'),
+            ? (l10n.mcpConfirmApprove)
+            : (l10n.mcpConfirmRefuse),
       'request_invoice_issue' =>
-        l10n?.mcpConfirmPeriod('${args['period']}') ??
-            'Period: ${args['period']}',
+        l10n.mcpConfirmPeriod('${args['period']}'),
       _ => '',
     };
     ListTile row(Key key, IconData icon, String title, String subtitle) =>
@@ -235,14 +225,13 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       row(
         const ValueKey('mcp-confirm-workspace'),
         Icons.business_outlined,
-        l10n?.mcpConfirmWorkspace(c.workspaceName) ??
-            'Workspace: ${c.workspaceName}',
+        l10n.mcpConfirmWorkspace(c.workspaceName),
         '',
       ),
       row(
         const ValueKey('mcp-confirm-client'),
         Icons.smart_toy_outlined,
-        l10n?.mcpConfirmClient(c.clientName) ?? 'Asked by: ${c.clientName}',
+        l10n.mcpConfirmClient(c.clientName),
         '',
       ),
     ];

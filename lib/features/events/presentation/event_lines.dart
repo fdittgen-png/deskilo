@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';
@@ -28,7 +28,7 @@ String roleNameIn(Object? names, String locale, String fallback) {
 }
 
 String eventLine(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   WorkspaceEvent event,
   Map<String, String> names,
   Map<String, String> targets,
@@ -40,19 +40,14 @@ String eventLine(
   final amount = cents == null ? '' : currency.formatMinor(cents);
   var line = switch ((event.type, event.action)) {
     (EventType.reservation, EventAction.created) =>
-      l10n?.eventReservationCreated(actor, target) ??
-          '$actor booked $target',
+      l10n.eventReservationCreated(actor, target),
     (EventType.reservation, EventAction.modified) =>
-      l10n?.eventReservationModified(actor, target) ??
-          '$actor changed the booking of $target',
+      l10n.eventReservationModified(actor, target),
     (EventType.reservation, EventAction.cancelled) =>
-      l10n?.eventReservationCancelled(actor, target) ??
-          '$actor cancelled the booking of $target',
+      l10n.eventReservationCancelled(actor, target),
     (EventType.payment, _) =>
-      l10n?.eventPaymentSubmitted(actor, amount) ??
-          '$actor recorded a payment of $amount',
-    (EventType.expense, _) => (l10n?.eventExpenseSubmitted(actor, amount) ??
-            '$actor submitted an expense of $amount') +
+      l10n.eventPaymentSubmitted(actor, amount),
+    (EventType.expense, _) => (l10n.eventExpenseSubmitted(actor, amount)) +
         // #731 — a supply says what lands on the shelf.
         (event.payload['supply'] is Map
             ? ' · ${(event.payload['supply'] as Map)['quantity']}× '
@@ -63,49 +58,42 @@ String eventLine(
         // the member's explanation.
         (event.payload['deviation_reason'] is String &&
                 (event.payload['deviation_reason'] as String).isNotEmpty
-            ? ' · ${l10n?.eventExpenseDeviation(
+            ? ' · ${l10n.eventExpenseDeviation(
                   currency.formatMinor(
                       (event.payload['scheduled_amount_cents'] as num?)
                               ?.toInt() ??
                           0),
                   event.payload['deviation_reason'] as String,
-                ) ?? 'validated ${currency.formatMinor((event.payload['scheduled_amount_cents'] as num?)?.toInt() ?? 0)} — ${event.payload['deviation_reason']}'}'
+                )}'
             : ''),
-    (EventType.serviceCharge, _) => l10n?.eventServiceChargeTitle(
+    (EventType.serviceCharge, _) => l10n.eventServiceChargeTitle(
           event.payload['name'] as String? ?? '',
           (event.payload['quantity'] as num?)?.toInt() ?? 0,
           amount,
-        ) ??
-        '${event.payload['name']} '
-            '×${event.payload['quantity']} — $amount',
-    (EventType.quota, _) => l10n?.eventQuotaRequested(
+        ),
+    (EventType.quota, _) => l10n.eventQuotaRequested(
           actor,
           (event.payload['half_days'] as num?)?.toInt() ?? 0,
           event.payload['period'] as String? ?? '',
-        ) ??
-        '$actor requests ${event.payload['half_days']} extra '
-            'half-days for ${event.payload['period']}',
+        ),
     // #2085 — a workspace's own role, given or taken back at once: the
     // payload names the role (as it read that day) and the direction.
     (EventType.roleChange, _) when event.payload.containsKey('role_key') =>
       () {
         final role = roleNameIn(
           event.payload['role_names'],
-          l10n?.localeName ?? 'en',
+          l10n.localeName,
           '${event.payload['role_key']}',
         );
         final member = names[event.subjectMemberId] ?? '';
         return event.payload['assign'] == true
-            ? (l10n?.eventRoleGiven(actor, role, member) ??
-                '$actor gives the role $role to $member')
-            : (l10n?.eventRoleTakenBack(actor, role, member) ??
-                '$actor takes back the role $role from $member');
+            ? (l10n.eventRoleGiven(actor, role, member))
+            : (l10n.eventRoleTakenBack(actor, role, member));
       }(),
     (EventType.roleChange, _) => (event.payload['make_admin'] == true
-            ? l10n?.eventRolePromote(actor)
-            : l10n?.eventRoleDemote(actor)) ??
-        '$actor changes a role',
-    (EventType.reservationDelete, _) => l10n?.eventReservationDeleteLine(
+            ? l10n.eventRolePromote(actor)
+            : l10n.eventRoleDemote(actor)),
+    (EventType.reservationDelete, _) => l10n.eventReservationDeleteLine(
           actor,
           (event.payload['starts_at'] as String? ?? '')
               .split('T')
@@ -113,44 +101,34 @@ String eventLine(
           event.payload['was_checked_in'] == true
               ? l10n.eventReservationDeleteCheckedIn
               : l10n.eventReservationDeleteUnused,
-        ) ??
-        '$actor asks to delete the booking of '
-            '${(event.payload['starts_at'] as String? ?? '').split('T').first} '
-            '(${event.payload['was_checked_in'] == true ? 'checked in' : 'never used'})',
-    (EventType.invoiceWriteoff, _) => l10n?.eventInvoiceWriteoffLine(
+        ),
+    (EventType.invoiceWriteoff, _) => l10n.eventInvoiceWriteoffLine(
           actor,
           event.payload['number'] as String? ?? '',
           amount,
-        ) ??
-        '$actor asks to cancel the remainder of '
-            '${event.payload['number']} — $amount',
-    (EventType.invoicePayment, _) => l10n?.eventInvoicePaid(
+        ),
+    (EventType.invoicePayment, _) => l10n.eventInvoicePaid(
           event.payload['number'] as String? ?? '',
           amount,
-        ) ??
-        'Invoice ${event.payload['number']} paid — $amount',
-    (EventType.invoiceReminder, _) => l10n?.eventInvoiceReminderLine(
+        ),
+    (EventType.invoiceReminder, _) => l10n.eventInvoiceReminderLine(
           event.payload['number'] as String? ?? '',
           (event.payload['level'] as num?)?.toInt() ?? 1,
           amount,
-        ) ??
-        'Reminder ${event.payload['level']}: invoice '
-            '${event.payload['number']} — $amount still due',
+        ),
     // #828 — a shared expense distributed.
-    (EventType.expenseRepartition, _) => l10n?.eventExpenseRepartitionLine(
+    (EventType.expenseRepartition, _) => l10n.eventExpenseRepartitionLine(
           actor,
           event.payload['title'] as String? ?? '',
           amount,
           (event.payload['member_count'] as num?)?.toInt() ?? 0,
-        ) ??
-        '$actor distributes "${event.payload['title']}" — $amount over ${event.payload['member_count']} members',
-    (EventType.expenseSchedule, _) => l10n?.eventExpenseScheduleLine(
+        ),
+    (EventType.expenseSchedule, _) => l10n.eventExpenseScheduleLine(
           actor,
           event.payload['title'] as String? ?? '',
           amount,
-        ) ??
-        '$actor schedules "${event.payload['title']}" — $amount recurring',
-    (EventType.priceNegotiation, _) => l10n?.eventPriceNegotiationLine(
+        ),
+    (EventType.priceNegotiation, _) => l10n.eventPriceNegotiationLine(
           actor,
           names[event.subjectMemberId] ?? '',
           [
@@ -166,34 +144,30 @@ String eventLine(
               l10n.eventPriceNegotiationItems(
                   (event.payload['item_count'] as num).toInt()),
           ].join(' · '),
-        ) ??
-        '$actor proposes a deal for ${names[event.subjectMemberId] ?? ''}',
+        ),
     // #833 — an early departure asked for, and an admin clearing a
     // record. Both name the numbers, because the numbers are the ask.
-    (EventType.usageCorrection, _) => l10n?.eventUsageCorrectionLine(
+    (EventType.usageCorrection, _) => l10n.eventUsageCorrectionLine(
           actor,
           usageDuration(
               (event.payload['from_minutes'] as num?)?.toInt() ?? 0),
           usageDuration(
               (event.payload['to_minutes'] as num?)?.toInt() ?? 0),
-        ) ??
-        '$actor asks to be billed less',
+        ),
     // #881 — validators decide on the conditions themselves.
     (EventType.paymentTermsChange, _) =>
-      l10n?.eventPaymentTermsChangeLine(
+      l10n.eventPaymentTermsChangeLine(
             actor,
             (event.payload['inherit'] == true)
                 ? (l10n.paymentTermsInherit)
                 : ((event.payload['after'] as Map?)?['payment_terms']
                         as String? ??
                     ''),
-          ) ??
-          '$actor asks to change payment conditions',
-    (EventType.usageRecordDelete, _) => l10n?.eventUsageRecordDeleteLine(
+          ),
+    (EventType.usageRecordDelete, _) => l10n.eventUsageRecordDeleteLine(
           actor,
           event.payload['space_label'] as String? ?? '',
-        ) ??
-        '$actor asks to remove a usage record',
+        ),
     _ => '${eventTypeLabel(l10n, event.type)} · ${event.action.name}',
   };
   // Service charges name no actor in the title, so always say whose bill
@@ -204,7 +178,7 @@ String eventLine(
   if ((!event.actorIsSubject || event.type == EventType.serviceCharge) &&
       !namesMember) {
     final subject = names[event.subjectMemberId] ?? '';
-    line = '$line ${l10n?.eventForSubject(subject) ?? 'for $subject'}';
+    line = '$line ${l10n.eventForSubject(subject)}';
   }
   return line;
 }
@@ -219,7 +193,7 @@ String eventLine(
 /// mid-flight has events that never got the marker, and those fall
 /// back to the accepts already in hand.
 String? eventQuorumProgress(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   WorkspaceEvent event,
   List<EventDecision> decisions,
   List<ValidationPolicy> policies,
@@ -238,11 +212,9 @@ String? eventQuorumProgress(
       _ => accepts + 1,
     }
         .clamp(1, required);
-    return l10n?.eventValidationStage(stage, required) ??
-        'Validation $stage of $required requested';
+    return l10n.eventValidationStage(stage, required);
   }
-  return l10n?.eventValidations(accepts, required) ??
-      '$accepts/$required validations';
+  return l10n.eventValidations(accepts, required);
 }
 
 /// When: the booked range when the event carries one, and when it was

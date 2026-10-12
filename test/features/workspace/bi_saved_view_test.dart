@@ -113,12 +113,12 @@ void main() {
         const {},
       ).query!;
       expect(last.current(DateTime(2026, 3, 31)).wire, '2026-02');
-      expect(last.current(DateTime(2026, 4, 1)).wire, '2026-03');
+      expect(last.current(DateTime(2026, 4)).wire, '2026-03');
       final fixed = checkView(
         const BiViewDefinition(query: {'at': '2026-02'}),
         const {},
       ).query!;
-      expect(fixed.current(DateTime(2026, 4, 1)).wire, '2026-02');
+      expect(fixed.current(DateTime(2026, 4)).wire, '2026-02');
     },
   );
 

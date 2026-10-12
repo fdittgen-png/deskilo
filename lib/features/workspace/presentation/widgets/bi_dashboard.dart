@@ -7,9 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_result.dart';
@@ -39,7 +39,7 @@ class BiDashboard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
     final grain = result.period.grain;
@@ -99,7 +99,7 @@ class BiDashboard extends ConsumerWidget {
           ),
           if (seriesAsync is AsyncError)
             Text(
-              l10n?.biUnavailable ?? 'This analysis could not be computed.',
+              l10n.biUnavailable,
               key: const ValueKey('bi-series-unavailable'),
             )
           else

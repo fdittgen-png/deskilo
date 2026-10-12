@@ -5,16 +5,16 @@
 // preview in the space's own colour.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/workspace_branding.dart';
 import 'brand_swatch.dart';
 
 /// The name of [pattern] in the reader's language.
-String _brandPatternLabel(AppLocalizations? l10n, BrandPattern pattern) {
-  final t = l10n ?? AppLocalizationsEn();
+String _brandPatternLabel(AppLocalizations l10n, BrandPattern pattern) {
+  final t = l10n;
   return switch (pattern) {
     BrandPattern.solid => t.coloursPatternSolid,
     BrandPattern.stripes => t.coloursPatternStripes,
@@ -41,8 +41,8 @@ class PatternPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final t = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final t = l10n;
     final scheme = Theme.of(context).colorScheme;
     final current = selected ?? BrandPattern.solid;
     return Column(

@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -68,7 +71,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     try {
       result = await ref.read(decideOAuthConsentProvider).answer(
           widget.authorizationId, context, approve: approve);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('auth', 'OAuth consent could not continue',
           error: e.runtimeType, stackTrace: st);
     }
@@ -87,10 +90,10 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
         _returnUri = null;
       });
     });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final value = ref.watch(oauthConsentProvider(widget.authorizationId));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.identityConsentTitle ?? 'Continue with Deskilo')),
+      appBar: AppBar(title: Text(l10n.identityConsentTitle)),
       body: value.when(
         loading: () => const LoadingView(),
         error: (e, st) => Padding(
@@ -106,20 +109,18 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
             final generation = _generation;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted && generation == _generation) {
-                _go(request.returnUri!, request.context, automatic: true);
+                unawaited(_go(request.returnUri!, request.context, automatic: true));
               }
             });
           }
           return ListView(
             padding: AppSpacing.gutterAll,
             children: [
-              Text(l10n?.identityConsentAsks(destination.authority) ??
-                  'Use your Deskilo identity to sign in to ${destination.authority}.',
+              Text(l10n.identityConsentAsks(destination.authority),
                   key: const ValueKey('identity-consent-destination'),
                   style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: AppSpacing.md),
-              Text(l10n?.identityConsentPurpose ??
-                  'Workspace and assistant access are approved separately.'),
+              Text(l10n.identityConsentPurpose),
               if (_failed) ...[
                 const SizedBox(height: AppSpacing.md),
                 _unavailable(l10n),
@@ -127,21 +128,21 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
                   OutlinedButton(
                     key: const ValueKey('identity-consent-retry-return'),
                     onPressed: _busy ? null : () => _go(_returnUri!, request.context),
-                    child: Text(l10n?.commonRetry ?? 'Try again'),
+                    child: Text(l10n.commonRetry),
                   ),
               ],
               const SizedBox(height: AppSpacing.lg),
               if (_busy || _returnAttempted)
                 Semantics(liveRegion: true, child: Text(
-                  _failed ? (l10n?.identityConsentReturnFailed ?? 'Could not open the destination.') :
-                  _returnAttempted ? (l10n?.identityConsentReturning ?? 'Returning to sign-in…') :
-                  (l10n?.identityConsentCompleting ?? 'Saving your choice…'),
+                  _failed ? (l10n.identityConsentReturnFailed) :
+                  _returnAttempted ? (l10n.identityConsentReturning) :
+                  (l10n.identityConsentCompleting),
                 ))
               else ...[
                 FilledButton(
                   key: const ValueKey('identity-consent-approve'),
                   onPressed: () => _answer(request.context, true),
-                  child: Text(l10n?.authSignInButton ?? 'Sign in'),
+                  child: Text(l10n.authSignInButton),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton(
@@ -157,11 +158,9 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     );
   }
 
-  Widget _unavailable(AppLocalizations? l10n) => InlineBanner(
+  Widget _unavailable(AppLocalizations l10n) => InlineBanner(
     key: const ValueKey('identity-consent-unavailable'),
     icon: Icons.info_outline,
-    severity: InlineBannerSeverity.error,
-    text: l10n?.identityConsentUnavailable ??
-        'This sign-in request is unavailable. Return to the destination and start again.',
+    text: l10n.identityConsentUnavailable,
   );
 }

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_spacing.dart';
+
 import '../../../../core/motion/motion.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 
 class SettingsTaskSection extends StatelessWidget {

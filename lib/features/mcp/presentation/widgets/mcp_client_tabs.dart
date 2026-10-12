@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/mcp/mcp_endpoint.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -20,15 +21,15 @@ import '../../../../l10n/app_localizations.dart';
 /// The assistants the page explains, in the order the tabs show them.
 enum _McpClientKind { claude, claudeCode, chatgpt, cursor, vscode, other }
 
-String _mcpClientLabel(AppLocalizations? l10n, _McpClientKind kind) =>
+String _mcpClientLabel(AppLocalizations l10n, _McpClientKind kind) =>
     switch (kind) {
-      _McpClientKind.claude => l10n?.mcpConnectTabClaude ?? 'Claude',
+      _McpClientKind.claude => l10n.mcpConnectTabClaude,
       _McpClientKind.claudeCode =>
-        l10n?.mcpConnectTabClaudeCode ?? 'Claude Code',
-      _McpClientKind.chatgpt => l10n?.mcpConnectTabChatgpt ?? 'ChatGPT',
-      _McpClientKind.cursor => l10n?.mcpConnectTabCursor ?? 'Cursor',
-      _McpClientKind.vscode => l10n?.mcpConnectTabVscode ?? 'VS Code',
-      _McpClientKind.other => l10n?.mcpConnectTabOther ?? 'Other',
+        l10n.mcpConnectTabClaudeCode,
+      _McpClientKind.chatgpt => l10n.mcpConnectTabChatgpt,
+      _McpClientKind.cursor => l10n.mcpConnectTabCursor,
+      _McpClientKind.vscode => l10n.mcpConnectTabVscode,
+      _McpClientKind.other => l10n.mcpConnectTabOther,
     };
 
 class McpClientTabs extends StatefulWidget {
@@ -46,19 +47,19 @@ class _McpClientTabsState extends State<McpClientTabs> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final url = widget.connector;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.mcpConnectAddressLabel ?? 'Your DesKilo address for assistants',
+          l10n.mcpConnectAddressLabel,
           style: Theme.of(context).textTheme.labelLarge,
         ),
         McpCopyBlock(id: 'url', text: '$url'),
         const SizedBox(height: AppSpacing.md),
         Text(
-          l10n?.mcpConnectWhich ?? 'Which assistant do you use?',
+          l10n.mcpConnectWhich,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -93,95 +94,69 @@ class _McpClientTabsState extends State<McpClientTabs> {
     );
   }
 
-  Widget _claude(AppLocalizations? l10n) => _Panel(
+  Widget _claude(AppLocalizations l10n) => _Panel(
     steps: [
-      l10n?.mcpConnectClaudeStep1 ?? 'In Claude, open Settings → Connectors.',
-      l10n?.mcpConnectClaudeStep2 ??
-          'Choose "Add custom connector", name it DesKilo and paste the '
-              'address above.',
-      l10n?.mcpConnectClaudeStep3 ??
-          'Choose Connect, sign in with Google and pick this workspace and '
-              'what Claude may do there.',
+      l10n.mcpConnectClaudeStep1,
+      l10n.mcpConnectClaudeStep2,
+      l10n.mcpConnectClaudeStep3,
     ],
     note:
-        l10n?.mcpConnectClaudeNote ??
-        'Claude on the web, Claude Desktop and the Claude mobile app share '
-            'the same connectors. On a Team or Enterprise plan, an owner of '
-            'the Claude organisation adds the connector first.',
+        l10n.mcpConnectClaudeNote,
     action: _LinkButton(
       id: 'claude-open',
-      label: l10n?.mcpConnectClaudeOpen ?? 'Open Claude connectors',
+      label: l10n.mcpConnectClaudeOpen,
       uri: claudeConnectorsUri,
     ),
   );
 
-  Widget _claudeCode(AppLocalizations? l10n, Uri url) => _Panel(
-    steps: [l10n?.mcpConnectCodeStep1 ?? 'Run this in a terminal:'],
+  Widget _claudeCode(AppLocalizations l10n, Uri url) => _Panel(
+    steps: [l10n.mcpConnectCodeStep1],
     block: McpCopyBlock(id: 'code-command', text: claudeCodeAddCommand(url)),
     after: [
-      l10n?.mcpConnectCodeStep2 ??
-          'In Claude Code, type /mcp, choose deskilo and then Authenticate. '
-              'A browser opens to sign in and pick this workspace.',
+      l10n.mcpConnectCodeStep2,
     ],
   );
 
-  Widget _chatgpt(AppLocalizations? l10n) => _Panel(
+  Widget _chatgpt(AppLocalizations l10n) => _Panel(
     steps: [
-      l10n?.mcpConnectChatgptStep1 ??
-          'In ChatGPT, turn on developer mode: Settings → Apps → Advanced '
-              'settings.',
-      l10n?.mcpConnectChatgptStep2 ??
-          'Create an app named DesKilo, paste the address above and choose '
-              'OAuth as the authentication.',
-      l10n?.mcpConnectChatgptStep3 ??
-          'Sign in with Google and pick this workspace and what ChatGPT may '
-              'do there.',
+      l10n.mcpConnectChatgptStep1,
+      l10n.mcpConnectChatgptStep2,
+      l10n.mcpConnectChatgptStep3,
     ],
     note:
-        l10n?.mcpConnectChatgptNote ??
-        'Developer mode needs a paid ChatGPT plan (Plus, Pro, Business, '
-            'Enterprise or Edu).',
+        l10n.mcpConnectChatgptNote,
   );
 
-  Widget _cursor(AppLocalizations? l10n, Uri url) => _Panel(
+  Widget _cursor(AppLocalizations l10n, Uri url) => _Panel(
     action: _LinkButton(
       id: 'cursor-install',
-      label: l10n?.mcpConnectCursorInstall ?? 'Add to Cursor',
+      label: l10n.mcpConnectCursorInstall,
       uri: cursorInstallUri(url),
     ),
     steps: [
-      l10n?.mcpConnectCursorStep ??
-          'Cursor asks to install DesKilo, then opens a browser to sign in '
-              'and pick this workspace. Without the button, add this to '
-              '~/.cursor/mcp.json:',
+      l10n.mcpConnectCursorStep,
     ],
     block: McpCopyBlock(id: 'cursor-json', text: genericMcpConfig(url)),
   );
 
-  Widget _vscode(AppLocalizations? l10n, Uri url) => _Panel(
+  Widget _vscode(AppLocalizations l10n, Uri url) => _Panel(
     action: _LinkButton(
       id: 'vscode-install',
-      label: l10n?.mcpConnectVscodeInstall ?? 'Add to VS Code',
+      label: l10n.mcpConnectVscodeInstall,
       uri: vscodeInstallUri(url),
     ),
     steps: [
-      l10n?.mcpConnectVscodeStep ??
-          'VS Code asks to install DesKilo. Start it from the MCP servers '
-              'list; a browser opens to sign in and pick this workspace.',
+      l10n.mcpConnectVscodeStep,
     ],
   );
 
-  Widget _other(AppLocalizations? l10n, Uri url) => _Panel(
+  Widget _other(AppLocalizations l10n, Uri url) => _Panel(
     steps: [
-      l10n?.mcpConnectOtherStep1 ??
-          'Most clients read a JSON file of servers. Add this entry; the '
-              'client opens a browser to sign in the first time.',
+      l10n.mcpConnectOtherStep1,
     ],
     block: McpCopyBlock(id: 'other-json', text: genericMcpConfig(url)),
     after: [
-      l10n?.mcpConnectOtherStep2 ??
-          'A client that only starts local programs can reach DesKilo '
-              'through mcp-remote (needs Node.js):',
+      l10n.mcpConnectOtherStep2,
     ],
     afterBlock: McpCopyBlock(id: 'other-remote', text: mcpRemoteCommand(url)),
   );
@@ -249,14 +224,12 @@ class _LinkButton extends ConsumerWidget {
     icon: const Icon(Icons.open_in_new),
     label: Text(label),
     onPressed: () async {
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       final opened = await ref.read(linkLauncherProvider)(uri);
       if (!opened && context.mounted) {
         AppSnack.error(
           context,
-          l10n?.mcpConnectOpenFailed ??
-              'The app could not be opened from here. Use the steps below '
-                  'instead.',
+          l10n.mcpConnectOpenFailed,
         );
       }
     },
@@ -272,7 +245,7 @@ class McpCopyBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Container(
       margin: const EdgeInsets.only(top: AppSpacing.xs),
       padding: const EdgeInsets.only(left: AppSpacing.sm),
@@ -291,12 +264,12 @@ class McpCopyBlock extends StatelessWidget {
           ),
           IconButton(
             key: ValueKey('mcp-connect-copy-$id'),
-            tooltip: l10n?.commonCopy ?? 'Copy',
+            tooltip: l10n.commonCopy,
             icon: const Icon(Icons.copy_outlined),
             onPressed: () async {
               await Clipboard.setData(ClipboardData(text: text));
               if (context.mounted) {
-                AppSnack.success(context, l10n?.mcpConnectCopied ?? 'Copied.');
+                AppSnack.success(context, l10n.mcpConnectCopied);
               }
             },
           ),

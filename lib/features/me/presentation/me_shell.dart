@@ -8,24 +8,21 @@
 // the navigator, by route (app/shell/layer_chrome.dart), so every page
 // pushed from here wears it too.
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/backend/backend_settings.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../workspace/application/pending_invitation.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../app/shell/shell_drawer.dart';
-import '../../profile/presentation/widgets/personal_avatar.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
+import '../../../core/backend/backend_settings.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../directory/providers/messenger_providers.dart';
+import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
+import '../../workspace/application/pending_invitation.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import 'me_account_tab.dart';
@@ -63,7 +60,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   void initState() {
     super.initState();
-    _offerKeptInvitation();
+    unawaited(_offerKeptInvitation());
     _badgeRefresh = Timer.periodic(const Duration(seconds: 30), (_) {
       if (mounted && !_visited.contains(MeTab.messages)) ref.invalidate(unifiedInboxProvider);
     });
@@ -85,10 +82,11 @@ class _MeShellState extends ConsumerState<MeShell> {
       final text = await invitations.offeredOn(active);
       if (!mounted || text == null || _tab != MeTab.home) return;
       if (GoRouter.of(context).state.uri.path != '/me') return;
-      arrived.markOfferedOn(active.url);
-      arrived.hold(text);
+      arrived
+        ..markOfferedOn(active.url)
+        ..hold(text);
       context.go('/onboarding?join=1');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'workspace',
         'kept invitation unreadable',
@@ -125,7 +123,7 @@ class _MeShellState extends ConsumerState<MeShell> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final inbox = ref.watch(unifiedInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     Widget messageIcon(IconData icon) => unread > 0
@@ -134,10 +132,10 @@ class _MeShellState extends ConsumerState<MeShell> {
     final wideNavigation = menu && MediaQuery.sizeOf(context).width >= 900 &&
         MediaQuery.textScalerOf(context).scale(100) <= 150;
     final labels = [
-      l10n?.meTabHome ?? 'Home',
-      l10n?.meTabDiscover ?? 'Discover',
-      l10n?.meTabMessages ?? 'Messages',
-      (l10n ?? AppLocalizationsEn()).uxProfileAccount,
+      l10n.meTabHome,
+      l10n.meTabDiscover,
+      l10n.meTabMessages,
+      l10n.uxProfileAccount,
     ];
     final icons = [
       Icons.home_outlined,
@@ -151,7 +149,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                     ListTile(
                       leading: const PersonalAvatar(radius: 20),
                       title: Text(
-                        '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
+                        '${l10n.appTitle} · ${l10n.meTabMe}',
                       ),
                     ),
                     const Divider(),
@@ -164,10 +162,10 @@ class _MeShellState extends ConsumerState<MeShell> {
                         ListTile(
                           key: const ValueKey('me-drawer-task-wizard'),
                           leading: const Icon(Icons.assistant_navigation),
-                          title: Text(l10n?.taskWizardTitle ?? 'Task wizard'),
+                          title: Text(l10n.taskWizardTitle),
                           onTap: () {
                             if (!permanent) Navigator.of(context).pop();
-                            context.push(taskWizardRoute);
+                            unawaited(context.push(taskWizardRoute));
                           },
                         ),
                       // Me is the profile button at the top right already.
@@ -194,7 +192,7 @@ class _MeShellState extends ConsumerState<MeShell> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
+              '${l10n.appTitle} · ${l10n.meTabMe}',
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
@@ -206,7 +204,7 @@ class _MeShellState extends ConsumerState<MeShell> {
         actions: [
           IconButton(
             key: const ValueKey('me-profile-settings'),
-            tooltip: (l10n ?? AppLocalizationsEn()).uxProfileAccount,
+            tooltip: l10n.uxProfileAccount,
             onPressed: () => _show(MeTab.me),
             icon: const PersonalAvatar(),
           ),
@@ -245,25 +243,25 @@ class _MeShellState extends ConsumerState<MeShell> {
                   key: const ValueKey('me-tab-home'),
                   icon: const Icon(Icons.home_outlined),
                   selectedIcon: const Icon(Icons.home),
-                  label: l10n?.meTabHome ?? 'Home',
+                  label: l10n.meTabHome,
                 ),
                 NavigationDestination(
                   key: const ValueKey('me-tab-discover'),
                   icon: const Icon(Icons.travel_explore_outlined),
                   selectedIcon: const Icon(Icons.travel_explore),
-                  label: l10n?.meTabDiscover ?? 'Discover',
+                  label: l10n.meTabDiscover,
                 ),
                 NavigationDestination(
                   key: const ValueKey('me-tab-messages'),
                   icon: messageIcon(Icons.forum_outlined),
                   selectedIcon: messageIcon(Icons.forum),
-                  label: l10n?.meTabMessages ?? 'Messages',
+                  label: l10n.meTabMessages,
                 ),
                 NavigationDestination(
                   key: const ValueKey('me-tab-me'),
                   icon: const Icon(Icons.person_outline),
                   selectedIcon: const PersonalAvatar(),
-                  label: (l10n ?? AppLocalizationsEn()).uxProfileAccount,
+                  label: l10n.uxProfileAccount,
                 ),
               ],
             ),

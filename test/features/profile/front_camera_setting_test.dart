@@ -2,13 +2,13 @@
 //
 // The front-camera switch in Settings → Preferences: on by default,
 // toggling writes the device-local preference the badge scanner reads.
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 void main() {
   testWidgets(

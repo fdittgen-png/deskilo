@@ -3,38 +3,38 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../application/start_workspace.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../app/theme.dart';
+import '../../../core/images/emblem_bytes.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
+import '../../../core/time/work_hours.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/time/work_hours.dart';
-import '../../../app/theme.dart';
-import '../../../core/images/emblem_bytes.dart';
-import '../application/set_workspace_emblem.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../application/set_wording_term.dart';
+import '../application/set_workspace_emblem.dart';
+import '../application/start_workspace.dart';
 import '../application/workspace_colours.dart';
-import '../domain/workspace_branding.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
 import '../domain/closure_day.dart';
+import '../domain/managed_identity_read.dart';
 import '../domain/member.dart';
 import '../domain/member_note.dart';
-import '../domain/workspace.dart';
-import '../domain/workspace_feature.dart';
-import '../domain/workspace_permission.dart';
-import '../domain/work_hours_provenance.dart';
-import '../domain/workspace_repository.dart';
-import '../domain/managed_identity_read.dart';
-import '../application/set_wording_term.dart';
 import '../domain/new_member_defaults.dart';
-import '../domain/workspace_document.dart';
-import '../domain/workspace_overview.dart';
 import '../domain/site.dart';
+import '../domain/work_hours_provenance.dart';
+import '../domain/workspace.dart';
+import '../domain/workspace_branding.dart';
+import '../domain/workspace_document.dart';
+import '../domain/workspace_feature.dart';
+import '../domain/workspace_overview.dart';
+import '../domain/workspace_permission.dart';
+import '../domain/workspace_repository.dart';
 import '../domain/workspace_template.dart';
 import 'workspace_roles_providers.dart';
 
@@ -86,7 +86,7 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
     // store already moved; the default follows at the next switch.
     try {
       await ref.read(defaultWorkspaceIdProvider.notifier).set(workspaceId);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
           'workspace', 'default-workspace write failed — active kept',
           error: e, stackTrace: st);
@@ -128,7 +128,7 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
           .fetchDefaultWorkspaceId();
       await store.write(account, server);
       return server;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Offline: the cached choice keeps working.
       TraceLogger.instance.warn(
           'workspace', 'default-workspace fetch failed — using cache',
@@ -396,7 +396,7 @@ class UnreadNoteCount extends _$UnreadNoteCount {
       await ref
           .read(workspaceRepositoryProvider)
           .markMyNotesRead(workspace.id, fromMemberId: fromMemberId);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('workspace', 'mark conversation read failed',
           error: e, stackTrace: st);
       return;

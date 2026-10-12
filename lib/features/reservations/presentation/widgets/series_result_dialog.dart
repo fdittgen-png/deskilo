@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../domain/reservation_repository.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../domain/reservation_repository.dart';
 
 /// Outcome of a series booking (spec §5.2): how many instances landed and
 /// which dates were skipped (already taken / closed / blocked / over
@@ -14,14 +14,13 @@ Future<void> showSeriesResultDialog(
   BuildContext context,
   SeriesResult result,
 ) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final dateFormat = DateFormat.MMMEd();
   return showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(
-        l10n?.seriesBookedCount(result.booked.length) ??
-            '${result.booked.length} bookings created',
+        l10n.seriesBookedCount(result.booked.length),
       ),
       content: result.skipped.isEmpty
           ? null
@@ -29,7 +28,7 @@ Future<void> showSeriesResultDialog(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n?.seriesSkippedTitle ?? 'Skipped (already taken):'),
+                Text(l10n.seriesSkippedTitle),
                 const SizedBox(height: 8),
                 for (final d in result.skipped)
                   Text(dateFormat.format(WorkspaceTime.dateOf(d))),
@@ -39,7 +38,7 @@ Future<void> showSeriesResultDialog(
         FilledButton(
           key: const ValueKey('series-result-dialog-ok'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonOk ?? 'OK'),
+          child: Text(l10n.commonOk),
         ),
       ],
     ),

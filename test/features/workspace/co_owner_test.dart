@@ -5,15 +5,14 @@
 // (actsAsOwner drives every owner gate); "Promote to owner now"
 // (activation) makes a co-owner a full owner. Succession on owner
 // removal is a server-side trigger — pinned by the migration, not here.
-import '../../helpers/settings_sections.dart';
+import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deskilo/app/app.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 /// Seeds Ana BEFORE the pump (the member providers cache their first
 /// fetch), then walks Settings → Members & plans.

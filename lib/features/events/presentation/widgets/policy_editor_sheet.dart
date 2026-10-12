@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import 'validation_scope_picker.dart';
@@ -144,7 +144,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
@@ -165,8 +165,8 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: HelpDotTitle(
-                  l10n?.validationRequiredCount ?? 'Required validations',
-                  l10n?.helpHintValidationTopic ?? 'confirmations',
+                  l10n.validationRequiredCount,
+                  l10n.helpHintValidationTopic,
                   anchor: HelpAnchor.validationRequiredCount,
                 ),
                 trailing: Row(
@@ -174,7 +174,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   children: [
                     IconButton(
                       key: const ValueKey('policy-editor-sheet-a11y-decrease'),
-                      tooltip: l10n?.a11yDecrease ?? 'Decrease',
+                      tooltip: l10n.a11yDecrease,
                       icon: const Icon(Icons.remove),
                       onPressed: _requiredCount > 1
                           ? () => setState(() {
@@ -189,7 +189,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     ),
                     IconButton(
                       key: const ValueKey('policy-editor-sheet-a11y-increase'),
-                      tooltip: l10n?.a11yIncrease ?? 'Increase',
+                      tooltip: l10n.a11yIncrease,
                       icon: const Icon(Icons.add),
                       onPressed: _requiredCount < _maxRequired
                           ? () => setState(() {
@@ -223,7 +223,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       }),
                     ),
                   ),
-                  HelpDot(l10n?.helpHintMembersTip4Topic ?? 'Role management',
+                  HelpDot(l10n.helpHintMembersTip4Topic,
                     anchor: HelpAnchor.validationWhoMay,
                   ),
                 ]),
@@ -231,14 +231,16 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
               SwitchListTile(
                 key: const ValueKey('policy-editor-sheet-validation-admins-may'),
                 contentPadding: EdgeInsets.zero,
-                title: HelpDotTitle(
-                  l10n?.validationAdminsMay ?? 'Admins may validate',
-                  l10n?.helpHintValidationTopic ?? 'confirmations',
-                  anchor: HelpAnchor.validationWhoMay,
-                ),
+                title: widget.scopesOn
+                    ? Text(l10n.validationAdminsMay)
+                    : HelpDotTitle(
+                        l10n.validationAdminsMay,
+                        l10n.helpHintValidationTopic,
+                        anchor: HelpAnchor.validationWhoMay,
+                      ),
                 subtitle: _adminsMayValidate
                     ? null
-                    : Text(l10n?.validationOwnerOnly ?? 'Owner only'),
+                    : Text(l10n.validationOwnerOnly),
                 value: _adminsMayValidate,
                 onChanged: (value) => setState(() {
                   _adminsMayValidate = value;
@@ -254,7 +256,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     children: [
                       FilterChip(
                         key: const ValueKey('policy-editor-sheet-validation-all-admins'),
-                        label: Text(l10n?.validationAllAdmins ?? 'All admins'),
+                        label: Text(l10n.validationAllAdmins),
                         selected: _selectedAdminIds.isEmpty,
                         onSelected: (_) => setState(() {
                           _selectedAdminIds.clear();
@@ -273,10 +275,6 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                             _notEnough = false;
                           }),
                         ),
-                      HelpDot(
-                        l10n?.helpHintValidationTopic ?? 'confirmations',
-                        anchor: HelpAnchor.validationWhoMay,
-                      ),
                     ],
                   ),
                 ),
@@ -284,9 +282,8 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 key: const ValueKey('policy-editor-sheet-validation-owner-required'),
                 contentPadding: EdgeInsets.zero,
                 title: HelpDotTitle(
-                  l10n?.validationOwnerRequired ??
-                      'Owner must always validate',
-                  l10n?.helpHintValidationTopic ?? 'confirmations',
+                  l10n.validationOwnerRequired,
+                  l10n.helpHintValidationTopic,
                   anchor: HelpAnchor.validationOwnerRequired,
                 ),
                 value: _ownerRequired,
@@ -298,9 +295,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Text(
-                  l10n?.validationNoSelfDesc ??
-                      'Whoever creates an event never validates it. It waits '
-                          'for someone else, or expires undecided.',
+                  l10n.validationNoSelfDesc,
                   key: const Key('validation-no-self'),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -311,15 +306,12 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   key: const Key('validation-owner-self'),
                   contentPadding: EdgeInsets.zero,
                   title: HelpDotTitle(
-                    l10n?.validationOwnerSelf ??
-                        'The owner may validate their own',
-                    l10n?.helpHintValidationTopic ?? 'confirmations',
+                    l10n.validationOwnerSelf,
+                    l10n.helpHintValidationTopic,
                     anchor: HelpAnchor.validationOwnerSelf,
                   ),
                   subtitle: Text(
-                    l10n?.validationOwnerSelfDesc ??
-                        'The single exception, and the owner\'s alone: an '
-                            'admin never validates their own act.',
+                    l10n.validationOwnerSelfDesc,
                   ),
                   value: _ownerMaySelfValidate,
                   onChanged: (value) =>
@@ -335,9 +327,8 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       controller: _minAmount,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelText: l10n?.validationMinAmount ?? 'Only above this amount',
-                        helperText: l10n?.validationMinAmountDesc ??
-                            'Below it the act applies at once. Empty: every amount.',
+                        labelText: l10n.validationMinAmount,
+                        helperText: l10n.validationMinAmountDesc,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -346,14 +337,12 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   key: const Key('validation-sequential'),
                   contentPadding: EdgeInsets.zero,
                   title: HelpDotTitle(
-                    l10n?.validationSequential ?? 'One after another',
-                    l10n?.helpHintValidationTopic ?? 'confirmations',
+                    l10n.validationSequential,
+                    l10n.helpHintValidationTopic,
                     anchor: HelpAnchor.validationSequential,
                   ),
                   subtitle: Text(
-                    l10n?.validationSequentialDesc ??
-                        'The next validation is asked for once the previous '
-                            'one passed, and the trail numbers each step.',
+                    l10n.validationSequentialDesc,
                   ),
                   value: _sequential,
                   onChanged: (value) =>
@@ -366,15 +355,12 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   key: const Key('auto-validate-owner'),
                   contentPadding: EdgeInsets.zero,
                   title: HelpDotTitle(
-                    l10n?.validationAutoValidateOwner ??
-                        'Owners delete without validation',
-                    l10n?.helpHintValidationTopic ?? 'confirmations',
+                    l10n.validationAutoValidateOwner,
+                    l10n.helpHintValidationTopic,
                     anchor: HelpAnchor.validationAutoOwner,
                   ),
                   subtitle: Text(
-                    l10n?.validationAutoValidateDesc ??
-                        'Their own deletion request settles itself and '
-                            'stays marked as auto-validated.',
+                    l10n.validationAutoValidateDesc,
                   ),
                   value: _autoValidateOwner,
                   onChanged: (value) =>
@@ -384,9 +370,8 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   key: const Key('auto-validate-admin'),
                   contentPadding: EdgeInsets.zero,
                   title: HelpDotTitle(
-                    l10n?.validationAutoValidateAdmin ??
-                        'Admins delete without validation',
-                    l10n?.helpHintValidationTopic ?? 'confirmations',
+                    l10n.validationAutoValidateAdmin,
+                    l10n.helpHintValidationTopic,
                     anchor: HelpAnchor.validationAutoAdmin,
                   ),
                   value: _autoValidateAdmin,
@@ -398,8 +383,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.xs),
                   child: Text(
-                    l10n?.validationNotEnough ??
-                        'Not enough eligible validators.',
+                    l10n.validationNotEnough,
                     style: theme.textTheme.bodyMedium
                         ?.copyWith(color: theme.colorScheme.error),
                   ),
@@ -411,13 +395,13 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   TextButton(
                     key: const ValueKey('policy-editor-sheet-cancel'),
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(l10n?.commonCancel ?? 'Cancel'),
+                    child: Text(l10n.commonCancel),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
                     key: const ValueKey('policy-editor-sheet-save'),
                     onPressed: _save,
-                    child: Text(l10n?.commonSave ?? 'Save'),
+                    child: Text(l10n.commonSave),
                   ),
                 ],
               ),

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/theme/seat_legend_profile.dart';
+import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// #814 — the seat states, named. The plan, the day, the week and the
@@ -52,7 +53,7 @@ class SeatLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final brightness = Theme.of(context).brightness;
     final scheme = Theme.of(context).colorScheme;
     final entries = <(String, Color, IconData?)>[
@@ -122,7 +123,7 @@ class SeatLegend extends StatelessWidget {
   /// «Place libre» here without a second hardcoded string set.
   (String, Color, IconData?) _describe(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     SeatGroup group,
     ColorScheme scheme,
     Brightness brightness,
@@ -134,32 +135,32 @@ class SeatLegend extends StatelessWidget {
 
     return switch (group) {
       SeatGroup.free => (
-          word('legendFree', l10n?.legendFree ?? 'Free'),
+          word('legendFree', l10n.legendFree),
           colorOf(SeatState.free),
           SeatStateIcons.of(SeatState.free),
         ),
       SeatGroup.reserved => (
-          word('legendReserved', l10n?.legendReserved ?? 'Reserved'),
+          word('legendReserved', l10n.legendReserved),
           colorOf(SeatState.reserved),
           SeatStateIcons.of(SeatState.reserved),
         ),
       SeatGroup.occupied => (
-          word('legendOccupied', l10n?.legendOccupied ?? 'Checked in'),
+          word('legendOccupied', l10n.legendOccupied),
           colorOf(SeatState.occupied),
           SeatStateIcons.of(SeatState.occupied),
         ),
       SeatGroup.mine => (
-          word('legendMine', l10n?.legendMine ?? 'Mine'),
+          word('legendMine', l10n.legendMine),
           colorOf(SeatState.mine),
           SeatStateIcons.of(SeatState.mine),
         ),
       SeatGroup.blocked => (
-          word('legendBlocked', l10n?.legendBlocked ?? 'Blocked'),
+          word('legendBlocked', l10n.legendBlocked),
           colorOf(SeatState.blocked),
           Icons.block,
         ),
       SeatGroup.closed => (
-          word('legendClosed', l10n?.legendClosed ?? 'Closed day'),
+          word('legendClosed', l10n.legendClosed),
           scheme.surfaceContainerHighest,
           Icons.event_busy_outlined,
         ),
@@ -167,7 +168,7 @@ class SeatLegend extends StatelessWidget {
       // called «blocked»: under the simple profile the two are the same
       // answer to a member, «you cannot have this».
       SeatGroup.unavailable => (
-          word('legendUnavailable', l10n?.legendUnavailable ?? 'Unavailable'),
+          word('legendUnavailable', l10n.legendUnavailable),
           colorOf(SeatState.blocked),
           Icons.block,
         ),

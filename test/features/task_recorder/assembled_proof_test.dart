@@ -37,6 +37,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void _clean(String where, String text) {
@@ -144,8 +145,9 @@ void main() {
       }
       var token = run.onAction(s.action!);
       if (s.isCommand) {
-        run.onOutcome(RecorderOutcomes.bookingRefused, token: token);
-        run.acknowledge(); // the recovery instruction
+        run
+          ..onOutcome(RecorderOutcomes.bookingRefused, token: token)
+          ..acknowledge(); // the recovery instruction
         token = run.onAction(s.action!);
         run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token);
       }

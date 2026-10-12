@@ -20,8 +20,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/assign_role.dart';
@@ -36,18 +38,14 @@ import '../member_labels.dart';
 import '../screens/roles_screen_labels.dart';
 
 /// The sentence a person reads for [refusal].
-String roleRefusalText(AppLocalizations? l10n, RoleRefusal refusal) =>
+String roleRefusalText(AppLocalizations l10n, RoleRefusal refusal) =>
     switch (refusal) {
       RoleRefusal.yourself =>
-        l10n?.roleEditorNotYourself ?? 'You cannot give a role to yourself.',
-      RoleRefusal.notPermitted => l10n?.roleRefusalNotPermitted ??
-          'Only someone who manages roles can give this one.',
-      RoleRefusal.ownerOnly => l10n?.roleRefusalOwnerOnly ??
-          'Only the owner gives a role that manages roles.',
-      RoleRefusal.exceedsYours => l10n?.roleRefusalExceedsYours ??
-          'This role can do things you cannot, so only the owner gives it.',
-      RoleRefusal.notAssignable => l10n?.roleRefusalNotAssignable ??
-          'This member cannot hold this role.',
+        l10n.roleEditorNotYourself,
+      RoleRefusal.notPermitted => l10n.roleRefusalNotPermitted,
+      RoleRefusal.ownerOnly => l10n.roleRefusalOwnerOnly,
+      RoleRefusal.exceedsYours => l10n.roleRefusalExceedsYours,
+      RoleRefusal.notAssignable => l10n.roleRefusalNotAssignable,
     };
 
 /// Whether [caller] may give anybody any role at all: the owner asks for
@@ -76,13 +74,13 @@ class MemberRolesCard extends ConsumerWidget {
     WidgetRef ref,
     WorkspaceRole role,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'workspace',
       message: 'role take-back failed',
       errorText:
-          l10n?.roleTakeBackFailed ?? 'The role was not taken back.',
+          l10n.roleTakeBackFailed,
       action: () => setMemberRole(
         ref,
         memberId: member.id,
@@ -91,12 +89,12 @@ class MemberRolesCard extends ConsumerWidget {
       ),
     );
     if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n?.roleTakenBack ?? 'Role taken back.');
+    AppSnack.success(context, l10n.roleTakenBack);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
     final perms = ref.watch(myPermissionsProvider);
@@ -112,9 +110,9 @@ class MemberRolesCard extends ConsumerWidget {
     // Co-owner, Owner. Every other role adds to it and never takes from it.
     final base = permissionRoleOf(member);
     final baseName = baseRoleLabel(l10n, base, administratorName(
-        roles, locale, l10n?.roleAdmin ?? 'Administrator'));
+        roles, locale, l10n.roleAdmin));
     final successor = member.coOwner == CoOwnerStatus.passive
-        ? (l10n?.memberCoOwnerPassiveChip ?? 'Successor')
+        ? (l10n.memberCoOwnerPassiveChip)
         : null;
     final adminRefusal = me == null
         ? RoleRefusal.notPermitted
@@ -177,7 +175,7 @@ class MemberRolesCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.memberRolesTitle ?? 'Roles',
+              l10n.memberRolesTitle,
               style: theme.textTheme.labelLarge
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
@@ -191,10 +189,7 @@ class MemberRolesCard extends ConsumerWidget {
               padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: Text(
                 key: baseRoleNoteKey,
-                l10n?.baseRoleNote ??
-                    'Everyone has exactly one base role: User, Administrator, '
-                        'Co-owner or Owner. Other roles add to it; none takes '
-                        'anything away.',
+                l10n.baseRoleNote,
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
@@ -203,8 +198,7 @@ class MemberRolesCard extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(
-                  l10n?.roleEditorNotYourself ??
-                      'You cannot give a role to yourself.',
+                  l10n.roleEditorNotYourself,
                   style: theme.textTheme.bodySmall,
                 ),
               )
@@ -216,7 +210,7 @@ class MemberRolesCard extends ConsumerWidget {
                 child: ActionChip(
                   key: addKey,
                   avatar: const Icon(Icons.add, size: 18),
-                  label: Text(l10n?.memberRolesAdd ?? 'Add a role'),
+                  label: Text(l10n.memberRolesAdd),
                   onPressed: () =>
                       showRoleAssignSheet(context, ref, member, name),
                 ),
@@ -230,9 +224,8 @@ class MemberRolesCard extends ConsumerWidget {
                       ? '/settings/what-you-can-do'
                       : '/settings/what-you-can-do?member=${member.id}'),
                   child: Text(isSelf
-                      ? (l10n?.whatYouCanDoTitle ?? 'What you can do here')
-                      : (l10n?.memberRolesWhatTheyCanDo ??
-                          'What they can do here')),
+                      ? (l10n.whatYouCanDoTitle)
+                      : (l10n.memberRolesWhatTheyCanDo)),
                 ),
               ),
           ],
@@ -250,7 +243,7 @@ Future<void> showRoleAssignSheet(
   Member member,
   String name,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final me = ref.read(myMemberProvider).value;
   if (me == null) return;
   final perms = ref.read(myPermissionsProvider);
@@ -269,7 +262,7 @@ Future<void> showRoleAssignSheet(
       if (role.active && !heldIds.contains(role.id)) role,
   ];
 
-  final chosen = await showModalBottomSheet<Object>(
+  final chosen = await showAppSheet<Object>(
     context: context,
     showDragHandle: true,
     isScrollControlled: true,
@@ -299,7 +292,7 @@ Future<void> showRoleAssignSheet(
             Padding(
               padding: AppSpacing.lgAll,
               child: Text(
-                l10n?.roleAssignSheetTitle(name) ?? 'Give a role to $name',
+                l10n.roleAssignSheetTitle(name),
                 style: Theme.of(sheetContext).textTheme.titleMedium,
               ),
             ),
@@ -307,9 +300,8 @@ Future<void> showRoleAssignSheet(
               tile(
                 key: const ValueKey('role-assign-administrator'),
                 title: administratorName(
-                    roles, locale, l10n?.roleAdmin ?? 'Administrator'),
-                hint: l10n?.roleAssignQuorumHint ??
-                    'Takes effect once validated.',
+                    roles, locale, l10n.roleAdmin),
+                hint: l10n.roleAssignQuorumHint,
                 refusal: adminRefusal,
                 value: true,
               ),
@@ -318,7 +310,7 @@ Future<void> showRoleAssignSheet(
                 key: ValueKey('role-assign-${role.key}'),
                 title: role.nameIn(locale),
                 hint: [
-                  l10n?.roleAssignImmediateHint ?? 'Takes effect at once.',
+                  l10n.roleAssignImmediateHint,
                   for (final p in role.permissions) permissionLabel(l10n, p),
                 ].join(' · '),
                 refusal: customRoleRefusal(
@@ -333,7 +325,7 @@ Future<void> showRoleAssignSheet(
               Padding(
                 padding: AppSpacing.lgAll,
                 child: Text(
-                  l10n?.roleAssignNothing ?? 'There is no role left to give.',
+                  l10n.roleAssignNothing,
                 ),
               ),
           ],
@@ -347,7 +339,7 @@ Future<void> showRoleAssignSheet(
       context,
       domain: 'workspace',
       message: 'role grant failed',
-      errorText: l10n?.roleGiveFailed ?? 'The role was not given.',
+      errorText: l10n.roleGiveFailed,
       action: () => setMemberRole(
         ref,
         memberId: member.id,
@@ -356,7 +348,7 @@ Future<void> showRoleAssignSheet(
       ),
     );
     if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n?.roleGiven ?? 'Role given.');
+    AppSnack.success(context, l10n.roleGiven);
   } else {
     await requestMemberRoleChange(context, ref, member);
   }

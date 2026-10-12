@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
@@ -33,7 +33,7 @@ class EventValidationTrail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (eventId.isEmpty) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final trail = ref.watch(eventTrailProvider(eventId)).value;
     final event = trail?.event;
     if (trail == null || event == null) return const SizedBox.shrink();
@@ -57,7 +57,7 @@ class EventValidationTrail extends ConsumerWidget {
         pending: pending,
         sequential: policy.sequential,
         title: showTitle
-            ? (l10n?.validationTrailTitle ?? 'Validation trail')
+            ? (l10n.validationTrailTitle)
             : null,
       ),
     );

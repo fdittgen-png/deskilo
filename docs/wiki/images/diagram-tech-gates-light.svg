@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="550" viewBox="0 0 1200 550" role="img" aria-label="The quality-gate map: which of the 108 lint gates protects the client, the database, security and privacy, documentation, and the release.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker></defs>
+<g font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect width="1200" height="550" rx="22" fill="#fdfcf9"/>
+<text x="40" y="48" font-size="22" fill="#1b2236" text-anchor="start" font-weight="700">Which gate protects what</text>
+<text x="40" y="72" font-size="14" fill="#5a6277" text-anchor="start">108 lint suites in test/lint, each protecting one promise; CI adds analyze, the suite with a coverage floor and the database replay.</text>
+<rect x="40" y="108" width="208" height="350" rx="16" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="40" y="108" width="208" height="92" rx="16" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="144.0" y="140" font-size="16" fill="#1b2236" text-anchor="middle" font-weight="700">Client</text>
+<text x="144.0" y="166" font-size="15" fill="#0f766e" text-anchor="middle" font-weight="700">51 gates</text>
+<text x="54" y="232" font-size="12" fill="#1b2236" text-anchor="start">layering</text>
+<text x="54" y="266" font-size="12" fill="#1b2236" text-anchor="start">file_length</text>
+<text x="54" y="300" font-size="12" fill="#1b2236" text-anchor="start">no_silent_catch</text>
+<text x="54" y="334" font-size="12" fill="#1b2236" text-anchor="start">route_registry</text>
+<text x="54" y="368" font-size="12" fill="#1b2236" text-anchor="start">feature_registry</text>
+<text x="54" y="402" font-size="12" fill="#1b2236" text-anchor="start">money_wire_parity</text>
+<text x="54" y="440" font-size="12" fill="#5a6277" text-anchor="start">and more, see the lists</text>
+<rect x="268" y="108" width="208" height="350" rx="16" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="268" y="108" width="208" height="92" rx="16" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="372.0" y="140" font-size="16" fill="#1b2236" text-anchor="middle" font-weight="700">Database</text>
+<text x="372.0" y="166" font-size="15" fill="#0f766e" text-anchor="middle" font-weight="700">13 gates</text>
+<text x="282" y="232" font-size="12" fill="#1b2236" text-anchor="start">applied_migrations</text>
+<text x="282" y="266" font-size="12" fill="#1b2236" text-anchor="start">anchored_patch</text>
+<text x="282" y="300" font-size="12" fill="#1b2236" text-anchor="start">migration_grants</text>
+<text x="282" y="334" font-size="12" fill="#1b2236" text-anchor="start">system_columns</text>
+<text x="282" y="368" font-size="12" fill="#1b2236" text-anchor="start">instance_bundle</text>
+<text x="282" y="402" font-size="12" fill="#1b2236" text-anchor="start">policy_manifest</text>
+<text x="282" y="440" font-size="12" fill="#5a6277" text-anchor="start">and more, see the lists</text>
+<rect x="496" y="108" width="208" height="350" rx="16" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="496" y="108" width="208" height="92" rx="16" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="600.0" y="140" font-size="16" fill="#1b2236" text-anchor="middle" font-weight="700">Security and privacy</text>
+<text x="600.0" y="166" font-size="15" fill="#0f766e" text-anchor="middle" font-weight="700">13 gates</text>
+<text x="510" y="232" font-size="12" fill="#1b2236" text-anchor="start">rls_matrix_gate</text>
+<text x="510" y="266" font-size="12" fill="#1b2236" text-anchor="start">definer_caller_guard</text>
+<text x="510" y="300" font-size="12" fill="#1b2236" text-anchor="start">edge_exposure</text>
+<text x="510" y="334" font-size="12" fill="#1b2236" text-anchor="start">workspace_isolation</text>
+<text x="510" y="368" font-size="12" fill="#1b2236" text-anchor="start">privacy_claims</text>
+<text x="510" y="402" font-size="12" fill="#1b2236" text-anchor="start">gdpr_export_coverage</text>
+<text x="510" y="440" font-size="12" fill="#5a6277" text-anchor="start">and more, see the lists</text>
+<rect x="724" y="108" width="208" height="350" rx="16" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="724" y="108" width="208" height="92" rx="16" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="828.0" y="140" font-size="16" fill="#1b2236" text-anchor="middle" font-weight="700">Docs and words</text>
+<text x="828.0" y="166" font-size="15" fill="#0f766e" text-anchor="middle" font-weight="700">16 gates</text>
+<text x="738" y="232" font-size="12" fill="#1b2236" text-anchor="start">l10n_audit</text>
+<text x="738" y="266" font-size="12" fill="#1b2236" text-anchor="start">help_anchor</text>
+<text x="738" y="300" font-size="12" fill="#1b2236" text-anchor="start">setup_html</text>
+<text x="738" y="334" font-size="12" fill="#1b2236" text-anchor="start">adr_format</text>
+<text x="738" y="368" font-size="12" fill="#1b2236" text-anchor="start">spdx_headers</text>
+<text x="738" y="402" font-size="12" fill="#1b2236" text-anchor="start">legal_terms</text>
+<text x="738" y="440" font-size="12" fill="#5a6277" text-anchor="start">and more, see the lists</text>
+<rect x="952" y="108" width="208" height="350" rx="16" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="952" y="108" width="208" height="92" rx="16" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="1056.0" y="140" font-size="16" fill="#1b2236" text-anchor="middle" font-weight="700">Release</text>
+<text x="1056.0" y="166" font-size="15" fill="#0f766e" text-anchor="middle" font-weight="700">15 gates</text>
+<text x="966" y="232" font-size="12" fill="#1b2236" text-anchor="start">flutter_pin</text>
+<text x="966" y="266" font-size="12" fill="#1b2236" text-anchor="start">workflow_pins</text>
+<text x="966" y="300" font-size="12" fill="#1b2236" text-anchor="start">required_contexts</text>
+<text x="966" y="334" font-size="12" fill="#1b2236" text-anchor="start">fdroid_reproducible</text>
+<text x="966" y="368" font-size="12" fill="#1b2236" text-anchor="start">foss_flavour</text>
+<text x="966" y="402" font-size="12" fill="#1b2236" text-anchor="start">play_listing</text>
+<text x="966" y="440" font-size="12" fill="#5a6277" text-anchor="start">and more, see the lists</text>
+<rect x="40" y="478" width="1120" height="48" rx="12" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="600" y="508" font-size="14" fill="#1b2236" text-anchor="middle">Every gate runs in the required job "analyze · l10n gate · test · coverage"; the database replay and pgTAP run in "quality · database".</text>
+</g></svg>

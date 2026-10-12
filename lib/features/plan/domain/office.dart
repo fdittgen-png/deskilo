@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'grid_geometry.dart';
 import '../../../core/data/system_columns.dart';
+import 'grid_geometry.dart';
 
 part 'office.freezed.dart';
 

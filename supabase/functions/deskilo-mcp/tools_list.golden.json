@@ -1,0 +1,305 @@
+{
+  "list_workspaces": {
+    "name": "deskilo_list_workspaces",
+    "title": "List my workspaces",
+    "annotations": {
+      "title": "List my workspaces",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "d95f79382fcf2571",
+    "output": "b22e4f526ad018c8"
+  },
+  "get_capabilities": {
+    "name": "deskilo_get_capabilities",
+    "title": "What can I do here?",
+    "annotations": {
+      "title": "What can I do here?",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "09338a5eebae270a",
+    "output": "8f7838fa11733c88"
+  },
+  "get_availability": {
+    "name": "deskilo_get_availability",
+    "title": "Find free places",
+    "annotations": {
+      "title": "Find free places",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "1c61336bbcd30b9c",
+    "output": "ef2b826d64d7f55b"
+  },
+  "list_my_reservations": {
+    "name": "deskilo_list_my_reservations",
+    "title": "List my bookings",
+    "annotations": {
+      "title": "List my bookings",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "8788acd1a579afa4",
+    "output": "4e66201358ce4c89"
+  },
+  "get_place": {
+    "name": "deskilo_get_place",
+    "title": "Describe a place",
+    "annotations": {
+      "title": "Describe a place",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "9bd64b4f0e386244",
+    "output": "8c4fe129185bf18c"
+  },
+  "list_my_favorites": {
+    "name": "deskilo_list_my_favorites",
+    "title": "My favourite places",
+    "annotations": {
+      "title": "My favourite places",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "09338a5eebae270a",
+    "output": "bc42c37d9ddda59e"
+  },
+  "get_my_statement": {
+    "name": "deskilo_get_my_statement",
+    "title": "My monthly statement",
+    "annotations": {
+      "title": "My monthly statement",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "5ebe45b8fe31ec9a",
+    "output": "086ebde4829d9b59"
+  },
+  "get_member_statement": {
+    "name": "deskilo_get_member_statement",
+    "title": "A member's monthly statement",
+    "annotations": {
+      "title": "A member's monthly statement",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "44e0fee0cbf4bf98",
+    "output": "336734e3ef864da2"
+  },
+  "list_my_invoices": {
+    "name": "deskilo_list_my_invoices",
+    "title": "List my invoices",
+    "annotations": {
+      "title": "List my invoices",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "0cc9219aa8c59428",
+    "output": "ecd0180723f26321"
+  },
+  "create_reservation": {
+    "name": "deskilo_create_reservation",
+    "title": "Book a place",
+    "annotations": {
+      "title": "Book a place",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "e9ac05816b01a317",
+    "output": "0cd6c1bed3a3941b"
+  },
+  "update_reservation": {
+    "name": "deskilo_update_reservation",
+    "title": "Move my booking",
+    "annotations": {
+      "title": "Move my booking",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "815816a1c73367a3",
+    "output": "c95ceb5395596f2f"
+  },
+  "check_in": {
+    "name": "deskilo_check_in",
+    "title": "Check in",
+    "annotations": {
+      "title": "Check in",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "cd8a59145012352a",
+    "output": "65c3b65cf425106d"
+  },
+  "check_out": {
+    "name": "deskilo_check_out",
+    "title": "Check out",
+    "annotations": {
+      "title": "Check out",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "cd8a59145012352a",
+    "output": "79a9a19f39fe53dd"
+  },
+  "cancel_reservation": {
+    "name": "deskilo_cancel_reservation",
+    "title": "Cancel a booking",
+    "annotations": {
+      "title": "Cancel a booking",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "cd8a59145012352a",
+    "output": "27e088a41ef0fccd"
+  },
+  "set_favorite": {
+    "name": "deskilo_set_favorite",
+    "title": "Favourite or unfavourite a place",
+    "annotations": {
+      "title": "Favourite or unfavourite a place",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "c90fc576c8faed0f",
+    "output": "9169a6b2a93c9d5a"
+  },
+  "rate_place": {
+    "name": "deskilo_rate_place",
+    "title": "Rate a place",
+    "annotations": {
+      "title": "Rate a place",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "72bc972c0264bf0b",
+    "output": "e7ef98eef3de2e27"
+  },
+  "request_reservation_deletion": {
+    "name": "deskilo_request_reservation_deletion",
+    "title": "Ask to delete a started booking",
+    "annotations": {
+      "title": "Ask to delete a started booking",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "eb2cdaf80402ac81",
+    "output": "f77ef7700d00bfb6"
+  },
+  "request_invoice_issue": {
+    "name": "deskilo_request_invoice_issue",
+    "title": "Request an invoice",
+    "annotations": {
+      "title": "Request an invoice",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "04fd7bfa5ccf75de",
+    "output": "19ba367f6f9a3175"
+  },
+  "request_invoice_void": {
+    "name": "deskilo_request_invoice_void",
+    "title": "Request an invoice void",
+    "annotations": {
+      "title": "Request an invoice void",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "16e5eb7f156f99a2",
+    "output": "5b751e61b36b52bb"
+  },
+  "request_refund": {
+    "name": "deskilo_request_refund",
+    "title": "Request a refund",
+    "annotations": {
+      "title": "Request a refund",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "7c410d8a37982b8f",
+    "output": "966c2adaaff904a5"
+  },
+  "request_member_status_change": {
+    "name": "deskilo_request_member_status_change",
+    "title": "Request a member status change",
+    "annotations": {
+      "title": "Request a member status change",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "a9fb4671113ea947",
+    "output": "e39c483d0bd25c41"
+  },
+  "request_subscription_change": {
+    "name": "deskilo_request_subscription_change",
+    "title": "Request a subscription change",
+    "annotations": {
+      "title": "Request a subscription change",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "ab83126737d6093c",
+    "output": "3ac5c0a95616bee2"
+  },
+  "list_pending_validations": {
+    "name": "deskilo_list_pending_validations",
+    "title": "List requests awaiting a decision",
+    "annotations": {
+      "title": "List requests awaiting a decision",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "0cc9219aa8c59428",
+    "output": "48d58f064096d3ef"
+  },
+  "get_validation": {
+    "name": "deskilo_get_validation",
+    "title": "Read one request awaiting a decision",
+    "annotations": {
+      "title": "Read one request awaiting a decision",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "ce594932033ffbb4",
+    "output": "dee619a03c531958"
+  },
+  "respond_to_validation": {
+    "name": "deskilo_respond_to_validation",
+    "title": "Accept or refuse a request",
+    "annotations": {
+      "title": "Accept or refuse a request",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "e0aabcbea8cf558b",
+    "output": "c35402e8904135f2"
+  }
+}

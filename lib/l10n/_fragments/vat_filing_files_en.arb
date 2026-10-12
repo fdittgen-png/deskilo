@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "vatDeclElster": "ELSTER file (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
+  "vatDeclEdiTva": "EDI-TVA file (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Tax number (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  }
+}

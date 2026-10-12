@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'report_field_picker.dart';
@@ -28,7 +29,7 @@ class ReportMarkupGuide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final mono = theme.textTheme.bodySmall?.copyWith(
       fontFamily: 'monospace',
@@ -39,16 +40,12 @@ class ReportMarkupGuide extends StatelessWidget {
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
       title: Text(
-        l10n?.reportGuideTitle ?? 'Placeholders and markup',
+        l10n.reportGuideTitle,
         style: theme.textTheme.titleSmall,
       ),
       children: [
         Text(
-          l10n?.reportGuideIntro ??
-              'Three bands make the PDF: header, body, footer. Write text, '
-                  'put a field where a value goes, and use one markup sign '
-                  'at the start of a line for its style. The e-invoice XML '
-                  'is never touched.',
+          l10n.reportGuideIntro,
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -57,7 +54,7 @@ class ReportMarkupGuide extends StatelessWidget {
           child: FilledButton.tonalIcon(
             key: const ValueKey('report-guide-insert-field'),
             icon: const Icon(Icons.data_object),
-            label: Text(l10n?.reportGuideInsertField ?? 'Insert a field…'),
+            label: Text(l10n.reportGuideInsertField),
             onPressed: () async {
               final markup =
                   await showReportFieldPicker(context, textKeys: textKeys);
@@ -66,7 +63,7 @@ class ReportMarkupGuide extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        Text(l10n?.reportGuideMarkupTitle ?? 'Line markup',
+        Text(l10n.reportGuideMarkupTitle,
             style: theme.textTheme.labelLarge),
         const SizedBox(height: AppSpacing.xs),
         for (final row in _reportMarkupRows(l10n))
@@ -90,7 +87,7 @@ class ReportMarkupGuide extends StatelessWidget {
             ),
           ),
         const SizedBox(height: AppSpacing.md),
-        Text(l10n?.reportGuideSnippetsTitle ?? 'Ready-made pieces',
+        Text(l10n.reportGuideSnippetsTitle,
             style: theme.textTheme.labelLarge),
         const SizedBox(height: AppSpacing.xs),
         Wrap(
@@ -116,48 +113,46 @@ typedef _ReportMarkupRow = ({String id, String example, String meaning});
 /// The line markup the renderer accepts, one row each, in reading order.
 /// The examples are syntax (identical everywhere); the meanings are
 /// translated.
-List<_ReportMarkupRow> _reportMarkupRows(AppLocalizations? l10n) => [
+List<_ReportMarkupRow> _reportMarkupRows(AppLocalizations l10n) => [
       (
         id: 'heading',
         example: '# Title',
-        meaning: l10n?.reportMarkupHeading ?? 'A large title',
+        meaning: l10n.reportMarkupHeading,
       ),
       (
         id: 'section',
         example: '## Section',
-        meaning: l10n?.reportMarkupSection ?? 'A section heading',
+        meaning: l10n.reportMarkupSection,
       ),
       (
         id: 'small',
         example: '> small text',
-        meaning: l10n?.reportMarkupSmall ?? 'Small muted text',
+        meaning: l10n.reportMarkupSmall,
       ),
       (
         id: 'rule',
         example: '---',
-        meaning: l10n?.reportMarkupRule ?? 'A horizontal rule',
+        meaning: l10n.reportMarkupRule,
       ),
       (
         id: 'table',
         example: 'a | b | c',
-        meaning: l10n?.reportMarkupTable ?? 'A table row, one cell per |',
+        meaning: l10n.reportMarkupTable,
       ),
       (
         id: 'bold-row',
         example: '= a | b',
-        meaning: l10n?.reportMarkupBoldRow ?? 'A bold table row',
+        meaning: l10n.reportMarkupBoldRow,
       ),
       (
         id: 'columns',
         example: ':::\nleft\n|||\nright\n:::',
-        meaning: l10n?.reportMarkupColumns ??
-            'Side-by-side columns, split at |||',
+        meaning: l10n.reportMarkupColumns,
       ),
       (
         id: 'image',
         example: '![logo|m|left]',
-        meaning: l10n?.reportMarkupImage ??
-            'A library image: size s/m/l, align left/center/right',
+        meaning: l10n.reportMarkupImage,
       ),
     ];
 
@@ -166,24 +161,22 @@ typedef _ReportLiquidSnippet = ({String id, String label, String markup});
 
 /// The three Liquid patterns a band actually needs; anything else is
 /// the same three combined.
-List<_ReportLiquidSnippet> _reportLiquidSnippets(AppLocalizations? l10n) => [
+List<_ReportLiquidSnippet> _reportLiquidSnippets(AppLocalizations l10n) => [
       (
         id: 'if',
-        label: l10n?.reportGuideSnippetIf ??
-            'A line only when the value exists',
+        label: l10n.reportGuideSnippetIf,
         markup: '{% if due_date != "" %}{{ due_date }}{% endif %}',
       ),
       (
         id: 'loop',
-        label: l10n?.reportGuideSnippetLoop ?? 'One row per invoice line',
+        label: l10n.reportGuideSnippetLoop,
         markup:
             '{% for line in lines %}{{ line.label }} | {{ line.amount }}\n'
             '{% endfor %}',
       ),
       (
         id: 'title',
-        label: l10n?.reportGuideSnippetTitle ??
-            'The title: invoice, credit note or proforma',
+        label: l10n.reportGuideSnippetTitle,
         markup: '{% if credit_note %}CREDIT NOTE{% elsif proforma %}PROFORMA'
             '{% else %}INVOICE{% endif %} {{ number }}',
       ),

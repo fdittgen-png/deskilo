@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/domain/identity_binding.dart';
+import '../../workspace/providers/instance_providers.dart';
 import '../application/connect_assistant.dart';
+import '../domain/mcp_access_status.dart';
 import '../domain/mcp_connection.dart';
 import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
-import '../domain/mcp_access_status.dart';
-import '../../auth/domain/identity_binding.dart';
-import '../../workspace/providers/instance_providers.dart';
 import 'mcp_consent_refusal.dart';
 import 'mcp_operation_labels.dart';
 
@@ -44,7 +45,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   late final Future<McpGoogleSignIn> _google =
       ref.read(assistantAccessProvider).googleSignIn();
 
-  Widget _googleGate(AppLocalizations? l10n) => FutureBuilder<McpGoogleSignIn>(
+  Widget _googleGate(AppLocalizations l10n) => FutureBuilder<McpGoogleSignIn>(
         future: _google,
         builder: (context, snap) {
           final state = mcpGoogleState(snap.data);
@@ -60,10 +61,8 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                 _banner(
                   'mcp-consent-google-${state.name}',
                   link
-                      ? (l10n?.mcpNextLinkGoogle ??
-                          'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.')
-                      : (l10n?.mcpNextSignInGoogle ??
-                          'Assistants use your Google sign-in. Sign in with Google to continue.'),
+                      ? (l10n.mcpNextLinkGoogle)
+                      : (l10n.mcpNextSignInGoogle),
                   Icons.lock_outline,
                   InlineBannerSeverity.error,
                 ),
@@ -78,7 +77,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                           ref.read(assistantAccessProvider).signInWithGoogle(),
                     ),
                     child: Text(
-                        l10n?.mcpStatusSignInGoogle ?? 'Sign in with Google'),
+                        l10n.mcpStatusSignInGoogle),
                   ),
               ],
             ),
@@ -185,7 +184,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #2145 — the client's approval is read first: an assistant the
     // operator has not approved never reaches Auth's authorization API
     // from here, and the person learns why and who decides. A server
@@ -197,7 +196,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     if (gate.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.mcpConsentTitle ?? 'Connect an assistant'),
+          title: Text(l10n.mcpConsentTitle),
         ),
         body: const LoadingView(),
       );
@@ -208,7 +207,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     final consent = ref.watch(mcpConsentProvider(widget.authorizationId));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.mcpConsentTitle ?? 'Connect an assistant'),
+        title: Text(l10n.mcpConsentTitle),
       ),
       body: consent.when(
         loading: () => const LoadingView(),
@@ -221,8 +220,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           ),
           null => _banner(
             'mcp-consent-unavailable',
-            l10n?.mcpConsentUnavailable ??
-                'This connection request could not be loaded. Start again from the assistant.',
+            l10n.mcpConsentUnavailable,
             Icons.cloud_off_outlined,
             InlineBannerSeverity.error,
           ),
@@ -234,8 +232,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
             );
             return _banner(
               'mcp-consent-already',
-              l10n?.mcpConsentAlready ??
-                  'This assistant is already connected. Returning to it.',
+              l10n.mcpConsentAlready,
               Icons.check_circle_outline,
               InlineBannerSeverity.info,
             );
@@ -248,14 +245,12 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
               if (_failed)
                 _banner(
                   'mcp-consent-failed',
-                  l10n?.mcpConsentUnavailable ??
-                      'This connection request could not be loaded. Start again from the assistant.',
+                  l10n.mcpConsentUnavailable,
                   Icons.sync_problem_outlined,
                   InlineBannerSeverity.error,
                 ),
               Text(
-                l10n?.mcpConsentAsks(c.request.clientName) ??
-                    '${c.request.clientName} asks to act for you in Deskilo.',
+                l10n.mcpConsentAsks(c.request.clientName),
                 key: const ValueKey('mcp-consent-client'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -265,9 +260,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
               if (!c.options.eligible) ...[
                 _banner(
                   'mcp-consent-not-eligible',
-                  l10n?.mcpConsentNotEligible ??
-                      'This database has not approved assistants for you yet. '
-                          'Ask for approval, then connect again.',
+                  l10n.mcpConsentNotEligible,
                   Icons.lock_outline,
                   InlineBannerSeverity.error,
                 ),
@@ -279,21 +272,19 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                       ? null
                       : _requestEligibility,
                   child: Text(
-                    l10n?.mcpConsentRequestEligibility ?? 'Ask for approval',
+                    l10n.mcpConsentRequestEligibility,
                   ),
                 ),
               ] else if (c.options.workspaces.isEmpty)
                 _banner(
                   'mcp-consent-no-workspace',
-                  l10n?.mcpConsentNoWorkspace ??
-                      'None of your workspaces lets assistants in. Nothing can be connected.',
+                  l10n.mcpConsentNoWorkspace,
                   Icons.info_outline,
                   InlineBannerSeverity.info,
                 )
               else ...[
                 Text(
-                  l10n?.mcpConsentChoose ??
-                      'Choose each workspace and what it may do there. Nothing is chosen for you.',
+                  l10n.mcpConsentChoose,
                 ),
                 for (final w in c.options.workspaces) _workspace(l10n, w),
               ],
@@ -304,7 +295,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                     child: OutlinedButton(
                       key: const ValueKey('mcp-consent-deny'),
                       onPressed: _busy || _redirected ? null : _deny,
-                      child: Text(l10n?.mcpConsentDeny ?? 'Deny'),
+                      child: Text(l10n.mcpConsentDeny),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.md),
@@ -318,7 +309,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                               !_chosen.values.any((ops) => ops.isNotEmpty)
                           ? null
                           : () => _approve(c.request),
-                      child: Text(l10n?.mcpConsentApprove ?? 'Connect'),
+                      child: Text(l10n.mcpConsentApprove),
                     ),
                   ),
                 ],
@@ -330,7 +321,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     );
   }
 
-  Widget _workspace(AppLocalizations? l10n, ConsentWorkspace w) {
+  Widget _workspace(AppLocalizations l10n, ConsentWorkspace w) {
     final chosen = _chosen[w.id];
     return Card(
       key: ValueKey('mcp-consent-ws-${w.id}'),
@@ -379,8 +370,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                 0,
               ),
               child: Text(
-                l10n?.mcpConsentFieldsExplain ??
-                    'Details it may also see here. Leave them off to keep its answers minimised.',
+                l10n.mcpConsentFieldsExplain,
                 key: ValueKey('mcp-consent-fields-${w.id}'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -411,7 +401,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   /// #2145 — an assistant the operator has not approved: the cause, who
   /// decides, and Deny. Nothing is asked of Auth but the refusal.
   Widget _notApproved(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ConsentClient client,
     ConsentDecider? decider,
   ) {
@@ -419,7 +409,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     final blocked = client.status == McpClientApproval.blocked;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.mcpConsentTitle ?? 'Connect an assistant'),
+        title: Text(l10n.mcpConsentTitle),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -428,13 +418,8 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           _banner(
             'mcp-consent-client-${client.status.name}',
             blocked
-                ? (l10n?.mcpConsentClientBlocked(name) ??
-                      'The operator has blocked $name on this server. It '
-                          'cannot be connected.')
-                : (l10n?.mcpConsentClientWaiting(name) ??
-                      '$name is not approved on this server yet. The '
-                          'operator approves each assistant once; then '
-                          'connect again from the assistant.'),
+                ? (l10n.mcpConsentClientBlocked(name))
+                : (l10n.mcpConsentClientWaiting(name)),
             Icons.lock_outline,
             InlineBannerSeverity.error,
           ),
@@ -444,7 +429,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           OutlinedButton(
             key: const ValueKey('mcp-consent-deny'),
             onPressed: _busy || _redirected ? null : _deny,
-            child: Text(l10n?.mcpConsentDeny ?? 'Deny'),
+            child: Text(l10n.mcpConsentDeny),
           ),
         ],
       ),
@@ -452,15 +437,12 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   }
 
   /// Where the answer goes, and the family an approval covers.
-  Widget _clientFacts(AppLocalizations? l10n, ConsentClient client) {
+  Widget _clientFacts(AppLocalizations l10n, ConsentClient client) {
     final host = client.redirectHost;
     final family = switch (client.family) {
-      'claude' => l10n?.mcpConsentFamilyClaude ??
-          'Approved for every Claude connection.',
-      'chatgpt' => l10n?.mcpConsentFamilyChatgpt ??
-          'Approved for every ChatGPT connection.',
-      'loopback' => l10n?.mcpConsentFamilyLoopback ??
-          'Approved for desktop and command-line assistants on this computer.',
+      'claude' => l10n.mcpConsentFamilyClaude,
+      'chatgpt' => l10n.mcpConsentFamilyChatgpt,
+      'loopback' => l10n.mcpConsentFamilyLoopback,
       _ => null,
     };
     final approved = client.status == McpClientApproval.approved;
@@ -470,8 +452,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
         if (host != null && host.isNotEmpty)
           Text(
             key: const ValueKey('mcp-consent-redirect-host'),
-            l10n?.mcpConsentRedirectHost(host) ??
-                'The answer is sent to $host.',
+            l10n.mcpConsentRedirectHost(host),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         if (approved && family != null)
@@ -486,15 +467,14 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
 
   /// Who takes the open step: you (with the console), a named person, or
   /// nobody yet.
-  Widget _deciderLine(AppLocalizations? l10n, ConsentDecider d) {
+  Widget _deciderLine(AppLocalizations l10n, ConsentDecider d) {
     if (d.me) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             key: const ValueKey('mcp-consent-decider-me'),
-            l10n?.mcpConsentDeciderMe ??
-                'You decide this yourself, in the installation console.',
+            l10n.mcpConsentDeciderMe,
           ),
           Align(
             alignment: Alignment.centerLeft,
@@ -502,8 +482,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
               key: const ValueKey('mcp-consent-open-console'),
               onPressed: () => context.push('/installation/assistants'),
               child: Text(
-                l10n?.mcpConnectOpenInstallation ??
-                    'Open the installation console',
+                l10n.mcpConnectOpenInstallation,
               ),
             ),
           ),
@@ -514,15 +493,14 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     return Text(
       key: ValueKey('mcp-consent-decider-${d.kind.name}'),
       name == null || name.isEmpty
-          ? (l10n?.mcpConsentDeciderNobody ??
-                'Nobody answers for this server yet.')
-          : (l10n?.mcpConsentDeciderAsk(name) ?? 'Ask $name to decide.'),
+          ? (l10n.mcpConsentDeciderNobody)
+          : (l10n.mcpConsentDeciderAsk(name)),
     );
   }
 
   /// A refusal the server explained, with who can lift it when that is
   /// the installation's operator.
-  Widget _refusalBanner(AppLocalizations? l10n, McpConsentRefusal r) {
+  Widget _refusalBanner(AppLocalizations l10n, McpConsentRefusal r) {
     var text = mcpConsentRefusalText(l10n, r);
     if (r == McpConsentRefusal.clientNotApproved) {
       final who = ref.watch(instanceResponsiblesProvider).value;
@@ -531,7 +509,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
           if (p.name.isNotEmpty) p.name,
       ];
       if (names.isNotEmpty) {
-        text = '$text ${l10n?.mcpConnectWaitingOperator(names.join(', ')) ?? 'Waiting for the server\'s operator: ${names.join(', ')}.'}';
+        text = '$text ${l10n.mcpConnectWaitingOperator(names.join(', '))}';
       }
     }
     return _banner(
@@ -543,33 +521,30 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
   }
 
   Widget _outcomeBanner(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     String outcome,
   ) => switch (outcome) {
     'connected' => _banner(
       'mcp-consent-connected',
-      l10n?.mcpConsentConnected ?? 'Connected. Returning to the assistant.',
+      l10n.mcpConsentConnected,
       Icons.check_circle_outline,
       InlineBannerSeverity.info,
     ),
     'denied' => _banner(
       'mcp-consent-denied',
-      l10n?.mcpConsentDenied ?? 'Refused. The assistant gets nothing.',
+      l10n.mcpConsentDenied,
       Icons.block,
       InlineBannerSeverity.info,
     ),
     'approvedNotFinalized' => _banner(
       'mcp-consent-partial',
-      l10n?.mcpConsentPartial ??
-          'The assistant was approved but the connection is not usable yet. '
-              'Connect again from the assistant.',
+      l10n.mcpConsentPartial,
       Icons.sync_problem_outlined,
       InlineBannerSeverity.error,
     ),
     'eligibilityRequested' => _banner(
       'mcp-consent-requested',
-      l10n?.mcpConsentRequested ??
-          'Approval requested. A database administrator will review it.',
+      l10n.mcpConsentRequested,
       Icons.hourglass_top,
       InlineBannerSeverity.info,
     ),

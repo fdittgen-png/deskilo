@@ -9,9 +9,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/application/booking_observation.dart'
     show errorObservation;
 import '../../../task_recorder/domain/action_registry.dart';
@@ -38,7 +38,7 @@ Future<void> switchWorkspaceFeature(
   required bool value,
   required Map<WorkspaceFeature, FeatureAssessment> assessments,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   // #800 — switching one ON switches on everything it NEEDS.
   //
   // A switch that can be flipped green while the feature stays absent
@@ -102,9 +102,7 @@ Future<void> switchWorkspaceFeature(
     if (context.mounted) {
       AppSnack.info(
         context,
-        l10n?.featureChangedMeanwhile ??
-            'The features changed meanwhile, so nothing was written. '
-                'Check the list and switch again.',
+        l10n.featureChangedMeanwhile,
         replace: true,
       );
     }
@@ -120,14 +118,12 @@ Future<void> switchWorkspaceFeature(
     if (context.mounted) {
       AppSnack.info(
         context,
-        l10n?.featureChangeUnconfirmed ??
-            'The change was sent, but the features could not be reloaded '
-                'to confirm it. Reopen the screen to see what is set.',
+        l10n.featureChangeUnconfirmed,
         replace: true,
       );
     }
     return;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     recorded?.resolveWith(
       errorObservation(
         e,
@@ -144,9 +140,7 @@ Future<void> switchWorkspaceFeature(
     if (context.mounted) {
       AppSnack.error(
         context,
-        l10n?.processChangeFailed ??
-            'The features could not be changed. Nothing was written; '
-                'try again.',
+        l10n.processChangeFailed,
       );
     }
     return;
@@ -157,11 +151,9 @@ Future<void> switchWorkspaceFeature(
   if (value && alsoOn.isNotEmpty && context.mounted) {
     AppSnack.info(
       context,
-      l10n?.featureAlsoEnabled(
+      l10n.featureAlsoEnabled(
             alsoOn.map((f) => featureName(l10n, f)).join(', '),
-          ) ??
-          'Also switched on: '
-              '${alsoOn.map((f) => featureName(l10n, f)).join(', ')}',
+          ),
       replace: true,
     );
   }

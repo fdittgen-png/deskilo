@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1791: history shows every owned workspace and original currency; retry,
 // pagination and logout must not lose records or expose another account's view.
-import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
-import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/presentation/screens/account_activity_screen.dart';
+import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

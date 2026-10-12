@@ -3,11 +3,13 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
-export 'instance_operator.dart';
-import 'instance_operator.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/mcp/mcp_operations.dart';
+import 'instance_operator.dart';
 import 'mcp_context.dart';
 import 'mcp_usage.dart';
+
+export 'instance_operator.dart';
 
 /// #1809 — a server list of optional fields, kept to the ones the
 /// contract defines ([mcpOptionalFields]) and in the contract's order.
@@ -72,21 +74,26 @@ class McpPolicy {
   );
 
   factory McpPolicy.fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
-    List<String> strings(Object? v) => [
-      for (final x in (v is List ? v : const [])) '$x',
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'mcp_policy',
+    );
+    List<String> strings(String key) => [
+      for (final x in r.listOrAbsent(key)) '$x',
     ];
     return McpPolicy(
-      workspaceId: '${m['workspace_id'] ?? ''}',
-      revision: m['revision'] is int ? m['revision'] as int : 0,
-      enabled: m['enabled'] == true,
-      operations: strings(m['operations']).toSet(),
-      targetCeiling: m['target_ceiling'] == 'workspace' ? 'workspace' : 'own',
-      featureEnabled: m['feature_enabled'] == true,
-      available: strings(m['available_operations']),
-      optionalFields: mcpKnownOptionalFields(m['optional_fields']).toSet(),
+      workspaceId: r.textOrAbsent('workspace_id') ?? '',
+      revision: r.intOrAbsent('revision') ?? 0,
+      enabled: r.isTrue('enabled'),
+      operations: strings('operations').toSet(),
+      targetCeiling:
+          r.textOrAbsent('target_ceiling') == 'workspace' ? 'workspace' : 'own',
+      featureEnabled: r.isTrue('feature_enabled'),
+      available: strings('available_operations'),
+      optionalFields: mcpKnownOptionalFields(r.json['optional_fields']).toSet(),
       availableOptionalFields: mcpKnownOptionalFields(
-        m['available_optional_fields'],
+        r.json['available_optional_fields'],
       ),
     );
   }
@@ -104,10 +111,14 @@ class McpDisclosureMaximum {
   final List<String> available;
 
   factory McpDisclosureMaximum.fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'mcp_disclosure_maximum',
+    );
     return McpDisclosureMaximum(
-      fields: mcpKnownOptionalFields(m['optional_fields']).toSet(),
-      available: mcpKnownOptionalFields(m['available_fields']),
+      fields: mcpKnownOptionalFields(r.json['optional_fields']).toSet(),
+      available: mcpKnownOptionalFields(r.json['available_fields']),
     );
   }
 }
@@ -120,18 +131,20 @@ class PolicySaveResult {
   final int? revision;
 
   factory PolicySaveResult.fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
-    final revision = m['revision'] is int ? m['revision'] as int : null;
-    return switch (m['status']) {
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'policy_save_result',
+    );
+    final revision = r.intOrAbsent('revision');
+    return switch (r.textOrAbsent('status')) {
       'saved' => PolicySaveResult(PolicySaveStatus.saved, revision: revision),
       'replayed' => PolicySaveResult(
         PolicySaveStatus.replayed,
         revision: revision,
       ),
-      'conflict' when m['reason'] == 'stale_revision' => PolicySaveResult(
-        PolicySaveStatus.stale,
-        revision: revision,
-      ),
+      'conflict' when r.textOrAbsent('reason') == 'stale_revision' =>
+        PolicySaveResult(PolicySaveStatus.stale, revision: revision),
       _ => const PolicySaveResult(PolicySaveStatus.conflict),
     };
   }

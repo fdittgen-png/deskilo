@@ -32,6 +32,7 @@ class FakeHttp implements McpTargetHttp {
         json: {
           'issuer': fixtureAuthUrl,
           'jwks_uri': '$fixtureAuthUrl/.well-known/jwks.json',
+          'code_challenge_methods_supported': ['S256'],
         },
       );
     }

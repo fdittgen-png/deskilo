@@ -4,12 +4,12 @@ import '../domain/payment_provider.dart';
 
 /// #1154 — the provider's display name, once (was copied into the money
 /// screen and the provider configuration screen).
-String paymentProviderLabel(AppLocalizations? l10n, PaymentProvider provider) =>
+String paymentProviderLabel(AppLocalizations l10n, PaymentProvider provider) =>
     switch (provider) {
-      PaymentProvider.paypal => l10n?.paymentMethodPaypal ?? 'PayPal',
+      PaymentProvider.paypal => l10n.paymentMethodPaypal,
       PaymentProvider.stripe =>
-        l10n?.paymentProviderStripe ?? 'Credit card (Stripe)',
+        l10n.paymentProviderStripe,
       PaymentProvider.mollie =>
-        l10n?.paymentProviderMollie ?? 'Mollie — iDEAL, Bancontact…',
-      PaymentProvider.wero => l10n?.paymentProviderWero ?? 'Wero (via Mollie)',
+        l10n.paymentProviderMollie,
+      PaymentProvider.wero => l10n.paymentProviderWero,
     };

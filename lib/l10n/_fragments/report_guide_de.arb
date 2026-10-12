@@ -424,5 +424,6 @@
   "reportFieldMeaningSpecialMentions": "Die besonderen Hinweise des Raums",
   "@reportFieldMeaningSpecialMentions": {
     "description": "#966 report guide: meaning of special_mentions"
-  }
+  },
+  "reportFieldMeaningDeclarationNote": "Der Hinweis der Erklärung: vor der Abgabe prüfen"
 }

@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
+import 'guide_site.dart';
 
 /// #763 — the little ? beside a parameter or entry field: one tap opens
-/// the in-app guide at [topic] (the same `/help?topic=` jump the hint
-/// carousels use, so a topic is always a substring of a guide heading,
-/// localized). The SAME symbols exist on the setup questionnaire
+/// the guide site at [anchor] (the section whose element id it is), in the
+/// reader's language; the [topic] names the symbol and its key. The SAME symbols exist on the setup questionnaire
 /// (web/setup.html `helpIcon`) — the two are kept in sync by rule
 /// (docs/AGENT_RULES.md).
 ///
@@ -27,14 +26,13 @@ import '../../l10n/app_localizations.dart';
 class HelpDot extends ConsumerWidget {
   const HelpDot(this.topic, {this.anchor, super.key});
 
-  /// Localized needle for the guide jump — take it from an
-  /// `AppLocalizations` topic getter, never a hard-coded literal, so it
-  /// matches the reader's guide language.
+  /// Localized name of what the symbol documents — take it from an
+  /// `AppLocalizations` topic getter, never a hard-coded literal.
   final String topic;
 
-  /// #1016 — the exact object this symbol documents, from [HelpAnchor].
-  /// With one, the guide opens at that object; without, at the first
-  /// heading containing [topic], which is where the coarse topics land.
+  /// #1016 — the guide section this symbol opens, from [HelpAnchor]
+  /// (`user.*` is the user guide, `setup.*` the setup guide). Without
+  /// one, the top of the user guide.
   final String? anchor;
 
   @override
@@ -44,11 +42,11 @@ class HelpDot extends ConsumerWidget {
         .contains(WorkspaceFeature.formHelpHints)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return IconButton(
       key: ValueKey('help-dot-$topic'),
-      tooltip: l10n?.helpDotTooltip ?? 'Open the guide',
+      tooltip: l10n.helpDotTooltip,
       // The FINGER gets 48; the ink and the glyph stay small.
       constraints: const BoxConstraints.tightFor(width: 48, height: 48),
       padding: EdgeInsets.zero,
@@ -59,12 +57,7 @@ class HelpDot extends ConsumerWidget {
       // in a list row that box was the heaviest thing on the form.
       style: IconButton.styleFrom(shape: const CircleBorder()),
       icon: const Icon(Icons.help_outline),
-      onPressed: () => context.push(
-        Uri(path: '/help', queryParameters: {
-          'topic': topic,
-          'anchor': ?anchor,
-        }).toString(),
-      ),
+      onPressed: () => openGuide(ref, context, anchor: anchor),
     );
   }
 }

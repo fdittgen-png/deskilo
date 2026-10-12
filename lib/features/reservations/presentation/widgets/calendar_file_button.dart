@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/labeled_rows.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_calendar_file.dart';
 import '../../domain/reservation.dart';
@@ -32,19 +32,19 @@ class CalendarFileButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return OutlinedButton.icon(
       key: const ValueKey('reservation-calendar-file'),
       icon: const Icon(Icons.event_available_outlined),
       onPressed: () => _open(context, ref),
       label: Text(
-        l10n?.reservationCalendarFileButton ?? 'Save calendar file',
+        l10n.reservationCalendarFileButton,
       ),
     );
   }
 
   Future<void> _open(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // Captured BEFORE any await: a profile switch while the backend
     // answers must not turn this into somebody else's preview.
     final memberId = ref.read(myMemberProvider).value?.id;
@@ -55,7 +55,7 @@ class CalendarFileButton extends ConsumerWidget {
       context,
       domain: 'reservations',
       message: 'calendar file preview failed',
-      errorText: l10n?.commonSaveFailed ?? 'Could not save the file.',
+      errorText: l10n.commonSaveFailed,
       action: () async {
         files = await ref.read(calendarFilesProvider.future);
         outcome = await files!.prepare(
@@ -69,9 +69,7 @@ class CalendarFileButton extends ConsumerWidget {
       case CalendarFileRefused():
         AppSnack.error(
           context,
-          l10n?.reservationCalendarFileRefused ??
-              'This booking cannot be exported: it is not yours, or it '
-                  'no longer exists.',
+          l10n.reservationCalendarFileRefused,
         );
       case CalendarFileReady(:final preview):
         await showDialog<void>(
@@ -107,14 +105,14 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
   bool _saving = false;
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     CalendarSaveOutcome? outcome;
     final ok = await runGuarded(
       context,
       domain: 'reservations',
       message: 'calendar file save failed',
-      errorText: l10n?.commonSaveFailed ?? 'Could not save the file.',
+      errorText: l10n.commonSaveFailed,
       action: () async {
         outcome = await widget.files.save(_preview, memberId: widget.memberId);
       },
@@ -127,7 +125,7 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
         Navigator.of(context).pop();
         AppSnack.success(
           context,
-          l10n?.commonSavedTo(handle) ?? 'Saved to $handle',
+          l10n.commonSavedTo(handle),
         );
       case CalendarFileStale(:final fresh):
         // The member looks again and decides again — nothing was written.
@@ -139,23 +137,21 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
         Navigator.of(context).pop();
         AppSnack.error(
           context,
-          l10n?.reservationCalendarFileRefused ??
-              'This booking cannot be exported: it is not yours, or it '
-                  'no longer exists.',
+          l10n.reservationCalendarFileRefused,
         );
       case CalendarSaveFailed():
         // The dialog stays: the file is still right, only the platform
         // refused, and the Save button is the retry.
         AppSnack.error(
           context,
-          l10n?.commonSaveFailed ?? 'Could not save the file.',
+          l10n.commonSaveFailed,
         );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final snapshot = _preview.snapshot;
     final start = WorkspaceTime.display(snapshot.startUtc);
@@ -163,21 +159,15 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
         '${bookingRangeText(context, appFormatOf(context), l10n, snapshot.startUtc, snapshot.endUtc)}';
     final status = switch (snapshot.status) {
       CalendarEventStatus.confirmed =>
-        l10n?.reservationCalendarFileStatusConfirmed ?? 'Confirmed',
+        l10n.reservationCalendarFileStatusConfirmed,
       CalendarEventStatus.cancelled =>
-        l10n?.reservationCalendarFileStatusCancelled ?? 'Cancelled',
+        l10n.reservationCalendarFileStatusCancelled,
     };
-    final staleText = l10n?.reservationCalendarFileStale ??
-        'The booking changed since this preview. Check it again before '
-            'saving.';
-    final noteText = l10n?.reservationCalendarFileSnapshotNote ??
-        'This file is a snapshot of the booking as it is now. If the '
-            'booking is moved or cancelled later, a file already saved or '
-            'shared does not change — and a shared file cannot be taken '
-            'back.';
+    final staleText = l10n.reservationCalendarFileStale;
+    final noteText = l10n.reservationCalendarFileSnapshotNote;
     return AlertDialog(
       key: const ValueKey('calendar-file-preview'),
-      title: Text(l10n?.reservationCalendarFileTitle ?? 'Calendar file'),
+      title: Text(l10n.reservationCalendarFileTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -191,14 +181,14 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
               ),
               const SizedBox(height: AppSpacing.md),
             ],
-            _row(l10n?.reservationCalendarFileEvent ?? 'Event',
+            _labeled(l10n.reservationCalendarFileEvent,
                 snapshot.summary),
-            _row(l10n?.reservationCalendarFileWhen ?? 'When', when),
+            _labeled(l10n.reservationCalendarFileWhen, when),
             if (snapshot.location.isNotEmpty)
-              _row(l10n?.reservationCalendarFileLocation ?? 'Location',
+              _labeled(l10n.reservationCalendarFileLocation,
                   snapshot.location),
-            _row(l10n?.reservationCalendarFileStatus ?? 'Status', status),
-            _row(l10n?.reservationCalendarFileName ?? 'File',
+            _labeled(l10n.reservationCalendarFileStatus, status),
+            _labeled(l10n.reservationCalendarFileName,
                 _preview.fileName),
             const SizedBox(height: AppSpacing.md),
             Text(noteText, style: theme.textTheme.bodySmall),
@@ -206,7 +196,7 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
               key: const ValueKey('calendar-file-contents'),
               tilePadding: EdgeInsets.zero,
               title: Text(
-                l10n?.reservationCalendarFileContents ?? 'File contents',
+                l10n.reservationCalendarFileContents,
                 style: theme.textTheme.bodySmall,
               ),
               children: [
@@ -225,27 +215,17 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
         TextButton(
           key: const ValueKey('calendar-file-cancel'),
           onPressed: _saving ? null : () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('calendar-file-save'),
           onPressed: _saving ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );
   }
 
-  Widget _row(String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: '$label: ',
-              style: Theme.of(context).textTheme.bodyMedium?.emphasised,
-            ),
-            TextSpan(text: value),
-          ]),
-        ),
-      );
+  Widget _labeled(String label, String value) =>
+      LabeledRow(label: label, value: value);
 }

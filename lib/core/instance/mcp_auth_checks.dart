@@ -94,7 +94,8 @@ List<ReadinessCheck> nativeAccessChecks(
     if (!allow.contains('deskilo://**')) 'deskilo://**',
     if (siteOk && !allow.contains(sitePrefix)) sitePrefix,
   ];
-  checks.add(
+  checks
+    ..add(
     ReadinessCheck(
       area,
       'native_redirect_allow_list',
@@ -103,8 +104,8 @@ List<ReadinessCheck> nativeAccessChecks(
           ? ''
           : 'missing: ${missing.join(', ')} (an unlisted return falls back to the Site URL)',
     ),
-  );
-  checks.addAll(_emailChecks(auth));
+  )
+    ..addAll(_emailChecks(auth));
   return checks;
 }
 
@@ -271,6 +272,32 @@ List<ReadinessCheck> federationChecks(
             'auth_url_confirmed',
             CheckOutcome.fail,
             'auth_url_mismatch: Auth at $authUrl answers as issuer $discovered',
+          ),
+  );
+
+  // #2393 — an MCP client refuses an authorization server that does not
+  // advertise S256 PKCE; registration is dynamic when the server offers
+  // it, else clients are registered by hand (OPERATIONS.md).
+  final pkce = e.authDiscovery?['code_challenge_methods_supported'];
+  checks.add(
+    e.authDiscovery == null
+        ? check(
+            'authorization_server_pkce',
+            CheckOutcome.unknown,
+            'Auth discovery was not read',
+          )
+        : pkce is List && pkce.contains('S256')
+        ? check(
+            'authorization_server_pkce',
+            CheckOutcome.pass,
+            e.authDiscovery?['registration_endpoint'] is String
+                ? 'S256; dynamic client registration'
+                : 'S256; clients are registered by hand',
+          )
+        : check(
+            'authorization_server_pkce',
+            CheckOutcome.fail,
+            'the authorization server does not advertise S256 PKCE: MCP clients refuse it',
           ),
   );
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_push/deskilo_push.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -6,13 +7,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../notifications/notification_providers.dart';
 import '../trace/trace_logger.dart';
-import 'package:deskilo_push/deskilo_push.dart';
-
 import 'push_endpoint_repository.dart';
-import 'push_service.dart';
 import 'push_opt_out.dart';
+import 'push_service.dart';
 
 part 'push_providers.g.dart';
 
@@ -55,10 +55,10 @@ Future<PushService?> pushBootstrap(Ref ref) async {
   );
   if (!pushEnabled || await optedOut) return null;
 
-  AppLocalizations? l10n;
+  AppLocalizations l10n = englishL10n;
   try {
     l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('push l10n lookup failed, using fallback: $e\n$st');
     // Benign: the hard-coded English fallback strings below take over.
     TraceLogger.instance.warn('push', 'l10n lookup failed, using fallback',
@@ -72,12 +72,11 @@ Future<PushService?> pushBootstrap(Ref ref) async {
       final memberships = await ref.read(myMembershipsProvider.future);
       return [for (final m in memberships) m.id];
     },
-    pendingTitle: l10n?.pushPendingTitle ?? 'DesKilo',
+    pendingTitle: l10n.pushPendingTitle,
     pendingBody:
-        l10n?.pushPendingBody ?? 'Someone needs your confirmation.',
-    cancelledTitle: l10n?.pushCancelledTitle ?? 'DesKilo',
-    cancelledBody: l10n?.pushCancelledBody ??
-        'A reservation of yours was removed by an admin.',
+        l10n.pushPendingBody,
+    cancelledTitle: l10n.pushCancelledTitle,
+    cancelledBody: l10n.pushCancelledBody,
   );
   await service.start();
   // Exposed so Settings can show the pipeline state (#424) — a silent

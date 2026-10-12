@@ -4,14 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
-import 'open_invoice_card.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
@@ -21,6 +21,7 @@ import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
 import 'invoice_journey_view.dart';
 import 'invoice_overview.dart';
+import 'open_invoice_card.dart';
 
 /// #720 — the Invoices face lists MY documents right there, newest
 /// first, each opening the same detail sheet the register uses. An OPEN
@@ -40,7 +41,7 @@ class MyInvoicesList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     // Erroneous (voided) invoices stay out of a member's face, as they
     // do in the register's member view (0072): the replacement is the
@@ -65,9 +66,7 @@ class MyInvoicesList extends ConsumerWidget {
         key: const ValueKey('my-invoices-empty'),
         padding: AppSpacing.mdAll,
         child: Text(
-          l10n?.moneyNoInvoicesYet ??
-              'No invoice yet — the month is invoiced by the workspace once '
-                  'it closes.',
+          l10n.moneyNoInvoicesYet,
           style: theme.textTheme.bodyMedium
               ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
         ),
@@ -86,7 +85,7 @@ class MyInvoicesList extends ConsumerWidget {
   Widget _row(
     BuildContext context,
     WidgetRef ref,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ThemeData theme,
     Invoice invoice,
     InvoiceMatch? match,
@@ -109,16 +108,15 @@ class MyInvoicesList extends ConsumerWidget {
     final dueLine = !open
         ? null
         : overdue
-            ? (l10n?.moneyOverdueBy(-days) ?? 'Overdue by ${-days} days')
-            : (l10n?.moneyDueIn(days) ?? 'Due in $days days');
+            ? (l10n.moneyOverdueBy(-days))
+            : (l10n.moneyDueIn(days));
     final facts = Text(
       [
         invoicePeriodLabel(context, invoice),
         dateFormat.format(invoice.issuedAt),
         ?dueLine,
         if (reminder != null)
-          l10n?.moneyRemindedTimes(reminder.count) ??
-              'Reminded ×${reminder.count}',
+          l10n.moneyRemindedTimes(reminder.count),
       ].join(' · '),
       style: overdue ? TextStyle(color: theme.colorScheme.error) : null,
     );
@@ -166,7 +164,7 @@ class MyInvoicesList extends ConsumerWidget {
           if (open)
             IconButton(
               key: ValueKey('my-invoice-pay-${invoice.id}'),
-              tooltip: l10n?.moneyPayNow ?? 'Pay now',
+              tooltip: l10n.moneyPayNow,
               icon: Icon(Icons.payments_outlined,
                   color: overdue ? theme.colorScheme.error : null),
               onPressed: () => ref

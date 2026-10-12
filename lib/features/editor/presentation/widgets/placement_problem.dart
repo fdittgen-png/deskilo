@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan_rules.dart';
 
 /// Why a placement was refused, in the reader's words.
@@ -11,12 +11,12 @@ import '../../../plan/domain/floor_plan_rules.dart';
 /// seat somewhere illegal, and a rule explained two different ways is
 /// two rules as far as the reader is concerned.
 void showPlacementProblem(BuildContext context, PlacementProblem problem) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final message = switch (problem) {
     PlacementProblem.overlapsSibling =>
-      l10n?.editorPlacementOverlap ?? 'Overlaps an existing element.',
+      l10n.editorPlacementOverlap,
     PlacementProblem.outsideParent =>
-      l10n?.editorPlacementOutside ?? 'Must be fully inside an office.',
+      l10n.editorPlacementOutside,
   };
   AppSnack.error(context, message, replace: true);
 }

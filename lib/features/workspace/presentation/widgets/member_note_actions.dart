@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/member_note.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -19,7 +19,7 @@ Future<bool> sendMemberNoteGuarded(
   required String body,
   bool confirmWithSnack = true,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   final trimmed = body.trim();
   if (workspace == null || trimmed.isEmpty) return false;
@@ -29,13 +29,13 @@ Future<bool> sendMemberNoteGuarded(
           toMemberId: toMemberId,
           body: trimmed,
         );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('workspace', 'send member note failed', error: e, stackTrace: st);
     if (!context.mounted) return false;
     AppSnack.error(
       context,
-      l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+      l10n.workspaceGenericError,
     );
     return false;
   }
@@ -44,7 +44,7 @@ Future<bool> sendMemberNoteGuarded(
   if (confirmWithSnack) {
     AppSnack.info(
       context,
-      l10n?.memberNoteSent ?? 'Notification sent.',
+      l10n.memberNoteSent,
       replace: true,
     );
   }
@@ -59,19 +59,18 @@ Future<void> deleteMemberNoteGuarded(
   WidgetRef ref,
   MemberNote note,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!await _confirmMemberNoteDelete(context)) return;
   if (!context.mounted) return;
   try {
     await ref.read(workspaceRepositoryProvider).deleteMemberNote(note.id);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.error('workspace', 'delete member note failed',
         error: e, stackTrace: st);
     if (!context.mounted) return;
     AppSnack.error(
       context,
-      l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      l10n.workspaceGenericError,
     );
     ref.invalidate(myNotesProvider);
     return;
@@ -80,30 +79,29 @@ Future<void> deleteMemberNoteGuarded(
   if (!context.mounted) return;
   AppSnack.info(
     context,
-    l10n?.memberNoteDeleted ?? 'Message deleted.',
+    l10n.memberNoteDeleted,
     replace: true,
   );
 }
 
 /// Deleting is destructive: every path asks first.
 Future<bool> _confirmMemberNoteDelete(BuildContext context) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(l10n?.memberNoteDelete ?? 'Delete'),
-      content: Text(l10n?.memberNoteDeleteConfirm ??
-          'Delete this message? This cannot be undone.'),
+      title: Text(l10n.memberNoteDelete),
+      content: Text(l10n.memberNoteDeleteConfirm),
       actions: [
         TextButton(
           key: const ValueKey('member-note-actions-cancel'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('note-delete-confirm'),
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(l10n?.memberNoteDelete ?? 'Delete'),
+          child: Text(l10n.memberNoteDelete),
         ),
       ],
     ),

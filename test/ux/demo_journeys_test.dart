@@ -14,23 +14,23 @@
 // journey can affect live data — for a structural reason rather than a
 // promise: the fixture is an object graph with no client behind it, and
 // two fixtures share no instance.
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_center_button.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
-import 'package:deskilo/core/demo/demo_persona.dart';
-import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
-import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/expense_schedule.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
-
-import 'package:deskilo/core/navigation/navigation_style.dart';
-import '../helpers/demo_journey.dart';
 import '../features/reservations/reserve_hub_test.dart' show seatCenter;
+import '../helpers/demo_journey.dart';
 
 /// Enters the app on the demonstration fixture and opens the Reserve hub,
 /// which is where a visitor lands.
@@ -77,7 +77,7 @@ Future<void> becomePersona(WidgetTester tester, DemoPersona persona) async {
     }
     await tester.tap(find.byKey(DemoControls.viewAsKey));
     await tester.pumpAndSettle();
-    if (find.text(DemoControls.personaLabel(null, persona))
+    if (find.text(DemoControls.personaLabel(englishL10n, persona))
         .evaluate()
         .isNotEmpty) {
       return;
@@ -129,7 +129,7 @@ void main() {
 
   testWidgets('journey: the same space, seen by someone else — a member '
       'does not get the owner\'s reading', (tester) async {
-    final asOwner = DemoJourney.start(persona: DemoPersona.owner);
+    final asOwner = DemoJourney.start();
     final asMember = DemoJourney.start(persona: DemoPersona.member);
 
     expect(

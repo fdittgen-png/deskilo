@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 
 /// #1824 — the way into the space's Inquiries view, in the space's own
@@ -30,19 +31,18 @@ class SpaceInquiriesEntry extends ConsumerWidget {
         !(me?.isOwner == true || me?.isAdmin == true)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return TextButton.icon(
       key: const ValueKey('space-inquiries-entry'),
-      onPressed: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => SpaceInquiriesScreen(
-            workspaceId: workspace.id,
-            workspaceName: workspace.name,
-          ),
+      onPressed: () => spaceInquiriesPage.open<void>(
+        context,
+        SpaceInquiriesScreen(
+          workspaceId: workspace.id,
+          workspaceName: workspace.name,
         ),
       ),
       icon: const Icon(Icons.support_agent_outlined),
-      label: Text(l10n?.messengerInquiriesTitle ?? 'Inquiries'),
+      label: Text(l10n.messengerInquiriesTitle),
     );
   }
 }
@@ -60,19 +60,19 @@ class SpaceInquiriesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
     final provider = workspaceInquiriesProvider(workspaceId);
     final inquiries = ref.watch(provider);
     return Scaffold(
       key: const ValueKey('space-inquiries'),
-      appBar: AppBar(title: Text(l10n?.messengerInquiriesTitle ?? 'Inquiries')),
+      appBar: AppBar(title: Text(l10n.messengerInquiriesTitle)),
       body: switch (inquiries) {
         AsyncData(value: final list) when list.isEmpty => Center(
           child: Padding(
             padding: AppSpacing.lgAll,
             child: Text(
-              l10n?.messengerInquiriesEmpty ?? 'No inquiries yet.',
+              l10n.messengerInquiriesEmpty,
               key: const ValueKey('space-inquiries-empty'),
             ),
           ),
@@ -86,8 +86,7 @@ class SpaceInquiriesScreen extends ConsumerWidget {
                   key: ValueKey('space-inquiry-${inquiry.id}'),
                   leading: const Icon(Icons.support_agent_outlined),
                   title: Text(
-                    l10n?.messengerInquiryFrom(inquiry.requesterName) ??
-                        'From ${inquiry.requesterName}',
+                    l10n.messengerInquiryFrom(inquiry.requesterName),
                   ),
                   subtitle: Text(
                     inquiry.lastBody,
@@ -107,16 +106,13 @@ class SpaceInquiriesScreen extends ConsumerWidget {
                     ],
                   ),
                   onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => ContextThreadScreen(
-                          kind: MessageContextKind.inquiryIn,
-                          contextId: inquiry.id,
-                          title: inquiry.requesterName,
-                          subtitle:
-                              l10n?.messengerContextInquiryIn(workspaceName) ??
-                              'Inquiry to $workspaceName',
-                        ),
+                    await contextThreadPage.open<void>(
+                      context,
+                      ContextThreadScreen(
+                        kind: MessageContextKind.inquiryIn,
+                        contextId: inquiry.id,
+                        title: inquiry.requesterName,
+                        subtitle: l10n.messengerContextInquiryIn(workspaceName),
                       ),
                     );
                     ref.invalidate(provider);
@@ -129,7 +125,7 @@ class SpaceInquiriesScreen extends ConsumerWidget {
           child: TextButton(
             key: const ValueKey('space-inquiries-retry'),
             onPressed: () => ref.invalidate(provider),
-            child: Text(l10n?.commonRetry ?? 'Try again'),
+            child: Text(l10n.commonRetry),
           ),
         ),
         _ => const LoadingView(),

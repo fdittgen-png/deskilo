@@ -2106,6 +2106,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleRevenue => 'Ricavi';
 
   @override
+  String get bookRoleVatInput => 'IVA a credito';
+
+  @override
   String get bookRoleVatOutput => 'IVA a debito';
 
   @override
@@ -3963,6 +3966,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dunningSettingsTitle => 'Regole di sollecito';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'l’indirizzo elettronico del cliente (BT-49) nel suo profilo';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'un riferimento dell’acquirente o un numero d’ordine';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'la partita IVA o il codice fiscale del cliente';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'il Leitweg-ID del cliente come riferimento dell’acquirente';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'il conto bancario dello spazio (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'l’e-mail e il telefono di contatto dello spazio';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'l’indirizzo elettronico dello spazio (BT-34) nella sua identità legale';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'la partita IVA dello spazio';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'il distretto (județ) di ogni indirizzo rumeno';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Prima di inviare tramite $channel, aggiunga:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Manca il SIREN dell\'acquirente. Una piattaforma francese instrada in base ad esso: lo inserisca nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.';
 
@@ -3973,6 +4016,40 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'Dal $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'ogni fattura deve essere registrata in un registro concatenato (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'ogni impresa deve emettere fatture elettroniche';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'le grandi e medie imprese devono emettere fatture elettroniche';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'ogni impresa deve poter ricevere fatture elettroniche';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Dal $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle =>
+      'Obblighi di fatturazione elettronica nel Suo paese:';
 
   @override
   String get editorAccessoriesLabel => 'Accessori';
@@ -4692,6 +4769,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseInvalidAmount => 'Inserisca un importo maggiore di zero.';
 
   @override
+  String get expenseInvalidDeductible => 'Inserisca una quota tra 0 e 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Inserisca almeno un\'unità.';
 
   @override
@@ -4724,6 +4804,24 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Precompilato con importo ÷ quantità; arrotondi se vuole.';
+
+  @override
+  String get expenseVatDeductible => 'Quota detraibile (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'IVA detraibile: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % salvo che una parte della spesa sia privata o serva un\'attività esente.';
+
+  @override
+  String get expenseVatNone => 'Senza IVA';
+
+  @override
+  String get expenseVatRate => 'IVA su questa spesa';
 
   @override
   String get exportClaimExchange =>
@@ -5086,6 +5184,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Importa i giorni festivi';
+
+  @override
+  String get featureInputVatDesc =>
+      'Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l\'IVA detraibile dall\'IVA a debito. Disattivato: la dichiarazione riporta solo l\'IVA a debito.';
+
+  @override
+  String get featureInputVatTitle => 'IVA a credito';
 
   @override
   String get featureInstanceWizard => 'Assistente istanza';
@@ -7804,10 +7909,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady =>
-      'Pronto — questo file soddisfa la EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'Condividi fattura elettronica (XML)';
 
   @override
@@ -7829,6 +7930,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Un access point la consegna al cliente — nessuna piattaforma pubblica nel percorso.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Pronto — non manca nulla di ciò che la EN 16931 richiede, e questo formato supera il validatore ufficiale ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>
@@ -8197,6 +8303,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il nome o la ragione sociale del socio';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'L\'identificativo fiscale del membro: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'La partita IVA del socio (necessaria per il reverse charge)';
 
@@ -8205,12 +8315,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il fondamento giuridico dell\'esenzione IVA';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'L\'IVA nella valuta nazionale: un venditore di uno Stato membro fuori dall\'euro fattura qui l\'IVA nella propria valuta (art. 230 della direttiva IVA)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'L\'indirizzo postale dello spazio (via o città)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall\'app';
+      'Il paese dello spazio deve essere uno Stato membro dell\'Unione europea per emettere qui — gli altri paesi si emettono fuori dall\'app';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -11825,6 +11943,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le consenta in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Non ancora salvata: finché questa serie non viene salvata, le note di credito prendono numeri di fattura.';
+
+  @override
   String get numberSequenceDateNone => 'Nessuna';
 
   @override
@@ -14137,6 +14259,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
 
   @override
+  String get refusalVatRateVersioned =>
+      'Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.';
+
+  @override
   String get regionalClock => 'Orologio';
 
   @override
@@ -14710,6 +14836,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Vero su una nota di credito';
+
+  @override
+  String get reportFieldMeaningDeclarationNote =>
+      'L\'avvertenza della dichiarazione: verificare prima dell\'invio';
 
   @override
   String get reportFieldMeaningDueDate => 'La data di scadenza';
@@ -18852,11 +18982,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclBoxes => 'Righe del modulo ufficiale';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Rettifica di $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Una dichiarazione presentata non cambia mai. Ciò che è cambiato in seguito in un periodo dichiarato — una fattura annullata, un pagamento registrato in ritardo — è dichiarato qui come rettifica di quella dichiarazione.';
+
+  @override
+  String get vatDeclCredit => 'Credito IVA';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generata dalle fatture emesse del periodo. Verificare con la contabilità prima dell’invio — un aiuto alla dichiarazione, non consulenza fiscale.';
 
   @override
   String get vatDeclDraft => 'Bozza';
+
+  @override
+  String get vatDeclEdiTva => 'File EDI-TVA (CA3)';
+
+  @override
+  String get vatDeclElster => 'File ELSTER (UStVA)';
 
   @override
   String get vatDeclEmpty =>
@@ -18866,7 +19014,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclFiled => 'Presentata';
 
   @override
+  String get vatDeclFilingPeriod =>
+      'Una dichiarazione anticipata ELSTER copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Inserisca il numero fiscale: la Steuernummer per ELSTER, il SIREN (o una partita IVA FR) per EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Numero fiscale (Steuernummer)';
+
+  @override
   String get vatDeclGenerate => 'Prepara';
+
+  @override
+  String get vatDeclInputVat => 'IVA detraibile';
 
   @override
   String get vatDeclInvoices => 'Fatture';
@@ -18882,10 +19044,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclNet => 'Imponibile';
 
   @override
+  String get vatDeclPayable => 'IVA a debito netta';
+
+  @override
   String get vatDeclPdf => 'PDF';
 
   @override
   String get vatDeclPeriod => 'Periodo';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Annuale';
+
+  @override
+  String get vatDeclPeriodField => 'Periodicità della dichiarazione IVA';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'Con quale frequenza Lei presenta la dichiarazione. La schermata della dichiarazione IVA offre solo periodi di questa durata.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Mensile';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Periodicità: $period. Può modificarla in Identità legale e fatturazione elettronica.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Trimestrale';
 
   @override
   String get vatDeclPrepared => 'Preparata';

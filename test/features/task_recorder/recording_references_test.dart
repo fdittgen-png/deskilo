@@ -16,6 +16,7 @@ import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void main() {
@@ -36,15 +37,17 @@ void main() {
     'manual gap deduplication never hides a form change or missing reference',
     () async {
       await recorder.start(scope: canaryScope);
-      recorder.unrecorded();
-      recorder.setPage('/me?tab=me');
-      recorder.unrecorded();
+      recorder
+        ..unrecorded()
+        ..setPage('/me?tab=me')
+        ..unrecorded();
       expect(recorder.snapshot!.steps.map((s) => s.page), [
         '/reserve',
         '/me?tab=me',
       ]);
-      recorder.setPage(null);
-      recorder.unrecorded();
+      recorder
+        ..setPage(null)
+        ..unrecorded();
       expect(recorder.status.endReason, RecordingEndReason.referenceMissing);
       expect(recorder.snapshot!.steps, hasLength(2));
     },
@@ -54,14 +57,16 @@ void main() {
     'every step kind has a page and late results keep their command page',
     () async {
       await recorder.start(scope: canaryScope);
-      recorder.record(RecorderActions.openReserve);
-      recorder.annotate('Choose the period');
-      recorder.unrecorded();
-      recorder.excluded(ProtectedSurface.authentication);
+      recorder
+        ..record(RecorderActions.openReserve)
+        ..annotate('Choose the period')
+        ..unrecorded()
+        ..excluded(ProtectedSurface.authentication);
       final token = recorder.attempt(RecorderActions.confirmBooking);
-      recorder.setPage('/me?tab=me');
-      recorder.outcome(token, RecorderOutcomes.bookingConfirmed);
-      recorder.annotate('Review account');
+      recorder
+        ..setPage('/me?tab=me')
+        ..outcome(token, RecorderOutcomes.bookingConfirmed)
+        ..annotate('Review account');
       final recording = (await recorder.stop())!;
       expect(recording.steps.map((s) => s.page), [
         '/reserve',
@@ -85,8 +90,9 @@ void main() {
 
   test('a public profile is recorded on its form, Discover', () async {
     await recorder.start(scope: canaryScope);
-    recorder.setPage('/p/:id');
-    recorder.annotate('Read the profile');
+    recorder
+      ..setPage('/p/:id')
+      ..annotate('Read the profile');
     expect(recorder.snapshot!.steps.single.page, '/discover');
     expect(recorder.state, RecorderState.recording);
   });
@@ -95,9 +101,10 @@ void main() {
     'an unknown form stops before an unlinked step can be persisted',
     () async {
       await recorder.start(scope: canaryScope);
-      recorder.annotate('Known form');
-      recorder.setPage('/not-a-registered-page');
-      recorder.annotate('This must not be recorded');
+      recorder
+        ..annotate('Known form')
+        ..setPage('/not-a-registered-page')
+        ..annotate('This must not be recorded');
       final recording = (await recorder.stop())!;
       expect(recording.endReason, RecordingEndReason.referenceMissing);
       expect(recording.completeness, Completeness.partial);
@@ -115,10 +122,11 @@ void main() {
     'schema 3 refuses missing or unsafe references on any step kind',
     () async {
       await recorder.start(scope: canaryScope);
-      recorder.record(RecorderActions.openReserve);
-      recorder.annotate('Choose the period');
-      recorder.unrecorded();
-      recorder.excluded(ProtectedSurface.authentication);
+      recorder
+        ..record(RecorderActions.openReserve)
+        ..annotate('Choose the period')
+        ..unrecorded()
+        ..excluded(ProtectedSurface.authentication);
       final token = recorder.attempt(RecorderActions.confirmBooking);
       recorder.outcome(token, RecorderOutcomes.bookingConfirmed);
       final recording = (await recorder.stop())!;
@@ -156,15 +164,17 @@ void main() {
     'editing out navigation retains each page through storage and guide export',
     () async {
       await recorder.start(scope: canaryScope, captureValues: true);
-      recorder.setPage('/me?tab=me');
-      recorder.record(
+      recorder
+        ..setPage('/me?tab=me')
+        ..record(
         RecorderActions.uiOpenScreen,
         target: '/me',
         page: '/me?tab=me',
       );
       clock.tick();
-      recorder.record(RecorderActions.uiTap, target: 'me-profile-settings');
-      recorder.setPage('/reserve');
+      recorder
+        ..record(RecorderActions.uiTap, target: 'me-profile-settings')
+        ..setPage('/reserve');
       clock.tick();
       recorder.record(RecorderActions.changeBookingField, target: 'check_in');
       await recorder.stop();

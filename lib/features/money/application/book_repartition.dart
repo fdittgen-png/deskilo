@@ -149,7 +149,7 @@ Future<BookRepartitionOutcome> bookRepartition(
     try {
       await repository.setRepartitionRule(workspaceId, rule);
       // ignore: catch_no_st
-    } catch (e) {
+    } on Object catch (e) {
       // trace-exempt: the error is carried out in the outcome and the
       // caller reports it; catching here is the point — nothing has
       // been distributed, so nothing is half-done.

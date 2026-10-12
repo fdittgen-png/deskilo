@@ -154,8 +154,9 @@ class _ShellBarCollapseState extends ConsumerState<ShellBarCollapse>
     final motion =
         animate ? motionDuration(context, kShellBarHideDuration) : Duration.zero;
     if (motion == Duration.zero) {
-      _controller.stop();
-      _controller.value = target;
+      _controller
+        ..stop()
+        ..value = target;
       return;
     }
     unawaited(_controller.animateTo(

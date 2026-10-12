@@ -3,17 +3,17 @@
 // #1823 — Me is the account's own home: with ZERO workspaces the app
 // opens there, and every one of its four tabs opens. Each affordance on
 // Home and on the Me tab is tapped and lands where it says.
+import 'package:deskilo/app/shell/shell_drawer.dart';
+import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
+import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/app/shell/shell_drawer.dart';
-import 'package:deskilo/core/navigation/navigation_style.dart';
-import 'package:deskilo/features/workspace/domain/member.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
@@ -384,7 +384,6 @@ void main() {
     ('me-activity', '/account-activity'),
     ('me-privacy', '/privacy'),
     ('me-servers', '/connections'),
-    ('me-help', '/help'),
     ('settings-linked-accounts', '/linked-accounts'),
     ('me-workspaces', '/profiles'), // #1846
   ]) {
@@ -395,6 +394,16 @@ void main() {
       expect(router.state.uri.path, path);
     });
   }
+
+  testWidgets('the Me tab opens the guide site', (tester) async {
+    final opened = <Uri>[];
+    final router = await pumpMeApp(tester,
+        launcher: (uri) async { opened.add(uri); return true; });
+    await goTo(tester, router, '/me?tab=me');
+    await tapIn(tester, 'me-account-list', find.byKey(const ValueKey('me-help')));
+    expect(opened.single.toString(),
+        'https://fdittgen-png.github.io/deskilo/guide/en.html');
+  });
 
   testWidgets('the Me tab signs out', (tester) async {
     final auth = FakeAuthRepository.signedIn();

@@ -39,6 +39,7 @@ window.SETUP_L10N={
    "optHoursDefaultMax": "{n} hours (default max.)",
    "vatPeriodMonth": "Monthly",
    "vatPeriodQuarter": "Quarterly",
+   "vatPeriodAnnual": "Annual",
    "envDev": "Development — for trying things out: the app says so everywhere and watermarks every document",
    "envProd": "Production — the invoices it issues are really owed",
    "numDateNone": "None",
@@ -533,6 +534,7 @@ window.SETUP_L10N={
    "cfgNotRegistered": "Not applicable while the workspace is not VAT-registered.",
    "cfgVatDeclMonthly": "Monthly declaration.",
    "cfgVatDeclQuarterly": "Quarterly declaration.",
+   "cfgVatDeclAnnual": "Annual declaration.",
    "cfgCustomerService": "Customer service: {url}",
    "cfgCustomerServiceTodo": "Customer delivery service to configure in the app.",
    "cfgPlanObjectDelete": "Deletion of plan objects still referenced (audit substitution).",
@@ -610,7 +612,6 @@ window.SETUP_L10N={
    "todoInviteMembers": "Invite the {n} people listed in the Members step from the app (Members → Invite a member): the file keeps the list for your records only.",
    "todoInviteNobody": "Invite your first members from the app (Members → Invite a member).",
    "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
-   "todoVatPeriod": "Choose the VAT declaration period ({period}) in the app when you prepare the first declaration.",
    "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
    "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
    "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."
@@ -1131,6 +1132,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "EU sales list",
     "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice."
+   ],
+   "inputVat": [
+    "Input VAT",
+    "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only."
    ]
   },
   "process": {
@@ -1389,6 +1394,7 @@ window.SETUP_L10N={
    "optHoursDefaultMax": "{n} heures (défaut max.)",
    "vatPeriodMonth": "Mensuelle",
    "vatPeriodQuarter": "Trimestrielle",
+   "vatPeriodAnnual": "Annuelle",
    "envDev": "Développement — pour essayer : l'app l'annonce partout et filigrane chaque document",
    "envProd": "Production — les factures qui en sortent sont réellement dues",
    "numDateNone": "Aucune",
@@ -1883,6 +1889,7 @@ window.SETUP_L10N={
    "cfgNotRegistered": "Sans objet tant que l'espace n'est pas assujetti.",
    "cfgVatDeclMonthly": "Déclaration mensuelle.",
    "cfgVatDeclQuarterly": "Déclaration trimestrielle.",
+   "cfgVatDeclAnnual": "Déclaration annuelle.",
    "cfgCustomerService": "Service client : {url}",
    "cfgCustomerServiceTodo": "Service de remise au client à configurer dans l'app.",
    "cfgPlanObjectDelete": "Suppression d'objets du plan encore référencés (substitution d'audit).",
@@ -1960,7 +1967,6 @@ window.SETUP_L10N={
    "todoInviteMembers": "Invitez depuis l'app les {n} personnes listées à l'étape des membres (Membres → Inviter un membre) : le fichier garde la liste pour mémoire seulement.",
    "todoInviteNobody": "Invitez vos premiers membres depuis l'app (Membres → Inviter un membre).",
    "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
-   "todoVatPeriod": "Choisissez la périodicité de la déclaration de TVA ({period}) dans l'app en préparant la première déclaration.",
    "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
    "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
    "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."
@@ -2481,6 +2487,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Déclaration européenne de services",
     "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis."
+   ],
+   "inputVat": [
+    "TVA déductible",
+    "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée."
    ]
   },
   "process": {
@@ -2739,6 +2749,7 @@ window.SETUP_L10N={
    "optHoursDefaultMax": "{n} Stunden (Standard-Maximum)",
    "vatPeriodMonth": "Monatlich",
    "vatPeriodQuarter": "Vierteljährlich",
+   "vatPeriodAnnual": "Jährlich",
    "envDev": "Entwicklung — zum Ausprobieren: Die App weist überall darauf hin und versieht jedes Dokument mit einem Wasserzeichen",
    "envProd": "Produktion — die ausgestellten Rechnungen sind tatsächlich geschuldet",
    "numDateNone": "Keins",
@@ -3233,6 +3244,7 @@ window.SETUP_L10N={
    "cfgNotRegistered": "Entfällt, solange der Workspace nicht umsatzsteuerpflichtig ist.",
    "cfgVatDeclMonthly": "Monatliche Voranmeldung.",
    "cfgVatDeclQuarterly": "Vierteljährliche Voranmeldung.",
+   "cfgVatDeclAnnual": "Jährliche Erklärung.",
    "cfgCustomerService": "Kundendienst: {url}",
    "cfgCustomerServiceTodo": "Zustelldienst an den Kunden in der App zu konfigurieren.",
    "cfgPlanObjectDelete": "Löschen von Planobjekten, auf die noch verwiesen wird (Audit-Ersatztext).",
@@ -3310,7 +3322,6 @@ window.SETUP_L10N={
    "todoInviteMembers": "Laden Sie die {n} im Schritt Mitglieder aufgeführten Personen aus der App ein (Mitglieder → Mitglied einladen): Die Datei bewahrt die Liste nur zur Erinnerung auf.",
    "todoInviteNobody": "Laden Sie Ihre ersten Mitglieder aus der App ein (Mitglieder → Mitglied einladen).",
    "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
-   "todoVatPeriod": "Wählen Sie den Zeitraum der USt-Voranmeldung ({period}) in der App, wenn Sie die erste Voranmeldung vorbereiten.",
    "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
    "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
    "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."
@@ -3831,6 +3842,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Zusammenfassende Meldung",
     "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis."
+   ],
+   "inputVat": [
+    "Vorsteuer",
+    "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer."
    ]
   },
   "process": {
@@ -4089,6 +4104,7 @@ window.SETUP_L10N={
    "optHoursDefaultMax": "{n} horas (máx. predeterminado)",
    "vatPeriodMonth": "Mensual",
    "vatPeriodQuarter": "Trimestral",
+   "vatPeriodAnnual": "Anual",
    "envDev": "Desarrollo — para probar: la app lo indica en todas partes y pone una marca de agua en cada documento",
    "envProd": "Producción — las facturas que emite se deben de verdad",
    "numDateNone": "Ninguna",
@@ -4583,6 +4599,7 @@ window.SETUP_L10N={
    "cfgNotRegistered": "No aplica mientras el espacio no esté sujeto a IVA.",
    "cfgVatDeclMonthly": "Declaración mensual.",
    "cfgVatDeclQuarterly": "Declaración trimestral.",
+   "cfgVatDeclAnnual": "Declaración anual.",
    "cfgCustomerService": "Servicio del cliente: {url}",
    "cfgCustomerServiceTodo": "Servicio de entrega al cliente por configurar en la app.",
    "cfgPlanObjectDelete": "Eliminación de objetos del plano aún referenciados (sustitución de auditoría).",
@@ -4660,7 +4677,6 @@ window.SETUP_L10N={
    "todoInviteMembers": "Invitar desde la app a las {n} personas de la lista del paso de miembros (Miembros → Invitar a un miembro): el archivo guarda la lista solo como recordatorio.",
    "todoInviteNobody": "Invitar a los primeros miembros desde la app (Miembros → Invitar a un miembro).",
    "todoOnlineProvider": "Conectar el proveedor de pagos en línea en la app: sus claves nunca van en el archivo.",
-   "todoVatPeriod": "Elegir la periodicidad de la declaración de IVA ({period}) en la app al preparar la primera declaración.",
    "todoEinvoice": "Introducir en la app la dirección y las credenciales de la plataforma de facturación electrónica: el archivo nunca las aplica.",
    "todoInvoiceOutside": "Las facturas de un espacio en {country} se emiten fuera de la app.",
    "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración."
@@ -5181,6 +5197,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Declaración recapitulativa (modelo 349)",
     "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso."
+   ],
+   "inputVat": [
+    "IVA soportado",
+    "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido."
    ]
   },
   "process": {
@@ -5439,6 +5459,7 @@ window.SETUP_L10N={
    "optHoursDefaultMax": "{n} ore (max. predefinito)",
    "vatPeriodMonth": "Mensile",
    "vatPeriodQuarter": "Trimestrale",
+   "vatPeriodAnnual": "Annuale",
    "envDev": "Sviluppo — per provare: l'app lo segnala ovunque e applica una filigrana su ogni documento",
    "envProd": "Produzione — le fatture emesse sono realmente dovute",
    "numDateNone": "Nessuna",
@@ -5933,6 +5954,7 @@ window.SETUP_L10N={
    "cfgNotRegistered": "Non applicabile finché lo spazio non è soggetto IVA.",
    "cfgVatDeclMonthly": "Dichiarazione mensile.",
    "cfgVatDeclQuarterly": "Dichiarazione trimestrale.",
+   "cfgVatDeclAnnual": "Dichiarazione annuale.",
    "cfgCustomerService": "Servizio cliente: {url}",
    "cfgCustomerServiceTodo": "Servizio di consegna al cliente da configurare nell'app.",
    "cfgPlanObjectDelete": "Eliminazione di oggetti della piantina ancora referenziati (sostituzione di audit).",
@@ -6010,7 +6032,6 @@ window.SETUP_L10N={
    "todoInviteMembers": "Invitare dall'app le {n} persone elencate nel passaggio dei membri (Membri → Invita un membro): il file conserva l'elenco solo come promemoria.",
    "todoInviteNobody": "Invitare i primi membri dall'app (Membri → Invita un membro).",
    "todoOnlineProvider": "Collegare il fornitore di pagamenti online nell'app: le sue chiavi non vanno mai nel file.",
-   "todoVatPeriod": "Scegliere la periodicità della dichiarazione IVA ({period}) nell'app preparando la prima dichiarazione.",
    "todoEinvoice": "Inserire nell'app l'indirizzo e le credenziali della piattaforma di fatturazione elettronica: il file non le applica mai.",
    "todoInvoiceOutside": "Le fatture di uno spazio in {country} si emettono fuori dall'app.",
    "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione."
@@ -6531,6 +6552,10 @@ window.SETUP_L10N={
    "recapitulativeStatement": [
     "Elenchi riepilogativi (Intrastat servizi)",
     "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso."
+   ],
+   "inputVat": [
+    "IVA a credito",
+    "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito."
    ]
   },
   "process": {

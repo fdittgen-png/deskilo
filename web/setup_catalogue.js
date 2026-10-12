@@ -200,7 +200,8 @@ window.SETUP_PROCESSES=[
      "vatCounterparty",
      "supplyClassification",
      "viesVerification",
-     "recapitulativeStatement"
+     "recapitulativeStatement",
+     "inputVat"
     ]
    }
   ]

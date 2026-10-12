@@ -6,6 +6,7 @@
 // have before an e-invoice names it (a syntactic check; a VIES lookup
 // is #895). Reviewed against Council Directive 2006/112/EC (art. 226,
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
+import '../../../core/vat/place_of_supply.dart';
 import 'vat_regime.dart';
 
 // #2354 — the EU set and the place-of-supply rule live in core/vat (pure,
@@ -15,13 +16,28 @@ export '../../../core/vat/place_of_supply.dart';
 /// The statutory mention for a seller that charges no VAT, per country,
 /// used when the owner left the exemption reason empty (BT-120 must
 /// not be blank on a category E invoice, BR-E-10).
-String defaultExemptionMention(String countryCode, VatRegime regime) {
+///
+/// #2356 — an exempt seller using the small-enterprise scheme of ANOTHER
+/// member state (Directive 2020/285, since 2025) prints the identification
+/// number with the `EX` suffix that state gave it, and says which scheme.
+String defaultExemptionMention(
+  String countryCode,
+  VatRegime regime, {
+  String vatId = '',
+}) {
   final country = countryCode.trim().toUpperCase();
+  if (regime == VatRegime.exempt && _isExNumber(vatId)) {
+    return 'VAT exempt — small enterprise scheme for a supplier established '
+        'in another member state (art. 284 of Council Directive 2006/112/EC), '
+        'identification number ${vatId.trim()}.';
+  }
   return switch (regime) {
     VatRegime.vatRegistered => '',
     VatRegime.exempt => switch (country) {
         'FR' => 'TVA non applicable, art. 293 B du CGI',
-        'DE' => 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.',
+        // #2356 — the wording since the 2025 reform (§ 34a UStDV): the
+        // small-business turnover is exempt, and the invoice says so.
+        'DE' => 'Steuerbefreiung für Kleinunternehmer, § 19 UStG.',
         'AT' => 'Umsatzsteuerbefreit gemäß § 6 Abs. 1 Z 27 UStG '
             '(Kleinunternehmer).',
         'ES' => 'Operación exenta de IVA (régimen de franquicia, '
@@ -47,13 +63,23 @@ String defaultExemptionMention(String countryCode, VatRegime regime) {
   };
 }
 
+/// #2356 — whether [vatId] is an identification number of the EU
+/// small-enterprise scheme (the `EX` suffix).
+bool _isExNumber(String vatId) {
+  final id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  return id.length > 6 && id.endsWith('EX');
+}
+
 /// Whether [vatId] has the shape its member state prescribes (the
 /// VIES syntax, spaces and punctuation ignored). A prefix the table
 /// does not know is NOT flagged — the check exists to catch typos in
 /// the countries an e-invoice will actually meet, not to refuse the
 /// world. An empty id is not a VAT id at all and returns false.
 bool looksLikeEuVatId(String vatId) {
-  final id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  var id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  // #2356 — the EU small-enterprise scheme's number is the national one
+  // with an `EX` suffix (art. 284(3) of the Directive).
+  if (_isExNumber(id)) id = id.substring(0, id.length - 2);
   if (id.length < 4) return false;
   final prefix = id.substring(0, 2);
   final body = id.substring(2);
@@ -195,4 +221,37 @@ String exigibilityMention({
         ? 'VAT accounted for on receipts (cash accounting).'
         : 'VAT accounted for on invoices (accrual accounting).',
   };
+}
+
+/// #2356 — what a member state's own law adds to an invoice beyond the
+/// Directive's list (art. 226), in the seller's language:
+///  * Italy — the € 2 stamp duty on an invoice whose amount not subject to
+///    VAT exceeds € 77.47 (D.P.R. 642/1972, tariff art. 13);
+///  * Spain — a correcting invoice says it is one and names the invoice it
+///    rectifies (RD 1619/2012 art. 15);
+///  * France — the category of the operation (CGI ann. II art. 242
+///    nonies A, since the 2026 e-invoicing reform): a workspace supplies
+///    services.
+/// [untaxedCents] is the gross of the supplies that carry no VAT other
+/// than a reverse charge; [correction] a credit note or a replacement.
+List<String> nationalInvoiceMentions({
+  required String sellerCountry,
+  required VatRegime regime,
+  required String currency,
+  required int untaxedCents,
+  required bool correction,
+  String rectifies = '',
+}) {
+  final country = euCountryCode(sellerCountry);
+  return [
+    if (country == 'IT' && currency.toUpperCase() == 'EUR' && untaxedCents > 7747)
+      'Imposta di bollo da € 2,00 assolta ai sensi del D.P.R. 642/1972.',
+    if (country == 'ES' && correction && rectifies.trim().isEmpty)
+      'Factura rectificativa (art. 15 del RD 1619/2012).'
+    else if (country == 'ES' && correction)
+      'Factura rectificativa (art. 15 del RD 1619/2012) de la factura '
+          '${rectifies.trim()}.',
+    if (country == 'FR' && regime == VatRegime.vatRegistered)
+      "Catégorie de l'opération : prestation de services.",
+  ];
 }

@@ -14,6 +14,7 @@
 // member's only recourse is to try again and risk booking twice.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/domain/booking_success_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -34,7 +35,7 @@ void main() {
 
     test('after the end: recorded, and why', () {
       for (final space in ['13', null]) {
-        final text = bookingSuccessText(null, 'en',
+        final text = bookingSuccessText(englishL10n, 'en',
             checkedIn: false,
             start: start,
             end: end,
@@ -48,7 +49,7 @@ void main() {
 
     test('before the end, or with no clock, it is a reservation', () {
       for (final now in [DateTime(2026, 10, 7, 18, 59), null]) {
-        final text = bookingSuccessText(null, 'en',
+        final text = bookingSuccessText(englishL10n, 'en',
             checkedIn: false,
             start: start,
             end: end,
@@ -62,7 +63,7 @@ void main() {
   group('a check-in says when it runs until', () {
     test('names the space when there is one', () {
       final text = bookingSuccessText(
-        null,
+        englishL10n,
         'en',
         checkedIn: true,
         start: DateTime(2026, 8, 26, 10, 13),
@@ -77,7 +78,7 @@ void main() {
     test('drops the space cleanly when it is unknown or blank', () {
       for (final name in [null, '', '   ']) {
         final text = bookingSuccessText(
-          null,
+          englishL10n,
           'en',
           checkedIn: true,
           start: DateTime(2026, 8, 26, 10),
@@ -94,7 +95,7 @@ void main() {
     test('a check-in does NOT lead with its start — it is happening now',
         () {
       final text = bookingSuccessText(
-        null,
+        englishL10n,
         'en',
         checkedIn: true,
         start: DateTime(2026, 8, 26, 10, 13),
@@ -109,7 +110,7 @@ void main() {
       () {
     test('a same-day window shows the date once and both times', () {
       final text = bookingSuccessText(
-        null,
+        englishL10n,
         'en',
         checkedIn: false,
         start: DateTime(2026, 8, 27, 8),
@@ -130,7 +131,7 @@ void main() {
       // midnight — which formats as 00:00 and would look like the START
       // of the day it actually ends.
       final text = bookingSuccessText(
-        null,
+        englishL10n,
         'en',
         checkedIn: false,
         start: DateTime(2026, 8, 26, 18),
@@ -148,7 +149,7 @@ void main() {
     final start = DateTime(2026, 8, 27, 8);
     final end = DateTime(2026, 8, 27, 12);
     for (final locale in ['en', 'fr', 'de']) {
-      final text = bookingSuccessText(null, locale,
+      final text = bookingSuccessText(englishL10n, locale,
           checkedIn: false, start: start, end: end, spaceName: 'A1');
       expect(text, isNot(contains('2026-08-27')),
           reason: 'a raw ISO timestamp is a HARD RULE violation');
@@ -163,7 +164,7 @@ void main() {
     // A throw here would be caught by the same try/catch that reports
     // refusals, so a booking that WORKED would be announced as failed.
     final text = bookingSuccessText(
-      null,
+      englishL10n,
       'zz-ZZ',
       checkedIn: true,
       start: DateTime(2026, 8, 26, 10),

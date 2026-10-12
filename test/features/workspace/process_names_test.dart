@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Every process and subprocess has localized, business-readable copy.
 import 'dart:io';
-import '../../../tool/build_process_labels.dart';
-import 'package:flutter_test/flutter_test.dart';
+
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/process_names.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../../tool/build_process_labels.dart';
 
 void main() {
-  test('label lookup is generated from registry and English copy', () {
+  test('label lookup is generated from the registry', () {
     expect(File('lib/features/workspace/presentation/process_names.dart').readAsStringSync(), buildProcessLabels());
   });
   test('all supported locales render every registry title and description', () async {
@@ -20,7 +23,7 @@ void main() {
           expect(copy.title, isNotEmpty, reason: '$locale/$key');
           expect(copy.description, isNotEmpty, reason: '$locale/$key');
           expect(copy.description, isNot(copy.title));
-          expect(processCopy(null, key).title, isNotEmpty);
+          expect(processCopy(englishL10n, key).title, isNotEmpty);
         }
       }
     }

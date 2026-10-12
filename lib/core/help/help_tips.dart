@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../l10n/app_localizations.dart';
-import '../../l10n/app_localizations_en.dart';
 
 /// Every surface that carries a contextual help hint (#606). The enum
 /// name is the persisted dismissal id — renaming a value revives its
@@ -47,110 +46,94 @@ class HelpTip {
 }
 
 /// Tip 1 — the surface's basic how-to sentence (#606).
-String helpHintText(AppLocalizations? l10n, HelpHintId id) => switch (id) {
+String helpHintText(AppLocalizations l10n, HelpHintId id) => switch (id) {
   HelpHintId.reserve =>
-    l10n?.helpHintReserve ??
-        'Pick a day and time window, then tap a free seat to book it.',
+    l10n.helpHintReserve,
   HelpHintId.plan =>
-    l10n?.helpHintPlan ??
-        'The live floor plan: tap a free seat to book it, tap your '
-            'own booking to check in.',
+    l10n.helpHintPlan,
   HelpHintId.calendar =>
-    l10n?.helpHintCalendar ??
-        'Pick a day or a range: everything dated that you may see, in '
-            'one list, each row opening its source.',
+    l10n.helpHintCalendar,
   HelpHintId.events =>
-    l10n?.helpHintEvents ??
-        'Everything that happened, in one feed. Decisions waiting '
-            'for you sit on top; the chips filter the rest.',
+    l10n.helpHintEvents,
   HelpHintId.editor =>
-    l10n?.helpHintEditor ??
-        'Draw rooms and desks, stamp seats onto them — tap a seat '
-            'twice to edit its properties.',
+    l10n.helpHintEditor,
   HelpHintId.availability =>
-    l10n?.helpHintAvailability ??
-        'Set the open weekdays and working hours, and add closure '
-            'days nobody can book.',
+    l10n.helpHintAvailability,
   HelpHintId.features =>
-    l10n?.helpHintFeatures ??
-        'Switch workspace functionality on or off — every member\'s '
-            'app follows immediately.',
+    l10n.helpHintFeatures,
   HelpHintId.members =>
-    l10n?.helpHintMembers ??
-        'Invite members, set their plan percentage and role, and '
-            'manage their badges.',
+    l10n.helpHintMembers,
   HelpHintId.money =>
-    l10n?.helpHintMoney ??
-        'Your monthly bill: browse months with the arrows; pay, '
-            'export or share from here.',
+    l10n.helpHintMoney,
   HelpHintId.moneyStatement =>
-    l10n?.helpHintMoneyStatement ??
-        'The month as it stands: your account, days used and left, '
-            'subscription, services, packages, open positions, credits '
-            'and the balance. Browse months with the arrows.',
+    l10n.helpHintMoneyStatement,
   HelpHintId.moneyPayments =>
-    l10n?.helpHintMoneyPayments ??
-        'Settle and ask: the balance, how to pay it or pay online, '
-            'record a payment — and submit an expense, request '
-            'half-days or add a consumption.',
+    l10n.helpHintMoneyPayments,
   HelpHintId.moneyInvoices =>
-    l10n?.helpHintMoneyInvoices ??
-        'Your invoices: what is open and when it is due, every invoice '
-            'issued to you with its status, one tap to the detail and '
-            'to paying it.',
+    l10n.helpHintMoneyInvoices,
   HelpHintId.moneyDocuments =>
-    l10n?.helpHintMoneyDocuments ??
-        'Your paperwork: your conditions, the payments report, the '
-            'month\'s statement as PDF, the document library.',
+    l10n.helpHintMoneyDocuments,
   HelpHintId.validation =>
-    l10n?.helpHintValidation ??
-        'Decide which actions need confirmation, who confirms, and '
-            'how many approvals it takes.',
+    l10n.helpHintValidation,
   HelpHintId.workspaceSettings =>
-    l10n?.helpHintWorkspace ??
-        'Country, currency, language and billing details — '
-            'documents and taxes follow these settings.',
+    l10n.helpHintWorkspace,
   HelpHintId.messages =>
-    l10n?.helpHintMessages ??
-        'Every conversation in one list, newest first. Tap the pencil to '
-            'write to someone or start a group.',
+    l10n.helpHintMessages,
   HelpHintId.privacy =>
-    l10n?.helpHintPrivacy ??
-        'See who can read your data and who did, export everything as '
-            'one file, or leave with your personal data erased.',
+    l10n.helpHintPrivacy,
   HelpHintId.badges =>
-    l10n?.helpHintBadges ??
-        'Issue a printable QR badge or register an NFC card; revoke '
-            'lost badges any time.',
+    l10n.helpHintBadges,
 };
 
 /// A distinctive fragment of the matching guide heading, localized —
 /// the help guides are per-language, so the jump text must be too.
 /// This is the surface's DEFAULT topic; a tip may carry its own.
-String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
-  HelpHintId.reserve => l10n?.helpHintReserveTopic ?? 'Reserve hub',
-  HelpHintId.plan => l10n?.helpHintPlanTopic ?? 'floor plan',
-  HelpHintId.calendar => l10n?.helpHintCalendarTopic ?? 'Calendar',
-  HelpHintId.events => l10n?.helpHintEventsTopic ?? 'confirmations',
-  HelpHintId.editor => l10n?.helpHintEditorTopic ?? 'space editor',
-  HelpHintId.availability => l10n?.helpHintAvailabilityTopic ?? 'Availability',
-  HelpHintId.features => l10n?.helpHintFeaturesTopic ?? 'Features',
-  HelpHintId.members => l10n?.helpHintMembersTopic ?? 'Members & plans',
-  HelpHintId.money => l10n?.helpHintMoneyTopic ?? 'Money',
+String helpHintTopic(AppLocalizations l10n, HelpHintId id) => switch (id) {
+  HelpHintId.reserve => l10n.helpHintReserveTopic,
+  HelpHintId.plan => l10n.helpHintPlanTopic,
+  HelpHintId.calendar => l10n.helpHintCalendarTopic,
+  HelpHintId.events => l10n.helpHintEventsTopic,
+  HelpHintId.editor => l10n.helpHintEditorTopic,
+  HelpHintId.availability => l10n.helpHintAvailabilityTopic,
+  HelpHintId.features => l10n.helpHintFeaturesTopic,
+  HelpHintId.members => l10n.helpHintMembersTopic,
+  HelpHintId.money => l10n.helpHintMoneyTopic,
   HelpHintId.moneyStatement =>
-    l10n?.helpHintMoneyStatementTopic ?? 'The Statement face',
+    l10n.helpHintMoneyStatementTopic,
   HelpHintId.moneyPayments =>
-    l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+    l10n.helpHintMoneyPaymentsTopic,
   HelpHintId.moneyInvoices =>
-    l10n?.helpHintMoneyInvoicesTopic ?? 'The Invoices face',
+    l10n.helpHintMoneyInvoicesTopic,
   HelpHintId.moneyDocuments =>
-    l10n?.helpHintMoneyDocumentsTopic ?? 'The Documents face',
-  HelpHintId.validation => l10n?.helpHintValidationTopic ?? 'confirmations',
+    l10n.helpHintMoneyDocumentsTopic,
+  HelpHintId.validation => l10n.helpHintValidationTopic,
   HelpHintId.workspaceSettings =>
-    l10n?.helpHintWorkspaceTopic ?? 'Workspace settings',
-  HelpHintId.badges => l10n?.helpHintBadgesTopic ?? 'NFC badges',
-  HelpHintId.messages => l10n?.helpHintMessagesTopic ?? 'Messages',
-  HelpHintId.privacy => l10n?.helpHintPrivacyTopic ?? 'Privacy',
+    l10n.helpHintWorkspaceTopic,
+  HelpHintId.badges => l10n.helpHintBadgesTopic,
+  HelpHintId.messages => l10n.helpHintMessagesTopic,
+  HelpHintId.privacy => l10n.helpHintPrivacyTopic,
+};
+
+/// The guide section a surface's "Learn more" opens on the guide site.
+String helpHintAnchor(HelpHintId id) => switch (id) {
+  HelpHintId.reserve => 'user.reserve.hub',
+  HelpHintId.plan => 'user.reserve.plan-levels',
+  HelpHintId.calendar => 'user.reserve.calendar',
+  HelpHintId.events => 'user.collaborate.events',
+  HelpHintId.editor => 'user.space.overview',
+  HelpHintId.availability => 'user.workspace.availability.open-weekdays',
+  HelpHintId.features => 'user.features.switch',
+  HelpHintId.members => 'user.people.overview',
+  HelpHintId.money => 'user.money.overview',
+  HelpHintId.moneyStatement => 'user.money.statement',
+  HelpHintId.moneyPayments => 'user.money.payments',
+  HelpHintId.moneyInvoices => 'user.money.invoices',
+  HelpHintId.moneyDocuments => 'user.money.documents.library',
+  HelpHintId.validation => 'user.validation.overview',
+  HelpHintId.workspaceSettings => 'user.workspace.settings.country',
+  HelpHintId.badges => 'user.badges.nfc',
+  HelpHintId.messages => 'user.collaborate.messages',
+  HelpHintId.privacy => 'user.privacy.visibility',
 };
 
 /// The surface's carousel (#2313): every scenario a person may want from
@@ -158,8 +141,8 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
 /// the label keys, so all five languages quote the real buttons) and
 /// linking to the form it continues on. Regenerated from the current
 /// screens; tips of a switched-off feature are filtered by [HelpHint].
-List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) {
-  final t = l10n ?? AppLocalizationsEn();
+List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
+  final t = l10n;
   return switch (id) {
     // The live plan lives in Reserve now: the same scenarios.
     HelpHintId.plan => helpHintTips(l10n, HelpHintId.reserve),
@@ -355,8 +338,8 @@ List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) {
 }
 
 /// The name of the form a tip links to: the title its screen carries.
-String helpTipDestination(AppLocalizations? l10n, String route) {
-  final t = l10n ?? AppLocalizationsEn();
+String helpTipDestination(AppLocalizations l10n, String route) {
+  final t = l10n;
   return switch (Uri.parse(route).path) {
     '/accessories' => t.accessoriesTitle,
     '/account-activity' => t.financesTitle,

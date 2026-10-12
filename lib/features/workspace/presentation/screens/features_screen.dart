@@ -2,19 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../feature_copy.dart';
+import '../feature_names.dart';
 import '../widgets/feature_capability_list.dart';
 import '../widgets/feature_maturity_badge.dart';
 import '../widgets/feature_switch_flow.dart';
 import '../widgets/features_filter_bar.dart';
 import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
-import '../feature_copy.dart';
-import '../feature_names.dart';
 
 /// Owner-only feature management (#146). #1327 — it opens on the process
 /// overview; one switch per registry feature is the second view, kept
@@ -68,7 +70,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     // The RAW stored set, not the effective one: a child's saved choice
     // must survive its parent being switched off (and its switch must
@@ -85,8 +87,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
       if (raw.contains(entry.feature) != entry.defaultOn) changedCount++;
       final requires = entry.requires == null
           ? null
-          : (l10n?.featureRequires(featureName(l10n, entry.requires!)) ??
-              'Requires ${featureName(l10n, entry.requires!)}');
+          : (l10n.featureRequires(featureName(l10n, entry.requires!)));
       if (_changedOnly && raw.contains(entry.feature) == entry.defaultOn) {
         continue;
       }
@@ -104,7 +105,10 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
+      appBar: AppBar(
+        title: Text(l10n.featuresTitle),
+        actions: const [HelpDot('Features', anchor: HelpAnchor.featuresSwitch)],
+      ),
       body: workspace == null
           ? const LoadingView()
           : Column(

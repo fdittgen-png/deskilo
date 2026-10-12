@@ -3,6 +3,8 @@
 // Running a workspace group (0383): its description, whether only admins
 // post, and who a message reached.
 
+import '../../../core/data/json_reader.dart';
+
 class ConversationDetails {
   const ConversationDetails({this.description = '', this.announceOnly = false});
   final String description;
@@ -10,11 +12,13 @@ class ConversationDetails {
 
   static const ConversationDetails none = ConversationDetails();
 
-  factory ConversationDetails.fromJson(Map<String, dynamic> json) =>
-      ConversationDetails(
-        description: json['description'] as String? ?? '',
-        announceOnly: json['announce_only'] == true,
-      );
+  factory ConversationDetails.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'conversation_details');
+    return ConversationDetails(
+      description: r.stringOr('description'),
+      announceOnly: r.boolOr('announce_only', false),
+    );
+  }
 }
 
 /// Who a message reached: the participants whose last read is at or after it,
@@ -30,18 +34,18 @@ class MessageReach {
   final List<({String memberId, DateTime readAt})> readers;
   final List<String> pending;
 
-  factory MessageReach.fromJson(Map<String, dynamic> json) => MessageReach(
-        sentAt: DateTime.parse(json['sent_at'] as String).toUtc(),
-        readers: [
-          for (final r in (json['readers'] as List<dynamic>? ?? const []))
-            (
-              memberId: (r as Map)['member_id'] as String,
-              readAt: DateTime.parse(r['read_at'] as String).toUtc(),
-            ),
-        ],
-        pending: [
-          for (final id in (json['pending'] as List<dynamic>? ?? const []))
-            id as String,
-        ],
-      );
+  factory MessageReach.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'message_info');
+    return MessageReach(
+      sentAt: r.dateTime('sent_at').toUtc(),
+      readers: r.objects(
+        'readers',
+        (row) => (
+          memberId: row.string('member_id'),
+          readAt: row.dateTime('read_at').toUtc(),
+        ),
+      ),
+      pending: r.strings('pending'),
+    );
+  }
 }

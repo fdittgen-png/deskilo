@@ -21,6 +21,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The repository that owns the `workspaces` row.
 const _repository =
@@ -61,7 +62,7 @@ void main() {
   });
 
   test('the helper actually checks what came back', () {
-    final source = File(_repository).readAsStringSync();
+    final source = readLibrary(File(_repository)); // #2386 — with its parts
     final at = source.indexOf('Future<void> $_helper(');
     expect(at, greaterThan(0), reason: '$_helper is gone — so is the guard');
     final body = source.substring(at, source.indexOf('\n  }', at));

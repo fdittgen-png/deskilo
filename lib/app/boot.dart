@@ -27,7 +27,7 @@ Future<void> bootReady(Ref ref) async {
   final started = DateTime.now();
   try {
     await _warm(ref).timeout(_bootBudget);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // Purely a warm-up — the app opens regardless and the screens
     // surface their own errors; still traced for diagnosis.
     TraceLogger.instance

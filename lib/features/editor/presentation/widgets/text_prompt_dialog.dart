@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 /// Ask for one line of text — the editor's "name this room" dialog.
 ///
@@ -17,7 +17,7 @@ Future<String?> showTextPrompt(
   required String label,
   String initial = '',
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final controller = TextEditingController(text: initial);
   return showDialog<String>(
     context: context,
@@ -32,12 +32,12 @@ Future<String?> showTextPrompt(
         TextButton(
           key: const ValueKey('text-prompt-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('text-prompt-dialog-save'),
           onPressed: () => Navigator.of(context).pop(controller.text.trim()),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),

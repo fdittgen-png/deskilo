@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/vat/supply_class.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/vat/supply_class.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 
@@ -53,7 +51,7 @@ class VatRateField extends ConsumerWidget {
             .contains(WorkspaceFeature.vatManagement)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // A rate that was deactivated after this item pointed at it is still
     // its rate: keep showing the default entry rather than silently
     // re-taxing it here.
@@ -62,19 +60,19 @@ class VatRateField extends ConsumerWidget {
       key: dropdownKey,
       initialValue: known ? value : '',
       decoration: InputDecoration(
-        labelText: l10n?.vatServiceRate ?? 'VAT rate',
+        labelText: l10n.vatServiceRate,
       ),
       items: [
         DropdownMenuItem(
           value: '',
           child: Text(
-            l10n?.vatServiceRateDefault ?? 'Workspace default',
+            l10n.vatServiceRateDefault,
           ),
         ),
         for (final rate in rates)
           DropdownMenuItem(
             value: rate.id,
-            child: Text(vatRateOption(rate)),
+            child: Text(_vatRateOption(rate)),
           ),
       ],
       onChanged: (picked) => onChanged(picked ?? ''),
@@ -83,7 +81,7 @@ class VatRateField extends ConsumerWidget {
 }
 
 /// How a rate reads in a picker: 'Standard (20 %)'.
-String vatRateOption(VatRate rate) {
+String _vatRateOption(VatRate rate) {
   final percent = rate.percent == rate.percent.roundToDouble()
       ? rate.percent.toStringAsFixed(0)
       : rate.percent.toString();
@@ -119,8 +117,7 @@ class SupplyClassField extends ConsumerWidget {
       return const SizedBox.shrink();
     }
     final l10n =
-        AppLocalizations.of(context) ??
-        lookupAppLocalizations(const Locale('en'));
+        context.l10n;
     return DropdownButtonFormField<SupplyClass>(
       key: const ValueKey('supply-class-field'),
       initialValue: value,
@@ -129,10 +126,6 @@ class SupplyClassField extends ConsumerWidget {
         labelText: l10n.supplyClassLabel,
         helperText: l10n.supplyClassHelper,
         helperMaxLines: 5,
-        suffixIcon: HelpDot(
-          l10n.helpHintMoneyPaymentsTipSupplyTopic,
-          anchor: HelpAnchor.serviceSupply,
-        ),
       ),
       items: [
         for (final supply in SupplyClass.values)

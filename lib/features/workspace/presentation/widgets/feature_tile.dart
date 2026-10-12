@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/schema_version.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_operation.dart';
 import '../../domain/workspace_feature.dart';
@@ -27,7 +25,7 @@ class FeatureSurfaceHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       key: ValueKey('feature-surface-${surface.name}'),
@@ -102,7 +100,7 @@ class FeatureTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final child = entry.requires != null;
     // #1851 C — only a server that runs the classes may be described as
@@ -117,22 +115,14 @@ class FeatureTile extends ConsumerWidget {
     final notes = [
       ?requiresLabel,
       if (!value && alsoEnables.isNotEmpty)
-        l10n?.featureAlsoEnables(alsoEnables.join(', ')) ??
-            'Switching this on also enables ${alsoEnables.join(', ')}',
+        l10n.featureAlsoEnables(alsoEnables.join(', ')),
       // #1851 — what off means for a feature whose open work survives it.
       if (!value && confirmed)
-        l10n?.featureIntakeStoppedNote ??
-            'Off: nothing new starts; what is already open can still be '
-                'answered and closed.',
+        l10n.featureIntakeStoppedNote,
       if (!value && keepsWork && !confirmed)
-        l10n?.featureIntakeUnconfirmedNote ??
-            'Off: nothing new starts. This server could not confirm that '
-                'what is already open stays answerable, so do not count on '
-                'it.',
+        l10n.featureIntakeUnconfirmedNote,
       if (value && inactive)
-        l10n?.featureHeldBack ??
-            'Waiting on the feature above — switch that on and this one '
-                'works again.',
+        l10n.featureHeldBack,
     ];
     // #1221 — the lead sentence says WHAT it is; the rest says how it
     // behaves, and only matters for the one row you stopped on. The
@@ -152,11 +142,7 @@ class FeatureTile extends ConsumerWidget {
         title: Row(
           children: [
             Flexible(
-              child: HelpDotTitle(
-                name,
-                l10n?.helpHintFeaturesTopic ?? 'Features',
-                anchor: HelpAnchor.featuresSwitch,
-              ),
+              child: Text(name),
             ),
             // The tier the grouping used to be: a space that wants only
             // the basics can still see at a glance which rows are the
@@ -223,7 +209,7 @@ class _MoreAboutState extends State<_MoreAbout> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,8 +233,8 @@ class _MoreAboutState extends State<_MoreAbout> {
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Text(
               _open
-                  ? (l10n?.featureLess ?? 'Less')
-                  : (l10n?.featureMore ?? 'More'),
+                  ? (l10n.featureLess)
+                  : (l10n.featureMore),
               style: theme.textTheme.labelMedium
                   ?.copyWith(color: theme.colorScheme.primary),
             ),
@@ -268,7 +254,7 @@ class _TierChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
@@ -277,7 +263,7 @@ class _TierChip extends StatelessWidget {
         borderRadius: AppRadius.smAll,
       ),
       child: Text(
-        l10n?.featureTierPlatform ?? 'Platform',
+        l10n.featureTierPlatform,
         style: theme.textTheme.labelSmall
             ?.copyWith(color: theme.colorScheme.onSecondaryContainer),
       ),

@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
 import '../../domain/public_workspace.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 import 'refusal_text.dart';
 
@@ -22,24 +24,21 @@ Future<void> showInquirySheet(
   BuildContext context,
   PublicWorkspace workspace,
 ) async {
-  final inquiry = await showModalBottomSheet<String>(
+  final inquiry = await showAppSheet<String>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _InquirySheet(workspace: workspace),
   );
   if (inquiry == null || !context.mounted) return;
-  final l10n = AppLocalizations.of(context);
-  await Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (_) => ContextThreadScreen(
-        kind: MessageContextKind.inquiryOut,
-        contextId: inquiry,
-        title: workspace.name,
-        subtitle:
-            l10n?.messengerContextInquiryOut(workspace.name) ??
-            'Your inquiry to ${workspace.name}',
-        source: workspace.source,
-      ),
+  final l10n = context.l10n;
+  await contextThreadPage.open<void>(
+    context,
+    ContextThreadScreen(
+      kind: MessageContextKind.inquiryOut,
+      contextId: inquiry,
+      title: workspace.name,
+      subtitle: l10n.messengerContextInquiryOut(workspace.name),
+      source: workspace.source,
     ),
   );
 }
@@ -68,15 +67,14 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
   Future<void> _send() async {
     final text = _body.text.trim();
     if (_busy || text.isEmpty) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     String? inquiry;
     final ok = await runMessenger(
       context,
       message: 'start inquiry failed',
       errorText:
-          l10n?.applicationReplyFailed ??
-          'Your message was not sent. Your draft is kept; please try again.',
+          l10n.applicationReplyFailed,
       action: () async {
         inquiry = await ref
             .read(messengerActionsProvider(source: _source))
@@ -93,7 +91,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final provider = hostRosterProvider(widget.workspace.id, source: _source);
     final roster = ref.watch(provider);
     final media = MediaQuery.of(context);
@@ -111,7 +109,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
               Padding(
                 padding: AppSpacing.lgAll,
                 child: Text(
-                  l10n?.messengerWriteToHosts ?? 'Write to the hosts',
+                  l10n.messengerWriteToHosts,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -120,8 +118,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                   AsyncData() when hosts.isEmpty => Padding(
                     padding: AppSpacing.lgAll,
                     child: Text(
-                      l10n?.messengerHostsNone ??
-                          'This space has nobody answering messages right now.',
+                      l10n.messengerHostsNone,
                       key: const ValueKey('inquiry-no-hosts'),
                     ),
                   ),
@@ -133,7 +130,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                           horizontal: AppSpacing.lg,
                         ),
                         child: Text(
-                          l10n?.messengerHostsIntro ?? 'Your message is read by these hosts of the space:',
+                          l10n.messengerHostsIntro,
                         ),
                       ),
                       for (final (i, host) in hosts.indexed)
@@ -143,8 +140,8 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                           title: Text(host.name),
                           subtitle: Text(
                             host.isOwner
-                                ? (l10n?.portalOwner ?? 'Owner')
-                                : (l10n?.portalAdmin ?? 'Administrator'),
+                                ? (l10n.portalOwner)
+                                : (l10n.portalAdmin),
                           ),
                         ),
                     ],
@@ -153,7 +150,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                     child: TextButton(
                       key: const ValueKey('inquiry-roster-retry'),
                       onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n?.commonRetry ?? 'Try again'),
+                      child: Text(l10n.commonRetry),
                     ),
                   ),
                   _ => const LoadingView(),
@@ -173,7 +170,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                         minLines: 2,
                         maxLines: 5,
                         decoration: InputDecoration(
-                          labelText: l10n?.memberNoteHint ?? 'Your message',
+                          labelText: l10n.memberNoteHint,
                         ),
                       ),
                       FilledButton.icon(
@@ -181,7 +178,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                         onPressed: _busy ? null : _send,
                         icon: const Icon(Icons.send_outlined),
                         label: Text(
-                          l10n?.messengerInquirySend ?? 'Send inquiry',
+                          l10n.messengerInquirySend,
                         ),
                       ),
                     ],

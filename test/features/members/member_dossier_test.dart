@@ -158,7 +158,7 @@ void main() {
     // with no money history, which is the one conclusion an admin must
     // not draw from a network blip.
     final money = FakeMoneyRepository()
-      ..accountFailure = StateError('not your account');
+      ..accountFailure = Exception('not your account');
     final workspace = FakeWorkspaceRepository.withWorkspace();
     await tester.pumpWidget(
       ProviderScope(
@@ -290,7 +290,6 @@ void _originTests() {
     await _pump(
       tester,
       viewerIsAdmin: true,
-      origin: MemberOrigin.unknown,
       originFeature: true,
     );
     expect(find.byIcon(Icons.help_outline), findsNothing);

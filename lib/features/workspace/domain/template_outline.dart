@@ -6,6 +6,7 @@
 // It reads the same compatibility verdict and the same entity registry the
 // creation applies, so the confirm step cannot promise a group the
 // template will not bring, nor hide that this server refuses it.
+import '../../../core/data/json_reader.dart';
 import 'template_preview.dart';
 
 class TemplateOutline {
@@ -25,14 +26,19 @@ class TemplateOutline {
   bool get refused =>
       compatibility == TemplateCompatibility.notSupported;
 
-  factory TemplateOutline.fromJson(Map<String, dynamic> json) =>
-      TemplateOutline(
-        compatibility:
-            TemplateCompatibility.fromWire(json['compatibility'] as String?),
-        reason: json['reason'] as String?,
-        groups: [
-          for (final raw in json['groups'] as List? ?? const <Object?>[])
-            if (raw is Map) TemplateGroup.fromWire(raw['group'] as String?),
-        ],
-      );
+  factory TemplateOutline.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_outline');
+    return TemplateOutline(
+      compatibility:
+          TemplateCompatibility.fromWire(r.stringOrNull('compatibility')),
+      reason: r.stringOrNull('reason'),
+      groups: [
+        for (final raw in r.list('groups'))
+          if (raw is Map)
+            TemplateGroup.fromWire(
+              JsonReader.of(raw, context: r.context).stringOrNull('group'),
+            ),
+      ],
+    );
+  }
 }

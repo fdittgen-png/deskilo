@@ -105,8 +105,8 @@ class Attention {
 /// arrived this morning. Ties after that keep their input order, which
 /// makes the result stable rather than arbitrary.
 List<Attention> rankAttention(Iterable<Attention> items) {
-  final ranked = [...items];
-  ranked.sort((a, b) {
+  final ranked = [...items]
+    ..sort((a, b) {
     final byCost = a.kind.index.compareTo(b.kind.index);
     if (byCost != 0) return byCost;
     return a.waitingSince.compareTo(b.waitingSince);

@@ -2114,6 +2114,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookRoleRevenue => 'Erlöse';
 
   @override
+  String get bookRoleVatInput => 'Vorsteuer';
+
+  @override
   String get bookRoleVatOutput => 'Umsatzsteuer';
 
   @override
@@ -3974,6 +3977,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dunningSettingsTitle => 'Mahnregeln';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'die elektronische Adresse des Kunden (BT-49) in seinem Profil';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'eine Käuferreferenz oder eine Bestellnummer';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'die USt-IdNr. oder Steuernummer des Kunden';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'die Leitweg-ID des Kunden als Käuferreferenz';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'das Bankkonto des Space (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'Kontakt-E-Mail und Telefon des Space';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'die elektronische Adresse des Space (BT-34) in seiner rechtlichen Identität';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'die USt-IdNr. des Space';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'den Kreis (județ) jeder rumänischen Adresse';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Bevor Sie über $channel senden, ergänzen Sie:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.';
 
@@ -3984,6 +4027,39 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'Ab $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'jede Rechnung muss in einem verketteten Register erfasst werden (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'jedes Unternehmen muss E-Rechnungen ausstellen';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'große Unternehmen (Umsatz über 800 000 €) müssen E-Rechnungen ausstellen';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'jedes Unternehmen muss E-Rechnungen empfangen können';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Seit $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle => 'E-Rechnungspflichten in Ihrem Land:';
 
   @override
   String get editorAccessoriesLabel => 'Zubehör';
@@ -4703,6 +4779,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get expenseInvalidAmount => 'Geben Sie einen Betrag über null ein.';
 
   @override
+  String get expenseInvalidDeductible =>
+      'Geben Sie einen Anteil zwischen 0 und 100 ein.';
+
+  @override
   String get expenseInvalidSupplyQuantity =>
       'Geben Sie mindestens eine Einheit ein.';
 
@@ -4735,6 +4815,24 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.';
+
+  @override
+  String get expenseVatDeductible => 'Abziehbarer Anteil (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'Abziehbare Vorsteuer: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.';
+
+  @override
+  String get expenseVatNone => 'Ohne Umsatzsteuer';
+
+  @override
+  String get expenseVatRate => 'Umsatzsteuer auf diese Ausgabe';
 
   @override
   String get exportClaimExchange =>
@@ -5092,6 +5190,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Feiertage importieren';
+
+  @override
+  String get featureInputVatDesc =>
+      'Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer.';
+
+  @override
+  String get featureInputVatTitle => 'Vorsteuer';
 
   @override
   String get featureInstanceWizard => 'Instanz-Assistent';
@@ -7819,9 +7924,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady => 'Bereit — diese Datei erfüllt EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'E-Rechnung teilen (XML)';
 
   @override
@@ -7843,6 +7945,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Bereit — nichts, was EN 16931 verlangt, fehlt, und dieses Format besteht den offiziellen Validator ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>
@@ -8209,6 +8316,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'Die Steuerkennung des Mitglieds: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)';
 
@@ -8217,12 +8328,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Rechtsgrundlage der Umsatzsteuerbefreiung';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'Die Mehrwertsteuer in Landeswährung: ein Verkäufer aus einem Mitgliedstaat außerhalb des Euro stellt die Steuer hier in seiner eigenen Währung in Rechnung (Art. 230 MwStSystRL)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+      'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -11835,6 +11954,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erlauben Sie sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Noch nicht gespeichert: Bis diese Serie gespeichert ist, erhalten Gutschriften Rechnungsnummern.';
+
+  @override
   String get numberSequenceDateNone => 'Keins';
 
   @override
@@ -14158,6 +14281,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
 
   @override
+  String get refusalVatRateVersioned =>
+      'Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.';
+
+  @override
   String get regionalClock => 'Uhr';
 
   @override
@@ -14734,6 +14861,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
+
+  @override
+  String get reportFieldMeaningDeclarationNote =>
+      'Der Hinweis der Erklärung: vor der Abgabe prüfen';
 
   @override
   String get reportFieldMeaningDueDate => 'Das Fälligkeitsdatum';
@@ -18873,11 +19004,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclBoxes => 'Kennzahlen des amtlichen Formulars';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Berichtigung für $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Eine abgegebene Erklärung ändert sich nie. Was sich danach in einem abgegebenen Zeitraum geändert hat — eine stornierte Rechnung, eine verspätet erfasste Zahlung — wird hier als Berichtigung dieser Erklärung erklärt.';
+
+  @override
+  String get vatDeclCredit => 'Erstattungsanspruch';
+
+  @override
   String get vatDeclDisclaimer =>
       'Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.';
 
   @override
   String get vatDeclDraft => 'Entwurf';
+
+  @override
+  String get vatDeclEdiTva => 'EDI-TVA-Datei (CA3)';
+
+  @override
+  String get vatDeclElster => 'ELSTER-Datei (UStVA)';
 
   @override
   String get vatDeclEmpty =>
@@ -18887,7 +19036,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclFiled => 'Abgegeben';
 
   @override
+  String get vatDeclFilingPeriod =>
+      'Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Geben Sie die Steuernummer ein: die Steuernummer für ELSTER, die SIREN (oder eine französische USt-IdNr.) für EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Steuernummer';
+
+  @override
   String get vatDeclGenerate => 'Vorbereiten';
+
+  @override
+  String get vatDeclInputVat => 'Abziehbare Vorsteuer';
 
   @override
   String get vatDeclInvoices => 'Rechnungen';
@@ -18903,10 +19066,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclNet => 'Bemessungsgrundlage';
 
   @override
+  String get vatDeclPayable => 'Zahllast';
+
+  @override
   String get vatDeclPdf => 'PDF';
 
   @override
   String get vatDeclPeriod => 'Zeitraum';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Jährlich';
+
+  @override
+  String get vatDeclPeriodField => 'Voranmeldungszeitraum';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'Wie oft Sie die Erklärung abgeben. Der Bildschirm der Umsatzsteuererklärung bietet nur Zeiträume dieser Länge an.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Monatlich';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Erklärungszeitraum: $period. Änderbar unter Rechtliche Identität & E-Rechnung.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Vierteljährlich';
 
   @override
   String get vatDeclPrepared => 'Vorbereitet';

@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/action_registry.dart';
 import '../../domain/task_recording.dart';
 import '../../guide/guide_compiler.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
-import '../recorder_labels.dart';
 import '../guide_host/guide_step_text.dart' show guideDestinationLabel;
+import '../recorder_labels.dart';
 
 class RecordingStepsView extends StatelessWidget {
   const RecordingStepsView({
@@ -32,7 +32,7 @@ class RecordingStepsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final steps = recording.steps;
     final answered = {
       for (final s in steps)
@@ -43,7 +43,7 @@ class RecordingStepsView extends StatelessWidget {
       children: [
         for (var i = 0; i < steps.length; i++) ...[
           if (i > 0 && steps[i - 1].segment != steps[i].segment)
-            _Gap(label: l10n?.taskRecorderSegmentGap ?? 'Paused here'),
+            _Gap(label: l10n.taskRecorderSegmentGap),
           _StepTile(
             step: steps[i],
             answered: !steps[i].isAttempt || answered.contains(steps[i].op),
@@ -54,8 +54,7 @@ class RecordingStepsView extends StatelessWidget {
         if (leftOut.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
           Text(
-            l10n?.taskRecorderEditedNote(leftOut.length) ??
-                'Edited copy: ${leftOut.length} steps left out.',
+            l10n.taskRecorderEditedNote(leftOut.length),
             key: const ValueKey('task-recording-edited-note'),
           ),
         ],
@@ -110,11 +109,11 @@ class _StepTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final text = stepText(l10n, step);
     final unanswered = answered
         ? null
-        : (l10n?.taskRecorderNoOutcome ?? 'No answer recorded');
+        : (l10n.taskRecorderNoOutcome);
     final detail = [?text.detail, ?unanswered].join(' · ');
     final style = leftOut
         ? TextStyle(
@@ -170,8 +169,8 @@ class _StepTile extends ConsumerWidget {
       trailing: IconButton(
         key: ValueKey('task-step-toggle-${step.seq}'),
         tooltip: leftOut
-            ? (l10n?.taskRecorderPutBack ?? 'Put back')
-            : (l10n?.taskRecorderLeaveOut ?? 'Leave out of the export'),
+            ? (l10n.taskRecorderPutBack)
+            : (l10n.taskRecorderLeaveOut),
         icon: Icon(leftOut ? Icons.undo : Icons.remove_circle_outline),
         onPressed: onToggle,
       ),

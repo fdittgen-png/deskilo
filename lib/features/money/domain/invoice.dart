@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/data/json_reader.dart';
+import '../../../core/data/system_columns.dart';
 import 'billing_rules.dart';
 import 'invoice_clauses.dart';
 import 'vat_rate.dart';
-import '../../../core/data/system_columns.dart';
 
 part 'invoice.freezed.dart';
 
@@ -32,6 +33,11 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// #831 — on a settlement, the number of the source invoice this
     /// position was carried over from; '' on every other document.
     @Default('') String sourceNumber,
+
+    /// #2356 — the EN 16931 category the server froze on this line (S, Z,
+    /// E, O, AE, G; 0403); '' on a line issued before it, where readers
+    /// derive the category from the rate and the regime as they always did.
+    @Default('') String vatCategory,
   }) = _InvoiceLine;
 }
 
@@ -165,6 +171,20 @@ sealed class InvoiceParty with _$InvoiceParty {
     /// #922 — BT-13, the purchase-order reference: the *numéro
     /// d'engagement*. Buyer only; frozen at issue.
     @Default('') String orderReference,
+
+    /// #2358 — BT-34 (seller) / BT-49 (buyer), the electronic address a
+    /// network delivers to: a Peppol participant id, the French
+    /// directory address, an SdI recipient code or PEC mailbox.
+    @Default('') String endpointId,
+
+    /// #2358 — the EAS scheme of [endpointId] ('0009' SIRET, '0225' the
+    /// French directory, '0208' a Belgian enterprise number, '9930' a
+    /// German VAT id, 'EM' an e-mail address).
+    @Default('') String endpointScheme,
+
+    /// #2358 — BT-39 / BT-54, the country subdivision: the ISO 3166-2
+    /// county a CIUS-RO address must name ('RO-B'), the Italian province.
+    @Default('') String subdivision,
   }) = _InvoiceParty;
 
   /// Reads one party out of the invoice's `parties` jsonb. Named away
@@ -190,6 +210,9 @@ sealed class InvoiceParty with _$InvoiceParty {
     taxExemptionReason: json['tax_exemption_reason'] as String? ?? '',
     email: json['email'] as String? ?? '',
     phone: json['phone'] as String? ?? '',
+    endpointId: JsonReader.of(json).stringOr('endpoint_id'),
+    endpointScheme: JsonReader.of(json).stringOr('endpoint_scheme'),
+    subdivision: JsonReader.of(json).stringOr('subdivision'),
   );
 }
 
@@ -224,6 +247,7 @@ sealed class SettledSource with _$SettledSource {
               amountCents: (line['amount_cents'] as num?)?.toInt() ?? 0,
               vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
               sourceNumber: line['source_number'] as String? ?? '',
+              vatCategory: line['vat_category'] as String? ?? '',
             ),
         ],
       );
@@ -405,6 +429,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
           amountCents: (line['amount_cents'] as num).toInt(),
           vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
           sourceNumber: line['source_number'] as String? ?? '',
+          vatCategory: line['vat_category'] as String? ?? '',
         ),
     ],
     kind: InvoiceKind.fromWire(row['kind'] as String?),

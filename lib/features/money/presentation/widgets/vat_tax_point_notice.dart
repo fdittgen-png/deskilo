@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint_providers.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/vat_regime.dart';
 import '../vat_tax_point_labels.dart';
@@ -56,7 +56,7 @@ class VatTaxPointNotice extends ConsumerWidget {
         key: const ValueKey('vat-tax-point-notice'),
         icon: Icons.info_outline,
         severity: InlineBannerSeverity.info,
-        text: vatWords(AppLocalizations.of(context)).vatTaxPointNoticeFr,
+        text: vatWords(context.l10n).vatTaxPointNoticeFr,
         actionLabel: MaterialLocalizations.of(context).okButtonLabel,
         onAction: () => ref
             .read(dismissedHelpHintsProvider.notifier)

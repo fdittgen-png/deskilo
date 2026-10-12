@@ -8,6 +8,7 @@
 // one reader of that map; nothing else parses a hex string. Pure Dart:
 // colours are ARGB integers here, `Color` is the presentation's.
 
+import '../../../core/data/json_reader.dart';
 import 'workspace.dart';
 import 'workspace_feature.dart';
 
@@ -99,17 +100,17 @@ class WorkspaceBranding {
   /// crash — the server validated what it stored, an older client may
   /// still meet a newer key.
   factory WorkspaceBranding.fromJson(Map<String, dynamic> json) {
-    final palette = json[BrandingKeys.officePalette];
+    // Fail-closed (#2387): a colour or pattern that does not parse reads
+    // as absent, and the default look applies.
+    final r = JsonReader(json, context: 'workspace_branding');
     return WorkspaceBranding(
-      seedArgb: parseHexColor(json[BrandingKeys.seedColor]),
+      seedArgb: parseHexColor(r.json[BrandingKeys.seedColor]),
       officePalette: [
-        if (palette is List)
-          for (final c in palette) ?parseHexColor(c),
+        for (final c in r.listOrAbsent(BrandingKeys.officePalette))
+          ?parseHexColor(c),
       ],
-      seatPalette: json[BrandingKeys.seatPalette] is String
-          ? json[BrandingKeys.seatPalette] as String
-          : null,
-      pattern: BrandPattern.fromWire(json[BrandingKeys.pattern]),
+      seatPalette: r.textOrAbsent(BrandingKeys.seatPalette),
+      pattern: BrandPattern.fromWire(r.json[BrandingKeys.pattern]),
     );
   }
 

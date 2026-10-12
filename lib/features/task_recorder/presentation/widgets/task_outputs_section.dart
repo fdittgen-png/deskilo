@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -44,7 +45,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
 
   Future<void> _generate(TaskOutputGenerator generator) async {
     if (_busy.contains(generator.id)) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final request = TaskOutputRequest(
       recording: widget.recording(),
       languageCode: Localizations.localeOf(context).languageCode,
@@ -56,7 +57,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
     TaskOutputResult result;
     try {
       result = await generator.generate(request);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'output ${generator.id} failed (${e.runtimeType})',
@@ -94,7 +95,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
           FutureBuilder<TaskOutputAvailability>(
             future: g.availability(),
             builder: (context, snapshot) {
-              final l10n = AppLocalizations.of(context);
+              final l10n = context.l10n;
               final availability = snapshot.data;
               final why = availability is TaskOutputUnsupported
                   ? outputReasonText(l10n, availability.reason)
@@ -102,7 +103,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
               return ListTile(
                 key: ValueKey('task-output-${g.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(outputKindLabel(l10n, g.kind)),
+                title: Text(_outputKindLabel(l10n, g.kind)),
                 subtitle: why == null ? null : Text(why),
                 trailing: FilledButton(
                   key: ValueKey('task-output-make-${g.id}'),
@@ -111,7 +112,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
                           !_busy.contains(g.id)
                       ? () => _generate(g)
                       : null,
-                  child: Text(l10n?.taskOutputMake ?? 'Make'),
+                  child: Text(l10n.taskOutputMake),
                 ),
               );
             },
@@ -122,30 +123,27 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
 }
 
 /// The words for an output's kind.
-String outputKindLabel(AppLocalizations? l10n, TaskOutputKind kind) =>
+String _outputKindLabel(AppLocalizations l10n, TaskOutputKind kind) =>
     switch (kind) {
-      TaskOutputKind.document => l10n?.taskOutputDocument ?? 'Word document',
-      TaskOutputKind.storyboard => l10n?.taskOutputStoryboard ?? 'Storyboard',
+      TaskOutputKind.document => l10n.taskOutputDocument,
+      TaskOutputKind.storyboard => l10n.taskOutputStoryboard,
     };
 
 /// The words for why an output was not made.
-String outputReasonText(AppLocalizations? l10n, TaskOutputReason reason) =>
+String outputReasonText(AppLocalizations l10n, TaskOutputReason reason) =>
     switch (reason) {
       TaskOutputReason.refused =>
-        l10n?.taskExportRefused ??
-            'This recording cannot be exported as a Word document.',
+        l10n.taskExportRefused,
       TaskOutputReason.stale =>
-        l10n?.taskOutputStale ??
-            'The illustrations were reviewed for an earlier version.',
+        l10n.taskOutputStale,
       TaskOutputReason.empty =>
-        l10n?.taskOutputMissingMedia ??
-            'This task has no images to use.',
+        l10n.taskOutputMissingMedia,
       TaskOutputReason.tooLong =>
-        l10n?.taskOutputTooLong ?? 'This task is too long for this output.',
+        l10n.taskOutputTooLong,
       TaskOutputReason.busy =>
-        l10n?.taskOutputBusy ?? 'This output is already being made.',
+        l10n.taskOutputBusy,
       TaskOutputReason.unsupportedPlatform =>
-        l10n?.taskOutputUnsupportedPlatform ?? 'Not available on this device.',
+        l10n.taskOutputUnsupportedPlatform,
       TaskOutputReason.failed =>
-        l10n?.taskOutputFailed ?? 'The output could not be made.',
+        l10n.taskOutputFailed,
     };

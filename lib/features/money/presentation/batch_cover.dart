@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/report_block_widgets.dart';
 import 'invoice_documents.dart';
-import '../../workspace/providers/workspace_providers.dart';
 
 /// #671 — the cover page for a batch print, rendered from the report
 /// editor's bands for [docId] through the same pipeline every other

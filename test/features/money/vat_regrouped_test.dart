@@ -64,9 +64,7 @@ SettledSource _src(String id, int total) => SettledSource(
       invoiceId: id,
       number: id.toUpperCase(),
       period: '2026-08',
-      kind: InvoiceKind.full,
       totalCents: total,
-      lines: const [],
     );
 
 void main() {
@@ -82,12 +80,11 @@ void main() {
       invoiceId: 's',
       paidCents: 24000,
       resolution: 'exact',
-      status: 'confirmed',
       matchedAt: DateTime.utc(2026, 9, 15),
       byName: 'Flo',
     ),
   };
-  final start = DateTime.utc(2026, 9, 1);
+  final start = DateTime.utc(2026, 9);
   final end = DateTime.utc(2026, 9, 30);
 
   test('the cash-basis declaration reports the regrouped sources', () {
@@ -122,7 +119,7 @@ void main() {
     // Invoice basis: the sources were issued in August.
     final onIssue = buildVatReport(
       view.invoices,
-      start: DateTime.utc(2026, 8, 1),
+      start: DateTime.utc(2026, 8),
       end: DateTime.utc(2026, 8, 31),
       zeroCategory: 'Z',
     );

@@ -2,15 +2,16 @@
 // #1661: actual independently authenticated local PostgREST -> repository ->
 // workbook -> saved bytes. Started by test/helpers/workbook_provenance_runtime.py;
 // opt-in, never a fake substitute for the two-installation check.
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:deskilo/features/workspace/application/template_workbook.dart';
+import 'package:deskilo/features/workspace/data/supabase_workbook_origin_repository.dart';
+import 'package:deskilo/features/workspace/data/supabase_workspace_repository.dart';
+import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:deskilo/features/workspace/application/template_workbook.dart';
-import 'package:deskilo/features/workspace/data/supabase_workspace_repository.dart';
-import 'package:deskilo/features/workspace/data/supabase_workbook_origin_repository.dart';
-import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 
 class HeldNativeRead extends SupabaseWorkspaceRepository {
   HeldNativeRead(super._client);
@@ -43,7 +44,10 @@ void main() {
         final source = SupabaseWorkbookOriginRepository(client);
         final origin = await source.read();
         expect(origin.installationId, row['installation']);
-        expect(origin.accountId, (row['session'] as Map)['user']['id']);
+        expect(
+          origin.accountId,
+          ((row['session'] as Map)['user'] as Map)['id'],
+        );
         await client.auth.refreshSession();
         expect(origin.sameContext(await source.read()), true,
           reason: 'refresh retains the same target, account and Auth session');

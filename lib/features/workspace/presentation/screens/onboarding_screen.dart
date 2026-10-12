@@ -1,38 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/material.dart';
-import '../../../directory/presentation/account_portal_entry.dart';
-import '../widgets/application_requests_entry.dart';
+import 'dart:async';
 
-import '../../../../core/ids/request_id.dart';
-import '../../../../core/locale/device_locale.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/country/country_catalog.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../onboarding_handoff.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/sign_out.dart';
-import '../../../../core/ui/inline_banner.dart';
-import '../../application/creation_intent.dart';
-import '../../application/start_workspace.dart';
-import '../widgets/local_setup_views.dart';
-import '../widgets/template_region_notice.dart';
-import '../widgets/onboarding_creation.dart';
-import '../widgets/invitation_join_panel.dart';
-import '../../application/pending_invitation.dart';
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/country/country_catalog.dart';
+import '../../../../core/ids/request_id.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/locale/device_locale.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/wizard_form_layout.dart';
 import '../../../../core/ui/wizard_navigation.dart';
-import '../../domain/workspace_template.dart';
+import '../../../../core/ui/wizard_progress.dart';
+import '../../../../core/ui/wizard_scaffold.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../auth/providers/sign_out.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
+import '../../application/creation_intent.dart';
+import '../../application/pending_invitation.dart';
+import '../../application/start_workspace.dart';
 import '../../domain/template_outline.dart';
+import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
+import '../onboarding_handoff.dart';
+import '../widgets/application_requests_entry.dart';
+import '../widgets/invitation_join_panel.dart';
+import '../widgets/local_setup_views.dart';
+import '../widgets/onboarding_creation.dart';
 import '../widgets/template_picker.dart';
-import '../../../../core/ui/wizard_scaffold.dart';
-import '../../../../core/ui/wizard_form_layout.dart';
-import '../../../../core/ui/wizard_progress.dart';
+import '../widgets/template_region_notice.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -123,9 +125,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // #1652 — the person came to join: Join is selected, not Create.
     _joinMode = widget.joinFirst ||
         ref.read(entryIntentsProvider)?.purpose == EntryPurpose.join;
-    _resume();
+    unawaited(_resume());
     _takeArrivedInvitation();
-    _offerKeptInvitation();
+    unawaited(_offerKeptInvitation());
   }
 
   /// #1652 — the link the app was opened with fills the field; the
@@ -152,7 +154,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     try {
       final active = await ref.read(activeBackendProvider.future);
       text = await ref.read(pendingInvitationsProvider).offeredOn(active);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Storage unavailable: the field stays empty.
       TraceLogger.instance.warn('workspace', 'kept invitation unreadable',
           error: e, stackTrace: st);
@@ -218,7 +220,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_busy) return;
     Object? error;
     setState(() { _busy = true; _failure = null; });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #1654 runs the action against a captured context; #1636 keeps the
     // error to tell a template refusal from an unknown outcome, and clears
     // the creation draft once the server confirmed the workspace.
@@ -240,9 +242,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         setState(() {
           _busy = false;
           _failure = _joinMode
-              ? l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.'
-              : l10n?.onboardingUnconfirmed ??
-                  'The result could not be confirmed. Your entries are kept. Retry to check the same request.';
+              ? l10n.workspaceGenericError
+              : l10n.onboardingUnconfirmed;
           // #1636 — only the server refusing the template means nothing
           // was made; any other failure may have created it.
           final refused = error != null && isTemplateRefusal(error!);
@@ -339,16 +340,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final sent = _sent;
     if (sent == null || _busy) return;
     setState(() => _restore(sent));
-    _create();
+    unawaited(_create());
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final signOut = IconButton(
       key: const ValueKey('onboarding-auth-sign-out'),
       icon: const Icon(Icons.logout),
-      tooltip: l10n?.authSignOut ?? 'Sign out',
+      tooltip: l10n.authSignOut,
       onPressed: _busy ? null : () async => signOutAndForget(ref),
     );
     final modeSwitch = SegmentedButton<bool>(
@@ -357,11 +358,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       segments: [
         ButtonSegment(
           value: false,
-          label: Text(l10n?.onboardingCreateTab ?? 'Create a workspace'),
+          label: Text(l10n.onboardingCreateTab),
         ),
         ButtonSegment(
           value: true,
-          label: Text(l10n?.onboardingJoinTab ?? 'Join a workspace'),
+          label: Text(l10n.onboardingJoinTab),
         ),
       ],
       selected: {_joinMode},
@@ -371,7 +372,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_joinMode) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.onboardingTitle ?? 'Welcome to DesKilo'),
+          title: Text(l10n.onboardingTitle),
           actions: [const ApplicationRequestsEntry(), const AccountPortalEntry(), signOut],
         ),
         body: _centered(Column(
@@ -383,8 +384,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
     return WizardNavigation(controller: widget.navigation,
       busy: _busy, hasDraft: _name.text.isNotEmpty || _completed.isNotEmpty,
-      discardMessage: l10n?.onboardingDiscardDraft ??
-          'Your entries will be lost. This does not cancel a request already sent.',
+      discardMessage: l10n.onboardingDiscardDraft,
       onStepBack: _step == 0 ? null : () => _goTo(_step - 1),
       builder: (back) => WizardScaffold(
       leading: Navigator.of(context).canPop() ? BackButton(key: const ValueKey('onboarding-back-button'), onPressed: back) : null,
@@ -394,13 +394,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       animateStep: true,
       stepStates: [for (var i = 0; i <= _confirmStep; i++) _stateOf(i)],
       formMaxWidth: _step == 2 ? double.infinity : WizardFormLayout.shortFormWidth,
-      title: l10n?.onboardingTitle ?? 'Welcome to DesKilo',
+      title: l10n.onboardingTitle,
       actions: [const ApplicationRequestsEntry(), const AccountPortalEntry(), signOut],
       steps: [
-        (name: 'name', label: l10n?.onboardingStepName ?? 'Name'),
-        (name: 'where', label: l10n?.onboardingStepWhere ?? 'Where'),
-        (name: 'start', label: l10n?.onboardingStartFrom ?? 'Start from'),
-        (name: 'confirm', label: l10n?.onboardingStepConfirm ?? 'Confirm'),
+        (name: 'name', label: l10n.onboardingStepName),
+        (name: 'where', label: l10n.onboardingStepWhere),
+        (name: 'start', label: l10n.onboardingStartFrom),
+        (name: 'confirm', label: l10n.onboardingStepConfirm),
       ],
       index: _step,
       onStepTap: _busy
@@ -415,7 +415,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       onFinish: _create,
       finishEnabled: !_busy && !_templateRefused,
       finishKey: const ValueKey('onboarding-create'),
-      finishLabel: l10n?.onboardingCreateButton ?? 'Create workspace',
+      finishLabel: l10n.onboardingCreateButton,
       body: Form(
         key: _createFormKey,
         child: switch (_step) {
@@ -442,7 +442,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ),
       );
 
-  Widget _nameStepBody(AppLocalizations? l10n, Widget modeSwitch) => Column(
+  Widget _nameStepBody(AppLocalizations l10n, Widget modeSwitch) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           modeSwitch,
@@ -452,11 +452,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             controller: _name,
             focusNode: _nameFocus,
             decoration: InputDecoration(
-              labelText: l10n?.workspaceNameLabel ?? 'Workspace name',
+              labelText: l10n.workspaceNameLabel,
             ),
             onChanged: (_) => setState(() {}),
             validator: (v) => (v == null || v.trim().isEmpty)
-                ? (l10n?.authFieldRequired ?? 'Required')
+                ? (l10n.authFieldRequired)
                 : null,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -471,21 +471,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   },
             icon: const Icon(Icons.fast_forward_outlined),
             label: Text(
-                l10n?.onboardingUseSuggested ?? 'Use the suggested settings'),
+                l10n.onboardingUseSuggested),
           ),
         ],
       );
 
-  Widget _whereStepBody(AppLocalizations? l10n) => Column(
+  Widget _whereStepBody(AppLocalizations l10n) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DropdownButtonFormField<String>(
             key: const ValueKey('onboarding-workspace-country-label'),
             isExpanded: true,
-            itemHeight: null,
             initialValue: _countryCode,
             decoration: InputDecoration(
-              labelText: l10n?.workspaceCountryLabel ?? 'Country',
+              labelText: l10n.workspaceCountryLabel,
             ),
             items: [
               for (final country in CountryCatalog.countries)
@@ -551,7 +550,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
   }
 
-  Widget _confirmStepBody(AppLocalizations? l10n) =>
+  Widget _confirmStepBody(AppLocalizations l10n) =>
       Consumer(builder: (context, ref, _) {
         _resolveDefaultTemplate(ref);
         final templates = ref.watch(workspaceTemplatesProvider).value ?? const [];
@@ -565,7 +564,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               CreationPendingBanner(
                   changed: _intentChanged || !_intent.sameMaterial(_sent!),
                   onRetryAsSent: _retryAsSent),
-            Text(l10n?.onboardingConfirmIntro ?? 'This is what will be created:',
+            Text(l10n.onboardingConfirmIntro,
                 style: Theme.of(context).textTheme.titleMedium),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -597,17 +596,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.grid_view_outlined),
               title: Text(template?.name ??
-                  (l10n?.onboardingStartEmpty ?? 'Empty space')),
+                  (l10n.onboardingStartEmpty)),
               subtitle: template == null
                   ? null
                   : Text([
-                      l10n?.libraryCounts(template.counts.levels,
-                              template.counts.desks, template.counts.seats) ??
-                          '${template.counts.levels} levels · '
-                              '${template.counts.desks} desks · '
-                              '${template.counts.seats} seats',
+                      l10n.libraryCounts(template.counts.levels,
+                              template.counts.desks, template.counts.seats),
                       if (template.carriesConfiguration)
-                        l10n?.libraryCarriesSettings ?? 'with its settings',
+                        l10n.libraryCarriesSettings,
                     ].join(' · ')),
             ),
             if (template != null)
@@ -626,10 +622,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           _templateResolved = true;
                           _failedWithTemplate = false;
                         });
-                        _create();
+                        unawaited(_create());
                       },
-                child: Text(l10n?.onboardingCreateWithoutTemplate ??
-                    'Create without a template'),
+                child: Text(l10n.onboardingCreateWithoutTemplate),
               ),
           ],
         );

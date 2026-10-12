@@ -3,58 +3,58 @@ import '../../../l10n/app_localizations.dart';
 
 /// What each MCP operation does, in the person's language: the consent
 /// screen lists them, the confirmation screen names the one asked.
-String mcpOperationLabel(AppLocalizations? l10n, String op) => switch (op) {
+String mcpOperationLabel(AppLocalizations l10n, String op) => switch (op) {
   'list_workspaces' =>
-    l10n?.mcpOpListWorkspaces ?? 'See which workspaces it may use',
-  'get_capabilities' => l10n?.mcpOpCapabilities ?? 'See what it may do there',
-  'get_availability' => l10n?.mcpOpAvailability ?? 'See free places',
+    l10n.mcpOpListWorkspaces,
+  'get_capabilities' => l10n.mcpOpCapabilities,
+  'get_availability' => l10n.mcpOpAvailability,
   'list_my_reservations' =>
-    l10n?.mcpOpMyReservations ?? 'See your reservations',
-  'get_my_statement' => l10n?.mcpOpMyStatement ?? 'See your account statement',
-  'get_member_statement' => l10n?.mcpOpMemberStatement ?? op,
-  'list_my_invoices' => l10n?.mcpOpMyInvoices ?? 'See your invoices',
+    l10n.mcpOpMyReservations,
+  'get_my_statement' => l10n.mcpOpMyStatement,
+  'get_member_statement' => l10n.mcpOpMemberStatement,
+  'list_my_invoices' => l10n.mcpOpMyInvoices,
   'create_reservation' =>
-    l10n?.mcpOpCreateReservation ?? 'Book a place for you',
+    l10n.mcpOpCreateReservation,
   'update_reservation' =>
-    l10n?.mcpOpUpdateReservation ?? 'Change your reservations',
-  'check_in' => l10n?.mcpOpCheckIn ?? 'Check you in',
-  'check_out' => l10n?.mcpOpCheckOut ?? 'Check you out',
+    l10n.mcpOpUpdateReservation,
+  'check_in' => l10n.mcpOpCheckIn,
+  'check_out' => l10n.mcpOpCheckOut,
   'get_place' =>
-    l10n?.mcpOpGetPlace ?? 'Describe a place, and show it when you ask',
+    l10n.mcpOpGetPlace,
   'list_my_favorites' =>
-    l10n?.mcpOpListMyFavorites ?? 'Your favourite places',
+    l10n.mcpOpListMyFavorites,
   'set_favorite' =>
-    l10n?.mcpOpSetFavorite ?? 'Mark places as favourites',
-  'rate_place' => l10n?.mcpOpRatePlace ?? 'Rate places',
+    l10n.mcpOpSetFavorite,
+  'rate_place' => l10n.mcpOpRatePlace,
   'cancel_reservation' =>
-    l10n?.mcpOpCancelReservation ?? 'Cancel your bookings that have not started',
+    l10n.mcpOpCancelReservation,
   'request_reservation_deletion' =>
-    l10n?.mcpOpReservationDeletion ?? 'Ask to delete a booking that has started',
+    l10n.mcpOpReservationDeletion,
   'list_pending_validations' =>
-    l10n?.mcpOpPendingValidations ?? 'See pending validation requests',
-  'get_validation' => l10n?.mcpOpGetValidation ?? 'Read a validation request',
-  'request_invoice_issue' => l10n?.mcpOpInvoiceIssue ?? 'Issue an invoice',
-  'request_invoice_void' => l10n?.mcpOpInvoiceVoid ?? 'Void an invoice',
-  'request_refund' => l10n?.mcpOpRefund ?? 'Refund an invoice',
+    l10n.mcpOpPendingValidations,
+  'get_validation' => l10n.mcpOpGetValidation,
+  'request_invoice_issue' => l10n.mcpOpInvoiceIssue,
+  'request_invoice_void' => l10n.mcpOpInvoiceVoid,
+  'request_refund' => l10n.mcpOpRefund,
   'request_member_status_change' =>
-    l10n?.mcpOpMemberStatus ?? 'Change a member\'s status',
+    l10n.mcpOpMemberStatus,
   'request_subscription_change' =>
-    l10n?.mcpOpSubscription ?? 'Change a member\'s subscription share',
+    l10n.mcpOpSubscription,
   'respond_to_validation' =>
-    l10n?.mcpOpRespond ?? 'Answer a validation request',
+    l10n.mcpOpRespond,
   _ => op,
 };
 
 /// #1809 — what each optional field discloses, in the person's language.
-String mcpOptionalFieldLabel(AppLocalizations? l10n, String field) =>
+String mcpOptionalFieldLabel(AppLocalizations l10n, String field) =>
     switch (field) {
-      'name' => l10n?.mcpFieldName ?? 'Names of workspaces and places',
+      'name' => l10n.mcpFieldName,
       _ => field,
     };
 
 /// #1809 — a fictional value for a field in the disclosure preview.
-String mcpOptionalFieldSample(AppLocalizations? l10n, String field) =>
+String mcpOptionalFieldSample(AppLocalizations l10n, String field) =>
     switch (field) {
-      'name' => l10n?.mcpFieldNameSample ?? 'Window desk 12',
+      'name' => l10n.mcpFieldNameSample,
       _ => '…',
     };

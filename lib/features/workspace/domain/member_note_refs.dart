@@ -231,14 +231,14 @@ String reservationToken(String id, String label) =>
     return (quote: null, rest: body);
   }
   final quote = segments.first as NoteQuoteRef;
-  final token = quoteTokenRaw(quote.id, quote.preview);
+  final token = _quoteTokenRaw(quote.id, quote.preview);
   final rest = body.startsWith(token) ? body.substring(token.length) : body;
   return (quote: quote, rest: rest.trimLeft());
 }
 
 /// The token exactly as it appears in a body, with no preview trimming —
 /// used to cut a parsed quote back out of the text it came from.
-String quoteTokenRaw(String id, String preview) => '[quote:$id|$preview]';
+String _quoteTokenRaw(String id, String preview) => '[quote:$id|$preview]';
 
 /// Builds a quote token for the composer. The preview is trimmed to one
 /// line so a quoted paragraph does not swallow the reply.

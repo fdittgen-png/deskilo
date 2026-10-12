@@ -4,6 +4,7 @@
 // of the transaction (the seller's country) and the customer's stated
 // capacity, frozen at issue; never by the reader's language or the
 // seller's legal form.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
@@ -67,7 +68,7 @@ Invoice _invoice({
   workspaceId: 'ws-1',
   memberId: 'm1',
   number: number,
-  issuedAt: DateTime(2026, 7, 1),
+  issuedAt: DateTime(2026, 7),
   title: '2026-07',
   lines: const [InvoiceLine(label: 'Desk', amountCents: 12000)],
   totalCents: 12000,
@@ -338,7 +339,7 @@ void main() {
   group('reminders', () {
     String letter(Map<String, Object?> data, String kind) {
       final report = renderReportBands(
-        bands: defaultBandsForDoc(kind, null),
+        bands: defaultBandsForDoc(kind, englishL10n),
         data: data,
       )!;
       return [
@@ -361,7 +362,7 @@ void main() {
       for (final (level, kind) in [(1, 'r1'), (2, 'r2'), (3, 'r3')]) {
         final data = reminderReportData(
           _en,
-          ReminderFacts(now: DateTime(2026, 8, 1), workspace: _workspace('FR')),
+          ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
           invoice,
           level: level,
         );
@@ -387,7 +388,7 @@ void main() {
       );
       final data = reminderReportData(
         _en,
-        ReminderFacts(now: DateTime(2026, 8, 1), workspace: _workspace('FR')),
+        ReminderFacts(now: DateTime(2026, 8), workspace: _workspace('FR')),
         invoice,
         level: 2,
       );

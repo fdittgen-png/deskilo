@@ -23,14 +23,22 @@
 //     needs review: it may not override consumer protection.
 //   * Capacity not stated — no automatic clause; the owner's texts print
 //     and are flagged for review.
-//   * Any other seller country — no reviewed profile: nothing automatic,
-//     the owner's texts print flagged, and the EU recovery indemnity is
-//     not printed outside the EU.
+//   * Any other EU member state (#2356; Italy, Spain, Poland and Romania
+//     wait for their national e-invoicing channel, #2358) — Directive 2011/7/EU gives every
+//     member state the €40 recovery indemnity and statutory interest
+//     between businesses, by law, without making them an invoice mention:
+//     the owner's texts print, as for Germany; a consumer never gets the
+//     indemnity.
+//   * Outside the EU — no reviewed profile: nothing automatic, the owner's
+//     texts print flagged, and no EU recovery indemnity.
 //
 // Every profile is `requiresReview`: these rules are the documented
 // statutory references, not an authoritative legal review. A profile
 // becomes reviewed only when someone with that authority says so.
 import 'package:meta/meta.dart';
+
+import '../../../core/data/json_reader.dart';
+import 'einvoice_mandates.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
@@ -62,10 +70,14 @@ enum LegalProfile {
   deBusiness,
   deConsumer,
 
+  /// #2356 — any other EU member state, under Directive 2011/7/EU.
+  euBusiness,
+  euConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
-  /// FR or DE with the capacity not stated.
+  /// An EU seller with the capacity not stated.
   capacityUnknown,
 }
 
@@ -183,27 +195,26 @@ class LegalClauseSnapshot {
 
   bool get onPaymentBasis => vatExigibility == 'payment';
 
-  factory LegalClauseSnapshot.fromJson(Map<dynamic, dynamic> json) =>
-      LegalClauseSnapshot(
-        schema: (json['schema'] as num?)?.toInt() ?? 1,
-        sellerKind: json['seller_kind'] as String? ?? '',
-        sellerCountry: json['seller_country'] as String? ?? '',
-        buyerCountry: json['buyer_country'] as String? ?? '',
-        buyerCapacity: CustomerCapacity.fromWire(
-          json['buyer_capacity'] as String?,
-        ),
-        capacitySource: json['capacity_source'] as String? ?? 'none',
-        termsSource: json['terms_source'] as String? ?? 'workspace',
-        clauses: PaymentTerms.fromJson(
-          json['clauses'] as Map? ?? const <String, Object?>{},
-        ),
-        legalForm: json['legal_form'] as String? ?? '',
-        registration: json['registration'] as String? ?? '',
-        insurance: json['insurance'] as String? ?? '',
-        specialMentions: json['special_mentions'] as String? ?? '',
-        vatExigibility: json['vat_exigibility'] as String? ?? 'invoice',
-        fingerprint: json['fingerprint'] as String? ?? '',
-      );
+  factory LegalClauseSnapshot.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'legal_clause_snapshot');
+    return LegalClauseSnapshot(
+      schema: r.intOrNull('schema') ?? 1,
+      sellerKind: r.stringOr('seller_kind'),
+      sellerCountry: r.stringOr('seller_country'),
+      buyerCountry: r.stringOr('buyer_country'),
+      buyerCapacity:
+          CustomerCapacity.fromWire(r.stringOrNull('buyer_capacity')),
+      capacitySource: r.stringOr('capacity_source', 'none'),
+      termsSource: r.stringOr('terms_source', 'workspace'),
+      clauses: PaymentTerms.fromJson(r.objectOrEmpty('clauses')),
+      legalForm: r.stringOr('legal_form'),
+      registration: r.stringOr('registration'),
+      insurance: r.stringOr('insurance'),
+      specialMentions: r.stringOr('special_mentions'),
+      vatExigibility: r.stringOr('vat_exigibility', 'invoice'),
+      fingerprint: r.stringOr('fingerprint'),
+    );
+  }
 
   /// The same facts read from the LIVE settings — for documents that are
   /// not an issued invoice (statements, letters, previews). The member's
@@ -245,12 +256,18 @@ class LegalClauseSnapshot {
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  if (country != 'FR' && country != 'DE') return LegalProfile.unsupported;
+  // #2358 — a national clearance channel the app does not speak yet.
+  if (!isEuCountry(country) ||
+      nationalChannelRequired.contains(euCountryCode(country))) {
+    return LegalProfile.unsupported;
+  }
   return switch ((country, snapshot.buyerCapacity)) {
     ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
     ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
     ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
     ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
+    (_, CustomerCapacity.business) => LegalProfile.euBusiness,
+    (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
   };
 }
@@ -300,14 +317,16 @@ QualifiedClauses qualifyClauses(
       ),
       escompte: owned(own.escompte, orDefault: strings.escompteDefault),
     ),
-    LegalProfile.deBusiness => QualifiedClauses(
+    LegalProfile.deBusiness || LegalProfile.euBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
       recoveryIndemnity: owned(own.recoveryIndemnity, orDefault: ''),
       escompte: owned(own.escompte, orDefault: ''),
     ),
-    LegalProfile.frConsumer || LegalProfile.deConsumer => QualifiedClauses(
+    LegalProfile.frConsumer ||
+    LegalProfile.deConsumer ||
+    LegalProfile.euConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),

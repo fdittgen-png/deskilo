@@ -21,7 +21,7 @@ import 'task_document.dart';
 
 /// The app localizations for [code], English when the code is not one of
 /// the app's languages.
-AppLocalizations outputLocalizations(String code) {
+AppLocalizations _outputLocalizations(String code) {
   final supported = AppLocalizations.supportedLocales.any(
     (l) => l.languageCode == code,
   );
@@ -51,7 +51,7 @@ class DocxOutputGenerator implements TaskOutputGenerator {
     void Function(double fraction)? onProgress,
     TaskOutputCancel? cancel,
   }) async {
-    final l = outputLocalizations(request.languageCode);
+    final l = _outputLocalizations(request.languageCode);
     final recording = request.recording;
     final storyboard = request.storyboard;
     if (storyboard != null &&

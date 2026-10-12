@@ -7,10 +7,10 @@
 // accounts, because every wrong account code has to be unbooked by hand.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 

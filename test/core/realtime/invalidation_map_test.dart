@@ -94,8 +94,7 @@ void main() {
   test('the resume observer fires on RESUMED only — backgrounding must '
       'not trigger refetch storms', () {
     var calls = 0;
-    final observer = ResumeResyncObserver(() => calls++);
-    observer
+    final observer = ResumeResyncObserver(() => calls++)
       ..didChangeAppLifecycleState(AppLifecycleState.paused)
       ..didChangeAppLifecycleState(AppLifecycleState.inactive)
       ..didChangeAppLifecycleState(AppLifecycleState.hidden);

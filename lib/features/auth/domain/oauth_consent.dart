@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../core/data/json_reader.dart';
+
 /// The server-owned purpose of an Auth authorization, never a query parameter.
 enum OAuthConsentPurpose { identityFederation, mcp }
 
@@ -19,13 +21,18 @@ class OAuthConsentContext {
   final String? targetInstallationId;
 
   factory OAuthConsentContext.fromJson(Object? value) {
-    if (value is! Map || value['client_id'] is! String ||
-        value['local_user_id'] is! String ||
-        (value['client_id'] as String).isEmpty ||
-        (value['local_user_id'] as String).isEmpty) {
+    if (value is! Map) {
       throw const FormatException('invalid_oauth_consent_context');
     }
-    final purpose = switch (value['purpose']) {
+    // Fail-closed (#2387): a malformed field reads as absent, and an
+    // absent client or user refuses the whole context.
+    final r = JsonReader.of(value, context: 'oauth_consent_context');
+    final clientId = r.textOrAbsent('client_id') ?? '';
+    final localUserId = r.textOrAbsent('local_user_id') ?? '';
+    if (clientId.isEmpty || localUserId.isEmpty) {
+      throw const FormatException('invalid_oauth_consent_context');
+    }
+    final purpose = switch (r.textOrAbsent('purpose')) {
       'identity_federation' => OAuthConsentPurpose.identityFederation,
       'mcp' => OAuthConsentPurpose.mcp,
       _ => throw const FormatException('unknown_oauth_consent_purpose'),
@@ -33,10 +40,9 @@ class OAuthConsentContext {
     Uri? target;
     String? installation;
     if (purpose == OAuthConsentPurpose.identityFederation) {
-      final raw = value['target_auth_url'];
-      final rawInstallation = value['target_installation_id'];
-      installation = rawInstallation is String ? rawInstallation : null;
-      target = raw is String ? Uri.tryParse(raw) : null;
+      final raw = r.textOrAbsent('target_auth_url');
+      installation = r.textOrAbsent('target_installation_id');
+      target = raw == null ? null : Uri.tryParse(raw);
       if (target == null || target.scheme != 'https' ||
           target.host.isEmpty || target.userInfo.isNotEmpty ||
           target.hasQuery || target.hasFragment ||
@@ -47,8 +53,8 @@ class OAuthConsentContext {
     }
     return OAuthConsentContext(
       purpose: purpose,
-      clientId: value['client_id'] as String,
-      localUserId: value['local_user_id'] as String,
+      clientId: clientId,
+      localUserId: localUserId,
       targetAuthUrl: target,
       targetInstallationId: installation,
     );

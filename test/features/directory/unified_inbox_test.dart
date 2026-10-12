@@ -111,7 +111,6 @@ void main() {
           'c-inq',
           'La Serre',
           unread: 1,
-          at: '2026-07-15T08:00:00Z',
         ),
       );
   });

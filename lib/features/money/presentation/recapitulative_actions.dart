@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/currencies.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/time/date_text.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/recapitulative_statement.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
-import '../../../core/time/date_text.dart';
 
 /// #2354 — the recapitulative statement (EU sales list) of `[start,
 /// end)` as a CSV file, from the issued invoices: what was reverse-charged
@@ -24,8 +24,7 @@ Future<void> saveRecapitulativeCsv(
   required String currency,
 }) async {
   final l10n =
-      AppLocalizations.of(context) ??
-      lookupAppLocalizations(const Locale('en'));
+      context.l10n;
   final invoices = await ref.read(invoicesProvider.future);
   if (!context.mounted) return;
   final lines = recapitulativeStatement(invoices, from: start, to: end);

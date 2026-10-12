@@ -16,11 +16,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 

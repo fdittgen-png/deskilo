@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/event_decision.dart';
 import '../../../events/presentation/event_labels.dart';
@@ -17,7 +19,6 @@ import '../../providers/workspace_providers.dart';
 import '../reference_locale.dart';
 import 'note_record_open.dart';
 import 'ref_picker_sheet.dart';
-import '../../../../core/time/date_text.dart';
 
 /// What a record reference of one kind can point at.
 ///
@@ -50,7 +51,7 @@ Future<NoteRecordChoices> noteRecordChoices(
   BuildContext context,
   NoteRecordKind kind,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final localeName = Localizations.maybeLocaleOf(context)?.toString();
   final bakedLocale = referenceLocale(ref, context);
   final bakedL10n = referenceL10n(ref, context);
@@ -80,7 +81,7 @@ Future<NoteRecordChoices> noteRecordChoices(
           continue;
         }
         final who = names[event.subjectMemberId] ?? '';
-        String label(AppLocalizations? strings, String? locale) {
+        String label(AppLocalizations strings, String? locale) {
           final when = DateFormat.MMMd(locale)
               .add_Hm()
               .format(event.createdAt.toLocal());
@@ -99,8 +100,8 @@ Future<NoteRecordChoices> noteRecordChoices(
           at: created,
           facets: {
             'status': event.isPending
-                ? (id: 'pending', label: l10n?.refStatusPending ?? 'Pending')
-                : (id: 'decided', label: l10n?.refStatusDecided ?? 'Decided'),
+                ? (id: 'pending', label: l10n.refStatusPending)
+                : (id: 'decided', label: l10n.refStatusDecided),
             'type': (
               id: event.type.name,
               label: eventTypeLabel(l10n, event.type),
@@ -112,10 +113,10 @@ Future<NoteRecordChoices> noteRecordChoices(
         ));
       }
       facets = [
-        facet('status', l10n?.refFacetStatus ?? 'Status', quick: true),
-        facet('type', l10n?.refFacetType ?? 'Type'),
-        facet('person', l10n?.refFacetPerson ?? 'Person'),
-        facet('month', l10n?.refFacetMonth ?? 'Month'),
+        facet('status', l10n.refFacetStatus, quick: true),
+        facet('type', l10n.refFacetType),
+        facet('person', l10n.refFacetPerson),
+        facet('month', l10n.refFacetMonth),
       ];
     case NoteRecordKind.invoice:
     case NoteRecordKind.refund:
@@ -140,14 +141,14 @@ Future<NoteRecordChoices> noteRecordChoices(
           InvoiceLifecycle.open ||
           InvoiceLifecycle.awaitingValidation ||
           InvoiceLifecycle.partiallyPaid =>
-            (id: 'open', label: l10n?.refStatusOpen ?? 'Open (unpaid)'),
+            (id: 'open', label: l10n.refStatusOpen),
           InvoiceLifecycle.paid ||
           InvoiceLifecycle.remainderCancelled =>
-            (id: 'paid', label: l10n?.refStatusPaid ?? 'Paid'),
+            (id: 'paid', label: l10n.refStatusPaid),
           InvoiceLifecycle.refunded =>
-            (id: 'refunded', label: l10n?.refStatusRefunded ?? 'Refunded'),
+            (id: 'refunded', label: l10n.refStatusRefunded),
           InvoiceLifecycle.erroneous =>
-            (id: 'cancelled', label: l10n?.refStatusCancelled ?? 'Cancelled'),
+            (id: 'cancelled', label: l10n.refStatusCancelled),
         };
         final person = names[invoice.memberId] ?? invoice.memberName;
         candidates.add(refCandidate(
@@ -163,9 +164,9 @@ Future<NoteRecordChoices> noteRecordChoices(
             'type': invoice.isCreditNote
                 ? (
                     id: 'credit_note',
-                    label: l10n?.refTypeCreditNote ?? 'Credit note',
+                    label: l10n.refTypeCreditNote,
                   )
-                : (id: 'invoice', label: l10n?.refTypeInvoice ?? 'Invoice'),
+                : (id: 'invoice', label: l10n.refTypeInvoice),
             if (person.isNotEmpty) 'person': (id: invoice.memberId, label: person),
             'month': invoice.period != null
                 ? (id: invoice.period!, label: invoice.period!)
@@ -174,10 +175,10 @@ Future<NoteRecordChoices> noteRecordChoices(
         ));
       }
       facets = [
-        facet('status', l10n?.refFacetStatus ?? 'Status', quick: true),
-        facet('person', l10n?.refFacetPerson ?? 'Person'),
-        facet('month', l10n?.refFacetMonth ?? 'Month'),
-        facet('type', l10n?.refFacetType ?? 'Type'),
+        facet('status', l10n.refFacetStatus, quick: true),
+        facet('person', l10n.refFacetPerson),
+        facet('month', l10n.refFacetMonth),
+        facet('type', l10n.refFacetType),
       ];
     case NoteRecordKind.payment:
       final ledger = await ref.read(myLedgerProvider.future);
@@ -192,8 +193,8 @@ Future<NoteRecordChoices> noteRecordChoices(
         // The reference names the MONTH: that is the page a payment
         // opens on, and two payments in one month share it.
         if (!seen.add(entry.period)) continue;
-        String label(AppLocalizations? strings) =>
-            '${strings?.noteRefPayment ?? 'Payment'} · '
+        String label(AppLocalizations strings) =>
+            '${strings.noteRefPayment} · '
             '${entry.period} · ${money.formatMinor(entry.amountCents)}';
         baked[entry.period] = label(bakedL10n);
         candidates.add(refCandidate(
@@ -207,7 +208,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         ));
       }
       formatAmount = money.formatMinor;
-      facets = [facet('month', l10n?.refFacetMonth ?? 'Month', quick: true)];
+      facets = [facet('month', l10n.refFacetMonth, quick: true)];
   }
   return (
     candidates: candidates,

@@ -2,6 +2,7 @@
 //
 // #1280 S3 — what publishing this workspace as a template would carry, as
 // the server's allow-list decides it (`template_publication_preview`, 0231).
+import '../../../core/data/json_reader.dart';
 import 'template_preview.dart';
 
 /// An entity the chosen groups would publish, and the keys removed from it.
@@ -48,33 +49,31 @@ class TemplatePublication {
           if (p.group != TemplateGroup.unknown) p.group,
       }.toList();
 
-  factory TemplatePublication.fromJson(Map<String, dynamic> json) =>
-      TemplatePublication(
-        published: [
-          for (final raw in json['published'] as List? ?? const <Object?>[])
-            if (raw is Map)
-              PublishedEntity(
-                entity: raw['entity'] as String? ?? '',
-                group: TemplateGroup.fromWire(raw['group'] as String?),
-                stripped: [
-                  for (final k in raw['stripped'] as List? ?? const <Object?>[])
-                    '$k'
-                ],
-              ),
-        ],
-        neverPublished: [
-          for (final raw
-              in json['never_published'] as List? ?? const <Object?>[])
-            if (raw is Map)
-              NeverPublished(
-                entity: raw['entity'] as String? ?? '',
-                reason: raw['reason'] as String? ?? '',
-              ),
-        ],
-        planNames: [
-          for (final n in json['plan_names'] as List? ?? const <Object?>[]) '$n'
-        ],
-      );
+  factory TemplatePublication.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_publication');
+    List<JsonReader> rows(String key) => [
+      for (final raw in r.list(key))
+        if (raw is Map) JsonReader.of(raw, context: '${r.context}.$key'),
+    ];
+    return TemplatePublication(
+      published: [
+        for (final row in rows('published'))
+          PublishedEntity(
+            entity: row.stringOr('entity'),
+            group: TemplateGroup.fromWire(row.stringOrNull('group')),
+            stripped: [for (final k in row.list('stripped')) '$k'],
+          ),
+      ],
+      neverPublished: [
+        for (final row in rows('never_published'))
+          NeverPublished(
+            entity: row.stringOr('entity'),
+            reason: row.stringOr('reason'),
+          ),
+      ],
+      planNames: [for (final n in r.list('plan_names')) '$n'],
+    );
+  }
 }
 
 /// #1658 — a publication request id reused with other arguments: the

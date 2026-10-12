@@ -5,8 +5,8 @@
 // With nothing to pay there is no card at all.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
-import 'package:flutter/material.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,8 +18,8 @@ void main() {
     final repo = FakeAccountActivityRepository()
       ..financeOverview = FinanceOverview(
         invoices: [
-          invoice('a', total: 12000, due: DateTime(2000, 1, 1)),
-          invoice('b', ws: 'Office B', total: 3000, due: DateTime(2999, 1, 1)),
+          invoice('a', total: 12000, due: DateTime(2000)),
+          invoice('b', ws: 'Office B', total: 3000, due: DateTime(2999)),
         ],
       );
     final router = await pumpMeApp(
@@ -66,7 +66,7 @@ void main() {
             workspaceId: 'ws-2',
             workspaceName: 'Second Space',
             number: 'D-1',
-            issuedAt: DateTime.utc(2026, 9, 1),
+            issuedAt: DateTime.utc(2026, 9),
             totalCents: 50000,
             paidCents: 0,
             currency: 'EUR',

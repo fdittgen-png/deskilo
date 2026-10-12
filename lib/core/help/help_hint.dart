@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
+import 'guide_site.dart';
 import 'help_arbiter.dart';
 import 'help_hint_providers.dart';
 import 'help_tips.dart';
@@ -29,15 +31,15 @@ class HelpHint extends ConsumerStatefulWidget {
   final HelpHintId id;
 
   /// Tip 1 — the surface's basic how-to sentence (#606).
-  static String text(AppLocalizations? l10n, HelpHintId id) =>
+  static String text(AppLocalizations l10n, HelpHintId id) =>
       helpHintText(l10n, id);
 
   /// The surface's default "Learn more" topic — see [helpHintTopic].
-  static String topic(AppLocalizations? l10n, HelpHintId id) =>
+  static String topic(AppLocalizations l10n, HelpHintId id) =>
       helpHintTopic(l10n, id);
 
   /// The surface's carousel — see [helpHintTips] for the catalog.
-  static List<HelpTip> tips(AppLocalizations? l10n, HelpHintId id) =>
+  static List<HelpTip> tips(AppLocalizations l10n, HelpHintId id) =>
       helpHintTips(l10n, id);
 
   /// Where a fresh visit opens — see [helpHintInitialTipIndex].
@@ -102,7 +104,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     if (dismissed == null || positions == null || dismissed.contains(id.name)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     // #2313 — a scenario of a switched-off feature is not offered.
     final tips = [
@@ -192,7 +194,6 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                           ),
                         ),
                         layoutBuilder: (current, previous) => Stack(
-                          alignment: AlignmentDirectional.topStart,
                           children: [...previous, ?current],
                         ),
                         child: SizedBox(
@@ -224,17 +225,10 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                         ),
                       TextButton(
                         key: ValueKey('help-hint-learn-more-${id.name}'),
-                        onPressed: () => context.push(
-                          Uri(
-                            path: '/help',
-                            queryParameters: {
-                              'topic':
-                                  tips[_page].topic ?? HelpHint.topic(l10n, id),
-                            },
-                          ).toString(),
-                        ),
+                        onPressed: () =>
+                            openGuide(ref, context, anchor: helpHintAnchor(id)),
                         child: Text(
-                          l10n?.helpHintLearnMore ?? 'Learn more',
+                          l10n.helpHintLearnMore,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -254,7 +248,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                             IconButton(
                               key: ValueKey('help-hint-prev-${id.name}'),
                               style: _round,
-                              tooltip: l10n?.helpHintPrevTip ?? 'Previous tip',
+                              tooltip: l10n.helpHintPrevTip,
                               icon: const Icon(Icons.navigate_before, size: 20),
                               color: scheme.onSurfaceVariant,
                               onPressed: () => _goTo(_page - 1, tips.length),
@@ -267,7 +261,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                             IconButton(
                               key: ValueKey('help-hint-next-${id.name}'),
                               style: _round,
-                              tooltip: l10n?.helpHintNextTip ?? 'Next tip',
+                              tooltip: l10n.helpHintNextTip,
                               icon: const Icon(Icons.navigate_next, size: 20),
                               color: scheme.onSurfaceVariant,
                               onPressed: () => _goTo(_page + 1, tips.length),
@@ -282,7 +276,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
             IconButton(
               key: ValueKey('help-hint-dismiss-${id.name}'),
               style: _round,
-              tooltip: l10n?.helpHintDismiss ?? 'Dismiss hint',
+              tooltip: l10n.helpHintDismiss,
               icon: const Icon(Icons.close, size: 18),
               color: scheme.onSurfaceVariant,
               onPressed: () => ref

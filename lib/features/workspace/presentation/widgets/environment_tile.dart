@@ -12,9 +12,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -24,7 +24,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
     if (workspace == null || !isOwner) return const SizedBox.shrink();
@@ -37,11 +37,11 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
       leading: Icon(workspace.isDevelopment
           ? Icons.construction_outlined
           : Icons.verified_outlined),
-      title: Text(l10n?.environmentLabel ?? 'Workspace type'),
+      title: Text(l10n.environmentLabel),
       subtitle: Text(
         workspace.isDevelopment
-            ? (l10n?.environmentDev ?? 'Development — for trying things out')
-            : (l10n?.environmentProd ?? 'Production — the invoices are owed'),
+            ? (l10n.environmentDev)
+            : (l10n.environmentProd),
       ),
       trailing: Switch(
         key: const ValueKey('workspace-environment-switch'),
@@ -56,16 +56,12 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
           key: const ValueKey('workspace-create-twin'),
           leading: const Icon(Icons.copy_all_outlined),
           title: Text(workspace.pairId.isEmpty
-              ? (l10n?.environmentPairsCreateTwin ?? 'Create its twin')
+              ? (l10n.environmentPairsCreateTwin)
               : workspace.isDevelopment
-                  ? (l10n?.environmentPairsPairedProd ??
-                      'Paired with its production twin')
-                  : (l10n?.environmentPairsPairedDev ??
-                      'Paired with its development twin')),
+                  ? (l10n.environmentPairsPairedProd)
+                  : (l10n.environmentPairsPairedDev)),
           subtitle: workspace.pairId.isEmpty
-              ? Text(l10n?.environmentPairsCreateTwinDesc ??
-                  'A development and a production workspace with the '
-                      'same name; the configuration is copied once.')
+              ? Text(l10n.environmentPairsCreateTwinDesc)
               : null,
           enabled: workspace.pairId.isEmpty,
           onTap: workspace.pairId.isEmpty
@@ -77,24 +73,24 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
 
   Future<void> _createTwin(
       BuildContext context, WidgetRef ref, Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'twin creation failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .createWorkspaceTwin(workspace.id),
     )) {
       return;
     }
-    ref.invalidate(myWorkspacesProvider);
-    ref.invalidate(currentWorkspaceProvider);
+    ref
+      ..invalidate(myWorkspacesProvider)
+      ..invalidate(currentWorkspaceProvider);
     if (!context.mounted) return;
     AppSnack.success(
-        context, l10n?.environmentPairsTwinCreated ?? 'The twin is created.');
+        context, l10n.environmentPairsTwinCreated);
   }
 
   Future<void> _set(
@@ -103,28 +99,25 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
     Workspace workspace, {
     required bool toProduction,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (toProduction) {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
           key: const ValueKey('workspace-environment-confirm'),
-          title: Text(l10n?.environmentProdConfirmTitle ??
-              'Declare this workspace production?'),
-          content: Text(l10n?.environmentProdConfirmBody ??
-              'The banner goes away and documents lose their watermark. '
-                  'Invoices already issued do not change.'),
+          title: Text(l10n.environmentProdConfirmTitle),
+          content: Text(l10n.environmentProdConfirmBody),
           actions: [
             TextButton(
               key: const ValueKey('environment-tile-cancel'),
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(l10n?.commonCancel ?? 'Cancel'),
+              child: Text(l10n.commonCancel),
             ),
             FilledButton(
               key: const ValueKey('workspace-environment-confirm-yes'),
               onPressed: () => Navigator.of(context).pop(true),
               child: Text(
-                  l10n?.environmentProdConfirmAction ?? 'Declare production'),
+                  l10n.environmentProdConfirmAction),
             ),
           ],
         ),
@@ -135,8 +128,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'workspace environment change failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(workspaceRepositoryProvider).setWorkspaceEnvironment(
             workspace.id,
             toProduction
@@ -148,7 +140,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
     if (!saved || !context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.environmentSaved ?? 'Workspace type saved.',
+      l10n.environmentSaved,
     );
   }
 }

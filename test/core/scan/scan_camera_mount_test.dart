@@ -55,6 +55,7 @@ class _CountingScannerState extends State<_CountingScanner> {
 /// A store whose read is held open until the test releases it, so the
 /// loading frame is observable rather than a race.
 class _SlowFrontCameraStore implements FrontCameraStore {
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   _SlowFrontCameraStore(this.value);
 
   final bool value;

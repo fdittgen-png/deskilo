@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
+import 'package:xml/xml.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
-import 'package:xml/xml.dart';
-
 import 'e_invoice_totals.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
@@ -56,16 +56,17 @@ String buildInvoiceCii({
   ) = eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
   final currency = invoice.currency;
 
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element('rsm:CrossIndustryInvoice', nest: () {
-    builder.namespace(
-        'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100', 'rsm');
-    builder.namespace(
+    builder
+      ..namespace(
+        'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100', 'rsm')
+      ..namespace(
         'urn:un:unece:uncefact:data:standard:'
         'ReusableAggregateBusinessInformationEntity:100',
-        'ram');
-    builder.namespace(
+        'ram')
+      ..namespace(
         'urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100', 'udt');
 
     void ram(String name, String text,
@@ -84,8 +85,9 @@ String buildInvoiceCii({
       builder.element('ram:$name', nest: () {
         builder.element('udt:DateTimeString', nest: () {
           // CII dates are `format="102"` — YYYYMMDD, no separators.
-          builder.attribute('format', '102');
-          builder.text(ymd(value));
+          builder
+            ..attribute('format', '102')
+            ..text(ymd(value));
         });
       });
     }
@@ -121,12 +123,17 @@ String buildInvoiceCii({
             ? line.quantity
             : 1;
         final unitCents = lineNet ~/ quantity;
-        final lineCategory = line.vatPercent > 0 ? 'S' : category;
+        // #2356 — the category the server froze on the line wins (a Z
+        // zero-rated line of a VAT-registered seller); an older line derives it.
+        final lineCategory = line.vatCategory.isNotEmpty
+            ? line.vatCategory
+            : line.vatPercent > 0 ? 'S' : category;
         builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {
-          builder.element('ram:AssociatedDocumentLineDocument', nest: () {
+          builder
+            ..element('ram:AssociatedDocumentLineDocument', nest: () {
             ram('LineID', '${i + 1}');
-          });
-          builder.element('ram:SpecifiedTradeProduct', nest: () {
+          })
+            ..element('ram:SpecifiedTradeProduct', nest: () {
             ram('Name', lineText(line));
           });
           builder.element('ram:SpecifiedLineTradeAgreement', nest: () {
@@ -138,7 +145,8 @@ String buildInvoiceCii({
             ram('BilledQuantity', '$quantity', {'unitCode': 'C62'});
           });
           builder.element('ram:SpecifiedLineTradeSettlement', nest: () {
-            builder.element('ram:ApplicableTradeTax', nest: () {
+            builder
+              ..element('ram:ApplicableTradeTax', nest: () {
               ram('TypeCode', 'VAT');
               ram('CategoryCode', lineCategory);
               // BR-S-05 wants the real rate, BR-E-05 the zero spelled
@@ -146,8 +154,8 @@ String buildInvoiceCii({
               if (lineCategory != 'O') {
                 ram('RateApplicablePercent', percentText(line.vatPercent));
               }
-            });
-            builder.element(
+            })
+              ..element(
                 'ram:SpecifiedTradeSettlementLineMonetarySummation',
                 nest: () {
               money('LineTotalAmount', lineNet);

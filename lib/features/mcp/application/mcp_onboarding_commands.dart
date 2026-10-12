@@ -91,6 +91,7 @@ class McpOnboardingCommands {
     days: days,
   );
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<bool> allowLoopbackClients(bool allowed) =>
       _repository.setLoopbackClients(allowed: allowed);
 

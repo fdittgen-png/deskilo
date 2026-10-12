@@ -4,21 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/instance_builder.dart';
 import '../../../../core/instance/instance_bundle.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
+import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/instance_readiness.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/management_api.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
-import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/instance/instance_doctor.dart';
 import '../widgets/instance_done_step.dart';
 import '../widgets/instance_owner_claim_field.dart';
 import '../widgets/instance_readiness_card.dart';
@@ -115,12 +116,10 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       TraceLogger.instance.warn('instance', '$what refused', error: e, stackTrace: st);
       if (mounted) {
         setState(() => _error = e.unauthorized
-            ? (AppLocalizations.of(context)?.instanceTokenRefused ??
-                'Supabase refused the token. Create one at Account → Access '
-                    'Tokens and paste it whole.')
+            ? (context.l10n.instanceTokenRefused)
             : e.message);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('instance', '$what failed', error: e, stackTrace: st);
       if (mounted) setState(() => _error = '$e');
     } finally {
@@ -130,8 +129,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   }
 
   String _stepFailed(String item, String message) =>
-      AppLocalizations.of(context)?.instanceStepFailed(item, message) ??
-      'Stopped at $item: $message';
+      context.l10n.instanceStepFailed(item, message);
 
   Future<void> _checkToken() async {
     final token = _token.text.trim();
@@ -242,7 +240,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       });
       return;
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await _run('switch device', () async {
       await ref
           .read(activeBackendProvider.notifier)
@@ -252,8 +250,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     if (!ok || !mounted) return;
     AppSnack.success(
       context,
-      l10n?.backendServerSaved ??
-          'Saved. Close and reopen the app to use the new server.',
+      l10n.backendServerSaved,
     );
     context.go('/server');
   }
@@ -269,24 +266,24 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final steps = <WizardStepSpec>[
-      (name: 'account', label: l10n?.instanceStepAccount ?? 'Account'),
-      (name: 'project', label: l10n?.instanceStepProject ?? 'Project'),
-      (name: 'schema', label: l10n?.instanceStepSchema ?? 'Schema'),
-      (name: 'functions', label: l10n?.instanceStepFunctions ?? 'Functions'),
-      (name: 'signin', label: l10n?.instanceStepSignIn ?? 'Sign-in'),
-      (name: 'done', label: l10n?.instanceStepDone ?? 'Done'),
+      (name: 'account', label: l10n.instanceStepAccount),
+      (name: 'project', label: l10n.instanceStepProject),
+      (name: 'schema', label: l10n.instanceStepSchema),
+      (name: 'functions', label: l10n.instanceStepFunctions),
+      (name: 'signin', label: l10n.instanceStepSignIn),
+      (name: 'done', label: l10n.instanceStepDone),
     ];
     return WizardScaffold(
-      title: l10n?.instanceWizardTitle ?? 'Create a new instance',
+      title: l10n.instanceWizardTitle,
       // #1393 — an instance is a whole DesKilo on its own database, and
       // the bundle is what builds it. The wizard performs that; the
       // guide is where it is explained.
       actions: [
         HelpDot(
-          l10n?.helpTopicInstances ?? 'Instances',
-          anchor: HelpAnchor.adminInstances,
+          l10n.helpTopicInstances,
+          anchor: HelpAnchor.backendHow,
         ),
       ],
       steps: steps,
@@ -306,7 +303,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               }),
       onFinish: _step == _Step.done && _endpoint != null && !_busy ? _useHere : null,
       finishEnabled: _doctor != null && !hasAlarm(_doctor!),
-      finishLabel: l10n?.instanceUseHere ?? 'Use this instance on this device',
+      finishLabel: l10n.instanceUseHere,
       finishKey: const ValueKey('instance-use-here'),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -334,13 +331,12 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     );
   }
 
-  List<Widget> _body(AppLocalizations? l10n) => switch (_step) {
+  List<Widget> _body(AppLocalizations l10n) => switch (_step) {
         _Step.account => _account(l10n),
         _Step.project => _projectStep(l10n),
         _Step.schema => [
             InstanceRunStep(
-              intro: l10n?.instanceInstallSchema(_bundle?.schema.length ?? 0) ??
-                  'Install the schema: every migration of the app, in order.',
+              intro: l10n.instanceInstallSchema(_bundle?.schema.length ?? 0),
               buttonKey: 'instance-install-schema',
               done: _schemaInstalled,
               busy: _busy,
@@ -351,8 +347,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           ],
         _Step.functions => [
             InstanceRunStep(
-              intro: l10n?.instanceDeployFunctions(_bundle?.functions.length ?? 0) ??
-                  'Deploy the functions: payments, e-invoices, push, badges.',
+              intro: l10n.instanceDeployFunctions(_bundle?.functions.length ?? 0),
               buttonKey: 'instance-deploy-functions',
               done: _functionsDeployed,
               busy: _busy,
@@ -364,41 +359,31 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         _Step.signIn => [
             InstanceOwnerClaimField(controller: _ownerEmail, enabled: !_signInConfigured),
             InstanceRunStep(
-              intro: l10n?.instanceSignInExplain ??
-                  'Sign-in settings: e-mail confirmation on (a sign-up must click '
-                      'the link in its mail), and the app\'s links allowed for '
-                      'password resets and magic links.',
+              intro: l10n.instanceSignInExplain,
               buttonKey: 'instance-apply-signin',
               done: _signInConfigured,
               busy: _busy,
               progress: null,
               retry: false,
               onRun: _configureSignIn,
-              startLabel: l10n?.instanceApplySignIn ?? 'Apply the sign-in settings',
+              startLabel: l10n.instanceApplySignIn,
               startIcon: Icons.tune,
             ),
           ],
         _Step.done => _doneStep(l10n),
       };
 
-  List<Widget> _account(AppLocalizations? l10n) => [
-        WizardText(l10n?.instanceTokenReach ??
-            'A personal access token reaches your whole Supabase account for '
-                'as long as it lives. The wizard holds it in memory only and '
-                'tells you when you can revoke it.'),
-        WizardText(l10n?.instanceAccountIntro ??
-            'Create a free account at supabase.com, then make a personal '
-                'access token (Account → Access Tokens) and paste it here. '
-                'The wizard uses it to create and set up the project; it is '
-                'never stored.'),
-        CopyableLink(supabaseUrl, label: l10n?.commonCopy ?? 'Copy'),
-        CopyableLink(tokensUrl, label: l10n?.commonCopy ?? 'Copy'),
+  List<Widget> _account(AppLocalizations l10n) => [
+        WizardText(l10n.instanceTokenReach),
+        WizardText(l10n.instanceAccountIntro),
+        CopyableLink(supabaseUrl, label: l10n.commonCopy),
+        CopyableLink(tokensUrl, label: l10n.commonCopy),
         TextField(
           key: const ValueKey('instance-token'),
           controller: _token,
           obscureText: true,
           decoration: InputDecoration(
-            labelText: l10n?.instanceTokenLabel ?? 'Personal access token',
+            labelText: l10n.instanceTokenLabel,
             border: const OutlineInputBorder(),
           ),
         ),
@@ -407,11 +392,11 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           key: const ValueKey('instance-check-token'),
           onPressed: _busy ? null : _checkToken,
           icon: const Icon(Icons.verified_user_outlined),
-          label: Text(l10n?.instanceCheckToken ?? 'Check the token'),
+          label: Text(l10n.instanceCheckToken),
         ),
         if (_orgs.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          WizardText(l10n?.instanceOrganisationLabel ?? 'Organisation',
+          WizardText(l10n.instanceOrganisationLabel,
               style: Theme.of(context).textTheme.labelLarge),
           RadioGroup<String>(
             key: const ValueKey('new-instance-radio-group'),
@@ -431,7 +416,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ],
       ];
 
-  List<Widget> _projectStep(AppLocalizations? l10n) => [
+  List<Widget> _projectStep(AppLocalizations l10n) => [
         TextField(
           key: const ValueKey('instance-project-name'),
           controller: _name,
@@ -439,7 +424,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           // to prefill it (the first start), typing must enable it.
           onChanged: (_) => setState(() {}),
           decoration: InputDecoration(
-            labelText: l10n?.instanceProjectName ?? 'Project name',
+            labelText: l10n.instanceProjectName,
             border: const OutlineInputBorder(),
           ),
         ),
@@ -448,7 +433,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           key: const ValueKey('instance-region'),
           initialValue: _region,
           decoration: InputDecoration(
-            labelText: l10n?.instanceRegion ?? 'Region (the nearest to the space)',
+            labelText: l10n.instanceRegion,
             border: const OutlineInputBorder(),
           ),
           items: [
@@ -458,22 +443,20 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           onChanged: (v) => setState(() => _region = v ?? _region),
         ),
         const SizedBox(height: AppSpacing.sm),
-        WizardText(l10n?.instanceDatabasePassword ??
-            'Database password, chosen for you — copy it somewhere safe; '
-                'the app never needs it again.'),
-        CopyableLink(_password, label: l10n?.commonCopy ?? 'Copy'),
+        WizardText(l10n.instanceDatabasePassword),
+        CopyableLink(_password, label: l10n.commonCopy),
         FilledButton.icon(
           key: const ValueKey('instance-create-project'),
           onPressed: _busy || _project != null || _name.text.trim().isEmpty
               ? null
               : _createProject,
           icon: const Icon(Icons.add_circle_outline),
-          label: Text(l10n?.instanceCreateProject ?? 'Create the project'),
+          label: Text(l10n.instanceCreateProject),
         ),
         if (_status.isNotEmpty && _project == null)
-          WizardText(l10n?.instanceProjectStatus(_status) ?? 'Project status: $_status'),
+          WizardText(l10n.instanceProjectStatus(_status)),
         if (_project case final p?)
-          WizardText(l10n?.instanceProjectReady(p.ref) ?? 'Project ready: ${p.ref}',
+          WizardText(l10n.instanceProjectReady(p.ref),
               style: Theme.of(context).textTheme.titleSmall),
         if (_readiness case final r?)
           InstanceReadinessCard(
@@ -485,7 +468,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           ),
         if (_existing.isNotEmpty && _project == null) ...[
           const SizedBox(height: AppSpacing.md),
-          WizardText(l10n?.instanceUseExisting ?? 'Or use an existing project:',
+          WizardText(l10n.instanceUseExisting,
               style: Theme.of(context).textTheme.labelLarge),
           for (final p in _existing)
             ListTile(
@@ -498,7 +481,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         ],
       ];
 
-  List<Widget> _doneStep(AppLocalizations? l10n) => [
+  List<Widget> _doneStep(AppLocalizations l10n) => [
         InstanceDoneStep(
           endpoint: _endpoint,
           api: _project == null ? null : _api,

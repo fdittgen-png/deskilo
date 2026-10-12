@@ -10,8 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// `// ignore:` comments in hand-written lib/ (26 when the budget began,
-/// none of them naming an issue).
-const _ignoreBudget = 26;
+/// none of them naming an issue; 72 once the staged rules of #2389 were
+/// turned on and their kept sites recorded below).
+const _ignoreBudget = 72;
+
+/// #2389 — `avoid_positional_boolean_parameters` is on for new code; the
+/// existing APIs that take a positional bool carry an ignore naming the
+/// issue, and this count only goes down as they become named.
+const _positionalBoolBudget = 47;
 
 /// Of those, the ones that name no issue (`#NNNN`).
 const _unexplainedBudget = 26;
@@ -56,6 +62,24 @@ void main() {
       reason:
           'fewer unexplained ignores than the budget: lower '
           '_unexplainedBudget to ${unexplained.length}',
+    );
+  });
+
+  test('positional-bool APIs only go down (ratchet)', () {
+    final kept = hits
+        .where((h) => h.contains('avoid_positional_boolean_parameters'))
+        .length;
+    expect(
+      kept,
+      lessThanOrEqualTo(_positionalBoolBudget),
+      reason: 'a new bool parameter is named: {required bool x}',
+    );
+    expect(
+      kept,
+      _positionalBoolBudget,
+      reason:
+          'fewer kept positional bools than the budget: lower '
+          '_positionalBoolBudget to $kept',
     );
   });
 }

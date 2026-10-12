@@ -18,6 +18,7 @@ external JSObject get _window;
 extension type _NDEFReader._(JSObject _) implements JSObject {
   external factory _NDEFReader();
   external JSPromise<JSAny?> scan(_ScanOptions options);
+  external JSFunction? get onreading;
   external set onreading(JSFunction handler);
 }
 
@@ -50,15 +51,15 @@ Future<bool> webNfcStartRead(void Function(String uid) onUid) async {
   try {
     final controller = _AbortController();
     _controller = controller;
-    final reader = _NDEFReader();
-    reader.onreading = ((JSObject event) {
+    final reader = _NDEFReader()
+      ..onreading = ((JSObject event) {
       final serial = _NDEFReadingEvent._(event).serialNumber;
       final uid = serial.toLowerCase().replaceAll(RegExp('[^0-9a-f]'), '');
       if (uid.isNotEmpty) onUid(uid);
     }).toJS;
     await reader.scan(_ScanOptions(signal: controller.signal)).toDart;
     return true;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('web nfc scan failed: $e\n$st');
     TraceLogger.instance
         .error('nfc', 'web scan failed', error: e, stackTrace: st);

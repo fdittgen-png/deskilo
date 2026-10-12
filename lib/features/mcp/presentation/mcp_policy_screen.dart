@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
@@ -82,7 +83,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final active = ref.watch(currentWorkspaceProvider).value?.id;
     final workspaceId = _workspaceId ??= active;
     final current = ref.watch(activeMcpTargetProvider);
@@ -91,7 +92,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         (active != null && active != workspaceId) ||
         (current.value != null && current.value != target);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.mcpPolicyTitle ?? 'Assistant access')),
+      appBar: AppBar(title: Text(l10n.mcpPolicyTitle)),
       body: workspaceId == null
           ? const SizedBox.shrink()
           : target == null && current.isLoading
@@ -111,10 +112,8 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
                     child: InlineBanner(
                       key: const ValueKey('mcp-policy-unavailable'),
                       icon: Icons.cloud_off_outlined,
-                      severity: InlineBannerSeverity.error,
                       text:
-                          l10n?.mcpPolicyUnavailable ??
-                          'The assistant settings could not be loaded. Try again later.',
+                          l10n.mcpPolicyUnavailable,
                     ),
                   ),
                   data: (policy) {
@@ -129,7 +128,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
 
   Widget _form(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     McpPolicy policy,
     McpPolicyDraft draft,
     bool switched,
@@ -142,16 +141,12 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         if (switched)
           _note(
             'mcp-policy-switched',
-            l10n?.mcpPolicySwitched ??
-                'You switched workspace. Reopen this page to edit the other workspace.',
+            l10n.mcpPolicySwitched,
             Icons.swap_horiz,
             InlineBannerSeverity.error,
           ),
         Text(
-          l10n?.mcpPolicyExplain ??
-              'Choose what assistants may do in this workspace. A member still needs this '
-                  'database\'s approval, the matching role, and must choose this workspace '
-                  'when connecting their assistant.',
+          l10n.mcpPolicyExplain,
         ),
         const SizedBox(height: AppSpacing.md),
         McpWorkspaceUsageCard(workspaceId: policy.workspaceId),
@@ -161,10 +156,9 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
             key: const ValueKey('mcp-api-reference'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.api_outlined),
-            title: Text(l10n?.mcpApiReference ?? 'API reference'),
+            title: Text(l10n.mcpApiReference),
             subtitle: Text(
-              l10n?.mcpApiReferenceHint ??
-                  'What an assistant can call, and how it is authorised',
+              l10n.mcpApiReferenceHint,
             ),
             trailing: const Icon(Icons.open_in_new),
             onTap: () => ref.read(linkLauncherProvider)(
@@ -174,16 +168,14 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         if (!policy.featureEnabled)
           _note(
             'mcp-policy-feature-off',
-            l10n?.mcpPolicyFeatureOff ??
-                'Assistants are switched off for this workspace in its features. You can still '
-                    'narrow or switch off the services below.',
+            l10n.mcpPolicyFeatureOff,
             Icons.toggle_off_outlined,
             InlineBannerSeverity.info,
           ),
         SwitchListTile(
           key: const ValueKey('mcp-policy-enabled'),
           contentPadding: EdgeInsets.zero,
-          title: Text(l10n?.mcpPolicyEnabled ?? 'Offer assistant services'),
+          title: Text(l10n.mcpPolicyEnabled),
           value: draft.enabled,
           onChanged: _busy || (!policy.featureEnabled && !draft.enabled)
               ? null
@@ -191,7 +183,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
-          l10n?.mcpPolicyCeiling ?? 'Records an assistant may act on',
+          l10n.mcpPolicyCeiling,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -200,11 +192,11 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
           segments: [
             ButtonSegment(
               value: 'own',
-              label: Text(l10n?.mcpPolicyCeilingOwn ?? 'Own records only'),
+              label: Text(l10n.mcpPolicyCeilingOwn),
             ),
             ButtonSegment(
               value: 'workspace',
-              label: Text(l10n?.mcpPolicyCeilingWorkspace ?? 'Workspace-wide'),
+              label: Text(l10n.mcpPolicyCeilingWorkspace),
             ),
           ],
           selected: {draft.targetCeiling},
@@ -219,9 +211,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
           const SizedBox(height: AppSpacing.md),
           _note(
             'mcp-policy-broadening',
-            l10n?.mcpPolicyBroadening ??
-                'Assistants already connected do not get the added services: each person '
-                    'must add them when they connect again.',
+            l10n.mcpPolicyBroadening,
             Icons.info_outline,
             InlineBannerSeverity.info,
           ),
@@ -230,14 +220,14 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         FilledButton(
           key: const ValueKey('mcp-policy-save'),
           onPressed: _busy || switched ? null : _save,
-          child: Text(l10n?.mcpPolicySave ?? 'Save'),
+          child: Text(l10n.mcpPolicySave),
         ),
       ],
     );
   }
 
   List<Widget> _group(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     McpPolicy policy,
     McpPolicyDraft draft,
     String group,
@@ -248,13 +238,13 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
     ];
     if (ops.isEmpty) return const [];
     final title = switch (group) {
-      McpOperationGroups.own => l10n?.mcpGroupOwn ?? 'Own bookings and account',
-      McpOperationGroups.financial => l10n?.mcpGroupFinancial ?? 'Finances',
+      McpOperationGroups.own => l10n.mcpGroupOwn,
+      McpOperationGroups.financial => l10n.mcpGroupFinancial,
       McpOperationGroups.membership =>
-        l10n?.mcpGroupMembership ?? 'Membership requests',
+        l10n.mcpGroupMembership,
       McpOperationGroups.validations =>
-        l10n?.mcpGroupValidations ?? 'Validations',
-      _ => l10n?.mcpGroupOther ?? group,
+        l10n.mcpGroupValidations,
+      _ => l10n.mcpGroupOther,
     };
     return [
       const SizedBox(height: AppSpacing.md),
@@ -280,26 +270,23 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
   /// #1809 — the optional fields, only within the installation maximum,
   /// and what they change in a fictional answer.
   List<Widget> _disclosure(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     McpPolicy policy,
     McpPolicyDraft draft,
   ) => [
     const SizedBox(height: AppSpacing.md),
     Text(
-      l10n?.mcpDisclosureTitle ?? 'Optional details',
+      l10n.mcpDisclosureTitle,
       style: Theme.of(context).textTheme.titleSmall,
     ),
     const SizedBox(height: AppSpacing.sm),
     Text(
-      l10n?.mcpDisclosurePolicyExplain ??
-          'Assistants get minimised answers. Choose the details they may also see '
-              'here; each person still chooses for themselves.',
+      l10n.mcpDisclosurePolicyExplain,
     ),
     if (policy.availableOptionalFields.isEmpty)
       _note(
         'mcp-policy-fields-none',
-        l10n?.mcpDisclosureNoneAllowed ??
-            'This database lets no optional detail be shown to assistants.',
+        l10n.mcpDisclosureNoneAllowed,
         Icons.lock_outline,
         InlineBannerSeverity.info,
       ),
@@ -323,26 +310,24 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
   ];
 
   Widget _outcomeBanner(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     String outcome,
   ) => switch (outcome) {
     'saved' || 'replayed' => _note(
       'mcp-policy-saved',
-      l10n?.mcpPolicySaved ?? 'Saved.',
+      l10n.mcpPolicySaved,
       Icons.check_circle_outline,
       InlineBannerSeverity.info,
     ),
     'stale' => _note(
       'mcp-policy-stale',
-      l10n?.mcpPolicyStale ??
-          'Someone changed these settings meanwhile. Review the current settings and save again.',
+      l10n.mcpPolicyStale,
       Icons.sync_problem_outlined,
       InlineBannerSeverity.error,
     ),
     _ => _note(
       'mcp-policy-conflict',
-      l10n?.mcpPolicyConflict ??
-          'This save was refused. Review the current settings and save again.',
+      l10n.mcpPolicyConflict,
       Icons.error_outline,
       InlineBannerSeverity.error,
     ),

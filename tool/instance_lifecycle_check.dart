@@ -45,14 +45,12 @@ String _versionOf(InstanceMigration m) => m.name.split('_').first;
 InstanceBundle _breaking(InstanceBundle bundle, int index) => InstanceBundle(
   schema: [
     for (var i = 0; i < bundle.schema.length; i++)
-      i == index
-          ? (
+      if (i == index) (
               name: bundle.schema[i].name,
               sql:
                   '${bundle.schema[i].sql.trimRight()}\n;\n'
                   "select 1 / 0 as interrupted_on_purpose;\n",
-            )
-          : bundle.schema[i],
+            ) else bundle.schema[i],
   ],
   functions: bundle.functions,
 );

@@ -12,9 +12,10 @@
 // the same apportionment feeds the accountant's report, so the two can
 // never disagree; and the choice is printed on every invoice, because it
 // is a statutory mention where it is asked for.
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
@@ -22,7 +23,6 @@ import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
 
 Invoice _invoice(
   String id,
@@ -55,13 +55,13 @@ InvoiceMatch _paid(String id, DateTime on, int cents) => InvoiceMatch(
       matchedAt: on,
     );
 
-final _august = (DateTime(2026, 8, 1), DateTime(2026, 8, 31));
-final _september = (DateTime(2026, 9, 1), DateTime(2026, 9, 30));
+final _august = (DateTime(2026, 8), DateTime(2026, 8, 31));
+final _september = (DateTime(2026, 9), DateTime(2026, 9, 30));
 
 /// #2355 — what a payment of [paidCents] declares, rate by rate.
 Map<double, int> _shares(Invoice invoice, int paidCents) => {
       for (final a in taxPointsOf(
-          invoice, [TaxPointPayment(DateTime(2026, 9, 1), paidCents)],
+          invoice, [TaxPointPayment(DateTime(2026, 9), paidCents)],
           basis: VatTaxPointBasis.receipt))
         a.percent: a.grossCents,
     };

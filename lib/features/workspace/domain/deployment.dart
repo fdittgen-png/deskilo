@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 
 /// #988 — the direction a deployment travels, named after the sides.
@@ -37,16 +38,16 @@ class DeployableEntity {
   /// #998 — the document designs: every report kind, preset, language.
   bool get isReports => kind == 'reports';
 
-  factory DeployableEntity.fromJson(Map<dynamic, dynamic> json) =>
-      DeployableEntity(
-        key: json['key'] as String? ?? '',
-        kind: json['kind'] as String? ?? 'configuration',
-        requires: [for (final r in json['requires'] as List? ?? const []) '$r'],
-        workspaceKeys: [
-          for (final k in json['workspace_keys'] as List? ?? const []) '$k'
-        ],
-        tables: [for (final t in json['tables'] as List? ?? const []) '$t'],
-      );
+  factory DeployableEntity.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'deployable_entity');
+    return DeployableEntity(
+      key: r.stringOr('key'),
+      kind: r.stringOr('kind', 'configuration'),
+      requires: [for (final x in r.list('requires')) '$x'],
+      workspaceKeys: [for (final k in r.list('workspace_keys')) '$k'],
+      tables: [for (final t in r.list('tables')) '$t'],
+    );
+  }
 }
 
 /// #988 — what a deployment would do to one entity on the target.
@@ -71,14 +72,17 @@ class EntityDiff {
 
   bool get isNoop => added == 0 && changed == 0 && removed == 0;
 
-  factory EntityDiff.fromJson(Map<dynamic, dynamic> json) => EntityDiff(
-        key: json['key'] as String? ?? '',
-        kind: json['kind'] as String? ?? 'configuration',
-        added: (json['added'] as num?)?.toInt() ?? 0,
-        changed: (json['changed'] as num?)?.toInt() ?? 0,
-        removed: (json['removed'] as num?)?.toInt() ?? 0,
-        details: [for (final d in json['details'] as List? ?? const []) '$d'],
-      );
+  factory EntityDiff.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'entity_diff');
+    return EntityDiff(
+      key: r.stringOr('key'),
+      kind: r.stringOr('kind', 'configuration'),
+      added: r.intOrNull('added') ?? 0,
+      changed: r.intOrNull('changed') ?? 0,
+      removed: r.intOrNull('removed') ?? 0,
+      details: [for (final d in r.list('details')) '$d'],
+    );
+  }
 }
 
 class DeploymentPreview {
@@ -89,14 +93,13 @@ class DeploymentPreview {
 
   bool get isNoop => entries.every((e) => e.isNoop);
 
-  factory DeploymentPreview.fromJson(Map<dynamic, dynamic> json) =>
-      DeploymentPreview(
-        direction: DeploymentDirection.fromWire(json['direction'] as String?),
-        entries: [
-          for (final e in json['entities'] as List? ?? const [])
-            EntityDiff.fromJson(e as Map),
-        ],
-      );
+  factory DeploymentPreview.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'deployment_preview');
+    return DeploymentPreview(
+      direction: DeploymentDirection.fromWire(r.stringOrNull('direction')),
+      entries: r.objects('entities', (row) => EntityDiff.fromJson(row.json)),
+    );
+  }
 }
 
 /// #988 — one line of the journal: who deployed what, when, in which

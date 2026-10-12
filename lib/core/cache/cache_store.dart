@@ -115,7 +115,7 @@ class FileCacheStore implements CacheStore {
       final dir = Directory('${support.path}/cache');
       if (!dir.existsSync()) dir.createSync(recursive: true);
       return _dir = dir;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       _unavailable = true;
       TraceLogger.instance.warn('cache', 'cache dir unavailable',
           error: e, stackTrace: st);
@@ -155,13 +155,13 @@ class FileCacheStore implements CacheStore {
             DateTime.fromMillisecondsSinceEpoch(raw['storedAt'] as int? ?? 0),
         ttl: Duration(milliseconds: raw['ttlMs'] as int? ?? 0),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Corrupt entries are deleted and read as a miss.
       TraceLogger.instance
           .warn('cache', 'unreadable entry $key', error: e, stackTrace: st);
       try {
         await file.delete();
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn('cache', 'could not remove unreadable entry',
             error: e, stackTrace: st);
       }
@@ -200,7 +200,7 @@ class FileCacheStore implements CacheStore {
       // Atomic swap: a killed app never leaves a half-written entry.
       await tmp.rename('${dir.path}/${_fileName(key)}');
       _publishedSeq[key] = seq;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('cache', 'write failed for $key', error: e, stackTrace: st);
       await _deleteQuietly(tmp);
@@ -217,7 +217,7 @@ class FileCacheStore implements CacheStore {
   Future<void> _deleteQuietly(File file) async {
     try {
       if (file.existsSync()) await file.delete();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('cache', 'could not remove a temporary entry',
           error: e, stackTrace: st);
     }
@@ -240,7 +240,7 @@ class FileCacheStore implements CacheStore {
         final name = file.uri.pathSegments.last;
         if (name.startsWith(filePrefix)) await file.delete();
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('cache', 'invalidate $prefix failed',
           error: e, stackTrace: st);
     }
@@ -262,7 +262,7 @@ class FileCacheStore implements CacheStore {
               await file.delete();
               evicted++;
             }
-          } catch (e, st) {
+          } on Object catch (e, st) {
             TraceLogger.instance.warn('cache', 'orphan temporary entry',
                 error: e, stackTrace: st);
           }
@@ -284,14 +284,14 @@ class FileCacheStore implements CacheStore {
             await file.delete();
             evicted++;
           }
-        } catch (e, st) {
+        } on Object catch (e, st) {
           TraceLogger.instance.warn('cache', 'evicting unreadable entry',
               error: e, stackTrace: st);
           await file.delete();
           evicted++;
         }
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('cache', 'eviction sweep failed', error: e, stackTrace: st);
     }

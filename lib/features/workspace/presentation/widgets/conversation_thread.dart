@@ -1,35 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/capture/capture_shield.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../directory/domain/group_details.dart';
+import '../../../directory/domain/message_marks.dart';
+import '../../../directory/domain/messenger.dart';
+import '../../../directory/presentation/messenger/message_actions_sheet.dart';
+import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/providers/message_marks_providers.dart';
+import '../../../directory/providers/messenger_providers.dart';
+import '../../../members/presentation/member_profile_link.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
-import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
 import 'message_reach_sheet.dart';
-import '../../../../core/capture/capture_shield.dart';
-import '../../../directory/domain/messenger.dart';
-import '../../../directory/presentation/messenger/message_actions_sheet.dart';
-import '../../../directory/presentation/messenger/message_marks.dart';
-import '../../../directory/domain/group_details.dart';
-import '../../../directory/domain/message_marks.dart';
-import '../../../directory/providers/message_marks_providers.dart';
-import '../../../directory/providers/messenger_providers.dart';
 
 /// A conversation, by id (#687) — the thread behind a row of the
 /// messaging centre, for a direct exchange or a group alike.
@@ -68,7 +71,7 @@ Future<void> showConversationThread(
     await context.push('/conversation/$conversationId');
     return;
   }
-  return showModalBottomSheet<void>(
+  return showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (_) => ConversationThread(
@@ -152,7 +155,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
   void _messageActions(MemberNote note, {required bool mine}) {
     final marks =
         ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
-    showMessageActions(
+    unawaited(showMessageActions(
       context,
       ref,
       MessageRef(
@@ -184,7 +187,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           ..invalidate(conversationMessagesProvider(widget.conversationId))
           ..invalidate(messageMarksProvider(_marksKey));
       },
-    );
+    ));
   }
 
   /// A tap on a reaction under a bubble toggles mine.
@@ -195,8 +198,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       context,
       domain: 'messages',
       message: 'react to message failed',
-      errorText: AppLocalizations.of(context)?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: context.l10n.portalActionFailed,
       action: () => ref.read(messengerActionsProvider()).react(
             MessageKind.memberNote,
             note.id,
@@ -214,7 +216,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           .recordScreenCapture(
               MessageContextKind.space, widget.conversationId);
       ref.invalidate(conversationMessagesProvider(widget.conversationId));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('messaging', 'record screen capture failed',
           error: e, stackTrace: st);
     }
@@ -239,7 +241,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         _noMoreEarlier = page.isEmpty;
         _loadingEarlier = false;
       });
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('messaging', 'load earlier failed',
           error: e, stackTrace: st);
       if (mounted) setState(() => _loadingEarlier = false);
@@ -263,7 +265,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       ref.invalidate(messageMarksProvider(_marksKey));
     });
     final conversationId = widget.conversationId;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -278,14 +280,14 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       final before = prev?.value?.length ?? 0;
       final after = next.value?.length ?? 0;
       if (after > before && before > 0) {
-        ref
+        unawaited(ref
             .read(workspaceRepositoryProvider)
             .markConversationRead(conversationId)
             .then((_) => ref.invalidate(conversationsProvider))
             .catchError((Object e, StackTrace st) {
           TraceLogger.instance.warn('messaging', 're-mark read failed',
               error: e, stackTrace: st);
-        });
+        }));
       }
     });
     final conversation = (ref.watch(conversationsProvider).value ?? const [])
@@ -295,9 +297,9 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     final title = conversation == null
         ? ''
         : conversation.isGroup
-            ? (conversation.title ?? (l10n?.conversationGroup ?? 'Group'))
+            ? (conversation.title ?? (l10n.conversationGroup))
             : (names[conversation.otherMemberId] ??
-                (l10n?.conversationUnknownMember ?? 'Member'));
+                (l10n.conversationUnknownMember));
     final messages = [..._earlier, ...newest];
     final canLoadEarlier = hub &&
         !_noMoreEarlier &&
@@ -360,7 +362,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 if (!(conversation?.isGroup ?? true))
                   Row(mainAxisSize: MainAxisSize.min, children: [
                     Text(
-                      l10n?.conversationSeeProfile ?? 'See profile',
+                      l10n.conversationSeeProfile,
                       style: theme.textTheme.bodySmall,
                     ),
                     Icon(Icons.chevron_right,
@@ -369,10 +371,9 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                 if (conversation?.isGroup ?? false)
                   Row(mainAxisSize: MainAxisSize.min, children: [
                     Text(
-                      l10n?.conversationMemberCount(
+                      l10n.conversationMemberCount(
                             conversation!.participantCount,
-                          ) ??
-                          '${conversation!.participantCount} members',
+                          ),
                       style: theme.textTheme.bodySmall,
                     ),
                     Icon(Icons.chevron_right,
@@ -395,7 +396,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     final list = messages.isEmpty
         ? Center(
             child: Text(
-              l10n?.conversationEmpty ?? 'No messages yet — say hello!',
+              l10n.conversationEmpty,
               style: theme.textTheme.bodySmall,
             ),
           )
@@ -424,8 +425,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                           key: const ValueKey('conversation-load-earlier'),
                           onPressed: () => _loadEarlier(newest),
                           icon: const Icon(Icons.history, size: 18),
-                          label: Text(l10n?.conversationLoadEarlier ??
-                              'Load earlier messages'),
+                          label: Text(l10n.conversationLoadEarlier),
                         ),
                 );
               }
@@ -513,8 +513,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         ? Padding(
             padding: AppSpacing.lgAll,
             child: Text(
-              AppLocalizations.of(context)?.groupPostingClosed ??
-                  'Only admins can post in this group.',
+              context.l10n.groupPostingClosed,
               key: const ValueKey('group-posting-closed'),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
@@ -589,13 +588,12 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
 
   Future<bool> _send(BuildContext context, WidgetRef ref, String body) async {
     final conversationId = widget.conversationId;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'workspace',
       message: 'send conversation message failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .sendConversationMessage(conversationId, body),
@@ -621,15 +619,15 @@ class _DaySeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final d = DateTime(day.year, day.month, day.day);
     final t = DateTime(today.year, today.month, today.day);
     final diff = d.difference(t).inDays;
     final label = diff == 0
-        ? (l10n?.conversationToday ?? 'Today')
+        ? (l10n.conversationToday)
         : diff == -1
-            ? (l10n?.conversationYesterday ?? 'Yesterday')
+            ? (l10n.conversationYesterday)
             : DateFormat.yMMMEd(Localizations.maybeLocaleOf(context)?.toString())
                 .format(day);
     return Center(

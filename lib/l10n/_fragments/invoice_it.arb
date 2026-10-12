@@ -275,7 +275,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Pronto — questo file soddisfa la EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validatore rifiuterebbe questo file:",
   "invoiceEInvoiceIncompleteTitle": "Valido, ma i profili nazionali più severi chiedono anche:",
   "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.",

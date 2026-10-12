@@ -8,45 +8,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/rights_requests.dart';
 import '../../domain/rights_request.dart';
 import '../../providers/profile_providers.dart';
 
-String _rightsKindLabel(AppLocalizations? l10n, String kind) => switch (kind) {
-  'access' => l10n?.rightsKindAccess ?? 'See a copy of my data',
+String _rightsKindLabel(AppLocalizations l10n, String kind) => switch (kind) {
+  'access' => l10n.rightsKindAccess,
   'portability' =>
-    l10n?.rightsKindPortability ?? 'Take my data elsewhere (machine-readable)',
-  'rectification' => l10n?.rightsKindRectification ?? 'Correct my data',
+    l10n.rightsKindPortability,
+  'rectification' => l10n.rightsKindRectification,
   'restriction' =>
-    l10n?.rightsKindRestriction ?? 'Restrict how my data is used',
-  'objection' => l10n?.rightsKindObjection ?? 'Object to a use of my data',
-  _ => l10n?.rightsKindErasure ?? 'Erase my data',
+    l10n.rightsKindRestriction,
+  'objection' => l10n.rightsKindObjection,
+  _ => l10n.rightsKindErasure,
 };
 
 String _rightsStatusLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   RightsRequest request,
   DateFormat date,
 ) => switch (request.status) {
   'extended' =>
-    l10n?.rightsStatusExtended(
+    l10n.rightsStatusExtended(
           date.format(request.answerBy),
           request.extensionReason ?? '',
-        ) ??
-        'Extended to ${date.format(request.answerBy)}: '
-            '${request.extensionReason ?? ''}',
+        ),
   'completed' =>
-    l10n?.rightsStatusCompleted ?? 'Answered — the space recorded what it did',
+    l10n.rightsStatusCompleted,
   'refused' =>
-    l10n?.rightsStatusRefused(request.refusalReason ?? '') ??
-        'Refused: ${request.refusalReason ?? ''}',
+    l10n.rightsStatusRefused(request.refusalReason ?? ''),
   _ =>
-    l10n?.rightsStatusReceived(date.format(request.dueOn)) ??
-        'Received — answer due by ${date.format(request.dueOn)}',
+    l10n.rightsStatusReceived(date.format(request.dueOn)),
 };
 
 /// The Privacy & data row; [workspaceId] is the space the request goes to.
@@ -57,18 +55,16 @@ class RightsRequestsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ListTile(
       key: const ValueKey('privacy-rights-requests'),
       leading: const Icon(Icons.gavel_outlined),
-      title: Text(l10n?.rightsRequestsTitle ?? 'My rights requests'),
+      title: Text(l10n.rightsRequestsTitle),
       subtitle: Text(
-        l10n?.rightsRequestsHint ??
-            'Ask the space for a copy, a correction, a restriction or '
-                'erasure — answered within one calendar month.',
+        l10n.rightsRequestsHint,
       ),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => showModalBottomSheet<void>(
+      onTap: () => showAppSheet<void>(
         context: context,
         isScrollControlled: true,
         builder: (_) => _RightsRequestsSheet(workspaceId: workspaceId),
@@ -84,7 +80,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final date = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
@@ -98,12 +94,12 @@ class _RightsRequestsSheet extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.rightsRequestsTitle ?? 'My rights requests',
+              l10n.rightsRequestsTitle,
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.sm),
             if (requests.isEmpty)
-              Text(l10n?.rightsRequestsEmpty ?? 'No request yet.'),
+              Text(l10n.rightsRequestsEmpty),
             for (final r in requests)
               ListTile(
                 key: ValueKey('rights-request-${r.id}'),
@@ -116,7 +112,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
               FilledButton.icon(
                 key: const ValueKey('rights-request-new'),
                 icon: const Icon(Icons.add),
-                label: Text(l10n?.rightsRequestNew ?? 'Make a request'),
+                label: Text(l10n.rightsRequestNew),
                 onPressed: () => _new(context, ref, workspaceId!, date),
               ),
           ],
@@ -131,7 +127,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
     String workspaceId,
     DateFormat date,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final chosen = await showDialog<({String kind, String details})>(
       context: context,
       builder: (_) => const _NewRightsRequestDialog(),
@@ -146,8 +142,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
       domain: 'privacy',
       message: 'rights request failed',
       errorText:
-          l10n?.rightsRequestFailed ??
-          'The request could not be sent. Please try again.',
+          l10n.rightsRequestFailed,
       action: () async {
         sent = await submitRightsRequest(
           ref,
@@ -163,9 +158,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
     if (!context.mounted || sent == null) return;
     AppSnack.success(
       context,
-      l10n?.rightsRequestSent(date.format(sent!.answerBy)) ??
-          'Request sent — the space answers by '
-              '${date.format(sent!.answerBy)}.',
+      l10n.rightsRequestSent(date.format(sent!.answerBy)),
     );
   }
 }
@@ -190,9 +183,9 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.rightsRequestAsk ?? 'What do you ask the space?'),
+      title: Text(l10n.rightsRequestAsk),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -219,7 +212,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
               maxLength: 2000,
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: l10n?.rightsRequestDetails ?? 'Details (optional)',
+                labelText: l10n.rightsRequestDetails,
               ),
             ),
           ],
@@ -236,7 +229,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
           onPressed: () =>
               Navigator.of(context)
                   .pop((kind: _kind, details: _details.text.trim())),
-          child: Text(l10n?.rightsRequestSend ?? 'Send the request'),
+          child: Text(l10n.rightsRequestSend),
         ),
       ],
     );

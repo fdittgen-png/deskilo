@@ -7,9 +7,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -17,24 +21,27 @@ import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/book_repartition.dart';
 import '../../domain/expense_repartition.dart';
 import '../../providers/expense_repartition_providers.dart';
-import '../../application/book_repartition.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'wizard_scaffold.dart';
-import '../../../../core/format/cents.dart';
-import '../../../../core/time/date_text.dart';
 
 /// Opens the repartition assistant (kept under its historical name).
 Future<void> showExpenseRepartitionSheet(
   BuildContext context,
   WidgetRef ref,
 ) =>
-    Navigator.of(context).push<void>(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => const _RepartitionWizard(),
-    ));
+    expenseRepartitionPage.open<void>(context, null);
+
+/// #2388 — the repartition wizard as a page with a path.
+final expenseRepartitionPage = PageSpec<Null>(
+  '/money/repartition',
+  (_) => const _RepartitionWizard(),
+  fallback: '/money',
+  fullscreenDialog: true,
+);
 
 class _RepartitionWizard extends ConsumerStatefulWidget {
   const _RepartitionWizard();
@@ -59,7 +66,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
 
   static String _shift(String period, int months) {
     final parts = period.split('-');
-    final d = DateTime(int.parse(parts[0]), int.parse(parts[1]) + months, 1);
+    final d = DateTime(int.parse(parts[0]), int.parse(parts[1]) + months);
     return _current(d);
   }
 
@@ -102,7 +109,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
       ];
 
   Future<void> _submit(List<RepartitionShare> shares) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final cents = _cents;
     if (workspace == null || cents == null || shares.isEmpty) return;
@@ -112,8 +119,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
       context,
       domain: 'money',
       message: 'distribute expense failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       // Distributing and then learning WHICH of the two things happened
       // is one decision, so it lives in the command (#1449).
       action: () async {
@@ -140,16 +146,14 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     AppSnack.success(
       context,
       outcome.pending
-          ? (l10n?.repartitionFiledPending ??
-              'Shares filed — they book once validated.')
-          : (l10n?.repartitionFiled ??
-              'Shares booked — they appear on the next usage invoice.'),
+          ? (l10n.repartitionFiledPending)
+          : (l10n.repartitionFiled),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currency = moneyFormat(workspace?.currencyCode);
@@ -165,17 +169,14 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     final expenseComplete = _title.text.trim().isNotEmpty && cents != null;
     final canSubmit = !_busy && expenseComplete && shares.isNotEmpty;
     final steps = <WizardStepSpec>[
-      (name: 'expense', label: l10n?.repartitionStepExpense ?? 'The expense'),
-      (name: 'shares', label: l10n?.repartitionPreview ?? 'Shares'),
+      (name: 'expense', label: l10n.repartitionStepExpense),
+      (name: 'shares', label: l10n.repartitionPreview),
     ];
     final body = _index == 0
         ? ListView(children: [
             const SizedBox(height: AppSpacing.sm),
             Text(
-              l10n?.repartitionHint ??
-                  'Split a shared cost over the members. The shares land '
-                      "as lines on each member's next usage invoice; a "
-                      'reversal gives the money back as credit notes.',
+              l10n.repartitionHint,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.md),
@@ -184,7 +185,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               controller: _title,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                  labelText: l10n?.repartitionTitleField ?? 'What for'),
+                  labelText: l10n.repartitionTitleField),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
@@ -194,20 +195,19 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                labelText: l10n?.repartitionAmount ?? 'Total amount',
+                labelText: l10n.repartitionAmount,
                 suffixText: workspace?.currencyCode ?? '',
               ),
             ),
             SwitchListTile(
               key: const ValueKey('repartition-reverse'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.repartitionReverse ??
-                  'Reversal — give back as credit notes'),
+              title: Text(l10n.repartitionReverse),
               value: _reverse,
               onChanged: (v) => setState(() => _reverse = v),
             ),
             Row(children: [
-              Text(l10n?.repartitionPeriod ?? 'Lands on',
+              Text(l10n.repartitionPeriod,
                   style: theme.textTheme.labelLarge),
               const Spacer(),
               IconButton(
@@ -228,13 +228,13 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               ),
             ]),
             const Divider(height: AppSpacing.xl),
-            Text(l10n?.repartitionHistory ?? 'Distributions',
+            Text(l10n.repartitionHistory,
                 style: theme.textTheme.labelLarge),
             if (history.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
-                  l10n?.repartitionHistoryEmpty ?? 'No distribution yet.',
+                  l10n.repartitionHistoryEmpty,
                   style: theme.textTheme.bodySmall,
                 ),
               ),
@@ -254,7 +254,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
           ])
         : ListView(children: [
             const SizedBox(height: AppSpacing.sm),
-            Text(l10n?.repartitionMethod ?? 'Split by',
+            Text(l10n.repartitionMethod,
                 style: theme.textTheme.labelLarge),
             const SizedBox(height: AppSpacing.xs),
             SegmentedButton<RepartitionMethod>(
@@ -263,35 +263,34 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               segments: [
                 ButtonSegment(
                   value: RepartitionMethod.equal,
-                  label: Text(l10n?.repartitionMethodEqual ?? 'Equal'),
+                  label: Text(l10n.repartitionMethodEqual),
                 ),
                 ButtonSegment(
                   value: RepartitionMethod.subscription,
                   label: Text(
-                      l10n?.repartitionMethodSubscription ?? 'Subscription'),
+                      l10n.repartitionMethodSubscription),
                 ),
                 ButtonSegment(
                   value: RepartitionMethod.usage,
-                  label: Text(l10n?.repartitionMethodUsage ?? 'Usage'),
+                  label: Text(l10n.repartitionMethodUsage),
                 ),
                 ButtonSegment(
                   value: RepartitionMethod.custom,
                   label:
-                      Text(l10n?.repartitionMethodCustom ?? 'Custom key'),
+                      Text(l10n.repartitionMethodCustom),
                 ),
               ],
               selected: {_method},
               onSelectionChanged: (s) => setState(() => _method = s.first),
             ),
             const Divider(),
-            Text(l10n?.repartitionPreview ?? 'Shares',
+            Text(l10n.repartitionPreview,
                 style: theme.textTheme.labelLarge),
             if (cents != null && shares.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
-                  l10n?.repartitionNoShares ??
-                      'Nobody carries a share — check the key.',
+                  l10n.repartitionNoShares,
                   key: const ValueKey('repartition-no-shares'),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.error),
@@ -312,7 +311,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
                       onChanged: (_) => setState(() {}),
                       decoration: InputDecoration(
                         isDense: true,
-                        labelText: l10n?.repartitionWeight ?? 'Key',
+                        labelText: l10n.repartitionWeight,
                       ),
                     ),
                   ),
@@ -335,10 +334,8 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
-                  l10n?.repartitionSum(
-                          shares.length, currency.formatMinor(cents!)) ??
-                      '${shares.length} members · '
-                          '${currency.formatMinor(cents!)}',
+                  l10n.repartitionSum(
+                          shares.length, currency.formatMinor(cents!)),
                   key: const ValueKey('repartition-sum'),
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.right,
@@ -346,7 +343,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
               ),
           ]);
     return WizardScaffold(
-      title: l10n?.repartitionTitle ?? 'Distribute an expense',
+      title: l10n.repartitionTitle,
       steps: steps,
       index: _index,
       body: body,
@@ -357,16 +354,16 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
       nextEnabled: expenseComplete,
       onFinish: () => _submit(shares),
       finishKey: const ValueKey('repartition-submit'),
-      finishLabel: l10n?.repartitionSubmit ?? 'Book the shares',
+      finishLabel: l10n.repartitionSubmit,
       finishEnabled: canSubmit,
     );
   }
 
-  static String _statusLabel(AppLocalizations? l10n, String status) =>
+  static String _statusLabel(AppLocalizations l10n, String status) =>
       switch (status) {
-        'confirmed' => l10n?.repartitionStatusConfirmed ?? 'Booked',
-        'rejected' => l10n?.repartitionStatusRejected ?? 'Rejected',
-        'expired' => l10n?.repartitionStatusExpired ?? 'Expired',
-        _ => l10n?.repartitionStatusPending ?? 'Awaiting validation',
+        'confirmed' => l10n.repartitionStatusConfirmed,
+        'rejected' => l10n.repartitionStatusRejected,
+        'expired' => l10n.repartitionStatusExpired,
+        _ => l10n.repartitionStatusPending,
       };
 }

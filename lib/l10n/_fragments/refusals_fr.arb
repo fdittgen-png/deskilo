@@ -7,5 +7,9 @@
   "refusalMoneyLocaleLocked": "La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalVatRateVersioned": "Ce taux figure déjà sur des factures émises : son pourcentage reste tel quel. Utilisez « Changement par la loi » pour fixer la nouvelle valeur à partir d’une date. Rien n’a été enregistré.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
   }
 }

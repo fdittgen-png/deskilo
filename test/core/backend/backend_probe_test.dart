@@ -15,6 +15,7 @@ import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,9 +45,9 @@ const publishable = 'sb_publishable_0123456789abcdefghij';
 /// A transport scripted per call.
 class ScriptedTransport implements BackendProbeTransport {
   ScriptedTransport({this.onWorkspace, this.version, this.versionError});
-  final Object? onWorkspace;
+  final Exception? onWorkspace;
   final int? version;
-  final Object? versionError;
+  final Exception? versionError;
   bool disposed = false;
 
   @override
@@ -107,7 +108,7 @@ void main() {
       for (final entry in cases.entries) {
         final error = validateBackendEndpoint(endpoint.url, entry.key);
         expect(error, entry.value, reason: entry.key);
-        expect(backendErrorText(null, error!), isNot(contains(entry.key)));
+        expect(backendErrorText(englishL10n, error!), isNot(contains(entry.key)));
       }
       expect(validateBackendEndpoint(endpoint.url, anonJwt), isNull);
       expect(validateBackendEndpoint(endpoint.url, publishable), isNull);
@@ -203,7 +204,7 @@ void main() {
       final behind = await probe(ScriptedTransport(version: requiredSchemaVersion - 1));
       expect(behind.result, BackendProbeResult.behind);
       expect(behind.usable, isFalse);
-      final none = await probe(ScriptedTransport(version: null));
+      final none = await probe(ScriptedTransport());
       expect(none.result, BackendProbeResult.behind,
           reason: 'no marker = predates 0226');
     });

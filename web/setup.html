@@ -284,6 +284,7 @@ const FEATURES=[
  ['supplyClassification',0],
  ['viesVerification',0],
  ['recapitulativeStatement',0],
+ ['inputVat',0],
  ['environmentPairs',0],
  ['deployments',0],
  ['siteDocuments',0],
@@ -337,10 +338,12 @@ const PERM_DEFAULTS={co_owner:PERMS.slice(),admin:['manageMembers','manageDocume
 const PERMS_ADDED_2331=['deployToProd','deployToDev','accessProd','viewAnalytics',...EVERYDAY_PERMS];
 function upgradePerms(perms){for(const role of Object.keys(PERM_DEFAULTS)){const list=perms[role];if(!Array.isArray(list))continue;
  if(!list.some(p=>PERMS_ADDED_2331.includes(p)))perms[role]=[...list,...PERM_DEFAULTS[role].filter(p=>PERMS_ADDED_2331.includes(p))]}return perms}
-// #2331 — where DesKilo can issue an invoice itself today: the legal clauses
-// were reviewed for these sellers only (server: `seller_country_unsupported`,
-// migration 0395; client: the invoiceMissingSellerCountry refusal).
-const INVOICING_COUNTRIES=['FR','DE'];
+// #2331 — where DesKilo can issue an invoice itself today (server:
+// `seller_country_unsupported`; client: the invoiceMissingSellerCountry
+// refusal). #2356 — every member state of the European Union (0409) but
+// those whose law routes invoices through a national channel the app does
+// not speak yet: IT, ES, PL, RO (0410, #2358).
+const INVOICING_COUNTRIES=['AT','BE','BG','CY','CZ','DE','DK','EE','FI','FR','GR','HR','HU','IE','LT','LU','LV','MT','NL','PT','SE','SI','SK'];
 // [ISO code, currency, time zone, bank scheme]; names from the app's countryName* strings.
 const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','sepa'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.
@@ -381,7 +384,9 @@ const DOMAIN_GATE={payment_terms_change:'memberPaymentTerms',expense_schedule:'s
 const DOMAIN_EVENT_TYPE={service:'service_charge'};
 const HORIZON=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['60','optDays',{n:60}],['90','optDaysDefault',{n:90}],['120','optDays',{n:120}],['180','optDays',{n:180}],['365','optOneYear'],['730','optYears',{n:2}]];
 const DURATIONS=[['5','optMinutes',{n:5}],['10','optMinutes',{n:10}],['15','optMinutes',{n:15}],['30','optMinutesDefaultMin',{n:30}],['45','optMinutes',{n:45}],['60','optOneHour'],['90','optHourAndHalf'],['120','optHours',{n:2}],['180','optHours',{n:3}],['240','optHours',{n:4}],['300','optHours',{n:5}],['360','optHours',{n:6}],['480','optHours',{n:8}],['600','optHours',{n:10}],['720','optHours',{n:12}],['1440','optHoursDefaultMax',{n:24}]];
-const VATPERIOD=[['month','vatPeriodMonth'],['quarter','vatPeriodQuarter']];
+// #2357 — a questionnaire saved before 'annual' existed reads as it was.
+const vatPeriodOf=v=>['month','quarter','annual'].includes(v)?v:'quarter';
+const VATPERIOD=[['month','vatPeriodMonth'],['quarter','vatPeriodQuarter'],['annual','vatPeriodAnnual']];
 const ENVIRONMENTS=[['dev','envDev'],['prod','envProd']];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
@@ -472,7 +477,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',supplyClassification:'vatManagement',viesVerification:'supplyClassification',recapitulativeStatement:'vatDeclarations',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',messageMentions:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement'};
+const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',supplyClassification:'vatManagement',inputVat:'vatDeclarations',viesVerification:'supplyClassification',recapitulativeStatement:'vatDeclarations',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',messageMentions:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
@@ -550,7 +555,7 @@ function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',vatPeriod:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 function destBadge(path){if(path==null)return null;const d=destOf(path);return h('span',{class:'dest '+d,title:T(DEST_TEXT[d][1])},T(DEST_TEXT[d][0]))}
@@ -911,7 +916,7 @@ const STEPS=[
    deletionRequests:()=>{const who=[S.autoValidate.owner?T('cfgOwners'):null,S.autoValidate.admin?T('cfgAdmins'):null].filter(Boolean);return [T('cfgDeletionRequests'),who.length?T('cfgAutoValidation',{list:who.join(', ')}):null].filter(Boolean).join(' · ')+'.'},
    roleManagement:()=>T('cfgRoleManagement',{coOwner:(S.perms.co_owner||[]).length,admin:(S.perms.admin||[]).length,member:(S.perms.member||[]).length}),
    vatManagement:()=>registered()?T('cfgVatRates',{n:n(S.vatRates),list:S.vatRates.filter(r=>String(r.label).trim()).map(r=>r.percent+' %').join(', ')}):T('cfgNotRegistered'),
-   vatDeclarations:()=>registered()?T(S.vatPeriod==='month'?'cfgVatDeclMonthly':'cfgVatDeclQuarterly'):T('cfgNotRegistered'),
+   vatDeclarations:()=>registered()?T(({month:'cfgVatDeclMonthly',annual:'cfgVatDeclAnnual'})[S.vatPeriod]||'cfgVatDeclQuarterly'):T('cfgNotRegistered'),
    einvoiceCustomerDelivery:()=>S.einvoice.customerUrl?T('cfgCustomerService',{url:S.einvoice.customerUrl}):T('cfgCustomerServiceTodo'),
    planObjectDelete:()=>T('cfgPlanObjectDelete'),
    notificationGrouping:()=>T('cfgNotificationGrouping'),
@@ -986,7 +991,6 @@ function toDoInApp(){const out=[T('todoCreateSpace',{name:S.name.trim()||'—'})
  const ms=S.members.filter(m=>String(m.email||'').trim());
  out.push(ms.length?T('todoInviteMembers',{n:ms.length}):T('todoInviteNobody'));
  if(on('onlinePayments'))out.push(T('todoOnlineProvider'));
- if(on('invoicing')&&registered()&&on('vatDeclarations'))out.push(T('todoVatPeriod',{period:T(S.vatPeriod==='month'?'vatPeriodMonth':'vatPeriodQuarter')}));
  if(on('invoicing')&&isEU())out.push(T('todoEinvoice'));
  if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))out.push(T('todoInvoiceOutside',{country:countryName(S.country)}));
  out.push(T('todoImportFile'));
@@ -1120,7 +1124,9 @@ function configurationTree(){
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
    recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
    seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:taxPointOf(S.vatExigibility),
-   ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[taxPointOf(S.vatExigibility)]||{})},
+   ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[taxPointOf(S.vatExigibility)]||{}),
+   // #2357 — how often the return is filed: a stored parameter now.
+   ...(on('vatDeclarations')&&registered()?{vat_declaration_period:vatPeriodOf(S.vatPeriod)}:{})},
  };
  // #2331 — the role matrix, in the column's shape (role -> permission
  // names). Written only while the page asks for it; a role row REPLACES

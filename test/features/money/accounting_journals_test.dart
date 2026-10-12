@@ -2,19 +2,18 @@
 //
 // #936 — the exports carry the purchases side, book credit notes, and
 // mark a development workspace's books.
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _company = InvoiceParty(
   name: 'pezenas1', street: '2 Place du Marché', city: 'Pézenas',
   postalCode: '34120', country: 'FR', legalId: '812 345 678',
-  vatRegime: 'not_subject',
 );
 
 Invoice _invoice({String number = 'INV-2026-0001', int total = 25000, String replaces = ''}) =>
@@ -115,7 +114,7 @@ void main() {
   group('DATEV', () {
     String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(
           invoices: invoices ?? [_invoice()], matches: const {},
-          accounts: const DatevAccounts(), from: DateTime(2026, 1, 1), to: DateTime(2026, 12, 31),
+          accounts: const DatevAccounts(), from: DateTime(2026), to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 9, 6, 10), consultantNumber: '1', clientNumber: '2',
           ledger: [_reimbursement], repartitions: [_rent], development: development,
         );

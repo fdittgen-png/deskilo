@@ -8,10 +8,10 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/backend_uri.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../widgets/backend_candidate_form.dart';
 import '../widgets/backend_how_to.dart';
@@ -48,19 +48,19 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final endpoint = ref.watch(activeBackendProvider).value;
     final isDefault = endpoint == null || ActiveBackend.isDefault(endpoint);
     final booted = ref.watch(bootedBackendUrlProvider);
     final pending = ref.watch(pendingBackendSwitchProvider).value;
     final switchPending =
         endpoint != null && booted.isNotEmpty && booted != endpoint.url;
-    final topic = l10n?.helpTopicServer ?? 'your own server';
+    final topic = l10n.helpTopicServer;
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.backendServerTitle ?? 'Server'),
+        title: Text(l10n.backendServerTitle),
         actions: [HelpDot(topic, anchor: HelpAnchor.backendServer)],
       ),
       body: ListView(
@@ -74,20 +74,18 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                 color: scheme.primary,
               ),
               title: Text(switchPending
-                  ? (l10n?.backendPendingTitle ?? 'Saved for the next start')
-                  : (l10n?.backendCurrentTitle ?? 'This device uses')),
+                  ? (l10n.backendPendingTitle)
+                  : (l10n.backendCurrentTitle)),
               subtitle: Text(endpoint == null
                   ? ''
                   : isDefault
-                      ? (l10n?.backendServerDefault(endpoint.host) ??
-                          "The app's own server (${endpoint.host})")
-                      : (l10n?.backendServerCustom(endpoint.host) ??
-                          'Your own server (${endpoint.host})')),
+                      ? (l10n.backendServerDefault(endpoint.host))
+                      : (l10n.backendServerCustom(endpoint.host))),
               trailing: endpoint == null
                   ? null
                   : IconButton(
                       key: const ValueKey('backend-share'),
-                      tooltip: l10n?.backendShare ?? 'Share this server',
+                      tooltip: l10n.backendShare,
                       icon: const Icon(Icons.qr_code_2),
                       onPressed: () => _share(endpoint),
                     ),
@@ -102,19 +100,15 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(l10n?.backendPendingBody(
+                    Text(l10n.backendPendingBody(
                             Uri.tryParse(booted)?.host ?? booted,
-                            endpoint.host) ??
-                        'This session still runs on '
-                            '${Uri.tryParse(booted)?.host ?? booted}. '
-                            '${endpoint.host} takes over when you close and '
-                            'reopen the app.'),
+                            endpoint.host)),
                     if (pending != null) ...[
                       const SizedBox(height: AppSpacing.sm),
                       OutlinedButton(
                         key: const ValueKey('backend-pending-undo'),
                         onPressed: _undo,
-                        child: Text(l10n?.backendPendingUndo ?? 'Undo'),
+                        child: Text(l10n.backendPendingUndo),
                       ),
                     ],
                   ],
@@ -150,19 +144,17 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
   }
 
   Future<void> _share(BackendEndpoint endpoint) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final payload = BackendUriCodec.encode(endpoint);
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.backendShare ?? 'Share this server'),
+        title: Text(l10n.backendShare),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              l10n?.backendShareHint ??
-                  'Members scan this in Settings → Server to point their '
-                      'app at the same instance.',
+              l10n.backendShareHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -180,12 +172,12 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
               await Clipboard.setData(ClipboardData(text: payload));
               if (context.mounted) Navigator.of(context).pop();
             },
-            child: Text(l10n?.backendCopyLink ?? 'Copy'),
+            child: Text(l10n.backendCopyLink),
           ),
           FilledButton(
             key: const ValueKey('backend-close'),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonClose ?? 'Close'),
+            child: Text(l10n.commonClose),
           ),
         ],
       ),
@@ -193,7 +185,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
   }
 
   Future<void> _undo() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'backend',
@@ -205,18 +197,17 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     if (!ok || !mounted) return;
     AppSnack.success(
       context,
-      l10n?.backendPendingUndone ?? 'Undone — the previous server is back.',
+      l10n.backendPendingUndone,
     );
   }
 
   Future<void> _apply(BackendEndpoint? endpoint) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'backend',
       message: 'set backend endpoint failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         await ref.read(activeBackendProvider.notifier).setEndpoint(endpoint);
         // The session was issued by the OTHER instance — keeping it would
@@ -228,8 +219,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     if (!ok || !mounted) return;
     AppSnack.success(
       context,
-      l10n?.backendServerSaved ??
-          'Saved. Close and reopen the app to use the new server.',
+      l10n.backendServerSaved,
     );
   }
 }

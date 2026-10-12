@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
 import 'template_group_label.dart';
@@ -24,19 +24,18 @@ Future<bool> showTemplateWidenDialog(
   required TemplateInspection inspection,
   required TemplateVisibility to,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final audience = switch (to) {
     TemplateVisibility.shared =>
-      l10n?.libraryVisibilityShared ?? 'People I invite',
-    _ => l10n?.libraryVisibilityPublic ?? 'Everyone (the library)',
+      l10n.libraryVisibilityShared,
+    _ => l10n.libraryVisibilityPublic,
   };
   final ok = await showDialog<bool>(
     context: context,
     builder: (ctx) => AlertDialog(
       key: const ValueKey('template-widen'),
       title: Text(
-        l10n?.templateWidenTitle(audience) ??
-            'Make this template readable by: $audience?',
+        l10n.templateWidenTitle(audience),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -45,9 +44,7 @@ Future<bool> showTemplateWidenDialog(
           children: [
             Text(
               key: const ValueKey('template-widen-count'),
-              l10n?.templateWidenCount('${inspection.coverage.present}') ??
-                  '${inspection.coverage.present} settings become readable, '
-                      'exactly as the template holds them now.',
+              l10n.templateWidenCount('${inspection.coverage.present}'),
             ),
             const SizedBox(height: AppSpacing.xs),
             for (final g in inspection.outline.groups)
@@ -59,11 +56,9 @@ Future<bool> showTemplateWidenDialog(
               const SizedBox(height: AppSpacing.sm),
               Text(
                 key: const ValueKey('template-widen-excluded'),
-                l10n?.templateWidenExcluded(
+                l10n.templateWidenExcluded(
                       '${inspection.exclusions.length}',
-                    ) ??
-                    '${inspection.exclusions.length} kinds of value never '
-                        'leave with it (bank details, sites, addresses…).',
+                    ),
               ),
             ],
           ],
@@ -78,7 +73,7 @@ Future<bool> showTemplateWidenDialog(
         FilledButton(
           key: const ValueKey('template-widen-confirm'),
           onPressed: () => Navigator.of(ctx).pop(true),
-          child: Text(l10n?.templateWidenConfirm ?? 'Make readable'),
+          child: Text(l10n.templateWidenConfirm),
         ),
       ],
     ),

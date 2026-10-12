@@ -13,20 +13,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
-import '../../domain/workspace_feature.dart';
 import '../widgets/role_editor_sheet.dart';
 import '../widgets/role_holders_section.dart';
 import 'roles_screen_labels.dart';
-import '../../../task_recorder/domain/action_registry.dart';
-import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RolesOfSpaceScreen extends ConsumerStatefulWidget {
   const RolesOfSpaceScreen({super.key});
@@ -48,7 +49,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
     final locale =
         workspace.defaultLocale.isEmpty ? 'en' : workspace.defaultLocale;
     var saved = false; // #1884 B — a sheet closed unsaved is a step too
-    await showModalBottomSheet<void>(
+    await showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -75,7 +76,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
 
   Future<void> _save(String workspaceId, WorkspaceRole draft,
       {required bool created}) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     final repository = ref.read(workspaceRolesRepositoryProvider);
     final attempt = recordTaskAttempt(ref, RecorderActions.saveRole, payload: {
@@ -87,7 +88,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
       message: 'workspace role update failed',
       // Its own sentence: the server refuses a built-in key and an
       // unknown permission, and an owner needs to know THAT.
-      errorText: l10n?.roleEditorSaveFailed ?? 'The role was not saved.',
+      errorText: l10n.roleEditorSaveFailed,
       // #2085 — the Administrator is renamed, never redefined.
       action: () => observeTaskSetting(
           attempt,
@@ -99,12 +100,12 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
     setState(() => _saving = false);
     if (!ok) return;
     ref.invalidate(workspaceRolesProvider);
-    AppSnack.success(context, l10n?.billingSaved ?? 'Saved.');
+    AppSnack.success(context, l10n.billingSaved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final roles = ref.watch(workspaceRolesProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
@@ -114,13 +115,13 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.rolesOfSpaceTitle ?? 'Roles this space defines'),
+        title: Text(l10n.rolesOfSpaceTitle),
       ),
       floatingActionButton: FloatingActionButton.extended(
         key: RolesOfSpaceScreen.addKey,
         onPressed: _saving ? null : () => _edit(null),
         icon: const Icon(Icons.add),
-        label: Text(l10n?.rolesOfSpaceAdd ?? 'Add a role'),
+        label: Text(l10n.rolesOfSpaceAdd),
       ),
       body: roles.when(
         loading: () => const LoadingView(),
@@ -131,16 +132,13 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
           padding: AppSpacing.gutterAll,
           children: [
             Text(
-              l10n?.rolesOfSpaceSubtitle ??
-                  "Each one adds permissions on top of a member's role. None "
-                      'ever takes one away, and an owner always keeps every '
-                      'one.',
+              l10n.rolesOfSpaceSubtitle,
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.lg),
             if (list.isEmpty)
               Text(
-                l10n?.rolesOfSpaceEmpty ?? 'No roles yet.',
+                l10n.rolesOfSpaceEmpty,
                 style: theme.textTheme.bodyMedium,
               ),
             for (final role in list)
@@ -151,8 +149,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
                 subtitle: Text(
                   [
                     if (role.builtin)
-                      l10n?.roleBuiltInSubtitle ??
-                          'Built in. What it may do is set in Roles.'
+                      l10n.roleBuiltInSubtitle
                     else if (role.permissions.isEmpty)
                       '—'
                     else
@@ -160,7 +157,7 @@ class _RolesOfSpaceScreenState extends ConsumerState<RolesOfSpaceScreen> {
                           .map((p) => permissionLabel(l10n, p))
                           .join(' · '),
                     if (!role.active)
-                      l10n?.rolesOfSpaceInactive ?? 'Put aside',
+                      l10n.rolesOfSpaceInactive,
                   ].join(' — '),
                 ),
                 trailing: const Icon(Icons.chevron_right),

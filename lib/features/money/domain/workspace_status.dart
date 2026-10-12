@@ -4,8 +4,9 @@
 // `workspace_status` (0167) returns it: what was invoiced, collected,
 // reimbursed and shared out, and the same per member. Computed in the
 // database so the screen and the printed report read one set of numbers.
-import 'expense_repartition.dart';
+import '../../../core/data/json_reader.dart';
 import 'accounting_amount.dart';
+import 'expense_repartition.dart';
 
 class WorkspaceStatus {
   const WorkspaceStatus({
@@ -62,32 +63,29 @@ class WorkspaceStatus {
       invoicedCents - creditNotesCents - reimbursedCents - creditsGrantedCents;
 
   factory WorkspaceStatus.fromJson(Map<String, dynamic> j) {
-    Map<String, dynamic> section(String key) {
-      final value = j[key];
-      if (value is! Map) throw FormatException('Missing status section: $key');
-      return value.cast<String, dynamic>();
-    }
-    final currency = j['currency'];
-    if (currency is! String || !supportedCurrencies.contains(currency)) {
+    final r = JsonReader(j, context: 'workspace_status');
+    JsonReader section(String key) =>
+        r.objectOrNull(key) ??
+        (throw FormatException('Missing status section: $key'));
+    final currency = r.stringOrNull('currency');
+    if (currency == null || !supportedCurrencies.contains(currency)) {
       throw const FormatException('Missing or unsupported status currency');
     }
     final revenue = section('revenue');
     final payments = section('payments');
     final expenses = section('expenses');
-    if (revenue['by_kind'] is! Map || j['members'] is! List) {
+    final byKind = revenue.objectOrNull('by_kind');
+    if (byKind == null || r.json['members'] is! List) {
       throw const FormatException('Missing status breakdown');
     }
-    int cents(Map<String, dynamic> m, String k) => _minor(m[k]);
+    int cents(JsonReader m, String k) => _minor(m.json[k]);
     return WorkspaceStatus(
-      from: j['from'] as String? ?? '',
-      to: j['to'] as String? ?? '',
+      from: r.stringOr('from'),
+      to: r.stringOr('to'),
       currency: currency,
       invoicedCents: cents(revenue, 'invoiced_cents'),
       creditNotesCents: cents(revenue, 'credit_notes_cents'),
-      byKind: {
-        for (final e in ((revenue['by_kind'] as Map?) ?? const {}).entries)
-          e.key as String: _minor(e.value),
-      },
+      byKind: {for (final e in byKind.json.entries) e.key: _minor(e.value)},
       repartitionChargesCents: cents(revenue, 'repartition_charges_cents'),
       paymentsMatchedCents: cents(payments, 'matched_cents'),
       paymentsReceivedCents: cents(payments, 'received_cents'),
@@ -95,10 +93,7 @@ class WorkspaceStatus {
       repartitionedCents: cents(expenses, 'repartitioned_cents'),
       awaitingCents: cents(expenses, 'awaiting_cents'),
       creditsGrantedCents: cents(expenses, 'credits_granted_cents'),
-      members: [
-        for (final m in (j['members'] as List?) ?? const [])
-          StatusMemberRow.fromJson(Map<String, dynamic>.from(m as Map)),
-      ],
+      members: r.objects('members', (row) => StatusMemberRow.fromJson(row.json)),
     );
   }
 }
@@ -135,17 +130,20 @@ class StatusMemberRow {
   final int creditsCents;
   final int chargedCents;
 
-  factory StatusMemberRow.fromJson(Map<String, dynamic> j) => StatusMemberRow(
-        memberId: j['member_id'] as String? ?? '',
-        name: j['name'] as String? ?? '',
-        memberNumber: j['member_number'] as String? ?? '',
-        subscriptionPct: (j['subscription_pct'] as num?)?.toInt() ?? 100,
-        invoicedCents: _minor(j['invoiced_cents']),
-        paidCents: _minor(j['paid_cents']),
-        reimbursedCents: _minor(j['reimbursed_cents']),
-        creditsCents: _minor(j['credits_cents']),
-        chargedCents: _minor(j['charged_cents']),
-      );
+  factory StatusMemberRow.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'workspace_status.members');
+    return StatusMemberRow(
+      memberId: r.stringOr('member_id'),
+      name: r.stringOr('name'),
+      memberNumber: r.stringOr('member_number'),
+      subscriptionPct: r.intOrNull('subscription_pct') ?? 100,
+      invoicedCents: _minor(r.json['invoiced_cents']),
+      paidCents: _minor(r.json['paid_cents']),
+      reimbursedCents: _minor(r.json['reimbursed_cents']),
+      creditsCents: _minor(r.json['credits_cents']),
+      chargedCents: _minor(r.json['charged_cents']),
+    );
+  }
 }
 
 /// #934 — the repartition rule the wizard proposes month after month:
@@ -168,18 +166,18 @@ class RepartitionRule {
 
   factory RepartitionRule.fromJson(Map<String, dynamic>? j) {
     if (j == null) return const RepartitionRule();
+    final r = JsonReader(j, context: 'repartition_rule');
+    final weights = r.objectOrNull(keyWeights);
     return RepartitionRule(
       method: RepartitionMethod.values
-              .where((m) => m.name == j[keyMethod])
+              .where((m) => m.name == r.stringOrNull(keyMethod))
               .firstOrNull ??
           RepartitionMethod.subscription,
       weights: {
-        for (final e in ((j[keyWeights] as Map?) ?? const {}).entries)
-          e.key as String: (e.value as num),
+        if (weights != null)
+          for (final key in weights.json.keys) key: weights.numeric(key),
       },
-      excluded: {
-        for (final id in (j[keyExcluded] as List?) ?? const []) id as String,
-      },
+      excluded: r.strings(keyExcluded).toSet(),
     );
   }
 

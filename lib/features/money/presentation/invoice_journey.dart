@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/time/calendar_days.dart';
 import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice.dart';
 import 'invoice_status.dart';
-import '../../../core/time/calendar_days.dart';
 
 /// #812 — the four steps every invoice walks through, in order. The same
 /// four on every surface, so an issuer's hub and a member's face tell one

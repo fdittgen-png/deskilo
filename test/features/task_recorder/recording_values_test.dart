@@ -9,6 +9,7 @@
 // declare.
 import 'dart:convert';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
@@ -17,6 +18,7 @@ import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart'
 import 'package:deskilo/features/task_recorder/presentation/recorder_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void main() {
@@ -50,7 +52,7 @@ void main() {
     final text = encodeRecordingText(r);
     expect(text.contains('values'), isFalse);
     expect(text.contains('2026-10-06'), isFalse);
-    expect(jsonDecode(text)['schema_version'], 3);
+    expect((jsonDecode(text) as Map)['schema_version'], 3);
     // The stored log never held it either.
     expect(backend.logs.values.join().contains('2026-10-06'), isFalse);
   });
@@ -85,9 +87,10 @@ void main() {
       'value it is a new one', () async {
     await c.start(scope: canaryScope, captureValues: true);
     StepValues v(String s) => StepValues.of({'value': TextValue(s)});
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'));
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'));
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('b'));
+    c
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'))
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'))
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('b'));
     final values = [for (final s in c.snapshot!.steps) s.values];
     expect(values, [v('a'), v('b')]);
   });
@@ -112,18 +115,19 @@ void main() {
   test('the readable transcript carries the values, redacted ones only as '
       'their length', () async {
     await c.start(scope: canaryScope, captureValues: true);
-    c.record(
+    c
+      ..record(
       RecorderActions.selectDate,
       payload: {'date_relation': 'today'},
       values: date('2026-10-06'),
-    );
-    c.record(
+    )
+      ..record(
       RecorderActions.uiCommitField,
       target: 'unkeyed',
       values: StepValues.of({'value': const RedactedValue(7)}),
     );
     final r = (await c.stop())!;
-    final text = recordingTranscript(null, r);
+    final text = recordingTranscript(englishL10n, r);
     expect(text, contains('date: 2026-10-06'));
     expect(text, contains('value: not kept (7 characters)'));
   });

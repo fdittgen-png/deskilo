@@ -23,7 +23,7 @@ void main() {
     });
 
     expect(g.days, hasLength(3));
-    expect(g.days.first.day, DateTime(2026, 1, 1));
+    expect(g.days.first.day, DateTime(2026));
     expect(g.days.first.key, 'newYear');
     expect(g.lockedMonths, ['2026-07']);
     expect(g.created, 1);

@@ -1,32 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
-import 'einvoice_gateway.dart';
-import 'vat_rate.dart';
-import 'fee_band.dart';
-
-import 'invoice.dart';
-import 'vat_declaration.dart';
-import 'vat_tax_point.dart';
-import 'member_account.dart';
+import '../../../core/vat/supply_class.dart';
 import 'billing_rules.dart';
-import 'expense_repartition.dart';
-import 'usage_record.dart';
 import 'dunning.dart';
-import 'price_negotiation.dart';
-import 'invoice_pdf_template.dart';import 'ledger_entry.dart';
+import 'einvoice_gateway.dart';
+import 'expense_repartition.dart';
+import 'expense_schedule.dart';
+import 'fee_band.dart';
+import 'invoice.dart';
+import 'invoice_pdf_template.dart';
+import 'ledger_entry.dart';
+import 'member_account.dart';
+import 'number_sequence.dart';
 import 'package.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
-import 'expense_schedule.dart';
-import '../../../core/vat/supply_class.dart';
+import 'price_negotiation.dart';
+import 'reminder_evidence.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
-import 'number_sequence.dart';
+import 'usage_record.dart';
+import 'vat_declaration.dart';
+import 'vat_rate.dart';
+import 'vat_tax_point.dart';
 import 'workspace_status.dart';
-import 'reminder_evidence.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
@@ -426,6 +426,8 @@ abstract class MoneyRepository {
     /// #731 — when the expense is a SUPPLY for the space: name (or
     /// service_id of an existing item), quantity, unit_price_cents.
     Map<String, Object?>? supply,
+    /// #2357 — input VAT: {percent, deductible_pct}; null without VAT.
+    Map<String, Object?>? vat,
   });
 
   /// #767 — my recurring expense schedules (admins with the expense or

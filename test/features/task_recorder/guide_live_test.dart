@@ -152,8 +152,8 @@ void main() {
             target: _key,
           ),
         ]),
-      );
-      run.onAction(RecorderActions.uiTap, target: 'another-control');
+      )
+        ..onAction(RecorderActions.uiTap, target: 'another-control');
       expect(run.statusOf('g1'), GuideStepStatus.pending);
       run.onAction(RecorderActions.uiTap, target: _key);
       expect(run.statusOf('g1'), GuideStepStatus.done);

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-label="The dependency stack by layer: UI, state and models, data and documents, backend, tooling.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker></defs>
+<g font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect width="1200" height="640" rx="22" fill="#0f1420"/>
+<text x="40" y="48" font-size="22" fill="#eef1f8" text-anchor="start" font-weight="700">The dependency stack, by layer</text>
+<text x="40" y="72" font-size="14" fill="#a2abc0" text-anchor="start">Each layer may use the one below it. Domain code imports no Flutter.</text>
+<rect x="40" y="100" width="1120" height="86" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="60" y="136" font-size="17" fill="#eef1f8" text-anchor="start" font-weight="700">UI</text>
+<text x="60" y="160" font-size="13" fill="#a2abc0" text-anchor="start">Flutter, Material 3</text>
+<text x="320" y="136" font-size="14" fill="#eef1f8" text-anchor="start">flex_color_scheme · go_router 17 · flutter_map + marker cluster · markdown_widget</text>
+<text x="320" y="162" font-size="14" fill="#eef1f8" text-anchor="start">qr_flutter · flutter_zxing · nfc_manager · url_launcher · share_plus · file_selector</text>
+<line x1="600" y1="188" x2="600" y2="212" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="212" width="1120" height="86" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="60" y="248" font-size="17" fill="#eef1f8" text-anchor="start" font-weight="700">State and models</text>
+<text x="60" y="272" font-size="13" fill="#a2abc0" text-anchor="start">Riverpod 3, freezed</text>
+<text x="320" y="248" font-size="14" fill="#eef1f8" text-anchor="start">flutter_riverpod · riverpod_annotation · freezed_annotation · json_annotation</text>
+<text x="320" y="274" font-size="14" fill="#eef1f8" text-anchor="start">intl · five ARB languages · timezone · meta</text>
+<line x1="600" y1="300" x2="600" y2="324" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="324" width="1120" height="86" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="60" y="360" font-size="17" fill="#eef1f8" text-anchor="start" font-weight="700">Data and documents</text>
+<text x="60" y="384" font-size="13" fill="#a2abc0" text-anchor="start">one repository per feature</text>
+<text x="320" y="360" font-size="14" fill="#eef1f8" text-anchor="start">supabase_flutter · dio · http · hive · shared_preferences · flutter_secure_storage</text>
+<text x="320" y="386" font-size="14" fill="#eef1f8" text-anchor="start">pdf · liquify · xml · archive · crypto · path_provider · deskilo_push</text>
+<line x1="600" y1="412" x2="600" y2="436" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="436" width="1120" height="86" rx="14" fill="#2dd4bf" fill-opacity="0.14" stroke="#2dd4bf" stroke-width="2"/>
+<text x="60" y="472" font-size="17" fill="#eef1f8" text-anchor="start" font-weight="700">Backend</text>
+<text x="60" y="496" font-size="13" fill="#a2abc0" text-anchor="start">Supabase</text>
+<text x="320" y="472" font-size="14" fill="#eef1f8" text-anchor="start">Postgres with row-level security · 406 migrations · security definer RPCs</text>
+<text x="320" y="498" font-size="14" fill="#eef1f8" text-anchor="start">9 edge functions · instance bundle for the in-app wizard</text>
+<line x1="600" y1="524" x2="600" y2="548" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="548" width="1120" height="86" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="60" y="584" font-size="17" fill="#eef1f8" text-anchor="start" font-weight="700">Tooling</text>
+<text x="60" y="608" font-size="13" fill="#a2abc0" text-anchor="start">build and verify</text>
+<text x="320" y="584" font-size="14" fill="#eef1f8" text-anchor="start">build_runner · freezed · json_serializable · riverpod_generator · riverpod_lint</text>
+<text x="320" y="610" font-size="14" fill="#eef1f8" text-anchor="start">mocktail · 108 lint gates in test/lint · tool/*.dart generators</text>
+</g></svg>

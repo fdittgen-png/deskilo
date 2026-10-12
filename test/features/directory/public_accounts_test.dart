@@ -1,29 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1791: real UI affordances publish/search a page, opt into an account inbox
 // and edit employment independently of permissions. SQL tests own authorization.
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
+import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
+import 'package:deskilo/features/directory/domain/directory_location.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
-import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
+import 'package:deskilo/features/directory/presentation/directory_map.dart';
+import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/directory/presentation/member_employment_tile.dart';
 import 'package:deskilo/features/directory/presentation/public_page_editor.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
-
-import 'dart:convert';
-import 'dart:async';
-import 'package:deskilo/features/directory/domain/directory_location.dart';
 import 'package:deskilo/features/directory/providers/directory_location_providers.dart';
-
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:go_router/go_router.dart';
-import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
-import 'package:deskilo/features/directory/presentation/directory_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../helpers/mock_providers.dart';
 

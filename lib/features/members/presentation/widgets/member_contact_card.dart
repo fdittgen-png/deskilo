@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../providers/directory_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/directory_providers.dart';
 
 /// HOW TO REACH THIS PERSON, and what the workspace knows about them —
 /// as much of it as the viewer is allowed to see (#704).
@@ -40,7 +41,7 @@ class MemberContactCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final permissions = ref.watch(myPermissionsProvider);
     final isAdmin =
@@ -63,8 +64,7 @@ class MemberContactCard extends ConsumerWidget {
       if (isSelf || isAdmin)
         (
           Icons.pie_chart_outline,
-          l10n?.memberPlanShare('${member.subscriptionPct}') ??
-              'Plan ${member.subscriptionPct}%',
+          l10n.memberPlanShare('${member.subscriptionPct}'),
         ),
       if ((isSelf || isAdmin) && member.status != MemberStatus.active)
         (Icons.pause_circle_outline, _statusLabel(l10n, member.status)),
@@ -85,7 +85,7 @@ class MemberContactCard extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(top: AppSpacing.md, bottom: 2),
           child: Text(
-            (l10n?.memberContactHeading ?? 'Contact').toUpperCase(),
+            l10n.memberContactHeading.toUpperCase(),
             style: theme.textTheme.labelSmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
               letterSpacing: 1.1,
@@ -115,14 +115,14 @@ class MemberContactCard extends ConsumerWidget {
   /// created by an admin", not "Delegated". [MemberOrigin.unknown] is a
   /// row written before 0200, or by a server newer than this build:
   /// there is no honest sentence for it, so it shows nothing.
-  String _originLabel(AppLocalizations? l10n, MemberOrigin origin) =>
+  String _originLabel(AppLocalizations l10n, MemberOrigin origin) =>
       switch (origin) {
         MemberOrigin.founder =>
-          l10n?.memberOriginFounder ?? 'Founded this space',
+          l10n.memberOriginFounder,
         MemberOrigin.invited =>
-          l10n?.memberOriginInvited ?? 'Joined by invitation',
+          l10n.memberOriginInvited,
         MemberOrigin.delegated =>
-          l10n?.memberOriginDelegated ?? 'Profile created by an admin',
+          l10n.memberOriginDelegated,
         MemberOrigin.unknown => '',
       };
 
@@ -134,6 +134,6 @@ class MemberContactCard extends ConsumerWidget {
       };
 
   /// No chip for the ordinary case: only a status worth noticing shows.
-  String _statusLabel(AppLocalizations? l10n, MemberStatus status) =>
+  String _statusLabel(AppLocalizations l10n, MemberStatus status) =>
       status == MemberStatus.active ? '' : memberStatusLabel(l10n, status);
 }

@@ -3667,6 +3667,12 @@ abstract class AppLocalizations {
   /// **'Revenue'**
   String get bookRoleRevenue;
 
+  /// #2357 input VAT: bookRoleVatInput
+  ///
+  /// In en, this message translates to:
+  /// **'Input VAT'**
+  String get bookRoleVatInput;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -6889,6 +6895,66 @@ abstract class AppLocalizations {
   /// **'Reminder rules'**
   String get dunningSettingsTitle;
 
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s electronic address (BT-49) on their profile'**
+  String get eInvoiceChannelGapBuyerEndpoint;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'a buyer reference or a purchase-order number'**
+  String get eInvoiceChannelGapBuyerReference;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s VAT number or fiscal code'**
+  String get eInvoiceChannelGapBuyerTaxId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s Leitweg-ID as their buyer reference'**
+  String get eInvoiceChannelGapLeitwegId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s bank account (IBAN)'**
+  String get eInvoiceChannelGapPaymentAccount;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s contact e-mail and telephone'**
+  String get eInvoiceChannelGapSellerContact;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s electronic address (BT-34) in its legal identity'**
+  String get eInvoiceChannelGapSellerEndpoint;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s VAT number'**
+  String get eInvoiceChannelGapSellerVatId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the county of each Romanian address'**
+  String get eInvoiceChannelGapSubdivision;
+
+  /// #2358 e-invoice sheet: what the configured channel still needs before Send is offered
+  ///
+  /// In en, this message translates to:
+  /// **'Before sending through {channel}, add:'**
+  String eInvoiceChannelGapsTitle(String channel);
+
   /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
   ///
   /// In en, this message translates to:
@@ -6906,6 +6972,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.'**
   String get eInvoiceGapMixedNotSubjectLines;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'sales to consumers and abroad, and the payments of services, must be e-reported'**
+  String get eInvoiceMandateEReporting;
+
+  /// #2358 mandate calendar: a duty still ahead
+  ///
+  /// In en, this message translates to:
+  /// **'From {date}: {duty}.'**
+  String eInvoiceMandateFrom(String date, String duty);
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every invoice must be recorded in a hash-chained register (Verifactu)'**
+  String get eInvoiceMandateInvoiceRecords;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every business must issue e-invoices'**
+  String get eInvoiceMandateIssueAll;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'large and mid-sized businesses must issue e-invoices'**
+  String get eInvoiceMandateIssueLarge;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every business must be able to receive e-invoices'**
+  String get eInvoiceMandateReceiveAll;
+
+  /// #2358 mandate calendar: a duty in force
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}: {duty}.'**
+  String eInvoiceMandateSince(String date, String duty);
+
+  /// #2358 e-invoice sheet: header above the mandate calendar
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing obligations in your country:'**
+  String get eInvoiceMandateTitle;
 
   /// Label above the seat sheet's accessory chips (workspace catalog)
   ///
@@ -8124,6 +8238,12 @@ abstract class AppLocalizations {
   /// **'Enter an amount above zero.'**
   String get expenseInvalidAmount;
 
+  /// #2357 input VAT: expenseInvalidDeductible
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a share between 0 and 100.'**
+  String get expenseInvalidDeductible;
+
   /// #1449 expense_rules
   ///
   /// In en, this message translates to:
@@ -8183,6 +8303,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
+
+  /// #2357 input VAT: expenseVatDeductible
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible share (%)'**
+  String get expenseVatDeductible;
+
+  /// #2357 input VAT: the deductible VAT an expense makes
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible VAT: {amount}'**
+  String expenseVatDeductibleAmount(String amount);
+
+  /// #2357 input VAT: expenseVatDeductibleHint
+  ///
+  /// In en, this message translates to:
+  /// **'100 % unless part of the expense is private or serves an exempt activity.'**
+  String get expenseVatDeductibleHint;
+
+  /// #2357 input VAT: expenseVatNone
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT'**
+  String get expenseVatNone;
+
+  /// #2357 input VAT: expenseVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT on this expense'**
+  String get expenseVatRate;
 
   /// #669 - accounting export formats
   ///
@@ -8783,6 +8933,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Import public holidays'**
   String get featureHolidayImportTitle;
+
+  /// #2357 input VAT: featureInputVatDesc
+  ///
+  /// In en, this message translates to:
+  /// **'An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.'**
+  String get featureInputVatDesc;
+
+  /// #2357 input VAT: featureInputVatTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Input VAT'**
+  String get featureInputVatTitle;
 
   /// #977 instance wizard: featureInstanceWizard
   ///
@@ -13326,12 +13488,6 @@ abstract class AppLocalizations {
   /// **'Public-sector customers: {channel}.'**
   String invoiceEInvoicePublicRoute(String channel);
 
-  /// E-invoice sheet: the file satisfies the norm
-  ///
-  /// In en, this message translates to:
-  /// **'Ready — this file satisfies EN 16931.'**
-  String get invoiceEInvoiceReady;
-
   /// Menu: share the EN 16931 UBL XML (EU workspaces)
   ///
   /// In en, this message translates to:
@@ -13367,6 +13523,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An access point delivers it to the customer — no government platform in between.'**
   String get invoiceEInvoiceTransportPeppol;
+
+  /// #2358 e-invoice sheet: complete, and the format passes the named official validator
+  ///
+  /// In en, this message translates to:
+  /// **'Ready — nothing EN 16931 requires is missing, and this format passes the official validator ({validator}).'**
+  String invoiceEInvoiceValidated(String validator);
 
   /// #1916 invoice essentials: invoiceEssentialsRefused
   ///
@@ -13998,6 +14160,12 @@ abstract class AppLocalizations {
   /// **'The member\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #2356: invoiceMissingBuyerTaxId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
+  String get invoiceMissingBuyerTaxId;
+
   /// #1916 invoice essentials: invoiceMissingBuyerVatId
   ///
   /// In en, this message translates to:
@@ -14010,6 +14178,12 @@ abstract class AppLocalizations {
   /// **'The legal basis for the VAT exemption'**
   String get invoiceMissingExemptionReason;
 
+  /// #2356: invoiceMissingNationalCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
+  String get invoiceMissingNationalCurrency;
+
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
   /// In en, this message translates to:
@@ -14019,8 +14193,14 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be France or Germany for issuing here — other countries are issued outside the app'**
+  /// **'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
+
+  /// #2356: invoiceMissingSellerTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
+  String get invoiceMissingSellerTaxNumber;
 
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
@@ -20142,6 +20322,12 @@ abstract class AppLocalizations {
   /// **'Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.'**
   String get notificationsSystemOffHint;
 
+  /// #2356 number sequences: numberSequenceCreditNoteUnsaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved yet: until this series is saved, credit notes take invoice numbers.'**
+  String get numberSequenceCreditNoteUnsaved;
+
   /// #925 number sequences: numberSequenceDateNone
   ///
   /// In en, this message translates to:
@@ -24104,6 +24290,12 @@ abstract class AppLocalizations {
   /// **'Your session has ended. Sign in again, then retry.'**
   String get refusalSession;
 
+  /// #2356: refusalVatRateVersioned
+  ///
+  /// In en, this message translates to:
+  /// **'This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.'**
+  String get refusalVatRateVersioned;
+
   /// #711 - globalization
   ///
   /// In en, this message translates to:
@@ -25141,6 +25333,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'True on a credit note'**
   String get reportFieldMeaningCreditNote;
+
+  /// #2388 report guide: meaning of declaration_note
+  ///
+  /// In en, this message translates to:
+  /// **'The declaration\'s caution to verify before filing'**
+  String get reportFieldMeaningDeclarationNote;
 
   /// #966 report guide: meaning of due_date
   ///
@@ -32252,6 +32450,24 @@ abstract class AppLocalizations {
   /// **'Official form lines'**
   String get vatDeclBoxes;
 
+  /// #2357 VAT period locks: vatDeclCorrectionOf
+  ///
+  /// In en, this message translates to:
+  /// **'Correction of {period}'**
+  String vatDeclCorrectionOf(String period);
+
+  /// #2357 VAT period locks: vatDeclCorrectionsNote
+  ///
+  /// In en, this message translates to:
+  /// **'A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.'**
+  String get vatDeclCorrectionsNote;
+
+  /// #2357 input VAT: vatDeclCredit
+  ///
+  /// In en, this message translates to:
+  /// **'VAT credit'**
+  String get vatDeclCredit;
+
   /// Disclaimer at the bottom of the declaration PDF
   ///
   /// In en, this message translates to:
@@ -32263,6 +32479,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Draft'**
   String get vatDeclDraft;
+
+  /// #2357 VAT filing files: vatDeclEdiTva
+  ///
+  /// In en, this message translates to:
+  /// **'EDI-TVA file (CA3)'**
+  String get vatDeclEdiTva;
+
+  /// #2357 VAT filing files: vatDeclElster
+  ///
+  /// In en, this message translates to:
+  /// **'ELSTER file (UStVA)'**
+  String get vatDeclElster;
 
   /// Empty state of the declarations list
   ///
@@ -32276,11 +32504,35 @@ abstract class AppLocalizations {
   /// **'Filed'**
   String get vatDeclFiled;
 
+  /// #2357 VAT filing files: vatDeclFilingPeriod
+  ///
+  /// In en, this message translates to:
+  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  String get vatDeclFilingPeriod;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.'**
+  String get vatDeclFilingTaxNumber;
+
+  /// #2357 VAT filing files: vatDeclFilingTaxNumberField
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number (Steuernummer)'**
+  String get vatDeclFilingTaxNumberField;
+
   /// Generate-declaration button
   ///
   /// In en, this message translates to:
   /// **'Prepare'**
   String get vatDeclGenerate;
+
+  /// #2357 input VAT: vatDeclInputVat
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible VAT'**
+  String get vatDeclInputVat;
 
   /// Invoice-count column
   ///
@@ -32306,6 +32558,12 @@ abstract class AppLocalizations {
   /// **'Net base'**
   String get vatDeclNet;
 
+  /// #2357 input VAT: vatDeclPayable
+  ///
+  /// In en, this message translates to:
+  /// **'VAT payable'**
+  String get vatDeclPayable;
+
   /// PDF button on a declaration card
   ///
   /// In en, this message translates to:
@@ -32317,6 +32575,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Period'**
   String get vatDeclPeriod;
+
+  /// #2357 VAT period locks: vatDeclPeriodAnnual
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get vatDeclPeriodAnnual;
+
+  /// #2357 VAT period locks: vatDeclPeriodField
+  ///
+  /// In en, this message translates to:
+  /// **'VAT return period'**
+  String get vatDeclPeriodField;
+
+  /// #2357 VAT period locks: vatDeclPeriodHint
+  ///
+  /// In en, this message translates to:
+  /// **'How often you file the return. The VAT return screen offers only periods of this length.'**
+  String get vatDeclPeriodHint;
+
+  /// #2357 VAT period locks: vatDeclPeriodMonth
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get vatDeclPeriodMonth;
+
+  /// #2357 VAT period locks: vatDeclPeriodNote
+  ///
+  /// In en, this message translates to:
+  /// **'Filing period: {period}. Change it under Legal identity & e-invoicing.'**
+  String vatDeclPeriodNote(String period);
+
+  /// #2357 VAT period locks: vatDeclPeriodQuarter
+  ///
+  /// In en, this message translates to:
+  /// **'Quarterly'**
+  String get vatDeclPeriodQuarter;
 
   /// Status chip: the server computed the return, ready to file (#2357)
   ///

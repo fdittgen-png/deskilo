@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/template_capabilities.dart';
@@ -9,19 +10,19 @@ import '../capability_labels.dart';
 import '../screens/template_compare_screen.dart';
 
 /// A capability state in words: never only a colour or a tick.
-String _capabilityStateLabel(AppLocalizations? l10n, CapabilityState s) =>
+String _capabilityStateLabel(AppLocalizations l10n, CapabilityState s) =>
     switch (s) {
-      CapabilityState.enabled => l10n?.capabilityStateEnabled ?? 'On',
-      CapabilityState.disabled => l10n?.capabilityStateDisabled ?? 'Off',
+      CapabilityState.enabled => l10n.capabilityStateEnabled,
+      CapabilityState.disabled => l10n.capabilityStateDisabled,
       CapabilityState.conditional =>
-        l10n?.capabilityStateConditional ?? 'On only if its prerequisites are',
+        l10n.capabilityStateConditional,
       CapabilityState.unspecified =>
-        l10n?.capabilityStateUnspecified ?? 'Not set by this template',
+        l10n.capabilityStateUnspecified,
       CapabilityState.localInputRequired =>
-        l10n?.capabilityStateLocalInput ?? 'Needs a local value first',
+        l10n.capabilityStateLocalInput,
       CapabilityState.incompatible =>
-        l10n?.capabilityStateIncompatible ?? 'Cannot apply here',
-      CapabilityState.unknown => l10n?.capabilityStateUnknown ?? 'Unknown',
+        l10n.capabilityStateIncompatible,
+      CapabilityState.unknown => l10n.capabilityStateUnknown,
     };
 
 /// #1660 — "Why this matches": for each capability the search asked
@@ -47,7 +48,7 @@ class _TemplateWhyMatchState extends State<TemplateWhyMatch> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -64,8 +65,8 @@ class _TemplateWhyMatchState extends State<TemplateWhyMatch> {
             icon: Icon(_open ? Icons.expand_less : Icons.expand_more),
             label: Text(
               _open
-                  ? (l10n?.templateWhyHide ?? 'Hide why')
-                  : (l10n?.templateWhy ?? 'Why this matches'),
+                  ? (l10n.templateWhyHide)
+                  : (l10n.templateWhy),
             ),
             onPressed: () => setState(() => _open = !_open),
           ),

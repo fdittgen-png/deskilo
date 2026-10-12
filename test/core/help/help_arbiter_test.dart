@@ -16,8 +16,9 @@ void main() {
     expect(c.read(helpSlotProvider), HelpSlot.guide);
     arbiter.blockerShown('closed-day');
     expect(c.read(helpSlotProvider), HelpSlot.blocker);
-    arbiter.blockerShown('closed-day'); // idempotent
-    arbiter.blockerCleared('closed-day');
+    arbiter
+      ..blockerShown('closed-day') // idempotent
+      ..blockerCleared('closed-day');
     expect(c.read(helpSlotProvider), HelpSlot.guide);
     arbiter.guide(active: false);
     expect(c.read(helpSlotProvider), HelpSlot.tips);

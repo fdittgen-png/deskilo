@@ -12,9 +12,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/shell/space_entry.dart';
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -34,7 +34,7 @@ class SpaceOffers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final signedIn = ref.watch(authStateProvider).value != null;
     // A membership can only be recognised on this server: the page's id
     // is that server's own workspace id.
@@ -56,7 +56,7 @@ class SpaceOffers extends ConsumerWidget {
             FilledButton.icon(
               key: const ValueKey('portal-enter'),
               icon: const Icon(Icons.login),
-              label: Text(l?.portalEnterSpace ?? 'Enter'),
+              label: Text(l.portalEnterSpace),
               onPressed: () => enterSpace(context, ref, mine),
             )
           else
@@ -64,7 +64,7 @@ class SpaceOffers extends ConsumerWidget {
               key: const ValueKey('portal-request-membership'),
               icon: const Icon(Icons.person_add_outlined),
               label: Text(
-                l?.portalRequestProfile ?? 'Request a workspace profile',
+                l.portalRequestProfile,
               ),
               onPressed: onRequest,
             ),
@@ -72,11 +72,11 @@ class SpaceOffers extends ConsumerWidget {
             OutlinedButton.icon(
               key: const ValueKey('portal-copy-email'),
               icon: const Icon(Icons.copy_outlined),
-              label: Text(l?.portalCopyEmail ?? 'Copy the e-mail'),
+              label: Text(l.portalCopyEmail),
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(text: email));
                 if (!context.mounted) return;
-                AppSnack.success(context, l?.portalEmailCopied ?? 'E-mail copied');
+                AppSnack.success(context, l.portalEmailCopied);
               },
             ),
         ],

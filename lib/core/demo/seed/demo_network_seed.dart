@@ -21,9 +21,9 @@ import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/public_workspace.dart';
 import '../../../features/visits/domain/guest_participation.dart';
 import '../../../features/workspace/domain/bi_saved_view.dart';
+import '../data/connected_installations.dart';
 import '../data/guest_participation_repository.dart';
 import '../data/messenger_repository.dart';
-import '../data/connected_installations.dart';
 import '../data/public_directory_repository.dart';
 import '../demo_clock.dart';
 import '../demo_dataset.dart';
@@ -32,7 +32,7 @@ import 'demo_people_seed.dart';
 
 /// The second space: a whole public page, from its presentation to its
 /// conditions and the hosts who answer (#2405).
-const demoNeighbourQuai = PublicWorkspace('demo-quai', kDemoServerOrigin, '', {
+const _demoNeighbourQuai = PublicWorkspace('demo-quai', kDemoServerOrigin, '', {
   'name': 'Le Quai Numérique',
   'address': '9 quai des Pêcheurs\n34200 Sète',
   'host_type': 'company',
@@ -54,13 +54,13 @@ const demoNeighbourQuai = PublicWorkspace('demo-quai', kDemoServerOrigin, '', {
 });
 
 /// Its hosts, as the inquiry sheet names them before anything is written.
-const demoQuaiHosts = [
+const _demoQuaiHosts = [
   HostRosterEntry(name: 'Inès Caradec', role: 'owner'),
   HostRosterEntry(name: 'Malo Ferrand', role: 'admin'),
 ];
 
 /// A third space, so the map has a region rather than a pair of pins.
-const demoNeighbourHalles = PublicWorkspace(
+const _demoNeighbourHalles = PublicWorkspace(
   'demo-halles',
   kDemoServerOrigin,
   '',
@@ -90,7 +90,7 @@ const _demoSpacePlans =
 
 /// The demo space's own card: the owner finds their page in the same
 /// directory a stranger searches, and opening it offers to enter.
-PublicWorkspace demoOwnCard() => PublicWorkspace('ws-1', kDemoServerOrigin, '', {
+PublicWorkspace _demoOwnCard() => PublicWorkspace('ws-1', kDemoServerOrigin, '', {
   'name': demoSpaceName,
   'address': demoSpaceAddress,
   'host_type': 'company',
@@ -121,7 +121,7 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
         'website': 'https://atelier-du-marche.example.test',
       },
     }
-    ..cards.addAll([demoOwnCard(), demoNeighbourQuai, demoNeighbourHalles]);
+    ..cards.addAll([_demoOwnCard(), _demoNeighbourQuai, _demoNeighbourHalles]);
 }
 
 /// Two visits as a guest, in spaces the directory lists: one the host
@@ -137,8 +137,8 @@ FakeGuestParticipationRepository demoGuestVisits(DateTime now) {
     visits: [
       GuestParticipation(
         id: 'demo-visit-quai',
-        workspaceId: demoNeighbourQuai.id,
-        workspaceName: demoNeighbourQuai.name,
+        workspaceId: _demoNeighbourQuai.id,
+        workspaceName: _demoNeighbourQuai.name,
         status: GuestVisitStatus.confirmed,
         startsAt: at(6, 9),
         endsAt: at(6, 17),
@@ -148,8 +148,8 @@ FakeGuestParticipationRepository demoGuestVisits(DateTime now) {
       ),
       GuestParticipation(
         id: 'demo-visit-halles',
-        workspaceId: demoNeighbourHalles.id,
-        workspaceName: demoNeighbourHalles.name,
+        workspaceId: _demoNeighbourHalles.id,
+        workspaceName: _demoNeighbourHalles.name,
         status: GuestVisitStatus.requested,
         startsAt: at(13, 14),
         endsAt: at(13, 18),
@@ -196,8 +196,8 @@ FakeMessengerRepository demoMessenger(
       HostRosterEntry(name: demoCast[0].name, role: 'owner'),
       HostRosterEntry(name: demoCast[2].name, role: 'admin'),
     ]
-    ..roster[demoNeighbourQuai.id] = demoQuaiHosts
-    ..roster[demoNeighbourHalles.id] = const [
+    ..roster[_demoNeighbourQuai.id] = _demoQuaiHosts
+    ..roster[_demoNeighbourHalles.id] = const [
       HostRosterEntry(name: 'Yann Le Berre', role: 'owner'),
     ]
     ..inboxRows.add({

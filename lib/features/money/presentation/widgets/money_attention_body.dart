@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/providers/attention_providers.dart';
 import '../../../events/providers/notification_filter_providers.dart';
 
@@ -14,7 +14,7 @@ class MoneyAttentionBody extends ConsumerWidget {
   final Widget child;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     final count = enabled ? ref.watch(workspaceAttentionProvider).money : 0;
     return Column(children: [
       if (enabled) ListTile(key: const ValueKey('money-alerts'),

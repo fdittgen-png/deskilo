@@ -91,7 +91,6 @@ void main() {
                     cap: null,
                     capped: false,
                     granularity: BookingGranularity.minutes15,
-                    walkUp: true,
                   ),
                 );
               },

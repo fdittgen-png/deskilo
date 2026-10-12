@@ -9,7 +9,7 @@ import 'report_kind_labels.dart';
 ReportBands professionalReportBands({
   required ReportKind kind,
   required ReportBands content,
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
 }) {
   // Invoices already have their own identity/date/tax sections; preserve
   // them rather than replacing them with a generic management header.
@@ -30,7 +30,7 @@ ReportBands professionalReportBands({
 {% if member != "" %}{{ member }}{% endif %}
 {% if client_address != "" %}> {{ client_address }}{% endif %}
 {% if period != "" %}> {{ period }}{% endif %}
-{% if issued != "" %}> ${l10n?.invoicePdfIssuedOn ?? 'Issued on'} {{ issued }}{% endif %}
+{% if issued != "" %}> ${l10n.invoicePdfIssuedOn} {{ issued }}{% endif %}
 {% if vat_period != "" %}> {{ vat_period }}{% endif %}
 {% if vat_basis_note != "" %}> {{ vat_basis_note }}{% endif %}
 {% if status_from != "" %}> {{ status_from }} → {{ status_to }}{% endif %}

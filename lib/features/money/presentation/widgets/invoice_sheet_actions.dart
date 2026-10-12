@@ -47,7 +47,7 @@ bool allowed(InvoiceAction action) =>
 /// the build can pull the expected one to the front.
 List<(InvoiceAction, Widget)> build(
   BuildContext context,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   InvoiceLifecycle status,
   InvoiceAction expected,
 ) =>
@@ -59,7 +59,7 @@ List<(InvoiceAction, Widget)> build(
           context,
           key: 'invoice-quick-${invoice.id}',
           icon: Icons.bolt_outlined,
-          label: l10n?.reportQuickView ?? 'Quick view',
+          label: l10n.reportQuickView,
           action: InvoiceAction.quickView,
         ),
       ),
@@ -69,7 +69,7 @@ List<(InvoiceAction, Widget)> build(
           context,
           key: 'invoice-download-${invoice.id}',
           icon: Icons.download_outlined,
-          label: l10n?.invoiceDownload ?? 'Download PDF',
+          label: l10n.invoiceDownload,
           action: InvoiceAction.downloadPdf,
           primary: expected == InvoiceAction.downloadPdf,
         ),
@@ -80,7 +80,7 @@ List<(InvoiceAction, Widget)> build(
           context,
           key: 'invoice-share-${invoice.id}',
           icon: Icons.share_outlined,
-          label: l10n?.invoiceShare ?? 'Share PDF',
+          label: l10n.invoiceShare,
           action: InvoiceAction.sharePdf,
         ),
       ),
@@ -92,7 +92,7 @@ List<(InvoiceAction, Widget)> build(
             context,
             key: 'invoice-einvoice-action',
             icon: Icons.code_outlined,
-            label: l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
+            label: l10n.invoiceEInvoiceAction,
             action: InvoiceAction.eInvoice,
           ),
         ),
@@ -104,7 +104,7 @@ List<(InvoiceAction, Widget)> build(
               context,
               key: 'invoice-remind-action',
               icon: Icons.notifications_outlined,
-              label: l10n?.invoiceRemindAction ?? 'Send a reminder',
+              label: l10n.invoiceRemindAction,
               action: InvoiceAction.remind,
               primary: expected == InvoiceAction.remind,
             ),
@@ -119,9 +119,8 @@ List<(InvoiceAction, Widget)> build(
                   ? Icons.pause_circle_outline
                   : Icons.play_circle_outline,
               label: heldReason == null
-                  ? l10n?.invoiceHoldAction ?? 'Hold reminders'
-                  : l10n?.invoiceHoldReleaseAction ??
-                      'Release the reminder hold',
+                  ? l10n.invoiceHoldAction
+                  : l10n.invoiceHoldReleaseAction,
               action: InvoiceAction.dunningHold,
             ),
           ),
@@ -131,7 +130,7 @@ List<(InvoiceAction, Widget)> build(
             context,
             key: 'invoice-match-action',
             icon: Icons.price_check_outlined,
-            label: l10n?.invoiceMatchAction ?? 'Mark as paid',
+            label: l10n.invoiceMatchAction,
             action: InvoiceAction.markPaid,
             primary: expected == InvoiceAction.markPaid,
           ),
@@ -142,7 +141,7 @@ List<(InvoiceAction, Widget)> build(
             context,
             key: 'invoice-void-action',
             icon: Icons.block_outlined,
-            label: l10n?.invoiceVoidAction ?? 'Mark erroneous',
+            label: l10n.invoiceVoidAction,
             action: InvoiceAction.markErroneous,
             danger: true,
           ),
@@ -159,7 +158,7 @@ List<(InvoiceAction, Widget)> build(
             context,
             key: 'invoice-replace-action',
             icon: Icons.published_with_changes_outlined,
-            label: l10n?.invoiceReplaceAction ?? 'Issue replacement',
+            label: l10n.invoiceReplaceAction,
             action: InvoiceAction.replace,
             primary: expected == InvoiceAction.replace,
           ),

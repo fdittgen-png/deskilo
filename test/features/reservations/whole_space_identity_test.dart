@@ -16,9 +16,9 @@
 //    sheet stated the conflict and stopped — even when the conflict was
 //    the caller's OWN booking. A whole-space reservation could be made
 //    and never undone from the place it was made.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/source_of.dart';
 
 void main() {
   group('a whole-space booking is drawn differently, not just tinted', () {
@@ -30,12 +30,10 @@ void main() {
     late String painter;
 
     setUpAll(() {
-      helpers = File('lib/features/plan/presentation/widgets/'
-              'plan_paint_helpers.dart')
-          .readAsStringSync();
-      painter = File('lib/features/plan/presentation/widgets/'
-              'floor_plan_painter.dart')
-          .readAsStringSync();
+      helpers = sourceOf('lib/features/plan/presentation/widgets/'
+              'plan_paint_helpers.dart');
+      painter = sourceOf('lib/features/plan/presentation/widgets/'
+              'floor_plan_painter.dart');
     });
 
     test('the hatch exists and is applied to BOTH rooms and tables', () {
@@ -77,12 +75,10 @@ void main() {
     late String sheet;
 
     setUpAll(() {
-      actions = File('lib/features/reservations/presentation/widgets/'
-              'space_conflict_actions.dart')
-          .readAsStringSync();
-      sheet = File('lib/features/reservations/presentation/widgets/'
-              'space_scan.dart')
-          .readAsStringSync();
+      actions = sourceOf('lib/features/reservations/presentation/widgets/'
+              'space_conflict_actions.dart');
+      sheet = sourceOf('lib/features/reservations/presentation/widgets/'
+              'space_scan.dart');
     });
 
     test('the sheet still mounts the conflict actions', () {
@@ -128,9 +124,8 @@ void main() {
     late String sheet;
 
     setUpAll(() {
-      sheet = File('lib/features/reservations/presentation/widgets/'
-              'space_scan.dart')
-          .readAsStringSync();
+      sheet = sourceOf('lib/features/reservations/presentation/widgets/'
+              'space_scan.dart');
     });
 
     test('a CHECKED-IN booking of yours is recognised as yours', () {

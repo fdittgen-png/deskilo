@@ -121,11 +121,6 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'collectée» are the legal names of the accounts a bookkeeper '
         'reads. A translated account name is the wrong account.',
   ),
-  'lib/features/money/domain/vat_declaration.dart': (
-    allowed: 10,
-    reason: 'CA3 and UStVA box names, in French and German, as the forms '
-        'print them.',
-  ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,
     reason: 'cloud region names as the provider spells them — a place '

@@ -448,7 +448,10 @@ void main() {
       if (feature == null) continue;
       final text = layering.withoutComments(file.readAsStringSync());
       if (!layering.repositoryUse.hasMatch(text)) continue;
-      (offenders[feature] ??= []).add(file.path);
+      // #2386 — a part file counts as its library.
+      final list = offenders[feature] ??= [];
+      final library = layering.libraryPathOf(file);
+      if (!list.contains(library)) list.add(library);
     }
 
     final grew = <String>[];

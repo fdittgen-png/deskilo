@@ -13,10 +13,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/save_template_sheet.dart';
@@ -24,14 +25,13 @@ import '../widgets/template_apply_sheet.dart';
 import '../widgets/template_gallery.dart';
 import '../widgets/template_share_sheet.dart';
 import '../widgets/template_widen_dialog.dart';
-import '../../domain/template_inspection.dart';
 
 class WorkspaceLibraryScreen extends ConsumerWidget {
   const WorkspaceLibraryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
     final all = ref.watch(workspaceTemplatesProvider).value ?? const [];
@@ -40,13 +40,13 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
     final canPublish = me?.actsAsOwner ?? false;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.libraryTitle ?? 'Workspace library')),
+      appBar: AppBar(title: Text(l10n.libraryTitle)),
       floatingActionButton: canPublish && workspace != null
           ? FloatingActionButton.extended(
               key: const ValueKey('library-save'),
               onPressed: () => showSaveTemplateSheet(context, ref, workspace.id),
               icon: const Icon(Icons.bookmark_add_outlined),
-              label: Text(l10n?.librarySave ?? 'Save this space as a template'),
+              label: Text(l10n.librarySave),
             )
           : null,
       body: Padding(
@@ -58,18 +58,18 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
           padding: const EdgeInsets.only(bottom: kFabSafeBottom),
           sections: [
             TemplateGallerySection(
-              title: l10n?.libraryStartFrom ?? 'Start from the library',
+              title: l10n.libraryStartFrom,
               templates: library,
               trailingFor: (t) => canPublish && workspace != null
                   ? TextButton(
                       key: ValueKey('library-apply-${t.key}'),
                       onPressed: () => _apply(context, ref, workspace.id, t),
-                      child: Text(l10n?.libraryPreviewChanges ?? 'Preview changes'),
+                      child: Text(l10n.libraryPreviewChanges),
                     )
                   : null,
             ),
             TemplateGallerySection(
-              title: l10n?.libraryYours ?? 'Your templates',
+              title: l10n.libraryYours,
               templates: mine,
               trailingFor: (t) => canPublish
                   ? PopupMenuButton<String>(
@@ -78,19 +78,19 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
                       itemBuilder: (_) => [
                         PopupMenuItem(
                             value: 'share',
-                            child: Text(l10n?.libraryShare ?? 'Share…')),
+                            child: Text(l10n.libraryShare)),
                         PopupMenuItem(
                             value: 'private',
-                            child: Text(l10n?.libraryVisibilityPrivate ?? 'Only me')),
+                            child: Text(l10n.libraryVisibilityPrivate)),
                         PopupMenuItem(
                             value: 'shared',
-                            child: Text(l10n?.libraryVisibilityShared ?? 'People I invite')),
+                            child: Text(l10n.libraryVisibilityShared)),
                         PopupMenuItem(
                             value: 'public',
-                            child: Text(l10n?.libraryVisibilityPublic ?? 'Everyone (the library)')),
+                            child: Text(l10n.libraryVisibilityPublic)),
                         PopupMenuItem(
                             value: 'delete',
-                            child: Text(l10n?.libraryDelete ?? 'Delete template')),
+                            child: Text(l10n.libraryDelete)),
                       ],
                     )
                   : null,
@@ -105,16 +105,16 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
   /// announces the result.
   Future<void> _apply(BuildContext context, WidgetRef ref, String workspaceId,
       WorkspaceTemplate t) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final count = await showTemplateApplySheet(context, ref, workspaceId, t);
     if (count == null || !context.mounted) return;
     AppSnack.success(
-        context, l10n?.libraryAppliedChanges(count) ?? '$count changes applied.');
+        context, l10n.libraryAppliedChanges(count));
   }
 
   Future<void> _menu(BuildContext context, WidgetRef ref,
       WorkspaceTemplate t, String action) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final repo = ref.read(workspaceRepositoryProvider);
     switch (action) {
       case 'share':
@@ -151,9 +151,8 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
         final ok = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text(l10n?.libraryDelete ?? 'Delete template'),
-            content: Text(l10n?.libraryDeleteConfirm(t.name) ??
-                'Delete « ${t.name} »? People you shared it with lose access.'),
+            title: Text(l10n.libraryDelete),
+            content: Text(l10n.libraryDeleteConfirm(t.name)),
             actions: [
               TextButton(
                   key: ValueKey('workspace-library-text-button-$action'),

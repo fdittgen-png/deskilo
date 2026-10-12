@@ -275,7 +275,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Prêt — ce fichier satisfait la norme EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validateur rejetterait ce fichier :",
   "invoiceEInvoiceIncompleteTitle": "Valide, mais les profils nationaux stricts demandent aussi :",
   "invoiceGapVatNotSupported": "L'espace facture la TVA mais cette facture ne porte aucun taux — ajoutez vos taux de TVA, puis émettez-la à nouveau.",

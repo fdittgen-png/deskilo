@@ -9,35 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/reminder_evidence.dart';
 import '../../providers/reminder_evidence_providers.dart';
 
 @visibleForTesting
-String reminderStatusLabel(AppLocalizations? l10n, String status) =>
+String reminderStatusLabel(AppLocalizations l10n, String status) =>
     switch (status) {
-      'prepared' => l10n?.reminderStatusPrepared ?? 'Prepared',
-      'queued' => l10n?.reminderStatusQueued ?? 'Handed to the push service',
+      'prepared' => l10n.reminderStatusPrepared,
+      'queued' => l10n.reminderStatusQueued,
       'provider_accepted' =>
-        l10n?.reminderStatusAccepted ??
-            'Accepted by the push service — not proof it was read',
+        l10n.reminderStatusAccepted,
       'declared_delivered' =>
-        l10n?.reminderStatusDeclared ??
-            'Shared by the sender — their statement, not a receipt',
-      'failed' => l10n?.reminderStatusFailed ?? 'Not delivered',
+        l10n.reminderStatusDeclared,
+      'failed' => l10n.reminderStatusFailed,
       'unknown' =>
-        l10n?.reminderStatusUnknown ?? 'No answer from the push service',
+        l10n.reminderStatusUnknown,
       _ =>
-        l10n?.reminderStatusLegacy ??
-            'Recorded before delivery was tracked — unknown',
+        l10n.reminderStatusLegacy,
     };
 
-String _reminderOriginLabel(AppLocalizations? l10n, String origin) =>
+String _reminderOriginLabel(AppLocalizations l10n, String origin) =>
     switch (origin) {
-      'manual' => l10n?.reminderOriginManual ?? 'by hand',
-      'automatic' => l10n?.reminderOriginAutomatic ?? 'automatic',
-      _ => l10n?.reminderOriginLegacy ?? 'earlier',
+      'manual' => l10n.reminderOriginManual,
+      'automatic' => l10n.reminderOriginAutomatic,
+      _ => l10n.reminderOriginLegacy,
     };
 
 /// The reminder history of [invoiceId]; nothing when it has none.
@@ -50,7 +48,7 @@ class ReminderEvidenceList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final evidence = ref.watch(reminderEvidenceProvider(invoiceId)).value;
     if (evidence == null || evidence.isEmpty) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final date = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
@@ -63,13 +61,13 @@ class ReminderEvidenceList extends ConsumerWidget {
           children: [
             Expanded(
               child: Text(
-                l10n?.reminderHistoryTitle ?? 'Reminder history',
+                l10n.reminderHistoryTitle,
                 style: theme.textTheme.titleSmall,
               ),
             ),
             IconButton(
               key: const ValueKey('invoice-reminder-evidence-refresh'),
-              tooltip: l10n?.reminderHistoryRefresh ?? 'Check delivery again',
+              tooltip: l10n.reminderHistoryRefresh,
               icon: const Icon(Icons.refresh),
               onPressed: () =>
                   ref.invalidate(reminderEvidenceProvider(invoiceId)),
@@ -81,9 +79,7 @@ class ReminderEvidenceList extends ConsumerWidget {
             key: ValueKey('invoice-reminder-evidence-${item.intentId}'),
             padding: const EdgeInsets.only(top: AppSpacing.xs),
             child: Text(
-              '${l10n?.reminderHistoryLine(item.level, _reminderOriginLabel(l10n, item.origin), date.format(item.preparedAt)) ?? 'Level ${item.level} · '
-                      '${_reminderOriginLabel(l10n, item.origin)} · '
-                      '${date.format(item.preparedAt)}'}\n'
+              '${l10n.reminderHistoryLine(item.level, _reminderOriginLabel(l10n, item.origin), date.format(item.preparedAt))}\n'
               '${reminderStatusLabel(l10n, item.status)}',
               style: theme.textTheme.bodySmall,
             ),

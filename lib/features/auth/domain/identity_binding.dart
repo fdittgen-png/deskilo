@@ -4,6 +4,7 @@
 // installation, as `my_identity_status` / `finalize_identity_binding`
 // answer it. It never carries the subject or any raw Auth payload, and it
 // confers nothing: no membership, no role, no MCP eligibility.
+import '../../../core/data/json_reader.dart';
 import 'database_capabilities.dart';
 
 export 'database_capabilities.dart';
@@ -55,21 +56,22 @@ class IdentityBindingStatus {
   /// [IdentityBindingState.unavailable] — never promoted to verified.
   factory IdentityBindingStatus.fromJson(Object? json) {
     if (json is! Map) return unknown;
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'identity_binding_status');
     final state = IdentityBindingState.values
-        .where((s) => s.name == json['status'])
+        .where((s) => s.name == r.textOrAbsent('status'))
         .firstOrNull;
     if (state == null) return unknown;
-    String? text(String key) => json[key] is String ? json[key] as String : null;
-    final boundAt = DateTime.tryParse(text('bound_at') ?? '');
+    final boundAt = DateTime.tryParse(r.textOrAbsent('bound_at') ?? '');
     if (state == IdentityBindingState.verified &&
-        (text('issuer') == null || boundAt == null)) {
+        (r.textOrAbsent('issuer') == null || boundAt == null)) {
       return unknown;
     }
     return IdentityBindingStatus(
       state: state,
-      installationId: text('installation_id'),
-      issuer: text('issuer'),
-      reason: text('reason'),
+      installationId: r.textOrAbsent('installation_id'),
+      issuer: r.textOrAbsent('issuer'),
+      reason: r.textOrAbsent('reason'),
       boundAt: boundAt?.toUtc(),
     );
   }

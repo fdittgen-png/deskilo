@@ -7,6 +7,7 @@
 // re-recorded) — so re-acceptance can never be forgotten.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -44,7 +45,7 @@ const _pins = <String, int>{
 void main() {
   test('the consent text is pinned to kPrivacyPolicyVersion — a changed '
       'text needs a new version so every account is asked again', () {
-    final text = privacySections(null)
+    final text = privacySections(englishL10n)
         .map((s) => '${s.title}\n${s.body}')
         .join('\n\n');
     final hash = _fnv1a(text);

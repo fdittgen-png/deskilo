@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/set_workspace_emblem.dart';
 import '../../providers/workspace_providers.dart';
 import 'workspace_emblem.dart';
@@ -32,7 +32,7 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
   bool _busy = false;
 
   Future<void> _pick() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final picker = ref.read(filePickerProvider);
     final emblems = ref.read(emblemsProvider);
     final file = await picker(const XTypeGroup(
@@ -48,8 +48,7 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
       context,
       domain: 'workspace',
       message: 'workspace emblem upload failed',
-      errorText: l10n?.emblemFailed ??
-          'The emblem could not be saved. Nothing changed.',
+      errorText: l10n.emblemFailed,
       action: () async => outcome = await emblems.choose(
         workspaceId: widget.workspaceId,
         bytes: bytes,
@@ -61,16 +60,15 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
     switch (outcome) {
       case EmblemOutcome.notAnImage:
         AppSnack.error(context,
-            l10n?.emblemNotAnImage ?? 'That file is not an image.');
+            l10n.emblemNotAnImage);
       case EmblemOutcome.tooHeavy:
         AppSnack.error(
             context,
-            l10n?.emblemTooHeavy ??
-                'That image is too heavy for a mark shown at 28 pixels.');
+            l10n.emblemTooHeavy);
       case EmblemOutcome.stored:
         ref.invalidate(myWorkspacesProvider);
         _reload();
-        AppSnack.success(context, l10n?.emblemSaved ?? 'Emblem saved.');
+        AppSnack.success(context, l10n.emblemSaved);
       case EmblemOutcome.removed || null:
         break;
     }
@@ -84,39 +82,35 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
   }
 
   Future<void> _remove() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final emblems = ref.read(emblemsProvider);
     setState(() => _busy = true);
     final ok = await runGuarded(
       context,
       domain: 'workspace',
       message: 'workspace emblem removal failed',
-      errorText: l10n?.emblemFailed ??
-          'The emblem could not be saved. Nothing changed.',
+      errorText: l10n.emblemFailed,
       action: () => emblems.remove(widget.workspaceId),
     );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!ok) return;
     _reload();
-    AppSnack.success(context, l10n?.emblemRemoved ?? 'Emblem removed.');
+    AppSnack.success(context, l10n.emblemRemoved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final stored = ref.watch(workspaceEmblemOfProvider(widget.workspaceId));
     final has = stored.value?.isNotEmpty ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n?.emblemTitle ?? 'Emblem', style: theme.textTheme.titleSmall),
+        Text(l10n.emblemTitle, style: theme.textTheme.titleSmall),
         Text(
-          l10n?.emblemHint ??
-              'A small image shown beneath the app’s own name in the menu. '
-                  'It is redrawn at most 512 pixels wide and stored without '
-                  'the file’s metadata.',
+          l10n.emblemHint,
           key: const ValueKey('emblem-hint'),
           style: theme.textTheme.bodySmall,
         ),
@@ -133,12 +127,12 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
             FilledButton.tonal(
               key: const ValueKey('emblem-pick'),
               onPressed: _busy ? null : _pick,
-              child: Text(l10n?.emblemChoose ?? 'Choose an image'),
+              child: Text(l10n.emblemChoose),
             ),
             TextButton(
               key: const ValueKey('emblem-remove'),
               onPressed: _busy || !has ? null : _remove,
-              child: Text(l10n?.emblemRemove ?? 'Remove'),
+              child: Text(l10n.emblemRemove),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -21,11 +22,10 @@ class ForwardOriginLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final text =
-        l10n?.messengerForwardedFrom(origin.contextLabel, origin.authorName) ??
-        'Forwarded from ${origin.contextLabel} · written by ${origin.authorName}';
+        l10n.messengerForwardedFrom(origin.contextLabel, origin.authorName);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Row(
@@ -49,20 +49,15 @@ class ForwardOriginLine extends StatelessWidget {
 }
 
 /// The sentence a system line says, in the reader's language.
-String _noticeText(AppLocalizations? l10n, MessageNotice notice) =>
+String _noticeText(AppLocalizations l10n, MessageNotice notice) =>
     switch (notice.kind) {
       // A personal conversation is never named to the source (0316).
       NoticeKind.forwarded when notice.targetLabel.isEmpty =>
-        l10n?.messengerNoticeForwardedPrivate(notice.actorName) ??
-            '${notice.actorName} forwarded a message of this conversation '
-                'to a personal conversation.',
+        l10n.messengerNoticeForwardedPrivate(notice.actorName),
       NoticeKind.forwarded =>
-        l10n?.messengerNoticeForwarded(notice.actorName, notice.targetLabel) ??
-            '${notice.actorName} forwarded a message of this conversation '
-                'to ${notice.targetLabel}.',
+        l10n.messengerNoticeForwarded(notice.actorName, notice.targetLabel),
       NoticeKind.captured =>
-        l10n?.messengerNoticeCaptured(notice.actorName) ??
-            '${notice.actorName} took a screenshot of this conversation.',
+        l10n.messengerNoticeCaptured(notice.actorName),
     };
 
 /// A centred system line in the thread: not a message, no actions.
@@ -74,7 +69,7 @@ class MessageNoticeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final text = _noticeText(AppLocalizations.of(context), notice);
+    final text = _noticeText(context.l10n, notice);
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),

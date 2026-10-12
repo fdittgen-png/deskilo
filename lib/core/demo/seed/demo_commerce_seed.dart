@@ -18,7 +18,7 @@ void seedDemoNegotiations(FakeMoneyRepository money, DateTime now) {
     active: NegotiationDeal(
       feeCents: 8500,
       note: 'Long-standing member',
-      validFrom: DateTime(now.year, 1, 1),
+      validFrom: DateTime(now.year),
       status: 'confirmed',
       subscriptionPct: 50,
     ),
@@ -26,7 +26,7 @@ void seedDemoNegotiations(FakeMoneyRepository money, DateTime now) {
     pending: NegotiationDeal(
       feeCents: 8000,
       discountPercent: 10,
-      validFrom: DateTime(now.year, now.month + 1, 1),
+      validFrom: DateTime(now.year, now.month + 1),
       status: 'pending',
       subscriptionPct: 50,
       previousSubscriptionPct: 50,
@@ -57,7 +57,7 @@ void seedDemoCarnets(FakeCreditRepository credits) {
 /// The last two quarters' declarations, from the session's own bills.
 void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
   final quarter = (now.month - 1) ~/ 3;
-  final thisQuarter = DateTime(now.year, quarter * 3 + 1, 1);
+  final thisQuarter = DateTime(now.year, quarter * 3 + 1);
   VatDeclaration declaration(DateTime start, {required bool submitted}) {
     final end = DateTime(start.year, start.month + 3, 0);
     final bills = [
@@ -99,11 +99,11 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
 
   money.vatDeclarations.addAll([
     declaration(
-      DateTime(thisQuarter.year, thisQuarter.month - 6, 1),
+      DateTime(thisQuarter.year, thisQuarter.month - 6),
       submitted: true,
     ),
     declaration(
-      DateTime(thisQuarter.year, thisQuarter.month - 3, 1),
+      DateTime(thisQuarter.year, thisQuarter.month - 3),
       submitted: false,
     ),
   ]);

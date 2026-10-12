@@ -23,7 +23,7 @@ ExpenseOccurrence occurrence({
       scheduleId: 'schedule-1',
       workspaceId: 'ws-1',
       memberId: 'member-1',
-      dueOn: DateTime.utc(2026, 8, 1),
+      dueOn: DateTime.utc(2026, 8),
       amountCents: 3999,
       status: status,
       scheduleTitle: 'Internet',
@@ -143,8 +143,6 @@ void main() {
         amountCents: 2990,
         startsOn: DateTime(2026, 9, 9),
         unit: ScheduleUnit.month,
-        every: 1,
-        status: ScheduleStatus.pending,
       ),
       ExpenseSchedule(
         id: 'sched-dead',

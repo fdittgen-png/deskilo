@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Invariant: alert counts belong to one person, server and workspace;
 // reading new updates preserves pending decisions and the visible feed.
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/domain/notification_feed.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
@@ -15,6 +16,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../helpers/mock_providers.dart';
 
 class _Clock implements Clock {

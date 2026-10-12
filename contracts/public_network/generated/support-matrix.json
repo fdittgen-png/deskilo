@@ -222,13 +222,13 @@
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "ed06b606a8331aeb09359fbf11bc4de569d2f2c67d7be9567162e21d64cc17cc",
+      "lib/core/public_network/public_network_operations.dart": "198c3c3a79951b301de58f99bdd5f6523daf2cb0f77cce96176570fd9af32e11",
       "public_network_descriptor()": "a241bc44f17f7029f49195b02412d5142de31e1522037aa5fdf97a030891ea55"
     },
     "evidence": {
       "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
       "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
-      "test/core/public_network/public_network_negotiation_test.dart": "54740b1ca949a6287f096a6723114dc1661bb84ea7adb3aee2ff85fffe0b8119",
+      "test/core/public_network/public_network_negotiation_test.dart": "106e53c751b096087d212a28fd3f5be387569fabdaf7ff45ccb0a3bd195f175e",
       "test/features/directory/participant_negotiation_test.dart": "df6291acac00af0a99da82fb055cb161d35a69a7c7b4c1535990086d06da276a",
       "test/fixtures/public_network/descriptor_current.json": "51fb6f5b32d4a232b3ad92865c03dcd2eb6e8cc21c24176fc5aa7cb95b683189",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",

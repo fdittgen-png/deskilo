@@ -3,12 +3,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
-
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/ui/canvas_controls.dart';
-import '../../domain/desk.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
+import '../../domain/desk.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/office.dart';
 import '../../domain/seat.dart';
@@ -176,13 +175,13 @@ class _PlanCanvasState extends State<PlanCanvas>
   /// "A1 · occupied — Ana": name, localized state, occupant when shown.
   /// Composed here because the painter has no l10n (#402).
   Map<String, String> _semanticLabels(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     String stateName(SeatState? state) => switch (state) {
-          SeatState.reserved => l10n?.a11ySeatReserved ?? 'reserved',
-          SeatState.occupied => l10n?.a11ySeatOccupied ?? 'occupied',
-          SeatState.mine => l10n?.a11ySeatMine ?? 'your seat',
-          SeatState.blocked => l10n?.a11ySeatBlocked ?? 'not available',
-          SeatState.free || null => l10n?.a11ySeatFree ?? 'free',
+          SeatState.reserved => l10n.a11ySeatReserved,
+          SeatState.occupied => l10n.a11ySeatOccupied,
+          SeatState.mine => l10n.a11ySeatMine,
+          SeatState.blocked => l10n.a11ySeatBlocked,
+          SeatState.free || null => l10n.a11ySeatFree,
         };
     return {
       for (final seat in widget.plan.seats)

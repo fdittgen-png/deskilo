@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../capability_labels.dart';
 
 /// #1660 — requirements the person chose explicitly. The search words
@@ -36,7 +36,7 @@ class TemplateRequirementChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (offered.isEmpty && required.isEmpty && preferred.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -52,7 +52,7 @@ class TemplateRequirementChips extends StatelessWidget {
               key: ValueKey('template-required-$id'),
               avatar: const Icon(Icons.rule, size: 18),
               label: Text(capabilityLabel(l10n, id)),
-              tooltip: l10n?.templateRequirementRemove ?? 'Remove requirement',
+              tooltip: l10n.templateRequirementRemove,
               onDeleted: () => onRemove(id),
             ),
           for (final id in preferred)
@@ -60,10 +60,9 @@ class TemplateRequirementChips extends StatelessWidget {
               key: ValueKey('template-preferred-$id'),
               avatar: const Icon(Icons.thumb_up_outlined, size: 18),
               label: Text(
-                l10n?.templatePreferredChip(capabilityLabel(l10n, id)) ??
-                    'Preferred: ${capabilityLabel(l10n, id)}',
+                l10n.templatePreferredChip(capabilityLabel(l10n, id)),
               ),
-              tooltip: l10n?.templateRequirementRemove ?? 'Remove requirement',
+              tooltip: l10n.templateRequirementRemove,
               onDeleted: () => onRemove(id),
             ),
           for (final id in offered)
@@ -71,8 +70,7 @@ class TemplateRequirementChips extends StatelessWidget {
               ActionChip(
                 key: ValueKey('template-prefer-$id'),
                 label: Text(
-                  l10n?.templatePrefer(capabilityLabel(l10n, id)) ??
-                      'Prefer: ${capabilityLabel(l10n, id)}',
+                  l10n.templatePrefer(capabilityLabel(l10n, id)),
                 ),
                 onPressed: () => onPrefer!(id),
               ),
@@ -81,8 +79,7 @@ class TemplateRequirementChips extends StatelessWidget {
               key: ValueKey('template-require-$id'),
               avatar: const Icon(Icons.add, size: 18),
               label: Text(
-                l10n?.templateRequire(capabilityLabel(l10n, id)) ??
-                    'Require: ${capabilityLabel(l10n, id)}',
+                l10n.templateRequire(capabilityLabel(l10n, id)),
               ),
               onPressed: () => onRequire(id),
             ),
@@ -90,7 +87,7 @@ class TemplateRequirementChips extends StatelessWidget {
             TextButton(
               key: const ValueKey('template-requirements-reset'),
               onPressed: onReset,
-              child: Text(l10n?.templateRequirementsReset ?? 'Reset'),
+              child: Text(l10n.templateRequirementsReset),
             ),
         ],
       ),

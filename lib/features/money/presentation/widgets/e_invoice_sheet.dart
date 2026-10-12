@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/e_invoice_routing.dart';
+import '../../domain/einvoice_channel_check.dart';
+import '../../domain/einvoice_mandates.dart';
 import '../../domain/invoice_ubl_check.dart';
 
 /// What to do with the generated XML.
@@ -30,51 +35,67 @@ enum EInvoiceExport {
 }
 
 /// Localized wording of one readiness gap (0069).
-String _eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
+String _eInvoiceGapText(AppLocalizations l10n, EInvoiceGap gap) =>
     switch (gap) {
-      EInvoiceGap.vatNotSupported => l10n?.invoiceGapVatNotSupported ??
-          'The workspace charges VAT but this invoice carries no rate — '
-              'add your VAT rates, then issue it again.',
-      EInvoiceGap.missingVatId => l10n?.invoiceGapMissingVatId ??
-          'The VAT number is missing — an exempt seller must state one.',
-      EInvoiceGap.missingLegalId => l10n?.invoiceGapMissingLegalId ??
-          'The company registration number is missing.',
+      EInvoiceGap.vatNotSupported => l10n.invoiceGapVatNotSupported,
+      EInvoiceGap.missingVatId => l10n.invoiceGapMissingVatId,
+      EInvoiceGap.missingLegalId => l10n.invoiceGapMissingLegalId,
       EInvoiceGap.missingExemptionReason =>
-        l10n?.invoiceGapMissingExemptionReason ??
-            'The reason for not charging VAT is missing.',
+        l10n.invoiceGapMissingExemptionReason,
       EInvoiceGap.missingSellerCountry =>
-        l10n?.invoiceGapMissingSellerCountry ??
-            'The workspace country is missing.',
-      EInvoiceGap.missingBuyerCountry => l10n?.invoiceGapMissingBuyerCountry ??
-          "The customer's country is missing.",
-      EInvoiceGap.missingBuyerVatId => l10n?.invoiceGapMissingBuyerVatId ??
-          "The customer's VAT number is missing — a reverse-charged invoice must name it.",
+        l10n.invoiceGapMissingSellerCountry,
+      EInvoiceGap.missingBuyerCountry => l10n.invoiceGapMissingBuyerCountry,
+      EInvoiceGap.missingBuyerVatId => l10n.invoiceGapMissingBuyerVatId,
       EInvoiceGap.mixedNotSubjectLines =>
-        l10n?.eInvoiceGapMixedNotSubjectLines ??
-            'A not-subject line (a refundable deposit) sits beside taxed lines — '
-                'EN 16931 refuses the mix; issue the deposit on its own document.',
+        l10n.eInvoiceGapMixedNotSubjectLines,
       EInvoiceGap.missingBuyerLegalId =>
-        l10n?.eInvoiceGapMissingBuyerLegalId ??
-            'The buyer is a French business without a SIREN — fill in its '
-                'legal id on the member\'s profile.',
+        l10n.eInvoiceGapMissingBuyerLegalId,
       EInvoiceGap.buyerLegalIdAdvisable =>
-        l10n?.eInvoiceGapBuyerLegalIdAdvisable ?? 'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.',
+        l10n.eInvoiceGapBuyerLegalIdAdvisable,
       EInvoiceGap.missingPublicSectorReferences =>
-          l10n?.invoiceGapPublicSectorRefs ??
-              'Bound for a public-sector platform with no engagement number and no service code — Chorus Pro refuses most deposits without one.',
-      EInvoiceGap.buyerVatIdFormat => l10n?.invoiceGapBuyerVatIdFormat ??
-          "The customer's VAT number does not have its country's shape — check it.",
-      EInvoiceGap.noChargeLines => l10n?.invoiceGapNoChargeLines ??
-          'This invoice has no charge line — there is no invoice to send.',
+          l10n.invoiceGapPublicSectorRefs,
+      EInvoiceGap.buyerVatIdFormat => l10n.invoiceGapBuyerVatIdFormat,
+      EInvoiceGap.noChargeLines => l10n.invoiceGapNoChargeLines,
       EInvoiceGap.creditNoteWithPayments =>
-        l10n?.invoiceGapCreditNoteWithPayments ??
-            'This credit note also nets payments, which an EN 16931 credit note cannot state. Issue the credit on its own document.',
-      EInvoiceGap.missingSellerCity => l10n?.invoiceGapMissingSellerCity ??
-          'the city of the workspace address',
+        l10n.invoiceGapCreditNoteWithPayments,
+      EInvoiceGap.missingSellerCity => l10n.invoiceGapMissingSellerCity,
       EInvoiceGap.missingSellerPostalCode =>
-        l10n?.invoiceGapMissingSellerPostalCode ??
-            'the post code of the workspace address',
+        l10n.invoiceGapMissingSellerPostalCode,
     };
+
+/// #2358 — localized wording of what a channel still needs.
+String _channelGapText(AppLocalizations l10n, ChannelGap gap) =>
+    switch (gap) {
+      ChannelGap.sellerEndpoint => l10n.eInvoiceChannelGapSellerEndpoint,
+      ChannelGap.buyerEndpoint => l10n.eInvoiceChannelGapBuyerEndpoint,
+      ChannelGap.buyerReference => l10n.eInvoiceChannelGapBuyerReference,
+      ChannelGap.leitwegId => l10n.eInvoiceChannelGapLeitwegId,
+      ChannelGap.paymentAccount => l10n.eInvoiceChannelGapPaymentAccount,
+      ChannelGap.sellerContact => l10n.eInvoiceChannelGapSellerContact,
+      ChannelGap.subdivision => l10n.eInvoiceChannelGapSubdivision,
+      ChannelGap.sellerVatId => l10n.eInvoiceChannelGapSellerVatId,
+      ChannelGap.buyerTaxId => l10n.eInvoiceChannelGapBuyerTaxId,
+    };
+
+/// #2358 — one dated duty of the national mandate.
+String _mandateText(
+  AppLocalizations l10n,
+  EInvoiceMandate mandate,
+  DateTime today,
+  DateFormat dates,
+) {
+  final duty = switch (mandate.duty) {
+    MandateDuty.receiveAll => l10n.eInvoiceMandateReceiveAll,
+    MandateDuty.issueLarge => l10n.eInvoiceMandateIssueLarge,
+    MandateDuty.issueAll => l10n.eInvoiceMandateIssueAll,
+    MandateDuty.eReporting => l10n.eInvoiceMandateEReporting,
+    MandateDuty.invoiceRecords => l10n.eInvoiceMandateInvoiceRecords,
+  };
+  final date = dates.format(mandate.from);
+  return mandate.inForceOn(today)
+      ? l10n.eInvoiceMandateSince(date, duty)
+      : l10n.eInvoiceMandateFrom(date, duty);
+}
 
 /// The e-invoice sheet: the XML export used to be two anonymous entries in
 /// an overflow menu, leaving the only question that matters unanswered —
@@ -88,8 +109,13 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   bool canSend = false,
   bool canSendCustomer = false,
   bool identityFixedSince = false,
+  String validator = '',
+  String sendChannel = '',
+  List<ChannelGap> sendGaps = const [],
+  List<EInvoiceMandate> mandates = const [],
+  required DateTime today,
 }) =>
-    showModalBottomSheet<EInvoiceExport>(
+    showAppSheet<EInvoiceExport>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -101,6 +127,11 @@ Future<EInvoiceExport?> showEInvoiceSheet(
         canSend: canSend,
         canSendCustomer: canSendCustomer,
         identityFixedSince: identityFixedSince,
+        validator: validator,
+        sendChannel: sendChannel,
+        sendGaps: sendGaps,
+        mandates: mandates,
+        today: today,
       ),
     );
 
@@ -112,6 +143,11 @@ class _EInvoiceBody extends StatelessWidget {
     required this.canSend,
     this.canSendCustomer = false,
     this.identityFixedSince = false,
+    this.validator = '',
+    this.sendChannel = '',
+    this.sendGaps = const [],
+    this.mandates = const [],
+    required this.today,
   });
 
   final EInvoiceRoute route;
@@ -137,25 +173,30 @@ class _EInvoiceBody extends StatelessWidget {
   /// for a number the owner is looking at, already filled in.
   final bool identityFixedSince;
 
+  /// #2358 — the official validator the format passes in CI
+  /// (einvoice_validation.dart); the readiness line names it.
+  final String validator;
+
+  /// #2358 — the configured channel and what it still needs before the
+  /// document can be sent through it. Send is not offered meanwhile.
+  final String sendChannel;
+  final List<ChannelGap> sendGaps;
+
+  /// #2358 — the national mandate's dated duties (FR, DE).
+  final List<EInvoiceMandate> mandates;
+  final DateTime today;
+
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
     final transport = switch (route.transport) {
-      EInvoiceTransport.peppol => l10n?.invoiceEInvoiceTransportPeppol ??
-          'An access point delivers it to the customer — no government '
-              'platform in between.',
-      EInvoiceTransport.clearance => l10n?.invoiceEInvoiceTransportClearance ??
-          'The national platform receives the invoice first and hands it '
-              'on — sending it straight to the customer is not an option.',
+      EInvoiceTransport.peppol => l10n.invoiceEInvoiceTransportPeppol,
+      EInvoiceTransport.clearance => l10n.invoiceEInvoiceTransportClearance,
       EInvoiceTransport.accredited =>
-        l10n?.invoiceEInvoiceTransportAccredited ??
-            'An accredited platform carries the invoice and reports it to '
-                'the tax administration for you.',
-      EInvoiceTransport.bilateral => l10n?.invoiceEInvoiceTransportBilateral ??
-          'No channel is imposed: e-mail, a portal or Peppol — whatever '
-              'you agree with the customer.',
+        l10n.invoiceEInvoiceTransportAccredited,
+      EInvoiceTransport.bilateral => l10n.invoiceEInvoiceTransportBilateral,
     };
 
     Widget fact(IconData icon, String text, {bool strong = false}) => Padding(
@@ -192,7 +233,7 @@ class _EInvoiceBody extends StatelessWidget {
               Row(children: [
                 Expanded(
                   child: Text(
-                    l10n?.invoiceEInvoiceAction ?? 'E-invoice (XML)',
+                    l10n.invoiceEInvoiceAction,
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
@@ -200,32 +241,27 @@ class _EInvoiceBody extends StatelessWidget {
                 // and that is exactly the moment somebody wants the
                 // chapter explaining what EN 16931 requires.
                 HelpDot(
-                  l10n?.helpTopicReadiness ?? 'readiness gate',
-                  anchor: HelpAnchor.adminEinvoiceReadiness,
+                  l10n.helpTopicReadiness,
+                  anchor: HelpAnchor.einvoiceOverview,
                 ),
               ]),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.invoiceEInvoiceExplain ??
-                    'The machine-readable EN 16931 invoice — what tax '
-                        'administrations and business customers ask for.',
+                l10n.invoiceEInvoiceExplain,
                 style: theme.textTheme.bodySmall?.copyWith(color: muted),
               ),
               fact(
                 Icons.business_outlined,
-                l10n?.invoiceEInvoiceBusinessRoute(
+                l10n.invoiceEInvoiceBusinessRoute(
                       route.businessChannel,
                       route.businessFormat,
-                    ) ??
-                    'Business customers: ${route.businessChannel} '
-                        '(${route.businessFormat}).',
+                    ),
                 strong: true,
               ),
               fact(Icons.route_outlined, transport),
               fact(
                 Icons.account_balance_outlined,
-                l10n?.invoiceEInvoicePublicRoute(route.publicChannel) ??
-                    'Public-sector customers: ${route.publicChannel}.',
+                l10n.invoiceEInvoicePublicRoute(route.publicChannel),
               ),
               // Where the domestic mandate runs on a national syntax, this
               // file is not the one the platform accepts — say so instead
@@ -235,25 +271,38 @@ class _EInvoiceBody extends StatelessWidget {
                 InlineBanner(
                   key: const ValueKey('invoice-einvoice-format-warning'),
                   icon: Icons.warning_amber_outlined,
-                  text: l10n?.invoiceEInvoiceFormatMismatch(
+                  text: l10n.invoiceEInvoiceFormatMismatch(
                         route.businessChannel,
                         route.businessFormat,
-                      ) ??
-                      '${route.businessChannel} accepts only '
-                          '${route.businessFormat}: this EN 16931 file '
-                          'serves Peppol, public buyers and foreign '
-                          'customers — your platform converts the rest.',
+                      ),
                 ),
               ],
               const SizedBox(height: AppSpacing.md),
               // READINESS (0069): the fatal EN 16931 rules, judged before
               // the file exists. Handing out an XML that the receiving
               // platform silently rejects is worse than refusing here.
+              if (mandates.isNotEmpty)
+                InlineBanner(
+                  key: const ValueKey('invoice-einvoice-mandates'),
+                  icon: Icons.event_outlined,
+                  text: [
+                    l10n.eInvoiceMandateTitle,
+                    for (final m in mandates)
+                      '• ${_mandateText(
+                        l10n,
+                        m,
+                        today,
+                        DateFormat.yMMMd(
+                          Localizations.maybeLocaleOf(context)?.toString(),
+                        ),
+                      )}',
+                  ].join('\n'),
+                ),
+              if (mandates.isNotEmpty) const SizedBox(height: AppSpacing.sm),
               if (readiness.ready)
                 fact(
                   Icons.verified_outlined,
-                  l10n?.invoiceEInvoiceReady ??
-                      'Ready — this file satisfies EN 16931.',
+                  l10n.invoiceEInvoiceValidated(validator),
                   strong: true,
                 )
               else
@@ -261,8 +310,7 @@ class _EInvoiceBody extends StatelessWidget {
                   key: const ValueKey('invoice-einvoice-blocked'),
                   icon: Icons.report_outlined,
                   text: [
-                    l10n?.invoiceEInvoiceBlockedTitle ??
-                        'A validator would reject this file:',
+                    l10n.invoiceEInvoiceBlockedTitle,
                     for (final gap in readiness.blocking)
                       '• ${_eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
@@ -274,23 +322,30 @@ class _EInvoiceBody extends StatelessWidget {
                 InlineBanner(
                   key: const ValueKey('invoice-einvoice-stale-identity'),
                   icon: Icons.history_outlined,
-                  text: l10n?.invoiceEInvoiceStaleIdentity ??
-                      'Your legal identity is complete now, but this '
-                          'invoice was signed before it and keeps what it '
-                          'was issued with. Mark it erroneous and issue a '
-                          'replacement to carry the new identity.',
+                  text: l10n.invoiceEInvoiceStaleIdentity,
                 ),
               ],
               if (readiness.ready && readiness.warnings.isNotEmpty)
                 fact(
                   Icons.info_outlined,
                   [
-                    l10n?.invoiceEInvoiceIncompleteTitle ??
-                        'Valid, but the strict national profiles also want:',
+                    l10n.invoiceEInvoiceIncompleteTitle,
                     for (final gap in readiness.warnings)
                       '• ${_eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
+              if (readiness.ready && sendGaps.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.sm),
+                InlineBanner(
+                  key: const ValueKey('invoice-einvoice-channel-gaps'),
+                  icon: Icons.outbox_outlined,
+                  text: [
+                    l10n.eInvoiceChannelGapsTitle(sendChannel),
+                    for (final gap in sendGaps)
+                      '• ${_channelGapText(l10n, gap)}',
+                  ].join('\n'),
+                ),
+              ],
               const SizedBox(height: AppSpacing.lg),
               if (readiness.ready) ...[
                 // Sending beats saving: if the platform is there, the file
@@ -304,8 +359,7 @@ class _EInvoiceBody extends StatelessWidget {
                         Navigator.of(context).pop(EInvoiceExport.send),
                     icon: const Icon(Icons.account_balance_outlined),
                     label: Text(
-                      l10n?.invoiceSendAction ??
-                          'Send to the government platform',
+                      l10n.invoiceSendAction,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -317,8 +371,7 @@ class _EInvoiceBody extends StatelessWidget {
                         .pop(EInvoiceExport.sendCustomer),
                     icon: const Icon(Icons.send_outlined),
                     label: Text(
-                      l10n?.invoiceSendCustomerAction ??
-                          "Send to the customer's service",
+                      l10n.invoiceSendCustomerAction,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -332,8 +385,7 @@ class _EInvoiceBody extends StatelessWidget {
                       .pop(EInvoiceExport.facturXDownload),
                   icon: const Icon(Icons.picture_as_pdf_outlined),
                   label: Text(
-                    l10n?.invoiceFacturXDownload ??
-                        'Download Factur-X (PDF)',
+                    l10n.invoiceFacturXDownload,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -343,7 +395,7 @@ class _EInvoiceBody extends StatelessWidget {
                       Navigator.of(context).pop(EInvoiceExport.facturXShare),
                   icon: const Icon(Icons.share_outlined),
                   label: Text(
-                    l10n?.invoiceFacturXShare ?? 'Share Factur-X (PDF)',
+                    l10n.invoiceFacturXShare,
                   ),
                 ),
                 Padding(
@@ -352,9 +404,7 @@ class _EInvoiceBody extends StatelessWidget {
                     bottom: AppSpacing.md,
                   ),
                   child: Text(
-                    l10n?.invoiceFacturXExplain ??
-                        'One file: the invoice a human reads, with the '
-                            'machine-readable XML inside it.',
+                    l10n.invoiceFacturXExplain,
                     style: theme.textTheme.bodySmall?.copyWith(color: muted),
                   ),
                 ),
@@ -364,8 +414,7 @@ class _EInvoiceBody extends StatelessWidget {
                       Navigator.of(context).pop(EInvoiceExport.download),
                   icon: const Icon(Icons.code_outlined),
                   label: Text(
-                    l10n?.invoiceEInvoiceDownload ??
-                        'Download e-invoice (XML)',
+                    l10n.invoiceEInvoiceDownload,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -375,7 +424,7 @@ class _EInvoiceBody extends StatelessWidget {
                       Navigator.of(context).pop(EInvoiceExport.share),
                   icon: const Icon(Icons.share_outlined),
                   label: Text(
-                    l10n?.invoiceEInvoiceShare ?? 'Share e-invoice (XML)',
+                    l10n.invoiceEInvoiceShare,
                   ),
                 ),
               ] else if (canFixIdentity &&
@@ -387,8 +436,7 @@ class _EInvoiceBody extends StatelessWidget {
                       Navigator.of(context).pop(EInvoiceExport.fixIdentity),
                   icon: const Icon(Icons.badge_outlined),
                   label: Text(
-                    l10n?.invoiceEInvoiceFixIdentity ??
-                        'Complete the legal identity',
+                    l10n.invoiceEInvoiceFixIdentity,
                   ),
                 ),
             ],

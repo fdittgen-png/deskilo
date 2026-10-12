@@ -1,27 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../events/presentation/widgets/event_validation_trail.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../domain/einvoice_gateway.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../events/presentation/widgets/event_validation_trail.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
+import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
-import '../../providers/money_providers.dart';
-import '../invoice_journey.dart';
 import '../../domain/invoice_line_text.dart';
-import '../report_strings_l10n.dart';
-import '../invoice_status.dart';
-import '../period_label.dart';
-import 'invoice_journey_view.dart';
+import '../../providers/money_providers.dart';
 import '../dunning_hold_actions.dart';
 import '../invoice_actions.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../invoice_journey.dart';
+import '../invoice_status.dart';
+import '../period_label.dart';
+import '../report_strings_l10n.dart';
+import 'invoice_journey_view.dart';
 import 'invoice_sheet_actions.dart';
 import 'reminder_evidence_list.dart';
 
@@ -75,7 +75,7 @@ Future<void> showInvoiceDetailSheet(
   // #831 — the settlement a regrouped source went into.
   String settledByNumber = '',
 }) async {
-  final action = await showModalBottomSheet<InvoiceAction>(
+  final action = await showAppSheet<InvoiceAction>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
@@ -148,7 +148,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
     // #1913 — an active dunning hold, for whoever issues invoices.
     final holds = canIssue ? ref.watch(dunningHoldsProvider).value : null;
     final heldReason = holds == null ? null : holds[invoice.id];
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
     final currency = moneyFormat(invoice.currency);
@@ -161,11 +161,11 @@ class _InvoiceDetailBody extends ConsumerWidget {
     // The platform's answer, in the reader's language.
     final sentStatus = switch (sent?.status) {
       EInvoiceSubmissionStatus.accepted =>
-        l10n?.invoiceSendStatusAccepted ?? 'accepted',
+        l10n.invoiceSendStatusAccepted,
       EInvoiceSubmissionStatus.rejected =>
-        l10n?.invoiceSendStatusRejected ?? 'rejected',
+        l10n.invoiceSendStatusRejected,
       EInvoiceSubmissionStatus.failed =>
-        l10n?.invoiceSendStatusFailed ?? 'not delivered',
+        l10n.invoiceSendStatusFailed,
       null => '',
     };
 
@@ -269,28 +269,23 @@ class _InvoiceDetailBody extends ConsumerWidget {
 
               // The SNAPSHOT — what the document itself says, never the
               // live profile (0060).
-              line('${l10n?.invoicePdfIssuedOn ?? 'Issued on'} '
+              line('${l10n.invoicePdfIssuedOn} '
                   '${dateFormat.format(invoice.issuedAt)}'
                   '${invoice.issuerName.isEmpty ? '' : ' · '
-                      '${l10n?.invoicePdfIssuedBy ?? 'Issued by'} '
+                      '${l10n.invoicePdfIssuedBy} '
                       '${invoice.issuerName}'}'),
               // #910 — "Billed to: , SASU KaloA, …": the name was empty
               // and its comma stayed behind. Build the parts, then join.
               // #1913 — why reminders stop, and a due date nobody agreed
               // to, said where the issuer decides.
               if (canIssue && heldReason != null)
-                line(l10n?.invoiceHeldNote(
-                        dunningHoldReasonLabel(l10n, heldReason)) ??
-                    'Reminders on hold: '
-                        '${dunningHoldReasonLabel(l10n, heldReason)}'),
+                line(l10n.invoiceHeldNote(
+                        dunningHoldReasonLabel(l10n, heldReason))),
               if (canIssue &&
                   invoice.maturityBasis != null &&
                   invoice.maturityBasis != 'document_term')
-                line(l10n?.invoiceMaturityReview ??
-                    'No agreed payment term was recorded for this invoice: '
-                        'reminders are not sent automatically until '
-                        'you review it.'),
-              line('${l10n?.invoicePdfBilledTo ?? 'Billed to'}: '
+                line(l10n.invoiceMaturityReview),
+              line('${l10n.invoicePdfBilledTo}: '
                   '${[
                     invoice.clientName,
                     ...invoice.memberAddress.split('\n'),
@@ -324,7 +319,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                     child: Row(children: [
                       Expanded(
                         child: Text(
-                          '${l10n?.vatPdfVat ?? 'VAT'} '
+                          '${l10n.vatPdfVat} '
                           '${_percentLabel(total.percent)}',
                           style: TextStyle(color: theme.hintColor),
                         ),
@@ -338,7 +333,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               Row(children: [
                 Expanded(
                   child: Text(
-                    l10n?.invoiceBalance ?? 'Balance due',
+                    l10n.invoiceBalance,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -357,7 +352,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               if (invoice.settles.isNotEmpty) ...[
                 const Divider(height: AppSpacing.xl),
                 Text(
-                  l10n?.settlementRegroups ?? 'This invoice regroups',
+                  l10n.settlementRegroups,
                   style: theme.textTheme.titleSmall,
                 ),
                 for (final source in invoice.settles)
@@ -405,9 +400,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                       ],
                     ),
                   ),
-                line(l10n?.settlementVatNote ??
-                    'VAT stays declared on the invoices above; this '
-                        'document only regroups what is owed.'),
+                line(l10n.settlementVatNote),
               ],
               if (invoice.settledByInvoiceId != null)
                 Container(
@@ -421,13 +414,10 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   child: Text(
                     [
                       if (settledByNumber.isNotEmpty)
-                        l10n?.settlementFoldedIn(settledByNumber) ??
-                            'Regrouped in $settledByNumber'
+                        l10n.settlementFoldedIn(settledByNumber)
                       else
-                        l10n?.settlementSettledBy ??
-                            'Regrouped into another invoice — that one is what is owed and chased.',
-                      l10n?.settlementDocumentationOnly ??
-                          'Documentation only — every operation happens on the regrouping invoice.',
+                        l10n.settlementSettledBy,
+                      l10n.settlementDocumentationOnly,
                     ].join(' '),
                     style: theme.textTheme.bodySmall,
                   ),
@@ -445,53 +435,45 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   key: const ValueKey('invoice-detail-timeline'),
                   padding: const EdgeInsets.only(top: AppSpacing.md),
                   child: Text(
-                    l10n?.journeyTimelineTitle ?? 'Timeline',
+                    l10n.journeyTimelineTitle,
                     style: theme.textTheme.titleSmall,
                   ),
                 ),
               if (invoice.replacesNumber.isNotEmpty)
-                line('${l10n?.invoicePdfReplaces ?? 'Replaces'} '
+                line('${l10n.invoicePdfReplaces} '
                     '${invoice.replacesNumber}'),
               if (replacedByNumber.isNotEmpty)
-                line(l10n?.invoiceReplacedBy(replacedByNumber) ??
-                    'Replaced by $replacedByNumber'),
+                line(l10n.invoiceReplacedBy(replacedByNumber)),
               if (standingMatch != null)
-                line(l10n?.invoiceMatchSummary(
+                line(l10n.invoiceMatchSummary(
                       currency.formatMinor(standingMatch.paidCents),
                       dateFormat.format(standingMatch.matchedAt),
-                    ) ??
-                    'Paid ${currency.formatMinor(standingMatch.paidCents)} '
-                        'on ${dateFormat.format(standingMatch.matchedAt)}'),
+                    )),
               if (standingMatch != null && standingMatch.note.isNotEmpty)
                 line(standingMatch.note),
               if (reminder != null)
-                line('${l10n?.invoiceRemindedBadge(reminder!.count) ??
-                    'Reminded ×${reminder!.count}'} · '
-                    '${l10n?.invoiceRemindedLast(
+                line('${l10n.invoiceRemindedBadge(reminder!.count)} · '
+                    '${l10n.invoiceRemindedLast(
                           dateFormat.format(reminder!.last),
-                        ) ?? 'last ${dateFormat.format(reminder!.last)}'}'),
+                        )}'),
               // Did it LEAVE, and what came back (0073). A rehearsal
               // names its environment so it never reads as the real
               // submission (#393).
               if (sent != null)
-                line('${l10n?.invoiceSentOn(
+                line('${l10n.invoiceSentOn(
                       dateFormat.format(sent.sentAt),
                       sentStatus,
-                    ) ?? 'Sent ${dateFormat.format(sent.sentAt)} · '
-                        '$sentStatus'}${sent.isTestSend ? ' · '
+                    )}${sent.isTestSend ? ' · '
                         '${sent.environment.toUpperCase()} '
-                        '(${l10n?.invoiceSentTestChip ?? 'test'})' : ''}'),
+                        '(${l10n.invoiceSentTestChip})' : ''}'),
               if (sent != null && sent.externalId.isNotEmpty)
                 line(sent.externalId),
               if (invoice.detailed)
-                line(l10n?.invoiceAnnexSummary(
+                line(l10n.invoiceAnnexSummary(
                       invoice.detailLedger.length,
                       invoice.attendance.length,
-                    ) ??
-                    '${l10n?.invoicePdfAnnex ?? 'Annex'}: '
-                        '${invoice.detailLedger.length} · '
-                        '${invoice.attendance.length}'),
-              line('${l10n?.invoicePdfSignature ?? 'Digital signature'} '
+                    )),
+              line('${l10n.invoicePdfSignature} '
                   '${invoice.signature.substring(
                     0,
                     invoice.signature.length < 12

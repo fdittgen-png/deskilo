@@ -24,8 +24,8 @@ class _Out implements IOSink {
 const id = '00000000-0000-4000-8000-0000000160a1';
 
 FakeSupabaseManagement fake({bool bound = true, int accounts = 1, String? refuse}) {
-  final api = FakeSupabaseManagement();
-  api.onQuery = (ref, sql) {
+  final api = FakeSupabaseManagement()
+    ..onQuery = (ref, sql) {
     if (sql.contains('from auth.users u where lower(u.email)')) {
       return [for (var i = 0; i < accounts; i++) {'id': id, 'bound': bound}];
     }

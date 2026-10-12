@@ -5,20 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/fee_band.dart';
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
-import '../../providers/money_providers.dart';
 import '../../domain/vat_rate.dart';
+import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
-import '../widgets/vat_rate_field.dart';
 import '../widgets/carnets_editor.dart';
-import '../../../workspace/domain/workspace_feature.dart';
+import '../widgets/vat_rate_field.dart';
 
 /// Owner-only billing editor (#128, ADR 0008): the fee bands pricing the
 /// percentage subscriptions, and the subscription levels members may pick
@@ -28,13 +29,13 @@ class BillingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final bandsAsync = ref.watch(feeBandsProvider);
     final levelsAsync = ref.watch(subscriptionLevelsProvider);
     final packagesAsync = ref.watch(allPackagesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.billingTitle ?? 'Billing')),
+      appBar: AppBar(title: Text(l10n.billingTitle)),
       body: switch ((bandsAsync, levelsAsync, packagesAsync)) {
         (
           AsyncData(value: final bands),
@@ -45,8 +46,7 @@ class BillingScreen extends ConsumerWidget {
         (AsyncError(), _, _) || (_, AsyncError(), _) || (_, _, AsyncError()) =>
           Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -133,20 +133,19 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   /// Shared guard of every editor save: traced failure + generic error
   /// snackbar; true = proceed to invalidate/confirm.
   Future<bool> _run(String message, Future<void> Function() action) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return runGuarded(
       context,
       domain: 'money',
       message: message,
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: action,
     );
   }
 
   void _showSaved() {
-    final l10n = AppLocalizations.of(context);
-    AppSnack.success(context, l10n?.billingSaved ?? 'Saved.');
+    final l10n = context.l10n;
+    AppSnack.success(context, l10n.billingSaved);
   }
 
   // ---- fee bands ----------------------------------------------------------
@@ -307,8 +306,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     _pkgDays.clear();
     _pkgPrice.clear();
     setState(() => _pkgVatRateId = '');
-    ref.invalidate(allPackagesProvider);
-    ref.invalidate(packagesProvider);
+    ref
+      ..invalidate(allPackagesProvider)
+      ..invalidate(packagesProvider);
     if (!mounted) return;
     _showSaved();
   }
@@ -322,8 +322,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     )) {
       return;
     }
-    ref.invalidate(allPackagesProvider);
-    ref.invalidate(packagesProvider);
+    ref
+      ..invalidate(allPackagesProvider)
+      ..invalidate(packagesProvider);
   }
 
   // ---- build --------------------------------------------------------------
@@ -371,14 +372,14 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   }
 
   /// "incl. VAT 41.67" for a gross amount at the tariff rate (#537).
-  String? _vatShare(AppLocalizations? l10n, int? cents) {
+  String? _vatShare(AppLocalizations l10n, int? cents) {
     final percent = _tariffVatPercent;
     if (percent == null || cents == null || cents <= 0) return null;
     final share = centsToMajor(vatSplit(cents, percent).vatCents);
-    return l10n?.vatShareAmount(share) ?? 'incl. VAT $share';
+    return l10n.vatShareAmount(share);
   }
 
-  Widget _bandRow(AppLocalizations? l10n, int index) {
+  Widget _bandRow(AppLocalizations l10n, int index) {
     final draft = _bands[index];
     final isLast = index == _bands.length - 1;
     final from = index == 0 ? 0 : _bands[index - 1].toPct;
@@ -386,12 +387,11 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
       key: ObjectKey(draft),
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: 72,
             child: Text(
-              l10n?.billingBandFrom(from ?? 0) ?? 'from ${from ?? 0}%',
+              l10n.billingBandFrom(from ?? 0),
             ),
           ),
           Expanded(
@@ -401,11 +401,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               initialValue: '${draft.toPct ?? ''}',
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: l10n?.billingBandTo ?? 'To %',
-                suffixIcon: HelpDot(
-                  l10n?.helpTopicBilling ?? 'Billing',
-                  anchor: HelpAnchor.billingBandTo,
-                ),
+                labelText: l10n.billingBandTo,
               ),
               // setState so the following rows' derived "from X %" labels
               // track the boundary immediately (#194). The keyed rows keep
@@ -423,12 +419,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: l10n?.billingBandFee ?? 'Monthly fee',
+                labelText: l10n.billingBandFee,
                 helperText: _vatShare(l10n, draft.feeCents),
-                suffixIcon: HelpDot(
-                  l10n?.helpTopicBilling ?? 'Billing',
-                  anchor: HelpAnchor.billingBandFee,
-                ),
               ),
               // setState so the VAT-share helper tracks the amount live.
               onChanged: (raw) => setState(
@@ -443,12 +435,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: l10n?.billingBandOverage ?? 'Overage',
+                labelText: l10n.billingBandOverage,
                 helperText: _vatShare(l10n, draft.overageCents),
-                suffixIcon: HelpDot(
-                  l10n?.helpTopicBilling ?? 'Billing',
-                  anchor: HelpAnchor.billingBandOverage,
-                ),
               ),
               onChanged: (raw) => setState(
                   () => draft.overageCents = parseCentsInput(raw)),
@@ -463,7 +451,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             IconButton(
               key: ValueKey('billing-remove-band-$index'),
               icon: const Icon(Icons.remove_circle_outline),
-              tooltip: l10n?.billingRemoveBand ?? 'Remove band',
+              tooltip: l10n.billingRemoveBand,
               onPressed: () => _removeBand(draft),
             ),
         ],
@@ -473,18 +461,18 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         Row(
           children: [
             Text(
-              l10n?.billingFeeBands ?? 'Fee bands',
+              l10n.billingFeeBands,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             HelpDot(
-              l10n?.helpTopicBilling ?? 'Billing',
+              l10n.helpTopicBilling,
               anchor: HelpAnchor.billingFeeBands,
             ),
           ],
@@ -507,12 +495,8 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             padding: const EdgeInsets.only(top: 2, bottom: 4),
             child: Text(
               tariffRateId.isEmpty
-                  ? (l10n?.billingPricesVatHint(rate) ??
-                      'Prices are gross — VAT $rate (the workspace '
-                          'default rate) is included.')
-                  : (l10n?.billingTariffVatHint(rate) ??
-                      'Prices are gross — VAT $rate (the tariff rate) '
-                          'is included.'),
+                  ? (l10n.billingPricesVatHint(rate))
+                  : (l10n.billingTariffVatHint(rate)),
               key: const ValueKey('billing-vat-hint'),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -525,8 +509,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              l10n?.billingBandsInvalid ??
-                  'Bands must increase and end at 100%.',
+              l10n.billingBandsInvalid,
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
@@ -544,13 +527,13 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               key: const ValueKey('billing-add-band'),
               onPressed: _addBand,
               icon: const Icon(Icons.add),
-              label: Text(l10n?.billingAddBand ?? 'Add band'),
+              label: Text(l10n.billingAddBand),
             ),
             const Spacer(),
             FilledButton(
               key: const ValueKey('billing-save'),
               onPressed: _saveBands,
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
           ],
         ),
@@ -558,11 +541,11 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         Row(
           children: [
             Text(
-              l10n?.billingLevels ?? 'Subscription levels',
+              l10n.billingLevels,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             HelpDot(
-              l10n?.helpTopicBilling ?? 'Billing',
+              l10n.helpTopicBilling,
               anchor: HelpAnchor.billingLevels,
             ),
           ],
@@ -575,7 +558,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             for (final preset in SubscriptionLevels.presets)
               FilterChip(
                 key: ValueKey('billing-percent-value-$preset'),
-                label: Text(l10n?.percentValue(preset) ?? '$preset%'),
+                label: Text(l10n.percentValue(preset)),
                 selected: _enabledPresets.contains(preset),
                 onSelected: (selected) => setState(() {
                   if (selected) {
@@ -587,7 +570,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               ),
             for (final level in _extraLevels)
               InputChip(
-                label: Text(l10n?.percentValue(level) ?? '$level%'),
+                label: Text(l10n.percentValue(level)),
                 onDeleted: () => setState(() => _extraLevels.remove(level)),
               ),
           ],
@@ -600,11 +583,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 controller: _newLevel,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: l10n?.billingLevelValue ?? 'Level (1–100)',
-                  suffixIcon: HelpDot(
-                        l10n?.helpTopicBilling ?? 'Billing',
-                        anchor: HelpAnchor.billingLevelValue,
-                      ),
+                  labelText: l10n.billingLevelValue,
                 ),
                 onSubmitted: (_) => _addLevel(),
               ),
@@ -612,7 +591,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             IconButton(
               key: const ValueKey('billing-add-level'),
               icon: const Icon(Icons.add),
-              tooltip: l10n?.billingAddLevel ?? 'Add level',
+              tooltip: l10n.billingAddLevel,
               onPressed: _addLevel,
             ),
           ],
@@ -620,11 +599,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         SwitchListTile(
           key: const ValueKey('billing-allow-custom'),
           contentPadding: EdgeInsets.zero,
-          title: HelpDotTitle(
-            l10n?.billingAllowCustom ?? 'Allow negotiated custom value',
-            l10n?.helpTopicBilling ?? 'Billing',
-            anchor: HelpAnchor.billingCustomLevel,
-          ),
+          title: Text(l10n.billingAllowCustom),
           value: _allowCustom,
           onChanged: (v) => setState(() => _allowCustom = v),
         ),
@@ -633,26 +608,24 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           child: FilledButton(
             key: const ValueKey('billing-save-2'),
             onPressed: _saveLevels,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ),
         const Divider(height: 32),
         Row(
           children: [
             Text(
-              l10n?.billingPackages ?? 'Day packages',
+              l10n.billingPackages,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             HelpDot(
-              l10n?.helpTopicBilling ?? 'Billing',
+              l10n.helpTopicBilling,
               anchor: HelpAnchor.billingPackages,
             ),
           ],
         ),
         Text(
-          l10n?.billingPackagesHint ??
-              'Members on the package plan buy these when their days run '
-                  'out.',
+          l10n.billingPackagesHint,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 8),
@@ -660,11 +633,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ListTile(
             key: ValueKey('package-${package.id}'),
             contentPadding: EdgeInsets.zero,
-            title: HelpDotTitle(
-              package.name,
-              l10n?.helpTopicBilling ?? 'Billing',
-              anchor: HelpAnchor.billingPackages,
-            ),
+            title: Text(package.name),
             // #537 — currency + the pack's own VAT rate on the row:
             // "2 days · 200.00 EUR · incl. VAT 20 %".
             subtitle: Builder(builder: (context) {
@@ -677,8 +646,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                   '${centsToMajor(package.priceCents)} $currencyCode'
                       .trim();
               final summary =
-                  l10n?.billingPackageSummary(package.days, price) ??
-                      '${package.days} days · $price';
+                  l10n.billingPackageSummary(package.days, price);
               final rate = vatRateSuffix(
                 chargesVat: ref
                         .watch(currentWorkspaceProvider)
@@ -690,7 +658,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               );
               final vatLabel = rate == null
                   ? null
-                  : (l10n?.priceVatIncluded(rate) ?? 'incl. VAT $rate');
+                  : (l10n.priceVatIncluded(rate));
               return Text(
                   vatLabel == null ? summary : '$summary · $vatLabel');
             }),
@@ -704,28 +672,23 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         Row(
           children: [
             Text(
-              l10n?.billingNewPackage ?? 'New package',
+              l10n.billingNewPackage,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             HelpDot(
-              l10n?.helpTopicBilling ?? 'Billing',
+              l10n.helpTopicBilling,
               anchor: HelpAnchor.billingPackageNew,
             ),
           ],
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               flex: 3,
               child: TextField(
                 controller: _pkgName,
                 decoration: InputDecoration(
-                  labelText: l10n?.billingPackageName ?? 'Name',
-                  suffixIcon: HelpDot(
-                        l10n?.helpTopicBilling ?? 'Billing',
-                        anchor: HelpAnchor.billingPackageName,
-                      ),
+                  labelText: l10n.billingPackageName,
                 ),
               ),
             ),
@@ -735,11 +698,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 controller: _pkgDays,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: l10n?.billingPackageDays ?? 'Days',
-                  suffixIcon: HelpDot(
-                        l10n?.helpTopicBilling ?? 'Billing',
-                        anchor: HelpAnchor.billingPackageDays,
-                      ),
+                  labelText: l10n.billingPackageDays,
                 ),
               ),
             ),
@@ -751,18 +710,14 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  labelText: l10n?.billingPackagePrice ?? 'Price',
-                  suffixIcon: HelpDot(
-                        l10n?.helpTopicBilling ?? 'Billing',
-                        anchor: HelpAnchor.billingPackagePrice,
-                      ),
+                  labelText: l10n.billingPackagePrice,
                 ),
               ),
             ),
             IconButton(
               key: const ValueKey('billing-add-package'),
               icon: const Icon(Icons.add_circle_outline),
-              tooltip: l10n?.billingAddPackage ?? 'Add package',
+              tooltip: l10n.billingAddPackage,
               onPressed: _addPackage,
             ),
           ],

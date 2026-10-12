@@ -15,10 +15,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/managed_access.dart';
 import '../../../workspace/domain/member.dart';
@@ -31,7 +31,7 @@ class ManagedAccessEditor extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final access = ManagedAccess.fromJson(member.managedAccess);
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -44,15 +44,14 @@ class ManagedAccessEditor extends ConsumerWidget {
         context,
         domain: 'workspace',
         message: 'managed access change failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => ref
             .read(workspaceRepositoryProvider)
             .setManagedAccess(member.id, next),
       );
       ref.invalidate(workspaceMembersProvider);
       if (!saved || !context.mounted) return;
-      AppSnack.success(context, l10n?.managedAccessSaved ?? 'Rule saved.');
+      AppSnack.success(context, l10n.managedAccessSaved);
     }
 
     return Column(
@@ -60,18 +59,15 @@ class ManagedAccessEditor extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: AppSpacing.md),
-        Text(l10n?.managedAccessTitle ?? 'Who may administer this profile',
+        Text(l10n.managedAccessTitle,
             style: theme.textTheme.titleSmall),
         Text(
-          l10n?.managedAccessHint ??
-              'By default: every owner and every admin. The owner may '
-                  'always change this rule but only reaches the data when '
-                  'the rule names them.',
+          l10n.managedAccessHint,
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
         if (access.isDefault)
-          Text(l10n?.managedAccessDefault ?? 'Every owner and every admin',
+          Text(l10n.managedAccessDefault,
               style: theme.textTheme.bodySmall
                   ?.copyWith(fontWeight: FontWeight.w600)),
         Wrap(
@@ -79,14 +75,14 @@ class ManagedAccessEditor extends ConsumerWidget {
           children: [
             FilterChip(
               key: const ValueKey('managed-access-owners'),
-              label: Text(l10n?.managedAccessOwners ?? 'Owners'),
+              label: Text(l10n.managedAccessOwners),
               selected: access.hasRole(ManagedAccess.roleOwner),
               onSelected: (on) =>
                   save(access.withRole(ManagedAccess.roleOwner, on)),
             ),
             FilterChip(
               key: const ValueKey('managed-access-admins'),
-              label: Text(l10n?.managedAccessAdmins ?? 'Admins'),
+              label: Text(l10n.managedAccessAdmins),
               selected: access.hasRole(ManagedAccess.roleAdmin),
               onSelected: (on) =>
                   save(access.withRole(ManagedAccess.roleAdmin, on)),
@@ -94,7 +90,7 @@ class ManagedAccessEditor extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        Text(l10n?.managedAccessPeople ?? 'Named people',
+        Text(l10n.managedAccessPeople,
             style: theme.textTheme.labelMedium),
         Wrap(
           spacing: AppSpacing.sm,

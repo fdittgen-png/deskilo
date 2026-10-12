@@ -16,7 +16,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import '../ui/app_snack.dart';
 import 'recording_providers.dart';
@@ -35,10 +35,7 @@ bool refusedWhileRecording(BuildContext context, WidgetRef ref) {
   if (!ref.read(recordingPrivacyProvider)) return false;
   AppSnack.error(
     context,
-    AppLocalizations.of(context)?.recordingPrivacyWriteRefused ??
-        'Not while filming mode is on: this form is showing an invented '
-            'person, and saving it would write that over somebody\'s '
-            'real details. Switch filming mode off first.',
+    context.l10n.recordingPrivacyWriteRefused,
   );
   return true;
 }
@@ -54,14 +51,10 @@ class RecordingBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!ref.watch(recordingPrivacyProvider)) return child;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final label = l10n?.recordingPrivacyBadge ??
-        'Filming mode — invented people';
-    final hint = l10n?.recordingPrivacyBadgeHint ??
-        'Filming mode is on: every name, e-mail, telephone number, '
-            'address and photograph on screen belongs to an invented '
-            'person.';
+    final label = l10n.recordingPrivacyBadge;
+    final hint = l10n.recordingPrivacyBadgeHint;
     return Column(
       children: [
         Material(

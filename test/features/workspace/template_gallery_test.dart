@@ -36,7 +36,6 @@ Future<void> _pump(WidgetTester tester, List<WorkspaceTemplate> templates,
     home: Scaffold(
       body: TemplateGallery(
         sections: [TemplateGallerySection(title: 'All', templates: templates)],
-        selectedId: null,
         onSelected: (_) {},
       ),
     ),
@@ -117,9 +116,9 @@ void main() {
     final ordered = TemplateGallery.ordered([
       _tpl(1, name: 'b', visibility: TemplateVisibility.private),
       _tpl(2, name: 'a', visibility: TemplateVisibility.shared),
-      _tpl(3, name: 'z', visibility: TemplateVisibility.public),
+      _tpl(3, name: 'z'),
       _tpl(4, name: 'y', visibility: TemplateVisibility.builtin),
-      _tpl(5, name: 'c', visibility: TemplateVisibility.public),
+      _tpl(5, name: 'c'),
     ]);
     expect([for (final t in ordered) t.name], ['y', 'c', 'z', 'a', 'b']);
   });

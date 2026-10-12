@@ -8,8 +8,8 @@
 // whether or not the workspace writes its own template.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/address_window.dart';
 
 /// Picks the window convention, with `null` meaning "follow the
@@ -33,24 +33,21 @@ class AddressWindowField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final resolved = addressWindowForCountry(countryCode);
     String labelOf(AddressWindow window) => switch (window) {
-          AddressWindow.left => l10n?.addressWindowLeft ?? 'Left (DIN 5008)',
-          AddressWindow.right => l10n?.addressWindowRight ?? 'Right (French)',
-          AddressWindow.off => l10n?.addressWindowOff ?? 'No window',
+          AddressWindow.left => l10n.addressWindowLeft,
+          AddressWindow.right => l10n.addressWindowRight,
+          AddressWindow.off => l10n.addressWindowOff,
         };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n?.addressWindowTitle ?? 'Address window',
+        Text(l10n.addressWindowTitle,
             style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          l10n?.addressWindowSubtitle ??
-              'Where the recipient is printed so it shows through a '
-                  'window envelope. The address field is 85 × 45 mm, '
-                  '45 mm from the top of the sheet.',
+          l10n.addressWindowSubtitle,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -63,7 +60,7 @@ class AddressWindowField extends StatelessWidget {
             DropdownMenuItem(
               value: '',
               child: Text(
-                '${l10n?.addressWindowCountry ?? 'Follow the country'}'
+                '${l10n.addressWindowCountry}'
                 ' — ${labelOf(resolved)}',
               ),
             ),

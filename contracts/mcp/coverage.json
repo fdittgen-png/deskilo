@@ -31,7 +31,7 @@
     "supabase/tests/database/96_scoped_invalidation.sql",
     "supabase/tests/database/97_mcp_conformance_journey.sql",
     "supabase/functions/deskilo-mcp/index_test.ts",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "get_availability": {
@@ -42,7 +42,7 @@
    "denial": [
     "supabase/tests/database/64_mcp_connection_consent.sql",
     "supabase/tests/database/94_mcp_disclosure.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "list_my_reservations": {
@@ -51,7 +51,7 @@
    ],
    "denial": [
     "supabase/tests/database/97_mcp_conformance_journey.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "get_place": {
@@ -60,7 +60,7 @@
    ],
    "denial": [
     "supabase/tests/database/153_mcp_get_place.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "list_my_favorites": {
@@ -69,7 +69,7 @@
    ],
    "denial": [
     "supabase/tests/database/156_mcp_place_feedback.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "get_my_statement": {
@@ -78,15 +78,15 @@
    ],
    "denial": [
     "supabase/tests/database/97_mcp_conformance_journey.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "get_member_statement": {
    "positive": [
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "denial": [
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "list_my_invoices": {
@@ -95,7 +95,7 @@
    ],
    "denial": [
     "supabase/tests/database/97_mcp_conformance_journey.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "create_reservation": {
@@ -107,7 +107,7 @@
    "denial": [
     "supabase/tests/database/96_scoped_invalidation.sql",
     "supabase/tests/database/97_mcp_conformance_journey.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
@@ -122,7 +122,7 @@
    ],
    "denial": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -134,7 +134,7 @@
    ],
    "denial": [
     "supabase/tests/database/64_mcp_connection_consent.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -146,7 +146,7 @@
    ],
    "denial": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -158,7 +158,7 @@
    ],
    "denial": [
     "supabase/tests/database/75_mcp_reservation_tools.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -170,7 +170,7 @@
    ],
    "denial": [
     "supabase/tests/database/156_mcp_place_feedback.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/156_mcp_place_feedback.sql"
@@ -182,7 +182,7 @@
    ],
    "denial": [
     "supabase/tests/database/156_mcp_place_feedback.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/156_mcp_place_feedback.sql"
@@ -194,7 +194,7 @@
    ],
    "denial": [
     "supabase/tests/database/59_mcp_policy_and_dispatch.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/75_mcp_reservation_tools.sql"
@@ -207,7 +207,7 @@
    "denial": [
     "supabase/tests/database/64_mcp_connection_consent.sql",
     "supabase/tests/database/76_mcp_financial_requests.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/76_mcp_financial_requests.sql"
@@ -219,7 +219,7 @@
    ],
    "denial": [
     "supabase/tests/database/76_mcp_financial_requests.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/76_mcp_financial_requests.sql",
@@ -232,7 +232,7 @@
    ],
    "denial": [
     "supabase/tests/database/76_mcp_financial_requests.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/76_mcp_financial_requests.sql"
@@ -244,7 +244,7 @@
    ],
    "denial": [
     "supabase/tests/database/77_mcp_membership_requests.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/77_mcp_membership_requests.sql",
@@ -258,7 +258,7 @@
    "denial": [
     "supabase/tests/database/60_mcp_action_confirmations.sql",
     "supabase/tests/database/77_mcp_membership_requests.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/77_mcp_membership_requests.sql",
@@ -271,7 +271,7 @@
    ],
    "denial": [
     "supabase/tests/database/63_mcp_bounded_reads.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "get_validation": {
@@ -280,7 +280,7 @@
    ],
    "denial": [
     "supabase/tests/database/63_mcp_bounded_reads.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ]
   },
   "respond_to_validation": {
@@ -291,7 +291,7 @@
    "denial": [
     "supabase/tests/database/78_mcp_validation_decisions.sql",
     "supabase/tests/database/97_mcp_conformance_journey.sql",
-    "supabase/tests/database/170_mcp_authorization_matrix.sql"
+    "supabase/tests/database/171_mcp_authorization_matrix.sql"
    ],
    "state": [
     "supabase/tests/database/78_mcp_validation_decisions.sql",

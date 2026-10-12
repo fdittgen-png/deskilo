@@ -10,19 +10,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../application/assign_role.dart';
 import '../../domain/member.dart';
 import '../../domain/role_assignment.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
-import '../../../task_recorder/domain/action_registry.dart';
-import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RoleHoldersSection extends ConsumerWidget {
   const RoleHoldersSection({
@@ -47,7 +47,7 @@ class RoleHoldersSection extends ConsumerWidget {
     String memberId, {
     required bool assign,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final attempt = recordTaskAttempt(ref, RecorderActions.giveRole,
         payload: {'switch_to': assign ? 'on' : 'off'}); // #1884 B
     final ok = await runGuarded(
@@ -55,8 +55,8 @@ class RoleHoldersSection extends ConsumerWidget {
       domain: 'workspace',
       message: assign ? 'role grant failed' : 'role take-back failed',
       errorText: assign
-          ? (l10n?.roleGiveFailed ?? 'The role was not given.')
-          : (l10n?.roleTakeBackFailed ?? 'The role was not taken back.'),
+          ? (l10n.roleGiveFailed)
+          : (l10n.roleTakeBackFailed),
       action: () => observeTaskSetting(
           attempt,
           () => setMemberRole(ref,
@@ -66,8 +66,8 @@ class RoleHoldersSection extends ConsumerWidget {
     AppSnack.success(
       context,
       assign
-          ? (l10n?.roleGiven ?? 'Role given.')
-          : (l10n?.roleTakenBack ?? 'Role taken back.'),
+          ? (l10n.roleGiven)
+          : (l10n.roleTakenBack),
     );
   }
 
@@ -81,7 +81,7 @@ class RoleHoldersSection extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => SimpleDialog(
         title: Text(
-          AppLocalizations.of(dialogContext)?.roleHoldersAdd ?? 'Add a member',
+          dialogContext.l10n.roleHoldersAdd,
         ),
         children: [
           for (final m in candidates)
@@ -99,7 +99,7 @@ class RoleHoldersSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
     final perms = ref.watch(myPermissionsProvider);
@@ -134,13 +134,13 @@ class RoleHoldersSection extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          l10n?.roleEditorHolders ?? 'Members in this role',
+          l10n.roleEditorHolders,
           style: theme.textTheme.labelLarge,
         ),
         if (holders.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-            child: Text(l10n?.roleEditorNobody ?? 'Nobody yet.'),
+            child: Text(l10n.roleEditorNobody),
           ),
         for (final m in holders)
           ListTile(
@@ -162,7 +162,7 @@ class RoleHoldersSection extends ConsumerWidget {
           TextButton.icon(
             key: addKey,
             icon: const Icon(Icons.person_add_alt_1_outlined),
-            label: Text(l10n?.roleHoldersAdd ?? 'Add a member'),
+            label: Text(l10n.roleHoldersAdd),
             onPressed: () => _pick(context, ref, candidates, names),
           ),
       ],

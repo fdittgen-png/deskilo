@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
-import '../../domain/space_act.dart';
 import '../../domain/picked_time.dart';
+import '../../domain/space_act.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/theme/app_typography.dart';
 
 /// THE action + derived-period core of the kiosk one-sheet (#529),
 /// extracted for #622 so the app's scan flow offers the SAME options
@@ -101,7 +102,8 @@ class SpaceActFormState extends State<SpaceActForm> {
   /// the day part the member is standing in (day-based) or the shared
   /// walk-up window, start clamped to now.
   void _resetWindow() {
-    final options = _dayBased ? _dayOptions(null) : const <_DayOption>[];
+    final options =
+        _dayBased ? _dayOptions(labelled: false) : const <_DayOption>[];
     if (options.isNotEmpty) {
       final current = options.firstWhere(
         (o) => !o.start.isAfter(widget.now) && o.end.isAfter(widget.now),
@@ -117,14 +119,15 @@ class SpaceActFormState extends State<SpaceActForm> {
     }
   }
 
-  /// Today's bookable day parts, already clamped to now. Passing [l10n]
-  /// labels them; initState passes null (keys only).
-  List<_DayOption> _dayOptions(AppLocalizations? l10n) {
-    // #1277 — initState calls this with a null l10n for the KEYS ONLY,
-    // before dependencies are available, and reading `Localizations`
-    // there is illegal (it asserts in the app, not only in tests). The
-    // context is meaningful exactly when l10n is, so it travels with it.
-    final ctx = l10n == null ? null : context;
+  /// Today's bookable day parts, already clamped to now, [labelled] from
+  /// the context; initState asks for the keys only.
+  List<_DayOption> _dayOptions({required bool labelled}) {
+    // #1277 — initState calls this for the KEYS ONLY, before dependencies
+    // are available, and reading `Localizations` there is illegal (it
+    // asserts in the app, not only in tests): no context then, and the
+    // labels are the ARB's English, which nobody reads.
+    final ctx = labelled ? context : null;
+    final l10n = labelled ? context.l10n : englishL10n;
     final now = widget.now;
     final morning = HalfDayWindows.morning(now);
     final afternoon = HalfDayWindows.afternoon(now);
@@ -135,7 +138,7 @@ class SpaceActFormState extends State<SpaceActForm> {
           morning.end.isAfter(now))
         (
           key: 'morning',
-          label: lexiconText(ctx, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
+          label: lexiconText(ctx, key: 'planMorningChip', fallback: l10n.planMorningChip),
           start: clamp(morning.start),
           end: morning.end,
         ),
@@ -143,14 +146,14 @@ class SpaceActFormState extends State<SpaceActForm> {
           afternoon.end.isAfter(now))
         (
           key: 'afternoon',
-          label: lexiconText(ctx, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
+          label: lexiconText(ctx, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
           start: clamp(afternoon.start),
           end: afternoon.end,
         ),
       if (fullDay.end.isAfter(now))
         (
           key: 'day',
-          label: l10n?.planFullDayChip ?? 'Day',
+          label: l10n.planFullDayChip,
           start: clamp(fullDay.start),
           end: fullDay.end,
         ),
@@ -162,7 +165,7 @@ class SpaceActFormState extends State<SpaceActForm> {
     return [
       (
         key: 'rest',
-        label: l10n?.kioskRestOfDay ?? 'Rest of the day',
+        label: l10n.kioskRestOfDay,
         start: overtime.start,
         end: overtime.end,
       ),
@@ -201,25 +204,24 @@ class SpaceActFormState extends State<SpaceActForm> {
   /// The rule the derived window follows, spelled out — the settings
   /// ARE the explanation ("include the settings on which base the
   /// check-in must be done").
-  String _basisLine(AppLocalizations? l10n, MaterialLocalizations time) {
+  String _basisLine(AppLocalizations l10n, MaterialLocalizations time) {
     final granularityLabel = switch (widget.granularity) {
       BookingGranularity.flexible =>
-        l10n?.availabilityGranularityFlexible ?? 'Free time period',
+        l10n.availabilityGranularityFlexible,
       BookingGranularity.halfDay =>
-        l10n?.availabilityGranularityHalfDay ??
-            'Half days (morning & afternoon)',
+        l10n.availabilityGranularityHalfDay,
       BookingGranularity.minutes5 =>
-        l10n?.availabilityGranularity5 ?? '5-minute slots',
+        l10n.availabilityGranularity5,
       BookingGranularity.minutes15 =>
-        l10n?.availabilityGranularity15 ?? '15-minute slots',
+        l10n.availabilityGranularity15,
       BookingGranularity.minutes30 =>
-        l10n?.availabilityGranularity30 ?? '30-minute slots',
+        l10n.availabilityGranularity30,
       BookingGranularity.minutes60 =>
-        l10n?.availabilityGranularity60 ?? '1-hour slots',
+        l10n.availabilityGranularity60,
       BookingGranularity.fullDay =>
-        l10n?.availabilityGranularityFullDay ?? 'Full days only',
+        l10n.availabilityGranularityFullDay,
       BookingGranularity.hours =>
-        l10n?.availabilityGranularityHours ?? 'Real hours',
+        l10n.availabilityGranularityHours,
     };
     String range(({DateTime start, DateTime end}) w) =>
         '${time.formatTimeOfDay(TimeOfDay.fromDateTime(w.start))}–'
@@ -229,13 +231,12 @@ class SpaceActFormState extends State<SpaceActForm> {
         ? '${range(HalfDayWindows.morning(now))} / '
               '${range(HalfDayWindows.afternoon(now))}'
         : range(HalfDayWindows.fullDay(now));
-    return l10n?.kioskBasis(granularityLabel, hours) ??
-        '$granularityLabel · today $hours';
+    return l10n.kioskBasis(granularityLabel, hours);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final timeLabel = MaterialLocalizations.of(context);
     final prefix = widget.keyPrefix;
@@ -255,7 +256,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               // #1191 — the chip's own tick would land on this.
               showCheckmark: false,
               avatar: const Icon(Icons.login_outlined, size: 18),
-              label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+              label: Text(l10n.kioskCheckIn),
               selected: _action == SpaceAction.checkIn,
               onSelected: (_) => setState(() {
                 _action = SpaceAction.checkIn;
@@ -267,7 +268,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               // #1191 — the chip's own tick would land on this.
               showCheckmark: false,
               avatar: const Icon(Icons.event_available_outlined, size: 18),
-              label: Text(l10n?.kioskReserve ?? 'Reserve'),
+              label: Text(l10n.kioskReserve),
               selected: _action == SpaceAction.reserve,
               onSelected: (_) => setState(() {
                 _action = SpaceAction.reserve;
@@ -279,7 +280,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               // #1191 — the chip's own tick would land on this.
               showCheckmark: false,
               avatar: const Icon(Icons.logout_outlined, size: 18),
-              label: Text(l10n?.kioskCheckOut ?? 'Check out'),
+              label: Text(l10n.kioskCheckOut),
               selected: _action == SpaceAction.checkOut,
               onSelected: (_) => setState(() => _action = SpaceAction.checkOut),
             ),
@@ -292,7 +293,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                for (final option in _dayOptions(l10n))
+                for (final option in _dayOptions(labelled: true))
                   ChoiceChip(
                     key: ValueKey('$prefix-period-${option.key}'),
                     label: Text(option.label),
@@ -323,7 +324,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                         ? null
                         : () => _pickTime(isStart: true),
                     label: Text(
-                      '${lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From')} '
+                      '${lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel)} '
                       '${timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_start))}',
                     ),
                   ),
@@ -335,7 +336,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                     icon: const Icon(Icons.schedule),
                     onPressed: () => _pickTime(isStart: false),
                     label: Text(
-                      '${l10n?.planToLabel ?? 'To'} '
+                      '${l10n.planToLabel} '
                       '${timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_end))}',
                     ),
                   ),
@@ -353,7 +354,7 @@ class SpaceActFormState extends State<SpaceActForm> {
               key: ValueKey('$prefix-period-checkin-now'),
               contentPadding: EdgeInsets.zero,
               dense: true,
-              title: Text(l10n?.kioskCheckInRightAway ?? 'Check in right away'),
+              title: Text(l10n.kioskCheckInRightAway),
               value: _checkInNow,
               onChanged: (value) => setState(() => _checkInNow = value),
             ),
@@ -370,8 +371,7 @@ class SpaceActFormState extends State<SpaceActForm> {
                   Expanded(
                     child: Text(
                       widget.refusalTextOf?.call(refusal) ??
-                          (l10n?.bookingGateBlocked ??
-                              'Not bookable as chosen'),
+                          (l10n.bookingGateBlocked),
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: theme.colorScheme.error),
                     ),

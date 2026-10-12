@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
 import '../trace/trace_logger.dart';
 import 'auth_callback_guard.dart';
@@ -49,7 +49,6 @@ class NativeFederationFlow {
       key,
       httpClient: httpClient,
       authOptions: AuthClientOptions(
-        authFlowType: AuthFlowType.pkce,
         autoRefreshToken: false,
         pkceAsyncStorage: _pkce(flow),
       ),
@@ -196,7 +195,7 @@ class NativeFederationFlow {
         AuthCallbackStatus.refused,
         failure: federationFailureFromCode(error.code),
       );
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: network/provider payloads may contain credentials.
       TraceLogger.instance.warn(
         'auth',
@@ -209,8 +208,8 @@ class NativeFederationFlow {
       // A linking refusal retains the person's previous working account.
       if (!accepted && expected == null && client.auth.currentSession != null) {
         try {
-          await client.auth.signOut(scope: SignOutScope.local);
-        } catch (error, stack) {
+          await client.auth.signOut();
+        } on Object catch (error, stack) {
           // trace-exempt: report only that revocation could not be confirmed.
           TraceLogger.instance.warn(
             'auth',
@@ -221,7 +220,7 @@ class NativeFederationFlow {
       }
       try {
         await _clear(flow);
-      } catch (error, stack) {
+      } on Object catch (error, stack) {
         // trace-exempt: no persisted callback secrets in diagnostic payloads.
         TraceLogger.instance.warn(
           'auth',

@@ -16,8 +16,10 @@
 // (0335).
 
 import 'package:meta/meta.dart';
-import 'accounting_amount.dart';
+
+import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
+import 'accounting_amount.dart';
 
 /// Who keeps the official books.
 enum BookAuthority {
@@ -60,19 +62,24 @@ class BookProfile {
     required this.revision,
   });
 
-  factory BookProfile.fromJson(Map<String, Object?> json) => BookProfile(
-    id: '${json['id']}',
-    workspaceId: '${json['workspace_id']}',
-    issuerSiteId: '${json['issuer_site_id']}',
-    authority: BookAuthority.fromWire(json['authority_mode'] as String?),
-    externalSystem: (json['external_system'] as String?) ?? '',
-    functionalCurrency: '${json['functional_currency']}',
-    fiscalYearStartMonth: json['fiscal_year_start_month']! as int,
-    fiscalYearStartDay: json['fiscal_year_start_day']! as int,
-    basis: AccountingBasis.fromWire(json['accounting_basis'] as String?),
-    effectiveFrom: DateTime.parse('${json['effective_from']}'),
-    revision: json['revision']! as int,
-  );
+  /// #2387 — read through [JsonReader]: a missing column names the
+  /// table, the key and the type instead of `Null is not a subtype`.
+  factory BookProfile.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'book_profiles');
+    return BookProfile(
+      id: r.stringOr('id'),
+      workspaceId: r.string('workspace_id'),
+      issuerSiteId: r.string('issuer_site_id'),
+      authority: BookAuthority.fromWire(r.stringOrNull('authority_mode')),
+      externalSystem: r.stringOr('external_system'),
+      functionalCurrency: r.string('functional_currency'),
+      fiscalYearStartMonth: r.integer('fiscal_year_start_month'),
+      fiscalYearStartDay: r.integer('fiscal_year_start_day'),
+      basis: AccountingBasis.fromWire(r.stringOrNull('accounting_basis')),
+      effectiveFrom: r.dateTime('effective_from'),
+      revision: r.integer('revision'),
+    );
+  }
 
   /// Empty for a profile not saved yet.
   final String id;

@@ -2,6 +2,7 @@
 //
 // #192 — payment method wire names are a stable contract: pinned, round-
 // tripped, ordered and labelled.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/presentation/payment_method_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,8 +49,8 @@ void main() {
 
   test('English fallback labels exist for the #192 methods (brand names)',
       () {
-    expect(paymentMethodLabel(null, PaymentMethod.wero), 'Wero');
-    expect(paymentMethodLabel(null, PaymentMethod.lydia), 'Lydia');
-    expect(paymentMethodLabel(null, PaymentMethod.wise), 'Wise');
+    expect(paymentMethodLabel(englishL10n, PaymentMethod.wero), 'Wero');
+    expect(paymentMethodLabel(englishL10n, PaymentMethod.lydia), 'Lydia');
+    expect(paymentMethodLabel(englishL10n, PaymentMethod.wise), 'Wise');
   });
 }

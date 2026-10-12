@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 
@@ -15,7 +17,7 @@ Future<String?> showReportFieldPicker(
   /// #880 — the owner's text keys, offered as `text.<key>`.
   List<String> textKeys = const [],
 }) =>
-    showModalBottomSheet<String>(
+    showAppSheet<String>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _FieldPickerSheet(textKeys: textKeys),
@@ -44,7 +46,7 @@ enum ReportFieldGroup {
 @visibleForTesting
 ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       // #880 — the owner's own texts.
-      String f when f.startsWith('text.') => ReportFieldGroup.texts,
+      final String f when f.startsWith('text.') => ReportFieldGroup.texts,
       'number' ||
       'period_month' ||
       'period_year' ||
@@ -113,7 +115,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_basis_note' =>
         ReportFieldGroup.vat,
       'site_name' || 'site_address' || 'usage_sites' => ReportFieldGroup.sites,
-      String f when f.startsWith('status_') && f != 'status_members' =>
+      final String f when f.startsWith('status_') && f != 'status_members' =>
         ReportFieldGroup.status,
       'lines' ||
       'vat' ||
@@ -131,122 +133,121 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
 /// registry placeholder has one (pinned by test); an unknown field (a
 /// text key) reads as itself.
 @visibleForTesting
-String reportFieldMeaning(String field, AppLocalizations? l10n) =>
+String reportFieldMeaning(String field, AppLocalizations l10n) =>
     switch (field) {
-      'number' => l10n?.reportFieldMeaningNumber ?? 'The document\'s number',
-      'member' => l10n?.reportFieldMeaningMember ?? 'The member\'s display name',
-      'workspace' => l10n?.reportFieldMeaningWorkspace ?? 'The workspace\'s name',
-      'workspace_address' => l10n?.reportFieldMeaningWorkspaceAddress ?? 'The workspace\'s address, or the document site\'s',
-      'period' => l10n?.reportFieldMeaningPeriod ?? 'The month the document covers',
+      'number' => l10n.reportFieldMeaningNumber,
+      'member' => l10n.reportFieldMeaningMember,
+      'workspace' => l10n.reportFieldMeaningWorkspace,
+      'workspace_address' => l10n.reportFieldMeaningWorkspaceAddress,
+      'period' => l10n.reportFieldMeaningPeriod,
       // #1002 — the month by name, and the year, for a designed label.
-      'period_month' => l10n?.reportFieldMeaningPeriodMonth ??
-          'The month of the period, by name (« September »)',
-      'period_year' => l10n?.reportFieldMeaningPeriodYear ?? 'The year of the period',
-      'issued' => l10n?.reportFieldMeaningIssued ?? 'The issue date',
-      'due_date' => l10n?.reportFieldMeaningDueDate ?? 'The settlement date',
-      'purchase_order' => l10n?.reportFieldMeaningPurchaseOrder ?? 'The buyer\'s purchase-order reference',
-      'buyer_reference' => l10n?.reportFieldMeaningBuyerReference ?? 'The buyer\'s own reference (public sector)',
-      'issued_by' => l10n?.reportFieldMeaningIssuedBy ?? 'Who issued the document',
-      'replaces' => l10n?.reportFieldMeaningReplaces ?? 'The number of the invoice this one replaces',
-      'total' => l10n?.reportFieldMeaningTotal ?? 'The amount due, everything included',
-      'charges' => l10n?.reportFieldMeaningCharges ?? 'The charges before payments',
-      'payments' => l10n?.reportFieldMeaningPayments ?? 'Payments already received',
-      'voided' => l10n?.reportFieldMeaningVoided ?? 'True when the invoice was cancelled',
-      'proforma' => l10n?.reportFieldMeaningProforma ?? 'True on a proforma',
-      'copy' => l10n?.reportFieldMeaningCopy ?? 'True on a duplicate',
-      'has_vat' => l10n?.reportFieldMeaningHasVat ?? 'True when VAT applies',
-      'lines' => l10n?.reportFieldMeaningLines ?? 'The invoice lines — a loop',
-      'vat' => l10n?.reportFieldMeaningVat ?? 'VAT by rate — a loop',
-      'net_total' => l10n?.reportFieldMeaningNetTotal ?? 'The total before VAT',
-      'vat_total' => l10n?.reportFieldMeaningVatTotal ?? 'The total VAT',
-      'credit_note' => l10n?.reportFieldMeaningCreditNote ?? 'True on a credit note',
-      'refund_total' => l10n?.reportFieldMeaningRefundTotal ?? 'The amount refunded',
-      'iban' => l10n?.reportFieldMeaningIban ?? 'The account\'s IBAN',
-      'bic' => l10n?.reportFieldMeaningBic ?? 'The bank\'s BIC',
-      'bank_name' => l10n?.reportFieldMeaningBankName ?? 'The bank\'s name',
-      'bank_account' => l10n?.reportFieldMeaningBankAccount ?? 'The account number',
-      'bank_code' => l10n?.reportFieldMeaningBankCode ?? 'The bank code',
-      'account_holder' => l10n?.reportFieldMeaningAccountHolder ?? 'The account holder',
-      'payment_reference' => l10n?.reportFieldMeaningPaymentReference ?? 'The reference to quote when paying',
-      'seller_legal_form' => l10n?.reportFieldMeaningSellerLegalForm ?? 'The seller\'s legal form',
-      'seller_registration' => l10n?.reportFieldMeaningSellerRegistration ?? 'The seller\'s registration (SIREN, RNA…)',
-      'seller_vat_id' => l10n?.reportFieldMeaningSellerVatId ?? 'The seller\'s VAT number',
-      'seller_legal_id' => l10n?.reportFieldMeaningSellerLegalId ?? 'The seller\'s legal identifier',
-      'exemption_reason' => l10n?.reportFieldMeaningExemptionReason ?? 'The VAT exemption mention',
-      'vat_exigibility_mention' => l10n?.reportFieldMeaningVatExigibilityMention ?? 'When the VAT falls due, in words',
-      'client_name' => l10n?.reportFieldMeaningClientName ?? 'The client\'s full name',
-      'client_company' => l10n?.reportFieldMeaningClientCompany ?? 'The client\'s company',
-      'client_phone' => l10n?.reportFieldMeaningClientPhone ?? 'The client\'s phone',
-      'client_email' => l10n?.reportFieldMeaningClientEmail ?? 'The client\'s e-mail',
-      'client_address' => l10n?.reportFieldMeaningClientAddress ?? 'The client\'s postal block',
-      'client_vat_id' => l10n?.reportFieldMeaningClientVatId ?? 'The client\'s VAT number',
-      'client_legal_id' => l10n?.reportFieldMeaningClientLegalId ?? 'The client\'s legal identifier (SIREN…)',
-      'client_member_number' => l10n?.reportFieldMeaningClientMemberNumber ?? 'The client\'s member number',
-      'usage_paid' => l10n?.reportFieldMeaningUsagePaid ?? 'What the month\'s usage cost',
-      'usage_included_half_days' => l10n?.reportFieldMeaningUsageIncludedHalfDays ?? 'Half-days included in the subscription',
-      'usage_used_half_days' => l10n?.reportFieldMeaningUsageUsedHalfDays ?? 'Half-days used',
-      'usage_remaining_half_days' => l10n?.reportFieldMeaningUsageRemainingHalfDays ?? 'Half-days remaining',
-      'usage_extra_half_days' => l10n?.reportFieldMeaningUsageExtraHalfDays ?? 'Half-days beyond the subscription',
-      'usage_overage' => l10n?.reportFieldMeaningUsageOverage ?? 'The overage charged',
-      'usage_supplements' => l10n?.reportFieldMeaningUsageSupplements ?? 'The accessory supplements',
-      'usage_records' => l10n?.reportFieldMeaningUsageRecords ?? 'Every consumption record — a loop',
-      'vat_period' => l10n?.reportFieldMeaningVatPeriod ?? 'The VAT period reported',
-      'vat_period_net' => l10n?.reportFieldMeaningVatPeriodNet ?? 'The period\'s net total',
-      'vat_period_vat' => l10n?.reportFieldMeaningVatPeriodVat ?? 'The period\'s VAT',
-      'vat_period_gross' => l10n?.reportFieldMeaningVatPeriodGross ?? 'The period\'s gross total',
-      'vat_basis_note' => l10n?.reportFieldMeaningVatBasisNote ?? 'Whether the period counts what was paid or what was issued',
-      'site_name' => l10n?.reportFieldMeaningSiteName ?? 'The document site\'s name',
-      'site_address' => l10n?.reportFieldMeaningSiteAddress ?? 'The document site\'s address',
-      'usage_sites' => l10n?.reportFieldMeaningUsageSites ?? 'The other sites the month stood at',
-      'pending_payments_total' => l10n?.reportFieldMeaningPendingPaymentsTotal ?? 'Payments still to confirm',
-      'pending_expenses_total' => l10n?.reportFieldMeaningPendingExpensesTotal ?? 'Expenses still to validate',
-      'status_from' => l10n?.reportFieldMeaningStatusFrom ?? 'The status period\'s first day',
-      'status_to' => l10n?.reportFieldMeaningStatusTo ?? 'The status period\'s last day',
-      'status_invoiced' => l10n?.reportFieldMeaningStatusInvoiced ?? 'What the workspace invoiced',
-      'status_credit_notes' => l10n?.reportFieldMeaningStatusCreditNotes ?? 'The credit notes issued',
-      'status_payments' => l10n?.reportFieldMeaningStatusPayments ?? 'What was collected',
-      'status_reimbursed' => l10n?.reportFieldMeaningStatusReimbursed ?? 'What was reimbursed',
-      'status_repartitioned' => l10n?.reportFieldMeaningStatusRepartitioned ?? 'What was repartitioned',
-      'status_credits' => l10n?.reportFieldMeaningStatusCredits ?? 'The credits granted',
-      'status_net' => l10n?.reportFieldMeaningStatusNet ?? 'Revenues minus expenses',
-      'status_members' => l10n?.reportFieldMeaningStatusMembers ?? 'The member-by-member lines — a loop',
-      'declaration_status' => l10n?.vatDeclStatus ?? 'Status',
-      'declaration_note' => l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
-      'declaration_invoice_count' => l10n?.vatDeclInvoices ?? 'Invoices',
-      'configuration_rows' => l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
-      'vat_form_boxes' => l10n?.vatDeclBoxes ?? 'Official form lines',
-      'vat_positions' => l10n?.reportFieldMeaningVatPositions ?? 'Every invoice of the VAT period — a loop',
-      'vat_rate_totals' => l10n?.reportFieldMeaningVatRateTotals ?? 'The VAT period totals by rate — a loop',
-      'payment_terms' => l10n?.reportFieldMeaningPaymentTerms ?? 'The payment terms mention',
-      'payment_terms_source' => l10n?.reportFieldMeaningPaymentTermsSource ?? 'Where the payment terms come from (member or workspace)',
-      'late_penalty' => l10n?.reportFieldMeaningLatePenalty ?? 'The late-payment penalty mention',
-      'recovery_indemnity' => l10n?.reportFieldMeaningRecoveryIndemnity ?? 'The recovery indemnity mention',
-      'escompte' => l10n?.reportFieldMeaningEscompte ?? 'The early-payment discount mention',
-      'insurance' => l10n?.reportFieldMeaningInsurance ?? 'The professional insurance mention',
-      'special_mentions' => l10n?.reportFieldMeaningSpecialMentions ?? 'The workspace\'s special mentions',
+      'period_month' => l10n.reportFieldMeaningPeriodMonth,
+      'period_year' => l10n.reportFieldMeaningPeriodYear,
+      'issued' => l10n.reportFieldMeaningIssued,
+      'due_date' => l10n.reportFieldMeaningDueDate,
+      'purchase_order' => l10n.reportFieldMeaningPurchaseOrder,
+      'buyer_reference' => l10n.reportFieldMeaningBuyerReference,
+      'issued_by' => l10n.reportFieldMeaningIssuedBy,
+      'replaces' => l10n.reportFieldMeaningReplaces,
+      'total' => l10n.reportFieldMeaningTotal,
+      'charges' => l10n.reportFieldMeaningCharges,
+      'payments' => l10n.reportFieldMeaningPayments,
+      'voided' => l10n.reportFieldMeaningVoided,
+      'proforma' => l10n.reportFieldMeaningProforma,
+      'copy' => l10n.reportFieldMeaningCopy,
+      'has_vat' => l10n.reportFieldMeaningHasVat,
+      'lines' => l10n.reportFieldMeaningLines,
+      'vat' => l10n.reportFieldMeaningVat,
+      'net_total' => l10n.reportFieldMeaningNetTotal,
+      'vat_total' => l10n.reportFieldMeaningVatTotal,
+      'credit_note' => l10n.reportFieldMeaningCreditNote,
+      'refund_total' => l10n.reportFieldMeaningRefundTotal,
+      'iban' => l10n.reportFieldMeaningIban,
+      'bic' => l10n.reportFieldMeaningBic,
+      'bank_name' => l10n.reportFieldMeaningBankName,
+      'bank_account' => l10n.reportFieldMeaningBankAccount,
+      'bank_code' => l10n.reportFieldMeaningBankCode,
+      'account_holder' => l10n.reportFieldMeaningAccountHolder,
+      'payment_reference' => l10n.reportFieldMeaningPaymentReference,
+      'seller_legal_form' => l10n.reportFieldMeaningSellerLegalForm,
+      'seller_registration' => l10n.reportFieldMeaningSellerRegistration,
+      'seller_vat_id' => l10n.reportFieldMeaningSellerVatId,
+      'seller_legal_id' => l10n.reportFieldMeaningSellerLegalId,
+      'exemption_reason' => l10n.reportFieldMeaningExemptionReason,
+      'vat_exigibility_mention' => l10n.reportFieldMeaningVatExigibilityMention,
+      'client_name' => l10n.reportFieldMeaningClientName,
+      'client_company' => l10n.reportFieldMeaningClientCompany,
+      'client_phone' => l10n.reportFieldMeaningClientPhone,
+      'client_email' => l10n.reportFieldMeaningClientEmail,
+      'client_address' => l10n.reportFieldMeaningClientAddress,
+      'client_vat_id' => l10n.reportFieldMeaningClientVatId,
+      'client_legal_id' => l10n.reportFieldMeaningClientLegalId,
+      'client_member_number' => l10n.reportFieldMeaningClientMemberNumber,
+      'usage_paid' => l10n.reportFieldMeaningUsagePaid,
+      'usage_included_half_days' => l10n.reportFieldMeaningUsageIncludedHalfDays,
+      'usage_used_half_days' => l10n.reportFieldMeaningUsageUsedHalfDays,
+      'usage_remaining_half_days' => l10n.reportFieldMeaningUsageRemainingHalfDays,
+      'usage_extra_half_days' => l10n.reportFieldMeaningUsageExtraHalfDays,
+      'usage_overage' => l10n.reportFieldMeaningUsageOverage,
+      'usage_supplements' => l10n.reportFieldMeaningUsageSupplements,
+      'usage_records' => l10n.reportFieldMeaningUsageRecords,
+      'vat_period' => l10n.reportFieldMeaningVatPeriod,
+      'vat_period_net' => l10n.reportFieldMeaningVatPeriodNet,
+      'vat_period_vat' => l10n.reportFieldMeaningVatPeriodVat,
+      'vat_period_gross' => l10n.reportFieldMeaningVatPeriodGross,
+      'vat_basis_note' => l10n.reportFieldMeaningVatBasisNote,
+      'site_name' => l10n.reportFieldMeaningSiteName,
+      'site_address' => l10n.reportFieldMeaningSiteAddress,
+      'usage_sites' => l10n.reportFieldMeaningUsageSites,
+      'pending_payments_total' => l10n.reportFieldMeaningPendingPaymentsTotal,
+      'pending_expenses_total' => l10n.reportFieldMeaningPendingExpensesTotal,
+      'status_from' => l10n.reportFieldMeaningStatusFrom,
+      'status_to' => l10n.reportFieldMeaningStatusTo,
+      'status_invoiced' => l10n.reportFieldMeaningStatusInvoiced,
+      'status_credit_notes' => l10n.reportFieldMeaningStatusCreditNotes,
+      'status_payments' => l10n.reportFieldMeaningStatusPayments,
+      'status_reimbursed' => l10n.reportFieldMeaningStatusReimbursed,
+      'status_repartitioned' => l10n.reportFieldMeaningStatusRepartitioned,
+      'status_credits' => l10n.reportFieldMeaningStatusCredits,
+      'status_net' => l10n.reportFieldMeaningStatusNet,
+      'status_members' => l10n.reportFieldMeaningStatusMembers,
+      'declaration_status' => l10n.vatDeclStatus,
+      'declaration_note' => l10n.reportFieldMeaningDeclarationNote,
+      'declaration_invoice_count' => l10n.vatDeclInvoices,
+      'configuration_rows' => l10n.workspaceConfigPdfTitle,
+      'vat_form_boxes' => l10n.vatDeclBoxes,
+      'vat_positions' => l10n.reportFieldMeaningVatPositions,
+      'vat_rate_totals' => l10n.reportFieldMeaningVatRateTotals,
+      'payment_terms' => l10n.reportFieldMeaningPaymentTerms,
+      'payment_terms_source' => l10n.reportFieldMeaningPaymentTermsSource,
+      'late_penalty' => l10n.reportFieldMeaningLatePenalty,
+      'recovery_indemnity' => l10n.reportFieldMeaningRecoveryIndemnity,
+      'escompte' => l10n.reportFieldMeaningEscompte,
+      'insurance' => l10n.reportFieldMeaningInsurance,
+      'special_mentions' => l10n.reportFieldMeaningSpecialMentions,
       _ => field,
     };
 
 @visibleForTesting
-String reportFieldGroupName(ReportFieldGroup group, AppLocalizations? l10n) =>
+String reportFieldGroupName(ReportFieldGroup group, AppLocalizations l10n) =>
     switch (group) {
       ReportFieldGroup.document =>
-        l10n?.reportFieldGroupDocument ?? 'Document',
+        l10n.reportFieldGroupDocument,
       ReportFieldGroup.member =>
-        l10n?.reportFieldGroupMember ?? 'Member & workspace',
-      ReportFieldGroup.money => l10n?.reportFieldGroupMoney ?? 'Amounts',
+        l10n.reportFieldGroupMember,
+      ReportFieldGroup.money => l10n.reportFieldGroupMoney,
       ReportFieldGroup.legal =>
-        l10n?.reportFieldGroupLegal ?? 'Legal mentions',
+        l10n.reportFieldGroupLegal,
       ReportFieldGroup.loops =>
-        l10n?.reportFieldGroupLoops ?? 'Lines & VAT loops',
-      ReportFieldGroup.texts => l10n?.reportFieldGroupTexts ?? 'Your texts',
-      ReportFieldGroup.seller => l10n?.reportFieldGroupSeller ?? 'Seller',
-      ReportFieldGroup.bank => l10n?.reportFieldGroupBank ?? 'Bank details',
-      ReportFieldGroup.usage => l10n?.reportFieldGroupUsage ?? 'Usage report',
-      ReportFieldGroup.vat => l10n?.reportFieldGroupVat ?? 'VAT report',
-      ReportFieldGroup.sites => l10n?.reportFieldGroupSites ?? 'Sites',
+        l10n.reportFieldGroupLoops,
+      ReportFieldGroup.texts => l10n.reportFieldGroupTexts,
+      ReportFieldGroup.seller => l10n.reportFieldGroupSeller,
+      ReportFieldGroup.bank => l10n.reportFieldGroupBank,
+      ReportFieldGroup.usage => l10n.reportFieldGroupUsage,
+      ReportFieldGroup.vat => l10n.reportFieldGroupVat,
+      ReportFieldGroup.sites => l10n.reportFieldGroupSites,
       ReportFieldGroup.status =>
-        l10n?.reportFieldGroupStatus ?? 'Workspace status',
+        l10n.reportFieldGroupStatus,
     };
 
 /// What a field inserts: a token, or for the two loops the scaffold
@@ -286,7 +287,7 @@ class _FieldPickerSheetState extends State<_FieldPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final q = _query.trim().toLowerCase();
     final fields = [
@@ -312,7 +313,7 @@ class _FieldPickerSheetState extends State<_FieldPickerSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n?.reportDesignerFields ?? 'Fields',
+            Text(l10n.reportDesignerFields,
                 style: theme.textTheme.titleMedium),
             const SizedBox(height: AppSpacing.sm),
             TextField(
@@ -322,7 +323,7 @@ class _FieldPickerSheetState extends State<_FieldPickerSheet> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 hintText:
-                    l10n?.reportDesignerFieldsSearch ?? 'Search a field',
+                    l10n.reportDesignerFieldsSearch,
                 isDense: true,
               ),
             ),

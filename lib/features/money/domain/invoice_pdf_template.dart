@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:collection';
 
-
+import '../../../core/data/json_reader.dart';
 import 'address_window.dart';
 
 /// Owner-written invoice report template (#454, rebuilt as a banded
@@ -29,12 +29,15 @@ class ReportBands {
     this.continuation = '',
   });
 
-  factory ReportBands.fromJson(Map<String, dynamic> json) => ReportBands(
-    header: json['header'] as String? ?? '',
-    body: json['body'] as String? ?? '',
-    footer: json['footer'] as String? ?? '',
-    continuation: json['continuation'] as String? ?? '',
-  );
+  factory ReportBands.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'report_bands');
+    return ReportBands(
+      header: r.stringOr('header'),
+      body: r.stringOr('body'),
+      footer: r.stringOr('footer'),
+      continuation: r.stringOr('continuation'),
+    );
+  }
 
   final String header;
   final String body;
@@ -84,52 +87,43 @@ class InvoicePdfTemplate {
     this.texts = const {},
   });
 
-  factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) =>
-      InvoicePdfTemplate(
-        header:
-            json[keyHeader] as String? ?? json[legacyKeyIntro] as String? ?? '',
-        body: json[keyBody] as String? ?? '',
-        footer: json[keyFooter] as String? ?? '',
-        continuation: json[keyContinuation] as String? ?? '',
-        reminders: [
-          for (final r in json[keyReminders] as List<dynamic>? ?? const [])
-            ReportBands.fromJson((r as Map).cast<String, dynamic>()),
-        ],
-        proforma: json[keyProforma] is Map
-            ? ReportBands.fromJson(
-                (json[keyProforma] as Map).cast<String, dynamic>(),
-              )
-            : ReportBands.empty,
-        statement: json[keyStatement] is Map
-            ? ReportBands.fromJson(
-                (json[keyStatement] as Map).cast<String, dynamic>(),
-              )
-            : ReportBands.empty,
-        extraDocs: {
-          for (final entry in (json[keyDocs] as Map? ?? const {}).entries)
-            if (entry.value is Map)
-              entry.key as String: ReportBands.fromJson(
-                (entry.value as Map).cast<String, dynamic>(),
-              ),
-        },
-        translations: {
-          for (final entry in (json[keyI18n] as Map? ?? const {}).entries)
-            if (entry.value is Map)
-              entry.key as String: InvoicePdfTemplate.fromJson(
-                (entry.value as Map).cast<String, dynamic>(),
-              ),
-        },
-        addressWindow: addressWindowFromWire(json[keyAddressWindow] as String?),
-        layouts: {
-          for (final entry in (json[keyLayouts] as Map? ?? const {}).entries)
-            if (entry.value is String && (entry.value as String).isNotEmpty)
-              entry.key as String: entry.value as String,
-        },
-        texts: {
-          for (final entry in (json[keyTexts] as Map? ?? const {}).entries)
-            if (entry.value is String) entry.key as String: entry.value as String,
-        },
-      );
+  factory InvoicePdfTemplate.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'invoice_pdf_template');
+    ReportBands bands(Object? value) => value is Map
+        ? ReportBands.fromJson(value.cast<String, dynamic>())
+        : ReportBands.empty;
+    return InvoicePdfTemplate(
+      header: r.stringOrNull(keyHeader) ?? r.stringOr(legacyKeyIntro),
+      body: r.stringOr(keyBody),
+      footer: r.stringOr(keyFooter),
+      continuation: r.stringOr(keyContinuation),
+      reminders:
+          r.objects(keyReminders, (row) => ReportBands.fromJson(row.json)),
+      proforma: bands(r.json[keyProforma]),
+      statement: bands(r.json[keyStatement]),
+      extraDocs: {
+        for (final entry in r.objectOrEmpty(keyDocs).entries)
+          if (entry.value is Map) entry.key: bands(entry.value),
+      },
+      translations: {
+        for (final entry in r.objectOrEmpty(keyI18n).entries)
+          if (entry.value is Map)
+            entry.key: InvoicePdfTemplate.fromJson(
+              (entry.value as Map).cast<String, dynamic>(),
+            ),
+      },
+      addressWindow: addressWindowFromWire(r.stringOrNull(keyAddressWindow)),
+      layouts: {
+        for (final entry in r.objectOrEmpty(keyLayouts).entries)
+          if (entry.value case final String layout when layout.isNotEmpty)
+            entry.key: layout,
+      },
+      texts: {
+        for (final entry in r.objectOrEmpty(keyTexts).entries)
+          if (entry.value case final String text) entry.key: text,
+      },
+    );
+  }
 
   /// Band above the whole document (letterhead territory).
   final String header;

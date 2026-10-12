@@ -29,14 +29,17 @@ void main() {
     calls = [];
     installed = true;
     ignorePatch = false;
-    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
-    server.listen((request) async {
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0)
+      ..listen((request) async {
       final body = await utf8.decoder.bind(request).join();
       calls.add(request.method);
       expect(request.uri.path, startsWith('/v1/projects/$ref/'));
       request.response.headers.contentType = ContentType.json;
       if (request.uri.path.endsWith('/database/query')) {
-        expect(jsonDecode(body)['query'], contains('has_function_privilege'));
+        expect(
+          (jsonDecode(body) as Map)['query'],
+          contains('has_function_privilege'),
+        );
         request.response.write(jsonEncode([{'installed': installed}]));
       } else {
         if (request.method == 'PATCH') {

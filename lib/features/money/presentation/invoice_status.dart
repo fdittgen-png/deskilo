@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
@@ -125,44 +126,43 @@ class InvoiceStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final colors = Theme.of(context).colorScheme;
     final (Color background, Color foreground, String label) = switch (status) {
       InvoiceLifecycle.open => (
           colors.surfaceContainerHighest,
           colors.onSurfaceVariant,
-          l10n?.invoiceStatusOpen ?? 'Open',
+          l10n.invoiceStatusOpen,
         ),
       InvoiceLifecycle.awaitingValidation => (
           colors.primaryContainer,
           colors.onPrimaryContainer,
-          l10n?.invoiceMatchPendingBadge ?? 'Awaiting validation',
+          l10n.invoiceMatchPendingBadge,
         ),
       InvoiceLifecycle.paid => (
           colors.secondaryContainer,
           colors.onSecondaryContainer,
-          l10n?.invoiceMatchedBadge ?? 'Paid',
+          l10n.invoiceMatchedBadge,
         ),
       InvoiceLifecycle.partiallyPaid => (
           colors.tertiaryContainer,
           colors.onTertiaryContainer,
-          l10n?.invoiceStatusPartiallyPaid ?? 'Partially paid',
+          l10n.invoiceStatusPartiallyPaid,
         ),
       InvoiceLifecycle.remainderCancelled => (
           colors.tertiaryContainer,
           colors.onTertiaryContainer,
-          l10n?.invoiceStatusRemainderCancelled ??
-              'Partially paid · remainder cancelled',
+          l10n.invoiceStatusRemainderCancelled,
         ),
       InvoiceLifecycle.refunded => (
           colors.secondaryContainer,
           colors.onSecondaryContainer,
-          l10n?.invoiceStatusRefunded ?? 'Refunded',
+          l10n.invoiceStatusRefunded,
         ),
       InvoiceLifecycle.erroneous => (
           colors.errorContainer,
           colors.onErrorContainer,
-          l10n?.invoiceVoidedChip ?? 'Erroneous',
+          l10n.invoiceVoidedChip,
         ),
     };
     return Container(
@@ -191,14 +191,14 @@ class InvoiceStatusChip extends StatelessWidget {
 /// makes an otherwise puzzling document make sense: a subscription
 /// invoice is dated before the month it charges, and a settlement's
 /// amount belongs to invoices that are not this one.
-String invoiceKindLabel(AppLocalizations? l10n, InvoiceKind kind) =>
+String invoiceKindLabel(AppLocalizations l10n, InvoiceKind kind) =>
     switch (kind) {
       InvoiceKind.subscription =>
-        l10n?.invoiceKindSubscription ?? 'Subscription, in advance',
-      InvoiceKind.usage => l10n?.invoiceKindUsage ?? 'The month\'s extras',
+        l10n.invoiceKindSubscription,
+      InvoiceKind.usage => l10n.invoiceKindUsage,
       InvoiceKind.settlement =>
-        l10n?.invoiceKindSettlement ?? 'Regrouped invoices',
-      InvoiceKind.full => l10n?.invoiceKindFull ?? 'Whole month',
+        l10n.invoiceKindSettlement,
+      InvoiceKind.full => l10n.invoiceKindFull,
     };
 
 /// #831 — the number of the settlement [invoice] was regrouped into,
