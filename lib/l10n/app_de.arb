@@ -10862,6 +10862,58 @@
   "@sitesTitle": {
     "description": "#945 sites: sitesTitle"
   },
+  "smallBusinessCheckFigure": "Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen.",
+  "@smallBusinessCheckFigure": {
+    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  },
+  "smallBusinessNearImmediate": "Ihr Nettoumsatz in diesem Jahr ({turnover}) nähert sich der Grenze von {limit}. Mit dem Umsatz, der sie überschreitet, endet die Befreiung sofort.",
+  "@smallBusinessNearImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessNearImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessNearNextYear": "Ihr Nettoumsatz in diesem Jahr ({turnover}) nähert sich der Kleinunternehmergrenze von {limit}. Liegt das Jahr am Ende darüber, endet die Befreiung mit diesem Jahr.",
+  "@smallBusinessNearNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessNearNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedImmediate": "Ihr Nettoumsatz in diesem Jahr ({turnover}) hat die Grenze von {limit} überschritten: Die Befreiung ist beendet, weisen Sie ab dem Umsatz, der sie überschritten hat, Umsatzsteuer aus.",
+  "@smallBusinessPassedImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessPassedImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedNextYear": "Ihr Nettoumsatz in diesem Jahr ({turnover}) hat die Kleinunternehmergrenze von {limit} überschritten: Die Befreiung endet mit diesem Jahr, weisen Sie ab dem neuen Jahr Umsatzsteuer aus.",
+  "@smallBusinessPassedNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessPassedNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "spaceAlreadyCheckedInHere": "Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.",
   "spaceBackToMe": "Zurück zu Ich",
   "spaceBlockedByYou": "Sie halten diesen Bereich für diesen Zeitraum bereits.",

@@ -16458,6 +16458,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sitesTitle => 'Sedi';
 
   @override
+  String get smallBusinessCheckFigure =>
+      'Questo limite è l\'ultimo verificato: confermi l\'importo vigente con l\'ufficio delle imposte.';
+
+  @override
+  String smallBusinessNearImmediate(String turnover, String limit) {
+    return 'Il suo fatturato netto di quest\'anno ($turnover) si avvicina al limite di $limit. Superarlo pone fine all\'esenzione con l\'operazione stessa che lo supera.';
+  }
+
+  @override
+  String smallBusinessNearNextYear(String turnover, String limit) {
+    return 'Il suo fatturato netto di quest\'anno ($turnover) si avvicina al limite del regime di franchigia di $limit. Se l\'anno si chiude sopra, l\'esenzione termina con quest\'anno.';
+  }
+
+  @override
+  String smallBusinessPassedImmediate(String turnover, String limit) {
+    return 'Il suo fatturato netto di quest\'anno ($turnover) ha superato il limite di $limit: l\'esenzione è terminata, applichi l\'IVA dall\'operazione che lo ha superato.';
+  }
+
+  @override
+  String smallBusinessPassedNextYear(String turnover, String limit) {
+    return 'Il suo fatturato netto di quest\'anno ($turnover) ha superato il limite di franchigia di $limit: l\'esenzione termina con quest\'anno, applichi l\'IVA dal nuovo anno.';
+  }
+
+  @override
   String get spaceAlreadyCheckedInHere =>
       'È già registrato qui. Scelga « Registra l\'uscita » per liberare il posto.';
 

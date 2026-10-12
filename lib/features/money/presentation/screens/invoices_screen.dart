@@ -28,6 +28,7 @@ import '../widgets/invoice_template_sheet.dart';
 import '../widgets/invoicing_dashboard.dart';
 import '../widgets/recapitulative_notice.dart';
 import '../widgets/settlement_sheet.dart';
+import '../widgets/small_business_notice.dart';
 
 /// The invoicing HUB (field request: "the user sees what to invoice, what
 /// to remind, what has been invoiced") — three tabs over one archive:
@@ -288,6 +289,12 @@ class InvoicesScreen extends ConsumerWidget {
           RecapitulativeNotice(
               enabled: features
                   .contains(WorkspaceFeature.recapitulativeStatement)), // #2354
+          SmallBusinessNotice(
+            // #2440
+            exempt: workspace?.vatRegime == 'exempt',
+            country: countryCode,
+            currency: workspace?.currencyCode ?? 'EUR',
+          ),
           if (journeyOn)
             Builder(
               builder: (context) => InvoiceStageStrip(

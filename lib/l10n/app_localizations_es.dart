@@ -16448,6 +16448,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sitesTitle => 'Sedes';
 
   @override
+  String get smallBusinessCheckFigure =>
+      'Este límite es el último verificado: confirme la cifra vigente con su administración tributaria.';
+
+  @override
+  String smallBusinessNearImmediate(String turnover, String limit) {
+    return 'Su facturación neta de este año ($turnover) se acerca al límite de $limit. Superarlo pone fin a la exención en la propia operación que lo supera.';
+  }
+
+  @override
+  String smallBusinessNearNextYear(String turnover, String limit) {
+    return 'Su facturación neta de este año ($turnover) se acerca al límite del régimen de franquicia de $limit. Si el año termina por encima, la exención acaba con este año.';
+  }
+
+  @override
+  String smallBusinessPassedImmediate(String turnover, String limit) {
+    return 'Su facturación neta de este año ($turnover) ha superado el límite de $limit: la exención ha terminado, repercuta el IVA desde la operación que lo superó.';
+  }
+
+  @override
+  String smallBusinessPassedNextYear(String turnover, String limit) {
+    return 'Su facturación neta de este año ($turnover) ha superado el límite de franquicia de $limit: la exención acaba con este año, repercuta el IVA desde el año nuevo.';
+  }
+
+  @override
   String get spaceAlreadyCheckedInHere =>
       'Ya ha fichado aquí. Elija « Fichar la salida » para dejar la plaza.';
 

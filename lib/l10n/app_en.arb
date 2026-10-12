@@ -18688,6 +18688,58 @@
   "@sitesTitle": {
     "description": "#945 sites: sitesTitle"
   },
+  "smallBusinessCheckFigure": "This limit is the last one verified: check the current figure with your tax office.",
+  "@smallBusinessCheckFigure": {
+    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  },
+  "smallBusinessNearImmediate": "Your net turnover this year ({turnover}) is close to the limit of {limit}. Passing it ends the exemption on the very supply that passes it.",
+  "@smallBusinessNearImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessNearImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessNearNextYear": "Your net turnover this year ({turnover}) is close to the small-business limit of {limit}. If the year ends above it, the exemption ends with this year.",
+  "@smallBusinessNearNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessNearNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedImmediate": "Your net turnover this year ({turnover}) has passed the limit of {limit}: the exemption has ended, so charge VAT from the supply that passed it.",
+  "@smallBusinessPassedImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessPassedImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedNextYear": "Your net turnover this year ({turnover}) has passed the small-business limit of {limit}: the exemption ends with this year, so charge VAT from the new year.",
+  "@smallBusinessPassedNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessPassedNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
   "spaceBackToMe": "Back to Me",
   "@spaceBackToMe": {

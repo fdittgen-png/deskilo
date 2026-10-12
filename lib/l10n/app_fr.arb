@@ -10862,6 +10862,58 @@
   "@sitesTitle": {
     "description": "#945 sites: sitesTitle"
   },
+  "smallBusinessCheckFigure": "Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
+  "@smallBusinessCheckFigure": {
+    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  },
+  "smallBusinessNearImmediate": "Votre chiffre d'affaires net de l'année ({turnover}) approche le seuil de {limit}. Le dépasser met fin à la franchise dès l'opération qui le dépasse.",
+  "@smallBusinessNearImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessNearImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessNearNextYear": "Votre chiffre d'affaires net de l'année ({turnover}) approche le seuil de la franchise de {limit}. S'il le dépasse à la fin de l'année, la franchise cesse avec cette année.",
+  "@smallBusinessNearNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessNearNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedImmediate": "Votre chiffre d'affaires net de l'année ({turnover}) a dépassé le seuil de {limit} : la franchise a pris fin, facturez la TVA dès l'opération qui l'a dépassé.",
+  "@smallBusinessPassedImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessPassedImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedNextYear": "Votre chiffre d'affaires net de l'année ({turnover}) a dépassé le seuil de la franchise de {limit} : elle cesse avec cette année, facturez la TVA dès la nouvelle année.",
+  "@smallBusinessPassedNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessPassedNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "spaceAlreadyCheckedInHere": "Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.",
   "spaceBackToMe": "Retour à Moi",
   "spaceBlockedByYou": "Vous détenez déjà cet espace pour cette période.",

@@ -28154,6 +28154,36 @@ abstract class AppLocalizations {
   /// **'Sites'**
   String get sitesTitle;
 
+  /// #2440 small-business threshold: smallBusinessCheckFigure
+  ///
+  /// In en, this message translates to:
+  /// **'This limit is the last one verified: check the current figure with your tax office.'**
+  String get smallBusinessCheckFigure;
+
+  /// #2440 small-business threshold: smallBusinessNearImmediate
+  ///
+  /// In en, this message translates to:
+  /// **'Your net turnover this year ({turnover}) is close to the limit of {limit}. Passing it ends the exemption on the very supply that passes it.'**
+  String smallBusinessNearImmediate(String turnover, String limit);
+
+  /// #2440 small-business threshold: smallBusinessNearNextYear
+  ///
+  /// In en, this message translates to:
+  /// **'Your net turnover this year ({turnover}) is close to the small-business limit of {limit}. If the year ends above it, the exemption ends with this year.'**
+  String smallBusinessNearNextYear(String turnover, String limit);
+
+  /// #2440 small-business threshold: smallBusinessPassedImmediate
+  ///
+  /// In en, this message translates to:
+  /// **'Your net turnover this year ({turnover}) has passed the limit of {limit}: the exemption has ended, so charge VAT from the supply that passed it.'**
+  String smallBusinessPassedImmediate(String turnover, String limit);
+
+  /// #2440 small-business threshold: smallBusinessPassedNextYear
+  ///
+  /// In en, this message translates to:
+  /// **'Your net turnover this year ({turnover}) has passed the small-business limit of {limit}: the exemption ends with this year, so charge VAT from the new year.'**
+  String smallBusinessPassedNextYear(String turnover, String limit);
+
   /// No description provided for @spaceAlreadyCheckedInHere.
   ///
   /// In en, this message translates to:
