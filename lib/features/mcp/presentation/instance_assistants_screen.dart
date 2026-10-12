@@ -26,6 +26,7 @@ import '../providers/mcp_providers.dart';
 import 'eligibility_review_screen.dart' show SecondFactorSheet;
 import 'widgets/instance_assistant_sections.dart';
 import 'widgets/instance_console_sections.dart';
+import 'widgets/instance_grant_dialog.dart';
 
 class InstanceAssistantsScreen extends ConsumerStatefulWidget {
   const InstanceAssistantsScreen({super.key});
