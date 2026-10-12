@@ -6,8 +6,6 @@
 
 import '../../../core/data/json_reader.dart';
 
-int _int(Object? v) => v is int ? v : (v is num ? v.toInt() : 0);
-
 /// Counts for one slice of usage: every answered call, the refused ones
 /// (denied, invalid or over a limit), the mutations that applied, and the
 /// answers still waiting for a person's validation.
@@ -32,7 +30,7 @@ class McpUsageCounts {
   }) {
     // Fail-closed (#2387): a count that is not a number reads as 0.
     final r = JsonReader.of(m, context: 'mcp_usage_counts');
-    int count(String key) => _int(r.json[key]);
+    int count(String key) => r.intOrAbsent(key) ?? 0;
     return McpUsageCounts(
       requests: count(requestsKey ?? 'requests'),
       refusals: count('refusals'),
@@ -64,17 +62,28 @@ class McpClientUsage {
   final DateTime? lastUsedAt;
 
   static List<McpClientUsage> listFromJson(Object? json) {
-    final clients = json is Map ? json['clients'] : null;
+    final clients = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'mcp_my_usage',
+    ).listOrAbsent('clients');
     return [
-      for (final c in clients is List ? clients : const [])
-        if (c is Map && c['client_id'] is String)
-          McpClientUsage(
-            clientId: c['client_id'] as String,
-            clientName: '${c['client_name'] ?? c['client_id']}',
-            today: McpUsageCounts.fromJson(c, requestsKey: 'requests_today'),
-            lastUsedAt: DateTime.tryParse('${c['last_used_at']}')?.toUtc(),
-          ),
+      for (final raw in clients)
+        ?_fromRow(raw),
     ];
+  }
+
+  // Fail-closed (#2387): a row without a client id is left out.
+  static McpClientUsage? _fromRow(Object? raw) {
+    final c = JsonReader.orEmpty(raw, context: 'mcp_client_usage');
+    final id = c.textOrAbsent('client_id');
+    if (id == null) return null;
+    return McpClientUsage(
+      clientId: id,
+      clientName: c.textOrAbsent('client_name') ?? id,
+      today: McpUsageCounts.fromJson(c.json, requestsKey: 'requests_today'),
+      lastUsedAt: DateTime.tryParse(c.textOrAbsent('last_used_at') ?? '')
+          ?.toUtc(),
+    );
   }
 }
 
@@ -112,12 +121,13 @@ class McpWorkspaceUsage {
     return McpWorkspaceUsage(
       workspaceId: r.textOrAbsent('workspace_id') ?? '',
       rows: [
-        for (final row in r.listOrAbsent('rows'))
-          if (row is Map && row['operation'] is String)
+        for (final raw in r.listOrAbsent('rows'))
+          if (JsonReader.orEmpty(raw, context: 'mcp_usage_row') case final row
+              when row.textOrAbsent('operation') != null)
             (
-              day: DateTime.tryParse('${row['day']}'),
-              operation: row['operation'] as String,
-              counts: McpUsageCounts.fromJson(row),
+              day: DateTime.tryParse(row.textOrAbsent('day') ?? ''),
+              operation: row.textOrAbsent('operation')!,
+              counts: McpUsageCounts.fromJson(row.json),
             ),
       ],
     );

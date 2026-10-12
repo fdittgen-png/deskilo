@@ -169,10 +169,10 @@ class InstanceMcpOverview {
           r.objects('candidates', (row) => InstanceMember.fromJson(row.json)),
       clients: r.objects('clients', (row) => InstanceClient.fromJson(row.json)),
       allowLoopbackClients: r.boolOr('allow_loopback_clients', false),
-      endpoint: McpEndpointInfo.fromJson(r.json['endpoint']),
-      endpointProbe: r.json['endpoint_probe'] == null
+      endpoint: McpEndpointInfo.fromReader(r.objectOrAbsent('endpoint')),
+      endpointProbe: r.objectOrNull('endpoint_probe') == null
           ? EndpointProbe.missing
-          : EndpointProbe.fromJson(r.json['endpoint_probe']),
+          : EndpointProbe.fromJson(r.objectOrAbsent('endpoint_probe').json),
       eligibleUsers: r.objects(
         'eligible_users',
         (row) => InstanceEligibleUser.fromJson(row.json),
