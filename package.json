@@ -1,0 +1,13 @@
+{
+  "name": "deskilo-site",
+  "version": "1.0.0",
+  "description": "The DesKilo welcome page, user guide, setup guide and setup questionnaire, served as a dependency-free Node.js app.",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build/build-site.mjs --src ../deskilo"
+  },
+  "engines": { "node": ">=18" }
+}

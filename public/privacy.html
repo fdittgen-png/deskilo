@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DesKilo — Privacy Policy</title>
+<meta name="description" content="What the DesKilo coworking app processes: what flows, to whom, when, and under whose control.">
+<style>
+  :root { color-scheme: light dark; --ink: #1a1206; --muted: #6b5c4a;
+          --rule: #e6ddd2; --bg: #fdf8f4; --accent: #c2410c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #f2e9e1; --muted: #b6a795; --rule: #3a322a; --bg: #17130f; }
+  }
+  body { margin: 0 auto; max-width: 46rem; padding: 2.5rem 1.25rem 5rem;
+         background: var(--bg); color: var(--ink);
+         font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 1.9rem; letter-spacing: -.02em; margin-bottom: .25rem; }
+  h2 { font-size: 1.2rem; margin-top: 2.2rem; padding-top: .9rem;
+        border-top: 1px solid var(--rule); }
+  a { color: var(--accent); }
+  code { background: rgba(0,0,0,.05); padding: .1em .35em; border-radius: 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block;
+           overflow-x: auto; }
+  th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule);
+            vertical-align: top; font-size: .95rem; }
+  th { color: var(--muted); font-weight: 600; }
+  em { color: var(--muted); }
+</style>
+</head>
+<body>
+<h1>DesKilo Privacy Policy</h1>
+<p><em>Last updated: 2026-10-10 · Contact: fdittgen@gmail.com</em></p>
+<p>DesKilo is a booking, community and ledger app for small self-organized spaces, published by Florian Dittgen (Germany). This page says, for each kind of data, what flows, to whom, when, and who decides. DesKilo is free software (AGPL-3.0-or-later): everything below can be checked in the code at <a href="https://github.com/fdittgen-png/deskilo">https://github.com/fdittgen-png/deskilo</a>.</p>
+
+<h2>Who is responsible</h2>
+<ul>
+<li><strong>The space's owner</strong> runs each space — your community. The owner decides who is a member, the prices, the features the space uses and its payment providers, and answers for what you do in that space.</li>
+<li><strong>The server's operator</strong> runs the server a space lives on and stores its data. The app's default, the shared reference server, is operated by Florian Dittgen on Supabase in the EU (<code>eu-central-1</code>). A community can run its own server instead; then whoever runs it is the operator, and the data is wherever that operator put it.</li>
+<li><strong>The app's publisher</strong>, Florian Dittgen, writes the app. The app contains no tracking or analytics and sends nothing to its publisher.</li>
+</ul>
+<p>In the app, <em>Settings → Privacy &amp; data</em> shows the notice of the server you use — who runs it, the region, and each recipient with its purpose and transfer safeguard — and the space's own notice where it has one. Where the operator has not recorded something, the notice says so rather than guessing.</p>
+
+<h2>What flows, to whom, when, and who decides</h2>
+<table><thead><tr><th>Data</th><th>What flows, and to whom</th><th>When</th><th>Who decides</th></tr></thead><tbody>
+<tr><td>Account: e-mail, display name, password (hashed)</td><td>Stored on the server you sign in to. Your e-mail receives that server's account e-mails (sign-up confirmation, password reset) — DesKilo sends no other e-mail.</td><td>When you create the account and sign in</td><td>You; the operator hosts it</td></tr>
+<tr><td>Social sign-in identity (Google, Microsoft, Apple or Facebook user id and e-mail)</td><td>From that provider to the server's sign-in, linked to the same account</td><td>Only if you choose that way to sign in</td><td>You</td></tr>
+<tr><td>Membership, role, subscription</td><td>The space's owners and admins</td><td>From joining until you leave</td><td>The space's owner</td></tr>
+<tr><td>Bookings and check-ins (seat or level, time)</td><td>The members of the space: the floor plan shows occupancy</td><td>When you book or check in</td><td>You; the space keeps past bookings as its occupancy record, up to its booking-history limit</td></tr>
+<tr><td>Ledger, invoices, payments, expenses</td><td>You, the space's owners and the admins holding the matching permission</td><td>As the space bills and you pay</td><td>The space's owner; kept for the statutory accounting period</td></tr>
+<tr><td>Profile: photo, status, profession and bio, WhatsApp and e-mail, presence ("in the space today")</td><td>Only the audience you pick for each item under <em>Who sees me</em>. Nothing is public unless you choose it; WhatsApp, e-mail and presence never go wider than your own spaces.</td><td>When you fill an item in</td><td>You, item by item</td></tr>
+<tr><td>Public profile: name, profession, bio</td><td>Anyone with the link, signed in or not. Never your contact details, presence or spaces.</td><td>Only after you publish it; off by default; withdraw it at any time</td><td>You</td></tr>
+<tr><td>Conversations: person to person, groups</td><td>Only the people in the conversation. Stored on the server the conversation lives on (see <a href="#messages">Messages</a>).</td><td>When you write</td><td>You decide who may write to you first (<em>Who can start a conversation with me</em>) and can block anyone</td></tr>
+<tr><td>A message to a space ("Write to the hosts")</td><td>The space's hosts: its owners and the admins who agreed to be its public contacts, named before you write</td><td>When you write to the hosts</td><td>You; the space decides whether it takes such messages</td></tr>
+<tr><td>A space's public page in the shared directory</td><td>Anyone: the space's description, address, prices and contacts, with the names of its owners and of the admins who chose <em>Show me as a public administrator</em></td><td>Only when the owner publishes the page; withdrawn at any time</td><td>The owner for the page; each admin for their own name</td></tr>
+<tr><td>Push notifications</td><td>This device's address (push token) and each notification, to the push service: Firebase Cloud Messaging (Google), which hands notifications for Apple devices on to Apple. The text is generic, such as "You have a new message" — no names, no times, no message text.</td><td>When something concerns you, only if the operator has set push up, the space uses it and it is on for this device</td><td>The operator sets it up; the owner switches the feature; you switch it off per device</td></tr>
+<tr><td>Badge credentials (kiosk QR or RFID card)</td><td>Stored on the server <strong>only as SHA-256 hashes</strong>; the raw badge never persists there</td><td>When a badge is issued; checked at the wall tablet</td><td>The space's admins; revocable at any time</td></tr>
+<tr><td>Online payment (amount, provider order id)</td><td>The space's payment provider (PayPal, Stripe, Mollie or Wero), under its own terms. Card details are typed on the provider's pages, never in DesKilo.</td><td>Only when you choose to pay online</td><td>The owner chooses the providers; you choose to pay</td></tr>
+<tr><td>Electronic invoices</td><td>The destination the space configured: a government e-invoicing platform and, where enabled, the customer's own service</td><td>When the space issues an e-invoice</td><td>The space's owner</td></tr>
+<tr><td>Diagnostic trace</td><td>Stays on your device (512 KiB, oldest discarded)</td><td>Only in developer mode</td><td>You: shared only if you export it yourself</td></tr>
+</tbody></table>
+
+<h2 id="messages">Messages</h2>
+<ul>
+<li><strong>Only participants open a conversation</strong>: the two of you, the members of a group or, for a message to a space, the hosts named before you write. A space's owners and admins cannot read your conversations; the server enforces this, it is not a setting.</li>
+<li><strong>Not end-to-end encrypted.</strong> A message is stored on the server the conversation lives on, and whoever runs that server can technically reach its database. This is an access rule, not encryption — one more reason a community may prefer to run its own server.</li>
+<li><strong>Across spaces and servers.</strong> Your conversations from every space and every server you connected appear in one list. Writing to someone on another server, or asking to join a space there, connects you to that server first and asks you before anything is sent; that conversation is then stored on that server, under its operator.</li>
+</ul>
+
+<h2>Push notifications</h2>
+<p>Push is an outbound flow, and optional. It works only where the server's operator has set it up and the space uses it. When it is on for a device, that device's address and each notification go to the push service (Firebase Cloud Messaging, which passes notifications for Apple devices on to Apple). A notification carries a generic text only; the details are read in the app. Switch it off in <em>Settings → Privacy &amp; data → Push notifications on this device</em>: the app keeps working and nothing more is sent to that device. The installed app can also remind you of a booking on the device itself, without any push service. A build prepared for F-Droid carries no push transport and no Google services at all. Whether it can be installed from F-Droid yet is stated in one place, the <a href="https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status">F-Droid status</a>.</p>
+
+<h2>What we do NOT do</h2>
+<ul><li><strong>No tracking, no analytics, no advertising.</strong> The app contains no third-party tracking or analytics SDK and no ad SDK. Firebase is used only to deliver push notifications, where the operator set it up.</li><li><strong>No sale of data.</strong> Data reaches only the recipients named above and in the server's and the space's notices.</li><li><strong>No payment card data.</strong> Card and wallet details are entered on the payment provider's own pages; DesKilo only records that a payment happened and its amount.</li></ul>
+
+<h2>Retention &amp; deletion</h2>
+<ul><li><strong>Leaving one space.</strong> Your open bookings there are cancelled, the messages you sent in it are deleted, and your membership is marked exited; it keeps no personal data of its own.</li><li><strong>Leaving your last space.</strong> Your profile is cleared as well: name, photo, WhatsApp number, status, address and VAT id.</li><li><strong>Accounting records stay.</strong> Ledger entries and invoices are the space's books: they are kept for the statutory accounting period of the space's country (ten years in France and Germany), and invoices stay exactly as issued.</li><li>Badges can be revoked at any time; a revoked hash stops working immediately.</li></ul>
+<p>The full retention table is in <a href="https://github.com/fdittgen-png/deskilo/blob/master/PRIVACY.md">PRIVACY.md</a>.</p>
+
+<h2>Your rights (GDPR)</h2>
+<p>You have the right to access, rectify, export and erase your personal data, to restrict its use and to object. Export, erasure and rights requests are buttons in <em>Settings → Privacy &amp; data</em>; a request to a space is answered within one calendar month. For anything else, contact <strong>fdittgen@gmail.com</strong>. You may also lodge a complaint with your supervisory authority.</p>
+
+<h2>Children</h2>
+<p>DesKilo is a workplace tool intended for adults and is not directed at children under 16.</p>
+
+<h2>In-app consent</h2>
+<p>Every account accepts this policy inside the app before using it (version <code>2026-10-10</code>; the accepted version and date are stored on the account). A change of the text asks for acceptance again. The same text is readable anytime in <em>Settings → Privacy &amp; data → Your data, your rights</em>, in the in-app help (Privacy) and in the <a href="guide/en.html#user.privacy.consent">online user guide</a>.</p>
+
+<h2>Changes</h2>
+<p>Changes to this policy are published here (the file's git history is the change log).</p>
+<p><a href="./">← DesKilo</a></p>
+</body>
+</html>
