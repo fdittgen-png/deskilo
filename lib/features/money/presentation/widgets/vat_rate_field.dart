@@ -72,7 +72,7 @@ class VatRateField extends ConsumerWidget {
         for (final rate in rates)
           DropdownMenuItem(
             value: rate.id,
-            child: Text(vatRateOption(rate)),
+            child: Text(_vatRateOption(rate)),
           ),
       ],
       onChanged: (picked) => onChanged(picked ?? ''),
@@ -81,7 +81,7 @@ class VatRateField extends ConsumerWidget {
 }
 
 /// How a rate reads in a picker: 'Standard (20 %)'.
-String vatRateOption(VatRate rate) {
+String _vatRateOption(VatRate rate) {
   final percent = rate.percent == rate.percent.roundToDouble()
       ? rate.percent.toStringAsFixed(0)
       : rate.percent.toString();

@@ -4,7 +4,6 @@
 // opens it in the guide editor instead, and once the author chooses the
 // step's page there the same step opens its form.
 import 'package:deskilo/features/task_recorder/data/guide_store.dart';
-import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
 import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 Finder _key(String k) => find.byKey(ValueKey(k));

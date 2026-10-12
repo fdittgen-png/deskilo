@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/backend_settings.dart';
@@ -19,6 +20,7 @@ abstract class UpdateSeenStore {
   Future<void> write(String? value);
 }
 
+@visibleForTesting
 class PrefsUpdateSeenStore extends PrefsStringStore implements UpdateSeenStore {
   const PrefsUpdateSeenStore(super.key);
 }

@@ -141,7 +141,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(FakeActionConfirmationRepository()),
       // #1615 — nor an assistant to connect.
       mcpConnectionRepositoryProvider.overrideWithValue(
-        FakeMcpConnectionRepository(installationId: kDemoInstallationId),
+        FakeMcpConnectionRepository(installationId: _kDemoInstallationId),
       ),
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
@@ -154,7 +154,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1625 — Demo's one fictional installation: nothing is verified
       // against a server, and every client borrows the fakes above.
       activeMcpTargetProvider.overrideWith(
-        (ref) => fixedMcpTarget(ref, kDemoInstallationId),
+        (ref) => fixedMcpTarget(ref, _kDemoInstallationId),
       ),
       // #1656 — Demo lacks nothing locally.
       localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
@@ -296,4 +296,4 @@ List<Override> demoOverrides(DemoFixture fixture) {
 }
 
 /// #1625 — Demo's fictional installation id (never a real server's).
-const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';

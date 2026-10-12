@@ -11,6 +11,8 @@
 
 import 'dart:async';
 
+import 'package:meta/meta.dart';
+
 import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart' show isTransientNetworkFailure;
 import '../../reservations/application/book_seat.dart';
@@ -125,6 +127,7 @@ Observation errorObservation(
     };
 
 /// The refusal category of a server error.
+@visibleForTesting
 String refusalCategory(Object error) {
   final text = error.toString().toLowerCase();
   bool any(List<String> marks) => marks.any(text.contains);

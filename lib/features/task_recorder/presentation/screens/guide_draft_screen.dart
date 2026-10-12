@@ -21,7 +21,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_destination.dart';
@@ -357,24 +356,6 @@ class _StepCard extends StatelessWidget {
     );
   }
 }
-
-/// A guide step as the reader reads it.
-String guideStepTitle(AppLocalizations l10n, GuideStep step) =>
-    switch (step.kind) {
-      GuideStepKind.perform =>
-        actionLabel(l10n, step.action) ??
-            (l10n.taskRecorderStepUnrecorded),
-      GuideStepKind.instruction =>
-        step.text ??
-            (l10n.taskGuideNoText),
-      GuideStepKind.manual =>
-        step.text ??
-            (step.manualCategory == null
-                ? (l10n.taskGuideManual)
-                : (l10n.taskGuideManualProtected(
-                        protectedLabel(l10n, step.manualCategory!),
-                      ))),
-    };
 
 class _TextDialog extends StatefulWidget {
   const _TextDialog({required this.initial});

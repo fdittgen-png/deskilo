@@ -145,7 +145,7 @@ String? outcomeLabel(AppLocalizations l10n, String? outcome) =>
     };
 
 /// The words for one category value; the raw value is never shown.
-String valueLabel(AppLocalizations l10n, String value) => switch (value) {
+String _valueLabel(AppLocalizations l10n, String value) => switch (value) {
   'today' => l10n.taskRecorderValueToday,
   'tomorrow' => l10n.taskRecorderValueTomorrow,
   'later_this_week' =>
@@ -207,7 +207,7 @@ String valueLabel(AppLocalizations l10n, String value) => switch (value) {
 };
 
 /// The words for a booking field a step changed.
-String fieldLabel(AppLocalizations l10n, String field) => switch (field) {
+String _fieldLabel(AppLocalizations l10n, String field) => switch (field) {
   'for_whom' => l10n.taskRecorderFieldForWhom,
   'repeat' => l10n.taskRecorderFieldRepeat,
   'check_in' => l10n.taskRecorderFieldCheckIn,
@@ -273,10 +273,10 @@ String endReasonLabel(AppLocalizations l10n, RecordingEndReason? r) =>
     if (words != null)
       words
     else if (step.target != null)
-      uiTargetText(l10n, step.action, step.target!) ??
+      _uiTargetText(l10n, step.action, step.target!) ??
           targetLabel(l10n, step.target!, action: step.action),
     for (final e in step.payload.toJson().entries)
-      if (e.key != 'label') valueLabel(l10n, e.value),
+      if (e.key != 'label') _valueLabel(l10n, e.value),
   ];
   final detail = details.isEmpty ? null : details.join(' · ');
   return switch (step.kind) {
@@ -385,12 +385,12 @@ String targetLabel(AppLocalizations l10n, String target, {String? action}) {
   }
   final kind = CalendarKind.values.where((k) => k.wire == target);
   if (kind.isNotEmpty) return calendarKindLabel(l10n, kind.first);
-  return fieldLabel(l10n, target);
+  return _fieldLabel(l10n, target);
 }
 
 /// #2142 — a generic step's name, as a reader sees it; null when the
 /// step is not a generic one.
-String? uiTargetText(AppLocalizations l10n, String? action, String target) =>
+String? _uiTargetText(AppLocalizations l10n, String? action, String target) =>
     switch (action) {
       RecorderActions.uiTap || RecorderActions.uiCommitField
           when target == uiUnkeyed =>

@@ -103,7 +103,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
               return ListTile(
                 key: ValueKey('task-output-${g.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(outputKindLabel(l10n, g.kind)),
+                title: Text(_outputKindLabel(l10n, g.kind)),
                 subtitle: why == null ? null : Text(why),
                 trailing: FilledButton(
                   key: ValueKey('task-output-make-${g.id}'),
@@ -123,7 +123,7 @@ class _TaskOutputsSectionState extends ConsumerState<TaskOutputsSection> {
 }
 
 /// The words for an output's kind.
-String outputKindLabel(AppLocalizations l10n, TaskOutputKind kind) =>
+String _outputKindLabel(AppLocalizations l10n, TaskOutputKind kind) =>
     switch (kind) {
       TaskOutputKind.document => l10n.taskOutputDocument,
       TaskOutputKind.storyboard => l10n.taskOutputStoryboard,

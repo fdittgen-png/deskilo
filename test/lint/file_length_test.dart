@@ -267,7 +267,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/vat_tax_point.dart': 540, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/vat_tax_point.dart': 544, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/presentation/screens/my_finances_screen.dart': 574, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -285,7 +285,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/task_recorder/domain/task_recording_decoder.dart': 570, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/task_recorder/export/docx/docx_writer.dart': 520, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/task_recorder/export/docx/docx_writer.dart': 524, // 2026-10-11 #2384 520→524: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/task_recorder/package/task_package.dart': 592, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

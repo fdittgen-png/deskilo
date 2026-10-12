@@ -28,6 +28,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_event_repository.dart';
+import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/validation_settings.dart' show admin;
 import 'fixtures/recording_fixtures.dart';

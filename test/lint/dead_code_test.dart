@@ -18,14 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // Left until the task recorder work in progress lands.
-  'lib/features/task_recorder/presentation/screens/guide_draft_screen.dart::guideStepTitle':
-      '#2383 — task recorder, after the work in progress there lands',
-  'lib/features/task_recorder/data/recorder_store.dart::MemoryRecorderLogBackend':
-      '#2383 — task recorder: a test fake to move to test/helpers',
-  'lib/features/task_recorder/storyboard/png_safety.dart::pngChunkTypes':
-      '#2383 — task recorder, after the work in progress there lands',
-
   // MCP, app side: wired in by the server issue or deleted there.
   'lib/core/instance/mcp_readiness.dart::verifyMcpReadinessReport':
       '#2394 — the readiness report verifier',
