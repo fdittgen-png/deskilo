@@ -76,6 +76,22 @@ void main() {
       expect(_derive(_status(consent: McpConsentState.current)).next, isNull);
     });
 
+    test('the phase is the state of the first row not done', () {
+      expect(
+        _derive(_status(consent: McpConsentState.current)).phase,
+        ConnectPhase.ready,
+      );
+      expect(_derive(_status()).phase, ConnectPhase.needsYou);
+      expect(
+        _derive(_status(eligibility: McpEligibilityState.pending)).phase,
+        ConnectPhase.waitingForOthers,
+      );
+      expect(
+        _derive(_status(google: McpGoogleState.unavailable)).phase,
+        ConnectPhase.unavailable,
+      );
+    });
+
     test('Google first: each Google state names its own action', () {
       final link = _derive(_status(google: McpGoogleState.linkGoogle));
       expect(link.item(ConnectStep.google).action, ConnectAction.linkGoogle);

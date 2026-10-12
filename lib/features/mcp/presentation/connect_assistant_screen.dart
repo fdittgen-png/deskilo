@@ -289,7 +289,7 @@ class _ConnectAssistantScreenState
               children: [
                 for (final item in list.items)
                   _row(l10n, item, operators, list.accessExpiresSoon),
-                if (list.next == null)
+                if (list.phase == ConnectPhase.ready)
                   InlineBanner(
                     key: const ValueKey('mcp-connect-all-done'),
                     icon: Icons.check_circle_outline,
