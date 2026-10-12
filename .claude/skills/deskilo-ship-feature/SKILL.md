@@ -78,7 +78,7 @@ needs the deployment entity registry (reference.md "Flags").
   `dart run tool/build_arb.dart && flutter gen-l10n` and commit both outputs (CI's
   l10n gate rebuilds from the fragments). No `{` in message text unless it is an ICU
   placeholder. `Text` literals are read by `tool/l10n_audit` (#2055, wrapped lines
-  included): only `l10n?.x ?? 'English'` or a literal made of interpolations passes.
+  included): only `context.l10n.x` (never null, #2388 — no Dart-side English) or a literal made of interpolations passes.
   Reach for `MaterialLocalizations` before inventing a key for a generic action.
 - **Codegen.** A freezed class or a `@riverpod` provider body change changes its
   `.g.dart`: `dart run build_runner build --delete-conflicting-outputs`, commit the

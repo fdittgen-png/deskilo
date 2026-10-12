@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../domain/workspace_feature.dart';
 
 /// What each switch on the Features screen actually does, in the
@@ -11,592 +10,250 @@ import '../domain/workspace_feature.dart';
 /// needed, and this is the half that grows every time a feature ships.
 /// The screen is now about listing and filtering; this file is the
 /// registry's prose.
-String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
+String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       switch (feature) {
-        WorkspaceFeature.calendarTab => l10n?.featureCalendarTabDesc ??
-            'Monthly overview of bookings and closures.',
-        WorkspaceFeature.eventsTab => l10n?.featureEventsTabDesc ??
-            'Activity feed and pending confirmations.',
-        WorkspaceFeature.moneyTab => l10n?.featureMoneyTabDesc ??
-            'Bills, payments, expenses and consumptions.',
-        WorkspaceFeature.services => l10n?.featureServicesDesc ??
-            'Service catalog and consumption tracking.',
-        WorkspaceFeature.pdfExport => l10n?.featurePdfExportDesc ??
-            'Export the monthly bill as a PDF.',
-        WorkspaceFeature.seriesBooking => l10n?.featureSeriesBookingDesc ??
-            'Repeat a reservation daily, weekly or on weekdays.',
-        WorkspaceFeature.bookForOthers => l10n?.featureBookForOthersDesc ??
-            'Admins and owners book seats for other members.',
+        WorkspaceFeature.calendarTab => l10n.featureCalendarTabDesc,
+        WorkspaceFeature.eventsTab => l10n.featureEventsTabDesc,
+        WorkspaceFeature.moneyTab => l10n.featureMoneyTabDesc,
+        WorkspaceFeature.services => l10n.featureServicesDesc,
+        WorkspaceFeature.pdfExport => l10n.featurePdfExportDesc,
+        WorkspaceFeature.seriesBooking => l10n.featureSeriesBookingDesc,
+        WorkspaceFeature.bookForOthers => l10n.featureBookForOthersDesc,
         WorkspaceFeature.pushNotifications =>
-          l10n?.featurePushNotificationsDesc ??
-              'Deliver pending confirmations to members\' devices.',
+          l10n.featurePushNotificationsDesc,
         WorkspaceFeature.adminSeatBlocking =>
-          l10n?.featureAdminSeatBlockingDesc ??
-              'Admins mark seats not reservable for maintenance. '
-                  'The owner always can.',
+          l10n.featureAdminSeatBlockingDesc,
         WorkspaceFeature.accessorySupplements =>
-          l10n?.featureAccessorySupplementsDesc ??
-              'Bill priced seat accessories per booked half-day. '
-                  'Applies to bookings from activation on.',
+          l10n.featureAccessorySupplementsDesc,
         WorkspaceFeature.onlinePayments =>
-          l10n?.featureOnlinePaymentsDesc ??
-              'Let members pay their bill online (PayPal). Needs the '
-                  'payment provider configured on the server.',
+          l10n.featureOnlinePaymentsDesc,
         WorkspaceFeature.kioskMode =>
-          l10n?.featureKioskModeDesc ??
-              'Wall-tablet accounts locked to the live plan; members act '
-                  'through badges.',
+          l10n.featureKioskModeDesc,
         WorkspaceFeature.nfcBadges =>
-          l10n?.featureNfcBadgesDesc ??
-              'Members check in at a kiosk by tapping an RFID/NFC card. '
-                  'Needs an Android device with NFC.',
+          l10n.featureNfcBadgesDesc,
         WorkspaceFeature.levelBooking =>
-          l10n?.featureLevelBookingDesc ??
-              'Reserve a whole floor as one booking, priced per '
-                  'half-day. Grant members the right per member.',
+          l10n.featureLevelBookingDesc,
         WorkspaceFeature.membersDirectory =>
-          l10n?.featureMembersDirectoryDesc ??
-              'The community tab: who is here, statuses, presence.',
+          l10n.featureMembersDirectoryDesc,
         WorkspaceFeature.whatsappIntegration =>
-          l10n?.featureWhatsappIntegrationDesc ??
-              'Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.',
+          l10n.featureWhatsappIntegrationDesc,
         WorkspaceFeature.spaceQrCodes =>
-          l10n?.featureSpaceQrCodesDesc ??
-              'Printable QR cards per seat, desk, office and level — '
-                  'scan to reserve or check in.',
+          l10n.featureSpaceQrCodesDesc,
         WorkspaceFeature.coOwner =>
-          l10n?.featureCoOwnerDesc ??
-              'Appoint co-owners: owner permissions now (active) or '
-                  'succession-in-waiting (passive).',
+          l10n.featureCoOwnerDesc,
         WorkspaceFeature.invoicing =>
-          l10n?.featureInvoicingDesc ??
-              'Immutable, signed invoices in an archive — download or '
-                  'share as PDF.',
+          l10n.featureInvoicingDesc,
         WorkspaceFeature.adminInvoicing =>
-          l10n?.featureAdminInvoicingDesc ??
-              'Admins issue invoices too. The owner always can.',
+          l10n.featureAdminInvoicingDesc,
         WorkspaceFeature.autoCheckInOut =>
-          l10n?.featureAutoCheckInOutDesc ??
-              'Reservations never checked in or out complete themselves '
-                  'once their time has passed.',
+          l10n.featureAutoCheckInOutDesc,
         WorkspaceFeature.dataExport =>
-          l10n?.featureDataExportDesc ??
-              'Download all workspace data as an Excel workbook.',
+          l10n.featureDataExportDesc,
         WorkspaceFeature.adminLevelAssign =>
-          l10n?.featureAdminLevelAssignDesc ??
-              'Admins assign level reservations to members. '
-                  'The owner always can.',
+          l10n.featureAdminLevelAssignDesc,
         WorkspaceFeature.workingHours =>
-          l10n?.featureWorkingHoursDesc ??
-              'Configure the working day and offer exact-hours booking; '
-                  'off keeps the 8:00–17:00 defaults.',
+          l10n.featureWorkingHoursDesc,
         WorkspaceFeature.invoicePdfTemplate =>
-          l10n?.featureInvoicePdfTemplateDesc ??
-              'Owner-written intro and footer text on the invoice PDF. '
-                  'Never touches the e-invoice XML.',
+          l10n.featureInvoicePdfTemplateDesc,
         WorkspaceFeature.invoiceAddressWindow =>
-          l10n?.featureInvoiceAddressWindowDesc ??
-              'Place the recipient where a window envelope shows it, so '
-                  'a printed invoice can be folded and posted. The side '
-                  'follows the country and can be overridden.',
+          l10n.featureInvoiceAddressWindowDesc,
         WorkspaceFeature.memberNotifications =>
-          l10n?.featureMemberNotificationsDesc ??
-              'Send a short notification to another member; admins can '
-                  'notify all admins including the owner.',
-        WorkspaceFeature.documents => l10n?.featureDocumentsDesc ??
-            'The workspace document library: statutes, guides, '
-                'financial statements, minutes — linked from any drive, '
-                'visible per role.',
-        WorkspaceFeature.dunning => l10n?.featureDunningDesc ??
-            'Configurable reminder rules and "Reminder due" '
-                'suggestions on overdue invoices. Nothing is ever sent '
-                'automatically.',
+          l10n.featureMemberNotificationsDesc,
+        WorkspaceFeature.documents => l10n.featureDocumentsDesc,
+        WorkspaceFeature.dunning => l10n.featureDunningDesc,
         WorkspaceFeature.memberReports =>
-          l10n?.featureMemberReportsDesc ??
-              'The financial agreement and the monthly payments report '
-                  '— self-service for members, sendable per member.',
+          l10n.featureMemberReportsDesc,
         WorkspaceFeature.deletionRequests =>
-          l10n?.featureDeletionRequestsDesc ??
-              'Members may REQUEST deletion of a past or checked-in '
-                  'booking; an owner/admin validates. Off, such '
-                  'bookings cannot be deleted at all.',
+          l10n.featureDeletionRequestsDesc,
         WorkspaceFeature.roleManagement =>
-          l10n?.featureRoleManagementDesc ??
-              'The central role→permission matrix: the owner decides '
-                  'which role holds which permission; everyone else '
-                  'reads their own. Off, the defaults simply apply.',
+          l10n.featureRoleManagementDesc,
         WorkspaceFeature.vatManagement =>
-          l10n?.featureVatManagementDesc ??
-              'The VAT rate editor and the rate pickers on services, '
-                  'packs, accessories and the tariff. Off hides the '
-                  'configuration; stored rates keep applying. A space '
-                  'registered for VAT needs it on, and a default rate, '
-                  'before it can issue an invoice: without them issuing is '
-                  'refused.',
+          l10n.featureVatManagementDesc,
         WorkspaceFeature.vatDeclarations =>
-          l10n?.featureVatDeclarationsDesc ??
-              'Generate the periodic VAT return from issued invoices, '
-                  'map it to the official form and transmit or export '
-                  'it.',
+          l10n.featureVatDeclarationsDesc,
         WorkspaceFeature.einvoiceCustomerDelivery =>
-          l10n?.featureEinvoiceCustomerDeliveryDesc ??
-              "A second sending channel beside the government platform: "
-                  "post the issued invoice straight to the customer's "
-                  "own e-invoicing service.",
+          l10n.featureEinvoiceCustomerDeliveryDesc,
         WorkspaceFeature.planObjectDelete =>
-          l10n?.featurePlanObjectDeleteDesc ??
-              'Owners may delete levels, offices, desks and seats even '
-                  'when past reservations reference them — the bookings '
-                  'keep a text snapshot for audits and reports.',
+          l10n.featurePlanObjectDeleteDesc,
         WorkspaceFeature.notificationGrouping =>
-          l10n?.featureNotificationGroupingDesc ??
-              'Members may fold the notification feed into groups by '
-                  'type, day or member; tapping the group symbol '
-                  'returns to the flat list.',
+          l10n.featureNotificationGroupingDesc,
         WorkspaceFeature.bookingPolicies =>
-          l10n?.featureBookingPoliciesDesc ??
-              'Owner-configurable booking behavior: past bookings, '
-                  'minute bookings outside the working hours, and '
-                  'check-out by admins.',
+          l10n.featureBookingPoliciesDesc,
         WorkspaceFeature.nfcSeatTags =>
-          l10n?.featureNfcSeatTagsDesc ??
-              'A physical NFC/RFID tag on a chair resolves to its seat '
-                  'like the printed QR card; owners fill the tag field '
-                  'by tapping the chip.',
+          l10n.featureNfcSeatTagsDesc,
         WorkspaceFeature.qrBadges =>
-          l10n?.featureQrBadgesDesc ??
-              'Printable QR badge cards for the kiosk, beside the '
-                  'NFC/RFID cards.',
+          l10n.featureQrBadgesDesc,
         WorkspaceFeature.formHelpHints =>
-          l10n?.featureFormHelpHintsDesc ??
-              'Short dismissible how-to hints on forms and screens, '
-                  'each linking into the matching guide section.',
+          l10n.featureFormHelpHintsDesc,
         WorkspaceFeature.workspaceLibrary =>
-          l10n?.featureWorkspaceLibraryDesc ??
-              'Save this space\'s floor plan as a template, choose who may '
-                  'see it, invite people by e-mail, and start from what '
-                  'others offer.',
+          l10n.featureWorkspaceLibraryDesc,
         WorkspaceFeature.memberEnvironments =>
-          l10n?.featureMemberEnvironmentsDesc ??
-              'When you invite somebody, choose whether they also reach '
-                  'the production space. They join the test space either '
-                  'way, and the role still has to allow production access.',
+          l10n.featureMemberEnvironmentsDesc,
         WorkspaceFeature.memberOrigin =>
-          l10n?.featureMemberOriginDesc ??
-              'A discreet line on a member saying how their membership '
-                  'began: founded the space, joined by invitation, or had '
-                  'the profile created for them. It is not a status.',
+          l10n.featureMemberOriginDesc,
         WorkspaceFeature.uiAnimations =>
-          l10n?.featureUiAnimationsDesc ??
-              'Smooth transitions and state animations across the app. '
-                  'Off means every change is instant; the device\'s '
-                  'reduced-motion setting always wins.',
+          l10n.featureUiAnimationsDesc,
         WorkspaceFeature.kioskMemberPhotos =>
-          l10n?.featureKioskMemberPhotosDesc ??
-              "The kiosk receipt shows the member's profile photo — the "
-                  'visual wrong-badge check.',
+          l10n.featureKioskMemberPhotosDesc,
         WorkspaceFeature.planMemberPhotos =>
-          l10n?.featurePlanMemberPhotosDesc ??
-              'Occupied seats on the Plan tab and Reserve hub show the '
-                  "occupant's profile photo instead of the initial.",
+          l10n.featurePlanMemberPhotosDesc,
         WorkspaceFeature.regionalFormats =>
-          l10n?.featureRegionalFormatsDesc ??
-              'Members choose how numbers, dates, the clock and the time '
-                  'zone are shown to them. Off: everyone reads in the app '
-                  "language's home region, 24-hour, workspace time.",
+          l10n.featureRegionalFormatsDesc,
         WorkspaceFeature.calendarHub =>
-          l10n?.featureCalendarHubDesc ??
-              'The calendar shows everything dated — bookings, check-ins, alerts, messages, invoices, payments, consumption, reminders — for a day or a range, each row opening its source. Off: reservations only.',
+          l10n.featureCalendarHubDesc,
         WorkspaceFeature.financeFaces =>
-          l10n?.featureFinanceFacesDesc ??
-              'The Finances tab shows three faces — Payments, Consumption, Invoices — under one month chooser, each with its own help. Off: one column.',
+          l10n.featureFinanceFacesDesc,
         WorkspaceFeature.paymentReminders =>
-          l10n?.featurePaymentRemindersDesc ??
-              'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.',
+          l10n.featurePaymentRemindersDesc,
         WorkspaceFeature.supplyExpenses =>
-          l10n?.featureSupplyExpensesDesc ??
-              'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.',
+          l10n.featureSupplyExpensesDesc,
         WorkspaceFeature.validationScopes =>
-          l10n?.featureValidationScopesDesc ??
-              'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.',
+          l10n.featureValidationScopesDesc,
         WorkspaceFeature.validationChain =>
-          l10n?.featureValidationChainDesc ??
-              'A validation rule can ask for its validations one after another, each step requested once the previous passed, and can let the owner — never an admin — validate their own act. Off: every validation is asked at once and nobody validates their own event.',
+          l10n.featureValidationChainDesc,
         WorkspaceFeature.richMessageRefs =>
-          l10n?.featureRichMessageRefsDesc ??
-              'A message can point at an alert, at the validation trail behind one, and at an invoice, a payment or a refund — each one a link that opens what it names. Every reference picker filters as you type. Off: only reservations and spaces can be referenced.',
+          l10n.featureRichMessageRefsDesc,
         WorkspaceFeature.calendarValidations =>
-          l10n?.featureCalendarValidationsDesc ??
-              'Every decision taken on an event appears on the calendar at the moment it was taken, not at the moment of the event: who validated or refused what, and when. Tapping one opens its trail. Off: the calendar carries no decisions.',
+          l10n.featureCalendarValidationsDesc,
         WorkspaceFeature.usageRecords =>
-          l10n?.featureUsageRecordsDesc ??
-              'Every counted booking leaves a record: the window booked, the time actually present, and what of it bills. A booking nobody checked into bills in full. A member who left early can ask for the unused time to stop billing, and somebody else decides it — never them. Off: no records and no correction.',
+          l10n.featureUsageRecordsDesc,
         WorkspaceFeature.reportDesignExchange =>
-          l10n?.featureReportDesignExchangeDesc ??
-              'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.',
+          l10n.featureReportDesignExchangeDesc,
         WorkspaceFeature.reportLayouts =>
-          l10n?.featureReportLayoutsDesc ??
-              'Design a report by stating where each element sits, in '
-                  'mm, cm, px or %; the PDF prints exactly that. A '
-                  'document with a layout uses it, the others keep '
-                  'their bands.',
+          l10n.featureReportLayoutsDesc,
         WorkspaceFeature.personalInfo =>
-          l10n?.featurePersonalInfoDesc ??
-              'Members enter their name, postal address, phone, e-mail '
-                  'and legal ids in Settings; invoices and letters print '
-                  'them in the standard postal block.',
+          l10n.featurePersonalInfoDesc,
         WorkspaceFeature.numberSequences =>
-          l10n?.featureNumberSequencesDesc ??
-              'How each journal numbers its documents — prefix, year or '
-                  'month, digits, when the counter restarts — one screen '
-                  'for every series. Numbers are drawn in the database, '
-                  'gapless, whether this is on or off; on, the owner can '
-                  'change the format for what comes next.',
+          l10n.featureNumberSequencesDesc,
         WorkspaceFeature.workspaceStatus =>
-          l10n?.featureWorkspaceStatusDesc ??
-              'What the workspace invoiced, collected, reimbursed and '
-                  'shared out over a range of months, member by member — '
-                  'on screen for owners and admins, and as a printable '
-                  'report. Off: no status view.',
+          l10n.featureWorkspaceStatusDesc,
         WorkspaceFeature.expenseRepartitionWizard =>
-          l10n?.featureExpenseRepartitionWizardDesc ??
-              'A guided repartition: a shared cost proposed over the '
-                  'members by subscription share, each share adjustable, '
-                  'and the adjusted rule remembered for next month. '
-                  'Off: the one-expense repartition sheet only.',
+          l10n.featureExpenseRepartitionWizardDesc,
         WorkspaceFeature.multiSite =>
-          l10n?.featureMultiSiteDesc ??
-              'Several addresses: levels are grouped by site, each site has '
-                  'its own address and registration, each member a home '
-                  'site, and documents name the site they concern. Off: one '
-                  'address for the whole workspace.',
+          l10n.featureMultiSiteDesc,
         WorkspaceFeature.instanceWizard =>
-          l10n?.featureInstanceWizardDesc ??
-              'On the Server screen, a wizard that creates a new Supabase '
-                  'project, installs the app\'s schema, deploys its functions '
-                  'and points this device at it — one access token, no '
-                  'terminal. Off: the manual steps only.',
+          l10n.featureInstanceWizardDesc,
         WorkspaceFeature.demoMode =>
-          l10n?.featureDemoModeDesc ??
-              'An invented workspace anyone can open from the sign-in '
-                  'screen, with its own people, bookings and bills. Nothing '
-                  'done in it reaches a real workspace or leaves the device, '
-                  'and no account is needed. Off: the offer does not appear.',
+          l10n.featureDemoModeDesc,
         WorkspaceFeature.navigationStyle =>
-          l10n?.featureNavigationStyleDesc ??
-              'Each member picks in their settings how the app navigates: '
-                  'the classic bottom bar with the round Reserve button, or '
-                  'the menu the web uses. Off: every device keeps its '
-                  'platform\'s default.',
+          l10n.featureNavigationStyleDesc,
         WorkspaceFeature.configurationTransfer =>
-          l10n?.featureConfigurationTransferDesc ??
-              'The space file (XML) carries the whole configuration — '
-                  'tariffs, legal identity, booking and validation rules, '
-                  'roles, document designs, sites, closure days — and '
-                  'importing it applies it, even on a space that already '
-                  'has bookings. Off: the file carries settings and floor '
-                  'plan only.',
+          l10n.featureConfigurationTransferDesc,
         WorkspaceFeature.siteDocuments =>
-          l10n?.featureSiteDocumentsDesc ??
-              'Documents name the site they concern: the member\'s home '
-                  'site\'s address and registration as the seller, and the '
-                  'other sites the month stood at in the details. Off: the '
-                  'workspace address on every document.',
+          l10n.featureSiteDocumentsDesc,
         WorkspaceFeature.vatGroups =>
-          l10n?.featureVatGroupsDesc ??
-              'Each VAT rate carries the fiscal group of what it taxes — '
-                  'standard, intermediate, reduced, super-reduced, zero, exempt, '
-                  'not subject, refundable deposit, excise-bearing — with the '
-                  'category and the exemption reason the group implies. Off: '
-                  'bare percentages.',
+          l10n.featureVatGroupsDesc,
         WorkspaceFeature.vatRateHistory =>
-          l10n?.featureVatRateHistoryDesc ??
-              'A rate is a family of dated versions: a change by law adds '
-                  'the new value from its date, the old value stays on every '
-                  'supply before it, and nothing is re-pointed. Off: one '
-                  'value per rate.',
-        WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ?? AppLocalizationsEn().featureSupplyClassificationDesc,
-        WorkspaceFeature.viesVerification => l10n?.featureViesVerificationDesc ?? AppLocalizationsEn().featureViesVerificationDesc,
-        WorkspaceFeature.recapitulativeStatement => l10n?.featureRecapitulativeStatementDesc ?? AppLocalizationsEn().featureRecapitulativeStatementDesc,
-        WorkspaceFeature.inputVat => l10n?.featureInputVatDesc ??
-            AppLocalizationsEn().featureInputVatDesc,
+          l10n.featureVatRateHistoryDesc,
+        WorkspaceFeature.supplyClassification => l10n.featureSupplyClassificationDesc,
+        WorkspaceFeature.viesVerification => l10n.featureViesVerificationDesc,
+        WorkspaceFeature.recapitulativeStatement => l10n.featureRecapitulativeStatementDesc,
+        WorkspaceFeature.inputVat => l10n.featureInputVatDesc,
         WorkspaceFeature.vatCounterparty =>
-          l10n?.featureVatCounterpartyDesc ??
-              'Who the buyer is for VAT, set on each member: domestic VAT, '
-                  'reverse charge, outside the EU, or exempt with a printed '
-                  'reason. Off: the automatic rule only.',
+          l10n.featureVatCounterpartyDesc,
         WorkspaceFeature.environmentPairs =>
-          l10n?.featureEnvironmentPairsDesc ??
-              'A workspace and its twin — the development and the '
-                  'production side — as one couple: one card in Profiles '
-                  'with a switch, and the twin created on demand with the '
-                  'configuration copied. Off: two unrelated entries.',
+          l10n.featureEnvironmentPairsDesc,
         WorkspaceFeature.deployments =>
-          l10n?.featureDeploymentsDesc ??
-              'Configuration and master data deployed between the two '
-                  'sides of a pair, entity by entity, with a preview of what '
-                  'changes and a journal that can roll back. Off: the twins '
-                  'are edited by hand, each on its own.',
+          l10n.featureDeploymentsDesc,
         WorkspaceFeature.managedProfileAccess =>
-          l10n?.featureManagedProfileAccessDesc ??
-              'Each managed profile says who may administer it — by role, '
-                  'by named people, or both. Off: every owner and admin '
-                  'may, as before. The identity itself is protected '
-                  'either way, and every read is written down for the '
-                  'person who takes the profile over.',
+          l10n.featureManagedProfileAccessDesc,
         WorkspaceFeature.managedProfiles =>
-          l10n?.featureManagedProfilesDesc ??
-              'Admins create members who have no account yet, book and '
-                  'invoice for them, and hand the profile over with a '
-                  'personal code the person redeems when they join.',
+          l10n.featureManagedProfilesDesc,
         WorkspaceFeature.seatDayTimeline =>
-          l10n?.featureSeatDayTimelineDesc ??
-              'A seat booked for part of the day is drawn part-filled on '
-                  'the plan, and a seat several people share opens a '
-                  'timeline of the day: who has it, when, and which '
-                  'stretches are still free.',
+          l10n.featureSeatDayTimelineDesc,
         WorkspaceFeature.memberPaymentTerms =>
-          l10n?.featureMemberPaymentTermsDesc ??
-              'The workspace sets the default payment conditions; a '
-                  'member may have their own, visible to them, changed '
-                  'only through a validated request by an authorised admin.',
+          l10n.featureMemberPaymentTermsDesc,
         WorkspaceFeature.reportTexts =>
-          l10n?.featureReportTextsDesc ??
-              'The owner writes texts (a greeting, a note, a legal '
-                  'paragraph) per language and places them in any '
-                  'report as {{ text.key }} — wording changes without '
-                  'touching the design.',
+          l10n.featureReportTextsDesc,
         WorkspaceFeature.usageReport =>
-          l10n?.featureUsageReportDesc ??
-              'At month end a member receives what their participation '
-                  'paid for, what they actually consumed and what is left '
-                  'or exceeded — from the usage records, as a letter.',
+          l10n.featureUsageReportDesc,
         WorkspaceFeature.vatReport =>
-          l10n?.featureVatReportDesc ??
-              'Every taxable position of a month or period — document, '
-                  'customer, net, rate, VAT, gross, category — with '
-                  'subtotals per rate, as a letter and as a CSV for the '
-                  'accountant.',
+          l10n.featureVatReportDesc,
         WorkspaceFeature.letterStandard =>
-          l10n?.featureLetterStandardDesc ??
-              'Invoices, proformas, statements, agreements, payments and '
-                  'consumption reports and reminders without a design '
-                  'print as standard letters: letterhead, recipient in '
-                  'the envelope window, body from 90 mm, a fixed footer.',
+          l10n.featureLetterStandardDesc,
         WorkspaceFeature.priceNegotiations =>
-          l10n?.featurePriceNegotiationsDesc ??
-              'The tariff is the default; a member can have their own deal (monthly fee, overage rate, discount on supplements), proposed by the owner or a finance admin and validated under the rules. Seen by the member, the owners and finance admins; every read is on the record.',
+          l10n.featurePriceNegotiationsDesc,
         WorkspaceFeature.scheduledExpenses =>
-          l10n?.featureScheduledExpensesDesc ??
-              'Recurring expenses (internet, phone, electricity): the schedule is validated once, every due date is confirmed by the member — the validated amount counts immediately, a deviation explains itself and passes the expense validation.',
+          l10n.featureScheduledExpensesDesc,
         WorkspaceFeature.subscriptionInvoices =>
-          l10n?.featureSubscriptionInvoicesDesc ??
-              'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.',
+          l10n.featureSubscriptionInvoicesDesc,
         WorkspaceFeature.usageInvoices =>
-          l10n?.featureUsageInvoicesDesc ??
-              'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.',
+          l10n.featureUsageInvoicesDesc,
         WorkspaceFeature.invoiceSettlement =>
-          l10n?.featureInvoiceSettlementDesc ??
-              'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.',
+          l10n.featureInvoiceSettlementDesc,
         WorkspaceFeature.settlementFold =>
-          l10n?.featureSettlementFoldDesc ??
-              'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.',
+          l10n.featureSettlementFoldDesc,
         WorkspaceFeature.expenseRepartition =>
-          l10n?.featureExpenseRepartitionDesc ??
-              'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.',
+          l10n.featureExpenseRepartitionDesc,
         WorkspaceFeature.invoicingWizard =>
-          l10n?.featureInvoicingWizardDesc ??
-              'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.',
+          l10n.featureInvoicingWizardDesc,
         WorkspaceFeature.memberPage =>
-          l10n?.featureMemberPageDesc ??
-              'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.',
+          l10n.featureMemberPageDesc,
         WorkspaceFeature.reportDesigner =>
-          l10n?.featureReportDesignerDesc ??
-              'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.',
+          l10n.featureReportDesignerDesc,
         WorkspaceFeature.messagesHub =>
-          l10n?.featureMessagesHubDesc ??
-              'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.',
+          l10n.featureMessagesHubDesc,
         WorkspaceFeature.calendarViews =>
-          l10n?.featureCalendarViewsDesc ??
-              'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.',
+          l10n.featureCalendarViewsDesc,
         WorkspaceFeature.bookingGate =>
-          l10n?.featureBookingGateDesc ??
-              'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.',
+          l10n.featureBookingGateDesc,
         WorkspaceFeature.invoiceJourney =>
-          l10n?.featureInvoiceJourneyDesc ??
-              'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.',
+          l10n.featureInvoiceJourneyDesc,
         WorkspaceFeature.messageGestures =>
-          l10n?.featureMessageGesturesDesc ??
-              'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.',
+          l10n.featureMessageGesturesDesc,
         WorkspaceFeature.uniqueMonograms =>
-          l10n?.featureUniqueMonogramsDesc ??
-              'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.',
+          l10n.featureUniqueMonogramsDesc,
         WorkspaceFeature.dataAccessLog =>
-          l10n?.featureDataAccessLogDesc ??
-              'Members see who looked at their finances and when (written by the server, never skippable). Off hides the row; the log is still kept.',
+          l10n.featureDataAccessLogDesc,
         WorkspaceFeature.memberDataExport =>
-          l10n?.featureMemberDataExportDesc ??
-              'Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data.',
+          l10n.featureMemberDataExportDesc,
         WorkspaceFeature.badgeSignIn =>
-          l10n?.featureBadgeSignInDesc ??
-              'Members can sign in by scanning their badge and entering '
-                  'their PIN, instead of typing an e-mail on a shared '
-                  'tablet. Each member sets their own PIN and arms their '
-                  'own badge.',
+          l10n.featureBadgeSignInDesc,
         WorkspaceFeature.singleRoomLevelNames =>
-          l10n?.featureSingleRoomLevelNamesDesc ??
-              'When a level holds only one room, the booking views name the '
-                  'level instead of the room. Adding a second room brings '
-                  'both names back; the plan editor always shows the rooms.',
-        WorkspaceFeature.carnets => l10n?.featureCarnetsDesc ??
-            'Sell carnets of half-days that are spent across months when a '
-                'member books beyond their subscription, charged once at the sale.',
+          l10n.featureSingleRoomLevelNamesDesc,
+        WorkspaceFeature.carnets => l10n.featureCarnetsDesc,
         WorkspaceFeature.publicHolidays =>
-          l10n?.featurePublicHolidaysDesc ??
-              'An owner picks a year and sees the public holidays that '
-                  'would become closure days, then confirms. Re-running a '
-                  'year adds nothing, and a month that already carries an '
-                  'invoice is skipped and named — generating holidays '
-                  'never changes a bill that was already issued.',
+          l10n.featurePublicHolidaysDesc,
         WorkspaceFeature.workspaceVocabulary =>
-          l10n?.featureWorkspaceVocabularyDesc ??
-              'The workspace may rename a small, approved set of product '
-                  'words — a seat, the legend labels, the tabs — per '
-                  'language. Everything else keeps the product\'s own '
-                  'wording, and a workspace that renames nothing looks '
-                  'exactly as it did before.',
-        WorkspaceFeature.publicListings => l10n?.featurePublicListingsDesc ?? 'Public workspace listing',
+          l10n.featureWorkspaceVocabularyDesc,
+        WorkspaceFeature.publicListings => l10n.featurePublicListingsDesc,
         WorkspaceFeature.spaceInquiries =>
-          l10n?.featureSpaceInquiriesDesc ??
-              'A signed-in person who finds the published page can write to '
-                  'the hosts: the owners, and the administrators who chose '
-                  'to be public contacts. Only that person and the hosts '
-                  'read the conversation.',
-        WorkspaceFeature.messageMentions => l10n?.featureMessageMentionsDesc ??
-            AppLocalizationsEn().featureMessageMentionsDesc,
+          l10n.featureSpaceInquiriesDesc,
+        WorkspaceFeature.messageMentions => l10n.featureMessageMentionsDesc,
         WorkspaceFeature.messageForwarding =>
-          l10n?.featureMessageForwardingDesc ??
-              'A message can be forwarded into another conversation the '
-                  'forwarder takes part in. The copy names where it came '
-                  'from, the original conversation is told who forwarded '
-                  'it and where, and an author can lock a message.',
+          l10n.featureMessageForwardingDesc,
         WorkspaceFeature.captureProtection =>
-          l10n?.featureCaptureProtectionDesc ??
-              'Message screens refuse screenshots and screen recording '
-                  'where the device allows it, and announce a screenshot '
-                  'where it can only be detected.',
+          l10n.featureCaptureProtectionDesc,
         WorkspaceFeature.holidayImport =>
-          l10n?.featureHolidayImportDesc ??
-              'An owner imports the public holidays of the country, and of '
-                  'one region, from an open-data source, deselects the days '
-                  'the space stays open and imports the rest as closure '
-                  'days. Invoiced months are skipped and named.',
+          l10n.featureHolidayImportDesc,
         WorkspaceFeature.capacityKpi =>
-          l10n?.featureCapacityKpiDesc ??
-              'Shows owners and reservation managers how much of the offered '
-                  'seat time was reserved in a month, with how it is '
-                  'computed and what the figure cannot know.',
+          l10n.featureCapacityKpiDesc,
         WorkspaceFeature.accountingBook =>
-          l10n?.featureAccountingBookDesc ??
-              'Who keeps the official books of each issuer: Deskilo as '
-                  'pre-accounting, a local book, or an external accounting '
-                  'system that stays authoritative. Each issuer states its '
-                  'currency, fiscal year and accounting basis. Off: member '
-                  'balances and invoices work as before.',
+          l10n.featureAccountingBookDesc,
         WorkspaceFeature.roleAssignment =>
-          l10n?.featureRoleAssignmentDesc ??
-              "Shows a Roles section on each member's page to give or take "
-                  'back a role, the members holding each role, and lets '
-                  'every member see what they can do here.',
+          l10n.featureRoleAssignmentDesc,
         WorkspaceFeature.taskRecorder =>
-          l10n?.featureTaskRecorderDesc ??
-              'Lets a person record the steps of a task on this '
-                  "workspace's screens, on their own device, review them and "
-                  'export a file without any value they typed. Nothing is '
-                  'uploaded. Off: nobody records here.',
+          l10n.featureTaskRecorderDesc,
         WorkspaceFeature.guestParticipation =>
-          l10n?.featureGuestParticipationDesc ??
-              'Lets a person who is not a member ask to visit this space, '
-                  'and someone who manages reservations admit or decline '
-                  'them. A visit creates no membership, subscription or role. '
-                  'Off: nobody asks or is admitted here.',
+          l10n.featureGuestParticipationDesc,
       WorkspaceFeature.workspaceBranding =>
-          l10n?.featureWorkspaceBrandingDesc ??
-              'The workspace chooses a brand colour the app derives its '
-                  'light and dark themes from, and the fill colours of its '
-                  'rooms. A colour that would make the app unreadable is '
-                  'refused with the reason; the product\'s own palette '
-                  'stays the default.',
+          l10n.featureWorkspaceBrandingDesc,
         WorkspaceFeature.customRoles =>
-          l10n?.featureCustomRolesDesc ??
-              'The workspace may define roles of its own — a treasurer, a '
-                  'secretary — each adding permissions on top of a '
-                  'member\'s role. They never take a permission away, and '
-                  'an owner always keeps every one.',
+          l10n.featureCustomRolesDesc,
         WorkspaceFeature.customFields =>
-          l10n?.featureCustomFieldsDesc ??
-              'The workspace may ask its own questions inside the identity '
-                  'form — a committee role, a joining date, an emergency '
-                  'contact. The answers belong to the membership, so a '
-                  'question asked here never follows somebody elsewhere.',
+          l10n.featureCustomFieldsDesc,
         WorkspaceFeature.decisionSurface =>
-          l10n?.featureDecisionSurfaceDesc ??
-              'One place that answers "does anything need me?", ranked by '
-                  'what the delay costs — money that leaves first, then '
-                  'somebody waiting on an answer. A line appears only when '
-                  'a person must decide or act; a number nobody can act on '
-                  'stays on the screen that owns it.',
+          l10n.featureDecisionSurfaceDesc,
         WorkspaceFeature.recordingPrivacy =>
-          l10n?.featureRecordingPrivacyDesc ??
-              'For filming or photographing this workspace. Every name, '
-                  'e-mail, telephone number, address and photograph is '
-                  'replaced by an invented person before it reaches the '
-                  'screen, while the plan, the bookings and the figures '
-                  'stay the real ones. A banner says so on every screen, '
-                  'and the identity forms refuse to save until it is off.',
+          l10n.featureRecordingPrivacyDesc,
         WorkspaceFeature.memberAccountMenu =>
-          l10n?.featureMemberAccountMenuDesc ??
-              'A member who administers nothing meets My account instead '
-                  'of Settings — the same screen, which already shows them '
-                  'only their own account, membership and preferences, '
-                  'under the name that says so. Anyone whose role grants '
-                  'administration keeps Settings and everything it opens. '
-                  'This renames an entry; it grants and withdraws nothing.',
+          l10n.featureMemberAccountMenuDesc,
         WorkspaceFeature.mcpAccess =>
-          l10n?.featureMcpAccessDesc ??
-              'Makes the MCP interface available to this workspace, so an '
-                  'AI assistant can be connected to DesKilo. Availability '
-                  'only: switching it on grants nobody anything. Each person '
-                  'still needs a grant the owner configures and the instance '
-                  'administrator approves, and every operation keeps '
-                  'answering to the permissions and rules the app already '
-                  'applies. Off hides the MCP entry points and refuses '
-                  'calls; existing grants stay visible and revocable.',
+          l10n.featureMcpAccessDesc,
         WorkspaceFeature.calendarFileExport =>
-          l10n?.featureCalendarFileExportDesc ??
-              'Lets a member save one of their own bookings as a standard '
-                  'calendar file (.ics) for the calendar they already use. '
-                  'The file carries the time, the booked space and the '
-                  'workspace name only — no amount, no name, no note, no '
-                  'link — and it is a snapshot: a later change to the '
-                  'booking does not update a file already saved. Nothing '
-                  'is written to any calendar and nothing syncs. Off hides '
-                  'the button.',
+          l10n.featureCalendarFileExportDesc,
         WorkspaceFeature.memberGettingStarted =>
-          l10n?.featureMemberGettingStartedDesc ??
-              'After joining or creating a workspace, a member sees one '
-                  'compact card on the Reserve hub: which workspace they '
-                  'are in, and one suggested next step — choose a time to '
-                  'book, view their membership, or open the help — only '
-                  'where the features and their permissions allow it. Not '
-                  'now hides it; Settings can show it again. It never '
-                  'books, pays or approves anything. For whoever configures '
-                  'the space, the settings also show how far it is from a '
-                  'first booking, section by section. Off hides the card '
-                  'and that checklist and changes nothing else.',
+          l10n.featureMemberGettingStartedDesc,
         WorkspaceFeature.placeFeedback =>
-          l10n?.featurePlaceFeedbackDesc ??
-              'Members mark seats, desks, offices and levels as favourites '
-                  'and rate them from 0 to 5 stars. Off hides the hearts '
-                  'and stars and refuses the writes; nothing else follows it.',
+          l10n.featurePlaceFeedbackDesc,
       };

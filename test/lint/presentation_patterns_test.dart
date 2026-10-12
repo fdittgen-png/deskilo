@@ -8,28 +8,19 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// Sheets still opened directly: files an open branch was changing when
-/// the rest moved (#2388); the count only goes down.
-const _directSheetBudget = 2;
-
 void main() {
   final files = handWrittenDartFiles('lib').toList();
 
-  test('sheets open through showAppSheet (ratchet)', () {
+  test('sheets open through showAppSheet', () {
     final direct = RegExp(r'\bshowModalBottomSheet\s*(<|\()');
     final hits = scanLines(
       files.where((f) => !f.path.endsWith('core/ui/app_sheet.dart')),
       direct.hasMatch,
     );
     expect(
-      hits.length,
-      lessThanOrEqualTo(_directSheetBudget),
+      hits,
+      isEmpty,
       reason: 'open the sheet with showAppSheet:\n${hits.join('\n')}',
-    );
-    expect(
-      hits.length,
-      _directSheetBudget,
-      reason: 'fewer direct sheets: lower _directSheetBudget to ${hits.length}',
     );
   });
 

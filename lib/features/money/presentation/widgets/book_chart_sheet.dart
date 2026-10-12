@@ -6,6 +6,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
@@ -16,21 +17,21 @@ import '../../domain/vat_regime.dart';
 import '../../providers/book_profile_providers.dart';
 import '../vat_tax_point_labels.dart';
 
-String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
-  BookRole.customers => l10n?.bookRoleCustomers ?? 'Customers (receivable)',
-  BookRole.revenue => l10n?.bookRoleRevenue ?? 'Revenue',
-  BookRole.bank => l10n?.bookRoleBank ?? 'Bank',
-  BookRole.vatOutput => l10n?.bookRoleVatOutput ?? 'Output VAT',
-  BookRole.vatInput => vatWords(l10n ?? englishL10n).bookRoleVatInput,
-  BookRole.expenses => l10n?.bookRoleExpenses ?? 'Expenses',
+String bookRoleLabel(AppLocalizations l10n, BookRole r) => switch (r) {
+  BookRole.customers => l10n.bookRoleCustomers,
+  BookRole.revenue => l10n.bookRoleRevenue,
+  BookRole.bank => l10n.bookRoleBank,
+  BookRole.vatOutput => l10n.bookRoleVatOutput,
+  BookRole.vatInput => vatWords(l10n).bookRoleVatInput,
+  BookRole.expenses => l10n.bookRoleExpenses,
 };
 
-String _accountTypeLabel(AppLocalizations? l10n, AccountType t) => switch (t) {
-  AccountType.asset => l10n?.bookTypeAsset ?? 'Asset',
-  AccountType.liability => l10n?.bookTypeLiability ?? 'Liability',
-  AccountType.equity => l10n?.bookTypeEquity ?? 'Equity',
-  AccountType.income => l10n?.bookTypeIncome ?? 'Income',
-  AccountType.expense => l10n?.bookTypeExpense ?? 'Expense',
+String _accountTypeLabel(AppLocalizations l10n, AccountType t) => switch (t) {
+  AccountType.asset => l10n.bookTypeAsset,
+  AccountType.liability => l10n.bookTypeLiability,
+  AccountType.equity => l10n.bookTypeEquity,
+  AccountType.income => l10n.bookTypeIncome,
+  AccountType.expense => l10n.bookTypeExpense,
 };
 
 /// #1869 B — one issuer's chart of accounts and the account each posting
@@ -38,7 +39,7 @@ String _accountTypeLabel(AppLocalizations? l10n, AccountType t) => switch (t) {
 /// to save one by one; a role lists only the posting accounts of the type
 /// that fits it; choosing one saves a mapping version from today.
 Future<void> showBookChartSheet(BuildContext context, Site issuer) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _BookChartSheet(issuer: issuer),
@@ -69,7 +70,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
   }
 
   Future<void> _run(Future<BookSaveOutcome> Function() action) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     var outcome = BookSaveOutcome.invalid;
     final ok = await runGuarded(
@@ -77,8 +78,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
       domain: 'money',
       message: 'save book chart failed',
       errorText:
-          l10n?.bookSaveFailed ??
-          'The book was not saved. Check the connection and try again.',
+          l10n.bookSaveFailed,
       action: () async => outcome = await action(),
     );
     if (!mounted) return;
@@ -88,9 +88,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
     if (outcome == BookSaveOutcome.stale) {
       AppSnack.info(
         context,
-        l10n?.bookStale ??
-            'Someone saved this book since you opened it. Close and reopen '
-                'to see their version.',
+        l10n.bookStale,
       );
     }
   }
@@ -125,7 +123,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final chart = ref.watch(bookChartProvider).value;
     final today = ref.watch(clockProvider).now();
@@ -150,8 +148,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              l10n?.bookChartTitle(widget.issuer.name) ??
-                  'Chart of accounts · ${widget.issuer.name}',
+              l10n.bookChartTitle(widget.issuer.name),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             if (accounts.isEmpty)
@@ -174,8 +171,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                         return last;
                       }),
                 child: Text(
-                  l10n?.bookChartSuggest ??
-                      'Add the suggested accounts to review',
+                  l10n.bookChartSuggest,
                 ),
               ),
             for (final a in accounts)
@@ -194,7 +190,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
               controller: _code,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                labelText: l10n?.bookAccountCode ?? 'Account code',
+                labelText: l10n.bookAccountCode,
               ),
             ),
             TextField(
@@ -202,7 +198,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
               controller: _name,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                labelText: l10n?.bookAccountName ?? 'Account name',
+                labelText: l10n.bookAccountName,
               ),
             ),
             DropdownButton<AccountType>(
@@ -221,7 +217,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
             SwitchListTile(
               key: const ValueKey('book-account-posting'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.bookAccountPosting ?? 'Takes postings'),
+              title: Text(l10n.bookAccountPosting),
               value: _posting,
               onChanged: (v) => setState(() => _posting = v),
             ),
@@ -233,11 +229,11 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                       await _run(() => commands.saveAccount(draft));
                       if (mounted) _clear();
                     },
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
             const Divider(),
             Text(
-              l10n?.bookMappingsTitle ?? 'Which account each entry books to',
+              l10n.bookMappingsTitle,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             for (final role in BookRole.values)
@@ -286,7 +282,7 @@ class _RoleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final selected = accounts.where((a) => a.id == current?.accountId);
     return DropdownButtonFormField<String>(
       key: ValueKey('book-role-${role.wire}'),

@@ -704,7 +704,6 @@ const Set<String> uiKeys = {
   'dunning-levels',
   'dunning-rules-dialog-cancel',
   'dunning-save',
-  'e-invoice',
   'edit-repeat-daily',
   'edit-repeat-none',
   'edit-repeat-weekdays',
