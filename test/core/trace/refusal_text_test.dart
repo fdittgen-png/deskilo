@@ -14,6 +14,7 @@
 // drop silently back to "Something went wrong".
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/guarded.dart';
 import 'package:deskilo/core/trace/refusal_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -77,14 +78,14 @@ void main() {
           'fixed once this space has issued a document or recorded money',
           code: 'DK423');
       expect(knownRefusalOf(e), KnownRefusal.moneyLocaleLocked);
-      expect(knownRefusalText(null, e), contains('currency and the country'));
+      expect(knownRefusalText(englishL10n, e), contains('currency and the country'));
     });
 
     test('a rate on issued invoices changes by law (#2356, DKV01)', () {
       final e = _pg('vat_rate_versioned: Standard 20 % is on issued invoices; '
           'change it by law from a date', code: 'DKV01');
       expect(knownRefusalOf(e), KnownRefusal.vatRateVersioned);
-      expect(knownRefusalText(null, e), contains('Change by law'));
+      expect(knownRefusalText(englishL10n, e), contains('Change by law'));
       // The code is the server's: some migration still raises it.
       final raised = Directory('supabase/migrations')
           .listSync()
@@ -104,7 +105,7 @@ void main() {
     test('anything else is not a known refusal', () {
       expect(knownRefusalOf(_pg('duplicate key value')), isNull);
       expect(knownRefusalOf(StateError('boom')), isNull);
-      expect(knownRefusalText(null, StateError('boom')), isNull);
+      expect(knownRefusalText(englishL10n, StateError('boom')), isNull);
     });
   });
 

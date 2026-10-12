@@ -9,10 +9,12 @@ import 'package:intl/intl.dart';
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_frame.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -250,7 +252,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final me = ref.watch(myMemberProvider).value;
     final permissions = ref.watch(myPermissionsProvider);
@@ -296,7 +298,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       memberLabel: !mayPickMember
           ? null
           : _memberId == null
-              ? (l10n?.calendarMemberMe ?? 'Me')
+              ? (l10n.calendarMemberMe)
               : (names[_memberId] ?? ''),
       onPickMember: () => _pickMember(names, me?.id),
     );
@@ -311,8 +313,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             ),
       AsyncError() => Center(
           child: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
         ),
       _ => const LoadingView(),
@@ -404,7 +405,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   }
 
   // ── flag OFF: the plain selector ───────────────────────────────────
-  Widget _plainSelector(AppLocalizations? l10n) {
+  Widget _plainSelector(AppLocalizations l10n) {
     final format = ref.watch(appFormatProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -414,7 +415,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       child: Row(children: [
         IconButton(
           key: const ValueKey('calendar-prev'),
-          tooltip: l10n?.calendarPrevious ?? 'Previous',
+          tooltip: l10n.calendarPrevious,
           icon: const Icon(Icons.chevron_left),
           onPressed: () => _shift(-1),
         ),
@@ -432,7 +433,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         ),
         IconButton(
           key: const ValueKey('calendar-next'),
-          tooltip: l10n?.calendarNext ?? 'Next',
+          tooltip: l10n.calendarNext,
           icon: const Icon(Icons.chevron_right),
           onPressed: () => _shift(1),
         ),
@@ -443,12 +444,12 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             ButtonSegment(
               value: false,
               icon: const Icon(Icons.today_outlined),
-              tooltip: l10n?.calendarDay ?? 'Day',
+              tooltip: l10n.calendarDay,
             ),
             ButtonSegment(
               value: true,
               icon: const Icon(Icons.date_range_outlined),
-              tooltip: l10n?.calendarRange ?? 'Range',
+              tooltip: l10n.calendarRange,
             ),
           ],
           selected: {_range},
@@ -468,12 +469,12 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   /// The arrows and the label of what is on screen: "Next 30 days · from
   /// 2 Sep", "1 – 7 Sep", "September 2026". The label opens a date
   /// picker that jumps the anchor.
-  Widget _stepBar(AppLocalizations? l10n) {
+  Widget _stepBar(AppLocalizations l10n) {
     final format = ref.watch(appFormatProvider);
     final s = _selection;
     final label = switch (s.view) {
       CalendarView.agenda =>
-        '${l10n?.calendarAgendaRange(calendarAgendaDays) ?? 'Next $calendarAgendaDays days'}'
+        '${l10n.calendarAgendaRange(calendarAgendaDays)}'
             ' · ${format.shortDate(WorkspaceTime.at(s.anchor.year, s.anchor.month, s.anchor.day, 12))}',
       CalendarView.week => () {
           final end = DateTime(s.weekStart.year, s.weekStart.month, s.weekStart.day + 6);
@@ -485,7 +486,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     return Row(children: [
       IconButton(
         key: const ValueKey('calendar-prev'),
-        tooltip: l10n?.calendarPrevious ?? 'Previous',
+        tooltip: l10n.calendarPrevious,
         icon: const Icon(Icons.chevron_left),
         onPressed: () =>
             _move('previous', () => _selection = _selection.shifted(-1)),
@@ -499,7 +500,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       ),
       IconButton(
         key: const ValueKey('calendar-next'),
-        tooltip: l10n?.calendarNext ?? 'Next',
+        tooltip: l10n.calendarNext,
         icon: const Icon(Icons.chevron_right),
         onPressed: () =>
             _move('next', () => _selection = _selection.shifted(1)),
@@ -568,7 +569,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     CalendarPage page,
     Map<String, String> names,
   ) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final s = _selection;
     final CalendarPage shown;
     final List<DateTime> days;
@@ -580,15 +581,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           for (var i = 0; i < calendarAgendaDays; i++)
             DateTime(s.anchor.year, s.anchor.month, s.anchor.day + i),
         ];
-        empty = l10n?.calendarAgendaEmpty(calendarAgendaDays) ??
-            'Nothing planned in the next $calendarAgendaDays days.';
+        empty = l10n.calendarAgendaEmpty(calendarAgendaDays);
       case CalendarView.week:
         shown = page;
         days = [
           for (var i = 0; i < 7; i++)
             DateTime(s.weekStart.year, s.weekStart.month, s.weekStart.day + i),
         ];
-        empty = l10n?.calendarWeekEmpty ?? 'Nothing this week.';
+        empty = l10n.calendarWeekEmpty;
       case CalendarView.month:
         shown = CalendarPage(
           subjectMemberId: page.subjectMemberId,
@@ -600,7 +600,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           ],
         );
         days = [s.anchor];
-        empty = l10n?.calendarDayEmpty ?? 'Nothing on this day.';
+        empty = l10n.calendarDayEmpty;
     }
     // The agenda and the week list only the days that carry something
     // (or are closed); the month's single day always shows its header.
@@ -622,17 +622,17 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
   // ── the filters ────────────────────────────────────────────────────
   Future<void> _pickMember(Map<String, String> names, String? myId) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final entries = names.entries.toList()
       ..sort((a, b) => a.value.toLowerCase().compareTo(b.value.toLowerCase()));
-    final picked = await showModalBottomSheet<String?>(
+    final picked = await showAppSheet<String?>(
       context: context,
       builder: (_) => SafeArea(
         child: ListView(children: [
           ListTile(
             key: const ValueKey('calendar-member-me'),
             leading: const Icon(Icons.person_outline),
-            title: Text(l10n?.calendarMemberMe ?? 'Me'),
+            title: Text(l10n.calendarMemberMe),
             onTap: () => Navigator.of(context).pop(myId),
           ),
           for (final e in entries)

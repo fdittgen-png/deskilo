@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/messenger.dart';
 import '../providers/directory_providers.dart';
@@ -56,14 +56,13 @@ class _ThreadState extends ConsumerState<AccountThread> {
       _loading = true;
       _failed = false;
     });
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'messages',
       message: 'load account conversation failed',
       errorText:
-          l?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l.portalActionFailed,
       action: () async {
         final id = await ref
             .read(accountContactActionsProvider(source: widget.source))
@@ -86,7 +85,7 @@ class _ThreadState extends ConsumerState<AccountThread> {
     if (ref.watch(authStateProvider).value != widget.account) {
       return const SizedBox.shrink();
     }
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     if (_loading || _failed) {
       return Scaffold(
         appBar: AppBar(title: Text(widget.name)),
@@ -96,7 +95,7 @@ class _ThreadState extends ConsumerState<AccountThread> {
                 child: TextButton(
                   key: const ValueKey('account-thread-retry'),
                   onPressed: _lookup,
-                  child: Text(l?.commonRetry ?? 'Try again'),
+                  child: Text(l.commonRetry),
                 ),
               ),
       );

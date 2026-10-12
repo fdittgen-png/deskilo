@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/local_setup_providers.dart';
 import 'local_setup_views.dart';
 
@@ -20,14 +20,13 @@ class TemplateProfileLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final full = chosen >= total;
     return Text(
       key: const ValueKey('save-template-profile'),
       full
-          ? (l10n?.templateProfileFull ?? 'Full configuration profile')
-          : (l10n?.templateProfileSelected('$chosen', '$total') ??
-                'Selected groups: $chosen of $total'),
+          ? (l10n.templateProfileFull)
+          : (l10n.templateProfileSelected('$chosen', '$total')),
       style: Theme.of(context).textTheme.bodySmall,
     );
   }
@@ -43,7 +42,7 @@ class TemplateLocalNeedsPreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final slots =
         ref.watch(workspaceLocalSlotsProvider(workspaceId)).value ?? const [];
     if (slots.isEmpty) return const SizedBox.shrink();
@@ -54,8 +53,7 @@ class TemplateLocalNeedsPreview extends ConsumerWidget {
       children: [
         const SizedBox(height: AppSpacing.md),
         Text(
-          l10n?.templatePublishLocalNeeds ??
-              'A space that applies it will set these up itself:',
+          l10n.templatePublishLocalNeeds,
           style: theme.textTheme.titleSmall,
         ),
         const SizedBox(height: AppSpacing.xs),

@@ -4,10 +4,10 @@
 // development heading.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'dev_label.dart';
 
 /// "All spaces" or one of them: the documents of several workspaces arrive
@@ -27,7 +27,7 @@ class FinancesWorkspaceFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: EdgeFadeScroll(
@@ -37,7 +37,7 @@ class FinancesWorkspaceFilter extends StatelessWidget {
           children: [
             ChoiceChip(
               key: const ValueKey('finances-filter-all'),
-              label: Text(l10n?.financesAllSpaces ?? 'All spaces'),
+              label: Text(l10n.financesAllSpaces),
               selected: selected == null,
               onSelected: (_) => onSelected(null),
             ),
@@ -65,7 +65,7 @@ class FinancesDevSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final tone = AppEnvironmentColors.developmentOf(Theme.of(context).brightness);
     return Padding(
       key: const ValueKey('finances-dev-section'),
@@ -76,8 +76,7 @@ class FinancesDevSection extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              l10n?.financesDevSection ??
-                  'Development spaces — test data, not counted above',
+              l10n.financesDevSection,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(color: tone),
             ),
           ),

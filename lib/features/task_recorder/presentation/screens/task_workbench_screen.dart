@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -34,7 +36,9 @@ import '../../storyboard/storyboard_builder.dart';
 import '../../storyboard/storyboard_pictures.dart';
 import '../../storyboard/storyboard_preview.dart';
 import '../recorder_labels.dart';
+import '../recorder_pages.dart';
 import '../recording_export.dart';
+import '../route_classification.dart' show taskWorkbenchRoute;
 import '../widgets/recording_steps_view.dart';
 import '../widgets/task_outputs_section.dart';
 import 'guide_draft_screen.dart';
@@ -61,12 +65,12 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
   }
 
   Future<void> _choose() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final XFile? file;
     try {
       file = await ref.read(filePickerProvider)(
         XTypeGroup(
-          label: l10n?.taskWorkbenchFileType ?? 'Task file',
+          label: l10n.taskWorkbenchFileType,
           extensions: workbenchExtensions,
         ),
       );
@@ -119,8 +123,8 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
 
   Future<void> _reviewIllustrations() async {
     final copy = _copy;
-    final l10n = AppLocalizations.of(context);
-    if (copy == null || l10n == null) return;
+    final l10n = context.l10n;
+    if (copy == null) return;
     Storyboard board;
     try {
       board = _storyboard ?? buildStoryboard(copy, l10n);
@@ -134,16 +138,15 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
       return;
     }
     setState(() => _storyboard = board);
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => _StoryboardPage(
+    await _storyboardPage.open<void>(
+      context,
+      _StoryboardPage(
           key: const ValueKey('task-workbench-storyboard-page'),
           initial: board,
           onChanged: (next) {
             if (mounted) setState(() => _storyboard = next);
           },
         ),
-      ),
     );
   }
 
@@ -151,8 +154,8 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
   /// again from its recording. Said aloud when it cannot be used.
   Storyboard? _restoredStoryboard(WorkbenchOpened opened) {
     final review = opened.storyboard;
-    final l10n = AppLocalizations.of(context);
-    if (review == null || l10n == null) return null;
+    final l10n = context.l10n;
+    if (review == null) return null;
     try {
       final result = applyReview(
         buildStoryboard(opened.recording, l10n),
@@ -177,7 +180,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     final copy = _copy;
     final opened = _opened;
     if (copy == null || opened == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #1876 — a package keeps the reviewed storyboard of THIS copy and the
     // pictures of its approved frames.
     final board = _storyboard;
@@ -190,7 +193,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
       final pictures = await renderApprovedPictures(
         board,
         colors: Theme.of(context).colorScheme,
-        provenance: l10n?.taskExportSceneProvenance ?? 'Illustration',
+        provenance: l10n.taskExportSceneProvenance,
       );
       assets = [
         ...opened.assets.where((a) => !a.path.startsWith('media/frame-')),
@@ -218,24 +221,20 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final opened = _opened;
     final copy = _copy;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.taskWorkbenchTitle ?? 'Task workbench')),
+      appBar: AppBar(title: Text(l10n.taskWorkbenchTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.taskWorkbenchIntro ??
-                'Open a saved task file. It is read on this device only; '
-                    'nothing is uploaded and no sign-in is needed.',
+            l10n.taskWorkbenchIntro,
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            l10n?.taskWorkbenchAccepted(workbenchMaxBytes ~/ (1024 * 1024)) ??
-                'Accepted: .json and .deskilo-task.zip, up to '
-                    '${workbenchMaxBytes ~/ (1024 * 1024)} MB.',
+            l10n.taskWorkbenchAccepted(workbenchMaxBytes ~/ (1024 * 1024)),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -245,7 +244,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
             key: const ValueKey('workbench-choose'),
             onPressed: _choose,
             icon: const Icon(Icons.file_open_outlined),
-            label: Text(l10n?.taskWorkbenchChoose ?? 'Choose a task file'),
+            label: Text(l10n.taskWorkbenchChoose),
           ),
           if (opened != null && copy != null) ...[
             const SizedBox(height: AppSpacing.lg),
@@ -265,14 +264,14 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
                   key: const ValueKey('workbench-save-json'),
                   onPressed: () => _saveTask(package: false),
                   icon: const Icon(Icons.download),
-                  label: Text(l10n?.taskRecorderExport ?? 'Export a file'),
+                  label: Text(l10n.taskRecorderExport),
                 ),
                 OutlinedButton.icon(
                   key: const ValueKey('workbench-save-package'),
                   onPressed: () => _saveTask(package: true),
                   icon: const Icon(Icons.inventory_2_outlined),
                   label: Text(
-                    l10n?.taskRecorderExportPackage ?? 'Export a task package',
+                    l10n.taskRecorderExportPackage,
                   ),
                 ),
               ],
@@ -283,20 +282,18 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
               onPressed: _reviewIllustrations,
               icon: const Icon(Icons.photo_library_outlined),
               label: Text(
-                l10n?.taskWorkbenchReviewIllustrations ??
-                    'Review the illustrations',
+                l10n.taskWorkbenchReviewIllustrations,
               ),
             ),
             const SizedBox(height: AppSpacing.md),
             OutlinedButton.icon(
               key: const ValueKey('workbench-create-guide'),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => GuideDraftScreen(guide: compileGuide(copy)),
-                ),
+              onPressed: () => guideDraftPage.open<void>(
+                context,
+                GuideDraftScreen(guide: compileGuide(copy)),
               ),
               icon: const Icon(Icons.route_outlined),
-              label: Text(l10n?.taskGuideCreate ?? 'Create a guide draft'),
+              label: Text(l10n.taskGuideCreate),
             ),
             const SizedBox(height: AppSpacing.md),
             TaskOutputsSection(
@@ -318,22 +315,19 @@ class _Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = opened.recording;
     final lines = <String>[
-      r.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task'),
+      r.title ?? (l10n.taskRecorderUntitled),
       '${completenessLabel(l10n, r.completeness)} · '
           '${endReasonLabel(l10n, r.endReason)}',
       if (r.kind == RecordingKind.edited)
-        l10n?.taskWorkbenchEdited ?? 'An edited copy of a recording.',
+        l10n.taskWorkbenchEdited,
       if (!opened.runnable)
-        l10n?.taskWorkbenchTranscriptOnly ??
-            'Some steps come from a newer version: shown as a transcript only.',
-      l10n?.taskWorkbenchUntrusted ??
-          'A private draft from a file: nothing in it is trusted or sent.',
+        l10n.taskWorkbenchTranscriptOnly,
+      l10n.taskWorkbenchUntrusted,
       for (final claim in opened.claims.entries)
-        l10n?.taskWorkbenchClaim(claim.key, claim.value) ??
-            'The file says ${claim.key}: ${claim.value}',
+        l10n.taskWorkbenchClaim(claim.key, claim.value),
     ];
     return Card(
       child: Padding(
@@ -348,28 +342,34 @@ class _Summary extends StatelessWidget {
 }
 
 /// The words for a refused file.
-String refusalText(AppLocalizations? l10n, WorkbenchRefusal reason) =>
+String refusalText(AppLocalizations l10n, WorkbenchRefusal reason) =>
     switch (reason) {
       WorkbenchRefusal.tooLarge =>
-        l10n?.taskWorkbenchRefusedTooLarge ??
-            'This file is larger than the workbench reads.',
+        l10n.taskWorkbenchRefusedTooLarge,
       WorkbenchRefusal.unsupported =>
-        l10n?.taskWorkbenchRefusedUnsupported ?? 'This is not a task file.',
+        l10n.taskWorkbenchRefusedUnsupported,
       WorkbenchRefusal.unsafe =>
-        l10n?.taskWorkbenchRefusedUnsafe ??
-            'This file is built in a way that is not safe to open.',
+        l10n.taskWorkbenchRefusedUnsafe,
       WorkbenchRefusal.damaged =>
-        l10n?.taskWorkbenchRefusedDamaged ??
-            'This file is damaged or was changed after it was made.',
+        l10n.taskWorkbenchRefusedDamaged,
       WorkbenchRefusal.newer =>
-        l10n?.taskWorkbenchRefusedNewer ??
-            'This file was made by a newer version of the app.',
+        l10n.taskWorkbenchRefusedNewer,
       WorkbenchRefusal.invalid =>
-        l10n?.taskWorkbenchRefusedInvalid ??
-            'This file does not hold a valid task.',
+        l10n.taskWorkbenchRefusedInvalid,
     };
 
 /// The storyboard review on its own page: it scrolls by itself.
+/// #2388 — the storyboard as a page with a path; a link without the
+/// storyboard lands on the workbench.
+final _storyboardPage = PageSpec<_StoryboardPage>(
+  '$taskWorkbenchRoute/storyboard',
+  (page) => page,
+  fallback: taskWorkbenchRoute,
+);
+
+/// The workbench's own pages, for the router.
+final List<PageSpec<Object?>> workbenchPages = [_storyboardPage];
+
 class _StoryboardPage extends StatefulWidget {
   const _StoryboardPage({super.key, required this.initial, required this.onChanged});
 
@@ -385,11 +385,11 @@ class _StoryboardPageState extends State<_StoryboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n?.taskWorkbenchReviewIllustrations ?? 'Review the illustrations',
+          l10n.taskWorkbenchReviewIllustrations,
         ),
       ),
       body: StoryboardPreview(

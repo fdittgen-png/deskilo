@@ -11,11 +11,13 @@
 // whether every surface knows about it.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_design_file.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Two levels is enough to prove the reminder family is covered without
 /// pinning a workspace's dunning configuration.
@@ -32,7 +34,7 @@ void main() {
 
   test('every kind has a human label, and none falls back to its id', () {
     for (final kind in kinds) {
-      final label = reportKindLabel(null, kind);
+      final label = reportKindLabel(englishL10n, kind);
       expect(label.trim(), isNotEmpty, reason: kind.id);
       expect(label, isNot(kind.id),
           reason: '${kind.id} has no label — reportKindLabel fell back to '
@@ -98,9 +100,8 @@ void main() {
   });
 
   test('the editor no longer keeps its own list of kinds', () {
-    final editor = File(
-            'lib/features/money/presentation/widgets/invoice_template_sheet.dart')
-        .readAsStringSync();
+    final editor = readLibrary(File( // #2386 — with its parts
+        'lib/features/money/presentation/widgets/invoice_template_sheet.dart'));
     // The five hand-maintained switches this registry replaced.
     expect(editor, isNot(contains('_extraDocs')),
         reason: 'the extras constant is back');

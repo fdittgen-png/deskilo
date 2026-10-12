@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
@@ -48,20 +49,20 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
   Member? _memberOf(Workspace s) =>
       widget.memberships.where((m) => m.workspaceId == s.id).firstOrNull;
 
-  String _groupName(AppLocalizations? l10n, SpacePrefs prefs, String id) =>
+  String _groupName(AppLocalizations l10n, SpacePrefs prefs, String id) =>
       switch (id) {
-        SpaceGroup.favoritesGroup => l10n?.meGroupFavorites ?? 'Favorites',
-        SpaceGroup.otherGroup => l10n?.meGroupOther ?? 'Other',
+        SpaceGroup.favoritesGroup => l10n.meGroupFavorites,
+        SpaceGroup.otherGroup => l10n.meGroupOther,
         _ => prefs.groups.firstWhere((g) => g.id == id).name,
       };
 
   Future<String?> _askName(BuildContext context, {String initial = ''}) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final controller = TextEditingController(text: initial);
     return showDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: Text(l10n?.meGroupName ?? 'Group name'),
+        title: Text(l10n.meGroupName),
         content: TextField(
           key: const ValueKey('me-group-name-field'),
           controller: controller,
@@ -79,7 +80,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           FilledButton(
             key: const ValueKey('me-group-save'),
             onPressed: () => Navigator.of(dialog).pop(controller.text),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -95,10 +96,10 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
   }
 
   Future<void> _pickGroup(BuildContext context, String key) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final prefs = ref.read(spacePrefsProvider).value ?? SpacePrefs.empty;
     final current = prefs.groupIdOf(key);
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       showDragHandle: true,
       builder: (sheet) => SafeArea(
@@ -120,7 +121,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             ListTile(
               key: const ValueKey('me-group-pick-new'),
               leading: const Icon(Icons.add),
-              title: Text(l10n?.meGroupAdd ?? 'New group'),
+              title: Text(l10n.meGroupAdd),
               onTap: () => Navigator.of(sheet).pop('\u0000new'),
             ),
           ],
@@ -137,17 +138,17 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
 
   /// #2343 — the server these spaces live on: the one this process runs
   /// on (Settings may already hold the next one, pending a restart).
-  String? _hostedOn(AppLocalizations? l10n) {
+  String? _hostedOn(AppLocalizations l10n) {
     final booted = ref.watch(bootedBackendUrlProvider);
     final url = booted.isNotEmpty
         ? booted
         : ref.watch(activeBackendProvider).value?.url;
-    return l10n == null || url == null ? null : serverLabel(l10n, url);
+    return url == null ? null : serverLabel(l10n, url);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final byKey = <String, List<Workspace>>{};
@@ -203,10 +204,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
               ),
               child: Text(
                 id == SpaceGroup.favoritesGroup
-                    ? (l10n?.meGroupEmptyFavorites ??
-                          'Give a space a heart and it waits for you here.')
-                    : (l10n?.meGroupEmptyOwn ??
-                          'Move spaces here from their menu.'),
+                    ? (l10n.meGroupEmptyFavorites)
+                    : (l10n.meGroupEmptyOwn),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -249,7 +248,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             key: const ValueKey('me-spaces-no-match'),
             padding: AppSpacing.lgAll,
             child: Text(
-              l10n?.meSpacesNoMatch ?? 'No space matches.',
+              l10n.meSpacesNoMatch,
               textAlign: TextAlign.center,
             ),
           ),
@@ -266,7 +265,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     List<Workspace> group,
     int? dragIndex,
   ) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final sides = [...group]
       ..sort((a, b) => b.environment.compareTo(a.environment));
@@ -287,16 +286,14 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             SpaceLeaveItem(
               id: space.id,
               label: (_memberOf(space)?.isOwner ?? false)
-                  ? (l10n?.meLeaveOwner ??
-                        'Owners hand the space over before leaving')
+                  ? (l10n.meLeaveOwner)
                   : group.length == 1
-                  ? (l10n?.meLeaveAction ?? 'Leave this space')
-                  : (l10n?.meLeaveSide(
+                  ? (l10n.meLeaveAction)
+                  : (l10n.meLeaveSide(
                           space.environment == 'prod'
                               ? l10n.profilesPairProd
                               : l10n.profilesPairDev,
-                        ) ??
-                        'Leave ${space.environment}'),
+                        )),
               enabled: !(_memberOf(space)?.isOwner ?? false),
               onLeave: () =>
                   confirmLeaveSpace(context, ref, space, _memberOf(space)),
@@ -310,7 +307,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             : () => notifier.move(groupKeys, key, 1),
       ),
       environmentHint: group.any((s) => s.isDevelopment)
-          ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint
+          ? l10n.uxTestSpaceHint
           : null,
       avatar: WorkspaceAvatar(workspace: group.first),
       // #2313 — production's identity when the pair has one.
@@ -320,7 +317,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       detail: {
         for (final space in group)
           if (_memberOf(space) case final member?)
-            if (member.status == MemberStatus.pending) (l10n?.meSpacePending ?? 'Waiting for approval') else memberRoleLabel(l10n, member),
+            if (member.status == MemberStatus.pending) l10n.meSpacePending else memberRoleLabel(l10n, member),
       }.join(' · '),
       actions: [
         // A space without a production side keeps development at the right.
@@ -352,12 +349,12 @@ class _Toolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     String label(SpaceSort s) => switch (s) {
-      SpaceSort.byHand => l10n?.meSortHand ?? 'My order',
-      SpaceSort.recent => l10n?.meSortRecent ?? 'Recently used',
-      SpaceSort.rating => l10n?.meSortRating ?? 'Best rated',
-      SpaceSort.alphabet => l10n?.meSortAlphabet ?? 'A–Z',
+      SpaceSort.byHand => l10n.meSortHand,
+      SpaceSort.recent => l10n.meSortRecent,
+      SpaceSort.rating => l10n.meSortRating,
+      SpaceSort.alphabet => l10n.meSortAlphabet,
     };
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -371,7 +368,7 @@ class _Toolbar extends StatelessWidget {
               decoration: InputDecoration(
                 isDense: true,
                 prefixIcon: const Icon(Icons.search),
-                hintText: l10n?.meSpacesSearch ?? 'Search my spaces',
+                hintText: l10n.meSpacesSearch,
                 filled: true,
                 border: const OutlineInputBorder(
                   borderRadius: AppRadius.xlAll,
@@ -382,7 +379,7 @@ class _Toolbar extends StatelessWidget {
           ),
           PopupMenuButton<SpaceSort>(
             key: const ValueKey('me-spaces-sort'),
-            tooltip: l10n?.meSortTooltip ?? 'Sort',
+            tooltip: l10n.meSortTooltip,
             icon: const Icon(Icons.sort),
             style: IconButton.styleFrom(side: BorderSide.none),
             initialValue: sort,
@@ -399,7 +396,7 @@ class _Toolbar extends StatelessWidget {
           ),
           IconButton(
             key: const ValueKey('me-spaces-add-group'),
-            tooltip: l10n?.meGroupAdd ?? 'New group',
+            tooltip: l10n.meGroupAdd,
             style: IconButton.styleFrom(side: BorderSide.none),
             icon: const Icon(Icons.create_new_folder_outlined),
             onPressed: onAddGroup,
@@ -428,7 +425,7 @@ class _GroupHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -486,12 +483,12 @@ class _GroupHeader extends StatelessWidget {
                 PopupMenuItem(
                   key: ValueKey('me-group-rename-$id'),
                   value: 'rename',
-                  child: Text(l10n?.meGroupRename ?? 'Rename'),
+                  child: Text(l10n.meGroupRename),
                 ),
                 PopupMenuItem(
                   key: ValueKey('me-group-delete-$id'),
                   value: 'delete',
-                  child: Text(l10n?.meGroupDelete ?? 'Delete group'),
+                  child: Text(l10n.meGroupDelete),
                 ),
               ],
             ),

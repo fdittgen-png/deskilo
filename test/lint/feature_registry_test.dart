@@ -18,6 +18,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
@@ -73,7 +74,7 @@ void main() {
   test('every feature has a human name (fallback wired)', () {
     for (final feature in WorkspaceFeature.values) {
       expect(
-        featureName(null, feature).trim(),
+        featureName(englishL10n, feature).trim(),
         isNotEmpty,
         reason: '${feature.name} has no name in feature_names.dart',
       );

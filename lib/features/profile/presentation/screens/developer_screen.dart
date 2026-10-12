@@ -9,11 +9,11 @@ import '../../../../core/app_info.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation_export.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -50,7 +50,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
   bool _exporting = false;
 
   Future<void> _export() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final logger = ref.read(traceLoggerProvider);
     final save = ref.read(fileSaverProvider);
     try {
@@ -73,11 +73,11 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       );
       if (!mounted) return;
       if (path == null) {
-        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+        AppSnack.error(context, l10n.commonSaveFailed);
       } else {
         AppSnack.success(
           context,
-          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          l10n.commonSavedTo(path),
         );
       }
     } on Object catch (e, st) {
@@ -86,8 +86,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       if (!mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
@@ -100,7 +99,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
   /// says. Having only the first is why "it says the seat is taken and
   /// it is not" has been unanswerable from a bug report alone.
   Future<void> _exportReservations() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final logger = ref.read(traceLoggerProvider);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -136,11 +135,11 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       if (!mounted) return;
       setState(() => _exporting = false);
       if (path == null) {
-        AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+        AppSnack.error(context, l10n.commonSaveFailed);
       } else {
         AppSnack.success(
           context,
-          l10n?.commonSavedTo(path) ?? 'Saved to $path',
+          l10n.commonSavedTo(path),
         );
       }
     } on Object catch (e, st) {
@@ -150,36 +149,35 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
       setState(() => _exporting = false);
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final logger = ref.watch(traceLoggerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.developerTitle ?? 'Developer'),
+        title: Text(l10n.developerTitle),
         actions: [
           IconButton(
             key: const ValueKey('developer-export'),
             icon: const Icon(Icons.ios_share),
-            tooltip: l10n?.developerExport ?? 'Export trace',
+            tooltip: l10n.developerExport,
             onPressed: _export,
           ),
           IconButton(
             key: const ValueKey('developer-clear'),
             icon: const Icon(Icons.delete_outline),
-            tooltip: l10n?.developerClear ?? 'Clear trace',
+            tooltip: l10n.developerClear,
             onPressed: () => ref.read(traceLoggerProvider).clear(),
           ),
           // #1393 — what the three shapes mean, why a trace is per
           // device, and what an export deliberately does not carry.
           HelpDot(
-            l10n?.helpTopicTrace ?? 'The trace',
+            l10n.helpTopicTrace,
             anchor: HelpAnchor.advancedTroubleshooting,
           ),
         ],
@@ -197,20 +195,14 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
                   )
                 : const Icon(Icons.table_view_outlined),
             title: Text(
-              l10n?.developerExportReservations ?? 'Export reservations',
+              l10n.developerExportReservations,
             ),
             subtitle: Text(
               ref
                       .watch(myPermissionsProvider)
                       .contains(WorkspacePermission.exportData)
-                  ? (l10n?.developerExportReservationsHint ??
-                      'Every booking and check-in — past, present and '
-                          'future, every state — as CSV, for analysis and '
-                          'debugging.')
-                  : (l10n?.developerExportReservationsOwnHint ??
-                      'Your own bookings and check-ins, every state, as '
-                          'CSV — exporting the whole workspace needs the '
-                          'data-export permission.'),
+                  ? (l10n.developerExportReservationsHint)
+                  : (l10n.developerExportReservationsOwnHint),
             ),
             onTap: _exporting ? null : _exportReservations,
           ),
@@ -225,21 +217,21 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
               children: [
                 ChoiceChip(
                   key: const ValueKey('developer-filter-all'),
-                  label: Text(l10n?.developerFilterAll ?? 'All'),
+                  label: Text(l10n.developerFilterAll),
                   selected: _filter == _TraceFilter.all,
                   onSelected: (_) =>
                       setState(() => _filter = _TraceFilter.all),
                 ),
                 ChoiceChip(
                   key: const ValueKey('developer-filter-errors'),
-                  label: Text(l10n?.developerFilterErrors ?? 'Errors'),
+                  label: Text(l10n.developerFilterErrors),
                   selected: _filter == _TraceFilter.errors,
                   onSelected: (_) =>
                       setState(() => _filter = _TraceFilter.errors),
                 ),
                 ChoiceChip(
                   key: const ValueKey('developer-filter-warnings'),
-                  label: Text(l10n?.developerFilterWarnings ?? 'Warnings+'),
+                  label: Text(l10n.developerFilterWarnings),
                   selected: _filter == _TraceFilter.warnings,
                   onSelected: (_) =>
                       setState(() => _filter = _TraceFilter.warnings),
@@ -257,7 +249,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
                 if (visible.isEmpty) {
                   return Center(
                     child: Text(
-                      l10n?.developerEmpty ?? 'No trace entries yet.',
+                      l10n.developerEmpty,
                     ),
                   );
                 }

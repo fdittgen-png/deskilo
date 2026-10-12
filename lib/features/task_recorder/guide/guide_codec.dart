@@ -64,10 +64,10 @@ Map<String, Object?> encodeGuide(TaskGuide g) => {
   'action_contract_version': g.actionContractVersion,
   if (g.title != null) 'title': g.title,
   if (g.sourceDigest != null) 'source_digest': g.sourceDigest,
-  'steps': [for (final s in g.steps) encodeGuideStep(s)],
+  'steps': [for (final s in g.steps) _encodeGuideStep(s)],
 };
 
-Map<String, Object?> encodeGuideStep(GuideStep s) => {
+Map<String, Object?> _encodeGuideStep(GuideStep s) => {
   'id': s.id,
   'kind': s.kind.wire,
   if (s.action != null) 'action': s.action,
@@ -80,7 +80,7 @@ Map<String, Object?> encodeGuideStep(GuideStep s) => {
   if (s.label != null) 'label': s.label,
   if (s.destination != null) 'destination': s.destination,
   if (s.recovery.isNotEmpty)
-    'recovery': [for (final r in s.recovery) encodeGuideStep(r)],
+    'recovery': [for (final r in s.recovery) _encodeGuideStep(r)],
 };
 
 String encodeGuideText(TaskGuide g) =>

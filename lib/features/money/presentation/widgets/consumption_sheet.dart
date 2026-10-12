@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -31,7 +32,7 @@ Future<void> showConsumptionSheet(
   required String subjectMemberId,
   String? subjectName,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final services = await ref.read(servicesProvider.future);
@@ -53,7 +54,7 @@ Future<void> showConsumptionSheet(
   if (services.isEmpty) {
     AppSnack.info(
       context,
-      l10n?.consumptionNoServices ?? 'No active services to record.',
+      l10n.consumptionNoServices,
     );
     return;
   }
@@ -64,7 +65,7 @@ Future<void> showConsumptionSheet(
   );
   var service = services.first;
   var quantity = 1;
-  final submitted = await showModalBottomSheet<bool>(
+  final submitted = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Padding(
@@ -81,9 +82,8 @@ Future<void> showConsumptionSheet(
           children: [
             Text(
               subjectName == null
-                  ? (l10n?.consumptionAdd ?? 'Add consumption')
-                  : (l10n?.consumptionAddForMember(subjectName) ??
-                      'Add service for $subjectName'),
+                  ? (l10n.consumptionAdd)
+                  : (l10n.consumptionAddForMember(subjectName)),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
@@ -93,7 +93,7 @@ Future<void> showConsumptionSheet(
               isExpanded: true,
               initialValue: service,
               decoration: InputDecoration(
-                labelText: l10n?.consumptionService ?? 'Service',
+                labelText: l10n.consumptionService,
               ),
               items: [
                 for (final item in services)
@@ -104,7 +104,7 @@ Future<void> showConsumptionSheet(
                     child: Text(
                       '${item.name} — '
                       '${currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)}'
-                      '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n?.serviceOutOfStock ?? 'Out of stock'}' : ' · ${l10n?.serviceStockCount(item.stock!) ?? '${item.stock} in stock'}'}',
+                      '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n.serviceOutOfStock}' : ' · ${l10n.serviceStockCount(item.stock!)}'}',
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -115,11 +115,11 @@ Future<void> showConsumptionSheet(
             Row(
               children: [
                 Expanded(
-                  child: Text(l10n?.consumptionQuantity ?? 'Quantity'),
+                  child: Text(l10n.consumptionQuantity),
                 ),
                 IconButton(
                   key: ValueKey('consumption-sheet-a11y-decrease-$subjectMemberId'),
-                  tooltip: l10n?.a11yDecrease ?? 'Decrease',
+                  tooltip: l10n.a11yDecrease,
                   icon: const Icon(Icons.remove),
                   onPressed: quantity <= 1
                       ? null
@@ -131,7 +131,7 @@ Future<void> showConsumptionSheet(
                 ),
                 IconButton(
                   key: ValueKey('consumption-sheet-a11y-increase-$subjectMemberId'),
-                  tooltip: l10n?.a11yIncrease ?? 'Increase',
+                  tooltip: l10n.a11yIncrease,
                   icon: const Icon(Icons.add),
                   onPressed: quantity >= 999
                       ? null
@@ -149,8 +149,7 @@ Future<void> showConsumptionSheet(
               // nothing, silently.
               onChanged: (_) => setSheetState(() {}),
               decoration: InputDecoration(
-                labelText: l10n?.consumptionPeriodLabel ??
-                    'Billing period (YYYY-MM)',
+                labelText: l10n.consumptionPeriodLabel,
               ),
             ),
             const SizedBox(height: 16),
@@ -165,7 +164,7 @@ Future<void> showConsumptionSheet(
                   ? () => Navigator.of(context).pop(true)
                   : null,
               child: Text(
-                l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+                l10n.moneySubmitPayment,
               ),
             ),
           ],
@@ -183,8 +182,7 @@ Future<void> showConsumptionSheet(
     context,
     domain: 'money',
     message: 'record service charge failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async => outcome = await ref.read(consumptionsProvider).record(
           workspaceId: workspace.id,
           subjectMemberId: subjectMemberId,
@@ -200,14 +198,10 @@ Future<void> showConsumptionSheet(
   // emptied meanwhile) is said, never swallowed.
   final refusal = switch (outcome) {
     ConsumptionOutcome.filed => null,
-    ConsumptionOutcome.insufficientStock => l10n?.consumptionRefusedStock ??
-        'Not enough left in stock. Nothing was recorded.',
-    ConsumptionOutcome.serviceInactive => l10n?.consumptionRefusedInactive ??
-        'This service is no longer offered. Nothing was recorded.',
-    ConsumptionOutcome.quantityOutOfRange => l10n?.consumptionRefusedQuantity ??
-        'The quantity must be between 1 and 999. Nothing was recorded.',
-    ConsumptionOutcome.periodNotAMonth => l10n?.consumptionRefusedPeriod ??
-        'The billing period must be a month (YYYY-MM). Nothing was recorded.',
+    ConsumptionOutcome.insufficientStock => l10n.consumptionRefusedStock,
+    ConsumptionOutcome.serviceInactive => l10n.consumptionRefusedInactive,
+    ConsumptionOutcome.quantityOutOfRange => l10n.consumptionRefusedQuantity,
+    ConsumptionOutcome.periodNotAMonth => l10n.consumptionRefusedPeriod,
   };
   if (refusal != null) {
     AppSnack.error(context, refusal);
@@ -215,8 +209,7 @@ Future<void> showConsumptionSheet(
   }
   AppSnack.success(
     context,
-    l10n?.consumptionRecorded ??
-        'Consumption recorded — waiting for confirmation.',
+    l10n.consumptionRecorded,
   );
   ref.invalidate(eventsProvider);
 }

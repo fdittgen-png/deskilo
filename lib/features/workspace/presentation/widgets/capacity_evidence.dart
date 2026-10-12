@@ -4,26 +4,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/kpi_contract.dart';
 
-String biQualityLabel(Set<KpiQuality> quality, AppLocalizations? l10n) {
+String biQualityLabel(Set<KpiQuality> quality, AppLocalizations l10n) {
   if (quality.contains(KpiQuality.forbidden) ||
       quality.contains(KpiQuality.unavailable)) {
-    return l10n?.biDataUnavailable ?? 'Unavailable';
+    return l10n.biDataUnavailable;
   }
   if (quality.contains(KpiQuality.notRecorded)) {
-    return l10n?.biDataNotRecorded ?? 'Not recorded';
+    return l10n.biDataNotRecorded;
   }
   if (quality.contains(KpiQuality.notApplicable)) {
-    return l10n?.biDataNotApplicable ?? 'No applicable capacity';
+    return l10n.biDataNotApplicable;
   }
   return [
     if (quality.contains(KpiQuality.partial))
-      l10n?.biDataPartial ?? 'Partial data',
-    if (quality.contains(KpiQuality.stale)) l10n?.biDataStale ?? 'Out of date',
+      l10n.biDataPartial,
+    if (quality.contains(KpiQuality.stale)) l10n.biDataStale,
   ].join(' · ');
 }
 
@@ -34,27 +35,21 @@ class CapacityEvidence extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final theme = Theme.of(context);
     final future = !kpi.from.isBefore(kpi.computedAt);
     final closed = !kpi.to.isAfter(kpi.computedAt);
     final period = future
-        ? l10n?.biRecordedFuture ?? 'Future period · bookings on record'
+        ? l10n.biRecordedFuture
         : closed
-        ? l10n?.biRecordedPast ?? 'Past period · current records'
-        : l10n?.biRecordedPresent ?? 'Current period · includes future dates';
+        ? l10n.biRecordedPast
+        : l10n.biRecordedPresent;
     final explanation = future
-        ? l10n?.biFutureBasis ??
-              'Existing bookings and current opening rules; not a demand '
-                  'forecast or guaranteed usage.'
+        ? l10n.biFutureBasis
         : closed
-        ? l10n?.biPastBasis ??
-              'Recomputed from records available now, not a snapshot of what '
-                  'was known then.'
-        : l10n?.biCurrentBasis ??
-              'The whole period is included. Comparison with a completed '
-                  'period is not like-for-like.';
+        ? l10n.biPastBasis
+        : l10n.biCurrentBasis;
     final quality = biQualityLabel(kpi.quality, l10n);
     final asOf = DateFormat.yMd(locale)
         .add_Hm()
@@ -77,8 +72,7 @@ class CapacityEvidence extends StatelessWidget {
           ),
           Text(explanation, style: theme.textTheme.bodySmall),
           Text(
-            l10n?.biBookingBasis ??
-                'Reserved capacity measures bookings, not actual attendance.',
+            l10n.biBookingBasis,
             style: theme.textTheme.bodySmall,
           ),
           if (quality.isNotEmpty)
@@ -90,8 +84,7 @@ class CapacityEvidence extends StatelessWidget {
               ),
             ),
           Text(
-            l10n?.biComputedWorkspaceTime(asOf) ??
-                'Computed $asOf · workspace time',
+            l10n.biComputedWorkspaceTime(asOf),
             key: const ValueKey('capacity-computed-at'),
             style: theme.textTheme.bodySmall,
           ),
@@ -102,13 +95,11 @@ class CapacityEvidence extends StatelessWidget {
               children: [
                 if (free >= 0)
                   Text(
-                    l10n?.biSeatHoursFree(hours.format(free)) ??
-                        '${hours.format(free)} unreserved seat-hours',
+                    l10n.biSeatHoursFree(hours.format(free)),
                   ),
                 if (blocked >= 0)
                   Text(
-                    l10n?.biSeatHoursBlocked(hours.format(blocked)) ??
-                        '${hours.format(blocked)} blocked seat-hours',
+                    l10n.biSeatHoursBlocked(hours.format(blocked)),
                   ),
               ],
             ),

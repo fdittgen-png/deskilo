@@ -3,10 +3,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../core/l10n/context_l10n.dart';
 import '../../core/motion/motion.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
-import '../../l10n/app_localizations.dart';
 
 /// Teaches the swipe-away gesture, once (#1173).
 ///
@@ -151,14 +151,12 @@ class _ShellSwipeCoachMarkState extends State<ShellSwipeCoachMark>
 
   Widget _buildOverlayChild(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final curve = CurvedAnimation(parent: _enter, curve: MotionTokens.enter);
     // Clear of the bar, the system inset below it, and a breath of gap.
     final bottom =
         widget.barHeight + MediaQuery.paddingOf(context).bottom + 14;
-    final text = l10n?.shellSwipeCoachMark ??
-        'Swipe the bar down for a full-screen view. '
-            'Swipe up, or long-press the Reserve button, to bring it back.';
+    final text = l10n.shellSwipeCoachMark;
 
     return Align(
       alignment: Alignment.bottomCenter,
@@ -224,7 +222,7 @@ class _ShellSwipeCoachMarkState extends State<ShellSwipeCoachMark>
                             minimumSize: const Size(0, 32),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text(l10n?.helpHintDismiss ?? 'Dismiss hint'),
+                          child: Text(l10n.helpHintDismiss),
                         ),
                       ],
                     ),

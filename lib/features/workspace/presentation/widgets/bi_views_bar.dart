@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -24,18 +25,16 @@ import 'bi_toolbar.dart';
 /// null, the product standard.
 typedef BiOpenView = void Function(BiSavedView? view, BiQueryContext query);
 
-String _biViewFailureText(AppLocalizations? l10n, BiViewFailure f) =>
+String _biViewFailureText(AppLocalizations l10n, BiViewFailure f) =>
     switch (f) {
       BiViewFailure.stale =>
-        l10n?.biViewStale ??
-            'Someone saved this view since you opened it. The list was read '
-                'again; try once more.',
+        l10n.biViewStale,
       BiViewFailure.nameTaken =>
-        l10n?.biViewNameTaken ?? 'A view with this name already exists.',
+        l10n.biViewNameTaken,
       BiViewFailure.forbidden =>
-        l10n?.biViewForbidden ?? 'You may not change this view.',
+        l10n.biViewForbidden,
       BiViewFailure.invalid =>
-        l10n?.biViewInvalid ?? 'This name or view cannot be saved.',
+        l10n.biViewInvalid,
     };
 
 class BiViewsBar extends ConsumerWidget {
@@ -62,7 +61,7 @@ class BiViewsBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final views = ref.watch(biViewsProvider(workspaceId)).value ?? const [];
     final canManage = ref
         .watch(myPermissionsProvider)
@@ -105,7 +104,7 @@ class BiViewsBar extends ConsumerWidget {
       PopupMenuItem(
         key: const ValueKey('bi-views-standard'),
         value: () => onOpen(null, BiQueryContext.standard),
-        child: Text(l10n?.biViewStandard ?? 'Standard view'),
+        child: Text(l10n.biViewStandard),
       ),
       for (final scope in BiViewScope.values)
         if (views.any((v) => v.scope == scope)) ...[
@@ -114,8 +113,8 @@ class BiViewsBar extends ConsumerWidget {
             enabled: false,
             child: Text(
               scope == BiViewScope.private
-                  ? l10n?.biViewsMine ?? 'My views'
-                  : l10n?.biViewsTeam ?? 'Team views',
+                  ? l10n.biViewsMine
+                  : l10n.biViewsTeam,
             ),
           ),
           for (final v in views.where((v) => v.scope == scope))
@@ -127,10 +126,7 @@ class BiViewsBar extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        l10n?.biViewUnreadable ??
-                            'This view cannot be opened here: it was saved '
-                                'in a form this version does not read, or '
-                                'none of its analyses is available to you.',
+                        l10n.biViewUnreadable,
                       ),
                     ),
                   );
@@ -155,7 +151,7 @@ class BiViewsBar extends ConsumerWidget {
             );
             onOpen(saved, query);
           }),
-          child: Text(l10n?.biViewSave ?? 'Save'),
+          child: Text(l10n.biViewSave),
         ),
       PopupMenuItem(
         key: const ValueKey('bi-views-save-as'),
@@ -178,7 +174,7 @@ class BiViewsBar extends ConsumerWidget {
           );
           onOpen(saved, answer.query);
         }),
-        child: Text(l10n?.biViewSaveAs ?? 'Save as a new view…'),
+        child: Text(l10n.biViewSaveAs),
       ),
       if (open != null) ...[
         if (editable(open))
@@ -198,7 +194,7 @@ class BiViewsBar extends ConsumerWidget {
                 definition: open.definition ?? BiViewDefinition.of(query),
               );
             }),
-            child: Text(l10n?.biViewRename ?? 'Rename…'),
+            child: Text(l10n.biViewRename),
           ),
         PopupMenuItem(
           key: const ValueKey('bi-views-duplicate'),
@@ -206,12 +202,12 @@ class BiViewsBar extends ConsumerWidget {
             final copy = await actions.save(
               workspaceId,
               scope: BiViewScope.private,
-              name: l10n?.biViewCopyName(open.name) ?? '${open.name} (copy)',
+              name: l10n.biViewCopyName(open.name),
               definition: BiViewDefinition.of(query),
             );
             onOpen(copy, query);
           }),
-          child: Text(l10n?.biViewDuplicate ?? 'Duplicate as my view'),
+          child: Text(l10n.biViewDuplicate),
         ),
         if (open.scope == BiViewScope.private && open.mine && !open.isDefault)
           PopupMenuItem(
@@ -221,7 +217,7 @@ class BiViewsBar extends ConsumerWidget {
                   actions.setDefault(workspaceId, BiViewScope.private, open.id),
             ),
             child: Text(
-              l10n?.biViewMakeMyDefault ?? 'Open this view by default',
+              l10n.biViewMakeMyDefault,
             ),
           ),
         if (open.scope == BiViewScope.workspace && canManage && !open.isDefault)
@@ -235,7 +231,7 @@ class BiViewsBar extends ConsumerWidget {
               ),
             ),
             child: Text(
-              l10n?.biViewMakeTeamDefault ?? 'Make it the team’s default',
+              l10n.biViewMakeTeamDefault,
             ),
           ),
         if (editable(open))
@@ -246,8 +242,7 @@ class BiViewsBar extends ConsumerWidget {
                 context: context,
                 builder: (dialog) => AlertDialog(
                   content: Text(
-                    l10n?.biViewDeleteConfirm(open.name) ??
-                        'Delete the view “${open.name}”?',
+                    l10n.biViewDeleteConfirm(open.name),
                   ),
                   actions: [
                     TextButton(
@@ -260,7 +255,7 @@ class BiViewsBar extends ConsumerWidget {
                     TextButton(
                       key: const ValueKey('bi-views-delete-confirm'),
                       onPressed: () => Navigator.of(dialog).pop(true),
-                      child: Text(l10n?.biViewDelete ?? 'Delete'),
+                      child: Text(l10n.biViewDelete),
                     ),
                   ],
                 ),
@@ -269,7 +264,7 @@ class BiViewsBar extends ConsumerWidget {
               await actions.delete(workspaceId, open);
               onOpen(null, query);
             }),
-            child: Text(l10n?.biViewDelete ?? 'Delete'),
+            child: Text(l10n.biViewDelete),
           ),
       ],
       if (myDefault)
@@ -279,7 +274,7 @@ class BiViewsBar extends ConsumerWidget {
             () => actions.setDefault(workspaceId, BiViewScope.private, null),
           ),
           child: Text(
-            l10n?.biViewClearMyDefault ?? 'Stop opening my default view',
+            l10n.biViewClearMyDefault,
           ),
         ),
       if (teamDefault && canManage)
@@ -289,7 +284,7 @@ class BiViewsBar extends ConsumerWidget {
             () => actions.setDefault(workspaceId, BiViewScope.workspace, null),
           ),
           child: Text(
-            l10n?.biViewClearTeamDefault ?? 'Clear the team’s default',
+            l10n.biViewClearTeamDefault,
           ),
         ),
     ];
@@ -302,7 +297,7 @@ class BiViewsBar extends ConsumerWidget {
         children: [
           PopupMenuButton<void Function()>(
             key: const ValueKey('bi-views'),
-            tooltip: l10n?.biViews ?? 'Views',
+            tooltip: l10n.biViews,
             itemBuilder: (_) => items,
             onSelected: (action) => action(),
             child: Row(
@@ -312,7 +307,7 @@ class BiViewsBar extends ConsumerWidget {
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   open == null
-                      ? l10n?.biViewStandard ?? 'Standard view'
+                      ? l10n.biViewStandard
                       : label(open),
                   key: const ValueKey('bi-views-current'),
                 ),
@@ -322,7 +317,7 @@ class BiViewsBar extends ConsumerWidget {
           ),
           if (modified)
             Text(
-              l10n?.biViewModified ?? 'changed since it was opened',
+              l10n.biViewModified,
               key: const ValueKey('bi-views-modified'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -360,7 +355,7 @@ class _NameDialogState extends State<_NameDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     return AlertDialog(
       content: TextField(
@@ -368,7 +363,7 @@ class _NameDialogState extends State<_NameDialog> {
         controller: _name,
         autofocus: true,
         maxLength: 80,
-        decoration: InputDecoration(labelText: l10n?.biViewName ?? 'Name'),
+        decoration: InputDecoration(labelText: l10n.biViewName),
       ),
       actions: [
         TextButton(
@@ -419,13 +414,13 @@ class _SaveDialogState extends State<_SaveDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
     final relative = widget.query.period.isRelative;
     final current = widget.query.current(widget.today);
     return AlertDialog(
-      title: Text(l10n?.biViewSaveAs ?? 'Save as a new view…'),
+      title: Text(l10n.biViewSaveAs),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -437,7 +432,7 @@ class _SaveDialogState extends State<_SaveDialog> {
               autofocus: true,
               maxLength: 80,
               decoration: InputDecoration(
-                labelText: l10n?.biViewName ?? 'Name',
+                labelText: l10n.biViewName,
               ),
             ),
             if (widget.canShare)
@@ -446,11 +441,11 @@ class _SaveDialogState extends State<_SaveDialog> {
                 segments: [
                   ButtonSegment(
                     value: BiViewScope.private,
-                    label: Text(l10n?.biViewScopePrivate ?? 'Only me'),
+                    label: Text(l10n.biViewScopePrivate),
                   ),
                   ButtonSegment(
                     value: BiViewScope.workspace,
-                    label: Text(l10n?.biViewScopeTeam ?? 'The team'),
+                    label: Text(l10n.biViewScopeTeam),
                   ),
                 ],
                 selected: {_scope},
@@ -470,8 +465,7 @@ class _SaveDialogState extends State<_SaveDialog> {
                       value: false,
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        l10n?.biViewPeriodMoves ??
-                            'The period moves with the day it is opened',
+                        l10n.biViewPeriodMoves,
                       ),
                     ),
                     RadioListTile<bool>(
@@ -479,10 +473,9 @@ class _SaveDialogState extends State<_SaveDialog> {
                       value: true,
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        l10n?.biViewPeriodFixed(
+                        l10n.biViewPeriodFixed(
                               biPeriodLabel(current, l10n, locale),
-                            ) ??
-                            'Always ${biPeriodLabel(current, l10n, locale)}',
+                            ),
                       ),
                     ),
                   ],

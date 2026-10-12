@@ -1,0 +1,137 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+part of '../vat_form_catalogue.dart';
+
+final _mwst = VatFormSpec(
+  country: 'CH',
+  name: 'MWST-Abrechnung (effektive Methode)',
+  validFrom: DateTime(2024),
+  boxes: [
+    VatBoxSpec(
+      '200',
+      'Total der vereinbarten bzw. vereinnahmten Entgelte',
+      base: [_sales(categories: null)],
+      baseKey: '200',
+      always: true,
+    ),
+    VatBoxSpec(
+      '220',
+      'Von der Steuer befreite Leistungen (Exporte)',
+      base: [
+        _sales(categories: {'Z'}),
+      ],
+      baseKey: '220',
+    ),
+    VatBoxSpec(
+      '221',
+      'Leistungen im Ausland (Ort der Leistung im Ausland)',
+      base: [
+        _sales(categories: {'AE', 'G', 'O'}),
+      ],
+      baseKey: '221',
+    ),
+    VatBoxSpec(
+      '230',
+      'Von der Steuer ausgenommene Leistungen',
+      base: [
+        _sales(categories: {'E'}),
+      ],
+      baseKey: '230',
+    ),
+    const VatBoxSpec(
+      '289',
+      'Total Abzüge',
+      base: [VatTerm.box('220'), VatTerm.box('221'), VatTerm.box('230')],
+      baseKey: '289',
+    ),
+    const VatBoxSpec(
+      '299',
+      'Steuerbarer Gesamtumsatz',
+      base: [VatTerm.box('200'), VatTerm.box('289', factor: -1)],
+      baseKey: '299',
+      always: true,
+    ),
+    VatBoxSpec(
+      '303',
+      'Normalsatz 8,1 %',
+      base: [
+        _sales(rates: {8.1}),
+      ],
+      tax: [
+        _sales(rates: {8.1}),
+      ],
+      baseKey: '303',
+      taxKey: '303',
+    ),
+    VatBoxSpec(
+      '313',
+      'Reduzierter Satz 2,6 %',
+      base: [
+        _sales(rates: {2.6}),
+      ],
+      tax: [
+        _sales(rates: {2.6}),
+      ],
+      baseKey: '313',
+      taxKey: '313',
+    ),
+    VatBoxSpec(
+      '343',
+      'Beherbergungssatz 3,8 %',
+      base: [
+        _sales(rates: {3.8}),
+      ],
+      tax: [
+        _sales(rates: {3.8}),
+      ],
+      baseKey: '343',
+      taxKey: '343',
+    ),
+    VatBoxSpec(
+      '399',
+      'Total geschuldete Steuer',
+      tax: [_sales()],
+      taxKey: '399',
+      always: true,
+    ),
+    VatBoxSpec(
+      '400',
+      'Vorsteuer auf Material- und Dienstleistungsaufwand',
+      tax: [_input(categories: _taxable)],
+      taxKey: '400',
+    ),
+    VatBoxSpec(
+      '405',
+      'Vorsteuer auf Investitionen und übrigem Betriebsaufwand',
+      tax: [_input(categories: _asset)],
+      taxKey: '405',
+    ),
+    const VatBoxSpec(
+      '479',
+      'Total Vorsteuer',
+      tax: [VatTerm.box('400', tax: true), VatTerm.box('405', tax: true)],
+      taxKey: '479',
+      always: true,
+    ),
+    const VatBoxSpec(
+      '500',
+      'Zu bezahlender Betrag',
+      tax: [
+        VatTerm.box('399', tax: true),
+        VatTerm.box('479', tax: true, factor: -1),
+      ],
+      taxKey: '500',
+      clampAtZero: true,
+      always: true,
+    ),
+    const VatBoxSpec(
+      '510',
+      'Guthaben der steuerpflichtigen Person',
+      tax: [
+        VatTerm.box('479', tax: true),
+        VatTerm.box('399', tax: true, factor: -1),
+      ],
+      taxKey: '510',
+      clampAtZero: true,
+    ),
+  ],
+);

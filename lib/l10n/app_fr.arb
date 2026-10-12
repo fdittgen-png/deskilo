@@ -2693,6 +2693,51 @@
   "dunningLevels": "Nombre de niveaux de relance",
   "dunningSaved": "Règles de relance enregistrées.",
   "dunningSettingsTitle": "Règles de relance",
+  "eInvoiceChannelGapBuyerEndpoint": "l’adresse électronique du client (BT-49) sur son profil",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "une référence acheteur ou un numéro de commande",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "le numéro de TVA ou le code fiscal du client",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "le Leitweg-ID du client comme référence acheteur",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "le compte bancaire de l’espace (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "l’e-mail et le téléphone de contact de l’espace",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerEndpoint": "l’adresse électronique de l’espace (BT-34) dans son identité légale",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "le numéro de TVA de l’espace",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "le județ de chaque adresse roumaine",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapsTitle": "Avant d’envoyer via {channel}, ajoutez :",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Le SIREN de l'acheteur manque. Une plateforme agréée l'utilise pour acheminer la facture : renseignez-le sur le profil de l'adhérent avant de transmettre. Ce n'est pas un refus — le fichier est valide sans lui.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2704,6 +2749,54 @@
   "eInvoiceGapMixedNotSubjectLines": "Une ligne hors champ (consigne) figure à côté de lignes taxées — la norme EN 16931 refuse ce mélange ; émettez la consigne sur un document séparé.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceMandateEReporting": "les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateFrom": "À partir du {date} : {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateInvoiceRecords": "chaque facture doit être enregistrée dans un registre chaîné (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "toute entreprise doit émettre des factures électroniques",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "les grandes entreprises et les ETI doivent émettre des factures électroniques",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateReceiveAll": "toute entreprise doit pouvoir recevoir des factures électroniques",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateSince": "Depuis le {date} : {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateTitle": "Obligations de facturation électronique dans votre pays :",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
   },
   "editorAccessoriesLabel": "Accessoires",
   "editorAddLevel": "Ajouter un étage",
@@ -4997,13 +5090,21 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Prêt — ce fichier satisfait la norme EN 16931.",
   "invoiceEInvoiceShare": "Partager la facture électronique (XML)",
   "invoiceEInvoiceStaleIdentity": "Votre identité légale est complète, mais cette facture a été signée avant et conserve ce avec quoi elle a été émise. Marquez-la erronée puis émettez un remplacement pour porter la nouvelle identité.",
   "invoiceEInvoiceTransportAccredited": "Une plateforme agréée transporte la facture et transmet les données à l'administration fiscale pour vous.",
   "invoiceEInvoiceTransportBilateral": "Aucun canal imposé : e-mail, portail ou Peppol — comme convenu avec le client.",
   "invoiceEInvoiceTransportClearance": "La plateforme nationale reçoit la facture d'abord et la transmet — l'envoi direct au client n'est pas possible.",
   "invoiceEInvoiceTransportPeppol": "Un point d'accès la livre au client — aucune plateforme publique dans le circuit.",
+  "invoiceEInvoiceValidated": "Prêt — rien de ce qu’exige la norme EN 16931 ne manque, et ce format passe le validateur officiel ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
@@ -9240,6 +9341,7 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "La mise en garde de la déclaration : vérifier avant de déposer",
   "reportFieldMeaningDueDate": "La date d'échéance",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"

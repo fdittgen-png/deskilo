@@ -3977,6 +3977,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dunningSettingsTitle => 'Mahnregeln';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'die elektronische Adresse des Kunden (BT-49) in seinem Profil';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'eine Käuferreferenz oder eine Bestellnummer';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'die USt-IdNr. oder Steuernummer des Kunden';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'die Leitweg-ID des Kunden als Käuferreferenz';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'das Bankkonto des Space (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'Kontakt-E-Mail und Telefon des Space';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'die elektronische Adresse des Space (BT-34) in seiner rechtlichen Identität';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'die USt-IdNr. des Space';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'den Kreis (județ) jeder rumänischen Adresse';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Bevor Sie über $channel senden, ergänzen Sie:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.';
 
@@ -3987,6 +4027,39 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'Ab $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'jede Rechnung muss in einem verketteten Register erfasst werden (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'jedes Unternehmen muss E-Rechnungen ausstellen';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'große Unternehmen (Umsatz über 800 000 €) müssen E-Rechnungen ausstellen';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'jedes Unternehmen muss E-Rechnungen empfangen können';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Seit $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle => 'E-Rechnungspflichten in Ihrem Land:';
 
   @override
   String get editorAccessoriesLabel => 'Zubehör';
@@ -7851,9 +7924,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady => 'Bereit — diese Datei erfüllt EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'E-Rechnung teilen (XML)';
 
   @override
@@ -7875,6 +7945,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Ein Access Point liefert sie an den Kunden — keine staatliche Plattform dazwischen.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Bereit — nichts, was EN 16931 verlangt, fehlt, und dieses Format besteht den offiziellen Validator ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>
@@ -14768,6 +14843,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
+
+  @override
+  String get reportFieldMeaningDeclarationNote =>
+      'Der Hinweis der Erklärung: vor der Abgabe prüfen';
 
   @override
   String get reportFieldMeaningDueDate => 'Das Fälligkeitsdatum';

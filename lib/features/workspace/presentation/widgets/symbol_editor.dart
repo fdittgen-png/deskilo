@@ -6,10 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/workspace_symbol.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
@@ -37,7 +37,7 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
   }
 
   Future<void> _run(Future<SymbolOutcome> Function(WorkspaceSymbols) act) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final symbols = ref.read(workspaceSymbolsProvider);
     setState(() => _busy = true);
     SymbolOutcome? outcome;
@@ -45,8 +45,7 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
       context,
       domain: 'workspace',
       message: 'workspace symbol save failed',
-      errorText: l10n?.symbolSaveFailed ??
-          'The symbol could not be saved. Nothing changed.',
+      errorText: l10n.symbolSaveFailed,
       action: () async => outcome = await act(symbols),
     );
     if (!mounted) return;
@@ -56,14 +55,11 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
       case SymbolOutcome.malformed:
         AppSnack.error(
             context,
-            l10n?.symbolLettersRule ??
-                'Use one or two letters or digits for the symbol.');
+            l10n.symbolLettersRule);
       case SymbolOutcome.taken:
         AppSnack.error(
             context,
-            l10n?.symbolTaken ??
-                'Another workspace already uses these letters in this colour. '
-                    'Choose another colour or letters — or use a photo instead.');
+            l10n.symbolTaken);
       case SymbolOutcome.saved || SymbolOutcome.removed:
         if (outcome == SymbolOutcome.removed) _text.clear();
         ref
@@ -71,7 +67,7 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
           ..invalidate(workspaceEmblemOfProvider(widget.workspaceId))
           ..invalidate(workspaceEmblemProvider);
         if (outcome == SymbolOutcome.saved) {
-          AppSnack.success(context, l10n?.symbolSaved ?? 'Symbol saved.');
+          AppSnack.success(context, l10n.symbolSaved);
         }
       case null:
         break;
@@ -90,7 +86,7 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref
         .watch(myWorkspacesProvider)
@@ -106,11 +102,9 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n?.symbolTitle ?? 'Symbol', style: theme.textTheme.titleSmall),
+        Text(l10n.symbolTitle, style: theme.textTheme.titleSmall),
         Text(
-          l10n?.symbolHint ??
-              'A round mark of one or two letters on a colour, unique to this '
-                  'workspace — or use a photo below instead.',
+          l10n.symbolHint,
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -127,7 +121,7 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
                 maxLength: 2,
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
-                  labelText: l10n?.symbolLetters ?? 'Letters',
+                  labelText: l10n.symbolLetters,
                   counterText: '',
                 ),
               ),
@@ -173,12 +167,12 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
             FilledButton.tonal(
               key: const ValueKey('symbol-save'),
               onPressed: _busy ? null : _save,
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
             TextButton(
               key: const ValueKey('symbol-remove'),
               onPressed: _busy || stored == null ? null : _remove,
-              child: Text(l10n?.emblemRemove ?? 'Remove'),
+              child: Text(l10n.emblemRemove),
             ),
           ],
         ),

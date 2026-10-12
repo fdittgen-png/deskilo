@@ -8,10 +8,11 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -45,11 +46,11 @@ class MembersScreen extends ConsumerWidget {
     required bool kioskOn,
     required bool coOwnerOn,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final active = member.status == MemberStatus.active;
     final pending = member.status == MemberStatus.pending;
     // #763 — one guide topic for the management rows.
-    final membersTopic = l10n?.helpHintMembersTopic ?? 'Members & plans';
+    final membersTopic = l10n.helpHintMembersTopic;
     // #763 — mirrors MemberNegotiationTile's own gate (#739/#749): the
     // dot beside the self-gating tile must never float alone.
     final perms = ref.read(myPermissionsProvider);
@@ -77,8 +78,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-send-agreement'),
           icon: Icons.handshake_outlined,
-          label: l10n?.memberSendAgreement ??
-              'Send the financial agreement',
+          label: l10n.memberSendAgreement,
           onTap: () => sendMemberAgreement(context, ref, member, name),
         ),
       // Messaging (#456, refactor): the member's CONVERSATION — read
@@ -94,7 +94,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-messages-action'),
           icon: Icons.chat_outlined,
-          label: l10n?.memberMessagesAction ?? 'Messages',
+          label: l10n.memberMessagesAction,
           onTap: () => openDirectConversation(
             context,
             ref,
@@ -109,7 +109,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-approve'),
           icon: Icons.how_to_reg_outlined,
-          label: l10n?.memberApprove ?? 'Approve membership',
+          label: l10n.memberApprove,
           onTap: () => decideMemberJoin(context, ref, member, approve: true),
         ),
       if (pending && !isSelf)
@@ -117,7 +117,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-reject-join'),
           icon: Icons.person_off_outlined,
-          label: l10n?.memberRejectJoin ?? 'Reject membership',
+          label: l10n.memberRejectJoin,
           onTap: () => decideMemberJoin(context, ref, member, approve: false),
         ),
       if (servicesOn && !member.isKiosk && active)
@@ -125,7 +125,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-consumption-add-for-member'),
           icon: Icons.room_service_outlined,
-          label: l10n?.consumptionAddForMember(name) ?? 'Add service for $name',
+          label: l10n.consumptionAddForMember(name),
           onTap: () => showConsumptionSheet(
             context,
             ref,
@@ -138,7 +138,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-subscription-label'),
           icon: Icons.percent,
-          label: l10n?.memberSubscriptionLabel ?? 'Subscription',
+          label: l10n.memberSubscriptionLabel,
           onTap: () => pickMemberSubscription(context, ref, member),
         ),
       if (!member.isKiosk && active)
@@ -148,8 +148,7 @@ class MembersScreen extends ConsumerWidget {
                 memberId: member.id, memberName: name, isOwner: isOwner),
           ),
           if (negotiationVisible)
-            HelpDot(l10n?.helpHintMembersTipNegotiationTopic ??
-                'Price negotiations',
+            HelpDot(l10n.helpHintMembersTipNegotiationTopic,
               anchor: HelpAnchor.membersNegotiation,
             ),
         ]),
@@ -160,7 +159,7 @@ class MembersScreen extends ConsumerWidget {
           icon: member.overagePolicy == OveragePolicy.blocked
               ? Icons.speed_outlined
               : Icons.speed,
-          label: l10n?.memberOveragePolicyLabel ?? 'When days run out',
+          label: l10n.memberOveragePolicyLabel,
           onTap: () => pickMemberOveragePolicy(context, ref, member),
         ),
       if (staff && !isSelf && !member.isKiosk && active)
@@ -168,7 +167,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-reservation-limit-label'),
           icon: Icons.stacked_bar_chart_outlined,
-          label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+          label: l10n.memberReservationLimitLabel,
           onTap: () => pickMemberReservationLimit(context, ref, member),
         ),
       // #628 — the explicit permission to hold OVERLAPPING bookings;
@@ -178,8 +177,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-simultaneous-limit-label'),
           icon: Icons.splitscreen_outlined,
-          label: l10n?.memberSimultaneousLimitLabel ??
-              'Simultaneous reservations',
+          label: l10n.memberSimultaneousLimitLabel,
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
@@ -192,10 +190,8 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.layers
               : Icons.layers_outlined,
           label: member.canReserveLevel
-              ? (l10n?.levelPermissionAllowed ??
-                  'May reserve a whole level')
-              : (l10n?.levelPermissionDenied ??
-                  'May not reserve a whole level'),
+              ? (l10n.levelPermissionAllowed)
+              : (l10n.levelPermissionDenied),
           onTap: () => toggleMemberLevelPermission(context, ref, member),
         ),
       if (!member.isKiosk && !member.isOwner && active)
@@ -203,7 +199,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-badges-tooltip'),
           icon: Icons.qr_code_2_outlined,
-          label: l10n?.memberBadgesTooltip ?? 'Badges',
+          label: l10n.memberBadgesTooltip,
           onTap: () => showMemberBadgesDialog(context, ref, member, name),
         ),
       // #2085 — with roleAssignment, "Add a role" offers the
@@ -217,7 +213,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-roles-add'),
           icon: Icons.badge_outlined,
-          label: l10n?.memberRolesAdd ?? 'Add a role',
+          label: l10n.memberRolesAdd,
           onTap: () => showRoleAssignSheet(context, ref, member, name),
         ),
       if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
@@ -228,8 +224,8 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.remove_moderator_outlined
               : Icons.add_moderator_outlined,
           label: member.isAdmin
-              ? (l10n?.memberMakeMember ?? 'Take back the Administrator role')
-              : (l10n?.memberMakeAdmin ?? 'Give the Administrator role'),
+              ? (l10n.memberMakeMember)
+              : (l10n.memberMakeAdmin),
           onTap: () => requestMemberRoleChange(context, ref, member),
         ),
       // Co-ownership (0058): owner-level callers appoint active/passive
@@ -249,7 +245,7 @@ class MembersScreen extends ConsumerWidget {
             CoOwnerStatus.passive => Icons.workspace_premium_outlined,
             CoOwnerStatus.none => Icons.badge_outlined,
           },
-          label: l10n?.coOwnerAction ?? 'Co-ownership',
+          label: l10n.coOwnerAction,
           onTap: () => pickMemberCoOwner(context, ref, member),
         ),
       if (isOwner &&
@@ -260,7 +256,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-co-owner-activate'),
           icon: Icons.military_tech_outlined,
-          label: l10n?.coOwnerActivate ?? 'Promote to owner now',
+          label: l10n.coOwnerActivate,
           onTap: () => activateMemberCoOwner(context, ref, member),
         ),
       // #982 — the kiosk is operateKiosk's; a kiosk viewing ITSELF keeps
@@ -277,8 +273,8 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.tablet_mac
               : Icons.tablet_mac_outlined,
           label: member.isKiosk
-              ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
-              : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
+              ? (l10n.memberUnmakeKiosk)
+              : (l10n.memberMakeKiosk),
           onTap: () => toggleMemberKiosk(context, ref, member),
         ),
       // Kiosk self-revert (0056): the kiosk account manages its OWN row
@@ -289,7 +285,7 @@ class MembersScreen extends ConsumerWidget {
           context,
           key: const ValueKey('members-action-unmake-kiosk-2'),
           icon: Icons.tablet_mac,
-          label: l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
+          label: l10n.memberUnmakeKiosk,
           onTap: () => revertMyKiosk(context, ref, member),
         ),
       // Pause/reactivate was a hidden long-press before — now a visible,
@@ -302,8 +298,8 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.play_circle_outline
               : Icons.pause_circle_outline,
           label: member.status == MemberStatus.paused
-              ? (l10n?.memberReactivate ?? 'Reactivate membership')
-              : (l10n?.memberPause ?? 'Pause membership'),
+              ? (l10n.memberReactivate)
+              : (l10n.memberPause),
           onTap: () => toggleMemberPaused(context, ref, member),
         ),
     ];
@@ -314,8 +310,7 @@ class MembersScreen extends ConsumerWidget {
         Padding(
           padding: AppSpacing.lgAll,
           child: Text(
-            l10n?.memberNoActions ??
-                'Only the workspace owner can change this member.',
+            l10n.memberNoActions,
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
@@ -329,7 +324,7 @@ class MembersScreen extends ConsumerWidget {
         child: HelpDot(membersTopic, anchor: HelpAnchor.membersActions),
       ),
     );
-    await showModalBottomSheet<void>(
+    await showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SafeArea(
@@ -366,7 +361,7 @@ class MembersScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     // Admin surface (#410): non-admin callers get {} from the server.
@@ -390,7 +385,7 @@ class MembersScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.membersTitle ?? 'Members & plans'),
+        title: Text(l10n.membersTitle),
         actions: [
           // Admin broadcast (#456): one note to ALL admins incl. the
           // owner — the server re-checks the sender's rights.
@@ -399,13 +394,13 @@ class MembersScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('members-notify-admins'),
               icon: const Icon(Icons.campaign_outlined),
-              tooltip: l10n?.memberNotifyAllAdmins ?? 'Notify all admins',
+              tooltip: l10n.memberNotifyAllAdmins,
               onPressed: () => showMemberNoteDialog(
                 context,
                 ref,
                 toMemberId: null,
                 recipientName:
-                    l10n?.memberAllAdmins ?? 'all admins',
+                    l10n.memberAllAdmins,
               ),
             ),
           // #887 — a member who has no account yet: the admin runs the
@@ -415,7 +410,7 @@ class MembersScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('members-add-managed'),
               icon: const Icon(Icons.person_add_alt_1_outlined),
-              tooltip: l10n?.managedProfileAdd ?? 'Add a managed profile',
+              tooltip: l10n.managedProfileAdd,
               onPressed: () => context.push('/members/managed'),
             ),
           // Invite entry point (#195): the members list is where owners
@@ -425,14 +420,14 @@ class MembersScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('members-invite'),
               icon: const Icon(Icons.person_add_outlined),
-              tooltip: l10n?.membersInvite ?? 'Invite a member',
+              tooltip: l10n.membersInvite,
               onPressed: () => context.push('/workspace-code'),
             ),
           if (isOwner)
           IconButton(
             key: const ValueKey('members-billing-title'),
             icon: const Icon(Icons.tune),
-            tooltip: l10n?.billingTitle ?? 'Billing',
+            tooltip: l10n.billingTitle,
             onPressed: () => context.push('/billing'),
           ),
         ],
@@ -467,13 +462,12 @@ class MembersScreen extends ConsumerWidget {
                           subscriptionText(l10n, member.subscriptionPct),
                         ),
                       if (member.isKiosk)
-                        Text(l10n?.memberKioskLabel ?? 'Kiosk'),
+                        Text(l10n.memberKioskLabel),
                       if (member.maxActiveReservations != null)
                         Text(
-                          l10n?.memberReservationLimitChip(
+                          l10n.memberReservationLimitChip(
                                 member.maxActiveReservations!,
-                              ) ??
-                              'max ${member.maxActiveReservations}',
+                              ),
                         ),
                       // #628 — the EFFECTIVE overlap allowance (member
                       // permission, else the workspace default); 1 is
@@ -483,34 +477,32 @@ class MembersScreen extends ConsumerWidget {
                               policies) >
                           BookingPolicies.defaultSimultaneous)
                         Text(
-                          l10n?.memberSimultaneousLimitChip(
+                          l10n.memberSimultaneousLimitChip(
                                 BookingPolicies.allowanceFor(
                                     member.maxSimultaneousReservations,
                                     policies),
-                              ) ??
-                              '${member.maxSimultaneousReservations} at once',
+                              ),
                         ),
                       if (member.isOwner)
-                        Text(l10n?.memberRoleOwner ?? 'Owner'),
+                        Text(l10n.memberRoleOwner),
                       if (member.coOwner == CoOwnerStatus.active)
-                        Text(l10n?.memberCoOwnerChip ?? 'Co-owner'),
+                        Text(l10n.memberCoOwnerChip),
                       if (member.coOwner == CoOwnerStatus.passive)
-                        Text(l10n?.memberCoOwnerPassiveChip ??
-                            'Successor'),
+                        Text(l10n.memberCoOwnerPassiveChip),
                       if (member.isAdmin && !member.isOwner)
-                        Text(l10n?.memberRoleAdmin ?? 'Administrator'),
+                        Text(l10n.memberRoleAdmin),
                       if (member.status == MemberStatus.pending)
                         Text(
-                          l10n?.memberStatusPending ?? 'Pending',
+                          l10n.memberStatusPending,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.error,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       if (member.status == MemberStatus.paused)
-                        Text(l10n?.memberStatusPaused ?? 'Paused'),
+                        Text(l10n.memberStatusPaused),
                       if (member.status == MemberStatus.exited)
-                        Text(l10n?.memberStatusExited ?? 'Exited'),
+                        Text(l10n.memberStatusExited),
                     ],
                   ),
                   // One labeled management surface per member (UX pass):
@@ -541,8 +533,7 @@ class MembersScreen extends ConsumerWidget {
           ),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),

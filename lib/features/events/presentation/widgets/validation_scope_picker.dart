@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// #732 — who validates a rule: the SCOPE, then — for a listed rule —
 /// the persons. The owner always may; that is said in the hint, not
@@ -27,14 +27,14 @@ class ValidationScopePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: AppSpacing.sm),
-          child: Text(l10n?.validationScopeLabel ?? 'Who validates',
+          child: Text(l10n.validationScopeLabel,
               style: theme.textTheme.titleSmall),
         ),
         Padding(
@@ -45,15 +45,15 @@ class ValidationScopePicker extends StatelessWidget {
             segments: [
               ButtonSegment(
                 value: 'admins',
-                label: Text(l10n?.validationScopeAdmins ?? 'Admins'),
+                label: Text(l10n.validationScopeAdmins),
               ),
               ButtonSegment(
                 value: 'listed',
-                label: Text(l10n?.validationScopeListed ?? 'Listed persons'),
+                label: Text(l10n.validationScopeListed),
               ),
               ButtonSegment(
                 value: 'members',
-                label: Text(l10n?.validationScopeMembers ?? 'All members'),
+                label: Text(l10n.validationScopeMembers),
               ),
             ],
             selected: {scope},
@@ -61,10 +61,7 @@ class ValidationScopePicker extends StatelessWidget {
           ),
         ),
         Text(
-          l10n?.validationScopeHint ??
-              'The owner always may. Admins: every admin, or the ones you '
-                  'list. Listed: exactly these people, whatever their role. '
-                  'All members: anyone active.',
+          l10n.validationScopeHint,
           style: theme.textTheme.bodySmall,
         ),
         if (scope == 'listed')

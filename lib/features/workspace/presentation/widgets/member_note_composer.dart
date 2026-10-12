@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/space_code.dart';
@@ -110,7 +111,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   /// The send button, or a spinner while the message goes out.
-  Widget _sendControl(AppLocalizations? l10n) => _sending
+  Widget _sendControl(AppLocalizations l10n) => _sending
       ? const Padding(
           padding: EdgeInsets.all(AppSpacing.sm),
           child: SizedBox(
@@ -122,7 +123,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
       : IconButton.filled(
           key: const ValueKey('member-note-send'),
           icon: const Icon(Icons.send),
-          tooltip: l10n?.memberNoteSend ?? 'Send',
+          tooltip: l10n.memberNoteSend,
           onPressed: _send,
         );
 
@@ -167,7 +168,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _pickMention() async {
-    final picked = await showModalBottomSheet<({String id, String name})>(
+    final picked = await showAppSheet<({String id, String name})>(
       context: context,
       builder: (sheet) => SafeArea(
         child: ListView(
@@ -191,7 +192,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _pickReservation() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final localeName = Localizations.maybeLocaleOf(context)?.toString();
     final workspace = ref.read(currentWorkspaceProvider).value;
     final me = ref.read(myMemberProvider).value;
@@ -224,7 +225,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     if (reservations.isEmpty) {
       AppSnack.info(
         context,
-        l10n?.noteRefNoReservations ?? 'No upcoming reservations to link.',
+        l10n.noteRefNoReservations,
       );
       return;
     }
@@ -233,7 +234,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     // them is a list you scroll past, not one you choose from.
     final pickedId = await showRefPicker(
       context,
-      title: l10n?.noteRefReservation ?? 'Reservation',
+      title: l10n.noteRefReservation,
       keyPrefix: 'note-ref-res',
       candidates: [
         for (final reservation in reservations)
@@ -259,7 +260,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _pickSpace() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final levels = await ref.read(levelsProvider.future);
     if (!mounted || levels.isEmpty) return;
     // Step 1: the level. Step 2: the level itself, or one of its rooms,
@@ -268,7 +269,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
         ? levels.single.id
         : await showRefPicker(
             context,
-            title: l10n?.noteRefSpace ?? 'Space',
+            title: l10n.noteRefSpace,
             keyPrefix: 'note-ref-level',
             candidates: [
               for (final candidate in levels)
@@ -297,7 +298,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     ];
     final pickedKey = await showRefPicker(
       context,
-      title: l10n?.noteRefSpace ?? 'Space',
+      title: l10n.noteRefSpace,
       keyPrefix: 'note-ref-space',
       candidates: [
         for (final space in spaces)
@@ -307,7 +308,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             id: '${space.kind.name}-${space.id}',
             label: space.kind == SpaceKind.level
                 ? '${level.name} — '
-                    '${l10n?.noteRefWholeLevel ?? 'whole level'}'
+                    '${l10n.noteRefWholeLevel}'
                 : space.label,
             icon: switch (space.kind) {
               SpaceKind.level => Icons.layers_outlined,
@@ -330,25 +331,25 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   /// month's payments. Every list goes through the same filterable
   /// sheet, because every one of them is long in a real workspace.
   Future<void> _pickRecord(NoteRecordKind kind) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final (:candidates, :baked, :facets, :formatAmount) =
         await noteRecordChoices(ref, context, kind);
 
     if (!mounted) return;
     if (candidates.isEmpty) {
       AppSnack.info(
-          context, l10n?.noteRefNone ?? 'Nothing to reference yet.');
+          context, l10n.noteRefNone);
       return;
     }
     final picked = await showRefPicker(
       context,
       title: switch (kind) {
-        NoteRecordKind.alert => l10n?.noteRefPickAlert ?? 'Which alert?',
+        NoteRecordKind.alert => l10n.noteRefPickAlert,
         NoteRecordKind.validation =>
-          l10n?.noteRefPickValidation ?? 'Which validation?',
+          l10n.noteRefPickValidation,
         NoteRecordKind.payment =>
-          l10n?.noteRefPickPayment ?? 'Which payment?',
-        _ => l10n?.noteRefPickInvoice ?? 'Which invoice?',
+          l10n.noteRefPickPayment,
+        _ => l10n.noteRefPickInvoice,
       },
       keyPrefix: 'note-ref-${kind.name}',
       candidates: candidates,
@@ -372,13 +373,13 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             ]
           : const [];
 
-  String _recordLabel(AppLocalizations? l10n, NoteRecordKind kind) =>
+  String _recordLabel(AppLocalizations l10n, NoteRecordKind kind) =>
       switch (kind) {
-        NoteRecordKind.alert => l10n?.noteRefAlert ?? 'Alert',
-        NoteRecordKind.validation => l10n?.noteRefValidation ?? 'Validation',
-        NoteRecordKind.invoice => l10n?.noteRefInvoice ?? 'Invoice',
-        NoteRecordKind.payment => l10n?.noteRefPayment ?? 'Payment',
-        NoteRecordKind.refund => l10n?.noteRefRefund ?? 'Refund',
+        NoteRecordKind.alert => l10n.noteRefAlert,
+        NoteRecordKind.validation => l10n.noteRefValidation,
+        NoteRecordKind.invoice => l10n.noteRefInvoice,
+        NoteRecordKind.payment => l10n.noteRefPayment,
+        NoteRecordKind.refund => l10n.noteRefRefund,
       };
 
   Future<void> _send() async {
@@ -401,7 +402,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final quoted = widget.quoted;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -436,7 +437,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               IconButton(
                 key: const ValueKey('composer-quote-cancel'),
                 icon: const Icon(Icons.close, size: 18),
-                tooltip: l10n?.commonCancel ?? 'Cancel',
+                tooltip: l10n.commonCancel,
                 onPressed: widget.onCancelQuote,
               ),
             ]),
@@ -453,16 +454,15 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             if (widget.compact) setState(() {});
           },
           decoration: InputDecoration(
-            labelText: l10n?.memberNoteHint ?? 'Your message',
+            labelText: l10n.memberNoteHint,
             border: const OutlineInputBorder(),
             // #821 — silent until the limit is near, then it says how
             // much room is left instead of just stopping the keys.
             counterText: widget.compact &&
                     MemberNoteRules.maxLength - _body.text.length <=
                         _counterFrom
-                ? (l10n?.composerCharsLeft(
-                        MemberNoteRules.maxLength - _body.text.length) ??
-                    '${MemberNoteRules.maxLength - _body.text.length} characters left')
+                ? (l10n.composerCharsLeft(
+                        MemberNoteRules.maxLength - _body.text.length))
                 : '',
           ),
           onSubmitted: (_) => _send(),
@@ -472,8 +472,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             if (widget.mentionCandidates.isNotEmpty)
               IconButton(
                 key: const ValueKey('member-note-mention'),
-                tooltip: l10n?.composerMention ??
-                    AppLocalizationsEn().composerMention,
+                tooltip: l10n.composerMention,
                 onPressed: _pickMention,
                 icon: const Icon(Icons.alternate_email),
               ),
@@ -498,7 +497,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           Row(children: [
             PopupMenuButton<String>(
               key: const ValueKey('composer-attach'),
-              tooltip: l10n?.composerAttach ?? 'Attach a reference',
+              tooltip: l10n.composerAttach,
               icon: const Icon(Icons.add_circle_outline),
               onSelected: (value) => switch (value) {
                 'reservation' => _pickReservation(),
@@ -515,7 +514,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.event_available_outlined),
                     title: Text(
-                        l10n?.noteRefReservation ?? 'Link a reservation'),
+                        l10n.noteRefReservation),
                   ),
                 ),
                 PopupMenuItem(
@@ -524,7 +523,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                   child: ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.chair_outlined),
-                    title: Text(l10n?.noteRefSpace ?? 'Link a space'),
+                    title: Text(l10n.noteRefSpace),
                   ),
                 ),
                 for (final kind in _recordKinds)
@@ -544,7 +543,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.alternate_email),
-                      title: Text(l10n?.composerMention ?? 'Mention someone'),
+                      title: Text(l10n.composerMention),
                     ),
                   ),
               ],
@@ -566,13 +565,13 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                     avatar:
                         const Icon(Icons.event_available_outlined, size: 18),
                     label: Text(
-                        l10n?.noteRefReservation ?? 'Link a reservation'),
+                        l10n.noteRefReservation),
                     onPressed: _pickReservation,
                   ),
                   ActionChip(
                     key: const ValueKey('member-note-ref-space'),
                     avatar: const Icon(Icons.chair_outlined, size: 18),
-                    label: Text(l10n?.noteRefSpace ?? 'Link a space'),
+                    label: Text(l10n.noteRefSpace),
                     onPressed: _pickSpace,
                   ),
                   for (final kind in _recordKinds)
@@ -588,7 +587,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             IconButton.filled(
               key: const ValueKey('member-note-send'),
               icon: const Icon(Icons.send),
-              tooltip: l10n?.memberNoteSend ?? 'Send',
+              tooltip: l10n.memberNoteSend,
               onPressed: _sending ? null : _send,
             ),
           ],

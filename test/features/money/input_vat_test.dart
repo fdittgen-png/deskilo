@@ -135,9 +135,13 @@ void main() {
     ]);
     expect(de.singleWhere((b) => b.code == 'Kz 81').vatCents, 1900);
     expect(de.singleWhere((b) => b.code == 'Kz 66').vatCents, 3000);
-    expect(vatFormBoxes('GB', const [_input]).single.code, 'Box 4');
-    expect(vatFormBoxes('CH', const [_input]).single.code, '400');
-    expect(vatFormBoxes('CA', const [_input]).single.code, '108');
+    int vat(String country, String code) => vatFormBoxes(
+      country,
+      const [_input],
+    ).singleWhere((b) => b.code == code).vatCents;
+    expect(vat('GB', 'Box 4'), 3000);
+    expect(vat('CH', '400'), 3000);
+    expect(vat('CA', '106'), 3000);
     final line = VatDeclarationLine.fromJson(_input.toJson());
     expect(line.isInput, isTrue);
     expect(VatDeclarationLine.fromJson(_sale.toJson()).isInput, isFalse);

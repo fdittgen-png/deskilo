@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -22,28 +23,28 @@ bool featureMaturityFilterMatches(
   _ => assessment.maturity.name == filter.name,
 };
 
-String featureMaturityLabel(AppLocalizations? l10n, FeatureMaturity m) =>
+String featureMaturityLabel(AppLocalizations l10n, FeatureMaturity m) =>
     switch (m) {
       FeatureMaturity.unreviewed =>
-        l10n?.featureMaturityUnreviewed ?? 'Unreviewed',
-      FeatureMaturity.alpha => l10n?.featureMaturityAlpha ?? 'Alpha',
-      FeatureMaturity.beta => l10n?.featureMaturityBeta ?? 'Beta',
-      FeatureMaturity.stable => l10n?.featureMaturityStable ?? 'Stable',
+        l10n.featureMaturityUnreviewed,
+      FeatureMaturity.alpha => l10n.featureMaturityAlpha,
+      FeatureMaturity.beta => l10n.featureMaturityBeta,
+      FeatureMaturity.stable => l10n.featureMaturityStable,
     };
 
-String _featureLifecycleLabel(AppLocalizations? l10n, FeatureLifecycle l) =>
+String _featureLifecycleLabel(AppLocalizations l10n, FeatureLifecycle l) =>
     switch (l) {
-      FeatureLifecycle.active => l10n?.featureLifecycleActive ?? 'Active',
+      FeatureLifecycle.active => l10n.featureLifecycleActive,
       FeatureLifecycle.deprecated =>
-        l10n?.featureLifecycleDeprecated ?? 'Deprecated',
-      FeatureLifecycle.retired => l10n?.featureLifecycleRetired ?? 'Retired',
+        l10n.featureLifecycleDeprecated,
+      FeatureLifecycle.retired => l10n.featureLifecycleRetired,
     };
 
 String featureMaturityFilterLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   FeatureMaturityFilter f,
 ) => switch (f) {
-  FeatureMaturityFilter.all => l10n?.featureMaturityFilterAll ?? 'All stages',
+  FeatureMaturityFilter.all => l10n.featureMaturityFilterAll,
   FeatureMaturityFilter.deprecated => _featureLifecycleLabel(
     l10n,
     FeatureLifecycle.deprecated,
@@ -61,14 +62,13 @@ class FeatureMaturityBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final maturity = featureMaturityLabel(l10n, assessment.maturity);
     final lifecycle = _featureLifecycleLabel(l10n, assessment.lifecycle);
     final reviewed = assessment.maturity != FeatureMaturity.unreviewed;
     final semantics =
-        l10n?.featureMaturitySemantics(maturity, lifecycle) ??
-        'Maturity $maturity, $lifecycle';
+        l10n.featureMaturitySemantics(maturity, lifecycle);
     return Semantics(
       label: semantics,
       excludeSemantics: true,
@@ -136,8 +136,8 @@ class FeatureMaturityFilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final title = l10n?.featureMaturityFilterLabel ?? 'Maturity';
+    final l10n = context.l10n;
+    final title = l10n.featureMaturityFilterLabel;
     return PopupMenuButton<FeatureMaturityFilter>(
       key: const ValueKey('features-filter-maturity'),
       tooltip: title,

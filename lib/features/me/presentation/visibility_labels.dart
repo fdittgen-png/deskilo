@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/visibility.dart';
 
-String visibilityFieldLabel(AppLocalizations? l10n, VisibilityField field) =>
+String visibilityFieldLabel(AppLocalizations l10n, VisibilityField field) =>
     switch (field) {
-      VisibilityField.identity => l10n?.visibilityIdentity ?? 'Name and photo',
-      VisibilityField.about => l10n?.visibilityAbout ?? 'Profession and bio',
+      VisibilityField.identity => l10n.visibilityIdentity,
+      VisibilityField.about => l10n.visibilityAbout,
       VisibilityField.contactChannels =>
-        l10n?.visibilityContact ?? 'WhatsApp and e-mail',
+        l10n.visibilityContact,
       VisibilityField.presence =>
-        l10n?.visibilityPresence ?? 'In the space today',
+        l10n.visibilityPresence,
       VisibilityField.reachability =>
-        l10n?.visibilityReachability ?? 'Who can start a conversation with me',
+        l10n.visibilityReachability,
     };
 
 IconData visibilityFieldIcon(VisibilityField field) => switch (field) {
@@ -27,29 +27,28 @@ IconData visibilityFieldIcon(VisibilityField field) => switch (field) {
       VisibilityField.reachability => Icons.forum_outlined,
     };
 
-String audienceLabel(AppLocalizations? l10n, VisibilityAudience audience) =>
+String audienceLabel(AppLocalizations l10n, VisibilityAudience audience) =>
     switch (audience) {
-      VisibilityAudience.nobody => l10n?.visibilityNobody ?? 'Nobody',
+      VisibilityAudience.nobody => l10n.visibilityNobody,
       VisibilityAudience.mySpaces =>
-        l10n?.visibilityMySpaces ?? 'Members of my spaces',
+        l10n.visibilityMySpaces,
       VisibilityAudience.chosenSpaces =>
-        l10n?.visibilityChosenSpaces ?? 'Members of chosen spaces',
+        l10n.visibilityChosenSpaces,
       VisibilityAudience.signedIn =>
-        l10n?.visibilitySignedIn ?? 'Anyone signed in',
+        l10n.visibilitySignedIn,
     };
 
 /// The audience, and how many spaces when they were chosen.
-String audienceSummary(AppLocalizations? l10n, FieldAudience choice) =>
+String audienceSummary(AppLocalizations l10n, FieldAudience choice) =>
     choice.audience == VisibilityAudience.chosenSpaces
-        ? (l10n?.visibilityChosenCount(choice.workspaces.length) ??
-            'Members of ${choice.workspaces.length} chosen spaces')
+        ? (l10n.visibilityChosenCount(choice.workspaces.length))
         : audienceLabel(l10n, choice.audience);
 
-String previewAudienceLabel(AppLocalizations? l10n, PreviewAudience as) =>
+String previewAudienceLabel(AppLocalizations l10n, PreviewAudience as) =>
     switch (as) {
       PreviewAudience.mySpaces =>
-        l10n?.visibilityPreviewMySpaces ?? 'A member of my spaces',
+        l10n.visibilityPreviewMySpaces,
       PreviewAudience.signedIn =>
-        l10n?.visibilityPreviewSignedIn ?? 'Anyone signed in',
-      PreviewAudience.nobody => l10n?.visibilityPreviewNobody ?? 'Only me',
+        l10n.visibilityPreviewSignedIn,
+      PreviewAudience.nobody => l10n.visibilityPreviewNobody,
     };

@@ -5,10 +5,10 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_location_providers.dart';
@@ -108,7 +108,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final target = widget.workspaces.where((w) =>
         widget.selected == '${w.source}/${w.id}').firstOrNull ??
         (widget.workspaces.length == 1 ? widget.workspaces.first : null);
@@ -139,16 +139,16 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
             const SizedBox(width: AppSpacing.sm),
             Expanded(child: Text(
               lookup?.isLoading == true
-                  ? (l?.directoryLocating ?? 'Locating the public address…')
+                  ? (l.directoryLocating)
                   : lookup?.value != null
-                      ? '${l?.directoryApproximate ?? 'Approximate address location'} · ${lookup!.value!.label}'
-                      : (l?.directoryLocationMissing ?? 'Location unavailable. The owner can publish precise map coordinates.'),
+                      ? '${l.directoryApproximate} · ${lookup!.value!.label}'
+                      : (l.directoryLocationMissing),
               key: const ValueKey('directory-location-status'),
               style: Theme.of(context).textTheme.bodySmall,
             )),
             if (lookup?.hasError == true)
               IconButton(key: const ValueKey('directory-map-retry'), onPressed: () => ref.invalidate(directoryAddressLocationProvider(address)),
-                tooltip: l?.commonRetry ?? 'Try again', icon: const Icon(Icons.refresh)),
+                tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),
           ]),
         ),
       Expanded(child: Stack(children: [FlutterMap(
@@ -209,7 +209,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     ),
       Positioned(top: 8, right: 8, child: IconButton.filledTonal(
         key: const ValueKey('directory-map-recenter'),
-        tooltip: l?.directoryLocate ?? 'Locate on map',
+        tooltip: l.directoryLocate,
         onPressed: located.isEmpty ? null : () => _focus(located, target),
         icon: const Icon(Icons.center_focus_strong),
       )),

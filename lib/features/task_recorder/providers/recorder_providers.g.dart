@@ -358,7 +358,7 @@ final class RecorderControllerProvider
 }
 
 String _$recorderControllerHash() =>
-    r'4c2ca2c1fb2c8a470621b1d0069310b5ab24f2e7';
+    r'20ba245a0907c02cc26f9ff722e125408f8e4e89';
 
 /// The recorder's status, for the indicator and the controls.
 

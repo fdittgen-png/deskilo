@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// What the Reserve hub shows.
 ///
@@ -61,25 +61,25 @@ class ReserveViewMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     String nameOf(ReserveView view) => switch (view) {
           ReserveView.plan || ReserveView.list => lexiconText(context,
-              key: 'tabPlan', fallback: l10n?.tabPlan ?? 'Plan'),
+              key: 'tabPlan', fallback: l10n.tabPlan),
           ReserveView.day => lexiconText(context,
-              key: 'reserveDayView', fallback: l10n?.reserveDayView ?? 'Day'),
+              key: 'reserveDayView', fallback: l10n.reserveDayView),
           ReserveView.week => lexiconText(context,
               key: 'reserveWeekView',
-              fallback: l10n?.reserveWeekView ?? 'Week'),
+              fallback: l10n.reserveWeekView),
           ReserveView.month => lexiconText(context,
               key: 'reserveMonthView',
-              fallback: l10n?.reserveMonthView ?? 'Month'),
+              fallback: l10n.reserveMonthView),
         };
     final current = view == ReserveView.list ? ReserveView.plan : view;
     final currentName = nameOf(current);
 
     return PopupMenuButton<ReserveView>(
       key: const ValueKey('reserve-view-switch'),
-      tooltip: l10n?.reserveViewMenu ?? 'View',
+      tooltip: l10n.reserveViewMenu,
       initialValue: current,
       onSelected: (chosen) {
         if (chosen != current) onChanged(chosen);
@@ -104,7 +104,7 @@ class ReserveViewMenu extends StatelessWidget {
             child: ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.flag_outlined),
-              title: Text(l10n?.gettingStartedReopen ?? 'Get started'),
+              title: Text(l10n.gettingStartedReopen),
             ),
           ),
         ],

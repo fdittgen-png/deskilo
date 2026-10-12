@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -26,15 +27,15 @@ import '../widgets/bi_module_section.dart';
 import '../widgets/bi_toolbar.dart';
 import '../widgets/bi_views_bar.dart';
 
-String _biAreaName(AppLocalizations? l10n, BiArea area) => switch (area) {
-  BiArea.overview => l10n?.biAreaOverview ?? 'Overview',
-  BiArea.capacity => l10n?.biAreaCapacity ?? 'Space and capacity',
-  BiArea.people => l10n?.biAreaPeople ?? 'People and business',
-  BiArea.finance => l10n?.biAreaFinance ?? 'Finance',
-  BiArea.treasury => l10n?.biAreaTreasury ?? 'Treasury',
-  BiArea.operations => l10n?.biAreaOperations ?? 'Operations',
-  BiArea.planning => l10n?.biAreaPlanning ?? 'Planning',
-  BiArea.saved => l10n?.biAreaSaved ?? 'Saved analyses',
+String _biAreaName(AppLocalizations l10n, BiArea area) => switch (area) {
+  BiArea.overview => l10n.biAreaOverview,
+  BiArea.capacity => l10n.biAreaCapacity,
+  BiArea.people => l10n.biAreaPeople,
+  BiArea.finance => l10n.biAreaFinance,
+  BiArea.treasury => l10n.biAreaTreasury,
+  BiArea.operations => l10n.biAreaOperations,
+  BiArea.planning => l10n.biAreaPlanning,
+  BiArea.saved => l10n.biAreaSaved,
 };
 
 class BiScreen extends ConsumerWidget {
@@ -42,7 +43,7 @@ class BiScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final modules = visibleBiModules(
       ref.watch(enabledFeaturesSyncProvider),
@@ -95,12 +96,12 @@ class BiScreen extends ConsumerWidget {
     final unavailable = cards.where((c) => !visibleIds.contains(c)).length;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.biTitle ?? 'Business analytics'),
+        title: Text(l10n.biTitle),
         actions: [
           if (query != null && workspaceId != null && shown.isNotEmpty)
             IconButton(
               key: const ValueKey('bi-export-pdf'),
-              tooltip: l10n?.biExportPdf ?? 'Export as PDF',
+              tooltip: l10n.biExportPdf,
               icon: const Icon(Icons.picture_as_pdf_outlined),
               onPressed: () => exportBiPdf(
                 context,
@@ -137,14 +138,12 @@ class BiScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n?.biInvalidAddress ??
-                          'This address asks for an analysis that does not '
-                              'exist; nothing was read.',
+                      l10n.biInvalidAddress,
                     ),
                     TextButton(
                       key: const ValueKey('bi-reset'),
                       onPressed: () => go(BiQueryContext.standard, 'standard'),
-                      child: Text(l10n?.biReset ?? 'Show the standard view'),
+                      child: Text(l10n.biReset),
                     ),
                   ],
                 ),
@@ -172,9 +171,7 @@ class BiScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 child: Text(
-                  l10n?.biCardsUnavailable('$unavailable') ??
-                      '$unavailable analyses of this view are not available '
-                          'to you and are left out.',
+                  l10n.biCardsUnavailable('$unavailable'),
                   key: const ValueKey('bi-cards-unavailable'),
                 ),
               ),

@@ -55,7 +55,7 @@ final class PendingInvitationStoreProvider
 }
 
 String _$pendingInvitationStoreHash() =>
-    r'9d8642beeaeb18e0ac2a1786c6eddb4c8f772038';
+    r'9ea420441a1408b7e54f514582d8b2ee1048c382';
 
 @ProviderFor(pendingInvitations)
 final pendingInvitationsProvider = PendingInvitationsProvider._();

@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 
@@ -31,14 +32,14 @@ Future<String?> pickEInvoiceEnvironment(
   if (!devMode || testEnvironments.isEmpty) return 'prod';
   if (!context.mounted) return null;
 
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   String label(String env) => switch (env) {
-        'uat' => l10n?.einvoiceEnvUat ?? 'UAT (test platform)',
-        'dev' => l10n?.einvoiceEnvDev ?? 'Dev (test platform)',
-        _ => l10n?.einvoiceEnvProd ?? 'Production',
+        'uat' => l10n.einvoiceEnvUat,
+        'dev' => l10n.einvoiceEnvDev,
+        _ => l10n.einvoiceEnvProd,
       };
 
-  return showModalBottomSheet<String>(
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(
@@ -48,7 +49,7 @@ Future<String?> pickEInvoiceEnvironment(
           Padding(
             padding: AppSpacing.lgAll,
             child: Text(
-              l10n?.einvoiceEnvTitle ?? 'Send to which platform?',
+              l10n.einvoiceEnvTitle,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -57,7 +58,7 @@ Future<String?> pickEInvoiceEnvironment(
             leading: const Icon(Icons.cloud_upload_outlined),
             title: Text(label('prod')),
             subtitle: Text(
-              l10n?.einvoiceEnvProdHint ?? 'The real submission.',
+              l10n.einvoiceEnvProdHint,
             ),
             onTap: () => Navigator.of(context).pop('prod'),
           ),
@@ -67,8 +68,7 @@ Future<String?> pickEInvoiceEnvironment(
               leading: const Icon(Icons.science_outlined),
               title: Text(label(env)),
               subtitle: Text(
-                l10n?.einvoiceEnvTestHint ??
-                    'A rehearsal — logged as a test send.',
+                l10n.einvoiceEnvTestHint,
               ),
               onTap: () => Navigator.of(context).pop(env),
             ),

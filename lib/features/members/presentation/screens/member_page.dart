@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -20,7 +21,6 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/vat/vat_treatment.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/member_billing_tiles.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -68,7 +68,7 @@ class MemberPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final membersAsync = ref.watch(workspaceMembersProvider);
     final member = membersAsync.value?.where((m) => m.id == memberId).firstOrNull;
     if (member == null) {
@@ -78,8 +78,7 @@ class MemberPage extends ConsumerWidget {
             ? const LoadingView()
             : EmptyState(
                 icon: Icons.person_off_outlined,
-                title: l10n?.workspaceGenericError ??
-                    'Something went wrong. Please try again.',
+                title: l10n.workspaceGenericError,
               ),
       );
     }
@@ -95,7 +94,7 @@ class _MemberPageBody extends ConsumerWidget {
   final String name;
 
   Future<void> _launch(BuildContext context, WidgetRef ref, Uri uri) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       final handled = await ref.read(linkLauncherProvider)(uri);
       if (!handled) throw StateError('no handler for $uri');
@@ -105,8 +104,7 @@ class _MemberPageBody extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
@@ -122,7 +120,7 @@ class _MemberPageBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final now = ref.watch(clockProvider).now();
     final me = ref.watch(myMemberProvider).value;
@@ -180,7 +178,7 @@ class _MemberPageBody extends ConsumerWidget {
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-message'),
           icon: const Icon(Icons.chat_bubble_outline),
-          label: Text(l10n?.memberMessagesAction ?? 'Messages'),
+          label: Text(l10n.memberMessagesAction),
           onPressed: () =>
               openDirectConversation(context, ref, memberId: member.id),
         ),
@@ -188,14 +186,14 @@ class _MemberPageBody extends ConsumerWidget {
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-wa'),
           icon: const Icon(Icons.chat_outlined),
-          label: Text(l10n?.directoryWhatsapp ?? 'Chat on WhatsApp'),
+          label: Text(l10n.directoryWhatsapp),
           onPressed: () => _launch(context, ref, whatsappUri),
         ),
       if (email.isNotEmpty && !isSelf)
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-email'),
           icon: const Icon(Icons.mail_outline),
-          label: Text(l10n?.memberPageEmailAction ?? 'E-mail'),
+          label: Text(l10n.memberPageEmailAction),
           onPressed: () =>
               _launch(context, ref, Uri(scheme: 'mailto', path: email)),
         ),
@@ -207,7 +205,7 @@ class _MemberPageBody extends ConsumerWidget {
         FilledButton.tonalIcon(
           key: const ValueKey('member-page-action-service'),
           icon: const Icon(Icons.room_service_outlined),
-          label: Text(l10n?.memberPageAddService ?? 'Add a service'),
+          label: Text(l10n.memberPageAddService),
           onPressed: () => showConsumptionSheet(
             context,
             ref,
@@ -220,7 +218,7 @@ class _MemberPageBody extends ConsumerWidget {
           key: const ValueKey('member-page-action-agreement'),
           icon: const Icon(Icons.handshake_outlined),
           label: Text(
-              l10n?.memberSendAgreement ?? 'Send the financial agreement'),
+              l10n.memberSendAgreement),
           onPressed: () => sendMemberAgreement(context, ref, member, name),
         ),
     ];
@@ -231,13 +229,13 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-approve'),
           icon: Icons.how_to_reg_outlined,
-          title: l10n?.memberApprove ?? 'Approve membership',
+          title: l10n.memberApprove,
           onTap: () => decideMemberJoin(context, ref, member, approve: true),
         ),
         _ManageTile(
           tileKey: const ValueKey('member-page-reject'),
           icon: Icons.person_off_outlined,
-          title: l10n?.memberRejectJoin ?? 'Reject membership',
+          title: l10n.memberRejectJoin,
           onTap: () => decideMemberJoin(context, ref, member, approve: false),
         ),
       ],
@@ -247,7 +245,7 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-managed-edit'),
           icon: Icons.contact_mail_outlined,
-          title: l10n?.managedProfileEdit ?? 'Edit identity',
+          title: l10n.managedProfileEdit,
           // #915 — the address comes from BEHIND the rule, and asking
           // for it is written down. An admin the rule does not name sees
           // the name on the tile and nothing under it.
@@ -268,12 +266,8 @@ class _MemberPageBody extends ConsumerWidget {
           _ManageTile(
             tileKey: const ValueKey('member-page-hand-over'),
             icon: Icons.qr_code_2_outlined,
-            title: l10n?.managedProfileHandOver ?? 'Hand over to the person',
-            subtitle: l10n?.managedProfileHandOverHint ??
-                'Mints a personal code bound to this profile. Whoever '
-                    'redeems it takes the profile over — reservations, '
-                    'invoices, subscription — once you approve the '
-                    'membership.',
+            title: l10n.managedProfileHandOver,
+            subtitle: l10n.managedProfileHandOverHint,
             onTap: () => showInviteSheet(
               context,
               workspace: workspace,
@@ -285,7 +279,7 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-revoke-handover'),
           icon: Icons.link_off_outlined,
-          title: l10n?.managedProfileRevoke ?? 'Revoke handover',
+          title: l10n.managedProfileRevoke,
           onTap: () => _revokeHandover(context, ref, member),
         ),
       ],
@@ -296,8 +290,8 @@ class _MemberPageBody extends ConsumerWidget {
               ? Icons.play_circle_outline
               : Icons.pause_circle_outline,
           title: member.status == MemberStatus.paused
-              ? (l10n?.memberReactivate ?? 'Reactivate membership')
-              : (l10n?.memberPause ?? 'Pause membership'),
+              ? (l10n.memberReactivate)
+              : (l10n.memberPause),
           subtitle: memberStatusLabel(l10n, member.status),
           onTap: () => toggleMemberPaused(context, ref, member),
         ),
@@ -309,11 +303,11 @@ class _MemberPageBody extends ConsumerWidget {
               ? Icons.remove_moderator_outlined
               : Icons.add_moderator_outlined,
           title: member.isAdmin
-              ? (l10n?.memberMakeMember ?? 'Take back the Administrator role')
-              : (l10n?.memberMakeAdmin ?? 'Give the Administrator role'),
+              ? (l10n.memberMakeMember)
+              : (l10n.memberMakeAdmin),
           subtitle: member.isAdmin
-              ? (l10n?.memberRoleAdmin ?? 'Administrator')
-              : (l10n?.memberRoleMember ?? 'Member'),
+              ? (l10n.memberRoleAdmin)
+              : (l10n.memberRoleMember),
           onTap: () => requestMemberRoleChange(context, ref, member),
         ),
       if (isOwner &&
@@ -329,12 +323,12 @@ class _MemberPageBody extends ConsumerWidget {
             CoOwnerStatus.passive => Icons.workspace_premium_outlined,
             CoOwnerStatus.none => Icons.badge_outlined,
           },
-          title: l10n?.coOwnerAction ?? 'Co-ownership',
+          title: l10n.coOwnerAction,
           subtitle: switch (member.coOwner) {
-            CoOwnerStatus.active => l10n?.memberCoOwnerChip ?? 'Co-owner',
+            CoOwnerStatus.active => l10n.memberCoOwnerChip,
             CoOwnerStatus.passive =>
-              l10n?.memberCoOwnerPassiveChip ?? 'Successor',
-            CoOwnerStatus.none => l10n?.memberPageNone ?? 'None',
+              l10n.memberCoOwnerPassiveChip,
+            CoOwnerStatus.none => l10n.memberPageNone,
           },
           onTap: () => pickMemberCoOwner(context, ref, member),
         ),
@@ -342,7 +336,7 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-coowner-activate'),
           icon: Icons.military_tech_outlined,
-          title: l10n?.coOwnerActivate ?? 'Promote to owner now',
+          title: l10n.coOwnerActivate,
           onTap: () => activateMemberCoOwner(context, ref, member),
         ),
       if (perms.contains(WorkspacePermission.operateKiosk) &&
@@ -353,15 +347,15 @@ class _MemberPageBody extends ConsumerWidget {
           tileKey: const ValueKey('member-page-kiosk'),
           icon: member.isKiosk ? Icons.tablet_mac : Icons.tablet_mac_outlined,
           title: member.isKiosk
-              ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
-              : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
+              ? (l10n.memberUnmakeKiosk)
+              : (l10n.memberMakeKiosk),
           onTap: () => toggleMemberKiosk(context, ref, member),
         ),
       if (isSelf && member.isKiosk)
         _ManageTile(
           tileKey: const ValueKey('member-page-kiosk-self'),
           icon: Icons.tablet_mac,
-          title: l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
+          title: l10n.memberUnmakeKiosk,
           onTap: () => revertMyKiosk(context, ref, member),
         ),
     ];
@@ -371,21 +365,19 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-reservation-limit'),
           icon: Icons.stacked_bar_chart_outlined,
-          title: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+          title: l10n.memberReservationLimitLabel,
           subtitle: member.maxActiveReservations == null
-              ? (l10n?.memberReservationLimitNone ?? 'No limit')
+              ? (l10n.memberReservationLimitNone)
               : '${member.maxActiveReservations}',
           onTap: () => pickMemberReservationLimit(context, ref, member),
         ),
         _ManageTile(
           tileKey: const ValueKey('member-page-simultaneous'),
           icon: Icons.splitscreen_outlined,
-          title: l10n?.memberSimultaneousLimitLabel ??
-              'Simultaneous reservations',
+          title: l10n.memberSimultaneousLimitLabel,
           subtitle: member.maxSimultaneousReservations == null
-              ? (l10n?.memberPageWorkspaceDefaultValue(
-                      BookingPolicies.allowanceFor(null, policies)) ??
-                  'Workspace default (${BookingPolicies.allowanceFor(null, policies)})')
+              ? (l10n.memberPageWorkspaceDefaultValue(
+                      BookingPolicies.allowanceFor(null, policies)))
               : '${member.maxSimultaneousReservations}',
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
@@ -394,7 +386,7 @@ class _MemberPageBody extends ConsumerWidget {
           _ManageTile(
             tileKey: const ValueKey('member-page-vat-treatment'),
             icon: Icons.account_balance_outlined,
-            title: l10n?.memberVatTreatmentLabel ?? 'VAT treatment',
+            title: l10n.memberVatTreatmentLabel,
             subtitle: vatTreatmentName(
                 l10n, VatTreatment.fromWire(member.vatTreatment)),
             onTap: () => pickMemberVatTreatment(context, ref, member),
@@ -405,7 +397,7 @@ class _MemberPageBody extends ConsumerWidget {
           _ManageTile(
             tileKey: const ValueKey('member-page-customer-capacity'),
             icon: Icons.storefront_outlined,
-            title: l10n?.customerCapacityLabel ?? 'Customer capacity',
+            title: l10n.customerCapacityLabel,
             subtitle: customerCapacityName(l10n, member.customerCapacity),
             onTap: () => pickMemberCustomerCapacity(context, ref, member),
           ),
@@ -414,12 +406,12 @@ class _MemberPageBody extends ConsumerWidget {
           _ManageTile(
             tileKey: const ValueKey('member-page-home-site'),
             icon: Icons.location_city_outlined,
-            title: l10n?.memberHomeSiteLabel ?? 'Home site',
+            title: l10n.memberHomeSiteLabel,
             subtitle: (ref.watch(sitesProvider).value ?? const <Site>[])
                     .where((s) => member.homeSiteId == null ? s.isDefault : s.id == member.homeSiteId)
                     .map((s) => s.name)
                     .firstOrNull ??
-                (l10n?.memberHomeSiteDefault ?? 'Workspace address'),
+                (l10n.memberHomeSiteDefault),
             onTap: () => pickMemberHomeSite(context, ref, member),
           ),
         if (levelOn)
@@ -427,11 +419,10 @@ class _MemberPageBody extends ConsumerWidget {
             key: const ValueKey('member-page-level'),
             secondary: Icon(
                 member.canReserveLevel ? Icons.layers : Icons.layers_outlined),
-            title: Text(l10n?.memberPageLevelTitle ?? 'Whole-level bookings'),
+            title: Text(l10n.memberPageLevelTitle),
             subtitle: Text(member.canReserveLevel
-                ? (l10n?.levelPermissionAllowed ?? 'May reserve a whole level')
-                : (l10n?.levelPermissionDenied ??
-                    'May not reserve a whole level')),
+                ? (l10n.levelPermissionAllowed)
+                : (l10n.levelPermissionDenied)),
             value: member.canReserveLevel,
             onChanged: (_) =>
                 toggleMemberLevelPermission(context, ref, member),
@@ -449,7 +440,7 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-subscription'),
           icon: Icons.percent,
-          title: l10n?.memberSubscriptionLabel ?? 'Subscription',
+          title: l10n.memberSubscriptionLabel,
           subtitle: subscriptionText(l10n, member.subscriptionPct),
           onTap: () => pickMemberSubscription(context, ref, member),
         ),
@@ -459,14 +450,14 @@ class _MemberPageBody extends ConsumerWidget {
           icon: member.overagePolicy == OveragePolicy.blocked
               ? Icons.speed_outlined
               : Icons.speed,
-          title: l10n?.memberOveragePolicyLabel ?? 'When days run out',
+          title: l10n.memberOveragePolicyLabel,
           subtitle: switch (member.overagePolicy) {
             OveragePolicy.blocked =>
-              l10n?.overagePolicyBlocked ?? 'Block further booking',
+              l10n.overagePolicyBlocked,
             OveragePolicy.payg =>
-              l10n?.overagePolicyPayg ?? 'Charge overage (pay-as-you-go)',
+              l10n.overagePolicyPayg,
             OveragePolicy.package =>
-              l10n?.overagePolicyPackage ?? 'Require buying a package',
+              l10n.overagePolicyPackage,
           },
           onTap: () => pickMemberOveragePolicy(context, ref, member),
         ),
@@ -479,15 +470,15 @@ class _MemberPageBody extends ConsumerWidget {
         _ManageTile(
           tileKey: const ValueKey('member-page-badges'),
           icon: Icons.qr_code_2_outlined,
-          title: l10n?.memberBadgesTooltip ?? 'Badges',
+          title: l10n.memberBadgesTooltip,
           onTap: () => showMemberBadgesDialog(context, ref, member, name),
         ),
     ];
     final groups = <(String, List<Widget>)>[
-      (l10n?.memberPageGroupMembership ?? 'Membership', membership),
-      (l10n?.memberPageGroupBooking ?? 'Booking rules', booking),
-      (l10n?.memberPageGroupBilling ?? 'Billing', billing),
-      (l10n?.memberPageGroupAccess ?? 'Badges & access', access),
+      (l10n.memberPageGroupMembership, membership),
+      (l10n.memberPageGroupBooking, booking),
+      (l10n.memberPageGroupBilling, billing),
+      (l10n.memberPageGroupAccess, access),
     ].where((g) => g.$2.isNotEmpty).toList();
 
     return Scaffold(
@@ -499,7 +490,7 @@ class _MemberPageBody extends ConsumerWidget {
             IconButton(
               key: const ValueKey('member-page-message'),
               icon: const Icon(Icons.chat_bubble_outline),
-              tooltip: l10n?.memberMessagesAction ?? 'Messages',
+              tooltip: l10n.memberMessagesAction,
               onPressed: () =>
                   openDirectConversation(context, ref, memberId: member.id),
             ),
@@ -509,7 +500,7 @@ class _MemberPageBody extends ConsumerWidget {
         sections: [
           _MemberSection(
             'profile',
-            (l10n ?? AppLocalizationsEn()).uxProfileSection,
+            l10n.uxProfileSection,
             [
               _HeaderCard(
                 member: member,
@@ -568,13 +559,13 @@ class _MemberPageBody extends ConsumerWidget {
               (isSelf ||
                   canAdmin ||
                   perms.contains(WorkspacePermission.manageRoles)))
-            _MemberSection('roles', l10n?.memberRolesTitle ?? 'Roles', [
+            _MemberSection('roles', l10n.memberRolesTitle, [
               MemberRolesCard(member: member, name: name),
             ], showHeading: false),
           if (groups.isNotEmpty)
             _MemberSection(
               'manage',
-              l10n?.memberPageManageHeading ?? 'Manage',
+              l10n.memberPageManageHeading,
               [
                 for (final (title, tiles) in groups)
                   Card(
@@ -606,7 +597,7 @@ class _MemberPageBody extends ConsumerWidget {
               (isSelf || canAdmin))
             _MemberSection(
               'payment-terms',
-              l10n?.paymentTermsTitle ?? 'Payment conditions',
+              l10n.paymentTermsTitle,
               [PaymentTermsCard(member: member, isSelf: isSelf)],
               showHeading: false,
             ),
@@ -728,38 +719,35 @@ class _MemberSectionsState extends State<_MemberSections> {
 /// "Seen 20 h ago" — the directory's relative last-seen label, shared
 /// with the row chip (#825: it now says what the number means).
 String relativeLastSeen(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   DateTime now,
   DateTime lastSeenAt,
 ) {
   final diff = now.difference(lastSeenAt);
   if (diff.inMinutes < 60) {
     final minutes = diff.inMinutes < 1 ? 1 : diff.inMinutes;
-    return l10n?.directoryLastSeenMinutes(minutes) ?? 'Seen $minutes min ago';
+    return l10n.directoryLastSeenMinutes(minutes);
   }
   if (diff.inHours < 24) {
     final hours = diff.inHours;
-    return l10n?.directoryLastSeenHours(hours) ??
-        (hours == 1 ? 'Seen 1 hour ago' : 'Seen $hours hours ago');
+    return l10n.directoryLastSeenHours(hours);
   }
   final days = diff.inDays;
-  return l10n?.directoryLastSeenDays(days) ??
-      (days == 1 ? 'Seen 1 day ago' : 'Seen $days days ago');
+  return l10n.directoryLastSeenDays(days);
 }
 
 /// #887 — takes an unredeemed handover back; the member stays managed.
 Future<void> _revokeHandover(
     BuildContext context, WidgetRef ref, Member member) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final ok = await runGuarded(
     context,
     domain: 'workspace',
     message: 'revoke handover failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () =>
         ref.read(workspaceRepositoryProvider).revokeHandover(member.id),
   );
   if (!ok || !context.mounted) return;
-  AppSnack.success(context, l10n?.managedProfileRevoked ?? 'Handover revoked');
+  AppSnack.success(context, l10n.managedProfileRevoked);
 }

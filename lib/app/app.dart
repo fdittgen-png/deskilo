@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/demo/demo_entry.dart';
 import '../core/demo/presentation/demo_workspace.dart';
+import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/presence/presence_providers.dart';
 import '../core/privacy/recording_banner.dart';
@@ -61,7 +62,7 @@ class DeskiloApp extends ConsumerWidget {
     final brand = seed == null ? null : Color(seed);
     return MaterialApp.router(
       onGenerateTitle: (context) =>
-          AppLocalizations.of(context)?.appTitle ?? 'DesKilo',
+          context.l10n.appTitle,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

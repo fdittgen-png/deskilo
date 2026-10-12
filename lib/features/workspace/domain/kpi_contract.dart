@@ -15,6 +15,8 @@ library;
 
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// How a KPI may be combined across a dimension or across time.
 enum KpiAggregation {
   /// sum(numerator) / sum(denominator) over the whole scope.
@@ -25,6 +27,7 @@ enum KpiAggregation {
 }
 
 /// #1921 — what a KPI discloses, and so who may read it.
+@visibleForTesting
 enum KpiDisclosure {
   /// Counts and hours over places and time; no person, no money.
   aggregateOperational,
@@ -49,8 +52,8 @@ enum KpiDisclosure {
 }
 
 /// One registered KPI definition.
-class KpiDefinition {
-  const KpiDefinition({
+class _KpiDefinition {
+  const _KpiDefinition({
     required this.id,
     required this.version,
     required this.unit,
@@ -62,7 +65,7 @@ class KpiDefinition {
     required this.permissions,
     required this.disclosure,
     required this.prerequisites,
-    this.minCohort,
+    required this.minCohort,
   });
 
   final String id;
@@ -92,7 +95,8 @@ class KpiDefinition {
 }
 
 /// Seat utilisation: reserved seat-hours over offered seat-hours.
-const seatUtilisationKpi = KpiDefinition(
+@visibleForTesting
+const seatUtilisationKpi = _KpiDefinition(
   id: 'capacity.seat_utilisation',
   version: 1,
   unit: 'percent',
@@ -110,13 +114,15 @@ const seatUtilisationKpi = KpiDefinition(
     'closure days',
     'seat blocks',
   ],
+  minCohort: null,
 );
 
 /// #1924 — what was invoiced over whole workspace months: invoices of
 /// the months, non-void, settlements left out (they regroup invoices
 /// already counted), positive totals. Credit notes are named beside it,
 /// never netted silently. Not a profit: no cost is in it.
-const invoicedKpi = KpiDefinition(
+@visibleForTesting
+const invoicedKpi = _KpiDefinition(
   id: 'finance.invoiced',
   version: 1,
   unit: 'currency_minor',
@@ -130,11 +136,13 @@ const invoicedKpi = KpiDefinition(
   permissions: ['viewAnalytics', 'viewFinances'],
   disclosure: KpiDisclosure.financial,
   prerequisites: ['invoicing', 'the workspace currency'],
+  minCohort: null,
 );
 
 /// #1924 — what was collected: payments matched to invoices, by the month
 /// of the match on the workspace clock (the money report's "matched").
-const collectedKpi = KpiDefinition(
+@visibleForTesting
+const collectedKpi = _KpiDefinition(
   id: 'finance.collected',
   version: 1,
   unit: 'currency_minor',
@@ -148,10 +156,12 @@ const collectedKpi = KpiDefinition(
   permissions: ['viewAnalytics', 'viewFinances'],
   disclosure: KpiDisclosure.financial,
   prerequisites: ['invoicing', 'payment matching', 'the workspace currency'],
+  minCohort: null,
 );
 
 /// Every KPI the app knows. One list; the server registers the same ids.
-const kpiCatalogue = <KpiDefinition>[
+@visibleForTesting
+const kpiCatalogue = <_KpiDefinition>[
   seatUtilisationKpi,
   invoicedKpi,
   collectedKpi,
@@ -331,11 +341,11 @@ abstract interface class KpiRepository {
 
 /// The largest magnitude JSON (an IEEE double, a JS number) carries
 /// exactly: beyond it a minor-unit amount is refused, never rounded.
-const int maxExactMinor = 9007199254740991;
+const int _maxExactMinor = 9007199254740991;
 
 /// What `kpi_finance_summary` returned, typed (#1924). Amounts are minor
 /// units of [currency], read from decimal strings; one beyond
-/// [maxExactMinor] makes the figure unavailable rather than wrong.
+/// [_maxExactMinor] makes the figure unavailable rather than wrong.
 class FinanceSummaryKpi {
   const FinanceSummaryKpi({
     required this.fromMonth,
@@ -373,7 +383,8 @@ class FinanceSummaryKpi {
 }
 
 /// An exact minor-unit amount from a decimal string (or an integer),
-/// or null when it is malformed or beyond [maxExactMinor].
+/// or null when it is malformed or beyond [_maxExactMinor].
+@visibleForTesting
 int? exactMinor(Object? v) {
   final big = switch (v) {
     final String s when RegExp(r'^-?[0-9]{1,30}$').hasMatch(s) => BigInt.parse(
@@ -382,7 +393,7 @@ int? exactMinor(Object? v) {
     final int i => BigInt.from(i),
     _ => null,
   };
-  if (big == null || big.abs() > BigInt.from(maxExactMinor)) return null;
+  if (big == null || big.abs() > BigInt.from(_maxExactMinor)) return null;
   return big.toInt();
 }
 

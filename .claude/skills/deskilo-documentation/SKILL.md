@@ -19,7 +19,7 @@ Stitching incidents and the screenshot backlog: [reference.md](reference.md).
 ## The anchor is one identity for four things
 | the id names | where it lives |
 |---|---|
-| a help symbol | `HelpDot(l10n?.helpTopicDeployment ?? 'Deploying', anchor: HelpAnchor.advancedDeploy)` — constants in `lib/core/help/help_anchors.dart` |
+| a help symbol | `HelpDot(context.l10n.helpTopicDeployment, anchor: HelpAnchor.advancedDeploy)` — constants in `lib/core/help/help_anchors.dart` |
 | a documented object | `<!-- anchor: env.deploy.screen -->` on the line above its heading, in all five guides of the family |
 | its screenshot | `docs/wiki/images/env-deploy-screen.jpg` |
 | an *Ausschnitt* of one part | `env-deploy-screen--<part>.jpg` |

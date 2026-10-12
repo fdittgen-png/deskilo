@@ -15,9 +15,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/event_decision.dart';
 
 /// The ordered decision trail of one event.
@@ -58,7 +58,7 @@ class ValidationTrail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final ordered = [...decisions]
       ..sort((a, b) => a.decidedAt.compareTo(b.decidedAt));
@@ -88,7 +88,7 @@ class ValidationTrail extends StatelessWidget {
           ),
         if (ordered.isEmpty)
           Text(
-            l10n?.validationTrailNone ?? 'No decision yet.',
+            l10n.validationTrailNone,
             key: const Key('validation-trail-none'),
             style: theme.textTheme.bodySmall
                 ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -107,9 +107,7 @@ class ValidationTrail extends StatelessWidget {
                 const SizedBox(width: 4),
                 Flexible(
                   child: Text(
-                    l10n?.validationTrailAwaiting(_outstanding) ??
-                        'Awaiting $_outstanding more validation'
-                            '${_outstanding == 1 ? '' : 's'}.',
+                    l10n.validationTrailAwaiting(_outstanding),
                     key: const Key('validation-trail-awaiting'),
                     style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant),
@@ -139,10 +137,10 @@ class _TrailEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final name = decision.memberId == null || decision.decidedBySystem
-        ? (l10n?.eventSystemDecider ?? 'System')
+        ? (l10n.eventSystemDecider)
         : (names[decision.memberId] ?? '');
     final when =
         DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
@@ -150,10 +148,10 @@ class _TrailEntry extends StatelessWidget {
         ? AppStatusColors.successOf(theme.brightness)
         : theme.colorScheme.error;
     final what = decision.accept
-        ? (l10n?.eventValidatedBy(name, when) ?? 'Validated by $name · $when')
-        : (l10n?.eventRejectedBy(name, when) ?? 'Declined by $name · $when');
+        ? (l10n.eventValidatedBy(name, when))
+        : (l10n.eventRejectedBy(name, when));
     final lead = sequential
-        ? (l10n?.validationTrailStep(order) ?? 'Step $order')
+        ? (l10n.validationTrailStep(order))
         : '$order.';
     return Row(
       mainAxisSize: MainAxisSize.min,

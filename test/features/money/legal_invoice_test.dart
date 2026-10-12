@@ -7,6 +7,7 @@
 // complètes du vendeur, N° TVA, détail des lignes, totaux par taux,
 // modalités de règlement, mentions particulières).
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -47,22 +48,22 @@ void main() {
   group('every document ships professional and legacy presets (#480)', () {
     for (final doc in ['invoice', 'proforma', 'statement', 'r1', 'r2']) {
       test(doc, () {
-        final presets = presetsForDoc(doc, null);
+        final presets = presetsForDoc(doc, englishL10n);
         expect(presets.map((p) => p.id),
             ['professional', 'classic', 'simple', 'verbose', 'formal']);
         // The first preset IS the default the uncustomized doc renders.
         expect(presets.first.bands.header,
-            defaultBandsForDoc(doc, null).header);
+            defaultBandsForDoc(doc, englishL10n).header);
       });
     }
   });
 
   group('the shipped invoice presets are legally complete (#480)', () {
-    final data = sampleReportData(null);
+    final data = sampleReportData(englishL10n);
 
     for (final id in reportPresetIds) {
       test('preset $id carries the mandatory mentions', () {
-        final bands = presetsForDoc('invoice', null)
+        final bands = presetsForDoc('invoice', englishL10n)
             .firstWhere((p) => p.id == id)
             .bands;
         final report = renderReportBands(bands: bands, data: data);
@@ -101,7 +102,7 @@ void main() {
 
     test('the verbose preset details unit price, qty and per-line net '
         'as table columns (#482)', () {
-      final bands = presetsForDoc('invoice', null)
+      final bands = presetsForDoc('invoice', englishL10n)
           .firstWhere((p) => p.id == 'verbose')
           .bands;
       final report = renderReportBands(bands: bands, data: data)!;
@@ -113,14 +114,14 @@ void main() {
 
     test('optional mentions stay OFF the document until declared', () {
       final report = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
+        bands: defaultBandsForDoc('invoice', englishL10n),
         data: {...data, 'insurance': '', 'special_mentions': ''},
       )!;
       final text = report.footer.map(blockText).join('\n');
       expect(text, isNot(contains('Assurance')));
       // …and ON it when they are.
       final withInsurance = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
+        bands: defaultBandsForDoc('invoice', englishL10n),
         data: {
           ...data,
           'insurance':
@@ -134,7 +135,7 @@ void main() {
     test('the exemption reason replaces the VAT recap for a franchise '
         'workspace (art. 293 B)', () {
       final report = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
+        bands: defaultBandsForDoc('invoice', englishL10n),
         data: {
           ...data,
           'has_vat': false,
@@ -186,8 +187,8 @@ Client SARL
         'brand|title row, seller|client row, 4-column line table, '
         'right-aligned totals', () {
       final report = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
-        data: sampleReportData(null),
+        bands: defaultBandsForDoc('invoice', englishL10n),
+        data: sampleReportData(englishL10n),
       )!;
       // Header: two column rows (brand/title, seller/client) around a
       // divider.
@@ -247,8 +248,8 @@ Client SARL
       final association = legalMentionData(
         const ReportStrings(), _workspace(const {'seller_kind': 'association'}));
       final report = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
-        data: {...sampleReportData(null), ...association},
+        bands: defaultBandsForDoc('invoice', englishL10n),
+        data: {...sampleReportData(englishL10n), ...association},
       )!;
       final footer = report.footer.map(blockText).join('\n');
       expect(footer, contains('Payment on receipt.'));
@@ -256,8 +257,8 @@ Client SARL
       expect(footer, isNot(contains('statutory interest')));
       // The reminder letter drops them too.
       final letter = renderReportBands(
-        bands: defaultBandsForDoc('r1', null),
-        data: {...sampleReportData(null), ...association},
+        bands: defaultBandsForDoc('r1', englishL10n),
+        data: {...sampleReportData(englishL10n), ...association},
       )!;
       final letterText = [
         ...letter.header,
@@ -270,9 +271,9 @@ Client SARL
     test('the association exemption mention prints on the document '
         '(art. 261, 7-1° CGI)', () {
       final report = renderReportBands(
-        bands: defaultBandsForDoc('invoice', null),
+        bands: defaultBandsForDoc('invoice', englishL10n),
         data: {
-          ...sampleReportData(null),
+          ...sampleReportData(englishL10n),
           'has_vat': false,
           'vat': const [],
           'exemption_reason':
@@ -289,9 +290,9 @@ Client SARL
       () {
     for (final id in reportPresetIds) {
       final bands =
-          presetsForDoc('r2', null).firstWhere((p) => p.id == id).bands;
+          presetsForDoc('r2', englishL10n).firstWhere((p) => p.id == id).bands;
       final report =
-          renderReportBands(bands: bands, data: sampleReportData(null))!;
+          renderReportBands(bands: bands, data: sampleReportData(englishL10n))!;
       final text = [
         ...report.header,
         ...report.body,

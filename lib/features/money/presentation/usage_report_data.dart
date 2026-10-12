@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -29,7 +30,7 @@ Map<String, Object?> usageReportData(
   AppLocalizations? l10nOverride,
   String? localeName,
 }) {
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
+  final l10n = l10nOverride ?? context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
   final locale = localeName ?? Localizations.maybeLocaleOf(context)?.toString();
@@ -50,30 +51,29 @@ Map<String, Object?> usageReportData(
   String halfDays(int n) => '$n';
   final lines = <Map<String, Object?>>[
     {
-      'label': l10n?.usageReportPaid ?? 'Paid ahead (participation)',
+      'label': l10n.usageReportPaid,
       'amount': currency.formatMinor(statement?.feeCents ?? 0),
     },
     {
-      'label': l10n?.usageReportIncluded ?? 'Included half-days',
+      'label': l10n.usageReportIncluded,
       'amount': halfDays(statement?.includedHalfDays ?? 0),
     },
     {
-      'label': l10n?.usageReportUsed ?? 'Half-days consumed',
+      'label': l10n.usageReportUsed,
       'amount': halfDays(statement?.usedHalfDays ?? 0),
     },
     {
-      'label': l10n?.usageReportRemaining ?? 'Half-days remaining',
+      'label': l10n.usageReportRemaining,
       'amount': halfDays(statement?.remainingHalfDays ?? 0),
     },
     if ((statement?.extraHalfDays ?? 0) > 0)
       {
-        'label': l10n?.usageReportExtra ?? 'Extra half-days',
+        'label': l10n.usageReportExtra,
         'amount': halfDays(statement!.extraHalfDays),
       },
     if (supplements > 0)
       {
-        'label': l10n?.usageReportSupplements ??
-            'Supplements (accessories, desks, offices)',
+        'label': l10n.usageReportSupplements,
         'amount': currency.formatMinor(supplements),
       },
   ];

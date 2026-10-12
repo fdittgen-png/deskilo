@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -21,23 +21,15 @@ class BackendHowTo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final featureOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.instanceWizard);
     final steps = [
-      l10n?.backendStep1 ??
-          'Create a project at supabase.com (the free tier is enough to '
-              'start).',
-      l10n?.backendStep2 ??
-          'Install the app\'s schema: run the SQL files in '
-              'supabase/migrations from the source repository, in order.',
-      l10n?.backendStep3 ??
-          'In the Supabase dashboard, open Project Settings → API keys and '
-              'copy the Project URL and the publishable key.',
-      l10n?.backendStep4 ??
-          'Paste them below, test the connection, and save. Members join '
-              'the same instance by scanning the QR above.',
+      l10n.backendStep1,
+      l10n.backendStep2,
+      l10n.backendStep3,
+      l10n.backendStep4,
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +42,7 @@ class BackendHowTo extends ConsumerWidget {
               key: const ValueKey('backend-new-instance'),
               onPressed: () => context.push('/server/new-instance'),
               icon: const Icon(Icons.auto_fix_high_outlined),
-              label: Text(l10n?.instanceCreateButton ?? 'Create a new instance'),
+              label: Text(l10n.instanceCreateButton),
             ),
           ),
         Card(
@@ -63,7 +55,7 @@ class BackendHowTo extends ConsumerWidget {
         leading: const Icon(Icons.dns_outlined),
         title: Row(children: [
           Expanded(
-            child: Text(l10n?.backendHowTitle ?? 'Use your own server'),
+            child: Text(l10n.backendHowTitle),
           ),
           HelpDot(topic,
             anchor: HelpAnchor.backendHow,

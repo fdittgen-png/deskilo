@@ -12,8 +12,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/report_layout/layout_model.dart';
 import '../../domain/report_layout/layout_render.dart';
 import '../../domain/report_layout/layout_units.dart';
@@ -27,7 +27,7 @@ Future<void> showLayoutQuickPreview(
   required String layoutXml,
   required Map<String, Object?> data,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   LayoutDocument document;
   try {
     document = renderLayoutDocument(layoutXml, data);
@@ -39,13 +39,13 @@ Future<void> showLayoutQuickPreview(
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.reportLayoutTitle ?? 'Positioned layout (XML)'),
+        title: Text(l10n.reportLayoutTitle),
         content: Text(_describe(e)),
         actions: [
           TextButton(
             key: ValueKey('report-layout-preview-dialog-close-$layoutXml'),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonClose ?? 'Close'),
+            child: Text(l10n.commonClose),
           ),
         ],
       ),
@@ -71,7 +71,7 @@ Future<void> showLayoutQuickPreview(
               padding: const EdgeInsets.fromLTRB(
                   AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
               child: Text(
-                l10n?.reportLayoutPreview ?? 'Page preview',
+                l10n.reportLayoutPreview,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -97,7 +97,7 @@ Future<void> showLayoutQuickPreview(
                 child: TextButton(
                   key: ValueKey('report-layout-preview-dialog-close-2-$layoutXml'),
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(l10n?.commonClose ?? 'Close'),
+                  child: Text(l10n.commonClose),
                 ),
               ),
             ),

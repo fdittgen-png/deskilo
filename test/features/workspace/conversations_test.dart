@@ -282,8 +282,8 @@ void main() {
     test('people and groups filter LOCALLY; only text search waits', () {
       // They are already in memory. Debouncing them too would make the
       // list lag behind the field for no reason.
-      expect(screen, contains('Timer('));
-      expect(screen, contains('milliseconds: 300'));
+      // #2388 — through the one Debouncer, at its search delay (300 ms).
+      expect(screen, contains('Debouncer('));
       expect(screen, contains('_query'), reason: 'the debounced term is '
           'separate from the field text');
     });

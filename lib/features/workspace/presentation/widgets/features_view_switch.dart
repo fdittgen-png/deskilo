@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// The Features screen's two views (#1327): the process overview an
 /// owner starts from, and every switch — the capability list with its
@@ -21,7 +21,7 @@ class FeaturesViewSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     Widget label(String key, String text) => Text(
       text,
       key: ValueKey('features-view-$key'),
@@ -43,13 +43,13 @@ class FeaturesViewSwitch extends StatelessWidget {
             icon: const Icon(Icons.account_tree_outlined),
             label: label(
               'processes',
-              l10n?.featuresViewProcesses ?? 'Processes',
+              l10n.featuresViewProcesses,
             ),
           ),
           ButtonSegment(
             value: true,
             icon: const Icon(Icons.tune),
-            label: label('switches', l10n?.featuresViewSwitches ?? 'Switches'),
+            label: label('switches', l10n.featuresViewSwitches),
           ),
         ],
         selected: {switches},

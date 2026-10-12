@@ -16,9 +16,11 @@
 // booking is "for another member", never for whom. A field change says
 // which field was committed, never its value.
 
+import 'package:meta/meta.dart';
 import 'ui_vocabulary.g.dart';
 
 /// The placeholder a value outside its field's vocabulary becomes.
+@visibleForTesting
 const String withheldValue = 'withheld';
 
 /// One payload field and the only values it can carry.
@@ -35,6 +37,7 @@ class SafeField {
 
 /// The whole field list. Adding a field is a reviewed change to this
 /// file; there is no other way for a value to reach a recording.
+@visibleForTesting
 const Map<String, SafeField> safeFields = {
   'date_relation': SafeField('date_relation', {
     'today',

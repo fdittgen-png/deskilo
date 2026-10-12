@@ -13,6 +13,7 @@
 // structurally: there was no set to iterate and nothing to check a new
 // member against. This file is that set. Everything that needs to know
 // what report kinds exist, or where one keeps its design, asks here.
+import 'package:meta/meta.dart';
 import 'invoice_pdf_template.dart';
 
 /// Where a kind's three bands live inside the saved template.
@@ -64,6 +65,7 @@ class ReportKind {
 
 /// The kinds that exist regardless of configuration, in the order the
 /// editor shows them.
+@visibleForTesting
 const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'invoice', slot: ReportRootSlot()),
   ReportKind(id: 'proforma', slot: ReportProformaSlot()),

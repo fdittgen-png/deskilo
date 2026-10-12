@@ -6,6 +6,7 @@
 // table is always one tap away as the accessible alternative.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_query.dart';
@@ -13,10 +14,10 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import 'capacity_evidence.dart';
 
-String _biRowLabel(BiRow row, AppLocalizations? l10n) => row.isTotal
-    ? l10n?.biTotal ?? 'Total'
+String _biRowLabel(BiRow row, AppLocalizations l10n) => row.isTotal
+    ? l10n.biTotal
     : row.isRemainder
-    ? l10n?.biRemainder ?? 'Not in a current group'
+    ? l10n.biRemainder
     : row.label ?? row.key;
 
 class BiRows extends StatelessWidget {
@@ -49,7 +50,7 @@ class BiRows extends StatelessWidget {
       view == BiView.chart ? _chart(context) : _table(context);
 
   Widget _table(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final bold = Theme.of(context).textTheme.labelLarge;
     Widget cell(String text, {Key? key, TextStyle? style}) => Padding(
       padding: const EdgeInsets.symmetric(
@@ -68,10 +69,10 @@ class BiRows extends StatelessWidget {
           TableRow(
             children: [
               cell(groupHeader ?? '', style: bold),
-              cell(l10n?.biColumnValue ?? 'Value', style: bold),
+              cell(l10n.biColumnValue, style: bold),
               if (compared != null) ...[
                 cell(compared, style: bold),
-                cell(l10n?.biColumnChange ?? 'Change', style: bold),
+                cell(l10n.biColumnChange, style: bold),
               ],
             ],
           ),
@@ -99,7 +100,7 @@ class BiRows extends StatelessWidget {
   }
 
   Widget _chart(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final values = [
       for (final r in rows) ...[

@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../theme/app_spacing.dart';
+import 'app_sheet.dart';
 import 'inline_banner.dart';
 
 /// Per-field problems: the field's key → the localized sentence shown
@@ -407,7 +408,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
 
 /// Opens an [AppFormSheet]; true when it was submitted successfully.
 Future<bool> showAppFormSheet(BuildContext context, AppFormSheet sheet) async =>
-    await showModalBottomSheet<bool>(
+    await showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

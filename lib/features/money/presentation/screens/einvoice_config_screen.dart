@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
@@ -69,7 +69,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     setState(() => _saving = true);
@@ -77,8 +77,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       context,
       domain: 'money',
       message: 'e-invoice platform save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(moneyRepositoryProvider).setEInvoiceCredentials(
             workspace.id,
             {
@@ -111,19 +110,18 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
     if (!mounted) return;
-    AppSnack.success(context, l10n?.einvoiceConfigSaved ?? 'Platform saved.');
+    AppSnack.success(context, l10n.einvoiceConfigSaved);
   }
 
   Future<void> _clear() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     if (!await runGuarded(
       context,
       domain: 'money',
       message: 'e-invoice platform clear failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(moneyRepositoryProvider)
           .clearEInvoiceCredentials(workspace.id),
@@ -148,13 +146,13 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     if (!mounted) return;
     AppSnack.success(
       context,
-      l10n?.einvoiceConfigCleared ?? 'Platform removed.',
+      l10n.einvoiceConfigCleared,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final statusAsync = ref.watch(eInvoiceStatusProvider);
     final status = statusAsync.value;
     if (status != null && !_loaded) {
@@ -175,7 +173,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.einvoiceConfigTitle ?? 'E-invoicing platform'),
+        title: Text(l10n.einvoiceConfigTitle),
       ),
       // An unreachable probe used to leave the screen spinning for ever
       // (field report): a failing RPC is now something the owner can see
@@ -187,15 +185,13 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
               InlineBanner(
                 key: const ValueKey('einvoice-config-error'),
                 icon: Icons.cloud_off_outlined,
-                text: l10n?.einvoiceConfigUnavailable ??
-                    'The platform settings could not be loaded. Check your '
-                        'connection and try again.',
+                text: l10n.einvoiceConfigUnavailable,
               ),
               const SizedBox(height: AppSpacing.md),
               FilledButton(
                 key: const ValueKey('einvoice-config-retry'),
                 onPressed: () => ref.invalidate(eInvoiceStatusProvider),
-                child: Text(l10n?.commonRetry ?? 'Try again'),
+                child: Text(l10n.commonRetry),
               ),
             ],
           ),
@@ -204,9 +200,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
-                  l10n?.einvoiceConfigIntro ??
-                      'Where DesKilo posts your invoices. The token is '
-                          'stored server-side and never comes back out.',
+                  l10n.einvoiceConfigIntro,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -217,9 +211,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _endpoint,
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
-                    labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
+                    labelText: l10n.einvoiceConfigEndpoint,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceEndpoint,
                     ),
                   ),
@@ -231,15 +225,13 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText:
-                        l10n?.einvoiceConfigToken ?? 'Token or credential',
+                        l10n.einvoiceConfigToken,
                     helperMaxLines: 2,
                     helperText: status.secretsSet.contains('auth_value')
-                        ? (l10n?.einvoiceConfigTokenSet ??
-                            'A token is stored (type a new one to replace '
-                                'it).')
+                        ? (l10n.einvoiceConfigTokenSet)
                         : null,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceToken,
                     ),
                   ),
@@ -249,9 +241,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   key: const ValueKey('einvoice-header'),
                   controller: _header,
                   decoration: InputDecoration(
-                    labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
+                    labelText: l10n.einvoiceConfigHeader,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceAuthHeader,
                     ),
                   ),
@@ -261,9 +253,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   key: const ValueKey('einvoice-field'),
                   controller: _field,
                   decoration: InputDecoration(
-                    labelText: l10n?.einvoiceConfigField ?? 'File field name',
+                    labelText: l10n.einvoiceConfigField,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceFileField,
                     ),
                   ),
@@ -275,16 +267,12 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     .contains(WorkspaceFeature.einvoiceCustomerDelivery)) ...[
                   const SizedBox(height: AppSpacing.lg),
                   Text(
-                    l10n?.einvoiceCustomerSectionTitle ??
-                        'Customer delivery service',
+                    l10n.einvoiceCustomerSectionTitle,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    l10n?.einvoiceCustomerSectionHelp ??
-                        "Where invoices go for the customer: their Peppol "
-                            "access point, portal or agreed upload API — "
-                            "separate from the government platform.",
+                    l10n.einvoiceCustomerSectionHelp,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color:
                               Theme.of(context).colorScheme.onSurfaceVariant,
@@ -296,7 +284,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     controller: _customerEndpoint,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(
-                      labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
+                      labelText: l10n.einvoiceConfigEndpoint,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -306,13 +294,11 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText:
-                          l10n?.einvoiceConfigToken ?? 'Token or credential',
+                          l10n.einvoiceConfigToken,
                       helperMaxLines: 2,
                       helperText:
                           status.secretsSet.contains('customer_auth_value')
-                              ? (l10n?.einvoiceConfigTokenSet ??
-                                  'A token is stored (type a new one to '
-                                      'replace it).')
+                              ? (l10n.einvoiceConfigTokenSet)
                               : null,
                     ),
                   ),
@@ -321,7 +307,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     key: const ValueKey('einvoice-customer-header'),
                     controller: _customerHeader,
                     decoration: InputDecoration(
-                      labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
+                      labelText: l10n.einvoiceConfigHeader,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -330,22 +316,18 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     controller: _customerField,
                     decoration: InputDecoration(
                       labelText:
-                          l10n?.einvoiceConfigField ?? 'File field name',
+                          l10n.einvoiceConfigField,
                     ),
                   ),
                 ],
                 const SizedBox(height: AppSpacing.lg),
                 Text(
-                  l10n?.einvoiceTestEnvsTitle ??
-                      'Test environments (UAT / Dev)',
+                  l10n.einvoiceTestEnvsTitle,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  l10n?.einvoiceTestEnvsHelp ??
-                      'Separate endpoints and tokens for rehearsals. The '
-                          'choice appears at send time only while developer '
-                          'mode is on.',
+                  l10n.einvoiceTestEnvsHelp,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -356,9 +338,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _uatEndpoint,
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
-                    labelText: l10n?.einvoiceUatEndpoint ?? 'UAT upload URL',
+                    labelText: l10n.einvoiceUatEndpoint,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceUat,
                     ),
                   ),
@@ -370,11 +352,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText:
-                        l10n?.einvoiceUatToken ?? 'UAT token or credential',
+                        l10n.einvoiceUatToken,
                     helperText: status.secretsSet.contains('auth_value_uat')
-                        ? (l10n?.einvoiceConfigTokenSet ??
-                            'A token is stored (type a new one to replace '
-                                'it).')
+                        ? (l10n.einvoiceConfigTokenSet)
                         : null,
                   ),
                 ),
@@ -384,9 +364,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   controller: _devEndpoint,
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
-                    labelText: l10n?.einvoiceDevEndpoint ?? 'Dev upload URL',
+                    labelText: l10n.einvoiceDevEndpoint,
                     suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
+                      l10n.helpTopicEinvoice,
                       anchor: HelpAnchor.einvoiceDev,
                     ),
                   ),
@@ -398,11 +378,9 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText:
-                        l10n?.einvoiceDevToken ?? 'Dev token or credential',
+                        l10n.einvoiceDevToken,
                     helperText: status.secretsSet.contains('auth_value_dev')
-                        ? (l10n?.einvoiceConfigTokenSet ??
-                            'A token is stored (type a new one to replace '
-                                'it).')
+                        ? (l10n.einvoiceConfigTokenSet)
                         : null,
                   ),
                 ),
@@ -410,7 +388,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                 FilledButton(
                   key: const ValueKey('einvoice-save'),
                   onPressed: _saving ? null : _save,
-                  child: Text(l10n?.commonSave ?? 'Save'),
+                  child: Text(l10n.commonSave),
                 ),
                 if (status.configured) ...[
                   const SizedBox(height: AppSpacing.sm),
@@ -418,7 +396,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     key: const ValueKey('einvoice-clear'),
                     onPressed: _saving ? null : _clear,
                     child: Text(
-                      l10n?.einvoiceConfigClear ?? 'Remove the platform',
+                      l10n.einvoiceConfigClear,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
                       ),

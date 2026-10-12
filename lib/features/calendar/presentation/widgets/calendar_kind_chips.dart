@@ -7,10 +7,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import 'calendar_item_row.dart';
 
 /// The horizontal filter row above the feed.
@@ -42,8 +41,8 @@ class CalendarKindChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final words = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final words = l10n;
     final scopeLabel = '${memberLabel ?? words.calendarMemberMe} · ${kinds == null ? words.eventsFilterAll : kinds!.map((k) => calendarKindLabel(words, k)).join(', ')}';
     return Column(mainAxisSize: MainAxisSize.min, children: [
       Padding(padding: AppSpacing.smH, child: Wrap(
@@ -73,7 +72,7 @@ class CalendarKindChips extends StatelessWidget {
       child: Row(children: [
         FilterChip(
           key: const ValueKey('calendar-kind-all'),
-          label: Text(l10n?.eventsFilterAll ?? 'All'),
+          label: Text(l10n.eventsFilterAll),
           selected: kinds == null,
           onSelected: (_) => onKinds(null),
         ),

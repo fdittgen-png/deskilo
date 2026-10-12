@@ -89,12 +89,16 @@ Map<String, Object?> vatDeclarationReportData({
       },
   ],
   'vat_form_boxes': [
-    for (final box in vatFormBoxes(countryCode, declaration.lines))
+    for (final box in vatFormBoxes(
+      countryCode,
+      declaration.lines,
+      periodEnd: declaration.periodEnd,
+    ))
       {
         'code': box.code,
         'label': box.label,
-        'net': money(box.netCents),
-        'vat': money(box.vatCents),
+        'net': box.hasBase ? money(box.netCents) : '',
+        'vat': box.hasTax ? money(box.vatCents) : '',
       },
   ],
 };

@@ -3,6 +3,7 @@
 // #878 — the VAT review as code: statutory mentions per country, the
 // shape of a European VAT id, the readiness warning, and the VAT
 // report built from frozen breakdowns with its CSV.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
@@ -182,7 +183,7 @@ void main() {
     test('the kind is registered and its default bands render the sample', () {
       expect(reportKindById('vat'), isNotNull);
       final report = renderReportBands(
-          bands: defaultVatBands(null), data: sampleReportData(null));
+          bands: defaultVatBands(englishL10n), data: sampleReportData(englishL10n));
       final body = report!.body.map(_text).join('\n');
       expect(body, contains('INV-2026-0007'));
       expect(body, contains('Totals per rate'));

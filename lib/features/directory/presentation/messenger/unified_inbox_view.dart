@@ -6,20 +6,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_labels.dart';
-import 'create_group_screen.dart';
 import 'open_inbox_entry.dart';
-import 'starred_messages_screen.dart';
 
 /// #1824 — Me › Messages: every conversation I take part in, on every
 /// server I connected, in ONE list — each labelled with its context, the
@@ -57,7 +57,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final inbox = ref.watch(unifiedInboxProvider);
     final servers = ref.watch(serverLabelsProvider).value ?? const {};
     final unread = inbox.value?.unread ?? 0;
@@ -80,7 +80,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               children: [
                 FilterChip(
                   key: const ValueKey('unified-inbox-all'),
-                  label: Text(l10n?.inboxFilterAll ?? 'All'),
+                  label: Text(l10n.inboxFilterAll),
                   selected: !_unreadOnly,
                   onSelected: (_) => setState(() {
                     _unreadOnly = false;
@@ -91,8 +91,8 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                   key: const ValueKey('unified-inbox-unread'),
                   label: Text(
                     unread > 0
-                        ? '${l10n?.inboxFilterUnread ?? 'Unread'} · $unread'
-                        : (l10n?.inboxFilterUnread ?? 'Unread'),
+                        ? '${l10n.inboxFilterUnread} · $unread'
+                        : (l10n.inboxFilterUnread),
                   ),
                   selected: _unreadOnly,
                   onSelected: (_) => setState(() {
@@ -102,7 +102,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 ),
                 FilterChip(
                   key: const ValueKey('unified-inbox-archived'),
-                  label: Text(l10n?.inboxFilterArchived ?? 'Archived'),
+                  label: Text(l10n.inboxFilterArchived),
                   selected: _archived,
                   onSelected: (_) => setState(() {
                     _archived = true;
@@ -112,16 +112,13 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 TextButton.icon(
                   key: const ValueKey('unified-inbox-starred'),
                   icon: const Icon(Icons.star_outline, size: 18),
-                  label: Text(l10n?.messengerStarred ?? 'Starred'),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const StarredMessagesScreen(),
-                    ),
-                  ),
+                  label: Text(l10n.messengerStarred),
+                  onPressed: () =>
+                      starredMessagesPage.open<void>(context, null),
                 ),
                 IconButton(
                   key: const ValueKey('unified-inbox-search'),
-                  tooltip: l10n?.messageSearchTitle ?? 'Search',
+                  tooltip: l10n.messageSearchTitle,
                   icon: Icon(_searching ? Icons.search_off : Icons.search),
                   onPressed: () => setState(() {
                     _searching = !_searching;
@@ -130,20 +127,16 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 ),
                 TextButton.icon(
                   key: const ValueKey('unified-inbox-new-group'),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const CreateGroupScreen(),
-                    ),
-                  ),
+                  onPressed: () => createGroupPage.open<void>(context, null),
                   icon: const Icon(Icons.group_add_outlined, size: 18),
-                  label: Text(l10n?.groupNew ?? 'New group'),
+                  label: Text(l10n.groupNew),
                 ),
                 FilledButton.tonalIcon(
                   key: const ValueKey('unified-inbox-people'),
                   onPressed: () => context.push('/account-messages'),
                   icon: const Icon(Icons.edit_outlined),
                   label: Text(
-                    l10n?.newConversationTitle ?? 'New conversation',
+                    l10n.newConversationTitle,
                   ),
                 ),
               ],
@@ -163,7 +156,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 onChanged: (value) => setState(() => _query = value),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
-                  hintText: l10n?.messageSearchTitle ?? 'Search',
+                  hintText: l10n.messageSearchTitle,
                 ),
               ),
             ),
@@ -179,7 +172,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 child: TextButton(
                   key: const ValueKey('unified-inbox-retry'),
                   onPressed: () => ref.invalidate(unifiedInboxProvider),
-                  child: Text(l10n?.commonRetry ?? 'Try again'),
+                  child: Text(l10n.commonRetry),
                 ),
               ),
               _ => const LoadingView(),
@@ -194,10 +187,10 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     BuildContext context,
     UnifiedInbox inbox,
     Map<String, String> servers,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
   ) {
     final format = ref.watch(appFormatProvider);
-    final words = l10n ?? AppLocalizationsEn();
+    final words = l10n;
     final marks = ref.watch(inboxMarksProvider);
     // A workspace conversation's pin / archive are the server's (0386); every
     // other kind keeps this device's marks.
@@ -238,9 +231,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               key: const ValueKey('unified-inbox-unavailable'),
               leading: const Icon(Icons.cloud_off_outlined),
               title: Text(
-                l10n?.messengerInboxUnavailable(inbox.unavailable.join(', ')) ??
-                    'Not reachable right now: ${inbox.unavailable.join(', ')}. '
-                        'Their conversations are missing from this list.',
+                l10n.messengerInboxUnavailable(inbox.unavailable.join(', ')),
               ),
               onTap: () => ref.invalidate(unifiedInboxProvider),
             ),
@@ -249,11 +240,10 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               padding: AppSpacing.lgAll,
               child: Text(
                 _unreadOnly
-                    ? (l10n?.inboxNoUnread ??
-                          'Nothing unread — you are up to date.')
+                    ? (l10n.inboxNoUnread)
                     : _archived
-                        ? (l10n?.inboxNoArchived ?? 'No archived conversation.')
-                        : (l10n?.messagesEmpty ?? 'No conversations yet.'),
+                        ? (l10n.inboxNoArchived)
+                        : (l10n.messagesEmpty),
                 key: const ValueKey('unified-inbox-empty'),
                 textAlign: TextAlign.center,
               ),
@@ -329,12 +319,12 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
 
   /// Long-press: pin and archive (kept on this device).
   Future<void> _marksMenu(BuildContext context, InboxEntry entry) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final marks = ref.read(inboxMarksProvider);
     final flags = entry.flags;
     final pinned = flags?.pinned ?? marks.pinned.contains(entry.key);
     final archived = flags?.archived ?? marks.archived.contains(entry.key);
-    final choice = await showModalBottomSheet<String>(
+    final choice = await showAppSheet<String>(
       context: context,
       showDragHandle: true,
       builder: (sheet) => SafeArea(
@@ -345,8 +335,8 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               key: const ValueKey('inbox-menu-pin'),
               leading: const Icon(Icons.push_pin_outlined),
               title: Text(pinned
-                  ? (l10n?.conversationUnpin ?? 'Unpin')
-                  : (l10n?.conversationPin ?? 'Pin')),
+                  ? (l10n.conversationUnpin)
+                  : (l10n.conversationPin)),
               onTap: () => Navigator.of(sheet).pop('pin'),
             ),
             if (flags != null) ...[
@@ -356,15 +346,15 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     ? Icons.notifications_active_outlined
                     : Icons.notifications_off_outlined),
                 title: Text(flags.muted
-                    ? (l10n?.conversationUnmute ?? 'Unmute')
-                    : (l10n?.conversationMute ?? 'Mute notifications')),
+                    ? (l10n.conversationUnmute)
+                    : (l10n.conversationMute)),
                 onTap: () => Navigator.of(sheet).pop('mute'),
               ),
               if (entry.unread == 0)
                 ListTile(
                   key: const ValueKey('inbox-menu-unread'),
                   leading: const Icon(Icons.mark_chat_unread_outlined),
-                  title: Text(l10n?.conversationMarkUnread ?? 'Mark as unread'),
+                  title: Text(l10n.conversationMarkUnread),
                   onTap: () => Navigator.of(sheet).pop('unread'),
                 ),
             ],
@@ -372,8 +362,8 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               key: const ValueKey('inbox-menu-archive'),
               leading: const Icon(Icons.archive_outlined),
               title: Text(archived
-                  ? (l10n?.conversationUnarchive ?? 'Unarchive')
-                  : (l10n?.conversationArchive ?? 'Archive')),
+                  ? (l10n.conversationUnarchive)
+                  : (l10n.conversationArchive)),
               onTap: () => Navigator.of(sheet).pop('archive'),
             ),
           ],

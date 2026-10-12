@@ -24,11 +24,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_arbiter.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/action_registry.dart';
 import '../../domain/recording_reference.dart';
 import '../../guide/guide_runner.dart';
@@ -219,7 +218,7 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     int mainIndex,
     bool blocked,
   ) {
-    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final l10n = context.l10n;
     final notifier = ref.read(guideSessionProvider.notifier);
     final steps = run.guide.steps;
     final running = run.state == GuideRunState.running;

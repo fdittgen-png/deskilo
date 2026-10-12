@@ -27,6 +27,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
+import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
 import '../reservations/reserve_hub_test.dart'
     show pickHubDate, reservationOn, seatCenter;

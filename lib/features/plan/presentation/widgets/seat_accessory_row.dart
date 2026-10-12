@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accessory.dart';
@@ -63,7 +63,7 @@ class SeatAccessoryRow extends ConsumerWidget {
     ];
     if (accessories.isEmpty) return const SizedBox.shrink();
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final showSupplements = ref
         .watch(enabledFeaturesSyncProvider)
@@ -105,8 +105,7 @@ class SeatAccessoryRow extends ConsumerWidget {
           // Unit hint for the (+price) suffixes: supplements are billed
           // per half-day (#170); shown only when a priced chip is visible.
           Text(
-            l10n?.planAccessorySupplementHint ??
-                'Supplements are per half-day.',
+            l10n.planAccessorySupplementHint,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import 'booking_window_summary.dart';
 
 /// Keeps confirmation reachable while the draft and secondary details scroll.
@@ -69,7 +68,7 @@ class BookingReviewSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.sm),
@@ -110,7 +109,7 @@ class BookingManagementOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     return ExpansionTile(
       key: const ValueKey('booking-manage-options'),
       tilePadding: EdgeInsets.zero,

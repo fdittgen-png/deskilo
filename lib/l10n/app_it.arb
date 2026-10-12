@@ -2693,6 +2693,51 @@
   "dunningLevels": "Numero di livelli di sollecito",
   "dunningSaved": "Regole di sollecito salvate.",
   "dunningSettingsTitle": "Regole di sollecito",
+  "eInvoiceChannelGapBuyerEndpoint": "l’indirizzo elettronico del cliente (BT-49) nel suo profilo",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "un riferimento dell’acquirente o un numero d’ordine",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "la partita IVA o il codice fiscale del cliente",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "il Leitweg-ID del cliente come riferimento dell’acquirente",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "il conto bancario dello spazio (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "l’e-mail e il telefono di contatto dello spazio",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerEndpoint": "l’indirizzo elettronico dello spazio (BT-34) nella sua identità legale",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "la partita IVA dello spazio",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "il distretto (județ) di ogni indirizzo rumeno",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapsTitle": "Prima di inviare tramite {channel}, aggiunga:",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Manca il SIREN dell'acquirente. Una piattaforma francese instrada in base ad esso: lo inserisca nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2704,6 +2749,54 @@
   "eInvoiceGapMixedNotSubjectLines": "Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceMandateEReporting": "le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateFrom": "Dal {date}: {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateInvoiceRecords": "ogni fattura deve essere registrata in un registro concatenato (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "ogni impresa deve emettere fatture elettroniche",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "le grandi e medie imprese devono emettere fatture elettroniche",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateReceiveAll": "ogni impresa deve poter ricevere fatture elettroniche",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateSince": "Dal {date}: {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateTitle": "Obblighi di fatturazione elettronica nel Suo paese:",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
   },
   "editorAccessoriesLabel": "Accessori",
   "editorAddLevel": "Aggiungi piano",
@@ -4997,13 +5090,21 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Pronto — questo file soddisfa la EN 16931.",
   "invoiceEInvoiceShare": "Condividi fattura elettronica (XML)",
   "invoiceEInvoiceStaleIdentity": "La sua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. La segnali come errata ed emetta una sostitutiva perché porti la nuova identità.",
   "invoiceEInvoiceTransportAccredited": "Una piattaforma accreditata trasporta la fattura e comunica i dati all'amministrazione fiscale per Lei.",
   "invoiceEInvoiceTransportBilateral": "Nessun canale è imposto: e-mail, un portale o Peppol — come concordato con il cliente.",
   "invoiceEInvoiceTransportClearance": "La piattaforma nazionale riceve prima la fattura e la inoltra — inviarla direttamente al cliente non è possibile.",
   "invoiceEInvoiceTransportPeppol": "Un access point la consegna al cliente — nessuna piattaforma pubblica nel percorso.",
+  "invoiceEInvoiceValidated": "Pronto — non manca nulla di ciò che la EN 16931 richiede, e questo formato supera il validatore ufficiale ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceEssentialsRefused": "La fattura non è stata emessa: mancano dati obbligatori.",
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
@@ -9240,6 +9341,7 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "L'avvertenza della dichiarazione: verificare prima dell'invio",
   "reportFieldMeaningDueDate": "La data di scadenza",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"

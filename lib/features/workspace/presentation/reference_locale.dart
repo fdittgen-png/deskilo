@@ -2,6 +2,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
 import '../providers/workspace_providers.dart';
 
@@ -36,8 +37,8 @@ String? referenceLocale(WidgetRef ref, BuildContext context) {
 /// date, and both are frozen into the message. This resolves the same
 /// language [referenceLocale] picks, falling back to the reader's own
 /// whenever the workspace names a language the app does not ship.
-AppLocalizations? referenceL10n(WidgetRef ref, BuildContext context) {
-  final mine = AppLocalizations.of(context);
+AppLocalizations referenceL10n(WidgetRef ref, BuildContext context) {
+  final mine = context.l10n;
   final name = referenceLocale(ref, context);
   if (name == null || name.isEmpty) return mine;
   final locale = Locale(name.split(RegExp('[_-]')).first);

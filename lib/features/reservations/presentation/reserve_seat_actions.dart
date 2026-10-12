@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/work_hours.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
@@ -103,7 +105,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// Maps a server refusal to the sentence that says what to do about
   /// it — closed day, seat just taken, beyond quota. A generic
   /// "something went wrong" to someone standing at a desk is useless.
-  String _errorText(AppLocalizations? l10n, Object error, String fallback) =>
+  String _errorText(AppLocalizations l10n, Object error, String fallback) =>
       bookingErrorText(l10n, error, fallback,
           stepMinutes: granularity.stepMinutes);
 
@@ -147,14 +149,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     List<Reservation> reservations,
     HalfDayWindow window,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #1301 S4 — before the opening days load, a closed day would take the
     // tap and only the server's refusal would say otherwise, and "Closed"
     // would be just as untrue. Say what is happening and open nothing.
     if (!availabilityKnown) {
       AppSnack.info(
         context,
-        l10n?.planAvailabilityLoading ?? 'Checking the opening days…',
+        l10n.planAvailabilityLoading,
         replace: true,
       );
       return;
@@ -165,7 +167,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       traceClosedDay(seat, window.start);
       AppSnack.info(
         context,
-        l10n?.planClosedDay ?? 'Closed on this day',
+        l10n.planClosedDay,
         replace: true,
       );
       return;
@@ -220,7 +222,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         } else {
           AppSnack.info(
             context,
-            l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+            l10n.planSeatBlocked,
             replace: true,
           );
         }
@@ -293,10 +295,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// Sheet on a blocked seat for owners/delegated admins (#161):
   /// explains the block and offers to make the seat reservable again.
   Future<void> _blockedSeatSheet(Seat seat) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final blockedText =
-        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.';
-    final unblock = await showModalBottomSheet<bool>(
+        l10n.planSeatBlocked;
+    final unblock = await showAppSheet<bool>(
       context: context,
       builder: (context) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -307,7 +309,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           ListTile(
             key: const ValueKey('reserve-make-reservable'),
             leading: const Icon(Icons.event_seat_outlined),
-            title: Text(l10n?.planMakeReservable ?? 'Make reservable'),
+            title: Text(l10n.planMakeReservable),
             onTap: () => Navigator.of(context).pop(true),
           ),
           const SizedBox(height: 8),
@@ -319,8 +321,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       context,
       domain: 'reservations',
       message: 'set seat block failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () =>
           ref.read(floorPlanRepositoryProvider).setSeatBlock(seat.id),
     );
@@ -332,7 +333,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// Presence rule: check-in means "I am standing here NOW", so the REAL
   /// clock decides, never the browsed instant.
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final now = ref.read(clockProvider).now();
     final windowOpen = mine.checkInWindowOpen(now, granularity: granularity);
     traceMySeatSheet(
@@ -395,8 +396,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         _errorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
         replace: true,
       );
@@ -439,7 +439,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     bool offerWalkUp = false,
   }) async {
     final liveWindow = !walkUp && windowIsNow;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     // Defense in depth (#161): the tap handler never routes blocked seats
@@ -447,7 +447,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     if (seat.isBlockedAt(window.start)) {
       AppSnack.info(
         context,
-        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+        l10n.planSeatBlocked,
         replace: true,
       );
       return;
@@ -546,7 +546,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           )
         : null;
 
-    final choice = await showModalBottomSheet<BookingChoice>(
+    final choice = await showAppSheet<BookingChoice>(
       context: context,
       isScrollControlled: true,
       builder: (context) => BookingSheet(
@@ -626,8 +626,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         context,
         domain: 'reservations',
         message: 'set seat block failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () => ref.read(floorPlanRepositoryProvider).setSeatBlock(
               seat.id,
               from: ref.read(clockProvider).now().toUtc(),
@@ -699,7 +698,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
               '';
           AppSnack.success(
             context,
-            l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
+            l10n.planBookedForPending(who),
             replace: true,
           );
         case Booked(:final reservationId, :final checkedIn, :final start, :final end):
@@ -756,10 +755,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           // check-in; "could not reserve" sends someone standing at the
           // desk looking for a reservation they never tried to make.
           choice.walkUp
-              ? (l10n?.planCheckInFailed ??
-                  'Could not check in — the seat may have just been taken.')
-              : (l10n?.reserveBookingFailed ??
-                  'Could not reserve — the seat may have just been taken.'),
+              ? (l10n.planCheckInFailed)
+              : (l10n.reserveBookingFailed),
         ),
         replace: true,
       );

@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
+import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
 import '../demo_entry.dart';
 import '../demo_persona.dart';
@@ -133,8 +133,8 @@ class DemoControls extends StatelessWidget {
       DemoPersona.values[(persona.index + 1) % DemoPersona.values.length];
 
   /// The persona's own name, in the reader's language.
-  static String personaLabel(AppLocalizations? l10n, DemoPersona persona) {
-    final words = l10n ?? AppLocalizationsEn();
+  static String personaLabel(AppLocalizations l10n, DemoPersona persona) {
+    final words = l10n;
     return switch (persona) {
       DemoPersona.member => words.demoPersonaMember,
       DemoPersona.admin => words.demoPersonaAdmin,
@@ -148,7 +148,7 @@ class DemoControls extends StatelessWidget {
     final env = DemoEnvironment.maybeOf(context);
     if (env == null) return child;
     final persona = env.persona;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return Column(
       children: [
@@ -168,11 +168,9 @@ class DemoControls extends StatelessWidget {
                 spacing: AppSpacing.sm,
                 children: [
                   Semantics(
-                    label: l10n?.demoSessionBadgeHint ??
-                        'You are exploring a demonstration space. Nothing '
-                            'here leaves this device.',
+                    label: l10n.demoSessionBadgeHint,
                     child: Text(
-                      l10n?.demoSessionBadge ?? 'Demo',
+                      l10n.demoSessionBadge,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: scheme.onSecondaryContainer,
                           ),
@@ -194,13 +192,13 @@ class DemoControls extends StatelessWidget {
                   TextButton.icon(
                     key: resetKey,
                     icon: const Icon(Icons.restart_alt),
-                    label: Text(l10n?.demoSessionReset ?? 'Reset the demo'),
+                    label: Text(l10n.demoSessionReset),
                     onPressed: () => _reset(context, env.onReset, l10n),
                   ),
                   TextButton.icon(
                     key: leaveKey,
                     icon: const Icon(Icons.logout),
-                    label: Text(l10n?.demoSessionLeave ?? 'Leave the demo'),
+                    label: Text(l10n.demoSessionLeave),
                     onPressed: env.onLeave,
                   ),
                 ],
@@ -214,13 +212,13 @@ class DemoControls extends StatelessWidget {
   }
 
   void _reset(BuildContext context, VoidCallback onReset,
-      AppLocalizations? l10n) {
+      AppLocalizations l10n) {
     final messenger = ScaffoldMessenger.maybeOf(context);
     onReset();
     messenger?.showSnackBar(
       SnackBar(
         content: Text(
-          l10n?.demoSessionResetDone ?? 'The demo is back as it started.',
+          l10n.demoSessionResetDone,
         ),
       ),
     );

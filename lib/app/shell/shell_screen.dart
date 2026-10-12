@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../core/badge/app_badge.dart';
 import '../../core/i18n/format_controller.dart';
 import '../../core/i18n/workspace_currency.dart';
+import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
 import '../../core/notifications/notification_providers.dart';
@@ -31,8 +32,6 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
-import '../../l10n/app_localizations_en.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
@@ -77,7 +76,7 @@ class ShellScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
 
     // #711 — resolve the member's format locale, clock and zone for
@@ -109,9 +108,8 @@ class ShellScreen extends ConsumerWidget {
         for (final e in pending)
           (
             id: e.id,
-            title: l10n?.pushPendingTitle ?? 'DesKilo',
-            body: l10n?.pushPendingBody ??
-                'Someone needs your confirmation.',
+            title: l10n.pushPendingTitle,
+            body: l10n.pushPendingBody,
           ),
       ]));
     });
@@ -160,9 +158,8 @@ class ShellScreen extends ConsumerWidget {
             final sender = names[note.fromMemberId] ?? '';
             await ref.read(notificationServiceProvider).showNow(
                   title: sender.isEmpty
-                      ? (l10n?.pushPendingTitle ?? 'DesKilo')
-                      : (l10n?.memberNoteReceived(sender) ??
-                          'Message from $sender'),
+                      ? (l10n.pushPendingTitle)
+                      : (l10n.memberNoteReceived(sender)),
                   // #523 — reference tokens read as their labels.
                   body: notePlainText(note.body),
                 );
@@ -231,15 +228,14 @@ class ShellScreen extends ConsumerWidget {
           now: ref.read(clockProvider).now(),
           targetNames: targets,
           titleOf: (target, startsAt) =>
-              l10n?.reminderTitle ?? 'Check in soon',
+              l10n.reminderTitle,
           // #1082 — the reminder names the hour the SPACE opens the
           // booking, which is what the member read when they booked it
           // and what the plan shows. `toLocal()` is the device's clock,
           // and #711 made the workspace's the default everywhere else.
           bodyOf: (target, startsAt) {
             final at = timeFormat.format(WorkspaceTime.wall(startsAt));
-            return l10n?.reminderBody(target, at) ??
-                '$target starts at $at';
+            return l10n.reminderBody(target, at);
           },
         );
         await scheduleCheckInReminders(
@@ -262,13 +258,13 @@ class ShellScreen extends ConsumerWidget {
       // Réserver, which draws the same canvas.
       // Discussions moved to Me › Messages: this destination is the
       // workspace's alerts.
-      l10n?.inboxAlertsTab ?? 'Alerts',
-      lexiconText(context, key: 'tabCalendar', fallback: l10n?.tabCalendar ?? 'Calendar'),
-      lexiconText(context, key: 'directoryTitle', fallback: l10n?.directoryTitle ?? 'Members'),
-      lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
+      l10n.inboxAlertsTab,
+      lexiconText(context, key: 'tabCalendar', fallback: l10n.tabCalendar),
+      lexiconText(context, key: 'directoryTitle', fallback: l10n.directoryTitle),
+      lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
       // The centre button's branch (#reserve-as-branch): not a bar
       // destination, but it owns the app-bar title while active.
-      lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
+      lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
     ];
 
     // Per-workspace feature gating (#146): the router branches stay fixed,
@@ -384,7 +380,7 @@ class ShellScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('reserve-scan-button'),
               icon: const Icon(Icons.qr_code_scanner_outlined),
-              tooltip: l10n?.spaceScanTitle ?? 'Scan a space code',
+              tooltip: l10n.spaceScanTitle,
               onPressed: () => scanSpace(context, ref),
             ),
           // #2137 — the owner, and whoever holds manageSites.
@@ -396,7 +392,7 @@ class ShellScreen extends ConsumerWidget {
             IconButton(
               key: const ValueKey('shell-editor-button'),
               icon: const Icon(Icons.design_services_outlined),
-              tooltip: l10n?.editorOpenTooltip ?? 'Edit workspace',
+              tooltip: l10n.editorOpenTooltip,
               onPressed: () => context.push('/editor'),
             ),
           // #707 — the bell is back, as a SHORTCUT: it opens the inbox
@@ -417,7 +413,7 @@ class ShellScreen extends ConsumerWidget {
                       maxCount: 99,
                       child: const Icon(Icons.inbox_outlined),
                     ),
-              tooltip: '${lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events')} — ${(l10n ?? AppLocalizationsEn()).uxAttentionSummary(attention.updates, attention.pending)}',
+              tooltip: '${lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents)} — ${l10n.uxAttentionSummary(attention.updates, attention.pending)}',
               // The /events path lands on the alerts (the calendar's Alerts
               // view when the hub holds them).
               onPressed: () => context.go('/events'),
@@ -434,8 +430,8 @@ class ShellScreen extends ConsumerWidget {
                 ? Icons.account_circle_outlined
                 : Icons.settings_outlined),
             tooltip: accountMenu
-                ? (l10n?.memberAccountTitle ?? 'My account')
-                : (l10n?.settingsTitle ?? 'Settings'),
+                ? (l10n.memberAccountTitle)
+                : (l10n.settingsTitle),
             onPressed: () => context.push('/settings'),
           ),
           const BackToMeButton(), // #1823
@@ -497,7 +493,7 @@ class ShellScreen extends ConsumerWidget {
               destinations: [
                 for (final branch in visibleBranches) destinationFor(branch),
               ],
-              reserveLabel: lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
+              reserveLabel: lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
               // A branch switch, not a push — the bar (and this button)
               // stay visible and functional on the hub.
               onReservePressed: () => navigationShell.goBranch(

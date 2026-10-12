@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -21,20 +22,20 @@ Map<String, Object?> workspaceStatusReportData(
   AppLocalizations? l10nOverride,
   String? localeName,
 }) {
-  final l10n = l10nOverride ?? AppLocalizations.of(context);
+  final l10n = l10nOverride ?? context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(status.currency);
   final issued = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   ).format(ref.read(clockProvider).now());
   final lines = <Map<String, Object?>>[
-    {'label': l10n?.statusInvoiced ?? 'Invoiced', 'amount': currency.formatMinor(status.invoicedCents)},
-    {'label': l10n?.statusCreditNotes ?? 'Credit notes', 'amount': currency.formatMinor(-status.creditNotesCents), 'negative': true},
-    {'label': l10n?.statusPaymentsMatched ?? 'Payments matched', 'amount': currency.formatMinor(status.paymentsMatchedCents)},
-    {'label': l10n?.statusPaymentsReceived ?? 'Payments received', 'amount': currency.formatMinor(status.paymentsReceivedCents)},
-    {'label': l10n?.statusReimbursed ?? 'Expenses reimbursed', 'amount': currency.formatMinor(-status.reimbursedCents), 'negative': true},
-    {'label': l10n?.statusRepartitioned ?? 'Expenses shared out', 'amount': currency.formatMinor(status.repartitionedCents)},
-    {'label': l10n?.statusCredits ?? 'Credits granted', 'amount': currency.formatMinor(-status.creditsGrantedCents), 'negative': true},
+    {'label': l10n.statusInvoiced, 'amount': currency.formatMinor(status.invoicedCents)},
+    {'label': l10n.statusCreditNotes, 'amount': currency.formatMinor(-status.creditNotesCents), 'negative': true},
+    {'label': l10n.statusPaymentsMatched, 'amount': currency.formatMinor(status.paymentsMatchedCents)},
+    {'label': l10n.statusPaymentsReceived, 'amount': currency.formatMinor(status.paymentsReceivedCents)},
+    {'label': l10n.statusReimbursed, 'amount': currency.formatMinor(-status.reimbursedCents), 'negative': true},
+    {'label': l10n.statusRepartitioned, 'amount': currency.formatMinor(status.repartitionedCents)},
+    {'label': l10n.statusCredits, 'amount': currency.formatMinor(-status.creditsGrantedCents), 'negative': true},
   ];
   return <String, Object?>{
     'workspace': workspace?.name ?? '',

@@ -6,11 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/site.dart';
 import '../../providers/workspace_providers.dart';
@@ -20,17 +20,17 @@ class SitesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final sites = ref.watch(sitesProvider);
     final levels = ref.watch(levelsProvider).value ?? const [];
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.sitesTitle ?? 'Sites')),
+      appBar: AppBar(title: Text(l10n.sitesTitle)),
       floatingActionButton: FloatingActionButton.extended(
         key: const ValueKey('sites-add'),
         onPressed: () => _editSite(context, ref, null),
         icon: const Icon(Icons.add_location_alt_outlined),
-        label: Text(l10n?.sitesAdd ?? 'Add a site'),
+        label: Text(l10n.sitesAdd),
       ),
       body: switch (sites) {
         AsyncData(value: final rows) => ListView(
@@ -39,9 +39,7 @@ class SitesScreen extends ConsumerWidget {
                 .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
             children: [
               Text(
-                l10n?.sitesIntro ??
-                    'Every level belongs to a site; the default site carries the '
-                        'workspace\'s address.',
+                l10n.sitesIntro,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -55,7 +53,7 @@ class SitesScreen extends ConsumerWidget {
                         : Icons.location_city_outlined),
                     title: Text(site.name),
                     subtitle: Text([
-                      if (site.isDefault) l10n?.sitesDefault ?? 'Default site',
+                      if (site.isDefault) l10n.sitesDefault,
                       if (site.hasAddress) site.postalBlock.replaceAll('\n', ' · '),
                       if (site.legalId.isNotEmpty) site.legalId,
                     ].join('\n')),
@@ -66,7 +64,7 @@ class SitesScreen extends ConsumerWidget {
                 ),
               if (rows.length > 1 && levels.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.lg),
-                Text(l10n?.sitesLevels ?? 'Levels', style: theme.textTheme.titleSmall),
+                Text(l10n.sitesLevels, style: theme.textTheme.titleSmall),
                 const SizedBox(height: AppSpacing.sm),
                 for (final level in levels)
                   ListTile(
@@ -90,8 +88,7 @@ class SitesScreen extends ConsumerWidget {
                           context,
                           domain: 'workspace',
                           message: 'level site change failed',
-                          errorText: l10n?.workspaceGenericError ??
-                              'Something went wrong. Please try again.',
+                          errorText: l10n.workspaceGenericError,
                           action: () => ref
                               .read(floorPlanRepositoryProvider)
                               .setLevelSite(level.id, (v ?? '').isEmpty ? null : v),
@@ -110,7 +107,7 @@ class SitesScreen extends ConsumerWidget {
   }
 
   Future<void> _editSite(BuildContext context, WidgetRef ref, Site? site) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final name = TextEditingController(text: site?.name ?? '');
@@ -131,34 +128,30 @@ class SitesScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(site == null
-            ? (l10n?.sitesAdd ?? 'Add a site')
+            ? (l10n.sitesAdd)
             : site.name),
         content: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            field('site-name', name, l10n?.siteName ?? 'Site name'),
-            field('site-street', street, l10n?.siteStreet ?? 'Street'),
-            field('site-postal', postal, l10n?.sitePostalCode ?? 'Post code'),
-            field('site-city', city, l10n?.siteCity ?? 'City'),
-            field('site-country', country, l10n?.siteCountry ?? 'Country (code)'),
+            field('site-name', name, l10n.siteName),
+            field('site-street', street, l10n.siteStreet),
+            field('site-postal', postal, l10n.sitePostalCode),
+            field('site-city', city, l10n.siteCity),
+            field('site-country', country, l10n.siteCountry),
             field('site-legal', legal,
-                l10n?.siteLegalId ?? 'Establishment registration (SIRET)'),
+                l10n.siteLegalId),
             if (site != null && !site.isDefault) ...[
               const SizedBox(height: AppSpacing.md),
               Text(
-                l10n?.siteRegistrationHint ??
-                    'Only for a site that is a distinct legal entity — usually '
-                        'that is a separate workspace. Empty inherits the '
-                        'workspace\'s numbers.',
+                l10n.siteRegistrationHint,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              field('site-vat', vat, l10n?.siteVatId ?? 'VAT number (this entity)'),
+              field('site-vat', vat, l10n.siteVatId),
               field('site-exemption', exemption,
-                  l10n?.siteExemptionReason ?? 'VAT exemption mention (this entity)'),
+                  l10n.siteExemptionReason),
             ],
             if (site != null && !site.isDefault) ...[
               const SizedBox(height: AppSpacing.md),
-              Text(l10n?.siteDeleteHint ??
-                  'Its levels and members go back to the default site.',
+              Text(l10n.siteDeleteHint,
                   style: Theme.of(context).textTheme.bodySmall),
             ],
           ]),
@@ -168,17 +161,17 @@ class SitesScreen extends ConsumerWidget {
             TextButton(
               key: const ValueKey('site-delete'),
               onPressed: () => Navigator.of(context).pop('delete'),
-              child: Text(l10n?.siteDelete ?? 'Delete this site'),
+              child: Text(l10n.siteDelete),
             ),
           TextButton(
             key: const ValueKey('sites-cancel'),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('site-save'),
             onPressed: () => Navigator.of(context).pop('save'),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -189,7 +182,7 @@ class SitesScreen extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'site save failed',
-      errorText: l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         if (result == 'delete') {
           await repo.deleteSite(site!.id);
@@ -217,7 +210,7 @@ class SitesScreen extends ConsumerWidget {
       ..invalidate(sitesProvider)
       ..invalidate(levelsProvider);
     if (ok && result == 'save') {
-      AppSnack.success(context, l10n?.siteSaved ?? 'Site saved.');
+      AppSnack.success(context, l10n.siteSaved);
     }
   }
 }

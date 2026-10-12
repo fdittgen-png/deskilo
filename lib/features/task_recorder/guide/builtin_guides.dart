@@ -16,15 +16,15 @@ import 'task_guide.dart';
 /// The built-in guides, by id.
 enum BuiltinGuide { bookAPlace }
 
-String builtinGuideTitle(AppLocalizations? l10n, BuiltinGuide g) => switch (g) {
-  BuiltinGuide.bookAPlace => l10n?.guideBuiltinBooking ?? 'Book a place',
+String builtinGuideTitle(AppLocalizations l10n, BuiltinGuide g) => switch (g) {
+  BuiltinGuide.bookAPlace => l10n.guideBuiltinBooking,
 };
 
-TaskGuide builtinGuide(AppLocalizations? l10n, BuiltinGuide g) => switch (g) {
+TaskGuide builtinGuide(AppLocalizations l10n, BuiltinGuide g) => switch (g) {
   BuiltinGuide.bookAPlace => _bookAPlace(l10n),
 };
 
-TaskGuide _bookAPlace(AppLocalizations? l10n) {
+TaskGuide _bookAPlace(AppLocalizations l10n) {
   final confirm = recorderRegistry.action(RecorderActions.confirmBooking)!;
   return TaskGuide(
     actionContractVersion: actionContractVersion,
@@ -35,10 +35,7 @@ TaskGuide _bookAPlace(AppLocalizations? l10n) {
         destination: '/reserve',
         kind: GuideStepKind.instruction,
         text:
-            l10n?.guideBuiltinBookingIntro ??
-            'This guide shows how to book a place: choose the day and the '
-                'period, pick a place, then confirm. Nothing is booked until '
-                'you confirm.',
+            l10n.guideBuiltinBookingIntro,
       ),
       // Already on Reserve, or today is the day: these may be skipped.
       const GuideStep(
@@ -74,10 +71,7 @@ TaskGuide _bookAPlace(AppLocalizations? l10n) {
             id: 'g6r1',
             kind: GuideStepKind.instruction,
             text:
-                l10n?.guideBookingRefusedRecovery ??
-                'The booking was refused (the place is taken or a rule '
-                    'forbids it). Choose another place or period, then '
-                    'confirm again.',
+                l10n.guideBookingRefusedRecovery,
           ),
         ],
       ),

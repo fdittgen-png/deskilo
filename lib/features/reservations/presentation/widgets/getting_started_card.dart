@@ -8,9 +8,9 @@ import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/local_setup_providers.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
@@ -109,39 +109,37 @@ class GettingStartedCard extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final title =
-        l10n?.gettingStartedTitle(facts.workspaceName) ??
-        'Get started in ${facts.workspaceName}';
+        l10n.gettingStartedTitle(facts.workspaceName);
     final environment = !facts.production
-        ? (l10n?.gettingStartedEnvDev ?? 'Development workspace')
-        : (l10n?.gettingStartedEnvProd ?? 'Production workspace');
+        ? (l10n.gettingStartedEnvDev)
+        : (l10n.gettingStartedEnvProd);
     final lines = <String>[
       if (hint.standing != null) GettingStartedCopy.standing(l10n, hint.standing!),
       GettingStartedCopy.reason(l10n, hint),
       if (hint.allowance != null)
-        l10n?.gettingStartedAllowance(hint.allowance!) ??
-            'You may hold ${hint.allowance} bookings at a time.',
+        l10n.gettingStartedAllowance(hint.allowance!),
     ];
     final (String actionLabel, VoidCallback onAction) = switch (hint.action!) {
       GettingStartedAction.chooseTime => (
         hint.reason == GettingStartedReason.closedToday
-            ? (l10n?.gettingStartedActionChooseDay ?? 'Choose another day')
-            : (l10n?.gettingStartedActionChooseTime ?? 'Choose a time to book'),
+            ? (l10n.gettingStartedActionChooseDay)
+            : (l10n.gettingStartedActionChooseTime),
         onChooseTime,
       ),
       GettingStartedAction.viewMembership => (
-        l10n?.gettingStartedActionMembership ?? 'View my membership',
+        l10n.gettingStartedActionMembership,
         () => context.push('/settings'),
       ),
       GettingStartedAction.finishSetup => (
-        l10n?.gettingStartedActionFinishSetup ?? 'Finish setting up',
+        l10n.gettingStartedActionFinishSetup,
         () => context.push(hint.setupStep?.route ?? '/workspace-settings'),
       ),
       GettingStartedAction.openHelp => (
-        l10n?.gettingStartedActionHelp ?? 'Help for this workspace',
+        l10n.gettingStartedActionHelp,
         () => openGuide(ref, context, anchor: 'user.start.get-started'),
       ),
     };
@@ -149,8 +147,7 @@ class GettingStartedCard extends ConsumerWidget {
     return Semantics(
       container: true,
       label:
-          l10n?.gettingStartedSemantics ??
-          'Get started: one suggested next step',
+          l10n.gettingStartedSemantics,
       child: Card(
         key: const ValueKey('getting-started-card'),
         margin: const EdgeInsets.symmetric(
@@ -237,7 +234,7 @@ class GettingStartedCard extends ConsumerWidget {
                         : () => ref
                               .read(dismissedHelpHintsProvider.notifier)
                               .dismiss(seenKey),
-                    child: Text(l10n?.gettingStartedNotNow ?? 'Not now'),
+                    child: Text(l10n.gettingStartedNotNow),
                   ),
                   FilledButton.tonal(
                     key: const ValueKey('getting-started-primary'),

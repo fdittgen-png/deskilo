@@ -16,8 +16,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../l10n/app_localizations.dart';
 import 'illustration_renderer.dart';
 import 'storyboard.dart';
 
@@ -92,7 +92,7 @@ class _StoryboardPreviewState extends State<StoryboardPreview> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+    final l = context.l10n;
     final colors = Theme.of(context).colorScheme;
     final provenance = widget.provenance ?? l.taskExportSceneProvenance;
     final sb = widget.storyboard;
@@ -144,7 +144,7 @@ class _FrameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+    final l = context.l10n;
     final theme = Theme.of(context);
     final source = switch (frame.source) {
       IllustrationSource.recreatedScene => l.taskExportStoryboardSourceScene,

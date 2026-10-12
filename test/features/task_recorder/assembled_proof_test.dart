@@ -37,6 +37,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void _clean(String where, String text) {

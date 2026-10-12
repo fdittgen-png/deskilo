@@ -4,7 +4,11 @@ import 'package:xml/xml.dart';
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'invoice.dart';
+import 'vat_form_catalogue.dart';
+import 'vat_forms.dart';
 import 'vat_tax_point.dart';
+
+export 'vat_forms.dart' show VatFormBox;
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
@@ -182,232 +186,20 @@ List<VatDeclarationLine> computeVatDeclarationLines(
     vatDeclarationLinesOf(
         vatTaxPointLedger(invoices), periodStart, periodEnd);
 
-/// One box of a country's official return form the declaration lines map
-/// onto (#534) — e.g. CA3 line 08 or UStVA Kennzahl 81.
-class VatFormBox {
-  const VatFormBox({
-    required this.code,
-    required this.label,
-    required this.netCents,
-    required this.vatCents,
-  });
-
-  final String code;
-  final String label;
-  final int netCents;
-  final int vatCents;
-}
-
 /// Maps declaration lines onto the country's official form boxes, so the
 /// owner copies numbers straight onto the EFI/ELSTER screen (or the file
-/// their EDI partner uploads).
-///
-///  * FR — CA3 (form 3310): base+VAT per rate on lines 08 (20 %),
-///    09 (5,5 %), 9B (10 %), 11 (2,1 %); everything else on line 14
-///    ("opérations imposables à un autre taux").
-///  * DE — UStVA (USt 1 A): Kz 81 (19 %) / Kz 86 (7 %) carry the NET
-///    base, the tax computes on the form; other rates on Kz 35/36.
-///  * Anywhere else — a generic per-rate listing, one box per rate.
+/// their EDI partner uploads). #2357 — the forms are data, per country
+/// and year (`vat_form_catalogue.dart`), rounded as each form rounds;
+/// [periodEnd] picks the layout in force (the latest when null).
 List<VatFormBox> vatFormBoxes(
   String countryCode,
-  List<VatDeclarationLine> lines,
-) => [
-      ..._outputBoxes(countryCode, [
-        for (final l in lines)
-          if (!l.isInput) l,
-      ]),
-      ..._inputBoxes(countryCode, [
-        for (final l in lines)
-          if (l.isInput) l,
-      ]),
-    ];
-
-/// #2357 — the deductible VAT of the period's expenses, on the box each
-/// form reserves for it: CA3 line 20 (other goods and services), UStVA
-/// Kz 66, the UK's box 4, the Swiss 400, the Canadian line 108. Only the
-/// tax is reported; corrections of it fold in.
-List<VatFormBox> _inputBoxes(String countryCode, List<VatDeclarationLine> lines) {
-  if (lines.isEmpty) return const [];
-  final net = lines.fold(0, (s, l) => s + l.netCents);
-  final vat = lines.fold(0, (s, l) => s + l.vatCents);
-  final (code, label) = switch (countryCode.toUpperCase()) {
-    'FR' => ('20', 'Autres biens et services — TVA déductible'),
-    'DE' => ('Kz 66', 'Vorsteuerbeträge'),
-    'GB' || 'UK' => ('Box 4', 'VAT reclaimed on purchases'),
-    'CH' => ('400', 'Vorsteuer auf Material- und Dienstleistungsaufwand'),
-    'CA' => ('108', 'Input tax credits (ITCs)'),
-    _ => ('Input', 'Input VAT'),
-  };
-  return [VatFormBox(code: code, label: label, netCents: net, vatCents: vat)];
-}
-
-List<VatFormBox> _outputBoxes(
-  String countryCode,
-  List<VatDeclarationLine> lines,
-) {
-  final code = countryCode.toUpperCase();
-  // #2357 — the server keeps the categories of one rate apart (0 % AE, E
-  // and Z are three lines); the boxes still sum them per rate until the
-  // form mappings read the category.
-  final byRate = _perRate(code == 'FR'
-      ? [for (final l in lines) if (!l.isCorrection) l]
-      : lines);
-  VatDeclarationLine? at(double percent) =>
-      byRate.where((l) => l.percent == percent).firstOrNull;
-  List<VatDeclarationLine> others(Set<double> named) =>
-      [for (final l in byRate) if (!named.contains(l.percent)) l];
-
-  switch (code) {
-    case 'FR':
-      final named = {20.0, 10.0, 5.5, 2.1, 0.0};
-      final rest = others(named);
-      return [
-        if (at(20.0) case final l?)
-          VatFormBox(
-              code: '08',
-              label: 'Taux normal 20 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        // #2357 — 3310-CA3-SD: line 09 is the 5,5 % rate (code 0105) and
-        // line 9B the 10 % rate (code 0151); they were swapped.
-        if (at(5.5) case final l?)
-          VatFormBox(
-              code: '09',
-              label: 'Taux réduit 5,5 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(10.0) case final l?)
-          VatFormBox(
-              code: '9B',
-              label: 'Taux réduit 10 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(2.1) case final l?)
-          VatFormBox(
-              code: '11',
-              label: 'Taux particulier 2,1 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        for (final l in rest)
-          VatFormBox(
-              code: '14',
-              label: 'Autre taux ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(0.0) case final l?)
-          VatFormBox(
-              code: '05',
-              label: 'Opérations non imposées / taux 0',
-              netCents: l.netCents,
-              vatCents: 0),
-        ..._frenchRegularisations(lines),
-      ];
-    case 'DE':
-      final named = {19.0, 7.0, 0.0};
-      final rest = others(named);
-      return [
-        if (at(19.0) case final l?)
-          VatFormBox(
-              code: 'Kz 81',
-              label: 'Umsätze 19 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(7.0) case final l?)
-          VatFormBox(
-              code: 'Kz 86',
-              label: 'Umsätze 7 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        for (final l in rest)
-          VatFormBox(
-              code: 'Kz 35',
-              label: 'Andere Steuersätze ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-        if (at(0.0) case final l?)
-          VatFormBox(
-              code: 'Kz 48',
-              label: 'Nicht steuerbare / 0 %-Umsätze',
-              netCents: l.netCents,
-              vatCents: 0),
-      ];
-    default:
-      return [
-        for (final l in byRate)
-          VatFormBox(
-              code: _pct(l.percent),
-              label: l.percent == 0
-                  ? '0 % / out of scope'
-                  : 'Rate ${_pct(l.percent)}',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
-      ];
-  }
-}
-
-/// #2357 — CA3 régularisations: VAT a correction adds goes to line 15,
-/// VAT it takes back (a void, a reduction declared too high) to line 21
-/// as a deduction. In Germany (§ 17 UStG), the United Kingdom (error
-/// correction on the next return) and elsewhere, corrections fold into
-/// the period's rate boxes.
-List<VatFormBox> _frenchRegularisations(List<VatDeclarationLine> lines) {
-  var dueNet = 0, dueVat = 0, backNet = 0, backVat = 0;
-  for (final l in lines) {
-    if (!l.isCorrection) continue;
-    if (l.vatCents >= 0) {
-      dueNet += l.netCents;
-      dueVat += l.vatCents;
-    } else {
-      backNet -= l.netCents;
-      backVat -= l.vatCents;
-    }
-  }
-  return [
-    if (dueVat != 0 || dueNet != 0)
-      VatFormBox(
-          code: '15',
-          label: 'Régularisation — TVA à reverser',
-          netCents: dueNet,
-          vatCents: dueVat),
-    if (backVat != 0 || backNet != 0)
-      VatFormBox(
-          code: '21',
-          label: 'Régularisation — autre TVA à déduire',
-          netCents: backNet,
-          vatCents: backVat),
-  ];
-}
-
-/// [lines] summed per rate, in their first appearance's order.
-List<VatDeclarationLine> _perRate(List<VatDeclarationLine> lines) {
-  final out = <double, VatDeclarationLine>{};
-  for (final l in lines) {
-    final seen = out[l.percent];
-    out[l.percent] = seen == null
-        ? VatDeclarationLine(
-            percent: l.percent,
-            grossCents: l.grossCents,
-            netCents: l.netCents,
-            vatCents: l.vatCents,
-            invoiceCount: l.invoiceCount,
-          )
-        : VatDeclarationLine(
-            percent: l.percent,
-            grossCents: seen.grossCents + l.grossCents,
-            netCents: seen.netCents + l.netCents,
-            vatCents: seen.vatCents + l.vatCents,
-            invoiceCount: seen.invoiceCount + l.invoiceCount,
-          );
-  }
-  return out.values.toList();
-}
-
-String _pct(double percent) {
-  final text = percent == percent.roundToDouble()
-      ? percent.toStringAsFixed(0)
-      : percent.toString();
-  return '$text %';
-}
+  List<VatDeclarationLine> lines, {
+  DateTime? periodEnd,
+}) => fillVatForm(
+  vatFormSpecFor(countryCode, periodEnd ?? DateTime(9999)) ??
+      genericVatForm(lines),
+  lines,
+);
 
 /// The machine-readable export (#534): a compact self-describing XML any
 /// EDI partner, accountant tool or spreadsheet can ingest. Amounts in
@@ -466,13 +258,24 @@ String vatDeclarationXml({
       }
     });
     builder.element('boxes', nest: () {
-      for (final box in vatFormBoxes(countryCode, declaration.lines)) {
+      for (final box in vatFormBoxes(countryCode, declaration.lines,
+          periodEnd: declaration.periodEnd)) {
         builder.element('box', nest: () {
           builder
             ..attribute('code', box.code)
-            ..attribute('label', box.label)
-            ..element('net-cents', nest: box.netCents.toString())
-            ..element('vat-cents', nest: box.vatCents.toString());
+            ..attribute('label', box.label);
+          if (box.hasBase && box.baseKey.isNotEmpty) {
+            builder.attribute('base-key', box.baseKey);
+          }
+          if (box.hasTax && box.taxKey.isNotEmpty) {
+            builder.attribute('tax-key', box.taxKey);
+          }
+          if (box.hasBase) {
+            builder.element('net-cents', nest: box.netCents.toString());
+          }
+          if (box.hasTax) {
+            builder.element('vat-cents', nest: box.vatCents.toString());
+          }
         });
       }
     });

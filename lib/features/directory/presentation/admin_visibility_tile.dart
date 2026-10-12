@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../providers/directory_providers.dart';
 
@@ -15,12 +15,12 @@ class AdminVisibilityTile extends ConsumerWidget {
     if (member == null || !member.canAdminister || member.isOwner) {
       return const SizedBox.shrink();
     }
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final visible = ref.watch(adminVisibilityProvider(member.workspaceId));
     return SwitchListTile(
       key: const ValueKey('admin-visibility-tile-portal-admin-visible'),
       value: visible.value ?? false,
-      title: Text(l?.portalAdminVisible ?? 'Show me as a public administrator'),
+      title: Text(l.portalAdminVisible),
       onChanged: visible.hasValue
           ? (v) async {
               final ok = await runGuarded(
@@ -28,8 +28,7 @@ class AdminVisibilityTile extends ConsumerWidget {
                 domain: 'directory',
                 message: 'save administrator visibility failed',
                 errorText:
-                    l?.portalActionFailed ??
-                    'Could not save this change. Please try again.',
+                    l.portalActionFailed,
                 action: () => ref
                     .read(accountContactActionsProvider())
                     .adminVisibility(member.workspaceId, visible: v),

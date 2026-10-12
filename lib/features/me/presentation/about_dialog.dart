@@ -5,7 +5,7 @@
 // mean nobody; who reads them is the About audience on the same card.
 import 'package:flutter/material.dart';
 
-import '../../../l10n/app_localizations.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../application/me_actions.dart';
 
 /// Edits profession and bio; pops `(profession, bio)` or null.
@@ -32,9 +32,9 @@ class _AboutDialogState extends State<AboutMeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.visibilityAboutMe ?? 'About me'),
+      title: Text(l10n.visibilityAboutMe),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -44,7 +44,7 @@ class _AboutDialogState extends State<AboutMeDialog> {
               controller: _profession,
               maxLength: AboutLimits.profession,
               decoration: InputDecoration(
-                  labelText: l10n?.visibilityProfession ?? 'Profession'),
+                  labelText: l10n.visibilityProfession),
             ),
             TextField(
               key: const ValueKey('about-bio'),
@@ -53,7 +53,7 @@ class _AboutDialogState extends State<AboutMeDialog> {
               minLines: 2,
               maxLines: 5,
               decoration: InputDecoration(
-                  labelText: l10n?.visibilityBio ?? 'A few words about you'),
+                  labelText: l10n.visibilityBio),
             ),
           ],
         ),
@@ -62,13 +62,13 @@ class _AboutDialogState extends State<AboutMeDialog> {
         TextButton(
           key: const ValueKey('about-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('about-save'),
           onPressed: () =>
               Navigator.of(context).pop((_profession.text, _bio.text)),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

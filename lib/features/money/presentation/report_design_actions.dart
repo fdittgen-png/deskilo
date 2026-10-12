@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/files/file_picker.dart';
 import '../../../core/files/file_saver.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -33,7 +34,7 @@ Future<String?> exportReportDesign(
   required ReportBands bands,
   required DateTime exportedAt,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final content = buildReportDesignFile(
     kind: kind,
     language: language,
@@ -52,10 +53,10 @@ Future<String?> exportReportDesign(
   );
   if (!context.mounted) return path;
   if (path == null) {
-    AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+    AppSnack.error(context, l10n.commonSaveFailed);
   } else {
     AppSnack.success(
-        context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
+        context, l10n.commonSavedTo(path));
   }
   return path;
 }
@@ -68,9 +69,9 @@ Future<ReportBands?> importReportDesign(
   required ReportKind kind,
   required int reminderLevels,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final file = await ref.read(filePickerProvider)(XTypeGroup(
-    label: l10n?.reportDesignFileTypeLabel ?? 'JSON',
+    label: l10n.reportDesignFileTypeLabel,
     extensions: const ['json'],
     mimeTypes: const ['application/json'],
   ));
@@ -99,25 +100,20 @@ Future<ReportBands?> importReportDesign(
 /// One sentence per refusal, because "invalid file" tells the holder of
 /// the file nothing about what to change.
 String reportDesignErrorText(
-        AppLocalizations? l10n, ReportDesignError error) =>
+        AppLocalizations l10n, ReportDesignError error) =>
     switch (error) {
       ReportDesignError.malformed =>
-        l10n?.reportDesignErrorMalformed ?? 'That file is not readable JSON.',
+        l10n.reportDesignErrorMalformed,
       ReportDesignError.notADesignFile =>
-        l10n?.reportDesignErrorNotADesign ??
-            'That file is not a DesKilo report design.',
+        l10n.reportDesignErrorNotADesign,
       ReportDesignError.unsupportedVersion =>
-        l10n?.reportDesignErrorVersion ??
-            'That design was written by a newer version of DesKilo.',
+        l10n.reportDesignErrorVersion,
       ReportDesignError.unknownKind =>
-        l10n?.reportDesignErrorUnknownKind ??
-            'That design is for a report this workspace does not have.',
+        l10n.reportDesignErrorUnknownKind,
       ReportDesignError.wrongKind =>
-        l10n?.reportDesignErrorWrongKind ??
-            'That design belongs to a different report.',
+        l10n.reportDesignErrorWrongKind,
       ReportDesignError.invalidDesign =>
-        l10n?.reportDesignErrorInvalidDesign ??
-            'That file carries no readable design.',
+        l10n.reportDesignErrorInvalidDesign,
     };
 
 /// The pair of actions, so the designer carries three lines rather than
@@ -136,19 +132,19 @@ class ReportDesignExchangeButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Wrap(
       children: [
         TextButton.icon(
           key: const ValueKey('report-design-export'),
           icon: const Icon(Icons.file_upload_outlined),
-          label: Text(l10n?.reportDesignExport ?? 'Export this design'),
+          label: Text(l10n.reportDesignExport),
           onPressed: onExport,
         ),
         TextButton.icon(
           key: const ValueKey('report-design-import'),
           icon: const Icon(Icons.file_download_outlined),
-          label: Text(l10n?.reportDesignImport ?? 'Import a design'),
+          label: Text(l10n.reportDesignImport),
           onPressed: onImport,
         ),
       ],

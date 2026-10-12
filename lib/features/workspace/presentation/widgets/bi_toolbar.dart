@@ -6,25 +6,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 
 /// The period's name: "March 2026", "Q1 2026", "2026".
-String biPeriodLabel(BiPeriod p, AppLocalizations? l10n, String locale) =>
+String biPeriodLabel(BiPeriod p, AppLocalizations l10n, String locale) =>
     switch (p.grain) {
       BiGrain.month => DateFormat.yMMMM(
         locale,
       ).format(DateTime(p.year, p.index)),
       BiGrain.quarter =>
-        l10n?.biQuarter('${p.index}', '${p.year}') ?? 'Q${p.index} ${p.year}',
+        l10n.biQuarter('${p.index}', '${p.year}'),
       BiGrain.year => '${p.year}',
     };
 
-String biDimensionName(AppLocalizations? l10n, String dimension) =>
+String biDimensionName(AppLocalizations l10n, String dimension) =>
     switch (dimension) {
-      'level' => l10n?.biDimensionLevel ?? 'Level',
+      'level' => l10n.biDimensionLevel,
       _ => dimension,
     };
 
@@ -53,11 +54,11 @@ class BiToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final material = MaterialLocalizations.of(context);
     final notOffered =
-        l10n?.biNotOffered ?? 'not offered by the analyses shown';
+        l10n.biNotOffered;
     final current = query.current(today);
 
     // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
@@ -137,14 +138,14 @@ class BiToolbar extends StatelessWidget {
         children: [
           field<BiGrain>(
             fieldKey: 'grain',
-            label: l10n?.biGrain ?? 'Period length',
+            label: l10n.biGrain,
             value: query.grain,
             items: [
               for (final g in BiGrain.values)
                 item(g, switch (g) {
-                  BiGrain.month => l10n?.biGrainMonth ?? 'Month',
-                  BiGrain.quarter => l10n?.biGrainQuarter ?? 'Quarter',
-                  BiGrain.year => l10n?.biGrainYear ?? 'Year',
+                  BiGrain.month => l10n.biGrainMonth,
+                  BiGrain.quarter => l10n.biGrainQuarter,
+                  BiGrain.year => l10n.biGrainYear,
                 }, modules.any((m) => m.grains.contains(g))),
             ],
             onSelected: (g) => onChanged(query.copyWith(grain: g)),
@@ -162,19 +163,18 @@ class BiToolbar extends StatelessWidget {
           ),
           field<BiComparison>(
             fieldKey: 'comparison',
-            label: l10n?.biCompare ?? 'Compare with',
+            label: l10n.biCompare,
             value: query.comparison,
             items: [
               for (final c in BiComparison.values)
                 item(c, switch (c) {
-                  BiComparison.none => l10n?.biCompareNone ?? 'Nothing',
+                  BiComparison.none => l10n.biCompareNone,
                   BiComparison.previousPeriod =>
-                    l10n?.biComparePrevious ?? 'The period before',
+                    l10n.biComparePrevious,
                   BiComparison.previousYear =>
-                    l10n?.biComparePreviousYear ??
-                        'The same period a year before',
+                    l10n.biComparePreviousYear,
                   BiComparison.custom =>
-                    l10n?.biCompareCustom ?? 'A period I choose',
+                    l10n.biCompareCustom,
                 }, modules.any((m) => m.comparisons.contains(c))),
             ],
             onSelected: (c) => onChanged(
@@ -195,10 +195,10 @@ class BiToolbar extends StatelessWidget {
             ),
           field<String>(
             fieldKey: 'group',
-            label: l10n?.biGroupBy ?? 'Group by',
+            label: l10n.biGroupBy,
             value: query.groupBy ?? '',
             items: [
-              item('', l10n?.biGroupNone ?? 'No grouping', true),
+              item('', l10n.biGroupNone, true),
               for (final d in biDimensions)
                 item(
                   d,
@@ -215,18 +215,18 @@ class BiToolbar extends StatelessWidget {
           field<BiSort>(
             fieldKey: 'sort',
             label: grouped
-                ? l10n?.biSort ?? 'Order'
-                : l10n?.biSortUngrouped ?? 'Order (groups only)',
+                ? l10n.biSort
+                : l10n.biSortUngrouped,
             value: query.sort,
             enabled: grouped,
             items: [
               for (final s in BiSort.values)
                 item(s, switch (s) {
-                  BiSort.natural => l10n?.biSortNatural ?? 'As listed',
+                  BiSort.natural => l10n.biSortNatural,
                   BiSort.valueDescending =>
-                    l10n?.biSortDescending ?? 'Highest first',
+                    l10n.biSortDescending,
                   BiSort.valueAscending =>
-                    l10n?.biSortAscending ?? 'Lowest first',
+                    l10n.biSortAscending,
                 }, true),
             ],
             onSelected: (s) => onChanged(query.copyWith(sort: s)),
@@ -235,7 +235,7 @@ class BiToolbar extends StatelessWidget {
             OutlinedButton.icon(
               key: const ValueKey('bi-cards'),
               icon: const Icon(Icons.view_agenda_outlined),
-              label: Text(l10n?.biCards ?? 'Analyses shown'),
+              label: Text(l10n.biCards),
               onPressed: () async {
                 final chosen = await showDialog<List<String>>(
                   context: context,
@@ -266,17 +266,17 @@ class BiToolbar extends StatelessWidget {
               ButtonSegment(
                 value: BiView.dashboard,
                 icon: const Icon(Icons.space_dashboard_outlined),
-                label: Text(l10n?.biViewDashboard ?? 'Dashboard'),
+                label: Text(l10n.biViewDashboard),
               ),
               ButtonSegment(
                 value: BiView.table,
                 icon: const Icon(Icons.table_rows_outlined),
-                label: Text(l10n?.biViewTable ?? 'Table'),
+                label: Text(l10n.biViewTable),
               ),
               ButtonSegment(
                 value: BiView.chart,
                 icon: const Icon(Icons.bar_chart),
-                label: Text(l10n?.biViewChart ?? 'Chart'),
+                label: Text(l10n.biViewChart),
               ),
             ],
             selected: {query.view},
@@ -319,10 +319,10 @@ class _CardsDialogState extends State<_CardsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.biCards ?? 'Analyses shown'),
+      title: Text(l10n.biCards),
       content: SizedBox(
         width: 360,
         child: ListView(
@@ -342,13 +342,13 @@ class _CardsDialogState extends State<_CardsDialog> {
                   children: [
                     IconButton(
                       key: ValueKey('bi-card-up-$id'),
-                      tooltip: l10n?.biCardUp ?? 'Move up',
+                      tooltip: l10n.biCardUp,
                       icon: const Icon(Icons.arrow_upward),
                       onPressed: i == 0 ? null : () => _move(i, -1),
                     ),
                     IconButton(
                       key: ValueKey('bi-card-down-$id'),
-                      tooltip: l10n?.biCardDown ?? 'Move down',
+                      tooltip: l10n.biCardDown,
                       icon: const Icon(Icons.arrow_downward),
                       onPressed: i == _order.length - 1
                           ? null

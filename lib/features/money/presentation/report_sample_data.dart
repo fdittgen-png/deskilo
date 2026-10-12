@@ -15,7 +15,7 @@ import '../../../l10n/app_localizations.dart';
 /// VAT, plus the reminder and legal-mention fields (#480) — the quick
 /// preview runs on it when no real invoice exists yet. Everything is
 /// sample text, no live data.
-Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
+Map<String, Object?> sampleReportData(AppLocalizations l10n) => {
       'workspace': 'Coworking Demo',
       'workspace_address': '1 Example Street, 12345 Demo City',
       'member': 'Alex Sample',
@@ -42,7 +42,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
       'has_vat': true,
       'lines': [
         {
-          'label': l10n?.invoicePdfDescription ?? 'Subscription',
+          'label': l10n.invoicePdfDescription,
           'kind': 'subscription',
           'pct': '100',
           'month': 'July',
@@ -135,7 +135,7 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
               'période).',
       'declaration_invoice_count': '2',
       'declaration_status': 'draft',
-      'declaration_note': l10n?.vatDeclDisclaimer ?? 'Verify against your accounting before filing.',
+      'declaration_note': l10n.vatDeclDisclaimer,
       'configuration_rows': [{'heading': true, 'label': 'Configuration'}, {'label': 'Country', 'value': 'FR', 'detail': ''}],
       'vat_form_boxes': <Map<String, Object?>>[],
       'vat_positions': [
@@ -146,13 +146,10 @@ Map<String, Object?> sampleReportData(AppLocalizations? l10n) => {
         {'rate': '20 %', 'category': 'S', 'count': '2', 'net': '1 000,00 €', 'vat': '200,00 €', 'gross': '1 200,00 €'},
       ],
       'payment_terms':
-          l10n?.invoiceLegalPaymentTermsDefault ?? 'Payment on receipt.',
-      'late_penalty': l10n?.invoiceLegalLatePenaltyDefault ??
-          'Late-payment penalty: three times the statutory interest rate.',
-      'recovery_indemnity': l10n?.invoiceLegalRecoveryDefault ??
-          'Fixed recovery indemnity for collection costs: €40.',
-      'escompte': l10n?.invoiceLegalEscompteDefault ??
-          'No discount for early payment.',
+          l10n.invoiceLegalPaymentTermsDefault,
+      'late_penalty': l10n.invoiceLegalLatePenaltyDefault,
+      'recovery_indemnity': l10n.invoiceLegalRecoveryDefault,
+      'escompte': l10n.invoiceLegalEscompteDefault,
       'insurance': '',
       'special_mentions': '',
     };

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -65,7 +66,7 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
       context,
       domain: 'directory',
       message: 'directory link check failed',
-      errorText: AppLocalizations.of(context)?.portalConnectionFailed,
+      errorText: context.l10n.portalConnectionFailed,
       action: () async {
         state = await ref
             .read(directoryActionsProvider)
@@ -82,7 +83,7 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
   Future<void> _link() async {
     final candidate = _candidate;
     if (candidate == null || _busy) return;
-    final l = AppLocalizations.of(context)!;
+    final l = context.l10n;
     setState(() => _busy = true);
     ConnectionFailure? failure;
     final ok = await runGuarded(
@@ -150,7 +151,7 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+    final l = context.l10n;
     final state = _state;
     final ready = _candidate != null && !_busy;
     return AlertDialog(

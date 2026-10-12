@@ -6895,6 +6895,66 @@ abstract class AppLocalizations {
   /// **'Reminder rules'**
   String get dunningSettingsTitle;
 
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s electronic address (BT-49) on their profile'**
+  String get eInvoiceChannelGapBuyerEndpoint;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'a buyer reference or a purchase-order number'**
+  String get eInvoiceChannelGapBuyerReference;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s VAT number or fiscal code'**
+  String get eInvoiceChannelGapBuyerTaxId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the customer’s Leitweg-ID as their buyer reference'**
+  String get eInvoiceChannelGapLeitwegId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s bank account (IBAN)'**
+  String get eInvoiceChannelGapPaymentAccount;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s contact e-mail and telephone'**
+  String get eInvoiceChannelGapSellerContact;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s electronic address (BT-34) in its legal identity'**
+  String get eInvoiceChannelGapSellerEndpoint;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the space’s VAT number'**
+  String get eInvoiceChannelGapSellerVatId;
+
+  /// #2358 channel gap
+  ///
+  /// In en, this message translates to:
+  /// **'the county of each Romanian address'**
+  String get eInvoiceChannelGapSubdivision;
+
+  /// #2358 e-invoice sheet: what the configured channel still needs before Send is offered
+  ///
+  /// In en, this message translates to:
+  /// **'Before sending through {channel}, add:'**
+  String eInvoiceChannelGapsTitle(String channel);
+
   /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
   ///
   /// In en, this message translates to:
@@ -6912,6 +6972,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.'**
   String get eInvoiceGapMixedNotSubjectLines;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'sales to consumers and abroad, and the payments of services, must be e-reported'**
+  String get eInvoiceMandateEReporting;
+
+  /// #2358 mandate calendar: a duty still ahead
+  ///
+  /// In en, this message translates to:
+  /// **'From {date}: {duty}.'**
+  String eInvoiceMandateFrom(String date, String duty);
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every invoice must be recorded in a hash-chained register (Verifactu)'**
+  String get eInvoiceMandateInvoiceRecords;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every business must issue e-invoices'**
+  String get eInvoiceMandateIssueAll;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'large and mid-sized businesses must issue e-invoices'**
+  String get eInvoiceMandateIssueLarge;
+
+  /// #2358 mandate duty
+  ///
+  /// In en, this message translates to:
+  /// **'every business must be able to receive e-invoices'**
+  String get eInvoiceMandateReceiveAll;
+
+  /// #2358 mandate calendar: a duty in force
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}: {duty}.'**
+  String eInvoiceMandateSince(String date, String duty);
+
+  /// #2358 e-invoice sheet: header above the mandate calendar
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing obligations in your country:'**
+  String get eInvoiceMandateTitle;
 
   /// Label above the seat sheet's accessory chips (workspace catalog)
   ///
@@ -13380,12 +13488,6 @@ abstract class AppLocalizations {
   /// **'Public-sector customers: {channel}.'**
   String invoiceEInvoicePublicRoute(String channel);
 
-  /// E-invoice sheet: the file satisfies the norm
-  ///
-  /// In en, this message translates to:
-  /// **'Ready — this file satisfies EN 16931.'**
-  String get invoiceEInvoiceReady;
-
   /// Menu: share the EN 16931 UBL XML (EU workspaces)
   ///
   /// In en, this message translates to:
@@ -13421,6 +13523,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An access point delivers it to the customer — no government platform in between.'**
   String get invoiceEInvoiceTransportPeppol;
+
+  /// #2358 e-invoice sheet: complete, and the format passes the named official validator
+  ///
+  /// In en, this message translates to:
+  /// **'Ready — nothing EN 16931 requires is missing, and this format passes the official validator ({validator}).'**
+  String invoiceEInvoiceValidated(String validator);
 
   /// #1916 invoice essentials: invoiceEssentialsRefused
   ///
@@ -25195,6 +25303,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'True on a credit note'**
   String get reportFieldMeaningCreditNote;
+
+  /// #2388 report guide: meaning of declaration_note
+  ///
+  /// In en, this message translates to:
+  /// **'The declaration\'s caution to verify before filing'**
+  String get reportFieldMeaningDeclarationNote;
 
   /// #966 report guide: meaning of due_date
   ///

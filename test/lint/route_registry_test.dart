@@ -73,6 +73,17 @@ const Set<String> _openWithEveryFeatureOff = {
   // recording is gated by taskRecorder inside the screen.
   '/task-recorder',
   '/task-wizard',
+  // #2388 — pages opened over another screen (they were Navigator pushes
+  // with no path). A page without its argument goes back to the screen it
+  // is opened from; the ones with nothing to carry open as that screen
+  // would, and the feature gate stays where it always was, on the button
+  // that opens them.
+  '/me/messages/starred',
+  '/me/messages/new-group',
+  '/money/repartition',
+  '/money/settlement',
+  '/account-activity/history',
+  '/help/support-bundle',
   // #1872 — the local workbench: no account, no workspace, no flag.
   '/task-workbench',
 };

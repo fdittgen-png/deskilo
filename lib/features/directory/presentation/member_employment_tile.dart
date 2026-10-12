@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
 import '../providers/directory_providers.dart';
 
 class MemberEmploymentTile extends ConsumerWidget {
@@ -16,21 +16,21 @@ class MemberEmploymentTile extends ConsumerWidget {
   final bool editable;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final value = ref.watch(employmentStatusProvider(member));
     if (value.hasError) {
       return TextButton(
         key: const ValueKey('member-employment-tile-retry'),
         onPressed: () => ref.invalidate(employmentStatusProvider(member)),
-        child: Text(l?.commonRetry ?? 'Try again'),
+        child: Text(l.commonRetry),
       );
     }
     return SwitchListTile(
       key: const ValueKey('member-employment-tile-portal-employed'),
       value: value.value ?? false,
-      title: Text(l?.portalEmployed ?? 'Employed by this workspace'),
+      title: Text(l.portalEmployed),
       subtitle: Text(
-        l?.portalEmploymentHint ?? 'Employment does not change access or subscriptions. Salary payments are not enabled.',
+        l.portalEmploymentHint,
       ),
       onChanged: editable && value.hasValue
           ? (employed) async {
@@ -39,8 +39,7 @@ class MemberEmploymentTile extends ConsumerWidget {
                 domain: 'members',
                 message: 'save member employment failed',
                 errorText:
-                    l?.portalActionFailed ??
-                    'Could not save this change. Please try again.',
+                    l.portalActionFailed,
                 action: () => ref
                     .read(accountContactActionsProvider())
                     .employment(member, employed: employed),

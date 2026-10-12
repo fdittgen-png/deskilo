@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../providers/message_marks_providers.dart';
 
@@ -16,17 +16,17 @@ class StarredMessagesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final starred = ref.watch(starredMessagesProvider);
     final format = ref.watch(appFormatProvider);
     return Scaffold(
       key: const ValueKey('starred-messages'),
-      appBar: AppBar(title: Text(l10n?.messengerStarred ?? 'Starred')),
+      appBar: AppBar(title: Text(l10n.messengerStarred)),
       body: switch (starred) {
         AsyncData(value: final rows) when rows.isEmpty => EmptyState(
             key: const ValueKey('starred-empty'),
             icon: Icons.star_outline,
-            title: l10n?.messengerNoStarred ?? 'No starred message yet.',
+            title: l10n.messengerNoStarred,
           ),
         AsyncData(value: final rows) => Align(
             alignment: Alignment.topCenter,
@@ -61,7 +61,7 @@ class StarredMessagesScreen extends ConsumerWidget {
             child: TextButton(
               key: const ValueKey('starred-retry'),
               onPressed: () => ref.invalidate(starredMessagesProvider),
-              child: Text(l10n?.commonRetry ?? 'Try again'),
+              child: Text(l10n.commonRetry),
             ),
           ),
         _ => const LoadingView(),

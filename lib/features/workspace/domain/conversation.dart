@@ -20,7 +20,7 @@ enum ConversationKind {
   group,
 }
 
-ConversationKind conversationKindFromWire(String value) =>
+ConversationKind _conversationKindFromWire(String value) =>
     value == 'group' ? ConversationKind.group : ConversationKind.direct;
 
 /// One row of the conversation list, as `my_conversations` returns it:
@@ -50,7 +50,7 @@ class Conversation implements SystemStamped {
   factory Conversation.fromRow(Map<String, dynamic> row) => Conversation(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
-        kind: conversationKindFromWire(row['kind'] as String? ?? 'direct'),
+        kind: _conversationKindFromWire(row['kind'] as String? ?? 'direct'),
         title: row['title'] as String?,
         avatarPath: row['avatar_path'] as String?,
         otherMemberId: row['other_member_id'] as String?,

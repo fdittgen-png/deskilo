@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -12,6 +13,7 @@ import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
@@ -40,6 +42,9 @@ import 'calendar_file_button.dart';
 import 'reservation_status_note.dart';
 import 'series_result_dialog.dart';
 
+part 'reservation_detail_sheet_part1.dart';
+part 'reservation_detail_sheet_part2.dart';
+
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
 /// seat's accessories, a "Show on plan" jump — and for MY still-upcoming
@@ -58,7 +63,7 @@ class ReservationDetailSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final seatId = r.seatId;
     final officeId = r.officeId;
@@ -165,7 +170,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .watch(targetNamesProvider)
                                   .value?[r.deskId];
                               return Text(
-                                '${lexiconText(context, key: 'deskDetail', fallback: l10n?.deskDetail ?? 'Whole desk')}'
+                                '${lexiconText(context, key: 'deskDetail', fallback: l10n.deskDetail)}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-desk'),
                               );
@@ -182,7 +187,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .firstOrNull
                                   ?.name;
                               return Text(
-                                '${lexiconText(context, key: 'levelDetail', fallback: l10n?.levelDetail ?? 'Whole level')}'
+                                '${lexiconText(context, key: 'levelDetail', fallback: l10n.levelDetail)}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-level'),
                               );
@@ -207,7 +212,7 @@ class ReservationDetailSheet extends ConsumerWidget {
               onPressed: target == null
                   ? null
                   : () => Navigator.of(context).pop(target),
-              label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
+              label: Text(l10n.calendarShowOnPlan),
             ),
             if (editable) ...[
               const SizedBox(height: 8),
@@ -219,7 +224,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                       icon: const Icon(Icons.edit_calendar_outlined),
                       onPressed: () => _editTimes(context, ref),
                       label: Text(
-                        l10n?.reservationEditTimes ?? 'Edit times',
+                        l10n.reservationEditTimes,
                       ),
                     ),
                   ),
@@ -234,8 +239,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                       icon: const Icon(Icons.event_busy_outlined),
                       onPressed: () => _cancel(context, ref),
                       label: Text(
-                        l10n?.planCancelReservationButton ??
-                            'Cancel reservation',
+                        l10n.planCancelReservationButton,
                       ),
                     ),
                   ),
@@ -249,7 +253,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.more_time_outlined),
                 onPressed: () => _extendEnd(context, ref),
                 label: Text(
-                  l10n?.reservationExtendButton ?? 'Stay longer',
+                  l10n.reservationExtendButton,
                 ),
               ),
             ],
@@ -260,7 +264,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.timelapse_outlined),
                 onPressed: () => _endEarly(context, ref),
                 label: Text(
-                  l10n?.reservationEndEarlyButton ?? 'End earlier',
+                  l10n.reservationEndEarlyButton,
                 ),
               ),
             ],
@@ -274,8 +278,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () => _requestDeletion(context, ref),
                 // The label says REQUEST — nothing is deleted here.
-                label: Text(l10n?.reservationDeleteRequestButton ??
-                    'Request deletion'),
+                label: Text(l10n.reservationDeleteRequestButton),
               ),
             ],
             if (calendarFile) ...[
@@ -294,480 +297,6 @@ class ReservationDetailSheet extends ConsumerWidget {
     );
   }
 
-  /// #492 — the request dialog, then the sheet closes (#2328: the plan's
-  /// seat sheet files the same request through [requestBookingDeletion]).
-  Future<void> _requestDeletion(BuildContext context, WidgetRef ref) async {
-    if (!await requestBookingDeletion(context, ref, reservation)) return;
-    if (context.mounted) Navigator.of(context).pop();
-  }
-
-  // ── cancel ──
-
-  /// Same choice flow as the calendar's menu (#118): a single booking
-  /// offers one cancel action; a series adds "this and following".
-  Future<void> _cancel(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    final choice = await showModalBottomSheet<CancelScope>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              key: const ValueKey('reservation-detail-sheet-plan-cancel-reservation-button'),
-              leading: const Icon(Icons.event_busy_outlined),
-              title: Text(
-                r.seriesId == null
-                    ? (l10n?.planCancelReservationButton ??
-                        'Cancel reservation')
-                    : (l10n?.calendarCancelOccurrence ??
-                        'Cancel this occurrence'),
-              ),
-              onTap: () =>
-                  Navigator.of(sheetContext).pop(CancelScope.thisOne),
-            ),
-            if (r.seriesId != null)
-              ListTile(
-                key: const ValueKey('reservation-detail-sheet-calendar-cancel-following'),
-                leading: const Icon(Icons.fast_forward_outlined),
-                title: Text(
-                  l10n?.calendarCancelFollowing ??
-                      'Cancel this and following',
-                ),
-                onTap: () => Navigator.of(sheetContext)
-                    .pop(CancelScope.thisAndFollowing),
-              ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-    if (choice == null || !context.mounted) return;
-    try {
-      // #1234 — which occurrences a cancellation touches is a decision,
-      // and it lives in application/ where a test can reach it.
-      await cancelReservation(
-        ref.read(reservationRepositoryProvider),
-        r,
-        scope: choice,
-      );
-    } on Object catch (e, st) {
-      debugPrint('cancel failed: $e\n$st');
-      TraceLogger.instance.error(
-          'reservations',
-          'reservation cancel failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
-      );
-      return;
-    }
-    invalidateBookingData(ref);
-    if (!context.mounted) return;
-    Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n?.reservationCancelledSnack ?? 'Reservation cancelled.',
-    );
-  }
-
-  // ── edit ──
-
-  /// Granularity-aware window edit on the booking's own (workspace) day:
-  /// half-day offers the three canonical windows, minute grids and
-  /// legacy flexible offer snapped from/to pickers, full-day re-books
-  /// the full day (nothing else exists to pick).
-  Future<void> _editTimes(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final day = WorkspaceTime.dateOf(r.startsAt);
-
-    HalfDayWindow? window;
-    if (granularity == BookingGranularity.halfDay) {
-      window = await _pickHalfDayWindow(context, l10n, day);
-    } else if (granularity == BookingGranularity.fullDay) {
-      window = HalfDayWindows.fullDay(day);
-    } else {
-      window = await _pickTimes(context, l10n, granularity);
-    }
-    if (window == null || !context.mounted) return;
-
-    // Repetition on modification too: a single booking may become a
-    // series here. Only offered when the workspace enables series and
-    // this isn't already a series instance (changing a series' pattern
-    // is out of scope — cancel + rebook for that).
-    final canRepeat = r.seriesId == null &&
-        ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.seriesBooking);
-    SeriesPattern? pattern;
-    if (canRepeat) {
-      pattern = await _pickPattern(context, l10n);
-      if (!context.mounted) return;
-    }
-
-    final RescheduleOutcome outcome;
-    try {
-      // #1394 — with a pattern this is `convert_to_series` (0224): ONE
-      // transaction that refuses rather than leaving the member with the
-      // original cancelled and nothing in its place. It used to be a
-      // client-side `cancel` followed by `createSeries`, and when no date
-      // could be booked the second returned NORMALLY with an empty
-      // `booked`, so nothing here ever caught it.
-      outcome = await rescheduleReservation(
-        ref.read(reservationRepositoryProvider),
-        r,
-        start: window.start,
-        end: window.end,
-        pattern: pattern,
-        // The horizon the booking sheet starts from. The member cannot
-        // change it HERE yet — the detail sheet has no repeat-end
-        // affordance, and adding one is its own slice (#1394).
-        until: pattern == null
-            ? null
-            : window.start.add(const Duration(days: 28)),
-      );
-    } on Object catch (e, st) {
-      debugPrint('reservation edit failed: $e\n$st');
-      TraceLogger.instance.error(
-          'reservations',
-          'reservation edit failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      // #574 — the server's own reason (granularity, one-place, quota),
-      // not a generic "taken": the edit flow used to swallow it.
-      AppSnack.error(
-        context,
-        bookingErrorText(
-          l10n,
-          e,
-          l10n?.reserveBookingFailed ??
-              'Could not reserve — the seat may have just been taken.',
-          stepMinutes: granularity.stepMinutes,
-        ),
-      );
-      return;
-    }
-    invalidateBookingData(ref);
-    if (!context.mounted) return;
-    Navigator.of(context).pop();
-    // A repeat may book some dates and skip others, and the skips are
-    // what the member needs to see — a generic "updated" would hide
-    // them. The plain move has nothing to report beyond success.
-    switch (outcome) {
-      case BecameSeries(:final result):
-        await showSeriesResultDialog(context, result);
-      case Moved():
-        AppSnack.success(
-          context,
-          l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
-        );
-    }
-  }
-
-  /// The next canonical LATER end for a running booking (#574), or null
-  /// when nothing later exists: under half-day granularity a morning
-  /// grows to the day's end; grids/hours/flexible may pick any later
-  /// time; a booking already at its day's end has nowhere to grow.
-  DateTime? _laterEndFor(WidgetRef ref, Reservation r) {
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final day = WorkspaceTime.dateOf(r.startsAt);
-    final dayEnd = HalfDayWindows.fullDay(day).end;
-    if (granularity == BookingGranularity.halfDay ||
-        granularity == BookingGranularity.fullDay) {
-      return r.endsAt.isBefore(dayEnd) ? dayEnd : null;
-    }
-    // Grids, hours, flexible: anything later the same day works — the
-    // picker decides; the day's midnight bounds it.
-    final next = day.add(const Duration(days: 1));
-    final midnight = WorkspaceTime.at(next.year, next.month, next.day);
-    return r.endsAt.isBefore(midnight) ? midnight : null;
-  }
-
-  /// The canonical EARLIER end a running booking may shrink to (#638),
-  /// or null when nothing earlier is reachable. Day-based granularity
-  /// has exactly one earlier canonical edge — the half-day boundary —
-  /// and it only counts while it still lies ahead of [now] (and after
-  /// the immovable start). Grids/hours/flexible let the picker choose:
-  /// they qualify as soon as one whole step still fits between now and
-  /// the current end.
-  DateTime? _earlierEndFor(WidgetRef ref, Reservation r, DateTime now) {
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final day = WorkspaceTime.dateOf(r.startsAt);
-    if (granularity.isDayBased) {
-      final boundary = HalfDayWindows.morning(day).end;
-      return boundary.isBefore(r.endsAt) &&
-              boundary.isAfter(now) &&
-              boundary.isAfter(r.startsAt)
-          ? boundary
-          : null;
-    }
-    // The picker decides; one grid step ahead of now is the earliest
-    // end that can still be reached.
-    final step = granularity.stepMinutes ?? 15;
-    final earliest = now.add(Duration(minutes: step));
-    return earliest.isBefore(r.endsAt) ? earliest : null;
-  }
-
-  /// One snapped instant on [day] from a clock pick — the SHARED grid
-  /// rule ([BookingGranularity.snapMinutesOfDay], #638), so extend and
-  /// shrink can never drift apart the way they had.
-  DateTime _snappedOnDay(
-    DateTime day,
-    TimeOfDay picked,
-    BookingGranularity granularity,
-  ) {
-    final minutes =
-        granularity.snapMinutesOfDay(picked.hour * 60 + picked.minute);
-    return WorkspaceTime.at(day.year, day.month, day.day)
-        .add(Duration(minutes: minutes.clamp(0, 24 * 60)));
-  }
-
-  /// #574 — extend a RUNNING booking's end within the workspace's
-  /// granularity. Day-based: one confirm to the day's end (that IS the
-  /// only later canonical edge). Grids/hours: a snapped time picker.
-  Future<void> _extendEnd(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final day = WorkspaceTime.dateOf(r.startsAt);
-
-    DateTime? newEnd;
-    if (granularity.isDayBased) {
-      newEnd = HalfDayWindows.fullDay(day).end;
-    } else {
-      final picked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(
-          WorkspaceTime.display(r.endsAt),
-        ),
-      );
-      if (picked == null || !context.mounted) return;
-      newEnd = _snappedOnDay(day, picked, granularity);
-    }
-    if (!newEnd.isAfter(r.endsAt)) {
-      if (!context.mounted) return;
-      AppSnack.info(
-        context,
-        l10n?.reservationExtendLaterOnly ??
-            'Pick a time after the current end.',
-      );
-      return;
-    }
-    await _writeEnd(context, ref, newEnd, granularity);
-  }
-
-  /// #638 — free the rest of the booking: shrink a RUNNING booking's end
-  /// to an earlier canonical edge, the start untouched (the server keeps
-  /// it immovable anyway). Day-based granularity offers the half-day
-  /// boundary — "cancel the rest of the day", the affordance the guide
-  /// already described; grids/hours offer a snapped picker that refuses
-  /// anything not still ahead of now.
-  Future<void> _endEarly(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
-    final now = ref.read(clockProvider).now();
-    final day = WorkspaceTime.dateOf(r.startsAt);
-
-    DateTime newEnd;
-    if (granularity.isDayBased) {
-      final boundary = _earlierEndFor(ref, r, now);
-      if (boundary == null) return; // the button is not offered then
-      newEnd = boundary;
-    } else {
-      final picked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(
-          WorkspaceTime.display(r.endsAt),
-        ),
-      );
-      if (picked == null || !context.mounted) return;
-      newEnd = _snappedOnDay(day, picked, granularity);
-    }
-    // Ahead of now AND before the current end — the two halves of the
-    // server's own rule, refused here with the reason instead of a
-    // round-trip that says "invalid".
-    if (!newEnd.isBefore(r.endsAt) || !newEnd.isAfter(now)) {
-      if (!context.mounted) return;
-      AppSnack.info(
-        context,
-        l10n?.reservationEndEarlyAheadOnly ??
-            'Pick a time still ahead of now and before the current end.',
-      );
-      return;
-    }
-    await _writeEnd(context, ref, newEnd, granularity);
-  }
-
-  /// The one write both end changes share (#638): the start is passed
-  /// back untouched, refusals go through [bookingErrorText] like every
-  /// neighbouring action, success pops the sheet.
-  Future<void> _writeEnd(
-    BuildContext context,
-    WidgetRef ref,
-    DateTime newEnd,
-    BookingGranularity granularity,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final r = reservation;
-    try {
-      // #1234 — "I am leaving at a different time", never "I arrived at
-      // a different time": the command keeps the start out of the
-      // caller's hands, which is the rule update_reservation enforces.
-      await changeReservationEnd(
-        ref.read(reservationRepositoryProvider),
-        r,
-        end: newEnd,
-      );
-    } on Object catch (e, st) {
-      TraceLogger.instance.error(
-          'reservations',
-          'reservation end change failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        bookingErrorText(
-          l10n,
-          e,
-          l10n?.reserveBookingFailed ??
-              'Could not reserve — the seat may have just been taken.',
-          stepMinutes: granularity.stepMinutes,
-        ),
-      );
-      return;
-    }
-    invalidateBookingData(ref);
-    if (!context.mounted) return;
-    Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
-    );
-  }
-
-  /// Repeat-modality picker for the edit flow (spec §5.2): the same
-  /// choices as the booking sheet's Repeat dropdown, as tappable rows.
-  Future<SeriesPattern?> _pickPattern(
-    BuildContext context,
-    AppLocalizations? l10n,
-  ) {
-    Widget row(String key, SeriesPattern? p, String label, IconData icon) =>
-        ListTile(
-          key: ValueKey(key),
-          leading: Icon(icon),
-          title: Text(label),
-          onTap: () => Navigator.of(context).pop(p),
-        );
-    return showModalBottomSheet<SeriesPattern?>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            row('edit-repeat-none', null,
-                l10n?.repeatNone ?? 'Does not repeat', Icons.event_outlined),
-            row('edit-repeat-daily', SeriesPattern.daily,
-                l10n?.repeatDaily ?? 'Every day', Icons.repeat),
-            row('edit-repeat-weekdays', SeriesPattern.weekdays,
-                l10n?.repeatWeekdays ?? 'Every weekday',
-                Icons.work_outline),
-            row('edit-repeat-weekly', SeriesPattern.weekly,
-                l10n?.repeatWeekly ?? 'Weekly', Icons.view_week_outlined),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
-  Future<HalfDayWindow?> _pickHalfDayWindow(
-    BuildContext context,
-    AppLocalizations? l10n,
-    DateTime day,
-  ) {
-    return showModalBottomSheet<HalfDayWindow>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              key: const ValueKey('edit-window-am'),
-              leading: const Icon(Icons.wb_twilight_outlined),
-              title: Text(lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning')),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.morning(day)),
-            ),
-            ListTile(
-              key: const ValueKey('edit-window-pm'),
-              leading: const Icon(Icons.wb_sunny_outlined),
-              title: Text(lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon')),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.afternoon(day)),
-            ),
-            ListTile(
-              key: const ValueKey('edit-window-day'),
-              leading: const Icon(Icons.today_outlined),
-              title: Text(lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day')),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.fullDay(day)),
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// From/to clock pickers on the booking's device-local day, snapped to
-  /// the granularity's step — the same slot language as the hub's chips.
-  Future<HalfDayWindow?> _pickTimes(
-    BuildContext context,
-    AppLocalizations? l10n,
-    BookingGranularity granularity,
-  ) async {
-    final r = reservation;
-    final snap = granularity.stepMinutes ?? 15;
-    final local = WorkspaceTime.wall(r.startsAt);
-    final endLocal = WorkspaceTime.wall(r.endsAt);
-    final from = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(local),
-      helpText: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
-    );
-    if (from == null || !context.mounted) return null;
-    final to = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(endLocal),
-      helpText: l10n?.planToLabel ?? 'To',
-    );
-    if (to == null) return null;
-    DateTime snapDown(int hour, int minute) {
-      // #638 — the shared grid rule, not a private copy of it.
-      // #1082 — and the result is a WORKSPACE instant. `local` is the
-      // workspace wall clock of the reservation; rebuilding a bare
-      // DateTime from it silently MOVED an existing booking by the
-      // device's offset every time somebody edited its times.
-      final m = granularity.snapMinutesOfDay(hour * 60 + minute);
-      return pickedInstantAt(local, m ~/ 60, m % 60);
-    }
-
-    final start = snapDown(from.hour, from.minute);
-    var end = snapDown(to.hour, to.minute);
-    if (!end.isAfter(start)) end = start.add(Duration(minutes: snap));
-    return (start: start, end: end);
-  }
 }
 
 /// Opens the detail sheet AND owns the "Show on plan" jump (#182): the
@@ -782,7 +311,7 @@ Future<void> showReservationDetail(
   Reservation reservation,
 ) async {
   recordTaskStep(ref, RecorderActions.viewDetails); // #1865
-  final target = await showModalBottomSheet<SeatContext>(
+  final target = await showAppSheet<SeatContext>(
     context: context,
     isScrollControlled: true,
     builder: (_) => ReservationDetailSheet(reservation: reservation),
@@ -836,8 +365,7 @@ Future<bool> requestBookingDeletion(
 ) async {
   // English only where no localization is installed (a bare test app).
   final l10n =
-      AppLocalizations.of(context) ??
-      lookupAppLocalizations(const Locale('en'));
+      context.l10n;
   final reasonController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,

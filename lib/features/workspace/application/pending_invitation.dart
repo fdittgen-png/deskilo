@@ -22,11 +22,9 @@ abstract class PendingInvitationStore {
   Future<void> write(String? value);
 }
 
-class SecurePendingInvitationStore implements PendingInvitationStore {
-  const SecurePendingInvitationStore([
-    this._secrets = const PlatformAuthSecretStore(),
-  ]);
-  final AuthSecretStore _secrets;
+class _SecurePendingInvitationStore implements PendingInvitationStore {
+  const _SecurePendingInvitationStore();
+  final AuthSecretStore _secrets = const PlatformAuthSecretStore();
   static const _key = 'deskilo.invitation.pending';
 
   @override
@@ -39,7 +37,7 @@ class SecurePendingInvitationStore implements PendingInvitationStore {
 
 @Riverpod(keepAlive: true)
 PendingInvitationStore pendingInvitationStore(Ref ref) =>
-    const SecurePendingInvitationStore();
+    const _SecurePendingInvitationStore();
 
 class PendingInvitations {
   const PendingInvitations(this._store, this._clock);

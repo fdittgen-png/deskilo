@@ -7,26 +7,26 @@
 import '../../../l10n/app_localizations.dart';
 import '../domain/report_kind.dart';
 
-String reportKindLabel(AppLocalizations? l10n, ReportKind kind) {
+String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
   if (kind.slot case ReportReminderSlot(:final level)) {
-    return l10n?.invoiceTemplateDocReminder(level) ?? 'Reminder $level';
+    return l10n.invoiceTemplateDocReminder(level);
   }
   return switch (kind.id) {
-    'invoice' => l10n?.invoiceTemplateDocInvoice ?? 'Invoice',
-    'proforma' => l10n?.invoicePdfProforma ?? 'Proforma',
-    'statement' => l10n?.invoiceTemplateDocStatement ?? 'Statement',
-    'agreement' => l10n?.reportDocAgreement ?? 'Financial agreement',
-    'payments' => l10n?.reportDocPayments ?? 'Payments report',
-    'usage' => l10n?.reportDocUsage ?? 'Consumption report',
-    'workspace' => l10n?.reportDocWorkspace ?? 'Workspace report',
-    'status' => l10n?.reportDocStatus ?? 'Workspace status',
-    'bi_analytics' => l10n?.biPdfTitle ?? 'Business analytics',
-    'workspace_configuration' => l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration',
-    'vat_declaration' => l10n?.vatDeclTitle ?? 'VAT declaration',
-    'vat' => l10n?.reportDocVat ?? 'VAT report',
-    'coa' => l10n?.reportDocCoa ?? 'Chart of accounts',
-    'badges' => l10n?.reportDocBadges ?? 'Member badges',
-    'space_codes' => l10n?.reportDocSpaceCodes ?? 'Space QR cards',
+    'invoice' => l10n.invoiceTemplateDocInvoice,
+    'proforma' => l10n.invoicePdfProforma,
+    'statement' => l10n.invoiceTemplateDocStatement,
+    'agreement' => l10n.reportDocAgreement,
+    'payments' => l10n.reportDocPayments,
+    'usage' => l10n.reportDocUsage,
+    'workspace' => l10n.reportDocWorkspace,
+    'status' => l10n.reportDocStatus,
+    'bi_analytics' => l10n.biPdfTitle,
+    'workspace_configuration' => l10n.workspaceConfigPdfTitle,
+    'vat_declaration' => l10n.vatDeclTitle,
+    'vat' => l10n.reportDocVat,
+    'coa' => l10n.reportDocCoa,
+    'badges' => l10n.reportDocBadges,
+    'space_codes' => l10n.reportDocSpaceCodes,
     // A kind in the registry with no label here is a bug the lint test
     // catches; falling back to the id keeps the editor usable meanwhile.
     _ => kind.id,

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../screens/editor_tool.dart';
 
 /// The level canvas's bottom bar (#1216).
@@ -41,7 +41,7 @@ class EditorToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return SafeArea(
       child: Padding(
         padding: AppSpacing.smAll,
@@ -51,22 +51,22 @@ class EditorToolbar extends StatelessWidget {
               (
                 EditorTool.office,
                 Icons.meeting_room_outlined,
-                l10n?.editorToolOffice ?? 'Office',
+                l10n.editorToolOffice,
               ),
               (
                 EditorTool.desk,
                 Icons.table_restaurant_outlined,
-                l10n?.editorToolDesk ?? 'Desk',
+                l10n.editorToolDesk,
               ),
               (
                 EditorTool.seat,
                 Icons.chair_outlined,
-                l10n?.editorToolSeat ?? 'Seat',
+                l10n.editorToolSeat,
               ),
               (
                 EditorTool.image,
                 Icons.add_photo_alternate_outlined,
-                l10n?.editorToolImage ?? 'Image',
+                l10n.editorToolImage,
               ),
             ])
               Expanded(

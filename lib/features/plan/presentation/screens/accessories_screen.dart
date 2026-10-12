@@ -4,11 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/vat_rate.dart';
 import '../../../money/presentation/vat_price_label.dart';
 import '../../../money/presentation/widgets/vat_rate_field.dart';
@@ -31,9 +32,9 @@ class AccessoriesScreen extends ConsumerWidget {
   }) async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
-    final result = await showModalBottomSheet<_AccessoryDraft>(
+    final result = await showAppSheet<_AccessoryDraft>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _AccessorySheet(
@@ -47,8 +48,7 @@ class AccessoriesScreen extends ConsumerWidget {
       context,
       domain: 'plan',
       message: 'accessory save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         final repo = ref.read(accessoryRepositoryProvider);
         if (accessory == null) {
@@ -87,7 +87,7 @@ class AccessoriesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final accessoriesAsync =
         ref.watch(accessoriesProvider(includeInactive: true));
     final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? 'EUR');
@@ -102,27 +102,27 @@ class AccessoriesScreen extends ConsumerWidget {
 
     String supplementLabel(Accessory accessory) {
       if (accessory.supplementCents == 0) {
-        return l10n?.accessoriesNoSupplement ?? 'No supplement';
+        return l10n.accessoriesNoSupplement;
       }
       final amount = currency.formatMinor(accessory.supplementCents);
       final base =
-          l10n?.accessoriesPerHalfDay(amount) ?? '$amount / half-day';
+          l10n.accessoriesPerHalfDay(amount);
       final vatRate = vatRateSuffix(
         chargesVat: chargesVat,
         rates: vatRates,
         vatRateId: accessory.vatRateId,
       );
       if (vatRate == null) return base;
-      return '$base · ${l10n?.priceVatIncluded(vatRate) ?? 'incl. VAT $vatRate'}';
+      return '$base · ${l10n.priceVatIncluded(vatRate)}';
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
+        title: Text(l10n.accessoriesTitle),
       ),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('accessories-new'),
-        tooltip: l10n?.accessoriesNew ?? 'New accessory',
+        tooltip: l10n.accessoriesNew,
         onPressed: () => _editSheet(context, ref),
         child: const Icon(Icons.add),
       ),
@@ -130,7 +130,7 @@ class AccessoriesScreen extends ConsumerWidget {
         AsyncData(value: final accessories) when accessories.isEmpty =>
           EmptyState(
             icon: Icons.chair_alt_outlined,
-            title: l10n?.accessoriesEmpty ?? 'No accessories yet.',
+            title: l10n.accessoriesEmpty,
           ),
         AsyncData(value: final accessories) => ListView(
             // #1181 — the add button overlays this list; it ends above it.
@@ -154,7 +154,7 @@ class AccessoriesScreen extends ConsumerWidget {
                   subtitle: Text(supplementLabel(accessory)),
                   trailing: accessory.active
                       ? null
-                      : Text(l10n?.accessoriesInactive ?? 'Inactive'),
+                      : Text(l10n.accessoriesInactive),
                   onTap: () =>
                       _editSheet(context, ref, accessory: accessory),
                 ),
@@ -162,8 +162,7 @@ class AccessoriesScreen extends ConsumerWidget {
           ),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -237,7 +236,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       // #210: sheet gutter unified onto the xl token like every other
       // modal edit sheet (was 16).
@@ -253,8 +252,8 @@ class _AccessorySheetState extends State<_AccessorySheet> {
         children: [
           Text(
             widget.accessory == null
-                ? (l10n?.accessoriesNew ?? 'New accessory')
-                : (l10n?.accessoriesEdit ?? 'Edit accessory'),
+                ? (l10n.accessoriesNew)
+                : (l10n.accessoriesEdit),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
@@ -263,7 +262,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
             autofocus: widget.accessory == null,
             maxLength: 80,
             decoration: InputDecoration(
-              labelText: l10n?.accessoriesName ?? 'Name',
+              labelText: l10n.accessoriesName,
             ),
           ),
           TextField(
@@ -272,10 +271,9 @@ class _AccessorySheetState extends State<_AccessorySheet> {
                 const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
               labelText:
-                  l10n?.accessoriesSupplement ?? 'Supplement per half-day',
+                  l10n.accessoriesSupplement,
               // #537 — gross, like every DesKilo price.
-              helperText: l10n?.priceGrossHint ??
-                  'Gross price — what the member pays; VAT is part of it.',
+              helperText: l10n.priceGrossHint,
             ),
           ),
           // #542 — per-accessory rate, defaulted to the workspace default.
@@ -289,7 +287,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
             SwitchListTile(
               key: const ValueKey('accessories-active'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.accessoriesActive ?? 'Active'),
+              title: Text(l10n.accessoriesActive),
               value: _active,
               onChanged: (v) => setState(() => _active = v),
             ),
@@ -297,7 +295,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
           FilledButton(
             key: const ValueKey('accessories-save'),
             onPressed: _submit,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),

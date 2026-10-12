@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/sign_up_verification.dart';
 import '../../domain/auth_outcome.dart';
 import '../auth_outcome_text.dart';
@@ -97,7 +97,7 @@ class _VerificationPendingViewState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final result = _lastResult;
     final sentAgain = result?.outcome == AuthOutcome.verificationRequired;
@@ -105,28 +105,25 @@ class _VerificationPendingViewState
     final banner = result == null
         ? null
         : sentAgain
-            ? (l10n?.authVerifyResent ?? 'Sent again.')
+            ? (l10n.authVerifyResent)
             : authOutcomeText(result, l10n);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.authVerifyTitle ?? 'Check your e-mail',
+          l10n.authVerifyTitle,
           style: theme.textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
           key: const ValueKey('verify-body'),
-          l10n?.authVerifyBody(widget.email) ??
-              'We sent a confirmation link to ${widget.email}. Open it on '
-                  'this device to finish creating your account.',
+          l10n.authVerifyBody(widget.email),
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
-          l10n?.authVerifyHint ??
-              'Nothing yet? Look in the spam folder, or send it again.',
+          l10n.authVerifyHint,
           style: theme.textTheme.bodySmall,
         ),
         if (banner != null) ...[
@@ -151,21 +148,20 @@ class _VerificationPendingViewState
           onPressed: _busy || _coolingDown ? null : _resend,
           child: Text(
             _coolingDown
-                ? (l10n?.authVerifyResendWait ??
-                    'You can send it again in a minute.')
-                : (l10n?.authVerifyResend ?? 'Send the e-mail again'),
+                ? (l10n.authVerifyResendWait)
+                : (l10n.authVerifyResend),
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
         OutlinedButton(
           key: const ValueKey('verify-change-email'),
           onPressed: widget.onChangeEmail,
-          child: Text(l10n?.authVerifyChangeEmail ?? 'Use another address'),
+          child: Text(l10n.authVerifyChangeEmail),
         ),
         TextButton(
           key: const ValueKey('verify-back'),
           onPressed: widget.onBackToSignIn,
-          child: Text(l10n?.authVerifyBackToSignIn ?? 'Back to sign in'),
+          child: Text(l10n.authVerifyBackToSignIn),
         ),
       ],
     );

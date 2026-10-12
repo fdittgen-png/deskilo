@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -50,7 +51,7 @@ class _InvoiceRegisterScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final invoicesAsync = ref.watch(invoicesProvider);
     final rawMatches = ref.watch(invoiceMatchesProvider).value ?? const {};
     // #831 — a regrouped invoice reads paid through its settlement; the
@@ -78,7 +79,7 @@ class _InvoiceRegisterScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.invoiceRegisterTitle ?? 'Invoice register'),
+        title: Text(l10n.invoiceRegisterTitle),
         actions: [
           // #1310 S0 — an accounting export (and the archive bundle
           // behind it) is a bulk export: exportData governs it, beside
@@ -89,14 +90,14 @@ class _InvoiceRegisterScreenState
               // Named for the ACTION, not for one of the seven formats
               // behind it (#669). It said "(SAF-T)" until an owner
               // hunting for the accounting export walked past it.
-              tooltip: l10n?.invoiceAccountingExport ?? 'Accounting export',
+              tooltip: l10n.invoiceAccountingExport,
               icon: const Icon(Icons.plagiarism_outlined),
               onPressed: () => exportAccountingFile(
                 context,
                 ref,
                 _visible(invoicesAsync.value ?? const [], canIssue),
                 label: _year?.toString() ??
-                    (l10n?.invoiceRegisterAllYears ?? 'all'),
+                    (l10n.invoiceRegisterAllYears),
               ),
             ),
         ],
@@ -117,8 +118,7 @@ class _InvoiceRegisterScreenState
           ),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -138,7 +138,7 @@ class _InvoiceRegisterScreenState
 
   Widget _table(
     BuildContext context,
-    AppLocalizations? l10n, {
+    AppLocalizations l10n, {
     required List<Invoice> invoices,
     required List<int> years,
     required Map<String, InvoiceMatch> matches,
@@ -151,7 +151,7 @@ class _InvoiceRegisterScreenState
     if (invoices.isEmpty) {
       return EmptyState(
         icon: Icons.receipt_long_outlined,
-        title: l10n?.invoicesEmpty ?? 'No invoices yet.',
+        title: l10n.invoicesEmpty,
       );
     }
     final rows = [...invoices]..sort(
@@ -178,7 +178,7 @@ class _InvoiceRegisterScreenState
             isExpanded: true,
             items: [
               DropdownMenuItem(
-                child: Text(l10n?.invoiceRegisterAllYears ?? 'All years'),
+                child: Text(l10n.invoiceRegisterAllYears),
               ),
               for (final year in years)
                 // A year is a number, not copy — but the lint reads the
@@ -187,7 +187,7 @@ class _InvoiceRegisterScreenState
             ],
             onChanged: (value) => setState(() => _year = value),
             decoration: InputDecoration(
-              labelText: l10n?.invoiceRegisterYear ?? 'Year',
+              labelText: l10n.invoiceRegisterYear,
             ),
           ),
         ),
@@ -207,7 +207,7 @@ class _InvoiceRegisterScreenState
               onTap: () => setState(() => _newestFirst = !_newestFirst),
               child: Row(children: [
                 Text(
-                  l10n?.invoiceRegisterDate ?? 'Date',
+                  l10n.invoiceRegisterDate,
                   style: theme.textTheme.labelMedium?.copyWith(color: muted),
                 ),
                 Icon(
@@ -220,14 +220,14 @@ class _InvoiceRegisterScreenState
           ),
           Expanded(
             child: Text(
-              l10n?.invoiceRegisterName ?? 'Name',
+              l10n.invoiceRegisterName,
               style: theme.textTheme.labelMedium?.copyWith(color: muted),
             ),
           ),
           SizedBox(
             width: 86,
             child: Text(
-              l10n?.invoiceRegisterAmount ?? 'Amount',
+              l10n.invoiceRegisterAmount,
               textAlign: TextAlign.right,
               style: theme.textTheme.labelMedium?.copyWith(color: muted),
             ),
@@ -318,7 +318,7 @@ class _InvoiceRegisterScreenState
         child: Row(children: [
           Expanded(
             child: Text(
-              l10n?.invoiceRegisterTotal ?? 'Total',
+              l10n.invoiceRegisterTotal,
               style: theme.textTheme.titleSmall,
             ),
           ),

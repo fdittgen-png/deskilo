@@ -13,6 +13,7 @@ import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void main() {

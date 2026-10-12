@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/shell/space_entry.dart';
 import '../../../core/demo/presentation/demo_workspace.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -17,8 +18,6 @@ import '../../../core/theme/status_colors.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
@@ -52,15 +51,15 @@ class MeSpaceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final words = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final words = l10n;
     final role = member == null ? null : memberRoleLabel(l10n, member!);
     final demo = DemoEnvironment.maybeOf(context) != null;
     final environment = demo ? words.demoSessionBadge : space.environment == 'prod'
         ? words.uxRealWorkspace
         : words.uxTestSpace;
     final status = _pending
-        ? (l10n?.meSpacePending ?? 'Waiting for approval')
+        ? (l10n.meSpacePending)
         : role;
     final brightness = Theme.of(context).brightness;
     final isProd = space.environment == 'prod';
@@ -86,7 +85,7 @@ class MeSpaceCard extends ConsumerWidget {
               environment,
               if (demo) words.demoSessionBadgeHint else if (space.isDevelopment) words.uxTestSpaceHint else words.uxRealSpaceHint,
               ?status,
-              if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used',
+              if (lastUsed) l10n.meSpaceLastUsed,
               if (waiting > 0) words.meSpaceNotifications(waiting),
             ].join(' · '),
             child: Badge.count(
@@ -171,26 +170,24 @@ Future<void> confirmLeaveSpace(
   Workspace space,
   Member? member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(l10n?.meLeaveTitle(space.name) ?? 'Leave ${space.name}?'),
+      title: Text(l10n.meLeaveTitle(space.name)),
       content: Text(
-        l10n?.meLeaveBody ??
-            'You stop being a member. Your bookings, invoices and messages '
-                'stay with the space. To also erase your data, use Privacy.',
+        l10n.meLeaveBody,
       ),
       actions: [
         TextButton(
           key: const ValueKey('me-leave-cancel'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('me-leave-confirm'),
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(l10n?.meLeaveAction ?? 'Leave this space'),
+          child: Text(l10n.meLeaveAction),
         ),
       ],
     ),
@@ -201,7 +198,7 @@ Future<void> confirmLeaveSpace(
     domain: 'me',
     message: 'leave space failed',
     errorText:
-        l10n?.meLeaveFailed ?? 'Could not leave the space. Please try again.',
+        l10n.meLeaveFailed,
     action: () => ref
         .read(meActionsProvider)
         .leave(space.id, isOwner: member?.isOwner ?? false),
@@ -213,6 +210,6 @@ Future<void> confirmLeaveSpace(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.meLeaveDone(space.name) ?? 'You left ${space.name}.',
+    l10n.meLeaveDone(space.name),
   );
 }

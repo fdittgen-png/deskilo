@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/carnets.dart';
 import '../../providers/credit_providers.dart';
 
@@ -22,7 +22,7 @@ class MemberCarnetTile extends ConsumerWidget {
   final bool canSell;
 
   Future<void> _sell(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final products = [
       for (final p in await ref.read(creditProductsProvider.future))
         if (p.active) p,
@@ -31,12 +31,12 @@ class MemberCarnetTile extends ConsumerWidget {
     final productId = await showDialog<String>(
       context: context,
       builder: (ctx) => SimpleDialog(
-        title: Text(l10n?.carnetSell ?? 'Sell a carnet'),
+        title: Text(l10n.carnetSell),
         children: [
           if (products.isEmpty)
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(l10n?.carnetsEmpty ?? 'No carnet yet.'),
+              child: Text(l10n.carnetsEmpty),
             ),
           for (final p in products)
             SimpleDialogOption(
@@ -45,9 +45,8 @@ class MemberCarnetTile extends ConsumerWidget {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(p.name),
-                subtitle: Text(l10n?.carnetSummary(
-                        p.halfDays, centsToMajor(p.priceCents)) ??
-                    '${p.halfDays} half-days · ${centsToMajor(p.priceCents)}'),
+                subtitle: Text(l10n.carnetSummary(
+                        p.halfDays, centsToMajor(p.priceCents))),
               ),
             ),
         ],
@@ -62,22 +61,22 @@ class MemberCarnetTile extends ConsumerWidget {
     )) {
       if (context.mounted) {
         AppSnack.success(context,
-            l10n?.carnetSold ?? 'Carnet sold — charged once on this month\'s bill.');
+            l10n.carnetSold);
       }
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final balance = ref.watch(memberCreditBalanceProvider(memberId)).value;
     return ListTile(
       key: const ValueKey('member-carnets'),
       leading: const Icon(Icons.confirmation_number_outlined),
-      title: Text(l10n?.carnetsTitle ?? 'Carnets'),
+      title: Text(l10n.carnetsTitle),
       subtitle: balance == null
           ? null
-          : Text(l10n?.carnetBalance(balance) ?? '$balance half-days left'),
+          : Text(l10n.carnetBalance(balance)),
       trailing: canSell ? const Icon(Icons.add_shopping_cart) : null,
       onTap: canSell ? () => _sell(context, ref) : null,
     );

@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// #1312 — the server this device uses runs an older DesKilo schema than
 /// this app needs.
@@ -27,21 +27,12 @@ class SchemaUpdateScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
-    final title = l10n?.schemaUpdateTitle ?? 'This server needs an update';
-    final body = l10n?.schemaUpdateBody(requiredSchemaVersion) ??
-        'This app needs version $requiredSchemaVersion of the DesKilo '
-            'schema, and the server it connects to runs an older one. '
-            'Until the server is updated, the app would fail in ways it '
-            'could not explain, so it stops here.';
-    final operator = l10n?.schemaUpdateOperator ??
-        'If you run this server: apply the missing migrations with '
-            '`dart run tool/instance.dart install --ref <project>`. Only '
-            'what is missing runs.';
-    final member = l10n?.schemaUpdateMember ??
-        'Otherwise: tell the person who runs your space. Nothing you '
-            'entered is lost.';
+    final title = l10n.schemaUpdateTitle;
+    final body = l10n.schemaUpdateBody(requiredSchemaVersion);
+    final operator = l10n.schemaUpdateOperator;
+    final member = l10n.schemaUpdateMember;
     return Scaffold(
       key: const ValueKey('schema-update'),
       body: SafeArea(
@@ -69,14 +60,14 @@ class SchemaUpdateScreen extends ConsumerWidget {
               key: const ValueKey('schema-update-retry'),
               onPressed: () => ref.invalidate(schemaCompatibilityProvider),
               icon: const Icon(Icons.refresh),
-              label: Text(l10n?.schemaUpdateRetry ?? 'Check again'),
+              label: Text(l10n.schemaUpdateRetry),
             ),
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               key: const ValueKey('schema-update-server'),
               onPressed: () => context.push('/server'),
               icon: const Icon(Icons.dns_outlined),
-              label: Text(l10n?.schemaUpdateServer ?? 'Server settings'),
+              label: Text(l10n.schemaUpdateServer),
             ),
           ],
         ),

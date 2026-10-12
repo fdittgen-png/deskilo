@@ -40,29 +40,24 @@ ValidationWorkflow workflowOf(EventType type) => switch (type) {
 
 String workflowName(
   BuildContext context,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   ValidationWorkflow w,
 ) =>
     switch (w) {
-      ValidationWorkflow.money => lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
+      ValidationWorkflow.money => lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
       ValidationWorkflow.bookings =>
-        l10n?.validationWorkflowBookings ?? 'Bookings',
+        l10n.validationWorkflowBookings,
       ValidationWorkflow.people =>
-        l10n?.validationWorkflowPeople ?? 'People and roles',
+        l10n.validationWorkflowPeople,
     };
 
 /// What is at stake while a rule of this workflow is waiting — the half
 /// of the answer the old summary never gave.
-String workflowStake(AppLocalizations? l10n, ValidationWorkflow w) =>
+String workflowStake(AppLocalizations l10n, ValidationWorkflow w) =>
     switch (w) {
-      ValidationWorkflow.money => l10n?.validationWorkflowMoneyStake ??
-          'Until it is accepted, the amount does not count on anybody\'s '
-              'statement.',
-      ValidationWorkflow.bookings => l10n?.validationWorkflowBookingsStake ??
-          'Until it is accepted, the seat stays as it was.',
-      ValidationWorkflow.people => l10n?.validationWorkflowPeopleStake ??
-          'Until it is accepted, the person keeps the access they have '
-              'now.',
+      ValidationWorkflow.money => l10n.validationWorkflowMoneyStake,
+      ValidationWorkflow.bookings => l10n.validationWorkflowBookingsStake,
+      ValidationWorkflow.people => l10n.validationWorkflowPeopleStake,
     };
 
 IconData workflowIcon(ValidationWorkflow w) => switch (w) {
@@ -81,13 +76,13 @@ IconData workflowIcon(ValidationWorkflow w) => switch (w) {
 typedef ValidationSteps = ({String asked, String decide, String then});
 
 ValidationSteps validationSteps(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   ValidationPolicy policy,
 ) {
   final who = switch (policy.validatorScope) {
-    'members' => l10n?.validationScopeMembers ?? 'Every member',
-    'listed' => l10n?.validationSpecificAdmins ?? 'Specific admins',
-    _ => l10n?.validationAllAdmins ?? 'All admins',
+    'members' => l10n.validationScopeMembers,
+    'listed' => l10n.validationSpecificAdmins,
+    _ => l10n.validationAllAdmins,
   };
   final count = policy.requiredCount;
   return (
@@ -96,16 +91,15 @@ ValidationSteps validationSteps(
     // is. Said on every card, because it is the first thing that
     // happens and the thing an owner most often forgets they changed.
     asked: policy.ownerMaySelfValidate
-        ? '${l10n?.validationStepRaised ?? 'Someone asks'} · '
-            '${l10n?.validationOwnerSelfShort ?? 'Owner may validate their own'}'
-        : '${l10n?.validationStepRaised ?? 'Someone asks'} · '
-            '${l10n?.validationNoSelfShort ?? 'Never your own'}',
+        ? '${l10n.validationStepRaised} · '
+            '${l10n.validationOwnerSelfShort}'
+        : '${l10n.validationStepRaised} · '
+            '${l10n.validationNoSelfShort}',
     decide: policy.sequential
-        ? (l10n?.validationStepSequential(count, who) ??
-            '$who — $count in turn')
-        : (l10n?.validationStepQuorum(count, who) ?? '$who — any $count'),
+        ? (l10n.validationStepSequential(count, who))
+        : (l10n.validationStepQuorum(count, who)),
     then: policy.ownerRequired
-        ? (l10n?.validationStepOwnerToo ?? 'and the owner, always')
-        : (l10n?.validationStepApplies ?? 'it takes effect'),
+        ? (l10n.validationStepOwnerToo)
+        : (l10n.validationStepApplies),
   );
 }
