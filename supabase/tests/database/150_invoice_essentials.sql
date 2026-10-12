@@ -5,7 +5,7 @@
 -- taken, so a refused invoice leaves no row and no gap. A consumer is not
 -- asked for a postal address; a stated business capacity is.
 begin;
-select plan(21);
+select plan(22);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001917'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -29,9 +29,11 @@ select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered"
   array['seller_vat_id','vat_rate_unresolved'],
   'a VAT-registered seller needs its identifier — and, with no default rate, a rate (#1917)');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":""},"buyer":{"name":"B"}}',
-  '[{"category":"E"}]'), array['exemption_reason','vat_treatment_unreviewed'], 'an exempt line needs its basis and reviewed classification');
+  '[{"category":"E"}]'), array[]::text[], 'the seller''s own exemption needs no stated basis: the statutory mention prints by default (0409)');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":"art. 261"},"buyer":{"name":"B"}}',
-  '[{"category":"E"}]'), array['vat_treatment_unreviewed'], 'a free-text basis alone cannot qualify the exemption');
+  '[{"category":"E"}]'), array[]::text[], 'the seller''s own exemption is a reviewed regime, with or without a free-text basis (0409)');
+select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt"},"buyer":{"name":"B","vat_treatment":"exempt","tax_exemption_reason":"art. 261"}}',
+  '[{"category":"E"}]'), array['vat_treatment_unreviewed'], 'a buyer''s exemption on a free-text basis alone cannot qualify');
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","vat_id":""}}', '[{"category":"AE"}]'),
   array['buyer_vat_id','vat_treatment_unreviewed'], 'reverse charge needs more than the buyer''s VAT identifier');
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"","company":""}}'),
