@@ -274,6 +274,21 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
     });
   }
 
+  Future<void> _setMemberEInvoiceAddressImpl(
+    String memberId, {
+    required String endpointId,
+    required String endpointScheme,
+    required String subdivision,
+  }) async {
+    // #2358 — the customer's e-invoicing address, by whoever issues.
+    await _client.rpc<void>('set_member_einvoice_address', params: {
+      'p_member_id': memberId,
+      'p_endpoint_id': endpointId.trim(),
+      'p_endpoint_scheme': endpointScheme.trim().toUpperCase(),
+      'p_subdivision': subdivision.trim().toUpperCase(),
+    });
+  }
+
   Future<void> _setMemberLevelPermissionImpl(
     String memberId, {
     required bool allowed,

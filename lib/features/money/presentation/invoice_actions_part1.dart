@@ -149,6 +149,9 @@ Future<void> sendEInvoice(
             bytes: file.bytes,
             environment: environment,
             destination: destination,
+            format: format.name,
+            receiverScheme: buyer.endpointScheme,
+            receiverId: buyer.endpointId,
           );
     },
   )) {

@@ -2738,6 +2738,78 @@
       }
     }
   },
+  "eInvoiceContactEmailField": "E-mail du contact facturation",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Téléphone du contact facturation",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "eInvoiceEndpointIdField": "Adresse électronique",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Schéma de l’adresse (code EAS, p. ex. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
+  "eInvoiceFieldAccessToken": "Jeton d’accès (OAuth ANAF)",
+  "@eInvoiceFieldAccessToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldApiKey": "Clé d’API",
+  "@eInvoiceFieldApiKey": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldBaseUrl": "Adresse de l’API",
+  "@eInvoiceFieldBaseUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldCif": "CIF de l’espace",
+  "@eInvoiceFieldCif": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientId": "Identifiant client",
+  "@eInvoiceFieldClientId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientSecret": "Secret client",
+  "@eInvoiceFieldClientSecret": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldKsefToken": "Jeton KSeF",
+  "@eInvoiceFieldKsefToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLegalEntityId": "Identifiant de l’entité au point d’accès",
+  "@eInvoiceFieldLegalEntityId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLoginUrl": "Adresse de connexion",
+  "@eInvoiceFieldLoginUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldNip": "NIP de l’espace",
+  "@eInvoiceFieldNip": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldPassword": "Mot de passe",
+  "@eInvoiceFieldPassword": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldSecretSet": "Enregistré — laissez vide pour le conserver.",
+  "@eInvoiceFieldSecretSet": {
+    "description": "#2358 connector field: a secret is stored"
+  },
+  "eInvoiceFieldTokenUrl": "Adresse du jeton (OAuth)",
+  "@eInvoiceFieldTokenUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldUsername": "Nom d’utilisateur",
+  "@eInvoiceFieldUsername": {
+    "description": "#2358 connector field"
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Le SIREN de l'acheteur manque. Une plateforme agréée l'utilise pour acheminer la facture : renseignez-le sur le profil de l'adhérent avant de transmettre. Ce n'est pas un refus — le fichier est valide sans lui.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2749,6 +2821,14 @@
   "eInvoiceGapMixedNotSubjectLines": "Une ligne hors champ (consigne) figure à côté de lignes taxées — la norme EN 16931 refuse ce mélange ; émettez la consigne sur un document séparé.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceIdentityHelp": "L’adresse où les réseaux livrent les factures de cet espace (BT-34) : son identifiant Peppol ou son adresse dans l’annuaire français, et le contact qu’un acheteur public allemand demande.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceIdentityTitle": "Adresse de facturation électronique",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
   },
   "eInvoiceMandateEReporting": "les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)",
   "@eInvoiceMandateEReporting": {
@@ -2797,6 +2877,63 @@
   "eInvoiceMandateTitle": "Obligations de facturation électronique dans votre pays :",
   "@eInvoiceMandateTitle": {
     "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceProviderFrPa": "Plateforme agréée (PA)",
+  "@eInvoiceProviderFrPa": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderGeneric": "Dépôt générique (toute plateforme acceptant un envoi HTTP)",
+  "@eInvoiceProviderGeneric": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderHelp": "Le canal décide du format : chaque réseau reçoit le XML qu’il accepte, et une personne reçoit le PDF Factur-X.",
+  "@eInvoiceProviderHelp": {
+    "description": "#2358 e-invoice config: what the connector does"
+  },
+  "eInvoiceProviderItSdi": "SdI, via un intermédiaire",
+  "@eInvoiceProviderItSdi": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderLabel": "Canal",
+  "@eInvoiceProviderLabel": {
+    "description": "#2358 e-invoice config: the connector picker"
+  },
+  "eInvoiceProviderPeppol": "Point d’accès Peppol",
+  "@eInvoiceProviderPeppol": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderPlKsef": "KSeF",
+  "@eInvoiceProviderPlKsef": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderRoEfactura": "RO e-Factura (ANAF)",
+  "@eInvoiceProviderRoEfactura": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceReceiptAsk": "Demander l’accusé de la plateforme",
+  "@eInvoiceReceiptAsk": {
+    "description": "#2358 invoice detail: ask the channel for its receipt"
+  },
+  "eInvoiceReceiptFailed": "La plateforme n’a pas pu être interrogée ; réessayez plus tard.",
+  "@eInvoiceReceiptFailed": {
+    "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceReceiptLine": "Accusé de la plateforme : {receipt}",
+  "@eInvoiceReceiptLine": {
+    "description": "#2358 invoice detail: what the channel answered",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceReceiptNothingYet": "La plateforme n’a encore rien de nouveau sur ce document.",
+  "@eInvoiceReceiptNothingYet": {
+    "description": "#2358 invoice detail: the channel has no answer yet"
+  },
+  "eInvoiceSubdivisionField": "Département, județ ou province (p. ex. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
   },
   "editorAccessoriesLabel": "Accessoires",
   "editorAddLevel": "Ajouter un étage",
@@ -6770,6 +6907,22 @@
   "memberContactHeading": "Contact",
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
+  },
+  "memberEInvoiceAddressFailed": "L’adresse de facturation électronique n’a pas pu être enregistrée.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
+  },
+  "memberEInvoiceAddressHelp": "L’adresse où ce client reçoit ses factures électroniques (BT-49) : un identifiant Peppol, une adresse de l’annuaire français, un Leitweg-ID (schéma 0204) ou un code destinataire SdI.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressLabel": "Adresse de facturation électronique",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Non renseignée",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
   },
   "memberHomeSiteDefault": "Adresse de l'espace",
   "@memberHomeSiteDefault": {

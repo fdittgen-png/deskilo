@@ -23,6 +23,7 @@ import '../../domain/vat_tax_point.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
+import '../widgets/einvoice_identity_fields.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_field.dart';
 
@@ -58,6 +59,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _recovery = TextEditingController();
   final _escompte = TextEditingController();
   final _insurance = TextEditingController();
+  final _einvoice = EInvoiceIdentityForm(); // #2358
   final _special = TextEditingController();
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
@@ -95,6 +97,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     _recovery.dispose();
     _escompte.dispose();
     _insurance.dispose();
+    _einvoice.dispose();
     _special.dispose();
     super.dispose();
   }
@@ -123,7 +126,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               city: _city.text,
               postalCode: _postalCode.text,
               vatAccount: _vatAccount.text,
-              invoiceLegal: InvoiceLegal(
+              invoiceLegal: _einvoice.applyTo(InvoiceLegal(
                 sellerKind: _sellerKind,
                 customerCapacity: _customerCapacity,
                 legalForm: _legalForm.text,
@@ -137,7 +140,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 reverseChargeOptIn: _reverseCharge,
                 vatTaxPoint: _taxPoint,
                 declarationPeriod: _declarationPeriod,
-              ).toJson(),
+              )).toJson(),
               addressWindow: _addressWindow,
             ),
             currentTemplate: ref.read(invoicePdfTemplateProvider).value ??
@@ -231,6 +234,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _escompte.text = legal.escompte;
       _insurance.text = legal.insurance;
       _special.text = legal.specialMentions;
+      _einvoice.load(legal);
     }
 
     return Scaffold(
@@ -614,6 +618,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             l10n.invoiceLegalSpecialField,
             anchor: HelpAnchor.legalSpecialMentions,
           ),
+          if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
+            EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
           const SizedBox(height: AppSpacing.md),
           // #869 — where the sheet is addressed. It sits with the legal
           // identity rather than the band editor because it applies

@@ -551,6 +551,17 @@ abstract class MoneyRepository {
     required List<int> bytes,
     String environment = 'prod',
     String destination = 'government',
+    String format = '',
+    String receiverScheme = '',
+    String receiverId = '',
+  });
+
+  /// #2358 — asks the channel what became of an earlier transmission and
+  /// stores its receipt (a Peppol evidence, the PA lifecycle, the SdI
+  /// notification, the KSeF number, the ANAF state) on that row.
+  Future<EInvoiceSubmission> requestEInvoiceReceipt({
+    required String workspaceId,
+    required String transmissionId,
   });
 
   /// invoiceId → its LATEST transmission (0071); invoices never sent are

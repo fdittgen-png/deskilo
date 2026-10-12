@@ -26,6 +26,11 @@ class InvoiceLegal {
     this.escompte = '',
     this.insurance = '',
     this.specialMentions = '',
+    this.einvoiceEndpointId = '',
+    this.einvoiceEndpointScheme = '',
+    this.subdivision = '',
+    this.contactEmail = '',
+    this.contactPhone = '',
   });
 
   /// '' (company/business, the default) or 'association' (#484) — a
@@ -115,6 +120,47 @@ class InvoiceLegal {
   /// Special regime / CGV / retention-of-title clauses.
   final String specialMentions;
 
+  /// #2358 — the space's electronic address on the e-invoicing networks
+  /// (BT-34) and its EAS scheme: frozen as the seller's `endpoint_id` /
+  /// `endpoint_scheme` on every invoice (0414).
+  final String einvoiceEndpointId;
+  final String einvoiceEndpointScheme;
+
+  /// #2358 — BT-39, the county or province (CIUS-RO, the Italian Sede).
+  final String subdivision;
+
+  /// #2358 — BG-6, the seller's contact, which XRechnung requires.
+  final String contactEmail;
+  final String contactPhone;
+
+  /// The same identity with the e-invoicing address fields replaced.
+  InvoiceLegal withEInvoiceAddress({
+    required String endpointId,
+    required String endpointScheme,
+    required String subdivision,
+    required String contactEmail,
+    required String contactPhone,
+  }) => InvoiceLegal(
+    sellerKind: sellerKind,
+    customerCapacity: customerCapacity,
+    reverseChargeOptIn: reverseChargeOptIn,
+    vatTaxPoint: vatTaxPoint,
+    declarationPeriod: declarationPeriod,
+    legalForm: legalForm,
+    registration: registration,
+    paymentTerms: paymentTerms,
+    latePenalty: latePenalty,
+    recoveryIndemnity: recoveryIndemnity,
+    escompte: escompte,
+    insurance: insurance,
+    specialMentions: specialMentions,
+    einvoiceEndpointId: endpointId,
+    einvoiceEndpointScheme: endpointScheme,
+    subdivision: subdivision,
+    contactEmail: contactEmail,
+    contactPhone: contactPhone,
+  );
+
   /// Client-side cap per field — these are printed lines, not essays.
   static const int maxFieldLength = 300;
 
@@ -145,6 +191,11 @@ class InvoiceLegal {
       escompte: r.stringOr('escompte'),
       insurance: r.stringOr('insurance'),
       specialMentions: r.stringOr('special_mentions'),
+      einvoiceEndpointId: r.stringOr('einvoice_endpoint_id'),
+      einvoiceEndpointScheme: r.stringOr('einvoice_endpoint_scheme'),
+      subdivision: r.stringOr('subdivision'),
+      contactEmail: r.stringOr('contact_email'),
+      contactPhone: r.stringOr('contact_phone'),
     );
   }
 
@@ -163,6 +214,11 @@ class InvoiceLegal {
         'escompte': escompte.trim(),
         'insurance': insurance.trim(),
         'special_mentions': specialMentions.trim(),
+        'einvoice_endpoint_id': einvoiceEndpointId.trim(),
+        'einvoice_endpoint_scheme': einvoiceEndpointScheme.trim(),
+        'subdivision': subdivision.trim(),
+        'contact_email': contactEmail.trim(),
+        'contact_phone': contactPhone.trim(),
       };
 
   @override
@@ -180,10 +236,16 @@ class InvoiceLegal {
       other.recoveryIndemnity == recoveryIndemnity &&
       other.escompte == escompte &&
       other.insurance == insurance &&
-      other.specialMentions == specialMentions;
+      other.specialMentions == specialMentions &&
+      other.einvoiceEndpointId == einvoiceEndpointId &&
+      other.einvoiceEndpointScheme == einvoiceEndpointScheme &&
+      other.subdivision == subdivision &&
+      other.contactEmail == contactEmail &&
+      other.contactPhone == contactPhone;
 
   @override
   int get hashCode => Object.hash(vatTaxPoint, declarationPeriod, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
-      specialMentions);
+      specialMentions, einvoiceEndpointId, einvoiceEndpointScheme, subdivision,
+      contactEmail, contactPhone);
 }

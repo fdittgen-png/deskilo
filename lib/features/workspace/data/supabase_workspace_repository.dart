@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/enum_wire.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/time/work_hours.dart';
@@ -100,6 +101,7 @@ class SupabaseWorkspaceRepository
   @override Future<void> setMemberSimultaneousLimit(String memberId, int? limit) => _setMemberSimultaneousLimitImpl(memberId, limit);
   @override Future<void> setMemberVatTreatment(String memberId, String treatment, String reason) => _setMemberVatTreatmentImpl(memberId, treatment, reason);
   @override Future<void> setMemberCustomerCapacity(String memberId, String? capacity) => _setMemberCustomerCapacityImpl(memberId, capacity);
+  @override Future<void> setMemberEInvoiceAddress(String memberId, {required String endpointId, required String endpointScheme, required String subdivision}) => _setMemberEInvoiceAddressImpl(memberId, endpointId: endpointId, endpointScheme: endpointScheme, subdivision: subdivision);
   @override Future<void> setMemberLevelPermission(String memberId, {required bool allowed}) => _setMemberLevelPermissionImpl(memberId, allowed: allowed);
   @override Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) => _setMemberKioskImpl(memberId, isKiosk: isKiosk);
   @override Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) => _fetchMemberBadgesImpl(workspaceId);

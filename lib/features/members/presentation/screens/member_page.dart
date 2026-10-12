@@ -41,6 +41,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
+import '../../../workspace/presentation/member_einvoice_address_tile.dart';
 import '../../../workspace/presentation/member_labels.dart';
 import '../../../workspace/presentation/member_vat_treatment.dart';
 import '../../../workspace/presentation/widgets/invite_sheet.dart';
@@ -401,6 +402,10 @@ class _MemberPageBody extends ConsumerWidget {
             subtitle: customerCapacityName(l10n, member.customerCapacity),
             onTap: () => pickMemberCustomerCapacity(context, ref, member),
           ),
+        // #2358 — where this customer receives e-invoices.
+        if (perms.contains(WorkspacePermission.issueInvoices) &&
+            ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
+          MemberEInvoiceAddressTile(member: member),
         // #945 — the site whose address this member's documents carry.
         if (canAdmin && ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.multiSite))
           _ManageTile(

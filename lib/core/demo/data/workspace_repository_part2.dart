@@ -24,6 +24,22 @@ extension _FakeWorkspaceRepositoryPart2 on FakeWorkspaceRepository {
     }
   }
 
+  Future<void> _setMemberEInvoiceAddressImpl(
+    String memberId, {
+    required String endpointId,
+    required String endpointScheme,
+    required String subdivision,
+  }) async {
+    final i = otherMembers.indexWhere((m) => m.id == memberId);
+    if (i >= 0) {
+      otherMembers[i] = otherMembers[i].copyWith(
+        einvoiceEndpointId: endpointId.trim(),
+        einvoiceEndpointScheme: endpointScheme.trim().toUpperCase(),
+        billingSubdivision: subdivision.trim().toUpperCase(),
+      );
+    }
+  }
+
   Future<void> _setMemberVatTreatmentImpl(
       String memberId, String treatment, String reason) async {
     final i = otherMembers.indexWhere((m) => m.id == memberId);

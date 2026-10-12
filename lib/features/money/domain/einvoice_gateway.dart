@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 
 /// Whether this workspace can SEND an e-invoice, and what it still needs
 /// (0073). Probed from the `send-e-invoice` function so the app never
@@ -102,6 +103,10 @@ class InvoiceTransmission {
     required this.invoiceId,
     required this.status,
     required this.sentAt,
+    this.id = '',
+    this.format = '',
+    this.receipt = const {},
+    this.receiptAt,
     this.provider = 'generic',
     this.externalId = '',
     this.documentHash = '',
@@ -114,6 +119,55 @@ class InvoiceTransmission {
   final String invoiceId;
   final EInvoiceSubmissionStatus status;
   final DateTime sentAt;
+
+  /// The row's id — the handle for asking the channel about it (#2358).
+  final String id;
+
+  /// #2358 — the syntax that left ('' before #2358).
+  final String format;
+
+  /// #2358 — what the channel said about the document afterwards, as it
+  /// said it (a Peppol evidence, the PA lifecycle, the SdI notification,
+  /// the KSeF number, the ANAF state). Empty until it is asked.
+  final Map<String, Object?> receipt;
+  final DateTime? receiptAt;
+
+  /// The one fact a reader wants from [receipt]: the number the network
+  /// gave the document, or the state it reports — '' when it said nothing.
+  String get receiptSummary {
+    for (final key in const [
+      'ksefNumber',
+      'id_descarcare',
+      'flowStatus',
+      'notification',
+      'state',
+      'stare',
+      'status',
+    ]) {
+      final value = receipt[key];
+      if (value is String && value.isNotEmpty) return value;
+      if (value is num) return '$value';
+    }
+    return '';
+  }
+
+  InvoiceTransmission copyWithReceipt(Map<String, Object?> value) =>
+      InvoiceTransmission(
+        invoiceId: invoiceId,
+        status: status,
+        sentAt: sentAt,
+        id: id,
+        format: format,
+        receipt: value,
+        receiptAt: sentAt,
+        provider: provider,
+        externalId: externalId,
+        documentHash: documentHash,
+        detail: detail,
+        byName: byName,
+        environment: environment,
+        destination: destination,
+      );
   final String provider;
   final String externalId;
 
@@ -149,6 +203,10 @@ class InvoiceTransmission {
         byName: row['by_name'] as String? ?? '',
         environment: row['environment'] as String? ?? 'prod',
         destination: row['destination'] as String? ?? 'government',
+        id: JsonReader.of(row).stringOr('id'),
+        format: JsonReader.of(row).stringOr('format'),
+        receipt: JsonReader.of(row).objectOrEmpty('receipt'),
+        receiptAt: JsonReader.of(row).dateTimeOrNull('receipt_at')?.toLocal(),
       );
 }
 
@@ -158,11 +216,16 @@ class InvoiceTransmission {
 class EInvoiceProviderStatus {
   const EInvoiceProviderStatus({
     required this.configured,
+    this.provider = 'generic',
     this.fields = const {},
     this.secretsSet = const [],
   });
 
   final bool configured;
+
+  /// #2358 — the connector: 'generic', 'peppol', 'fr_pa', 'it_sdi',
+  /// 'pl_ksef' or 'ro_efactura'.
+  final String provider;
   final Map<String, String> fields;
   final List<String> secretsSet;
 }

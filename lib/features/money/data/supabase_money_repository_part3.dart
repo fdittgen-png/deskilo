@@ -314,8 +314,15 @@ extension _SupabaseMoneyRepositoryPart3 on SupabaseMoneyRepository {
     required List<int> bytes,
     String environment = 'prod',
     String destination = 'government',
+    String format = '',
+    String receiverScheme = '',
+    String receiverId = '',
   }) async {
     final data = await _invokeSend({
+      // #2358 — the syntax built for the channel, and where to deliver it.
+      if (format.isNotEmpty) 'format': format,
+      if (receiverId.isNotEmpty) 'receiver_scheme': receiverScheme,
+      if (receiverId.isNotEmpty) 'receiver_id': receiverId,
       'workspace_id': workspaceId,
       'invoice_id': invoiceId,
       'file_name': fileName,
@@ -338,6 +345,32 @@ extension _SupabaseMoneyRepositoryPart3 on SupabaseMoneyRepository {
       ),
       externalId: data['external_id'] as String? ?? '',
       detail: data['detail'] as String? ?? data['error'] as String? ?? '',
+    );
+  }
+
+  Future<EInvoiceSubmission> _requestEInvoiceReceiptImpl({
+    required String workspaceId,
+    required String transmissionId,
+  }) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'status',
+      'transmission_id': transmissionId,
+    });
+    if (data == null) {
+      return const EInvoiceSubmission(
+        status: EInvoiceSubmissionStatus.failed,
+        detail: 'not_deployed',
+      );
+    }
+    final answer = JsonReader.of(data, context: 'send-e-invoice status');
+    final status = answer.stringOr('status');
+    return EInvoiceSubmission(
+      status: EInvoiceSubmissionStatus.values.firstWhere(
+        (s) => s.name == status,
+        orElse: () => EInvoiceSubmissionStatus.failed,
+      ),
+      detail: answer.stringOr('detail', answer.stringOr('error')),
     );
   }
 
@@ -392,6 +425,8 @@ extension _SupabaseMoneyRepositoryPart3 on SupabaseMoneyRepository {
         : const <String, dynamic>{};
     return EInvoiceProviderStatus(
       configured: map['configured'] == true,
+      // #2358 — the connector the space uses; 'generic' before it existed.
+      provider: JsonReader.of(map).stringOr('provider', 'generic'),
       fields: {
         for (final entry in (map['fields'] as Map? ?? const {}).entries)
           entry.key as String: '${entry.value}',

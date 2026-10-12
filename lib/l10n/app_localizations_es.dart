@@ -4008,6 +4008,64 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceContactEmailField => 'Correo del contacto de facturación';
+
+  @override
+  String get eInvoiceContactPhoneField =>
+      'Teléfono del contacto de facturación';
+
+  @override
+  String get eInvoiceEndpointIdField => 'Dirección electrónica';
+
+  @override
+  String get eInvoiceEndpointSchemeField =>
+      'Esquema de la dirección (código EAS, p. ej. 0225, 0208, 0204, EM)';
+
+  @override
+  String get eInvoiceFieldAccessToken => 'Token de acceso (OAuth de ANAF)';
+
+  @override
+  String get eInvoiceFieldApiKey => 'Clave de API';
+
+  @override
+  String get eInvoiceFieldBaseUrl => 'Dirección de la API';
+
+  @override
+  String get eInvoiceFieldCif => 'CIF del espacio';
+
+  @override
+  String get eInvoiceFieldClientId => 'Identificador de cliente';
+
+  @override
+  String get eInvoiceFieldClientSecret => 'Secreto de cliente';
+
+  @override
+  String get eInvoiceFieldKsefToken => 'Token de KSeF';
+
+  @override
+  String get eInvoiceFieldLegalEntityId =>
+      'Identificador de la entidad en el punto de acceso';
+
+  @override
+  String get eInvoiceFieldLoginUrl => 'Dirección de inicio de sesión';
+
+  @override
+  String get eInvoiceFieldNip => 'NIP del espacio';
+
+  @override
+  String get eInvoiceFieldPassword => 'Contraseña';
+
+  @override
+  String get eInvoiceFieldSecretSet =>
+      'Guardado: déjelo en blanco para conservarlo.';
+
+  @override
+  String get eInvoiceFieldTokenUrl => 'Dirección del token (OAuth)';
+
+  @override
+  String get eInvoiceFieldUsername => 'Nombre de usuario';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.';
 
@@ -4018,6 +4076,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.';
+
+  @override
+  String get eInvoiceIdentityHelp =>
+      'Dónde entregan las redes las facturas a este espacio (BT-34): su identificador Peppol o su dirección en el directorio francés, y el contacto que pide un comprador público alemán.';
+
+  @override
+  String get eInvoiceIdentityTitle => 'Dirección de facturación electrónica';
 
   @override
   String get eInvoiceMandateEReporting =>
@@ -4052,6 +4117,52 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceMandateTitle =>
       'Obligaciones de facturación electrónica en su país:';
+
+  @override
+  String get eInvoiceProviderFrPa => 'Plataforma acreditada francesa (PA)';
+
+  @override
+  String get eInvoiceProviderGeneric =>
+      'Envío genérico (cualquier plataforma con carga HTTP)';
+
+  @override
+  String get eInvoiceProviderHelp =>
+      'El canal decide el formato: cada red recibe el XML que acepta y una persona recibe el PDF Factur-X.';
+
+  @override
+  String get eInvoiceProviderItSdi => 'SdI, mediante un intermediario';
+
+  @override
+  String get eInvoiceProviderLabel => 'Canal';
+
+  @override
+  String get eInvoiceProviderPeppol => 'Punto de acceso Peppol';
+
+  @override
+  String get eInvoiceProviderPlKsef => 'KSeF';
+
+  @override
+  String get eInvoiceProviderRoEfactura => 'RO e-Factura (ANAF)';
+
+  @override
+  String get eInvoiceReceiptAsk => 'Pedir el acuse a la plataforma';
+
+  @override
+  String get eInvoiceReceiptFailed =>
+      'No se pudo consultar la plataforma; inténtelo más tarde.';
+
+  @override
+  String eInvoiceReceiptLine(String receipt) {
+    return 'Acuse de la plataforma: $receipt';
+  }
+
+  @override
+  String get eInvoiceReceiptNothingYet =>
+      'La plataforma aún no tiene nada nuevo sobre este documento.';
+
+  @override
+  String get eInvoiceSubdivisionField =>
+      'Provincia o distrito (p. ej. RO-B, MI)';
 
   @override
   String get editorAccessoriesLabel => 'Accesorios';
@@ -10864,6 +10975,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberContactHeading => 'Contacto';
+
+  @override
+  String get memberEInvoiceAddressFailed =>
+      'No se pudo guardar la dirección de facturación electrónica.';
+
+  @override
+  String get memberEInvoiceAddressHelp =>
+      'Dónde recibe este cliente las facturas electrónicas (BT-49): un identificador Peppol, una dirección del directorio francés, un Leitweg-ID (esquema 0204) o un código de destinatario SdI.';
+
+  @override
+  String get memberEInvoiceAddressLabel =>
+      'Dirección de facturación electrónica';
+
+  @override
+  String get memberEInvoiceAddressNone => 'Sin indicar';
 
   @override
   String get memberHomeSiteDefault => 'Dirección del espacio';

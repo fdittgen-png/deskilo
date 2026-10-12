@@ -4604,6 +4604,78 @@
       }
     }
   },
+  "eInvoiceContactEmailField": "Invoicing contact e-mail",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Invoicing contact telephone",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "eInvoiceEndpointIdField": "Electronic address",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Address scheme (EAS code, e.g. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
+  "eInvoiceFieldAccessToken": "Access token (ANAF OAuth)",
+  "@eInvoiceFieldAccessToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldApiKey": "API key",
+  "@eInvoiceFieldApiKey": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldBaseUrl": "API address",
+  "@eInvoiceFieldBaseUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldCif": "CIF of the space",
+  "@eInvoiceFieldCif": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientId": "Client id",
+  "@eInvoiceFieldClientId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientSecret": "Client secret",
+  "@eInvoiceFieldClientSecret": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldKsefToken": "KSeF token",
+  "@eInvoiceFieldKsefToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLegalEntityId": "Legal entity id at the access point",
+  "@eInvoiceFieldLegalEntityId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLoginUrl": "Login address",
+  "@eInvoiceFieldLoginUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldNip": "NIP of the space",
+  "@eInvoiceFieldNip": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldPassword": "Password",
+  "@eInvoiceFieldPassword": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldSecretSet": "Set — leave blank to keep it.",
+  "@eInvoiceFieldSecretSet": {
+    "description": "#2358 connector field: a secret is stored"
+  },
+  "eInvoiceFieldTokenUrl": "Token address (OAuth)",
+  "@eInvoiceFieldTokenUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldUsername": "User name",
+  "@eInvoiceFieldUsername": {
+    "description": "#2358 connector field"
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -4615,6 +4687,14 @@
   "eInvoiceGapMixedNotSubjectLines": "A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceIdentityHelp": "Where the networks deliver invoices to this space (BT-34): its Peppol id or its French directory address, and the contact a German public buyer asks for.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceIdentityTitle": "E-invoicing address",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
   },
   "eInvoiceMandateEReporting": "sales to consumers and abroad, and the payments of services, must be e-reported",
   "@eInvoiceMandateEReporting": {
@@ -4663,6 +4743,63 @@
   "eInvoiceMandateTitle": "E-invoicing obligations in your country:",
   "@eInvoiceMandateTitle": {
     "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceProviderFrPa": "French accredited platform (PA)",
+  "@eInvoiceProviderFrPa": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderGeneric": "Generic upload (any platform with an HTTP upload)",
+  "@eInvoiceProviderGeneric": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderHelp": "The channel decides the format: each network receives the XML it accepts, and a person receives the Factur-X PDF.",
+  "@eInvoiceProviderHelp": {
+    "description": "#2358 e-invoice config: what the connector does"
+  },
+  "eInvoiceProviderItSdi": "SdI, through an intermediary",
+  "@eInvoiceProviderItSdi": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderLabel": "Channel",
+  "@eInvoiceProviderLabel": {
+    "description": "#2358 e-invoice config: the connector picker"
+  },
+  "eInvoiceProviderPeppol": "Peppol access point",
+  "@eInvoiceProviderPeppol": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderPlKsef": "KSeF",
+  "@eInvoiceProviderPlKsef": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderRoEfactura": "RO e-Factura (ANAF)",
+  "@eInvoiceProviderRoEfactura": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceReceiptAsk": "Ask the platform for its receipt",
+  "@eInvoiceReceiptAsk": {
+    "description": "#2358 invoice detail: ask the channel for its receipt"
+  },
+  "eInvoiceReceiptFailed": "The platform could not be asked; try again later.",
+  "@eInvoiceReceiptFailed": {
+    "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceReceiptLine": "Platform receipt: {receipt}",
+  "@eInvoiceReceiptLine": {
+    "description": "#2358 invoice detail: what the channel answered",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceReceiptNothingYet": "The platform has nothing new about this document yet.",
+  "@eInvoiceReceiptNothingYet": {
+    "description": "#2358 invoice detail: the channel has no answer yet"
+  },
+  "eInvoiceSubdivisionField": "County or province (e.g. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
   },
   "editorAccessoriesLabel": "Accessories",
   "@editorAccessoriesLabel": {
@@ -12526,6 +12663,22 @@
   "memberContactHeading": "Contact",
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
+  },
+  "memberEInvoiceAddressFailed": "The e-invoicing address could not be saved.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
+  },
+  "memberEInvoiceAddressHelp": "Where this customer receives e-invoices (BT-49): a Peppol id, a French directory address, a Leitweg-ID (scheme 0204) or an SdI recipient code.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressLabel": "E-invoicing address",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Not stated",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
   },
   "memberHomeSiteDefault": "Workspace address",
   "@memberHomeSiteDefault": {

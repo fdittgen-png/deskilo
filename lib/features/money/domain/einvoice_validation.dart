@@ -17,7 +17,7 @@ import 'einvoice_format.dart';
 /// the UBL schema and the CEN rules; ANAF's own rules sit behind its web
 /// service.
 const Map<EInvoiceFormat, String> eInvoiceValidators = {
-  EInvoiceFormat.facturX: 'Mustang 2.26.0 (PDF/A-3, Factur-X EN 16931)',
+  EInvoiceFormat.facturX: 'Mustang 2.26.0 (PDF/A-3, Factur-X EN 16931, French CIUS)',
   EInvoiceFormat.en16931Ubl: 'KoSIT 1.6.3 (EN 16931 1.3.16)',
   EInvoiceFormat.en16931Cii: 'KoSIT 1.6.3 (EN 16931 1.3.16)',
   EInvoiceFormat.peppolBis: 'KoSIT 1.6.3 (Peppol BIS Billing 3.0.21)',

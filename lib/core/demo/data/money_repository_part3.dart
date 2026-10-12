@@ -232,6 +232,19 @@ extension _FakeMoneyRepositoryPart3 on FakeMoneyRepository {
   ) async =>
       einvoiceGateway;
 
+  /// #2358 — the demo platform answers at once: delivered.
+  Future<EInvoiceSubmission> _requestEInvoiceReceiptImpl({
+    required String workspaceId,
+    required String transmissionId,
+  }) async {
+    for (final MapEntry(:key, :value) in transmissions.entries) {
+      if (value.id == transmissionId) {
+        transmissions[key] = value.copyWithReceipt(const {'state': 'delivered'});
+      }
+    }
+    return const EInvoiceSubmission(status: EInvoiceSubmissionStatus.accepted);
+  }
+
   Future<EInvoiceSubmission> _sendEInvoiceImpl({
     required String workspaceId,
     required String invoiceId,
@@ -240,6 +253,9 @@ extension _FakeMoneyRepositoryPart3 on FakeMoneyRepository {
     required List<int> bytes,
     String environment = 'prod',
     String destination = 'government',
+    String format = '',
+    String receiverScheme = '',
+    String receiverId = '',
   }) async {
     sentEInvoices.add((
       invoiceId: invoiceId,
@@ -249,6 +265,8 @@ extension _FakeMoneyRepositoryPart3 on FakeMoneyRepository {
       destination: destination,
     ));
     transmissions[invoiceId] = InvoiceTransmission(
+      id: 'transmission-${sentEInvoices.length}',
+      format: format,
       invoiceId: invoiceId,
       status: einvoiceOutcome,
       sentAt: kTestNow,
