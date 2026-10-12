@@ -87,7 +87,7 @@ class TemplateSearch {
         inspections.add(_inspections[t.id] ??=
             await _workspaces.inspectWorkspaceTemplate(t.id));
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('templates', 'capability search could not inspect',
           error: e, stackTrace: st);
       return TemplateSearchResult(capabilities: capabilities, unavailable: true);

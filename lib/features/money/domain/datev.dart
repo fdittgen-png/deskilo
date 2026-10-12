@@ -145,7 +145,7 @@ String buildDatevFile({
 
   // Belegdatum is DDMM (`ddmm`): the year is the header's, not the
   // booking's. Field 116 is TTMMJJJJ.
-  final fiscalYearStart = DateTime(from.year, 1, 1);
+  final fiscalYearStart = DateTime(from.year);
   final stamp = '${ymd(generatedAt)}${hhmmss(generatedAt, separator: '')}000';
 
   // Field order is fixed by DATEV; positions, not names, are what the

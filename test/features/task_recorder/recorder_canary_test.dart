@@ -13,6 +13,7 @@ import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 void main() {
@@ -34,11 +35,12 @@ void main() {
 
       // Stray events a careless call site might send on the way.
       await c.start(scope: canaryScope);
-      c.record(RecorderActions.selectResource,
-          target: kCanaryReservationId, payload: canaryPayload());
-      c.record('members.open_$kCanaryMemberName', payload: canaryPayload());
-      c.unrecorded(surface: kCanaryUrl);
-      c.outcome(null, RecorderOutcomes.bookingConfirmed,
+      c
+        ..record(RecorderActions.selectResource,
+          target: kCanaryReservationId, payload: canaryPayload())
+        ..record('members.open_$kCanaryMemberName', payload: canaryPayload())
+        ..unrecorded(surface: kCanaryUrl)
+        ..outcome(null, RecorderOutcomes.bookingConfirmed,
           payload: canaryPayload());
       await c.stop();
 

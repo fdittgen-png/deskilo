@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -26,20 +27,19 @@ class EditorToolHint extends StatelessWidget {
   /// What the next gesture does. Phrased as the instruction it is —
   /// "drag to draw", "tap a desk" — because the question the reader has
   /// is what to do with their finger, not what mode they are in.
-  static String instruction(AppLocalizations? l10n, EditorTool tool) =>
+  static String instruction(AppLocalizations l10n, EditorTool tool) =>
       switch (tool) {
         EditorTool.office =>
-          l10n?.editorHintOffice ?? 'Drag to draw an office',
-        EditorTool.desk => l10n?.editorHintDesk ??
-            'Drag inside an office to draw a desk',
-        EditorTool.seat => l10n?.editorHintSeat ?? 'Tap a desk to add a seat',
+          l10n.editorHintOffice,
+        EditorTool.desk => l10n.editorHintDesk,
+        EditorTool.seat => l10n.editorHintSeat,
         EditorTool.image =>
-          l10n?.editorHintImage ?? 'Tap where the image should go',
+          l10n.editorHintImage,
       };
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: AppSpacing.smAll,
@@ -66,7 +66,7 @@ class EditorToolHint extends StatelessWidget {
                 style: TextButton.styleFrom(
                   foregroundColor: scheme.inversePrimary,
                 ),
-                child: Text(l10n?.commonDone ?? 'Done'),
+                child: Text(l10n.commonDone),
               ),
             ],
           ),

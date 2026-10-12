@@ -18,17 +18,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_destination.dart';
-import '../../domain/action_registry.dart' show uiRoutes;
-import '../guide_host/guide_step_text.dart'
-    show guideStepText, guideDestinationLabel;
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
+import '../guide_host/guide_step_text.dart'
+    show guideDestinationLabel, guideStepText;
 import '../recorder_labels.dart';
 import '../recording_export.dart';
 
@@ -70,7 +70,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   );
 
   void _replace(GuideStep step) => setState(() {
-    _steps = [for (final s in _steps) s.id == step.id ? step : s];
+    _steps = [for (final s in _steps) if (s.id == step.id) step else s];
   });
 
   Future<void> _editText(GuideStep step) async {
@@ -100,16 +100,14 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   /// Follows this draft on the live app. Only a runnable guide starts:
   /// one this build fully understands, in a scope that allows it.
   void _start({GuideStep? at}) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final decoded = decodeGuideText(encodeGuideText(_guide));
     final messenger = ScaffoldMessenger.of(context);
     if (!decoded.runnable) {
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            l10n?.guideStartNotRunnable ??
-                'This guide names steps this version of the app does not '
-                    'know; it can be read, not followed.',
+            l10n.guideStartNotRunnable,
           ),
         ),
       );
@@ -119,8 +117,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            l10n?.guideHostDestinationMissing ??
-                'Choose a page for every step.',
+            l10n.guideHostDestinationMissing,
           ),
         ),
       );
@@ -130,9 +127,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            l10n?.guideStartRefused ??
-                'This guide cannot start here: sign in and turn the task '
-                    'recorder on in this workspace.',
+            l10n.guideStartRefused,
           ),
         ),
       );
@@ -152,7 +147,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   /// and can be started again from the task wizard.
   Future<void> _addToLibrary() async {
     final store = ref.read(guideStoreProvider);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (store == null || _saving) return;
     setState(() => _saving = true);
     try {
@@ -166,7 +161,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
       if (!mounted) return;
       AppSnack.success(
         context,
-        l10n?.taskWizardGuideAdded ?? 'Added to My guides.',
+        l10n.taskWizardGuideAdded,
       );
       Navigator.of(context).pop();
     } on Object {
@@ -174,7 +169,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
       setState(() => _saving = false);
       AppSnack.error(
         context,
-        l10n?.taskWizardGuideNotSaved ?? 'The guide could not be kept.',
+        l10n.taskWizardGuideNotSaved,
       );
     }
   }
@@ -192,17 +187,14 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.taskGuideTitle ?? 'Guide draft')),
+      appBar: AppBar(title: Text(l10n.taskGuideTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.taskGuideIntro ??
-                'Each step as a reader will follow it. A step that books '
-                    'waits for the real answer; nothing here is done for '
-                    'the reader.',
+            l10n.taskGuideIntro,
           ),
           const SizedBox(height: AppSpacing.md),
           TextField(
@@ -210,7 +202,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
             controller: _title,
             maxLength: 120,
             decoration: InputDecoration(
-              labelText: l10n?.taskWizardGuideName ?? 'Name of the guide',
+              labelText: l10n.taskWizardGuideName,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -236,8 +228,8 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
               icon: const Icon(Icons.library_add_outlined),
               label: Text(
                 _libraryId == null
-                    ? (l10n?.taskWizardAddToGuides ?? 'Add to my guides')
-                    : (l10n?.taskWizardSaveChanges ?? 'Save the changes'),
+                    ? (l10n.taskWizardAddToGuides)
+                    : (l10n.taskWizardSaveChanges),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -246,14 +238,14 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
             key: const ValueKey('guide-start'),
             onPressed: _start,
             icon: const Icon(Icons.assistant_navigation),
-            label: Text(l10n?.guideStart ?? 'Start the guide'),
+            label: Text(l10n.guideStart),
           ),
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton.icon(
             key: const ValueKey('guide-save'),
             onPressed: _save,
             icon: const Icon(Icons.download),
-            label: Text(l10n?.taskGuideSave ?? 'Save the guide'),
+            label: Text(l10n.taskGuideSave),
           ),
         ],
       ),
@@ -280,21 +272,18 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final title = guideStepText(l10n, step);
     final waits = step.isCommand
-        ? l10n?.taskGuideWaitsFor(
+        ? l10n.taskGuideWaitsFor(
                 step.expectedOutcomes
                     .map((o) => outcomeLabel(l10n, o) ?? o)
                     .join(' / '),
-              ) ??
-              'Waits for: ${step.expectedOutcomes.join(' / ')}'
+              )
         : null;
     final recovery = step.recovery.isEmpty
         ? null
-        : l10n?.taskGuideRecovery ??
-              'If it is refused: choose another place, day or period, then '
-                  'confirm again.';
+        : l10n.taskGuideRecovery;
     return Card(
       key: ValueKey('guide-step-${step.id}'),
       child: Padding(
@@ -313,7 +302,7 @@ class _StepCard extends StatelessWidget {
                 if (onEdit != null)
                   IconButton(
                     key: ValueKey('guide-edit-${step.id}'),
-                    tooltip: l10n?.taskGuideEditText ?? 'Write the words',
+                    tooltip: l10n.taskGuideEditText,
                     icon: const Icon(Icons.edit_outlined),
                     onPressed: onEdit,
                   ),
@@ -325,10 +314,9 @@ class _StepCard extends StatelessWidget {
               initialValue: destination,
               isExpanded: true,
               decoration: InputDecoration(
-                labelText: l10n?.guideHostDestination ?? 'Step destination',
+                labelText: l10n.guideHostDestination,
                 helperText: destination == null
-                    ? (l10n?.guideHostDestinationMissing ??
-                          'Choose a page in the guide editor')
+                    ? (l10n.guideHostDestinationMissing)
                     : null,
                 prefixIcon: const Icon(Icons.link),
               ),
@@ -351,14 +339,14 @@ class _StepCard extends StatelessWidget {
                 key: ValueKey('guide-preview-${step.id}'),
                 onPressed: onOpen,
                 icon: const Icon(Icons.open_in_new),
-                label: Text(l10n?.guideHostShowMe ?? 'Open & highlight'),
+                label: Text(l10n.guideHostShowMe),
               ),
             ?(waits == null ? null : Text(waits)),
             ?(recovery == null ? null : Text(recovery)),
             SwitchListTile(
               key: ValueKey('guide-optional-${step.id}'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.taskGuideOptional ?? 'The reader may skip it'),
+              title: Text(l10n.taskGuideOptional),
               value: step.optional,
               onChanged: onOptional,
             ),
@@ -368,26 +356,6 @@ class _StepCard extends StatelessWidget {
     );
   }
 }
-
-/// A guide step as the reader reads it.
-String guideStepTitle(AppLocalizations? l10n, GuideStep step) =>
-    switch (step.kind) {
-      GuideStepKind.perform =>
-        actionLabel(l10n, step.action) ??
-            (l10n?.taskRecorderStepUnrecorded ??
-                'A step the recorder cannot describe'),
-      GuideStepKind.instruction =>
-        step.text ??
-            (l10n?.taskGuideNoText ?? 'An instruction still to be written'),
-      GuideStepKind.manual =>
-        step.text ??
-            (step.manualCategory == null
-                ? (l10n?.taskGuideManual ?? 'Do this step yourself')
-                : (l10n?.taskGuideManualProtected(
-                        protectedLabel(l10n, step.manualCategory!),
-                      ) ??
-                      'Do this step yourself, on a protected screen')),
-    };
 
 class _TextDialog extends StatefulWidget {
   const _TextDialog({required this.initial});
@@ -409,10 +377,10 @@ class _TextDialogState extends State<_TextDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.taskGuideEditText ?? 'Write the words'),
+      title: Text(l10n.taskGuideEditText),
       content: TextField(
         key: const ValueKey('guide-text-field'),
         controller: _text,

@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
@@ -24,21 +23,21 @@ class WizardReviewStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final toIssue = wiz.issueItems.where((i) => !i.done).length;
     final issued = wiz.issueItems.where((i) => i.done).length;
     final counts = <(Key, String, int)>[
       (const ValueKey('wizard-review-to-issue'),
-          l10n?.wizardReviewToIssue ?? 'To issue', toIssue),
+          l10n.wizardReviewToIssue, toIssue),
       (const ValueKey('wizard-review-issued'),
-          l10n?.wizardReviewIssued ?? 'Already issued', issued),
+          l10n.wizardReviewIssued, issued),
       (const ValueKey('wizard-review-open'),
-          l10n?.wizardReviewOpen ?? 'Open invoices', wiz.open.length),
+          l10n.wizardReviewOpen, wiz.open.length),
       (const ValueKey('wizard-review-overdue'),
-          l10n?.wizardReviewOverdue ?? 'Reminders due', wiz.reminds.length),
+          l10n.wizardReviewOverdue, wiz.reminds.length),
       (const ValueKey('wizard-review-pending'),
-          l10n?.wizardReviewPending ?? 'Payments to validate',
+          l10n.wizardReviewPending,
           wiz.pending.length),
     ];
     return ListView(
@@ -64,18 +63,11 @@ class WizardReviewStep extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         WizardHint(switch (wiz.state.run) {
-          WizardRun.startOfMonth => l10n?.wizardRunStartHint ??
-              'The subscriptions members pay ahead: issue them for the '
-                  'coming month, send them, plan the reminders — then the '
-                  'payment side.',
-          WizardRun.endOfMonth => l10n?.wizardRunEndHint ??
-              'What the month that just ended cost: usage, consumption and '
-                  'extra charges. Issue, send, remind — then register, '
-                  'validate and match the payments, and close.',
+          WizardRun.startOfMonth => l10n.wizardRunStartHint,
+          WizardRun.endOfMonth => l10n.wizardRunEndHint,
         }),
         Text(
-          l10n?.wizardPeriodLabel(monthLabel(context, wiz.period)) ??
-              'Period: ${monthLabel(context, wiz.period)}',
+          l10n.wizardPeriodLabel(monthLabel(context, wiz.period)),
           key: const ValueKey('wizard-period'),
           style: theme.textTheme.titleMedium,
         ),
@@ -116,7 +108,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
   bool _busy = false;
 
   Future<void> _issueAll(List<WizardIssueItem> todo) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     var done = 0;
     for (final item in todo) {
@@ -125,8 +117,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
         context,
         domain: 'money',
         message: 'wizard issue failed',
-        errorText: l10n?.wizardIssueFailed(item.memberName) ??
-            'Could not issue for ${item.memberName}.',
+        errorText: l10n.wizardIssueFailed(item.memberName),
         action: () => ref.read(moneyRepositoryProvider).createInvoice(
               workspaceId: widget.wiz.workspaceId,
               memberId: item.memberId,
@@ -149,7 +140,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final wiz = widget.wiz;
     final items = wiz.issueItems;
@@ -158,7 +149,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
     final enabled = wiz.issuingEnabled;
     if (!wiz.loading && items.isEmpty) {
       return WizardNothing(
-        l10n?.wizardIssueNothing ?? 'Nothing to issue for this period.',
+        l10n.wizardIssueNothing,
         stepKey: 'issue',
       );
     }
@@ -168,11 +159,9 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
           InlineBanner(
             icon: Icons.info_outline,
             severity: InlineBannerSeverity.info,
-            text: l10n?.invoiceFeatureDisabled ?? AppLocalizationsEn().invoiceFeatureDisabled,
+            text: l10n.invoiceFeatureDisabled,
           ),
-        WizardHint(l10n?.wizardIssueHint ??
-            'Untick a member to leave them out of this batch. Members '
-                'already covered are shown as done.'),
+        WizardHint(l10n.wizardIssueHint),
         if (wiz.loading) const LinearProgressIndicator(),
         for (final item in items)
           Card(
@@ -182,8 +171,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
                     leading: const Icon(Icons.check_circle_outline),
                     title: Text(item.memberName),
                     subtitle: Text(
-                      l10n?.wizardIssuedChip(item.issued!.number) ??
-                          'Issued ${item.issued!.number}',
+                      l10n.wizardIssuedChip(item.issued!.number),
                       key: ValueKey('wizard-issued-${item.memberId}'),
                     ),
                     trailing: Text(
@@ -200,7 +188,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
                     title: Text(item.memberName),
                     subtitle: Text([
                       for (final l in item.lines)
-                        l.label.isEmpty ? l.kind : l.label,
+                        if (l.label.isEmpty) l.kind else l.label,
                     ].join(' · ')),
                     secondary: Text(wiz.currency.formatMinor(item.totalCents),
                         style: theme.textTheme.titleSmall),
@@ -211,8 +199,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
           FilledButton.icon(
             key: const ValueKey('wizard-issue-all'),
             icon: const Icon(Icons.receipt_long_outlined),
-            label: Text(l10n?.wizardIssueAll(selected) ??
-                'Issue $selected invoices'),
+            label: Text(l10n.wizardIssueAll(selected)),
             onPressed: !enabled || _busy || selected == 0 ? null : () => _issueAll(todo),
           ),
       ],
@@ -228,20 +215,18 @@ class WizardSendStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final issued = wiz.issued;
     if (!wiz.loading && issued.isEmpty) {
       return WizardNothing(
-        l10n?.wizardSendNone ?? 'No invoice of this run to send yet.',
+        l10n.wizardSendNone,
         stepKey: 'send',
       );
     }
     final controller = ref.read(invoicingWizardControllerProvider.notifier);
     return ListView(
       children: [
-        WizardHint(l10n?.wizardSendHint ??
-            'Hand each invoice to its member — share the PDF, or download '
-                'it to send it your own way.'),
+        WizardHint(l10n.wizardSendHint),
         for (final invoice in issued)
           Card(
             key: ValueKey('wizard-send-${invoice.id}'),
@@ -253,7 +238,7 @@ class WizardSendStep extends ConsumerWidget {
                 IconButton(
                   key: ValueKey('wizard-share-${invoice.id}'),
                   icon: const Icon(Icons.share_outlined),
-                  tooltip: l10n?.wizardSendShare ?? 'Share the PDF',
+                  tooltip: l10n.wizardSendShare,
                   onPressed: () async {
                     await shareInvoicePdf(context, ref, invoice);
                     controller.bump((t) => t.copyWith(shared: t.shared + 1));
@@ -262,7 +247,7 @@ class WizardSendStep extends ConsumerWidget {
                 IconButton(
                   key: ValueKey('wizard-download-${invoice.id}'),
                   icon: const Icon(Icons.download_outlined),
-                  tooltip: l10n?.wizardSendDownload ?? 'Download the PDF',
+                  tooltip: l10n.wizardSendDownload,
                   onPressed: () async {
                     await downloadInvoicePdf(context, ref, invoice);
                     controller.bump((t) => t.copyWith(shared: t.shared + 1));
@@ -292,7 +277,7 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
   bool _busy = false;
 
   Future<void> _remindAll(List<WizardRemindItem> due) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     var done = 0;
     for (final item in due) {
@@ -300,8 +285,7 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
         context,
         domain: 'money',
         message: 'wizard remind failed',
-        errorText: l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        errorText: l10n.workspaceGenericError,
         action: () =>
             ref.read(moneyRepositoryProvider).remindInvoice(item.invoice.id),
       );
@@ -317,20 +301,18 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final wiz = widget.wiz;
     final due = wiz.reminds;
     if (!wiz.loading && due.isEmpty) {
       return WizardNothing(
-        l10n?.wizardRemindNone ?? 'No reminder is due by your rules.',
+        l10n.wizardRemindNone,
         stepKey: 'remind',
       );
     }
     return ListView(
       children: [
-        WizardHint(l10n?.wizardRemindHint ??
-            'Overdue by your reminder rules. One tap records every reminder '
-                'and notifies the members; the letter opens per row.'),
+        WizardHint(l10n.wizardRemindHint),
         for (final item in due)
           Card(
             key: ValueKey('wizard-remind-row-${item.invoice.id}'),
@@ -338,11 +320,11 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
               title: Text(item.invoice.memberName),
               subtitle: Text(
                   '${item.invoice.number} · ${wiz.currency.formatMinor(item.invoice.totalCents)} · '
-                  '${l10n?.wizardRemindLevel(item.level) ?? 'reminder ${item.level}'}'),
+                  '${l10n.wizardRemindLevel(item.level)}'),
               trailing: IconButton(
                 key: ValueKey('wizard-remind-${item.invoice.id}'),
                 icon: const Icon(Icons.picture_as_pdf_outlined),
-                tooltip: l10n?.wizardRemindOne ?? 'Reminder letter',
+                tooltip: l10n.wizardRemindOne,
                 onPressed: _busy
                     ? null
                     : () async {
@@ -358,8 +340,7 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
         FilledButton.icon(
           key: const ValueKey('wizard-remind-all'),
           icon: const Icon(Icons.notifications_active_outlined),
-          label: Text(l10n?.wizardRemindAll(due.length) ??
-              'Send ${due.length} reminders'),
+          label: Text(l10n.wizardRemindAll(due.length)),
           onPressed: _busy || due.isEmpty ? null : () => _remindAll(due),
         ),
       ],

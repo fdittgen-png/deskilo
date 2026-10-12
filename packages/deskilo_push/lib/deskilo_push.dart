@@ -7,11 +7,11 @@
 // carries no Firebase and reports push unavailable. The app itself
 // never imports Firebase — this file is the only door, and it has two
 // interchangeable keys.
-export 'src/firebase_push_connector.dart' show FirebasePushConnector;
-export 'src/push_connector.dart';
-
 import 'src/firebase_push_connector.dart';
 import 'src/push_connector.dart';
+
+export 'src/firebase_push_connector.dart' show FirebasePushConnector;
+export 'src/push_connector.dart';
 
 /// Whether this build carries a push transport at all. True here; the
 /// FOSS package answers false, and Settings says so.

@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -18,12 +22,10 @@ import '../../domain/booking_error_text.dart';
 import '../../domain/booking_gate.dart';
 import '../../domain/reservation.dart';
 import '../../domain/space_act.dart';
-import '../booking_gate_scope.dart';
 import '../../providers/reservation_providers.dart';
+import '../booking_gate_scope.dart';
 import 'message_reserver.dart';
 import 'space_act_form.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/trace/act_trace.dart';
 
 /// #622 — the authenticated act sheet: scanning a seat's QR card (or
 /// tapping its chair's NFC tag, or picking it in a desk/office space
@@ -41,7 +43,7 @@ Future<void> showSpaceActSheet(
   required Seat seat,
   FloorPlan? plan,
   required String title,
-}) => showModalBottomSheet<void>(
+}) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (context) => _SpaceActSheet(seat: seat, plan: plan, title: title),
@@ -107,7 +109,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
   }
 
   Future<void> _confirm(SpaceActChoice choice) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final me = ref.read(myMemberProvider).value;
     if (workspace == null || _busy) return;
@@ -154,7 +156,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           granularity: _granularity,
         ),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'reservations',
         'space act failed',
@@ -170,8 +172,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         bookingErrorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
           stepMinutes: _granularity.stepMinutes,
         ),
         replace: true,
@@ -190,9 +191,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         setState(() => _busy = false);
         AppSnack.info(
           context,
-          l10n?.spaceAlreadyCheckedInHere ??
-              'You are already checked in here. Choose Check out to '
-                  'leave the seat.',
+          l10n.spaceAlreadyCheckedInHere,
           replace: true,
         );
         return;
@@ -200,9 +199,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         setState(() => _busy = false);
         AppSnack.error(
           context,
-          l10n?.kioskNotCheckedIn ??
-              'No active check-in found — the plan may have just '
-                  'updated.',
+          l10n.kioskNotCheckedIn,
           replace: true,
         );
         return;
@@ -215,14 +212,14 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.kioskDone ?? "Done — you're all set.",
+      l10n.kioskDone,
       replace: true,
     );
     invalidateBookingData(ref);
   }
 
   Widget _footer(BuildContext context, SpaceActChoice choice) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final now = ref.read(clockProvider).now();
     final me = ref.watch(myMemberProvider).value;
@@ -245,7 +242,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         if (mine != null) ...[
           const SizedBox(height: 8),
           Text(
-            l10n?.spaceYoursNow ?? 'Reserved by you for this slot.',
+            l10n.spaceYoursNow,
             key: const ValueKey('space-act-yours'),
             style: theme.textTheme.bodySmall,
           ),
@@ -263,8 +260,8 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         if (blocking != null) ...[
           const SizedBox(height: 8),
           Text(
-            '${blocking.status == ReservationStatus.checkedIn ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name') : (l10n?.planReservedBy(name) ?? 'Reserved by $name')}'
-            ' · ${l10n?.planUntil(ref.watch(appFormatProvider).time(blocking.endsAt)) ?? 'until ${ref.watch(appFormatProvider).time(blocking.endsAt)}'}',
+            '${blocking.status == ReservationStatus.checkedIn ? (l10n.planOccupiedBy(name)) : (l10n.planReservedBy(name))}'
+            ' · ${l10n.planUntil(ref.watch(appFormatProvider).time(blocking.endsAt))}',
             key: const ValueKey('space-act-blocked'),
             style: theme.textTheme.bodySmall,
           ),
@@ -283,7 +280,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           key: const ValueKey('space-act-confirm'),
           onPressed: _busy || refused ? null : () => _confirm(choice),
           icon: const Icon(Icons.check),
-          label: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
+          label: Text(l10n.kioskBadgeConfirm),
         ),
       ],
     );
@@ -296,7 +293,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
   /// Returning a sentence rather than a bool: "Confirm is greyed out" is
   /// not an answer, and the sequence this fixes had somebody tapping an
   /// enabled button five times.
-  String? _ownStandingRefusal(SpaceActChoice choice, AppLocalizations? l10n) {
+  String? _ownStandingRefusal(SpaceActChoice choice, AppLocalizations l10n) {
     if (choice.action == SpaceAction.checkOut) return null;
     final now = ref.read(clockProvider).now();
     final me = ref.read(myMemberProvider).value;
@@ -309,9 +306,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
     if (live == null || !live.coversRange(choice.start, choice.end)) {
       return null;
     }
-    return l10n?.spaceAlreadyCheckedInHere ??
-        'You are already checked in here. Choose Check out to leave the '
-            'seat.';
+    return l10n.spaceAlreadyCheckedInHere;
   }
 
   /// The gate's answer for [choice] (null while the feature is off).
@@ -328,7 +323,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final now = ref.read(clockProvider).now();
     final gate = bookingGateOf(ref, watch: true);
     return SingleChildScrollView(

@@ -16,8 +16,8 @@ import 'package:pdf/widgets.dart' as pw;
 /// it, then reports where the text actually landed.
 Future<Uint8List> _sheet(AddressWindow window) async {
   // Uncompressed so the test can read the placement transforms.
-  final doc = pw.Document(compress: false);
-  doc.addPage(
+  final doc = pw.Document(compress: false)
+    ..addPage(
     pw.MultiPage(
       pageTheme: pw.PageTheme(
         pageFormat: PdfPageFormat.a4,

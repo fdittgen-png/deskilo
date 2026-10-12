@@ -37,6 +37,7 @@ part 'shell_bar_visibility.g.dart';
 /// channel (the `FrontCameraStore` shape).
 abstract class ShellFlagStore {
   Future<bool> read();
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> write(bool value);
 }
 
@@ -70,12 +71,13 @@ class ShellBarHidden extends _$ShellBarHidden {
   Future<bool> build() => ref.watch(shellBarHiddenStoreProvider).read();
 
   /// Hide or show the bar, remembering the choice.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> set(bool hidden) async {
     if (state.value == hidden) return;
     state = AsyncData(hidden);
     try {
       await ref.read(shellBarHiddenStoreProvider).write(hidden);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The bar still moved; only the memory of it is lost.
       TraceLogger.instance.warn(
         'shell',
@@ -106,7 +108,7 @@ class ShellSwipeCoachSeen extends _$ShellSwipeCoachSeen {
     state = const AsyncData(true);
     try {
       await ref.read(shellSwipeCoachStoreProvider).write(true);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'shell',
         'swipe coach flag not persisted',

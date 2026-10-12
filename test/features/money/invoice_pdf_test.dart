@@ -8,13 +8,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -44,7 +44,7 @@ String _operators(Uint8List bytes) {
     if (end < 0) continue;
     try {
       out.writeln(String.fromCharCodes(zlib.decode(bytes.sublist(match.end, end))));
-    } catch (_) {
+    } on Object catch (_) {
       // Not a deflated stream (fonts, metadata) — nothing to read here.
     }
   }

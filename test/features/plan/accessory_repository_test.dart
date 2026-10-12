@@ -10,9 +10,9 @@ void main() {
   group('accessory catalog contract (#166)', () {
     test('fetchAccessories orders by sort_order, then name', () async {
       final repo = FakeAccessoryRepository();
-      await repo.createAccessory('ws-1', name: 'Zebra lamp', sortOrder: 0);
+      await repo.createAccessory('ws-1', name: 'Zebra lamp');
       await repo.createAccessory('ws-1', name: 'Monitor', sortOrder: 1);
-      await repo.createAccessory('ws-1', name: 'Anglepoise', sortOrder: 0);
+      await repo.createAccessory('ws-1', name: 'Anglepoise');
 
       final names =
           (await repo.fetchAccessories('ws-1')).map((a) => a.name).toList();

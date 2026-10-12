@@ -12,9 +12,10 @@
 // bounds the bytes and the dimensions, and it strips every metadata
 // block by construction: the output is pixels this code drew, not a file
 // somebody handed over with an EXIF block travelling inside it.
-import 'package:meta/meta.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+import 'package:meta/meta.dart';
 
 import 'emblem_refusal.dart';
 
@@ -41,8 +42,6 @@ Future<Uint8List> emblemPngOf(Uint8List bytes) async {
   try {
     final codec = await ui.instantiateImageCodec(
       bytes,
-      targetWidth: null,
-      targetHeight: null,
     );
     source = (await codec.getNextFrame()).image;
   } on Object {

@@ -3,39 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/save_book_profile.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
-import '../../application/save_book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
 
-String _bookAuthorityLabel(AppLocalizations? l10n, BookAuthority a) =>
+String _bookAuthorityLabel(AppLocalizations l10n, BookAuthority a) =>
     switch (a) {
-      BookAuthority.preAccounting => l10n?.bookAuthorityPre ?? 'Pre-accounting',
+      BookAuthority.preAccounting => l10n.bookAuthorityPre,
       BookAuthority.localBook =>
-        l10n?.bookAuthorityLocal ?? 'DesKilo is the book',
+        l10n.bookAuthorityLocal,
       BookAuthority.externalBook =>
-        l10n?.bookAuthorityExternal ?? 'External system',
+        l10n.bookAuthorityExternal,
     };
 
-String _bookProblemLabel(AppLocalizations? l10n, BookProfileProblem p) =>
+String _bookProblemLabel(AppLocalizations l10n, BookProfileProblem p) =>
     switch (p) {
       BookProfileProblem.externalSystemMissing =>
-        l10n?.bookProblemExternal ??
-            'Name the external system that keeps the official books.',
+        l10n.bookProblemExternal,
       BookProfileProblem.unsupportedCurrency =>
-        l10n?.bookProblemCurrency ??
-            'This currency has no reviewed number of decimals.',
+        l10n.bookProblemCurrency,
       BookProfileProblem.invalidFiscalStart =>
-        l10n?.bookProblemFiscal ??
-            'A fiscal year starts on a day every year has (never 29 February).',
+        l10n.bookProblemFiscal,
     };
 
 /// #1869 — set who keeps the official books of one issuer: preview the
@@ -45,7 +44,7 @@ Future<bool> _showBookProfileSheet(
   BuildContext context, {
   BookProfile? editing,
 }) async {
-  final saved = await showModalBottomSheet<bool>(
+  final saved = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _BookProfileSheet(editing: editing),
@@ -117,7 +116,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   }
 
   Future<void> _save(BookProfile draft) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     var outcome = BookSaveOutcome.invalid;
     final ok = await runGuarded(
@@ -125,8 +124,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
       domain: 'money',
       message: 'save book profile failed',
       errorText:
-          l10n?.bookSaveFailed ??
-          'The book was not saved. Check the connection and try again.',
+          l10n.bookSaveFailed,
       action: () async => outcome = await ref
           .read(bookProfileCommandsProvider)
           .save(draft, mappings: _mappings),
@@ -136,21 +134,19 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
     if (outcome == BookSaveOutcome.stale) {
       AppSnack.info(
         context,
-        l10n?.bookStale ??
-            'Someone saved this book since you opened it. Close and reopen '
-                'to see their version.',
+        l10n.bookStale,
       );
       return;
     }
     if (!ok || outcome != BookSaveOutcome.saved) return;
     ref.invalidate(bookProfilesProvider);
-    AppSnack.success(context, l10n?.bookSaved ?? 'Book saved');
+    AppSnack.success(context, l10n.bookSaved);
     Navigator.of(context).pop(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final sites = ref.watch(sitesProvider).value ?? const <Site>[];
@@ -175,16 +171,13 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
         : fiscalYearOf(draft, draft.effectiveFrom);
     final yearText = year == null
         ? null
-        : (l10n?.bookFiscalPreview(
+        : (l10n.bookFiscalPreview(
                 year.label,
                 dates.format(year.start),
                 dates.format(year.end),
-              ) ??
-              'Fiscal year ${year.label}: ${dates.format(year.start)} – '
-                  '${dates.format(year.end)}');
+              ));
     final fromText =
-        l10n?.bookEffectiveFrom(dates.format(draft?.effectiveFrom ?? today)) ??
-        'Takes effect from ${dates.format(draft?.effectiveFrom ?? today)}';
+        l10n.bookEffectiveFrom(dates.format(draft?.effectiveFrom ?? today));
     return Padding(
       padding: EdgeInsets.fromLTRB(
         AppSpacing.md,
@@ -198,7 +191,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              l10n?.bookSheetTitle ?? 'Accounting book',
+              l10n.bookSheetTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -207,7 +200,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               initialValue: _issuer,
               isExpanded: true,
               decoration: InputDecoration(
-                labelText: l10n?.bookIssuer ?? 'Issuer',
+                labelText: l10n.bookIssuer,
               ),
               items: [
                 for (final s in sites)
@@ -247,7 +240,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                 controller: _external,
                 onChanged: (_) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: l10n?.bookExternalSystem ?? 'Authoritative system',
+                  labelText: l10n.bookExternalSystem,
                 ),
               ),
             TextField(
@@ -255,12 +248,12 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               controller: _currency,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                labelText: l10n?.bookCurrency ?? 'Functional currency',
+                labelText: l10n.bookCurrency,
                 hintText: workspace.currencyCode,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            Text(l10n?.bookFiscalStart ?? 'Fiscal year starts on'),
+            Text(l10n.bookFiscalStart),
             Row(
               children: [
                 Expanded(
@@ -301,11 +294,11 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               segments: [
                 ButtonSegment(
                   value: AccountingBasis.accrual,
-                  label: Text(l10n?.bookBasisAccrual ?? 'Accrual basis'),
+                  label: Text(l10n.bookBasisAccrual),
                 ),
                 ButtonSegment(
                   value: AccountingBasis.cash,
-                  label: Text(l10n?.bookBasisCash ?? 'Cash basis'),
+                  label: Text(l10n.bookBasisCash),
                 ),
               ],
               selected: {_basis},
@@ -337,11 +330,9 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               ),
             if (unmapped.isNotEmpty)
               Text(
-                l10n?.bookProblemUnmapped(
+                l10n.bookProblemUnmapped(
                       unmapped.map((r) => bookRoleLabel(l10n, r)).join(', '),
-                    ) ??
-                    'Map these accounts before a local book starts: '
-                        '${unmapped.map((r) => bookRoleLabel(l10n, r)).join(', ')}.',
+                    ),
                 key: const ValueKey('book-unmapped'),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
@@ -355,7 +346,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                       _saving
                   ? null
                   : () => _save(draft),
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
           ],
         ),
@@ -373,7 +364,7 @@ class BookProfileSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final profiles = ref.watch(bookProfilesProvider).value ?? const [];
     final sites = {
@@ -387,12 +378,10 @@ class BookProfileSection extends ConsumerWidget {
           key: const ValueKey('legal-identity-book'),
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.menu_book_outlined),
-          title: Text(l10n?.bookSheetTitle ?? 'Accounting book'),
+          title: Text(l10n.bookSheetTitle),
           subtitle: profiles.isEmpty
               ? Text(
-                  l10n?.bookTileEmpty ??
-                      'No book set: DesKilo keeps member balances and invoices '
-                          '(pre-accounting).',
+                  l10n.bookTileEmpty,
                 )
               : null,
           trailing: const Icon(Icons.add),
@@ -405,8 +394,7 @@ class BookProfileSection extends ConsumerWidget {
             contentPadding: const EdgeInsets.only(left: AppSpacing.lg),
             leading: const Icon(Icons.account_tree_outlined),
             title: Text(
-              l10n?.bookChartTitle(site.name) ??
-                  'Chart of accounts · ${site.name}',
+              l10n.bookChartTitle(site.name),
             ),
             onTap: () => showBookChartSheet(context, site),
           ),
@@ -423,7 +411,7 @@ class BookProfileSection extends ConsumerWidget {
               '${p.authority == BookAuthority.externalBook ? ' (${p.externalSystem})' : ''}',
             ),
             subtitle: Text(
-              '${l10n?.bookEffectiveFrom(dates.format(p.effectiveFrom)) ?? 'Takes effect from ${dates.format(p.effectiveFrom)}'}'
+              '${l10n.bookEffectiveFrom(dates.format(p.effectiveFrom))}'
               ' · ${p.functionalCurrency} · '
               '${fiscalYearOf(p, p.effectiveFrom).label}',
             ),

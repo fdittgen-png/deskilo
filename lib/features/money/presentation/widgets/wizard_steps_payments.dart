@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -33,13 +33,12 @@ class WizardPaymentsStep extends ConsumerWidget {
     WorkspaceEvent event, {
     required bool accept,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'wizard payment decision failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () =>
           ref.read(eventRepositoryProvider).respond(event.id, accept: accept),
     );
@@ -54,19 +53,16 @@ class WizardPaymentsStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final pending = wiz.pending;
     final me = ref.watch(myMemberProvider).value?.id;
     return ListView(
       children: [
-        WizardHint(l10n?.wizardPaymentsHint ??
-            'What members declared waits for your confirmation below. A '
-                'payment that reached the account without a declaration is '
-                'registered here — the member then confirms it.'),
+        WizardHint(l10n.wizardPaymentsHint),
         FilledButton.tonalIcon(
           key: const ValueKey('wizard-register-payment'),
           icon: const Icon(Icons.add_card_outlined),
-          label: Text(l10n?.registerPaymentTitle ?? 'Register a payment'),
+          label: Text(l10n.registerPaymentTitle),
           onPressed: () async {
             final done = await showRegisterPaymentSheet(context, ref);
             if (done) {
@@ -79,7 +75,7 @@ class WizardPaymentsStep extends ConsumerWidget {
         const SizedBox(height: AppSpacing.md),
         if (!wiz.loading && pending.isEmpty)
           WizardNothing(
-            l10n?.wizardPaymentsNone ?? 'No declared payment waits for you.',
+            l10n.wizardPaymentsNone,
             stepKey: 'payments',
           ),
         for (final event in pending)
@@ -98,19 +94,19 @@ class WizardPaymentsStep extends ConsumerWidget {
               ].join(' · ')),
               // The declaring member never validates their own line.
               trailing: event.actorMemberId == me
-                  ? Text(l10n?.wizardMatchPending ?? 'Awaiting validation')
+                  ? Text(l10n.wizardMatchPending)
                   : Row(mainAxisSize: MainAxisSize.min, children: [
                       IconButton(
                         key: ValueKey('wizard-payment-reject-${event.id}'),
                         icon: const Icon(Icons.close),
-                        tooltip: l10n?.wizardPaymentReject ?? 'Reject',
+                        tooltip: l10n.wizardPaymentReject,
                         onPressed: () =>
                             _decide(context, ref, event, accept: false),
                       ),
                       IconButton.filled(
                         key: ValueKey('wizard-payment-accept-${event.id}'),
                         icon: const Icon(Icons.check),
-                        tooltip: l10n?.wizardPaymentAccept ?? 'Confirm',
+                        tooltip: l10n.wizardPaymentAccept,
                         onPressed: () =>
                             _decide(context, ref, event, accept: true),
                       ),
@@ -131,20 +127,18 @@ class WizardMatchStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final open = wiz.open;
     if (!wiz.loading && open.isEmpty) {
       return WizardNothing(
-        l10n?.wizardMatchNone ?? 'Every invoice is paid or closed.',
+        l10n.wizardMatchNone,
         stepKey: 'match',
       );
     }
     return ListView(
       children: [
-        WizardHint(l10n?.wizardMatchHint ??
-            'An invoice is paid once a real payment is matched to it. '
-                'Rows with credit on the member\'s account are ready.'),
+        WizardHint(l10n.wizardMatchHint),
         for (final invoice in open)
           Consumer(builder: (context, ref, _) {
             final match = wiz.matches[invoice.id];
@@ -164,12 +158,11 @@ class WizardMatchStep extends ConsumerWidget {
                 subtitle: Text([
                   invoiceLine(wiz, invoice),
                   if (pending)
-                    l10n?.wizardMatchPending ?? 'Awaiting validation'
+                    l10n.wizardMatchPending
                   else if (credit > 0)
-                    l10n?.wizardMatchCredit(wiz.currency.formatMinor(credit)) ??
-                        'Credit available: ${wiz.currency.formatMinor(credit)}'
+                    l10n.wizardMatchCredit(wiz.currency.formatMinor(credit))
                   else
-                    l10n?.wizardMatchNoCredit ?? 'No payment on the account yet',
+                    l10n.wizardMatchNoCredit,
                 ].join(' · ')),
                 trailing: ready
                     ? FilledButton.tonal(
@@ -180,7 +173,7 @@ class WizardMatchStep extends ConsumerWidget {
                               .read(invoicingWizardControllerProvider.notifier)
                               .bump((t) => t.copyWith(matched: t.matched + 1));
                         },
-                        child: Text(l10n?.wizardMatchAction ?? 'Match'),
+                        child: Text(l10n.wizardMatchAction),
                       )
                     : null,
               ),
@@ -201,21 +194,18 @@ class WizardCloseStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final plan = wiz.close;
     final controller = ref.read(invoicingWizardControllerProvider.notifier);
     if (!wiz.loading && plan.groups.isEmpty && plan.refunds.isEmpty) {
       return WizardNothing(
-        l10n?.wizardCloseNone ?? 'Nothing to regroup, write off or refund.',
+        l10n.wizardCloseNone,
         stepKey: 'close',
       );
     }
     return ListView(
       children: [
-        WizardHint(l10n?.wizardCloseHint ??
-            'A member with several open invoices can pay ONE; a partly '
-                'paid invoice can have its remainder written off; a credit '
-                'note is refunded. Each goes through validation.'),
+        WizardHint(l10n.wizardCloseHint),
         for (final group in plan.groups) ...[
           if (group.canSettle)
             Card(
@@ -230,8 +220,7 @@ class WizardCloseStep extends ConsumerWidget {
                     await showSettlementSheet(context, ref);
                     controller.bump((t) => t.copyWith(settled: t.settled + 1));
                   },
-                  child: Text(l10n?.wizardSettle(group.open.length) ??
-                      'Regroup ${group.open.length}'),
+                  child: Text(l10n.wizardSettle(group.open.length)),
                 ),
               ),
             ),
@@ -249,7 +238,7 @@ class WizardCloseStep extends ConsumerWidget {
                     controller
                         .bump((t) => t.copyWith(writeoffs: t.writeoffs + 1));
                   },
-                  child: Text(l10n?.wizardWriteoff ?? 'Write off'),
+                  child: Text(l10n.wizardWriteoff),
                 ),
               ),
             ),
@@ -267,7 +256,7 @@ class WizardCloseStep extends ConsumerWidget {
                   await settleCreditInvoiceDialog(context, ref, invoice);
                   controller.bump((t) => t.copyWith(refunds: t.refunds + 1));
                 },
-                child: Text(l10n?.wizardRefund ?? 'Refund'),
+                child: Text(l10n.wizardRefund),
               ),
             ),
           ),
@@ -285,21 +274,21 @@ class WizardSummaryStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final t = wiz.state.tally;
     final tally = <(String, int)>[
-      (l10n?.wizardTallyIssued ?? 'Invoices issued', t.issued),
-      (l10n?.wizardTallyShared ?? 'PDFs shared or downloaded', t.shared),
-      (l10n?.wizardTallyReminded ?? 'Reminders sent', t.reminded),
-      (l10n?.wizardTallyDecided ?? 'Payments confirmed or rejected',
+      (l10n.wizardTallyIssued, t.issued),
+      (l10n.wizardTallyShared, t.shared),
+      (l10n.wizardTallyReminded, t.reminded),
+      (l10n.wizardTallyDecided,
           t.paymentsDecided),
-      (l10n?.wizardTallyRegistered ?? 'Payments registered',
+      (l10n.wizardTallyRegistered,
           t.paymentsRegistered),
-      (l10n?.wizardTallyMatched ?? 'Invoices matched', t.matched),
-      (l10n?.wizardTallySettled ?? 'Regroupings', t.settled),
-      (l10n?.wizardTallyWriteoffs ?? 'Write-offs requested', t.writeoffs),
-      (l10n?.wizardTallyRefunds ?? 'Refunds', t.refunds),
+      (l10n.wizardTallyMatched, t.matched),
+      (l10n.wizardTallySettled, t.settled),
+      (l10n.wizardTallyWriteoffs, t.writeoffs),
+      (l10n.wizardTallyRefunds, t.refunds),
     ];
     final todos = <(Invoice, String, String)>[];
     for (final invoice in wiz.open) {
@@ -309,8 +298,8 @@ class WizardSummaryStep extends ConsumerWidget {
       if (journey == null || journey.move == InvoiceMove.none) continue;
       final who = switch (journey.move.who) {
         InvoiceMover.member => invoice.memberName,
-        InvoiceMover.issuer => l10n?.wizardWhoYou ?? 'You',
-        InvoiceMover.validators => l10n?.wizardWhoValidators ?? 'Validators',
+        InvoiceMover.issuer => l10n.wizardWhoYou,
+        InvoiceMover.validators => l10n.wizardWhoValidators,
         InvoiceMover.nobody => '',
       };
       todos.add((
@@ -330,7 +319,7 @@ class WizardSummaryStep extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n?.wizardSummaryHint ?? 'What this run did',
+                  l10n.wizardSummaryHint,
                   style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -348,7 +337,7 @@ class WizardSummaryStep extends ConsumerWidget {
                     ]),
                 if (t.total == 0)
                   Text(
-                    l10n?.wizardTallyNothing ?? 'Nothing was changed.',
+                    l10n.wizardTallyNothing,
                     style: theme.textTheme.bodyMedium,
                   ),
               ],
@@ -357,13 +346,13 @@ class WizardSummaryStep extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
-          l10n?.wizardTodoHeading ?? 'Still open — whose move',
+          l10n.wizardTodoHeading,
           style: theme.textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.xs),
         if (todos.isEmpty)
           Text(
-            l10n?.wizardTodoNone ?? 'Nothing left open.',
+            l10n.wizardTodoNone,
             key: const ValueKey('wizard-todo-none'),
           ),
         for (final (invoice, who, text) in todos)
@@ -378,7 +367,7 @@ class WizardSummaryStep extends ConsumerWidget {
         FilledButton.icon(
           key: const ValueKey('wizard-finish'),
           icon: const Icon(Icons.done_all),
-          label: Text(l10n?.wizardFinish ?? 'Finish'),
+          label: Text(l10n.wizardFinish),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
       ],

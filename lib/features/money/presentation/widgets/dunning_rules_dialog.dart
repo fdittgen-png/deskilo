@@ -4,10 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
@@ -41,7 +40,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
   bool _busy = false;
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     setState(() => _busy = true);
@@ -49,15 +48,14 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
       await ref
           .read(moneyRepositoryProvider)
           .setDunningRules(workspace.id, _rules);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'set dunning rules failed',
           error: e, stackTrace: st);
       if (!mounted) return;
       setState(() => _busy = false);
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -66,7 +64,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
     Navigator.of(context).pop();
     AppSnack.info(
       context,
-      l10n?.dunningSaved ?? 'Reminder rules saved.',
+      l10n.dunningSaved,
       replace: true,
     );
   }
@@ -81,8 +79,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
       Row(children: [
         Expanded(child: Text(label)),
         HelpDot(
-          AppLocalizations.of(context)?.helpHintMoneyInvoicesTip2Topic ??
-              'Automatic payment reminders',
+          context.l10n.helpHintMoneyInvoicesTip2Topic,
           anchor: HelpAnchor.remindersRules,
         ),
         DropdownButton<int>(
@@ -101,15 +98,15 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     const dayOptions = [3, 5, 7, 10, 14, 21, 30, 45, 60];
     return AlertDialog(
-      title: Text(l10n?.dunningSettingsTitle ?? 'Reminder rules'),
+      title: Text(l10n.dunningSettingsTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _countRow(
-            l10n?.dunningLevels ?? 'Number of reminder levels',
+            l10n.dunningLevels,
             key: 'dunning-levels',
             value: _rules.levels,
             options: const [1, 2, 3, 4, 5],
@@ -117,7 +114,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
                 setState(() => _rules = _rules.copyWith(levels: v)),
           ),
           _countRow(
-            l10n?.dunningFirstAfterDays ?? 'Days until the first reminder',
+            l10n.dunningFirstAfterDays,
             key: 'dunning-first-days',
             value: _rules.firstAfterDays,
             options: dayOptions,
@@ -125,7 +122,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
                 () => _rules = _rules.copyWith(firstAfterDays: v)),
           ),
           _countRow(
-            l10n?.dunningBetweenDays ?? 'Days between reminders',
+            l10n.dunningBetweenDays,
             key: 'dunning-between-days',
             value: _rules.betweenDays,
             options: dayOptions,
@@ -137,19 +134,14 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
             key: const ValueKey('dunning-automatic'),
             contentPadding: EdgeInsets.zero,
             title: HelpDotTitle(
-              l10n?.dunningAutomatic ?? 'Automatic reminders',
-              l10n?.helpHintMoneyInvoicesTip2Topic ??
-                  'Automatic payment reminders',
+              l10n.dunningAutomatic,
+              l10n.helpHintMoneyInvoicesTip2Topic,
               anchor: HelpAnchor.remindersAutomatic,
             ),
             // #2332 — and when "once a day" actually happens.
             subtitle: Text([
-              l10n?.dunningAutomaticHint ??
-                  'Once a day, open invoices past the term get their next '
-                      'reminder level by themselves — an alert in the '
-                      'member\'s feed and a push. Off: you send each '
-                      'reminder yourself.',
-              (l10n ?? AppLocalizationsEn()).paymentRemindersWhen,
+              l10n.dunningAutomaticHint,
+              l10n.paymentRemindersWhen,
             ].join(' ')),
             value: _rules.automatic,
             onChanged: (v) =>
@@ -161,12 +153,12 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
         TextButton(
           key: const ValueKey('dunning-rules-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('dunning-save'),
           onPressed: _busy ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

@@ -20,12 +20,13 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:meta/meta.dart';
 
 import 'action_registry.dart';
+import 'recording_reference.dart';
 import 'safe_payload.dart';
 import 'step_values.dart';
 import 'task_recording.dart';
-import 'recording_reference.dart';
 
 part 'task_recording_decoder.dart';
 
@@ -80,6 +81,7 @@ class RecordingDecodeResult {
 }
 
 /// Encodes [r] in canonical key order. The result is the export.
+@visibleForTesting
 Map<String, Object?> encodeRecording(TaskRecording r) => {
   'format': taskRecordingFormat,
   'schema_version': schemaVersionOf(r),

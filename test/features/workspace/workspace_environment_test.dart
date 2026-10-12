@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/source_of.dart';
 
 InvoicePdfStrings _strings({
   String development = '',
@@ -159,8 +160,7 @@ void main() {
     test('every builder the app has takes the mark — a statement, an '
         'agreement, a VAT report and a declaration are as mistakable as '
         'an invoice', () {
-      final pdf = File('lib/features/money/domain/invoice_pdf.dart')
-          .readAsStringSync();
+      final pdf = sourceOf('lib/features/money/domain/invoice_pdf.dart');
       // The banded letter builder is the funnel for every non-invoice
       // report, including declarations.
       expect(pdf, contains('Future<Uint8List> buildBandedLetterPdf('));
@@ -168,14 +168,12 @@ void main() {
         pdf.substring(pdf.indexOf('buildBandedLetterPdf(')),
         contains('buildForeground: watermarkForeground(watermark)'),
       );
-      final decl = File('lib/features/money/presentation/screens/vat_declarations_screen.dart')
-          .readAsStringSync();
+      final decl = sourceOf('lib/features/money/presentation/screens/vat_declarations_screen.dart');
       expect(decl, contains('await letterDocPdf(context, ref,'));
       // #1061 — document generation left invoice_actions.dart for
       // invoice_documents.dart; the mark went with it.
       final documents =
-          File('lib/features/money/presentation/invoice_documents.dart')
-              .readAsStringSync();
+          sourceOf('lib/features/money/presentation/invoice_documents.dart');
       expect(documents, contains('String developmentMark('),
           reason: 'one source for the word, read where the workspace is');
     });

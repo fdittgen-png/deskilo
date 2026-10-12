@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/data/system_columns.dart';
 import '../../workspace/domain/member.dart';
 import 'validation_policy.dart';
-import '../../../core/data/system_columns.dart';
 
 part 'workspace_event.freezed.dart';
 

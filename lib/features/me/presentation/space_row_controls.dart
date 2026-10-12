@@ -6,7 +6,7 @@
 // menu so the row keeps its height.
 import 'package:flutter/material.dart';
 
-import '../../../l10n/app_localizations.dart';
+import '../../../core/l10n/context_l10n.dart';
 
 /// One way out of a space: the menu lists one per side of the row.
 class SpaceLeaveItem {
@@ -57,7 +57,7 @@ class SpaceRowControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final key = 'space-menu-$rowKey';
     return Row(
@@ -87,7 +87,7 @@ class SpaceRowControls extends StatelessWidget {
             side: BorderSide.none,
           ),
           key: ValueKey(key),
-          tooltip: l10n?.spaceOptions(name) ?? 'Options for $name',
+          tooltip: l10n.spaceOptions(name),
           onSelected: (v) {
             switch (v) {
               case 'favorite':
@@ -119,7 +119,7 @@ class SpaceRowControls extends StatelessWidget {
                     const SizedBox(width: 8),
                     Flexible(
                       child: Text(
-                        AppLocalizations.of(context)!.spaceHostedOn(server),
+                        context.l10n.spaceHostedOn(server),
                       ),
                     ),
                   ],
@@ -132,27 +132,27 @@ class SpaceRowControls extends StatelessWidget {
               value: 'favorite',
               child: Text(
                 favorite
-                    ? (l10n?.spaceFavoriteRemove ?? 'Remove from favorites')
-                    : (l10n?.spaceFavoriteAdd ?? 'Add to favorites'),
+                    ? (l10n.spaceFavoriteRemove)
+                    : (l10n.spaceFavoriteAdd),
               ),
             ),
             if (onMoveToGroup != null)
               PopupMenuItem(
                 key: ValueKey('$key-group'),
                 value: 'group',
-                child: Text(l10n?.meGroupMove ?? 'Move to group…'),
+                child: Text(l10n.meGroupMove),
               ),
             PopupMenuItem(
               key: ValueKey('$key-up'),
               value: 'up',
               enabled: onUp != null,
-              child: Text(l10n?.spaceMoveUp ?? 'Move up'),
+              child: Text(l10n.spaceMoveUp),
             ),
             PopupMenuItem(
               key: ValueKey('$key-down'),
               value: 'down',
               enabled: onDown != null,
-              child: Text(l10n?.spaceMoveDown ?? 'Move down'),
+              child: Text(l10n.spaceMoveDown),
             ),
             const PopupMenuDivider(),
             for (var n = 5; n >= 1; n--)
@@ -164,7 +164,7 @@ class SpaceRowControls extends StatelessWidget {
             PopupMenuItem(
               key: ValueKey('$key-clear'),
               value: 'clear',
-              child: Text(l10n?.spaceRatingClear ?? 'No rating'),
+              child: Text(l10n.spaceRatingClear),
             ),
             if (leave.isNotEmpty) const PopupMenuDivider(),
             // An owner cannot leave either side: say it once, not per side.

@@ -6,11 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../providers/public_profile_providers.dart';
 
 class PublicPersonScreen extends ConsumerWidget {
@@ -19,16 +19,16 @@ class PublicPersonScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final person = ref.watch(publicPersonProvider(userId));
     final theme = Theme.of(context);
     final gone = EmptyState(
       key: const ValueKey('public-person-unavailable'),
       icon: Icons.person_off_outlined,
-      title: l10n?.publicPersonUnavailable ?? 'This profile is not public.',
+      title: l10n.publicPersonUnavailable,
     );
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.publicProfileTitle ?? 'Public profile')),
+      appBar: AppBar(title: Text(l10n.publicProfileTitle)),
       body: switch (person) {
         AsyncData(value: final p?) => Align(
           alignment: Alignment.topCenter,

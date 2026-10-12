@@ -6,8 +6,8 @@
 // It reads the same compatibility verdict and the same entity registry the
 // creation applies, so the confirm step cannot promise a group the
 // template will not bring, nor hide that this server refuses it.
-import 'template_preview.dart';
 import '../../../core/data/json_reader.dart';
+import 'template_preview.dart';
 
 class TemplateOutline {
   const TemplateOutline({

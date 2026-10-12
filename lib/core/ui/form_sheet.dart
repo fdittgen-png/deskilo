@@ -7,7 +7,7 @@ import '../theme/app_spacing.dart';
 /// stretched column with a titleMedium header — the scaffolding every
 /// money/quota sheet used to copy-paste around its fields.
 ///
-/// Use inside `showModalBottomSheet(isScrollControlled: true, ...)`; the
+/// Use inside `showAppSheet(isScrollControlled: true, ...)`; the
 /// sheet's fields and submit button are the [children].
 class SheetShell extends StatelessWidget {
   const SheetShell({super.key, required this.title, required this.children});

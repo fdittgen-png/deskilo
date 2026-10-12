@@ -12,8 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// the codec (the seat-photo lesson, #618).
 Future<Uint8List> pngOf(int width, int height) async {
   final recorder = ui.PictureRecorder();
-  final canvas = ui.Canvas(recorder);
-  canvas.drawRect(
+  ui.Canvas(recorder).drawRect(
     ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
     ui.Paint()..color = const Color(0xFFC2410C),
   );

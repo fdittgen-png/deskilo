@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/debouncer.dart';
+import '../../../../core/ui/labeled_rows.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
@@ -38,7 +40,7 @@ class _MessageSearchScreen extends ConsumerStatefulWidget {
 
 class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
   final _controller = TextEditingController();
-  Timer? _debounce;
+  final _debounce = Debouncer();
 
   /// What the SERVER is asked. Separate from the field's text so every
   /// keystroke does not become a query: the field updates instantly, the
@@ -47,7 +49,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
 
   @override
   void dispose() {
-    _debounce?.cancel();
+    _debounce.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -56,15 +58,14 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
     // People and groups filter locally and instantly — they are already
     // in memory. Only the message search waits.
     setState(() {});
-    _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 300), () {
+    _debounce.run(() {
       if (mounted) setState(() => _query = value.trim());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final typed = _controller.text.trim().toLowerCase();
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -104,7 +105,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
           autofocus: true,
           onChanged: _onChanged,
           decoration: InputDecoration(
-            hintText: l10n?.messageSearchHint ?? 'People, groups, messages',
+            hintText: l10n.messageSearchHint,
             border: InputBorder.none,
           ),
         ),
@@ -114,8 +115,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
               child: Padding(
                 padding: AppSpacing.lgAll,
                 child: Text(
-                  l10n?.messageSearchPrompt ??
-                      'Search people, groups and what was said.',
+                  l10n.messageSearchPrompt,
                   key: const ValueKey('message-search-prompt'),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodySmall,
@@ -125,7 +125,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
           : nothing
               ? Center(
                   child: Text(
-                    l10n?.messageSearchNothing ?? 'Nothing matched.',
+                    l10n.messageSearchNothing,
                     key: const ValueKey('message-search-nothing'),
                     style: theme.textTheme.bodySmall,
                   ),
@@ -134,7 +134,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
                   key: const ValueKey('message-search-results'),
                   children: [
                     if (people.isNotEmpty)
-                      _header(l10n?.messageSearchPeople ?? 'People'),
+                      _header(l10n.messageSearchPeople),
                     for (final m in people)
                       ListTile(
                         key: ValueKey('search-person-${m.id}'),
@@ -146,7 +146,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
                         onTap: () => _openWith(m.id),
                       ),
                     if (groups.isNotEmpty)
-                      _header(l10n?.messageSearchGroups ?? 'Groups'),
+                      _header(l10n.messageSearchGroups),
                     for (final c in groups)
                       ListTile(
                         key: ValueKey('search-group-${c.id}'),
@@ -157,13 +157,12 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
                         ),
                         title: Text(c.title ?? ''),
                         subtitle: Text(
-                          l10n?.conversationMemberCount(c.participantCount) ??
-                              '${c.participantCount} members',
+                          l10n.conversationMemberCount(c.participantCount),
                         ),
                         onTap: () => _openConversation(c.id),
                       ),
                     if (messages.isNotEmpty)
-                      _header(l10n?.messageSearchMessages ?? 'Messages'),
+                      _header(l10n.messageSearchMessages),
                     for (final note in messages)
                       ListTile(
                         key: ValueKey('search-message-${note.id}'),
@@ -191,20 +190,18 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
     );
   }
 
-  Widget _header(String text) => Padding(
+  Widget _header(String text) => SectionHeading(
+        text,
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.lg,
           AppSpacing.md,
           AppSpacing.lg,
           AppSpacing.xs,
         ),
-        child: Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.primary),
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.primary),
       );
 
   /// A PERSON opens the thread with them, creating it if this is the

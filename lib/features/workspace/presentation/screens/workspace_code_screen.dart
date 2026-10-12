@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,14 +10,14 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
-import '../qr_png.dart';
 import '../../providers/workspace_providers.dart';
+import '../qr_png.dart';
 import '../widgets/invite_sheet.dart';
 
 /// Owner surface (#88): role-scoped invites. Every invite is bound to a
@@ -40,7 +42,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
   bool _minting = false;
 
   Future<void> _mintAdminCode() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null || _minting) return;
     setState(() => _minting = true);
@@ -49,9 +51,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
       context,
       domain: 'workspace',
       message: 'create admin invitation failed',
-      errorText: l10n?.inviteCreateFailed ??
-          'Could not create the invitation. '
-              'Check your connection and try again.',
+      errorText: l10n.inviteCreateFailed,
       action: () async {
         code = await ref
             .read(workspaceRepositoryProvider)
@@ -66,14 +66,14 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
   }
 
   Future<void> _editCode(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final controller = TextEditingController(text: workspace.inviteCode);
     final code = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.workspaceCodeEdit ?? 'Change workspace ID'),
+        title: Text(l10n.workspaceCodeEdit),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -83,11 +83,11 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
             FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
           ],
           decoration: InputDecoration(
-            labelText: l10n?.workspaceCodeLabel ?? 'Workspace ID',
+            labelText: l10n.workspaceCodeLabel,
             helperText:
-                l10n?.workspaceCodeHint ?? '4–20 letters or digits, unique',
+                l10n.workspaceCodeHint,
             suffixIcon:
-                HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID',
+                HelpDot(l10n.helpTopicWorkspaceId,
                   anchor: HelpAnchor.workspaceCode,
                 ),
           ),
@@ -96,13 +96,13 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
           TextButton(
             key: const ValueKey('workspace-code-cancel'),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('workspace-code-save'),
             onPressed: () =>
                 Navigator.of(context).pop(controller.text.trim()),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -112,9 +112,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
       context,
       domain: 'workspace',
       message: 'set workspace code failed',
-      errorText: l10n?.workspaceCodeRejected ??
-          'That ID was rejected — it must be 4–20 letters or digits '
-              'and not already taken.',
+      errorText: l10n.workspaceCodeRejected,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .setWorkspaceCode(workspace.id, code),
@@ -131,13 +129,12 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
     String code,
     String payload,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'QR share failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
           final bytes = await buildQrPng(payload);
           await SharePlus.instance.share(
@@ -156,14 +153,14 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
 
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
+          title: Text(l10n.workspaceCodeTitle),
         ),
         body: const LoadingView(),
       );
@@ -182,7 +179,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
+        title: Text(l10n.workspaceCodeTitle),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -208,14 +205,14 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                             value: InviteRole.user,
                             icon: const Icon(Icons.person_outline),
                             label: Text(
-                              l10n?.inviteRoleMember ?? 'Member invite',
+                              l10n.inviteRoleMember,
                             ),
                           ),
                           ButtonSegment(
                             value: InviteRole.admin,
                             icon: const Icon(Icons.shield_outlined),
                             label: Text(
-                              l10n?.inviteRoleAdmin ?? 'Administrator invite',
+                              l10n.inviteRoleAdmin,
                             ),
                           ),
                         ],
@@ -224,12 +221,12 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                           setState(() => _role = selection.first);
                           if (selection.first == InviteRole.admin &&
                               _adminCode == null) {
-                            _mintAdminCode();
+                            unawaited(_mintAdminCode());
                           }
                         },
                       ),
                     ),
-                    HelpDot(l10n?.helpTopicWorkspaceId ?? 'Workspace ID',
+                    HelpDot(l10n.helpTopicWorkspaceId,
                       anchor: HelpAnchor.workspaceCode,
                     ),
                   ],
@@ -248,8 +245,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                             key: const ValueKey('admin-invite-retry'),
                             onPressed: _mintAdminCode,
                             icon: const Icon(Icons.refresh),
-                            label: Text(l10n?.inviteAdminNewCode ??
-                                'New administrator code'),
+                            label: Text(l10n.inviteAdminNewCode),
                           ),
                   ),
                 ),
@@ -279,13 +275,8 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               const SizedBox(height: 8),
               Text(
                 isAdminInvite
-                    ? (l10n?.inviteAdminExplainer ??
-                        'This code is single-use: it admits ONE person as '
-                            'an admin, then expires. Give it only to the '
-                            'person it is meant for.')
-                    : (l10n?.workspaceCodeExplainer ??
-                        'Coworkers scan this QR code — or type the ID — '
-                            'to join this workspace.'),
+                    ? (l10n.inviteAdminExplainer)
+                    : (l10n.workspaceCodeExplainer),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -300,12 +291,12 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                       if (!context.mounted) return;
                       AppSnack.success(
                         context,
-                        l10n?.workspaceCodeCopied ?? 'Copied',
+                        l10n.workspaceCodeCopied,
                       );
                     },
                     icon: const Icon(Icons.copy),
                     label: Text(
-                      l10n?.workspaceCodeCopy ?? 'Copy ID',
+                      l10n.workspaceCodeCopy,
                     ),
                   ),
                   if (!isAdminInvite) ...[
@@ -315,7 +306,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                       onPressed: () => _editCode(context),
                       icon: const Icon(Icons.edit),
                       label: Text(
-                        l10n?.workspaceCodeEdit ?? 'Change workspace ID',
+                        l10n.workspaceCodeEdit,
                       ),
                     ),
                   ],
@@ -327,7 +318,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 onPressed: () => _sharePng(context, code, payload),
                 icon: const Icon(Icons.image_outlined),
                 label: Text(
-                  l10n?.workspaceCodeSharePng ?? 'Share as PNG',
+                  l10n.workspaceCodeSharePng,
                 ),
               ),
               if (isAdminInvite) ...[
@@ -338,7 +329,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   key: const ValueKey('admin-invite-new'),
                   onPressed: _minting ? null : _mintAdminCode,
                   icon: const Icon(Icons.refresh),
-                  label: Text(l10n?.inviteAdminNewCode ?? 'New administrator code'),
+                  label: Text(l10n.inviteAdminNewCode),
                 ),
               ],
               ],
@@ -355,13 +346,11 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                       isAdminInvite ? InviteRole.admin : InviteRole.user,
                 ),
                 icon: const Icon(Icons.person_add_alt),
-                label: Text(l10n?.inviteSectionTitle ?? 'Invite someone'),
+                label: Text(l10n.inviteSectionTitle),
               ),
               const SizedBox(height: 16),
               Text(
-                l10n?.inviteOwnerNote ??
-                    'There is no owner invite — only an owner can grant '
-                        'ownership, in Members & plans.',
+                l10n.inviteOwnerNote,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.outline,

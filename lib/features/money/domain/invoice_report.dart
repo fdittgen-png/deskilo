@@ -176,7 +176,7 @@ InvoiceReport? renderReportBands({
       footer: band(bands.footer),
       continuation: band(bands.continuation),
     );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
         'money', 'report bands failed — using the built-in layout',
         error: e, stackTrace: st);
@@ -199,7 +199,7 @@ String? reportBandsError({
   ]) {
     try {
       Template.parse(source, data: Map.of(data)).render();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'report band $name failed',
           error: e, stackTrace: st);
       return '$name: $e';

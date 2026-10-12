@@ -17,6 +17,7 @@ import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../helpers/memory_recorder_log_backend.dart';
 import 'fixtures/recording_fixtures.dart';
 
 const _id = '0123456789abcdef0123456789abcdef';
@@ -142,7 +143,7 @@ void main() {
     final old = RecorderStore(
         backend: backend,
         namespace: canaryNamespace,
-        clock: FixedClock(DateTime.utc(2026, 8, 1)));
+        clock: FixedClock(DateTime.utc(2026, 8)));
     final c = fixtureController(old, StepClock());
     await c.start(scope: canaryScope);
     await c.stop();

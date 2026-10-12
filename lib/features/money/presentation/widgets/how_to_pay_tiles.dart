@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -20,7 +20,7 @@ class BankDetailTiles extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(children: [
 // #711 — local bank details for the countries that do not
 // bank by IBAN. One tile per filled field; the routing code
@@ -29,16 +29,16 @@ if (instructions.bankName.trim().isNotEmpty)
   ListTile(
     key: const Key('howToPayBankName'),
     leading: const Icon(Icons.account_balance_outlined),
-    title: Text(l10n?.paymentBankNameLabel ?? 'Bank name'),
+    title: Text(l10n.paymentBankNameLabel),
     subtitle: Text(instructions.bankName.trim()),
   ),
 if (instructions.accountNumber.trim().isNotEmpty)
   CopyTile(
     key: const Key('howToPayAccountNumber'),
     icon: Icons.numbers_outlined,
-    title: l10n?.paymentAccountNumberLabel ?? 'Account number',
+    title: l10n.paymentAccountNumberLabel,
     value: instructions.accountNumber.trim(),
-    copiedMessage: l10n?.paymentCopied ?? 'Copied.',
+    copiedMessage: l10n.paymentCopied,
   ),
 if (instructions.bankCode.trim().isNotEmpty)
   CopyTile(
@@ -48,23 +48,23 @@ if (instructions.bankCode.trim().isNotEmpty)
       CountryCatalog.byCode(
         ref.watch(currentWorkspaceProvider).value?.countryCode ?? '',
       ).scheme,
-      sortCode: l10n?.paymentSortCodeLabel ?? 'Sort code',
+      sortCode: l10n.paymentSortCodeLabel,
       routingNumber:
-          l10n?.paymentRoutingNumberLabel ?? 'Routing number',
+          l10n.paymentRoutingNumberLabel,
       transitNumber:
-          l10n?.paymentTransitNumberLabel ?? 'Transit · institution',
-      bankCode: l10n?.paymentBankCodeLabel ?? 'Bank code',
+          l10n.paymentTransitNumberLabel,
+      bankCode: l10n.paymentBankCodeLabel,
     ),
     value: instructions.bankCode.trim(),
-    copiedMessage: l10n?.paymentCopied ?? 'Copied.',
+    copiedMessage: l10n.paymentCopied,
   ),
 if (instructions.bic.trim().isNotEmpty)
   CopyTile(
     key: const Key('howToPayBic'),
     icon: Icons.swap_horiz_outlined,
-    title: l10n?.paymentBicLabel ?? 'BIC / SWIFT',
+    title: l10n.paymentBicLabel,
     value: instructions.bic.trim(),
-    copiedMessage: l10n?.paymentCopied ?? 'Copied.',
+    copiedMessage: l10n.paymentCopied,
   ),
     ]);
   }

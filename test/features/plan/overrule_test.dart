@@ -7,8 +7,8 @@
 // The plan sheet on another member's seat offers Remove to admins —
 // any time, window open or not — while plain members keep the snackbar.
 
-import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';

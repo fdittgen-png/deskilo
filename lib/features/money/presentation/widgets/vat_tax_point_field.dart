@@ -6,7 +6,7 @@
 // period a declaration covers, and it is printed on every invoice.
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/vat_tax_point.dart';
 import '../vat_tax_point_labels.dart';
 
@@ -25,7 +25,7 @@ class VatTaxPointField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final policy = vatTaxPointPolicy(country);
     return DropdownButtonFormField<VatTaxPointOption>(
       key: const ValueKey('legal-identity-exigibility'),

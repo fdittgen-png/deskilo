@@ -4,14 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
-import '../../../events/presentation/screens/events_screen.dart';
-import '../../domain/workspace_feature.dart';
-import '../../../events/providers/attention_providers.dart';
-import '../../../directory/providers/messenger_providers.dart';
-import '../../providers/workspace_providers.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
+import '../../../directory/providers/messenger_providers.dart';
+import '../../../events/presentation/screens/events_screen.dart';
+import '../../../events/providers/attention_providers.dart';
+import '../../domain/workspace_feature.dart';
+import '../../providers/workspace_providers.dart';
 import '../widgets/application_requests_entry.dart';
 
 part 'inbox_screen.g.dart';
@@ -94,13 +93,13 @@ class _AlertsHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final attention = ref.watch(workspaceAttentionProvider);
     final pending = attention.total;
     final label = features.contains(WorkspaceFeature.messagesHub)
-        ? (l10n?.inboxAlertsTab ?? 'Alerts')
-        : (l10n?.tabEvents ?? 'Events');
+        ? (l10n.inboxAlertsTab)
+        : (l10n.tabEvents);
     return Padding(
       key: const ValueKey('inbox-tab-alerts'),
       padding: const EdgeInsets.fromLTRB(8, 0, 12, 0),
@@ -117,7 +116,7 @@ class _AlertsHeader extends ConsumerWidget {
           ),
           if (pending > 0) ...[
             const SizedBox(width: 8),
-            Tooltip(message: (l10n ?? AppLocalizationsEn()).uxAttentionSummary(attention.updates, attention.pending),
+            Tooltip(message: l10n.uxAttentionSummary(attention.updates, attention.pending),
                 child: Badge.count(count: pending, maxCount: 99)),
           ],
         ],
@@ -135,7 +134,7 @@ class _TopRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final inbox = ref.watch(unifiedInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     return Padding(
@@ -155,7 +154,7 @@ class _TopRow extends ConsumerWidget {
                     child: const Icon(Icons.forum_outlined),
                   )
                 : const Icon(Icons.forum_outlined),
-            label: Text(l10n?.inboxMessengerDoor ?? 'Open my messenger'),
+            label: Text(l10n.inboxMessengerDoor),
           ),
           const ApplicationRequestsEntry(compact: false),
           const SpaceInquiriesEntry(),

@@ -75,9 +75,10 @@ class IllustrationRenderer {
     required String provenance,
     List<NormalizedRect> redactions = const [],
   }) {
-    canvas.save();
-    canvas.clipRect(Offset.zero & size);
-    canvas.drawRect(Offset.zero & size, Paint()..color = colors.surface);
+    canvas
+      ..save()
+      ..clipRect(Offset.zero & size)
+      ..drawRect(Offset.zero & size, Paint()..color = colors.surface);
     _paintScene(canvas, size, scene);
     _text(
       canvas,
@@ -104,9 +105,10 @@ class IllustrationRenderer {
     String title,
     List<String> lines,
   ) {
-    canvas.save();
-    canvas.clipRect(Offset.zero & size);
-    canvas.drawRect(
+    canvas
+      ..save()
+      ..clipRect(Offset.zero & size)
+      ..drawRect(
       Offset.zero & size,
       Paint()..color = colors.surfaceContainerHighest,
     );

@@ -36,7 +36,7 @@ class FakeGuestParticipationRepository implements GuestParticipationRepository {
           message: v.message,
           requestedAt: v.requestedAt,
           decidedAt: v.decidedAt,
-          cancelledAt: DateTime.utc(2026, 1, 1),
+          cancelledAt: DateTime.utc(2026),
           revision: v.revision + 1,
         );
       }

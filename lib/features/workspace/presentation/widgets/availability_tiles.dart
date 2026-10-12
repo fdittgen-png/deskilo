@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_policies.dart';
@@ -61,12 +62,12 @@ const durationOptions = <int>[
 
 /// Minutes read as hours once they divide evenly and reach one hour —
 /// "4 hours" beats "240 minutes" on a settings row.
-String formatDuration(AppLocalizations? l10n, int minutes) {
+String formatDuration(AppLocalizations l10n, int minutes) {
   if (minutes >= 60 && minutes % 60 == 0) {
     final hours = minutes ~/ 60;
-    return l10n?.policyHoursValue(hours) ?? '$hours h';
+    return l10n.policyHoursValue(hours);
   }
-  return l10n?.policyMinutesValue(minutes) ?? '$minutes min';
+  return l10n.policyMinutesValue(minutes);
 }
 
 /// One numeric booking limit as a dropdown of sensible values. A value
@@ -133,19 +134,16 @@ class SimultaneousTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ListTile(
       key: const Key('policy-simultaneous'),
-      title: Text(l10n?.policySimultaneousTitle ??
-          'Simultaneous reservations per member'),
-      subtitle: Text(l10n?.policySimultaneousDesc ??
-          'How many overlapping bookings one member may hold. '
-              '1 keeps one place at a time.'),
+      title: Text(l10n.policySimultaneousTitle),
+      subtitle: Text(l10n.policySimultaneousDesc),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            tooltip: l10n?.a11yDecrease ?? 'Decrease',
+            tooltip: l10n.a11yDecrease,
             key: const Key('policy-simultaneous-minus'),
             icon: const Icon(Icons.remove),
             onPressed: value > BookingPolicies.defaultSimultaneous
@@ -159,7 +157,7 @@ class SimultaneousTile extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           IconButton(
-            tooltip: l10n?.a11yIncrease ?? 'Increase',
+            tooltip: l10n.a11yIncrease,
             key: const Key('policy-simultaneous-plus'),
             icon: const Icon(Icons.add),
             onPressed: value < BookingPolicies.maxSimultaneous
@@ -188,7 +186,7 @@ class HourCountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ListTile(
         key: ValueKey('work-hours-$keySuffix'),
         leading: const Icon(Icons.timelapse_outlined),
@@ -201,7 +199,7 @@ class HourCountTile extends StatelessWidget {
             for (var h = 1; h <= 16; h++)
               DropdownMenuItem(
                 value: h,
-                child: Text(l10n?.availabilityHourOption(h) ?? '$h h'),
+                child: Text(l10n.availabilityHourOption(h)),
               ),
           ],
           onChanged: (v) {

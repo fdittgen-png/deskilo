@@ -6,8 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../directory/providers/blocks_providers.dart';
 import '../../directory/providers/messenger_providers.dart';
 
@@ -16,14 +16,14 @@ class BlockedPeopleCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final blocks = ref.watch(myBlocksProvider('')).value ?? const [];
     return ExpansionTile(
       key: const ValueKey('me-blocked-people'),
       leading: const Icon(Icons.block_outlined),
-      title: Text(l10n?.blockedPeopleTitle ?? 'Blocked people'),
+      title: Text(l10n.blockedPeopleTitle),
       subtitle: Text(blocks.isEmpty
-          ? (l10n?.blockedPeopleEmpty ?? 'You have not blocked anyone.')
+          ? (l10n.blockedPeopleEmpty)
           : '${blocks.length}'),
       children: [
         Padding(
@@ -31,9 +31,7 @@ class BlockedPeopleCard extends ConsumerWidget {
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
-              l10n?.blockedPeopleHint ??
-                  'A blocked person cannot see you or write to you, and you '
-                      'cannot see or reach them.',
+              l10n.blockedPeopleHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
@@ -55,7 +53,7 @@ class BlockedPeopleCard extends ConsumerWidget {
                 );
                 if (ok) ref.invalidate(myBlocksProvider(''));
               },
-              child: Text(l10n?.unblockAction ?? 'Unblock'),
+              child: Text(l10n.unblockAction),
             ),
           ),
       ],

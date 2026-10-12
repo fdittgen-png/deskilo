@@ -18,25 +18,24 @@
 // (and this file is not it). What this does is establish what the paths
 // cost TODAY, so the redesign has a number to beat instead of an
 // impression to argue with.
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deskilo/app/app.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../helpers/screens/events.dart' show pumpEvents, event;
+import '../features/reservations/reserve_hub_test.dart'
+    show pumpHub, seatCenter;
+import '../features/workspace/onboarding_flow_test.dart'
+    show pumpWithoutWorkspace;
 import '../helpers/fake_event_repository.dart';
 import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
-import '../features/reservations/reserve_hub_test.dart'
-    show pumpHub, seatCenter;
-import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/money_face.dart';
-import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import '../helpers/screens/money_faces.dart' show pumpFaces, openInvoice;
-import '../features/workspace/onboarding_flow_test.dart'
-    show pumpWithoutWorkspace;
+import '../helpers/screens/events.dart' show event, pumpEvents;
+import '../helpers/screens/money_faces.dart' show openInvoice, pumpFaces;
 
 /// Counts the taps a path costs.
 ///
@@ -109,7 +108,6 @@ void main() {
       seed: [
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       ],
@@ -142,7 +140,6 @@ void main() {
     final events = FakeEventRepository()
       ..events.add(event(
         actor: 'member-2',
-        subject: 'member-1',
         status: EventStatus.pending,
       ));
     await tester.pumpWidget(ProviderScope(

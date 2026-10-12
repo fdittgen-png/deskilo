@@ -14,14 +14,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/trace/trace_logger.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/report_layout/layout_render.dart';
 import '../domain/report_layout/layout_units.dart';
 import '../providers/money_providers.dart';
-import 'report_layout_defaults.dart';
-import '../../../l10n/app_localizations.dart';
 import 'invoice_documents.dart';
+import 'report_layout_defaults.dart';
 
 /// Renders [layoutXml] against [data] into a PDF, or returns null after
 /// tracing why — the #470 contract that a broken design never blocks a
@@ -72,7 +72,7 @@ Future<Uint8List?> tryLayoutPdf({
       stackTrace: e.stackTrace ?? st,
     );
     return null;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // #874 — an image store or font that cannot be reached must not
     // block a legal document either: the bands still render.
     TraceLogger.instance.warn(

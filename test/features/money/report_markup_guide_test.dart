@@ -3,6 +3,7 @@
 // #966 — the markup guide: every placeholder has a meaning and a topic,
 // the guide is collapsed until asked for, and everything it offers
 // inserts at the caret of the band last edited.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/presentation/widgets/report_field_picker.dart';
 import 'package:deskilo/features/money/presentation/widgets/report_markup_guide.dart';
@@ -21,7 +22,7 @@ void main() {
   test('every registry placeholder has a one-line meaning and a topic that '
       'is not the catch-all', () {
     for (final field in InvoicePdfTemplate.placeholders) {
-      final meaning = reportFieldMeaning(field, null);
+      final meaning = reportFieldMeaning(field, englishL10n);
       expect(meaning, isNotEmpty);
       expect(meaning, isNot(field), reason: '$field reads as itself');
       expect(meaning.length, lessThan(90), reason: '$field: one line');

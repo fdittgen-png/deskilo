@@ -29,7 +29,7 @@ class _Pane extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final l10n = context.l10n;
     final text = Theme.of(context).textTheme;
     final notifier = ref.read(guideSessionProvider.notifier);
     final guide = run.guide;
@@ -285,7 +285,7 @@ class _StepList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final l10n = context.l10n;
     String status(GuideStepStatus s) => switch (s) {
       GuideStepStatus.pending => l10n.guideHostStatusPending,
       GuideStepStatus.waiting => l10n.guideHostStatusWaiting,

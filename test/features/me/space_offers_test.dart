@@ -30,8 +30,7 @@ Future<GoRouter> _open(WidgetTester tester, PublicWorkspace page) async {
       workspace: twoSpaces(serverDefault: null),
       directory: FakeDirectoryRepository()..cards.add(page));
   await tester.pumpAndSettle();
-  final navigator = Navigator.of(tester.element(find.byType(Scaffold).first));
-  navigator.push(MaterialPageRoute<void>(
+  Navigator.of(tester.element(find.byType(Scaffold).first)).push(MaterialPageRoute<void>(
       builder: (_) => PublicWorkspaceView(workspace: page)));
   await tester.pumpAndSettle();
   return router;

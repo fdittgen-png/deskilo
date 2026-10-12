@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import '../../../../core/trace/trace_logger.dart';
-
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// always stopped, whether the user taps a card or cancels.
@@ -12,7 +12,7 @@ class NfcTapDialog extends StatefulWidget {
   const NfcTapDialog({super.key, required this.reader, required this.l10n});
 
   final NfcUidReader reader;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
 
   @override
   State<NfcTapDialog> createState() => _NfcTapDialogState();
@@ -33,7 +33,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
             Navigator.of(context).pop(uid);
           },
         );
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // The dialog stays open with its hint; the member can still type
         // the uid — the failure is on the record.
         TraceLogger.instance.warn('nfc', 'tag read failed',
@@ -52,7 +52,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
     return AlertDialog(
-      title: Text(l10n?.badgeTapCardTitle ?? 'Register a card'),
+      title: Text(l10n.badgeTapCardTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -61,8 +61,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
             child: Icon(Icons.contactless_outlined, size: 56),
           ),
           Text(
-            l10n?.badgeTapCardHint ??
-                'Hold the RFID/NFC card to the back of the device.',
+            l10n.badgeTapCardHint,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall,
           ),
@@ -72,7 +71,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
         TextButton(
           key: const ValueKey('nfc-tap-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
       ],
     );

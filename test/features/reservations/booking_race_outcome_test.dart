@@ -5,13 +5,14 @@
 // "the level has reservations" for a seat under a whole-reserved desk); a
 // checkout that lost the race to another checkout or to the day-end sweep
 // says the reservation is already closed instead of a generic failure.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 void main() {
   String map(String message) =>
-      bookingErrorText(null, PostgrestException(message: message), 'fallback');
+      bookingErrorText(englishL10n, PostgrestException(message: message), 'fallback');
 
   test('the hierarchy guard names the space chain, not the level', () {
     final text = map('that space is already reserved in that period');

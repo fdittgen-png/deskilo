@@ -36,47 +36,31 @@ ConnectionRecovery connectionRecovery(ConnectionFailureReason reason) =>
 
 /// The sentence for [failure]. A transport loss after the request was sent
 /// says the outcome is unknown — never that the action failed.
-String connectionFailureText(AppLocalizations? l, ConnectionFailure failure) {
+String connectionFailureText(AppLocalizations l, ConnectionFailure failure) {
   if (failure.afterSend &&
       failure.reason == ConnectionFailureReason.unavailable) {
-    return l?.connectionUnknownOutcome ??
-        'The connection dropped after the request was sent. It may have been '
-            'applied: check before trying again.';
+    return l.connectionUnknownOutcome;
   }
   return switch (failure.reason) {
     ConnectionFailureReason.unsupported =>
-      l?.connectionUnsupported ??
-          "This server's version cannot be connected from this app. Update "
-              "the app, or ask the server's operator to update the server.",
+      l.connectionUnsupported,
     ConnectionFailureReason.expired =>
-      l?.connectionExpired ??
-          'Your sign-in to this server has ended. Sign in to this server '
-              'again.',
+      l.connectionExpired,
     ConnectionFailureReason.denied =>
-      l?.connectionDenied ??
-          'This server refused the account. Check the sign-in details, or '
-              'disconnect it.',
+      l.connectionDenied,
     ConnectionFailureReason.unavailable =>
-      l?.connectionUnavailable ??
-          'This server is not answering right now. Your other servers are '
-              'not affected.',
+      l.connectionUnavailable,
     ConnectionFailureReason.changedIdentity =>
-      l?.connectionChangedIdentity ??
-          'This server is no longer the one you connected. Its actions are '
-              'paused until you verify it again.',
+      l.connectionChangedIdentity,
     ConnectionFailureReason.invalidEndpoint =>
-      l?.connectionInvalidEndpoint ??
-          'This address or key is not a valid server.',
+      l.connectionInvalidEndpoint,
     ConnectionFailureReason.notConnected =>
-      l?.connectionNotConnected ??
-          'This server is not connected on this device.',
+      l.connectionNotConnected,
     ConnectionFailureReason.currentServer =>
-      l?.connectionCurrentServer ?? 'This is the server this app already uses.',
+      l.connectionCurrentServer,
     ConnectionFailureReason.cancelled =>
-      l?.connectionCancelled ??
-          'The account changed meanwhile, so this answer was discarded.',
+      l.connectionCancelled,
     ConnectionFailureReason.malformed =>
-      l?.connectionMalformed ??
-          'This server answered something this app cannot read.',
+      l.connectionMalformed,
   };
 }

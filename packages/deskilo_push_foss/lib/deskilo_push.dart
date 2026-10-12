@@ -7,11 +7,11 @@
 // F-Droid's scanner refuses. The app behaves exactly as an unconfigured
 // store build does today: local notifications and the in-app inbox,
 // and the Settings row says push is not available on this build.
-export 'src/push_connector.dart';
-
 import 'dart:typed_data';
 
 import 'src/push_connector.dart';
+
+export 'src/push_connector.dart';
 
 /// Whether this build carries a push transport at all. False here.
 const bool kPushTransportAvailable = false;

@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/me_providers.dart';
 import '../providers/public_profile_providers.dart';
@@ -19,19 +19,16 @@ class PublicProfileTile extends ConsumerWidget {
   const PublicProfileTile({super.key});
 
   Future<void> _set(BuildContext context, WidgetRef ref, bool publish) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (publish) {
       final ok = await showDialog<bool>(
         context: context,
         builder: (dialog) => AlertDialog(
           title: Text(
-            l10n?.publicProfilePublishTitle ?? 'Publish a public profile?',
+            l10n.publicProfilePublishTitle,
           ),
           content: Text(
-            l10n?.publicProfilePublishBody ??
-                'Anyone on the internet, signed in or not, will be able to read '
-                    'your name, profession and bio at your link. Your contact '
-                    'details, presence and spaces stay private.',
+            l10n.publicProfilePublishBody,
           ),
           actions: [
             TextButton(
@@ -42,7 +39,7 @@ class PublicProfileTile extends ConsumerWidget {
             FilledButton(
               key: const ValueKey('public-profile-confirm'),
               onPressed: () => Navigator.of(dialog).pop(true),
-              child: Text(l10n?.publicProfilePublishAction ?? 'Publish'),
+              child: Text(l10n.publicProfilePublishAction),
             ),
           ],
         ),
@@ -60,7 +57,7 @@ class PublicProfileTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final published = ref.watch(myPublicProfileProvider).value ?? false;
     final me = ref.watch(authStateProvider).value;
     final link = me == null ? null : publicProfileLink(me);
@@ -70,13 +67,11 @@ class PublicProfileTile extends ConsumerWidget {
         SwitchListTile(
           key: const ValueKey('visibility-public-profile'),
           secondary: const Icon(Icons.public),
-          title: Text(l10n?.publicProfileTitle ?? 'Public profile'),
+          title: Text(l10n.publicProfileTitle),
           subtitle: Text(
             published
-                ? (l10n?.publicProfileOn ??
-                      'Anyone with the link reads your name, profession and bio.')
-                : (l10n?.publicProfileOff ??
-                      'Off: people who are not signed in see nothing of you.'),
+                ? (l10n.publicProfileOn)
+                : (l10n.publicProfileOff),
           ),
           value: published,
           onChanged: (v) => _set(context, ref, v),
@@ -96,14 +91,14 @@ class PublicProfileTile extends ConsumerWidget {
                 ),
                 IconButton(
                   key: const ValueKey('public-profile-copy'),
-                  tooltip: l10n?.publicProfileCopy ?? 'Copy the link',
+                  tooltip: l10n.publicProfileCopy,
                   icon: const Icon(Icons.copy_outlined),
                   onPressed: () async {
                     await Clipboard.setData(ClipboardData(text: link));
                     if (context.mounted) {
                       AppSnack.success(
                         context,
-                        l10n?.publicProfileCopied ?? 'Link copied.',
+                        l10n.publicProfileCopied,
                       );
                     }
                   },

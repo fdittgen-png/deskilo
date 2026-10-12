@@ -6,9 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/visibility.dart';
@@ -27,10 +28,10 @@ class VisibilityCard extends ConsumerWidget {
     VisibilityField field,
     FieldAudience current,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final spaces =
         ref.read(myWorkspacesProvider).value ?? const <Workspace>[];
-    final choice = await showModalBottomSheet<FieldAudience>(
+    final choice = await showAppSheet<FieldAudience>(
       context: context,
       isScrollControlled: true,
       constraints: BoxConstraints(
@@ -49,8 +50,7 @@ class VisibilityCard extends ConsumerWidget {
       context,
       domain: 'me',
       message: 'save visibility failed',
-      errorText: l10n?.visibilitySaveFailed ??
-          'Could not save who sees this. Please try again.',
+      errorText: l10n.visibilitySaveFailed,
       action: () => ref.read(meActionsProvider).choose(field, choice),
     );
     if (ok) ref.invalidate(myVisibilityProvider);
@@ -64,7 +64,7 @@ class VisibilityCard extends ConsumerWidget {
 
   Future<void> _editAbout(
       BuildContext context, WidgetRef ref, MyVisibility current) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final about = await showDialog<(String, String)>(
       context: context,
       builder: (_) =>
@@ -75,8 +75,7 @@ class VisibilityCard extends ConsumerWidget {
       context,
       domain: 'me',
       message: 'save about failed',
-      errorText: l10n?.visibilityAboutSaveFailed ??
-          'Could not save your profession and bio. Please try again.',
+      errorText: l10n.visibilityAboutSaveFailed,
       action: () => ref.read(meActionsProvider).saveAbout(about.$1, about.$2),
     );
     if (ok) ref.invalidate(myVisibilityProvider);
@@ -84,7 +83,7 @@ class VisibilityCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final visibility =
         ref.watch(myVisibilityProvider).value ?? MyVisibility.defaults;
     Widget row(VisibilityField field) {
@@ -106,20 +105,17 @@ class VisibilityCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ListTile(
-            title: Text(l10n?.visibilityTitle ?? 'Who sees me',
+            title: Text(l10n.visibilityTitle,
                 style: Theme.of(context).textTheme.titleMedium),
-            subtitle: Text(l10n?.visibilityIntro ??
-                'Each part of your account picks its own audience. '
-                    'Nothing is public unless you choose it.'),
+            subtitle: Text(l10n.visibilityIntro),
           ),
           ListTile(
             key: const ValueKey('visibility-about-edit'),
             leading: const Icon(Icons.edit_note_outlined),
-            title: Text(l10n?.visibilityAboutMe ?? 'About me'),
+            title: Text(l10n.visibilityAboutMe),
             subtitle: Text(
               visibility.profession.isEmpty && visibility.bio.isEmpty
-                  ? (l10n?.visibilityAboutEmpty ??
-                      'Add your profession and a few words')
+                  ? (l10n.visibilityAboutEmpty)
                   : [visibility.profession, visibility.bio]
                       .where((t) => t.isNotEmpty)
                       .join(' · '),
@@ -171,7 +167,7 @@ class _AudienceSheetState extends State<_AudienceSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -220,7 +216,7 @@ class _AudienceSheetState extends State<_AudienceSheet> {
               onPressed: _choice.incomplete
                   ? null
                   : () => Navigator.of(context).pop(_choice),
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
           ),
         ],
@@ -236,15 +232,14 @@ Future<bool> confirmVisibilityWiden(
   VisibilityField field,
   FieldAudience choice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final fieldName = visibilityFieldLabel(l10n, field);
   final who = audienceSummary(l10n, choice);
   return await showDialog<bool>(
         context: context,
         builder: (dialog) => AlertDialog(
           content: Text(
-            l10n?.visibilityWidenConfirm(fieldName, who) ??
-                'Show $fieldName to: $who?',
+            l10n.visibilityWidenConfirm(fieldName, who),
           ),
           actions: [
             TextButton(
@@ -255,7 +250,7 @@ Future<bool> confirmVisibilityWiden(
             FilledButton(
               key: const ValueKey('visibility-widen-confirm'),
               onPressed: () => Navigator.of(dialog).pop(true),
-              child: Text(l10n?.visibilityWidenAction ?? 'Widen'),
+              child: Text(l10n.visibilityWidenAction),
             ),
           ],
         ),

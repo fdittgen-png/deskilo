@@ -4,8 +4,8 @@
 // invoices, read from the same in-memory money the workspace's Money pages
 // read, so the two never disagree (the demo used to answer an empty
 // overview while Money showed the member's invoices and payments).
-import '../../features/money/domain/finance_overview.dart';
 import '../../features/money/domain/billing_rules.dart';
+import '../../features/money/domain/finance_overview.dart';
 import '../../features/money/domain/invoice.dart';
 import 'demo_fixture.dart';
 import 'seed/demo_people_seed.dart' show demoSpaceName;

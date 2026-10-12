@@ -14,14 +14,6 @@ Future<Uint8List> buildQrPng(String data, {int size = 1024}) async {
     data: data,
     version: QrVersions.auto,
     gapless: true,
-    eyeStyle: const QrEyeStyle(
-      eyeShape: QrEyeShape.square,
-      color: Colors.black,
-    ),
-    dataModuleStyle: const QrDataModuleStyle(
-      dataModuleShape: QrDataModuleShape.square,
-      color: Colors.black,
-    ),
   );
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder)

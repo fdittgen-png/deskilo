@@ -8,15 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/domain/money_face.dart';
+import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
-import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_permission.dart';
@@ -62,8 +63,7 @@ Future<void> openRecordById(
       if (invoice == null) {
         AppSnack.error(
           context,
-          AppLocalizations.of(context)?.noteRefGone ??
-              'That reference no longer exists.',
+          context.l10n.noteRefGone,
         );
         return;
       }
@@ -89,7 +89,7 @@ Future<void> showValidationTrailSheet(
   BuildContext context, {
   required String eventId,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       showDragHandle: true,
       builder: (_) => SafeArea(

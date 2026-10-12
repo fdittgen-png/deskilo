@@ -118,7 +118,7 @@ void main() {
         ]),
       ];
       final lines = computeVatDeclarationLines(
-          invoices, DateTime(2026, 8, 1), DateTime(2026, 8, 31));
+          invoices, DateTime(2026, 8), DateTime(2026, 8, 31));
       expect(lines, hasLength(2));
       final at20 = lines.singleWhere((l) => l.percent == 20);
       expect(at20.grossCents, 24000);
@@ -158,7 +158,8 @@ void main() {
             vatCents: 1000,
             invoiceCount: 1),
       ]);
-      expect(ten.single.code, '9B');
+      expect(ten.where((b) => b.code == '9B'), hasLength(1));
+      expect(ten.where((b) => b.code == '09'), isEmpty);
 
       const german = [
         VatDeclarationLine(
@@ -169,8 +170,7 @@ void main() {
             invoiceCount: 1),
       ];
       final de = vatFormBoxes('DE', german);
-      expect(de.single.code, 'Kz 81');
-      expect(de.single.netCents, 10000);
+      expect(de.singleWhere((b) => b.code == 'Kz 81').netCents, 10000);
 
       // Anywhere else: generic per-rate boxes.
       final generic = vatFormBoxes('NO', lines);
@@ -181,7 +181,7 @@ void main() {
       final declaration = VatDeclaration(
         id: 'd1',
         workspaceId: 'ws-1',
-        periodStart: DateTime(2026, 8, 1),
+        periodStart: DateTime(2026, 8),
         periodEnd: DateTime(2026, 8, 31),
         status: 'draft',
         lines: const [
@@ -232,7 +232,8 @@ void main() {
       );
     });
 
-    test('France: corrections go to CA3 lines 15 and 21, not the rate', () {
+    test('France: a correction in the Treasury\'s favour adds to its rate '
+        'line, one in the declarant\'s goes to line 21', () {
       const due = VatDeclarationLine(
         percent: 20,
         grossCents: 1200,
@@ -249,9 +250,10 @@ void main() {
         invoiceCount: 1,
       );
       final boxes = vatFormBoxes('FR', const [own, _correction, due]);
-      expect(boxes.singleWhere((b) => b.code == '08').vatCents, 2000,
-          reason: 'the rate box holds the period\'s own sales only');
-      expect(boxes.singleWhere((b) => b.code == '15').vatCents, 200);
+      expect(boxes.singleWhere((b) => b.code == '08').vatCents, 2200,
+          reason: 'VAT under-declared earlier is taxed on its rate line');
+      expect(boxes.where((b) => b.code == '15'), isEmpty,
+          reason: 'line 15 is input VAT paid back, not output VAT');
       expect(boxes.singleWhere((b) => b.code == '21').vatCents, 400);
 
       // Germany (§ 17 UStG): the correction lowers the rate's box.
@@ -270,8 +272,7 @@ void main() {
             invoiceCount: 1,
             corrects: 'sep'),
       ]);
-      expect(de.single.code, 'Kz 81');
-      expect(de.single.vatCents, 950);
+      expect(de.singleWhere((b) => b.code == 'Kz 81').vatCents, 950);
     });
 
     test('the XML names what a correction corrects', () {
@@ -391,17 +392,13 @@ void main() {
             invoiceId: 'a',
             number: 'INV-a',
             period: '2026-08',
-            kind: InvoiceKind.full,
             totalCents: 12000,
-            lines: [],
           ),
           SettledSource(
             invoiceId: 'b',
             number: 'INV-b',
             period: '2026-08',
-            kind: InvoiceKind.full,
             totalCents: 12000,
-            lines: [],
           ),
         ],
       );
@@ -410,7 +407,6 @@ void main() {
         invoiceId: 's',
         paidCents: 24000,
         resolution: 'exact',
-        status: 'confirmed',
         matchedAt: DateTime(kTestNow.year, kTestNow.month, 10),
         byName: 'Flo',
       );

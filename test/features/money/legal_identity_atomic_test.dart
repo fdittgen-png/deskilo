@@ -37,7 +37,6 @@ FakeWorkspaceRepository _repo() {
       currencyCode: 'EUR',
       timezone: 'Europe/Paris',
       inviteCode: 'CODE',
-      vatRegime: 'not_subject',
       invoiceLegal: {'payment_terms': 'thirty days'},
     ),
   );

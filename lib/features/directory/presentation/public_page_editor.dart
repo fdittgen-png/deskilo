@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import 'directory_pages.dart';
 import 'public_workspace_view.dart';
 
 class PublicPageEditor extends ConsumerStatefulWidget {
@@ -52,14 +56,13 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     if (!mounted) return;
     final account = _account;
     _loading = true;
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'directory',
       message: 'load public workspace page failed',
       errorText:
-          l?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l.portalActionFailed,
       action: () async {
         final page = await ref
             .read(publicationActionsProvider)
@@ -90,7 +93,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     final workspace = _workspace;
     final account = _account;
     if (workspace == null) return;
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     Map<String, dynamic>? preview;
     setState(() => _busy = true);
     final ok = await runGuarded(
@@ -98,8 +101,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       domain: 'directory',
       message: 'publish workspace page failed',
       errorText:
-          l?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l.portalActionFailed,
       action: () async {
         preview = await ref.read(publicationActionsProvider).savePage(
           workspace,
@@ -116,14 +118,14 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     if (!mounted || _workspace != workspace || _account != account) return;
     setState(() => _busy = false);
     if (ok) {
-      ref.invalidate(publicDirectoryProvider);
-      ref.invalidate(currentWorkspaceProvider);
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => PublicWorkspaceView(
-            workspace: PublicWorkspace(workspace, '', '', preview!),
-            preview: true,
-          ),
+      ref
+        ..invalidate(publicDirectoryProvider)
+        ..invalidate(currentWorkspaceProvider);
+      await publicWorkspacePage.open<void>(
+        context,
+        PublicWorkspaceView(
+          workspace: PublicWorkspace(workspace, '', '', preview!),
+          preview: true,
         ),
       );
     }
@@ -137,7 +139,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     final workspace = _workspace;
     final account = _account;
     if (workspace == null) return;
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     if (fields == null && !await _confirmResetAll(l)) return;
     if (!mounted) return;
     Map<String, dynamic>? page;
@@ -147,8 +149,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       domain: 'directory',
       message: 'reset public page to workspace information failed',
       errorText:
-          l?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l.portalActionFailed,
       action: () async {
         page = await ref
             .read(publicationActionsProvider)
@@ -173,20 +174,16 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     if (page != null) ref.invalidate(publicDirectoryProvider);
   }
 
-  Future<bool> _confirmResetAll(AppLocalizations? l) async {
+  Future<bool> _confirmResetAll(AppLocalizations l) async {
     final material = MaterialLocalizations.of(context);
     final ok = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(
-          l?.portalResetAll ??
-              'Reset all public data to workspace information',
+          l.portalResetAll,
         ),
         content: Text(
-          l?.portalResetAllBody ??
-              'The public values of every field that has workspace '
-                  'information are replaced by it. Fields without a '
-                  'workspace counterpart keep what you typed.',
+          l.portalResetAllBody,
         ),
         actions: [
           TextButton(
@@ -197,7 +194,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           FilledButton(
             key: const ValueKey('public-page-reset-all-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l?.portalResetAllConfirm ?? 'Reset'),
+            child: Text(l.portalResetAllConfirm),
           ),
         ],
       ),
@@ -211,7 +208,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     }
   }
 
-  Widget _inheritance(String field, AppLocalizations? l) => _InheritedStatus(
+  Widget _inheritance(String field, AppLocalizations l) => _InheritedStatus(
     key: ValueKey('public-page-inherit-$field'),
     following: _following.contains(field),
     busy: _busy,
@@ -221,7 +218,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final owner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
     final account = ref.watch(authStateProvider).value;
@@ -238,21 +235,21 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     }
     if (_workspace != null && owner && !_loaded && !_failed && !_loading) {
       _loading = true;
-      Future.microtask(() => _load(workspace!.id));
+      unawaited(Future.microtask(() => _load(workspace!.id)));
     }
     final labels = {
-      'description': l?.portalDescription ?? 'Description',
-      'address': l?.portalAddress ?? 'Public address',
-      'email': l?.portalEmail ?? 'Public email',
-      'phone': l?.portalPhone ?? 'Public phone',
-      'website': l?.portalWebsite ?? 'Website',
-      'image_url': l?.portalImage ?? 'Identity image URL',
-      'plan_url': l?.portalPublicPlan ?? 'Public floor plan',
-      'plans': l?.portalPlans ?? 'Plans and prices',
+      'description': l.portalDescription,
+      'address': l.portalAddress,
+      'email': l.portalEmail,
+      'phone': l.portalPhone,
+      'website': l.portalWebsite,
+      'image_url': l.portalImage,
+      'plan_url': l.portalPublicPlan,
+      'plans': l.portalPlans,
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l?.portalPublication ?? 'Public workspace page'),
+        title: Text(l.portalPublication),
       ),
       body: !owner
           ? const SizedBox.shrink()
@@ -262,7 +259,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                     child: TextButton(
                       key: const ValueKey('public-page-editor-retry'),
                       onPressed: () => _load(_workspace!),
-                      child: Text(l?.commonRetry ?? 'Try again'),
+                      child: Text(l.commonRetry),
                     ),
                   )
                 : const LoadingView())
@@ -276,7 +273,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                       ? null
                       : (v) => setState(() => _published = v),
                   title: Text(
-                    l?.portalPublished ?? 'Visible in the public directory',
+                    l.portalPublished,
                   ),
                 ),
                 DropdownButtonFormField<String>(
@@ -288,9 +285,9 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                         value: type,
                         child: Text(switch (type) {
                           'association' =>
-                            l?.portalAssociation ?? 'Association',
-                          'company' => l?.portalCompany ?? 'Company',
-                          _ => l?.portalPerson ?? 'Private host',
+                            l.portalAssociation,
+                          'company' => l.portalCompany,
+                          _ => l.portalPerson,
                         }),
                       ),
                   ],
@@ -333,8 +330,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                     key: const ValueKey('public-page-reset-all'),
                     onPressed: _busy ? null : () => _reset(null),
                     child: Text(
-                      l?.portalResetAll ??
-                          'Reset all public data to workspace information',
+                      l.portalResetAll,
                     ),
                   ),
                 ),
@@ -342,8 +338,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   key: const ValueKey('public-page-editor-portal-save-preview'),
                   onPressed: _busy ? null : _save,
                   child: Text(
-                    l?.portalSavePreview ??
-                        'Save and preview the external view',
+                    l.portalSavePreview,
                   ),
                 ),
               ],
@@ -363,14 +358,14 @@ class _InheritedStatus extends StatelessWidget {
     required this.onReset,
   });
   final bool following, busy;
-  final AppLocalizations? l;
+  final AppLocalizations l;
   final VoidCallback onReset;
 
   @override
   Widget build(BuildContext context) {
     final status = following
-        ? l?.portalFollowsWorkspace ?? 'From workspace information'
-        : l?.portalCustomised ?? 'Customised';
+        ? l.portalFollowsWorkspace
+        : l.portalCustomised;
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       spacing: 8,
@@ -386,7 +381,7 @@ class _InheritedStatus extends StatelessWidget {
             key: const ValueKey('public-page-editor-portal-use-workspace-info'),
             onPressed: busy ? null : onReset,
             child: Text(
-              l?.portalUseWorkspaceInfo ?? 'Use workspace information',
+              l.portalUseWorkspaceInfo,
             ),
           ),
       ],

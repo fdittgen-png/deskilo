@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
 
 /// Camera scanner for workspace QR codes (#88, rebuilt for #572). Runs on
@@ -52,12 +52,10 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
         'shape': ActTrace.payloadShape(payload),
         'reason': 'not-an-invite',
       });
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       AppSnack.info(
         context,
-        l10n?.scanJoinNotAnInvite ??
-            'That QR is not a DesKilo invitation — scan the one from the '
-                'invitation message.',
+        l10n.scanJoinNotAnInvite,
         replace: true,
       );
       return;
@@ -68,11 +66,11 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final muted = Theme.of(context).colorScheme.onSurfaceVariant;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.scanJoinTitle ?? 'Scan workspace QR'),
+        title: Text(l10n.scanJoinTitle),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -85,9 +83,7 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
-            l10n?.scanJoinHelp ??
-                'Point the camera at the invitation QR — the code is '
-                    'taken over and joined automatically.',
+            l10n.scanJoinHelp,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall

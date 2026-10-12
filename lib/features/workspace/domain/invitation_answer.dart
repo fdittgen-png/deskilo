@@ -3,9 +3,9 @@
 // #1652 — what the server said about one invitation (0309): a preview
 // before Join, and the typed result after it. Parsed defensively: a state
 // this build does not know is `unknown`, never a success.
+import '../../../core/data/json_reader.dart';
 import 'invite_uri.dart';
 import 'member.dart';
-import '../../../core/data/json_reader.dart';
 
 enum InvitationState {
   /// Usable: the preview's workspace, role and approval are real.

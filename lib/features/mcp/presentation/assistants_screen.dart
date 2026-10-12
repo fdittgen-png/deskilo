@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -10,10 +11,10 @@ import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/domain/database_capabilities.dart';
 import '../../auth/providers/auth_providers.dart';
-import '../domain/mcp_connection.dart';
-import '../providers/mcp_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/mcp_connection.dart';
+import '../providers/mcp_providers.dart';
 import 'connect_assistant_screen.dart';
 import 'mcp_operation_labels.dart';
 import 'widgets/mcp_access_status_card.dart';
@@ -49,29 +50,26 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
       ..invalidate(connectedMcpOverviewProvider);
   }
 
-  Future<void> _disconnect(AppLocalizations? l10n, McpConnectionInfo c) async {
+  Future<void> _disconnect(AppLocalizations l10n, McpConnectionInfo c) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          l10n?.mcpDisconnectTitle(c.clientName) ??
-              'Disconnect ${c.clientName}?',
+          l10n.mcpDisconnectTitle(c.clientName),
         ),
         content: Text(
-          l10n?.mcpDisconnectBody ??
-              'The assistant loses access to every workspace on this database. What it already '
-                  'read is not taken back.',
+          l10n.mcpDisconnectBody,
         ),
         actions: [
           TextButton(
             key: const ValueKey('assistants-mcp-cancel'),
             onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n?.mcpCancel ?? 'Cancel'),
+            child: Text(l10n.mcpCancel),
           ),
           FilledButton(
             key: const ValueKey('mcp-disconnect-confirm'),
             onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n?.mcpDisconnect ?? 'Disconnect'),
+            child: Text(l10n.mcpDisconnect),
           ),
         ],
       ),
@@ -85,11 +83,11 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final caps = ref.watch(myDatabaseCapabilitiesProvider);
     final connections = ref.watch(myMcpConnectionsProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.mcpAssistantsTitle ?? 'Assistants')),
+      appBar: AppBar(title: Text(l10n.mcpAssistantsTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
@@ -100,7 +98,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             FilledButton.icon(
               key: const ValueKey('mcp-open-connect'),
               icon: const Icon(Icons.add_link),
-              label: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),
+              label: Text(l10n.mcpConnectTitle),
               onPressed: () => context.push(connectAssistantRoute),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -113,8 +111,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             loading: () => const LoadingView(),
             error: (e, _) => _banner(
               'mcp-assistants-unavailable',
-              l10n?.mcpAssistantsUnavailable ??
-                  'Your assistant access could not be loaded. Try again later.',
+              l10n.mcpAssistantsUnavailable,
               Icons.cloud_off_outlined,
               InlineBannerSeverity.error,
             ),
@@ -122,7 +119,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           Text(
-            l10n?.mcpConnectedTitle ?? 'Connected assistants',
+            l10n.mcpConnectedTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -130,16 +127,14 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             loading: () => const LoadingView(),
             error: (e, _) => _banner(
               'mcp-connections-unavailable',
-              l10n?.mcpAssistantsUnavailable ??
-                  'Your assistant access could not be loaded. Try again later.',
+              l10n.mcpAssistantsUnavailable,
               Icons.cloud_off_outlined,
               InlineBannerSeverity.error,
             ),
             data: (list) => list.isEmpty
                 ? Text(
                     key: const ValueKey('mcp-connections-none'),
-                    l10n?.mcpConnectedNone ??
-                        'No assistant is connected. Connect one from the assistant itself.',
+                    l10n.mcpConnectedNone,
                   )
                 : Column(
                     children: [for (final c in list) _connection(l10n, c)],
@@ -152,35 +147,30 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
     );
   }
 
-  Widget _eligibility(AppLocalizations? l10n, DatabaseCapabilities c) {
+  Widget _eligibility(AppLocalizations l10n, DatabaseCapabilities c) {
     final (text, severity) = switch (c.eligibility) {
       McpEligibility.eligible => (
-        l10n?.mcpEligibleYes ?? 'This database allows you to use assistants.',
+        l10n.mcpEligibleYes,
         InlineBannerSeverity.info,
       ),
       McpEligibility.requested => (
-        l10n?.mcpEligibleRequested ??
-            'You asked for approval. A database administrator will review it.',
+        l10n.mcpEligibleRequested,
         InlineBannerSeverity.info,
       ),
       McpEligibility.expired => (
-        l10n?.mcpEligibleExpired ??
-            'Your approval expired. Ask again to keep using assistants.',
+        l10n.mcpEligibleExpired,
         InlineBannerSeverity.error,
       ),
       McpEligibility.noIdentity => (
-        l10n?.mcpEligibleNoIdentity ??
-            'Your account is not linked to a verified identity on this database.',
+        l10n.mcpEligibleNoIdentity,
         InlineBannerSeverity.error,
       ),
       McpEligibility.notRequested => (
-        l10n?.mcpEligibleNot ??
-            'This database has not approved assistants for you.',
+        l10n.mcpEligibleNot,
         InlineBannerSeverity.info,
       ),
       _ => (
-        l10n?.mcpAssistantsUnavailable ??
-            'Your assistant access could not be loaded. Try again later.',
+        l10n.mcpAssistantsUnavailable,
         InlineBannerSeverity.error,
       ),
     };
@@ -210,7 +200,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
                         ref.read(assistantAccessProvider).requestEligibility(),
                   ),
             child: Text(
-              l10n?.mcpConsentRequestEligibility ?? 'Ask for approval',
+              l10n.mcpConsentRequestEligibility,
             ),
           ),
         if (canWithdraw)
@@ -224,15 +214,14 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
                         ref.read(assistantAccessProvider).withdrawEligibility(),
                   ),
             child: Text(
-              l10n?.mcpEligibleWithdraw ??
-                  'Give up assistant access on this database',
+              l10n.mcpEligibleWithdraw,
             ),
           ),
       ],
     );
   }
 
-  Widget _connection(AppLocalizations? l10n, McpConnectionInfo c) => Card(
+  Widget _connection(AppLocalizations l10n, McpConnectionInfo c) => Card(
     key: ValueKey('mcp-connection-${c.clientId}'),
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
     child: Padding(
@@ -243,8 +232,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
           Text(c.clientName, style: Theme.of(context).textTheme.titleSmall),
           if (c.workspaces.isEmpty)
             Text(
-              l10n?.mcpConnectedNoWorkspace ??
-                  'No workspace: this assistant can do nothing here.',
+              l10n.mcpConnectedNoWorkspace,
             ),
           for (final w in c.workspaces)
             ListTile(
@@ -258,7 +246,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
               ),
               trailing: IconButton(
                 key: ValueKey('mcp-remove-${c.clientId}-${w.id}'),
-                tooltip: l10n?.mcpRemoveWorkspace ?? 'Remove this workspace',
+                tooltip: l10n.mcpRemoveWorkspace,
                 icon: const Icon(Icons.remove_circle_outline),
                 onPressed: _busy
                     ? null
@@ -275,7 +263,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             child: TextButton(
               key: ValueKey('mcp-disconnect-${c.clientId}'),
               onPressed: _busy ? null : () => _disconnect(l10n, c),
-              child: Text(l10n?.mcpDisconnect ?? 'Disconnect'),
+              child: Text(l10n.mcpDisconnect),
             ),
           ),
         ],

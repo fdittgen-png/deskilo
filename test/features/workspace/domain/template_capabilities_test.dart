@@ -41,6 +41,7 @@ TemplateInspection template(
       requiredInputs: inputs,
     );
 
+// ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
 TemplateFieldRecord flag(WorkspaceFeature f, bool on) =>
     present(featureFieldId(f), featureFieldId(f), on);
 

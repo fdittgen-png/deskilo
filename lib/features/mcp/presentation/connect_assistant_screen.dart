@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
@@ -19,8 +20,8 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../auth/providers/auth_providers.dart';
 import '../../auth/domain/database_capabilities.dart';
+import '../../auth/providers/auth_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/instance_providers.dart';
@@ -57,8 +58,7 @@ class _ConnectAssistantScreenState
       message: message,
       action: action,
       errorText:
-          AppLocalizations.of(context)?.mcpNextUnavailable ??
-          'The server could not answer. Nothing is assumed; try again later.',
+          context.l10n.mcpNextUnavailable,
     );
     if (!mounted) return;
     setState(() => _busy = false);
@@ -70,7 +70,7 @@ class _ConnectAssistantScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scope = ref.watch(currentMcpContextProvider);
     // #2145 — the endpoint the installation publishes (0357), else the
     // one this app derives from its backend, as before.
@@ -80,55 +80,47 @@ class _ConnectAssistantScreenState
         : ref.watch(mcpConnectorUrlProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.mcpConnectTitle ?? 'Connect an assistant'),
+        title: Text(l10n.mcpConnectTitle),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.mcpConnectIntro ??
-                'Let Claude, ChatGPT or another assistant check and book '
-                    'things for you in DesKilo. It acts as you, only in the '
-                    'workspaces and for the actions you approve.',
+            l10n.mcpConnectIntro,
           ),
           const SizedBox(height: AppSpacing.md),
-          _section(l10n?.mcpConnectBeforeTitle ?? 'Before you connect'),
+          _section(l10n.mcpConnectBeforeTitle),
           scope.when(
             loading: () => const LoadingView(),
             error: (_, _) => _unavailable(l10n),
             data: (captured) => captured == null
                 ? Text(
                     key: const ValueKey('mcp-connect-no-workspace'),
-                    l10n?.assistantSetupNoWorkspace ??
-                        'Select a workspace first.',
+                    l10n.assistantSetupNoWorkspace,
                   )
                 : _checklist(l10n, captured),
           ),
           const SizedBox(height: AppSpacing.lg),
-          _section(l10n?.mcpConnectWorkspacesTitle ?? 'Your workspaces'),
+          _section(l10n.mcpConnectWorkspacesTitle),
           Text(
-            l10n?.mcpConnectWorkspacesHint ??
-                'Each workspace decides for itself. When your assistant '
-                    'asks, you choose among the ready ones.',
+            l10n.mcpConnectWorkspacesHint,
           ),
           _workspaces(l10n, scope.value?.workspaceId),
           const SizedBox(height: AppSpacing.lg),
-          _section(l10n?.mcpConnectAddTitle ?? 'Add DesKilo to your assistant'),
+          _section(l10n.mcpConnectAddTitle),
           if (url == null)
             Text(
               key: const ValueKey('mcp-connect-no-connector'),
-              l10n?.assistantSetupNoConnector ?? 'This app runs without a server, so there is no connector URL.',
+              l10n.assistantSetupNoConnector,
             )
           else
             McpClientTabs(connector: url),
           const SizedBox(height: AppSpacing.lg),
-          _section(l10n?.mcpConnectTestTitle ?? 'Check that it works'),
+          _section(l10n.mcpConnectTestTitle),
           const McpConnectionTest(),
           const SizedBox(height: AppSpacing.lg),
           Text(
-            l10n?.mcpConnectManageHint ??
-                'To see what an assistant did or to disconnect it, open '
-                    'Assistants.',
+            l10n.mcpConnectManageHint,
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
@@ -141,18 +133,16 @@ class _ConnectAssistantScreenState
     child: Text(title, style: Theme.of(context).textTheme.titleMedium),
   );
 
-  Widget _unavailable(AppLocalizations? l10n) => InlineBanner(
+  Widget _unavailable(AppLocalizations l10n) => InlineBanner(
     key: const ValueKey('mcp-connect-unavailable'),
     icon: Icons.cloud_off_outlined,
-    severity: InlineBannerSeverity.error,
     text:
-        l10n?.mcpNextUnavailable ??
-        'The server could not answer. Nothing is assumed; try again later.',
+        l10n.mcpNextUnavailable,
   );
 
   /// #2145 — every workspace of this installation the person belongs
   /// to, each with its own state: one is never the stand-in for another.
-  Widget _workspaces(AppLocalizations? l10n, String? currentId) {
+  Widget _workspaces(AppLocalizations l10n, String? currentId) {
     final mine = ref.watch(myWorkspacesProvider);
     final caps = ref.watch(myDatabaseCapabilitiesProvider).value;
     final approved = caps?.eligibility == McpEligibility.eligible;
@@ -193,40 +183,33 @@ class _ConnectAssistantScreenState
     );
   }
 
-  Widget _workspaceRow(AppLocalizations? l10n, WorkspaceAssistantRow r) {
+  Widget _workspaceRow(AppLocalizations l10n, WorkspaceAssistantRow r) {
     final theme = Theme.of(context);
     final (icon, color, text) = switch (r.state) {
       WorkspaceAssistantState.connected => (
         Icons.check_circle,
         theme.colorScheme.primary,
-        l10n?.mcpConnectWsConnected ??
-            'Connected — an assistant may act for you here.',
+        l10n.mcpConnectWsConnected,
       ),
       WorkspaceAssistantState.ready => (
         Icons.radio_button_unchecked,
         theme.colorScheme.primary,
-        l10n?.mcpConnectWsReady ??
-            'Ready — choose it when your assistant asks.',
+        l10n.mcpConnectWsReady,
       ),
       WorkspaceAssistantState.notOffered => (
         Icons.hourglass_top,
         theme.colorScheme.tertiary,
-        l10n?.mcpConnectWsNotOffered ??
-            'Assistants are on, but nothing is offered to your role yet. A '
-                'workspace administrator decides.',
+        l10n.mcpConnectWsNotOffered,
       ),
       WorkspaceAssistantState.off => (
         Icons.block,
         theme.colorScheme.outline,
-        l10n?.mcpConnectWsOff ??
-            'Assistants are off in this workspace. A workspace administrator '
-                'turns them on in Assistant setup.',
+        l10n.mcpConnectWsOff,
       ),
       WorkspaceAssistantState.unknown => (
         Icons.more_horiz,
         theme.colorScheme.outline,
-        l10n?.mcpConnectWsUnknown ??
-            'Shown once your access to assistants is approved.',
+        l10n.mcpConnectWsUnknown,
       ),
     };
     return Column(
@@ -239,7 +222,7 @@ class _ConnectAssistantScreenState
           title: Text(r.name),
           subtitle: Text(
             r.current
-                ? '${l10n?.mcpConnectWorkspaceSelected ?? 'Selected workspace'} · $text'
+                ? '${l10n.mcpConnectWorkspaceSelected} · $text'
                 : text,
           ),
         ),
@@ -249,7 +232,7 @@ class _ConnectAssistantScreenState
             child: TextButton(
               key: ValueKey('mcp-connect-ws-${r.id}-setup'),
               onPressed: () => context.push('/settings/assistant-setup'),
-              child: Text(l10n?.mcpConnectOpenSetup ?? 'Open assistant setup'),
+              child: Text(l10n.mcpConnectOpenSetup),
             ),
           ),
         // Another workspace's setup is reached from inside it: switch,
@@ -263,7 +246,7 @@ class _ConnectAssistantScreenState
               onPressed: () =>
                   ref.read(activeWorkspaceIdProvider.notifier).select(r.id),
               child: Text(
-                l10n?.mcpConnectSwitchWorkspace ?? 'Switch to this workspace',
+                l10n.mcpConnectSwitchWorkspace,
               ),
             ),
           ),
@@ -271,7 +254,7 @@ class _ConnectAssistantScreenState
     );
   }
 
-  Widget _checklist(AppLocalizations? l10n, McpContextRef scope) {
+  Widget _checklist(AppLocalizations l10n, McpContextRef scope) {
     final status = ref.watch(mcpAccessStatusProvider(scope));
     final caps = ref.watch(myDatabaseCapabilitiesProvider);
     final who = ref.watch(instanceResponsiblesProvider).value;
@@ -312,8 +295,7 @@ class _ConnectAssistantScreenState
                     icon: Icons.check_circle_outline,
                     severity: InlineBannerSeverity.info,
                     text:
-                        l10n?.mcpConnectAllDone ??
-                        'Everything is ready. Test the connection below.',
+                        l10n.mcpConnectAllDone,
                   ),
               ],
             ),
@@ -324,7 +306,7 @@ class _ConnectAssistantScreenState
   }
 
   Widget _row(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ConnectItem item,
     List<String> operators,
     bool expiresSoon,
@@ -368,7 +350,7 @@ class _ConnectAssistantScreenState
   }
 
   Widget? _action(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ConnectItem item,
     List<String> operators,
   ) {
@@ -381,46 +363,43 @@ class _ConnectAssistantScreenState
     return switch (item.action) {
       ConnectAction.none || ConnectAction.addConnector => null,
       ConnectAction.linkGoogle => button(
-        l10n?.mcpStatusLinkGoogle ?? 'Link Google',
+        l10n.mcpStatusLinkGoogle,
         () => context.push('/linked-accounts'),
       ),
       ConnectAction.signInWithGoogle => button(
-        l10n?.mcpStatusSignInGoogle ?? 'Sign in with Google',
+        l10n.mcpStatusSignInGoogle,
         () => _run('google sign-in failed', access.signInWithGoogle),
       ),
       ConnectAction.confirmIdentity => button(
-        l10n?.mcpStatusConfirmIdentity ?? 'Confirm my identity',
+        l10n.mcpStatusConfirmIdentity,
         () => confirmAssistantIdentity(context, ref),
       ),
       ConnectAction.requestAccess => button(
-        l10n?.mcpConsentRequestEligibility ?? 'Ask for approval',
+        l10n.mcpConsentRequestEligibility,
         () => _run('eligibility request failed', access.requestEligibility),
       ),
       ConnectAction.openSetup => button(
-        l10n?.mcpConnectOpenSetup ?? 'Open assistant setup',
+        l10n.mcpConnectOpenSetup,
         () => context.push('/settings/assistant-setup'),
       ),
       ConnectAction.openInstallation => button(
-        l10n?.mcpConnectOpenInstallation ?? 'Open the installation console',
+        l10n.mcpConnectOpenInstallation,
         () => context.push('/installation/assistants'),
       ),
       // No conversation reaches the operator from a workspace (their
       // account id is not shown to members), so the request is copied
       // for whichever channel the person uses to reach them.
       ConnectAction.askOperator => button(
-        l10n?.mcpConnectCopyRequest ?? 'Copy a request to send',
+        l10n.mcpConnectCopyRequest,
         () async {
           await Clipboard.setData(
             ClipboardData(
               text:
-                  l10n?.mcpConnectOperatorRequest ??
-                  'Hello, could you switch assistants on for our DesKilo '
-                      'server? It is under Settings → Installation: '
-                      'assistants. Thank you.',
+                  l10n.mcpConnectOperatorRequest,
             ),
           );
           if (mounted) {
-            AppSnack.success(context, l10n?.mcpConnectCopied ?? 'Copied.');
+            AppSnack.success(context, l10n.mcpConnectCopied);
           }
         },
       ),
@@ -428,24 +407,24 @@ class _ConnectAssistantScreenState
   }
 }
 
-String _connectStepTitle(AppLocalizations? l10n, ConnectStep step) =>
+String _connectStepTitle(AppLocalizations l10n, ConnectStep step) =>
     switch (step) {
-      ConnectStep.google => l10n?.mcpConnectStepGoogle ?? 'Google sign-in',
+      ConnectStep.google => l10n.mcpConnectStepGoogle,
       ConnectStep.identity =>
-        l10n?.mcpConnectStepIdentity ?? 'Your identity on this server',
+        l10n.mcpConnectStepIdentity,
       ConnectStep.access =>
-        l10n?.mcpConnectStepAccess ?? 'Your access to assistants',
+        l10n.mcpConnectStepAccess,
       ConnectStep.workspace =>
-        l10n?.mcpConnectStepWorkspace ?? 'This workspace offers assistants',
+        l10n.mcpConnectStepWorkspace,
       ConnectStep.server =>
-        l10n?.mcpConnectStepServer ?? 'Assistants switched on for this server',
+        l10n.mcpConnectStepServer,
       ConnectStep.connect =>
-        l10n?.mcpConnectStepConnect ?? 'DesKilo added to your assistant',
+        l10n.mcpConnectStepConnect,
     };
 
 /// The state of [item] in words, and who acts when it is someone else.
 String _connectStepDetail(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   ConnectItem item, {
   List<String> operators = const [],
   bool expiresSoon = false,
@@ -454,45 +433,35 @@ String _connectStepDetail(
   if (item.state == ConnectState.done) {
     if (item.step == ConnectStep.access && days != null) {
       return expiresSoon
-          ? (l10n?.mcpConnectAccessExpiresSoon(days) ??
-                'Approved — expires in $days days. Ask for approval again '
-                    'once it lapses.')
-          : (l10n?.mcpConnectAccessExpiresIn(days) ??
-                'Approved — $days days left.');
+          ? (l10n.mcpConnectAccessExpiresSoon(days))
+          : (l10n.mcpConnectAccessExpiresIn(days));
     }
-    return l10n?.mcpConnectDone ?? 'Done';
+    return l10n.mcpConnectDone;
   }
   if (item.roleDenied) {
-    return l10n?.mcpConnectRoleDenied ??
-        'Nothing is offered to your role here. A workspace administrator '
-            'decides what each role may do.';
+    return l10n.mcpConnectRoleDenied;
   }
   return switch (item.state) {
     ConnectState.todo => switch (item.step) {
       ConnectStep.connect =>
-        l10n?.mcpConnectTodoConnect ??
-            'To do — you: follow the steps for your assistant below.',
-      _ => l10n?.mcpConnectTodoYou ?? 'To do — you.',
+        l10n.mcpConnectTodoConnect,
+      _ => l10n.mcpConnectTodoYou,
     },
     ConnectState.waiting => switch (item.actor) {
       ConnectActor.workspaceAdmin =>
-        l10n?.mcpConnectWaitingWorkspaceAdmin ??
-            'Waiting for a workspace administrator to offer assistants here.',
+        l10n.mcpConnectWaitingWorkspaceAdmin,
       ConnectActor.databaseAdministrator =>
-        l10n?.mcpConnectWaitingDatabaseAdmin ??
-            'Waiting for a database administrator to approve your request.',
+        l10n.mcpConnectWaitingDatabaseAdmin,
       ConnectActor.operator =>
         operators.isEmpty
-            ? (l10n?.mcpConnectWaitingOperatorUnknown ??
-                  'Waiting for the server\'s operator, who is not named yet.')
-            : (l10n?.mcpConnectWaitingOperator(operators.join(', ')) ??
-                  'Waiting for the server\'s operator: ${operators.join(', ')}.'),
-      ConnectActor.you => l10n?.mcpConnectTodoYou ?? 'To do — you.',
+            ? (l10n.mcpConnectWaitingOperatorUnknown)
+            : (l10n.mcpConnectWaitingOperator(operators.join(', '))),
+      ConnectActor.you => l10n.mcpConnectTodoYou,
     },
     ConnectState.blocked =>
-      l10n?.mcpStateAfterPrevious ?? 'After the step above',
+      l10n.mcpStateAfterPrevious,
     ConnectState.unavailable =>
-      l10n?.mcpConnectUnavailable ?? 'Could not be checked right now.',
-    ConnectState.done => l10n?.mcpConnectDone ?? 'Done',
+      l10n.mcpConnectUnavailable,
+    ConnectState.done => l10n.mcpConnectDone,
   };
 }

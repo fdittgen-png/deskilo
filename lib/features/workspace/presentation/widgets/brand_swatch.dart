@@ -70,8 +70,9 @@ class BrandPatternPainter extends CustomPainter {
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..isAntiAlias = true;
-    canvas.save();
-    canvas.clipRect(Offset.zero & size);
+    canvas
+      ..save()
+      ..clipRect(Offset.zero & size);
     switch (pattern) {
       case null || BrandPattern.solid:
         break;

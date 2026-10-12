@@ -12,23 +12,23 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../profile/domain/personal_info.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
+import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
-import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
-import '../domain/report_data.dart';
+import 'report_strings_l10n.dart';
 
 /// Renders the month as a PROFORMA and hands it to the share sheet — the
 /// quote an issuer sends before invoicing, and the payment request they
@@ -38,12 +38,11 @@ Future<void> shareProforma(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!invoice.lines.any((line) => line.amountCents > 0)) {
     AppSnack.info(
       context,
-      l10n?.invoiceProformaNothing ??
-          'Nothing tracked for this month — no proforma to send.',
+      l10n.invoiceProformaNothing,
     );
     return;
   }

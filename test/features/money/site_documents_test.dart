@@ -6,8 +6,8 @@
 
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
-import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _flat(List<ReportBlock> blocks) => blocks

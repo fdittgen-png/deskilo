@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../domain/booking_gate.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../plan/domain/seat.dart';
 import '../../workspace/domain/booking_granularity.dart';
+import '../domain/booking_gate.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 

@@ -4,29 +4,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../auth/providers/auth_providers.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
+import '../../money/domain/report_data_letters.dart';
 import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
-import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';
+import '../../money/presentation/report_strings_l10n.dart';
 import '../domain/member.dart';
-import '../domain/site.dart';
 import '../domain/overage_policy.dart';
-import '../providers/workspace_providers.dart';
-import 'widgets/badge_manager_dialog.dart';
-import 'widgets/application_comment_dialog.dart';
-import '../../auth/providers/auth_providers.dart';
+import '../domain/site.dart';
 import '../providers/workspace_application_providers.dart';
+import '../providers/workspace_providers.dart';
+import 'widgets/application_comment_dialog.dart';
+import 'widgets/badge_manager_dialog.dart';
 
 export 'member_subscription_action.dart';
 export 'subscription_text.dart';
-import '../../money/domain/report_data_letters.dart';
 
 /// The admin actions on ONE member (#825) — subscription, overage
 /// policy, limits, roles, co-ownership, kiosk, pause, join decisions,
@@ -43,27 +43,27 @@ Future<void> pickMemberOveragePolicy(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final options = <(OveragePolicy, String)>[
     (
       OveragePolicy.blocked,
-      l10n?.overagePolicyBlocked ?? 'Block further booking'
+      l10n.overagePolicyBlocked
     ),
     (
       OveragePolicy.payg,
-      l10n?.overagePolicyPayg ?? 'Charge overage (pay-as-you-go)'
+      l10n.overagePolicyPayg
     ),
     (
       OveragePolicy.package,
-      l10n?.overagePolicyPackage ?? 'Require buying a package'
+      l10n.overagePolicyPackage
     ),
   ];
   final chosen = await showDialog<OveragePolicy>(
     context: context,
     builder: (context) => SimpleDialog(
       title: HelpDotTitle(
-        l10n?.memberOveragePolicyLabel ?? 'When days run out',
-        l10n?.helpHintMembersTopic ?? 'Members & plans',
+        l10n.memberOveragePolicyLabel,
+        l10n.helpHintMembersTopic,
         anchor: HelpAnchor.membersOveragePolicy,
       ),
       children: [
@@ -97,8 +97,7 @@ Future<void> pickMemberOveragePolicy(
     context,
     domain: 'workspace',
     message: 'member overage policy update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async {
         await ref
             .read(workspaceRepositoryProvider)
@@ -118,13 +117,12 @@ Future<void> sendMemberAgreement(
   Member member,
   String name,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   await runGuarded(
     context,
     domain: 'workspace',
     message: 'agreement share failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async {
       await warmLetterDocProviders(ref, 'agreement');
       if (!context.mounted) return;
@@ -138,9 +136,7 @@ Future<void> sendMemberAgreement(
       } on AmbiguousReportLanguage {
         AppSnack.error(
           context,
-          l10n?.reportLanguageAmbiguous ??
-              'This country has several languages — set the '
-                  'workspace language in Workspace settings first.',
+          l10n.reportLanguageAmbiguous,
         );
         return;
       }
@@ -174,13 +170,12 @@ Future<void> revertMyKiosk(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'kiosk self-revert failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .unsetMyKiosk(member.workspaceId),
@@ -198,27 +193,24 @@ Future<void> pickMemberCoOwner(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final options = <(CoOwnerStatus, String)>[
-    (CoOwnerStatus.none, l10n?.coOwnerNone ?? 'No co-ownership'),
+    (CoOwnerStatus.none, l10n.coOwnerNone),
     (
       CoOwnerStatus.active,
-      l10n?.coOwnerActive ??
-          'Active co-owner — owner permissions now, automatic succession'
+      l10n.coOwnerActive
     ),
     (
       CoOwnerStatus.passive,
-      l10n?.coOwnerPassive ??
-          'Passive co-owner — becomes owner when activated or when the '
-              'owner leaves'
+      l10n.coOwnerPassive
     ),
   ];
   final chosen = await showDialog<CoOwnerStatus>(
     context: context,
     builder: (context) => SimpleDialog(
       title: HelpDotTitle(
-        l10n?.coOwnerAction ?? 'Co-ownership',
-        l10n?.helpHintMembersTopic ?? 'Members & plans',
+        l10n.coOwnerAction,
+        l10n.helpHintMembersTopic,
         anchor: HelpAnchor.membersCoOwnership,
       ),
       children: [
@@ -248,8 +240,7 @@ Future<void> pickMemberCoOwner(
     context,
     domain: 'workspace',
     message: 'co-owner update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () =>
         ref.read(workspaceRepositoryProvider).setCoOwner(member.id, chosen),
   )) {
@@ -266,13 +257,12 @@ Future<void> activateMemberCoOwner(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'co-owner activation failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () =>
         ref.read(workspaceRepositoryProvider).activateCoOwner(member.id),
   )) {
@@ -288,14 +278,13 @@ Future<void> toggleMemberPaused(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final paused = member.status == MemberStatus.paused;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'member status update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref.read(workspaceRepositoryProvider).updateMemberStatus(
           member.id,
           paused ? MemberStatus.active : MemberStatus.paused,
@@ -314,7 +303,7 @@ Future<void> pickMemberReservationLimit(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   const presets = [1, 2, 3, 5, 10];
   const noLimitSentinel = -1;
   final custom = TextEditingController();
@@ -322,16 +311,14 @@ Future<void> pickMemberReservationLimit(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(
-        l10n?.memberReservationLimitLabel ?? 'Reservation limit',
+        l10n.memberReservationLimitLabel,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            l10n?.memberReservationLimitExplainer ??
-                'How many open reservations this member may hold at '
-                    'the same time.',
+            l10n.memberReservationLimitExplainer,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -342,7 +329,7 @@ Future<void> pickMemberReservationLimit(
               ChoiceChip(
                 key: const ValueKey('member-admin-actions-reservation-limit-none'),
                 label: Text(
-                  l10n?.memberReservationLimitNone ?? 'No limit',
+                  l10n.memberReservationLimitNone,
                 ),
                 selected: member.maxActiveReservations == null,
                 onSelected: (_) =>
@@ -362,10 +349,9 @@ Future<void> pickMemberReservationLimit(
             controller: custom,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.memberReservationLimitCustom ??
-                  'Custom (1\u2013100)',
+              labelText: l10n.memberReservationLimitCustom,
               suffixIcon: HelpDot(
-                  l10n?.helpHintMembersTopic ?? 'Members & plans',
+                  l10n.helpHintMembersTopic,
                 anchor: HelpAnchor.membersReservationLimit,
               ),
             ),
@@ -376,7 +362,7 @@ Future<void> pickMemberReservationLimit(
         TextButton(
           key: const ValueKey('member-admin-actions-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('member-admin-actions-save'),
@@ -385,7 +371,7 @@ Future<void> pickMemberReservationLimit(
             if (value == null || value < 1 || value > 100) return;
             Navigator.of(context).pop(value);
           },
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),
@@ -398,8 +384,7 @@ Future<void> pickMemberReservationLimit(
     context,
     domain: 'workspace',
     message: 'reservation limit update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberReservationLimit(member.id, limit),
@@ -417,15 +402,15 @@ Future<void> pickMemberSimultaneousLimit(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   const presets = [1, 2, 3, 5];
   const defaultSentinel = -1;
   final chosen = await showDialog<int>(
     context: context,
     builder: (context) => AlertDialog(
       title: HelpDotTitle(
-        l10n?.memberSimultaneousLimitLabel ?? 'Simultaneous reservations',
-        l10n?.helpHintMembersTopic ?? 'Members & plans',
+        l10n.memberSimultaneousLimitLabel,
+        l10n.helpHintMembersTopic,
         anchor: HelpAnchor.membersSimultaneous,
       ),
       content: Column(
@@ -433,9 +418,7 @@ Future<void> pickMemberSimultaneousLimit(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            l10n?.memberSimultaneousLimitExplainer ??
-                'How many bookings this member may hold over the same '
-                    'period. Unset follows the workspace default.',
+            l10n.memberSimultaneousLimitExplainer,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -446,8 +429,7 @@ Future<void> pickMemberSimultaneousLimit(
               ChoiceChip(
                 key: const Key('simultaneous-default'),
                 label: Text(
-                  l10n?.memberSimultaneousLimitDefault ??
-                      'Workspace default',
+                  l10n.memberSimultaneousLimitDefault,
                 ),
                 selected: member.maxSimultaneousReservations == null,
                 onSelected: (_) =>
@@ -468,7 +450,7 @@ Future<void> pickMemberSimultaneousLimit(
         TextButton(
           key: const ValueKey('member-admin-actions-cancel-2'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
       ],
     ),
@@ -481,8 +463,7 @@ Future<void> pickMemberSimultaneousLimit(
     context,
     domain: 'workspace',
     message: 'simultaneous limit update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberSimultaneousLimit(member.id, limit),
@@ -500,13 +481,12 @@ Future<void> toggleMemberKiosk(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'kiosk toggle failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberKiosk(member.id, isKiosk: !member.isKiosk),
@@ -523,13 +503,12 @@ Future<void> toggleMemberLevelPermission(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!await runGuarded(
     context,
     domain: 'workspace',
     message: 'level permission toggle failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberLevelPermission(
@@ -550,7 +529,7 @@ Future<void> decideMemberJoin(
   Member member, {
   required bool approve,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final account = ref.read(authStateProvider).value;
   if (account == null) return;
   final comment = approve ? '' : await showDialog<String>(context: context,
@@ -560,8 +539,7 @@ Future<void> decideMemberJoin(
     context,
     domain: 'workspace',
     message: 'member join decision failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .decideMemberJoin(member.id, approve: approve, comment: comment, expectedAccount: account),
@@ -569,8 +547,9 @@ Future<void> decideMemberJoin(
     return;
   }
   if (!context.mounted || ref.read(authStateProvider).value != account) return;
-  ref.invalidate(workspaceMembersProvider);
-  ref.invalidate(workspaceApplicationsProvider);
+  ref
+    ..invalidate(workspaceMembersProvider)
+    ..invalidate(workspaceApplicationsProvider);
 }
 
 /// Badge manager of one member (0043): the active/revoked badge list
@@ -582,7 +561,7 @@ Future<void> showMemberBadgesDialog(
   Member member,
   String name,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   await showDialog<void>(
@@ -620,7 +599,7 @@ Future<void> requestMemberRoleChange(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final makeAdmin = !member.isAdmin;
@@ -628,8 +607,7 @@ Future<void> requestMemberRoleChange(
     context,
     domain: 'workspace',
     message: 'role change request failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async {
         await ref.read(workspaceRepositoryProvider).requestRoleChange(
               workspace.id,
@@ -644,7 +622,7 @@ Future<void> requestMemberRoleChange(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.memberRoleChangeRequested ?? 'Role change sent for validation.',
+    l10n.memberRoleChangeRequested,
   );
 }
 
@@ -673,8 +651,9 @@ Future<void> pickOwnHomeSite(
   final sites = await ref.read(sitesOfProvider(member.workspaceId).future);
   if (!context.mounted) return;
   await _pickHomeSiteAmong(context, ref, member, sites);
-  ref.invalidate(myMembershipsProvider);
-  ref.invalidate(myMemberProvider);
+  ref
+    ..invalidate(myMembershipsProvider)
+    ..invalidate(myMemberProvider);
 }
 
 /// The dialog and the write, over a given list of sites.
@@ -684,11 +663,11 @@ Future<void> _pickHomeSiteAmong(
   Member member,
   List<Site> sites,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final chosen = await showDialog<String>(
     context: context,
     builder: (context) => SimpleDialog(
-      title: Text(l10n?.memberHomeSiteLabel ?? 'Home site'),
+      title: Text(l10n.memberHomeSiteLabel),
       children: [
         for (final site in sites)
           ListTile(
@@ -710,7 +689,7 @@ Future<void> _pickHomeSiteAmong(
     context,
     domain: 'workspace',
     message: 'home site change failed',
-    errorText: l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberHomeSite(member.id, chosen.isEmpty ? null : chosen),

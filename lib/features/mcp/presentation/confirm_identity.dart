@@ -7,9 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/domain/identity_binding.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/mcp_providers.dart';
@@ -20,7 +20,7 @@ Future<void> confirmAssistantIdentity(
   BuildContext context,
   WidgetRef ref,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   IdentityBindingStatus? result;
   await runGuarded(
     context,
@@ -38,12 +38,12 @@ Future<void> confirmAssistantIdentity(
     case IdentityBindingState.ineligible:
       AppSnack.error(
         context,
-        l10n?.mcpIdentityIneligible ?? 'This account cannot be confirmed yet — confirm your e-mail address or sign in with a provider first.',
+        l10n.mcpIdentityIneligible,
       );
     case IdentityBindingState.conflict:
       AppSnack.error(
         context,
-        l10n?.mcpIdentityConflict ?? 'Another account already holds this identity here — a database administrator can resolve it.',
+        l10n.mcpIdentityConflict,
       );
     default:
       break;

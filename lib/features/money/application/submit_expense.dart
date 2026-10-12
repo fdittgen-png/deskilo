@@ -25,6 +25,9 @@ enum ExpenseOutcome {
   /// A unit price was typed but is not a non-negative amount.
   invalidUnitPrice,
 
+  /// #2357 — the deductible share is not a percentage.
+  invalidDeductible,
+
   /// Filed: waiting for the expense validators.
   submitted,
 }
@@ -41,6 +44,8 @@ class ExpenseDraft {
     this.supplyName = '',
     this.supplyQuantity = '1',
     this.supplyUnitPrice = '',
+    this.vatPercent,
+    this.deductible = '100',
   });
 
   final String amount;
@@ -54,6 +59,21 @@ class ExpenseDraft {
   final String supplyName;
   final String supplyQuantity;
   final String supplyUnitPrice;
+
+  /// #2357 — the VAT rate the expense carries (its amount is gross);
+  /// null when it carries none or input VAT is off.
+  final double? vatPercent;
+
+  /// The share of that VAT the space may deduct, in percent, as typed.
+  final String deductible;
+
+  double? get deductiblePct =>
+      double.tryParse(deductible.trim().replaceAll(',', '.'));
+
+  /// The VAT payload the RPC takes, or null for an expense without VAT.
+  Map<String, Object?>? get vat => (vatPercent ?? 0) <= 0
+      ? null
+      : {'percent': vatPercent, 'deductible_pct': deductiblePct};
 
   int? get amountCents => parseCentsInput(amount);
   int? get quantity => int.tryParse(supplyQuantity.trim());
@@ -74,6 +94,12 @@ class ExpenseDraft {
 ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
   final cents = draft.amountCents;
   if (cents == null || cents <= 0) return ExpenseOutcome.invalidAmount;
+  if (draft.vat != null) {
+    final share = draft.deductiblePct;
+    if (share == null || share < 0 || share > 100) {
+      return ExpenseOutcome.invalidDeductible;
+    }
+  }
   if (!draft.isSupply) return ExpenseOutcome.submitted;
   if (draft.name.isEmpty) return ExpenseOutcome.missingSupplyName;
   final qty = draft.quantity;
@@ -103,6 +129,7 @@ class Expenses {
       category: draft.category,
       description: draft.description.trim(),
       supply: draft.supply,
+      vat: draft.vat,
     );
     return outcome;
   }

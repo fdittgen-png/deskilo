@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'auth_secret_store.dart';
 import '../trace/trace_logger.dart';
+import 'auth_secret_store.dart';
 
 /// Full origin, including port: two installations on one hostname must never
 /// share a verifier or refresh token. The namespace carries no credential.
@@ -78,7 +78,7 @@ class InstallationSessionStorage extends LocalStorage {
               origin.host.endsWith('.supabase.co') &&
               origin.scheme == 'https' &&
               origin.port == 443);
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: malformed legacy secrets are never printed or migrated.
       TraceLogger.instance.warn(
         'auth',

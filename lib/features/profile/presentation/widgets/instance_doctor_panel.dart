@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
 import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/management_api.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// #1308 S3 — runs the doctor on a project and shows what it found:
 /// *Protected* or *Attention required*, problems first, passed checks
@@ -49,13 +49,12 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
       if (!mounted) return;
       setState(() => _findings = findings);
       widget.onChecked?.call(findings);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('instance', 'doctor could not run', error: e, stackTrace: st);
       if (mounted) {
         setState(() => _error = e is ManagementApiException && e.unauthorized
-            ? (AppLocalizations.of(context)?.instanceTokenRefused ??
-                'Supabase refused the token.')
+            ? (context.l10n.instanceTokenRefused)
             : '$e');
       }
     } finally {
@@ -65,7 +64,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final findings = _findings;
     final problems = [
@@ -91,8 +90,8 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                     ? Icons.gpp_maybe_outlined
                     : Icons.verified_user_outlined),
                 title: Text(alarm
-                    ? (l10n?.instanceDoctorAttention ?? 'Attention required')
-                    : (l10n?.instanceDoctorProtected ?? 'Protected')),
+                    ? (l10n.instanceDoctorAttention)
+                    : (l10n.instanceDoctorProtected)),
               ),
             for (final f in problems)
               ListTile(
@@ -106,8 +105,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
             if (passed.isNotEmpty)
               ExpansionTile(
                 tilePadding: EdgeInsets.zero,
-                title: Text(l10n?.instanceDoctorPassed(passed.length) ??
-                    '${passed.length} checks passed'),
+                title: Text(l10n.instanceDoctorPassed(passed.length)),
                 children: [
                   for (final f in passed)
                     ListTile(
@@ -126,8 +124,8 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
               onPressed: _running ? null : _run,
               icon: const Icon(Icons.health_and_safety_outlined),
               label: Text(findings == null
-                  ? (l10n?.instanceDoctorRun ?? 'Run the security check')
-                  : (l10n?.instanceDoctorRunAgain ?? 'Check again')),
+                  ? (l10n.instanceDoctorRun)
+                  : (l10n.instanceDoctorRunAgain)),
             ),
           ],
         ),

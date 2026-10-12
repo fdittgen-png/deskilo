@@ -59,9 +59,9 @@ Map<String, List<ContrastFailure>> auditSeed(Color seed) => {
 void main() {
   test('no brand: the derived scheme is the product scheme, pixel for pixel',
       () {
-    expect(DeskiloTheme.light(brand: null).colorScheme,
+    expect(DeskiloTheme.light().colorScheme,
         DeskiloTheme.light().colorScheme);
-    expect(DeskiloTheme.dark(brand: null).colorScheme,
+    expect(DeskiloTheme.dark().colorScheme,
         DeskiloTheme.dark().colorScheme);
   });
 

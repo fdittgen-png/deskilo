@@ -8,6 +8,7 @@
 // disappears (the end is fixed). Flexible workspaces keep the old chips.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_controls.dart';
@@ -20,7 +21,6 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
-import 'package:deskilo/core/time/workspace_time.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import 'plan_closed_day_test.dart' show ThrowingReservationRepository;

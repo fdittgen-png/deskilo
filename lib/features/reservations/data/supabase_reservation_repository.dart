@@ -3,14 +3,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
-
-import '../domain/reservation.dart';
-import '../domain/reservation_repository.dart';
-import '../../../core/trace/act_trace.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/trace/act_trace.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../domain/reservation.dart';
+import '../domain/reservation_repository.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
   SupabaseReservationRepository(this._client, this._cache);
@@ -76,7 +75,7 @@ class SupabaseReservationRepository implements ReservationRepository {
             await _client.rpc<dynamic>('sweep_day_end', params: {
               'p_workspace_id': workspaceId,
             });
-          } catch (e, st) {
+          } on Object catch (e, st) {
             TraceLogger.instance
                 .warn('booking', 'day-end sweep failed', error: e, stackTrace: st);
           }

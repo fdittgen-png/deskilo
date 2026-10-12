@@ -110,6 +110,7 @@ void main() {
   testWidgets(
       'MotionReveal with motion OFF swaps its child instantly — a banner '
       'appears fully sized on the next frame', (tester) async {
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     Widget host(bool banner) => MotionSettings(
           animationsEnabled: false,
           child: MediaQuery(

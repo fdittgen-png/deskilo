@@ -105,7 +105,7 @@ void main() {
       ));
       final w = HalfDayWindows.afternoon(DateTime(2026, 12, 31, 14));
       expect(w.start, DateTime(2026, 12, 31, 13));
-      expect(w.end, DateTime(2027, 1, 1));
+      expect(w.end, DateTime(2027));
     });
 
     test(

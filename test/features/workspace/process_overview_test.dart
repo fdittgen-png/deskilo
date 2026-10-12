@@ -5,6 +5,7 @@
 // registry, said in words beside an icon; search reaches every level
 // with its path, the filters narrow the cards, and a tapped feature
 // lands on its switch, which writes the same delta as before.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
@@ -317,7 +318,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('feature-detail-why-held-back')),
           findsOneWidget);
-      expect(find.textContaining(featureName(null, waiting)), findsWidgets);
+      expect(find.textContaining(featureName(englishL10n, waiting)), findsWidgets);
       expect(find.textContaining('through process'), findsNothing,
           reason: 'no invented provenance');
     });

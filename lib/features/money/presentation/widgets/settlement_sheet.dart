@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/settle_invoices.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
-import '../../application/settle_invoices.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
@@ -23,10 +25,15 @@ import 'wizard_scaffold.dart';
 
 /// Opens the settlement assistant (kept under its historical name).
 Future<void> showSettlementSheet(BuildContext context, WidgetRef ref) =>
-    Navigator.of(context).push<void>(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => const _SettlementWizard(),
-    ));
+    settlementPage.open<void>(context, null);
+
+/// #2388 — the settlement assistant as a page with a path.
+final settlementPage = PageSpec<Null>(
+  '/money/settlement',
+  (_) => const _SettlementWizard(),
+  fallback: '/money',
+  fullscreenDialog: true,
+);
 
 class _SettlementWizard extends ConsumerStatefulWidget {
   const _SettlementWizard();
@@ -51,7 +58,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
       );
 
   Future<void> _settle(List<Invoice> chosen) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final memberId = _memberId;
     if (workspace == null || memberId == null || !isRegrouping(chosen)) {
@@ -67,15 +74,14 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
             memberId: memberId,
             invoiceIds: chosen.map((i) => i.id).toList(),
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('money', 'settle invoices failed', error: e, stackTrace: st);
       if (!mounted) return;
       setState(() => _busy = false);
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -86,14 +92,14 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
     Navigator.of(context).pop();
     AppSnack.info(
       context,
-      l10n?.settlementDone(number) ?? 'Regrouped into $number.',
+      l10n.settlementDone(number),
       replace: true,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final open = ref.watch(invoicingOverviewProvider).value?.open ??
@@ -123,16 +129,15 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
         moneyFormat(candidates.isEmpty ? 'EUR' : candidates.first.currency);
     final total = chosen.fold<int>(0, (sum, i) => sum + i.totalCents);
     final steps = <WizardStepSpec>[
-      (name: 'pick', label: l10n?.settlementStepPick ?? 'Choose invoices'),
-      (name: 'summary', label: l10n?.wizardStepSummary ?? 'Summary'),
+      (name: 'pick', label: l10n.settlementStepPick),
+      (name: 'summary', label: l10n.wizardStepSummary),
     ];
     final body = _index == 0
         ? ListView(children: [
             const SizedBox(height: AppSpacing.sm),
             if (eligible.isEmpty)
               Text(
-                l10n?.settlementNeedsTwo ??
-                    'Pick at least two open invoices of the same member.',
+                l10n.settlementNeedsTwo,
                 style: theme.textTheme.bodySmall,
               )
             else ...[
@@ -140,7 +145,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
                 key: const ValueKey('settlement-member'),
                 initialValue: memberId,
                 decoration: InputDecoration(
-                  labelText: l10n?.invoiceMemberLabel ?? 'Member',
+                  labelText: l10n.invoiceMemberLabel,
                   border: const OutlineInputBorder(),
                 ),
                 items: [
@@ -179,9 +184,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
         : ListView(children: [
             const SizedBox(height: AppSpacing.sm),
             Text(
-              l10n?.settlementSummaryHint ??
-                  'These invoices are folded into one settlement document; '
-                      'each stays readable behind it.',
+              l10n.settlementSummaryHint,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -196,7 +199,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
             _totalRow(l10n, theme, currency.formatMinor(total)),
           ]);
     return WizardScaffold(
-      title: l10n?.settlementAction ?? 'Regroup into one invoice',
+      title: l10n.settlementAction,
       steps: steps,
       index: _index,
       body: body,
@@ -206,16 +209,16 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
       nextEnabled: chosen.length >= 2,
       onFinish: () => _settle(chosen),
       finishKey: const ValueKey('settlement-submit'),
-      finishLabel: l10n?.settlementAction ?? 'Regroup',
+      finishLabel: l10n.settlementAction,
       finishEnabled: !_busy && chosen.length >= 2,
     );
   }
 
-  Widget _totalRow(AppLocalizations? l10n, ThemeData theme, String total) =>
+  Widget _totalRow(AppLocalizations l10n, ThemeData theme, String total) =>
       Row(children: [
         Expanded(
           child: Text(
-            l10n?.invoiceBalance ?? 'Balance due',
+            l10n.invoiceBalance,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

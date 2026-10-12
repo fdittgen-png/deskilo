@@ -9,10 +9,10 @@ import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_bundle_asset.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';

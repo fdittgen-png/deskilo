@@ -1,23 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/invoice.dart';
-import 'open_invoice_card.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
 import 'invoice_journey_view.dart';
+import 'open_invoice_card.dart';
 
 /// Archive sort orders (field request: sort and filter by member and
 /// period).
@@ -105,15 +106,14 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final invoicesAsync = ref.watch(invoicesProvider);
     return switch (invoicesAsync) {
       AsyncData(value: final invoices) =>
         _body(context, l10n, invoices),
       AsyncError() => Center(
           child: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
         ),
       _ => const LoadingView(),
@@ -122,13 +122,13 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
 
   Widget _body(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     List<Invoice> invoices,
   ) {
     if (invoices.isEmpty) {
       return EmptyState(
         icon: Icons.receipt_long_outlined,
-        title: l10n?.invoicesEmpty ?? 'No invoices yet.',
+        title: l10n.invoicesEmpty,
       );
     }
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
@@ -218,9 +218,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 // A filtered-empty list is not an empty archive — saying
                 // "no invoices yet" there sent people looking for a bug.
                 title: _filtering
-                    ? (l10n?.invoiceFilterNoMatch ??
-                        'No invoice matches these filters.')
-                    : (l10n?.invoicesEmpty ?? 'No invoices yet.'),
+                    ? (l10n.invoiceFilterNoMatch)
+                    : (l10n.invoicesEmpty),
               )
             : ListView.builder(
                 padding: AppSpacing.mdAll,
@@ -267,7 +266,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
 
   Widget _filterBar(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Map<String, String> memberOptions,
     List<String> periodOptions,
     int shown,
@@ -289,9 +288,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   isExpanded: true,
                   items: [
                     DropdownMenuItem(
-                      value: null,
                       child: Text(
-                        l10n?.invoiceFilterAllMembers ?? 'All members',
+                        l10n.invoiceFilterAllMembers,
                       ),
                     ),
                     for (final entry in memberOptions.entries)
@@ -304,7 +302,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   onChanged: (value) =>
                       setState(() => _filterMemberId = value),
                   decoration: InputDecoration(
-                    labelText: l10n?.invoiceMemberLabel ?? 'Member',
+                    labelText: l10n.invoiceMemberLabel,
                   ),
                 ),
               ),
@@ -317,9 +315,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 isExpanded: true,
                 items: [
                   DropdownMenuItem(
-                    value: null,
                     child: Text(
-                      l10n?.invoiceFilterAllMonths ?? 'All months',
+                      l10n.invoiceFilterAllMonths,
                     ),
                   ),
                   for (final period in periodOptions)
@@ -333,13 +330,13 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 ],
                 onChanged: (value) => setState(() => _filterPeriod = value),
                 decoration: InputDecoration(
-                  labelText: l10n?.invoiceFilterMonthLabel ?? 'Month',
+                  labelText: l10n.invoiceFilterMonthLabel,
                 ),
               ),
             ),
             PopupMenuButton<_InvoiceSort>(
               key: const ValueKey('invoice-sort'),
-              tooltip: l10n?.invoiceSortTooltip ?? 'Sort',
+              tooltip: l10n.invoiceSortTooltip,
               icon: const Icon(Icons.sort),
               initialValue: _sort,
               onSelected: (value) => setState(() => _sort = value),
@@ -347,18 +344,18 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 PopupMenuItem(
                   key: const ValueKey('invoice-sort-newest'),
                   value: _InvoiceSort.newest,
-                  child: Text(l10n?.invoiceSortNewest ?? 'Newest first'),
+                  child: Text(l10n.invoiceSortNewest),
                 ),
                 if (widget.showMemberNames)
                   PopupMenuItem(
                     key: const ValueKey('invoice-sort-member'),
                     value: _InvoiceSort.member,
-                    child: Text(l10n?.invoiceSortByMember ?? 'By member'),
+                    child: Text(l10n.invoiceSortByMember),
                   ),
                 PopupMenuItem(
                   key: const ValueKey('invoice-sort-period'),
                   value: _InvoiceSort.period,
-                  child: Text(l10n?.invoiceSortByMonth ?? 'By month'),
+                  child: Text(l10n.invoiceSortByMonth),
                 ),
               ],
             ),
@@ -373,7 +370,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 child: FilterChip(
                   key: const ValueKey('invoice-filter-hide-voided'),
                   label: Text(
-                    l10n?.invoiceShowCancelled ?? 'Show cancelled',
+                    l10n.invoiceShowCancelled,
                   ),
                   selected: !_hideVoided,
                   onSelected: (show) =>
@@ -382,7 +379,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
               ),
             Expanded(
               child: Text(
-                l10n?.invoiceCountShown(shown) ?? '$shown invoices',
+                l10n.invoiceCountShown(shown),
                 key: const ValueKey('invoice-count'),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -393,7 +390,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
               TextButton(
                 key: const ValueKey('invoice-filter-clear'),
                 onPressed: _clearFilters,
-                child: Text(l10n?.invoiceFilterClear ?? 'Clear filters'),
+                child: Text(l10n.invoiceFilterClear),
               ),
           ]),
         ]),
@@ -401,7 +398,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
 
   Widget _row(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Invoice invoice, {
     required InvoiceMatch? match,
     required ({int count, DateTime last})? reminder,
@@ -440,8 +437,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
             invoice.clientName,
           dateFormat.format(invoice.issuedAt),
           if (widget.showMemberNames && reminder != null)
-            l10n?.invoiceRemindedBadge(reminder.count) ??
-                'Reminded ×${reminder.count}',
+            l10n.invoiceRemindedBadge(reminder.count),
         ].join(' · ')),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
@@ -454,7 +450,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
           // The one action frequent enough to stay on the row.
           IconButton(
             key: ValueKey('invoice-download-row-${invoice.id}'),
-            tooltip: l10n?.invoiceDownload ?? 'Download PDF',
+            tooltip: l10n.invoiceDownload,
             icon: const Icon(Icons.download_outlined),
             onPressed: () => downloadInvoicePdf(context, ref, invoice),
           ),

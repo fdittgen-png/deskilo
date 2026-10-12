@@ -125,13 +125,11 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
         }
         final stop = (fade / width).clamp(0.0, 0.5);
         return LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
           colors: [
-            _before ? Colors.transparent : Colors.white,
+            if (_before) Colors.transparent else Colors.white,
             Colors.white,
             Colors.white,
-            _more ? Colors.transparent : Colors.white,
+            if (_more) Colors.transparent else Colors.white,
           ],
           stops: [0, stop, 1 - stop, 1],
         ).createShader(bounds);

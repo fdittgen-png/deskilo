@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
+import '../../../../core/demo/presentation/demo_entry_sheet.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -14,11 +15,11 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/federation_handoff_controller.dart';
 import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
-import '../../application/federation_handoff_controller.dart';
 import '../widgets/badge_sign_in_sheet.dart';
 import '../widgets/federation_handoff_panel.dart';
 import '../widgets/password_recovery_sheet.dart';
@@ -114,7 +115,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               email: email,
               password: _password.text,
             );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The repository answers refusals as values; anything that still
       // throws is a bug or a fake, and nothing was judged.
       TraceLogger.instance.error(
@@ -154,7 +155,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   /// only when the sheet reports the update itself landed — a dismissal
   /// at any step, and a session a redeemed code opened, say nothing.
   Future<void> _resetPasswordSheet() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final completed = await showPasswordRecoverySheet(
       context,
       email: _email.text.trim(),
@@ -162,14 +163,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!mounted || !completed) return;
     AppSnack.success(
       context,
-      l10n?.authResetDone ?? 'Password updated — you are signed in.',
+      l10n.authResetDone,
     );
   }
 
   /// Browser OAuth (0051): the flow finishes out-of-app; the router
   /// reacts to the auth-state change when the callback returns.
   Future<void> _social(SocialProvider provider) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await ref.read(authRepositoryProvider).signInWithSocial(provider);
     } on AuthException catch (e, st) {
@@ -178,25 +179,22 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       if (!mounted) return;
       AppSnack.error(
         context,
-        l10n?.authSocialUnavailable(provider.label) ??
-            '${provider.label} sign-in is not available yet — the server '
-                'has not enabled it.',
+        l10n.authSocialUnavailable(provider.label),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('auth', 'social sign-in failed', error: e, stackTrace: st);
       if (!mounted) return;
       AppSnack.error(
         context,
-        l10n?.authNetworkError ??
-            'Could not reach the server. Check your connection.',
+        l10n.authNetworkError,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -227,7 +225,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         ],
       );
 
-  Widget _form(AppLocalizations? l10n) {
+  Widget _form(AppLocalizations l10n) {
     final handoff = ref.watch(federationHandoffAvailableProvider);
     final offersDeskilo = (ref.watch(availableSocialProvidersProvider).value ??
             const <SocialProvider>[])
@@ -243,8 +241,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             const SizedBox(height: 8),
             Text(
               _isSignUp
-                  ? (l10n?.authSignUpTitle ?? 'Create account')
-                  : (l10n?.authSignInTitle ?? 'Sign in'),
+                  ? (l10n.authSignUpTitle)
+                  : (l10n.authSignInTitle),
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -254,11 +252,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 controller: _displayName,
                 decoration: InputDecoration(
                   labelText:
-                      l10n?.authDisplayNameLabel ?? 'Display name',
+                      l10n.authDisplayNameLabel,
                 ),
                 textInputAction: TextInputAction.next,
                 validator: (v) => (v == null || v.trim().isEmpty)
-                    ? (l10n?.authFieldRequired ?? 'Required')
+                    ? (l10n.authFieldRequired)
                     : null,
               ),
               const SizedBox(height: 12),
@@ -267,25 +265,25 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               controller: _email,
               focusNode: _emailFocus,
               decoration: InputDecoration(
-                labelText: l10n?.authEmailLabel ?? 'Email',
+                labelText: l10n.authEmailLabel,
               ),
               keyboardType: TextInputType.emailAddress,
               autofillHints: const [AutofillHints.email],
               textInputAction: TextInputAction.next,
               validator: (v) => (v == null || !v.contains('@'))
-                  ? (l10n?.authFieldRequired ?? 'Required')
+                  ? (l10n.authFieldRequired)
                   : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _password,
               decoration: InputDecoration(
-                labelText: l10n?.authPasswordLabel ?? 'Password',
+                labelText: l10n.authPasswordLabel,
                 suffixIcon: IconButton(
                   key: const ValueKey('auth-show-password'),
                   tooltip: _obscurePassword
-                      ? (l10n?.authShowPassword ?? 'Show password')
-                      : (l10n?.authHidePassword ?? 'Hide password'),
+                      ? (l10n.authShowPassword)
+                      : (l10n.authHidePassword),
                   icon: Icon(
                     _obscurePassword
                         ? Icons.visibility_outlined
@@ -301,9 +299,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               // an existing one; telling it which is which is the
               // hint.
               autofillHints: [
-                _isSignUp
-                    ? AutofillHints.newPassword
-                    : AutofillHints.password,
+                if (_isSignUp) AutofillHints.newPassword else AutofillHints.password,
               ],
               onFieldSubmitted: (_) => _submit(),
               // The eight characters are a CREATION policy. An
@@ -312,11 +308,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               // server ever sees it, would lock that person out.
               validator: (v) => _isSignUp
                   ? (v == null || v.length < 8)
-                      ? (l10n?.authPasswordTooShort ??
-                          'At least 8 characters')
+                      ? (l10n.authPasswordTooShort)
                       : null
                   : (v == null || v.isEmpty)
-                      ? (l10n?.authFieldRequired ?? 'Required')
+                      ? (l10n.authFieldRequired)
                       : null,
             ),
             if (!_isSignUp)
@@ -326,7 +321,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   key: const ValueKey('auth-forgot-password'),
                   onPressed: _busy ? null : _resetPasswordSheet,
                   child: Text(
-                    l10n?.authForgotPassword ?? 'Forgot password?',
+                    l10n.authForgotPassword,
                   ),
                 ),
               ),
@@ -360,8 +355,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     )
                   : Text(
                       _isSignUp
-                          ? (l10n?.authSignUpButton ?? 'Create account')
-                          : (l10n?.authSignInButton ?? 'Sign in'),
+                          ? (l10n.authSignUpButton)
+                          : (l10n.authSignInButton),
                     ),
             ),
             const SizedBox(height: 12),
@@ -382,7 +377,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    l10n?.authContinueWith ?? 'or continue with',
+                    l10n.authContinueWith,
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
@@ -443,8 +438,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 Icons.contactless_outlined,
                               ),
                               label: Text(
-                                l10n?.badgeSignInEntry ??
-                                    'Sign in with a badge',
+                                l10n.badgeSignInEntry,
                               ),
                             ),
                           )
@@ -468,10 +462,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       }),
               child: Text(
                 _isSignUp
-                    ? (l10n?.authToggleToSignIn ??
-                        'Already have an account? Sign in')
-                    : (l10n?.authToggleToSignUp ??
-                        'New here? Create an account'),
+                    ? (l10n.authToggleToSignIn)
+                    : (l10n.authToggleToSignUp),
               ),
             ),
             // #1650 — the two ways in that are not "I already have a
@@ -482,7 +474,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             TextButton.icon(
               key: const ValueKey('auth-join'),
               icon: const Icon(Icons.mail_outline),
-              label: Text(l10n?.authJoinByInvitation ?? 'Join by invitation'),
+              label: Text(l10n.authJoinByInvitation),
               onPressed: _busy ? null : _joinByInvitation,
             ),
             if (_joining)
@@ -490,9 +482,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 key: const ValueKey('auth-join-hint'),
                 icon: Icons.info_outline,
                 severity: InlineBannerSeverity.info,
-                text: l10n?.authJoinHint ??
-                    "Create your account or sign in first — you'll paste "
-                        'your invitation right after.',
+                text: l10n.authJoinHint,
               ),
             // The explicit secondary path. Reachable signed out, because
             // choosing a server is what comes BEFORE an account on it;
@@ -501,14 +491,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               key: const ValueKey('auth-server'),
               onPressed: () => context.push('/server'),
               child: Text(
-                l10n?.authConnectServer ?? "Connect an organisation's server",
+                l10n.authConnectServer,
               ),
             ),
             TextButton.icon(
               key: const ValueKey('auth-discover'),
               onPressed: () => context.push('/discover'),
               icon: const Icon(Icons.public),
-              label: Text(l10n?.portalDiscover ?? 'Find a workspace'),
+              label: Text(l10n.portalDiscover),
             ),
           ],
         ),
@@ -560,7 +550,7 @@ class _Wordmark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scaled = MediaQuery.textScalerOf(context).scale(_size);
     return Row(
       // A lockup, not a banner: the pair stays together in the middle
@@ -589,7 +579,7 @@ class _Wordmark extends StatelessWidget {
         const SizedBox(width: AppSpacing.sm),
         Flexible(
           child: Text(
-            l10n?.appTitle ?? 'DesKilo',
+            l10n.appTitle,
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),

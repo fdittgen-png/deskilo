@@ -151,7 +151,7 @@ void main() {
     test('a reminder design is refused when dunning offers no levels', () {
       const reminder = ReportKind(id: 'r1', slot: ReportReminderSlot(1));
       expect(
-        () => parseReportDesignFile(_file(kind: reminder), reminderLevels: 0),
+        () => parseReportDesignFile(_file(kind: reminder)),
         throwsA(isA<ReportDesignException>()
             .having((e) => e.error, 'error', ReportDesignError.unknownKind)),
       );

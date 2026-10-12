@@ -36,7 +36,7 @@ void main() {
 
     test('the successor read backwards gives the old value', () {
       expect(vatPercentAt(rates, 'r-21', DateTime(2026, 8, 15)), 20);
-      expect(vatPercentAt(rates, 'r-21', DateTime(2026, 9, 1)), 21);
+      expect(vatPercentAt(rates, 'r-21', DateTime(2026, 9)), 21);
     });
 
     test('a rate outside the family is untouched by the change', () {
@@ -51,8 +51,8 @@ void main() {
     test('the pointed row wins a tie on the start date', () {
       const twinA = VatRate(id: 'a', label: 'A', percent: 10);
       const twinB = VatRate(id: 'b', label: 'B', percent: 12, supersedesId: 'a');
-      expect(vatPercentAt([twinA, twinB], 'a', DateTime(2026, 1, 1)), 10);
-      expect(vatPercentAt([twinA, twinB], 'b', DateTime(2026, 1, 1)), 12);
+      expect(vatPercentAt([twinA, twinB], 'a', DateTime(2026)), 10);
+      expect(vatPercentAt([twinA, twinB], 'b', DateTime(2026)), 12);
     });
   });
 

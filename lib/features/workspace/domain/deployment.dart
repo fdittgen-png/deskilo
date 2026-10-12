@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/data/system_columns.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/data/system_columns.dart';
 
 /// #988 — the direction a deployment travels, named after the sides.
 enum DeploymentDirection {

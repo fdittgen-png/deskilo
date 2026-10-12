@@ -4,6 +4,7 @@
 // merged like documents, seeded so an unknown key is EMPTY (guards stay
 // false), escaped in layouts, offered by the field picker, edited in
 // the panel.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
@@ -105,7 +106,7 @@ void main() {
   test('the field picker files text.<key> under its own group', () {
     expect(reportFieldGroup('text.greeting'), ReportFieldGroup.texts);
     expect(reportFieldMarkup('text.greeting'), '{{ text.greeting }}');
-    expect(reportFieldGroupName(ReportFieldGroup.texts, null), 'Your texts');
+    expect(reportFieldGroupName(ReportFieldGroup.texts, englishL10n), 'Your texts');
   });
 
   group('the panel', () {

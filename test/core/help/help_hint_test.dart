@@ -11,15 +11,15 @@
 // tip's Learn more lands on its own guide section.
 import 'dart:async';
 import 'dart:convert';
-
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/help/help_hint.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -292,12 +292,12 @@ void main() {
   test('every hint id resolves a non-empty text and topic (fallbacks)', () {
     for (final id in HelpHintId.values) {
       expect(
-        HelpHint.text(null, id).trim(),
+        HelpHint.text(englishL10n, id).trim(),
         isNotEmpty,
         reason: '${id.name} has no fallback text',
       );
       expect(
-        HelpHint.topic(null, id).trim(),
+        HelpHint.topic(englishL10n, id).trim(),
         isNotEmpty,
         reason: '${id.name} has no fallback topic',
       );
@@ -307,7 +307,7 @@ void main() {
   test('every surface carries at least three scenarios, each "To …" '
       '(#2313)', () {
     for (final id in HelpHintId.values) {
-      final tips = HelpHint.tips(null, id);
+      final tips = HelpHint.tips(englishL10n, id);
       expect(
         tips.length,
         greaterThanOrEqualTo(3),

@@ -22,21 +22,17 @@ FloorPlan applyOfficeRect(FloorPlan plan, String officeId, GridRect rect) {
   return plan.copyWith(
     offices: [
       for (final o in plan.offices)
-        o.id == officeId ? o.copyWith(rect: rect) : o,
+        if (o.id == officeId) o.copyWith(rect: rect) else o,
     ],
     desks: [
       for (final d in plan.desks)
-        isMove && deskIds.contains(d.id)
-            ? d.copyWith(
+        if (isMove && deskIds.contains(d.id)) d.copyWith(
                 rect: d.rect.copyWith(x: d.rect.x + dx, y: d.rect.y + dy),
-              )
-            : d,
+              ) else d,
     ],
     seats: [
       for (final s in plan.seats)
-        isMove && deskIds.contains(s.deskId)
-            ? s.copyWith(x: s.x + dx, y: s.y + dy)
-            : s,
+        if (isMove && deskIds.contains(s.deskId)) s.copyWith(x: s.x + dx, y: s.y + dy) else s,
     ],
   );
 }
@@ -51,13 +47,11 @@ FloorPlan applyDeskRect(FloorPlan plan, String deskId, GridRect rect) {
 
   return plan.copyWith(
     desks: [
-      for (final d in plan.desks) d.id == deskId ? d.copyWith(rect: rect) : d,
+      for (final d in plan.desks) if (d.id == deskId) d.copyWith(rect: rect) else d,
     ],
     seats: [
       for (final s in plan.seats)
-        isMove && s.deskId == deskId
-            ? s.copyWith(x: s.x + dx, y: s.y + dy)
-            : s,
+        if (isMove && s.deskId == deskId) s.copyWith(x: s.x + dx, y: s.y + dy) else s,
     ],
   );
 }
@@ -68,7 +62,7 @@ FloorPlan applySeatPosition(FloorPlan plan, String seatId, int x, int y) {
   return plan.copyWith(
     seats: [
       for (final s in plan.seats)
-        s.id == seatId ? s.copyWith(x: x, y: y) : s,
+        if (s.id == seatId) s.copyWith(x: x, y: y) else s,
     ],
   );
 }
@@ -79,7 +73,7 @@ FloorPlan applyImageRect(FloorPlan plan, String imageId, GridRect rect) {
   return plan.copyWith(
     images: [
       for (final i in plan.images)
-        i.id == imageId ? i.copyWith(rect: rect) : i,
+        if (i.id == imageId) i.copyWith(rect: rect) else i,
     ],
   );
 }

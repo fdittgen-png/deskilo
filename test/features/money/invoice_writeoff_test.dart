@@ -9,8 +9,8 @@ import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/test_clock.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/test_clock.dart';
 
 InvoiceMatch partialMatch(String invoiceId, {DateTime? writeoffAt}) =>
     InvoiceMatch(

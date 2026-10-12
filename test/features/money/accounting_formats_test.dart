@@ -197,7 +197,7 @@ void main() {
       expect(auditTrailFormat.claim, isNot(FormatClaim.regulatory));
       final csv = buildAuditTrailCsv(
         events: const [],
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         workspaceName: 'Pézenas',
       );
       expect(csv, contains('not a regulated audit file'));
@@ -210,7 +210,7 @@ void main() {
           invoices: [inv(issuedAt: issuedAt, vat: _vat20)],
           matches: {'i1': match()},
           accounts: const DatevAccounts(),
-          from: DateTime(2026, 1, 1),
+          from: DateTime(2026),
           to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 5, 1, 9),
           consultantNumber: '1234567',
@@ -244,9 +244,9 @@ void main() {
         invoices: [inv(voidedAt: DateTime(2026, 3, 20), vat: _vat20)],
         matches: const {},
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
       );
@@ -260,9 +260,9 @@ void main() {
         invoices: [inv(vat: _vat20)],
         matches: {'i1': match(status: 'pending')},
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
       );
@@ -319,7 +319,7 @@ void main() {
     String build({Invoice? invoice, InvoiceMatch? m}) => buildAccountantCsv(
           invoices: [invoice ?? inv(vat: _vat20)],
           matches: m == null ? const {} : {'i1': m},
-          generatedAt: DateTime(2026, 5, 1),
+          generatedAt: DateTime(2026, 5),
           workspaceName: 'Pézenas',
         );
 
@@ -395,7 +395,7 @@ void main() {
           invoices: [inv(memberName: 'Sample, Alex')],
           matches: const {},
         ),
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         workspaceName: 'Pézenas',
       );
       expect(csv, contains('"Sample, Alex"'));
@@ -422,7 +422,7 @@ void main() {
           company: const InvoiceParty(name: 'Pézenas', country: 'FR'),
           currency: 'EUR',
           softwareVersion: '1.0.0',
-          createdAt: DateTime(2026, 5, 1),
+          createdAt: DateTime(2026, 5),
           lineText: (line) => line.label,
           ledgerAccounts: ledger,
         );

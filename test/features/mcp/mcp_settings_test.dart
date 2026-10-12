@@ -8,11 +8,14 @@
 // nothing; one decision id per request. #1628 — the person's own
 // eligibility and connections: remove one workspace, disconnect only
 // after confirming.
+import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/mcp/mcp_operations.dart';
+import 'package:deskilo/core/mcp/mcp_spec.dart' as spec;
 import 'package:deskilo/features/auth/domain/database_capabilities.dart';
-import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/features/mcp/application/active_target_client.dart';
 import 'package:deskilo/features/mcp/application/eligibility_review.dart';
 import 'package:deskilo/features/mcp/application/mcp_client_registry.dart';
@@ -24,9 +27,6 @@ import 'package:deskilo/features/mcp/domain/mcp_connection.dart';
 import 'package:deskilo/features/mcp/domain/mcp_context.dart';
 import 'package:deskilo/features/mcp/presentation/assistants_screen.dart';
 import 'package:deskilo/features/mcp/presentation/eligibility_review_screen.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
-import 'package:deskilo/core/mcp/mcp_operations.dart';
-import 'package:deskilo/core/mcp/mcp_spec.dart' as spec;
 import 'package:deskilo/features/mcp/presentation/mcp_policy_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';

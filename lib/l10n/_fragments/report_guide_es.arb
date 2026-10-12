@@ -424,5 +424,6 @@
   "reportFieldMeaningSpecialMentions": "Las menciones especiales del espacio",
   "@reportFieldMeaningSpecialMentions": {
     "description": "#966 report guide: meaning of special_mentions"
-  }
+  },
+  "reportFieldMeaningDeclarationNote": "La advertencia de la declaración: verificar antes de presentar"
 }

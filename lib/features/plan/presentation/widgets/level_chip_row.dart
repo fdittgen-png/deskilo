@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/level.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
+import '../../domain/level.dart';
 
 /// The one horizontal level-chip selector (#187/#221 idiom), formerly
 /// copy-pasted across the day timeline, the week grid and the Reserve hub's

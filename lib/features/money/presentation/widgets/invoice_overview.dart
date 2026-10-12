@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice.dart';
 import '../../domain/money_face.dart';
@@ -98,7 +98,7 @@ class OverdueBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (exposure.overdue.isEmpty) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final amount = moneyFormat(exposure.currency).formatMinor(
       exposure.overdue.fold(0, (sum, i) => sum + i.totalCents),
@@ -114,8 +114,7 @@ class OverdueBanner extends ConsumerWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              l10n?.moneyOverdueBanner(exposure.overdue.length, amount) ??
-                  '${exposure.overdue.length} overdue — $amount to settle',
+              l10n.moneyOverdueBanner(exposure.overdue.length, amount),
               style: TextStyle(
                 color: scheme.onErrorContainer,
                 fontWeight: FontWeight.w600,
@@ -127,7 +126,7 @@ class OverdueBanner extends ConsumerWidget {
             onPressed: () => ref
                 .read(moneyFaceControllerProvider.notifier)
                 .show(MoneyFace.payments),
-            child: Text(l10n?.moneyPayNow ?? 'Pay now'),
+            child: Text(l10n.moneyPayNow),
           ),
         ]),
       ),
@@ -144,7 +143,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final money = moneyFormat(exposure.currency);
     // #812 — the same explainer the issuers' hub opens.
@@ -153,7 +152,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
             key: const ValueKey('money-invoice-process'),
             onPressed: () => showInvoiceProcessSheet(context),
             icon: const Icon(Icons.help_outline, size: 18),
-            label: Text(l10n?.journeyHowButton ?? 'How it works'),
+            label: Text(l10n.journeyHowButton),
           )
         : null;
     return Card(
@@ -166,8 +165,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
                     color: theme.colorScheme.primary),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: Text(l10n?.moneyNothingOpen ??
-                      'Nothing open — you are up to date.'),
+                  child: Text(l10n.moneyNothingOpen),
                 ),
                 // #1339 — the Expanded flexes; this button did not, and
                 // at twice the text size its own icon and label pushed
@@ -179,27 +177,24 @@ class InvoiceSummaryCard extends ConsumerWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n?.moneyOpenInvoicesTitle ?? 'Open invoices',
+                  Text(l10n.moneyOpenInvoicesTitle,
                       style: theme.textTheme.titleMedium),
                   const SizedBox(height: 4),
                   Text(
-                    l10n?.moneyOpenInvoicesSummary(
+                    l10n.moneyOpenInvoicesSummary(
                           exposure.open.length,
                           money.formatMinor(exposure.dueCents),
-                        ) ??
-                        '${exposure.open.length} open · '
-                            '${money.formatMinor(exposure.dueCents)} due',
+                        ),
                     style: theme.textTheme.bodyLarge,
                   ),
                   if (exposure.overdue.isNotEmpty) ...[
                     const SizedBox(height: 4),
                     Text(
-                      l10n?.moneyOverdueBanner(
+                      l10n.moneyOverdueBanner(
                             exposure.overdue.length,
                             money.formatMinor(exposure.overdue
                                 .fold(0, (s, i) => s + i.totalCents)),
-                          ) ??
-                          '${exposure.overdue.length} overdue',
+                          ),
                       style: TextStyle(color: theme.colorScheme.error),
                     ),
                   ],
@@ -216,7 +211,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
                             .read(moneyFaceControllerProvider.notifier)
                             .show(MoneyFace.payments),
                         icon: const Icon(Icons.payments_outlined),
-                        label: Text(l10n?.moneyPayNow ?? 'Pay now'),
+                        label: Text(l10n.moneyPayNow),
                       ),
                     ],
                   ),

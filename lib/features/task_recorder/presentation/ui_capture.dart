@@ -72,7 +72,9 @@ class UiCapture implements GuardedCommandWatcher {
   bool get _listening => _guide != null || _recording;
 
   /// The language labels are matched in; the index is rebuilt on change.
-  set localizations(AppLocalizations? l10n) {
+  AppLocalizations? get localizations => _l10n;
+
+  set localizations(AppLocalizations l10n) {
     if (identical(l10n, _l10n)) return;
     _l10n = l10n;
     _labelIndex = null;
@@ -232,7 +234,7 @@ class UiCapture implements GuardedCommandWatcher {
                   ? StepValues.none
                   : StepValues.of({'checked': on}),
             );
-          } catch (err, st) {
+          } on Object catch (err, st) {
             TraceLogger.instance.warn(
               'recorder',
               'tap not noted',
@@ -241,7 +243,7 @@ class UiCapture implements GuardedCommandWatcher {
           }
         });
       });
-    } catch (err, st) {
+    } on Object catch (err, st) {
       TraceLogger.instance.warn('recorder', 'tap not noted', stackTrace: st);
     }
   }
@@ -451,7 +453,7 @@ class UiCapture implements GuardedCommandWatcher {
         payload: {'label': ?label},
         values: values,
       );
-    } catch (err, st) {
+    } on Object catch (err, st) {
       TraceLogger.instance.warn('recorder', 'field not noted', stackTrace: st);
     }
   }
@@ -472,7 +474,7 @@ class UiCapture implements GuardedCommandWatcher {
           page: pattern == '/me' && meTab != null ? '/me?tab=$meTab' : null,
           payload: {'label': ?_visibleTitle(), 'me_tab': ?meTab},
         );
-      } catch (err, st) {
+      } on Object catch (err, st) {
         TraceLogger.instance.warn(
           'recorder',
           'screen not noted',
@@ -508,7 +510,7 @@ class UiCapture implements GuardedCommandWatcher {
       _guide?.action(action);
       if (!_recording) return;
       controller().record(action);
-    } catch (err, st) {
+    } on Object catch (err, st) {
       TraceLogger.instance.warn('recorder', 'window not noted', stackTrace: st);
     }
   }
@@ -534,7 +536,7 @@ class UiCapture implements GuardedCommandWatcher {
           : c.attempt(RecorderActions.uiCommand, target: target);
       if (guide == null) return token;
       return _GuidedCommand(guide, token, guideToken);
-    } catch (err, st) {
+    } on Object catch (err, st) {
       TraceLogger.instance.warn(
         'recorder',
         'command not noted',
@@ -583,7 +585,7 @@ class UiCapture implements GuardedCommandWatcher {
       if (recorded != null) {
         controller().outcome(recorded, o.outcome, payload: o.payload);
       }
-    } catch (err, st) {
+    } on Object catch (err, st) {
       TraceLogger.instance.warn('recorder', 'result not noted', stackTrace: st);
     }
   }

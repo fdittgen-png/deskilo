@@ -18,7 +18,7 @@ against master (the "also passes on master" row). Generic Flutter test advice is
 | PDF download test saves nothing after a layout change | the layout path awaits providers/fonts/images | run the whole exit inside `tester.runAsync(() async { tap; pump; pumpAndSettle })` |
 | `Found N widgets` / a count off by one | a pinned registry grew (validation cards, default-off features, placeholders) | update the pin with a dated comment; the features-screen test needs a taller `physicalSize`. Feature totals and routes are no longer counted (#2058) — a failure there is a real contract (`deskilo-ship-feature` §1) |
 | `no_wall_clock` lint | `DateTime.now()` in a fake | `kTestNow` |
-| `l10n_audit` lint (displayed text) | `Text('words')` without `l10n?.key ??` — wrapped onto the next line too (#2055) | add the ARB key; a literal of interpolations only (`'$a · $b'`) is accepted |
+| `l10n_audit` lint (displayed text) | `Text('words')` instead of `context.l10n.key` — wrapped onto the next line too (#2055) | add the ARB key; a literal of interpolations only (`'$a · $b'`) is accepted |
 | `file_length` lint | a file outgrew its budget | extract and lower the baseline, or bump with `// YYYY-MM-DD #issue reason` |
 | `help_host_inventory_test` fails after adding a help card | a new file mounts a `HelpHint` / Get started card, or a count rose (#2091) | the inventory only shrinks until the shared arbiter lands (#1853): never a new host file; a lowered count lowers the pin, a file at zero leaves the list; only the Reserve help host mounts Get started |
 | an app test hits `Supabase.instance` | a new repository provider has no fake in `standardTestOverrides` | register its fake there (e.g. `deployment:` → `FakeDeploymentRepository`) |

@@ -84,7 +84,7 @@ FloorPlanPainter planPainter(WidgetTester tester) {
 class ThrowingReservationRepository extends FakeReservationRepository {
   ThrowingReservationRepository(this.error);
 
-  final Object error;
+  final Exception error;
 
   @override
   Future<String> create({

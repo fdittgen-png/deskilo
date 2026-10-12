@@ -11,6 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -33,24 +34,24 @@ class WhatYouCanDoScreen extends ConsumerWidget {
   static Key sourceKeyFor(AccessSourceKind kind, [String roleKey = '']) =>
       ValueKey('what-you-can-do-${kind.name}$roleKey');
 
-  String _heading(AppLocalizations? l10n, AccessSource source, String locale) =>
+  String _heading(AppLocalizations l10n, AccessSource source, String locale) =>
       switch (source.kind) {
         AccessSourceKind.owner =>
-          l10n?.whatYouCanDoFromOwner ?? 'As the owner: everything',
-        AccessSourceKind.coOwner => l10n?.whatYouCanDoFromCoOwner ?? 'As co-owner',
+          l10n.whatYouCanDoFromOwner,
+        AccessSourceKind.coOwner => l10n.whatYouCanDoFromCoOwner,
         AccessSourceKind.administrator =>
-          l10n?.whatYouCanDoFromAdministrator ?? 'From the Administrator role',
+          l10n.whatYouCanDoFromAdministrator,
         AccessSourceKind.everyMember =>
-          l10n?.whatYouCanDoFromEveryMember ?? 'As every member',
+          l10n.whatYouCanDoFromEveryMember,
         AccessSourceKind.role => () {
             final name = source.role?.nameIn(locale) ?? '';
-            return l10n?.whatYouCanDoFromRole(name) ?? 'From the role $name';
+            return l10n.whatYouCanDoFromRole(name);
           }(),
       };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
     final perms = ref.watch(myPermissionsProvider);
@@ -74,10 +75,10 @@ class WhatYouCanDoScreen extends ConsumerWidget {
         : members.value?.where((m) => m.id == otherId).firstOrNull;
 
     final title = otherId == null
-        ? (l10n?.whatYouCanDoTitle ?? 'What you can do here')
+        ? (l10n.whatYouCanDoTitle)
         : () {
             final name = names[otherId] ?? '';
-            return l10n?.whatTheyCanDoTitle(name) ?? 'What $name can do here';
+            return l10n.whatTheyCanDoTitle(name);
           }();
 
     if (subject == null) {
@@ -97,15 +98,13 @@ class WhatYouCanDoScreen extends ConsumerWidget {
         padding: AppSpacing.lgAll,
         children: [
           Text(
-            l10n?.whatYouCanDoIntro ??
-                'Everyone here is a member: booking, checking in, messages '
-                    'and your own account. Roles add the rest.',
+            l10n.whatYouCanDoIntro,
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: AppSpacing.lg),
           if (nothingMore)
             Text(
-              l10n?.whatYouCanDoNothingMore ?? 'Nothing more than a member.',
+              l10n.whatYouCanDoNothingMore,
               style: theme.textTheme.titleSmall,
             ),
           for (final source in sources)

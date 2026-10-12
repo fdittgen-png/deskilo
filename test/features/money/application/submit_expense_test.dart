@@ -36,6 +36,7 @@ class _Refusing extends FakeMoneyRepository {
     required String category,
     String description = '',
     Map<String, Object?>? supply,
+    Map<String, Object?>? vat,
   }) async => throw StateError('refused');
 }
 

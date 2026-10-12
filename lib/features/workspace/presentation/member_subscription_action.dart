@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../money/providers/money_providers.dart';
 import '../application/set_member_subscription.dart';
 import '../domain/member.dart';
 import '../domain/overage_policy.dart';
-import '../../money/providers/money_providers.dart';
 import '../providers/workspace_providers.dart';
 
 /// Sets a member's subscription (#128): an offered level, a negotiated
@@ -20,7 +20,7 @@ Future<void> pickMemberSubscription(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final offered = (await ref.read(subscriptionLevelsProvider.future))
       .offeredLevels;
   if (!context.mounted) return;
@@ -29,7 +29,7 @@ Future<void> pickMemberSubscription(
   final pct = await showDialog<int>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.memberSubscriptionLabel ?? 'Subscription'),
+      title: Text(l10n.memberSubscriptionLabel),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,7 +43,7 @@ Future<void> pickMemberSubscription(
               // would book for free (the server refuses the pair too).
               ChoiceChip(
                 key: const ValueKey('member-subscription-none'),
-                label: Text(l10n?.memberNoSubscription ?? 'No subscription'),
+                label: Text(l10n.memberNoSubscription),
                 selected: member.subscriptionPct == 0,
                 onSelected:
                     subscriptionChange(member, 0) ==
@@ -54,7 +54,7 @@ Future<void> pickMemberSubscription(
               for (final level in offered)
                 ChoiceChip(
                   key: ValueKey('member-subscription-action-percent-value-$level'),
-                  label: Text(l10n?.percentValue(level) ?? '$level%'),
+                  label: Text(l10n.percentValue(level)),
                   selected: member.subscriptionPct == level,
                   onSelected: (_) => Navigator.of(context).pop(level),
                 ),
@@ -63,9 +63,7 @@ Future<void> pickMemberSubscription(
           if (member.overagePolicy == OveragePolicy.payg) ...[
             const SizedBox(height: 4),
             Text(
-              l10n?.memberNoSubscriptionPaygHint ??
-                  'No subscription is not possible with pay-as-you-go: '
-                      'choose blocked or a package first.',
+              l10n.memberNoSubscriptionPaygHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -76,9 +74,9 @@ Future<void> pickMemberSubscription(
             controller: custom,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.memberSubscriptionCustom ?? 'Custom (1–100)',
+              labelText: l10n.memberSubscriptionCustom,
               suffixIcon: HelpDot(
-                l10n?.helpHintMembersTopic ?? 'Members & plans',
+                l10n.helpHintMembersTopic,
                 anchor: HelpAnchor.membersSubscription,
               ),
             ),
@@ -89,7 +87,7 @@ Future<void> pickMemberSubscription(
         TextButton(
           key: const ValueKey('member-subscription-action-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('member-subscription-action-save'),
@@ -98,7 +96,7 @@ Future<void> pickMemberSubscription(
             if (value == null) return;
             Navigator.of(context).pop(value);
           },
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),

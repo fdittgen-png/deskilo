@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_preferences.dart';
 import '../../../profile/providers/personal_preferences_providers.dart';
 import '../../domain/payment_provider.dart';
@@ -16,7 +18,7 @@ class PersonalPaymentProvider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(personalSettingsProvider);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final value =
         preferences.value?.defaults[PersonalPreference.paymentProvider] ?? '';
     return Padding(
@@ -27,12 +29,12 @@ class PersonalPaymentProvider extends ConsumerWidget {
         isExpanded: true,
         decoration: InputDecoration(
           labelText:
-              l10n?.accountPaymentPreference ?? 'Preferred online payment',
+              l10n.accountPaymentPreference,
         ),
         items: [
           DropdownMenuItem(
             value: '',
-            child: Text(l10n?.accountPaymentAsk ?? 'Choose at checkout'),
+            child: Text(l10n.accountPaymentAsk),
           ),
           for (final provider in PaymentProvider.values)
             DropdownMenuItem(
@@ -43,18 +45,17 @@ class PersonalPaymentProvider extends ConsumerWidget {
         onChanged: preferences.hasValue
             ? (selected) {
                 if (selected == null) return;
-                runGuarded(
+                unawaited(runGuarded(
                   context,
                   domain: 'payments',
                   message: 'save preferred payment provider failed',
                   errorText:
-                      l10n?.preferencesSaveFailed ??
-                      'Could not save your preferences. Please try again.',
+                      l10n.preferencesSaveFailed,
                   action: () =>
                       ref.read(personalSettingsProvider.notifier).save({
                         PersonalPreference.paymentProvider: selected,
                       }, workspaceOnly: false),
-                );
+                ));
               }
             : null,
       ),

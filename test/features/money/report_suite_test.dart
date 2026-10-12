@@ -4,10 +4,12 @@
 // payments report and the workspace report — engine documents with
 // their own presets, self-service on the Money tab, sendable per member
 // and exportable from workspace settings.
+import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
+import 'package:deskilo/features/money/domain/report_data_letters.dart';
+import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/report_facts_of.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
-import 'package:deskilo/features/money/presentation/report_defaults.dart';
-import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 /// Builds the agreement's data model off a floor plan, in English —
@@ -73,12 +74,12 @@ void main() {
   group('the three new documents ship professional and legacy presets (#494)', () {
     for (final doc in ['agreement', 'payments', 'workspace']) {
       test(doc, () {
-        final presets = presetsForDoc(doc, null);
+        final presets = presetsForDoc(doc, englishL10n);
         expect(presets.map((p) => p.id),
             ['professional', 'classic', 'simple', 'verbose', 'formal']);
         expect(presets.first.bands.header,
-            defaultBandsForDoc(doc, null).header);
-        expect(defaultBandsForDoc(doc, null).hasBands, isTrue);
+            defaultBandsForDoc(doc, englishL10n).header);
+        expect(defaultBandsForDoc(doc, englishL10n).hasBands, isTrue);
       });
     }
   });

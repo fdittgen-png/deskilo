@@ -44,11 +44,13 @@ class PresenceHeartbeat {
   /// True while the periodic timer is armed (signed in + foregrounded).
   bool get isRunning => _timer != null;
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void setSignedIn(bool signedIn) {
     _signedIn = signedIn;
     _recompute();
   }
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void setForeground(bool foreground) {
     _foreground = foreground;
     _recompute();
@@ -77,7 +79,7 @@ class PresenceHeartbeat {
   Future<void> _touchSafely() async {
     try {
       await _touch();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('presence heartbeat failed: $e\n$st');
       // Best-effort by design: the next tick simply retries.
       TraceLogger.instance.warn('presence', 'last-seen heartbeat failed',

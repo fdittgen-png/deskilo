@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/trace/guarded.dart';
 import 'package:go_router/go_router.dart';
 
-import '../confirm_identity.dart';
-
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/mcp_access_status.dart';
 import '../../providers/mcp_providers.dart';
+import '../confirm_identity.dart';
 
 /// #1625 — where the person stands with assistants on the selected
 /// workspace, as the six facts the server answers (identity, database
@@ -25,7 +25,7 @@ class McpAccessStatusCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scope = ref.watch(currentMcpContextProvider);
     final overview = ref.watch(connectedMcpOverviewProvider).value ?? const [];
     final unavailable = _Banner(
@@ -55,7 +55,7 @@ class McpAccessStatusCard extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           Text(
             key: const ValueKey('mcp-overview-title'),
-            l10n?.mcpOverviewTitle ?? 'Other connected databases',
+            l10n.mcpOverviewTitle,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           for (final o in overview) _OverviewTile(status: o),
@@ -71,21 +71,21 @@ class _StatusCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final s = status;
     final next = s.next;
     final rows = <(String, String, Enum)>[
-      ('google', l10n?.mcpStatusGoogle ?? 'Google sign-in', s.google),
-      ('identity', l10n?.mcpStatusIdentity ?? 'Identity', s.identity),
+      ('google', l10n.mcpStatusGoogle, s.google),
+      ('identity', l10n.mcpStatusIdentity, s.identity),
       (
         'eligibility',
-        l10n?.mcpStatusEligibility ?? 'Database approval',
+        l10n.mcpStatusEligibility,
         s.eligibility,
       ),
-      ('exposure', l10n?.mcpStatusExposure ?? 'Workspace offer', s.exposure),
-      ('role', l10n?.mcpStatusRole ?? 'Your role', s.role),
-      ('consent', l10n?.mcpStatusConsent ?? 'Your consent', s.consent),
-      ('backend', l10n?.mcpStatusBackend ?? 'Server', s.backend),
+      ('exposure', l10n.mcpStatusExposure, s.exposure),
+      ('role', l10n.mcpStatusRole, s.role),
+      ('consent', l10n.mcpStatusConsent, s.consent),
+      ('backend', l10n.mcpStatusBackend, s.backend),
     ];
     return Card(
       key: const ValueKey('mcp-status'),
@@ -95,7 +95,7 @@ class _StatusCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.mcpStatusTitle ?? 'Where you stand here',
+              l10n.mcpStatusTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             for (final (key, label, state) in rows)
@@ -108,7 +108,7 @@ class _StatusCard extends ConsumerWidget {
                 // "unknown": it is decided after that step.
                 trailing: Text(state.name == 'unavailable' &&
                         next != McpNextStep.unavailable
-                    ? (l10n?.mcpStateAfterPrevious ?? 'After the step above')
+                    ? (l10n.mcpStateAfterPrevious)
                     : _mcpStateLabel(l10n, state)),
               ),
             _Banner(
@@ -126,7 +126,7 @@ class _StatusCard extends ConsumerWidget {
                   // Here the sign-in methods page IS the place: it links
                   // Google to this account.
                   onPressed: () => context.push('/linked-accounts'),
-                  child: Text(l10n?.mcpStatusLinkGoogle ?? 'Link Google'),
+                  child: Text(l10n.mcpStatusLinkGoogle),
                 ),
               ),
             if (next == McpNextStep.signInWithGoogle)
@@ -142,7 +142,7 @@ class _StatusCard extends ConsumerWidget {
                         ref.read(assistantAccessProvider).signInWithGoogle(),
                   ),
                   child: Text(
-                    l10n?.mcpStatusSignInGoogle ?? 'Sign in with Google',
+                    l10n.mcpStatusSignInGoogle,
                   ),
                 ),
               ),
@@ -154,7 +154,7 @@ class _StatusCard extends ConsumerWidget {
                   // Taken here: the sign-in methods page cannot take it.
                   onPressed: () => confirmAssistantIdentity(context, ref),
                   child: Text(
-                    l10n?.mcpStatusConfirmIdentity ?? 'Confirm my identity',
+                    l10n.mcpStatusConfirmIdentity,
                   ),
                 ),
               ),
@@ -171,16 +171,16 @@ class _OverviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final s = status;
     final host = Uri.tryParse(s.source)?.host ?? s.source;
     final reachable = s.backend != McpBackendState.unavailable;
     final detail = reachable
-        ? '${l10n?.mcpStatusIdentity ?? 'Identity'}: '
+        ? '${l10n.mcpStatusIdentity}: '
               '${_mcpStateLabel(l10n, s.identity)} · '
-              '${l10n?.mcpStatusEligibility ?? 'Database approval'}: '
+              '${l10n.mcpStatusEligibility}: '
               '${_mcpStateLabel(l10n, s.eligibility)}'
-        : (l10n?.mcpOverviewUnavailable ?? 'Could not be asked right now.');
+        : (l10n.mcpOverviewUnavailable);
     return ListTile(
       key: ValueKey(
         'mcp-overview-$host-${reachable ? s.eligibility.name : 'unavailable'}',
@@ -211,62 +211,49 @@ class _Banner extends StatelessWidget {
   );
 }
 
-String _nextText(AppLocalizations? l10n, McpNextStep step) => switch (step) {
+String _nextText(AppLocalizations l10n, McpNextStep step) => switch (step) {
   McpNextStep.linkGoogle =>
-    l10n?.mcpNextLinkGoogle ??
-        'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.',
+    l10n.mcpNextLinkGoogle,
   McpNextStep.signInWithGoogle =>
-    l10n?.mcpNextSignInGoogle ??
-        'Assistants use your Google sign-in. Sign in with Google to continue.',
+    l10n.mcpNextSignInGoogle,
   McpNextStep.linkIdentity =>
-    l10n?.mcpNextLinkIdentity ??
-        'Next: you link your account to this database\'s identity.',
+    l10n.mcpNextLinkIdentity,
   McpNextStep.requestEligibility =>
-    l10n?.mcpNextRequestEligibility ??
-        'Next: you ask this database\'s administrators for approval.',
+    l10n.mcpNextRequestEligibility,
   McpNextStep.awaitEligibility =>
-    l10n?.mcpNextAwaitEligibility ??
-        'Next: a database administrator decides your request.',
+    l10n.mcpNextAwaitEligibility,
   McpNextStep.ownerExposes =>
-    l10n?.mcpNextOwnerExposes ??
-        'Next: the workspace owner offers operations to assistants.',
+    l10n.mcpNextOwnerExposes,
   McpNextStep.roleDenied =>
-    l10n?.mcpNextRoleDenied ??
-        'Your role leaves no operation to offer here. The workspace owner '
-            'decides what each role may do.',
+    l10n.mcpNextRoleDenied,
   McpNextStep.consent =>
-    l10n?.mcpNextConsent ??
-        'Next: connect an assistant from the assistant itself and approve '
-            'this workspace.',
+    l10n.mcpNextConsent,
   McpNextStep.ready =>
-    l10n?.mcpNextReady ??
-        'Ready: a connected assistant may act for you in this workspace, '
-            'within what you approved.',
+    l10n.mcpNextReady,
   McpNextStep.unavailable =>
-    l10n?.mcpNextUnavailable ??
-        'The server could not answer. Nothing is assumed; try again later.',
+    l10n.mcpNextUnavailable,
 };
 
 /// One label per state value, whichever dimension it belongs to.
-String _mcpStateLabel(AppLocalizations? l10n, Enum state) =>
+String _mcpStateLabel(AppLocalizations l10n, Enum state) =>
     switch (state.name) {
-      'verified' => l10n?.mcpStateVerified ?? 'Verified',
-      'unlinked' => l10n?.mcpStateUnlinked ?? 'Not linked',
-      'notRequested' => l10n?.mcpStateNotRequested ?? 'Not requested',
-      'pending' => l10n?.mcpStatePending ?? 'Waiting for a decision',
-      'approved' => l10n?.mcpStateApproved ?? 'Approved',
-      'revoked' => l10n?.mcpStateRevoked ?? 'Expired or withdrawn',
-      'disabled' => l10n?.mcpStateDisabled ?? 'Nothing offered',
-      'exposed' => l10n?.mcpStateExposed ?? 'Operations offered',
-      'allowed' => l10n?.mcpStateAllowed ?? 'Allowed',
-      'denied' => l10n?.mcpStateDenied ?? 'Nothing for your role',
-      'missing' => l10n?.mcpStateMissing ?? 'Not given',
-      'current' => l10n?.mcpStateCurrent ?? 'Given',
-      'available' => l10n?.mcpStateAvailable ?? 'Reachable',
-      'incompatible' => l10n?.mcpStateIncompatible ?? 'Incompatible version',
-      'ready' => l10n?.mcpStateGoogleReady ?? 'Signed in with Google',
+      'verified' => l10n.mcpStateVerified,
+      'unlinked' => l10n.mcpStateUnlinked,
+      'notRequested' => l10n.mcpStateNotRequested,
+      'pending' => l10n.mcpStatePending,
+      'approved' => l10n.mcpStateApproved,
+      'revoked' => l10n.mcpStateRevoked,
+      'disabled' => l10n.mcpStateDisabled,
+      'exposed' => l10n.mcpStateExposed,
+      'allowed' => l10n.mcpStateAllowed,
+      'denied' => l10n.mcpStateDenied,
+      'missing' => l10n.mcpStateMissing,
+      'current' => l10n.mcpStateCurrent,
+      'available' => l10n.mcpStateAvailable,
+      'incompatible' => l10n.mcpStateIncompatible,
+      'ready' => l10n.mcpStateGoogleReady,
       'signInWithGoogle' =>
-        l10n?.mcpStateGoogleOtherSession ?? 'Signed in another way',
-      'linkGoogle' => l10n?.mcpStateGoogleMissing ?? 'Google not linked',
-      _ => l10n?.mcpStateUnavailable ?? 'Unknown',
+        l10n.mcpStateGoogleOtherSession,
+      'linkGoogle' => l10n.mcpStateGoogleMissing,
+      _ => l10n.mcpStateUnavailable,
     };

@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 /// Correct a message you wrote (0382): the words in a field, nothing else.
 Future<String?> showEditMessageDialog(BuildContext context, String initial) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final controller = TextEditingController(text: initial);
   return showDialog<String>(
     context: context,
     builder: (dialog) => AlertDialog(
-      title: Text(l10n?.messengerEditTitle ?? 'Edit message'),
+      title: Text(l10n.messengerEditTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -23,8 +23,7 @@ Future<String?> showEditMessageDialog(BuildContext context, String initial) {
           ),
           const SizedBox(height: 8),
           Text(
-            l10n?.messengerEditWindow ??
-                'A message can be corrected for 15 minutes after it was sent.',
+            l10n.messengerEditWindow,
             style: Theme.of(dialog).textTheme.bodySmall,
           ),
         ],
@@ -38,7 +37,7 @@ Future<String?> showEditMessageDialog(BuildContext context, String initial) {
         FilledButton(
           key: const ValueKey('message-edit-save'),
           onPressed: () => Navigator.of(dialog).pop(controller.text),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),

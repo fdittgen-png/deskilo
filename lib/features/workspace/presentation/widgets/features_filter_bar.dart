@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'feature_maturity_badge.dart';
 
 /// The Features screen's filter line (#1190).
@@ -44,8 +44,8 @@ class FeaturesFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final changedLabel = l10n?.featuresFilterChanged ?? 'Changed';
+    final l10n = context.l10n;
+    final changedLabel = l10n.featuresFilterChanged;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
@@ -64,7 +64,7 @@ class FeaturesFilterBar extends StatelessWidget {
                   decoration: InputDecoration(
                     isDense: true,
                     prefixIcon: const Icon(Icons.search),
-                    labelText: l10n?.featuresSearchLabel ?? 'Search features',
+                    labelText: l10n.featuresSearchLabel,
                     suffixIcon: controller.text.isEmpty
                         ? null
                         : IconButton(

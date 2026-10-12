@@ -135,7 +135,7 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
             }
           }
           return cards;
-        } catch (e, st) {
+        } on Object catch (e, st) {
           // Never include remote request headers or response bodies in
           // diagnostics.
           TraceLogger.instance.warn(

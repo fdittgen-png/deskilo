@@ -128,6 +128,59 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.authentication,
   ),
+  // #2388 — pages opened over another screen, covered as that screen is.
+  RouteCoverage('/discover/workspace', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage(
+    '/account-messages/thread',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/thread',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/inquiries',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/starred',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/new-group',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage('/templates/compare', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/templates/detail', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/task-recorder/guide', CoverageStatus.recorder),
+  RouteCoverage('/task-recorder/recording', CoverageStatus.recorder),
+  RouteCoverage('/task-workbench/storyboard', CoverageStatus.recorder),
+  RouteCoverage(
+    '/money/repartition',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.payment,
+  ),
+  RouteCoverage(
+    '/money/settlement',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.payment,
+  ),
+  RouteCoverage(
+    '/account-activity/history',
+    CoverageStatus.planned,
+    owner: '#1881 B',
+  ),
+  RouteCoverage('/help/support-bundle', CoverageStatus.planned, owner: '#1881 C'),
+  RouteCoverage(
+    '/server/new-instance/first-start',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.operator,
+  ),
   RouteCoverage('/onboarding', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/scan-join',

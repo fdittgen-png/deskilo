@@ -26,6 +26,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_calendar_repository.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/events.dart' show event;
 import 'fixtures/recording_fixtures.dart';
@@ -314,7 +315,6 @@ void main() {
       ..events.add(
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       );

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/reference_locale.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
-import '../../../workspace/presentation/reference_locale.dart';
 
 /// #622 — "message the reserver": when ANOTHER member's reservation
 /// blocks a check-in or booking (scan sheet, Plan tab), the surface
@@ -93,11 +94,11 @@ class MessageReserverButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return OutlinedButton.icon(
       key: widgetKey,
       icon: const Icon(Icons.chat_outlined),
-      label: Text(l10n?.spaceMessageReserver(name) ?? 'Message $name'),
+      label: Text(l10n.spaceMessageReserver(name)),
       onPressed: () => messageReserver(
         context,
         ref,
@@ -122,8 +123,8 @@ Future<void> showBlockedSpaceSheet(
   required String name,
   required String spaceName,
 }) async {
-  final l10n = AppLocalizations.of(context);
-  final message = await showModalBottomSheet<bool>(
+  final l10n = context.l10n;
+  final message = await showAppSheet<bool>(
     context: context,
     builder: (sheetContext) => SafeArea(
       child: Column(
@@ -136,7 +137,7 @@ Future<void> showBlockedSpaceSheet(
           ListTile(
             key: const ValueKey('blocked-message-reserver'),
             leading: const Icon(Icons.chat_outlined),
-            title: Text(l10n?.spaceMessageReserver(name) ?? 'Message $name'),
+            title: Text(l10n.spaceMessageReserver(name)),
             onTap: () => Navigator.of(sheetContext).pop(true),
           ),
           const SizedBox(height: 8),

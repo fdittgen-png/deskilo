@@ -77,7 +77,7 @@ void main() {
     test('empty bands produce NO cover page, not a blank leaf', () async {
       // Reset-to-empty is a real thing to do in the report editor, and
       // it must not start emitting a blank sheet with every print run.
-      expect(pageCount(await badges(body: const [])), 1);
+      expect(pageCount(await badges()), 1);
       expect(pageCount(await badges()), 1);
     });
   });

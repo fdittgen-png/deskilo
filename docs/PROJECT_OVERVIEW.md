@@ -553,7 +553,7 @@ flutter gen-l10n               # always run afterwards
 
 ### The rules
 
-- **No hard-coded user-facing strings.** Everything goes through `AppLocalizations` with a defensive English fallback literal. Lint-enforced with a ratchet-to-zero baseline.
+- **No hard-coded user-facing strings.** Everything goes through `AppLocalizations`, read as `context.l10n.key` (never null; the English lives in the ARB only, #2388). Lint-enforced with a ratchet-to-zero baseline.
 - **Every new key lands in all five locales in the same PR.**
 - **Key parity is a CI gate** — the workflow regenerates the ARB pipeline and fails on any `git diff` in `lib/l10n`.
 - Dates, numbers and currency always render through locale-aware `intl` formatting, never raw string formatting. The workspace **country** drives the default currency.
@@ -617,7 +617,7 @@ The methodology is inherited 1:1 from tankstellen/Sparkilo. `docs/AGENT_RULES.md
 
 ### HARD RULES (four, non-negotiable)
 
-1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations` with a defensive English fallback. English is canonical; FR/DE/ES/IT are maintained — every new key needs all five translations in the same PR. Lint-enforced with a ratchet-to-zero baseline.
+1. **No hard-coded user-facing text.** Every string goes through ARB / `AppLocalizations`, read as `context.l10n.key` (never null; no Dart-side English, #2388). English is canonical; FR/DE/ES/IT are maintained — every new key needs all five translations in the same PR. Lint-enforced with a ratchet-to-zero baseline.
 2. **Never develop without a GitHub issue.** Work larger than one PR or touching multiple subsystems becomes an **Epic** with a maintainer-validated breakdown *before* implementation starts.
 3. **Clean codegen before push.** After touching any freezed class or `@riverpod` annotation: `dart run build_runner build --delete-conflicting-outputs` from clean; commit the generated files; **zero drift on push**.
 4. **Locale key parity.** The key-parity gate fails CI if any locale is missing keys vs. `app_en.arb`.

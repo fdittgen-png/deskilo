@@ -10,8 +10,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/role_assignment.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
@@ -32,7 +32,7 @@ class InviteRolesPicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(myMemberProvider).value;
     final perms = ref.watch(myPermissionsProvider);
@@ -73,7 +73,7 @@ class InviteRolesPicker extends ConsumerWidget {
       children: [
         const SizedBox(height: AppSpacing.md),
         Text(
-          l10n?.inviteRolesTitle ?? 'Roles on arrival',
+          l10n.inviteRolesTitle,
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -84,8 +84,7 @@ class InviteRolesPicker extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          l10n?.inviteRolesHint ??
-              'Given when they join, once their membership is active.',
+          l10n.inviteRolesHint,
           style: theme.textTheme.bodySmall,
         ),
         for (final reason in reasons)

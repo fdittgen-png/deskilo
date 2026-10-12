@@ -8,10 +8,10 @@
 // the viewer already holds the reservation, the sheet checks in to it
 // instead of hiding behind a disabled conflict button.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/plan/domain/grid_geometry.dart';
-import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
+import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';

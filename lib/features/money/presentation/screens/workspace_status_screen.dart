@@ -9,17 +9,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_documents.dart';
 import '../report_actions.dart';
-import '../status_report_data.dart';
 import '../report_layout_actions.dart';
-import '../../../../core/time/date_text.dart';
+import '../status_report_data.dart';
 
 class WorkspaceStatusScreen extends ConsumerStatefulWidget {
   const WorkspaceStatusScreen({super.key});
@@ -40,17 +40,17 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
     super.initState();
     final now = ref.read(clockProvider).now();
     _months = [
-      for (var i = 0; i < 24; i++) _ym(DateTime(now.year, now.month - i, 1)),
+      for (var i = 0; i < 24; i++) _ym(DateTime(now.year, now.month - i)),
     ];
     _to = _months.first;
     _from = _months[2];
   }
 
   Future<void> _print(WorkspaceStatus status) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final data = workspaceStatusReportData(context, ref, status);
     final report = renderLetterDoc(context, ref, docId: 'status', data: data);
-    final title = l10n?.reportDocStatus ?? 'Workspace status';
+    final title = l10n.reportDocStatus;
     await runReportActions(
       context,
       ref,
@@ -63,7 +63,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
           ref,
           report: report,
           title: title,
-          layoutXml: letterLayoutXml(ref, docId: 'status', language: ''),
+          layoutXml: letterLayoutXml(ref, docId: 'status'),
           data: data,
         );
         return (bytes: pdf.bytes, fileName: pdf.fileName);
@@ -73,7 +73,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final status = ref.watch(workspaceStatusProvider(_from, _to));
     final monthLabel = DateFormat.yMMM(
       Localizations.maybeLocaleOf(context)?.toString(),
@@ -82,12 +82,12 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
         monthLabel.format(DateTime(int.parse(ym.substring(0, 4)), int.parse(ym.substring(5, 7))));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.statusTitle ?? 'Workspace status'),
+        title: Text(l10n.statusTitle),
         actions: [
           if (status.value case final s?)
             IconButton(
               key: const ValueKey('status-print'),
-              tooltip: l10n?.statusPrint ?? 'Print the status',
+              tooltip: l10n.statusPrint,
               icon: const Icon(Icons.print_outlined),
               onPressed: () => _print(s),
             ),
@@ -103,7 +103,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
                   key: const ValueKey('status-from'),
                   initialValue: _from,
                   isExpanded: true,
-                  decoration: InputDecoration(labelText: l10n?.statusFrom ?? 'From'),
+                  decoration: InputDecoration(labelText: l10n.statusFrom),
                   items: [
                     for (final m in _months)
                       DropdownMenuItem(value: m, child: Text(label(m))),
@@ -120,7 +120,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
                   key: const ValueKey('status-to'),
                   initialValue: _to,
                   isExpanded: true,
-                  decoration: InputDecoration(labelText: l10n?.statusTo ?? 'To'),
+                  decoration: InputDecoration(labelText: l10n.statusTo),
                   items: [
                     for (final m in _months)
                       DropdownMenuItem(value: m, child: Text(label(m))),
@@ -151,7 +151,7 @@ class _StatusBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final currency = moneyFormat(status.currency);
     Widget row(String label, int cents, {bool negative = false, Key? key}) =>
@@ -175,26 +175,22 @@ class _StatusBody extends StatelessWidget {
             padding: AppSpacing.mdAll,
             child: Column(
               children: [
-                row(l10n?.statusInvoiced ?? 'Invoiced', status.invoicedCents, key: const ValueKey('status-invoiced')),
-                row(l10n?.statusCreditNotes ?? 'Credit notes', status.creditNotesCents, negative: true),
-                row(l10n?.statusPaymentsMatched ?? 'Payments matched', status.paymentsMatchedCents),
-                row(l10n?.statusPaymentsReceived ?? 'Payments received', status.paymentsReceivedCents),
-                row(l10n?.statusReimbursed ?? 'Expenses reimbursed', status.reimbursedCents, negative: true),
-                row(l10n?.statusRepartitioned ?? 'Expenses shared out', status.repartitionedCents),
+                row(l10n.statusInvoiced, status.invoicedCents, key: const ValueKey('status-invoiced')),
+                row(l10n.statusCreditNotes, status.creditNotesCents, negative: true),
+                row(l10n.statusPaymentsMatched, status.paymentsMatchedCents),
+                row(l10n.statusPaymentsReceived, status.paymentsReceivedCents),
+                row(l10n.statusReimbursed, status.reimbursedCents, negative: true),
+                row(l10n.statusRepartitioned, status.repartitionedCents),
                 if (status.awaitingCents > 0)
-                  row(l10n?.statusAwaiting ?? 'Awaiting', status.awaitingCents),
-                row(l10n?.statusCredits ?? 'Credits granted', status.creditsGrantedCents, negative: true),
+                  row(l10n.statusAwaiting, status.awaitingCents),
+                row(l10n.statusCredits, status.creditsGrantedCents, negative: true),
                 const Divider(),
                 ListTile(
                   key: const ValueKey('status-net'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  title: Text(l10n?.statusNet ?? 'Net', style: theme.textTheme.titleMedium),
-                  subtitle: Text(l10n?.statusNetExplanation ??
-                      'This subtotal is invoiced amounts less credit notes, '
-                      'reimbursements and credits. It is neither profit nor a '
-                      'bank balance. Matched and received payments overlap '
-                      'and must not be added together.'),
+                  title: Text(l10n.statusNet, style: theme.textTheme.titleMedium),
+                  subtitle: Text(l10n.statusNetExplanation),
                   trailing: Text(
                     currency.formatMinor(status.netCents),
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -207,7 +203,7 @@ class _StatusBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        Text(l10n?.statusMembers ?? 'Members', style: theme.textTheme.titleSmall),
+        Text(l10n.statusMembers, style: theme.textTheme.titleSmall),
         const SizedBox(height: AppSpacing.sm),
         for (final (m, pct, figures) in [
           for (final m in status.members)

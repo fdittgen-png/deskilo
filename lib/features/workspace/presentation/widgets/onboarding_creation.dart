@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
-import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../../core/i18n/time_zones.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
 import '../../domain/template_outline.dart';
@@ -29,7 +29,7 @@ class CreationShapeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     RadioListTile<CreationShape> tile(
             CreationShape shape, String title, String hint) =>
         RadioListTile<CreationShape>(
@@ -44,7 +44,7 @@ class CreationShapeSelector extends StatelessWidget {
       key: const ValueKey('onboarding-shape'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n?.onboardingShapeLabel ?? 'What to create',
+        Text(l10n.onboardingShapeLabel,
             style: Theme.of(context).textTheme.titleSmall),
         RadioGroup<CreationShape>(
           key: const ValueKey('onboarding-creation-shape-test'),
@@ -55,23 +55,18 @@ class CreationShapeSelector extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             tile(
               CreationShape.test,
-              l10n?.onboardingShapeTest ?? 'One test workspace',
-              l10n?.onboardingShapeTestHint ??
-                  'Safe for trying things out: every screen and document '
-                      'says it is a test. No real billing.',
+              l10n.onboardingShapeTest,
+              l10n.onboardingShapeTestHint,
             ),
             tile(
               CreationShape.real,
-              l10n?.onboardingShapeReal ?? 'One real workspace',
-              l10n?.onboardingShapeRealHint ??
-                  'For real operation: the invoices it issues are owed.',
+              l10n.onboardingShapeReal,
+              l10n.onboardingShapeRealHint,
             ),
             tile(
               CreationShape.pair,
-              l10n?.onboardingShapePair ?? 'A linked test and real pair',
-              l10n?.onboardingWithTwinHint ??
-                  'Two workspaces with the same name: one to try things '
-                      'out, one that is real. You own both.',
+              l10n.onboardingShapePair,
+              l10n.onboardingWithTwinHint,
             ),
           ]),
         ),
@@ -89,7 +84,7 @@ class CreationSummary extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final host = ref.watch(activeBackendProvider).value?.host;
     final count = shape.workspaceCount;
     return Column(
@@ -102,17 +97,14 @@ class CreationSummary extends ConsumerWidget {
           leading: Icon(shape == CreationShape.pair
               ? Icons.copy_all_outlined
               : Icons.business_outlined),
-          title: Text(l10n?.onboardingSummaryCount(count) ??
-              (count == 1
-                  ? 'Creates one workspace'
-                  : 'Creates $count workspaces')),
+          title: Text(l10n.onboardingSummaryCount(count)),
           subtitle: Text(switch (shape) {
             CreationShape.test =>
-              l10n?.onboardingShapeTest ?? 'One test workspace',
+              l10n.onboardingShapeTest,
             CreationShape.real =>
-              l10n?.onboardingShapeReal ?? 'One real workspace',
+              l10n.onboardingShapeReal,
             CreationShape.pair =>
-              l10n?.onboardingShapePair ?? 'A linked test and real pair',
+              l10n.onboardingShapePair,
           }),
         ),
         ListTile(
@@ -122,18 +114,15 @@ class CreationSummary extends ConsumerWidget {
               ? Icons.receipt_long_outlined
               : Icons.science_outlined),
           title: Text(shape.realBilling
-              ? (l10n?.onboardingSummaryBillingOn ??
-                  'Real billing is possible: its invoices are owed.')
-              : (l10n?.onboardingSummaryBillingOff ??
-                  'No real billing: documents are marked as a test.')),
+              ? (l10n.onboardingSummaryBillingOn)
+              : (l10n.onboardingSummaryBillingOff)),
         ),
         if (host != null)
           ListTile(
             key: const ValueKey('onboarding-summary-server'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.dns_outlined),
-            title: Text(l10n?.onboardingSummaryServer(host) ??
-                'On the server $host'),
+            title: Text(l10n.onboardingSummaryServer(host)),
           ),
       ],
     );
@@ -156,19 +145,15 @@ class CreationPendingBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return InlineBanner(
       key: const ValueKey('onboarding-intent-pending'),
       icon: Icons.sync_problem_outlined,
       severity: InlineBannerSeverity.info,
       text: changed
-          ? (l10n?.onboardingIntentChanged ??
-              'Your earlier request may already have been created. Retry '
-                  'it exactly as it was sent before changing anything.')
-          : (l10n?.onboardingIntentResumed ??
-              'An earlier creation may have gone through. Retry to check '
-                  'the same request.'),
-      actionLabel: l10n?.onboardingRetryAsSent ?? 'Retry as sent',
+          ? (l10n.onboardingIntentChanged)
+          : (l10n.onboardingIntentResumed),
+      actionLabel: l10n.onboardingRetryAsSent,
       // The banner asserts label and action come together; a press while
       // busy is ignored by the wizard's own single-flight guard.
       onAction: onRetryAsSent,
@@ -184,7 +169,7 @@ class TemplateOutlineView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final outline = this.outline;
     if (outline == null) return const SizedBox.shrink();
     if (outline.refused) {
@@ -192,7 +177,7 @@ class TemplateOutlineView extends StatelessWidget {
         key: const ValueKey('onboarding-template-refused'),
         icon: Icons.block,
         text: [
-          l10n?.libraryNotSupported ?? 'This template cannot be applied here.',
+          l10n.libraryNotSupported,
           ?outline.reason,
         ].join(' '),
       );
@@ -207,12 +192,11 @@ class TemplateOutlineView extends StatelessWidget {
             key: const ValueKey('onboarding-template-partial'),
             icon: Icons.info_outline,
             severity: InlineBannerSeverity.info,
-            text: l10n?.libraryPartial ??
-                'Part of this template cannot be applied here and is left out.',
+            text: l10n.libraryPartial,
           ),
         if (groups.isNotEmpty)
           Text(
-            l10n?.onboardingTemplateSetsUp(groups) ?? 'Sets up: $groups',
+            l10n.onboardingTemplateSetsUp(groups),
             key: const ValueKey('onboarding-confirm-groups'),
           ),
       ],
@@ -236,7 +220,7 @@ class PlaceFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -245,12 +229,11 @@ class PlaceFields extends StatelessWidget {
             controller: currency,
             focusNode: currencyFocus,
             decoration: InputDecoration(
-              labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
+              labelText: l10n.workspaceCurrencyLabel,
             ),
             validator: (v) => isKnownCurrency(v ?? '')
                 ? null
-                : (l10n?.onboardingCurrencyUnknown ??
-                    'Enter a currency code the app supports, such as EUR'),
+                : (l10n.onboardingCurrencyUnknown),
           ),
           const SizedBox(height: 12),
           TextFormField(
@@ -258,12 +241,11 @@ class PlaceFields extends StatelessWidget {
             controller: timezone,
             focusNode: timezoneFocus,
             decoration: InputDecoration(
-              labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
+              labelText: l10n.workspaceTimezoneLabel,
             ),
             validator: (v) => TimeZones.isKnown(v?.trim() ?? '')
                 ? null
-                : (l10n?.workspaceTimezoneUnknown ??
-                    'Pick a time zone from the list'),
+                : (l10n.workspaceTimezoneUnknown),
           ),
           const SizedBox(height: 12),
       ],

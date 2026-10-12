@@ -4,11 +4,13 @@
 // it says where the offline copy stands as the browser reports it, and
 // lets the person keep it or stop keeping it.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../l10n/app_localizations.dart';
 import 'offline_tool.dart';
 
 class OfflineToolCard extends ConsumerStatefulWidget {
@@ -25,9 +27,9 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
   @override
   void initState() {
     super.initState();
-    ref.read(offlineToolProvider).state().then((s) {
+    unawaited(ref.read(offlineToolProvider).state().then((s) {
       if (mounted) setState(() => _state = s);
-    });
+    }));
   }
 
   Future<void> _run(Future<OfflineToolState> Function() action) async {
@@ -47,21 +49,17 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
     if (state == null || state == OfflineToolState.notNeeded) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final tool = ref.read(offlineToolProvider);
     final text = switch (state) {
       OfflineToolState.ready =>
-        l10n?.taskWorkbenchOfflineReady ??
-            'Kept on this browser: the verified workbench opens without a '
-                'connection. Workspace actions still need a connection.',
+        l10n.taskWorkbenchOfflineReady,
       OfflineToolState.off =>
-        l10n?.taskWorkbenchOfflineOff ??
-            'Not kept: without a connection this page will not open.',
+        l10n.taskWorkbenchOfflineOff,
       OfflineToolState.unsupported =>
-        l10n?.taskWorkbenchOfflineUnsupported ??
-            'This browser cannot keep it (a private window usually cannot).',
+        l10n.taskWorkbenchOfflineUnsupported,
       OfflineToolState.failed =>
-        l10n?.taskWorkbenchOfflineFailed ?? 'The browser refused to keep it.',
+        l10n.taskWorkbenchOfflineFailed,
       OfflineToolState.notNeeded => '',
     };
     return Card(
@@ -72,7 +70,7 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.taskWorkbenchOfflineTitle ?? 'Use the workbench offline',
+              l10n.taskWorkbenchOfflineTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -84,7 +82,7 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
                 key: const ValueKey('workbench-offline-forget'),
                 onPressed: _busy ? null : () => _run(tool.forget),
                 child: Text(
-                  l10n?.taskWorkbenchOfflineForget ?? 'Stop keeping it',
+                  l10n.taskWorkbenchOfflineForget,
                 ),
               )
             else if (state != OfflineToolState.unsupported)
@@ -92,7 +90,7 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
                 key: const ValueKey('workbench-offline-keep'),
                 onPressed: _busy ? null : () => _run(tool.keep),
                 child: Text(
-                  l10n?.taskWorkbenchOfflineKeep ?? 'Keep it on this device',
+                  l10n.taskWorkbenchOfflineKeep,
                 ),
               ),
           ],

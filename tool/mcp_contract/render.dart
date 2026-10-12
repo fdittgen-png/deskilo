@@ -7,8 +7,9 @@
 // appears as an MCP tool only once its handler exists (`handler: true`).
 import 'dart:convert';
 
-import '../contract_common/primitives.dart';
 import 'package:deskilo/core/backend/backend_config.dart';
+
+import '../contract_common/primitives.dart';
 
 export '../contract_common/primitives.dart' show fieldSchema;
 
@@ -600,19 +601,20 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   for (final op in ops) {
     final input = Map<String, dynamic>.from(op['input'] as Map);
     final authority = Map<String, dynamic>.from(op['authority'] as Map);
-    dart.writeln("  '${op['id']}': McpOperationSpec(");
-    dart.writeln("    id: '${op['id']}',");
-    dart.writeln('    rpc: ${op['rpc'] == null ? 'null' : "'${op['rpc']}'"},');
-    dart.writeln('    handler: ${op['handler'] == true},');
-    dart.writeln('    dispatch: ${op['dispatch'] == true},');
-    dart.writeln('    authority: McpAuthority.${authority['kind']},');
-    dart.writeln('    permission: ${authority['permission'] == null ? 'null' : "'${authority['permission']}'"},');
-    dart.writeln('    features: [${[for (final f in op['features'] as List) "'$f'"].join(', ')}],');
-    dart.writeln('    scope: McpScope.${op['scope']},');
-    dart.writeln('    mutation: McpMutation.${op['mutation']},');
-    dart.writeln('    idempotent: ${op['idempotency'] == 'request_id'},');
-    dart.writeln('    nativeConfirmation: ${op['confirmation'] == 'native'},');
-    dart.writeln('    fields: {');
+    dart
+      ..writeln("  '${op['id']}': McpOperationSpec(")
+      ..writeln("    id: '${op['id']}',")
+      ..writeln('    rpc: ${op['rpc'] == null ? 'null' : "'${op['rpc']}'"},')
+      ..writeln('    handler: ${op['handler'] == true},')
+      ..writeln('    dispatch: ${op['dispatch'] == true},')
+      ..writeln('    authority: McpAuthority.${authority['kind']},')
+      ..writeln('    permission: ${authority['permission'] == null ? 'null' : "'${authority['permission']}'"},')
+      ..writeln('    features: [${[for (final f in op['features'] as List) "'$f'"].join(', ')}],')
+      ..writeln('    scope: McpScope.${op['scope']},')
+      ..writeln('    mutation: McpMutation.${op['mutation']},')
+      ..writeln('    idempotent: ${op['idempotency'] == 'request_id'},')
+      ..writeln('    nativeConfirmation: ${op['confirmation'] == 'native'},')
+      ..writeln('    fields: {');
     for (final e in input.entries) {
       final f = Map<String, dynamic>.from(e.value as Map);
       final type = f['type'] == 'enum' ? 'enum_' : camelCase(f['type'] as String);
@@ -624,10 +626,11 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
           "${f['values'] != null ? ', values: [${[for (final v in f['values'] as List) "'$v'"].join(', ')}]' : ''}"
           "${f['param'] != null ? ", param: '${f['param']}'" : ''}),");
     }
-    dart.writeln('    },');
-    dart.writeln('    output: [${[for (final o in op['output'] as List) "'$o'"].join(', ')}],');
-    dart.writeln("    group: '${mcpOperationGroupOf(op)}',");
-    dart.writeln('  ),');
+    dart
+      ..writeln('    },')
+      ..writeln('    output: [${[for (final o in op['output'] as List) "'$o'"].join(', ')}],')
+      ..writeln("    group: '${mcpOperationGroupOf(op)}',")
+      ..writeln('  ),');
   }
   dart.writeln('};');
 

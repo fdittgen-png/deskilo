@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0406 (#2391) -- MCP authorization and parity, measured by one matrix
--- (supabase/tests/database/170_mcp_authorization_matrix.sql).
+-- 0411 (#2391) -- MCP authorization and parity, measured by one matrix
+-- (supabase/tests/database/171_mcp_authorization_matrix.sql).
 --
 -- * A member reads her own pending requests under the `own` ceiling:
 --   list_pending_validations and get_validation become `own` operations;
@@ -646,4 +646,4 @@ $catalogue$;
 revoke execute on function public.mcp_operation_catalogue() from public, anon;
 grant execute on function public.mcp_operation_catalogue() to authenticated;
 
-select public.set_deskilo_schema_version(406);
+select public.set_deskilo_schema_version(411);

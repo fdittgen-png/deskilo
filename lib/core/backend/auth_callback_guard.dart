@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import '../trace/trace_logger.dart';
-
 import 'auth_secret_store.dart';
 import 'federation_handoff.dart';
 import 'installation_auth_storage.dart';
@@ -94,7 +93,7 @@ class AuthCallbackGuard {
               parsed['installation'] is String)) {
         _pending = parsed;
       }
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: corrupt secret metadata is discarded without logging it.
       TraceLogger.instance.warn(
         'auth',

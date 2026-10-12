@@ -2108,6 +2108,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookRoleRevenue => 'Ingresos';
 
   @override
+  String get bookRoleVatInput => 'IVA soportado';
+
+  @override
   String get bookRoleVatOutput => 'IVA repercutido';
 
   @override
@@ -3965,6 +3968,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dunningSettingsTitle => 'Reglas de recordatorio';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'la dirección electrónica del cliente (BT-49) en su perfil';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'una referencia del comprador o un número de pedido';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'el NIF-IVA o el código fiscal del cliente';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'el Leitweg-ID del cliente como referencia del comprador';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'la cuenta bancaria del espacio (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'el correo y el teléfono de contacto del espacio';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'la dirección electrónica del espacio (BT-34) en su identidad legal';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'el NIF-IVA del espacio';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'el distrito (județ) de cada dirección rumana';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Antes de enviar por $channel, añada:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.';
 
@@ -3975,6 +4018,40 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'A partir del $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'cada factura debe registrarse en un registro encadenado (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'toda empresa debe emitir facturas electrónicas';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'las grandes y medianas empresas deben emitir facturas electrónicas';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'toda empresa debe poder recibir facturas electrónicas';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Desde el $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle =>
+      'Obligaciones de facturación electrónica en su país:';
 
   @override
   String get editorAccessoriesLabel => 'Accesorios';
@@ -4694,6 +4771,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get expenseInvalidAmount => 'Introduzca un importe mayor que cero.';
 
   @override
+  String get expenseInvalidDeductible => 'Introduzca una parte entre 0 y 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Introduzca al menos una unidad.';
 
   @override
@@ -4726,6 +4806,24 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Prellenado con importe ÷ cantidad; redondee si quiere.';
+
+  @override
+  String get expenseVatDeductible => 'Parte deducible (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'IVA deducible: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % salvo que parte del gasto sea privada o sirva a una actividad exenta.';
+
+  @override
+  String get expenseVatNone => 'Sin IVA';
+
+  @override
+  String get expenseVatRate => 'IVA de este gasto';
 
   @override
   String get exportClaimExchange =>
@@ -5089,6 +5187,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Importar días festivos';
+
+  @override
+  String get featureInputVatDesc =>
+      'Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido.';
+
+  @override
+  String get featureInputVatTitle => 'IVA soportado';
 
   @override
   String get featureInstanceWizard => 'Asistente de instancia';
@@ -7804,9 +7909,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady => 'Listo — este archivo cumple EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'Compartir factura electrónica (XML)';
 
   @override
@@ -7828,6 +7930,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Listo — no falta nada de lo que exige la EN 16931, y este formato supera el validador oficial ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>
@@ -8195,6 +8302,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMissingBuyerName => 'El nombre o la empresa del miembro';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'El identificador fiscal del miembro: el NIF de un cliente empresarial en España, el codice fiscale o la partita IVA de un cliente en Italia, el SIREN de un cliente empresarial en Francia';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'El número de IVA del miembro (necesario para la inversión del sujeto pasivo)';
 
@@ -8203,12 +8314,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'El fundamento legal de la exención de IVA';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'El IVA en la moneda nacional: un vendedor de un Estado miembro fuera del euro factura aquí el IVA en su propia moneda (art. 230 de la Directiva del IVA)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'La dirección postal del espacio (calle o ciudad)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'El país del espacio debe ser Francia o Alemania para emitir aquí — los demás países se emiten fuera de la aplicación';
+      'El país del espacio debe ser un Estado miembro de la Unión Europea para emitir aquí — los demás países se emiten fuera de la aplicación';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'El número de IVA o el NIF del espacio (el campo de registro lleva el NIF)';
 
   @override
   String get invoiceMissingSellerVatId =>
@@ -14709,6 +14828,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Verdadero en una nota de crédito';
 
   @override
+  String get reportFieldMeaningDeclarationNote =>
+      'La advertencia de la declaración: verificar antes de presentar';
+
+  @override
   String get reportFieldMeaningDueDate => 'La fecha de vencimiento';
 
   @override
@@ -18841,11 +18964,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una declaración presentada nunca cambia. Lo que cambió después en un periodo presentado — una factura anulada, un pago registrado tarde — se declara aquí como corrección de esa declaración.';
 
   @override
+  String get vatDeclCredit => 'IVA a compensar';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.';
 
   @override
   String get vatDeclDraft => 'Borrador';
+
+  @override
+  String get vatDeclEdiTva => 'Archivo EDI-TVA (CA3)';
+
+  @override
+  String get vatDeclElster => 'Archivo ELSTER (UStVA)';
 
   @override
   String get vatDeclEmpty =>
@@ -18855,7 +18987,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclFiled => 'Presentada';
 
   @override
+  String get vatDeclFilingPeriod =>
+      'Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Introduzca el número fiscal: la Steuernummer para ELSTER, el SIREN (o un número de IVA FR) para EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Número fiscal (Steuernummer)';
+
+  @override
   String get vatDeclGenerate => 'Preparar';
+
+  @override
+  String get vatDeclInputVat => 'IVA deducible';
 
   @override
   String get vatDeclInvoices => 'Facturas';
@@ -18869,6 +19015,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Base imponible';
+
+  @override
+  String get vatDeclPayable => 'IVA a ingresar';
 
   @override
   String get vatDeclPdf => 'PDF';

@@ -14,47 +14,37 @@ import '../domain/workspace_feature.dart';
 /// and the tier survives as a chip on the row.
 String featureSurfaceName(
   BuildContext context,
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   FeatureSurface surface,
 ) =>
     switch (surface) {
-      FeatureSurface.reserve => lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'),
-      FeatureSurface.calendar => lexiconText(context, key: 'tabCalendar', fallback: l10n?.tabCalendar ?? 'Calendar'),
-      FeatureSurface.members => l10n?.membersTitle ?? 'Members',
-      FeatureSurface.money => lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money'),
-      FeatureSurface.messages => lexiconText(context, key: 'messagesTitle', fallback: l10n?.messagesTitle ?? 'Messages'),
-      FeatureSurface.documents => l10n?.documentsTitle ?? 'Documents',
-      FeatureSurface.kiosk => l10n?.kioskRevertTitle ?? 'Kiosk device',
-      FeatureSurface.reports => l10n?.featureSurfaceReports ?? 'Documents you print',
-      FeatureSurface.settings => l10n?.settingsTitle ?? 'Settings',
+      FeatureSurface.reserve => lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
+      FeatureSurface.calendar => lexiconText(context, key: 'tabCalendar', fallback: l10n.tabCalendar),
+      FeatureSurface.members => l10n.membersTitle,
+      FeatureSurface.money => lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
+      FeatureSurface.messages => lexiconText(context, key: 'messagesTitle', fallback: l10n.messagesTitle),
+      FeatureSurface.documents => l10n.documentsTitle,
+      FeatureSurface.kiosk => l10n.kioskRevertTitle,
+      FeatureSurface.reports => l10n.featureSurfaceReports,
+      FeatureSurface.settings => l10n.settingsTitle,
       FeatureSurface.everywhere =>
-        l10n?.featureSurfaceEverywhere ?? 'The whole app',
+        l10n.featureSurfaceEverywhere,
     };
 
 /// One line under the heading saying what that part of the app is, so
 /// the group is a place rather than a word.
-String featureSurfaceHint(AppLocalizations? l10n, FeatureSurface surface) =>
+String featureSurfaceHint(AppLocalizations l10n, FeatureSurface surface) =>
     switch (surface) {
-      FeatureSurface.reserve => l10n?.featureSurfaceReserveHint ??
-          'Booking a seat, the floor plan, check-in.',
-      FeatureSurface.calendar => l10n?.featureSurfaceCalendarHint ??
-          'What is happening, by day and by month.',
-      FeatureSurface.members => l10n?.featureSurfaceMembersHint ??
-          'Who is in the space, their profiles and their roles.',
-      FeatureSurface.money => l10n?.featureSurfaceMoneyHint ??
-          'Statements, payments, invoices and what they are made of.',
-      FeatureSurface.messages => l10n?.featureSurfaceMessagesHint ??
-          'Conversations, alerts and what reaches a phone.',
-      FeatureSurface.documents => l10n?.featureSurfaceDocumentsHint ??
-          'The files the space keeps and shares.',
-      FeatureSurface.kiosk => l10n?.featureSurfaceKioskHint ??
-          'The tablet at the door, badges and scanning.',
-      FeatureSurface.reports => l10n?.featureSurfaceReportsHint ??
-          'Invoices, statements and letters, and how they look on paper.',
-      FeatureSurface.settings => l10n?.featureSurfaceSettingsHint ??
-          'How the space itself is set up.',
-      FeatureSurface.everywhere => l10n?.featureSurfaceEverywhereHint ??
-          'Changes how the app behaves, wherever you are in it.',
+      FeatureSurface.reserve => l10n.featureSurfaceReserveHint,
+      FeatureSurface.calendar => l10n.featureSurfaceCalendarHint,
+      FeatureSurface.members => l10n.featureSurfaceMembersHint,
+      FeatureSurface.money => l10n.featureSurfaceMoneyHint,
+      FeatureSurface.messages => l10n.featureSurfaceMessagesHint,
+      FeatureSurface.documents => l10n.featureSurfaceDocumentsHint,
+      FeatureSurface.kiosk => l10n.featureSurfaceKioskHint,
+      FeatureSurface.reports => l10n.featureSurfaceReportsHint,
+      FeatureSurface.settings => l10n.featureSurfaceSettingsHint,
+      FeatureSurface.everywhere => l10n.featureSurfaceEverywhereHint,
     };
 
 IconData featureSurfaceIcon(FeatureSurface surface) => switch (surface) {

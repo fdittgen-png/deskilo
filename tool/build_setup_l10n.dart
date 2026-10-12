@@ -55,13 +55,13 @@ const _featureCopy = 'lib/features/workspace/presentation/feature_copy.dart';
 /// wire name. The app calls the `service` event a service CHARGE.
 const _domainKeyOverrides = {'service': 'eventTypeServiceCharge'};
 
-/// `WorkspaceFeature.x => l10n?.someKey` in [source], as `x -> someKey`.
+/// `WorkspaceFeature.x => l10n.someKey` in [source], as `x -> someKey`.
 ///
 /// Read from the Dart source rather than restated here, so a feature whose
 /// label getter is renamed changes the questionnaire with it.
 Map<String, String> _getterMap(String source) => {
   for (final m in RegExp(
-    r'WorkspaceFeature\.(\w+)\s*=>\s*l10n\?\.(\w+)',
+    r'WorkspaceFeature\.(\w+)\s*=>\s*l10n\??\.(\w+)',
   ).allMatches(source))
     m.group(1)!: m.group(2)!,
 };
@@ -70,7 +70,7 @@ String _getter(Map<String, String> map, WorkspaceFeature f, String file) =>
     map[f.name] ??
     (throw StateError(
       '$file has no `WorkspaceFeature.${f.name} => '
-      'l10n?.<key>` arm — the setup questionnaire reads its label there',
+      'l10n.<key>` arm — the setup questionnaire reads its label there',
     ));
 
 String _camel(String snake) => snake

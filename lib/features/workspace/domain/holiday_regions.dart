@@ -183,8 +183,8 @@ String _sortKey(String name) {
 /// [codes] ordered by their region name (accents and case ignored), the
 /// code breaking a tie. A code without a name sorts by the code.
 List<String> sortHolidayRegions(Iterable<String> codes) {
-  final list = codes.toSet().toList();
-  list.sort((a, b) {
+  final list = codes.toSet().toList()
+    ..sort((a, b) {
     final byName = _sortKey(holidayRegionName(a))
         .compareTo(_sortKey(holidayRegionName(b)));
     return byName != 0 ? byName : a.compareTo(b);

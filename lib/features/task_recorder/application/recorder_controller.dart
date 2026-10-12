@@ -44,15 +44,15 @@ import 'dart:math';
 import '../../../core/cache/cache_scope.dart' show cacheDigest;
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
+import '../domain/recording_reference.dart';
 import '../domain/recording_sink.dart';
 import '../domain/safe_payload.dart';
 import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
-import '../domain/recording_reference.dart';
 import '../domain/task_recording_codec.dart' show encodeStep;
 
-part 'recorder_types.dart';
 part 'recorder_persistence.dart';
+part 'recorder_types.dart';
 
 class RecorderController {
   RecorderController({
@@ -186,7 +186,7 @@ class RecorderController {
           captureValues: captureValues,
         ),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'could not open a recording (${e.runtimeType})',
@@ -537,7 +537,7 @@ class RecorderController {
   static Future<void> _quietly(Future<void> Function() body) async {
     try {
       await body();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'discard failed (${e.runtimeType})',

@@ -6,65 +6,53 @@ import '../application/assistant_setup.dart';
 
 /// #1827 — the words of the setup checklist, one function per dimension.
 String assistantSetupStepTitle(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   AssistantSetupStep step,
 ) => switch (step) {
   AssistantSetupStep.identity =>
-    l10n?.assistantSetupStepIdentity ?? 'Link your identity',
+    l10n.assistantSetupStepIdentity,
   AssistantSetupStep.workspace =>
-    l10n?.assistantSetupStepWorkspace ??
-        'Turn assistants on for this workspace',
+    l10n.assistantSetupStepWorkspace,
   AssistantSetupStep.policy =>
-    l10n?.assistantSetupStepPolicy ?? 'Choose what assistants may do',
+    l10n.assistantSetupStepPolicy,
   AssistantSetupStep.eligibility =>
-    l10n?.assistantSetupStepEligibility ?? 'Ask for your assistant access',
+    l10n.assistantSetupStepEligibility,
   AssistantSetupStep.installation =>
-    l10n?.assistantSetupStepInstallation ??
-        'Assistants switched on for this database',
+    l10n.assistantSetupStepInstallation,
   AssistantSetupStep.connect =>
-    l10n?.assistantSetupStepConnect ?? 'Connect your assistant',
+    l10n.assistantSetupStepConnect,
 };
 
 /// Why the step exists, in one plain sentence.
 String assistantSetupStepReason(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   AssistantSetupStep step,
 ) => switch (step) {
   AssistantSetupStep.identity =>
-    l10n?.assistantSetupReasonIdentity ??
-        'An assistant acts as you, so this database must know it is you.',
+    l10n.assistantSetupReasonIdentity,
   AssistantSetupStep.workspace =>
-    l10n?.assistantSetupReasonWorkspace ??
-        'While it is off, the workspace refuses every assistant call.',
+    l10n.assistantSetupReasonWorkspace,
   AssistantSetupStep.policy =>
-    l10n?.assistantSetupReasonPolicy ??
-        'Nothing is offered to assistants until someone chooses the '
-            'operations.',
+    l10n.assistantSetupReasonPolicy,
   AssistantSetupStep.eligibility =>
-    l10n?.assistantSetupReasonEligibility ??
-        'This database\'s administrators approve each person once, for every '
-            'workspace on it.',
+    l10n.assistantSetupReasonEligibility,
   AssistantSetupStep.installation =>
-    l10n?.assistantSetupReasonInstallation ??
-        'The instance owner or a delegate switches assistants on for every '
-            'workspace on this database.',
+    l10n.assistantSetupReasonInstallation,
   AssistantSetupStep.connect =>
-    l10n?.assistantSetupReasonConnect ??
-        'Add the connector in your assistant, sign in, and approve this '
-            'workspace.',
+    l10n.assistantSetupReasonConnect,
 };
 
 String assistantSetupStateLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   AssistantSetupState state,
 ) => switch (state) {
-  AssistantSetupState.done => l10n?.assistantSetupStateDone ?? 'Done',
-  AssistantSetupState.todo => l10n?.assistantSetupStateTodo ?? 'To do',
-  AssistantSetupState.waiting => l10n?.assistantSetupStateWaiting ?? 'Waiting',
+  AssistantSetupState.done => l10n.assistantSetupStateDone,
+  AssistantSetupState.todo => l10n.assistantSetupStateTodo,
+  AssistantSetupState.waiting => l10n.assistantSetupStateWaiting,
   AssistantSetupState.blocked =>
-    l10n?.assistantSetupStateBlocked ?? 'After the steps above',
+    l10n.assistantSetupStateBlocked,
   AssistantSetupState.unavailable =>
-    l10n?.assistantSetupStateUnavailable ?? 'Could not be asked',
+    l10n.assistantSetupStateUnavailable,
 };
 
 IconData assistantSetupStateIcon(AssistantSetupState state) => switch (state) {
@@ -76,40 +64,34 @@ IconData assistantSetupStateIcon(AssistantSetupState state) => switch (state) {
 };
 
 String assistantSetupActorLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   AssistantSetupActor actor,
 ) => switch (actor) {
-  AssistantSetupActor.you => l10n?.assistantSetupActorYou ?? 'Who: you',
+  AssistantSetupActor.you => l10n.assistantSetupActorYou,
   AssistantSetupActor.configurer =>
-    l10n?.assistantSetupActorConfigurer ??
-        'Who: someone who manages this workspace\'s configuration',
+    l10n.assistantSetupActorConfigurer,
   AssistantSetupActor.integrations =>
-    l10n?.assistantSetupActorIntegrations ??
-        'Who: someone who manages this workspace\'s integrations',
+    l10n.assistantSetupActorIntegrations,
   AssistantSetupActor.databaseAdministrator =>
-    l10n?.assistantSetupActorDatabaseAdministrator ??
-        'Who: a database administrator',
+    l10n.assistantSetupActorDatabaseAdministrator,
   AssistantSetupActor.instanceOperator =>
-    l10n?.assistantSetupActorInstanceOperator ??
-        'Who: the instance owner or a delegate',
+    l10n.assistantSetupActorInstanceOperator,
 };
 
 /// The banner over the list: the first step not done, and what it needs.
-String assistantSetupNextText(AppLocalizations? l10n, AssistantSetupItem item) {
+String assistantSetupNextText(AppLocalizations l10n, AssistantSetupItem item) {
   final title = assistantSetupStepTitle(l10n, item.step);
   return switch (item.state) {
     AssistantSetupState.unavailable =>
-      l10n?.mcpNextUnavailable ??
-          'The server could not answer. Nothing is assumed; try again later.',
+      l10n.mcpNextUnavailable,
     AssistantSetupState.waiting =>
-      l10n?.assistantSetupNextWaiting(
+      l10n.assistantSetupNextWaiting(
             title,
             assistantSetupActorLabel(l10n, item.actor),
-          ) ??
-          'Next: $title. ${assistantSetupActorLabel(l10n, item.actor)}.',
-    _ => l10n?.assistantSetupNextTodo(title) ?? 'Next: $title.',
+          ),
+    _ => l10n.assistantSetupNextTodo(title),
   };
 }
 
-String assistantSetupFailedText(AppLocalizations? l10n) =>
-    l10n?.assistantSetupFailed ?? 'Could not save. Nothing changed; try again.';
+String assistantSetupFailedText(AppLocalizations l10n) =>
+    l10n.assistantSetupFailed;

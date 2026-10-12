@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-
-import 'note_record_open.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_radius.dart';
-import '../../../reservations/domain/space_code.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../reservations/domain/space_code.dart';
 import '../../../reservations/presentation/widgets/reference_open.dart';
 import '../../domain/member_note_refs.dart';
+import 'note_record_open.dart';
 
 /// Renders a member note's FULL body (#523): plain text — emojis are
 /// just text and render as such — with the `[res:…]` / `[space:…]`

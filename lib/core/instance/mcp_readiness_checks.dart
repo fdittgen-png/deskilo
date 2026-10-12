@@ -194,23 +194,19 @@ List<ReadinessCheck> _eligibility(
   final admins = asInt(m['administrators']) ?? 0;
   final unbound = asInt(m['administrators_without_identity']) ?? 0;
   return [
-    admins > 0
-        ? ReadinessCheck(
+    if (admins > 0) ReadinessCheck(
             area,
             'database_administrator',
             CheckOutcome.pass,
             '$admins active',
-          )
-        : const ReadinessCheck(
+          ) else const ReadinessCheck(
             area,
             'database_administrator',
             CheckOutcome.fail,
             'no database administrator. The infrastructure operator provisions one: '
                 'dart run tool/instance.dart db-admins --ref <ref> grant --email <address> --apply',
           ),
-    unbound == 0
-        ? const ReadinessCheck(area, 'administrators_bound', CheckOutcome.pass)
-        : ReadinessCheck(
+    if (unbound == 0) const ReadinessCheck(area, 'administrators_bound', CheckOutcome.pass) else ReadinessCheck(
             area,
             'administrators_bound',
             CheckOutcome.fail,
@@ -236,6 +232,7 @@ List<ReadinessCheck> _runtime(
       ReadinessCheck(area, code, CheckOutcome.unknown, why);
   ReadinessCheck judge(
     String code,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     bool ok,
     String failDetail, [
     String passDetail = '',
@@ -274,7 +271,8 @@ List<ReadinessCheck> _runtime(
       ),
     );
     final ids = e.oauthClientIds;
-    checks.add(
+    checks
+      ..add(
       ids == null
           ? unknown(
               'oauth_clients_registered',
@@ -285,16 +283,16 @@ List<ReadinessCheck> _runtime(
               clients.isNotEmpty && clients.every(ids.contains),
               '${clients.where((c) => !ids.contains(c)).length} approved client(s) are not registered in Auth',
             ),
-    );
-    checks.add(
+    )
+      ..add(
       judge(
         'output_classified',
         (runtime['unclassified_operations'] as List?)?.isEmpty == true &&
             _localOutputClassified(release.catalogue),
         'an implemented operation has no classified output',
       ),
-    );
-    checks.add(
+    )
+      ..add(
       judge(
         'disclosure_ceiling',
         (runtime['unknown_ceiling_fields'] as List?)?.isEmpty == true,
@@ -393,7 +391,8 @@ List<ReadinessCheck> _runtime(
   }
 
   final status = e.anonymousEndpointStatus;
-  checks.add(switch (status) {
+  checks
+    ..add(switch (status) {
     null => unknown(
       'endpoint_fails_closed',
       'the endpoint could not be reached',
@@ -416,9 +415,9 @@ List<ReadinessCheck> _runtime(
       CheckOutcome.fail,
       'an anonymous call answered $status, not 401',
     ),
-  });
+  })
 
-  checks.add(
+    ..add(
     _secret(
       e,
       'endpoint_installation',
@@ -426,8 +425,8 @@ List<ReadinessCheck> _runtime(
       db?['installation_id'] as String?,
       'installation_mismatch',
     ),
-  );
-  checks.add(
+  )
+    ..add(
     _secret(
       e,
       'endpoint_epoch',
@@ -435,9 +434,9 @@ List<ReadinessCheck> _runtime(
       db?['epoch'] == null ? null : '${db!['epoch']}',
       'epoch_mismatch',
     ),
-  );
-  checks.add(_resource(e, release));
-  checks.add(
+  )
+    ..add(_resource(e, release))
+    ..add(
     db == null
         ? unknown('runtime_state', noDb)
         : ReadinessCheck(

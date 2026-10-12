@@ -6,25 +6,31 @@ import 'package:intl/intl.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/work_hours.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/time/work_hours.dart';
+import '../../application/generate_public_holidays.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/legend_profile_tile.dart';
-import '../widgets/work_hours_provenance_row.dart';
 import '../widgets/availability_tiles.dart';
 import '../widgets/capacity_kpi_card.dart';
-import '../../application/generate_public_holidays.dart';
-import '../widgets/public_holidays_sheet.dart';
 import '../widgets/holiday_import_sheet.dart';
-import '../../../../core/time/clock.dart';
+import '../widgets/legend_profile_tile.dart';
+import '../widgets/public_holidays_sheet.dart';
+import '../widgets/work_hours_provenance_row.dart';
+
+part 'availability_screen_part1.dart';
+
+part 'availability_screen_part2.dart';
+
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
 /// stored in booking_rules) the workspace is open on, plus one-off closure
@@ -33,279 +39,9 @@ import '../../../../core/time/clock.dart';
 class AvailabilityScreen extends ConsumerWidget {
   const AvailabilityScreen({super.key});
 
-  Future<void> _toggleWeekday(
-    BuildContext context,
-    WidgetRef ref,
-    List<int> open,
-    int weekday, {
-    required bool selected,
-  }) async {
-    final l10n = AppLocalizations.of(context);
-    if (!selected && open.length <= 1) {
-      AppSnack.error(
-        context,
-        l10n?.availabilityLastOpenDay ??
-            'At least one weekday must stay open.',
-      );
-      return;
-    }
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final updated = {...open};
-    selected ? updated.add(weekday) : updated.remove(weekday);
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setOpenWeekdays(workspace.id, updated.toList()..sort());
-    } catch (e, st) {
-      debugPrint('set open weekdays failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set open weekdays failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(openWeekdaysProvider);
-  }
-
-  Future<void> _setGranularity(
-    BuildContext context,
-    WidgetRef ref,
-    BookingGranularity? granularity,
-  ) async {
-    if (granularity == null) return;
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setBookingGranularity(workspace.id, granularity);
-    } catch (e, st) {
-      debugPrint('set booking granularity failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set booking granularity failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(bookingGranularityProvider);
-  }
-
-  Future<void> _setWorkHours(
-    BuildContext context,
-    WidgetRef ref,
-    WorkHours hours,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    if (!hours.isValid) {
-      AppSnack.error(
-        context,
-        l10n?.availabilityWorkHoursInvalid ??
-            'The day must run start < half-day boundary < end.',
-      );
-      return;
-    }
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setWorkHours(workspace.id, hours);
-    } catch (e, st) {
-      debugPrint('set work hours failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set work hours failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(workHoursProvider);
-  }
-
-  Future<void> _setPolicy(
-    BuildContext context,
-    WidgetRef ref,
-    String key,
-    bool enabled,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setBookingPolicy(workspace.id, key, enabled: enabled);
-    } catch (e, st) {
-      debugPrint('set booking policy failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set booking policy failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(bookingPoliciesProvider);
-  }
-
-  Future<void> _setOutsideHoursMode(
-    BuildContext context,
-    WidgetRef ref,
-    OutsideHoursMode? mode,
-  ) async {
-    if (mode == null) return;
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setOutsideHoursMode(workspace.id, mode);
-    } catch (e, st) {
-      debugPrint('set outside-hours mode failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set outside-hours mode failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(bookingPoliciesProvider);
-  }
-
-  /// #628 — the workspace default for simultaneous reservations, through
-  /// the same merge-preserving booking_rules write as the other policies.
-  Future<void> _setSimultaneous(
-    BuildContext context,
-    WidgetRef ref,
-    int value,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setSimultaneousReservations(workspace.id, value);
-    } catch (e, st) {
-      debugPrint('set simultaneous reservations failed: $e\n$st');
-      TraceLogger.instance.error(
-          'workspace', 'set simultaneous reservations failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(bookingPoliciesProvider);
-  }
-
-  /// #649 — one writer for all three numeric limits; the key decides
-  /// which. Same merge-preserving booking_rules write as every other
-  /// policy, so the other keys survive untouched.
-  Future<void> _setLimit(
-    BuildContext context,
-    WidgetRef ref,
-    String key,
-    int value,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .setBookingLimit(workspace.id, key, value);
-    } catch (e, st) {
-      debugPrint('set booking limit failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'set booking limit failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(bookingPoliciesProvider);
-  }
-
-  Future<void> _pickWorkTime(
-    BuildContext context,
-    WidgetRef ref,
-    WorkHours hours,
-    int currentMinutes,
-    WorkHours Function(int minutes) apply,
-  ) async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay(
-        hour: currentMinutes ~/ 60,
-        minute: currentMinutes % 60,
-      ),
-    );
-    if (picked == null || !context.mounted) return;
-    await _setWorkHours(context, ref, apply(picked.hour * 60 + picked.minute));
-  }
-
-  Future<void> _addClosure(BuildContext context, WidgetRef ref) async {
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final l10n = AppLocalizations.of(context);
-
-    final now = ref.read(clockProvider).now();
-    final day = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: DateTime(now.year + 2, now.month, now.day),
-    );
-    if (day == null || !context.mounted) return;
-    final reason = await showDialog<String>(
-      context: context,
-      builder: (context) => const _ReasonDialog(),
-    );
-    if (reason == null) return; // cancelled
-
-    try {
-      await ref
-          .read(workspaceRepositoryProvider)
-          .addClosureDay(workspace.id, day, reason.trim());
-    } catch (e, st) {
-      debugPrint('add closure day failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'add closure day failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(closureDaysProvider);
-  }
-
-  Future<void> _removeClosure(
-    BuildContext context,
-    WidgetRef ref,
-    ClosureDay closure,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    try {
-      await ref.read(workspaceRepositoryProvider).removeClosureDay(closure.id);
-    } catch (e, st) {
-      debugPrint('remove closure day failed: $e\n$st');
-      TraceLogger.instance.error('workspace', 'remove closure day failed',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      _showGenericError(context, l10n);
-      return;
-    }
-    ref.invalidate(closureDaysProvider);
-  }
-
-  void _showGenericError(BuildContext context, AppLocalizations? l10n) {
-    AppSnack.error(
-      context,
-      l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final weekdaysAsync = ref.watch(openWeekdaysProvider);
     final granularityAsync = ref.watch(bookingGranularityProvider);
@@ -329,7 +65,7 @@ class AvailabilityScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.availabilityTitle ?? 'Availability'),
+        title: Text(l10n.availabilityTitle),
       ),
       body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (
@@ -345,11 +81,11 @@ class AvailabilityScreen extends ConsumerWidget {
               Row(children: [
                 Flexible(
                   child: SectionHeader(
-                    l10n?.availabilityOpenWeekdays ?? 'Open weekdays',
+                    l10n.availabilityOpenWeekdays,
                   ),
                 ),
                 HelpDot(
-                  l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  l10n.helpHintAvailabilityTopic,
                   anchor: HelpAnchor.availabilityOpenWeekdays,
                 ),
               ]),
@@ -382,21 +118,18 @@ class AvailabilityScreen extends ConsumerWidget {
               Row(children: [
                 Flexible(
                   child: SectionHeader(
-                    l10n?.availabilityGranularityTitle ??
-                        'Booking granularity',
+                    l10n.availabilityGranularityTitle,
                   ),
                 ),
                 HelpDot(
-                  l10n?.helpHintAvailabilityTopic ?? 'Availability',
+                  l10n.helpHintAvailabilityTopic,
                   anchor: HelpAnchor.availabilityGranularity,
                 ),
               ]),
               Padding(
                 padding: AppSpacing.lgH,
                 child: Text(
-                  l10n?.availabilityGranularityDescription ??
-                      'Half days: bookings cover the morning (until 13:00), '
-                          'the afternoon (from 13:00) or the whole day.',
+                  l10n.availabilityGranularityDescription,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -413,25 +146,22 @@ class AvailabilityScreen extends ConsumerWidget {
                   items: [
                     for (final (value, label) in [
                       (BookingGranularity.flexible,
-                          l10n?.availabilityGranularityFlexible ?? 'Free time period'),
+                          l10n.availabilityGranularityFlexible),
                       (BookingGranularity.minutes5,
-                          l10n?.availabilityGranularity5 ?? '5-minute slots'),
+                          l10n.availabilityGranularity5),
                       (BookingGranularity.minutes15,
-                          l10n?.availabilityGranularity15 ?? '15-minute slots'),
+                          l10n.availabilityGranularity15),
                       (BookingGranularity.minutes30,
-                          l10n?.availabilityGranularity30 ?? '30-minute slots'),
+                          l10n.availabilityGranularity30),
                       (BookingGranularity.minutes60,
-                          l10n?.availabilityGranularity60 ?? '1-hour slots'),
+                          l10n.availabilityGranularity60),
                       (BookingGranularity.halfDay,
-                          l10n?.availabilityGranularityHalfDay ??
-                              'Half days (morning & afternoon)'),
+                          l10n.availabilityGranularityHalfDay),
                       (BookingGranularity.fullDay,
-                          l10n?.availabilityGranularityFullDay ?? 'Full days only'),
+                          l10n.availabilityGranularityFullDay),
                       if (workingHoursOn)
                         (BookingGranularity.hours,
-                            l10n?.availabilityGranularityHours ??
-                                'Real hours (exact from-to, half/full days '
-                                    'as shortcuts)'),
+                            l10n.availabilityGranularityHours),
                     ])
                       DropdownMenuItem(value: value, child: Text(label)),
                   ],
@@ -442,21 +172,18 @@ class AvailabilityScreen extends ConsumerWidget {
                 Row(children: [
                   Flexible(
                     child: SectionHeader(
-                      l10n?.availabilityWorkHoursTitle ?? 'Working hours',
+                      l10n.availabilityWorkHoursTitle,
                     ),
                   ),
                   HelpDot(
-                    l10n?.helpTopicWorkingHours ?? 'Working hours',
+                    l10n.helpTopicWorkingHours,
                     anchor: HelpAnchor.availabilityWorkingHours,
                   ),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
                   child: Text(
-                    l10n?.availabilityWorkHoursDescription ??
-                        'The half-day and full-day windows everywhere - '
-                            'reservations, check-in and invoicing - follow '
-                            'these hours.',
+                    l10n.availabilityWorkHoursDescription,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -464,7 +191,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 WorkTimeTile(
                   key: const ValueKey('availability-work-start'),
                   keySuffix: 'start',
-                  title: l10n?.availabilityWorkStart ?? 'Day starts',
+                  title: l10n.availabilityWorkStart,
                   minutes: workHours.startMinutes,
                   onTap: () => _pickWorkTime(
                     context,
@@ -478,7 +205,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   key: const ValueKey('availability-half-boundary'),
                   keySuffix: 'boundary',
                   title:
-                      l10n?.availabilityHalfBoundary ?? 'Half-day boundary',
+                      l10n.availabilityHalfBoundary,
                   minutes: workHours.halfBoundaryMinutes,
                   onTap: () => _pickWorkTime(
                     context,
@@ -491,7 +218,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 WorkTimeTile(
                   key: const ValueKey('availability-work-end'),
                   keySuffix: 'end',
-                  title: l10n?.availabilityWorkEnd ?? 'Day ends',
+                  title: l10n.availabilityWorkEnd,
                   minutes: workHours.endMinutes,
                   onTap: () => _pickWorkTime(
                     context,
@@ -507,8 +234,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   HourCountTile(
                     key: const ValueKey('availability-half-day-hours'),
                     keySuffix: 'half-day-hours',
-                    title: l10n?.availabilityHalfDayHours ??
-                        'Hours billed as a half day',
+                    title: l10n.availabilityHalfDayHours,
                     value: workHours.halfDayHours,
                     onChanged: (v) => _setWorkHours(
                       context,
@@ -519,8 +245,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   HourCountTile(
                     key: const ValueKey('availability-full-day-hours'),
                     keySuffix: 'full-day-hours',
-                    title: l10n?.availabilityFullDayHours ??
-                        'Hours billed as a full day',
+                    title: l10n.availabilityFullDayHours,
                     value: workHours.fullDayHours,
                     onChanged: (v) => _setWorkHours(
                       context,
@@ -534,24 +259,22 @@ class AvailabilityScreen extends ConsumerWidget {
                 Row(children: [
                   Flexible(
                     child: SectionHeader(
-                      l10n?.availabilityPoliciesTitle ?? 'Booking policies',
+                      l10n.availabilityPoliciesTitle,
                     ),
                   ),
                   HelpDot(
-                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    l10n.helpTopicBookingPolicies,
                     anchor: HelpAnchor.availabilityPolicies,
                   ),
                 ]),
                 SwitchListTile(
                   key: const Key('policy-allow-past'),
                   title: HelpDotTitle(
-                    l10n?.policyAllowPastTitle ?? 'Allow past bookings',
-                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    l10n.policyAllowPastTitle,
+                    l10n.helpTopicBookingPolicies,
                     anchor: HelpAnchor.availabilityAllowPast,
                   ),
-                  subtitle: Text(l10n?.policyAllowPastDesc ??
-                      'Members may record a booking that already '
-                          'ended (backfill).'),
+                  subtitle: Text(l10n.policyAllowPastDesc),
                   value: policies.allowPastBookings,
                   onChanged: (v) => _setPolicy(context, ref,
                       BookingPolicies.allowPastBookingsKey, v),
@@ -559,13 +282,11 @@ class AvailabilityScreen extends ConsumerWidget {
                 SwitchListTile(
                   key: const Key('policy-admin-checkout'),
                   title: HelpDotTitle(
-                    l10n?.policyAdminCheckoutTitle ??
-                        'Admins may check members out',
-                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    l10n.policyAdminCheckoutTitle,
+                    l10n.helpTopicBookingPolicies,
                     anchor: HelpAnchor.availabilityAdminCheckout,
                   ),
-                  subtitle: Text(l10n?.policyAdminCheckoutDesc ??
-                      "An admin can end a member's running check-in."),
+                  subtitle: Text(l10n.policyAdminCheckoutDesc),
                   value: policies.adminCheckOut,
                   onChanged: (v) => _setPolicy(context, ref,
                       BookingPolicies.adminCheckOutKey, v),
@@ -577,14 +298,11 @@ class AvailabilityScreen extends ConsumerWidget {
                 LegendProfileTile(policies: policies),
                 ListTile(
                   title: HelpDotTitle(
-                    l10n?.policyOutsideHoursTitle ??
-                        'Outside the opening hours',
-                    l10n?.helpTopicBookingPolicies ?? 'Booking policies',
+                    l10n.policyOutsideHoursTitle,
+                    l10n.helpTopicBookingPolicies,
                     anchor: HelpAnchor.availabilityOutsideHours,
                   ),
-                  subtitle: Text(l10n?.policyOutsideHoursDesc ??
-                      'What may happen outside the working day — the '
-                          'same answer on every granularity.'),
+                  subtitle: Text(l10n.policyOutsideHoursDesc),
                 ),
                 RadioGroup<OutsideHoursMode>(
                   key: const Key('policy-outside-hours'),
@@ -597,40 +315,28 @@ class AvailabilityScreen extends ConsumerWidget {
                       RadioListTile<OutsideHoursMode>(
                         key: const Key('policy-outside-hours-off'),
                         value: OutsideHoursMode.off,
-                        title: Text(l10n?.policyOutsideHoursOff ?? 'Off'),
-                        subtitle: Text(l10n?.policyOutsideHoursOffDesc ??
-                            'Nothing outside the hours: no booking '
-                                'ahead, no walk-up, and a booking '
-                                'running past the day end is refused.'),
+                        title: Text(l10n.policyOutsideHoursOff),
+                        subtitle: Text(l10n.policyOutsideHoursOffDesc),
                       ),
                       RadioListTile<OutsideHoursMode>(
                         key: const Key('policy-outside-hours-walkup'),
                         value: OutsideHoursMode.walkupOnly,
-                        title: Text(l10n?.policyOutsideHoursWalkUp ??
-                            'Spontaneous only'),
-                        subtitle: Text(l10n?.policyOutsideHoursWalkUpDesc ??
-                            'Walk-up check-ins stay possible (evening '
-                                'overtime included); booking ahead '
-                                'outside the hours is refused.'),
+                        title: Text(l10n.policyOutsideHoursWalkUp),
+                        subtitle: Text(l10n.policyOutsideHoursWalkUpDesc),
                       ),
                       RadioListTile<OutsideHoursMode>(
                         key: const Key('policy-outside-hours-free'),
                         value: OutsideHoursMode.free,
-                        title: Text(l10n?.policyOutsideHoursFree ?? 'Free'),
-                        subtitle: Text(l10n?.policyOutsideHoursFreeDesc ??
-                            'Allowed, never counted and never charged — '
-                                'pure presence information.'),
+                        title: Text(l10n.policyOutsideHoursFree),
+                        subtitle: Text(l10n.policyOutsideHoursFreeDesc),
                       ),
                       RadioListTile<OutsideHoursMode>(
                         key: const Key('policy-outside-hours-charged'),
                         value: OutsideHoursMode.charged,
                         title: Text(
-                            l10n?.policyOutsideHoursCharged ?? 'Charged'),
+                            l10n.policyOutsideHoursCharged),
                         subtitle: Text(
-                            l10n?.policyOutsideHoursChargedDesc ??
-                                'Allowed and counted like ordinary '
-                                    'usage — except next to a regular '
-                                    'booking the same day.'),
+                            l10n.policyOutsideHoursChargedDesc),
                       ),
                     ],
                   ),
@@ -648,21 +354,18 @@ class AvailabilityScreen extends ConsumerWidget {
                 Row(children: [
                   Flexible(
                     child: SectionHeader(
-                      l10n?.policyLimitsTitle ?? 'Booking limits',
+                      l10n.policyLimitsTitle,
                     ),
                   ),
                   HelpDot(
-                    l10n?.helpTopicBookingLimits ?? 'Booking limits',
+                    l10n.helpTopicBookingLimits,
                     anchor: HelpAnchor.availabilityLimits,
                   ),
                 ]),
                 Padding(
                   padding: AppSpacing.lgH,
                   child: Text(
-                    l10n?.policyLimitsDesc ??
-                        'How far ahead a booking may be made, and how '
-                            'short or long it may be. These hold on '
-                            'every granularity.',
+                    l10n.policyLimitsDesc,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -670,13 +373,11 @@ class AvailabilityScreen extends ConsumerWidget {
                   key: const ValueKey('availability-policy-horizon-title'),
                   keySuffix: 'horizon',
                   icon: Icons.event_available_outlined,
-                  title: l10n?.policyHorizonTitle ??
-                      'Advance booking horizon',
-                  description: l10n?.policyHorizonDesc ??
-                      'How many days ahead a booking may start.',
+                  title: l10n.policyHorizonTitle,
+                  description: l10n.policyHorizonDesc,
                   value: policies.advanceHorizonDays,
                   options: horizonOptions,
-                  format: (v) => l10n?.policyDaysValue(v) ?? '$v days',
+                  format: l10n.policyDaysValue,
                   onChanged: (v) => _setLimit(context, ref,
                       BookingPolicies.advanceHorizonDaysKey, v),
                 ),
@@ -684,9 +385,8 @@ class AvailabilityScreen extends ConsumerWidget {
                   key: const ValueKey('availability-policy-min-duration-title'),
                   keySuffix: 'min-duration',
                   icon: Icons.hourglass_bottom_outlined,
-                  title: l10n?.policyMinDurationTitle ?? 'Minimum duration',
-                  description: l10n?.policyMinDurationDesc ??
-                      'The shortest booking accepted.',
+                  title: l10n.policyMinDurationTitle,
+                  description: l10n.policyMinDurationDesc,
                   value: policies.minDurationMinutes,
                   options: durationOptions,
                   format: (v) => formatDuration(l10n, v),
@@ -697,9 +397,8 @@ class AvailabilityScreen extends ConsumerWidget {
                   key: const ValueKey('availability-policy-max-duration-title'),
                   keySuffix: 'max-duration',
                   icon: Icons.hourglass_top_outlined,
-                  title: l10n?.policyMaxDurationTitle ?? 'Maximum duration',
-                  description: l10n?.policyMaxDurationDesc ??
-                      'The longest booking accepted.',
+                  title: l10n.policyMaxDurationTitle,
+                  description: l10n.policyMaxDurationDesc,
                   value: policies.maxDurationMinutes,
                   options: durationOptions,
                   format: (v) => formatDuration(l10n, v),
@@ -713,9 +412,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   Padding(
                     padding: AppSpacing.lgH,
                     child: Text(
-                      l10n?.policyDurationConflict ??
-                          'The minimum cannot exceed the maximum — no '
-                              'booking would be accepted.',
+                      l10n.policyDurationConflict,
                       key: const Key('policy-duration-conflict'),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Theme.of(context).colorScheme.error,
@@ -726,11 +423,11 @@ class AvailabilityScreen extends ConsumerWidget {
               Row(children: [
                 Flexible(
                   child: SectionHeader(
-                    l10n?.availabilityClosureDays ?? 'Closure days',
+                    l10n.availabilityClosureDays,
                   ),
                 ),
                 HelpDot(
-                  l10n?.helpTopicWorkingHours ?? 'Working hours',
+                  l10n.helpTopicWorkingHours,
                   anchor: HelpAnchor.availabilityClosureDays,
                 ),
               ]),
@@ -739,7 +436,7 @@ class AvailabilityScreen extends ConsumerWidget {
               ListTile(
                 key: const ValueKey('availability-add-closure'),
                 leading: const Icon(Icons.add),
-                title: Text(l10n?.availabilityAddClosure ?? 'Add closure day'),
+                title: Text(l10n.availabilityAddClosure),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _addClosure(context, ref),
               ),
@@ -748,7 +445,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   key: const ValueKey('availability-public-holidays'),
                   leading: const Icon(Icons.flag_outlined),
                   title: Text(
-                    l10n?.publicHolidaysAction ?? 'Add public holidays',
+                    l10n.publicHolidaysAction,
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   // The screen already holds the repository for its own
@@ -765,7 +462,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 Padding(
                   padding: AppSpacing.lgH,
                   child: Text(
-                    l10n?.availabilityNoClosures ?? 'No closure days.',
+                    l10n.availabilityNoClosures,
                   ),
                 ),
               for (final closure in closures)
@@ -778,7 +475,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       closure.reason.isEmpty ? null : Text(closure.reason),
                   trailing: IconButton(
                     key: ValueKey('availability-delete-${closure.id}'),
-                    tooltip: l10n?.commonDelete ?? 'Delete',
+                    tooltip: l10n.commonDelete,
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _removeClosure(context, ref, closure),
                   ),
@@ -791,58 +488,12 @@ class AvailabilityScreen extends ConsumerWidget {
         (_, _, AsyncError()) =>
           Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
       },
     );
   }
-}
 
-/// One working-day bound: localized clock text, tap opens a time picker.
-class _ReasonDialog extends StatefulWidget {
-  const _ReasonDialog();
-
-  @override
-  State<_ReasonDialog> createState() => _ReasonDialogState();
-}
-
-class _ReasonDialogState extends State<_ReasonDialog> {
-  final _reason = TextEditingController();
-
-  @override
-  void dispose() {
-    _reason.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(l10n?.availabilityAddClosure ?? 'Add closure day'),
-      content: TextField(
-        controller: _reason,
-        autofocus: true,
-        maxLength: 120,
-        decoration: InputDecoration(
-          labelText: l10n?.availabilityClosureReason ?? 'Reason (optional)',
-        ),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('availability-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
-        ),
-        FilledButton(
-          key: const ValueKey('availability-save'),
-          onPressed: () => Navigator.of(context).pop(_reason.text),
-          child: Text(l10n?.commonSave ?? 'Save'),
-        ),
-      ],
-    );
-  }
 }

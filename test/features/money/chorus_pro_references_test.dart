@@ -16,8 +16,7 @@ import 'package:xml/xml.dart';
 
 const _seller = InvoiceParty(
   name: 'COWORKONTI', street: '4 avenue de Castelnau', city: 'Pézenas',
-  postalCode: '34120', country: 'FR', legalId: '10825191900016',
-  vatRegime: 'not_subject', taxExemptionReason: 'Hors champ',
+  postalCode: '34120', country: 'FR', legalId: '10825191900016', taxExemptionReason: 'Hors champ',
 );
 const _mairie = InvoiceParty(
   name: 'Mairie de Pézenas', street: '6 rue Massillon', city: 'Pézenas',

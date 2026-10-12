@@ -8,6 +8,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
@@ -160,7 +161,7 @@ void main() {
 
     test('the default template renders the full built-in shape', () {
       final report = _renderInvoice(
-        template: defaultInvoiceTemplate(null),
+        template: defaultInvoiceTemplate(englishL10n),
         data: {
           ..._data,
           'workspace': 'Pezenas1',

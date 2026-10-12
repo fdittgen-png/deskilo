@@ -78,7 +78,7 @@ void main() {
           vat: const [_ae1500],
           voided: true,
         ),
-        _invoice('5', DateTime(2026, 10, 1), vat: const [_ae1500]),
+        _invoice('5', DateTime(2026, 10), vat: const [_ae1500]),
       ],
       from: from,
       to: to,

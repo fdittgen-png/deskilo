@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -13,13 +14,13 @@ import '../process_names.dart';
 
 /// The word for a [ProcessState] — always shown beside its icon, never
 /// replaced by a colour (#1327, spec §11).
-String processStateLabel(AppLocalizations? l10n, ProcessState state) =>
+String processStateLabel(AppLocalizations l10n, ProcessState state) =>
     switch (state) {
-      ProcessState.active => l10n?.processStateActive ?? 'Active',
-      ProcessState.partial => l10n?.processStatePartial ?? 'Partial',
-      ProcessState.available => l10n?.processStateAvailable ?? 'Available',
+      ProcessState.active => l10n.processStateActive,
+      ProcessState.partial => l10n.processStatePartial,
+      ProcessState.available => l10n.processStateAvailable,
       ProcessState.needsAttention =>
-        l10n?.processStateNeedsAttention ?? 'Needs attention',
+        l10n.processStateNeedsAttention,
     };
 
 IconData _processStateIcon(ProcessState state) => switch (state) {
@@ -63,6 +64,7 @@ class ProcessCard extends StatelessWidget {
   /// #1329 — switch a whole process, or one subprocess, on or off: the
   /// host opens the one preview-and-apply sheet. Null keeps the card
   /// read-only.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   /// Keys for the subprocess rows, so a search hit can scroll to one.
@@ -70,24 +72,19 @@ class ProcessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final copy = processCopy(l10n, status.process.key);
     final counts = [
-      l10n?.processSubprocessCount(
+      l10n.processSubprocessCount(
             status.activeSubprocessCount,
             status.subprocesses.length,
-          ) ??
-          '${status.activeSubprocessCount} of ${status.subprocesses.length} '
-              'subprocesses active',
-      l10n?.processFeatureCount(status.enabledCount, status.capabilityCount) ??
-          '${status.enabledCount} of ${status.capabilityCount} features on',
+          ),
+      l10n.processFeatureCount(status.enabledCount, status.capabilityCount),
     ];
     final warnings = [
       if (status.heldBackCount > 0)
-        l10n?.processHeldBack(status.heldBackCount) ??
-            '${status.heldBackCount} features are on but wait for a '
-                'switched-off prerequisite',
+        l10n.processHeldBack(status.heldBackCount),
       if (status.outsidePrerequisites.isNotEmpty) _alsoNeeds(l10n),
     ];
     final stateLabel = processStateLabel(l10n, status.state);
@@ -164,7 +161,7 @@ class ProcessCard extends StatelessWidget {
     );
   }
 
-  String _alsoNeeds(AppLocalizations? l10n) {
+  String _alsoNeeds(AppLocalizations l10n) {
     final names = status.outsidePrerequisites
         .map(
           (p) =>
@@ -172,8 +169,7 @@ class ProcessCard extends StatelessWidget {
               '(${processLabel(l10n, p.processKey)})',
         )
         .join(', ');
-    return l10n?.processAlsoNeeds(names) ??
-        'Switching it all on also needs: $names';
+    return l10n.processAlsoNeeds(names);
   }
 }
 
@@ -240,11 +236,12 @@ class _Detail extends StatelessWidget {
   final ProcessStatus status;
   final Map<String, GlobalKey> subprocessKeys;
   final ValueChanged<WorkspaceFeature> onOpenFeature;
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final void Function(bool activate, List<String> subprocessKeys)? onChange;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -269,8 +266,7 @@ class _Detail extends StatelessWidget {
             0,
           ),
           child: Text(
-            l10n?.processSwitchHint ??
-                'Tap a feature to change it among the switches.',
+            l10n.processSwitchHint,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -318,7 +314,7 @@ class _Detail extends StatelessWidget {
     if (sub.enabled.contains(feature)) {
       return (
         icon: Icons.check,
-        label: (l10n) => l10n?.processFeatureOn ?? 'On',
+        label: (l10n) => l10n.processFeatureOn,
       );
     }
     for (final held in sub.heldBack) {
@@ -327,15 +323,14 @@ class _Detail extends StatelessWidget {
         icon: Icons.pause_circle_outline,
         label: (l10n) {
           final parent = featureName(l10n, held.waitingFor);
-          return l10n?.processFeatureWaiting(parent) ??
-              'On, waiting for $parent';
+          return l10n.processFeatureWaiting(parent);
         },
       );
     }
     if (sub.off.contains(feature)) {
       return (
         icon: Icons.remove,
-        label: (l10n) => l10n?.processFeatureOff ?? 'Off',
+        label: (l10n) => l10n.processFeatureOff,
       );
     }
     return null;
@@ -344,7 +339,7 @@ class _Detail extends StatelessWidget {
 
 typedef _FeatureLine = ({
   IconData icon,
-  String Function(AppLocalizations? l10n) label,
+  String Function(AppLocalizations l10n) label,
 });
 
 class _SubprocessHeading extends StatelessWidget {
@@ -355,16 +350,15 @@ class _SubprocessHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final copy = processCopy(l10n, status.subprocess.key);
     final stateLabel = processStateLabel(l10n, status.state);
     final count =
-        l10n?.processFeatureCount(
+        l10n.processFeatureCount(
           status.enabled.length,
           status.capabilityCount,
-        ) ??
-        '${status.enabled.length} of ${status.capabilityCount} features on';
+        );
     return Semantics(
       container: true,
       header: true,
@@ -418,9 +412,9 @@ class _ChangeActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final on = l10n?.processSwitchOn ?? 'Switch on';
-    final off = l10n?.processSwitchOff ?? 'Switch off';
+    final l10n = context.l10n;
+    final on = l10n.processSwitchOn;
+    final off = l10n.processSwitchOff;
     return Padding(
       padding: compact
           ? const EdgeInsets.only(top: AppSpacing.xs)
@@ -430,26 +424,22 @@ class _ChangeActions extends StatelessWidget {
         spacing: AppSpacing.sm,
         children: [
           if (canSwitchOn)
-            compact
-                ? TextButton(
+            if (compact) TextButton(
                     key: ValueKey('$keyPrefix-on-$id'),
                     onPressed: () => onChange(true),
                     child: Text(on),
-                  )
-                : FilledButton.tonalIcon(
+                  ) else FilledButton.tonalIcon(
                     key: ValueKey('$keyPrefix-on-$id'),
                     onPressed: () => onChange(true),
                     icon: const Icon(Icons.toggle_on_outlined),
                     label: Text(on),
                   ),
           if (canSwitchOff)
-            compact
-                ? TextButton(
+            if (compact) TextButton(
                     key: ValueKey('$keyPrefix-off-$id'),
                     onPressed: () => onChange(false),
                     child: Text(off),
-                  )
-                : OutlinedButton.icon(
+                  ) else OutlinedButton.icon(
                     key: ValueKey('$keyPrefix-off-$id'),
                     onPressed: () => onChange(false),
                     icon: const Icon(Icons.toggle_off_outlined),

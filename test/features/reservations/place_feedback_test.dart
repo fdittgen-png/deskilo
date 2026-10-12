@@ -3,9 +3,9 @@
 // #2185 — a member favourites a place and rates it from 0 to 5 stars; the
 // bar is absent where the feature is off or the permission is not held.
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
-import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/workspace_feedback.dart';
+import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/place_feedback_bar.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ Future<void> _pumpChips(
 void main() {
   testWidgets('a heart, five stars and what everybody gave', (tester) async {
     final repo = await _pump(tester);
-    expect(find.text('4.0 · 2'), findsOneWidget);
+    expect(find.text('4.0 · 2 ratings'), findsOneWidget);
 
     await tester.tap(find.byKey(PlaceFeedbackBar.heartKey('s1')));
     await tester.pumpAndSettle();
@@ -62,7 +62,7 @@ void main() {
     await tester.tap(find.byKey(PlaceFeedbackBar.starKey('s1', 4)));
     await tester.pumpAndSettle();
     expect((await repo.fetch('ws-1', PlaceKind.seat, 's1')).mine, 4);
-    expect(find.text('4.0 · 3'), findsOneWidget);
+    expect(find.text('4.0 · 3 ratings'), findsOneWidget);
 
     // The same star again takes the rating back; zero is a rating of its own.
     await tester.tap(find.byKey(PlaceFeedbackBar.starKey('s1', 4)));

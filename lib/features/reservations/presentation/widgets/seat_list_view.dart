@@ -2,23 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/place_feedback.dart';
-import 'place_feedback_bar.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/place_feedback.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
-import 'list_space_tap.dart';
 import '../../domain/space_code.dart';
 import '../../domain/whole_space_blocking.dart';
-import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/format_controller.dart';
+import 'list_space_tap.dart';
+import 'place_feedback_bar.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
 ///
@@ -68,7 +67,7 @@ class SeatListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     final level = ref
         .watch(levelsProvider)
@@ -82,7 +81,7 @@ class SeatListView extends ConsumerWidget {
         !plan.offices.any((o) => o.bookableAsWhole)) {
       return EmptyState(
         icon: Icons.event_seat_outlined,
-        title: l10n?.planNoSeats ?? 'This level has no seats yet.',
+        title: l10n.planNoSeats,
       );
     }
 
@@ -124,7 +123,7 @@ class SeatListView extends ConsumerWidget {
           trailing: onTap == null
               ? null
               : Icon(Icons.add_circle_outline,
-                  semanticLabel: l10n?.planReserveButton ?? 'Reserve'),
+                  semanticLabel: l10n.planReserveButton),
           onTap: onTap,
         );
     // #1825 — the window the rows describe (live: the instant).
@@ -147,13 +146,12 @@ class SeatListView extends ConsumerWidget {
         int tables = 0, required int seats, required int priceCents}) {
       if (!offered) return null;
       if (taken != null) {
-        return l10n?.planReservedBy(names[taken.memberId] ?? '—') ??
-            'Reserved by ${names[taken.memberId] ?? '—'}';
+        return l10n.planReservedBy(names[taken.memberId] ?? '—');
       }
       return [
-        l10n?.listWholeReservable ?? 'Reservable as a whole',
-        if (tables > 0) l10n?.listCoversTables(tables) ?? '$tables tables',
-        if (seats > 0) l10n?.listCoversSeats(seats) ?? '$seats seats',
+        l10n.listWholeReservable,
+        if (tables > 0) l10n.listCoversTables(tables),
+        if (seats > 0) l10n.listCoversSeats(seats),
         if (priceCents > 0) '${centsToMajor(priceCents)} $currency',
       ].join(' · ');
     }
@@ -260,8 +258,8 @@ class SeatListView extends ConsumerWidget {
     double indent,
     String place,
   ) {
-    final l10n = AppLocalizations.of(context);
-    final words = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final words = l10n;
     final timeFormat = ref.watch(appFormatProvider); // #1150
     final myMemberId = ref.watch(myMemberProvider).value?.id;
         // Browsing (#184): the row mirrors the canvas — occupancy over the
@@ -310,17 +308,16 @@ class SeatListView extends ConsumerWidget {
         // Closed day (#186): the muted state is the day's, not the
         // seat's — say so instead of the maintenance-block text.
         final stateText = !dayOpen
-            ? (l10n?.planClosedDay ?? 'Closed on this day')
+            ? (l10n.planClosedDay)
             : switch (state) {
-                SeatState.free => l10n?.planStateFree ?? 'Free',
-                SeatState.blocked => l10n?.planSeatBlocked ??
-                    'This seat is blocked for maintenance.',
+                SeatState.free => l10n.planStateFree,
+                SeatState.blocked => l10n.planSeatBlocked,
                 SeatState.mine =>
-                  '${l10n?.planStateYours ?? 'Yours'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+                  '${l10n.planStateYours} · ${l10n.planUntil(until ?? '')}',
                 SeatState.reserved =>
-                  '${l10n?.planReservedBy(who) ?? 'Reserved by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+                  '${l10n.planReservedBy(who)} · ${l10n.planUntil(until ?? '')}',
                 SeatState.occupied =>
-                  '${l10n?.planOccupiedBy(who) ?? 'Occupied by $who'} · ${l10n?.planUntil(until ?? '') ?? 'until $until'}',
+                  '${l10n.planOccupiedBy(who)} · ${l10n.planUntil(until ?? '')}',
               };
         final accent = SeatStateColors.of(
           state,

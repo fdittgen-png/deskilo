@@ -23,7 +23,7 @@ import '../../../../core/theme/app_radius.dart';
 
 /// How many pulse cycles run after a step appears (each ~1.6 s, there and
 /// back) before the highlight rests.
-const int guidePulseCycles = 6;
+const int _guidePulseCycles = 6;
 
 class GuideAttention extends StatefulWidget {
   const GuideAttention({required this.target, required this.bounds, super.key});
@@ -57,8 +57,8 @@ class _GuideAttentionState extends State<GuideAttention>
     _started = true;
     if (MotionSettings.enabledOf(context)) {
       _flash.forward();
-      // there and back, `guidePulseCycles` times, then it rests.
-      _pulse.repeat(reverse: true, count: guidePulseCycles * 2);
+      // there and back, `_guidePulseCycles` times, then it rests.
+      _pulse.repeat(reverse: true, count: _guidePulseCycles * 2);
     }
   }
 

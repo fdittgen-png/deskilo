@@ -24,15 +24,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
+import '../../domain/recording_reference.dart';
 import '../../domain/task_recording.dart' show RecordingEndReason;
 import '../../guide/guide_session.dart';
 import '../../providers/recorder_providers.dart';
-import '../../domain/action_registry.dart' show uiRoutes;
-import '../../domain/recording_reference.dart';
 import '../guide_host/guide_host.dart';
 import '../route_classification.dart';
 import '../ui_capture.dart';
@@ -168,7 +168,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
             controller.unrecorded();
         }
       });
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'route not classified',
@@ -185,7 +185,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
         (status.state == RecorderState.recording ||
             status.state == RecorderState.paused);
     if (live) _referenceErrorDismissed = false;
-    _capture.localizations = AppLocalizations.of(context);
+    _capture.localizations = context.l10n;
     // One shape whether live or not, so starting or stopping a recording
     // never rebuilds the app beneath it from scratch.
     return Listener(
@@ -214,16 +214,14 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
                     children: [
                       Expanded(
                         child: Text(
-                          AppLocalizations.of(context)
-                                  ?.taskRecorderEndReferenceMissing ??
-                              'Stopped: the current form could not be identified. Open a supported page and start again.',
+                          context.l10n
+                                  .taskRecorderEndReferenceMissing,
                         ),
                       ),
                       _PillButton(
                         key: const ValueKey('recording-reference-error-close'),
                         label:
-                            AppLocalizations.of(context)?.guideHostClose ??
-                            'Close',
+                            context.l10n.guideHostClose,
                         onTap: () =>
                             setState(() => _referenceErrorDismissed = true),
                         icon: Icons.close,
@@ -256,14 +254,13 @@ class _Pill extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final paused = status.state == RecorderState.paused;
     final controller = ref.read(recorderControllerProvider);
     final label = paused
-        ? (l10n?.taskRecorderPaused ?? 'Paused')
-        : (l10n?.taskRecorderIndicator(status.stepCount) ??
-              'Recording a task: ${status.stepCount} steps');
+        ? (l10n.taskRecorderPaused)
+        : (l10n.taskRecorderIndicator(status.stepCount));
     return Semantics(
       container: true,
       liveRegion: true,
@@ -297,7 +294,7 @@ class _Pill extends ConsumerWidget {
                         child: Text(
                           paused
                               ? label
-                              : (l10n?.taskRecorderRecording ?? 'Recording'),
+                              : (l10n.taskRecorderRecording),
                           style: TextStyle(color: scheme.onErrorContainer),
                         ),
                       ),
@@ -311,14 +308,14 @@ class _Pill extends ConsumerWidget {
             _PillButton(
               key: const ValueKey('recording-indicator-pause'),
               label: paused
-                  ? (l10n?.taskRecorderResume ?? 'Resume')
-                  : (l10n?.taskRecorderPause ?? 'Pause'),
+                  ? (l10n.taskRecorderResume)
+                  : (l10n.taskRecorderPause),
               icon: paused ? Icons.play_arrow : Icons.pause,
               onTap: paused ? controller.resume : controller.pause,
             ),
             _PillButton(
               key: const ValueKey('recording-indicator-stop'),
-              label: l10n?.taskRecorderStop ?? 'Stop',
+              label: l10n.taskRecorderStop,
               icon: Icons.stop,
               onTap: () async {
                 await controller.stop();

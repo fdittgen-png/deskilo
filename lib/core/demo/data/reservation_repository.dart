@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
+import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 
-import 'package:deskilo/core/time/work_hours.dart';
-import 'package:deskilo/core/time/workspace_time.dart';
 import 'fixture_clock.dart';
 
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint

@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -73,7 +77,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
   }
 
   Future<void> _previewAndDeploy(Workspace from, Workspace to) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final deployments = ref.read(deploymentsProvider);
     setState(() => _busy = true);
     // #1449 — the previewed deployment carries the entities it was
@@ -84,8 +88,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       context,
       domain: 'workspace',
       message: 'deployment preview failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         previewed = await deployments.examine(
           fromWorkspaceId: from.id,
@@ -99,7 +102,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     setState(() => _busy = false);
     if (!ok || previewed == null) return;
     final entities = previewed!.entities;
-    final confirmed = await showModalBottomSheet<bool>(
+    final confirmed = await showAppSheet<bool>(
       context: context,
       showDragHandle: true,
       // #1006 — seventeen entities do not fit a phone: the sheet takes
@@ -118,22 +121,22 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(to.isDevelopment
-            ? (l10n?.deploymentConfirmTitleDev ?? 'Deploy into this DEV?')
-            : (l10n?.deploymentConfirmTitleProd ?? 'Deploy into this PROD?')),
+            ? (l10n.deploymentConfirmTitleDev)
+            : (l10n.deploymentConfirmTitleProd)),
         content: Text(
-          '${l10n?.deploymentConfirmBody ?? 'What this workspace holds for the ticked entities is replaced by the twin\'s. The journal keeps the way back.'}\n\n'
+          '${l10n.deploymentConfirmBody}\n\n'
           '${entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
         ),
         actions: [
           TextButton(
             key: const ValueKey('deploy-final-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('deploy-final-confirm'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.deploymentConfirm ?? 'Deploy'),
+            child: Text(l10n.deploymentConfirm),
           ),
         ],
       ),
@@ -144,46 +147,44 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       context,
       domain: 'workspace',
       message: 'deployment failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => deployments.apply(previewed!),
     );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!deployed) return;
     AppSnack.success(
-        context, l10n?.deploymentDone ?? 'Deployed. The journal has it.');
+        context, l10n.deploymentDone);
     ref.invalidate(myWorkspacesProvider);
     await _load(from);
   }
 
   Future<void> _rollback(Workspace from, Deployment deployment) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'workspace',
       message: 'deployment rollback failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(deploymentsProvider).rollBack(deployment.id),
     );
     if (!ok || !mounted) return;
     AppSnack.success(
-        context, l10n?.deploymentRolledBack ?? 'Rolled back.');
+        context, l10n.deploymentRolledBack);
     await _load(from);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final title = Text(l10n?.deploymentTitle ?? 'Deployment');
+    final title = Text(l10n.deploymentTitle);
     if (workspace == null) {
       return Scaffold(appBar: AppBar(title: title), body: const LoadingView());
     }
     if (!_loaded) {
       _loaded = true;
-      Future<void>.microtask(() => _load(workspace));
+      unawaited(Future<void>.microtask(() => _load(workspace)));
     }
     final twin = _twinOf(workspace);
     final perms = ref.watch(myPermissionsProvider);
@@ -205,7 +206,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
         // the side you stand on, and the guide says so first.
         actions: [
           HelpDot(
-            l10n?.helpTopicDeployment ?? 'Deploying',
+            l10n.helpTopicDeployment,
             anchor: HelpAnchor.advancedDeploy,
           ),
         ],
@@ -218,14 +219,8 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
               children: [
                 Text(
                   workspace.isDevelopment
-                      ? (l10n?.deploymentIntroFromProd ??
-                          'You stand on the development side. What you '
-                              'tick below is pulled from the production '
-                              'twin into this workspace, after a preview.')
-                      : (l10n?.deploymentIntroFromDev ??
-                          'You stand on the production side. What you '
-                              'tick below is pulled from the development '
-                              'twin into this workspace, after a preview.'),
+                      ? (l10n.deploymentIntroFromProd)
+                      : (l10n.deploymentIntroFromDev),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -234,28 +229,23 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                   InlineBanner(
                     key: const ValueKey('deploy-no-twin'),
                     icon: Icons.info_outline,
-                    text: l10n?.deploymentNoTwin ??
-                        'This workspace has no twin you are a member of.',
+                    text: l10n.deploymentNoTwin,
                   ),
                 if (!allowed)
                   InlineBanner(
                     key: const ValueKey('deploy-not-allowed'),
                     icon: Icons.lock_outline,
                     text: toProd
-                        ? (l10n?.deploymentNeedsProdPermission ??
-                            'Deploying to production needs the "Deploy to '
-                                'production" permission.')
-                        : (l10n?.deploymentNeedsDevPermission ??
-                            'Deploying to development needs the "Deploy to '
-                                'development" permission.'),
+                        ? (l10n.deploymentNeedsProdPermission)
+                        : (l10n.deploymentNeedsDevPermission),
                   ),
                 // #998 — grouped: configuration, master data, reports.
                 for (final (kind, label) in [
                   ('configuration',
-                      l10n?.deploymentKindConfiguration ?? 'Configuration'),
+                      l10n.deploymentKindConfiguration),
                   ('master_data',
-                      l10n?.deploymentKindMasterData ?? 'Master data'),
-                  ('reports', l10n?.deploymentKindReports ?? 'Reports'),
+                      l10n.deploymentKindMasterData),
+                  ('reports', l10n.deploymentKindReports),
                 ])
                   if (registry.any((e) => e.kind == kind)) ...[
                     Padding(
@@ -271,7 +261,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                         subtitle: entity.requires.isEmpty
                             ? null
                             : Text(
-                                '${l10n?.deploymentRequires ?? 'needs'} '
+                                '${l10n.deploymentRequires} '
                                 '${entity.requires.map((r) => _deploymentEntityName(l10n, r)).join(', ')}'),
                         onChanged: _busy || twin == null || !allowed
                             ? null
@@ -289,19 +279,19 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                       : () => _previewAndDeploy(from, to),
                   icon: const Icon(Icons.download_outlined),
                   label: Text(workspace.isDevelopment
-                      ? (l10n?.deploymentPullFromProd ?? 'Pull from PROD…')
-                      : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…')),
+                      ? (l10n.deploymentPullFromProd)
+                      : (l10n.deploymentPullFromDev)),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
-                  l10n?.deploymentJournal ?? 'Journal',
+                  l10n.deploymentJournal,
                   style: theme.textTheme.titleSmall,
                 ),
                 if (_journal.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                     child: Text(
-                      l10n?.deploymentJournalEmpty ?? 'Nothing deployed yet.',
+                      l10n.deploymentJournalEmpty,
                       key: const ValueKey('deploy-journal-empty'),
                     ),
                   ),
@@ -312,7 +302,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                         ? Icons.arrow_upward
                         : Icons.arrow_downward),
                     title: Text(
-                      '${d.direction == DeploymentDirection.devToProd ? (l10n?.deploymentDirectionToProd ?? 'To production') : (l10n?.deploymentDirectionToDev ?? 'To development')}'
+                      '${d.direction == DeploymentDirection.devToProd ? (l10n.deploymentDirectionToProd) : (l10n.deploymentDirectionToDev)}'
                       ' · ${d.entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
                     ),
                     subtitle: Text([
@@ -321,7 +311,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                         // #2352 — the reader's clock, never the raw UTC instant.
                         appFormatOf(context).dateTime(d.createdAt!),
                       if (d.isRolledBack)
-                        l10n?.deploymentRolledBackLabel ?? 'rolled back',
+                        l10n.deploymentRolledBackLabel,
                     ].join(' · ')),
                     trailing: index == 0 && !d.isRolledBack && allowed
                         ? TextButton(
@@ -330,7 +320,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                                 ? null
                                 : () => _rollback(workspace, d),
                             child: Text(
-                                l10n?.deploymentRollback ?? 'Roll back'),
+                                l10n.deploymentRollback),
                           )
                         : null,
                   ),
@@ -348,7 +338,7 @@ class _PreviewSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return SafeArea(
       child: Padding(
         padding: AppSpacing.gutterAll,
@@ -358,10 +348,8 @@ class _PreviewSheet extends StatelessWidget {
           children: [
             Text(
               preview.direction == DeploymentDirection.devToProd
-                  ? (l10n?.deploymentPreviewToProd ??
-                      'What changes on the production side')
-                  : (l10n?.deploymentPreviewToDev ??
-                      'What changes on the development side'),
+                  ? (l10n.deploymentPreviewToProd)
+                  : (l10n.deploymentPreviewToDev),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -376,15 +364,14 @@ class _PreviewSheet extends StatelessWidget {
                       dense: true,
                       title: Text(_deploymentEntityName(l10n, e.key)),
                       subtitle: Text(e.isNoop
-                          ? (l10n?.deploymentNoChange ?? 'No change')
+                          ? (l10n.deploymentNoChange)
                           : '+${e.added} · ~${e.changed} · −${e.removed}'),
                     ),
                   if (preview.isNoop)
                     Padding(
                       padding: const EdgeInsets.only(top: AppSpacing.sm),
                       child: Text(
-                        l10n?.deploymentNothingToDo ??
-                            'The two sides already agree on these entities.',
+                        l10n.deploymentNothingToDo,
                         key: const ValueKey('deploy-preview-noop'),
                       ),
                     ),
@@ -398,7 +385,7 @@ class _PreviewSheet extends StatelessWidget {
                 TextButton(
                   key: const ValueKey('deployment-cancel'),
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: Text(l10n?.commonCancel ?? 'Cancel'),
+                  child: Text(l10n.commonCancel),
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 FilledButton(
@@ -406,7 +393,7 @@ class _PreviewSheet extends StatelessWidget {
                   onPressed: preview.isNoop
                       ? null
                       : () => Navigator.of(context).pop(true),
-                  child: Text(l10n?.deploymentConfirm ?? 'Deploy'),
+                  child: Text(l10n.deploymentConfirm),
                 ),
               ],
             ),
@@ -418,37 +405,37 @@ class _PreviewSheet extends StatelessWidget {
 }
 
 /// #988 — the entity's name in the reader's language.
-String _deploymentEntityName(AppLocalizations? l10n, String key) =>
+String _deploymentEntityName(AppLocalizations l10n, String key) =>
     switch (key) {
-      'identity' => l10n?.deployEntityIdentity ?? 'Identity & legal',
-      'vat' => l10n?.deployEntityVat ?? 'VAT',
-      'tariffs' => l10n?.deployEntityTariffs ?? 'Tariffs',
-      'services' => l10n?.deployEntityServices ?? 'Services',
-      'packages' => l10n?.deployEntityPackages ?? 'Packages',
-      'accessories' => l10n?.deployEntityAccessories ?? 'Accessories',
-      'sites' => l10n?.deployEntitySites ?? 'Sites',
+      'identity' => l10n.deployEntityIdentity,
+      'vat' => l10n.deployEntityVat,
+      'tariffs' => l10n.deployEntityTariffs,
+      'services' => l10n.deployEntityServices,
+      'packages' => l10n.deployEntityPackages,
+      'accessories' => l10n.deployEntityAccessories,
+      'sites' => l10n.deployEntitySites,
       'floor_plan' =>
-        l10n?.deployEntityFloorPlan ?? 'Floor plans (levels, places, images)',
-      'booking_rules' => l10n?.deployEntityBookingRules ?? 'Booking rules',
+        l10n.deployEntityFloorPlan,
+      'booking_rules' => l10n.deployEntityBookingRules,
       'validation_rules' =>
-        l10n?.deployEntityValidationRules ?? 'Validation rules',
-      'roles' => l10n?.deployEntityRoles ?? 'Role matrix',
+        l10n.deployEntityValidationRules,
+      'roles' => l10n.deployEntityRoles,
       'payment_instructions' =>
-        l10n?.deployEntityPaymentInstructions ?? 'Payment instructions',
-      'reminders' => l10n?.deployEntityReminders ?? 'Reminder rules',
+        l10n.deployEntityPaymentInstructions,
+      'reminders' => l10n.deployEntityReminders,
       'document_design' =>
-        l10n?.deployEntityDocumentDesign ?? 'Document designs',
+        l10n.deployEntityDocumentDesign,
       'document_links' =>
-        l10n?.deployEntityDocumentLinks ?? 'Document links',
-      'closure_days' => l10n?.deployEntityClosureDays ?? 'Closure days',
-      'invitations' => l10n?.deployEntityInvitations ?? 'Invitation templates',
-      'features' => l10n?.deployEntityFeatures ?? 'Features',
-      'branding' => l10n?.deployEntityBranding ?? 'Colours',
+        l10n.deployEntityDocumentLinks,
+      'closure_days' => l10n.deployEntityClosureDays,
+      'invitations' => l10n.deployEntityInvitations,
+      'features' => l10n.deployEntityFeatures,
+      'branding' => l10n.deployEntityBranding,
       'field_definitions' =>
-        l10n?.deployEntityFieldDefinitions ?? 'Questions the space asks',
+        l10n.deployEntityFieldDefinitions,
       'workspace_roles' =>
-        l10n?.deployEntityWorkspaceRoles ?? 'Roles the space defines',
+        l10n.deployEntityWorkspaceRoles,
       'credit_products' =>
-        l10n?.deployEntityCreditProducts ?? 'Prepaid carnets on sale',
+        l10n.deployEntityCreditProducts,
       _ => key,
     };

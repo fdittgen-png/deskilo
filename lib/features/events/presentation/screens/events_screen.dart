@@ -1,37 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/controls_feed_body.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/domain/payment_method.dart';
+import '../../../money/presentation/payment_method_labels.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../money/domain/payment_method.dart';
-import '../../../money/presentation/payment_method_labels.dart';
 import '../../domain/event_decision.dart';
 import '../../domain/notification_feed.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
-import '../../providers/event_providers.dart';
 import '../../providers/attention_providers.dart';
+import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
 import '../feed_notes.dart';
+import '../widgets/note_row.dart';
 import '../widgets/pending_decisions_section.dart';
 import '../widgets/validation_trail.dart';
-import '../widgets/note_row.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The Events space (spec §8.1): pending confirmations pinned on top,
 /// ONE mixed date-sorted feed below (#581) — messages and workspace
@@ -95,15 +98,15 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     _seenThisShowing.addAll(categories);
     if (categories.contains(NotificationCategory.messages) &&
         ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.memberNotifications)) {
-      ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+      unawaited(ref.read(unreadNoteCountProvider.notifier).markAllSeen());
     }
-    if (filter.categories.isEmpty) ref.read(eventsSeenCutoffProvider.notifier).markOpened();
-    ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit);
+    if (filter.categories.isEmpty) unawaited(ref.read(eventsSeenCutoffProvider.notifier).markOpened());
+    unawaited(ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit));
   }
 
 
   String _line(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     WorkspaceEvent event,
     Map<String, String> names,
     Map<String, String> targets,
@@ -122,17 +125,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     };
   }
 
-  String _groupingLabel(AppLocalizations? l10n, FeedGrouping grouping) {
+  String _groupingLabel(AppLocalizations l10n, FeedGrouping grouping) {
     return switch (grouping) {
-      FeedGrouping.type => l10n?.notifGroupByType ?? 'Type',
-      FeedGrouping.date => l10n?.notifGroupByDate ?? 'Date',
-      FeedGrouping.user => l10n?.notifGroupByUser ?? 'Member',
+      FeedGrouping.type => l10n.notifGroupByType,
+      FeedGrouping.date => l10n.notifGroupByDate,
+      FeedGrouping.user => l10n.notifGroupByUser,
       FeedGrouping.none => '',
     };
   }
 
   String _groupTitle(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     FeedGrouping grouping,
     FeedGroup group,
     Map<String, String> names,
@@ -151,7 +154,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   /// straight back to the flat list — followed by the group's name.
   Widget _groupHeader(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     FeedGrouping grouping,
     FeedGroup group,
     Map<String, String> names,
@@ -167,7 +170,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         children: [
           IconButton(
             key: ValueKey('notif-ungroup-${group.id}'),
-            tooltip: l10n?.notifUngroup ?? 'Ungroup',
+            tooltip: l10n.notifUngroup,
             onPressed: () => ref
                 .read(notificationFilterProvider.notifier)
                 .setGrouping(FeedGrouping.none),
@@ -219,7 +222,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   }
 
   String? _quorumProgress(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     WorkspaceEvent event,
     List<EventDecision> decisions,
     List<ValidationPolicy> policies,
@@ -229,7 +232,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   /// #154 — the localized payment-method line for a payment event, or
   /// null when the payload carries no known method (pre-#154 events, ''
   /// = not specified, or a wire name from a newer app version).
-  String? _methodLine(AppLocalizations? l10n, WorkspaceEvent event) {
+  String? _methodLine(AppLocalizations l10n, WorkspaceEvent event) {
     if (event.type != EventType.payment) return null;
     final method =
         PaymentMethod.fromWire(event.payload['method'] as String?);
@@ -241,9 +244,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   /// colleague agreeing, and the feed has to say which one happened.
   /// The server stamps `payload.auto_validated` on exactly those events;
   /// a peer-reviewed deletion carries no such key and renders as before.
-  String? _autoValidatedNote(AppLocalizations? l10n, WorkspaceEvent event) {
+  String? _autoValidatedNote(AppLocalizations l10n, WorkspaceEvent event) {
     if (event.payload['auto_validated'] != true) return null;
-    return l10n?.eventAutoValidated ?? 'Auto-validated';
+    return l10n.eventAutoValidated;
   }
 
   String _when(WorkspaceEvent event) =>
@@ -252,7 +255,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     _followTab();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final eventsAsync = ref.watch(eventsProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
@@ -327,7 +330,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       padding: const EdgeInsets.only(top: 48),
                       child: EmptyState(
                         icon: Icons.notifications_none_outlined,
-                        title: l10n?.eventsEmpty ?? 'No events yet.',
+                        title: l10n.eventsEmpty,
                       ),
                     ),
                   ],
@@ -356,7 +359,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     children: [
                       FilterChip(
                         key: const ValueKey('events-filter-all'),
-                        label: Text(l10n?.eventsFilterAll ?? 'All'),
+                        label: Text(l10n.eventsFilterAll),
                         selected: filter.categories.isEmpty,
                         visualDensity: VisualDensity.compact,
                         onSelected: (_) => ref
@@ -401,7 +404,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       FilterChip(
                         key: const ValueKey('notes-filter-unread'),
                         label: Text(
-                          '${l10n?.notesFilterUnread ?? 'Unread'}'
+                          '${l10n.notesFilterUnread}'
                           '${unreadIds.isEmpty ? '' : ' (${unreadIds.length})'}',
                         ),
                         selected: unreadOnly,
@@ -416,7 +419,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       FilterChip(
                         key: const ValueKey('notes-filter-read'),
                         label:
-                            Text(l10n?.notesFilterRead ?? 'Read'),
+                            Text(l10n.notesFilterRead),
                         selected: filter.read == ReadFilter.read,
                         visualDensity: VisualDensity.compact,
                         onSelected: (value) => ref
@@ -436,7 +439,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                       // that shapes the list is on these two lines.
                       IconButton(
                         key: const ValueKey('events-sort-toggle'),
-                        tooltip: l10n?.notifSortByDate ?? 'Sort by date',
+                        tooltip: l10n.notifSortByDate,
                         onPressed: () => ref
                             .read(notificationFilterProvider.notifier)
                             .toggleSort(),
@@ -458,7 +461,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     child: Row(
                       children: [
                         Text(
-                          l10n?.notifGroupBy ?? 'Group by',
+                          l10n.notifGroupBy,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         for (final axis in const [
@@ -588,8 +591,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   Padding(
                     padding: AppSpacing.lgAll,
                     child: Text(
-                      l10n?.uxAlertsFilterEmpty ??
-                          'No updates match these filters.',
+                      l10n.uxAlertsFilterEmpty,
                       key: const ValueKey('notes-filter-empty'),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
@@ -601,8 +603,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         ),
       AsyncError() => Center(
           child: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
         ),
       _ => const LoadingView(),

@@ -2452,6 +2452,10 @@
   "@bookRoleRevenue": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleVatInput": "Input VAT",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "Output VAT",
   "@bookRoleVatOutput": {
     "description": "#1869 B chart of accounts"
@@ -4555,6 +4559,51 @@
   "@dunningSettingsTitle": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "eInvoiceChannelGapBuyerEndpoint": "the customer’s electronic address (BT-49) on their profile",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "a buyer reference or a purchase-order number",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "the customer’s VAT number or fiscal code",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "the customer’s Leitweg-ID as their buyer reference",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "the space’s bank account (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "the space’s contact e-mail and telephone",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerEndpoint": "the space’s electronic address (BT-34) in its legal identity",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "the space’s VAT number",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "the county of each Romanian address",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapsTitle": "Before sending through {channel}, add:",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "The buyer's SIREN is missing. A French platform routes by it: enter it on the member's profile before transmitting. Not a refusal — the file is valid without it.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -4566,6 +4615,54 @@
   "eInvoiceGapMixedNotSubjectLines": "A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceMandateEReporting": "sales to consumers and abroad, and the payments of services, must be e-reported",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateFrom": "From {date}: {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateInvoiceRecords": "every invoice must be recorded in a hash-chained register (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "every business must issue e-invoices",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "large and mid-sized businesses must issue e-invoices",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateReceiveAll": "every business must be able to receive e-invoices",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateSince": "Since {date}: {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateTitle": "E-invoicing obligations in your country:",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
   },
   "editorAccessoriesLabel": "Accessories",
   "@editorAccessoriesLabel": {
@@ -5582,6 +5679,10 @@
   "@expenseInvalidAmount": {
     "description": "#1449 expense_rules"
   },
+  "expenseInvalidDeductible": "Enter a share between 0 and 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Enter at least one unit.",
   "@expenseInvalidSupplyQuantity": {
     "description": "#1449 expense_rules"
@@ -5601,6 +5702,31 @@
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "expenseVatDeductible": "Deductible share (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleAmount": "Deductible VAT: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatDeductibleHint": "100 % unless part of the expense is private or serves an exempt activity.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "No VAT",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "VAT on this expense",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "For your accountant to import and review — not a filing.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -5983,6 +6109,14 @@
   "featureHolidayImportTitle": "Import public holidays",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "Input VAT",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Instance wizard",
   "@featureInstanceWizard": {
@@ -8908,10 +9042,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Ready — this file satisfies EN 16931.",
-  "@invoiceEInvoiceReady": {
-    "description": "E-invoice sheet: the file satisfies the norm"
-  },
   "invoiceEInvoiceShare": "Share e-invoice (XML)",
   "@invoiceEInvoiceShare": {
     "description": "Menu: share the EN 16931 UBL XML (EU workspaces)"
@@ -8935,6 +9065,15 @@
   "invoiceEInvoiceTransportPeppol": "An access point delivers it to the customer — no government platform in between.",
   "@invoiceEInvoiceTransportPeppol": {
     "description": "E-invoice sheet: how the file travels on Peppol"
+  },
+  "invoiceEInvoiceValidated": "Ready — nothing EN 16931 requires is missing, and this format passes the official validator ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
   },
   "invoiceEssentialsRefused": "The invoice was not issued: required details are missing.",
   "@invoiceEssentialsRefused": {
@@ -9382,6 +9521,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "The member's tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "The member's VAT number (needed for reverse charge)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -9390,11 +9533,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "The workspace country must be France or Germany for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "The workspace's VAT identification number",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
@@ -16773,6 +16924,10 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "The declaration's caution to verify before filing",
+  "@reportFieldMeaningDeclarationNote": {
+    "description": "#2388 report guide: meaning of declaration_note"
+  },
   "reportFieldMeaningDueDate": "The settlement date",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"
@@ -21279,6 +21434,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "VAT credit",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -21286,6 +21445,14 @@
   "vatDeclDraft": "Draft",
   "@vatDeclDraft": {
     "description": "Draft status chip"
+  },
+  "vatDeclEdiTva": "EDI-TVA file (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "ELSTER file (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
   },
   "vatDeclEmpty": "No declarations yet — pick a period and generate the first one.",
   "@vatDeclEmpty": {
@@ -21295,9 +21462,25 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Enter the tax number: the Steuernummer for ELSTER, the SIREN (or an FR VAT number) for EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Tax number (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  },
   "vatDeclGenerate": "Prepare",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
+  },
+  "vatDeclInputVat": "Deductible VAT",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
   },
   "vatDeclInvoices": "Invoices",
   "@vatDeclInvoices": {
@@ -21314,6 +21497,10 @@
   "vatDeclNet": "Net base",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "VAT payable",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {

@@ -59,7 +59,7 @@ Map<String, Object?> vatDeclarationReportData({
   required String disclaimer,
   required String statusLabel,
   required String Function(double) rate,
-  String Function(VatDeclarationLine line)? correctionOf,
+  String Function(VatDeclarationLine line)? lineNote,
   required String Function(int) money,
   required String Function(DateTime) date,
 }) => {
@@ -78,9 +78,10 @@ Map<String, Object?> vatDeclarationReportData({
   'vat_rate_totals': [
     for (final line in declaration.lines)
       {
-        // #2357 — a correction line names the return it corrects.
-        'rate': line.isCorrection && correctionOf != null
-            ? '${correctionOf(line)} · ${rate(line.percent)}'
+        // #2357 — a correction line names the return it corrects; an
+        // input line says it is deductible VAT.
+        'rate': (line.isCorrection || line.isInput) && lineNote != null
+            ? '${lineNote(line)} · ${rate(line.percent)}'
             : rate(line.percent),
         'net': money(line.netCents),
         'vat': money(line.vatCents),
@@ -88,12 +89,16 @@ Map<String, Object?> vatDeclarationReportData({
       },
   ],
   'vat_form_boxes': [
-    for (final box in vatFormBoxes(countryCode, declaration.lines))
+    for (final box in vatFormBoxes(
+      countryCode,
+      declaration.lines,
+      periodEnd: declaration.periodEnd,
+    ))
       {
         'code': box.code,
         'label': box.label,
-        'net': money(box.netCents),
-        'vat': money(box.vatCents),
+        'net': box.hasBase ? money(box.netCents) : '',
+        'vat': box.hasTax ? money(box.vatCents) : '',
       },
   ],
 };

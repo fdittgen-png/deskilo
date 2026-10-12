@@ -8,8 +8,7 @@ import 'widgets/feature_maturity_badge.dart';
 
 /// #1661 — the workbook's explanations and feature names in the reader's
 /// language; keys, states and values stay technical English.
-WorkbookLabels workbookLabels(AppLocalizations? l10n) {
-  if (l10n == null) return WorkbookLabels.english();
+WorkbookLabels workbookLabels(AppLocalizations l10n) {
   final byKey = {for (final f in WorkspaceFeature.values) f.dbKey: f};
   return WorkbookLabels(
     language: l10n.localeName,

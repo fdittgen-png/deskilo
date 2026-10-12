@@ -133,7 +133,7 @@ class McpClientRegistry {
       try {
         await client.dispose();
         outcomes[client.key] = McpDisposeOutcome.disposed;
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // trace-exempt: the error itself may quote a session; only that a
         // disposal failed is traced, and the outcome map reports it.
         TraceLogger.instance.warn(

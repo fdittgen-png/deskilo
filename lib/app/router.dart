@@ -1,115 +1,75 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../features/workspace/presentation/widgets/workspace_reports.dart';
-import '../features/workspace/presentation/screens/colours_screen.dart';
-import '../features/workspace/presentation/screens/attention_screen.dart';
-import '../features/workspace/presentation/screens/questions_screen.dart';
-import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
-import '../features/workspace/presentation/screens/what_you_can_do_screen.dart';
-import '../features/workspace/presentation/screens/deployment_screen.dart';
-import '../features/workspace/presentation/screens/wording_screen.dart';
-import '../features/directory/presentation/directory_screen.dart' as discovery;
-import '../features/directory/presentation/public_page_editor.dart';
-import '../features/directory/presentation/connections_screen.dart';
-import '../features/directory/presentation/account_messenger_screen.dart';
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
-import '../features/me/presentation/public_person_screen.dart';
-import '../features/money/presentation/screens/my_finances_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../core/backend/backend_uri.dart';
+import '../core/backend/schema_version.dart';
+import '../core/i18n/regional_formats_section.dart';
+import '../core/instance/schema_compatibility.dart';
+import '../core/ui/wizard_navigation.dart';
 import '../features/auth/presentation/screens/auth_screen.dart';
+import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/auth/providers/auth_providers.dart';
-import '../features/calendar/providers/calendar_view_request.dart';
 import '../features/calendar/presentation/screens/calendar_branch.dart';
+import '../features/calendar/providers/calendar_view_request.dart';
+import '../features/directory/presentation/account_messenger_screen.dart';
+import '../features/directory/presentation/connections_screen.dart';
+import '../features/directory/presentation/directory_screen.dart' as discovery;
+import '../features/directory/presentation/public_page_editor.dart';
 import '../features/editor/presentation/screens/editor_screen.dart';
-import '../features/members/presentation/screens/directory_screen.dart';
 import '../features/editor/presentation/screens/level_canvas_screen.dart';
 import '../features/events/presentation/screens/validation_settings_screen.dart';
-import '../features/money/presentation/screens/billing_screen.dart';
-import '../features/money/presentation/screens/report_editor_screen.dart';
-import '../features/members/presentation/screens/member_page.dart';
-import '../features/money/domain/invoicing_wizard.dart';
-import '../features/money/presentation/screens/invoicing_wizard_screen.dart';
-import '../features/money/presentation/screens/money_screen.dart';
-import '../features/money/presentation/screens/invoices_screen.dart';
-import '../features/money/presentation/screens/einvoice_config_screen.dart';
-import '../features/money/presentation/screens/invoice_register_screen.dart';
-import '../features/money/presentation/screens/legal_identity_screen.dart';
-import '../features/money/presentation/screens/my_payment_terms_screen.dart';
-import '../features/money/presentation/screens/vat_declarations_screen.dart';
-import '../features/reservations/domain/space_code.dart';
-import '../features/reservations/presentation/screens/reference_link_screen.dart';
-import '../features/workspace/presentation/screens/payment_methods_screen.dart';
-import '../features/workspace/presentation/screens/documents_screen.dart';
-import '../features/workspace/presentation/screens/roles_screen.dart';
-import '../features/profile/presentation/screens/personal_info_screen.dart';
-import '../features/members/presentation/screens/managed_profile_screen.dart';
-import '../features/money/presentation/screens/vat_screen.dart';
-import '../features/money/presentation/screens/services_screen.dart';
-import '../features/plan/presentation/screens/accessories_screen.dart';
-import '../features/auth/presentation/screens/linked_accounts_screen.dart';
 import '../features/help/presentation/screens/help_screen.dart';
-import '../features/profile/presentation/screens/backend_screen.dart';
-import '../features/mcp/presentation/instance_assistants_screen.dart';
-import '../features/mcp/presentation/mcp_confirmation_screen.dart';
-import 'oauth_consent_route.dart';
-import '../features/mcp/presentation/assistants_screen.dart';
-import '../features/mcp/presentation/eligibility_review_screen.dart';
-import '../features/mcp/presentation/assistant_setup_screen.dart';
-import '../features/mcp/presentation/connect_assistant_screen.dart';
-import '../features/mcp/presentation/mcp_policy_screen.dart';
-import '../features/profile/presentation/screens/new_instance_screen.dart';
-import '../features/profile/presentation/screens/developer_screen.dart';
-import '../features/workspace/presentation/screens/inbox_screen.dart';
-import '../features/workspace/presentation/widgets/conversation_thread.dart';
-import '../core/i18n/regional_formats_section.dart';
-import '../features/profile/presentation/screens/consent_screen.dart';
-import '../features/profile/providers/profile_providers.dart';
-import '../features/profile/presentation/screens/privacy_screen.dart';
-import '../features/profile/presentation/screens/profiles_screen.dart';
-import '../features/profile/presentation/screens/schema_update_screen.dart';
-import '../core/backend/schema_version.dart';
-import '../core/instance/schema_compatibility.dart';
-import 'entry_intent.dart';
-import 'entry_intents.dart';
-import 'entry_resumption.dart';
-import '../features/workspace/providers/workspace_roles_providers.dart';
-import 'route_access.dart';
-import 'route_classes.dart';
-import 'route_policy.dart';
-import 'schema_gate.dart';
-import '../features/profile/presentation/screens/settings_screen.dart';
-import '../features/reservations/presentation/screens/reserve_screen.dart';
-import '../features/workspace/domain/workspace_feature.dart';
-import '../features/workspace/presentation/screens/availability_screen.dart';
-import '../features/workspace/presentation/screens/bi_screen.dart';
-import '../features/workspace/domain/bi_modules.dart';
-import '../features/workspace/presentation/screens/features_screen.dart';
-import '../features/workspace/presentation/screens/members_screen.dart';
-import '../features/workspace/domain/member.dart';
-import '../features/workspace/presentation/screens/onboarding_screen.dart';
-import '../core/ui/wizard_navigation.dart';
-import '../features/workspace/presentation/screens/pending_approval_screen.dart';
-import '../features/workspace/presentation/screens/workspace_applications_screen.dart';
-import '../features/workspace/presentation/screens/scan_join_screen.dart';
-import '../core/backend/backend_uri.dart';
-import '../features/workspace/application/pending_invitation.dart';
-import '../features/workspace/presentation/screens/workspace_code_screen.dart';
-import '../features/workspace/presentation/screens/workspace_library_screen.dart';
-import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
-import '../features/workspace/domain/workspace_permission.dart';
-import '../features/workspace/providers/workspace_providers.dart';
 import '../features/kiosk/presentation/screens/kiosk_gate_screen.dart';
 import '../features/kiosk/presentation/screens/kiosk_screen.dart';
 import '../features/kiosk/providers/kiosk_mode.dart';
-import '../features/money/presentation/screens/payment_config_screen.dart';
-import '../features/workspace/presentation/screens/nfc_config_screen.dart';
-import 'shell/shell_screen.dart';
+import '../features/mcp/presentation/assistant_setup_screen.dart';
+import '../features/mcp/presentation/assistants_screen.dart';
+import '../features/mcp/presentation/connect_assistant_screen.dart';
+import '../features/mcp/presentation/eligibility_review_screen.dart';
+import '../features/mcp/presentation/instance_assistants_screen.dart';
+import '../features/mcp/presentation/mcp_confirmation_screen.dart';
+import '../features/mcp/presentation/mcp_policy_screen.dart';
 import '../features/me/presentation/me_shell.dart';
+import '../features/me/presentation/public_person_screen.dart';
+import '../features/members/presentation/screens/directory_screen.dart';
+import '../features/members/presentation/screens/managed_profile_screen.dart';
+import '../features/members/presentation/screens/member_page.dart';
+import '../features/money/domain/invoicing_wizard.dart';
+import '../features/money/presentation/screens/billing_screen.dart';
+import '../features/money/presentation/screens/einvoice_config_screen.dart';
+import '../features/money/presentation/screens/invoice_register_screen.dart';
+import '../features/money/presentation/screens/invoices_screen.dart';
+import '../features/money/presentation/screens/invoicing_wizard_screen.dart';
+import '../features/money/presentation/screens/legal_identity_screen.dart';
+import '../features/money/presentation/screens/money_screen.dart';
+import '../features/money/presentation/screens/my_finances_screen.dart';
+import '../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../features/money/presentation/screens/number_sequences_screen.dart';
-import '../features/money/presentation/screens/workspace_status_screen.dart';
+import '../features/money/presentation/screens/payment_config_screen.dart';
 import '../features/money/presentation/screens/repartition_wizard_screen.dart';
-import '../features/workspace/presentation/screens/sites_screen.dart';
+import '../features/money/presentation/screens/report_editor_screen.dart';
+import '../features/money/presentation/screens/services_screen.dart';
+import '../features/money/presentation/screens/vat_declarations_screen.dart';
+import '../features/money/presentation/screens/vat_screen.dart';
+import '../features/money/presentation/screens/workspace_status_screen.dart';
+import '../features/plan/presentation/screens/accessories_screen.dart';
+import '../features/profile/presentation/screens/backend_screen.dart';
+import '../features/profile/presentation/screens/consent_screen.dart';
+import '../features/profile/presentation/screens/developer_screen.dart';
+import '../features/profile/presentation/screens/new_instance_screen.dart';
+import '../features/profile/presentation/screens/personal_info_screen.dart';
+import '../features/profile/presentation/screens/privacy_screen.dart';
+import '../features/profile/presentation/screens/profiles_screen.dart';
+import '../features/profile/presentation/screens/schema_update_screen.dart';
+import '../features/profile/presentation/screens/settings_screen.dart';
+import '../features/profile/providers/profile_providers.dart';
+import '../features/reservations/domain/space_code.dart';
+import '../features/reservations/presentation/screens/reference_link_screen.dart';
+import '../features/reservations/presentation/screens/reserve_screen.dart';
 import '../features/task_recorder/presentation/route_classification.dart'
     show taskRecorderRoute, taskWizardRoute, taskWorkbenchRoute;
 import '../features/task_recorder/presentation/screens/task_recorder_screen.dart';
@@ -117,6 +77,49 @@ import '../features/task_recorder/presentation/screens/task_wizard_screen.dart';
 import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
 import '../features/task_recorder/presentation/ui_capture.dart'
     show RecorderWindowObserver;
+import '../features/workspace/application/pending_invitation.dart';
+import '../features/workspace/domain/bi_modules.dart';
+import '../features/workspace/domain/member.dart';
+import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/domain/workspace_permission.dart';
+import '../features/workspace/presentation/screens/attention_screen.dart';
+import '../features/workspace/presentation/screens/availability_screen.dart';
+import '../features/workspace/presentation/screens/bi_screen.dart';
+import '../features/workspace/presentation/screens/colours_screen.dart';
+import '../features/workspace/presentation/screens/deployment_screen.dart';
+import '../features/workspace/presentation/screens/documents_screen.dart';
+import '../features/workspace/presentation/screens/features_screen.dart';
+import '../features/workspace/presentation/screens/inbox_screen.dart';
+import '../features/workspace/presentation/screens/members_screen.dart';
+import '../features/workspace/presentation/screens/nfc_config_screen.dart';
+import '../features/workspace/presentation/screens/onboarding_screen.dart';
+import '../features/workspace/presentation/screens/payment_methods_screen.dart';
+import '../features/workspace/presentation/screens/pending_approval_screen.dart';
+import '../features/workspace/presentation/screens/questions_screen.dart';
+import '../features/workspace/presentation/screens/roles_of_space_screen.dart';
+import '../features/workspace/presentation/screens/roles_screen.dart';
+import '../features/workspace/presentation/screens/scan_join_screen.dart';
+import '../features/workspace/presentation/screens/sites_screen.dart';
+import '../features/workspace/presentation/screens/what_you_can_do_screen.dart';
+import '../features/workspace/presentation/screens/wording_screen.dart';
+import '../features/workspace/presentation/screens/workspace_applications_screen.dart';
+import '../features/workspace/presentation/screens/workspace_code_screen.dart';
+import '../features/workspace/presentation/screens/workspace_library_screen.dart';
+import '../features/workspace/presentation/screens/workspace_settings_screen.dart';
+import '../features/workspace/presentation/widgets/conversation_thread.dart';
+import '../features/workspace/presentation/widgets/workspace_reports.dart';
+import '../features/workspace/providers/workspace_providers.dart';
+import '../features/workspace/providers/workspace_roles_providers.dart';
+import 'entry_intent.dart';
+import 'entry_intents.dart';
+import 'entry_resumption.dart';
+import 'oauth_consent_route.dart';
+import 'page_routes.dart';
+import 'route_access.dart';
+import 'route_classes.dart';
+import 'route_policy.dart';
+import 'schema_gate.dart';
+import 'shell/shell_screen.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
 
@@ -278,6 +281,7 @@ GoRouter router(Ref ref) {
     },
     routes: [
       GoRoute(path: '/auth', builder: (_, s) => AuthScreen(offerDemo: s.uri.queryParameters['demo'] == '1')),
+      for (final page in openedPages) page.route(), // #2388
       GoRoute(path: '/me', builder: (context, state) => // #1823 the Me layer
           MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab']))),
       GoRoute(
@@ -456,13 +460,13 @@ GoRouter router(Ref ref) {
               featureEnabled(WorkspaceFeature.calendarHub);
           // Off the routing frame: setting a provider mid-redirect is
           // modifying state while the tree is building.
-          Future.microtask(
+          unawaited(Future.microtask(
             () => inCalendar
                 ? ref.read(calendarAlertsRequestProvider.notifier).request()
                 : ref
                     .read(inboxTabControllerProvider.notifier)
                     .show(InboxTab.alerts),
-          );
+          ));
           return inCalendar ? '/calendar' : '/messages';
         },
       ),

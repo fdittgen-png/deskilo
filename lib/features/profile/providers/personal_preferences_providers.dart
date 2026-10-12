@@ -20,6 +20,7 @@ class WorkspacePreferenceEditing extends _$WorkspacePreferenceEditing {
     ref.watch(personalPreferenceContextProvider);
     return false;
   }
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void set(bool value) => state = value;
 }
 

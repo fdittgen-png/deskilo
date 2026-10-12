@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/backend/connected_installation_providers.dart';
 import '../../../../core/backend/connected_installations.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/account_activity.dart';
 import '../../providers/account_activity_providers.dart';
 
@@ -17,7 +17,7 @@ class ConnectedActivity extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sources = ref.watch(connectedSourcesProvider);
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     return switch (sources) {
       AsyncData(value: final rows) => Column(
         children: [
@@ -33,7 +33,7 @@ class ConnectedActivity extends ConsumerWidget {
         key: const ValueKey('connected-activity-portal-source-unavailable'),
         onPressed: () => ref.invalidate(connectedSourcesProvider),
         child: Text(
-          l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
+          l.portalSourceUnavailable,
         ),
       ),
       _ => const LoadingView(),
@@ -53,7 +53,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
   final _pages = <ActivityCursor>[];
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final provider = connectedAccountActivityProvider(
       widget.source.endpoint.url,
       widget.kind,
@@ -69,7 +69,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
             AsyncData(value: final entries) => Column(
               children: [
                 if (entries.isEmpty)
-                  Text(l?.accountActivityEmpty ?? 'No records to display.'),
+                  Text(l.accountActivityEmpty),
                 for (final entry in entries)
                   ListTile(
                     title: Text(entry.workspaceName),
@@ -79,17 +79,15 @@ class _SourceState extends ConsumerState<_SourceActivity> {
                         // Preserve provider confirmation status. An issued invoice is not a paid invoice.
                         switch (entry.status) {
                           'created' =>
-                            l?.payOnlinePendingTitle ??
-                                'Online payment pending',
+                            l.payOnlinePendingTitle,
                           'failed' =>
-                            l?.payOnlineFailedTitle ?? 'Online payment failed',
+                            l.payOnlineFailedTitle,
                           'confirmed' =>
-                            l?.accountPaymentConfirmed ?? 'Payment confirmed',
+                            l.accountPaymentConfirmed,
                           'voided' =>
-                            l?.accountInvoiceVoided ?? 'Invoice voided',
+                            l.accountInvoiceVoided,
                           'regrouped' =>
-                            l?.accountInvoiceRegrouped ??
-                                'Included in a settlement invoice',
+                            l.accountInvoiceRegrouped,
                           _ => '',
                         },
                         DateFormat.yMMMd(
@@ -98,7 +96,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
                         if (entry.amountCents case final amount?)
                           moneyFormat(entry.currency).formatMinor(amount),
                         if (entry.minutes case final minutes?)
-                          l?.accountUsageMinutes(minutes) ?? '$minutes minutes',
+                          l.accountUsageMinutes(minutes),
                       ].where((s) => s.isNotEmpty).join(' · '),
                     ),
                   ),
@@ -132,7 +130,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
               key: const ValueKey('connected-activity-portal-source-unavailable-2'),
               onPressed: () => ref.invalidate(provider),
               child: Text(
-                l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
+                l.portalSourceUnavailable,
               ),
             ),
             _ => const LoadingView(),

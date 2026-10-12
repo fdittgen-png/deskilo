@@ -173,7 +173,6 @@ Map<String, InvoiceMatch> _matches() => {
       'i-A1': InvoiceMatch(
         invoiceId: 'i-A1',
         paidCents: 25000,
-        status: 'confirmed',
         resolution: 'exact',
         // Deliberately later than invoices A2..A6, so an exporter that
         // wrote rows document by document produces an out-of-order file.
@@ -182,7 +181,6 @@ Map<String, InvoiceMatch> _matches() => {
       'i-A6': InvoiceMatch(
         invoiceId: 'i-A6',
         paidCents: 3333,
-        status: 'confirmed',
         resolution: 'exact',
         matchedAt: DateTime(2026, 6, 30),
       ),
@@ -290,7 +288,7 @@ void main() {
       final rows = _fecRows(_fec(invoices: [
         _inv(
           number: 'S1',
-          issuedAt: DateTime(2026, 9, 1),
+          issuedAt: DateTime(2026, 9),
           lines: const [
             InvoiceLine(kind: 'subscription', label: '100', amountCents: 9000),
             InvoiceLine(kind: 'payment', label: 'Virement', amountCents: -9000),
@@ -322,7 +320,7 @@ void main() {
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
@@ -346,9 +344,9 @@ void main() {
         invoices: const [],
         matches: const {},
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
         batchName: name,
@@ -383,7 +381,7 @@ void main() {
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
@@ -525,9 +523,9 @@ void main() {
         invoices: year,
         matches: const {},
         accounts: const DatevAccounts(),
-        from: DateTime(2026, 1, 1),
+        from: DateTime(2026),
         to: DateTime(2026, 12, 31),
-        generatedAt: DateTime(2026, 5, 1),
+        generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
       );

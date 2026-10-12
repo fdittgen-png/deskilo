@@ -1,26 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
-import 'booking_review_summary.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
-import '../../domain/place_feedback.dart';
-import 'place_feedback_bar.dart';
 import '../../domain/picked_time.dart';
+import '../../domain/place_feedback.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'booking_review_summary.dart';
 import 'booking_sheet_parts.dart';
-import '../../../../core/i18n/format_controller.dart';
+import 'place_feedback_bar.dart';
 
 /// What the booking sheet returns: the chosen window (start + end), an
 /// optional recurrence and who the booking is for (null/self = caller).
@@ -166,6 +166,7 @@ class BookingSheet extends StatefulWidget {
   /// #814 — the booking gate, asked for every window the member picks:
   /// a refusal disables the confirm button and names its reason. Null
   /// (feature off) keeps the server as the only judge.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final BookingRefusal? Function(DateTime start, DateTime end, bool walkUp)?
       refusalOf;
   final String Function(BookingRefusal refusal)? refusalTextOf;
@@ -242,12 +243,12 @@ class _BookingSheetState extends State<BookingSheet> {
   /// The workspace-local day the booking sits on (canonical windows).
   DateTime get _day => WorkspaceTime.dateOf(widget.start);
 
-  String _patternLabel(AppLocalizations? l10n, SeriesPattern? pattern) {
+  String _patternLabel(AppLocalizations l10n, SeriesPattern? pattern) {
     return switch (pattern) {
-      null => l10n?.repeatNone ?? 'Does not repeat',
-      SeriesPattern.daily => l10n?.repeatDaily ?? 'Every day',
-      SeriesPattern.weekdays => l10n?.repeatWeekdays ?? 'Every weekday',
-      SeriesPattern.weekly => l10n?.repeatWeekly ?? 'Weekly',
+      null => l10n.repeatNone,
+      SeriesPattern.daily => l10n.repeatDaily,
+      SeriesPattern.weekdays => l10n.repeatWeekdays,
+      SeriesPattern.weekly => l10n.repeatWeekly,
     };
   }
 
@@ -264,8 +265,8 @@ class _BookingSheetState extends State<BookingSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final words = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final words = l10n;
     final timeFormat = appFormatOf(context); // #1150
     // Half-day granularity offers the three canonical windows (hours
     // offers them as shortcuts too, #446); full-day is a single locked
@@ -320,11 +321,10 @@ class _BookingSheetState extends State<BookingSheet> {
               ),
               child: Text(
                 _forOther
-                    ? (l10n?.planSendForConfirmation ??
-                        'Send for confirmation')
+                    ? (l10n.planSendForConfirmation)
                     : _walkUp
-                        ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in'))
-                        : (lexiconText(context, key: 'planReserveButton', fallback: l10n?.planReserveButton ?? 'Reserve')),
+                        ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n.planCheckInButton))
+                        : (lexiconText(context, key: 'planReserveButton', fallback: l10n.planReserveButton)),
               ),
             ),
       children: [
@@ -332,7 +332,7 @@ class _BookingSheetState extends State<BookingSheet> {
               Expanded(
                 child: Text(
                   widget.seatName.isEmpty
-                      ? (lexiconText(context, key: 'planCheckInTitle', fallback: l10n?.planCheckInTitle ?? 'Check in'))
+                      ? (lexiconText(context, key: 'planCheckInTitle', fallback: l10n.planCheckInTitle))
                       : widget.seatName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -343,7 +343,7 @@ class _BookingSheetState extends State<BookingSheet> {
               // ProviderScope: no scope, no dot.
               if (_hasProviderScope(context))
                 HelpDot(
-                  l10n?.helpHintReserveTip4Topic ?? 'How booking behaves',
+                  l10n.helpHintReserveTip4Topic,
                   anchor: HelpAnchor.reservationsBookingSheet,
                 ),
             ]),
@@ -377,10 +377,10 @@ class _BookingSheetState extends State<BookingSheet> {
             if (showTimePickers) ...[
               BookingTimeTile(
                 key: const ValueKey('booking-from-tile'),
-                label: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
+                label: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
                 value: _start,
                 onPicked: (t) {
-                  var start = _snap(pickedInstantAt(_day, t.hour, t.minute));
+                  final start = _snap(pickedInstantAt(_day, t.hour, t.minute));
                   var end = _end;
                   if (!end.isAfter(start)) end = start.add(_slot);
                   setState(() {
@@ -392,7 +392,7 @@ class _BookingSheetState extends State<BookingSheet> {
               ),
               BookingTimeTile(
                 key: const ValueKey('booking-until-tile'),
-                label: l10n?.planUntilLabel ?? 'Until',
+                label: l10n.planUntilLabel,
                 value: _end,
                 onPicked: (t) {
                   var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
@@ -409,7 +409,7 @@ class _BookingSheetState extends State<BookingSheet> {
             if (showDurationSlider) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
-                '${lexiconText(context, key: 'planDurationLabel', fallback: l10n?.planDurationLabel ?? 'Duration')} · '
+                '${lexiconText(context, key: 'planDurationLabel', fallback: l10n.planDurationLabel)} · '
                 '${bookingRangeText(context, appFormatOf(context), l10n, _start, _end)}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color:
@@ -442,7 +442,7 @@ class _BookingSheetState extends State<BookingSheet> {
             if (hoursWalkUp)
               BookingTimeTile(
                 key: const ValueKey('booking-until-tile'),
-                label: l10n?.planUntilLabel ?? 'Until',
+                label: l10n.planUntilLabel,
                 value: _end,
                 onPicked: (t) {
                   var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
@@ -466,7 +466,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 key: const ValueKey('booking-for-member'),
                 initialValue: _forMemberId,
                 decoration: InputDecoration(
-                  labelText: lexiconText(context, key: 'planBookForLabel', fallback: l10n?.planBookForLabel ?? 'Book for'),
+                  labelText: lexiconText(context, key: 'planBookForLabel', fallback: l10n.planBookForLabel),
                 ),
                 items: [
                   for (final m in widget.members)
@@ -483,11 +483,9 @@ class _BookingSheetState extends State<BookingSheet> {
 
             if (_capped && _cap != null)
               Text(
-                l10n?.planCappedByNext(
+                l10n.planCappedByNext(
                       timeFormat.time(_cap!),
-                    ) ??
-                    'The seat is reserved from '
-                        '${timeFormat.time(_cap!)}.',
+                    ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             if (overlap) const BookingOverlapNotice(),
@@ -504,8 +502,7 @@ class _BookingSheetState extends State<BookingSheet> {
                     Expanded(
                       child: Text(
                         widget.refusalTextOf?.call(refusal) ??
-                            (l10n?.bookingGateBlocked ??
-                                'Not bookable as chosen'),
+                            (l10n.bookingGateBlocked),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Theme.of(context).colorScheme.error,
                             ),
@@ -520,7 +517,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 tilePadding: EdgeInsets.zero,
                 childrenPadding: EdgeInsets.zero,
                 initiallyExpanded: _pattern != null,
-                title: Text(l10n?.bookingMoreOptions ?? 'More options'),
+                title: Text(l10n.bookingMoreOptions),
                 children: [
                   // ── repeat (spec §5.2) — available whenever booking for self ──
                   if (showRepeat) ...[
@@ -528,7 +525,7 @@ class _BookingSheetState extends State<BookingSheet> {
                       key: const ValueKey('booking-repeat'),
                       initialValue: _pattern,
                       decoration: InputDecoration(
-                        labelText: l10n?.planRepeatLabel ?? 'Repeat',
+                        labelText: l10n.planRepeatLabel,
                       ),
                       items: [
                         for (final p in [null, ...SeriesPattern.values])
@@ -544,7 +541,7 @@ class _BookingSheetState extends State<BookingSheet> {
                     ),
                     if (_pattern != null)
                       BookingDateTile(
-                        label: l10n?.planUntilDateLabel ?? 'Repeat until',
+                        label: l10n.planUntilDateLabel,
                         value: _until,
                         first: widget.start,
                         onPicked: (d) {
@@ -560,7 +557,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 key: const ValueKey('booking-check-in-now'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                    l10n?.kioskCheckInRightAway ?? 'Check in right away'),
+                    l10n.kioskCheckInRightAway),
                 subtitle: Text(words.uxBookingCheckInHelp),
                 value: _checkInNow,
                 onChanged: (v) {
@@ -618,7 +615,7 @@ class _BookingSheetState extends State<BookingSheet> {
 
   /// Morning / Afternoon / Full day under half-day granularity — the same
   /// language as the hub chips, but here it edits the booking's window.
-  Widget _periodChips(AppLocalizations? l10n) {
+  Widget _periodChips(AppLocalizations l10n) {
     Widget chip(String key, String label, HalfDayWindow w) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: ChoiceChip(
@@ -631,11 +628,11 @@ class _BookingSheetState extends State<BookingSheet> {
     return Wrap(
       spacing: AppSpacing.xs,
       children: [
-        chip('booking-am', lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
+        chip('booking-am', lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
             HalfDayWindows.morning(_day)),
-        chip('booking-pm', lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
+        chip('booking-pm', lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
             HalfDayWindows.afternoon(_day)),
-        chip('booking-day', lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
+        chip('booking-day', lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip),
             HalfDayWindows.fullDay(_day)),
       ],
     );

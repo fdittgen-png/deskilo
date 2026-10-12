@@ -18,21 +18,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../helpers/screens/signin.dart' show pumpSignIn;
-import '../helpers/screens/calendar_hub.dart' as calendar;
 import '../features/editor/level_canvas_test.dart' show pumpCanvas;
+import '../features/members/members_screen_test.dart' show pumpMembers;
+import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
+import '../features/profile/settings_sections_test.dart' show pumpSettingsAs;
+import '../features/reservations/reserve_hub_test.dart' show pumpHub;
+import '../features/workspace/workspace_settings_screen_test.dart' show pumpWorkspaceSettings;
+import '../helpers/screens/calendar_hub.dart' as calendar;
 import '../helpers/screens/events.dart' show pumpEvents;
-import '../helpers/screens/validation_settings.dart'
-    show pumpValidationSettings;
+import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/invoices.dart' show pumpInvoices;
 import '../helpers/screens/money_faces.dart' show pumpFaces;
-import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
-import '../features/reservations/reserve_hub_test.dart' show pumpHub;
-import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/onboarding_layout.dart' show pumpOnboardingLayout;
-import '../features/members/members_screen_test.dart' show pumpMembers;
-import '../features/profile/settings_sections_test.dart' show pumpSettingsAs;
-import '../features/workspace/workspace_settings_screen_test.dart' show pumpWorkspaceSettings;
+import '../helpers/screens/signin.dart' show pumpSignIn;
+import '../helpers/screens/validation_settings.dart'
+    show pumpValidationSettings;
 
 /// The six conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,

@@ -27,7 +27,7 @@ void main() {
   test('pro rata of the subscription percentage', () {
     final shares = distributeExpense(
       amountCents: 9000,
-      members: [_m('a', pct: 100), _m('b', pct: 50), _m('c', pct: 30)],
+      members: [_m('a'), _m('b', pct: 50), _m('c', pct: 30)],
       method: RepartitionMethod.subscription,
     );
     expect(shares.map((s) => s.amountCents), [5000, 2500, 1500]);
@@ -38,7 +38,7 @@ void main() {
       'largest fraction takes the odd cent', () {
     final shares = distributeExpense(
       amountCents: 1001,
-      members: [_m('a', days: 1), _m('b', days: 2), _m('c', days: 0)],
+      members: [_m('a', days: 1), _m('b', days: 2), _m('c')],
       method: RepartitionMethod.usage,
     );
     expect(shares.map((s) => s.memberId), ['a', 'b']);
@@ -62,7 +62,7 @@ void main() {
     expect(
         distributeExpense(
             amountCents: 500,
-            members: [_m('a', days: 0)],
+            members: [_m('a')],
             method: RepartitionMethod.usage),
         isEmpty);
     expect(

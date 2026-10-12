@@ -5,44 +5,34 @@
 // language; the counts are the server's.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/rights_request.dart';
 
-String _erasureStoreLabel(AppLocalizations? l10n, String store) =>
+String _erasureStoreLabel(AppLocalizations l10n, String store) =>
     switch (store) {
-      'messages_sent' => l10n?.erasureStoreMessages ?? 'Messages you sent',
+      'messages_sent' => l10n.erasureStoreMessages,
       'custom_answers' =>
-        l10n?.erasureStoreAnswers ?? 'Your answers to the space\'s questions',
+        l10n.erasureStoreAnswers,
       'profile' =>
-        l10n?.erasureStoreProfile ??
-            'Your profile (when this is your last space)',
+        l10n.erasureStoreProfile,
       'open_reservations' =>
-        l10n?.erasureStoreOpenBookings ?? 'Open bookings — cancelled',
+        l10n.erasureStoreOpenBookings,
       'invoices' || 'ledger_entries' =>
-        l10n?.erasureStoreAccounts ??
-            'Invoices and ledger — accounting evidence, kept for the '
-                'statutory period; issued documents are not rewritten',
+        l10n.erasureStoreAccounts,
       'past_reservations' =>
-        l10n?.erasureStorePastBookings ??
-            'Past bookings — the space\'s occupancy record',
+        l10n.erasureStorePastBookings,
       'membership_row' =>
-        l10n?.erasureStoreMembership ??
-            'The membership row — links the records kept; pseudonymous, '
-                'not anonymous',
+        l10n.erasureStoreMembership,
       'custom_answers_under_hold' =>
-        l10n?.erasureStoreHeldAnswers ??
-            'Answers under a retention hold the space documented',
+        l10n.erasureStoreHeldAnswers,
       'other_installations' =>
-        l10n?.erasureStoreOtherInstallations ??
-            'Another DesKilo installation is a separate controller — ask '
-                'it directly',
+        l10n.erasureStoreOtherInstallations,
       'device_caches' =>
-        l10n?.erasureStoreDeviceCaches ??
-            'Copies on your devices — cleared when you sign out of each',
+        l10n.erasureStoreDeviceCaches,
       'operator_backups' =>
-        l10n?.erasureStoreBackups ??
-            'The operator\'s backups — expire on their rotation',
+        l10n.erasureStoreBackups,
       _ => store,
     };
 
@@ -53,7 +43,7 @@ class ErasurePreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     Widget section(
       String title,
@@ -91,16 +81,16 @@ class ErasurePreviewView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n?.erasurePreviewTitle ?? 'What erasing does here',
+          l10n.erasurePreviewTitle,
           style: theme.textTheme.titleMedium,
         ),
-        section(l10n?.erasurePreviewRemoved ?? 'Removed', [
+        section(l10n.erasurePreviewRemoved, [
           ...preview.removed,
           ...preview.restricted,
         ]),
-        section(l10n?.erasurePreviewKept ?? 'Kept, and why', preview.retained),
+        section(l10n.erasurePreviewKept, preview.retained),
         section(
-          l10n?.erasurePreviewOutside ?? 'Outside this installation',
+          l10n.erasurePreviewOutside,
           preview.pendingExternal,
           count: false,
         ),

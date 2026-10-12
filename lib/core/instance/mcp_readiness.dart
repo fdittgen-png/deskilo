@@ -171,10 +171,10 @@ String _mcpReportDigest(Object? value) =>
 /// encode, and hash, the same.
 String canonicalJson(Object? value) {
   Object? sort(Object? v) => switch (v) {
-    Map<dynamic, dynamic> m => {
+    final Map<dynamic, dynamic> m => {
       for (final k in (m.keys.map((k) => '$k').toList()..sort())) k: sort(m[k]),
     },
-    List<dynamic> l => [for (final e in l) sort(e)],
+    final List<dynamic> l => [for (final e in l) sort(e)],
     _ => v,
   };
   return jsonEncode(sort(value));

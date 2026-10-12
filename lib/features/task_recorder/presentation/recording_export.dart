@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/files/file_saver.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -24,7 +25,7 @@ import 'recorder_labels.dart';
 /// The bytes of [recording] as plain JSON or as a package; null when the
 /// validator would refuse them (never offered then).
 Uint8List? recordingExportBytes(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   TaskRecording recording, {
   required bool package,
   List<TaskPackageAsset> assets = const [],
@@ -43,18 +44,15 @@ Uint8List? recordingExportBytes(
 }
 
 Future<bool> _confirmValues(BuildContext context) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final ok = await showDialog<bool>(
     context: context,
     builder: (dialog) => AlertDialog(
       title: Text(
-        l10n?.taskRecorderExportValuesTitle ?? 'This recording contains values',
+        l10n.taskRecorderExportValuesTitle,
       ),
       content: Text(
-        l10n?.taskRecorderExportValuesBody ??
-            'It holds what was typed and chosen during the recording. Check '
-                'it before sharing, and share it only with people who should '
-                'see that.',
+        l10n.taskRecorderExportValuesBody,
       ),
       actions: [
         TextButton(
@@ -65,7 +63,7 @@ Future<bool> _confirmValues(BuildContext context) async {
         FilledButton(
           key: const ValueKey('export-values-confirm'),
           onPressed: () => Navigator.of(dialog).pop(true),
-          child: Text(l10n?.taskRecorderExportValuesConfirm ?? 'Save anyway'),
+          child: Text(l10n.taskRecorderExportValuesConfirm),
         ),
       ],
     ),
@@ -81,12 +79,12 @@ Future<void> saveAndTell(
   required String fileName,
   bool containsValues = false,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   // A recording that captured values leaves the app only after the person
   // has been told it holds them.
   if (containsValues && bytes != null && !await _confirmValues(context)) return;
   if (!context.mounted) return;
-  final failed = l10n?.taskRecorderSaveFailed ?? 'The file could not be saved.';
+  final failed = l10n.taskRecorderSaveFailed;
   if (bytes == null) {
     AppSnack.error(context, failed);
     return;
@@ -97,7 +95,7 @@ Future<void> saveAndTell(
       bytes: bytes,
       fileName: fileName,
     );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'export not saved', stackTrace: st);
     if (context.mounted) AppSnack.error(context, failed);
     return;
@@ -107,20 +105,17 @@ Future<void> saveAndTell(
     case SavedFile(:final path):
       AppSnack.success(
         context,
-        l10n?.taskRecorderSaved(path) ?? 'Saved: $path',
+        l10n.taskRecorderSaved(path),
       );
     case SavedPrivately(:final path):
       AppSnack.info(
         context,
-        l10n?.taskRecorderSavedPrivately(path) ??
-            'Kept only inside the app: $path',
+        l10n.taskRecorderSavedPrivately(path),
       );
     case DownloadRequested():
       AppSnack.info(
         context,
-        l10n?.taskRecorderSaveNoPath ??
-            'The file was handed to your browser or device; it did not '
-                'say where it went.',
+        l10n.taskRecorderSaveNoPath,
       );
     case SaveFailed():
       AppSnack.error(context, failed);

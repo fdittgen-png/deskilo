@@ -16,9 +16,10 @@
 // (0335).
 
 import 'package:meta/meta.dart';
+
 import '../../../core/data/json_reader.dart';
-import 'accounting_amount.dart';
 import '../../../core/time/date_text.dart';
+import 'accounting_amount.dart';
 
 /// Who keeps the official books.
 enum BookAuthority {

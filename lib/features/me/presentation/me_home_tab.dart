@@ -6,32 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/ui/empty_state.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../money/presentation/my_finances_route.dart';
+import '../../money/providers/finance_overview_provider.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../../../core/i18n/money_format.dart';
-import '../../../core/time/clock.dart';
-import '../../money/presentation/my_finances_route.dart';
-import '../../money/providers/finance_overview_provider.dart';
 import '../providers/me_providers.dart';
+import '../providers/space_prefs_provider.dart';
 import 'linked_spaces_section.dart';
 import 'me_spaces_list.dart';
-import '../providers/space_prefs_provider.dart';
 
 class MeHomeTab extends ConsumerWidget {
   const MeHomeTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final spaces = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final memberships =
         ref.watch(myMembershipsProvider).value ?? const <Member>[];
@@ -57,7 +57,7 @@ class MeHomeTab extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        l10n?.meMySpaces ?? 'My spaces',
+                        l10n.meMySpaces,
                         style: Theme.of(context).textTheme.titleLarge?.strong,
                       ),
                     ),
@@ -77,10 +77,9 @@ class MeHomeTab extends ConsumerWidget {
                 EmptyState(
                   key: const ValueKey('me-home-empty'),
                   icon: Icons.meeting_room_outlined,
-                  title: l10n?.meNoSpaceTitle ?? 'You are not in a space yet',
+                  title: l10n.meNoSpaceTitle,
                   subtitle:
-                      l10n?.meNoSpaceBody ??
-                      'Find one near you, join with an invitation code, or create your own.',
+                      l10n.meNoSpaceBody,
                 )
               else if (spaces.isNotEmpty)
                 MeSpacesList(
@@ -105,7 +104,7 @@ class MeHomeTab extends ConsumerWidget {
                       ),
                       icon: const Icon(Icons.qr_code_2_outlined),
                       label: Text(
-                        l10n?.meJoinSpace ?? 'Join with a code',
+                        l10n.meJoinSpace,
                         overflow: TextOverflow.ellipsis,
                       ),
                       onPressed: () => context.push('/onboarding?join=1'),
@@ -123,7 +122,7 @@ class MeHomeTab extends ConsumerWidget {
                       ),
                       icon: const Icon(Icons.add_business_outlined),
                       label: Text(
-                        l10n?.meCreateSpace ?? 'Create a space',
+                        l10n.meCreateSpace,
                         overflow: TextOverflow.ellipsis,
                       ),
                       onPressed: () => context.push('/onboarding'),
@@ -135,7 +134,7 @@ class MeHomeTab extends ConsumerWidget {
                 TextButton(
                   key: const ValueKey('me-home-manage'),
                   onPressed: () => context.push('/profiles'),
-                  child: Text(l10n?.meManageSpaces ?? 'Manage my spaces'),
+                  child: Text(l10n.meManageSpaces),
                 ),
               const SizedBox(height: AppSpacing.xl),
             ],
@@ -154,7 +153,7 @@ class _FinanceGlance extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // Me is production: a development space's test invoices never count.
     final data = ref
         .watch(financeOverviewProvider)
@@ -193,13 +192,12 @@ class _FinanceGlance extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        l10n?.meFinanceGlanceOwed(amount) ?? 'To pay: $amount',
+                        l10n.meFinanceGlanceOwed(amount),
                         style: Theme.of(context).textTheme.titleSmall?.strong,
                       ),
                       if (overdue > 0)
                         Text(
-                          l10n?.financesOverdueCount(overdue) ??
-                              '$overdue overdue',
+                          l10n.financesOverdueCount(overdue),
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: scheme.error),
                         ),
@@ -222,7 +220,7 @@ class _MeHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final profile = ref.watch(myProfileProvider).value;
     final name = profile?.displayName ?? '';
@@ -255,8 +253,7 @@ class _MeHeader extends ConsumerWidget {
                     const SizedBox(width: AppSpacing.xs),
                     Flexible(
                       child: Text(
-                        l10n?.meHeaderOwned ??
-                            'Your account · it belongs only to you',
+                        l10n.meHeaderOwned,
                         style: Theme.of(context).textTheme.bodySmall
                             ?.copyWith(color: scheme.onSurfaceVariant),
                       ),

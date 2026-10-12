@@ -23,19 +23,26 @@
 //     needs review: it may not override consumer protection.
 //   * Capacity not stated — no automatic clause; the owner's texts print
 //     and are flagged for review.
-//   * Any other seller country — no reviewed profile: nothing automatic,
-//     the owner's texts print flagged, and the EU recovery indemnity is
-//     not printed outside the EU.
+//   * Any other EU member state (#2356; Italy, Spain, Poland and Romania
+//     wait for their national e-invoicing channel, #2358) — Directive 2011/7/EU gives every
+//     member state the €40 recovery indemnity and statutory interest
+//     between businesses, by law, without making them an invoice mention:
+//     the owner's texts print, as for Germany; a consumer never gets the
+//     indemnity.
+//   * Outside the EU — no reviewed profile: nothing automatic, the owner's
+//     texts print flagged, and no EU recovery indemnity.
 //
 // Every profile is `requiresReview`: these rules are the documented
 // statutory references, not an authoritative legal review. A profile
 // becomes reviewed only when someone with that authority says so.
 import 'package:meta/meta.dart';
+
+import '../../../core/data/json_reader.dart';
+import 'einvoice_mandates.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
 import 'vat_compliance.dart';
-import '../../../core/data/json_reader.dart';
 
 /// Whether the customer acts as a business or as a consumer. Stated by
 /// the seller (`members.customer_capacity`, the workspace default in
@@ -63,10 +70,14 @@ enum LegalProfile {
   deBusiness,
   deConsumer,
 
+  /// #2356 — any other EU member state, under Directive 2011/7/EU.
+  euBusiness,
+  euConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
-  /// FR or DE with the capacity not stated.
+  /// An EU seller with the capacity not stated.
   capacityUnknown,
 }
 
@@ -245,12 +256,18 @@ class LegalClauseSnapshot {
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  if (country != 'FR' && country != 'DE') return LegalProfile.unsupported;
+  // #2358 — a national clearance channel the app does not speak yet.
+  if (!isEuCountry(country) ||
+      nationalChannelRequired.contains(euCountryCode(country))) {
+    return LegalProfile.unsupported;
+  }
   return switch ((country, snapshot.buyerCapacity)) {
     ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
     ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
     ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
     ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
+    (_, CustomerCapacity.business) => LegalProfile.euBusiness,
+    (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
   };
 }
@@ -300,14 +317,16 @@ QualifiedClauses qualifyClauses(
       ),
       escompte: owned(own.escompte, orDefault: strings.escompteDefault),
     ),
-    LegalProfile.deBusiness => QualifiedClauses(
+    LegalProfile.deBusiness || LegalProfile.euBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
       recoveryIndemnity: owned(own.recoveryIndemnity, orDefault: ''),
       escompte: owned(own.escompte, orDefault: ''),
     ),
-    LegalProfile.frConsumer || LegalProfile.deConsumer => QualifiedClauses(
+    LegalProfile.frConsumer ||
+    LegalProfile.deConsumer ||
+    LegalProfile.euConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),

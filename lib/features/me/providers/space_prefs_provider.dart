@@ -99,7 +99,7 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
     await _set(
       _now.copyWith(
         groups: [
-          for (final g in _now.groups) g.id == id ? SpaceGroup(id, clean) : g,
+          for (final g in _now.groups) if (g.id == id) SpaceGroup(id, clean) else g,
         ],
       ),
     );

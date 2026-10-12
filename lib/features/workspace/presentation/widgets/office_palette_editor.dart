@@ -9,10 +9,10 @@
 // of eight slots: the order is the meaning.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/office_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_branding.dart';
 
 class OfficePaletteEditor extends StatelessWidget {
@@ -39,7 +39,7 @@ class OfficePaletteEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final showing = fills.isEmpty
         ? [for (final c in OfficeColors.palette) hexOfColor(c.toARGB32())]
@@ -47,14 +47,12 @@ class OfficePaletteEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n?.coloursRooms ?? 'Room colours',
+        Text(l10n.coloursRooms,
             style: theme.textTheme.titleSmall),
         Text(
           fills.isEmpty
-              ? (l10n?.coloursRoomsProduct ??
-                  'The product palette. Add a colour to use your own.')
-              : (l10n?.coloursRoomsOwn(fills.length) ??
-                  '${fills.length} of your own colours, in order.'),
+              ? (l10n.coloursRoomsProduct)
+              : (l10n.coloursRoomsOwn(fills.length)),
           key: const ValueKey('colours-rooms-state'),
           style: theme.textTheme.bodySmall,
         ),
@@ -84,12 +82,12 @@ class OfficePaletteEditor extends StatelessWidget {
             FilledButton.tonal(
               key: const ValueKey('colours-rooms-save'),
               onPressed: busy ? null : onSave,
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
             TextButton(
               key: const ValueKey('colours-rooms-reset'),
               onPressed: busy || fills.isEmpty ? null : onReset,
-              child: Text(l10n?.coloursReset ?? 'Product colours'),
+              child: Text(l10n.coloursReset),
             ),
           ],
         ),
@@ -157,7 +155,7 @@ class _AddFillState extends State<_AddFill> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final typed = parseHexColor(_field.text);
     return SizedBox(
       width: 180,
@@ -170,7 +168,7 @@ class _AddFillState extends State<_AddFill> {
               enabled: widget.enabled,
               decoration: InputDecoration(
                 isDense: true,
-                labelText: l10n?.coloursRoomsAdd ?? 'Add a colour',
+                labelText: l10n.coloursRoomsAdd,
                 hintText: '#EBDCC9',
               ),
               onChanged: (_) => setState(() {}),
@@ -178,7 +176,7 @@ class _AddFillState extends State<_AddFill> {
           ),
           IconButton(
             key: const ValueKey('colours-room-add'),
-            tooltip: l10n?.coloursRoomsAdd ?? 'Add a colour',
+            tooltip: l10n.coloursRoomsAdd,
             onPressed: widget.enabled && typed != null
                 ? () {
                     widget.onAdd(hexOfColor(typed));

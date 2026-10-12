@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/validation_policy.dart';
 import '../validation_workflow.dart';
 
@@ -25,7 +25,7 @@ class ValidationPolicyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final steps = validationSteps(l10n, effective);
     return Card(
@@ -47,7 +47,7 @@ class ValidationPolicyCard extends StatelessWidget {
                   Expanded(
                     child: HelpDotTitle(
                       label,
-                      l10n?.helpHintValidationTopic ?? 'confirmations',
+                      l10n.helpHintValidationTopic,
                       anchor: HelpAnchor.validationOverview,
                     ),
                   ),
@@ -61,8 +61,8 @@ class ValidationPolicyCard extends StatelessWidget {
                   Flexible(
                     child: Text(
                       customized
-                          ? (l10n?.validationCustomized ?? 'Customized')
-                          : (l10n?.validationInherited ?? 'Inherits default'),
+                          ? (l10n.validationCustomized)
+                          : (l10n.validationInherited),
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: customized
@@ -84,8 +84,7 @@ class ValidationPolicyCard extends StatelessWidget {
               if (effective.minAmountCents > 0) ...[
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  l10n?.validationThresholdNote ??
-                      'Smaller amounts apply straight away.',
+                  l10n.validationThresholdNote,
                   style: theme.textTheme.labelSmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),

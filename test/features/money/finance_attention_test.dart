@@ -3,10 +3,10 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/notification_feed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/events/presentation/widgets/pending_decisions_section.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/events/providers/notification_filter_providers.dart';
-import 'package:deskilo/features/events/presentation/widgets/pending_decisions_section.dart';
 import 'package:deskilo/features/money/presentation/widgets/money_attention_body.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';

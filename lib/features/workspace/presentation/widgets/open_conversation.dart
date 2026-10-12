@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_thread.dart';
@@ -34,7 +34,7 @@ Future<void> openDirectConversation(
   required String memberId,
   String? seedBody,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   String? conversationId;
@@ -42,8 +42,7 @@ Future<void> openDirectConversation(
     context,
     domain: 'workspace',
     message: 'open direct conversation failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async {
       conversationId = await ref
           .read(workspaceRepositoryProvider)

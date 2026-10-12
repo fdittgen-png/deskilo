@@ -7,11 +7,13 @@
 // said honestly: the image could not be CONFIRMED as saved. "Try again"
 // reruns the SAME write: for an illustration image the same operation id
 // (#2012 B), so a retry after a lost answer converges on one image.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 
 Future<void> runPlanMediaWrite(
   BuildContext context, {
@@ -24,28 +26,26 @@ Future<void> runPlanMediaWrite(
   busy.value = true;
   try {
     await write();
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.error('editor', trace, error: e, stackTrace: st);
     if (!context.mounted) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     AppSnack.error(
       context,
-      l10n?.editorMediaWriteFailed ??
-          'The image could not be confirmed as saved. Trying again never '
-              'adds it twice.',
+      l10n.editorMediaWriteFailed,
       replace: true,
       action: SnackBarAction(
         key: const ValueKey('plan-media-retry'),
-        label: l10n?.commonRetry ?? 'Try again',
+        label: l10n.commonRetry,
         onPressed: () {
           if (!context.mounted) return;
-          runPlanMediaWrite(
+          unawaited(runPlanMediaWrite(
             context,
             busy: busy,
             trace: trace,
             write: write,
             onDone: onDone,
-          );
+          ));
         },
       ),
     );

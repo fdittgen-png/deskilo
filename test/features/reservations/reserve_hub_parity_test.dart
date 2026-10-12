@@ -15,16 +15,16 @@
 //     problem.
 //  2. The hub had no way back to now. Browsing to another date was one
 //     tap; returning meant opening the picker and hunting for today.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/source_of.dart';
 
 void main() {
   group('the editor is reachable from the map surface', () {
     late String shell;
 
     setUpAll(() {
-      shell = File('lib/app/shell/shell_screen.dart').readAsStringSync();
+      shell = sourceOf('lib/app/shell/shell_screen.dart');
     });
 
     // #685 put the editor on BOTH map surfaces. #687 then deleted the
@@ -53,10 +53,9 @@ void main() {
     late String hub;
 
     setUpAll(() {
-      hub = File('lib/features/reservations/presentation/screens/'
-              'reserve_screen.dart')
-          .readAsStringSync() + File('lib/features/reservations/presentation/widgets/'
-              'reserve_hub_layout.dart').readAsStringSync();
+      hub = sourceOf('lib/features/reservations/presentation/screens/'
+              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
+              'reserve_hub_layout.dart');
     });
 
     test('a Back-to-now button exists, named in words', () {
@@ -86,10 +85,9 @@ void main() {
     late String hub;
 
     setUpAll(() {
-      hub = File('lib/features/reservations/presentation/screens/'
-              'reserve_screen.dart')
-          .readAsStringSync() + File('lib/features/reservations/presentation/widgets/'
-              'reserve_hub_layout.dart').readAsStringSync();
+      hub = sourceOf('lib/features/reservations/presentation/screens/'
+              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
+              'reserve_hub_layout.dart');
     });
 
     test('scan, date and the four views survive', () {
@@ -98,7 +96,7 @@ void main() {
       // control rows because its width was what pushed the window chips
       // onto a third one.
       expect(
-        File('lib/app/shell/shell_screen.dart').readAsStringSync(),
+        sourceOf('lib/app/shell/shell_screen.dart'),
         contains("ValueKey('reserve-scan-button')"),
       );
       for (final key in [

@@ -96,8 +96,8 @@ class DioSupabaseManagement implements SupabaseManagement {
       // trace-exempt: rethrown as ManagementApiException, stack kept; the wizard traces.
       final data = e.response?.data;
       final message = switch (data) {
-        Map<dynamic, dynamic> m => '${m['message'] ?? m['error'] ?? data}',
-        String s when s.isNotEmpty => s,
+        final Map<dynamic, dynamic> m => '${m['message'] ?? m['error'] ?? data}',
+        final String s when s.isNotEmpty => s,
         _ => e.message ?? 'network error',
       };
       Error.throwWithStackTrace(

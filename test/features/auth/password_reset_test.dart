@@ -172,9 +172,10 @@ void main() {
   testWidgets('a retry that finds the session gone goes back to the code '
       'step with its own sentence', (tester) async {
     final auth = await pumpSignedOut(tester);
-    auth.confirmResetResult =
-        const AuthResult.recoverySessionReadyButPasswordNotUpdated();
-    auth.updatePasswordResult = const AuthResult.recoveryVerificationRequired();
+    auth
+      ..confirmResetResult =
+        const AuthResult.recoverySessionReadyButPasswordNotUpdated()
+      ..updatePasswordResult = const AuthResult.recoveryVerificationRequired();
     await atVerify(tester);
     await tester.tap(find.text('Set new password'));
     await tester.pumpAndSettle();

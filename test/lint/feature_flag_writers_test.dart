@@ -33,7 +33,9 @@ const _repository =
 
 void main() {
   final sources = {
-    for (final f in handWrittenDartFiles('lib')) f.path: f.readAsStringSync(),
+    // #2386 — a part file is read with its library.
+    for (final f in handWrittenDartFiles('lib'))
+      if (!isPartFile(f)) f.path: readLibrary(f),
   };
 
   test('every setFeatureFlags caller writes a toggle delta, or is a named '

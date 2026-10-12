@@ -275,7 +275,6 @@
       }
     }
   },
-  "invoiceEInvoiceReady": "Bereit — diese Datei erfüllt EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Ein Validator würde diese Datei ablehnen:",
   "invoiceEInvoiceIncompleteTitle": "Gültig, doch die strengen nationalen Profile wollen zusätzlich:",
   "invoiceGapVatNotSupported": "Der Space verlangt Mehrwertsteuer, diese Rechnung trägt aber keinen Satz — Sätze anlegen und die Rechnung neu ausstellen.",

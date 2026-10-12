@@ -68,8 +68,8 @@ void main() {
       final store = FileCacheStore(directory: dir);
       await store.put('seed', 1, ttl: ttl);
       final fresh = File('${dir.path}/x.1.tmp')..writeAsStringSync('{');
-      final orphan = File('${dir.path}/y.2.tmp')..writeAsStringSync('{');
-      orphan.setLastModifiedSync(DateTime.utc(2020));
+      final orphan = File('${dir.path}/y.2.tmp')..writeAsStringSync('{')
+        ..setLastModifiedSync(DateTime.utc(2020));
       await store.evictExpired();
       expect(fresh.existsSync(), isTrue);
       expect(orphan.existsSync(), isFalse);

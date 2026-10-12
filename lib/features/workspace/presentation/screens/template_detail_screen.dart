@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -43,7 +44,7 @@ class TemplateDetailScreen extends ConsumerStatefulWidget {
 class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
   String _filter = '';
 
-  String _label(AppLocalizations? l10n, TemplateFieldRecord f) {
+  String _label(AppLocalizations l10n, TemplateFieldRecord f) {
     const flag = 'workspace.feature_flags.';
     if (f.path.startsWith(flag)) {
       final key = f.path.substring(flag.length);
@@ -59,7 +60,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final inspection = ref.watch(
       templateInspectionProvider(widget.template.id),
     );
@@ -72,8 +73,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
           child: InlineBanner(
             key: const ValueKey('template-detail-unavailable'),
             icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.error,
-            text: l10n?.compareUnavailable ?? 'These templates could not be read to compare them. Nothing is claimed either way.',
+            text: l10n.compareUnavailable,
           ),
         ),
         data: (t) {
@@ -107,8 +107,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
                   hintText:
-                      l10n?.templateDetailSearch ??
-                      'Find a setting in this template',
+                      l10n.templateDetailSearch,
                 ),
                 onChanged: (v) => setState(() => _filter = v),
               ),
@@ -117,7 +116,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
                   padding: const EdgeInsets.only(top: AppSpacing.md),
                   child: Text(
                     key: const ValueKey('template-detail-none'),
-                    l10n?.templateDetailNone ?? 'No setting matches.',
+                    l10n.templateDetailNone,
                   ),
                 ),
               for (final section in sections) ...[

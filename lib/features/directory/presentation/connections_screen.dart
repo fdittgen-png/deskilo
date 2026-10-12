@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../l10n/app_localizations.dart';
 import 'connection_dialog.dart';
 import 'connection_outcome_text.dart';
 
@@ -15,17 +15,17 @@ class ConnectionsScreen extends ConsumerWidget {
   const ConnectionsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final sources = ref.watch(connectedSourcesProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l?.portalConnections ?? 'Connected servers')),
+      appBar: AppBar(title: Text(l.portalConnections)),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('connections-portal-connect'),
         onPressed: () => showDialog<bool>(
           context: context,
           builder: (_) => const ConnectionDialog(),
         ),
-        tooltip: l?.portalConnect ?? 'Connect a server',
+        tooltip: l.portalConnect,
         child: const Icon(Icons.add),
       ),
       body: switch (sources) {
@@ -34,7 +34,7 @@ class ConnectionsScreen extends ConsumerWidget {
           children: [
             ListTile(
               title: Text(
-                l?.portalConnectionsHint ?? 'Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.',
+                l.portalConnectionsHint,
               ),
             ),
             for (final row in rows) _ConnectionTile(row),
@@ -44,7 +44,7 @@ class ConnectionsScreen extends ConsumerWidget {
           child: TextButton(
             key: const ValueKey('connections-retry'),
             onPressed: () => ref.invalidate(connectedSourcesProvider),
-            child: Text(l?.commonRetry ?? 'Try again'),
+            child: Text(l.commonRetry),
           ),
         ),
         _ => const LoadingView(),
@@ -62,7 +62,7 @@ class _ConnectionTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final source = row.endpoint.url;
     final health = ref.watch(connectionHealthProvider(source));
     final registry = ref.watch(connectedInstallationsProvider);
@@ -70,15 +70,12 @@ class _ConnectionTile extends ConsumerWidget {
     final status = switch (health) {
       AsyncData(value: null) =>
         registry.sessionNotSaved(source)
-            ? (l?.connectionSessionNotSaved ??
-                  'The action was done, but this device could not save the '
-                      "server's sign-in. You may be asked to sign in again.")
-            : (l?.connectionUsable ?? 'Connected'),
+            ? (l.connectionSessionNotSaved)
+            : (l.connectionUsable),
       AsyncData(value: final f?) => connectionFailureText(l, f),
       AsyncError() =>
-        l?.connectionMalformed ??
-            'This server answered something this app cannot read.',
-      _ => l?.connectionChecking ?? 'Checking…',
+        l.connectionMalformed,
+      _ => l.connectionChecking,
     };
     final key = switch (health) {
       AsyncData(value: null) => 'usable',
@@ -126,18 +123,18 @@ class _ConnectionTile extends ConsumerWidget {
                 ConnectionRecovery.signIn => TextButton(
                   key: const ValueKey('connection-action-signin'),
                   onPressed: reconnect,
-                  child: Text(l?.connectionSignInAgain ?? 'Sign in again'),
+                  child: Text(l.connectionSignInAgain),
                 ),
                 ConnectionRecovery.verify => TextButton(
                   key: const ValueKey('connection-action-verify'),
                   onPressed: reconnect,
-                  child: Text(l?.connectionVerifyAgain ?? 'Verify again'),
+                  child: Text(l.connectionVerifyAgain),
                 ),
                 _ => TextButton(
                   key: const ValueKey('connection-action-retry'),
                   onPressed: () =>
                       ref.invalidate(connectionHealthProvider(source)),
-                  child: Text(l?.connectionRetry ?? 'Try again'),
+                  child: Text(l.connectionRetry),
                 ),
               },
             ),
@@ -146,14 +143,14 @@ class _ConnectionTile extends ConsumerWidget {
       isThreeLine: true,
       trailing: IconButton(
         key: const ValueKey('connections-portal-disconnect'),
-        tooltip: l?.portalDisconnect ?? 'Disconnect',
+        tooltip: l.portalDisconnect,
         icon: const Icon(Icons.link_off),
         onPressed: () async {
           final ok = await runGuarded(
             context,
             domain: 'account',
             message: 'disconnect installation failed',
-            errorText: l?.portalConnectionFailed ?? 'Could not connect. Check this server and your sign-in details.',
+            errorText: l.portalConnectionFailed,
             action: () => ref
                 .read(connectedInstallationsProvider)
                 .disconnect(source),

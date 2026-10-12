@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/recapitulative_statement.dart';
 import '../../providers/money_providers.dart';
 
@@ -31,8 +31,7 @@ class RecapitulativeNotice extends ConsumerWidget {
     );
     if (lines.isEmpty) return const SizedBox.shrink();
     final l10n =
-        AppLocalizations.of(context) ??
-        lookupAppLocalizations(const Locale('en'));
+        context.l10n;
     final period = lines.first.period;
     final count = lines
         .where((l) => l.period == period)

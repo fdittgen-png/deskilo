@@ -17,18 +17,18 @@ import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/closure_day.dart';
+import '../../time/date_text.dart';
 import '../data/event_repository.dart';
 import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
 import '../data/reservation_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_clock.dart';
-import 'demo_space_seed.dart';
 import 'demo_people_seed.dart';
-import '../../time/date_text.dart';
+import 'demo_space_seed.dart';
 
 /// The first day the demo's history covers.
-DateTime _demoHistoryStart(DateTime now) => DateTime(now.year - 3, 1, 1);
+DateTime _demoHistoryStart(DateTime now) => DateTime(now.year - 3);
 
 /// The last day it covers: the end of the seeded year.
 DateTime _demoHistoryEnd(DateTime now) => DateTime(now.year, 12, 31);
@@ -67,7 +67,7 @@ List<_Regular> _regulars(DateTime now, String windowSeat) => [
   _Regular(
     'member-2',
     'Bruno Kessler',
-    DateTime(now.year - 2, 1, 1),
+    DateTime(now.year - 2),
     {DateTime.tuesday, DateTime.thursday},
     9,
     13,
@@ -76,7 +76,7 @@ List<_Regular> _regulars(DateTime now, String windowSeat) => [
   _Regular(
     'member-3',
     'Chiara Rossi',
-    DateTime(now.year - 1, 7, 1),
+    DateTime(now.year - 1, 7),
     {DateTime.wednesday},
     13,
     18,
@@ -186,12 +186,12 @@ String demoInvoiceNumber(DateTime issued, int memberIndex) =>
 /// A monthly bill per member for every month of the history before last
 /// month (which the story issues), each paid a few days after issue.
 void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
-  final lastMonth = DateTime(now.year, now.month - 1, 1);
+  final lastMonth = DateTime(now.year, now.month - 1);
   for (final (index, regular) in _regulars(now, '').indexed) {
     for (
-      var month = DateTime(regular.joined.year, regular.joined.month, 1);
+      var month = DateTime(regular.joined.year, regular.joined.month);
       month.isBefore(lastMonth);
-      month = DateTime(month.year, month.month + 1, 1)
+      month = DateTime(month.year, month.month + 1)
     ) {
       final cents = demoMonthlyCents(regular.monthlyCents, month.year, now);
       final issued = DateTime(month.year, month.month, 28);
@@ -265,9 +265,9 @@ void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
   // The cleaning contract has run since the start of last year: every
   // past month's occurrence was added.
   for (
-    var month = DateTime(now.year - 1, 1, 1);
-    month.isBefore(DateTime(now.year, now.month, 1));
-    month = DateTime(month.year, month.month + 1, 1)
+    var month = DateTime(now.year - 1);
+    month.isBefore(DateTime(now.year, now.month));
+    month = DateTime(month.year, month.month + 1)
   ) {
     money.expenseOccurrences.add(
       ExpenseOccurrence(
@@ -290,7 +290,7 @@ void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
 void seedDemoHistoryDecisions(FakeEventRepository events, DateTime now) {
   for (
     var month = DateTime(now.year - 2, 1, 15);
-    month.isBefore(DateTime(now.year, now.month - 1, 1));
+    month.isBefore(DateTime(now.year, now.month - 1));
     month = DateTime(month.year, month.month + 3, 15)
   ) {
     final id = 'demo-h-quota-${_period(month)}';

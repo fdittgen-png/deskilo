@@ -25,7 +25,7 @@ class _WebAppBadge implements AppBadge {
       } else {
         navigator.callMethod('clearAppBadge'.toJS);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('web badge update failed: $e\n$st');
       TraceLogger.instance
           .warn('badge', 'web badge update failed', error: e, stackTrace: st);

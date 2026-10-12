@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_labels.dart';
 import 'context_thread_screen.dart';
 
@@ -41,20 +42,19 @@ Future<void> openInboxEntry(
       await ref.read(activeWorkspaceIdProvider.notifier).select(previous);
     }
   } else {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final servers = ref.read(serverLabelsProvider).value ?? const {};
     final peer = entry.peerId ?? await _peerOf(ref, entry);
     if (!context.mounted) return;
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => ContextThreadScreen(
-          kind: entry.kind,
-          contextId: entry.contextId,
-          title: entry.title,
-          subtitle: contextSubtitle(l10n, entry, servers),
-          source: entry.source,
-          peer: peer,
-        ),
+    await contextThreadPage.open<void>(
+      context,
+      ContextThreadScreen(
+        kind: entry.kind,
+        contextId: entry.contextId,
+        title: entry.title,
+        subtitle: contextSubtitle(l10n, entry, servers),
+        source: entry.source,
+        peer: peer,
       ),
     );
   }
@@ -73,7 +73,7 @@ Future<String?> _peerOf(WidgetRef ref, InboxEntry entry) async {
         .where((r) => r['id'] == entry.contextId)
         .map((r) => r['recipient'] as String?)
         .firstOrNull;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // Without a peer the thread still reads; only a reply is refused.
     TraceLogger.instance.warn(
       'messages',

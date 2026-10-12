@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../domain/social_provider.dart';
-import '../../domain/auth_outcome.dart';
 import '../../application/federation_handoff_controller.dart';
+import '../../domain/auth_outcome.dart';
+import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../widgets/federation_handoff_panel.dart';
 
@@ -57,7 +58,7 @@ class _LinkedAccountsScreenState
           identical(ref.read(authRepositoryProvider), repository)) {
         setState(() => _identities = identities);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('auth', 'identities load failed',
           error: e, stackTrace: st);
       if (mounted && repository.currentUserId == account &&
@@ -68,14 +69,13 @@ class _LinkedAccountsScreenState
   }
 
   Future<void> _link(SocialProvider provider) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await ref.read(authRepositoryProvider).linkSocial(provider);
       if (!mounted) return;
       AppSnack.success(
         context,
-        l10n?.linkedAccountsLinkStarted ??
-            'Continue in the browser to finish linking.',
+        l10n.linkedAccountsLinkStarted,
       );
       await _load();
     } on AuthException catch (e, st) {
@@ -88,48 +88,37 @@ class _LinkedAccountsScreenState
       final code = e.code;
       final text = switch (code) {
         'provider_disabled' || 'oauth_provider_not_supported' =>
-          l10n?.authSocialUnavailable(provider.label) ??
-              '${provider.label} sign-in is not available yet — the server '
-                  'has not enabled it.',
+          l10n.authSocialUnavailable(provider.label),
         'manual_linking_disabled' =>
-          l10n?.authLinkManualDisabled ??
-              'Linking accounts is switched off on this server. Its '
-                  'administrator must turn on “Allow manual linking” in the '
-                  'authentication settings.',
+          l10n.authLinkManualDisabled,
         'identity_already_exists' =>
-          l10n?.authLinkAlreadyUsed(provider.label) ??
-              'This ${provider.label} identity is already linked to another '
-                  'account.',
+          l10n.authLinkAlreadyUsed(provider.label),
         _ =>
-          l10n?.authLinkFailed(provider.label, code ?? e.statusCode ?? 'unknown') ??
-              'Linking ${provider.label} did not work '
-                  '(${code ?? e.statusCode ?? 'unknown'}). Try again; if it '
-                  "keeps failing, tell the server's administrator this code.",
+          l10n.authLinkFailed(provider.label, code ?? e.statusCode ?? 'unknown'),
       };
       AppSnack.error(context, text);
     }
   }
 
   Future<void> _unlink(LinkedIdentity identity) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await ref.read(authRepositoryProvider).unlinkIdentity(identity);
       await _load();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('auth', 'unlink failed', error: e, stackTrace: st);
       if (!mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     ref.listen(authFeedbackProvider, (_, value) {
       final outcome = value.value?.outcome;
       if (outcome == AuthOutcome.authenticated) {
@@ -146,7 +135,7 @@ class _LinkedAccountsScreenState
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
+        title: Text(l10n.linkedAccountsTitle),
       ),
       body: identities == null
           ? const Center(child: CircularProgressIndicator())
@@ -154,9 +143,7 @@ class _LinkedAccountsScreenState
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
-                  l10n?.linkedAccountsIntro ??
-                      'Sign into this account with any linked identity. '
-                          'The available providers depend on your server.',
+                  l10n.linkedAccountsIntro,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -169,14 +156,14 @@ class _LinkedAccountsScreenState
                             identity.provider,
                       ),
                       subtitle: Text(
-                        l10n?.linkedAccountsLinked ?? 'Linked',
+                        l10n.linkedAccountsLinked,
                       ),
                       trailing: identities.length > 1
                           ? TextButton(
                               key: ValueKey('unlink-${identity.provider}'),
                               onPressed: () => _unlink(identity),
                               child: Text(
-                                l10n?.linkedAccountsUnlink ?? 'Unlink',
+                                l10n.linkedAccountsUnlink,
                               ),
                             )
                           : null,
@@ -202,7 +189,7 @@ class _LinkedAccountsScreenState
                           key: ValueKey('link-${provider.name}'),
                           onPressed: () => _link(provider),
                           child: Text(
-                            l10n?.linkedAccountsLink ?? 'Link',
+                            l10n.linkedAccountsLink,
                           ),
                         ),
                       ),

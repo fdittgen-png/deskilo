@@ -28,7 +28,7 @@ FinanceInvoice invoice(
       workspaceId: 'ws-$ws',
       workspaceName: ws,
       number: 'INV-$id',
-      issuedAt: DateTime.utc(2026, 9, 1),
+      issuedAt: DateTime.utc(2026, 9),
       dueOn: due,
       totalCents: total,
       paidCents: paid,
@@ -68,7 +68,7 @@ void main() {
   test('what remains per currency, and which invoice counts as owed', () {
     final o = FinanceOverview(invoices: [
       invoice('1'),
-      invoice('2', state: FinanceState.partiallyPaid, total: 10000, paid: 4000),
+      invoice('2', state: FinanceState.partiallyPaid, paid: 4000),
       invoice('3', currency: 'CHF', total: 500),
       invoice('4', state: FinanceState.paid),
       invoice('5', state: FinanceState.refunded),
@@ -83,8 +83,8 @@ void main() {
     await show(
       tester,
       FinanceOverview(invoices: [
-        invoice('1', due: DateTime(2020, 1, 1)),
-        invoice('2', ws: 'Office B', due: DateTime(2099, 1, 1)),
+        invoice('1', due: DateTime(2020)),
+        invoice('2', ws: 'Office B', due: DateTime(2099)),
         invoice('9', state: FinanceState.paid),
       ]),
     );

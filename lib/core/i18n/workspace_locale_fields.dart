@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../time/clock.dart';
 import 'currencies.dart';
 import 'money_format.dart';
@@ -35,7 +35,7 @@ class WorkspaceLocaleFields extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(children: [
       // #711 — a PICKER, not a text field. The field
       // accepted `EURO` and shipped it to invoices; this
@@ -50,7 +50,6 @@ class WorkspaceLocaleFields extends ConsumerWidget {
           child: DropdownButtonFormField<String>(
         key: const Key('workspaceSettingsCurrency'),
         isExpanded: true,
-        itemHeight: null,
         initialValue: Currencies.selectable.contains(currency.text)
             ? currency.text
             : null,
@@ -69,13 +68,11 @@ class WorkspaceLocaleFields extends ConsumerWidget {
                 if (code != null) currency.text = code;
               },
         decoration: InputDecoration(
-          labelText: l10n?.workspaceCurrencyLabel ?? 'Currency',
-          helperText: l10n?.workspaceSettingsCurrencyHelper ??
-              'Defaults from the country — override if your '
-                  'community bills in another currency.',
+          labelText: l10n.workspaceCurrencyLabel,
+          helperText: l10n.workspaceSettingsCurrencyHelper,
         ),
         validator: (value) => value == null
-            ? (l10n?.authFieldRequired ?? 'Required')
+            ? (l10n.authFieldRequired)
             : null,
       ),
         ),
@@ -99,13 +96,12 @@ class WorkspaceLocaleFields extends ConsumerWidget {
           if (picked != null) onTimezonePicked(picked);
         },
         decoration: InputDecoration(
-          labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
+          labelText: l10n.workspaceTimezoneLabel,
           suffixIcon: const Icon(Icons.search),
         ),
         validator: (value) => TimeZones.isKnown(value?.trim() ?? '')
             ? null
-            : (l10n?.workspaceTimezoneUnknown ??
-                'Pick a time zone from the list'),
+            : (l10n.workspaceTimezoneUnknown),
       ),
     ]);
   }

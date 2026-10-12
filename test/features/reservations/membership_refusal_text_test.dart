@@ -11,6 +11,7 @@
 // sentence without the server's own fields. Both halves are tested
 // here: the refusal now says which, and the trace carries the server's
 // answer in one greppable field.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/act_trace.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,7 +21,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 const _fallback = 'Could not reserve — the seat may have just been taken.';
 
 String _map(String serverMessage) => bookingErrorText(
-      null,
+      englishL10n,
       PostgrestException(message: serverMessage, code: 'P0001'),
       _fallback,
     );

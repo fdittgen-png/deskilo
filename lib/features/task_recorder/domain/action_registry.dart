@@ -21,6 +21,8 @@
 // #1867 (guided tasks) and #1872 (packages) read them from this file
 // rather than copying them.
 
+import 'package:meta/meta.dart';
+
 import 'ui_vocabulary.g.dart';
 import 'workspace_feature_keys.dart';
 

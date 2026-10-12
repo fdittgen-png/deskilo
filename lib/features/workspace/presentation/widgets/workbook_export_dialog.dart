@@ -8,8 +8,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/template_workbook.dart';
 
 /// Runs one export behind a progress dialog. Returns the saved location
@@ -48,15 +48,15 @@ void showWorkbookExportResult(
   BuildContext context,
   ({String? path, bool cancelled})? result,
 ) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (result == null) return;
   if (result.cancelled) {
     AppSnack.info(
       context,
-      l10n?.workbookExportCancelled ?? 'Export cancelled. Nothing was saved.',
+      l10n.workbookExportCancelled,
     );
   } else if (result.path != null) {
-    AppSnack.success(context, l10n?.compareExported ?? 'Workbook saved.');
+    AppSnack.success(context, l10n.compareExported);
   }
 }
 
@@ -100,7 +100,7 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
       outcome = _Outcome(path: path);
     } on WorkbookCancelled {
       outcome = const _Outcome(cancelled: true);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: handed to the caller, which reports it with context.
       outcome = _Outcome(error: e, stack: st);
     }
@@ -109,23 +109,22 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final p = _progress;
     final saving = p?.stage == WorkbookStage.saving;
     final label = switch (p?.stage) {
       WorkbookStage.building =>
-        l10n?.workbookExportBuilding ?? 'Building the workbook…',
+        l10n.workbookExportBuilding,
       WorkbookStage.saving =>
-        l10n?.workbookExportSaving ?? 'Choose where to save it…',
+        l10n.workbookExportSaving,
       _ =>
-        l10n?.workbookExportReading('${p?.done ?? 0}', '${p?.total ?? 0}') ??
-            'Reading templates: ${p?.done ?? 0} of ${p?.total ?? 0}',
+        l10n.workbookExportReading('${p?.done ?? 0}', '${p?.total ?? 0}'),
     };
     return PopScope(
       canPop: false,
       child: AlertDialog(
         key: const ValueKey('workbook-export-dialog'),
-        title: Text(l10n?.workbookExportTitle ?? 'Exporting the workbook'),
+        title: Text(l10n.workbookExportTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

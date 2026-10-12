@@ -332,7 +332,7 @@ String relationshipsCsv(Map<String, dynamic> dictionary) {
       r.name,
       r.onDelete,
       r.onUpdate,
-      r.kind == 'defined' ? r.validated : '',
+      if (r.kind == 'defined') r.validated else '',
     ]);
   }
   return _csv(rows);
@@ -414,6 +414,7 @@ String _neighbourhood(
   );
   final cy = height / 2 - 12;
   b.write(node(qualified, 245, cy, link: false));
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void side(List<String> names, double x, bool isLeft) {
     final n = names.length > cap ? cap : names.length;
     for (var i = 0; i < n; i++) {
@@ -455,11 +456,12 @@ String _object(
   for (final c in _list(o['columns'])) {
     search.write(' ${c['name']} ${c['type']}');
   }
-  b.writeln(
+  b
+    ..writeln(
     '<section class="obj" id="${_e(_tableId(schema, name))}" '
     'data-s="${_e(search.toString().toLowerCase())}">',
-  );
-  b.writeln('<h2>${_e(q)} <span class="kind">${_e(o['kind'])}</span></h2>');
+  )
+    ..writeln('<h2>${_e(q)} <span class="kind">${_e(o['kind'])}</span></h2>');
   if (o['comment'] != null) b.writeln('<p>${_e(o['comment'])}</p>');
   if (o['partitionKey'] != null) {
     b.writeln('<p>Partitioned by <code>${_e(o['partitionKey'])}</code></p>');
@@ -522,6 +524,7 @@ String _object(
       '<h3>Relationships</h3><table><thead><tr><th>Kind</th>'
       '<th>From</th><th>To</th><th>On delete</th></tr></thead><tbody>',
     );
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     String side(Relationship r, bool from) {
       final cols = (from ? r.fromColumns : r.toColumns).join(', ');
       final t = from
@@ -537,8 +540,9 @@ String _object(
         '<td>${_e(r.onDelete)}</td></tr>',
       );
     }
-    b.writeln('</tbody></table>');
-    b.writeln(_neighbourhood(q, out, inc, known));
+    b
+      ..writeln('</tbody></table>')
+      ..writeln(_neighbourhood(q, out, inc, known));
   }
   b.writeln('</section>');
   return b.toString();

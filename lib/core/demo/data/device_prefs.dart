@@ -23,22 +23,22 @@
 // live on the fixture, which settles the lifetime for free — they
 // survive a persona switch (same fixture), come back canonical on Reset
 // (new fixture) and are dropped on Leave (the fixture is dropped).
-import '../../../features/workspace/application/creation_intent.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/storage/booking_intent_store.dart';
 import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
-import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
 import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
 
+import '../../../features/workspace/application/creation_intent.dart';
+import '../../push/push_opt_out.dart';
 import 'default_level_store.dart';
 import 'stores.dart';
-import '../../push/push_opt_out.dart';
 
 /// In-memory [LocaleStore] (#147) — the language override a session
 /// picks lasts as long as the session.
@@ -76,6 +76,7 @@ class InMemoryNavigationStyleStore implements NavigationStyleStore {
 
 /// #1173 — one of the two shell flags (bar swiped away, swipe hint seen).
 class InMemoryShellFlagStore implements ShellFlagStore {
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   InMemoryShellFlagStore([this.value = false]);
 
   bool value;

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
 import '../route_classes.dart';
 
 /// Workspace identity, deliberately not a workspace switcher.
@@ -18,7 +18,7 @@ class SpaceChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final space = ref.watch(currentWorkspaceProvider).value;
     final text = Theme.of(context).textTheme;
     return Row(
@@ -50,7 +50,7 @@ class SpaceChip extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${l10n?.appTitle ?? 'DesKilo'} · ${space?.name ?? ''}',
+                '${l10n.appTitle} · ${space?.name ?? ''}',
                 key: const ValueKey('space-chip-name'),
                 maxLines: 1,
                 softWrap: false,
@@ -79,7 +79,7 @@ class BackToMeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IconButton(
     key: const ValueKey('shell-back-to-me'),
-    tooltip: AppLocalizations.of(context)?.spaceBackToMe ?? 'Back to Me',
+    tooltip: context.l10n.spaceBackToMe,
     onPressed: () => context.go(kMeHome),
     icon: const PersonalAvatar(),
   );

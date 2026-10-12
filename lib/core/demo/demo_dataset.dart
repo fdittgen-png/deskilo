@@ -12,13 +12,15 @@
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
 import 'package:meta/meta.dart';
-import '../../features/plan/domain/grid_geometry.dart';
-import '../../features/plan/domain/seat.dart';
+
 import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/invoice.dart';
-import '../../features/reservations/domain/reservation.dart';
+import '../../features/plan/domain/grid_geometry.dart';
+import '../../features/plan/domain/seat.dart';
 import '../../features/profile/domain/profile.dart';
+import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
+import '../time/date_text.dart';
 import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
@@ -28,7 +30,6 @@ import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
-import '../time/date_text.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
 /// and in the guides.

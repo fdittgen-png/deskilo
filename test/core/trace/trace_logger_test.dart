@@ -52,8 +52,8 @@ void main() {
 
   test('error and stack trace are captured and kept newline-free in the '
       'formatted line', () {
-    final logger = TraceLogger();
-    logger.error(
+    final logger = TraceLogger()
+      ..error(
       'events',
       'respond failed',
       error: StateError('boom'),
@@ -72,9 +72,9 @@ void main() {
 
   test('entries persist to <support>/deskilo-trace.log, one per line',
       () async {
-    final logger = fileLogger();
-    logger.warn('push', 'endpoint expired');
-    logger.error('money', 'record payment failed');
+    final logger = fileLogger()
+      ..warn('push', 'endpoint expired')
+      ..error('money', 'record payment failed');
     await logger.flush();
 
     final lines = traceFile().readAsLinesSync();
@@ -104,8 +104,8 @@ void main() {
   });
 
   test('exportContent returns the persisted file when present', () async {
-    final logger = fileLogger();
-    logger.error('flutter', 'render overflow');
+    final logger = fileLogger()
+      ..error('flutter', 'render overflow');
     await logger.flush();
 
     final content = await logger.exportContent();
@@ -114,14 +114,14 @@ void main() {
   });
 
   test('exportContent falls back to the buffer without a file', () async {
-    final logger = TraceLogger();
-    logger.warn('boot', 'slow start');
+    final logger = TraceLogger()
+      ..warn('boot', 'slow start');
     expect(await logger.exportContent(), contains('WARN boot: slow start'));
   });
 
   test('clear empties both the buffer and the file', () async {
-    final logger = fileLogger();
-    logger.error('money', 'oops');
+    final logger = fileLogger()
+      ..error('money', 'oops');
     await logger.flush();
     expect(traceFile().existsSync(), isTrue);
 
@@ -135,8 +135,8 @@ void main() {
       'memory-only', () async {
     final logger = TraceLogger(
       directoryProvider: () async => throw const FileSystemException('denied'),
-    );
-    logger.error('money', 'first');
+    )
+      ..error('money', 'first');
     await logger.flush();
     logger.error('money', 'second');
     await logger.flush();

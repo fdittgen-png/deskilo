@@ -8,8 +8,8 @@
 // its length budget; the sheet passes the kind and the callbacks.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class ReportLayoutPanel extends StatelessWidget {
   const ReportLayoutPanel({
@@ -32,7 +32,7 @@ class ReportLayoutPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Card(
       key: const ValueKey('report-layout-panel'),
@@ -46,7 +46,7 @@ class ReportLayoutPanel extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
-                  l10n?.reportLayoutTitle ?? 'Positioned layout (XML)',
+                  l10n.reportLayoutTitle,
                   style: theme.textTheme.titleSmall,
                 ),
               ),
@@ -54,8 +54,8 @@ class ReportLayoutPanel extends StatelessWidget {
               Chip(
                 key: const ValueKey('report-layout-engine-chip'),
                 label: Text(hasLayout
-                    ? (l10n?.reportLayoutActive ?? 'Layout active')
-                    : (l10n?.reportLayoutBands ?? 'Bands')),
+                    ? (l10n.reportLayoutActive)
+                    : (l10n.reportLayoutBands)),
                 avatar: Icon(
                   hasLayout ? Icons.grid_on : Icons.view_agenda_outlined,
                   size: 18,
@@ -64,12 +64,7 @@ class ReportLayoutPanel extends StatelessWidget {
             ]),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              l10n?.reportLayoutSubtitle ??
-                  'A layout states where every element sits, in mm, cm, '
-                      'px or %. Export it, edit it, check it with '
-                      '`dart run tool/report.dart check`, import it back. '
-                      'When a layout exists it is what prints; remove it '
-                      'and the bands print again.',
+              l10n.reportLayoutSubtitle,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -81,20 +76,20 @@ class ReportLayoutPanel extends StatelessWidget {
                   key: const ValueKey('report-layout-export'),
                   onPressed: busy ? null : onExport,
                   icon: const Icon(Icons.upload_file_outlined),
-                  label: Text(l10n?.reportLayoutExport ?? 'Export XML'),
+                  label: Text(l10n.reportLayoutExport),
                 ),
                 OutlinedButton.icon(
                   key: const ValueKey('report-layout-import'),
                   onPressed: busy ? null : onImport,
                   icon: const Icon(Icons.download_outlined),
-                  label: Text(l10n?.reportLayoutImport ?? 'Import XML'),
+                  label: Text(l10n.reportLayoutImport),
                 ),
                 if (hasLayout && onPreview != null)
                   OutlinedButton.icon(
                     key: const ValueKey('report-layout-preview'),
                     onPressed: busy ? null : onPreview,
                     icon: const Icon(Icons.preview_outlined),
-                    label: Text(l10n?.reportLayoutPreview ?? 'Page preview'),
+                    label: Text(l10n.reportLayoutPreview),
                   ),
                 if (hasLayout)
                   TextButton.icon(
@@ -102,7 +97,7 @@ class ReportLayoutPanel extends StatelessWidget {
                     onPressed: busy ? null : onRemove,
                     icon: const Icon(Icons.layers_clear_outlined),
                     label: Text(
-                        l10n?.reportLayoutRemove ?? 'Remove layout (use bands)'),
+                        l10n.reportLayoutRemove),
                   ),
               ],
             ),

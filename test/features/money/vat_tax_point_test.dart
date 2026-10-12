@@ -260,7 +260,7 @@ void main() {
       final amounts = _taxPointOf(august, [
         _paid(DateTime.utc(2026, 8, 31, 22, 30), 12000),
       ], country: 'FR');
-      expect(amounts.single.on, DateTime(2026, 9, 1));
+      expect(amounts.single.on, DateTime(2026, 9));
     });
 
     test('three instalments of a two-rate invoice add up to its per-line '
@@ -360,7 +360,7 @@ void main() {
         option: VatTaxPointOption.cash,
       );
       expect(amounts.map((a) => a.on), [
-        DateTime(2026, 4, 1),
+        DateTime(2026, 4),
         DateTime(2027, 12, 31),
       ]);
       expect(_gross(amounts), 12000);

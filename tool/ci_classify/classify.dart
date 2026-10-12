@@ -46,6 +46,7 @@ class ChangeSet {
 }
 
 class Verdict {
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   const Verdict(this.discipline, this.required, this.reason);
   final String discipline;
   final bool required;
@@ -157,14 +158,10 @@ List<Verdict> classify(ChangeSet change) {
   final dbTouching = change.paths.where((p) => !_databaseIndependent(p)).toList();
   final webTouching = change.paths.where(_webRelevant).toList();
   return [
-    dbTouching.isEmpty
-        ? Verdict('database', false,
-            'every changed path is independent of the database (${change.paths.length} files, e.g. ${change.paths.first})')
-        : Verdict('database', true, 'database-relevant: ${dbTouching.first}'),
-    webTouching.isEmpty
-        ? Verdict('web', false,
-            'no changed path reaches the browser build (e.g. ${change.paths.first})')
-        : Verdict('web', true, 'browser-relevant: ${webTouching.first}'),
+    if (dbTouching.isEmpty) Verdict('database', false,
+            'every changed path is independent of the database (${change.paths.length} files, e.g. ${change.paths.first})') else Verdict('database', true, 'database-relevant: ${dbTouching.first}'),
+    if (webTouching.isEmpty) Verdict('web', false,
+            'no changed path reaches the browser build (e.g. ${change.paths.first})') else Verdict('web', true, 'browser-relevant: ${webTouching.first}'),
   ];
 }
 

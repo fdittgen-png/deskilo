@@ -15,18 +15,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/usage_record.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// One month of usage, newest first.
 class UsageFace extends ConsumerWidget {
@@ -36,7 +36,7 @@ class UsageFace extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final async = ref.watch(usageRecordsProvider(period));
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -46,7 +46,7 @@ class UsageFace extends ConsumerWidget {
       AsyncData(value: final records) when records.isEmpty => Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: Text(
-            l10n?.usageEmpty ?? 'No usage this month.',
+            l10n.usageEmpty,
             key: const ValueKey('usage-empty'),
             style: theme.textTheme.bodyMedium
                 ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -68,7 +68,7 @@ class UsageFace extends ConsumerWidget {
         ),
       AsyncError() => Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
-          child: Text(l10n?.workspaceGenericError ?? 'Something went wrong.'),
+          child: Text(l10n.workspaceGenericError),
         ),
       _ => const Padding(
           padding: EdgeInsets.all(AppSpacing.md),
@@ -95,7 +95,7 @@ class UsageRecordCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     final day = DateFormat.MMMEd(locale).format(record.reservedFrom);
@@ -137,12 +137,12 @@ class UsageRecordCard extends ConsumerWidget {
             const SizedBox(height: 2),
             Text(
               [
-                '${l10n?.usageBooked ?? 'Booked'} '
+                '${l10n.usageBooked} '
                     '${usageDuration(record.reservedMinutes)}',
                 if (record.actualMinutes case final actual?)
-                  '${l10n?.usagePresent ?? 'Present'} '
+                  '${l10n.usagePresent} '
                       '${usageDuration(actual)}',
-                '${l10n?.usageBilled ?? 'Billed'} '
+                '${l10n.usageBilled} '
                     '${usageDuration(record.countedMinutes)}',
               ].join(' · '),
               style: theme.textTheme.bodySmall
@@ -154,8 +154,7 @@ class UsageRecordCard extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                  l10n?.usageNoShow ??
-                      'Nobody checked in — the booking bills in full',
+                  l10n.usageNoShow,
                   key: ValueKey('usage-noshow-${record.id}'),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.error),
@@ -167,8 +166,8 @@ class UsageRecordCard extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                  '${l10n?.usageCorrected ?? 'Corrected'} — '
-                  '${l10n?.usageWas(usageDuration(record.correctedFromMinutes ?? record.reservedMinutes)) ?? 'was ${usageDuration(record.correctedFromMinutes ?? record.reservedMinutes)}'}',
+                  '${l10n.usageCorrected} — '
+                  '${l10n.usageWas(usageDuration(record.correctedFromMinutes ?? record.reservedMinutes))}',
                   key: ValueKey('usage-corrected-${record.id}'),
                   style: theme.textTheme.bodySmall?.copyWith(
                       color: AppStatusColors.successTextOf(theme.brightness)),
@@ -181,7 +180,7 @@ class UsageRecordCard extends ConsumerWidget {
                   key: ValueKey('usage-ask-${record.id}'),
                   icon: const Icon(Icons.timelapse_outlined, size: 18),
                   label: Text(
-                      l10n?.usageAsk ?? 'Bill the time I was here'),
+                      l10n.usageAsk),
                   onPressed: () => _ask(context, ref),
                 ),
               ),
@@ -193,7 +192,7 @@ class UsageRecordCard extends ConsumerWidget {
                   style: TextButton.styleFrom(
                       foregroundColor: theme.colorScheme.error),
                   icon: const Icon(Icons.playlist_remove_outlined, size: 18),
-                  label: Text(l10n?.usageDelete ?? 'Remove this record'),
+                  label: Text(l10n.usageDelete),
                   onPressed: () => _remove(context, ref),
                 ),
               ),
@@ -204,28 +203,27 @@ class UsageRecordCard extends ConsumerWidget {
   }
 
   Future<void> _ask(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final controller = TextEditingController();
     final asked = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.usageAsk ?? 'Bill the time I was here'),
+        title: Text(l10n.usageAsk),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n?.usageAskExplain(
+            Text(l10n.usageAskExplain(
                   usageDuration(record.reservedMinutes),
                   usageDuration(record.actualMinutes ?? 0),
                   usageDuration(record.reducibleMinutes),
-                ) ??
-                'Somebody else decides it — never you.'),
+                )),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               key: const ValueKey('usage-ask-reason'),
               controller: controller,
               decoration: InputDecoration(
-                labelText: l10n?.usageReasonLabel ?? 'Why (optional)',
+                labelText: l10n.usageReasonLabel,
               ),
             ),
           ],
@@ -234,12 +232,12 @@ class UsageRecordCard extends ConsumerWidget {
           TextButton(
             key: const ValueKey('usage-face-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('usage-ask-submit'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.usageAskSubmit ?? 'Ask'),
+            child: Text(l10n.usageAskSubmit),
           ),
         ],
       ),
@@ -253,30 +251,30 @@ class UsageRecordCard extends ConsumerWidget {
       invalidateBookingData(ref);
       if (!context.mounted) return;
       AppSnack.success(context,
-          l10n?.usageAskSubmitted ?? 'Asked. Somebody else decides it.');
-    } catch (error, stack) {
+          l10n.usageAskSubmitted);
+    } on Object catch (error, stack) {
       TraceLogger.instance.error('money', 'usage correction request failed',
           error: error, stackTrace: stack);
       if (!context.mounted) return;
       AppSnack.error(
-          context, l10n?.workspaceGenericError ?? 'Something went wrong.');
+          context, l10n.workspaceGenericError);
     }
   }
 
   Future<void> _remove(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await ref.read(moneyRepositoryProvider).requestUsageRecordDelete(record.id);
       ref.invalidate(usageRecordsProvider);
       if (!context.mounted) return;
       AppSnack.success(
-          context, l10n?.usageDeleteSubmitted ?? 'Removal requested.');
-    } catch (error, stack) {
+          context, l10n.usageDeleteSubmitted);
+    } on Object catch (error, stack) {
       TraceLogger.instance.error('money', 'usage record delete failed',
           error: error, stackTrace: stack);
       if (!context.mounted) return;
       AppSnack.error(
-          context, l10n?.workspaceGenericError ?? 'Something went wrong.');
+          context, l10n.workspaceGenericError);
     }
   }
 }

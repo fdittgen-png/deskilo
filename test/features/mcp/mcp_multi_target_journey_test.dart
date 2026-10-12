@@ -237,8 +237,9 @@ Future<List<String>> _journey(
   final pending = [policy(a), policy(b), policy(d)];
   await pumpEventQueue();
   d2.releaseAll();
-  d1.releaseAll();
-  d1.gated = d2.gated = false;
+  d1
+    ..releaseAll()
+    ..gated = d2.gated = false;
   final got = await Future.wait(pending);
   for (final (i, want, ctx) in [(0, 3, a), (1, 5, b), (2, 7, d)]) {
     if (got[i].revision != want || got[i].workspaceId != ctx.workspaceId) {
@@ -300,8 +301,9 @@ Future<List<String>> _journey(
     answers.answer(confirmation.withScope(t1.instance), accept: true),
   ];
   await pumpEventQueue();
-  d1.releaseAll();
-  d1.gated = false;
+  d1
+    ..releaseAll()
+    ..gated = false;
   await Future.wait([screenB, ...taps]);
   if (d1.count('mcp_confirm_action') != 1 ||
       d2.count('mcp_confirm_action') != 0) {
@@ -353,8 +355,9 @@ Future<List<String>> _journey(
   final late = policy(a);
   await pumpEventQueue();
   await registry.revokeTarget(_d1);
-  d1.releaseAll();
-  d1.gated = false;
+  d1
+    ..releaseAll()
+    ..gated = false;
   try {
     await late;
     broken.add('a late D1 answer was published after the revoke');

@@ -32,6 +32,7 @@
 // `compute_vat_return` (0402) is its twin on the server — the same rules,
 // apportionment and rounding — and the declaration stores the server's
 // figures; `vat_return_parity_test.dart` pins both to one fixture.
+import 'package:meta/meta.dart';
 import '../../../core/time/workspace_time.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
@@ -226,6 +227,7 @@ class VatTaxPointAmount {
 /// A voided document and a settlement declare nothing: the settlement's
 /// sources carry the VAT, and their payments arrive through
 /// `accountingView`'s allocation.
+@visibleForTesting
 List<VatTaxPointAmount> taxPointsOf(
   Invoice invoice,
   List<TaxPointPayment> payments, {
@@ -261,6 +263,7 @@ List<VatTaxPointAmount> taxPointsOf(
 /// the money although the workspace has since opted for the invoice
 /// date, and one that said « on the debits » is due when issued. The
 /// SQL twin (`vat_return_amounts`, 0402) applies the same rule.
+@visibleForTesting
 VatTaxPointBasis frozenTaxPointBasis(
   Invoice invoice,
   VatTaxPointBasis basis,
@@ -435,6 +438,7 @@ List<VatTaxPointAmount> _slices(
 /// A match still awaiting validation pays nothing yet — the exports make
 /// the same exclusion — and the instalments never count for more than
 /// the confirmed aggregate.
+@visibleForTesting
 List<TaxPointPayment> paymentsOf(
   InvoiceMatch? match,
   List<TaxPointPayment> instalments,

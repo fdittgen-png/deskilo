@@ -165,7 +165,7 @@ final class McpClientRegistryProvider
   }
 }
 
-String _$mcpClientRegistryHash() => r'5325e89d66a67b45d016ebbe14b48b018058605d';
+String _$mcpClientRegistryHash() => r'4e50b3b676803187b35e2d8049b5a33c35e48f7b';
 
 @ProviderFor(mcpCommands)
 final mcpCommandsProvider = McpCommandsProvider._();

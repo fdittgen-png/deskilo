@@ -15,15 +15,16 @@
 // does, and reads the request that went out where the contract is about
 // the request (resend hits /resend, not /signup).
 import 'dart:convert';
-import 'package:deskilo/core/backend/auth_callback_guard.dart';
-import '../../core/backend/installation_auth_storage_test.dart' show MemorySecrets;
 
+import 'package:deskilo/core/backend/auth_callback_guard.dart';
 import 'package:deskilo/features/auth/data/supabase_auth_repository.dart';
 import 'package:deskilo/features/auth/domain/auth_outcome.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../core/backend/installation_auth_storage_test.dart' show MemorySecrets;
 
 class _MemoryStorage extends GotrueAsyncStorage {
   final Map<String, String> _items = {};
@@ -155,7 +156,7 @@ void main() {
     };
     for (final MapEntry(key: code, value: refusal) in cases.entries) {
       final repo = repositoryAnswering(
-          (_) => _error(code, 'server prose quoting $_email', 400));
+          (_) => _error(code, 'server prose quoting $_email'));
       final result = await repo.signInWithPassword(
           email: _email, password: 'whatever-it-was');
       expect(result.outcome, AuthOutcome.refused, reason: code);

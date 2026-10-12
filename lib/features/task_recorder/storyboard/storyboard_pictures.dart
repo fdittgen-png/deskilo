@@ -54,7 +54,7 @@ Future<StoryboardPictures> renderApprovedPictures(
         redactions: f.redactions,
         preset: preset,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'approved illustration not drawn',

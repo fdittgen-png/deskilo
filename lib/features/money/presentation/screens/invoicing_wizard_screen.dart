@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
@@ -45,7 +45,7 @@ class _InvoicingWizardScreenState extends ConsumerState<InvoicingWizardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final state = ref.watch(invoicingWizardControllerProvider);
     final controller = ref.read(invoicingWizardControllerProvider.notifier);
     final wiz = WizardContext.of(ref, state);
@@ -63,7 +63,7 @@ class _InvoicingWizardScreenState extends ConsumerState<InvoicingWizardScreen> {
     };
     return WizardScaffold(
       key: const ValueKey('invoicing-wizard'),
-      title: l10n?.wizardTitle ?? 'Invoicing wizard',
+      title: l10n.wizardTitle,
       steps: [
         for (final step in steps)
           (name: step.name, label: wizardStepLabel(l10n, step)),

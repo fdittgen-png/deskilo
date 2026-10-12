@@ -19,7 +19,7 @@ typedef LinkLauncher = Future<bool> Function(Uri uri);
 LinkLauncher linkLauncher(Ref ref) => (uri) async {
       try {
         return await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // OAuth return URLs carry one-time credentials. Platform exceptions
         // can repeat the entire URL, so neither belongs in a diagnostic.
         debugPrint('link launch failed (${e.runtimeType})\n$st');

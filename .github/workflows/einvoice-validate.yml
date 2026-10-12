@@ -1,0 +1,87 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: CI · E-invoice validators
+
+# #2358 — a pre-flight that checks which fields are present is not
+# validation. This job builds one sample per e-invoice format with the
+# app's own serializers (test/features/money/einvoice_samples_test.dart)
+# and runs the OFFICIAL validators on them, each fetched at a pinned
+# version and checked against its SHA-256 (tool/einvoice/validate.sh):
+# KoSIT with the XRechnung and Peppol BIS configurations, Mustang for
+# Factur-X, the SdI schema for FatturaPA and the KSeF schema for FA(3).
+#
+# lib/features/money/domain/einvoice_validation.dart lists the formats
+# this job proves; the app claims "passes the official validator" for
+# those formats only.
+
+on:
+  pull_request:
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'test/features/money/einvoice_samples_test.dart'
+      - 'tool/einvoice/**'
+      - '.github/workflows/einvoice-validate.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'tool/einvoice/**'
+  workflow_dispatch:
+
+concurrency:
+  group: einvoice-validate-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  validate:
+    name: e-invoice samples · official validators
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: xmllint
+        run: |
+          command -v xmllint || {
+            sudo apt-get update -q
+            sudo apt-get install -y --no-install-recommends libxml2-utils
+          }
+      - run: flutter pub get
+      - name: Build one sample per format
+        env:
+          EINVOICE_SAMPLES_DIR: ${{ runner.temp }}/einvoice-samples
+        run: flutter test test/features/money/einvoice_samples_test.dart
+      - name: Run the official validators
+        run: |
+          bash tool/einvoice/validate.sh \
+            "${{ runner.temp }}/einvoice-samples" \
+            "${{ runner.temp }}/einvoice-validators"
+      - name: Summary
+        if: always()
+        run: |
+          if [ -f "${{ runner.temp }}/einvoice-validators/summary.md" ]; then
+            cat "${{ runner.temp }}/einvoice-validators/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: einvoice-validation
+          path: |
+            ${{ runner.temp }}/einvoice-samples
+            ${{ runner.temp }}/einvoice-validators/reports
+            ${{ runner.temp }}/einvoice-validators/summary.md

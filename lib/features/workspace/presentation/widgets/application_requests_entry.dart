@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 class ApplicationRequestsEntry extends StatelessWidget {
   const ApplicationRequestsEntry({super.key, this.compact = true});
@@ -10,7 +10,7 @@ class ApplicationRequestsEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final label =
-        AppLocalizations.of(context)?.applicationsTitle ?? 'Workspace requests';
+        context.l10n.applicationsTitle;
     void open() => context.push('/applications');
     return compact
         ? IconButton(

@@ -22,7 +22,6 @@ import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart'
 import 'package:deskilo/features/task_recorder/export/docx/docx_writer.dart';
 import 'package:deskilo/features/task_recorder/export/docx_export.dart';
 import 'package:deskilo/features/task_recorder/export/task_document.dart';
-import 'package:deskilo/features/task_recorder/storyboard/png_safety.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard.dart';
 import 'package:deskilo/features/task_recorder/storyboard/storyboard_builder.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -30,6 +29,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
 
+import '../../../helpers/png_chunks.dart';
 import '../fixtures/recording_fixtures.dart';
 
 const _w = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';

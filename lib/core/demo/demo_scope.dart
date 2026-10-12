@@ -1,22 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
-import 'package:deskilo/core/demo/data/book_profile_repository.dart';
-import 'package:deskilo/core/demo/data/vies_repository.dart';
-import 'package:deskilo/core/demo/demo_finances.dart';
-import 'package:deskilo/features/money/providers/book_profile_providers.dart';
-import 'package:deskilo/features/money/providers/vies_providers.dart';
-import 'package:deskilo/core/demo/data/public_directory_repository.dart';
-import 'package:deskilo/core/demo/data/me_repository.dart';
-import 'package:deskilo/features/me/providers/me_providers.dart';
-import 'package:deskilo/features/visits/providers/visits_providers.dart';
-import 'package:deskilo/core/demo/data/messenger_repository.dart';
-import 'package:deskilo/features/directory/providers/messenger_providers.dart';
-import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
-import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
-import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
-import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
+import 'package:deskilo/core/demo/data/me_repository.dart';
+import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/vies_repository.dart';
 //
 // #1373 — what makes a `ProviderScope` the Demo environment.
 //
@@ -42,78 +34,86 @@ import 'package:deskilo/features/money/providers/account_activity_providers.dart
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
+import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/features/directory/providers/directory_providers.dart';
+import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
+import 'package:deskilo/features/money/providers/vies_providers.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
-import '../../features/workspace/application/creation_intent.dart';
-import '../../features/workspace/providers/local_setup_providers.dart';
-import '../../features/workspace/providers/template_search_providers.dart';
-import '../../features/reservations/providers/place_feedback_providers.dart';
-import 'data/place_feedback_repository.dart';
-import 'data/identity_binding_repository.dart';
-import 'data/oauth_consent_repository.dart';
-import 'data/workbook_origin_repository.dart';
-import 'data/personal_preferences_repository.dart';
-import '../../features/profile/providers/personal_preferences_providers.dart';
-import '../../features/workspace/application/template_compare.dart';
-import '../../features/auth/providers/oauth_consent_providers.dart';
-import 'data/action_confirmation_repository.dart';
-import 'data/local_setup_repository.dart';
-import 'data/template_search_repository.dart';
-import 'data/instance_repository.dart';
-import 'data/mcp_admin_repository.dart';
-import 'data/mcp_onboarding_repository.dart';
-import '../../features/mcp/providers/assistant_setup_providers.dart';
-import 'data/mcp_connection_repository.dart';
-import '../../features/mcp/providers/mcp_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/auth/providers/oauth_consent_providers.dart';
+import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/mcp/providers/assistant_setup_providers.dart';
+import '../../features/mcp/providers/mcp_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
-import '../../features/plan/providers/floor_plan_providers.dart';
-import '../../features/profile/providers/profile_providers.dart';
-import '../../features/reservations/providers/reservation_providers.dart';
-import '../../features/calendar/providers/calendar_providers.dart';
-import '../../features/workspace/providers/deployment_providers.dart';
-import '../../features/workspace/providers/workspace_files_providers.dart';
-import '../../features/workspace/providers/workspace_fields_providers.dart';
-import '../../features/workspace/providers/workspace_import_providers.dart';
-import '../../features/workspace/providers/workspace_roles_providers.dart';
-import '../../features/workspace/providers/instance_providers.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
-import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/plan/providers/default_level_controller.dart';
+import '../../features/plan/providers/floor_plan_providers.dart';
+import '../../features/profile/providers/personal_preferences_providers.dart';
+import '../../features/profile/providers/profile_providers.dart';
+import '../../features/reservations/domain/booking_intent.dart';
 import '../../features/reservations/providers/default_period_controller.dart';
+import '../../features/reservations/providers/place_feedback_providers.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/application/creation_intent.dart';
+import '../../features/workspace/application/template_compare.dart';
+import '../../features/workspace/domain/kpi_contract.dart';
+import '../../features/workspace/providers/bi_providers.dart';
+import '../../features/workspace/providers/deployment_providers.dart';
+import '../../features/workspace/providers/instance_providers.dart';
+import '../../features/workspace/providers/kpi_providers.dart';
+import '../../features/workspace/providers/local_setup_providers.dart';
+import '../../features/workspace/providers/template_search_providers.dart';
+import '../../features/workspace/providers/workspace_fields_providers.dart';
+import '../../features/workspace/providers/workspace_files_providers.dart';
+import '../../features/workspace/providers/workspace_import_providers.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../backend/backend_settings.dart';
 import '../backend/schema_version.dart';
 import '../badge/app_badge.dart';
 import '../cache/cache_store.dart';
 import '../files/file_saver.dart';
+import '../links/link_launcher.dart';
 import '../locale/locale_controller.dart';
 import '../navigation/navigation_style.dart';
 import '../notifications/notification_providers.dart';
+import '../push/push_opt_out.dart';
 import '../push/push_providers.dart';
 import '../realtime/realtime_providers.dart';
 import '../scan/front_camera.dart';
-import '../storage/active_workspace_store.dart';
-import '../storage/help_hint_store.dart';
-import '../storage/space_prefs_store.dart';
-import '../storage/note_seen_store.dart';
-import '../storage/entry_intent_store.dart';
-import '../storage/booking_intent_store.dart';
-import '../storage/notification_filter_store.dart';
-import '../../features/reservations/domain/booking_intent.dart';
-import '../links/link_launcher.dart';
 import '../share/file_sharer.dart';
 import '../share/text_sharer.dart';
+import '../storage/active_workspace_store.dart';
+import '../storage/booking_intent_store.dart';
+import '../storage/entry_intent_store.dart';
+import '../storage/help_hint_store.dart';
+import '../storage/note_seen_store.dart';
+import '../storage/notification_filter_store.dart';
+import '../storage/space_prefs_store.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
-import '../../features/workspace/domain/kpi_contract.dart';
-import '../../features/workspace/providers/kpi_providers.dart';
-import '../../features/workspace/providers/bi_providers.dart';
+import 'data/action_confirmation_repository.dart';
+import 'data/identity_binding_repository.dart';
+import 'data/instance_repository.dart';
+import 'data/local_setup_repository.dart';
+import 'data/mcp_admin_repository.dart';
+import 'data/mcp_connection_repository.dart';
+import 'data/mcp_onboarding_repository.dart';
+import 'data/oauth_consent_repository.dart';
+import 'data/personal_preferences_repository.dart';
+import 'data/place_feedback_repository.dart';
+import 'data/template_search_repository.dart';
+import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
-import '../push/push_opt_out.dart';
 
 /// The overrides that turn a scope into the Demo environment.
 ///
@@ -141,7 +141,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(FakeActionConfirmationRepository()),
       // #1615 — nor an assistant to connect.
       mcpConnectionRepositoryProvider.overrideWithValue(
-        FakeMcpConnectionRepository(installationId: kDemoInstallationId),
+        FakeMcpConnectionRepository(installationId: _kDemoInstallationId),
       ),
       // #1626/#1627 — no policy to save and no queue to review; and no
       // second factor, since Demo has no Auth server to verify one.
@@ -154,7 +154,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1625 — Demo's one fictional installation: nothing is verified
       // against a server, and every client borrows the fakes above.
       activeMcpTargetProvider.overrideWith(
-        (ref) => fixedMcpTarget(ref, kDemoInstallationId),
+        (ref) => fixedMcpTarget(ref, _kDemoInstallationId),
       ),
       // #1656 — Demo lacks nothing locally.
       localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
@@ -296,4 +296,4 @@ List<Override> demoOverrides(DemoFixture fixture) {
 }
 
 /// #1625 — Demo's fictional installation id (never a real server's).
-const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';

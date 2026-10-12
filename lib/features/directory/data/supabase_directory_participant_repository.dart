@@ -4,10 +4,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installations.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/public_network/data/public_network_client.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
 import '../../../core/public_network/public_network_operations.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/public_workspace.dart';
 
 /// #1847 — the PARTICIPANT interface: a signed-in account acting for
@@ -140,7 +140,7 @@ class SupabaseDirectoryParticipantRepository
     if (canonical == directory.url) return DirectoryLinkState.directory;
     try {
       await _probeCards(canonical, key);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'directory',
         'server cannot be linked',

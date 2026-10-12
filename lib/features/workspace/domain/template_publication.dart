@@ -2,8 +2,8 @@
 //
 // #1280 S3 — what publishing this workspace as a template would carry, as
 // the server's allow-list decides it (`template_publication_preview`, 0231).
-import 'template_preview.dart';
 import '../../../core/data/json_reader.dart';
+import 'template_preview.dart';
 
 /// An entity the chosen groups would publish, and the keys removed from it.
 class PublishedEntity {

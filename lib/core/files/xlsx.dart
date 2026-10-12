@@ -71,10 +71,10 @@ String _column(int index) {
 
 String _cell(String ref, Object? value) => switch (value) {
       null => '',
-      num n => '<c r="$ref"><v>$n</v></c>',
-      bool b => '<c r="$ref" t="inlineStr"><is><t>${b ? 'TRUE' : 'FALSE'}'
+      final num n => '<c r="$ref"><v>$n</v></c>',
+      final bool b => '<c r="$ref" t="inlineStr"><is><t>${b ? 'TRUE' : 'FALSE'}'
           '</t></is></c>',
-      DateTime d => '<c r="$ref" t="inlineStr"><is><t>'
+      final DateTime d => '<c r="$ref" t="inlineStr"><is><t>'
           '${d.toIso8601String()}</t></is></c>',
       _ => '<c r="$ref" t="inlineStr"><is><t xml:space="preserve">'
           '${_escape(value.toString())}</t></is></c>',

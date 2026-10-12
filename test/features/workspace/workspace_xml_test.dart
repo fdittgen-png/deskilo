@@ -82,7 +82,7 @@ final _openEndedSeat = Seat(
   orientation: SeatOrientation.w,
   chair: '',
   amenities: const [],
-  blockedFrom: DateTime.utc(2026, 9, 1),
+  blockedFrom: DateTime.utc(2026, 9),
 );
 
 /// The whole catalog (#180): a priced entry, a free one, and an INACTIVE
@@ -173,9 +173,9 @@ void main() {
           // The whole catalog in catalog order, inactive included (#180).
           accessories: const [
             WorkspaceXmlAccessory(
-                name: 'Monitor', supplementCents: 150, sortOrder: 0),
+                name: 'Monitor', supplementCents: 150),
             WorkspaceXmlAccessory(
-                name: 'Standing desk', supplementCents: 0, sortOrder: 1),
+                name: 'Standing desk', sortOrder: 1),
             WorkspaceXmlAccessory(
                 name: 'Docking station',
                 supplementCents: 50,
@@ -218,7 +218,7 @@ void main() {
                           x: 8,
                           y: 2,
                           orientation: SeatOrientation.w,
-                          blockedFrom: DateTime.utc(2026, 9, 1),
+                          blockedFrom: DateTime.utc(2026, 9),
                         ),
                       ],
                     ),

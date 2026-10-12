@@ -14,6 +14,7 @@ part of 'action_registry.dart';
 
 /// The calendar's entry kinds, by their wire names (CalendarKind.wire);
 /// pinned to the enum by test/features/task_recorder/calendar_journey_test.
+@visibleForTesting
 const Set<String> calendarKindKeys = {
   'reservation',
   'checkin',

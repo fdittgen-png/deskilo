@@ -18,9 +18,9 @@
 // four rows of `auth.users`. This is the thing that reads them.
 
 import 'instance_builder.dart';
-import 'schema_compatibility.dart';
 import 'instance_security_checks.dart';
 import 'management_api.dart';
+import 'schema_compatibility.dart';
 
 /// How serious a finding is. [alarm] means people are affected right now.
 enum DoctorLevel { ok, warn, alarm }
@@ -233,7 +233,8 @@ select
       for (final entry in InstanceAuthConfig.redirectAllowList.split(','))
         if (!allowList.contains(entry.trim())) entry.trim(),
     ];
-    findings.add(missing.isEmpty
+    findings
+      ..add(missing.isEmpty
         ? const DoctorFinding(
             DoctorLevel.ok, 'Redirect allow-list', 'carries every callback')
         : DoctorFinding(
@@ -243,11 +244,11 @@ select
                 '        A redirect that is not listed is refused, and the '
                 'Site URL is substituted instead.\n'
                 '        Fix: dart run tool/instance.dart auth --ref <ref>',
-          ));
+          ))
 
     // Not a fault either way — but it decides whether anybody has to click
     // anything, so it must be visible when it changes.
-    findings.add(DoctorFinding(
+      ..add(DoctorFinding(
       DoctorLevel.ok,
       'Confirmation e-mail',
       autoconfirm
@@ -498,8 +499,9 @@ String doctorReport(
         : '$finding');
   }
   final problems = findings.where((f) => f.isProblem).length;
-  buffer.writeln();
-  buffer.writeln(problems == 0
+  buffer
+    ..writeln()
+    ..writeln(problems == 0
       ? 'Everything checked is healthy.'
       : '$problems finding${problems == 1 ? '' : 's'} need a human.');
   return buffer.toString();

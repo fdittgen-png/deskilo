@@ -104,9 +104,9 @@ void main() {
     await money.createInvoice(
         workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
     money.invoices[0] =
-        money.invoices[0].copyWith(issuedAt: DateTime(2025, 12, 1));
+        money.invoices[0].copyWith(issuedAt: DateTime(2025, 12));
     money.invoices[1] =
-        money.invoices[1].copyWith(issuedAt: DateTime(2026, 7, 1));
+        money.invoices[1].copyWith(issuedAt: DateTime(2026, 7));
 
     final saved = <({String name, String body})>[];
     tester.view.physicalSize = const Size(800, 1400);
@@ -179,7 +179,7 @@ void main() {
     await money.createInvoice(
         workspaceId: 'ws-1', memberId: 'member-1', period: '2026-06');
     money.invoices[0] =
-        money.invoices[0].copyWith(issuedAt: DateTime(2026, 7, 1));
+        money.invoices[0].copyWith(issuedAt: DateTime(2026, 7));
     final workspace = FakeWorkspaceRepository.withWorkspace();
     workspace.workspaces[0] = workspace.workspaces[0].copyWith(
       countryCode: 'FR',

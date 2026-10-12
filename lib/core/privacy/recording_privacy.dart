@@ -210,14 +210,12 @@ Profile recordingProfile(Profile real) {
     id: real.id,
     displayName: recordingName(real.id, real.displayName),
     whatsapp: real.whatsapp.isEmpty ? '' : person.phone,
-    statusText: '',
     address: real.address.isEmpty
         ? ''
         : '${person.street}\n${person.postalCode} ${person.city}',
     countryCode: real.countryCode,
     vatId: real.vatId.isEmpty ? '' : 'FR00${_fnv1a(real.id, 6) % 1000000000}',
     lastSeenAt: real.lastSeenAt,
-    avatarPath: null,
     preferredLocale: real.preferredLocale,
     formatPrefs: real.formatPrefs,
     privacyAcceptedVersion: real.privacyAcceptedVersion,

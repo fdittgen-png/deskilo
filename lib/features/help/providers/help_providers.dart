@@ -28,7 +28,7 @@ Future<Map<String, String>> helpAnchors(Ref ref, String languageCode) async {
     final raw = await rootBundle.loadString(helpAnchorAssetFor(languageCode));
     final decoded = jsonDecode(raw) as Map<String, dynamic>;
     return {for (final e in decoded.entries) e.key: '${e.value}'};
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // A missing anchor map is the documented fallback path — the screen
     // still opens, at the nearest heading — so it is a warning in the
     // trace, not an error, and never a print (#1154).

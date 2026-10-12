@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/message_marks.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
-import '../../../workspace/domain/member_note_refs.dart';
 import 'edit_message_dialog.dart';
 import 'forward_target_sheet.dart';
 import 'message_history_sheet.dart';
@@ -75,8 +76,8 @@ Future<void> showMessageActions(
   VoidCallback? onChanged,
   VoidCallback? onInfo,
 }) async {
-  final l10n = AppLocalizations.of(context);
-  final picked = await showModalBottomSheet<Object>(
+  final l10n = context.l10n;
+  final picked = await showAppSheet<Object>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -116,36 +117,36 @@ Future<void> showMessageActions(
               key: const ValueKey('message-action-star'),
               leading: Icon(message.starred ? Icons.star : Icons.star_outline),
               title: Text(message.starred
-                  ? (l10n?.messengerUnstar ?? 'Remove star')
-                  : (l10n?.messengerStar ?? 'Star')),
+                  ? (l10n.messengerUnstar)
+                  : (l10n.messengerStar)),
               onTap: () => Navigator.of(sheet).pop(_Action.star),
             ),
           if (onInfo != null)
             ListTile(
               key: const ValueKey('message-action-info'),
               leading: const Icon(Icons.done_all),
-              title: Text(l10n?.messageInfo ?? 'Message info'),
+              title: Text(l10n.messageInfo),
               onTap: () => Navigator.of(sheet).pop(_Action.info),
             ),
           if (message.body.isNotEmpty && !message.isNotice)
             ListTile(
               key: const ValueKey('message-action-copy'),
               leading: const Icon(Icons.copy_outlined),
-              title: Text(l10n?.messengerCopy ?? 'Copy text'),
+              title: Text(l10n.messengerCopy),
               onTap: () => Navigator.of(sheet).pop(_Action.copy),
             ),
           if (message.editableAt(ref.read(clockProvider).now()))
             ListTile(
               key: const ValueKey('message-action-edit'),
               leading: const Icon(Icons.edit_outlined),
-              title: Text(l10n?.messengerEdit ?? 'Edit'),
+              title: Text(l10n.messengerEdit),
               onTap: () => Navigator.of(sheet).pop(_Action.edit),
             ),
           if (forwarding && !message.noForward)
             ListTile(
               key: const ValueKey('message-action-forward'),
               leading: const Icon(Icons.shortcut),
-              title: Text(l10n?.messengerForward ?? 'Forward'),
+              title: Text(l10n.messengerForward),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(sheet).pop(_Action.forward),
             ),
@@ -154,8 +155,7 @@ Future<void> showMessageActions(
               key: const ValueKey('message-action-locked'),
               leading: const Icon(Icons.lock_outline),
               title: Text(
-                l10n?.messengerForwardLocked ??
-                    'The author locked this message against forwarding.',
+                l10n.messengerForwardLocked,
               ),
             ),
           if (forwarding && message.mine)
@@ -168,15 +168,15 @@ Future<void> showMessageActions(
               ),
               title: Text(
                 message.noForward
-                    ? (l10n?.messengerUnlock ?? 'Allow forwarding')
-                    : (l10n?.messengerLock ?? 'Lock against forwarding'),
+                    ? (l10n.messengerUnlock)
+                    : (l10n.messengerLock),
               ),
               onTap: () => Navigator.of(sheet).pop(_Action.lock),
             ),
           ListTile(
             key: const ValueKey('message-action-history'),
             leading: const Icon(Icons.history),
-            title: Text(l10n?.messengerHistory ?? 'What happened'),
+            title: Text(l10n.messengerHistory),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => Navigator.of(sheet).pop(_Action.history),
           ),
@@ -184,7 +184,7 @@ Future<void> showMessageActions(
             ListTile(
               key: const ValueKey('message-action-delete'),
               leading: const Icon(Icons.delete_outline),
-              title: Text(l10n?.messengerDelete ?? 'Delete message'),
+              title: Text(l10n.messengerDelete),
               onTap: () => Navigator.of(sheet).pop(_Action.delete),
             ),
         ],
@@ -198,8 +198,7 @@ Future<void> showMessageActions(
     final ok = await runMessenger(
       context,
       message: 'react to message failed',
-      errorText: l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: l10n.portalActionFailed,
       action: () => actions.react(
         message.kind,
         message.messageId,
@@ -211,8 +210,7 @@ Future<void> showMessageActions(
   }
   final action = picked as _Action;
   final failed =
-      l10n?.portalActionFailed ??
-      'Could not save this change. Please try again.';
+      l10n.portalActionFailed;
   switch (action) {
     case _Action.forward:
       final target = await pickForwardTarget(
@@ -238,8 +236,7 @@ Future<void> showMessageActions(
       onChanged?.call();
       AppSnack.success(
         context,
-        l10n?.messengerForwarded(target.title) ??
-            'Forwarded to ${target.title}.',
+        l10n.messengerForwarded(target.title),
         replace: true,
       );
     case _Action.lock:
@@ -278,7 +275,7 @@ Future<void> showMessageActions(
     case _Action.copy:
       await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
       if (context.mounted) {
-        AppSnack.success(context, l10n?.messengerCopied ?? 'Copied.',
+        AppSnack.success(context, l10n.messengerCopied,
             replace: true);
       }
     case _Action.edit:
@@ -290,8 +287,7 @@ Future<void> showMessageActions(
       final ok = await runMessenger(
         context,
         message: 'edit message failed',
-        errorText: l10n?.messengerEditFailed ??
-            'This message could not be edited — the 15 minutes may be over.',
+        errorText: l10n.messengerEditFailed,
         action: () =>
             actions.edit(message.kind, message.messageId, text.trim()),
       );

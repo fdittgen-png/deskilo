@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/backend_uri.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -43,7 +46,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
 
   Future<void> _submit({bool requestCode = false}) async {
     if (_busy) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final endpoint = BackendEndpoint(_url.text.trim(), _key.text.trim());
     setState(() => _busy = true);
     // #1832 A — a typed outcome says what went wrong and what to do; only
@@ -71,18 +74,17 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
         context,
         failure != null
             ? connectionFailureText(l10n, failure!)
-            : (l10n?.portalConnectionFailed ??
-                  'Could not connect. Check this server and your sign-in '
-                      'details.'),
+            : (l10n.portalConnectionFailed),
       );
     }
     if (ok && requestCode) {
       setState(() => _code = true);
     }
     if (ok && !requestCode) {
-      ref.invalidate(connectedSourcesProvider);
-      ref.invalidate(connectionHealthProvider(endpoint.url));
-      ref.invalidate(publicDirectoryProvider);
+      ref
+        ..invalidate(connectedSourcesProvider)
+        ..invalidate(connectionHealthProvider(endpoint.url))
+        ..invalidate(publicDirectoryProvider);
       Navigator.of(context).pop(true);
     }
   }
@@ -119,7 +121,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
   /// #2343 — a `deskilo://server` code an organisation shared, pasted
   /// instead of typing a 40-character key on a phone.
   Future<void> _paste() async {
-    final l = AppLocalizations.of(context)!;
+    final l = context.l10n;
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     if (!mounted) return;
     final descriptor = BackendUriCodec.decodeDescriptor(data?.text ?? '');
@@ -139,7 +141,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
   void _leaveFor(String location, {Object? extra}) {
     final router = GoRouter.of(context);
     Navigator.of(context).pop();
-    router.push(location, extra: extra);
+    unawaited(router.push(location, extra: extra));
   }
 
   /// The candidate on the form, when it is a well-formed endpoint.
@@ -210,21 +212,21 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     return AlertDialog(
-      title: Text(l?.portalConnect ?? 'Connect a server'),
+      title: Text(l.portalConnect),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ..._joinOrCreate(AppLocalizations.of(context)!),
+            ..._joinOrCreate(context.l10n),
             TextField(
               key: const ValueKey('connection-dialog-url'),
               controller: _url,
               onChanged: (_) => setState(() {}),
               enabled: !_busy,
               decoration: InputDecoration(
-                labelText: l?.backendUrlLabel ?? 'Project URL',
+                labelText: l.backendUrlLabel,
               ),
             ),
             TextField(
@@ -233,7 +235,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
               onChanged: (_) => setState(() {}),
               enabled: !_busy,
               decoration: InputDecoration(
-                labelText: l?.backendKeyLabel ?? 'Publishable key',
+                labelText: l.backendKeyLabel,
               ),
             ),
             TextField(
@@ -242,7 +244,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
               keyboardType: TextInputType.emailAddress,
               autofillHints: const [AutofillHints.email],
               decoration: InputDecoration(
-                labelText: l?.authEmailLabel ?? 'Email',
+                labelText: l.authEmailLabel,
               ),
             ),
             TextField(
@@ -251,22 +253,22 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
               obscureText: !_code,
               decoration: InputDecoration(
                 labelText: _code
-                    ? (l?.portalEmailCode ?? 'Email sign-in code')
-                    : (l?.authPasswordLabel ?? 'Password'),
+                    ? (l.portalEmailCode)
+                    : (l.authPasswordLabel),
               ),
             ),
             SwitchListTile(
               key: const ValueKey('connection-dialog-portal-use-code'),
               value: _code,
               onChanged: _busy ? null : (v) => setState(() => _code = v),
-              title: Text(l?.portalUseCode ?? 'Use an email code'),
+              title: Text(l.portalUseCode),
             ),
             TextButton(
               key: const ValueKey('connection-dialog-portal-send-code'),
               onPressed: _busy ? null : () => _submit(requestCode: true),
-              child: Text(l?.portalSendCode ?? 'Send sign-in code'),
+              child: Text(l.portalSendCode),
             ),
-            ..._otherWays(AppLocalizations.of(context)!),
+            ..._otherWays(context.l10n),
           ],
         ),
       ),
@@ -279,7 +281,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
         FilledButton(
           key: const ValueKey('connection-dialog-save'),
           onPressed: _busy ? null : _submit,
-          child: Text(l?.commonSave ?? 'Save'),
+          child: Text(l.commonSave),
         ),
       ],
     );

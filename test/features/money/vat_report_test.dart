@@ -3,11 +3,13 @@
 // #878 — the VAT review as code: statutory mentions per country, the
 // shape of a European VAT id, the readiness warning, and the VAT
 // report built from frozen breakdowns with its CSV.
-import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
@@ -15,7 +17,6 @@ import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
 
 Invoice _invoice(
   String number, {
@@ -138,7 +139,7 @@ void main() {
           voidedAt: DateTime(2026, 9, 21)),
       _invoice('INV-4', issuedAt: DateTime(2026, 9, 25), vat: [s20],
           settledBy: 'inv-SET'),
-      _invoice('INV-5', issuedAt: DateTime(2026, 10, 1), vat: [s20]),
+      _invoice('INV-5', issuedAt: DateTime(2026, 10), vat: [s20]),
       _invoice('INV-0', issuedAt: DateTime(2026, 9, 30, 23, 59),
           lines: const [InvoiceLine(kind: 'subscription', label: 'old', amountCents: 5000)],
           replaces: 'INV-OLD'),
@@ -154,7 +155,7 @@ void main() {
         'out, regrouped sources IN; pre-0072 documents derive a zero-rated '
         'entry', () {
       final report = buildVatReport(invoices,
-          start: DateTime(2026, 9, 1), end: DateTime(2026, 9, 30),
+          start: DateTime(2026, 9), end: DateTime(2026, 9, 30),
           zeroCategory: 'E');
       expect(report.positions.map((p) => '${p.number}@${p.percent}'),
           ['INV-1@20.0', 'INV-2@20.0', 'INV-2@5.5', 'INV-4@20.0',
@@ -171,7 +172,7 @@ void main() {
 
     test('the CSV is one semicolon row per position, decimal comma', () {
       final report = buildVatReport(invoices.take(1),
-          start: DateTime(2026, 9, 1), end: DateTime(2026, 9, 30),
+          start: DateTime(2026, 9), end: DateTime(2026, 9, 30),
           zeroCategory: 'E');
       final csv = vatReportCsv(report, currency: 'EUR');
       expect(csv.split('\n').first,
@@ -182,7 +183,7 @@ void main() {
     test('the kind is registered and its default bands render the sample', () {
       expect(reportKindById('vat'), isNotNull);
       final report = renderReportBands(
-          bands: defaultVatBands(null), data: sampleReportData(null));
+          bands: defaultVatBands(englishL10n), data: sampleReportData(englishL10n));
       final body = report!.body.map(_text).join('\n');
       expect(body, contains('INV-2026-0007'));
       expect(body, contains('Totals per rate'));
