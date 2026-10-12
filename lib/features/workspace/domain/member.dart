@@ -126,6 +126,13 @@ sealed class Member with _$Member implements SystemStamped {
     /// `consumer`; null = not stated (the workspace default applies).
     String? customerCapacity,
 
+    /// #2358 (0410) — where this customer receives e-invoices (BT-49),
+    /// its EAS scheme, and the county or province of its address
+    /// (BT-54). Frozen into each invoice's buyer snapshot.
+    @Default('') String einvoiceEndpointId,
+    @Default('') String einvoiceEndpointScheme,
+    @Default('') String billingSubdivision,
+
     /// Whether this member may reserve/check into a WHOLE level (0050);
     /// granted by the owner or an admin, never self-set.
     @Default(false) bool canReserveLevel,

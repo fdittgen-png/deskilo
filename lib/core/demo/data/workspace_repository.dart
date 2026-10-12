@@ -409,6 +409,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   @override Future<void> updateMemberOveragePolicy(String memberId, OveragePolicy policy) => _updateMemberOveragePolicyImpl(memberId, policy);
   @override Future<void> setMemberReservationLimit(String memberId, int? limit) => _setMemberReservationLimitImpl(memberId, limit);
   @override Future<void> setMemberCustomerCapacity(String memberId, String? capacity) => _setMemberCustomerCapacityImpl(memberId, capacity);
+  @override Future<void> setMemberEInvoiceAddress(String memberId, {required String endpointId, required String endpointScheme, required String subdivision}) => _setMemberEInvoiceAddressImpl(memberId, endpointId: endpointId, endpointScheme: endpointScheme, subdivision: subdivision);
   @override Future<void> setMemberVatTreatment(String memberId, String treatment, String reason) => _setMemberVatTreatmentImpl(memberId, treatment, reason);
   @override Future<void> setMemberSimultaneousLimit(String memberId, int? limit) => _setMemberSimultaneousLimitImpl(memberId, limit);
   @override Future<void> setMemberLevelPermission(String memberId, {required bool allowed}) => _setMemberLevelPermissionImpl(memberId, allowed: allowed);

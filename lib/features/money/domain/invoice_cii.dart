@@ -109,6 +109,23 @@ String buildInvoiceCii({
               ? '381'
               : invoice.replacesNumber.isNotEmpty ? '384' : '380');
       date('IssueDateTime', invoice.issuedAt);
+      // #2358 — BT-22 with the French CIUS subject codes (BR-FR-05): the
+      // recovery indemnity (PMT), the late-payment penalties (PMD) and
+      // the early-payment discount (AAB), as frozen with the invoice.
+      final clauses = invoice.legalClauses?.clauses;
+      if (clauses != null && seller.country.toUpperCase() == 'FR') {
+        for (final (code, text) in [
+          ('PMT', clauses.recoveryIndemnity),
+          ('PMD', clauses.latePenalty),
+          ('AAB', clauses.escompte),
+        ]) {
+          if (text.trim().isEmpty) continue;
+          builder.element('ram:IncludedNote', nest: () {
+            ram('Content', text.trim());
+            ram('SubjectCode', code);
+          });
+        }
+      }
     });
 
     builder.element('rsm:SupplyChainTradeTransaction', nest: () {
@@ -189,7 +206,19 @@ String buildInvoiceCii({
             }
             if (p.city.isNotEmpty) ram('CityName', p.city);
             ram('CountryID', p.country.toUpperCase());
+            // #2358 — BT-39 / BT-54, after the country in CII's sequence.
+            if (p.subdivision.isNotEmpty) {
+              ram('CountrySubDivisionName', p.subdivision);
+            }
           });
+          // #2358 — BT-34 / BT-49: the electronic address a platform
+          // routes by (BR-FR-12/13 make both mandatory in France).
+          if (p.endpointId.isNotEmpty) {
+            builder.element('ram:URIUniversalCommunication', nest: () {
+              ram('URIID', p.endpointId,
+                  {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
+            });
+          }
           final showVat =
               p.vatId.isNotEmpty && (!isSeller || !regime.forbidsVatId);
           if (showVat) {

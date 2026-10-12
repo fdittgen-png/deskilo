@@ -210,5 +210,49 @@
   "eInvoiceReceiptFailed": "Die Plattform konnte nicht abgefragt werden; versuchen Sie es später erneut.",
   "@eInvoiceReceiptFailed": {
     "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceIdentityTitle": "E-Rechnungsadresse",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
+  },
+  "eInvoiceIdentityHelp": "Wohin die Netze Rechnungen für diesen Space zustellen (BT-34): seine Peppol-ID oder seine Adresse im französischen Verzeichnis, und der Kontakt, den ein deutscher öffentlicher Auftraggeber verlangt.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceEndpointIdField": "Elektronische Adresse",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Adressschema (EAS-Code, z. B. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
+  "eInvoiceSubdivisionField": "Kreis oder Provinz (z. B. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
+  },
+  "eInvoiceContactEmailField": "Kontakt-E-Mail für Rechnungen",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Kontakttelefon für Rechnungen",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "memberEInvoiceAddressLabel": "E-Rechnungsadresse",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Nicht angegeben",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
+  },
+  "memberEInvoiceAddressHelp": "Wo dieser Kunde E-Rechnungen empfängt (BT-49): eine Peppol-ID, eine Adresse im französischen Verzeichnis, eine Leitweg-ID (Schema 0204) oder ein SdI-Empfängercode.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressFailed": "Die E-Rechnungsadresse konnte nicht gespeichert werden.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
   }
 }

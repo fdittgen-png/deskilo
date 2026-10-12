@@ -4017,6 +4017,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceContactEmailField => 'Kontakt-E-Mail für Rechnungen';
+
+  @override
+  String get eInvoiceContactPhoneField => 'Kontakttelefon für Rechnungen';
+
+  @override
+  String get eInvoiceEndpointIdField => 'Elektronische Adresse';
+
+  @override
+  String get eInvoiceEndpointSchemeField =>
+      'Adressschema (EAS-Code, z. B. 0225, 0208, 0204, EM)';
+
+  @override
   String get eInvoiceFieldAccessToken => 'Zugriffstoken (ANAF-OAuth)';
 
   @override
@@ -4071,6 +4084,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.';
+
+  @override
+  String get eInvoiceIdentityHelp =>
+      'Wohin die Netze Rechnungen für diesen Space zustellen (BT-34): seine Peppol-ID oder seine Adresse im französischen Verzeichnis, und der Kontakt, den ein deutscher öffentlicher Auftraggeber verlangt.';
+
+  @override
+  String get eInvoiceIdentityTitle => 'E-Rechnungsadresse';
 
   @override
   String get eInvoiceMandateEReporting =>
@@ -4146,6 +4166,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get eInvoiceReceiptNothingYet =>
       'Die Plattform meldet zu diesem Dokument noch nichts Neues.';
+
+  @override
+  String get eInvoiceSubdivisionField => 'Kreis oder Provinz (z. B. RO-B, MI)';
 
   @override
   String get editorAccessoriesLabel => 'Zubehör';
@@ -10945,6 +10968,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberContactHeading => 'Kontakt';
+
+  @override
+  String get memberEInvoiceAddressFailed =>
+      'Die E-Rechnungsadresse konnte nicht gespeichert werden.';
+
+  @override
+  String get memberEInvoiceAddressHelp =>
+      'Wo dieser Kunde E-Rechnungen empfängt (BT-49): eine Peppol-ID, eine Adresse im französischen Verzeichnis, eine Leitweg-ID (Schema 0204) oder ein SdI-Empfängercode.';
+
+  @override
+  String get memberEInvoiceAddressLabel => 'E-Rechnungsadresse';
+
+  @override
+  String get memberEInvoiceAddressNone => 'Nicht angegeben';
 
   @override
   String get memberHomeSiteDefault => 'Adresse des Arbeitsbereichs';

@@ -2738,6 +2738,22 @@
       }
     }
   },
+  "eInvoiceContactEmailField": "Kontakt-E-Mail für Rechnungen",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Kontakttelefon für Rechnungen",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "eInvoiceEndpointIdField": "Elektronische Adresse",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Adressschema (EAS-Code, z. B. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
   "eInvoiceFieldAccessToken": "Zugriffstoken (ANAF-OAuth)",
   "@eInvoiceFieldAccessToken": {
     "description": "#2358 connector field"
@@ -2805,6 +2821,14 @@
   "eInvoiceGapMixedNotSubjectLines": "Eine nicht steuerbare Zeile (Pfand) steht neben besteuerten Zeilen — EN 16931 lehnt die Mischung ab; stellen Sie das Pfand gesondert in Rechnung.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceIdentityHelp": "Wohin die Netze Rechnungen für diesen Space zustellen (BT-34): seine Peppol-ID oder seine Adresse im französischen Verzeichnis, und der Kontakt, den ein deutscher öffentlicher Auftraggeber verlangt.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceIdentityTitle": "E-Rechnungsadresse",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
   },
   "eInvoiceMandateEReporting": "Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden",
   "@eInvoiceMandateEReporting": {
@@ -2906,6 +2930,10 @@
   "eInvoiceReceiptNothingYet": "Die Plattform meldet zu diesem Dokument noch nichts Neues.",
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
+  },
+  "eInvoiceSubdivisionField": "Kreis oder Provinz (z. B. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
   },
   "editorAccessoriesLabel": "Zubehör",
   "editorAddLevel": "Etage hinzufügen",
@@ -6875,6 +6903,22 @@
   "memberContactHeading": "Kontakt",
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
+  },
+  "memberEInvoiceAddressFailed": "Die E-Rechnungsadresse konnte nicht gespeichert werden.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
+  },
+  "memberEInvoiceAddressHelp": "Wo dieser Kunde E-Rechnungen empfängt (BT-49): eine Peppol-ID, eine Adresse im französischen Verzeichnis, eine Leitweg-ID (Schema 0204) oder ein SdI-Empfängercode.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressLabel": "E-Rechnungsadresse",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Nicht angegeben",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
   },
   "memberHomeSiteDefault": "Adresse des Arbeitsbereichs",
   "@memberHomeSiteDefault": {

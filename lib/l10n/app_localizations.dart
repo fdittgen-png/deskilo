@@ -6955,6 +6955,30 @@ abstract class AppLocalizations {
   /// **'Before sending through {channel}, add:'**
   String eInvoiceChannelGapsTitle(String channel);
 
+  /// #2358 field: seller contact e-mail
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing contact e-mail'**
+  String get eInvoiceContactEmailField;
+
+  /// #2358 field: seller contact telephone
+  ///
+  /// In en, this message translates to:
+  /// **'Invoicing contact telephone'**
+  String get eInvoiceContactPhoneField;
+
+  /// #2358 field: the electronic address
+  ///
+  /// In en, this message translates to:
+  /// **'Electronic address'**
+  String get eInvoiceEndpointIdField;
+
+  /// #2358 field: the EAS scheme code
+  ///
+  /// In en, this message translates to:
+  /// **'Address scheme (EAS code, e.g. 0225, 0208, 0204, EM)'**
+  String get eInvoiceEndpointSchemeField;
+
   /// #2358 connector field
   ///
   /// In en, this message translates to:
@@ -7056,6 +7080,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.'**
   String get eInvoiceGapMixedNotSubjectLines;
+
+  /// #2358 legal identity: what the address is for
+  ///
+  /// In en, this message translates to:
+  /// **'Where the networks deliver invoices to this space (BT-34): its Peppol id or its French directory address, and the contact a German public buyer asks for.'**
+  String get eInvoiceIdentityHelp;
+
+  /// #2358 legal identity: the e-invoicing address section
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing address'**
+  String get eInvoiceIdentityTitle;
 
   /// #2358 mandate duty
   ///
@@ -7176,6 +7212,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The platform has nothing new about this document yet.'**
   String get eInvoiceReceiptNothingYet;
+
+  /// #2358 field: county or province
+  ///
+  /// In en, this message translates to:
+  /// **'County or province (e.g. RO-B, MI)'**
+  String get eInvoiceSubdivisionField;
 
   /// Label above the seat sheet's accessory chips (workspace catalog)
   ///
@@ -18587,6 +18629,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Contact'**
   String get memberContactHeading;
+
+  /// #2358 member dialog: the save was refused
+  ///
+  /// In en, this message translates to:
+  /// **'The e-invoicing address could not be saved.'**
+  String get memberEInvoiceAddressFailed;
+
+  /// #2358 member dialog: what the address is for
+  ///
+  /// In en, this message translates to:
+  /// **'Where this customer receives e-invoices (BT-49): a Peppol id, a French directory address, a Leitweg-ID (scheme 0204) or an SdI recipient code.'**
+  String get memberEInvoiceAddressHelp;
+
+  /// #2358 member page: the customer e-invoicing address tile
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing address'**
+  String get memberEInvoiceAddressLabel;
+
+  /// #2358 member page: no address stated
+  ///
+  /// In en, this message translates to:
+  /// **'Not stated'**
+  String get memberEInvoiceAddressNone;
 
   /// #945 sites: memberHomeSiteDefault
   ///

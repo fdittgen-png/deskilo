@@ -236,4 +236,131 @@ comment on column public.invoice_transmissions.format is
 comment on column public.invoice_transmissions.receipt is
   '#2358 — the provider''s answer about the document: Peppol evidence, PA lifecycle, SdI notifications, KSeF number and UPO, ANAF state';
 
+-- ── 7. the electronic addresses (BT-34 / BT-49) and the county ────────
+-- Peppol and XRechnung route by the parties' electronic addresses, the
+-- French CIUS makes both mandatory (BR-FR-12/13) and CIUS-RO wants the
+-- county of a Romanian address. The space keeps its own in its legal
+-- identity (invoice_legal, as the client writes it); a customer's is set
+-- on its membership by whoever issues the space's invoices. Both are
+-- frozen into the parties snapshot when an invoice is issued.
+alter table public.members
+  add column if not exists einvoice_endpoint_id text not null default '',
+  add column if not exists einvoice_endpoint_scheme text not null default '',
+  add column if not exists billing_subdivision text not null default '';
+
+create or replace function public.set_member_einvoice_address(
+  p_member_id uuid, p_endpoint_id text, p_endpoint_scheme text, p_subdivision text
+) returns void
+language plpgsql security definer set search_path = public as $$
+declare
+  v_target public.members;
+  v_id text := btrim(coalesce(p_endpoint_id, ''));
+  v_scheme text := upper(btrim(coalesce(p_endpoint_scheme, '')));
+  v_county text := upper(btrim(coalesce(p_subdivision, '')));
+begin
+  select * into v_target from public.members where id = p_member_id;
+  if v_target.id is null then raise exception 'unknown member'; end if;
+  if auth.uid() is null
+     or not public.has_permission(v_target.workspace_id, 'issueInvoices') then
+    raise exception 'not allowed to set the e-invoicing address';
+  end if;
+  -- An address without its scheme is one no network can resolve.
+  if v_id <> '' and v_scheme = '' then
+    raise exception 'an electronic address needs its scheme' using errcode = '22023';
+  end if;
+  if length(v_id) > 120 or length(v_scheme) > 10 or length(v_county) > 10 then
+    raise exception 'e-invoicing address too long' using errcode = '22001';
+  end if;
+  update public.members
+     set einvoice_endpoint_id = v_id,
+         einvoice_endpoint_scheme = case when v_id = '' then '' else v_scheme end,
+         billing_subdivision = v_county
+   where id = p_member_id;
+end;
+$$;
+revoke execute on function public.set_member_einvoice_address(uuid, text, text, text)
+  from public, anon;
+
+-- The buyer's and the seller's address as the snapshot carries them.
+-- Invoker functions: create_invoice (a definer) is their only caller.
+create or replace function public.member_einvoice_address(p_member_id uuid)
+returns jsonb language sql stable set search_path = public as $$
+  select coalesce((
+    select jsonb_build_object(
+             'endpoint_id', m.einvoice_endpoint_id,
+             'endpoint_scheme', m.einvoice_endpoint_scheme,
+             'subdivision', m.billing_subdivision)
+      from public.members m where m.id = p_member_id), '{}'::jsonb);
+$$;
+revoke execute on function public.member_einvoice_address(uuid)
+  from public, anon, authenticated;
+
+create or replace function public.workspace_einvoice_address(p_workspace_id uuid)
+returns jsonb language sql stable set search_path = public as $$
+  select coalesce((
+    select jsonb_build_object(
+             'endpoint_id', coalesce(w.invoice_legal ->> 'einvoice_endpoint_id', ''),
+             'endpoint_scheme', coalesce(w.invoice_legal ->> 'einvoice_endpoint_scheme', ''),
+             'subdivision', coalesce(w.invoice_legal ->> 'subdivision', ''),
+             'email', coalesce(w.invoice_legal ->> 'contact_email', ''),
+             'phone', coalesce(w.invoice_legal ->> 'contact_phone', ''))
+      from public.workspaces w where w.id = p_workspace_id), '{}'::jsonb);
+$$;
+revoke execute on function public.workspace_einvoice_address(uuid)
+  from public, anon, authenticated;
+
+-- ── anchored patch: create_invoice freezes both addresses ─────────────
+create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
+returns text
+language plpgsql
+as $f$
+declare
+  v_pattern text;
+  v_out text;
+begin
+  if position(p_old in p_def) > 0 then
+    return replace(p_def, p_old, p_new);
+  end if;
+  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
+  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
+  return case when v_out = p_def then null else v_out end;
+end
+$f$;
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
+do $migration$
+declare
+  v_def text;
+  v_step record;
+begin
+  select pg_get_functiondef('public.create_invoice(uuid,uuid,text,uuid,boolean,text,boolean,text,text)'::regprocedure)
+    into v_def;
+  for v_step in
+    select * from (values
+      -- The seller object closes after its exemption reason; the address
+      -- joins it there, before the buyer opens.
+      (1, 'seller address',
+       $a$             else coalesce(v_workspace.tax_exemption_reason, '') end),
+    'buyer', jsonb_build_object($a$,
+       $a$             else coalesce(v_workspace.tax_exemption_reason, '') end)
+      || public.workspace_einvoice_address(p_workspace_id),
+    'buyer', jsonb_build_object($a$),
+      -- The first parenthesis closes the buyer object, the second the
+      -- parties: the address joins the buyer, between the two.
+      (2, 'buyer address',
+       $a$      'tax_exemption_reason', v_treatment_reason));$a$,
+       $a$      'tax_exemption_reason', v_treatment_reason)
+      || public.member_einvoice_address(v_subject.id));$a$)
+    ) as s(n, what, old_text, new_text) order by n
+  loop
+    v_def := pg_temp.anchor_replace(v_def, v_step.old_text, v_step.new_text);
+    if v_def is null then
+      raise exception '0410: create_invoice anchor % (%) missing', v_step.n, v_step.what;
+    end if;
+  end loop;
+  execute v_def;
+end
+$migration$;
+
 select public.set_deskilo_schema_version(410);

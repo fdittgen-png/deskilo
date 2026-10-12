@@ -4015,6 +4015,19 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceContactEmailField => 'E-mail du contact facturation';
+
+  @override
+  String get eInvoiceContactPhoneField => 'Téléphone du contact facturation';
+
+  @override
+  String get eInvoiceEndpointIdField => 'Adresse électronique';
+
+  @override
+  String get eInvoiceEndpointSchemeField =>
+      'Schéma de l’adresse (code EAS, p. ex. 0225, 0208, 0204, EM)';
+
+  @override
   String get eInvoiceFieldAccessToken => 'Jeton d’accès (OAuth ANAF)';
 
   @override
@@ -4069,6 +4082,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Une ligne hors champ (consigne) figure à côté de lignes taxées — la norme EN 16931 refuse ce mélange ; émettez la consigne sur un document séparé.';
+
+  @override
+  String get eInvoiceIdentityHelp =>
+      'L’adresse où les réseaux livrent les factures de cet espace (BT-34) : son identifiant Peppol ou son adresse dans l’annuaire français, et le contact qu’un acheteur public allemand demande.';
+
+  @override
+  String get eInvoiceIdentityTitle => 'Adresse de facturation électronique';
 
   @override
   String get eInvoiceMandateEReporting =>
@@ -4145,6 +4165,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get eInvoiceReceiptNothingYet =>
       'La plateforme n’a encore rien de nouveau sur ce document.';
+
+  @override
+  String get eInvoiceSubdivisionField =>
+      'Département, județ ou province (p. ex. RO-B, MI)';
 
   @override
   String get editorAccessoriesLabel => 'Accessoires';
@@ -10954,6 +10978,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberContactHeading => 'Contact';
+
+  @override
+  String get memberEInvoiceAddressFailed =>
+      'L’adresse de facturation électronique n’a pas pu être enregistrée.';
+
+  @override
+  String get memberEInvoiceAddressHelp =>
+      'L’adresse où ce client reçoit ses factures électroniques (BT-49) : un identifiant Peppol, une adresse de l’annuaire français, un Leitweg-ID (schéma 0204) ou un code destinataire SdI.';
+
+  @override
+  String get memberEInvoiceAddressLabel =>
+      'Adresse de facturation électronique';
+
+  @override
+  String get memberEInvoiceAddressNone => 'Non renseignée';
 
   @override
   String get memberHomeSiteDefault => 'Adresse de l\'espace';

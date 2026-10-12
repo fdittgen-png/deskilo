@@ -18,8 +18,8 @@
 #     UBL schema and the CEN schematron. ANAF publishes its own CIUS-RO
 #     rules behind a web service only; those are not run here.
 #   Mustang — Factur-X: PDF/A-3 (veraPDF), the embedded XML, the
-#     Factur-X/ZUGFeRD schematron; the French CIUS (BR-FR) rules are
-#     reported as warnings
+#     Factur-X/ZUGFeRD schematron and the French CIUS (BR-FR), which
+#     Mustang reports as warnings and this script treats as refusals
 #   xmllint + the SdI schema — FatturaPA FPR12 1.2.3
 #   xmllint + the KSeF schema — FA(3)
 #
@@ -117,8 +117,16 @@ java -Xmx1g -jar "$work/dl/mustang.jar" --action validate --no-notices \
   2>"$work/reports/factur-x.log" || true
 if [ "$(grep -oE '<summary status="[a-z]+"' "$work/reports/factur-x.xml" | tail -1)" = '<summary status="valid"' ]; then
   report "| factur-x.pdf | Mustang 2.26.0 (PDF/A-3, Factur-X EN 16931) | valid |"
-  grep -oE 'ID BR-FR-[^]]+' "$work/reports/factur-x.log" | sort -u |
-    sed 's/^/  French CIUS warning: /' || true
+  # The French CIUS (XP Z12-012, BR-FR) is reported as warnings by
+  # Mustang; the sample is a French B2B invoice, so any one of them is a
+  # document a French platform refuses.
+  if grep -qE 'ID BR-FR-' "$work/reports/factur-x.log"; then
+    report "| factur-x.pdf | Mustang 2.26.0 (French CIUS, BR-FR) | REJECTED |"
+    grep -oE 'ID BR-FR-[^]]+' "$work/reports/factur-x.log" | sort -u
+    failed=1
+  else
+    report "| factur-x.pdf | Mustang 2.26.0 (French CIUS, BR-FR) | accepted |"
+  fi
 else
   report "| factur-x.pdf | Mustang 2.26.0 (PDF/A-3, Factur-X EN 16931) | INVALID |"
   failed=1

@@ -70,6 +70,18 @@ Invoice _invoice() => Invoice(
   workspaceAddress: '2 Place du Marché',
   issuerName: 'Flo',
   signature: 'f' * 64,
+  // #2358 — the French payment mentions (BR-FR-05), as frozen.
+  legalSnapshot: const {
+    'schema': 1,
+    'seller_country': 'FR',
+    'buyer_country': 'FR',
+    'clauses': {
+      'late_penalty': 'Pénalités de retard : trois fois le taux légal.',
+      'recovery_indemnity':
+          'Indemnité forfaitaire pour frais de recouvrement : 40 €.',
+      'escompte': 'Pas d’escompte pour paiement anticipé.',
+    },
+  },
 );
 
 const _seller = InvoiceParty(
@@ -81,6 +93,8 @@ const _seller = InvoiceParty(
   vatId: 'FR32812345678',
   legalId: '812345678',
   vatRegime: 'vat_registered',
+  endpointId: '812345678',
+  endpointScheme: '0225',
   email: 'billing@test-space.example',
   phone: '+33 4 00 00 00 00',
 );
@@ -93,6 +107,8 @@ const _buyer = InvoiceParty(
   country: 'FR',
   vatId: 'FR40303265045',
   legalId: '303265045',
+  endpointId: '303265045',
+  endpointScheme: '0225',
   email: 'compta@atelier-nord.example',
 );
 

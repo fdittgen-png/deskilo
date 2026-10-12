@@ -283,7 +283,13 @@ void main() {
         findsNothing,
         reason: 'out of scope is the default and is correct');
 
-    await tester.ensureVisible(find.byKey(const ValueKey('legal-identity-regime')));
+    // Back UP to the regime: the list builds lazily, and the kind sits
+    // far enough below it that the regime is no longer built.
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('legal-identity-regime')),
+      -120,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
     await tester.pumpAndSettle();

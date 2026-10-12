@@ -3992,6 +3992,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceContactEmailField => 'Invoicing contact e-mail';
+
+  @override
+  String get eInvoiceContactPhoneField => 'Invoicing contact telephone';
+
+  @override
+  String get eInvoiceEndpointIdField => 'Electronic address';
+
+  @override
+  String get eInvoiceEndpointSchemeField =>
+      'Address scheme (EAS code, e.g. 0225, 0208, 0204, EM)';
+
+  @override
   String get eInvoiceFieldAccessToken => 'Access token (ANAF OAuth)';
 
   @override
@@ -4045,6 +4058,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'A not-subject line (a refundable deposit) sits beside taxed lines — EN 16931 refuses the mix; issue the deposit on its own document.';
+
+  @override
+  String get eInvoiceIdentityHelp =>
+      'Where the networks deliver invoices to this space (BT-34): its Peppol id or its French directory address, and the contact a German public buyer asks for.';
+
+  @override
+  String get eInvoiceIdentityTitle => 'E-invoicing address';
 
   @override
   String get eInvoiceMandateEReporting =>
@@ -4119,6 +4139,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get eInvoiceReceiptNothingYet =>
       'The platform has nothing new about this document yet.';
+
+  @override
+  String get eInvoiceSubdivisionField => 'County or province (e.g. RO-B, MI)';
 
   @override
   String get editorAccessoriesLabel => 'Accessories';
@@ -10845,6 +10868,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberContactHeading => 'Contact';
+
+  @override
+  String get memberEInvoiceAddressFailed =>
+      'The e-invoicing address could not be saved.';
+
+  @override
+  String get memberEInvoiceAddressHelp =>
+      'Where this customer receives e-invoices (BT-49): a Peppol id, a French directory address, a Leitweg-ID (scheme 0204) or an SdI recipient code.';
+
+  @override
+  String get memberEInvoiceAddressLabel => 'E-invoicing address';
+
+  @override
+  String get memberEInvoiceAddressNone => 'Not stated';
 
   @override
   String get memberHomeSiteDefault => 'Workspace address';

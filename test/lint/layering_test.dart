@@ -267,7 +267,7 @@ const Map<String, int> _pairBudget = {
   'members -> plan': 3,
   'members -> profile': 9,
   'members -> reservations': 14,
-  'members -> workspace': 36, // 2026-10-03 #1916 35→36: the member page states the customer capacity through workspace/presentation/member_customer_capacity.dart, beside the VAT treatment dialog it mirrors; 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
+  'members -> workspace': 37, // 2026-10-11 #2358 36→37: the member page states the customer's e-invoicing address through workspace/presentation/member_einvoice_address_tile.dart. // 2026-10-03 #1916 35→36: the member page states the customer capacity through workspace/presentation/member_customer_capacity.dart, beside the VAT treatment dialog it mirrors; 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
   'money -> events': 32, // #2295: Finance reads the existing authorized attention count and opens its filtered feed; no repository access.
   'money -> members': 2,

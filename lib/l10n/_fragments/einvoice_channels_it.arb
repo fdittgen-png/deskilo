@@ -210,5 +210,49 @@
   "eInvoiceReceiptFailed": "Non è stato possibile interrogare la piattaforma; riprovi più tardi.",
   "@eInvoiceReceiptFailed": {
     "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceIdentityTitle": "Indirizzo di fatturazione elettronica",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
+  },
+  "eInvoiceIdentityHelp": "Dove le reti consegnano le fatture a questo spazio (BT-34): il suo identificativo Peppol o il suo indirizzo nell’annuario francese, e il contatto che un acquirente pubblico tedesco richiede.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceEndpointIdField": "Indirizzo elettronico",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Schema dell’indirizzo (codice EAS, ad es. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
+  "eInvoiceSubdivisionField": "Provincia o distretto (ad es. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
+  },
+  "eInvoiceContactEmailField": "E-mail del contatto per la fatturazione",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Telefono del contatto per la fatturazione",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "memberEInvoiceAddressLabel": "Indirizzo di fatturazione elettronica",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Non indicato",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
+  },
+  "memberEInvoiceAddressHelp": "Dove questo cliente riceve le fatture elettroniche (BT-49): un identificativo Peppol, un indirizzo dell’annuario francese, un Leitweg-ID (schema 0204) o un codice destinatario SdI.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressFailed": "Non è stato possibile salvare l’indirizzo di fatturazione elettronica.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
   }
 }

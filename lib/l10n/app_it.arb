@@ -2738,6 +2738,22 @@
       }
     }
   },
+  "eInvoiceContactEmailField": "E-mail del contatto per la fatturazione",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Telefono del contatto per la fatturazione",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "eInvoiceEndpointIdField": "Indirizzo elettronico",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Schema dell’indirizzo (codice EAS, ad es. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
   "eInvoiceFieldAccessToken": "Token di accesso (OAuth ANAF)",
   "@eInvoiceFieldAccessToken": {
     "description": "#2358 connector field"
@@ -2805,6 +2821,14 @@
   "eInvoiceGapMixedNotSubjectLines": "Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
+  },
+  "eInvoiceIdentityHelp": "Dove le reti consegnano le fatture a questo spazio (BT-34): il suo identificativo Peppol o il suo indirizzo nell’annuario francese, e il contatto che un acquirente pubblico tedesco richiede.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceIdentityTitle": "Indirizzo di fatturazione elettronica",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
   },
   "eInvoiceMandateEReporting": "le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi",
   "@eInvoiceMandateEReporting": {
@@ -2906,6 +2930,10 @@
   "eInvoiceReceiptNothingYet": "La piattaforma non ha ancora novità su questo documento.",
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
+  },
+  "eInvoiceSubdivisionField": "Provincia o distretto (ad es. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
   },
   "editorAccessoriesLabel": "Accessori",
   "editorAddLevel": "Aggiungi piano",
@@ -6875,6 +6903,22 @@
   "memberContactHeading": "Contatti",
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
+  },
+  "memberEInvoiceAddressFailed": "Non è stato possibile salvare l’indirizzo di fatturazione elettronica.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
+  },
+  "memberEInvoiceAddressHelp": "Dove questo cliente riceve le fatture elettroniche (BT-49): un identificativo Peppol, un indirizzo dell’annuario francese, un Leitweg-ID (schema 0204) o un codice destinatario SdI.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressLabel": "Indirizzo di fatturazione elettronica",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Non indicato",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
   },
   "memberHomeSiteDefault": "Indirizzo dello spazio",
   "@memberHomeSiteDefault": {

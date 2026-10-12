@@ -52,5 +52,9 @@ extension _SupabaseWorkspaceRepositoryPart4 on SupabaseWorkspaceRepository {
         vatTreatment: row['vat_treatment'] as String? ?? 'auto',
         vatExemptionReason: row['vat_exemption_reason'] as String? ?? '',
         customerCapacity: row['customer_capacity'] as String?,
+        einvoiceEndpointId: JsonReader.of(row).stringOr('einvoice_endpoint_id'),
+        einvoiceEndpointScheme:
+            JsonReader.of(row).stringOr('einvoice_endpoint_scheme'),
+        billingSubdivision: JsonReader.of(row).stringOr('billing_subdivision'),
       );
 }

@@ -315,6 +315,16 @@ abstract class WorkspaceRepository {
   /// not stated. Whoever may issue invoices.
   Future<void> setMemberCustomerCapacity(String memberId, String? capacity);
 
+  /// #2358 (RPC `set_member_einvoice_address`, migration 0410): where this
+  /// customer receives e-invoices (BT-49 and its EAS scheme) and the
+  /// county or province of its address. Whoever may issue invoices.
+  Future<void> setMemberEInvoiceAddress(
+    String memberId, {
+    required String endpointId,
+    required String endpointScheme,
+    required String subdivision,
+  });
+
   /// Admin/owner (RPC `set_member_level_permission`, migration 0050):
   /// grant or revoke another member's right to reserve a whole level.
   /// The server refuses self-setting.

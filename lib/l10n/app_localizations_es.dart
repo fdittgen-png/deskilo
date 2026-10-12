@@ -4008,6 +4008,20 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceContactEmailField => 'Correo del contacto de facturación';
+
+  @override
+  String get eInvoiceContactPhoneField =>
+      'Teléfono del contacto de facturación';
+
+  @override
+  String get eInvoiceEndpointIdField => 'Dirección electrónica';
+
+  @override
+  String get eInvoiceEndpointSchemeField =>
+      'Esquema de la dirección (código EAS, p. ej. 0225, 0208, 0204, EM)';
+
+  @override
   String get eInvoiceFieldAccessToken => 'Token de acceso (OAuth de ANAF)';
 
   @override
@@ -4062,6 +4076,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.';
+
+  @override
+  String get eInvoiceIdentityHelp =>
+      'Dónde entregan las redes las facturas a este espacio (BT-34): su identificador Peppol o su dirección en el directorio francés, y el contacto que pide un comprador público alemán.';
+
+  @override
+  String get eInvoiceIdentityTitle => 'Dirección de facturación electrónica';
 
   @override
   String get eInvoiceMandateEReporting =>
@@ -4138,6 +4159,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceReceiptNothingYet =>
       'La plataforma aún no tiene nada nuevo sobre este documento.';
+
+  @override
+  String get eInvoiceSubdivisionField =>
+      'Provincia o distrito (p. ej. RO-B, MI)';
 
   @override
   String get editorAccessoriesLabel => 'Accesorios';
@@ -10925,6 +10950,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberContactHeading => 'Contacto';
+
+  @override
+  String get memberEInvoiceAddressFailed =>
+      'No se pudo guardar la dirección de facturación electrónica.';
+
+  @override
+  String get memberEInvoiceAddressHelp =>
+      'Dónde recibe este cliente las facturas electrónicas (BT-49): un identificador Peppol, una dirección del directorio francés, un Leitweg-ID (esquema 0204) o un código de destinatario SdI.';
+
+  @override
+  String get memberEInvoiceAddressLabel =>
+      'Dirección de facturación electrónica';
+
+  @override
+  String get memberEInvoiceAddressNone => 'Sin indicar';
 
   @override
   String get memberHomeSiteDefault => 'Dirección del espacio';

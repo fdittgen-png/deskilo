@@ -210,5 +210,49 @@
   "eInvoiceReceiptFailed": "La plateforme n’a pas pu être interrogée ; réessayez plus tard.",
   "@eInvoiceReceiptFailed": {
     "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceIdentityTitle": "Adresse de facturation électronique",
+  "@eInvoiceIdentityTitle": {
+    "description": "#2358 legal identity: the e-invoicing address section"
+  },
+  "eInvoiceIdentityHelp": "L’adresse où les réseaux livrent les factures de cet espace (BT-34) : son identifiant Peppol ou son adresse dans l’annuaire français, et le contact qu’un acheteur public allemand demande.",
+  "@eInvoiceIdentityHelp": {
+    "description": "#2358 legal identity: what the address is for"
+  },
+  "eInvoiceEndpointIdField": "Adresse électronique",
+  "@eInvoiceEndpointIdField": {
+    "description": "#2358 field: the electronic address"
+  },
+  "eInvoiceEndpointSchemeField": "Schéma de l’adresse (code EAS, p. ex. 0225, 0208, 0204, EM)",
+  "@eInvoiceEndpointSchemeField": {
+    "description": "#2358 field: the EAS scheme code"
+  },
+  "eInvoiceSubdivisionField": "Département, județ ou province (p. ex. RO-B, MI)",
+  "@eInvoiceSubdivisionField": {
+    "description": "#2358 field: county or province"
+  },
+  "eInvoiceContactEmailField": "E-mail du contact facturation",
+  "@eInvoiceContactEmailField": {
+    "description": "#2358 field: seller contact e-mail"
+  },
+  "eInvoiceContactPhoneField": "Téléphone du contact facturation",
+  "@eInvoiceContactPhoneField": {
+    "description": "#2358 field: seller contact telephone"
+  },
+  "memberEInvoiceAddressLabel": "Adresse de facturation électronique",
+  "@memberEInvoiceAddressLabel": {
+    "description": "#2358 member page: the customer e-invoicing address tile"
+  },
+  "memberEInvoiceAddressNone": "Non renseignée",
+  "@memberEInvoiceAddressNone": {
+    "description": "#2358 member page: no address stated"
+  },
+  "memberEInvoiceAddressHelp": "L’adresse où ce client reçoit ses factures électroniques (BT-49) : un identifiant Peppol, une adresse de l’annuaire français, un Leitweg-ID (schéma 0204) ou un code destinataire SdI.",
+  "@memberEInvoiceAddressHelp": {
+    "description": "#2358 member dialog: what the address is for"
+  },
+  "memberEInvoiceAddressFailed": "L’adresse de facturation électronique n’a pas pu être enregistrée.",
+  "@memberEInvoiceAddressFailed": {
+    "description": "#2358 member dialog: the save was refused"
   }
 }
