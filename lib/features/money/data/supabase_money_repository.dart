@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/time/date_text.dart';
@@ -169,7 +170,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<Package> updatePackage(String packageId, {String? name, int? days, int? priceCents, bool? active, String? vatRateId}) => _updatePackageImpl(packageId, name: name, days: days, priceCents: priceCents, active: active, vatRateId: vatRateId);
   @override Future<String> buyPackage(String workspaceId, String packageId) => _buyPackageImpl(workspaceId, packageId);
   @override Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) => _fetchEInvoiceGatewayImpl(workspaceId);
-  @override Future<EInvoiceSubmission> sendEInvoice({required String workspaceId, required String invoiceId, required String fileName, required String mimeType, required List<int> bytes, String environment = 'prod', String destination = 'government'}) => _sendEInvoiceImpl(workspaceId: workspaceId, invoiceId: invoiceId, fileName: fileName, mimeType: mimeType, bytes: bytes, environment: environment, destination: destination);
+  @override Future<EInvoiceSubmission> sendEInvoice({required String workspaceId, required String invoiceId, required String fileName, required String mimeType, required List<int> bytes, String environment = 'prod', String destination = 'government', String format = '', String receiverScheme = '', String receiverId = ''}) => _sendEInvoiceImpl(workspaceId: workspaceId, invoiceId: invoiceId, fileName: fileName, mimeType: mimeType, bytes: bytes, environment: environment, destination: destination, format: format, receiverScheme: receiverScheme, receiverId: receiverId);
+  @override Future<EInvoiceSubmission> requestEInvoiceReceipt({required String workspaceId, required String transmissionId}) => _requestEInvoiceReceiptImpl(workspaceId: workspaceId, transmissionId: transmissionId);
   @override Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(String workspaceId) => _fetchInvoiceTransmissionsImpl(workspaceId);
   @override Future<void> setEInvoiceCredentials(String workspaceId, Map<String, String> config) => _setEInvoiceCredentialsImpl(workspaceId, config);
   @override Future<void> clearEInvoiceCredentials(String workspaceId) => _clearEInvoiceCredentialsImpl(workspaceId);

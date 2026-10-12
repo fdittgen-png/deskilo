@@ -3992,6 +3992,49 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceFieldAccessToken => 'Access token (ANAF OAuth)';
+
+  @override
+  String get eInvoiceFieldApiKey => 'API key';
+
+  @override
+  String get eInvoiceFieldBaseUrl => 'API address';
+
+  @override
+  String get eInvoiceFieldCif => 'CIF of the space';
+
+  @override
+  String get eInvoiceFieldClientId => 'Client id';
+
+  @override
+  String get eInvoiceFieldClientSecret => 'Client secret';
+
+  @override
+  String get eInvoiceFieldKsefToken => 'KSeF token';
+
+  @override
+  String get eInvoiceFieldLegalEntityId =>
+      'Legal entity id at the access point';
+
+  @override
+  String get eInvoiceFieldLoginUrl => 'Login address';
+
+  @override
+  String get eInvoiceFieldNip => 'NIP of the space';
+
+  @override
+  String get eInvoiceFieldPassword => 'Password';
+
+  @override
+  String get eInvoiceFieldSecretSet => 'Set — leave blank to keep it.';
+
+  @override
+  String get eInvoiceFieldTokenUrl => 'Token address (OAuth)';
+
+  @override
+  String get eInvoiceFieldUsername => 'User name';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'The buyer\'s SIREN is missing. A French platform routes by it: enter it on the member\'s profile before transmitting. Not a refusal — the file is valid without it.';
 
@@ -4034,6 +4077,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eInvoiceMandateTitle => 'E-invoicing obligations in your country:';
+
+  @override
+  String get eInvoiceProviderFrPa => 'French accredited platform (PA)';
+
+  @override
+  String get eInvoiceProviderGeneric =>
+      'Generic upload (any platform with an HTTP upload)';
+
+  @override
+  String get eInvoiceProviderHelp =>
+      'The channel decides the format: each network receives the XML it accepts, and a person receives the Factur-X PDF.';
+
+  @override
+  String get eInvoiceProviderItSdi => 'SdI, through an intermediary';
+
+  @override
+  String get eInvoiceProviderLabel => 'Channel';
+
+  @override
+  String get eInvoiceProviderPeppol => 'Peppol access point';
+
+  @override
+  String get eInvoiceProviderPlKsef => 'KSeF';
+
+  @override
+  String get eInvoiceProviderRoEfactura => 'RO e-Factura (ANAF)';
+
+  @override
+  String get eInvoiceReceiptAsk => 'Ask the platform for its receipt';
+
+  @override
+  String get eInvoiceReceiptFailed =>
+      'The platform could not be asked; try again later.';
+
+  @override
+  String eInvoiceReceiptLine(String receipt) {
+    return 'Platform receipt: $receipt';
+  }
+
+  @override
+  String get eInvoiceReceiptNothingYet =>
+      'The platform has nothing new about this document yet.';
 
   @override
   String get editorAccessoriesLabel => 'Accessories';

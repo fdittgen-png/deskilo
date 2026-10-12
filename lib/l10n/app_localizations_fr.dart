@@ -4015,6 +4015,50 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceFieldAccessToken => 'Jeton d’accès (OAuth ANAF)';
+
+  @override
+  String get eInvoiceFieldApiKey => 'Clé d’API';
+
+  @override
+  String get eInvoiceFieldBaseUrl => 'Adresse de l’API';
+
+  @override
+  String get eInvoiceFieldCif => 'CIF de l’espace';
+
+  @override
+  String get eInvoiceFieldClientId => 'Identifiant client';
+
+  @override
+  String get eInvoiceFieldClientSecret => 'Secret client';
+
+  @override
+  String get eInvoiceFieldKsefToken => 'Jeton KSeF';
+
+  @override
+  String get eInvoiceFieldLegalEntityId =>
+      'Identifiant de l’entité au point d’accès';
+
+  @override
+  String get eInvoiceFieldLoginUrl => 'Adresse de connexion';
+
+  @override
+  String get eInvoiceFieldNip => 'NIP de l’espace';
+
+  @override
+  String get eInvoiceFieldPassword => 'Mot de passe';
+
+  @override
+  String get eInvoiceFieldSecretSet =>
+      'Enregistré — laissez vide pour le conserver.';
+
+  @override
+  String get eInvoiceFieldTokenUrl => 'Adresse du jeton (OAuth)';
+
+  @override
+  String get eInvoiceFieldUsername => 'Nom d’utilisateur';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Le SIREN de l\'acheteur manque. Une plateforme agréée l\'utilise pour acheminer la facture : renseignez-le sur le profil de l\'adhérent avant de transmettre. Ce n\'est pas un refus — le fichier est valide sans lui.';
 
@@ -4059,6 +4103,48 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get eInvoiceMandateTitle =>
       'Obligations de facturation électronique dans votre pays :';
+
+  @override
+  String get eInvoiceProviderFrPa => 'Plateforme agréée (PA)';
+
+  @override
+  String get eInvoiceProviderGeneric =>
+      'Dépôt générique (toute plateforme acceptant un envoi HTTP)';
+
+  @override
+  String get eInvoiceProviderHelp =>
+      'Le canal décide du format : chaque réseau reçoit le XML qu’il accepte, et une personne reçoit le PDF Factur-X.';
+
+  @override
+  String get eInvoiceProviderItSdi => 'SdI, via un intermédiaire';
+
+  @override
+  String get eInvoiceProviderLabel => 'Canal';
+
+  @override
+  String get eInvoiceProviderPeppol => 'Point d’accès Peppol';
+
+  @override
+  String get eInvoiceProviderPlKsef => 'KSeF';
+
+  @override
+  String get eInvoiceProviderRoEfactura => 'RO e-Factura (ANAF)';
+
+  @override
+  String get eInvoiceReceiptAsk => 'Demander l’accusé de la plateforme';
+
+  @override
+  String get eInvoiceReceiptFailed =>
+      'La plateforme n’a pas pu être interrogée ; réessayez plus tard.';
+
+  @override
+  String eInvoiceReceiptLine(String receipt) {
+    return 'Accusé de la plateforme : $receipt';
+  }
+
+  @override
+  String get eInvoiceReceiptNothingYet =>
+      'La plateforme n’a encore rien de nouveau sur ce document.';
 
   @override
   String get editorAccessoriesLabel => 'Accessoires';

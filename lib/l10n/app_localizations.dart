@@ -6955,6 +6955,90 @@ abstract class AppLocalizations {
   /// **'Before sending through {channel}, add:'**
   String eInvoiceChannelGapsTitle(String channel);
 
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Access token (ANAF OAuth)'**
+  String get eInvoiceFieldAccessToken;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'API key'**
+  String get eInvoiceFieldApiKey;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'API address'**
+  String get eInvoiceFieldBaseUrl;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'CIF of the space'**
+  String get eInvoiceFieldCif;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Client id'**
+  String get eInvoiceFieldClientId;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Client secret'**
+  String get eInvoiceFieldClientSecret;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'KSeF token'**
+  String get eInvoiceFieldKsefToken;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Legal entity id at the access point'**
+  String get eInvoiceFieldLegalEntityId;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Login address'**
+  String get eInvoiceFieldLoginUrl;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'NIP of the space'**
+  String get eInvoiceFieldNip;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get eInvoiceFieldPassword;
+
+  /// #2358 connector field: a secret is stored
+  ///
+  /// In en, this message translates to:
+  /// **'Set — leave blank to keep it.'**
+  String get eInvoiceFieldSecretSet;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'Token address (OAuth)'**
+  String get eInvoiceFieldTokenUrl;
+
+  /// #2358 connector field
+  ///
+  /// In en, this message translates to:
+  /// **'User name'**
+  String get eInvoiceFieldUsername;
+
   /// #972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable
   ///
   /// In en, this message translates to:
@@ -7020,6 +7104,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'E-invoicing obligations in your country:'**
   String get eInvoiceMandateTitle;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'French accredited platform (PA)'**
+  String get eInvoiceProviderFrPa;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'Generic upload (any platform with an HTTP upload)'**
+  String get eInvoiceProviderGeneric;
+
+  /// #2358 e-invoice config: what the connector does
+  ///
+  /// In en, this message translates to:
+  /// **'The channel decides the format: each network receives the XML it accepts, and a person receives the Factur-X PDF.'**
+  String get eInvoiceProviderHelp;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'SdI, through an intermediary'**
+  String get eInvoiceProviderItSdi;
+
+  /// #2358 e-invoice config: the connector picker
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get eInvoiceProviderLabel;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'Peppol access point'**
+  String get eInvoiceProviderPeppol;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'KSeF'**
+  String get eInvoiceProviderPlKsef;
+
+  /// #2358 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'RO e-Factura (ANAF)'**
+  String get eInvoiceProviderRoEfactura;
+
+  /// #2358 invoice detail: ask the channel for its receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the platform for its receipt'**
+  String get eInvoiceReceiptAsk;
+
+  /// #2358 invoice detail: the receipt request did not reach the channel
+  ///
+  /// In en, this message translates to:
+  /// **'The platform could not be asked; try again later.'**
+  String get eInvoiceReceiptFailed;
+
+  /// #2358 invoice detail: what the channel answered
+  ///
+  /// In en, this message translates to:
+  /// **'Platform receipt: {receipt}'**
+  String eInvoiceReceiptLine(String receipt);
+
+  /// #2358 invoice detail: the channel has no answer yet
+  ///
+  /// In en, this message translates to:
+  /// **'The platform has nothing new about this document yet.'**
+  String get eInvoiceReceiptNothingYet;
 
   /// Label above the seat sheet's accessory chips (workspace catalog)
   ///

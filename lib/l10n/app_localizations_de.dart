@@ -4017,6 +4017,50 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eInvoiceFieldAccessToken => 'Zugriffstoken (ANAF-OAuth)';
+
+  @override
+  String get eInvoiceFieldApiKey => 'API-Schlüssel';
+
+  @override
+  String get eInvoiceFieldBaseUrl => 'API-Adresse';
+
+  @override
+  String get eInvoiceFieldCif => 'CIF des Space';
+
+  @override
+  String get eInvoiceFieldClientId => 'Client-ID';
+
+  @override
+  String get eInvoiceFieldClientSecret => 'Client-Geheimnis';
+
+  @override
+  String get eInvoiceFieldKsefToken => 'KSeF-Token';
+
+  @override
+  String get eInvoiceFieldLegalEntityId =>
+      'Kennung der Rechtseinheit beim Zugangspunkt';
+
+  @override
+  String get eInvoiceFieldLoginUrl => 'Anmeldeadresse';
+
+  @override
+  String get eInvoiceFieldNip => 'NIP des Space';
+
+  @override
+  String get eInvoiceFieldPassword => 'Passwort';
+
+  @override
+  String get eInvoiceFieldSecretSet =>
+      'Gespeichert — leer lassen, um ihn zu behalten.';
+
+  @override
+  String get eInvoiceFieldTokenUrl => 'Token-Adresse (OAuth)';
+
+  @override
+  String get eInvoiceFieldUsername => 'Benutzername';
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Die SIREN des Käufers fehlt. Eine französische Plattform leitet danach weiter: tragen Sie sie vor der Übermittlung im Profil des Mitglieds ein. Keine Ablehnung — die Datei ist auch ohne sie gültig.';
 
@@ -4060,6 +4104,48 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eInvoiceMandateTitle => 'E-Rechnungspflichten in Ihrem Land:';
+
+  @override
+  String get eInvoiceProviderFrPa => 'Französische zugelassene Plattform (PA)';
+
+  @override
+  String get eInvoiceProviderGeneric =>
+      'Generischer Upload (jede Plattform mit HTTP-Upload)';
+
+  @override
+  String get eInvoiceProviderHelp =>
+      'Der Kanal bestimmt das Format: Jedes Netz erhält das XML, das es annimmt, eine Person erhält das Factur-X-PDF.';
+
+  @override
+  String get eInvoiceProviderItSdi => 'SdI über einen Vermittler';
+
+  @override
+  String get eInvoiceProviderLabel => 'Kanal';
+
+  @override
+  String get eInvoiceProviderPeppol => 'Peppol-Zugangspunkt';
+
+  @override
+  String get eInvoiceProviderPlKsef => 'KSeF';
+
+  @override
+  String get eInvoiceProviderRoEfactura => 'RO e-Factura (ANAF)';
+
+  @override
+  String get eInvoiceReceiptAsk => 'Empfangsbestätigung der Plattform abfragen';
+
+  @override
+  String get eInvoiceReceiptFailed =>
+      'Die Plattform konnte nicht abgefragt werden; versuchen Sie es später erneut.';
+
+  @override
+  String eInvoiceReceiptLine(String receipt) {
+    return 'Bestätigung der Plattform: $receipt';
+  }
+
+  @override
+  String get eInvoiceReceiptNothingYet =>
+      'Die Plattform meldet zu diesem Dokument noch nichts Neues.';
 
   @override
   String get editorAccessoriesLabel => 'Zubehör';

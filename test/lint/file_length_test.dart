@@ -264,7 +264,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/money_repository.dart': 587, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/money_repository.dart': 598, // 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

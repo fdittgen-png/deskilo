@@ -33,6 +33,9 @@ const _guards = [
 /// Definer functions that legitimately take an id and need no caller
 /// check, with the reason.
 const Map<String, String> _exempt = {
+  'einvoice_credentials_resolved': '#2358 — the send-e-invoice function\'s '
+      'reader of the decrypted credentials: revoked from authenticated, '
+      'granted to service_role only',
   'default_site': 'a workspace-level lookup used only from inside other '
       'guarded functions; not granted to authenticated',
 };

@@ -2738,6 +2738,62 @@
       }
     }
   },
+  "eInvoiceFieldAccessToken": "Token di accesso (OAuth ANAF)",
+  "@eInvoiceFieldAccessToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldApiKey": "Chiave API",
+  "@eInvoiceFieldApiKey": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldBaseUrl": "Indirizzo dell’API",
+  "@eInvoiceFieldBaseUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldCif": "CIF dello spazio",
+  "@eInvoiceFieldCif": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientId": "ID client",
+  "@eInvoiceFieldClientId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldClientSecret": "Segreto client",
+  "@eInvoiceFieldClientSecret": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldKsefToken": "Token KSeF",
+  "@eInvoiceFieldKsefToken": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLegalEntityId": "Identificativo dell’entità presso il punto di accesso",
+  "@eInvoiceFieldLegalEntityId": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldLoginUrl": "Indirizzo di accesso",
+  "@eInvoiceFieldLoginUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldNip": "NIP dello spazio",
+  "@eInvoiceFieldNip": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldPassword": "Password",
+  "@eInvoiceFieldPassword": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldSecretSet": "Salvato — lasci vuoto per conservarlo.",
+  "@eInvoiceFieldSecretSet": {
+    "description": "#2358 connector field: a secret is stored"
+  },
+  "eInvoiceFieldTokenUrl": "Indirizzo del token (OAuth)",
+  "@eInvoiceFieldTokenUrl": {
+    "description": "#2358 connector field"
+  },
+  "eInvoiceFieldUsername": "Nome utente",
+  "@eInvoiceFieldUsername": {
+    "description": "#2358 connector field"
+  },
   "eInvoiceGapBuyerLegalIdAdvisable": "Manca il SIREN dell'acquirente. Una piattaforma francese instrada in base ad esso: lo inserisca nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.",
   "@eInvoiceGapBuyerLegalIdAdvisable": {
     "description": "#972 buyer SIREN advice: eInvoiceGapBuyerLegalIdAdvisable"
@@ -2797,6 +2853,59 @@
   "eInvoiceMandateTitle": "Obblighi di fatturazione elettronica nel Suo paese:",
   "@eInvoiceMandateTitle": {
     "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceProviderFrPa": "Piattaforma accreditata francese (PA)",
+  "@eInvoiceProviderFrPa": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderGeneric": "Invio generico (qualsiasi piattaforma con caricamento HTTP)",
+  "@eInvoiceProviderGeneric": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderHelp": "Il canale decide il formato: ogni rete riceve l’XML che accetta e una persona riceve il PDF Factur-X.",
+  "@eInvoiceProviderHelp": {
+    "description": "#2358 e-invoice config: what the connector does"
+  },
+  "eInvoiceProviderItSdi": "SdI, tramite un intermediario",
+  "@eInvoiceProviderItSdi": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderLabel": "Canale",
+  "@eInvoiceProviderLabel": {
+    "description": "#2358 e-invoice config: the connector picker"
+  },
+  "eInvoiceProviderPeppol": "Punto di accesso Peppol",
+  "@eInvoiceProviderPeppol": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderPlKsef": "KSeF",
+  "@eInvoiceProviderPlKsef": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceProviderRoEfactura": "RO e-Factura (ANAF)",
+  "@eInvoiceProviderRoEfactura": {
+    "description": "#2358 connector name"
+  },
+  "eInvoiceReceiptAsk": "Chiedere la ricevuta alla piattaforma",
+  "@eInvoiceReceiptAsk": {
+    "description": "#2358 invoice detail: ask the channel for its receipt"
+  },
+  "eInvoiceReceiptFailed": "Non è stato possibile interrogare la piattaforma; riprovi più tardi.",
+  "@eInvoiceReceiptFailed": {
+    "description": "#2358 invoice detail: the receipt request did not reach the channel"
+  },
+  "eInvoiceReceiptLine": "Ricevuta della piattaforma: {receipt}",
+  "@eInvoiceReceiptLine": {
+    "description": "#2358 invoice detail: what the channel answered",
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceReceiptNothingYet": "La piattaforma non ha ancora novità su questo documento.",
+  "@eInvoiceReceiptNothingYet": {
+    "description": "#2358 invoice detail: the channel has no answer yet"
   },
   "editorAccessoriesLabel": "Accessori",
   "editorAddLevel": "Aggiungi piano",

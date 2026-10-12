@@ -12,7 +12,9 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/einvoice_gateway.dart';
 import '../../providers/money_providers.dart';
+import '../widgets/einvoice_provider_section.dart';
 
 /// Where the workspace's invoices are POSTED (0073) — owner-only.
 ///
@@ -33,6 +35,8 @@ class EInvoiceConfigScreen extends ConsumerStatefulWidget {
 }
 
 class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
+  // #2358 — the connector and its own fields.
+  final _providerForm = EInvoiceProviderForm();
   final _endpoint = TextEditingController();
   final _token = TextEditingController();
   final _header = TextEditingController();
@@ -65,6 +69,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _customerToken.dispose();
     _customerHeader.dispose();
     _customerField.dispose();
+    _providerForm.dispose();
     super.dispose();
   }
 
@@ -81,6 +86,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       action: () => ref.read(moneyRepositoryProvider).setEInvoiceCredentials(
             workspace.id,
             {
+              ..._providerForm.values(),
               'endpoint': _endpoint.text.trim(),
               // Blank keeps the stored token — the owner can change the
               // endpoint without re-typing a secret they cannot read.
@@ -106,6 +112,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _uatToken.clear();
     _devToken.clear();
     _customerToken.clear();
+    _providerForm.clearSecrets();
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -140,6 +147,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _customerToken.clear();
     _customerHeader.clear();
     _customerField.clear();
+    _providerForm.load(const EInvoiceProviderStatus(configured: false));
     ref
       ..invalidate(eInvoiceStatusProvider)
       ..invalidate(eInvoiceGatewayProvider);
@@ -157,6 +165,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     final status = statusAsync.value;
     if (status != null && !_loaded) {
       _loaded = true;
+      _providerForm.load(status);
       _endpoint.text = status.fields['endpoint'] ?? '';
       _header.text = status.fields['auth_header'] ?? '';
       _field.text = status.fields['field_name'] ?? '';
@@ -206,6 +215,14 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                       ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
+                EInvoiceProviderSection(
+                  key: const ValueKey('einvoice-provider-section'),
+                  form: _providerForm,
+                  secretsSet: status.secretsSet,
+                  onChanged: (_) => setState(() {}),
+                ),
+                if (_providerForm.provider == 'generic') ...[
+                const SizedBox(height: AppSpacing.md),
                 TextField(
                   key: const ValueKey('einvoice-endpoint'),
                   controller: _endpoint,
@@ -260,6 +277,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     ),
                   ),
                 ),
+                ],
                 // #568 — the customer's own delivery service, beside the
                 // government platform above. Behind its feature flag.
                 if (ref

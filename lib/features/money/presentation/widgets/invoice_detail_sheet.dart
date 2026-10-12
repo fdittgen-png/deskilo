@@ -21,6 +21,7 @@ import '../invoice_journey.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import '../report_strings_l10n.dart';
+import 'einvoice_receipt_line.dart';
 import 'invoice_journey_view.dart';
 import 'invoice_sheet_actions.dart';
 import 'reminder_evidence_list.dart';
@@ -468,6 +469,14 @@ class _InvoiceDetailBody extends ConsumerWidget {
                         '(${l10n.invoiceSentTestChip})' : ''}'),
               if (sent != null && sent.externalId.isNotEmpty)
                 line(sent.externalId),
+              // #2358 — what the national channel said afterwards.
+              if (sent != null)
+                EInvoiceReceiptLine(
+                  key: const ValueKey('invoice-detail-einvoice-receipt'),
+                  transmission: sent,
+                  workspaceId: invoice.workspaceId,
+                  canAsk: canIssue,
+                ),
               if (invoice.detailed)
                 line(l10n.invoiceAnnexSummary(
                       invoice.detailLedger.length,

@@ -9,10 +9,15 @@
 // deliberate: the platform token must never reach a phone, and the
 // document must never be rebuilt from a second, divergent code path.
 //
-// Providers: 'generic' — any platform that accepts an HTTP upload with a
-// bearer/basic credential (that covers most plateformes agréées, Peppol
-// access points and clearance-platform upload APIs). Named adapters can
-// join REQUIRED/submit() without touching the client.
+// Providers (#2358, connectors.ts): 'generic' — any platform that accepts
+// an HTTP upload with a bearer/basic credential — and the named national
+// channels: 'peppol' (an access point), 'fr_pa' (a French plateforme
+// agréée), 'it_sdi' (the SdI through an intermediary), 'pl_ksef' (KSeF)
+// and 'ro_efactura' (ANAF). The client sends each the syntax it takes;
+// the connector refuses any other before a byte leaves.
+//
+// The credentials are read through einvoice_credentials_resolved(), which
+// decrypts the Vault-held secrets for the service role only (#2358).
 //
 // Every attempt is logged to invoice_transmissions, accepted or not: a
 // document that may or may not have left is worse than one that failed.
@@ -20,15 +25,13 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
+import { requiredFields, status as askStatus, submit } from "./connectors.ts";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
     headers: { ...CORS, "Content-Type": "application/json" },
   });
-
-/** Fields the generic adapter needs before it can send anything. */
-const REQUIRED = ["endpoint", "auth_value"];
 
 /** Where a document may be sent. 'prod' is the unsuffixed key set that
  * predates environments; 'uat'/'dev' read the suffixed keys (0074). */
@@ -67,20 +70,56 @@ function configForDestination(cfg: Config, dest: Destination): Config {
  * feature exists to prevent. Header and field name fall back to the
  * production values, then to the adapter defaults: they describe the
  * upload shape, not the destination. */
-function configFor(cfg: Config, env: Environment): Config {
+function configFor(
+  cfg: Config,
+  env: Environment,
+  provider = "generic",
+): Config {
   if (env === "prod") return cfg;
-  return {
-    ...cfg,
-    endpoint: cfg[`endpoint_${env}`] ?? "",
-    auth_value: cfg[`auth_value_${env}`] ?? "",
-    auth_header: cfg[`auth_header_${env}`] || cfg.auth_header || "",
-    field_name: cfg[`field_name_${env}`] || cfg.field_name || "",
-  };
+  // #2358 — every field a connector REQUIRES is strictly per environment,
+  // like the generic endpoint and token: a sandbox key must never fall
+  // back to the production one.
+  const scoped: Config = { ...cfg };
+  for (const field of requiredFields(provider)) {
+    scoped[field] = cfg[`${field}_${env}`] ?? "";
+  }
+  scoped.auth_header = cfg[`auth_header_${env}`] || cfg.auth_header || "";
+  scoped.field_name = cfg[`field_name_${env}`] || cfg.field_name || "";
+  return scoped;
 }
 
-function missingFor(cfg: Config, env: Environment): string[] {
-  const scoped = configFor(cfg, env);
-  return REQUIRED.filter((field) => !scoped[field]);
+function missingFor(
+  cfg: Config,
+  env: Environment,
+  provider = "generic",
+): string[] {
+  const scoped = configFor(cfg, env, provider);
+  return requiredFields(provider).filter((field) => !scoped[field]);
+}
+
+/** The provider and its configuration with the secrets resolved. An
+ * instance whose database predates #2358 has no resolver and still keeps
+ * plain values in config: read the table then, as before. */
+async function credentialsOf(
+  admin: SupabaseClient,
+  workspaceId: string,
+): Promise<{ provider: string; config: Config } | null> {
+  const { data, error } = await admin.rpc("einvoice_credentials_resolved", {
+    p_workspace_id: workspaceId,
+  });
+  if (!error) {
+    return data
+      ? { provider: data.provider ?? "generic", config: data.config ?? {} }
+      : null;
+  }
+  const { data: row } = await admin
+    .from("einvoice_credentials")
+    .select("provider, config")
+    .eq("workspace_id", workspaceId)
+    .maybeSingle();
+  return row
+    ? { provider: row.provider ?? "generic", config: row.config ?? {} }
+    : null;
 }
 
 // #1117 — `Uint8Array<ArrayBuffer>`, not the bare `Uint8Array`.
@@ -94,48 +133,6 @@ async function sha256(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
   return [...new Uint8Array(digest)]
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-}
-
-/** POSTs the document as multipart/form-data — the shape upload endpoints
- * agree on. `auth_header` defaults to Authorization, `field_name` to file. */
-async function submitGeneric(
-  cfg: Config,
-  fileName: string,
-  mimeType: string,
-  bytes: Uint8Array<ArrayBuffer>,
-): Promise<{ status: "accepted" | "rejected"; externalId: string; detail: string }> {
-  const form = new FormData();
-  form.append(
-    cfg.field_name || "file",
-    new Blob([bytes], { type: mimeType }),
-    fileName,
-  );
-  const res = await fetch(cfg.endpoint, {
-    method: "POST",
-    headers: { [cfg.auth_header || "Authorization"]: cfg.auth_value },
-    body: form,
-  });
-  const text = await res.text();
-  if (!res.ok) {
-    return {
-      status: "rejected",
-      externalId: "",
-      detail: `${res.status} ${text}`.slice(0, 500),
-    };
-  }
-  // Most platforms answer JSON with an id under one of these names.
-  let externalId = "";
-  try {
-    const body = JSON.parse(text);
-    externalId = String(
-      body.id ?? body.documentId ?? body.document_id ?? body.guid ??
-        body.transmissionId ?? "",
-    );
-  } catch {
-    // A plain-text acknowledgement is still an acknowledgement.
-    externalId = text.trim().slice(0, 120);
-  }
-  return { status: "accepted", externalId, detail: text.slice(0, 500) };
 }
 
 Deno.serve(async (req) => {
@@ -162,6 +159,12 @@ Deno.serve(async (req) => {
     action?: string;
     environment?: string;
     destination?: string;
+    // #2358 — the syntax the client built for this channel, and where the
+    // network should deliver it (the buyer's BT-49).
+    format?: string;
+    receiver_scheme?: string;
+    receiver_id?: string;
+    transmission_id?: string;
   };
   try {
     payload = await req.json();
@@ -178,8 +181,7 @@ Deno.serve(async (req) => {
   if (payload.declaration_id) {
     return json({
       error: "vat_return_not_transmitted",
-      detail:
-        "A VAT return is filed by its owner with the tax authority; " +
+      detail: "A VAT return is filed by its owner with the tax authority; " +
         "this channel carries invoices only.",
     }, 410);
   }
@@ -227,24 +229,25 @@ Deno.serve(async (req) => {
     return json({ error: "not an admin of this workspace" }, 403);
   }
 
-  const { data: credentials } = await admin
-    .from("einvoice_credentials")
-    .select("provider, config")
-    .eq("workspace_id", workspaceId)
-    .maybeSingle();
+  const credentials = await credentialsOf(admin, workspaceId);
   const fullCfg = (credentials?.config ?? {}) as Config;
   const environment = (
-    ENVIRONMENTS as readonly string[]
-  ).includes(payload.environment ?? "")
+      ENVIRONMENTS as readonly string[]
+    ).includes(payload.environment ?? "")
     ? (payload.environment as Environment)
     : "prod";
   const destination = (
-    DESTINATIONS as readonly string[]
-  ).includes(payload.destination ?? "")
+      DESTINATIONS as readonly string[]
+    ).includes(payload.destination ?? "")
     ? (payload.destination as Destination)
     : "government";
   const cfg = configForDestination(fullCfg, destination);
-  const missing = missingFor(cfg, environment);
+  // The customer leg is always the generic upload (#568): its platforms
+  // are the customer's, not a national channel.
+  const provider = destination === "customer"
+    ? "generic"
+    : (credentials?.provider ?? "generic");
+  const missing = missingFor(cfg, environment, provider);
 
   // The client asks first whether sending is even possible, so it can hide
   // the affordance instead of offering a button that cannot work. The
@@ -254,12 +257,15 @@ Deno.serve(async (req) => {
   // The per-destination map (#568) is the same latch for the customer leg.
   if (payload.action === "config") {
     const govCfg = configForDestination(fullCfg, "government");
+    const govProvider = credentials?.provider ?? "generic";
     return json({
-      configured: missingFor(govCfg, "prod").length === 0,
-      provider: credentials?.provider ?? "generic",
-      missing: missingFor(govCfg, "prod"),
+      configured: missingFor(govCfg, "prod", govProvider).length === 0,
+      provider: govProvider,
+      missing: missingFor(govCfg, "prod", govProvider),
       environments: Object.fromEntries(
-        ENVIRONMENTS.map((env) => [env, missingFor(govCfg, env).length === 0]),
+        ENVIRONMENTS.map((
+          env,
+        ) => [env, missingFor(govCfg, env, govProvider).length === 0]),
       ),
       destinations: Object.fromEntries(
         DESTINATIONS.map((dest) => {
@@ -304,6 +310,39 @@ Deno.serve(async (req) => {
     return json({ error: "not_configured", missing, environment }, 409);
   }
 
+  // #2358 — what became of an earlier submission: the provider's receipt
+  // (a Peppol evidence, the PA lifecycle, the SdI notification, the KSeF
+  // number and UPO, the ANAF state) lands on the transmission it answers.
+  if (payload.action === "status") {
+    const { data: sent } = await admin
+      .from("invoice_transmissions")
+      .select("id, workspace_id, provider, external_id, environment")
+      .eq("id", payload.transmission_id ?? "")
+      .maybeSingle();
+    if (!sent || sent.workspace_id !== workspaceId || !sent.external_id) {
+      return json({ error: "unknown transmission" }, 404);
+    }
+    const answer = await askStatus(
+      sent.provider,
+      configFor(
+        cfg,
+        (sent.environment ?? "prod") as Environment,
+        sent.provider,
+      ),
+      sent.external_id,
+    );
+    await admin.from("invoice_transmissions").update({
+      receipt: answer.receipt,
+      receipt_at: new Date().toISOString(),
+      ...(answer.status === "rejected" ? { status: "rejected" } : {}),
+    }).eq("id", sent.id);
+    return json({
+      status: answer.status,
+      detail: answer.detail,
+      receipt: answer.receipt,
+    });
+  }
+
   const invoiceId = payload.invoice_id ?? "";
   const content = payload.content_base64 ?? "";
   if (!invoiceId || !content) {
@@ -323,25 +362,25 @@ Deno.serve(async (req) => {
   const fileName = payload.file_name || `${invoice.number}.pdf`;
   const mimeType = payload.mime_type || "application/pdf";
 
-  let outcome: {
-    status: "accepted" | "rejected" | "failed";
-    externalId: string;
-    detail: string;
-  };
-  try {
-    outcome = await submitGeneric(
-      configFor(cfg, environment),
+  const format = payload.format ||
+    (mimeType === "application/pdf" ? "facturX" : "en16931Ubl");
+  // Connectors never throw: an unreachable platform is a "failed" outcome.
+  const outcome = await submit(
+    provider,
+    configFor(cfg, environment, provider),
+    {
       fileName,
       mimeType,
       bytes,
-    );
-  } catch (error) {
-    console.error("send-e-invoice: transmission failed", error);
-    outcome = {
-      status: "failed",
-      externalId: "",
-      detail: String(error).slice(0, 500),
-    };
+      format,
+      number: invoice.number,
+      receiver: payload.receiver_id
+        ? { scheme: payload.receiver_scheme ?? "", id: payload.receiver_id }
+        : undefined,
+    },
+  );
+  if (outcome.status === "failed") {
+    console.error("send-e-invoice: transmission failed", outcome.detail);
   }
 
   // #1078 — the caller was already resolved at the top; this used to
@@ -355,7 +394,7 @@ Deno.serve(async (req) => {
   await admin.from("invoice_transmissions").insert({
     workspace_id: workspaceId,
     invoice_id: invoiceId,
-    provider: credentials?.provider ?? "generic",
+    provider,
     status: outcome.status,
     external_id: outcome.externalId,
     document_hash: hash,
@@ -363,6 +402,11 @@ Deno.serve(async (req) => {
     by_name: profile?.display_name ?? "",
     environment,
     destination,
+    format,
+    receipt: outcome.receipt,
+    receipt_at: Object.keys(outcome.receipt).length > 0
+      ? new Date().toISOString()
+      : null,
   });
 
   return json({
