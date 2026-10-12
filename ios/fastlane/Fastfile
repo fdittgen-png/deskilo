@@ -419,7 +419,11 @@ platform :ios do
     # the runner (never committed): deliver reads review_information/*.txt.
     phone = ENV["BETA_CONTACT_PHONE"].to_s.strip
     UI.user_error!("BETA_CONTACT_PHONE is not set") if phone.empty?
-    File.write("../fastlane/metadata/ios/review_information/phone_number.txt", phone)
+    review_dir = ["../fastlane", "../../fastlane", "fastlane"]
+      .map { |d| File.expand_path("#{d}/metadata/ios/review_information", Dir.pwd) }
+      .find { |d| Dir.exist?(d) }
+    UI.user_error!("review_information folder not found from #{Dir.pwd}") if review_dir.nil?
+    File.write(File.join(review_dir, "phone_number.txt"), phone)
 
     deliver(
       api_key: asc_api_key,
