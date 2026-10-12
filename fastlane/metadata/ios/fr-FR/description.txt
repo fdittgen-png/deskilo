@@ -1,36 +1,30 @@
-DesKilo gère toute la vie d'un petit espace de coworking auto-organisé : les postes, qui s'installe où, ce que chacun doit, et les factures en fin de mois. Sans tableur, sans fil de discussion sur qui a payé quoi.
+Votre espace de coworking, géré ensemble. Réservez un poste sur un plan en direct, donnez à chaque membre le même compte transparent que voient les admins, et laissez les personnes désignées par votre communauté valider ce qui compte. Libre et open source (AGPL-3.0), en bêta et prête pour un pilote.
 
-L'ESPACE
-• Dessinez votre espace sur une grille : niveaux, bureaux, postes réservables
-• Touchez un poste sur le plan en direct pour arriver — jamais de double réservation
-• Réservez à l'avance, ponctuellement ou en série, et faites défiler le temps
-• Réservez une salle entière, ou un niveau entier, si l'espace fonctionne ainsi
-• Scannez le QR code d'un espace pour le réserver depuis la porte
+ESSAYEZ AVANT D'INSTALLER
+• Démo dans votre navigateur : ouvrez www.deskilo.org et touchez « Essayer la démo » — aucun compte nécessaire, et rien de ce que vous y faites ne quitte votre appareil
+• Guide utilisateur en français, anglais, allemand, espagnol et italien, chaque écran expliqué pas à pas : www.deskilo.org/guide/fr.html
+• Guide de démarrage pour un petit espace, du plan à la première invitation : www.deskilo.org/guide/setup-fr.html
 
-LA COMMUNAUTÉ
-• Annuaire des membres, avec qui est là aujourd'hui
-• Invitations par lien ou QR ; les demandes d'adhésion sont confirmées, jamais silencieuses
-• Tout ce qu'un administrateur fait à votre place demande votre confirmation
-• Une tablette murale en mode borne enregistre les arrivées par badge, QR ou caméra
+OÙ PUIS-JE TRAVAILLER ?
+• Un plan en direct montre chaque poste et qui l'occupe, pour n'importe quel jour
+• Réservez une demi-journée, un poste ou une salle entière, une fois ou en série, puis pointez à la porte
+• Rejoignez l'espace en scannant son QR code ; codes de poste imprimés, badges NFC et mode kiosque pour une tablette murale
 
-L'ARGENT
-• Formules d'abonnement avec quotas en demi-journées ; dépassement facturé selon vos tranches
-• Un relevé transparent par membre : abonnement, usage, services, paiements
-• Dépenses communes : achetez le café, il est crédité sur votre prochain relevé
-• Carnets de journées pour les membres occasionnels
-• Paiement en ligne via PayPal, Stripe, Mollie ou Wero, si votre espace l'active
+QUE DOIS-JE ?
+• Un compte transparent par membre : abonnement, usage supplémentaire, dépenses partagées et paiements
+• Formules, quotas, forfaits journée et règles de dépassement deviennent un relevé mensuel
+• Factures à numérotation continue, avoirs, relances et TVA, émises dans l'app pour les espaces en France et en Allemagne ; exports comptables pour votre comptable
 
-LES PAPIERS
-• Factures mensuelles, dérivées de ce qui s'est réellement passé — jamais saisies à la main
-• Signées et immuables : une erreur se corrige par un remplacement, et les deux subsistent
-• TVA, si vous en facturez : taux par prestation, ventilation sur chaque document
-• Factures électroniques EN 16931 (UBL, CII et Factur-X) pour vos clients professionnels et publics
-• Exports comptables que votre comptable lit déjà : SAF-T, et le FEC français
+QUI DÉCIDE ?
+• Des rôles et des règles de validation choisis par votre communauté
+• Tout ce qu'un admin fait en votre nom attend votre confirmation, et chaque décision garde son historique
 
-PARTOUT
-Le même compte sur Android, iPhone, iPad, Mac, Windows et dans un navigateur. Un poste réservé au téléphone apparaît une seconde plus tard sur la tablette murale.
+ENTRE LES ESPACES
+• Un seul « Moi » pour tous les espaces d'un serveur, avec favoris et ordre à vous
+• Découvrir : un annuaire et une carte partagés où les espaces publient une page publique, volontairement
+• Messagerie : conversations privées et groupes ; vous choisissez qui voit votre nom, vos coordonnées et votre présence
 
-CONFIDENTIALITÉ
-Aucun traçage, aucune analyse d'audience, aucune publicité, aucun SDK tiers. Le backend est Supabase dans l'UE, et vous pouvez l'héberger vous-même. DesKilo est libre sous licence AGPL-3.0 — tout ce qui précède se vérifie dans le code.
+VOS DONNÉES, VOTRE CHOIX
+Utilisez le serveur de référence partagé, ou hébergez vous-même le backend sur votre propre Supabase. Ni pistage, ni analytique, ni publicité. Disponible sur Android, iPhone, Windows, macOS et dans un navigateur, en cinq langues.
 
-RGPD : données hébergées dans l'UE, ni traçage ni analytique, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui peut voir vos données, qui les a consultées, export, effacement.
+RGPD : données hébergées dans l'UE sur le déploiement de référence, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement.

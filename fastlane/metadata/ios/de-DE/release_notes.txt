@@ -1,1 +1,1 @@
-Erste Version.
+Ein neuer Blick auf DesKilo: euer Coworking-Space, gemeinsam geführt. Testet die Demo im Browser unter www.deskilo.org und lest dort das Benutzerhandbuch in fünf Sprachen.

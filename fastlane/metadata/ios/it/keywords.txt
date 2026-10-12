@@ -1,1 +1,1 @@
-coworking,prenotazione,postazione,scrivania,spazio,ufficio,membri,fattura,fatturazione,estratto
+coworking,prenotazione,postazione,piantina,spazio,membri,fattura,estratto,community,open source
