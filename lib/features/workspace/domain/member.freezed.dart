@@ -38,7 +38,7 @@ mixin _$Member {
  String get vatTreatment;/// #985 — the reason printed when the buyer is exempt.
  String get vatExemptionReason;/// #1916 (0349) — whether this customer acts as a `business` or a
 /// `consumer`; null = not stated (the workspace default applies).
- String? get customerCapacity;/// #2358 (0410) — where this customer receives e-invoices (BT-49),
+ String? get customerCapacity;/// #2358 (0414) — where this customer receives e-invoices (BT-49),
 /// its EAS scheme, and the county or province of its address
 /// (BT-54). Frozen into each invoice's buyer snapshot.
  String get einvoiceEndpointId; String get einvoiceEndpointScheme; String get billingSubdivision;/// Whether this member may reserve/check into a WHOLE level (0050);
@@ -339,7 +339,7 @@ class _Member extends Member {
 /// #1916 (0349) — whether this customer acts as a `business` or a
 /// `consumer`; null = not stated (the workspace default applies).
 @override final  String? customerCapacity;
-/// #2358 (0410) — where this customer receives e-invoices (BT-49),
+/// #2358 (0414) — where this customer receives e-invoices (BT-49),
 /// its EAS scheme, and the county or province of its address
 /// (BT-54). Frozen into each invoice's buyer snapshot.
 @override@JsonKey() final  String einvoiceEndpointId;
