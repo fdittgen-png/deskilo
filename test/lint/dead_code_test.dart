@@ -18,6 +18,21 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // Spanish Verifactu: built and pinned before its register exists.
+  'lib/features/money/domain/verifactu.dart::verifactuLegend':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuMention':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuCancellationHuella':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuRecordFor':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuChainHolds':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuQrUrl':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
+  'lib/features/money/domain/verifactu.dart::verifactuRecordXml':
+      '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',
   // MCP, app side: wired in by the server issue or deleted there.
   'lib/core/instance/mcp_readiness.dart::verifyMcpReadinessReport':
       '#2394 — the readiness report verifier',

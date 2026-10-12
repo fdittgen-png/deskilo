@@ -74,11 +74,11 @@ Future<void> requestInvoiceWriteoffDialog(
   );
 }
 
-/// SENDS the invoice: builds the Factur-X document and posts it to the
-/// workspace's platform through the edge function, which holds the
+/// SENDS the invoice: builds the document in the syntax the channel
+/// wants (#2358 — XML for a network, Factur-X for a person) and posts it
+/// to the workspace's platform through the edge function, which holds the
 /// credential and records the attempt (0073). The document that leaves is
-/// byte-for-byte the one the download produces — one builder, no second
-/// truth.
+/// built by the same builder as the download — no second truth.
 Future<void> sendEInvoice(
   BuildContext context,
   WidgetRef ref,
@@ -89,9 +89,15 @@ Future<void> sendEInvoice(
   required String workspaceId,
   String environment = 'prod',
   String destination = 'government',
+  String provider = 'generic',
 }) async {
   final l10n = context.l10n;
   EInvoiceSubmission? result;
+  final format = eInvoiceFormatFor(
+    provider: provider,
+    destination: destination,
+    buyerEndpointScheme: buyer.endpointScheme,
+  );
   if (!await runGuarded(
     context,
     domain: 'money',
@@ -99,14 +105,39 @@ Future<void> sendEInvoice(
     errorText:
         l10n.workspaceGenericError,
     action: () async {
-      final file = await buildFacturXFile(
-        context,
-        ref,
-        invoice,
-        seller: seller,
-        buyer: buyer,
-        iban: iban,
-      );
+      final ({List<int> bytes, String fileName}) file;
+      if (format == EInvoiceFormat.facturX) {
+        file = await buildFacturXFile(
+          context,
+          ref,
+          invoice,
+          seller: seller,
+          buyer: buyer,
+          iban: iban,
+        );
+      } else {
+        // #2358 — the network's own syntax, from the inputs the
+        // download uses.
+        final words = reportStringsOf(l10n);
+        final association = ref.read(sellerIsAssociationProvider);
+        final xml = buildChannelEInvoiceXml(
+          format: format,
+          invoice: invoice,
+          seller: seller,
+          buyer: buyer,
+          iban: iban,
+          lineText: (line) => invoiceLineText(words, line,
+              association: association, period: invoice.period),
+          dueDate: invoiceDueAt(ref, invoice),
+          paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
+              memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
+              '',
+        );
+        file = (
+          bytes: utf8.encode(xml),
+          fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
+        );
+      }
       if (file.fileName.isEmpty) return;
       result = await ref
           .read(moneyRepositoryProvider)
@@ -114,7 +145,7 @@ Future<void> sendEInvoice(
             workspaceId: workspaceId,
             invoiceId: invoice.id,
             fileName: file.fileName,
-            mimeType: 'application/pdf',
+            mimeType: format.mimeType,
             bytes: file.bytes,
             environment: environment,
             destination: destination,

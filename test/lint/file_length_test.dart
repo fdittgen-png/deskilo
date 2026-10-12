@@ -39,6 +39,7 @@ const int _budget = 500; // 2026-10-11 #2386: 600→500 for new files; the files
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
+  'lib/features/money/domain/invoice.dart': 512, // 2026-10-11 #2358: the party's electronic address, its scheme and the country subdivision (BT-34/49, BT-39/54), which Peppol, XRechnung and CIUS-RO require.
   // 600→630 (2026-09-20): #1514 — the recording seam. Three of the six
   // providers that answer with a person live here, and each pays four
   // lines: the flag read hoisted above the await (#1218), the

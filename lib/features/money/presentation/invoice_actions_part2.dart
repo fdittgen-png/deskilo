@@ -128,14 +128,36 @@ Future<void> _exportEInvoice(
   final isIssuer = me?.actsAsOwner == true ||
       me?.canAdminister == true ||
       ref.read(myPermissionsProvider).contains(WorkspacePermission.issueInvoices);
+  // #2358 — what the configured channel receives, what it still needs,
+  // and which official validator that format passes.
+  final sendFormat = eInvoiceFormatFor(
+    provider: gateway.provider,
+    destination: 'government',
+    buyerEndpointScheme: buyer.endpointScheme,
+  );
+  final sendGaps = gateway.configured
+      ? channelGaps(
+          sendFormat,
+          seller: seller,
+          buyer: buyer,
+          iban: workspaceIban(workspace),
+        )
+      : const <ChannelGap>[];
   final export = await showEInvoiceSheet(
     context,
     route: route,
     readiness: readiness,
+    validator: eInvoiceValidators[
+            gateway.configured ? sendFormat : EInvoiceFormat.en16931Ubl] ??
+        '',
+    sendChannel: route.businessChannel,
+    sendGaps: sendGaps,
+    mandates: mandateWarnings(seller.country, ref.read(clockProvider).now()),
+    today: ref.read(clockProvider).now(),
     canFixIdentity: me?.actsAsOwner ?? false,
     identityFixedSince: identityFixedSince,
     // Only an issuer sends, and only when a platform is configured.
-    canSend: gateway.configured && isIssuer,
+    canSend: gateway.configured && isIssuer && sendGaps.isEmpty,
     // The customer leg (#568): its own endpoint, its own flag, the same
     // issuer gate.
     canSendCustomer:
@@ -179,6 +201,7 @@ Future<void> _exportEInvoice(
       workspaceId: workspace.id,
       environment: environment,
       destination: toCustomer ? 'customer' : 'government',
+      provider: gateway.provider,
     );
     return;
   }

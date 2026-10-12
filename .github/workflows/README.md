@@ -40,6 +40,7 @@ changes.
 | CI · Dictionary refresh | `dictionary-refresh.yml` | after a merge to master, regenerates `docs/database/dictionary.json` and its renderings from the migration replay and keeps one auto-merging pull request, so a migration PR pays no CI round for the data dictionary (#2088) |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
+| CI · E-invoice validators | `einvoice-validate.yml` | builds one sample per e-invoice format and runs the official validators on it at pinned versions — KoSIT (EN 16931, XRechnung, Peppol BIS), Mustang (Factur-X), the SdI and KSeF schemas (#2358) |
 | Nightly · Journey latency benchmark | `perf-bench.yml` | runs `tool/bench` on the large workload and gates its SHAPE — round trips, elements, frames, the retry budget. The wall clock is reported, never gated, and the record declares what is not measured at all |
 | Release · Train (all platforms) | `release-train.yml` | one dispatch, every store, one commit: the ref is resolved **once** to a SHA and every leg builds that SHA or fails (#1446 C4) |
 | Release · Play track upload | `play-internal.yml` | builds the signed AAB from the pinned SHA and uploads it to the chosen Play track |
