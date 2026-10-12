@@ -11630,6 +11630,14 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
+  "vatDeclEdiTva": "Fichier EDI-TVA (CA3)",
+  "@vatDeclEdiTva": {
+    "description": "#2357 VAT filing files: vatDeclEdiTva"
+  },
+  "vatDeclElster": "Fichier ELSTER (UStVA)",
+  "@vatDeclElster": {
+    "description": "#2357 VAT filing files: vatDeclElster"
+  },
   "vatDeclEmpty": "Aucune déclaration — choisissez une période et générez la première.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
@@ -11637,6 +11645,18 @@
   "vatDeclFiled": "Déposée",
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclFilingPeriod": "Une déclaration ELSTER anticipée couvre un mois ou un trimestre ; la déclaration annuelle se dépose à part.",
+  "@vatDeclFilingPeriod": {
+    "description": "#2357 VAT filing files: vatDeclFilingPeriod"
+  },
+  "vatDeclFilingTaxNumber": "Saisissez le numéro fiscal : la Steuernummer pour ELSTER, le SIREN (ou un numéro de TVA FR) pour l'EDI-TVA.",
+  "@vatDeclFilingTaxNumber": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumber"
+  },
+  "vatDeclFilingTaxNumberField": "Numéro fiscal (Steuernummer)",
+  "@vatDeclFilingTaxNumberField": {
+    "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
   "vatDeclGenerate": "Préparer",
   "@vatDeclGenerate": {

@@ -19005,11 +19005,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclDraft => 'Entwurf';
 
   @override
+  String get vatDeclEdiTva => 'EDI-TVA-Datei (CA3)';
+
+  @override
+  String get vatDeclElster => 'ELSTER-Datei (UStVA)';
+
+  @override
   String get vatDeclEmpty =>
       'Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.';
 
   @override
   String get vatDeclFiled => 'Abgegeben';
+
+  @override
+  String get vatDeclFilingPeriod =>
+      'Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
+
+  @override
+  String get vatDeclFilingTaxNumber =>
+      'Geben Sie die Steuernummer ein: die Steuernummer für ELSTER, die SIREN (oder eine französische USt-IdNr.) für EDI-TVA.';
+
+  @override
+  String get vatDeclFilingTaxNumberField => 'Steuernummer';
 
   @override
   String get vatDeclGenerate => 'Vorbereiten';
