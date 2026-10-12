@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
 
-export 'mcp_operation_labels.g.dart';
+export 'mcp_operation_text.g.dart';
 
 /// #1809 — what each optional field discloses, in the person's language.
 String mcpOptionalFieldLabel(AppLocalizations l10n, String field) =>

@@ -22,7 +22,7 @@ const generatedPaths = (
   webOpenapi: 'web/api/openapi.json',
   // #2394 — each operation's label in the person's language, and the
   // function that reads it.
-  labels: 'lib/features/mcp/presentation/mcp_operation_labels.g.dart',
+  labels: 'lib/features/mcp/presentation/mcp_operation_text.g.dart',
   // #2394 — the operation enum and the envelope model, beside the specs.
   dartTypes: 'lib/core/mcp/mcp_contract.g.dart',
 );
