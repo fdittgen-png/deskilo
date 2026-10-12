@@ -16453,6 +16453,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sitesTitle => 'Standorte';
 
   @override
+  String get smallBusinessCheckFigure =>
+      'Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen.';
+
+  @override
+  String smallBusinessNearImmediate(String turnover, String limit) {
+    return 'Ihr Nettoumsatz in diesem Jahr ($turnover) nähert sich der Grenze von $limit. Mit dem Umsatz, der sie überschreitet, endet die Befreiung sofort.';
+  }
+
+  @override
+  String smallBusinessNearNextYear(String turnover, String limit) {
+    return 'Ihr Nettoumsatz in diesem Jahr ($turnover) nähert sich der Kleinunternehmergrenze von $limit. Liegt das Jahr am Ende darüber, endet die Befreiung mit diesem Jahr.';
+  }
+
+  @override
+  String smallBusinessPassedImmediate(String turnover, String limit) {
+    return 'Ihr Nettoumsatz in diesem Jahr ($turnover) hat die Grenze von $limit überschritten: Die Befreiung ist beendet, weisen Sie ab dem Umsatz, der sie überschritten hat, Umsatzsteuer aus.';
+  }
+
+  @override
+  String smallBusinessPassedNextYear(String turnover, String limit) {
+    return 'Ihr Nettoumsatz in diesem Jahr ($turnover) hat die Kleinunternehmergrenze von $limit überschritten: Die Befreiung endet mit diesem Jahr, weisen Sie ab dem neuen Jahr Umsatzsteuer aus.';
+  }
+
+  @override
   String get spaceAlreadyCheckedInHere =>
       'Sie sind hier bereits eingecheckt. Wählen Sie « Auschecken », um den Platz freizugeben.';
 

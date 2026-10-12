@@ -16464,6 +16464,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sitesTitle => 'Sites';
 
   @override
+  String get smallBusinessCheckFigure =>
+      'Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.';
+
+  @override
+  String smallBusinessNearImmediate(String turnover, String limit) {
+    return 'Votre chiffre d\'affaires net de l\'année ($turnover) approche le seuil de $limit. Le dépasser met fin à la franchise dès l\'opération qui le dépasse.';
+  }
+
+  @override
+  String smallBusinessNearNextYear(String turnover, String limit) {
+    return 'Votre chiffre d\'affaires net de l\'année ($turnover) approche le seuil de la franchise de $limit. S\'il le dépasse à la fin de l\'année, la franchise cesse avec cette année.';
+  }
+
+  @override
+  String smallBusinessPassedImmediate(String turnover, String limit) {
+    return 'Votre chiffre d\'affaires net de l\'année ($turnover) a dépassé le seuil de $limit : la franchise a pris fin, facturez la TVA dès l\'opération qui l\'a dépassé.';
+  }
+
+  @override
+  String smallBusinessPassedNextYear(String turnover, String limit) {
+    return 'Votre chiffre d\'affaires net de l\'année ($turnover) a dépassé le seuil de la franchise de $limit : elle cesse avec cette année, facturez la TVA dès la nouvelle année.';
+  }
+
+  @override
   String get spaceAlreadyCheckedInHere =>
       'Vous êtes déjà pointé ici. Choisissez « Pointer la sortie » pour libérer la place.';
 

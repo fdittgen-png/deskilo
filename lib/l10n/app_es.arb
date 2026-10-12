@@ -10834,6 +10834,58 @@
   "@sitesTitle": {
     "description": "#945 sites: sitesTitle"
   },
+  "smallBusinessCheckFigure": "Este límite es el último verificado: confirme la cifra vigente con su administración tributaria.",
+  "@smallBusinessCheckFigure": {
+    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  },
+  "smallBusinessNearImmediate": "Su facturación neta de este año ({turnover}) se acerca al límite de {limit}. Superarlo pone fin a la exención en la propia operación que lo supera.",
+  "@smallBusinessNearImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessNearImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessNearNextYear": "Su facturación neta de este año ({turnover}) se acerca al límite del régimen de franquicia de {limit}. Si el año termina por encima, la exención acaba con este año.",
+  "@smallBusinessNearNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessNearNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedImmediate": "Su facturación neta de este año ({turnover}) ha superado el límite de {limit}: la exención ha terminado, repercuta el IVA desde la operación que lo superó.",
+  "@smallBusinessPassedImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessPassedImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedNextYear": "Su facturación neta de este año ({turnover}) ha superado el límite de franquicia de {limit}: la exención acaba con este año, repercuta el IVA desde el año nuevo.",
+  "@smallBusinessPassedNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessPassedNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "spaceAlreadyCheckedInHere": "Ya ha fichado aquí. Elija « Fichar la salida » para dejar la plaza.",
   "spaceBackToMe": "Volver a Yo",
   "spaceBlockedByYou": "Ya tiene este espacio para ese periodo.",

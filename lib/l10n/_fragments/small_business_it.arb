@@ -1,0 +1,54 @@
+{
+  "smallBusinessNearNextYear": "Il suo fatturato netto di quest'anno ({turnover}) si avvicina al limite del regime di franchigia di {limit}. Se l'anno si chiude sopra, l'esenzione termina con quest'anno.",
+  "@smallBusinessNearNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessNearNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedNextYear": "Il suo fatturato netto di quest'anno ({turnover}) ha superato il limite di franchigia di {limit}: l'esenzione termina con quest'anno, applichi l'IVA dal nuovo anno.",
+  "@smallBusinessPassedNextYear": {
+    "description": "#2440 small-business threshold: smallBusinessPassedNextYear",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessNearImmediate": "Il suo fatturato netto di quest'anno ({turnover}) si avvicina al limite di {limit}. Superarlo pone fine all'esenzione con l'operazione stessa che lo supera.",
+  "@smallBusinessNearImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessNearImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessPassedImmediate": "Il suo fatturato netto di quest'anno ({turnover}) ha superato il limite di {limit}: l'esenzione è terminata, applichi l'IVA dall'operazione che lo ha superato.",
+  "@smallBusinessPassedImmediate": {
+    "description": "#2440 small-business threshold: smallBusinessPassedImmediate",
+    "placeholders": {
+      "turnover": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "smallBusinessCheckFigure": "Questo limite è l'ultimo verificato: confermi l'importo vigente con l'ufficio delle imposte.",
+  "@smallBusinessCheckFigure": {
+    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  }
+}

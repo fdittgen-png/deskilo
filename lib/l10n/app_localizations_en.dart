@@ -16288,6 +16288,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sitesTitle => 'Sites';
 
   @override
+  String get smallBusinessCheckFigure =>
+      'This limit is the last one verified: check the current figure with your tax office.';
+
+  @override
+  String smallBusinessNearImmediate(String turnover, String limit) {
+    return 'Your net turnover this year ($turnover) is close to the limit of $limit. Passing it ends the exemption on the very supply that passes it.';
+  }
+
+  @override
+  String smallBusinessNearNextYear(String turnover, String limit) {
+    return 'Your net turnover this year ($turnover) is close to the small-business limit of $limit. If the year ends above it, the exemption ends with this year.';
+  }
+
+  @override
+  String smallBusinessPassedImmediate(String turnover, String limit) {
+    return 'Your net turnover this year ($turnover) has passed the limit of $limit: the exemption has ended, so charge VAT from the supply that passed it.';
+  }
+
+  @override
+  String smallBusinessPassedNextYear(String turnover, String limit) {
+    return 'Your net turnover this year ($turnover) has passed the small-business limit of $limit: the exemption ends with this year, so charge VAT from the new year.';
+  }
+
+  @override
   String get spaceAlreadyCheckedInHere =>
       'You are already checked in here. Choose Check out to leave the seat.';
 
