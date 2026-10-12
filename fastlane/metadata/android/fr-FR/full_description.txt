@@ -30,3 +30,5 @@ Utilisez le serveur de référence partagé, ou hébergez vous-même le backend 
 RGPD : données hébergées dans l'UE sur le déploiement de référence, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement.
 
 La version F-Droid démarre sans serveur et demande lequel utiliser ; elle n'a pas de service de notifications push. Les versions des stores utilisent Firebase Cloud Messaging pour les notifications push.
+
+COÛT : le logiciel est gratuit, avec toutes les fonctions, y compris sur votre propre serveur. L’hébergement sur le déploiement de référence est gratuit pour tout le monde jusqu’au 31 décembre 2027 ; à partir du 1er janvier 2028, il reste gratuit jusqu’à cinq abonnés actifs (huit pour les associations à but non lucratif) et payant au-delà, à partir d’environ 29 € par mois. La facturation se fait en dehors de l’application.

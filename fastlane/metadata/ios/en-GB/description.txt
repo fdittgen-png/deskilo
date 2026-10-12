@@ -28,3 +28,5 @@ YOUR DATA, YOUR CHOICE
 Use the shared reference server, or host the backend yourself on your own Supabase. No tracking, no analytics, no advertising. Available on Android, iPhone, Windows, macOS and in a browser, in five languages.
 
 GDPR: EU-hosted data on the reference deployment, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
+
+COST: the software is free, with every feature, also on your own server. Hosting on the reference deployment is free for everyone until 31 December 2027; from 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that, from about €29 a month. Billing happens outside the app.

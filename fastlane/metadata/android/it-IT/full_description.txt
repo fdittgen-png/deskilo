@@ -30,3 +30,5 @@ Usa il server di riferimento condiviso oppure ospita tu stesso il backend sul tu
 GDPR: dati ospitati nell'UE sul deployment di riferimento, accesso limitato per ruolo e applicato sul server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione.
 
 La versione F-Droid parte senza server e chiede quale usare; non ha un servizio push. Le versioni degli store usano Firebase Cloud Messaging per le notifiche push.
+
+COSTO: il software è gratuito, con tutte le funzioni, anche sul vostro server. L’hosting sul deployment di riferimento è gratuito per tutti fino al 31 dicembre 2027; dal 1° gennaio 2028 resta gratuito fino a cinque abbonati attivi (otto per le organizzazioni non profit) e a pagamento oltre, da circa 29 € al mese. La fatturazione avviene fuori dall’app.

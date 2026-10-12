@@ -30,3 +30,5 @@ Use the shared reference server, or host the backend yourself on your own Supaba
 GDPR: EU-hosted data on the reference deployment, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
 
 The F-Droid build starts without a server and asks which one to use; it has no push service. The store builds use Firebase Cloud Messaging for push notifications.
+
+COST: the software is free, with every feature, also on your own server. Hosting on the reference deployment is free for everyone until 31 December 2027; from 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that, from about €29 a month. Billing happens outside the app.
