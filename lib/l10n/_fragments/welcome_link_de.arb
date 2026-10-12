@@ -1,0 +1,6 @@
+{
+  "welcomeLinkAction": "Was ist DesKilo?",
+  "@welcomeLinkAction": {
+    "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"
+  }
+}

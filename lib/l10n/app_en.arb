@@ -22338,6 +22338,10 @@
   "@visitStatusRequested": {
     "description": "#1835 visit status"
   },
+  "welcomeLinkAction": "What is DesKilo?",
+  "@welcomeLinkAction": {
+    "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"
+  },
   "whatTheyCanDoTitle": "What {name} can do here",
   "@whatTheyCanDoTitle": {
     "description": "#2085 giving roles: whatTheyCanDoTitle",

@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
+import '../../../../core/demo/presentation/welcome_link_button.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -494,12 +495,16 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 l10n.authConnectServer,
               ),
             ),
-            TextButton.icon(
-              key: const ValueKey('auth-discover'),
-              onPressed: () => context.push('/discover'),
-              icon: const Icon(Icons.public),
-              label: Text(l10n.portalDiscover),
-            ),
+            // #2459 — beside Discover, in the same row where it fits.
+            Wrap(alignment: WrapAlignment.center, children: [
+              TextButton.icon(
+                key: const ValueKey('auth-discover'),
+                onPressed: () => context.push('/discover'),
+                icon: const Icon(Icons.public),
+                label: Text(l10n.portalDiscover),
+              ),
+              const WelcomeLinkButton(),
+            ]),
           ],
         ),
       ),

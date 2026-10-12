@@ -19730,6 +19730,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get visitStatusRequested => 'Demandée';
 
   @override
+  String get welcomeLinkAction => 'Qu’est-ce que DesKilo ?';
+
+  @override
   String whatTheyCanDoTitle(String name) {
     return 'Ce que $name peut faire ici';
   }
