@@ -1,1 +1,1 @@
-coworking,desk booking,hot desk,workspace,members,invoice,billing,ledger,office,booking
+coworking,desk booking,hot desk,floor plan,workspace,members,invoice,ledger,community,open source

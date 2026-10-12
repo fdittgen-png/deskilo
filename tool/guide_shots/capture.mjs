@@ -44,7 +44,8 @@ const stamp = `b${sha}`;
 const taken = new Date().toISOString().slice(0, 10);
 const made = [];
 const LOCALE = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT' };
-const VIEW = { phone: [390, 844], tablet: [820, 1100], desktop: [1280, 860] };
+// --phone WxH overrides the phone window (store screenshots: 430x932 at --dpr 3 is 1290x2796).
+const VIEW = { phone: opt('phone', '390x844').split('x').map(Number), tablet: [820, 1100], desktop: [1280, 860] };
 const PERSONA = { owner: 'demoPersonaOwner', admin: 'demoPersonaAdmin', member: 'demoPersonaMember', kiosk: 'demoPersonaKiosk' };
 
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.wasm': 'application/wasm', '.png': 'image/png', '.css': 'text/css' };

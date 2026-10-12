@@ -484,7 +484,15 @@
     "workspace_id",
     "name",
     "operations"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpListWorkspaces",
+    "en": "See which workspaces it may use",
+    "fr": "Voir les espaces qu'il peut utiliser",
+    "de": "Sehen, welche Arbeitsbereiche er nutzen darf",
+    "es": "Ver qu\u00e9 espacios puede usar",
+    "it": "Vedere quali spazi pu\u00f2 usare"
+   }
   },
   {
    "id": "get_capabilities",
@@ -534,7 +542,15 @@
     "full_day",
     "from",
     "to"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpCapabilities",
+    "en": "See what it may do there",
+    "fr": "Voir ce qu'il peut y faire",
+    "de": "Sehen, was er dort tun darf",
+    "es": "Ver qu\u00e9 puede hacer all\u00ed",
+    "it": "Vedere cosa pu\u00f2 fare l\u00ec"
+   }
   },
   {
    "id": "get_availability",
@@ -630,7 +646,15 @@
     "free",
     "next_cursor",
     "not_checked"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpAvailability",
+    "en": "See free places",
+    "fr": "Voir les places libres",
+    "de": "Freie Pl\u00e4tze sehen",
+    "es": "Ver plazas libres",
+    "it": "Vedere i posti liberi"
+   }
   },
   {
    "id": "list_my_reservations",
@@ -701,7 +725,15 @@
     "ends_at",
     "status",
     "next_cursor"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpMyReservations",
+    "en": "See your reservations",
+    "fr": "Voir vos r\u00e9servations",
+    "de": "Ihre Reservierungen sehen",
+    "es": "Ver sus reservas",
+    "it": "Vedere le sue prenotazioni"
+   }
   },
   {
    "id": "get_place",
@@ -777,7 +809,15 @@
     "average",
     "count",
     "mine"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpGetPlace",
+    "en": "Describe a place, and show it when you ask",
+    "fr": "D\u00e9crire un lieu, et le montrer sur demande",
+    "de": "Einen Ort beschreiben und auf Wunsch zeigen",
+    "es": "Describir un lugar y mostrarlo si lo pide",
+    "it": "Descrivere un luogo e mostrarlo su richiesta"
+   }
   },
   {
    "id": "list_my_favorites",
@@ -817,7 +857,15 @@
     "count",
     "mine",
     "favorite"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpListMyFavorites",
+    "en": "Your favourite places",
+    "fr": "Vos lieux favoris",
+    "de": "Ihre Lieblingspl\u00e4tze",
+    "es": "Sus lugares favoritos",
+    "it": "I suoi posti preferiti"
+   }
   },
   {
    "id": "get_my_statement",
@@ -886,7 +934,15 @@
     "vat_percent",
     "amount_cents",
     "currency"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpMyStatement",
+    "en": "See your account statement",
+    "fr": "Voir votre relev\u00e9 de compte",
+    "de": "Ihren Kontoauszug sehen",
+    "es": "Ver su estado de cuenta",
+    "it": "Vedere il suo estratto conto"
+   }
   },
   {
    "id": "get_member_statement",
@@ -967,7 +1023,15 @@
     "amount_cents",
     "currency"
    ],
-   "group": "financial"
+   "group": "financial",
+   "label": {
+    "key": "mcpOpMemberStatement",
+    "en": "See a member's account statement",
+    "fr": "Voir le relev\u00e9 de compte d'un membre",
+    "de": "Den Kontoauszug eines Mitglieds sehen",
+    "es": "Ver el estado de cuenta de un miembro",
+    "it": "Vedere l'estratto conto di un membro"
+   }
   },
   {
    "id": "list_my_invoices",
@@ -1022,7 +1086,15 @@
     "issued_at",
     "voided",
     "next_cursor"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpMyInvoices",
+    "en": "See your invoices",
+    "fr": "Voir vos factures",
+    "de": "Ihre Rechnungen sehen",
+    "es": "Ver sus facturas",
+    "it": "Vedere le sue fatture"
+   }
   },
   {
    "id": "create_reservation",
@@ -1137,7 +1209,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpCreateReservation",
+    "en": "Book a place for you",
+    "fr": "R\u00e9server une place pour vous",
+    "de": "Einen Platz f\u00fcr Sie buchen",
+    "es": "Reservar una plaza por usted",
+    "it": "Prenotare un posto per Lei"
+   }
   },
   {
    "id": "update_reservation",
@@ -1233,7 +1313,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpUpdateReservation",
+    "en": "Change your reservations",
+    "fr": "Modifier vos r\u00e9servations",
+    "de": "Ihre Reservierungen \u00e4ndern",
+    "es": "Cambiar sus reservas",
+    "it": "Modificare le sue prenotazioni"
+   }
   },
   {
    "id": "check_in",
@@ -1294,7 +1382,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpCheckIn",
+    "en": "Check you in",
+    "fr": "Faire votre arriv\u00e9e",
+    "de": "Sie einchecken",
+    "es": "Registrar su entrada",
+    "it": "Registrare il suo arrivo"
+   }
   },
   {
    "id": "check_out",
@@ -1355,7 +1451,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpCheckOut",
+    "en": "Check you out",
+    "fr": "Faire votre d\u00e9part",
+    "de": "Sie auschecken",
+    "es": "Registrar su salida",
+    "it": "Registrare la sua uscita"
+   }
   },
   {
    "id": "cancel_reservation",
@@ -1416,7 +1520,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpCancelReservation",
+    "en": "Cancel your bookings that have not started",
+    "fr": "Annuler vos r\u00e9servations qui n'ont pas commenc\u00e9",
+    "de": "Ihre noch nicht begonnenen Buchungen stornieren",
+    "es": "Cancelar sus reservas que a\u00fan no han empezado",
+    "it": "Annullare le sue prenotazioni non ancora iniziate"
+   }
   },
   {
    "id": "set_favorite",
@@ -1489,7 +1601,15 @@
     "average",
     "count",
     "mine"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpSetFavorite",
+    "en": "Mark places as favourites",
+    "fr": "Marquer des lieux en favoris",
+    "de": "Pl\u00e4tze als Favoriten markieren",
+    "es": "Marcar lugares como favoritos",
+    "it": "Segnare posti come preferiti"
+   }
   },
   {
    "id": "rate_place",
@@ -1571,7 +1691,15 @@
     "average",
     "count",
     "mine"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpRatePlace",
+    "en": "Rate places",
+    "fr": "Noter des lieux",
+    "de": "Pl\u00e4tze bewerten",
+    "es": "Valorar lugares",
+    "it": "Valutare i posti"
+   }
   },
   {
    "id": "request_reservation_deletion",
@@ -1639,7 +1767,15 @@
     "checked_in_at",
     "checked_out_at",
     "state_digest"
-   ]
+   ],
+   "label": {
+    "key": "mcpOpReservationDeletion",
+    "en": "Ask to delete a booking that has started",
+    "fr": "Demander la suppression d'une r\u00e9servation commenc\u00e9e",
+    "de": "L\u00f6schung einer bereits begonnenen Buchung beantragen",
+    "es": "Pedir la eliminaci\u00f3n de una reserva ya iniciada",
+    "it": "Chiedere l'eliminazione di una prenotazione gi\u00e0 iniziata"
+   }
   },
   {
    "id": "request_invoice_issue",
@@ -1717,7 +1853,15 @@
     "currency",
     "voided"
    ],
-   "group": "financial"
+   "group": "financial",
+   "label": {
+    "key": "mcpOpInvoiceIssue",
+    "en": "Issue an invoice",
+    "fr": "\u00c9mettre une facture",
+    "de": "Rechnung ausstellen",
+    "es": "Emitir una factura",
+    "it": "Emettere una fattura"
+   }
   },
   {
    "id": "request_invoice_void",
@@ -1778,7 +1922,15 @@
     "currency",
     "voided"
    ],
-   "group": "financial"
+   "group": "financial",
+   "label": {
+    "key": "mcpOpInvoiceVoid",
+    "en": "Void an invoice",
+    "fr": "Annuler une facture",
+    "de": "Rechnung stornieren",
+    "es": "Anular una factura",
+    "it": "Annullare una fattura"
+   }
   },
   {
    "id": "request_refund",
@@ -1839,7 +1991,15 @@
     "currency",
     "voided"
    ],
-   "group": "financial"
+   "group": "financial",
+   "label": {
+    "key": "mcpOpRefund",
+    "en": "Refund an invoice",
+    "fr": "Rembourser une facture",
+    "de": "Rechnung erstatten",
+    "es": "Reembolsar una factura",
+    "it": "Rimborsare una fattura"
+   }
   },
   {
    "id": "request_member_status_change",
@@ -1905,7 +2065,15 @@
     "subscription_pct",
     "unchanged"
    ],
-   "group": "membership"
+   "group": "membership",
+   "label": {
+    "key": "mcpOpMemberStatus",
+    "en": "Change a member's status",
+    "fr": "Modifier le statut d'un membre",
+    "de": "Status eines Mitglieds \u00e4ndern",
+    "es": "Cambiar el estado de un miembro",
+    "it": "Modificare lo stato di un membro"
+   }
   },
   {
    "id": "request_subscription_change",
@@ -1968,7 +2136,15 @@
     "subscription_pct",
     "unchanged"
    ],
-   "group": "membership"
+   "group": "membership",
+   "label": {
+    "key": "mcpOpSubscription",
+    "en": "Change a member's subscription share",
+    "fr": "Modifier la part d'abonnement d'un membre",
+    "de": "Abonnementanteil eines Mitglieds \u00e4ndern",
+    "es": "Cambiar la parte de suscripci\u00f3n de un miembro",
+    "it": "Modificare la quota di abbonamento di un membro"
+   }
   },
   {
    "id": "list_pending_validations",
@@ -2019,7 +2195,15 @@
     "mine",
     "next_cursor"
    ],
-   "group": "validations"
+   "group": "validations",
+   "label": {
+    "key": "mcpOpPendingValidations",
+    "en": "See pending validation requests",
+    "fr": "Voir les demandes de validation en attente",
+    "de": "Offene Freigabeanfragen sehen",
+    "es": "Ver solicitudes de validaci\u00f3n pendientes",
+    "it": "Vedere le richieste di convalida in sospeso"
+   }
   },
   {
    "id": "get_validation",
@@ -2062,7 +2246,15 @@
     "can_respond",
     "reason"
    ],
-   "group": "validations"
+   "group": "validations",
+   "label": {
+    "key": "mcpOpGetValidation",
+    "en": "Read a validation request",
+    "fr": "Lire une demande de validation",
+    "de": "Eine Freigabeanfrage lesen",
+    "es": "Leer una solicitud de validaci\u00f3n",
+    "it": "Leggere una richiesta di convalida"
+   }
   },
   {
    "id": "respond_to_validation",
@@ -2121,7 +2313,15 @@
     "decision_recorded",
     "effect_applied"
    ],
-   "group": "validations"
+   "group": "validations",
+   "label": {
+    "key": "mcpOpRespond",
+    "en": "Answer a validation request",
+    "fr": "R\u00e9pondre \u00e0 une demande de validation",
+    "de": "Auf eine Freigabeanfrage antworten",
+    "es": "Responder a una solicitud de validaci\u00f3n",
+    "it": "Rispondere a una richiesta di validazione"
+   }
   }
  ],
  "native_rpcs": [

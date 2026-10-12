@@ -1,1 +1,1 @@
-First release.
+A new look at what DesKilo is: your coworking space, run together. Try the demo in your browser at www.deskilo.org, and read the user guide there in five languages.

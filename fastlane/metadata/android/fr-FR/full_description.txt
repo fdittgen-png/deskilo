@@ -1,21 +1,34 @@
-DesKilo est une application libre et gratuite pour les communautés de coworking et pour les personnes qui circulent entre elles : réservation de postes, un registre financier transparent — et un réseau social d'espaces, privé par défaut.
+Votre espace de coworking, géré ensemble. Réservez un poste sur un plan en direct, donnez à chaque membre le même compte transparent que voient les admins, et laissez les personnes désignées par votre communauté valider ce qui compte. Libre et open source (AGPL-3.0), en bêta et prête pour un pilote.
 
-LES ESPACES
-• Dessinez votre espace sur une grille : étages, bureaux, postes et places réservables
-• Touchez une place sur le plan en direct pour vous enregistrer ; réservez à l'avance, une fois ou en série
-• Calendrier de vos réservations et de vos alertes ; les administrateurs voient celles de tous
-• Formules d'adhésion, quotas, un registre transparent par membre, dépenses communes, factures
-• Tout ce qu'un administrateur fait pour vous demande votre confirmation
+ESSAYEZ AVANT D'INSTALLER
+• Démo dans votre navigateur : ouvrez www.deskilo.org et touchez « Essayer la démo » — aucun compte nécessaire, et rien de ce que vous y faites ne quitte votre appareil
+• Guide utilisateur en français, anglais, allemand, espagnol et italien, chaque écran expliqué pas à pas : www.deskilo.org/guide/fr.html
+• Guide de démarrage pour un petit espace, du plan à la première invitation : www.deskilo.org/guide/setup-fr.html
 
-VOUS, D'UN ESPACE À L'AUTRE
-• Un compte personnel (Moi) pour tous vos espaces
-• Découvrir : un annuaire partagé et une carte où les espaces publient une page publique, volontairement
-• Messagerie : conversations privées et groupes, avec des références à des réservations et des factures lorsque vous appartenez tous deux à l'espace
-• Demandes de personnes hors de votre cercle, liste de blocage et matrice de visibilité : vous choisissez qui voit votre nom, votre présentation, vos coordonnées et votre présence
+OÙ PUIS-JE TRAVAILLER ?
+• Un plan en direct montre chaque poste et qui l'occupe, pour n'importe quel jour
+• Réservez une demi-journée, un poste ou une salle entière, une fois ou en série, puis pointez à la porte
+• Rejoignez l'espace en scannant son QR code ; codes de poste imprimés, badges NFC et mode kiosque pour une tablette murale
+
+QUE DOIS-JE ?
+• Un compte transparent par membre : abonnement, usage supplémentaire, dépenses partagées et paiements
+• Formules, quotas, forfaits journée et règles de dépassement deviennent un relevé mensuel
+• Factures à numérotation continue, avoirs, relances et TVA, émises dans l'app pour les espaces en France et en Allemagne ; exports comptables pour votre comptable
+
+QUI DÉCIDE ?
+• Des rôles et des règles de validation choisis par votre communauté
+• Tout ce qu'un admin fait en votre nom attend votre confirmation, et chaque décision garde son historique
+
+ENTRE LES ESPACES
+• Un seul « Moi » pour tous les espaces d'un serveur, avec favoris et ordre à vous
+• Découvrir : un annuaire et une carte partagés où les espaces publient une page publique, volontairement
+• Messagerie : conversations privées et groupes ; vous choisissez qui voit votre nom, vos coordonnées et votre présence
 
 VOS DONNÉES, VOTRE CHOIX
-Hébergez vous-même le serveur sur votre propre instance Supabase, ou utilisez le déploiement de référence exploité par Florian DITTGEN, qui héberge aussi l'annuaire global. La version F-Droid démarre sans serveur et demande lequel utiliser : le déploiement de référence, un serveur existant, ou un nouveau qu'elle installe pour vous. Logiciel libre sous licence AGPL-3.0.
+Utilisez le serveur de référence partagé, ou hébergez vous-même le backend sur votre propre Supabase. Ni pistage, ni analytique, ni publicité. Disponible sur Android, iPhone, Windows, macOS et dans un navigateur, en cinq langues.
 
-RGPD : données hébergées dans l'UE sur le déploiement de référence, ni suivi ni publicité, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement. Dans les versions des stores, les notifications push utilisent Firebase Cloud Messaging ; la version F-Droid n'a aucun service push.
+RGPD : données hébergées dans l'UE sur le déploiement de référence, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement.
+
+La version F-Droid démarre sans serveur et demande lequel utiliser ; elle n'a pas de service de notifications push. Les versions des stores utilisent Firebase Cloud Messaging pour les notifications push.
 
 COÛT : le logiciel est gratuit, avec toutes les fonctions, y compris sur votre propre serveur. L’hébergement sur le déploiement de référence est gratuit pour tout le monde jusqu’au 31 décembre 2027 ; à partir du 1er janvier 2028, il reste gratuit jusqu’à cinq abonnés actifs (huit pour les associations à but non lucratif) et payant au-delà, à partir d’environ 29 € par mois. La facturation se fait en dehors de l’application.

@@ -1,1 +1,1 @@
-Plätze, Mitglieder und das Geld — eine App für einen selbstorganisierten Coworking-Space. Rechnungen aus dem, was wirklich passiert ist.
+Plätze auf dem Live-Raumplan buchen, ein transparentes Konto für jedes Mitglied. Demo im Browser testen unter www.deskilo.org — ohne Konto.

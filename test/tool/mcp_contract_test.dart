@@ -18,6 +18,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/mcp_contract/render.dart';
+import '../../tool/mcp_contract/validate.dart';
 
 Map<String, dynamic> source() => jsonDecode(
     File('contracts/mcp/operations.json').readAsStringSync()) as Map<String, dynamic>;

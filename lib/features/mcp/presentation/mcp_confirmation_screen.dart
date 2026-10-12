@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/mcp/mcp_operations.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -187,16 +188,16 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       'event' => '${target['type'] ?? ''}',
       _ => '',
     };
-    final change = switch (c.operation) {
-      'request_member_status_change' =>
+    final change = switch (McpOperationId.of(c.operation)) {
+      McpOperationId.requestMemberStatusChange =>
         l10n.mcpConfirmNewStatus('${args['status']}'),
-      'request_subscription_change' =>
+      McpOperationId.requestSubscriptionChange =>
         l10n.mcpConfirmNewShare('${args['pct']}'),
-      'respond_to_validation' =>
+      McpOperationId.respondToValidation =>
         args['accept'] == true
-            ? (l10n.mcpConfirmApprove)
-            : (l10n.mcpConfirmRefuse),
-      'request_invoice_issue' =>
+            ? l10n.mcpConfirmApprove
+            : l10n.mcpConfirmRefuse,
+      McpOperationId.requestInvoiceIssue =>
         l10n.mcpConfirmPeriod('${args['period']}'),
       _ => '',
     };

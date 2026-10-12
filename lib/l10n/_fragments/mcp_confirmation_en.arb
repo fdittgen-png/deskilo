@@ -91,29 +91,5 @@
         "type": "String"
       }
     }
-  },
-  "mcpOpInvoiceIssue": "Issue an invoice",
-  "@mcpOpInvoiceIssue": {
-    "description": "#1619 mcp_confirmation"
-  },
-  "mcpOpInvoiceVoid": "Void an invoice",
-  "@mcpOpInvoiceVoid": {
-    "description": "#1619 mcp_confirmation"
-  },
-  "mcpOpRefund": "Refund an invoice",
-  "@mcpOpRefund": {
-    "description": "#1619 mcp_confirmation"
-  },
-  "mcpOpMemberStatus": "Change a member's status",
-  "@mcpOpMemberStatus": {
-    "description": "#1619 mcp_confirmation"
-  },
-  "mcpOpSubscription": "Change a member's subscription share",
-  "@mcpOpSubscription": {
-    "description": "#1619 mcp_confirmation"
-  },
-  "mcpOpRespond": "Answer a validation request",
-  "@mcpOpRespond": {
-    "description": "#1619 mcp_confirmation"
   }
 }

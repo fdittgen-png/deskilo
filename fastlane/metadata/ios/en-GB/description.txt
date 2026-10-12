@@ -1,39 +1,32 @@
-DesKilo runs the whole life of a small, self-organised coworking space: the desks, who sits where, what each member owes, and the invoices at the end of the month. No spreadsheet, no group chat thread about who paid what.
+Your coworking space, run together. Book a desk on a live floor plan, give every member the same transparent account the admins see, and let the people your community names approve what matters. Free and open source (AGPL-3.0), in beta and ready for a pilot.
 
-THE SPACE
-• Draw your space on a grid: levels, offices, desks, bookable seats
-• Tap a seat on the live floor plan to check in — walk-ups can never double-book
-• Reserve ahead, once or as a repeating series, and scroll time to see any moment of any day
-• Book a whole room, or a whole level, when the space works that way
-• Scan a space's QR code to book it from the door
+TRY IT BEFORE YOU INSTALL
+• Demo in your browser: open www.deskilo.org and tap "Try the demo" — no account needed, and nothing you do there leaves your device
+• User guide in English, French, German, Spanish and Italian, every screen explained step by step: www.deskilo.org/guide/en.html
+• Setup guide for a small space, from the floor plan to the first invitation: www.deskilo.org/guide/setup-en.html
 
-THE COMMUNITY
-• Members directory with who is in today
-• Invitations by link or QR; join requests are confirmed, never silent
-• Everything an admin does on your behalf needs your confirmation
-• A wall tablet in kiosk mode checks people in by badge, QR or camera
+WHERE CAN I WORK?
+• A live floor plan shows every desk and who holds it, for any day
+• Book a half-day, a desk or a whole room, once or as a series, then check in at the door
+• Join by scanning the space's QR code; printed desk codes, NFC badges and a kiosk mode for a wall tablet
 
-THE MONEY
-• Membership plans with half-day quotas; overage priced by a band you set
-• One transparent ledger per member: subscription, usage, services, payments
-• Community expenses: buy the coffee, get it credited on your next statement
-• Day packs for occasional members
-• Pay online through PayPal, Stripe, Mollie or Wero, if your space enables it
+WHAT DO I OWE?
+• One transparent account per member: subscription, extra use, shared expenses and payments
+• Plans, allowances, day packages and overage rules become one monthly statement
+• Invoices with gapless numbering, credit notes, reminders and VAT, issued in the app for spaces in France and Germany; accounting exports for your accountant
 
-THE PAPERWORK
-• Monthly invoices, derived from what actually happened — never typed by hand
-• Signed and immutable: a mistake is corrected by a replacement, and both stay
-• VAT, if you charge it: rates per service, the breakdown on every document
-• EN 16931 e-invoices (UBL, CII and Factur-X) for business and public customers
-• Accounting exports your accountant already reads: SAF-T, and the French FEC
+WHO DECIDES?
+• Roles and approval rules your community chooses
+• Whatever an admin does on your behalf waits for your confirmation, and every decision keeps its history
 
-EVERYWHERE
-The same account on Android, iPhone, iPad, Mac, Windows and in a browser. A desk booked on a phone shows up on the wall tablet a second later.
+ACROSS SPACES
+• One "Me" for every space on a server, with favourites and your own order
+• Discover: a shared directory and map where spaces publish a public page on purpose
+• Messenger: private conversations and groups; you choose who sees your name, contact details and presence
 
-PRIVACY
-No tracking, no analytics, no advertising, no third-party SDK. The backend is Supabase in the EU, and you can host it yourself. DesKilo is open source under the AGPL-3.0 licence — everything above can be read in the code.
+YOUR DATA, YOUR CHOICE
+Use the shared reference server, or host the backend yourself on your own Supabase. No tracking, no analytics, no advertising. Available on Android, iPhone, Windows, macOS and in a browser, in five languages.
 
-
-GDPR: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
+GDPR: EU-hosted data on the reference deployment, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
 
 COST: the software is free, with every feature, also on your own server. Hosting on the reference deployment is free for everyone until 31 December 2027; from 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that, from about €29 a month. Billing happens outside the app.
