@@ -4777,6 +4777,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Prefilled from amount ÷ quantity; round up if you like.';
 
   @override
+  String get expenseVatAsset => 'A fixed asset';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.';
+
+  @override
   String get expenseVatDeductible => 'Deductible share (%)';
 
   @override
@@ -15695,6 +15702,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get scheduleValidationHint =>
       'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.';
+
+  @override
+  String get scheduleVatInvalid =>
+      'Enter a deductible share between 0 and 100.';
 
   @override
   String get scheduleWeekly => 'weekly';

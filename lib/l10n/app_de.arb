@@ -3269,6 +3269,14 @@
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "expenseVatAsset": "Ein Anlagegut",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Eine Ausstattung, die der Bereich behält und abschreibt (ein Laptop, Möbel): Ihre Vorsteuer wird getrennt vom Rest erklärt.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
   "expenseVatDeductible": "Abziehbarer Anteil (%)",
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
@@ -10350,6 +10358,10 @@
   "scheduleUnitYears": "Jahre",
   "scheduleUntil": "bis {date}",
   "scheduleValidationHint": "Der Plan geht zuerst an die Validierer. Jede Fälligkeit wird Ihnen dann vorgelegt: zu diesem Betrag bestätigt zählt sie sofort; ein anderer Betrag erklärt sich und wird erneut validiert.",
+  "scheduleVatInvalid": "Geben Sie einen abziehbaren Anteil zwischen 0 und 100 ein.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
+  },
   "scheduleWeekly": "wöchentlich",
   "scheduleYearly": "jährlich",
   "scheduledAwaitingTitle": "Geplante Ausgaben zur Bestätigung",

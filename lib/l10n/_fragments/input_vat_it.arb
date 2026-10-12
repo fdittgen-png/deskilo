@@ -52,5 +52,17 @@
         "type": "String"
       }
     }
+  },
+  "expenseVatAsset": "Un bene strumentale",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Un'attrezzatura che lo spazio conserva e ammortizza (un portatile, dei mobili): la sua IVA è dichiarata a parte dal resto.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
+  "scheduleVatInvalid": "Inserisca una quota detraibile tra 0 e 100.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
   }
 }

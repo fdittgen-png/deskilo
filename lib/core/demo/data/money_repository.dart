@@ -325,6 +325,9 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 — the VAT each submitted expense carried, in order.
   final submittedExpenseVat = <Map<String, Object?>?>[];
 
+  /// #2357 — the VAT each schedule's occurrences carry.
+  final expenseScheduleVat = <String, Map<String, Object?>?>{};
+
   /// #767 — seeded schedules/occurrences; the fake mirrors the server's
   /// two-lane rule: matching amount → added, deviation → needs a reason
   /// and goes pending; a rejected one resends the same way.
@@ -452,6 +455,7 @@ class FakeMoneyRepository implements MoneyRepository {
   @override Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) => _fetchExpenseSchedulesImpl(workspaceId);
   @override Future<String> createExpenseSchedule({required String workspaceId, required String title, required int amountCents, required DateTime startsOn, required ScheduleUnit unit, int every = 1, int? repeatCount, DateTime? endsOn, String description = ''}) => _createExpenseScheduleImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, startsOn: startsOn, unit: unit, every: every, repeatCount: repeatCount, endsOn: endsOn, description: description);
   @override Future<void> cancelExpenseSchedule(String scheduleId) => _cancelExpenseScheduleImpl(scheduleId);
+  @override Future<void> setExpenseScheduleVat(String scheduleId, Map<String, Object?>? vat) async => expenseScheduleVat[scheduleId] = vat;
   @override Future<int> sweepExpenseSchedules(String workspaceId) => _sweepExpenseSchedulesImpl(workspaceId);
   @override Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId) => _fetchExpenseOccurrencesImpl(workspaceId);
   @override Future<void> confirmExpenseOccurrence({required String occurrenceId, required int amountCents, String reason = '', String? note}) => _confirmExpenseOccurrenceImpl(occurrenceId: occurrenceId, amountCents: amountCents, reason: reason, note: note);

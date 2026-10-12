@@ -8304,6 +8304,18 @@ abstract class AppLocalizations {
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
 
+  /// #2357 input VAT: expenseVatAsset
+  ///
+  /// In en, this message translates to:
+  /// **'A fixed asset'**
+  String get expenseVatAsset;
+
+  /// #2357 input VAT: expenseVatAssetHint
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment the space keeps and depreciates (a laptop, furniture): its VAT is declared apart from the rest.'**
+  String get expenseVatAssetHint;
+
   /// #2357 input VAT: expenseVatDeductible
   ///
   /// In en, this message translates to:
@@ -27109,6 +27121,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.'**
   String get scheduleValidationHint;
+
+  /// #2357 input VAT: scheduleVatInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a deductible share between 0 and 100.'**
+  String get scheduleVatInvalid;
 
   /// No description provided for @scheduleWeekly.
   ///

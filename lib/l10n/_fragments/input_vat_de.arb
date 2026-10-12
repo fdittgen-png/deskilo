@@ -52,5 +52,17 @@
         "type": "String"
       }
     }
+  },
+  "expenseVatAsset": "Ein Anlagegut",
+  "@expenseVatAsset": {
+    "description": "#2357 input VAT: expenseVatAsset"
+  },
+  "expenseVatAssetHint": "Eine Ausstattung, die der Bereich behält und abschreibt (ein Laptop, Möbel): Ihre Vorsteuer wird getrennt vom Rest erklärt.",
+  "@expenseVatAssetHint": {
+    "description": "#2357 input VAT: expenseVatAssetHint"
+  },
+  "scheduleVatInvalid": "Geben Sie einen abziehbaren Anteil zwischen 0 und 100 ein.",
+  "@scheduleVatInvalid": {
+    "description": "#2357 input VAT: scheduleVatInvalid"
   }
 }

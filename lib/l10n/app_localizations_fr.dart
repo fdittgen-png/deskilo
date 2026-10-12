@@ -4814,6 +4814,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.';
 
   @override
+  String get expenseVatAsset => 'Une immobilisation';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Un équipement que l\'espace garde et amortit (un ordinateur, du mobilier) : sa TVA est déclarée à part du reste.';
+
+  @override
   String get expenseVatDeductible => 'Part déductible (%)';
 
   @override
@@ -15864,6 +15871,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get scheduleValidationHint =>
       'La programmation passe d\'abord par les validateurs. Chaque échéance vous est ensuite présentée : confirmée à ce montant, elle compte immédiatement ; un montant différent s\'explique et repasse en validation.';
+
+  @override
+  String get scheduleVatInvalid =>
+      'Saisissez une part déductible entre 0 et 100.';
 
   @override
   String get scheduleWeekly => 'hebdomadaire';

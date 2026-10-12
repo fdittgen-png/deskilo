@@ -90,6 +90,72 @@ void main() {
     });
   });
 
+  testWidgets('an expense on a fixed asset says so (CA3 line 19)', (
+    tester,
+  ) async {
+    final money = await pumpMoney(
+      tester,
+      money: _withRates(),
+      workspace: _registered(),
+    );
+    await openExpenseSheet(tester);
+    await tester.enterText(find.widgetWithText(TextField, 'Amount'), '1200');
+    await tester.tap(find.byKey(const ValueKey('expense-vat-rate')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('20 %').last);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('expense-vat-asset')));
+    await tester.tap(find.byKey(const ValueKey('expense-vat-asset')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Submit for confirmation'));
+    await tester.tap(find.text('Submit for confirmation'));
+    await tester.pumpAndSettle();
+
+    expect(money.submittedExpenseVat.single, {
+      'percent': 20.0,
+      'deductible_pct': 100.0,
+      'asset': true,
+    });
+  });
+
+  testWidgets('a scheduled expense states the VAT its occurrences carry', (
+    tester,
+  ) async {
+    final money = await pumpMoney(
+      tester,
+      money: _withRates(),
+      workspace: _registered(),
+    );
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('scheduled-expenses-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const ValueKey('scheduled-expenses-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('schedule-new')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('schedule-title')),
+      'Internet',
+    );
+    await tester.enterText(find.byKey(const ValueKey('schedule-amount')), '60');
+    await tester.ensureVisible(find.byKey(const ValueKey('schedule-vat-rate')));
+    await tester.tap(find.byKey(const ValueKey('schedule-vat-rate')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('20 %').last);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('schedule-submit')));
+    await tester.tap(find.byKey(const ValueKey('schedule-submit')));
+    await tester.pumpAndSettle();
+
+    final id = money.expenseSchedules.single.id;
+    expect(money.expenseScheduleVat[id], {
+      'percent': 20.0,
+      'deductible_pct': 100.0,
+    });
+  });
+
   testWidgets('with input VAT off, the expense asks for no VAT', (
     tester,
   ) async {

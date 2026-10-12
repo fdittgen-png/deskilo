@@ -4808,6 +4808,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Prellenado con importe ÷ cantidad; redondee si quiere.';
 
   @override
+  String get expenseVatAsset => 'Un bien de inversión';
+
+  @override
+  String get expenseVatAssetHint =>
+      'Un equipo que el espacio conserva y amortiza (un portátil, mobiliario): su IVA se declara aparte del resto.';
+
+  @override
   String get expenseVatDeductible => 'Parte deducible (%)';
 
   @override
@@ -15822,6 +15829,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get scheduleValidationHint =>
       'La programación pasa primero por los validadores. Cada vencimiento se le presenta después: confirmado a este importe cuenta de inmediato; un importe distinto se explica y vuelve a validarse.';
+
+  @override
+  String get scheduleVatInvalid =>
+      'Introduzca una parte deducible entre 0 y 100.';
 
   @override
   String get scheduleWeekly => 'semanal';
