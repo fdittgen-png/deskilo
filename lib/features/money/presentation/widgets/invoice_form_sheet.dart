@@ -504,6 +504,10 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'buyer_address' => l10n.invoiceMissingBuyerAddress,
       'buyer_vat_id' => l10n.invoiceMissingBuyerVatId,
       'seller_country_unsupported' => l10n.invoiceMissingSellerCountry,
+      // #2356 — § 14 UStG / NIF, the customer's identifier, art. 230.
+      'seller_tax_number' => l10n.invoiceMissingSellerTaxNumber,
+      'buyer_tax_id' => l10n.invoiceMissingBuyerTaxId,
+      'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
       'vat_rate_unresolved' => l10n.invoiceMissingVatRate,
       'vat_line_zero_unexplained' => l10n.invoiceMissingVatZeroLine,
       'vat_charged_not_registered' => l10n.invoiceMissingVatNotRegistered,

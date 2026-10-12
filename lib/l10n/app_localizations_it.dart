@@ -8303,6 +8303,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il nome o la ragione sociale del socio';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'L\'identificativo fiscale del membro: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'La partita IVA del socio (necessaria per il reverse charge)';
 
@@ -8311,12 +8315,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il fondamento giuridico dell\'esenzione IVA';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'L\'IVA nella valuta nazionale: un venditore di uno Stato membro fuori dall\'euro fattura qui l\'IVA nella propria valuta (art. 230 della direttiva IVA)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'L\'indirizzo postale dello spazio (via o città)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall\'app';
+      'Il paese dello spazio deve essere uno Stato membro dell\'Unione europea per emettere qui — gli altri paesi si emettono fuori dall\'app';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)';
 
   @override
   String get invoiceMissingSellerVatId =>

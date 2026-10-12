@@ -8320,6 +8320,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Le nom ou la société du membre';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'L\'identifiant fiscal du membre : le NIF d\'un client professionnel en Espagne, le codice fiscale ou la partita IVA d\'un client en Italie, le SIREN d\'un client professionnel en France';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'Le numéro de TVA du membre (requis pour l\'autoliquidation)';
 
@@ -8328,12 +8332,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le fondement légal de l\'exonération de TVA';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'La TVA dans la monnaie nationale : un vendeur d\'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'L\'adresse postale de l\'espace (rue ou ville)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Le pays de l\'espace doit être la France ou l\'Allemagne pour émettre ici — les autres pays sont émis hors de l\'application';
+      'Le pays de l\'espace doit être un État membre de l\'Union européenne pour émettre ici — les autres pays sont émis hors de l\'application';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'Le numéro de TVA ou le numéro fiscal de l\'espace (le champ d\'immatriculation porte la Steuernummer ou le NIF)';
 
   @override
   String get invoiceMissingSellerVatId =>
