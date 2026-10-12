@@ -5,6 +5,8 @@
 
 import 'mcp_spec.dart';
 
+export 'mcp_contract.g.dart';
+
 /// The contract version these specs were generated from.
 const int mcpContractVersion = 1;
 

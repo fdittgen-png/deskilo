@@ -11882,103 +11882,103 @@
   },
   "mcpOpAvailability": "See free places",
   "@mcpOpAvailability": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_availability)"
   },
   "mcpOpCancelReservation": "Cancel your bookings that have not started",
   "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (cancel_reservation)"
   },
   "mcpOpCapabilities": "See what it may do there",
   "@mcpOpCapabilities": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_capabilities)"
   },
   "mcpOpCheckIn": "Check you in",
   "@mcpOpCheckIn": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (check_in)"
   },
   "mcpOpCheckOut": "Check you out",
   "@mcpOpCheckOut": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (check_out)"
   },
   "mcpOpCreateReservation": "Book a place for you",
   "@mcpOpCreateReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (create_reservation)"
   },
   "mcpOpGetPlace": "Describe a place, and show it when you ask",
   "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_place)"
   },
   "mcpOpGetValidation": "Read a validation request",
   "@mcpOpGetValidation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_validation)"
   },
   "mcpOpInvoiceIssue": "Issue an invoice",
   "@mcpOpInvoiceIssue": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_issue)"
   },
   "mcpOpInvoiceVoid": "Void an invoice",
   "@mcpOpInvoiceVoid": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_invoice_void)"
   },
   "mcpOpListMyFavorites": "Your favourite places",
   "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_favorites)"
   },
   "mcpOpListWorkspaces": "See which workspaces it may use",
   "@mcpOpListWorkspaces": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_workspaces)"
   },
   "mcpOpMemberStatement": "See a member's account statement",
   "@mcpOpMemberStatement": {
-    "description": "#2391 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_member_statement)"
   },
   "mcpOpMemberStatus": "Change a member's status",
   "@mcpOpMemberStatus": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_member_status_change)"
   },
   "mcpOpMyInvoices": "See your invoices",
   "@mcpOpMyInvoices": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_invoices)"
   },
   "mcpOpMyReservations": "See your reservations",
   "@mcpOpMyReservations": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_my_reservations)"
   },
   "mcpOpMyStatement": "See your account statement",
   "@mcpOpMyStatement": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (get_my_statement)"
   },
   "mcpOpPendingValidations": "See pending validation requests",
   "@mcpOpPendingValidations": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (list_pending_validations)"
   },
   "mcpOpRatePlace": "Rate places",
   "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (rate_place)"
   },
   "mcpOpRefund": "Refund an invoice",
   "@mcpOpRefund": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_refund)"
   },
   "mcpOpReservationDeletion": "Ask to delete a booking that has started",
   "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_reservation_deletion)"
   },
   "mcpOpRespond": "Answer a validation request",
   "@mcpOpRespond": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (respond_to_validation)"
   },
   "mcpOpSetFavorite": "Mark places as favourites",
   "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
   "mcpOpSubscription": "Change a member's subscription share",
   "@mcpOpSubscription": {
-    "description": "#1619 mcp_confirmation"
+    "description": "#2394 generated from contracts/mcp/operations.json (request_subscription_change)"
   },
   "mcpOpUpdateReservation": "Change your reservations",
   "@mcpOpUpdateReservation": {
-    "description": "#1615 mcp_consent"
+    "description": "#2394 generated from contracts/mcp/operations.json (update_reservation)"
   },
   "mcpOverviewTitle": "Other connected databases",
   "@mcpOverviewTitle": {

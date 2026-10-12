@@ -6585,24 +6585,15 @@
   "mcpNextUnavailable": "Il server non ha potuto rispondere. Non si presume nulla; riprovi più tardi.",
   "mcpOpAvailability": "Vedere i posti liberi",
   "mcpOpCancelReservation": "Annullare le sue prenotazioni non ancora iniziate",
-  "@mcpOpCancelReservation": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpCapabilities": "Vedere cosa può fare lì",
   "mcpOpCheckIn": "Registrare il suo arrivo",
   "mcpOpCheckOut": "Registrare la sua uscita",
   "mcpOpCreateReservation": "Prenotare un posto per Lei",
   "mcpOpGetPlace": "Descrivere un luogo e mostrarlo su richiesta",
-  "@mcpOpGetPlace": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpGetValidation": "Leggere una richiesta di convalida",
   "mcpOpInvoiceIssue": "Emettere una fattura",
   "mcpOpInvoiceVoid": "Annullare una fattura",
   "mcpOpListMyFavorites": "I suoi posti preferiti",
-  "@mcpOpListMyFavorites": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpListWorkspaces": "Vedere quali spazi può usare",
   "mcpOpMemberStatement": "Vedere l'estratto conto di un membro",
   "mcpOpMemberStatus": "Modificare lo stato di un membro",
@@ -6611,19 +6602,10 @@
   "mcpOpMyStatement": "Vedere il suo estratto conto",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
   "mcpOpRatePlace": "Valutare i posti",
-  "@mcpOpRatePlace": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpRefund": "Rimborsare una fattura",
   "mcpOpReservationDeletion": "Chiedere l'eliminazione di una prenotazione già iniziata",
-  "@mcpOpReservationDeletion": {
-    "description": "#1615 mcp_consent"
-  },
   "mcpOpRespond": "Rispondere a una richiesta di validazione",
   "mcpOpSetFavorite": "Segnare posti come preferiti",
-  "@mcpOpSetFavorite": {
-    "description": "#2185 mcp_consent"
-  },
   "mcpOpSubscription": "Modificare la quota di abbonamento di un membro",
   "mcpOpUpdateReservation": "Modificare le sue prenotazioni",
   "mcpOverviewTitle": "Altri database collegati",

@@ -15,11 +15,5 @@
   "mcpConfirmRefuse": "Su respuesta: rechazar",
   "mcpConfirmPeriod": "Periodo: {period}",
   "mcpConfirmWorkspace": "Espacio: {workspace}",
-  "mcpConfirmClient": "Solicitado por: {client}",
-  "mcpOpInvoiceIssue": "Emitir una factura",
-  "mcpOpInvoiceVoid": "Anular una factura",
-  "mcpOpRefund": "Reembolsar una factura",
-  "mcpOpMemberStatus": "Cambiar el estado de un miembro",
-  "mcpOpSubscription": "Cambiar la parte de suscripción de un miembro",
-  "mcpOpRespond": "Responder a una solicitud de validación"
+  "mcpConfirmClient": "Solicitado por: {client}"
 }

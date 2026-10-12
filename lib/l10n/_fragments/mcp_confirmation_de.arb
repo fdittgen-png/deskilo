@@ -15,11 +15,5 @@
   "mcpConfirmRefuse": "Ihre Antwort: ablehnen",
   "mcpConfirmPeriod": "Zeitraum: {period}",
   "mcpConfirmWorkspace": "Arbeitsbereich: {workspace}",
-  "mcpConfirmClient": "Angefragt von: {client}",
-  "mcpOpInvoiceIssue": "Rechnung ausstellen",
-  "mcpOpInvoiceVoid": "Rechnung stornieren",
-  "mcpOpRefund": "Rechnung erstatten",
-  "mcpOpMemberStatus": "Status eines Mitglieds ändern",
-  "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
-  "mcpOpRespond": "Auf eine Freigabeanfrage antworten"
+  "mcpConfirmClient": "Angefragt von: {client}"
 }
