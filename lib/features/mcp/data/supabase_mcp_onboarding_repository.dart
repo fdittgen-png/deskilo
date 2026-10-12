@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_onboarding.dart';
 
@@ -66,7 +67,9 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
       'mark_instance_notice_read',
       params: {'p_id': id},
     );
-    return r is Map && r['count'] is int ? r['count'] as int : 0;
+    return JsonReader.orEmpty(r, context: 'mark_instance_notice_read')
+            .intOrAbsent('count') ??
+        0;
   }
 
   @override
@@ -84,7 +87,8 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
       'instance_set_mcp_loopback_clients',
       params: {'p_enabled': allowed},
     );
-    return r is Map && r['allow_loopback_clients'] == true;
+    return JsonReader.orEmpty(r, context: 'allow_loopback_clients')
+        .isTrue('allow_loopback_clients');
   }
 
   @override
@@ -107,8 +111,9 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
       'instance_grant_mcp_eligibility',
       params: {'p_subject': subjectId, 'p_reason': reason, 'p_days': days},
     );
-    return r is Map && r['status'] == 'granted'
-        ? DateTime.tryParse('${r['expires_at']}')
+    final grant = JsonReader.orEmpty(r, context: 'mcp_operator_grant');
+    return grant.textOrAbsent('status') == 'granted'
+        ? DateTime.tryParse(grant.textOrAbsent('expires_at') ?? '')
         : null;
   }
 
@@ -126,6 +131,6 @@ class SupabaseMcpOnboardingRepository implements McpOnboardingRepository {
         'p_expected': expected,
       },
     );
-    return r is Map && r['mcp_access'] == true;
+    return JsonReader.orEmpty(r, context: 'mcp_access').isTrue('mcp_access');
   }
 }

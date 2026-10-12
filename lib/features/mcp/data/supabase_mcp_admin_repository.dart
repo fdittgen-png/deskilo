@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_usage.dart';
@@ -57,8 +58,9 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
       'set_mcp_disclosure_maximum',
       params: {'p_fields': (fields.toList()..sort())},
     );
-    if (r is! Map || r['status'] != 'saved') return null;
-    return mcpKnownOptionalFields(r['optional_fields']).toSet();
+    final saved = JsonReader.orEmpty(r, context: 'mcp_disclosure_maximum');
+    if (saved.textOrAbsent('status') != 'saved') return null;
+    return mcpKnownOptionalFields(saved.listOrAbsent('optional_fields')).toSet();
   }
 
   @override
@@ -90,7 +92,8 @@ class SupabaseMcpAdminRepository implements McpAdminRepository {
       'revoke_mcp_eligibility',
       params: {'p_subject': userId},
     );
-    return r is Map && r['status'] == 'revoked';
+    return JsonReader.orEmpty(r, context: 'mcp_revoke').textOrAbsent('status') ==
+        'revoked';
   }
 
   @override

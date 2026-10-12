@@ -9,6 +9,7 @@ import 'package:deskilo/core/instance/mcp_readiness.dart';
 import 'package:deskilo/core/instance/mcp_readiness_checks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/mcp_report_verifier.dart';
 import '../../helpers/mcp_target_fixture.dart';
 
 Map<String, Object?> _with(

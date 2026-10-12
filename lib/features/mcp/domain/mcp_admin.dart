@@ -91,9 +91,9 @@ class McpPolicy {
           r.textOrAbsent('target_ceiling') == 'workspace' ? 'workspace' : 'own',
       featureEnabled: r.isTrue('feature_enabled'),
       available: strings('available_operations'),
-      optionalFields: mcpKnownOptionalFields(r.json['optional_fields']).toSet(),
+      optionalFields: mcpKnownOptionalFields(r.listOrAbsent('optional_fields')).toSet(),
       availableOptionalFields: mcpKnownOptionalFields(
-        r.json['available_optional_fields'],
+        r.listOrAbsent('available_optional_fields'),
       ),
     );
   }
@@ -117,8 +117,8 @@ class McpDisclosureMaximum {
       context: 'mcp_disclosure_maximum',
     );
     return McpDisclosureMaximum(
-      fields: mcpKnownOptionalFields(r.json['optional_fields']).toSet(),
-      available: mcpKnownOptionalFields(r.json['available_fields']),
+      fields: mcpKnownOptionalFields(r.listOrAbsent('optional_fields')).toSet(),
+      available: mcpKnownOptionalFields(r.listOrAbsent('available_fields')),
     );
   }
 }
@@ -180,16 +180,25 @@ class EligibilityRequest {
   );
 
   static List<EligibilityRequest> listFromJson(Object? json) => [
-    for (final r in json is List ? json : const [])
-      if (r is Map && r['request_id'] is String && r['local_user_id'] is String)
-        EligibilityRequest(
-          requestId: r['request_id'] as String,
-          userId: r['local_user_id'] as String,
-          email: '${r['email'] ?? ''}',
-          revision: r['revision'] is int ? r['revision'] as int : 0,
-          requestedAt: DateTime.tryParse('${r['requested_at']}')?.toUtc(),
-        ),
+    for (final raw in json is List ? json : const [])
+      ?_fromRow(raw),
   ];
+
+  // Fail-closed (#2387): a row without its ids is left out.
+  static EligibilityRequest? _fromRow(Object? raw) {
+    final r = JsonReader.orEmpty(raw, context: 'mcp_eligibility_request');
+    final id = r.textOrAbsent('request_id');
+    final user = r.textOrAbsent('local_user_id');
+    if (id == null || user == null) return null;
+    return EligibilityRequest(
+      requestId: id,
+      userId: user,
+      email: r.textOrAbsent('email') ?? '',
+      revision: r.intOrAbsent('revision') ?? 0,
+      requestedAt: DateTime.tryParse(r.textOrAbsent('requested_at') ?? '')
+          ?.toUtc(),
+    );
+  }
 }
 
 enum EligibilityDecisionStatus {
@@ -204,8 +213,8 @@ enum EligibilityDecisionStatus {
 }
 
 EligibilityDecisionStatus eligibilityDecisionFromJson(Object? json) {
-  final m = json is Map ? json : const <String, Object?>{};
-  return switch (m['status']) {
+  final m = JsonReader.orEmpty(json, context: 'mcp_eligibility_decision');
+  return switch (m.textOrAbsent('status')) {
     'approved' || 'rejected' || 'decided' => EligibilityDecisionStatus.decided,
     'replayed' => EligibilityDecisionStatus.replayed,
     'conflict' => EligibilityDecisionStatus.changed,

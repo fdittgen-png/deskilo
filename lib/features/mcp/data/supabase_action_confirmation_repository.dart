@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_confirmation.dart';
 
@@ -41,6 +42,8 @@ class SupabaseActionConfirmationRepository
       'mcp_confirm_action',
       params: {'p_confirmation_id': id, 'p_accept': accept},
     );
-    return ConfirmationStatus.fromWire(answer is Map ? answer['status'] : null);
+    return ConfirmationStatus.fromWire(
+      JsonReader.orEmpty(answer, context: 'action_confirmation').textOrAbsent('status'),
+    );
   }
 }
