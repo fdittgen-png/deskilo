@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0409 (#2357) — input VAT on fixed assets and on scheduled expenses.
+-- 0413 (#2357) — input VAT on fixed assets and on scheduled expenses.
 --
 -- 1. `expense_vat_payload` validates and normalises an expense's VAT —
 --    {percent, deductible_pct, asset} — for every writer: `submit_expense`
@@ -93,7 +93,7 @@ begin
       'service_id', v_service_id);
   end if;
   -- #2357 — the VAT the expense carried, the share the space deducts and
-  -- whether it bought a fixed asset (0409).
+  -- whether it bought a fixed asset (0413).
   v_vat := public.expense_vat_payload(p_workspace_id, p_vat);
   insert into public.events
     (workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
@@ -281,4 +281,4 @@ create trigger expense_event_schedule_vat
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(409);
+select public.set_deskilo_schema_version(413);

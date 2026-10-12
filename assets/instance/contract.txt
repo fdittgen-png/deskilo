@@ -1330,6 +1330,8 @@ routine public.erase_my_membership(p_workspace_id uuid) -> void | function | def
 routine public.eu_country_code(p_code text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:47ee308219c6
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:014f4fa2fca2
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:6149227a9717
+routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
+routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:52cecf24fb2a
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:50db203e93fa
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3aee0b867fcf
@@ -1816,6 +1818,7 @@ routine public.set_deskilo_schema_version(p_version integer) -> void | function 
 routine public.set_dev_mode(p_workspace_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:1b53c8d30e42
 routine public.set_dunning_rules(p_workspace_id uuid, p_rules jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:af1c88f3202e
 routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:849abb43884b
+routine public.set_expense_schedule_vat(p_schedule_id uuid, p_vat jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e2971cdc5ddb
 routine public.set_favorite(p_workspace uuid, p_kind text, p_resource uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:de88f8ec85e3
 routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:266bd6df81ae
 routine public.set_invitation_roles(p_workspace_id uuid, p_code text, p_role_keys text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:4e01f7f49035
@@ -1870,7 +1873,7 @@ routine public.stamp_accessory_supplements_since() -> trigger | function | invok
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:294d3fb428f3
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
-routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3e7b5a98174b
+routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8896fc904a9c
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
 routine public.supply_vat_category(p_treatment text, p_supply text, p_seller_regime text, p_seller_country text, p_buyer_country text, p_buyer_capacity text, p_reverse_charge_on boolean) -> text | function | invoker | immutable | exec:authenticated,service_role | body:415c0953b033
 routine public.sweep_billing_invoices(p_workspace_id uuid) -> integer | function | definer | volatile | exec:authenticated,service_role | body:63d00d449e58
@@ -1916,7 +1919,7 @@ routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | 
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a772dde0819a
 routine public.vat_declarations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:7e545bd2ecfe
-routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:b76e62f6db6e
+routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:d1e732a5ac79
 routine public.vat_input_split(p_gross bigint, p_percent numeric, p_share numeric) -> TABLE(net_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:95597107b5ee
 routine public.vat_period_overlaps_filed(p_workspace_id uuid, p_start date, p_end date) -> boolean | function | definer | stable | exec:service_role | body:7da21367be94
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:authenticated,service_role | body:be13b7375d62
@@ -1925,7 +1928,7 @@ routine public.vat_rate_in_force(p_rate_id uuid, p_date date) -> numeric | funct
 routine public.vat_rate_percent_at(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:authenticated,service_role | body:89d0065cfc67
 routine public.vat_return_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:289cdc3e37ab
 routine public.vat_return_entries_guard() -> trigger | function | invoker | volatile | exec:service_role | body:809594bfdd22
-routine public.vat_return_lines(p_workspace_id uuid, p_start date, p_end date) -> TABLE(direction text, invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:b0139603c0e6
+routine public.vat_return_lines(p_workspace_id uuid, p_start date, p_end date) -> TABLE(direction text, invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:e00cd0e621d3
 routine public.vat_return_summary(p_workspace_id uuid, p_start date, p_end date) -> TABLE(lines jsonb, total_net_cents integer, total_vat_cents integer, invoice_count integer) | function | definer | stable | exec:service_role | body:65c996795360
 routine public.vat_split_net(p_gross bigint, p_percent numeric) -> bigint | function | invoker | immutable | exec:authenticated,service_role | body:9614bff5ba9f
 routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c

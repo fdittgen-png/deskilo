@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2357 — input VAT on fixed assets and on scheduled expenses (0409). An
+-- #2357 — input VAT on fixed assets and on scheduled expenses (0413). An
 -- expense that bought a fixed asset keeps `asset` in its VAT, and the
 -- return files its deductible VAT under the category `asset` (CA3 line
 -- 19); an ordinary one stays `S`. A scheduled expense states its VAT once:
