@@ -1,0 +1,105 @@
+{
+  "@@locale": "it",
+  "eInvoiceMandateTitle": "Obblighi di fatturazione elettronica nel Suo paese:",
+  "@eInvoiceMandateTitle": {
+    "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceMandateFrom": "Dal {date}: {duty}.",
+  "@eInvoiceMandateFrom": {
+    "description": "#2358 mandate calendar: a duty still ahead",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateSince": "Dal {date}: {duty}.",
+  "@eInvoiceMandateSince": {
+    "description": "#2358 mandate calendar: a duty in force",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duty": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceMandateReceiveAll": "ogni impresa deve poter ricevere fatture elettroniche",
+  "@eInvoiceMandateReceiveAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueLarge": "le grandi e medie imprese devono emettere fatture elettroniche",
+  "@eInvoiceMandateIssueLarge": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateIssueAll": "ogni impresa deve emettere fatture elettroniche",
+  "@eInvoiceMandateIssueAll": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateEReporting": "le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi",
+  "@eInvoiceMandateEReporting": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceMandateInvoiceRecords": "ogni fattura deve essere registrata in un registro concatenato (Verifactu)",
+  "@eInvoiceMandateInvoiceRecords": {
+    "description": "#2358 mandate duty"
+  },
+  "eInvoiceChannelGapsTitle": "Prima di inviare tramite {channel}, aggiunga:",
+  "@eInvoiceChannelGapsTitle": {
+    "description": "#2358 e-invoice sheet: what the configured channel still needs before Send is offered",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceChannelGapSellerEndpoint": "l’indirizzo elettronico dello spazio (BT-34) nella sua identità legale",
+  "@eInvoiceChannelGapSellerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerEndpoint": "l’indirizzo elettronico del cliente (BT-49) nel suo profilo",
+  "@eInvoiceChannelGapBuyerEndpoint": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerReference": "un riferimento dell’acquirente o un numero d’ordine",
+  "@eInvoiceChannelGapBuyerReference": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapLeitwegId": "il Leitweg-ID del cliente come riferimento dell’acquirente",
+  "@eInvoiceChannelGapLeitwegId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapPaymentAccount": "il conto bancario dello spazio (IBAN)",
+  "@eInvoiceChannelGapPaymentAccount": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerContact": "l’e-mail e il telefono di contatto dello spazio",
+  "@eInvoiceChannelGapSellerContact": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSubdivision": "il distretto (județ) di ogni indirizzo rumeno",
+  "@eInvoiceChannelGapSubdivision": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapSellerVatId": "la partita IVA dello spazio",
+  "@eInvoiceChannelGapSellerVatId": {
+    "description": "#2358 channel gap"
+  },
+  "eInvoiceChannelGapBuyerTaxId": "la partita IVA o il codice fiscale del cliente",
+  "@eInvoiceChannelGapBuyerTaxId": {
+    "description": "#2358 channel gap"
+  },
+  "invoiceEInvoiceValidated": "Pronto — non manca nulla di ciò che la EN 16931 richiede, e questo formato supera il validatore ufficiale ({validator}).",
+  "@invoiceEInvoiceValidated": {
+    "description": "#2358 e-invoice sheet: complete, and the format passes the named official validator",
+    "placeholders": {
+      "validator": {
+        "type": "String"
+      }
+    }
+  }
+}

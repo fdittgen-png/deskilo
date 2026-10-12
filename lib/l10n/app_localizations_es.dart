@@ -3968,6 +3968,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dunningSettingsTitle => 'Reglas de recordatorio';
 
   @override
+  String get eInvoiceChannelGapBuyerEndpoint =>
+      'la dirección electrónica del cliente (BT-49) en su perfil';
+
+  @override
+  String get eInvoiceChannelGapBuyerReference =>
+      'una referencia del comprador o un número de pedido';
+
+  @override
+  String get eInvoiceChannelGapBuyerTaxId =>
+      'el NIF-IVA o el código fiscal del cliente';
+
+  @override
+  String get eInvoiceChannelGapLeitwegId =>
+      'el Leitweg-ID del cliente como referencia del comprador';
+
+  @override
+  String get eInvoiceChannelGapPaymentAccount =>
+      'la cuenta bancaria del espacio (IBAN)';
+
+  @override
+  String get eInvoiceChannelGapSellerContact =>
+      'el correo y el teléfono de contacto del espacio';
+
+  @override
+  String get eInvoiceChannelGapSellerEndpoint =>
+      'la dirección electrónica del espacio (BT-34) en su identidad legal';
+
+  @override
+  String get eInvoiceChannelGapSellerVatId => 'el NIF-IVA del espacio';
+
+  @override
+  String get eInvoiceChannelGapSubdivision =>
+      'el distrito (județ) de cada dirección rumana';
+
+  @override
+  String eInvoiceChannelGapsTitle(String channel) {
+    return 'Antes de enviar por $channel, añada:';
+  }
+
+  @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
       'Falta el SIREN del comprador. Una plataforma francesa enruta por él: introdúzcalo en el perfil del miembro antes de transmitir. No es un rechazo — el archivo es válido sin él.';
 
@@ -3978,6 +4018,40 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
       'Una línea no sujeta (envase retornable) figura junto a líneas gravadas — la norma EN 16931 rechaza la mezcla; emita el envase en un documento aparte.';
+
+  @override
+  String get eInvoiceMandateEReporting =>
+      'las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse';
+
+  @override
+  String eInvoiceMandateFrom(String date, String duty) {
+    return 'A partir del $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateInvoiceRecords =>
+      'cada factura debe registrarse en un registro encadenado (Verifactu)';
+
+  @override
+  String get eInvoiceMandateIssueAll =>
+      'toda empresa debe emitir facturas electrónicas';
+
+  @override
+  String get eInvoiceMandateIssueLarge =>
+      'las grandes y medianas empresas deben emitir facturas electrónicas';
+
+  @override
+  String get eInvoiceMandateReceiveAll =>
+      'toda empresa debe poder recibir facturas electrónicas';
+
+  @override
+  String eInvoiceMandateSince(String date, String duty) {
+    return 'Desde el $date: $duty.';
+  }
+
+  @override
+  String get eInvoiceMandateTitle =>
+      'Obligaciones de facturación electrónica en su país:';
 
   @override
   String get editorAccessoriesLabel => 'Accesorios';
@@ -7835,9 +7909,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get invoiceEInvoiceReady => 'Listo — este archivo cumple EN 16931.';
-
-  @override
   String get invoiceEInvoiceShare => 'Compartir factura electrónica (XML)';
 
   @override
@@ -7859,6 +7930,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoiceEInvoiceTransportPeppol =>
       'Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.';
+
+  @override
+  String invoiceEInvoiceValidated(String validator) {
+    return 'Listo — no falta nada de lo que exige la EN 16931, y este formato supera el validador oficial ($validator).';
+  }
 
   @override
   String get invoiceEssentialsRefused =>

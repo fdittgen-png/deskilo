@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -9,6 +10,8 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/e_invoice_routing.dart';
+import '../../domain/einvoice_channel_check.dart';
+import '../../domain/einvoice_mandates.dart';
 import '../../domain/invoice_ubl_check.dart';
 
 /// What to do with the generated XML.
@@ -60,6 +63,40 @@ String _eInvoiceGapText(AppLocalizations l10n, EInvoiceGap gap) =>
         l10n.invoiceGapMissingSellerPostalCode,
     };
 
+/// #2358 — localized wording of what a channel still needs.
+String _channelGapText(AppLocalizations l10n, ChannelGap gap) =>
+    switch (gap) {
+      ChannelGap.sellerEndpoint => l10n.eInvoiceChannelGapSellerEndpoint,
+      ChannelGap.buyerEndpoint => l10n.eInvoiceChannelGapBuyerEndpoint,
+      ChannelGap.buyerReference => l10n.eInvoiceChannelGapBuyerReference,
+      ChannelGap.leitwegId => l10n.eInvoiceChannelGapLeitwegId,
+      ChannelGap.paymentAccount => l10n.eInvoiceChannelGapPaymentAccount,
+      ChannelGap.sellerContact => l10n.eInvoiceChannelGapSellerContact,
+      ChannelGap.subdivision => l10n.eInvoiceChannelGapSubdivision,
+      ChannelGap.sellerVatId => l10n.eInvoiceChannelGapSellerVatId,
+      ChannelGap.buyerTaxId => l10n.eInvoiceChannelGapBuyerTaxId,
+    };
+
+/// #2358 — one dated duty of the national mandate.
+String _mandateText(
+  AppLocalizations l10n,
+  EInvoiceMandate mandate,
+  DateTime today,
+  DateFormat dates,
+) {
+  final duty = switch (mandate.duty) {
+    MandateDuty.receiveAll => l10n.eInvoiceMandateReceiveAll,
+    MandateDuty.issueLarge => l10n.eInvoiceMandateIssueLarge,
+    MandateDuty.issueAll => l10n.eInvoiceMandateIssueAll,
+    MandateDuty.eReporting => l10n.eInvoiceMandateEReporting,
+    MandateDuty.invoiceRecords => l10n.eInvoiceMandateInvoiceRecords,
+  };
+  final date = dates.format(mandate.from);
+  return mandate.inForceOn(today)
+      ? l10n.eInvoiceMandateSince(date, duty)
+      : l10n.eInvoiceMandateFrom(date, duty);
+}
+
 /// The e-invoice sheet: the XML export used to be two anonymous entries in
 /// an overflow menu, leaving the only question that matters unanswered —
 /// where does this file have to GO? This says it, for the workspace's own
@@ -72,6 +109,11 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   bool canSend = false,
   bool canSendCustomer = false,
   bool identityFixedSince = false,
+  String validator = '',
+  String sendChannel = '',
+  List<ChannelGap> sendGaps = const [],
+  List<EInvoiceMandate> mandates = const [],
+  required DateTime today,
 }) =>
     showAppSheet<EInvoiceExport>(
       context: context,
@@ -85,6 +127,11 @@ Future<EInvoiceExport?> showEInvoiceSheet(
         canSend: canSend,
         canSendCustomer: canSendCustomer,
         identityFixedSince: identityFixedSince,
+        validator: validator,
+        sendChannel: sendChannel,
+        sendGaps: sendGaps,
+        mandates: mandates,
+        today: today,
       ),
     );
 
@@ -96,6 +143,11 @@ class _EInvoiceBody extends StatelessWidget {
     required this.canSend,
     this.canSendCustomer = false,
     this.identityFixedSince = false,
+    this.validator = '',
+    this.sendChannel = '',
+    this.sendGaps = const [],
+    this.mandates = const [],
+    required this.today,
   });
 
   final EInvoiceRoute route;
@@ -120,6 +172,19 @@ class _EInvoiceBody extends StatelessWidget {
   /// document's snapshot that does not. Without saying so, the sheet asks
   /// for a number the owner is looking at, already filled in.
   final bool identityFixedSince;
+
+  /// #2358 — the official validator the format passes in CI
+  /// (einvoice_validation.dart); the readiness line names it.
+  final String validator;
+
+  /// #2358 — the configured channel and what it still needs before the
+  /// document can be sent through it. Send is not offered meanwhile.
+  final String sendChannel;
+  final List<ChannelGap> sendGaps;
+
+  /// #2358 — the national mandate's dated duties (FR, DE).
+  final List<EInvoiceMandate> mandates;
+  final DateTime today;
 
   @override
   Widget build(BuildContext context) {
@@ -216,10 +281,28 @@ class _EInvoiceBody extends StatelessWidget {
               // READINESS (0069): the fatal EN 16931 rules, judged before
               // the file exists. Handing out an XML that the receiving
               // platform silently rejects is worse than refusing here.
+              if (mandates.isNotEmpty)
+                InlineBanner(
+                  key: const ValueKey('invoice-einvoice-mandates'),
+                  icon: Icons.event_outlined,
+                  text: [
+                    l10n.eInvoiceMandateTitle,
+                    for (final m in mandates)
+                      '• ${_mandateText(
+                        l10n,
+                        m,
+                        today,
+                        DateFormat.yMMMd(
+                          Localizations.maybeLocaleOf(context)?.toString(),
+                        ),
+                      )}',
+                  ].join('\n'),
+                ),
+              if (mandates.isNotEmpty) const SizedBox(height: AppSpacing.sm),
               if (readiness.ready)
                 fact(
                   Icons.verified_outlined,
-                  l10n.invoiceEInvoiceReady,
+                  l10n.invoiceEInvoiceValidated(validator),
                   strong: true,
                 )
               else
@@ -251,6 +334,18 @@ class _EInvoiceBody extends StatelessWidget {
                       '• ${_eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
+              if (readiness.ready && sendGaps.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.sm),
+                InlineBanner(
+                  key: const ValueKey('invoice-einvoice-channel-gaps'),
+                  icon: Icons.outbox_outlined,
+                  text: [
+                    l10n.eInvoiceChannelGapsTitle(sendChannel),
+                    for (final gap in sendGaps)
+                      '• ${_channelGapText(l10n, gap)}',
+                  ].join('\n'),
+                ),
+              ],
               const SizedBox(height: AppSpacing.lg),
               if (readiness.ready) ...[
                 // Sending beats saving: if the platform is there, the file
