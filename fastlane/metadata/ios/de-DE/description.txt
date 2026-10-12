@@ -34,3 +34,5 @@ DATENSCHUTZ
 Kein Tracking, keine Analyse, keine Werbung, kein Drittanbieter-SDK. Das Backend ist Supabase in der EU und selbst hostbar. DesKilo ist quelloffen unter AGPL-3.0 — alles oben Genannte steht im Code.
 
 DSGVO: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt. Deine Rechte sind Knöpfe unter Einstellungen → Datenschutz & Daten: wer deine Daten sehen kann, wer zugegriffen hat, Export, Löschung.
+
+KOSTEN: Die Software ist kostenlos, mit allen Funktionen, auch auf einem eigenen Server. Das Hosting auf dem Referenz-Deployment ist für alle bis zum 31. Dezember 2027 kostenlos; ab dem 1. Januar 2028 bleibt es bis fünf aktive Abonnenten kostenlos (acht für gemeinnützige Organisationen) und kostet darüber, ab etwa 29 € im Monat. Die Abrechnung erfolgt außerhalb der App.

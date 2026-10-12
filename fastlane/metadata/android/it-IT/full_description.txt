@@ -17,3 +17,5 @@ I TUOI DATI, LA TUA SCELTA
 Ospita il backend sulla tua istanza Supabase, oppure usa l'installazione di riferimento gestita da Florian DITTGEN, che ospita anche la rubrica globale. La versione F-Droid si avvia senza server e chiede quale usare: l'installazione di riferimento, un server esistente o uno nuovo che configura per te. Software libero con licenza AGPL-3.0.
 
 GDPR: dati ospitati nell'UE sull'installazione di riferimento, nessun tracciamento né pubblicità, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi vede i tuoi dati, chi vi ha acceduto, esportazione, cancellazione. Nelle versioni degli store, le notifiche push usano Firebase Cloud Messaging; la versione F-Droid non ha alcun servizio push.
+
+COSTO: il software è gratuito, con tutte le funzioni, anche sul vostro server. L’hosting sul deployment di riferimento è gratuito per tutti fino al 31 dicembre 2027; dal 1° gennaio 2028 resta gratuito fino a cinque abbonati attivi (otto per le organizzazioni non profit) e a pagamento oltre, da circa 29 € al mese. La fatturazione avviene fuori dall’app.

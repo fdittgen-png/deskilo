@@ -35,3 +35,5 @@ No tracking, no analytics, no advertising, no third-party SDK. The backend is Su
 
 
 GDPR: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure.
+
+COST: the software is free, with every feature, also on your own server. Hosting on the reference deployment is free for everyone until 31 December 2027; from 1 January 2028 it stays free up to five active subscribers (eight for nonprofits) and is paid above that, from about €29 a month. Billing happens outside the app.

@@ -34,3 +34,5 @@ PRIVACY
 Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessun SDK di terze parti. Il backend è Supabase nell'UE e puoi ospitarlo tu. DesKilo è open source con licenza AGPL-3.0: tutto quanto sopra si legge nel codice.
 
 GDPR: dati ospitati nell'UE, nessun tracciamento né analitica, accesso limitato per ruolo e applicato dal server. I tuoi diritti sono pulsanti in Impostazioni → Privacy e dati: chi può vedere i tuoi dati, chi ha avuto accesso, esportazione, cancellazione.
+
+COSTO: il software è gratuito, con tutte le funzioni, anche sul vostro server. L’hosting sul deployment di riferimento è gratuito per tutti fino al 31 dicembre 2027; dal 1° gennaio 2028 resta gratuito fino a cinque abbonati attivi (otto per le organizzazioni non profit) e a pagamento oltre, da circa 29 € al mese. La fatturazione avviene fuori dall’app.
