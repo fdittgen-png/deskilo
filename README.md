@@ -1,44 +1,62 @@
 # DesKilo site — Node.js package for GoDaddy
 
-The welcome page, the five-language user guide, the setup guide, the setup
-questionnaire, the evaluation page, the privacy page and the API docs, served by
-a dependency-free Node.js server (`server.js`). `public/` is committed, so the
-host needs no build step and `npm install` downloads nothing.
+The DesKilo **web app at the root** (`/`), with the welcome page, the five-language
+user guide, the setup guide, the setup questionnaire, the evaluation page, the privacy
+page and the API docs beside it — served by a dependency-free Node.js server
+(`server.js`). `public/` is committed, so the host needs no build step and
+`npm install` downloads nothing.
 
 | URL | What |
 |---|---|
-| `/` | redirects to `/welcome/` (the advertising page) |
+| `/` | the web app (any path the app routes, e.g. `/money`, opens it too) |
+| `/welcome/` | the advertising page |
 | `/guide/en.html` (`fr` `de` `es` `it`) | the user guide |
 | `/guide/setup-en.html` (…) | the setup guide |
 | `/setup.html` | the setup questionnaire |
 | `/product.html`, `/privacy.html`, `/api/` | evaluation planner, privacy, API docs |
 | `/healthz` | `ok` — for a monitor |
 
-The **app itself** is not in this package: the "Open DesKilo" / "Sign in" links
-point to the Flutter web app (`APP_URL`, default the GitHub Pages one).
+## Updating the package (CI)
 
-## Deploy on GoDaddy (cPanel → Setup Node.js App)
+Run **Publish · GoDaddy site package** (Actions tab, or
+`gh workflow run godaddy-site.yml`). It builds the web app from `master` (or the ref you
+give), assembles `public/`, commits it to this branch and attaches
+`deskilo-site.zip` to the rolling release `godaddy-site`. Nothing else is needed.
 
-1. Repository `fdittgen-png/deskilo`, branch `hosting/godaddy` (this branch).
-2. Application root: the folder the deploy tool clones into · Startup file: `server.js`
-   · Node 18 or newer · Application URL: your domain.
-3. Run NPM Install (it is a no-op), then Restart. Open the domain.
+`public/BUILD.txt` records which master commit the package was built from and when.
 
-Re-deploy after a push: pull in the deploy tool, then Restart.
+## Deploy on GoDaddy
 
-## Refresh the content (when master changed)
+**From this branch** (cPanel → Setup Node.js App): repository `fdittgen-png/deskilo`,
+branch `hosting/godaddy`, startup file `server.js`, Node 18 or newer. Run NPM Install
+(a no-op), then Restart. To update: pull in the deploy tool, then Restart.
+
+**From the zip**: download `deskilo-site.zip` from the `godaddy-site` release, unzip it
+into the application root (it holds `server.js`, `package.json` and `public/`), set the
+startup file to `server.js`, Restart.
+
+`npm run build` is deliberately a no-op (the host runs it on deploy and `public/` is
+already built).
+
+## Before the app works on the domain
+
+The app signs in through Supabase. The domain has to be allowed there: **Authentication
+→ URL configuration** → add `https://www.deskilo.org/**` (and `https://deskilo.org/**`) to
+the redirect URLs, on every project the app should reach; and, for Google sign-in, add the
+origin in the Google OAuth client. Until then, sign-in, password reset and the invitation
+links may refuse the new domain.
+
+## By hand
 
 ```sh
-git clone https://github.com/fdittgen-png/deskilo ../deskilo       # or update it
-SITE_URL=https://www.your-domain.tld node build/build-site.mjs --src ../deskilo
-git add -A && git commit -m "site: refresh from master" && git push
+# pages only, from a checkout of the repository
+SITE_URL=https://www.deskilo.org node build/build-site.mjs --src ../deskilo
+# pages and the web app, from `flutter build web --base-href /`
+SITE_URL=https://www.deskilo.org node build/build-site.mjs --web ../deskilo/build/web
+PORT=4000 npm start        # then open http://localhost:4000
 ```
 
-`SITE_URL` makes the absolute links (share previews, cross-links) point at your
-domain; `APP_URL` moves the "open the app" links if you host the Flutter build
-elsewhere. The build fails if any relative link or image does not resolve.
-`public/BUILD.txt` records which master commit the site was built from.
+`SITE_URL` makes the absolute links (share previews, cross-links) point at this domain.
+The build fails if a relative link or image does not resolve.
 
-`npm run build` is deliberately a no-op (the host runs it on deploy and `public/` is already built); the real rebuild is `npm run refresh`.
-
-Local check: `PORT=4000 npm start`, then open `http://localhost:4000`.
+This branch is **protected against deletion** and must be kept: GoDaddy deploys from it.
