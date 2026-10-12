@@ -38,7 +38,7 @@ env:
   SITE_RELEASE: godaddy-site
 
 permissions:
-  contents: write
+  contents: read
 
 # A package build someone started is never cancelled by another; it queues.
 concurrency:
@@ -46,9 +46,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  package:
+  # The build runs a third-party action, so it holds no write access and keeps no credentials;
+  # the job that pushes runs only GitHub's own actions.
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.source.outputs.sha }}
     steps:
       - name: Pin the source
         id: source
@@ -65,21 +71,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ steps.source.outputs.sha }}
-          path: src
+          persist-credentials: false
 
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.SITE_BRANCH }}
-          path: site
-
-      - uses: subosito/flutter-action@v2
+      # subosito/flutter-action v2.23.0, pinned to its commit.
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
       - name: Build the web app
-        working-directory: src
         # --pwa-strategy=none: no offline-first service worker serving the PREVIOUS build after a
         # deploy. --base-href /: the app is the site's home, not a sub-path.
         run: |
@@ -87,13 +88,36 @@ jobs:
           flutter build web --release --no-web-resources-cdn --pwa-strategy=none --base-href /
           dart run tool/task_tool_manifest.dart
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+          retention-days: 1
+
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: web
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SITE_BRANCH }}
+          path: site
+
       - name: Assemble the package
         env:
-          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_SHA: ${{ needs.build.outputs.sha }}
           SITE_URL: ${{ inputs.site_url }}
         run: |
           set -euo pipefail
-          node site/build/build-site.mjs --web src/build/web
+          node site/build/build-site.mjs --web web
           rm -f deskilo-site.zip
           (cd site && zip -qr ../deskilo-site.zip server.js package.json README.md public)
           ls -lh deskilo-site.zip
@@ -114,14 +138,14 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: deskilo-site-${{ steps.source.outputs.sha }}
+          name: deskilo-site-${{ needs.build.outputs.sha }}
           path: deskilo-site.zip
           retention-days: 30
 
       - name: Commit the package to the branch
         if: inputs.push == true
         env:
-          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_SHA: ${{ needs.build.outputs.sha }}
         run: |
           set -euo pipefail
           cd site
@@ -136,7 +160,7 @@ jobs:
         if: inputs.push == true
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_SHA: ${{ needs.build.outputs.sha }}
         run: |
           set -euo pipefail
           notes="The current GoDaddy package: the web app, the welcome page, the guides and the setup guide as a Node.js app. Built from ${SOURCE_SHA}. Unzip it into the application root and restart; the branch ${SITE_BRANCH} carries the same files."
