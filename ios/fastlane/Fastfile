@@ -415,6 +415,16 @@ platform :ios do
   desc "no binary, nothing submitted for review — so it is safe to re-run at"
   desc "any time. Five locales, the same five the app itself speaks."
   lane :upload_metadata do
+    # App Review wants a contact phone; it is a secret, so it exists only on
+    # the runner (never committed): deliver reads review_information/*.txt.
+    phone = ENV["BETA_CONTACT_PHONE"].to_s.strip
+    UI.user_error!("BETA_CONTACT_PHONE is not set") if phone.empty?
+    review_dir = ["../fastlane", "../../fastlane", "fastlane"]
+      .map { |d| File.expand_path("#{d}/metadata/ios/review_information", Dir.pwd) }
+      .find { |d| Dir.exist?(d) }
+    UI.user_error!("review_information folder not found from #{Dir.pwd}") if review_dir.nil?
+    File.write(File.join(review_dir, "phone_number.txt"), phone)
+
     deliver(
       api_key: asc_api_key,
       app_identifier: "de.deskilo.app",
