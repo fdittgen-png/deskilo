@@ -59,7 +59,7 @@ class TaskExportException implements Exception {
 }
 
 /// The BCP 47 tag Word expects for a supported app language.
-String documentLanguageTag(String localeName) => switch (localeName) {
+String _documentLanguageTag(String localeName) => switch (localeName) {
   'en' => 'en-US',
   'fr' => 'fr-FR',
   'de' => 'de-DE',
@@ -183,7 +183,7 @@ DocxDocument buildTaskDocument(
   final footer = _footer(l);
   return DocxDocument(
     title: title,
-    languageTag: documentLanguageTag(l.localeName),
+    languageTag: _documentLanguageTag(l.localeName),
     blocks: blocks,
     footer: footer,
   );

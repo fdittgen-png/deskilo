@@ -15,6 +15,7 @@ part of 'action_registry.dart';
 
 /// The permission keys (WorkspacePermission.wireName), pinned to the enum
 /// by test/features/task_recorder/admin_journey_test.dart.
+@visibleForTesting
 const Set<String> workspacePermissionKeys = {
   'manageRoles',
   'manageMembers',
@@ -51,6 +52,7 @@ const Set<String> workspacePermissionKeys = {
 
 /// The event types a validation rule can be for (EventType.dbName, the
 /// fallback `unknown` excluded), pinned to the enum by the same test.
+@visibleForTesting
 const Set<String> validationRuleKeys = {
   'reservation',
   'payment',

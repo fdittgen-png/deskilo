@@ -118,9 +118,3 @@ Uint8List stripPngMetadata(
   }
   return out.toBytes();
 }
-
-/// The chunk types of [bytes], in order: what a test inspects.
-List<String> pngChunkTypes(
-  Uint8List bytes, {
-  PngLimits limits = const PngLimits(),
-}) => [for (final c in _chunks(bytes, limits)) c.type];

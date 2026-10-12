@@ -13,6 +13,8 @@
 
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// The shape a pasted credential has. Only [publishable] and
 /// [legacyAnon] may be sent, stored or shared.
 enum BackendKeyKind {
@@ -39,6 +41,7 @@ enum BackendKeyKind {
 }
 
 /// Longer than any legitimate key; anything above is refused unread.
+@visibleForTesting
 const int backendKeyMaxLength = 4096;
 
 /// Classifies [raw] by shape and declared claims. Never throws.
@@ -66,7 +69,7 @@ BackendKeyKind classifyBackendKey(String raw) {
 BackendKeyKind _classifyJwt(String token) {
   final parts = token.split('.');
   if (parts.length != 3) return BackendKeyKind.malformed;
-  final claims = jwtClaims(parts[1]);
+  final claims = _jwtClaims(parts[1]);
   if (claims == null) return BackendKeyKind.malformed;
   final role = claims['role'];
   if (role == 'service_role') return BackendKeyKind.secret;
@@ -80,7 +83,7 @@ BackendKeyKind _classifyJwt(String token) {
 /// The claims of a JWT payload segment, or null when it is not a JSON
 /// object in base64url. Signature and expiry are NOT checked here — this
 /// is a classifier, not a verifier.
-Map<String, Object?>? jwtClaims(String segment) {
+Map<String, Object?>? _jwtClaims(String segment) {
   try {
     var s = segment.replaceAll('-', '+').replaceAll('_', '/');
     while (s.length % 4 != 0) {

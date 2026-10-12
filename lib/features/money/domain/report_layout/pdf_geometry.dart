@@ -11,11 +11,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:meta/meta.dart';
+
 /// PostScript points per millimetre.
-const double mmPt = 72 / 25.4;
+const double _mmPt = 72 / 25.4;
 
 /// The height of A4, in points.
-const double a4HeightPt = 841.88976;
+const double _a4HeightPt = 841.88976;
 
 /// One piece of ink, positioned from the TOP-LEFT of the sheet in mm —
 /// the way a spec is written and a ruler is used, not the way PDF
@@ -33,6 +35,7 @@ class InkAt {
 }
 
 /// Inflates every page content stream in [bytes], in page order.
+@visibleForTesting
 List<String> pageStreams(Uint8List bytes) {
   final raw = String.fromCharCodes(bytes);
   final out = <String>[];
@@ -86,9 +89,9 @@ List<InkAt> textPositions(Uint8List bytes) {
         final x = tx + double.parse(m.group(9)!);
         final y = ty + double.parse(m.group(10)!);
         found.add(InkAt(
-          xMm: x / mmPt,
+          xMm: x / _mmPt,
           // PDF measures up from the bottom; a spec measures down.
-          yMm: (a4HeightPt - y) / mmPt,
+          yMm: (_a4HeightPt - y) / _mmPt,
           page: page + 1,
         ));
       }
@@ -111,7 +114,7 @@ List<int> addressFieldPages(
 }) {
   // A `Positioned(left:, top:)` becomes a translate measured from the
   // bottom of the sheet.
-  final yPt = a4HeightPt - topPt - heightPt;
+  final yPt = _a4HeightPt - topPt - heightPt;
   final pages = <int>[];
   final streams = pageStreams(bytes);
   for (var page = 0; page < streams.length; page++) {

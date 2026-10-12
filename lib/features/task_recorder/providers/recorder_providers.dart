@@ -98,7 +98,7 @@ bool taskRecorderAvailable(Ref ref) => ref
     .contains(WorkspaceFeature.taskRecorder);
 
 /// The platform family a recording names. Never a device model.
-RecordingPlatform currentRecordingPlatform() {
+RecordingPlatform _currentRecordingPlatform() {
   if (kIsWeb) return RecordingPlatform.web;
   return switch (defaultTargetPlatform) {
     TargetPlatform.android => RecordingPlatform.android,
@@ -115,7 +115,7 @@ RecordingPlatform currentRecordingPlatform() {
 RecorderController recorderController(Ref ref) {
   final controller = RecorderController(
     sink: _AccountSink(() => ref.read(recorderStoreProvider)),
-    platform: currentRecordingPlatform(),
+    platform: _currentRecordingPlatform(),
   );
   ref
     ..listen(recorderScopeProvider, (_, next) => controller.scopeChanged(next))

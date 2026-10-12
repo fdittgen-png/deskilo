@@ -37,7 +37,7 @@ class DemoEntryButton extends ConsumerWidget {
       key: buttonKey,
       icon: const Icon(Icons.play_circle_outline),
       label: Text(l10n.demoEntryAction),
-      onPressed: () => showDemoEntrySheet(context, ref),
+      onPressed: () => _showDemoEntrySheet(context, ref),
     );
   }
 }
@@ -50,11 +50,11 @@ Future<void> offerDemoEntry(BuildContext context, WidgetRef ref) async {
       .contains(WorkspaceFeature.demoMode)) {
     return;
   }
-  await showDemoEntrySheet(context, ref);
+  await _showDemoEntrySheet(context, ref);
 }
 
 /// Explains the demonstration space, and enters it if the visitor agrees.
-Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
+Future<void> _showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
   final l10n = context.l10n;
   final start = await showAppSheet<bool>(
     context: context,
