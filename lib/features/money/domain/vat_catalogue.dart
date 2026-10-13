@@ -199,6 +199,39 @@ final Map<String, Map<double, String>> _since = {
   'GB': {20: '2011-01-04', 5: '1997-09-01'},
 };
 
+/// #2360 — a change of rate already decided or proposed: the new value
+/// from a date, applied by the owner's "change by law" (a successor
+/// version linked to the old one, so items follow the family).
+typedef PlannedRateChange = ({
+  String from,
+  double fromPercent,
+  double toPercent,
+});
+
+/// #2360 — Switzerland, 13th AHV pension: normal rate 8.1 -> 8.5 % and
+/// the accommodation rate 3.8 -> 4.0 % from 2028-01-01; the reduced rate
+/// 2.6 % is not touched. The popular vote is on 2026-11-29: ONE LINE
+/// activates it, set this to true when the people have said yes.
+const bool _swissReform2028Approved = false;
+
+const Map<String, List<PlannedRateChange>> _plannedChanges = {
+  'CH': [
+    (from: '2028-01-01', fromPercent: 8.1, toPercent: 8.5),
+    (from: '2028-01-01', fromPercent: 3.8, toPercent: 4.0),
+  ],
+};
+
+/// The change planned for a rate of [percent], once decided (nothing
+/// while the Swiss vote has not passed; [approved] overrides for tests).
+PlannedRateChange? vatPlannedChangeFor(String countryCode, double percent,
+    {bool approved = _swissReform2028Approved}) {
+  if (countryCode.toUpperCase() == 'CH' && !approved) return null;
+  for (final c in _plannedChanges[countryCode.toUpperCase()] ?? <PlannedRateChange>[]) {
+    if (c.fromPercent == percent) return c;
+  }
+  return null;
+}
+
 /// #2359 — the statutory reason a country's exempt line prints (BT-120):
 /// VAT Act 1994, Schedule 9 Group 1 for a licence to occupy land.
 const Map<String, String> _exemptionReasons = {
@@ -250,7 +283,9 @@ String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase(
       'CH' =>
         'The 3.8 % special rate applies to accommodation only. If the vote '
             'of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: '
-            'change them by law then.',
+            'change them by law then.${_swissReform2028Approved ? ' '
+                'The vote passed: "Change by law" proposes the new rate and '
+                'its date.' : ''}',
       _ => null,
     };
 

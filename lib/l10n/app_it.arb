@@ -5715,6 +5715,10 @@
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
+  "invoiceMissingSellerUidFormat": "Il numero IDI dello spazio nel formato svizzero: CHE-123.456.789 seguito da IVA (MWST, TVA), con una cifra di controllo valida (art. 26 LIVA)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
+  },
   "invoiceMissingSellerVatId": "Il numero di partita IVA dello spazio",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

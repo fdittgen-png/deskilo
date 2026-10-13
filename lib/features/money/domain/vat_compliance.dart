@@ -88,6 +88,34 @@ bool looksLikeEuVatId(String vatId) {
   return RegExp('^(?:$pattern)\$').hasMatch(body);
 }
 
+/// #2360 — the Swiss UID (Unternehmens-Identifikationsnummer) of a
+/// VAT-registered seller: `CHE-123.456.789 MWST` (art. 26 Abs. 2 lit. a
+/// MWSTG; `TVA` and `IVA` in French and Italian). The ninth digit checks
+/// the first eight (modulus 11, weights 5 4 3 2 7 6 5 4). The server twin
+/// is `swiss_uid_valid` (migration 0420).
+bool isValidSwissUid(String uid, {bool requireSuffix = true}) {
+  final id = uid.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  final m = RegExp(r'^CHE(\d{9})(MWST|TVA|IVA)?$').firstMatch(id);
+  if (m == null || (requireSuffix && m.group(2) == null)) return false;
+  final digits = m.group(1)!.codeUnits.map((c) => c - 48).toList();
+  const weights = [5, 4, 3, 2, 7, 6, 5, 4];
+  var sum = 0;
+  for (var i = 0; i < 8; i++) {
+    sum += digits[i] * weights[i];
+  }
+  final check = 11 - sum % 11;
+  return check != 10 && (check == 11 ? 0 : check) == digits[8];
+}
+
+/// The UID as it prints: `CHE-123.456.789 MWST`. Anything that is not
+/// shaped like a UID is returned as typed.
+String formatSwissUid(String uid) {
+  final id = uid.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  final m = RegExp(r'^CHE(\d{3})(\d{3})(\d{3})(MWST|TVA|IVA)?$').firstMatch(id);
+  if (m == null) return uid;
+  return 'CHE-${m[1]}.${m[2]}.${m[3]}${m[4] == null ? '' : ' ${m[4]}'}';
+}
+
 /// The identifier body per member state (VIES formats; EL is Greece's
 /// prefix, XI Northern Ireland's).
 const Map<String, String> _vatIdBodies = {

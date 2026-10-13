@@ -5715,6 +5715,10 @@
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
+  "invoiceMissingSellerUidFormat": "Die UID des Arbeitsbereichs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
+  },
   "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

@@ -8540,6 +8540,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)';
 
   @override
+  String get invoiceMissingSellerUidFormat =>
+      'Il numero IDI dello spazio nel formato svizzero: CHE-123.456.789 seguito da IVA (MWST, TVA), con una cifra di controllo valida (art. 26 LIVA)';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Il numero di partita IVA dello spazio';
 

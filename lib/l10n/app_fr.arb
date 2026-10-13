@@ -5715,6 +5715,10 @@
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
+  "invoiceMissingSellerUidFormat": "L'IDE de l'espace au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
+  },
   "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

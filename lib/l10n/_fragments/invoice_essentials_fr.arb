@@ -81,5 +81,9 @@
   "invoiceCorrectionReasonR5": "R5 - factures simplifiées",
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
+  },
+  "invoiceMissingSellerUidFormat": "L'IDE de l'espace au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
   }
 }

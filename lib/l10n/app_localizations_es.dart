@@ -8539,6 +8539,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El número de IVA o el NIF del espacio (el campo de registro lleva el NIF)';
 
   @override
+  String get invoiceMissingSellerUidFormat =>
+      'El UID del espacio en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'El número de identificación fiscal (IVA) del espacio';
 

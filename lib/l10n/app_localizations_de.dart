@@ -8551,6 +8551,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)';
 
   @override
+  String get invoiceMissingSellerUidFormat =>
+      'Die UID des Arbeitsbereichs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs';
 
