@@ -155,6 +155,17 @@ const _sageFormat = AccountingFormat(
   needsAccounts: true,
 );
 
+/// #2360 — the booking journal of a Swiss space: the accounts of the KMU
+/// chart and the Ziffer of the MWST-Abrechnung per row. An exchange file;
+/// not a native Banana or bexio template (neither publishes one).
+const _swissKmuFormat = AccountingFormat(
+  id: 'ch_kmu',
+  claim: FormatClaim.exchange,
+  countries: {'CH'},
+  extension: 'csv',
+  needsAccounts: true,
+);
+
 /// A plain, self-describing CSV for every accountant with no national
 /// mandate behind them — most of the 32 supported countries.
 ///
@@ -226,6 +237,7 @@ const List<AccountingFormat> accountingFormats = [
   safTPtFormat,
   _datevFormat,
   _sageFormat,
+  _swissKmuFormat,
   safTFormat,
   _accountantCsvFormat,
   auditTrailFormat,

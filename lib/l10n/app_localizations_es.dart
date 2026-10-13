@@ -8193,6 +8193,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (registro de auditoría)';
 
   @override
+  String get invoiceExportSwissKmu =>
+      'Diario de asientos suizo (CSV, cuentas KMU)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Emita esta factura fuera de la aplicación';
 
@@ -16884,6 +16888,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportTitle => 'Detalles de soporte';
+
+  @override
+  String get swissKmuAccountsIntro =>
+      'Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.';
+
+  @override
+  String get swissKmuAccountsTitle => 'Diario de asientos suizo';
+
+  @override
+  String get swissKmuRevenueExempt =>
+      'Ingresos exentos, exportados o en el extranjero';
+
+  @override
+  String get swissKmuRevenueNormal => 'Ingresos al tipo normal';
+
+  @override
+  String get swissKmuRevenueReduced =>
+      'Ingresos al tipo reducido o de alojamiento';
 
   @override
   String get symbolHint =>

@@ -8193,6 +8193,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (giornale di audit)';
 
   @override
+  String get invoiceExportSwissKmu =>
+      'Giornale delle registrazioni svizzero (CSV, conti PMI)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Emetti questa fattura fuori dall’app';
 
@@ -16891,6 +16895,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supportTitle => 'Dettagli per l’assistenza';
+
+  @override
+  String get swissKmuAccountsIntro =>
+      'I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.';
+
+  @override
+  String get swissKmuAccountsTitle => 'Giornale delle registrazioni svizzero';
+
+  @override
+  String get swissKmuRevenueExempt => 'Ricavi esclusi, esportati o all\'estero';
+
+  @override
+  String get swissKmuRevenueNormal => 'Ricavi all\'aliquota normale';
+
+  @override
+  String get swissKmuRevenueReduced =>
+      'Ricavi all\'aliquota ridotta o di alloggio';
 
   @override
   String get symbolHint =>

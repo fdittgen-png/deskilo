@@ -26,6 +26,7 @@ import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
+import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
@@ -37,6 +38,7 @@ import 'vat_tax_point_labels.dart';
 import 'widgets/accountant_handoff_preflight.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
+import 'widgets/swiss_kmu_accounts_dialog.dart';
 
 /// THE ACCOUNTING EXPORT (0074, extended by #669).
 ///
@@ -232,6 +234,26 @@ Future<void> exportAccountingFile(
             customerRef: (invoice) => invoice.memberId,
           ),
           sageFileName(year, invoices.last.issuedAt.month),
+        ),
+      );
+
+    case 'ch_kmu':
+      // #2360 — the Swiss journal: the KMU accounts are asked for.
+      final kmu = await showSwissKmuAccountsDialog(context);
+      if (kmu == null || !context.mounted) return;
+      await runGuarded(
+        context,
+        domain: 'money',
+        message: 'Swiss booking export failed',
+        errorText: l10n.commonSaveFailed,
+        action: () => save(
+          buildSwissKmuFile(
+            invoices: exported,
+            matches: matches,
+            accounts: kmu,
+            customerRef: (invoice) => invoice.memberId,
+          ),
+          swissKmuFileName(year, invoices.last.issuedAt.month),
         ),
       );
 

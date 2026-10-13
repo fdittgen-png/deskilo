@@ -1,0 +1,26 @@
+{
+  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
+  "swissKmuAccountsTitle": "Giornale delle registrazioni svizzero",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuAccountsIntro": "I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuRevenueNormal": "Ricavi all'aliquota normale",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Ricavi all'aliquota ridotta o di alloggio",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
+  "swissKmuRevenueExempt": "Ricavi esclusi, esportati o all'estero",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  }
+}

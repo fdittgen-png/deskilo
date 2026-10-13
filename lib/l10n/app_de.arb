@@ -5415,6 +5415,10 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
   "invoiceExternalIssuingTitle": "Diese Rechnung außerhalb der App ausstellen",
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
@@ -11127,6 +11131,26 @@
     }
   },
   "supportTitle": "Supportdetails",
+  "swissKmuAccountsIntro": "Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuAccountsTitle": "Schweizer Buchungsjournal",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuRevenueExempt": "Ertrag ausgenommen, exportiert oder im Ausland",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  },
+  "swissKmuRevenueNormal": "Ertrag zum Normalsatz",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Ertrag zum reduzierten oder Beherbergungssatz",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
   "symbolHint": "Ein rundes Zeichen aus einem oder zwei Buchstaben auf einer Farbe, einmalig für diesen Arbeitsbereich — oder stattdessen unten ein Foto verwenden.",
   "@symbolHint": {
     "description": "workspace symbol"
