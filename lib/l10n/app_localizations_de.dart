@@ -8555,6 +8555,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs';
 
   @override
+  String get invoiceMissingSellerVatIdFormat =>
+      'Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)';
+
+  @override
   String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
 
   @override

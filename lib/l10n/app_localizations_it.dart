@@ -8544,6 +8544,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero di partita IVA dello spazio';
 
   @override
+  String get invoiceMissingSellerVatIdFormat =>
+      'Il numero di partita IVA dello spazio nel formato dell\'HMRC: GB o XI seguito da nove o dodici cifre (VAT Notice 700)';
+
+  @override
   String get invoiceMissingTitle =>
       'Completi questi dati prima dell\'emissione';
 

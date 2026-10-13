@@ -5719,6 +5719,10 @@
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
+  "invoiceMissingSellerVatIdFormat": "Le numéro d'immatriculation TVA du workspace au format de l'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingTitle": "Complétez ces informations avant d'émettre",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"

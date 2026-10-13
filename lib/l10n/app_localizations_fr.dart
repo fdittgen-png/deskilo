@@ -8560,6 +8560,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro d\'identification TVA de l\'espace';
 
   @override
+  String get invoiceMissingSellerVatIdFormat =>
+      'Le numéro d\'immatriculation TVA du workspace au format de l\'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)';
+
+  @override
   String get invoiceMissingTitle =>
       'Complétez ces informations avant d\'émettre';
 

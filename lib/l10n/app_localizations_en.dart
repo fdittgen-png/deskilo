@@ -8479,6 +8479,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s VAT identification number';
 
   @override
+  String get invoiceMissingSellerVatIdFormat =>
+      'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)';
+
+  @override
   String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override

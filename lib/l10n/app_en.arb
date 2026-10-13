@@ -9812,6 +9812,10 @@
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
+  "invoiceMissingSellerVatIdFormat": "The workspace's VAT registration number in HMRC's format: GB or XI followed by nine or twelve digits (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingTitle": "Complete these details before issuing",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"

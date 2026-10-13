@@ -50,6 +50,10 @@
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
   },
+  "invoiceMissingSellerVatIdFormat": "El número de registro de IVA del espacio en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingCorrectionReason": "El motivo de la rectificación (RD 1619/2012, art. 15): elija de R1 a R5 abajo",
   "@invoiceMissingCorrectionReason": {
     "description": "#2440: invoiceMissingCorrectionReason"

@@ -157,6 +157,16 @@ const Map<String, List<({String label, double percent, VatGroup group})>>
     (label: 'Næringsmidler 15 %', percent: 15, group: VatGroup.intermediate),
     (label: 'Redusert 12 %', percent: 12, group: VatGroup.reduced),
   ],
+  // #2359 — the United Kingdom (VAT Act 1994). The zero rate and the
+  // exempt line are two different things on a return (Box 6 counts both,
+  // only the zero rate lets the seller reclaim input VAT): a bare desk
+  // licence is exempt (Sch 9 Group 1) unless the owner opted to tax.
+  'GB': [
+    (label: 'Standard 20 %', percent: 20, group: VatGroup.standard),
+    (label: 'Reduced 5 %', percent: 5, group: VatGroup.reduced),
+    (label: 'Zero 0 %', percent: 0, group: VatGroup.zero),
+    (label: 'Exempt (land)', percent: 0, group: VatGroup.exempt),
+  ],
   // ── North America ──────────────────────────────────────────────────
   // Canada: GST is federal; the usable rate depends on the PROVINCE, so
   // the catalogue lists the per-province combined realities. The owner
@@ -185,6 +195,14 @@ final Map<String, Map<double, String>> _since = {
   'RO': {21: '2025-08-01', 11: '2025-08-01'},
   'SK': {23: '2025-01-01', 19: '2025-01-01', 5: '2025-01-01'},
   'CH': {8.1: '2024-01-01', 3.8: '2024-01-01', 2.6: '2024-01-01'},
+  // #2359 — the standard rate since 2011-01-04, the reduced one since 1997.
+  'GB': {20: '2011-01-04', 5: '1997-09-01'},
+};
+
+/// #2359 — the statutory reason a country's exempt line prints (BT-120):
+/// VAT Act 1994, Schedule 9 Group 1 for a licence to occupy land.
+const Map<String, String> _exemptionReasons = {
+  'GB': 'VAT Act 1994, Schedule 9, Group 1 (land)',
 };
 
 /// The country's usual rates as editable [VatRate]s, standard first and
@@ -205,6 +223,9 @@ List<VatRate> vatCatalogueFor(String countryCode) => [
           outsideBase: rate.group.outsideBase,
           validFrom:
               _since[countryCode.toUpperCase()]?[rate.percent] ?? '1900-01-01',
+          exemptionReason: rate.group == VatGroup.exempt
+              ? _exemptionReasons[countryCode.toUpperCase()] ?? ''
+              : '',
         ),
     ];
 
@@ -221,6 +242,11 @@ String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase(
       'CA' =>
         'Canada taxes by province: keep the line for yours (GST, HST, or '
             'GST+PST/QST) and delete the rest.',
+      'GB' =>
+        'A bare desk or office licence is exempt (VAT Act 1994 Sch 9 '
+            'Group 1) unless you opted to tax the building; a serviced '
+            'package of facilities is standard-rated. Keep the lines that '
+            'apply.',
       'CH' =>
         'The 3.8 % special rate applies to accommodation only. If the vote '
             'of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: '
