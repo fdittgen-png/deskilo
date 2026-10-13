@@ -1,0 +1,5 @@
+part of 'main.dart';
+
+int partFn(bool a) {
+  return a ? 1 : 2;
+}

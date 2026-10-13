@@ -1,0 +1,4 @@
+String sw(int a, String? b) {
+  final c = b ?? 'x';
+  return switch (a) { 1 => 'a', 2 => 'b', _ => c };
+}

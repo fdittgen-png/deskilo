@@ -1,0 +1,9 @@
+void closures(List<int> xs) {
+  xs.forEach((x) {
+    if (x > 1) {
+      xs.map((y) {
+        return y;
+      });
+    }
+  });
+}
