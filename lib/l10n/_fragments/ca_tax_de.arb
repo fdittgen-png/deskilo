@@ -1,0 +1,26 @@
+{
+  "caTaxTitle": "GST/HST und QST (Kanada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
+  "caTaxHelp": "Tragen Sie Ihre GST/HST-Geschäftsnummer mit RT-Konto (123456789 RT0001) oben als USt-IdNr. ein. Erheben Sie die QST, ergänzen Sie unten Ihre Nummer bei Revenu Québec: beide stehen auf der Rechnung. Unter 30 000 CAD steuerpflichtigen Umsätzen in vier aufeinanderfolgenden Quartalen sind Sie Kleinlieferant: wählen Sie „USt-befreit“, dann wird nichts berechnet.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caQstNumber": "QST-Registrierungsnummer (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — steht neben der GST/HST-Nummer auf Rechnungen mit QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Wir nutzen die Quick Method",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "Die Meldung kennzeichnet es. Die Abführungssätze sind die der CRA und werden von der App nicht berechnet.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  }
+}

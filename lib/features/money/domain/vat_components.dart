@@ -104,3 +104,17 @@ int _share(int netCents, double percent) {
     RoundingPolicy.halfUp,
   );
 }
+
+/// The name a tax goes by on a document in [locale]: the federal and Quebec
+/// acronyms are French in French (TPS, TVH, TVQ, TVP) and the English ones
+/// everywhere else, as Canadian invoices print them.
+String taxSchemeName(String scheme, String locale) {
+  if (!locale.toLowerCase().startsWith('fr')) return scheme;
+  return switch (scheme) {
+    'GST' => 'TPS',
+    'HST' => 'TVH',
+    'QST' => 'TVQ',
+    'PST' => 'TVP',
+    _ => scheme,
+  };
+}

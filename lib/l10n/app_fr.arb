@@ -1436,6 +1436,30 @@
   "buyPackageDone": "Jours ajoutés — profitez-en.",
   "buyPackageNone": "Aucun forfait disponible pour l'instant.",
   "buyPackageTitle": "Acheter un forfait",
+  "caQstNumber": "Numéro d'inscription à la TVQ (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — imprimé à côté du numéro de TPS/TVH sur les factures qui perçoivent la TVQ.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Nous utilisons la méthode rapide de comptabilité",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "La déclaration le signale. Les taux de versement sont ceux de l'ARC et ne sont pas calculés par l'application.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  },
+  "caTaxHelp": "Saisissez votre numéro d'entreprise de TPS/TVH avec son compte RT (123456789 RT0001) comme numéro de TVA ci-dessus. Si vous percevez la TVQ, ajoutez ci-dessous votre numéro de Revenu Québec : les deux figurent sur la facture. En dessous de 30 000 CAD de ventes taxables sur quatre trimestres consécutifs vous êtes petit fournisseur : choisissez « Exonéré de TVA » et rien n'est facturé.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caTaxTitle": "TPS/TVH et TVQ (Canada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
   "calendarAgendaEmpty": "Rien de prévu dans les {days} prochains jours.",
   "@calendarAgendaEmpty": {
     "placeholders": {
@@ -5738,7 +5762,15 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerBnFormat": "Le numéro d'entreprise de TPS/TVH de l'espace avec son compte RT, sous la forme 123456789 RT0001 (LTA, par. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
   "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne, le Royaume-Uni ou la Suisse pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerQstNumber": "Le numéro d'inscription à la TVQ de l'espace délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l'identité légale (la facture perçoit la TVQ)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
+  },
   "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'espace (le champ d'immatriculation porte la Steuernummer ou le NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

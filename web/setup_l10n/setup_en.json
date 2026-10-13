@@ -622,6 +622,11 @@
  "legalBareLetting": "We only let bare rooms",
  "legalBareLettingDesc": "Off: every property line is a package, taxed at the normal rate. On: exempt unless you opted.",
  "legalChOption": "We opted for taxation (art. 22 MWSTG)",
+ "legalCaTax": "GST/HST and QST (Canada)",
+ "legalCaTaxHint": "The VAT ID above is your GST/HST business number with its RT account (123456789 RT0001). If you charge the QST, add your Revenu Québec number: both are printed on the invoice.",
+ "legalQstNumber": "QST registration number (Revenu Québec)",
+ "legalQuickMethod": "We use the quick method of accounting",
+ "legalQuickMethodDesc": "The return flags it. The remittance rates are the CRA's and are not computed by the app.",
  "payQrIban": "QR-IBAN (Swiss QR-bill)",
  "payQrIbanHint": "Optional: with it, the QR-bill carries a QRR reference",
  "payErrQrIban": "The QR-IBAN is a Swiss or Liechtenstein IBAN whose institution identifier (digits 5 to 9) lies between 30000 and 31999."

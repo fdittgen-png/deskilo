@@ -1,0 +1,26 @@
+{
+  "caTaxTitle": "TPS/TVH et TVQ (Canada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
+  "caTaxHelp": "Saisissez votre numéro d'entreprise de TPS/TVH avec son compte RT (123456789 RT0001) comme numéro de TVA ci-dessus. Si vous percevez la TVQ, ajoutez ci-dessous votre numéro de Revenu Québec : les deux figurent sur la facture. En dessous de 30 000 CAD de ventes taxables sur quatre trimestres consécutifs vous êtes petit fournisseur : choisissez « Exonéré de TVA » et rien n'est facturé.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caQstNumber": "Numéro d'inscription à la TVQ (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — imprimé à côté du numéro de TPS/TVH sur les factures qui perçoivent la TVQ.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Nous utilisons la méthode rapide de comptabilité",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "La déclaration le signale. Les taux de versement sont ceux de l'ARC et ne sont pas calculés par l'application.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  }
+}

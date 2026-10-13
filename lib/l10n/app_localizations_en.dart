@@ -2339,6 +2339,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get buyPackageTitle => 'Buy a package';
 
   @override
+  String get caQstNumber => 'QST registration number (Revenu Québec)';
+
+  @override
+  String get caQstNumberHelp =>
+      '1234567890 TQ0001 — printed beside the GST/HST number on invoices that charge the QST.';
+
+  @override
+  String get caQuickMethod => 'We use the quick method of accounting';
+
+  @override
+  String get caQuickMethodHelp =>
+      'The return flags it. The remittance rates are the CRA\'s and are not computed by the app.';
+
+  @override
+  String get caTaxHelp =>
+      'Enter your GST/HST business number with its RT account (123456789 RT0001) as the VAT ID above. If you charge the QST, add your Revenu Québec number below: both are printed on the invoice. Below CAD 30 000 of taxable sales in four consecutive quarters you are a small supplier: choose \"VAT exempt\" and nothing is charged.';
+
+  @override
+  String get caTaxTitle => 'GST/HST and QST (Canada)';
+
+  @override
   String calendarAgendaEmpty(int days) {
     return 'Nothing planned in the next $days days.';
   }
@@ -8491,8 +8512,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s postal address (street or city)';
 
   @override
+  String get invoiceMissingSellerBnFormat =>
+      'The workspace\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))';
+
+  @override
   String get invoiceMissingSellerCountry =>
       'The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app';
+
+  @override
+  String get invoiceMissingSellerQstNumber =>
+      'The workspace\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

@@ -622,6 +622,11 @@
  "legalBareLetting": "Nous ne louons que des locaux nus",
  "legalBareLettingDesc": "Désactivé : chaque ligne est une prestation globale, imposée au taux normal. Activé : exclue, sauf option.",
  "legalChOption": "Nous avons opté (art. 22 LTVA)",
+ "legalCaTax": "TPS/TVH et TVQ (Canada)",
+ "legalCaTaxHint": "Le numéro de TVA ci-dessus est votre numéro d'entreprise de TPS/TVH avec son compte RT (123456789 RT0001). Si vous percevez la TVQ, ajoutez votre numéro de Revenu Québec : les deux figurent sur la facture.",
+ "legalQstNumber": "Numéro d'inscription à la TVQ (Revenu Québec)",
+ "legalQuickMethod": "Nous utilisons la méthode rapide de comptabilité",
+ "legalQuickMethodDesc": "La déclaration le signale. Les taux de versement sont ceux de l'ARC et ne sont pas calculés par l'application.",
  "payQrIban": "QR-IBAN (facture QR suisse)",
  "payQrIbanHint": "Facultatif : la facture QR porte alors une référence QRR",
  "payErrQrIban": "Le QR-IBAN est un IBAN suisse ou liechtensteinois dont l'identifiant de l'institution (chiffres 5 à 9) est compris entre 30000 et 31999."

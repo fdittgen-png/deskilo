@@ -1,0 +1,26 @@
+{
+  "caTaxTitle": "GST/HST e QST (Canada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
+  "caTaxHelp": "Inserisca il numero d'impresa GST/HST con il conto RT (123456789 RT0001) come partita IVA sopra. Se applica la QST, aggiunga sotto il numero di Revenu Québec: entrambi compaiono in fattura. Sotto i 30 000 CAD di vendite imponibili in quattro trimestri consecutivi è un piccolo fornitore: scelga «Esente IVA» e non si addebita nulla.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caQstNumber": "Numero di registrazione QST (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — stampato accanto al numero GST/HST sulle fatture con QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Utilizziamo il quick method",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "La dichiarazione lo segnala. Le aliquote di versamento sono quelle della CRA e l'app non le calcola.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  }
+}

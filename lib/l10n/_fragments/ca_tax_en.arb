@@ -1,0 +1,26 @@
+{
+  "caTaxTitle": "GST/HST and QST (Canada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
+  "caTaxHelp": "Enter your GST/HST business number with its RT account (123456789 RT0001) as the VAT ID above. If you charge the QST, add your Revenu Québec number below: both are printed on the invoice. Below CAD 30 000 of taxable sales in four consecutive quarters you are a small supplier: choose \"VAT exempt\" and nothing is charged.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caQstNumber": "QST registration number (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — printed beside the GST/HST number on invoices that charge the QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "We use the quick method of accounting",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "The return flags it. The remittance rates are the CRA's and are not computed by the app.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  }
+}

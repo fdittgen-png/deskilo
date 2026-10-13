@@ -2360,6 +2360,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get buyPackageTitle => 'Paket kaufen';
 
   @override
+  String get caQstNumber => 'QST-Registrierungsnummer (Revenu Québec)';
+
+  @override
+  String get caQstNumberHelp =>
+      '1234567890 TQ0001 — steht neben der GST/HST-Nummer auf Rechnungen mit QST.';
+
+  @override
+  String get caQuickMethod => 'Wir nutzen die Quick Method';
+
+  @override
+  String get caQuickMethodHelp =>
+      'Die Meldung kennzeichnet es. Die Abführungssätze sind die der CRA und werden von der App nicht berechnet.';
+
+  @override
+  String get caTaxHelp =>
+      'Tragen Sie Ihre GST/HST-Geschäftsnummer mit RT-Konto (123456789 RT0001) oben als USt-IdNr. ein. Erheben Sie die QST, ergänzen Sie unten Ihre Nummer bei Revenu Québec: beide stehen auf der Rechnung. Unter 30 000 CAD steuerpflichtigen Umsätzen in vier aufeinanderfolgenden Quartalen sind Sie Kleinlieferant: wählen Sie „USt-befreit“, dann wird nichts berechnet.';
+
+  @override
+  String get caTaxTitle => 'GST/HST und QST (Kanada)';
+
+  @override
   String calendarAgendaEmpty(int days) {
     return 'Nichts geplant in den nächsten $days Tagen.';
   }
@@ -8567,8 +8588,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
 
   @override
+  String get invoiceMissingSellerBnFormat =>
+      'Die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto im Format 123456789 RT0001 (ETA s. 169(4))';
+
+  @override
   String get invoiceMissingSellerCountry =>
       'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich oder die Schweiz sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+
+  @override
+  String get invoiceMissingSellerQstNumber =>
+      'Die QST-Registrierungsnummer des Arbeitsbereichs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

@@ -2769,6 +2769,30 @@
   "@buyPackageTitle": {
     "description": "Title of the package buy sheet"
   },
+  "caQstNumber": "QST registration number (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — printed beside the GST/HST number on invoices that charge the QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "We use the quick method of accounting",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "The return flags it. The remittance rates are the CRA's and are not computed by the app.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  },
+  "caTaxHelp": "Enter your GST/HST business number with its RT account (123456789 RT0001) as the VAT ID above. If you charge the QST, add your Revenu Québec number below: both are printed on the invoice. Below CAD 30 000 of taxable sales in four consecutive quarters you are a small supplier: choose \"VAT exempt\" and nothing is charged.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caTaxTitle": "GST/HST and QST (Canada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
   "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
   "@calendarAgendaEmpty": {
     "placeholders": {
@@ -9831,7 +9855,15 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerBnFormat": "The workspace's GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
   "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerQstNumber": "The workspace's QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
+  },
   "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

@@ -85,5 +85,13 @@
   "invoiceMissingSellerUidFormat": "Die UID des Arbeitsbereichs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
+  },
+  "invoiceMissingSellerBnFormat": "Die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto im Format 123456789 RT0001 (ETA s. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
+  "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Arbeitsbereichs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
   }
 }

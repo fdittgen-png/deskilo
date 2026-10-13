@@ -23,6 +23,7 @@ import 'payment_terms.dart';
 import 'period_label.dart';
 import 'report_strings.dart';
 import 'vat_compliance.dart';
+import 'vat_components.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
@@ -104,8 +105,16 @@ Map<String, Object?> legalMentionData(
             isValidSwissUid(seller?.vatId ?? workspace?.vatId ?? '',
                 requireSuffix: false)
         ? formatSwissUid(seller?.vatId ?? workspace?.vatId ?? '')
-        : seller?.vatId ?? workspace?.vatId ?? '',
-    'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
+        // #2361 — a Canadian business number prints as 123456789 RT0001.
+        : sellerCountry.trim().toUpperCase() == 'CA' &&
+                isValidCanadianBn(seller?.vatId ?? workspace?.vatId ?? '')
+            ? formatCanadianRegistration(seller?.vatId ?? workspace?.vatId ?? '')
+            : seller?.vatId ?? workspace?.vatId ?? '',
+    // #2361 — and Revenu Québec's number, kept here, as 1234567890 TQ0001.
+    'seller_legal_id': sellerCountry.trim().toUpperCase() == 'CA' &&
+            isValidQstNumber(seller?.legalId ?? workspace?.legalId ?? '')
+        ? formatCanadianRegistration(seller?.legalId ?? workspace?.legalId ?? '')
+        : seller?.legalId ?? workspace?.legalId ?? '',
     // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
     // carries the statutory mention of its member state when the owner
     // wrote none; a VAT-charging seller prints nothing here.
@@ -263,6 +272,10 @@ Map<String, Object?> invoiceReportData(
     correction: invoice.isCreditNote || invoice.replacesNumber.isNotEmpty,
     rectifies: invoice.replacesNumber,
     correctionReason: invoice.correctionReason,
+    sellerVatId: invoice.sellerParty?.vatId ?? workspace?.vatId ?? '',
+    sellerLegalId: invoice.sellerParty?.legalId ?? workspace?.legalId ?? '',
+    qstCharged: invoice.vatTotals.any(
+        (t) => t.components.any((c) => c.scheme == 'QST' && c.taxCents != 0)),
   );
   return <String, Object?>{
     'workspace': invoice.workspaceName,
@@ -332,11 +345,22 @@ Map<String, Object?> invoiceReportData(
     ],
     'vat': [
       for (final t in invoice.vatTotals.where((t) => t.vatCents > 0))
-        {
-          'rate': rate(t.percent),
-          'net': currency.formatMinor(t.netCents),
-          'amount': currency.formatMinor(t.vatCents),
-        },
+        // #2361 — a Canadian total states its GST / HST / QST apart, each on
+        // its own base: GST 5 % 50.00, QST 9,975 % 99.75.
+        if (t.components.isEmpty)
+          {
+            'rate': rate(t.percent),
+            'net': currency.formatMinor(t.netCents),
+            'amount': currency.formatMinor(t.vatCents),
+          }
+        else
+          for (final c in t.components)
+            {
+              'rate': '${taxSchemeName(c.scheme, strings.localeName ?? '')} '
+                  '${rate(c.percent)}',
+              'net': currency.formatMinor(c.baseCents),
+              'amount': currency.formatMinor(c.taxCents),
+            },
     ],
     ...legalData,
     if (national.isNotEmpty)
