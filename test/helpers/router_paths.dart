@@ -47,13 +47,18 @@ String concreteRoute(String pattern) =>
 Future<({GoRouter router, BuildContext context})> bootRouter(
   WidgetTester tester, {
   Map<String, dynamic> featureFlags = const {},
+  // #2493 — the identity the router is asked as; the default is the
+  // owner of the one seeded workspace, as before.
+  FakeAuthRepository? auth,
+  FakeWorkspaceRepository? workspace,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
-        workspace: FakeWorkspaceRepository.withWorkspace(
-          featureFlags: featureFlags,
-        ),
+        auth: auth,
+        workspace:
+            workspace ??
+            FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags),
       ),
       child: const DeskiloApp(),
     ),
