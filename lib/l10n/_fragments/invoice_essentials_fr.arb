@@ -50,6 +50,10 @@
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
   },
+  "invoiceMissingSellerVatIdFormat": "Le numéro d'immatriculation TVA du workspace au format de l'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingCorrectionReason": "Le motif de la rectification (RD 1619/2012, art. 15) : choisissez R1 à R5 ci-dessous",
   "@invoiceMissingCorrectionReason": {
     "description": "#2440: invoiceMissingCorrectionReason"

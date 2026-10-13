@@ -278,7 +278,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/widgets/expense_schedule_sheet.dart': 576, // 2026-10-11 #2357 557→576: the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 546, // 2026-10-12 #2440: the correction reason joins readiness and the result (the field itself is its own file). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 548, // 2026-10-12 #2359: the sterling VRN refusal has its message. 2026-10-12 #2440: the correction reason joins readiness and the result (the field itself is its own file). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/providers/money_providers.dart': 588, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

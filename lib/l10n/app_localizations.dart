@@ -14574,6 +14574,12 @@ abstract class AppLocalizations {
   /// **'The workspace\'s VAT identification number'**
   String get invoiceMissingSellerVatId;
 
+  /// #2359: invoiceMissingSellerVatIdFormat
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)'**
+  String get invoiceMissingSellerVatIdFormat;
+
   /// #1916 invoice essentials: invoiceMissingTitle
   ///
   /// In en, this message translates to:

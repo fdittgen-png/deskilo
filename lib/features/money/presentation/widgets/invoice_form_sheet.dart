@@ -530,6 +530,8 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'seller_tax_number' => l10n.invoiceMissingSellerTaxNumber,
       'buyer_tax_id' => l10n.invoiceMissingBuyerTaxId,
       'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
+      // #2359 — HMRC's VAT registration number format.
+      'seller_vat_id_format' => l10n.invoiceMissingSellerVatIdFormat,
       // #2440 — RD 1619/2012 art. 15.
       'correction_reason' => l10n.invoiceMissingCorrectionReason,
       'vat_rate_unresolved' => l10n.invoiceMissingVatRate,

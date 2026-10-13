@@ -8543,6 +8543,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El número de identificación fiscal (IVA) del espacio';
 
   @override
+  String get invoiceMissingSellerVatIdFormat =>
+      'El número de registro de IVA del espacio en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)';
+
+  @override
   String get invoiceMissingTitle => 'Complete estos datos antes de emitir';
 
   @override

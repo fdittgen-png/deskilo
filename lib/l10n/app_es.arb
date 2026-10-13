@@ -5719,6 +5719,10 @@
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
+  "invoiceMissingSellerVatIdFormat": "El número de registro de IVA del espacio en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingTitle": "Complete estos datos antes de emitir",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"

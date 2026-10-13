@@ -85,7 +85,7 @@ bool looksLikeEuVatId(String vatId) {
   final body = id.substring(2);
   final pattern = _vatIdBodies[prefix];
   if (pattern == null) return true;
-  return RegExp('^$pattern\$').hasMatch(body);
+  return RegExp('^(?:$pattern)\$').hasMatch(body);
 }
 
 /// The identifier body per member state (VIES formats; EL is Greece's
@@ -102,6 +102,8 @@ const Map<String, String> _vatIdBodies = {
   'EL': r'\d{9}',
   'ES': r'[A-Z0-9]\d{7}[A-Z0-9]',
   'FI': r'\d{8}',
+  // #2359 — HMRC: nine digits, a branch trader's twelve, or GD/HA + 3 digits.
+  'GB': r'\d{9}|\d{12}|GD\d{3}|HA\d{3}',
   'FR': r'[A-Z0-9]{2}\d{9}',
   'HR': r'\d{11}',
   'HU': r'\d{8}',

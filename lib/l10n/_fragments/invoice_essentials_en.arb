@@ -56,6 +56,10 @@
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
   },
+  "invoiceMissingSellerVatIdFormat": "The workspace's VAT registration number in HMRC's format: GB or XI followed by nine or twelve digits (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingCorrectionReason": "The reason for the correction (RD 1619/2012 art. 15): choose R1 to R5 below",
   "@invoiceMissingCorrectionReason": {
     "description": "#2440: invoiceMissingCorrectionReason"

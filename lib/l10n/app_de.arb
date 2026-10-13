@@ -5719,6 +5719,10 @@
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
+  "invoiceMissingSellerVatIdFormat": "Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingTitle": "Vor der Ausstellung bitte ergänzen",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"

@@ -50,6 +50,10 @@
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
   },
+  "invoiceMissingSellerVatIdFormat": "Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)",
+  "@invoiceMissingSellerVatIdFormat": {
+    "description": "#2359: invoiceMissingSellerVatIdFormat"
+  },
   "invoiceMissingCorrectionReason": "Der Berichtigungsgrund (RD 1619/2012 Art. 15): unten R1 bis R5 wählen",
   "@invoiceMissingCorrectionReason": {
     "description": "#2440: invoiceMissingCorrectionReason"
