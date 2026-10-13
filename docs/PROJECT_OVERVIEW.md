@@ -630,7 +630,7 @@ The methodology is inherited 1:1 from tankstellen/Sparkilo. `docs/AGENT_RULES.md
 - No `setState` for shared state — Riverpod providers only; `@riverpod` codegen, no manual `Provider`/`StateProvider`.
 - `presentation/` never imports `data/` — go through `providers/`. `domain/` is pure Dart.
 - After `await` in widget code: `if (!context.mounted) return;`.
-- No magic strings/numbers in business logic — constants class + a pinning test.
+- No magic strings/numbers in business logic; a business value is configuration with a UI point, never a constant (docs/AGENT_RULES.md, "No hardcoded values"); a pinned constants class is only for values that are not a choice.
 - Dates, numbers, currency: locale-aware formatting only (`intl`).
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No GMS, no Firebase, no third-party tracking, no GPL dependencies.
