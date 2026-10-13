@@ -609,5 +609,12 @@
  "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
  "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
  "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
- "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."
+ "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration.",
+ "legalLandTax": "Immobilier et option pour la taxation",
+ "legalLandTaxHint": "Au Royaume-Uni, une licence d'occupation d'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l'immeuble. L'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.",
+ "legalOptionToTax": "Nous avons opté pour la taxation de l'immeuble",
+ "legalOptionDate": "Option en vigueur depuis le",
+ "legalOptionRef": "Référence de notification au HMRC",
+ "legalFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
+ "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option."
 }

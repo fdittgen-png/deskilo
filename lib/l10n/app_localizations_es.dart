@@ -18762,6 +18762,30 @@ class AppLocalizationsEs extends AppLocalizations {
       'Para llamar las cosas a su manera —puestos, plantas, reservas—: cambie los términos.';
 
   @override
+  String get ukFacilitiesPackage =>
+      'Vendemos un paquete de servicios de oficina';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'Un puesto con servicios e instalaciones en un solo paquete tributa al tipo general, con o sin opción.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'En el Reino Unido, la cesión de un puesto o de una oficina está exenta (VAT Act 1994, anexo 9, grupo 1) salvo que se haya optado por gravar el edificio. La opción grava el alquiler al tipo general y permite deducir el IVA de sus costes; hay que informar a HMRC.';
+
+  @override
+  String get ukLandTaxTitle => 'Inmuebles y opción de tributación';
+
+  @override
+  String get ukOptionToTax => 'Hemos optado por gravar el edificio';
+
+  @override
+  String get ukOptionToTaxDate => 'Opción vigente desde (AAAA-MM-DD)';
+
+  @override
+  String get ukOptionToTaxReference => 'Referencia de notificación a HMRC';
+
+  @override
   String get unblockAction => 'Desbloquear';
 
   @override

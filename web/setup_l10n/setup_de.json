@@ -609,5 +609,12 @@
  "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
  "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
  "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
- "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."
+ "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration.",
+ "legalLandTax": "Grundstücke und Option zur Besteuerung",
+ "legalLandTaxHint": "Im Vereinigten Königreich ist die Überlassung eines Arbeitsplatzes oder Büros steuerfrei (VAT Act 1994, Schedule 9, Group 1), außer Sie haben für das Gebäude zur Besteuerung optiert. Die Option macht die Miete steuerpflichtig zum Regelsatz und erlaubt den Vorsteuerabzug auf die Kosten; das HMRC muss informiert werden.",
+ "legalOptionToTax": "Wir haben für das Gebäude zur Besteuerung optiert",
+ "legalOptionDate": "Option wirksam ab",
+ "legalOptionRef": "Mitteilungsreferenz beim HMRC",
+ "legalFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
+ "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option."
 }

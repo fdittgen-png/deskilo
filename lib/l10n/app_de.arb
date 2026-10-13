@@ -11739,6 +11739,34 @@
   "tipWorkspaceSettingsPay": "Mitgliedern sagen, wie sie bezahlen: die Zahlungsanweisungen ausfüllen.",
   "tipWorkspaceSettingsSave": "Ihre Änderungen behalten: vor dem Verlassen unten auf „Speichern“ tippen.",
   "tipWorkspaceSettingsWording": "Dinge auf Ihre Art benennen – Plätze, Ebenen, Buchungen: die Begriffe ändern.",
+  "ukFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Ein Arbeitsplatz mit Leistungen und Ausstattung als ein Paket wird zum Regelsatz besteuert, mit oder ohne Option.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  },
+  "ukLandTaxHelp": "Im Vereinigten Königreich ist die Überlassung eines Arbeitsplatzes oder Büros steuerfrei (VAT Act 1994, Schedule 9, Group 1), außer Sie haben für das Gebäude zur Besteuerung optiert. Die Option macht die Miete steuerpflichtig zum Regelsatz und erlaubt den Vorsteuerabzug auf die Kosten; das HMRC muss informiert werden.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukLandTaxTitle": "Grundstücke und Option zur Besteuerung",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukOptionToTax": "Wir haben für das Gebäude zur Besteuerung optiert",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Option wirksam ab (JJJJ-MM-TT)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Mitteilungsreferenz beim HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
   "unblockAction": "Blockierung aufheben",
   "unblockDone": "Blockierung aufgehoben.",
   "usageAsk": "Die Zeit berechnen, in der ich da war",
