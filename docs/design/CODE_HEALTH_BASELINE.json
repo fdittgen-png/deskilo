@@ -28,8 +28,6 @@
     {"p":"lib/app/shell/shell_bottom_bar.dart","loc":249,"part":false,"fn":7,"cog":5,"cyc":8,"len":119,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/shell_center_button.dart","loc":129,"part":false,"fn":1,"cog":11,"cyc":12,"len":130,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/shell_destinations.dart","loc":53,"part":false,"fn":4,"cog":11,"cyc":13,"len":24,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/app/shell/shell_drawer.dart","loc":299,"part":false,"fn":4,"cog":73,"cyc":66,"len":262,"params":2,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/app/shell/shell_screen.dart","loc":317,"part":false,"fn":3,"cog":84,"cyc":55,"len":430,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/app/shell/shell_slot.dart","loc":40,"part":false,"fn":5,"cog":8,"cyc":6,"len":21,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/shell_swipe_coach_mark.dart","loc":186,"part":false,"fn":9,"cog":4,"cyc":5,"len":86,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/shell_title_bar.dart","loc":65,"part":false,"fn":2,"cog":5,"cyc":5,"len":56,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1485,8 +1483,6 @@
   "functions": [
     {"id":"lib/app/entry_intents.dart#EntryIntentDraft.decode(String raw)","cog":17,"cyc":26,"len":58,"params":1},
     {"id":"lib/app/route_policy.dart#resolveDestination(RouteRequest request,RouteFacts facts)","cog":40,"cyc":48,"len":141,"params":2},
-    {"id":"lib/app/shell/shell_drawer.dart#ShellDrawer.build(BuildContext context,WidgetRef ref)","cog":73,"cyc":66,"len":262,"params":2},
-    {"id":"lib/app/shell/shell_screen.dart#ShellScreen.build(BuildContext context,WidgetRef ref)","cog":84,"cyc":55,"len":430,"params":2},
     {"id":"lib/core/backend/connection_outcome.dart#classifyConnectionError(Object error,{required String source,bool afterSend})","cog":23,"cyc":27,"len":55,"params":3},
     {"id":"lib/core/backend/native_federation_flow.dart#NativeFederationFlow.complete(Uri callback)","cog":25,"cyc":28,"len":116,"params":1},
     {"id":"lib/core/backend/secondary_federation.dart#SecondaryFederation.complete(Uri uri)","cog":25,"cyc":27,"len":122,"params":1},

@@ -234,7 +234,6 @@ const Map<String, int> _baseline = {
   // 2026-09-28 #1791: one import for the separately implemented account requests entry.
   'lib/features/workspace/presentation/screens/onboarding_screen.dart': 637, // 2026-10-09 #2313 633→637: every control keyed for the task recorder; 2026-09-28 #1652 602→633: Join is selected by an invitation errand, a link the app was opened with, or an invitation kept for this server; the join journey itself moved to widgets/invitation_join_panel.dart.
 
-  'lib/app/shell/shell_screen.dart': 507, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/core/backend/backend_settings.dart': 572, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
