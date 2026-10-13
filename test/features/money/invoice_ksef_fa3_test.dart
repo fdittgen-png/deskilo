@@ -4,6 +4,7 @@
 // in CI (einvoice_samples_test + the official XSD); these pin what the
 // schema leaves to the issuer — which band a rate fills, how a buyer is
 // identified, the annotations, a correction.
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_ksef_fa3.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -84,13 +85,11 @@ XmlDocument _doc({
   InvoiceParty buyer = _buyer,
   DateTime? correctedIssuedAt,
 }) => XmlDocument.parse(
-  buildInvoiceKsefFa3(
-    invoice: invoice ?? _invoice(),
+  buildInvoiceKsefFa3(EInvoiceInput(invoice: invoice ?? _invoice(),
     seller: _seller,
     buyer: buyer,
-    lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    correctedIssuedAt: correctedIssuedAt,
-  ),
+    lineText: (line) => invoiceLineText(const ReportStrings(), line)),
+    correctedIssuedAt: correctedIssuedAt),
 );
 
 extension on XmlDocument {

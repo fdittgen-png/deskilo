@@ -6,6 +6,7 @@ import 'package:xml/xml.dart';
 
 import '../../../core/money/money_text.dart';
 import 'e_invoice_totals.dart';
+import 'einvoice_input.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -28,12 +29,8 @@ import 'vat_regime.dart';
 ///
 /// Element order follows the XSD sequences: SdI rejects a schema-invalid
 /// file before any of its own checks run.
-String buildInvoiceFatturaPa({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String Function(InvoiceLine line) lineText,
-  String iban = '',
+String buildInvoiceFatturaPa(
+  EInvoiceInput input, {
 
   /// The intermediary that transmits the file ('IT01234567890'); the
   /// seller itself when it sends directly.
@@ -41,39 +38,77 @@ String buildInvoiceFatturaPa({
 
   /// ProgressivoInvio — the sender's own unique id for this file.
   String progressive = '',
-  DateTime? dueDate,
-}) {
-  final EInvoiceTotals(
-    :regime,
-    :category,
-    :exemptionText,
-    :supplies,
-    :supplyBreakdown,
-  ) = eInvoiceTotalsOf(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-  );
-  final creditNote = invoice.isCreditNote;
-  final int sign = creditNote ? -1 : 1;
-  final publicBuyer =
+}) => _FatturaPaWriter(input, transmitterId, progressive).write();
+
+/// The FatturaPA document, one method per section of it.
+class _FatturaPaWriter {
+  _FatturaPaWriter(this.input, this.transmitterId, this.progressive)
+    : totals = eInvoiceTotalsOf(
+        invoice: input.invoice,
+        seller: input.seller,
+        buyer: input.buyer,
+      );
+
+  final EInvoiceInput input;
+  final String transmitterId;
+  final String progressive;
+  final EInvoiceTotals totals;
+  final XmlBuilder builder = XmlBuilder();
+
+  Invoice get invoice => input.invoice;
+  InvoiceParty get seller => input.seller;
+  InvoiceParty get buyer => input.buyer;
+  List<InvoiceVatTotal> get supplyBreakdown => totals.supplyBreakdown;
+  int get taxCents =>
+      supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
+  bool get creditNote => invoice.isCreditNote;
+  int get sign => creditNote ? -1 : 1;
+  bool get publicBuyer =>
       buyer.endpointScheme == 'IT:IPA' ||
       RegExp(r'^[A-Z0-9]{6}$').hasMatch(buyer.endpointId);
-  final format = publicBuyer ? 'FPA12' : 'FPR12';
-  String amount(int minor) =>
-      _twoDecimals(minorToText(minor, invoice.currency));
-  final grossCents =
+  String get format => publicBuyer ? 'FPA12' : 'FPR12';
+  int get grossCents =>
       sign *
       supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netCents + t.vatCents);
-  final taxCents = supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
-  final natures = {
-    for (final t in supplyBreakdown) ?_natura(t.category, buyer),
-  };
 
-  final builder = XmlBuilder()
-    ..processing('xml', 'version="1.0" encoding="UTF-8"');
+  String amount(int minor) =>
+      _twoDecimals(minorToText(minor, invoice.currency));
+
   void el(String name, String text) =>
       builder.element(name, nest: () => builder.text(text));
+
+  String write() {
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element(
+      'p:FatturaElettronica',
+      nest: () {
+        builder
+          ..namespace(
+            'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2',
+            'p',
+          )
+          ..namespace('http://www.w3.org/2000/09/xmldsig#', 'ds')
+          ..attribute('versione', format);
+        builder.element(
+          'FatturaElettronicaHeader',
+          nest: () {
+            transmission();
+            supplier();
+            customer();
+          },
+        );
+        builder.element(
+          'FatturaElettronicaBody',
+          nest: () {
+            generalData();
+            goodsAndServices();
+            payment();
+          },
+        );
+      },
+    );
+    return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+  }
 
   void idFiscale(String name, String vatId, String country) {
     final (paese, codice) = _splitVatId(vatId, country);
@@ -108,229 +143,219 @@ String buildInvoiceFatturaPa({
     );
   }
 
-  builder.element(
-    'p:FatturaElettronica',
-    nest: () {
-      builder
-        ..namespace(
-          'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2',
-          'p',
-        )
-        ..namespace('http://www.w3.org/2000/09/xmldsig#', 'ds')
-        ..attribute('versione', format);
+  void transmission() {
+    builder.element(
+      'DatiTrasmissione',
+      nest: () {
+        idFiscale(
+          'IdTrasmittente',
+          transmitterId.isNotEmpty
+              ? transmitterId
+              : seller.vatId.isNotEmpty
+              ? seller.vatId
+              : seller.legalId,
+          seller.country,
+        );
+        el('ProgressivoInvio', _progressive(progressive, invoice.number));
+        el('FormatoTrasmissione', format);
+        final pec = buyer.endpointId.contains('@');
+        el('CodiceDestinatario', _recipientCode(buyer, publicBuyer: publicBuyer));
+        if (pec) el('PECDestinatario', buyer.endpointId.trim());
+      },
+    );
+  }
 
-      builder.element(
-        'FatturaElettronicaHeader',
-        nest: () {
-          builder.element(
-            'DatiTrasmissione',
-            nest: () {
-              idFiscale(
-                'IdTrasmittente',
-                transmitterId.isNotEmpty
-                    ? transmitterId
-                    : seller.vatId.isNotEmpty
-                    ? seller.vatId
-                    : seller.legalId,
-                seller.country,
-              );
-              el('ProgressivoInvio', _progressive(progressive, invoice.number));
-              el('FormatoTrasmissione', format);
-              final pec = buyer.endpointId.contains('@');
-              el(
-                'CodiceDestinatario',
-                _recipientCode(buyer, publicBuyer: publicBuyer),
-              );
-              if (pec) el('PECDestinatario', buyer.endpointId.trim());
-            },
-          );
-
-          builder.element(
-            'CedentePrestatore',
-            nest: () {
-              builder.element(
-                'DatiAnagrafici',
-                nest: () {
-                  idFiscale(
-                    'IdFiscaleIVA',
-                    seller.vatId.isNotEmpty ? seller.vatId : seller.legalId,
-                    seller.country,
-                  );
-                  if (_fiscalCode(seller.legalId) case final cf?) {
-                    el('CodiceFiscale', cf);
-                  }
-                  builder.element(
-                    'Anagrafica',
-                    nest: () {
-                      el('Denominazione', _latin(seller.name, 80, '-'));
-                    },
-                  );
-                  // RF01 ordinary; RF19 the flat-rate regime (forfettario), the
-                  // Italian reading of a seller that charges no VAT.
-                  el(
-                    'RegimeFiscale',
-                    regime == VatRegime.vatRegistered ? 'RF01' : 'RF19',
-                  );
-                },
-              );
-              sede(seller);
-            },
-          );
-
-          builder.element(
-            'CessionarioCommittente',
-            nest: () {
-              builder.element(
-                'DatiAnagrafici',
-                nest: () {
-                  if (buyer.vatId.isNotEmpty) {
-                    idFiscale('IdFiscaleIVA', buyer.vatId, buyer.country);
-                  }
-                  if (_fiscalCode(buyer.legalId) case final cf?) {
-                    el('CodiceFiscale', cf);
-                  }
-                  builder.element(
-                    'Anagrafica',
-                    nest: () {
-                      el('Denominazione', _latin(buyer.name, 80, '-'));
-                    },
-                  );
-                },
-              );
-              sede(buyer);
-            },
-          );
-        },
-      );
-
-      builder.element(
-        'FatturaElettronicaBody',
-        nest: () {
-          builder.element(
-            'DatiGenerali',
-            nest: () {
-              builder.element(
-                'DatiGeneraliDocumento',
-                nest: () {
-                  el('TipoDocumento', creditNote ? 'TD04' : 'TD01');
-                  el('Divisa', invoice.currency);
-                  el('Data', _date(invoice.issuedAt));
-                  el('Numero', _basic(invoice.number, 20));
-                  // Stamp duty: €2 on a document above €77.47 that carries no
-                  // VAT because the operation is exempt or outside its scope —
-                  // not on exports, intra-EU supplies or a reverse charge.
-                  if (taxCents == 0 &&
-                      grossCents > 7747 &&
-                      natures.any(_bolloNatures.contains)) {
-                    builder.element(
-                      'DatiBollo',
-                      nest: () {
-                        el('BolloVirtuale', 'SI');
-                        el('ImportoBollo', '2.00');
-                      },
-                    );
-                  }
-                  el('ImportoTotaleDocumento', amount(grossCents));
-                },
-              );
-              if (invoice.replacesNumber.isNotEmpty) {
-                builder.element(
-                  'DatiFattureCollegate',
-                  nest: () {
-                    el('IdDocumento', _basic(invoice.replacesNumber, 20));
-                  },
-                );
-              }
-            },
-          );
-
-          builder.element(
-            'DatiBeniServizi',
-            nest: () {
-              for (final (i, line) in supplies.indexed) {
-                final lineNet =
-                    sign * vatSplit(line.amountCents, line.vatPercent).netCents;
-                // The same divisibility rule as the UBL: quantity × price must
-                // be the line total SdI recomputes.
-                final units =
-                    line.quantity > 1 && lineNet.abs() % line.quantity == 0
-                    ? line.quantity
-                    : 1;
-                final lineCategory = line.vatCategory.isNotEmpty
-                    ? line.vatCategory
-                    : line.vatPercent > 0
-                    ? 'S'
-                    : category;
-                builder.element(
-                  'DettaglioLinee',
-                  nest: () {
-                    el('NumeroLinea', '${i + 1}');
-                    el('Descrizione', _latin(lineText(line), 1000, '-'));
-                    if (units > 1) el('Quantita', '$units.00');
-                    el('PrezzoUnitario', amount(lineNet ~/ units));
-                    el('PrezzoTotale', amount(lineNet));
-                    el('AliquotaIVA', _rate(line.vatPercent));
-                    if (line.vatPercent == 0) {
-                      el('Natura', _natura(lineCategory, buyer) ?? 'N2.2');
-                    }
-                  },
-                );
-              }
-              for (final total in supplyBreakdown) {
-                final natura = total.percent == 0
-                    ? _natura(total.category, buyer) ?? 'N2.2'
-                    : null;
-                builder.element(
-                  'DatiRiepilogo',
-                  nest: () {
-                    el('AliquotaIVA', _rate(total.percent));
-                    if (natura != null) el('Natura', natura);
-                    el('ImponibileImporto', amount(sign * total.netCents));
-                    el('Imposta', amount(sign * total.vatCents));
-                    if (natura == null) el('EsigibilitaIVA', 'I');
-                    if (natura != null && exemptionText.isNotEmpty) {
-                      el(
-                        'RiferimentoNormativo',
-                        _latin(exemptionText, 100, '-'),
-                      );
-                    }
-                  },
-                );
-              }
-            },
-          );
-
-          // Only an invoice is paid; a credit note settles by refund.
-          final payable = invoice.totalCents;
-          if (payable > 0) {
+  void supplier() {
+    builder.element(
+      'CedentePrestatore',
+      nest: () {
+        builder.element(
+          'DatiAnagrafici',
+          nest: () {
+            idFiscale(
+              'IdFiscaleIVA',
+              seller.vatId.isNotEmpty ? seller.vatId : seller.legalId,
+              seller.country,
+            );
+            if (_fiscalCode(seller.legalId) case final cf?) {
+              el('CodiceFiscale', cf);
+            }
             builder.element(
-              'DatiPagamento',
+              'Anagrafica',
               nest: () {
-                // TP02 — payment in full; MP05 — credit transfer.
-                el('CondizioniPagamento', 'TP02');
-                builder.element(
-                  'DettaglioPagamento',
-                  nest: () {
-                    el('ModalitaPagamento', 'MP05');
-                    if (dueDate != null) {
-                      el('DataScadenzaPagamento', _date(dueDate));
-                    }
-                    el('ImportoPagamento', amount(payable));
-                    final account = iban.replaceAll(' ', '').toUpperCase();
-                    if (RegExp(r'^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$')
-                        .hasMatch(account)) {
-                      el('IBAN', account);
-                    }
-                  },
-                );
+                el('Denominazione', _latin(seller.name, 80, '-'));
               },
             );
-          }
-        },
-      );
-    },
-  );
-  return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+            // RF01 ordinary; RF19 the flat-rate regime (forfettario), the
+            // Italian reading of a seller that charges no VAT.
+            el(
+              'RegimeFiscale',
+              totals.regime == VatRegime.vatRegistered ? 'RF01' : 'RF19',
+            );
+          },
+        );
+        sede(seller);
+      },
+    );
+  }
+
+  void customer() {
+    builder.element(
+      'CessionarioCommittente',
+      nest: () {
+        builder.element(
+          'DatiAnagrafici',
+          nest: () {
+            if (buyer.vatId.isNotEmpty) {
+              idFiscale('IdFiscaleIVA', buyer.vatId, buyer.country);
+            }
+            if (_fiscalCode(buyer.legalId) case final cf?) {
+              el('CodiceFiscale', cf);
+            }
+            builder.element(
+              'Anagrafica',
+              nest: () {
+                el('Denominazione', _latin(buyer.name, 80, '-'));
+              },
+            );
+          },
+        );
+        sede(buyer);
+      },
+    );
+  }
+
+  void generalData() {
+    final natures = {
+      for (final t in supplyBreakdown) ?_natura(t.category, buyer),
+    };
+    builder.element(
+      'DatiGenerali',
+      nest: () {
+        builder.element(
+          'DatiGeneraliDocumento',
+          nest: () {
+            el('TipoDocumento', creditNote ? 'TD04' : 'TD01');
+            el('Divisa', invoice.currency);
+            el('Data', _date(invoice.issuedAt));
+            el('Numero', _basic(invoice.number, 20));
+            // Stamp duty: €2 on a document above €77.47 that carries no
+            // VAT because the operation is exempt or outside its scope —
+            // not on exports, intra-EU supplies or a reverse charge.
+            if (taxCents == 0 &&
+                grossCents > 7747 &&
+                natures.any(_bolloNatures.contains)) {
+              builder.element(
+                'DatiBollo',
+                nest: () {
+                  el('BolloVirtuale', 'SI');
+                  el('ImportoBollo', '2.00');
+                },
+              );
+            }
+            el('ImportoTotaleDocumento', amount(grossCents));
+          },
+        );
+        if (invoice.replacesNumber.isNotEmpty) {
+          builder.element(
+            'DatiFattureCollegate',
+            nest: () {
+              el('IdDocumento', _basic(invoice.replacesNumber, 20));
+            },
+          );
+        }
+      },
+    );
+  }
+
+  void goodsAndServices() {
+    builder.element(
+      'DatiBeniServizi',
+      nest: () {
+        for (final (i, line) in totals.supplies.indexed) {
+          detailLine(i, line);
+        }
+        for (final total in supplyBreakdown) {
+          vatSummary(total);
+        }
+      },
+    );
+  }
+
+  void detailLine(int index, InvoiceLine line) {
+    final lineNet = sign * vatSplit(line.amountCents, line.vatPercent).netCents;
+    // The same divisibility rule as the UBL: quantity × price must
+    // be the line total SdI recomputes.
+    final units = line.quantity > 1 && lineNet.abs() % line.quantity == 0
+        ? line.quantity
+        : 1;
+    final lineCategory = line.vatCategory.isNotEmpty
+        ? line.vatCategory
+        : line.vatPercent > 0
+        ? 'S'
+        : totals.category;
+    builder.element(
+      'DettaglioLinee',
+      nest: () {
+        el('NumeroLinea', '${index + 1}');
+        el('Descrizione', _latin(input.lineText(line), 1000, '-'));
+        if (units > 1) el('Quantita', '$units.00');
+        el('PrezzoUnitario', amount(lineNet ~/ units));
+        el('PrezzoTotale', amount(lineNet));
+        el('AliquotaIVA', _rate(line.vatPercent));
+        if (line.vatPercent == 0) {
+          el('Natura', _natura(lineCategory, buyer) ?? 'N2.2');
+        }
+      },
+    );
+  }
+
+  void vatSummary(InvoiceVatTotal total) {
+    final natura = total.percent == 0
+        ? _natura(total.category, buyer) ?? 'N2.2'
+        : null;
+    builder.element(
+      'DatiRiepilogo',
+      nest: () {
+        el('AliquotaIVA', _rate(total.percent));
+        if (natura != null) el('Natura', natura);
+        el('ImponibileImporto', amount(sign * total.netCents));
+        el('Imposta', amount(sign * total.vatCents));
+        if (natura == null) el('EsigibilitaIVA', 'I');
+        if (natura != null && totals.exemptionText.isNotEmpty) {
+          el('RiferimentoNormativo', _latin(totals.exemptionText, 100, '-'));
+        }
+      },
+    );
+  }
+
+  /// Only an invoice is paid; a credit note settles by refund.
+  void payment() {
+    final payable = invoice.totalCents;
+    if (payable <= 0) return;
+    builder.element(
+      'DatiPagamento',
+      nest: () {
+        // TP02 — payment in full; MP05 — credit transfer.
+        el('CondizioniPagamento', 'TP02');
+        builder.element(
+          'DettaglioPagamento',
+          nest: () {
+            el('ModalitaPagamento', 'MP05');
+            final dueDate = input.dueDate;
+            if (dueDate != null) {
+              el('DataScadenzaPagamento', _date(dueDate));
+            }
+            el('ImportoPagamento', amount(payable));
+            final account = input.iban.replaceAll(' ', '').toUpperCase();
+            if (RegExp(r'^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$').hasMatch(account)) {
+              el('IBAN', account);
+            }
+          },
+        );
+      },
+    );
+  }
 }
 
 /// The Natura that stamp duty applies to: exempt or outside-scope

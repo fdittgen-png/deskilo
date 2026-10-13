@@ -23,22 +23,8 @@ String buildChannelEInvoiceXml(EInvoiceFormat format, EInvoiceInput input) =>
     'Factur-X is a PDF',
   ),
   EInvoiceFormat.en16931Cii => buildInvoiceCii(input),
-  EInvoiceFormat.fatturaPa => buildInvoiceFatturaPa(
-    invoice: input.invoice,
-    seller: input.seller,
-    buyer: input.buyer,
-    lineText: input.lineText,
-    iban: input.iban,
-    dueDate: input.dueDate,
-  ),
-  EInvoiceFormat.ksefFa3 => buildInvoiceKsefFa3(
-    invoice: input.invoice,
-    seller: input.seller,
-    buyer: input.buyer,
-    lineText: input.lineText,
-    iban: input.iban,
-    dueDate: input.dueDate,
-  ),
+  EInvoiceFormat.fatturaPa => buildInvoiceFatturaPa(input),
+  EInvoiceFormat.ksefFa3 => buildInvoiceKsefFa3(input),
   EInvoiceFormat.en16931Ubl ||
   EInvoiceFormat.peppolBis ||
   EInvoiceFormat.xrechnung ||

@@ -3,6 +3,7 @@ import 'package:xml/xml.dart';
 
 import '../../../core/money/money_text.dart';
 import 'e_invoice_totals.dart';
+import 'einvoice_input.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 
@@ -23,12 +24,8 @@ const _namespace = 'http://crd.gov.pl/wzor/2025/06/25/13775/';
 ///
 /// A correction (KOR) states the CHANGE: its amounts stay negative,
 /// unlike the UBL credit note, which states what is credited.
-String buildInvoiceKsefFa3({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String Function(InvoiceLine line) lineText,
-  String iban = '',
+String buildInvoiceKsefFa3(
+  EInvoiceInput input, {
 
   /// DataWytworzeniaFa — when the file was produced. Defaults to the
   /// issue date, so the same invoice always renders the same bytes.
@@ -37,34 +34,63 @@ String buildInvoiceKsefFa3({
 
   /// The corrected invoice's own issue date, which a KOR must state.
   DateTime? correctedIssuedAt,
-  DateTime? dueDate,
-}) {
-  final EInvoiceTotals(:category, :exemptionText, :supplies, :supplyBreakdown) =
-      eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
-  final correction = invoice.isCreditNote;
+}) => _KsefWriter(input, generatedAt, systemInfo, correctedIssuedAt).write();
+
+/// The FA(3) document, one method per section of it.
+class _KsefWriter {
+  _KsefWriter(
+    this.input,
+    this.generatedAt,
+    this.systemInfo,
+    this.correctedIssuedAt,
+  ) : totals = eInvoiceTotalsOf(
+        invoice: input.invoice,
+        seller: input.seller,
+        buyer: input.buyer,
+      ) {
+    // Band → (net, tax). Iterated in schema order below.
+    for (final total in totals.supplyBreakdown) {
+      final band = _band(total.percent, total.category, buyer);
+      final before = bands[band] ?? (net: 0, tax: 0);
+      bands[band] = (
+        net: before.net + total.netCents,
+        tax: before.tax + total.vatCents,
+      );
+    }
+  }
+
+  final EInvoiceInput input;
+  final DateTime? generatedAt;
+  final String systemInfo;
+  final DateTime? correctedIssuedAt;
+  final EInvoiceTotals totals;
+  final XmlBuilder builder = XmlBuilder();
+  final Map<String, ({int net, int tax})> bands = {};
+
+  Invoice get invoice => input.invoice;
+  InvoiceParty get seller => input.seller;
+  InvoiceParty get buyer => input.buyer;
+  bool get correction => invoice.isCreditNote;
+
   String amount(int minor) => minorToText(minor, invoice.currency);
 
-  // Band → (net, tax). Iterated in schema order below.
-  final bands = <String, ({int net, int tax})>{};
-  for (final total in supplyBreakdown) {
-    final band = _band(total.percent, total.category, buyer);
-    final before = bands[band] ?? (net: 0, tax: 0);
-    bands[band] = (
-      net: before.net + total.netCents,
-      tax: before.tax + total.vatCents,
-    );
-  }
-  final grossCents = supplyBreakdown.fold<int>(
-    0,
-    (sum, t) => sum + t.netCents + t.vatCents,
-  );
-  final exempt = bands.containsKey('7');
-  final domesticReverse = bands.containsKey('10');
-
-  final builder = XmlBuilder()
-    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   void el(String name, String text) =>
       builder.element(name, nest: () => builder.text(text));
+
+  String write() {
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element(
+      'Faktura',
+      nest: () {
+        builder.namespace(_namespace);
+        header();
+        seller1();
+        buyer2();
+        invoiceBody();
+      },
+    );
+    return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+  }
 
   void address(InvoiceParty p) {
     builder.element(
@@ -81,211 +107,237 @@ String buildInvoiceKsefFa3({
     );
   }
 
-  builder.element(
-    'Faktura',
-    nest: () {
-      builder.namespace(_namespace);
-      builder.element(
-        'Naglowek',
-        nest: () {
-          builder.element(
-            'KodFormularza',
-            nest: () {
-              builder
-                ..attribute('kodSystemowy', 'FA (3)')
-                ..attribute('wersjaSchemy', '1-0E')
-                ..text('FA');
-            },
-          );
-          el('WariantFormularza', '3');
-          el('DataWytworzeniaFa', _dateTime(generatedAt ?? invoice.issuedAt));
-          el('SystemInfo', _token(systemInfo, 256, 'DesKilo'));
-        },
-      );
+  void header() {
+    builder.element(
+      'Naglowek',
+      nest: () {
+        builder.element(
+          'KodFormularza',
+          nest: () {
+            builder
+              ..attribute('kodSystemowy', 'FA (3)')
+              ..attribute('wersjaSchemy', '1-0E')
+              ..text('FA');
+          },
+        );
+        el('WariantFormularza', '3');
+        el('DataWytworzeniaFa', _dateTime(generatedAt ?? invoice.issuedAt));
+        el('SystemInfo', _token(systemInfo, 256, 'DesKilo'));
+      },
+    );
+  }
 
-      builder.element(
-        'Podmiot1',
-        nest: () {
-          builder.element(
-            'DaneIdentyfikacyjne',
-            nest: () {
-              el(
-                'NIP',
-                _nip(seller.vatId.isNotEmpty ? seller.vatId : seller.legalId),
-              );
-              el('Nazwa', _token(seller.name, 512, '-'));
-            },
-          );
-          address(seller);
-        },
-      );
-
-      builder.element(
-        'Podmiot2',
-        nest: () {
-          builder.element(
-            'DaneIdentyfikacyjne',
-            nest: () {
-              final id = _buyerId(buyer);
-              switch (id) {
-                case _Nip(:final nip):
-                  el('NIP', nip);
-                case _EuVat(:final country, :final number):
-                  el('KodUE', country);
-                  el('NrVatUE', number);
-                case _Foreign(:final country, :final number):
-                  el('KodKraju', country);
-                  el('NrID', number);
-                case _NoId():
-                  el('BrakID', '1');
-              }
-              el('Nazwa', _token(buyer.name, 512, '-'));
-            },
-          );
-          address(buyer);
-          // JST / GV: 2 = the buyer is neither a local-government unit nor a
-          // VAT group member — the fields FA(3) made mandatory.
-          el('JST', '2');
-          el('GV', '2');
-        },
-      );
-
-      builder.element(
-        'Fa',
-        nest: () {
-          el('KodWaluty', invoice.currency);
-          el('P_1', _date(invoice.issuedAt));
-          el('P_2', _token(invoice.number, 256, '-'));
-          final period = _periodDates(invoice.period);
-          if (period != null) {
-            builder.element(
-              'OkresFa',
-              nest: () {
-                el('P_6_Od', period.start);
-                el('P_6_Do', period.end);
-              },
+  void seller1() {
+    builder.element(
+      'Podmiot1',
+      nest: () {
+        builder.element(
+          'DaneIdentyfikacyjne',
+          nest: () {
+            el(
+              'NIP',
+              _nip(seller.vatId.isNotEmpty ? seller.vatId : seller.legalId),
             );
-          }
-          for (final band in ['1', '2', '3', '4']) {
-            final figures = bands[band];
-            if (figures == null) continue;
-            el('P_13_$band', amount(figures.net));
-            el('P_14_$band', amount(figures.tax));
-          }
-          for (final band in ['6_1', '6_2', '6_3', '7', '8', '9', '10']) {
-            final figures = bands[band];
-            if (figures != null) el('P_13_$band', amount(figures.net));
-          }
-          el('P_15', amount(grossCents));
-          builder.element(
-            'Adnotacje',
+            el('Nazwa', _token(seller.name, 512, '-'));
+          },
+        );
+        address(seller);
+      },
+    );
+  }
+
+  void buyer2() {
+    builder.element(
+      'Podmiot2',
+      nest: () {
+        builder.element(
+          'DaneIdentyfikacyjne',
+          nest: () {
+            switch (_buyerId(buyer)) {
+              case _Nip(:final nip):
+                el('NIP', nip);
+              case _EuVat(:final country, :final number):
+                el('KodUE', country);
+                el('NrVatUE', number);
+              case _Foreign(:final country, :final number):
+                el('KodKraju', country);
+                el('NrID', number);
+              case _NoId():
+                el('BrakID', '1');
+            }
+            el('Nazwa', _token(buyer.name, 512, '-'));
+          },
+        );
+        address(buyer);
+        // JST / GV: 2 = the buyer is neither a local-government unit nor a
+        // VAT group member — the fields FA(3) made mandatory.
+        el('JST', '2');
+        el('GV', '2');
+      },
+    );
+  }
+
+  void invoiceBody() {
+    builder.element(
+      'Fa',
+      nest: () {
+        el('KodWaluty', invoice.currency);
+        el('P_1', _date(invoice.issuedAt));
+        el('P_2', _token(invoice.number, 256, '-'));
+        billingPeriod();
+        bandTotals();
+        annotations();
+        el('RodzajFaktury', correction ? 'KOR' : 'VAT');
+        correctedInvoice();
+        for (final (i, line) in totals.supplies.indexed) {
+          rowOf(i, line);
+        }
+        payment();
+      },
+    );
+  }
+
+  void billingPeriod() {
+    final period = _periodDates(invoice.period);
+    if (period == null) return;
+    builder.element(
+      'OkresFa',
+      nest: () {
+        el('P_6_Od', period.start);
+        el('P_6_Do', period.end);
+      },
+    );
+  }
+
+  void bandTotals() {
+    for (final band in ['1', '2', '3', '4']) {
+      final figures = bands[band];
+      if (figures == null) continue;
+      el('P_13_$band', amount(figures.net));
+      el('P_14_$band', amount(figures.tax));
+    }
+    for (final band in ['6_1', '6_2', '6_3', '7', '8', '9', '10']) {
+      final figures = bands[band];
+      if (figures != null) el('P_13_$band', amount(figures.net));
+    }
+    final grossCents = totals.supplyBreakdown.fold<int>(
+      0,
+      (sum, t) => sum + t.netCents + t.vatCents,
+    );
+    el('P_15', amount(grossCents));
+  }
+
+  void annotations() {
+    final exempt = bands.containsKey('7');
+    final domesticReverse = bands.containsKey('10');
+    builder.element(
+      'Adnotacje',
+      nest: () {
+        el('P_16', '2'); // no cash accounting
+        el('P_17', '2'); // not self-billed
+        el('P_18', domesticReverse ? '1' : '2'); // reverse charge
+        el('P_18A', '2'); // no split payment
+        builder
+          ..element(
+            'Zwolnienie',
             nest: () {
-              el('P_16', '2'); // no cash accounting
-              el('P_17', '2'); // not self-billed
-              el('P_18', domesticReverse ? '1' : '2'); // reverse charge
-              el('P_18A', '2'); // no split payment
-              builder
-                ..element(
-                  'Zwolnienie',
-                  nest: () {
-                    if (exempt) {
-                      el('P_19', '1');
-                      el('P_19A', _token(exemptionText, 256, 'Art. 43 ust. 1'));
-                    } else {
-                      el('P_19N', '1');
-                    }
-                  },
-                )
-                ..element(
-                  'NoweSrodkiTransportu',
-                  nest: () {
-                    el('P_22N', '1');
-                  },
-                );
-              el('P_23', '2'); // not a simplified triangular procedure
-              builder.element(
-                'PMarzy',
-                nest: () {
-                  el('P_PMarzyN', '1');
-                },
-              );
-            },
-          );
-          el('RodzajFaktury', correction ? 'KOR' : 'VAT');
-          if (correction && invoice.replacesNumber.isNotEmpty) {
-            builder.element(
-              'DaneFaKorygowanej',
-              nest: () {
+              if (exempt) {
+                el('P_19', '1');
                 el(
-                  'DataWystFaKorygowanej',
-                  _date(correctedIssuedAt ?? invoice.issuedAt),
+                  'P_19A',
+                  _token(totals.exemptionText, 256, 'Art. 43 ust. 1'),
                 );
-                el('NrFaKorygowanej', _token(invoice.replacesNumber, 256, '-'));
-                el('NrKSeFN', '1'); // the corrected invoice had no KSeF number
-              },
-            );
-          }
-          for (final (i, line) in supplies.indexed) {
-            final lineNet = vatSplit(
-              line.amountCents,
-              line.vatPercent,
-            ).netCents;
-            final units =
-                line.quantity > 1 && lineNet.abs() % line.quantity == 0
-                ? line.quantity
-                : 1;
-            final lineCategory = line.vatCategory.isNotEmpty
-                ? line.vatCategory
-                : line.vatPercent > 0
-                ? 'S'
-                : category;
-            builder.element(
-              'FaWiersz',
-              nest: () {
-                el('NrWierszaFa', '${i + 1}');
-                el('P_7', _token(lineText(line), 512, '-'));
-                el('P_8A', 'szt.');
-                el('P_8B', '$units');
-                el('P_9A', amount(lineNet ~/ units));
-                el('P_11', amount(lineNet));
-                if (_rateCode(line.vatPercent, lineCategory, buyer)
-                    case final code?) {
-                  el('P_12', code);
-                }
-              },
-            );
-          }
-          final payable = invoice.totalCents;
-          final account = iban.replaceAll(' ', '').toUpperCase();
-          if (payable > 0 && (dueDate != null || account.isNotEmpty)) {
-            builder.element(
-              'Platnosc',
-              nest: () {
-                if (dueDate != null) {
-                  builder.element(
-                    'TerminPlatnosci',
-                    nest: () {
-                      el('Termin', _date(dueDate));
-                    },
-                  );
-                }
-                el('FormaPlatnosci', '6'); // credit transfer
-                if (account.length >= 10 && account.length <= 34) {
-                  builder.element(
-                    'RachunekBankowy',
-                    nest: () {
-                      el('NrRB', account);
-                    },
-                  );
-                }
-              },
-            );
-          }
-        },
-      );
-    },
-  );
-  return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+              } else {
+                el('P_19N', '1');
+              }
+            },
+          )
+          ..element(
+            'NoweSrodkiTransportu',
+            nest: () {
+              el('P_22N', '1');
+            },
+          );
+        el('P_23', '2'); // not a simplified triangular procedure
+        builder.element(
+          'PMarzy',
+          nest: () {
+            el('P_PMarzyN', '1');
+          },
+        );
+      },
+    );
+  }
+
+  void correctedInvoice() {
+    if (!correction || invoice.replacesNumber.isEmpty) return;
+    builder.element(
+      'DaneFaKorygowanej',
+      nest: () {
+        el(
+          'DataWystFaKorygowanej',
+          _date(correctedIssuedAt ?? invoice.issuedAt),
+        );
+        el('NrFaKorygowanej', _token(invoice.replacesNumber, 256, '-'));
+        el('NrKSeFN', '1'); // the corrected invoice had no KSeF number
+      },
+    );
+  }
+
+  void rowOf(int index, InvoiceLine line) {
+    final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+    final units = line.quantity > 1 && lineNet.abs() % line.quantity == 0
+        ? line.quantity
+        : 1;
+    final lineCategory = line.vatCategory.isNotEmpty
+        ? line.vatCategory
+        : line.vatPercent > 0
+        ? 'S'
+        : totals.category;
+    builder.element(
+      'FaWiersz',
+      nest: () {
+        el('NrWierszaFa', '${index + 1}');
+        el('P_7', _token(input.lineText(line), 512, '-'));
+        el('P_8A', 'szt.');
+        el('P_8B', '$units');
+        el('P_9A', amount(lineNet ~/ units));
+        el('P_11', amount(lineNet));
+        if (_rateCode(line.vatPercent, lineCategory, buyer) case final code?) {
+          el('P_12', code);
+        }
+      },
+    );
+  }
+
+  void payment() {
+    final payable = invoice.totalCents;
+    final dueDate = input.dueDate;
+    final account = input.iban.replaceAll(' ', '').toUpperCase();
+    if (payable <= 0 || (dueDate == null && account.isEmpty)) return;
+    builder.element(
+      'Platnosc',
+      nest: () {
+        if (dueDate != null) {
+          builder.element(
+            'TerminPlatnosci',
+            nest: () {
+              el('Termin', _date(dueDate));
+            },
+          );
+        }
+        el('FormaPlatnosci', '6'); // credit transfer
+        if (account.length >= 10 && account.length <= 34) {
+          builder.element(
+            'RachunekBankowy',
+            nest: () {
+              el('NrRB', account);
+            },
+          );
+        }
+      },
+    );
+  }
 }
 
 /// Which FA(3) field carries a breakdown entry: the rate bands 1–4 for
