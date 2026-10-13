@@ -177,10 +177,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       eInvoiceInboxRepositoryProvider
           .overrideWithValue(FakeEInvoiceInboxRepository()), // #2358
-      // #2477 — the tax reference store in memory (the seed's rows).
-      taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()),
-      // #1869 — book profiles in memory.
-      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
+      taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), // #2477 in memory
+      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),

@@ -100,15 +100,14 @@ void main() {
     String past(TaxReferenceSet s) =>
         (s.on('2026-06-01').lookup(TaxDomain.rate, 'FR', 'standard')!.value as RateValue).label;
     final before = past(await store.load());
-    await store.setVersion(
-      domain: TaxDomain.rate,
+    await store.setVersion(const TaxVersionDraft(domain: TaxDomain.rate,
       country: 'FR',
       key: 'standard',
-      value: const RateValue(label: 'Standard 21 %', percent: 21, group: 'standard', category: 'S'),
+      value: RateValue(label: 'Standard 21 %', percent: 21, group: 'standard', category: 'S'),
       source: 'law',
       confirmed: true,
       validFrom: '2027-01-01',
-    );
+    ));
     final after = await store.load();
     expect(past(after), before);
     expect((after.on('2027-02-01').lookup(TaxDomain.rate, 'FR', 'standard')!.value as RateValue).percent, 21);

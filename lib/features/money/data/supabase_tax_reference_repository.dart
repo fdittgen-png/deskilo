@@ -39,25 +39,17 @@ class SupabaseTaxReferenceRepository
   }
 
   @override
-  Future<TaxReferenceRow> setVersion({
-    required TaxDomain domain,
-    required String country,
-    required String key,
-    required TaxValue value,
-    required String source,
-    required bool confirmed,
-    required String validFrom,
-  }) async {
+  Future<TaxReferenceRow> setVersion(TaxVersionDraft draft) async {
     final row = await _client.rpc<Object?>(
       'set_tax_reference',
       params: {
-        'p_domain': domain.wire,
-        'p_country': country,
-        'p_key': key,
-        'p_value': value.toJson(),
-        'p_source': source,
-        'p_confirmed': confirmed,
-        'p_valid_from': validFrom,
+        'p_domain': draft.domain.wire,
+        'p_country': draft.country,
+        'p_key': draft.key,
+        'p_value': draft.value.toJson(),
+        'p_source': draft.source,
+        'p_confirmed': draft.confirmed,
+        'p_valid_from': draft.validFrom,
       },
     );
     await _cache.invalidatePrefix(_prefix);

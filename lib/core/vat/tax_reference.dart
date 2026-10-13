@@ -198,6 +198,18 @@ class TaxReferenceRow {
       validFrom.compareTo(isoDate) <= 0 &&
       (validTo == null || validTo!.compareTo(isoDate) > 0);
 
+  /// This version, ended on [day] (the first day of its successor).
+  TaxReferenceRow closedOn(String day) => TaxReferenceRow(
+        id: id,
+        country: country,
+        key: key,
+        validFrom: validFrom,
+        validTo: day,
+        value: value,
+        source: source,
+        confirmed: confirmed,
+      );
+
   Map<String, Object?> toJson() => {
         if (id.isNotEmpty) 'id': id,
         'domain': domain.wire,
@@ -319,17 +331,31 @@ abstract class TaxReferenceSource {
 
 /// Writing reference data: the platform administrator's side.
 abstract class TaxReferenceAdmin {
-  /// Creates a new version of a value from [validFrom] on; the version in
-  /// force is closed on that day, never edited.
-  Future<TaxReferenceRow> setVersion({
-    required TaxDomain domain,
-    required String country,
-    required String key,
-    required TaxValue value,
-    required String source,
-    required bool confirmed,
-    required String validFrom,
+  /// Creates a new version of a value from [TaxVersionDraft.validFrom] on;
+  /// the version in force is closed on that day, never edited.
+  Future<TaxReferenceRow> setVersion(TaxVersionDraft draft);
+}
+
+/// What the platform owner proposes: one value from a day on, with the
+/// source that backs it.
+class TaxVersionDraft {
+  const TaxVersionDraft({
+    required this.domain,
+    required this.country,
+    required this.key,
+    required this.value,
+    required this.source,
+    required this.confirmed,
+    required this.validFrom,
   });
+
+  final TaxDomain domain;
+  final String country;
+  final String key;
+  final TaxValue value;
+  final String source;
+  final bool confirmed;
+  final String validFrom;
 }
 
 /// Both sides, for the one object a platform's editor needs.

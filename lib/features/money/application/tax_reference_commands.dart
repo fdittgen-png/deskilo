@@ -29,21 +29,14 @@ class TaxReferenceCommands {
   };
 
   /// Throws whatever the repository throws; the caller reports it.
-  Future<TaxReferenceRow> saveVersion({
-    required TaxDomain domain,
-    required String country,
-    required String key,
-    required TaxValue value,
-    required String source,
-    required bool confirmed,
-    required String validFrom,
-  }) => _admin.setVersion(
-    domain: domain,
-    country: country.trim().toUpperCase(),
-    key: key.trim(),
-    value: value,
-    source: source.trim(),
-    confirmed: confirmed,
-    validFrom: validFrom.trim(),
-  );
+  Future<TaxReferenceRow> saveVersion(TaxVersionDraft draft) =>
+      _admin.setVersion(TaxVersionDraft(
+        domain: draft.domain,
+        country: draft.country.trim().toUpperCase(),
+        key: draft.key.trim(),
+        value: draft.value,
+        source: draft.source.trim(),
+        confirmed: draft.confirmed,
+        validFrom: draft.validFrom.trim(),
+      ));
 }

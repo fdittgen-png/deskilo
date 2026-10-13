@@ -14,7 +14,6 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
-import '../../../money/presentation/screens/tax_reference_screen.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/domain/workspace.dart';
@@ -25,6 +24,7 @@ import '../../../workspace/presentation/member_labels.dart';
 import '../../../workspace/presentation/widgets/application_requests_entry.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/pair_card.dart';
+import '../widgets/platform_tools_entries.dart';
 import '../widgets/workspace_owners_sheet.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
@@ -218,15 +218,7 @@ class ProfilesScreen extends ConsumerWidget {
               shape: const Border(), collapsedShape: const Border(),
               leading: const Icon(Icons.admin_panel_settings_outlined),
               title: Text(l10n.profilesAllWorkspaces),
-              children: [
-            // #2477 — the tax reference data (rates, texts, patterns) is
-            // the platform owner's to maintain.
-            ListTile(
-              key: const ValueKey('profiles-tax-reference'),
-              leading: const Icon(Icons.percent),
-              title: Text(l10n.taxRefTitle),
-              onTap: () => showTaxReferenceScreen(context, canEdit: true),
-            ),
+              children: [const PlatformToolsEntries(),
             // #987 — a twin pair is ONE space with two sides, and the
             // list above has rendered it as one row since that issue.
             // This list used to emit a card per workspace row, so the

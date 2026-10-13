@@ -14,6 +14,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/vat/tax_reference.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/vat_rate.dart';
 
@@ -32,40 +33,51 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
       TaxDomain.vatIdPattern => context.l10n.taxRefDomainVatIdPattern,
     };
 
-/// Opens the form. [from] is the version being superseded (its fields
-/// prefill and its country and key are fixed); without it a new value of
-/// [domain] is added. Returns whether a version was saved.
-Future<bool> showTaxReferenceVersionSheet(
-  BuildContext context, {
-  required TaxReferenceCommands commands,
-  required String today,
-  required VoidCallback onSaved,
-  required TaxDomain domain,
-  TaxReferenceRow? from,
-}) {
-  final l10n = context.l10n;
-  final v = from?.value;
-  final fields = FormControllers({
-    'country': from?.country ?? '',
-    'key': from?.key ?? '',
-    'valid_from': today,
-    'source': from?.source ?? '',
-    'label': v is RateValue ? v.label : '',
-    'percent': v is RateValue ? percentText(v.percent) : '',
-    'reason': v is RateValue ? v.exemptionReason : '',
-    'position': v is RateValue ? '${v.position}' : '0',
-    'regime': v is ExemptionTextValue ? v.regime : '',
-    'text': v is ExemptionTextValue ? v.text : '',
-    'pattern': v is VatIdPatternValue ? v.pattern : '',
-  });
-  var group = v is RateValue ? v.group : VatGroup.standard.wire;
-  var category = v is RateValue ? v.category : 'S';
-  var confirmed = from?.confirmed ?? false;
+/// The state of one version form: its text fields and its three choices.
+class _VersionForm {
+  _VersionForm(this.domain, this.from, String today)
+      : fields = FormControllers({
+          'country': from?.country ?? '',
+          'key': from?.key ?? '',
+          'valid_from': today,
+          'source': from?.source ?? '',
+          'label': from?.value is RateValue ? (from!.value as RateValue).label : '',
+          'percent': from?.value is RateValue
+              ? percentText((from!.value as RateValue).percent)
+              : '',
+          'reason': from?.value is RateValue
+              ? (from!.value as RateValue).exemptionReason
+              : '',
+          'position': from?.value is RateValue ? '${(from!.value as RateValue).position}' : '0',
+          'regime': from?.value is ExemptionTextValue
+              ? (from!.value as ExemptionTextValue).regime
+              : '',
+          'text': from?.value is ExemptionTextValue
+              ? (from!.value as ExemptionTextValue).text
+              : '',
+          'pattern': from?.value is VatIdPatternValue
+              ? (from!.value as VatIdPatternValue).pattern
+              : '',
+        }),
+        group = from?.value is RateValue
+            ? (from!.value as RateValue).group
+            : VatGroup.standard.wire,
+        category = from?.value is RateValue ? (from!.value as RateValue).category : 'S',
+        confirmed = from?.confirmed ?? false;
+
+  final TaxDomain domain;
+  final TaxReferenceRow? from;
+  final FormControllers fields;
+  String group;
+  String category;
+  bool confirmed;
+
+  double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
 
   TaxValue value() => switch (domain) {
         TaxDomain.rate => RateValue(
             label: fields.text('label'),
-            percent: double.parse(fields.text('percent').replaceAll(',', '.')),
+            percent: percent ?? 0,
             group: group,
             category: category,
             exemptionReason: fields.text('reason'),
@@ -77,35 +89,43 @@ Future<bool> showTaxReferenceVersionSheet(
         TaxDomain.vatIdPattern => VatIdPatternValue(pattern: fields.text('pattern')),
       };
 
-  FieldErrors validate() {
+  TaxVersionDraft draft() => TaxVersionDraft(
+        domain: domain,
+        country: fields.text('country'),
+        key: fields.text('key'),
+        value: value(),
+        source: fields.text('source'),
+        confirmed: confirmed,
+        validFrom: fields.text('valid_from'),
+      );
+
+  FieldErrors errors(AppLocalizations l10n, TaxReferenceCommands commands) {
     final problems = commands.validate(
       country: fields.text('country'),
       key: fields.text('key'),
       validFrom: fields.text('valid_from'),
       source: fields.text('source'),
     );
-    final percent = double.tryParse(fields.text('percent').replaceAll(',', '.'));
-    String need(String k) => fields.text(k).isEmpty ? l10n.taxRefRequired : '';
+    String? need(String k) => fields.text(k).isEmpty ? l10n.taxRefRequired : null;
+    final p = percent;
     return {
       if (problems.contains(TaxVersionProblem.country)) 'country': l10n.taxRefCountry,
       if (problems.contains(TaxVersionProblem.key)) 'key': l10n.taxRefRequired,
       if (problems.contains(TaxVersionProblem.date)) 'valid_from': l10n.taxRefInvalidDate,
       if (problems.contains(TaxVersionProblem.source)) 'source': l10n.taxRefRequired,
       if (domain == TaxDomain.rate) ...{
-        if (need('label').isNotEmpty) 'label': need('label'),
-        if (percent == null || percent < 0 || percent > 99.999)
-          'percent': l10n.taxRefInvalidNumber,
+        'label': ?need('label'),
+        if (p == null || p < 0 || p > 99.999) 'percent': l10n.taxRefInvalidNumber,
       },
       if (domain == TaxDomain.mention) ...{
-        if (need('regime').isNotEmpty) 'regime': need('regime'),
-        if (need('text').isNotEmpty) 'text': need('text'),
+        'regime': ?need('regime'),
+        'text': ?need('text'),
       },
-      if (domain == TaxDomain.vatIdPattern && need('pattern').isNotEmpty)
-        'pattern': need('pattern'),
+      if (domain == TaxDomain.vatIdPattern) 'pattern': ?need('pattern'),
     };
   }
 
-  Widget text(String k, String label, {bool enabled = true, TextInputType? type}) =>
+  Widget _text(String k, String label, {bool enabled = true, TextInputType? type}) =>
       Padding(
         padding: const EdgeInsets.only(bottom: AppSpacing.md),
         child: AppTextField(
@@ -118,72 +138,44 @@ Future<bool> showTaxReferenceVersionSheet(
         ),
       );
 
-  return showAppFormSheet(
-    context,
-    AppFormSheet(
-      title: '${l10n.taxRefNewVersion} · ${taxDomainLabel(context, domain)}',
-      submitLabel: l10n.taxRefSave,
-      submitKey: const ValueKey('tax-reference-save'),
-      onDispose: fields.dispose,
-      validate: validate,
-      onSubmit: () async {
-        try {
-          await commands.saveVersion(
-            domain: domain,
-            country: fields.text('country'),
-            key: fields.text('key'),
-            value: value(),
-            source: fields.text('source'),
-            confirmed: confirmed,
-            validFrom: fields.text('valid_from'),
-          );
-          onSaved();
-          return null;
-        } on Object catch (e, st) {
-          TraceLogger.instance.error('money', 'tax reference save failed',
-              error: e, stackTrace: st);
-          return l10n.taxRefCouldNotSave;
-        }
-      },
-      builder: (context, refresh) => [
-        text('country', l10n.taxRefCountry, enabled: from == null),
-        text('key', l10n.taxRefKey, enabled: from == null),
-        if (domain == TaxDomain.rate) ...[
-          text('label', l10n.taxRefLabel),
-          text('percent', l10n.taxRefPercent, type: TextInputType.number),
-          DropdownButtonFormField<String>(
-            key: const ValueKey('tax-ref-group'),
-            initialValue: group,
-            decoration: InputDecoration(labelText: l10n.taxRefGroup),
-            items: [
-              for (final g in VatGroup.values)
-                DropdownMenuItem(value: g.wire, child: Text(g.wire)),
-            ],
-            onChanged: (x) => group = x ?? group,
-          ),
-          const FormGap(),
-          DropdownButtonFormField<String>(
-            key: const ValueKey('tax-ref-category'),
-            initialValue: category,
-            decoration: InputDecoration(labelText: l10n.taxRefCategory),
-            items: [
-              for (final c in const ['S', 'Z', 'E', 'O'])
-                DropdownMenuItem(value: c, child: Text(c)),
-            ],
-            onChanged: (x) => category = x ?? category,
-          ),
-          const FormGap(),
-          text('reason', l10n.taxRefExemptionReason),
-          text('position', l10n.taxRefPosition, type: TextInputType.number),
-        ],
-        if (domain == TaxDomain.euMember) Text(l10n.taxRefMemberEmpty),
-        if (domain == TaxDomain.mention) ...[
-          text('regime', l10n.taxRefRegime),
-          text('text', l10n.taxRefText),
-        ],
-        if (domain == TaxDomain.vatIdPattern) text('pattern', l10n.taxRefPattern),
-        text('valid_from', l10n.taxRefValidFrom),
-        text('source', l10n.taxRefSource),
+  Widget _choice(String k, String label, String current, Iterable<String> items,
+          ValueChanged<String> onChanged) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+        child: DropdownButtonFormField<String>(
+          key: ValueKey('tax-ref-$k'),
+          initialValue: current,
+          decoration: InputDecoration(labelText: label),
+          items: [for (final i in items) DropdownMenuItem(value: i, child: Text(i))],
+          onChanged: (x) => onChanged(x ?? current),
+        ),
+      );
+
+  List<Widget> _domainFields(AppLocalizations l10n) => switch (domain) {
+        TaxDomain.rate => [
+            _text('label', l10n.taxRefLabel),
+            _text('percent', l10n.taxRefPercent, type: TextInputType.number),
+            _choice('group', l10n.taxRefGroup, group,
+                VatGroup.values.map((g) => g.wire), (x) => group = x),
+            _choice('category', l10n.taxRefCategory, category,
+                const ['S', 'Z', 'E', 'O'], (x) => category = x),
+            _text('reason', l10n.taxRefExemptionReason),
+            _text('position', l10n.taxRefPosition, type: TextInputType.number),
+          ],
+        TaxDomain.euMember => [Text(l10n.taxRefMemberEmpty)],
+        TaxDomain.mention => [
+            _text('regime', l10n.taxRefRegime),
+            _text('text', l10n.taxRefText),
+          ],
+        TaxDomain.vatIdPattern => [_text('pattern', l10n.taxRefPattern)],
+      };
+
+  List<Widget> build(AppLocalizations l10n, VoidCallback refresh) => [
+        _text('country', l10n.taxRefCountry, enabled: from == null),
+        _text('key', l10n.taxRefKey, enabled: from == null),
+        ..._domainFields(l10n),
+        _text('valid_from', l10n.taxRefValidFrom),
+        _text('source', l10n.taxRefSource),
         SwitchListTile(
           key: const ValueKey('tax-ref-confirmed'),
           contentPadding: EdgeInsets.zero,
@@ -194,7 +186,42 @@ Future<bool> showTaxReferenceVersionSheet(
             refresh();
           },
         ),
-      ],
+      ];
+}
+
+/// Opens the form. [from] is the version being superseded (its fields
+/// prefill and its country and key are fixed); without it a new value of
+/// [domain] is added. Returns whether a version was saved.
+Future<bool> showTaxReferenceVersionSheet(
+  BuildContext context, {
+  required TaxReferenceCommands commands,
+  required String today,
+  required VoidCallback onSaved,
+  required TaxDomain domain,
+  TaxReferenceRow? from,
+}) {
+  final l10n = context.l10n;
+  final form = _VersionForm(domain, from, today);
+  return showAppFormSheet(
+    context,
+    AppFormSheet(
+      title: '${l10n.taxRefNewVersion} · ${taxDomainLabel(context, domain)}',
+      submitLabel: l10n.taxRefSave,
+      submitKey: const ValueKey('tax-reference-save'),
+      onDispose: form.fields.dispose,
+      validate: () => form.errors(l10n, commands),
+      onSubmit: () async {
+        try {
+          await commands.saveVersion(form.draft());
+          onSaved();
+          return null;
+        } on Object catch (e, st) {
+          TraceLogger.instance.error('money', 'tax reference save failed',
+              error: e, stackTrace: st);
+          return l10n.taxRefCouldNotSave;
+        }
+      },
+      builder: (context, refresh) => form.build(l10n, refresh),
     ),
   );
 }

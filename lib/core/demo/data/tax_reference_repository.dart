@@ -28,44 +28,27 @@ class FakeTaxReferenceRepository implements TaxReferenceStore {
   }
 
   @override
-  Future<TaxReferenceRow> setVersion({
-    required TaxDomain domain,
-    required String country,
-    required String key,
-    required TaxValue value,
-    required String source,
-    required bool confirmed,
-    required String validFrom,
-  }) async {
-    if (source.trim().isEmpty) {
+  Future<TaxReferenceRow> setVersion(TaxVersionDraft draft) async {
+    if (draft.source.trim().isEmpty) {
       throw ArgumentError('a source is required');
     }
-    final i = rows.lastIndexWhere(
-        (r) => r.domain == domain && r.country == country && r.key == key);
+    final i = rows.lastIndexWhere((r) =>
+        r.domain == draft.domain && r.country == draft.country && r.key == draft.key);
     if (i >= 0) {
       final last = rows[i];
-      if (validFrom.compareTo(last.validFrom) <= 0) {
+      if (draft.validFrom.compareTo(last.validFrom) <= 0) {
         throw ArgumentError('a new version must start after ${last.validFrom}');
       }
-      rows[i] = TaxReferenceRow(
-        id: last.id,
-        country: last.country,
-        key: last.key,
-        validFrom: last.validFrom,
-        validTo: validFrom,
-        value: last.value,
-        source: last.source,
-        confirmed: last.confirmed,
-      );
+      rows[i] = last.closedOn(draft.validFrom);
     }
     final created = TaxReferenceRow(
       id: 'tax-${rows.length + 1}',
-      country: country,
-      key: key,
-      validFrom: validFrom,
-      value: value,
-      source: source.trim(),
-      confirmed: confirmed,
+      country: draft.country,
+      key: draft.key,
+      validFrom: draft.validFrom,
+      value: draft.value,
+      source: draft.source.trim(),
+      confirmed: draft.confirmed,
     );
     rows.add(created);
     return created;
