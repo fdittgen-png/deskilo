@@ -8475,6 +8475,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)';
 
   @override
+  String get invoiceMissingSellerUidFormat =>
+      'The workspace\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'The workspace\'s VAT identification number';
 

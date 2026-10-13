@@ -81,5 +81,9 @@
   "invoiceCorrectionReasonR5": "R5 - vereinfachte Rechnungen",
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
+  },
+  "invoiceMissingSellerUidFormat": "Die UID des Arbeitsbereichs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
   }
 }

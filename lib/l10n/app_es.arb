@@ -5715,6 +5715,10 @@
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
+  "invoiceMissingSellerUidFormat": "El UID del espacio en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
+  },
   "invoiceMissingSellerVatId": "El número de identificación fiscal (IVA) del espacio",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

@@ -99,7 +99,12 @@ Map<String, Object?> legalMentionData(
     'payment_reference': pay.reference,
     'seller_legal_form': frozen?.legalForm ?? legal.legalForm,
     'seller_registration': frozen?.registration ?? legal.registration,
-    'seller_vat_id': seller?.vatId ?? workspace?.vatId ?? '',
+    // #2360 — a Swiss UID prints the way art. 26 MWSTG shows it.
+    'seller_vat_id': sellerCountry.trim().toUpperCase() == 'CH' &&
+            isValidSwissUid(seller?.vatId ?? workspace?.vatId ?? '',
+                requireSuffix: false)
+        ? formatSwissUid(seller?.vatId ?? workspace?.vatId ?? '')
+        : seller?.vatId ?? workspace?.vatId ?? '',
     'seller_legal_id': seller?.legalId ?? workspace?.legalId ?? '',
     // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
     // carries the statutory mention of its member state when the owner

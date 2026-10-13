@@ -136,9 +136,14 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     }
     final now = ref.read(clockProvider).now();
     final nextMonth = DateTime(now.year, now.month + 1);
-    final percent = TextEditingController();
+    // #2360 — a decided change of rate comes prefilled.
+    final planned = vatPlannedChangeFor(
+        ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
+        double.tryParse(draft.percent.text.trim().replaceAll(',', '.')) ?? -1);
+    final percent = TextEditingController(
+        text: planned == null ? '' : _percentText(planned.toPercent));
     final date = TextEditingController(
-        text: nextMonth.toIso8601String().substring(0, 10));
+        text: planned?.from ?? nextMonth.toIso8601String().substring(0, 10));
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(

@@ -87,5 +87,9 @@
   "invoiceCorrectionReasonR5": "R5 - simplified invoices",
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
+  },
+  "invoiceMissingSellerUidFormat": "The workspace's UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
   }
 }

@@ -81,5 +81,9 @@
   "invoiceCorrectionReasonR5": "R5 - facturas simplificadas",
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
+  },
+  "invoiceMissingSellerUidFormat": "El UID del espacio en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
   }
 }

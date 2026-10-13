@@ -532,6 +532,8 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
       // #2359 — HMRC's VAT registration number format.
       'seller_vat_id_format' => l10n.invoiceMissingSellerVatIdFormat,
+      // #2360 — the Swiss UID with its MWST suffix.
+      'seller_uid_format' => l10n.invoiceMissingSellerUidFormat,
       // #2440 — RD 1619/2012 art. 15.
       'correction_reason' => l10n.invoiceMissingCorrectionReason,
       'vat_rate_unresolved' => l10n.invoiceMissingVatRate,

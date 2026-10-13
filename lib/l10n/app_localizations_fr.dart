@@ -8556,6 +8556,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro de TVA ou le numéro fiscal de l\'espace (le champ d\'immatriculation porte la Steuernummer ou le NIF)';
 
   @override
+  String get invoiceMissingSellerUidFormat =>
+      'L\'IDE de l\'espace au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)';
+
+  @override
   String get invoiceMissingSellerVatId =>
       'Le numéro d\'identification TVA de l\'espace';
 

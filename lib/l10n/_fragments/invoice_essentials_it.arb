@@ -81,5 +81,9 @@
   "invoiceCorrectionReasonR5": "R5 - fatture semplificate",
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
+  },
+  "invoiceMissingSellerUidFormat": "Il numero IDI dello spazio nel formato svizzero: CHE-123.456.789 seguito da IVA (MWST, TVA), con una cifra di controllo valida (art. 26 LIVA)",
+  "@invoiceMissingSellerUidFormat": {
+    "description": "#2360: invoiceMissingSellerUidFormat"
   }
 }

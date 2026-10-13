@@ -14568,6 +14568,12 @@ abstract class AppLocalizations {
   /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
   String get invoiceMissingSellerTaxNumber;
 
+  /// #2360: invoiceMissingSellerUidFormat
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)'**
+  String get invoiceMissingSellerUidFormat;
+
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
   /// In en, this message translates to:
