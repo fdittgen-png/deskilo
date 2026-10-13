@@ -43,6 +43,7 @@ import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
 import '../providers/money_providers.dart';
+import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
 import 'report_defaults.dart';
@@ -252,70 +253,115 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   );
 }
 
-Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
-  BuildContext context,
-  Invoice invoice, {
-  bool proforma = false,
-  bool copy = false,
-  String facturXml = '',
-  Uint8List? colorProfile,
-  InvoicePdfTemplate template = InvoicePdfTemplate.empty,
-  Workspace? workspace,
-  // #488 — resolves ![name] references; null renders without images.
-  Future<Uint8List?> Function(String name)? reportImage,
-  // #831 — the stamp of a regrouped source ('' otherwise); the callers
-  // with a ref build it with [settledStampOf].
-  String settledIn = '',
+/// What [buildInvoicePdfFile] renders besides the invoice itself.
+class InvoicePdfFileOptions {
+  const InvoicePdfFileOptions({
+    this.proforma = false,
+    this.copy = false,
+    this.facturXml = '',
+    this.colorProfile,
+    this.template = InvoicePdfTemplate.empty,
+    this.workspace,
+    this.reportImage,
+    this.settledIn = '',
+    this.annexInvoices = const [],
+    this.memberTerms,
+    this.dueAt,
+    this.memberCapacity,
+  });
+
+  final bool proforma;
+  final bool copy;
+  final String facturXml;
+  final Uint8List? colorProfile;
+  final InvoicePdfTemplate template;
+  final Workspace? workspace;
+
+  /// #488 — resolves ![name] references; null renders without images.
+  final Future<Uint8List?> Function(String name)? reportImage;
+
+  /// #831 — the stamp of a regrouped source ('' otherwise); the callers
+  /// with a ref build it with [settledStampOf].
+  final String settledIn;
 
   /// #837 — the invoices this one regrouped, appended after its own
   /// pages as documentation. The caller resolves them, because only it
   /// holds the archive; each is stamped with this document's number.
-  List<Invoice> annexInvoices = const [],
-  // #881 — the member's own conditions; callers holding a ref pass
-  // memberTermsFor(ref, invoice.memberId).
-  PaymentTerms? memberTerms,
-  // #910 — the settlement date the document must state; callers
-  // holding a ref pass invoiceDueAt(ref, invoice).
-  DateTime? dueAt,
-  // #1916 — an unissued document's customer capacity; callers holding a
-  // ref pass memberCapacityFor(ref, invoice.memberId).
-  String? memberCapacity,
-}) async {
-  final l10n = context.l10n;
-  final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
+  final List<Invoice> annexInvoices;
+
+  /// #881 — the member's own conditions; callers holding a ref pass
+  /// memberTermsFor(ref, invoice.memberId).
+  final PaymentTerms? memberTerms;
+
+  /// #910 — the settlement date the document must state; callers
+  /// holding a ref pass invoiceDueAt(ref, invoice).
+  final DateTime? dueAt;
+
+  /// #1916 — an unissued document's customer capacity; callers holding a
+  /// ref pass memberCapacityFor(ref, invoice.memberId).
+  final String? memberCapacity;
+}
+
+/// A positioned layout wins over bands. A proforma without a layout of its
+/// own borrows the invoice's, as it borrows its bands. Annexes stay banded
+/// — they are documentation appended behind, and the layout engine renders
+/// one document. Undesigned documents use the enabled letter standard.
+String? _layoutXmlOf(
+  BuildContext context,
+  Invoice invoice,
+  InvoicePdfFileOptions options,
+  Set<WorkspaceFeature> features,
+) {
+  final template = options.template;
+  final workspace = options.workspace;
+  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
+  if (!features.contains(WorkspaceFeature.reportLayouts) ||
+      options.annexInvoices.isNotEmpty) {
+    return null;
+  }
+  String? standard() => resolveLayoutXmlFor(
+    template: template,
+    kindId: 'invoice',
+    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
+    letterStandard: letterStandard,
+    l10n: context.l10n,
   );
-  final dateLabel = dateFormat.format(invoice.issuedAt);
+  return options.proforma ? (template.layoutFor('proforma') ?? standard()) : standard();
+}
+
+/// #869 — the envelope window: the template's explicit choice wins,
+/// otherwise the seller's country decides the side. Off entirely when
+/// the workspace has not enabled the feature.
+AddressWindow _addressWindowOf(
+  InvoicePdfFileOptions options,
+  Set<WorkspaceFeature> features,
+) => features.contains(WorkspaceFeature.invoiceAddressWindow)
+    ? (options.template.addressWindow ??
+          addressWindowForCountry(options.workspace?.countryCode ?? ''))
+    : AddressWindow.off;
+
+Future<pw.Font> _asset(String asset) async =>
+    pw.Font.ttf(await rootBundle.load(asset));
+
+Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
+  BuildContext context,
+  Invoice invoice, [
+  InvoicePdfFileOptions options = const InvoicePdfFileOptions(),
+]) async {
+  final l10n = context.l10n;
+  final proforma = options.proforma;
+  final template = options.template;
+  final workspace = options.workspace;
   final periodLabel = invoicePeriodLabel(context, invoice);
-  // #837 — every appended invoice keeps its OWN issue date and period;
-  // only the stamp is about where it went.
-  final annexes = [
-    for (final source in annexInvoices)
-      (
-        invoice: source,
-        dateLabel: dateFormat.format(source.issuedAt),
-        periodLabel: invoicePeriodLabel(context, source),
-        watermark:
-            l10n.invoicePdfSettledIn(invoice.number),
-      ),
-  ];
-  final voidedAt = invoice.voidedAt;
-  final voidedLabel = voidedAt == null
-      ? ''
-      : '${l10n.invoicePdfVoided} '
-            '${dateFormat.format(voidedAt)}';
-  Future<pw.Font> font(String asset) async =>
-      pw.Font.ttf(await rootBundle.load(asset));
   final reportData = invoiceReportData(
     reportStringsFor(context),
     invoice,
-    memberTerms: memberTerms,
+    memberTerms: options.memberTerms,
     proforma: proforma,
-    copy: copy,
+    copy: options.copy,
     workspace: workspace,
-    dueAt: dueAt,
-    memberCapacity: memberCapacity,
+    dueAt: options.dueAt,
+    memberCapacity: options.memberCapacity,
   );
   // #476: a proforma renders its OWN bands when the owner set them —
   // else the invoice's, as it always did.
@@ -325,39 +371,11 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final features = effectiveFeatures(
     resolveEnabledFeatures(workspace?.featureFlags ?? const {}),
   );
-  final strings = InvoicePdfStrings(
-    // #508 — a NEGATIVE document is titled as the credit note it is.
-    invoiceTitle: invoice.totalCents < 0
-        ? (l10n.invoicePdfCreditNote)
-        : (l10n.invoicePdfTitle),
-    issuedOn: l10n.invoicePdfIssuedOn,
-    issuedBy: l10n.invoicePdfIssuedBy,
-    billedTo: l10n.invoicePdfBilledTo,
-    total: l10n.invoiceBalance,
-    signature: l10n.invoicePdfSignature,
-    voided: voidedLabel,
-    // The archive row's own word for it — one term, everywhere.
-    voidedWatermark: l10n.invoiceVoidedChip,
-    proforma: l10n.invoicePdfProforma,
-    copy: l10n.invoicePdfCopy,
-    // #831 — a regrouped source says where it went.
-    settledIn: settledIn,
-    // #917 — a document printed by a development workspace says so
-    // across the page, above every other stamp it could carry.
-    development: workspace?.isDevelopment ?? false
-        ? (l10n.developmentWatermark)
-        : '',
-    replaces: l10n.invoicePdfReplaces,
-    description: l10n.invoicePdfDescription,
-    charges: l10n.invoicePdfCharges,
-    payments: l10n.invoicePdfPayments,
-    net: l10n.vatPdfNet,
-    vat: l10n.vatPdfVat,
-    annex: l10n.invoicePdfAnnex,
-    attendance: l10n.invoicePdfAttendance,
-    activity: l10n.invoicePdfActivity,
-    reserved: l10n.invoicePdfReserved,
-    page: l10n.invoicePdfPage,
+  final strings = invoicePdfStringsOf(
+    context,
+    invoice,
+    settledIn: options.settledIn,
+    development: workspace?.isDevelopment ?? false,
   );
   // A proforma is named after what it covers — it has no number to be
   // filed under, and must never sit in a folder looking like the invoice.
@@ -367,31 +385,11 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
-  // A positioned layout wins over bands. A
-  // proforma without a layout of its own borrows the invoice's, as it
-  // borrows its bands. Annexes stay banded — they are documentation
-  // appended behind, and the layout engine renders one document.
-  // Undesigned documents use the enabled letter standard.
-  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
-  final layoutXml =
-      features.contains(WorkspaceFeature.reportLayouts) && annexInvoices.isEmpty
-      ? (proforma
-            ? (template.layoutFor('proforma') ??
-                  resolveLayoutXmlFor(
-                    template: template,
-                    kindId: 'invoice',
-                    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
-                    letterStandard: letterStandard,
-                    l10n: context.l10n,
-                  ))
-            : resolveLayoutXmlFor(
-                template: template,
-                kindId: 'invoice',
-                    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
-                letterStandard: letterStandard,
-                l10n: context.l10n,
-              ))
-      : null;
+  final layoutXml = _layoutXmlOf(context, invoice, options, features);
+  final dateFormat = DateFormat.yMMMd(
+    Localizations.maybeLocaleOf(context)?.toString(),
+  );
+  final annexes = invoiceAnnexesOf(context, invoice, options.annexInvoices, dateFormat);
   // #2360 — a Swiss seller's invoice ends on the QR-bill its customer pays with.
   final qrPage = await swissQrPageFor(
     l10n,
@@ -399,7 +397,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     workspace?.paymentInstructions ?? const {},
     workspace?.countryCode ?? '',
     proforma: proforma,
-    font: font,
+    font: _asset,
   );
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(
@@ -408,13 +406,13 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       what: invoice.number.isEmpty ? stem : invoice.number,
       documentTitle: '${strings.invoiceTitle} ${invoice.number}',
       pageLabel: strings.page,
-      font: font,
-      image: reportImage,
+      font: _asset,
+      image: options.reportImage,
       watermark: invoiceWatermark(
         strings,
         proforma: proforma,
         voided: invoice.isVoided,
-        copy: copy,
+        copy: options.copy,
       ),
       signatureLabel: strings.signature,
       signature: proforma ? '' : invoice.signature,
@@ -423,45 +421,34 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
   }
   final report = renderReportBands(bands: bands, data: withOwnerTexts(reportData, template.texts));
-  final reportImages = <String, Uint8List>{};
-  if (report != null && reportImage != null) {
-    for (final name in reportImageRefs(report)) {
-      final imageBytes = await reportImage(name);
-      if (imageBytes != null) reportImages[name] = imageBytes;
-    }
-  }
-  // #869 — the envelope window: the template's explicit choice wins,
-  // otherwise the seller's country decides the side. Off entirely when
-  // the workspace has not enabled the feature.
-  final addressWindow = features.contains(WorkspaceFeature.invoiceAddressWindow)
-      ? (template.addressWindow ??
-            addressWindowForCountry(workspace?.countryCode ?? ''))
-      : AddressWindow.off;
+  final reportImages = await reportImagesOf(report, options.reportImage);
   final association = InvoiceLegal.fromJson(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
   final words = reportStringsOf(l10n);
-  final bytes = await buildInvoicePdf(InvoicePdfRequest(qrBillPage: qrPage,
-    addressWindow: addressWindow,
+  final bytes = await buildInvoicePdf(InvoicePdfRequest(
+    qrBillPage: qrPage,
+    addressWindow: _addressWindowOf(options, features),
     invoice: invoice,
     reportImages: reportImages,
     lineText: (line) => invoiceLineText(words, line,
         association: association, period: invoice.period),
     activityText: (entry) => annexEntryText(words, entry),
     strings: strings,
-    money: currency.formatMinor,
-    dateLabel: dateLabel,
+    money: moneyFormat(invoice.currency).formatMinor,
+    dateLabel: dateFormat.format(invoice.issuedAt),
     // The stored title is the raw period ('2026-07'); the document reads
     // the month like a human would.
     periodLabel: periodLabel,
     annexes: annexes,
     proforma: proforma,
-    copy: copy,
-    facturXml: facturXml,
-    colorProfile: colorProfile,
+    copy: options.copy,
+    facturXml: options.facturXml,
+    colorProfile: options.colorProfile,
     report: report,
-    baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
-    boldFont: await font('assets/fonts/Roboto-Bold.ttf')));
+    baseFont: await _asset('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: await _asset('assets/fonts/Roboto-Bold.ttf'),
+  ));
   return (bytes: bytes, fileName: '$stem.pdf');
 }
 
@@ -499,18 +486,18 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
   final pdf = await buildInvoicePdfFile(
     context,
     invoice,
-    memberTerms: memberTermsFor(ref, invoice.memberId),
+    InvoicePdfFileOptions(
+      // #920 — through layoutImage, so the shipped layouts' `logo`
+      // resolves to whatever the owner actually called theirs.
+      reportImage: (String name) => layoutImage(ref, name),
+      memberTerms: memberTermsFor(ref, invoice.memberId),
     dueAt: invoiceDueAt(ref, invoice),
     copy: rendersCopy(ref),
     settledIn: settledStampOf(context, ref, invoice),
     facturXml: xml,
     colorProfile: icc.buffer.asUint8List(),
     template: invoicePdfTemplateFor(ref),
-    workspace: ref.read(currentWorkspaceProvider).value,
-    // #920 — through layoutImage, so the shipped layouts' `logo`
-    // resolves to whatever the owner actually called theirs.
-    reportImage: (name) => layoutImage(ref, name),
-  );
+    workspace: ref.read(currentWorkspaceProvider).value));
   return (
     bytes: pdf.bytes,
     fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',

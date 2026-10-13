@@ -112,7 +112,7 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_documents.dart': 644, // 2026-10-13 #2360: the Swiss QR-bill page is asked for and handed to both renderers. 2026-10-11 #2389 630→632: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-03 #1916 614→630: memberCapacityFor and the frozen BT-20 payment terms; 2026-10-02 #1913 610→614: the printed due date reads the date frozen at issue first. 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
+  'lib/features/money/presentation/invoice_documents.dart': 628, // 644→628
 
   'lib/features/money/presentation/accounting_export.dart': 505, // 2026-10-13 #2360: the Swiss booking journal is one more export case.
 
