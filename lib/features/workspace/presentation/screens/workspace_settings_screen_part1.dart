@@ -340,8 +340,7 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
 
           final strings = workspaceConfigurationStrings(l10n);
 
-          final data = workspaceConfigurationReportData(
-            strings: strings,
+          final data = workspaceConfigurationReportData(WorkspaceConfigDocument(strings: strings,
             workspaceName: workspace.name,
             generatedOnLabel: l10n.workspaceConfigPdfGeneratedOn(generatedOn),
             countryLabel: localizedCountryName(l10n, workspace.countryCode),
@@ -365,8 +364,7 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
                       : moneyFormat(workspace.currencyCode, locale: locale).formatMinor(entry.level.priceCents),
             },
             hasCustomInvitationTemplate:
-                workspace.invitationTemplate.trim().isNotEmpty,
-          );
+                workspace.invitationTemplate.trim().isNotEmpty));
           await warmLetterDocProviders(ref, 'workspace_configuration');
           if (!mounted || ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
           final report = renderLetterDoc(context, ref,
