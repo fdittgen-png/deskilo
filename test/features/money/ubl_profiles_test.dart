@@ -5,6 +5,7 @@
 // bare EN 16931 document stays exactly what it was; the official
 // validators run on one sample of each in CI (einvoice_samples_test).
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
@@ -75,16 +76,14 @@ const _buyer = InvoiceParty(
 );
 
 XmlDocument _doc(UblProfile profile) => XmlDocument.parse(
-  buildInvoiceUbl(
-    invoice: _invoice,
+  buildInvoiceUbl(EInvoiceInput(invoice: _invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
     iban: 'DE02120300000000202051',
-    profile: profile,
     dueDate: DateTime(2026, 10, 30),
-    paymentTerms: '30 days net',
-  ),
+    paymentTerms: '30 days net'),
+    profile: profile),
 );
 
 Iterable<String> _texts(XmlDocument doc, String name) =>

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'einvoice_format.dart';
-import 'invoice.dart';
+import 'einvoice_input.dart';
 import 'invoice_cii.dart';
 import 'invoice_fatturapa.dart';
 import 'invoice_ksef_fa3.dart';
@@ -15,57 +15,35 @@ import 'invoice_ubl.dart';
 ///
 /// [EInvoiceFormat.facturX] is a PDF, built by the PDF pipeline; asking
 /// for it here is a programming error.
-String buildChannelEInvoiceXml({
-  required EInvoiceFormat format,
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String Function(InvoiceLine line) lineText,
-  String iban = '',
-  DateTime? dueDate,
-  String paymentTerms = '',
-}) => switch (format) {
+String buildChannelEInvoiceXml(EInvoiceFormat format, EInvoiceInput input) =>
+    switch (format) {
   EInvoiceFormat.facturX => throw ArgumentError.value(
     format,
     'format',
     'Factur-X is a PDF',
   ),
-  EInvoiceFormat.en16931Cii => buildInvoiceCii(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    lineText: lineText,
-    iban: iban,
-    dueDate: dueDate,
-    paymentTerms: paymentTerms,
-  ),
+  EInvoiceFormat.en16931Cii => buildInvoiceCii(input),
   EInvoiceFormat.fatturaPa => buildInvoiceFatturaPa(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    lineText: lineText,
-    iban: iban,
-    dueDate: dueDate,
+    invoice: input.invoice,
+    seller: input.seller,
+    buyer: input.buyer,
+    lineText: input.lineText,
+    iban: input.iban,
+    dueDate: input.dueDate,
   ),
   EInvoiceFormat.ksefFa3 => buildInvoiceKsefFa3(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    lineText: lineText,
-    iban: iban,
-    dueDate: dueDate,
+    invoice: input.invoice,
+    seller: input.seller,
+    buyer: input.buyer,
+    lineText: input.lineText,
+    iban: input.iban,
+    dueDate: input.dueDate,
   ),
   EInvoiceFormat.en16931Ubl ||
   EInvoiceFormat.peppolBis ||
   EInvoiceFormat.xrechnung ||
   EInvoiceFormat.ciusRo => buildInvoiceUbl(
-    invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    lineText: lineText,
-    iban: iban,
+    input,
     profile: format.ublProfile ?? UblProfile.en16931,
-    dueDate: dueDate,
-    paymentTerms: paymentTerms,
   ),
 };

@@ -7,6 +7,7 @@
 // category: BR-CO-26 (a seller identifier exists at all), BR-O-02/05 (no
 // tax id and no rate outside the scope of VAT), BR-E-02/05/10 (VAT id,
 // zero rate and an exemption reason when exempt).
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
@@ -67,13 +68,11 @@ String _xml({
   InvoiceParty buyer = _buyer,
   String iban = '',
 }) =>
-    buildInvoiceUbl(
-      invoice: invoice ?? _invoice(),
+    buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
       seller: seller,
       buyer: buyer,
       iban: iban,
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    );
+      lineText: (line) => invoiceLineText(const ReportStrings(), line)));
 
 extension on XmlDocument {
   String one(String name) => findAllElements('cbc:$name').first.innerText;

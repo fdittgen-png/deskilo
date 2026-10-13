@@ -10,6 +10,7 @@
 // A strict EN 16931 validator rejects that (BR-CO-… line arithmetic),
 // and since #568 the same XML also goes straight to the customer, so a
 // malformed document reaches two audiences.
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -77,12 +78,10 @@ void expectConsistent(String quantity, String unitPrice, String lineNet) {
 
 void main() {
   test('UBL: quantity × unit price equals the line net', () {
-    final doc = XmlDocument.parse(buildInvoiceUbl(
-      invoice: _invoice(),
+    final doc = XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    ));
+      lineText: (line) => invoiceLineText(const ReportStrings(), line))));
     final line = doc.findAllElements('cac:InvoiceLine').first;
     final quantity =
         line.findElements('cbc:InvoicedQuantity').first.innerText;
@@ -96,12 +95,10 @@ void main() {
   });
 
   test('CII: quantity × unit price equals the line net', () {
-    final doc = XmlDocument.parse(buildInvoiceCii(
-      invoice: _invoice(),
+    final doc = XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: _invoice(),
       seller: _seller,
       buyer: _buyer,
-      lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    ));
+      lineText: (line) => invoiceLineText(const ReportStrings(), line))));
     final line = doc
         .findAllElements('ram:IncludedSupplyChainTradeLineItem')
         .first;

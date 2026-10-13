@@ -5,6 +5,7 @@
 // member owes — the tax is extracted from the price and shown. These tests
 // pin that arithmetic and check that every document says the same thing.
 
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
@@ -300,12 +301,10 @@ void main() {
   });
 
   group('UBL', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(
-          invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceUbl(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText,
-        ));
+          lineText: _lineText)));
 
     String text(XmlElement parent, String name) =>
         parent.findElements(name).single.innerText;
@@ -405,12 +404,10 @@ void main() {
   });
 
   group('CII', () {
-    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(
-          invoice: invoice ?? _invoice(),
+    XmlDocument doc({Invoice? invoice}) => XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: invoice ?? _invoice(),
           seller: _seller,
           buyer: _buyer,
-          lineText: _lineText,
-        ));
+          lineText: _lineText)));
 
     test('the settlement summation ties net + tax = gross', () {
       final summation = doc()
