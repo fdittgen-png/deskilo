@@ -1,4 +1,5 @@
 Type,Account Reference,Nominal A/C Ref,Department Code,Date,Reference,Details,Net Amount,Tax Code,Tax Amount
-SI,"Müller, Ana 'AM'",4000,0,04/03/2026,"INV-2026-0001","Coworking 'March' second line; part",110.00,T1,20.55
+SI,"Müller, Ana 'AM'",4000,0,04/03/2026,"INV-2026-0001","Coworking 'March' second line; part",100.00,T1,20.00
+SI,"Müller, Ana 'AM'",4000,0,04/03/2026,"INV-2026-0001","Coworking 'March' second line; part",10.00,T1,0.55
 SR,"Müller, Ana 'AM'",1200,0,02/04/2026,"INV-2026-0001","Payment INV-2026-0001",130.55,T9,0.00
-SI,"Müller, Ana 'AM'",4000,0,20/03/2026,"INV-2026-0002","Credit note",-25.00,T9,-5.00
+SC,"Müller, Ana 'AM'",4000,0,20/03/2026,"INV-2026-0002","Credit note",25.00,T1,5.00
