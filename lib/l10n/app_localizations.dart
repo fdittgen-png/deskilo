@@ -14643,7 +14643,7 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app'**
+  /// **'The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
 
   /// #2361: invoiceMissingSellerQstNumber
