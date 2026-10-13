@@ -5766,7 +5766,7 @@
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea, il Regno Unito o la Svizzera per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea, il Regno Unito, la Svizzera o il Canada per emettere qui — gli altri paesi si emettono fuori dall'app",
   "invoiceMissingSellerQstNumber": "Il numero di registrazione QST dello spazio, di Revenu Québec, nel formato 1234567890 TQ0001, nell'identità legale (la fattura applica la QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"

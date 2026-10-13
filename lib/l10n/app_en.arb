@@ -9859,7 +9859,7 @@
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app",
   "invoiceMissingSellerQstNumber": "The workspace's QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"

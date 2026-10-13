@@ -5766,7 +5766,7 @@
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne, le Royaume-Uni ou la Suisse pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne, le Royaume-Uni, la Suisse ou le Canada pour émettre ici — les autres pays sont émis hors de l'application",
   "invoiceMissingSellerQstNumber": "Le numéro d'inscription à la TVQ de l'espace délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l'identité légale (la facture perçoit la TVQ)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"

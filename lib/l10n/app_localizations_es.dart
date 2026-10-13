@@ -8581,7 +8581,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerCountry =>
-      'El país del espacio debe ser un Estado miembro de la Unión Europea, el Reino Unido o Suiza para emitir aquí — los demás países se emiten fuera de la aplicación';
+      'El país del espacio debe ser un Estado miembro de la Unión Europea, el Reino Unido, Suiza o Canadá para emitir aquí — los demás países se emiten fuera de la aplicación';
 
   @override
   String get invoiceMissingSellerQstNumber =>

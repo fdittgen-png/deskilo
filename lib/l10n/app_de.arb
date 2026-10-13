@@ -5766,7 +5766,7 @@
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich oder die Schweiz sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich, die Schweiz oder Kanada sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
   "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Arbeitsbereichs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"

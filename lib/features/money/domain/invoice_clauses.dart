@@ -86,6 +86,13 @@ enum LegalProfile {
   chBusiness,
   chConsumer,
 
+  /// #2361 — Canada: not in the Union, its own law (provincial; Quebec's
+  /// Charter of the French Language asks for French documents, which the
+  /// report language handles). Nothing is automatic: the owner's own
+  /// wording prints, a business customer only.
+  caBusiness,
+  caConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
@@ -269,7 +276,7 @@ class LegalClauseSnapshot {
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
   // #2358 — a national clearance channel the app does not speak yet.
-  if (!(isEuCountry(country) || country == 'GB' || country == 'CH') ||
+  if (!(isEuCountry(country) || country == 'GB' || country == 'CH' || country == 'CA') ||
       nationalChannelRequired.contains(euCountryCode(country))) {
     return LegalProfile.unsupported;
   }
@@ -282,6 +289,8 @@ LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
     ('GB', CustomerCapacity.consumer) => LegalProfile.gbConsumer,
     ('CH', CustomerCapacity.business) => LegalProfile.chBusiness,
     ('CH', CustomerCapacity.consumer) => LegalProfile.chConsumer,
+    ('CA', CustomerCapacity.business) => LegalProfile.caBusiness,
+    ('CA', CustomerCapacity.consumer) => LegalProfile.caConsumer,
     (_, CustomerCapacity.business) => LegalProfile.euBusiness,
     (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
@@ -336,7 +345,8 @@ QualifiedClauses qualifyClauses(
     LegalProfile.deBusiness ||
     LegalProfile.euBusiness ||
     LegalProfile.gbBusiness ||
-    LegalProfile.chBusiness => QualifiedClauses(
+    LegalProfile.chBusiness ||
+    LegalProfile.caBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
@@ -347,7 +357,8 @@ QualifiedClauses qualifyClauses(
     LegalProfile.deConsumer ||
     LegalProfile.euConsumer ||
     LegalProfile.gbConsumer ||
-    LegalProfile.chConsumer => QualifiedClauses(
+    LegalProfile.chConsumer ||
+    LegalProfile.caConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),
