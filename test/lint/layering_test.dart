@@ -284,7 +284,7 @@ const Map<String, int> _pairBudget = {
   'plan -> members': 1,
   'plan -> money': 4,
   'plan -> profile': 2,
-  'plan -> reservations': 9,
+  'plan -> reservations': 10, // 2026-10-13 #2494 9→10: the floor-plan painter's furniture layers became their own file (one library became two), both naming SeatState; coupling unchanged.
   // 2026-09-15 #1273 10→11: floor_plan_providers reads the
   // singleRoomLevelNames flag once for every map surface.
   'plan -> workspace': 12, // 2026-10-04 11→12: the plan focus starts over when the active workspace changes
