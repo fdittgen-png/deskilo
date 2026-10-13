@@ -5710,7 +5710,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea o il Regno Unito per emettere qui — gli altri paesi si emettono fuori dall'app",
   "invoiceMissingSellerTaxNumber": "La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

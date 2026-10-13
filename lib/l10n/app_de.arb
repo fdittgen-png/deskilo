@@ -5710,7 +5710,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union oder das Vereinigte Königreich sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
   "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

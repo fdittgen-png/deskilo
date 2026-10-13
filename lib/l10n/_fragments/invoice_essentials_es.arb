@@ -32,7 +32,7 @@
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
-  "invoiceMissingSellerCountry": "El país del espacio debe ser un Estado miembro de la Unión Europea para emitir aquí — los demás países se emiten fuera de la aplicación",
+  "invoiceMissingSellerCountry": "El país del espacio debe ser un Estado miembro de la Unión Europea o el Reino Unido para emitir aquí — los demás países se emiten fuera de la aplicación",
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
   "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
   "invoiceMissingVatNotRegistered": "Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio",
