@@ -8468,7 +8468,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerCountry =>
-      'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app';
+      'The workspace country must be a member state of the European Union or the United Kingdom for issuing here — other countries are issued outside the app';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

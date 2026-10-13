@@ -74,6 +74,12 @@ enum LegalProfile {
   euBusiness,
   euConsumer,
 
+  /// #2359 — the United Kingdom: not in the Union, its own law (Late
+  /// Payment of Commercial Debts (Interest) Act 1998). Nothing is
+  /// automatic: the owner's own wording prints, a business customer only.
+  gbBusiness,
+  gbConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
@@ -257,7 +263,7 @@ class LegalClauseSnapshot {
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
   // #2358 — a national clearance channel the app does not speak yet.
-  if (!isEuCountry(country) ||
+  if (!(isEuCountry(country) || country == 'GB') ||
       nationalChannelRequired.contains(euCountryCode(country))) {
     return LegalProfile.unsupported;
   }
@@ -266,6 +272,8 @@ LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
     ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
     ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
     ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
+    ('GB', CustomerCapacity.business) => LegalProfile.gbBusiness,
+    ('GB', CustomerCapacity.consumer) => LegalProfile.gbConsumer,
     (_, CustomerCapacity.business) => LegalProfile.euBusiness,
     (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
@@ -317,7 +325,9 @@ QualifiedClauses qualifyClauses(
       ),
       escompte: owned(own.escompte, orDefault: strings.escompteDefault),
     ),
-    LegalProfile.deBusiness || LegalProfile.euBusiness => QualifiedClauses(
+    LegalProfile.deBusiness ||
+    LegalProfile.euBusiness ||
+    LegalProfile.gbBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
@@ -326,7 +336,8 @@ QualifiedClauses qualifyClauses(
     ),
     LegalProfile.frConsumer ||
     LegalProfile.deConsumer ||
-    LegalProfile.euConsumer => QualifiedClauses(
+    LegalProfile.euConsumer ||
+    LegalProfile.gbConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),

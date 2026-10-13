@@ -8544,7 +8544,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+      'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union oder das Vereinigte Königreich sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
