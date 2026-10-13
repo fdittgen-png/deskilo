@@ -3902,6 +3902,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get directoryOpenGroup => 'Abrir el grupo de WhatsApp';
 
   @override
+  String directoryPinsMissing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count espacios no se pudieron situar en el mapa; sus fichas están debajo.',
+      one: '1 espacio no se pudo situar en el mapa; su ficha está debajo.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get directoryReservationsHeading => 'Reservas';
 
   @override

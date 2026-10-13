@@ -3,5 +3,6 @@
   "directoryLocating": "Localizando la dirección pública…",
   "directoryApproximate": "Ubicación aproximada de la dirección",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
-  "meSpaceOpen": "Abrir"
+  "meSpaceOpen": "Abrir",
+  "directoryPinsMissing": "{count, plural, =1{1 espacio no se pudo situar en el mapa; su ficha está debajo.} other{{count} espacios no se pudieron situar en el mapa; sus fichas están debajo.}}"
 }

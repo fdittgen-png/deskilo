@@ -3,5 +3,6 @@
   "directoryLocating": "Öffentliche Adresse wird gesucht…",
   "directoryApproximate": "Ungefähre Lage der Adresse",
   "directoryLocationMissing": "Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.",
-  "meSpaceOpen": "Öffnen"
+  "meSpaceOpen": "Öffnen",
+  "directoryPinsMissing": "{count, plural, =1{1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.} other{{count} Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.}}"
 }

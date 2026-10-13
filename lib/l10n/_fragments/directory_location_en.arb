@@ -3,5 +3,13 @@
   "directoryLocating": "Locating the public address…",
   "directoryApproximate": "Approximate address location",
   "directoryLocationMissing": "Location unavailable. The owner can publish precise map coordinates.",
-  "meSpaceOpen": "Open"
+  "meSpaceOpen": "Open",
+  "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
+  "@directoryPinsMissing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
