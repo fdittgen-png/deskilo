@@ -15,6 +15,10 @@
 //    address), the period, and one LIN per CA3 line with its code and
 //    its amounts in whole euros — MOA 125 the base, MOA 124 the tax.
 //
+//  * CH — the MWST-Abrechnung as eCH-0217 XML (#2360), the standard the ESTV
+//    ePortal takes for upload, validated against its published XSD. The
+//    upload itself needs an ePortal account of the owner and is not done
+//    here; the file is the digital link.
 //  * GB — Making Tax Digital for VAT through bridging software (#2359):
 //    one CSV row of the nine boxes under HMRC's own field names (boxes
 //    1–5 in pounds and pence, 6–9 in whole pounds). The file IS the
@@ -30,6 +34,7 @@ import 'package:xml/xml.dart';
 
 import '../../../core/time/date_text.dart';
 import 'vat_declaration.dart';
+import 'vat_filing_ech0217.dart';
 
 /// Why a filing file cannot be written for a declaration.
 enum VatFilingFileProblem {
@@ -41,6 +46,9 @@ enum VatFilingFileProblem {
 
   /// A UK return names the VAT registration number (nine digits).
   vatNumber,
+
+  /// A Swiss return names the UID (CHE-123.456.789 and its check digit).
+  uid,
 }
 
 class VatFilingFileException implements Exception {
@@ -61,6 +69,7 @@ class VatFilingParty {
     required this.city,
     required this.vatId,
     required this.legalId,
+    this.onReceipts = false,
   });
 
   final String countryCode;
@@ -73,11 +82,16 @@ class VatFilingParty {
   /// The registration number (SIRET, Handelsregister …).
   final String legalId;
 
+  /// Whether the space accounts for VAT on the consideration received (a
+  /// Swiss return says `formOfReporting` 2), not on the invoice.
+  final bool onReceipts;
+
   /// The country whose file exists here: `DE`, `FR`, else null.
   String? get fileCountry => switch (countryCode.trim().toUpperCase()) {
     'DE' => 'DE',
     'FR' => 'FR',
     'GB' || 'UK' => 'GB',
+    'CH' => 'CH',
     _ => null,
   };
 }
@@ -122,6 +136,16 @@ class VatFilingParty {
     'GB' => (
       fileName: 'mtd-vat-return-$start.csv',
       text: mtdBridgingCsv(declaration: declaration, vatId: party.vatId),
+    ),
+    'CH' => (
+      fileName: 'mwst-abrechnung-$start.xml',
+      text: ech0217Xml(
+        declaration: declaration,
+        uid: party.vatId,
+        organisationName: party.name,
+        onReceipts: party.onReceipts,
+        generatedAt: now,
+      ),
     ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),
   };

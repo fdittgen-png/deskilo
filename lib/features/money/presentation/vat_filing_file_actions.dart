@@ -22,6 +22,7 @@ String? vatFilingFileLabel(AppLocalizations l10n, String? country) =>
       'DE' => l10n.vatDeclElster,
       'FR' => l10n.vatDeclEdiTva,
       'GB' => l10n.vatDeclMtdCsv,
+      'CH' => l10n.vatDeclMwstXml,
       _ => null,
     };
 
@@ -59,6 +60,7 @@ Future<void> exportVatFilingFile(
           VatFilingFileProblem.period => l10n.vatDeclFilingPeriod,
           VatFilingFileProblem.taxNumber => l10n.vatDeclFilingTaxNumber,
           VatFilingFileProblem.vatNumber => l10n.vatDeclFilingVatNumber,
+          VatFilingFileProblem.uid => l10n.vatDeclFilingUid,
         });
         return;
       }

@@ -27,5 +27,13 @@
   "vatDeclFilingVatNumber": "Introduzca el número de registro de IVA del espacio (GB y nueve dígitos): el archivo lo indica.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
+  "vatDeclFilingUid": "Introduzca el UID del espacio (CHE-123.456.789 con un dígito de control válido): el archivo lo cita.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
+  "vatDeclMwstXml": "Declaración MWST, XML eCH-0217 (carga en el ePortal)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   }
 }

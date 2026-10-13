@@ -27,5 +27,13 @@
   "vatDeclFilingVatNumber": "Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
+  "vatDeclFilingUid": "Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
+  "vatDeclMwstXml": "MWST return, eCH-0217 XML (ePortal upload)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   }
 }

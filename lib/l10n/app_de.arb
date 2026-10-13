@@ -12045,6 +12045,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingUid": "Tragen Sie die UID des Workspace ein (CHE-123.456.789 mit gültiger Prüfziffer): die Datei nennt sie.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
   "vatDeclFilingVatNumber": "Tragen Sie die Umsatzsteuer-Registriernummer des Workspace ein (GB und neun Ziffern): die Datei nennt sie.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
@@ -12072,6 +12076,10 @@
   "vatDeclMtdCsv": "MTD-Brückendatei (CSV, neun Felder)",
   "@vatDeclMtdCsv": {
     "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclMwstXml": "MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   },
   "vatDeclNet": "Bemessungsgrundlage",
   "@vatDeclNet": {

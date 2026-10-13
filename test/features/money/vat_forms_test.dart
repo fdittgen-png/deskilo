@@ -160,6 +160,28 @@ void main() {
     expect(form.containsKey('510'), isFalse);
   });
 
+  test(
+    'Switzerland — exports on 220, abroad on 221, every amount to the centime',
+    () {
+      final form = _form('CH', [
+        _sale(8.1, 100049, 8104),
+        _sale(0, 20050, 0, category: 'E'),
+        _sale(0, 5000, 0, category: 'G'),
+        _sale(0, 10000, 0, category: 'AE'),
+      ]);
+      expect(form['200']!.$1, 135099);
+      expect(
+        form['220']!.$1,
+        5000,
+        reason: 'an export is exempt under art. 23',
+      );
+      expect(form['221']!.$1, 10000, reason: 'a service abroad');
+      expect(form['230']!.$1, 20050);
+      expect(form['299']!.$1, 100049);
+      expect(form['303'], (100049, 8104));
+    },
+  );
+
   test('Canada — line 101 in whole dollars, corrections on 104 and 107', () {
     final form = _form('CA', [
       _sale(13, 100000, 13000),

@@ -19359,6 +19359,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Numéro fiscal (Steuernummer)';
 
   @override
+  String get vatDeclFilingUid =>
+      'Saisissez l\'IDE de l\'espace (CHE-123.456.789 avec un chiffre de contrôle valide) : le fichier le mentionne.';
+
+  @override
   String get vatDeclFilingVatNumber =>
       'Saisissez le numéro d\'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.';
 
@@ -19380,6 +19384,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatDeclMtdCsv => 'Fichier MTD (CSV, neuf cases)';
+
+  @override
+  String get vatDeclMwstXml =>
+      'Décompte TVA, XML eCH-0217 (téléversement ePortal)';
 
   @override
   String get vatDeclNet => 'Base HT';

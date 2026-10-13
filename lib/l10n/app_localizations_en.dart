@@ -19143,6 +19143,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Tax number (Steuernummer)';
 
   @override
+  String get vatDeclFilingUid =>
+      'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.';
+
+  @override
   String get vatDeclFilingVatNumber =>
       'Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.';
 
@@ -19164,6 +19168,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclMtdCsv => 'MTD bridging file (CSV, nine boxes)';
+
+  @override
+  String get vatDeclMwstXml => 'MWST return, eCH-0217 XML (ePortal upload)';
 
   @override
   String get vatDeclNet => 'Net base';

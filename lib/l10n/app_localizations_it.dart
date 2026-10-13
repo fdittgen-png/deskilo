@@ -19330,6 +19330,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Numero fiscale (Steuernummer)';
 
   @override
+  String get vatDeclFilingUid =>
+      'Inserisca il numero IDI dello spazio (CHE-123.456.789 con una cifra di controllo valida): il file lo cita.';
+
+  @override
   String get vatDeclFilingVatNumber =>
       'Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.';
 
@@ -19351,6 +19355,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclMtdCsv => 'File MTD (CSV, nove caselle)';
+
+  @override
+  String get vatDeclMwstXml =>
+      'Rendiconto IVA, XML eCH-0217 (caricamento nell\'ePortal)';
 
   @override
   String get vatDeclNet => 'Imponibile';
