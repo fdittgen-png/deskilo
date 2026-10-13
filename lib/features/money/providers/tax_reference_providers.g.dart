@@ -219,3 +219,53 @@ final class TaxReferenceSetProvider
 }
 
 String _$taxReferenceSetHash() => r'61b820098fba461e0615d6a7e880ce77eeaf12bc';
+
+/// #2478 -- the installation's rows become the snapshot the VAT functions run
+/// on (the bundled copy stands until they arrive, and when they cannot).
+
+@ProviderFor(activeTaxReference)
+final activeTaxReferenceProvider = ActiveTaxReferenceProvider._();
+
+/// #2478 -- the installation's rows become the snapshot the VAT functions run
+/// on (the bundled copy stands until they arrive, and when they cannot).
+
+final class ActiveTaxReferenceProvider
+    extends $FunctionalProvider<void, void, void>
+    with $Provider<void> {
+  /// #2478 -- the installation's rows become the snapshot the VAT functions run
+  /// on (the bundled copy stands until they arrive, and when they cannot).
+  ActiveTaxReferenceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeTaxReferenceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeTaxReferenceHash();
+
+  @$internal
+  @override
+  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  void create(Ref ref) {
+    return activeTaxReference(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+}
+
+String _$activeTaxReferenceHash() =>
+    r'613e603623815c39013e01b5df8860623b22ccb1';

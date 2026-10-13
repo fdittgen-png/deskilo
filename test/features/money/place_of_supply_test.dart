@@ -7,9 +7,11 @@
 // the database is parsed here and run through the Dart twin, expecting
 // the same answer. A case added on one side is a case on both.
 //
-// The EU set is pinned the same way: the latest migration defining
-// `is_eu_country`, the questionnaire's EU set and `euMemberStates` list
-// the same 27 codes, with Greece as GR.
+// The EU set is pinned the same way: the member rows `is_eu_country` reads
+// (#2478: the seed of the tax reference store, no array in the function any
+// more), the questionnaire's EU set and `euMemberStates` list the same 27
+// codes, with Greece as GR.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/place_of_supply.dart';
@@ -25,23 +27,16 @@ final _case = RegExp(
 Set<String> _codes(String text) =>
     RegExp(r"'([A-Z]{2})'").allMatches(text).map((m) => m.group(1)!).toSet();
 
-String _latestDefinition(String function) {
-  final files =
-      Directory('supabase/migrations')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.sql'))
-          .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
-  String? body;
-  for (final f in files) {
-    final sql = f.readAsStringSync();
-    final at = sql.indexOf('function public.$function(');
-    if (at < 0) continue;
-    // The definition's code list ends with the array literal.
-    body = sql.substring(at, sql.indexOf(']);', at));
-  }
-  return body ?? '';
+/// The countries of the `eu_member` rows the SQL functions read: every
+/// migration that seeds the store, and the bundled copy, agree on them.
+Set<String> _memberRows() {
+  final rows = (jsonDecode(File('assets/instance/tax_reference.json').readAsStringSync())
+          as List)
+      .cast<Map<String, dynamic>>();
+  return {
+    for (final r in rows)
+      if (r['domain'] == 'eu_member' && r['key'] == 'member') r['country'] as String,
+  };
 }
 
 void main() {
@@ -69,7 +64,7 @@ void main() {
   });
 
   test('one EU set: SQL, the questionnaire and Dart list the same 27', () {
-    final sqlSet = _codes(_latestDefinition('is_eu_country'));
+    final sqlSet = _memberRows();
     expect(sqlSet, euMemberStates);
     final html = File('web/setup.html').readAsStringSync();
     final eu = RegExp(r'const EU=new Set\(\[([^\]]*)\]\)').firstMatch(html);

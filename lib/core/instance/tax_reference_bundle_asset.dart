@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../vat/tax_reference.dart';
+import '../vat/tax_reference_active.dart';
 
 part 'tax_reference_bundle_asset.g.dart';
 
@@ -24,3 +25,11 @@ TaxReferenceSet _parseTaxReferenceBundle(String json) => TaxReferenceSet.parse(
 @Riverpod(keepAlive: true)
 Future<TaxReferenceSet> Function() taxReferenceBundleLoader(Ref ref) =>
     () async => _parseTaxReferenceBundle(await rootBundle.loadString(_taxReferenceAssetPath));
+
+/// Installs the bundled copy as the snapshot the VAT functions run on (#2478).
+/// Called once at start-up, before anything renders: the app then answers
+/// "is this country in the EU" with no server, and the installation's own
+/// rows replace it when they arrive.
+Future<void> installBundledTaxReference() async => ActiveTaxReference.install(
+      _parseTaxReferenceBundle(await rootBundle.loadString(_taxReferenceAssetPath)),
+    );

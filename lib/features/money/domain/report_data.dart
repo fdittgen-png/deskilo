@@ -10,8 +10,10 @@
 // facts from the providers are presentation/report_facts_of.dart; the
 // widget boundary for the words is presentation/report_strings_l10n.dart.
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/time/date_text.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
@@ -86,8 +88,6 @@ Map<String, Object?> legalMentionData(
   final pay = PaymentInstructions.fromDb(
     workspace?.paymentInstructions ?? const {},
   );
-  String orDefault(String value, String fallback) =>
-      value.trim().isNotEmpty ? value.trim() : fallback;
   return <String, Object?>{
     'iban': pay.iban,
     'bic': pay.bic,
@@ -115,41 +115,17 @@ Map<String, Object?> legalMentionData(
             isValidQstNumber(seller?.legalId ?? workspace?.legalId ?? '')
         ? formatCanadianRegistration(seller?.legalId ?? workspace?.legalId ?? '')
         : seller?.legalId ?? workspace?.legalId ?? '',
-    // #878 — BR-E-10: an exempt (or out-of-scope) seller's document
-    // carries the statutory mention of its member state when the owner
-    // wrote none; a VAT-charging seller prints nothing here.
-    // #896 — WHEN the tax falls due, said on the document.
-    'vat_exigibility_mention': exigibilityMention(
-      regime: vatRegimeFromWire(
-          seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
-      sellerCountry: seller?.country ?? workspace?.countryCode ?? '',
-      onPaymentBasis: frozen?.onPaymentBasis ??
-          legal
-              .taxPointBasis(seller?.country ?? workspace?.countryCode ?? '')
-              .onReceipts,
-    ),
-    // #895 — a reverse-charged supply states WHY no tax is charged, and
-    // that mention is statutory: it wins over the seller's own text.
-    'exemption_reason': reverseCharged
-        ? reverseChargeMention(seller?.country ?? workspace?.countryCode ?? '')
-        : counterpartyCategory == 'G'
-            ? exportMention(seller?.country ?? workspace?.countryCode ?? '')
-            : counterpartyCategory == 'E' &&
-                    (buyer?.taxExemptionReason.trim().isNotEmpty ?? false)
-                ? buyer!.taxExemptionReason.trim()
-                // #2440 — BT-120 per VAT category: each exempt subtotal
-                // states its own rate's reason, once.
-                : rateExemptionReasons.isNotEmpty
-                    ? rateExemptionReasons.join('\n')
-                    : orDefault(
-            seller?.taxExemptionReason ?? workspace?.taxExemptionReason ?? '',
-            defaultExemptionMention(
-              seller?.country ?? workspace?.countryCode ?? '',
-              vatRegimeFromWire(
-                  seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
-              vatId: seller?.vatId ?? workspace?.vatId ?? '',
-            ),
-          ),
+    // #878/#895/#896 — the statutory mentions: why no tax is charged and
+    // when it falls due (#2478: the texts are reference data).
+    ...statutoryMentionData((
+      workspace: workspace,
+      seller: seller,
+      buyer: buyer,
+      reverseCharged: reverseCharged,
+      counterpartyCategory: counterpartyCategory,
+      rateExemptionReasons: rateExemptionReasons,
+      frozen: frozen,
+    )),
     // #886 — the client as the postal standard prints them: the full
     // name on its own line, the block (company · street · POSTAL CITY ·
     // country when abroad) beneath, the contacts beside.
@@ -205,6 +181,48 @@ String clientAddressOf(
   );
 }
 
+/// [legalMentionData] of an invoice: its frozen parties and clauses, and the
+/// statutory texts in force on the day it was issued (#2478), so a text
+/// changed later never reaches a document issued before.
+Map<String, Object?> _invoiceLegalMentionData(
+  ReportStrings strings,
+  Invoice invoice,
+  Workspace? workspace, {
+  PaymentTerms? memberTerms,
+  String? memberCapacity,
+}) {
+  final rateReasons = {
+    for (final t in invoice.vatTotals)
+      if (t.exemptionReason.isNotEmpty) t.exemptionReason,
+  }.toList();
+  return {
+    ...legalMentionData(
+      strings,
+      workspace,
+      seller: invoice.sellerParty,
+      buyer: invoice.buyerParty,
+      clientAddress: clientAddressOf(invoice, workspace, strings),
+      clientName: clientNameOf(invoice),
+      reverseCharged: invoice.isReverseCharged,
+      counterpartyCategory: invoice.counterpartyCategory,
+      rateExemptionReasons: rateReasons,
+      memberTerms: memberTerms,
+      frozen: invoice.legalClauses,
+      legacy: isLegacyInvoice(invoice),
+      memberCapacity: memberCapacity,
+    ),
+    ...statutoryMentionData((
+      workspace: workspace,
+      seller: invoice.sellerParty,
+      buyer: invoice.buyerParty,
+      reverseCharged: invoice.isReverseCharged,
+      counterpartyCategory: invoice.counterpartyCategory,
+      rateExemptionReasons: rateReasons,
+      frozen: invoice.legalClauses,
+    ), asOf: isoDay(invoice.issuedAt)),
+  };
+}
+
 /// The client's full name: the frozen buyer party, else the snapshot,
 /// else the frozen company (#910).
 String clientNameOf(Invoice invoice) => invoice.clientName;
@@ -241,24 +259,8 @@ Map<String, Object?> invoiceReportData(
   ).isAssociation;
   String rate(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
-  final legalData = legalMentionData(
-    strings,
-    workspace,
-    seller: invoice.sellerParty,
-    buyer: invoice.buyerParty,
-    clientAddress: clientAddressOf(invoice, workspace, strings),
-    clientName: clientNameOf(invoice),
-    reverseCharged: invoice.isReverseCharged,
-    counterpartyCategory: invoice.counterpartyCategory,
-    rateExemptionReasons: {
-      for (final t in invoice.vatTotals)
-        if (t.exemptionReason.isNotEmpty) t.exemptionReason,
-    }.toList(),
-    memberTerms: memberTerms,
-    frozen: invoice.legalClauses,
-    legacy: isLegacyInvoice(invoice),
-    memberCapacity: memberCapacity,
-  );
+  final legalData = _invoiceLegalMentionData(strings, invoice, workspace,
+      memberTerms: memberTerms, memberCapacity: memberCapacity);
   // #2356 — what the seller's own law adds (IT stamp duty, ES correcting
   // invoice, FR category of the operation), after the owner's mentions.
   final national = nationalInvoiceMentions(
@@ -400,4 +402,62 @@ String usageSitesOf(Invoice invoice) {
       .where((s) => s.isNotEmpty && s != home)
       .toSet()
       .join(', ');
+}
+
+// #2478 (C2 of #2476) -- the two statutory lines of a document: WHY no tax is
+// charged (BT-120) and WHEN it falls due. The texts are reference data
+// (`exemption_text` rows); [asOf] is the day of the document.
+/// What decides the mentions: the live workspace, overridden by the frozen
+/// parties and snapshot of an issued document.
+@visibleForTesting
+typedef StatutoryMentionInput = ({
+  Workspace? workspace,
+  InvoiceParty? seller,
+  InvoiceParty? buyer,
+  bool reverseCharged,
+  String counterpartyCategory,
+  List<String> rateExemptionReasons,
+  LegalClauseSnapshot? frozen,
+});
+
+/// `vat_exigibility_mention` and `exemption_reason` of a document.
+@visibleForTesting
+Map<String, Object?> statutoryMentionData(StatutoryMentionInput c, {String? asOf}) {
+  final country = c.seller?.country ?? c.workspace?.countryCode ?? '';
+  final regime = vatRegimeFromWire(
+      c.seller?.vatRegime ?? c.workspace?.vatRegime ?? 'not_subject');
+  final legal = InvoiceLegal.fromJson(c.workspace?.invoiceLegal ?? const {});
+  // #895 — a reverse-charged supply states WHY no tax is charged, and that
+  // mention is statutory: it wins over the seller's own text.
+  final buyerReason = c.buyer?.taxExemptionReason.trim() ?? '';
+  final own = (c.seller?.taxExemptionReason ?? c.workspace?.taxExemptionReason ?? '').trim();
+  final reason = c.reverseCharged
+      ? reverseChargeMention(country, asOf: asOf)
+      : c.counterpartyCategory == 'G'
+          ? exportMention(country, asOf: asOf)
+          : c.counterpartyCategory == 'E' && buyerReason.isNotEmpty
+              ? buyerReason
+              // #2440 — BT-120 per VAT category: each exempt subtotal
+              // states its own rate's reason, once.
+              : c.rateExemptionReasons.isNotEmpty
+                  ? c.rateExemptionReasons.join('\n')
+                  : own.isNotEmpty
+                      ? own
+                      : defaultExemptionMention(
+                          country,
+                          regime,
+                          vatId: c.seller?.vatId ?? c.workspace?.vatId ?? '',
+                          asOf: asOf,
+                        );
+  return {
+    // #896 — WHEN the tax falls due, said on the document.
+    'vat_exigibility_mention': exigibilityMention(
+      regime: regime,
+      sellerCountry: country,
+      onPaymentBasis:
+          c.frozen?.onPaymentBasis ?? legal.taxPointBasis(country).onReceipts,
+      asOf: asOf,
+    ),
+    'exemption_reason': reason,
+  };
 }

@@ -11,6 +11,7 @@ import 'app/bootstrap.dart';
 import 'app/server_choice_app.dart';
 import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
+import 'core/instance/tax_reference_bundle_asset.dart';
 import 'core/notifications/deferred_notification_service.dart';
 import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
@@ -21,6 +22,9 @@ import 'features/workspace/providers/workspace_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // #2478 — the VAT functions answer from the bundled reference data until
+  // the installation's own rows replace it.
+  await installBundledTaxReference();
 
   // Always-on error trace (#144): file-backed logger plus global hooks for
   // framework and platform errors. Installed first so even boot failures

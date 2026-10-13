@@ -18503,6 +18503,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefAdd => 'Añadir un valor';
 
   @override
+  String get taxRefAliasOf =>
+      'Alias de (código ISO, vacío para un Estado miembro)';
+
+  @override
   String get taxRefCategory => 'Categoría EN 16931';
 
   @override
@@ -18515,10 +18519,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefCountry => 'País (código ISO, o * para todos)';
 
   @override
+  String get taxRefDomainCatalogueNote => 'Notas del catálogo';
+
+  @override
   String get taxRefDomainEuMember => 'Miembros de la UE';
 
   @override
   String get taxRefDomainExemptionText => 'Textos legales';
+
+  @override
+  String get taxRefDomainGroupExample => 'Ejemplos por grupo';
 
   @override
   String get taxRefDomainRate => 'Tipos';

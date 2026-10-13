@@ -31748,6 +31748,12 @@ abstract class AppLocalizations {
   /// **'Add a value'**
   String get taxRefAdd;
 
+  /// #2478 tax reference: Field: the member state an alias code stands for.
+  ///
+  /// In en, this message translates to:
+  /// **'Alias of (ISO code, empty for a member state)'**
+  String get taxRefAliasOf;
+
   /// #2477 tax reference: Field: VAT category code of a rate.
   ///
   /// In en, this message translates to:
@@ -31772,6 +31778,12 @@ abstract class AppLocalizations {
   /// **'Country (ISO code, or * for all)'**
   String get taxRefCountry;
 
+  /// #2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue notes'**
+  String get taxRefDomainCatalogueNote;
+
   /// #2477 tax reference: Domain filter: EU member states.
   ///
   /// In en, this message translates to:
@@ -31783,6 +31795,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Statutory texts'**
   String get taxRefDomainExemptionText;
+
+  /// #2478 tax reference: Domain filter: what falls in each fiscal group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group examples'**
+  String get taxRefDomainGroupExample;
 
   /// #2477 tax reference: Domain filter: rates.
   ///
