@@ -151,6 +151,8 @@ const Map<String, List<({String label, double percent, VatGroup group})>>
     (label: 'Normal 8,1 %', percent: 8.1, group: VatGroup.standard),
     (label: 'Hébergement 3,8 %', percent: 3.8, group: VatGroup.intermediate),
     (label: 'Réduit 2,6 %', percent: 2.6, group: VatGroup.reduced),
+    // #2360 — a bare letting of rooms (art. 21 Abs. 2 Ziff. 21 MWSTG).
+    (label: 'Ausgenommen (Vermietung)', percent: 0, group: VatGroup.exempt),
   ],
   'NO': [
     (label: 'Alminnelig 25 %', percent: 25, group: VatGroup.standard),
@@ -236,6 +238,7 @@ PlannedRateChange? vatPlannedChangeFor(String countryCode, double percent,
 /// VAT Act 1994, Schedule 9 Group 1 for a licence to occupy land.
 const Map<String, String> _exemptionReasons = {
   'GB': 'VAT Act 1994, Schedule 9, Group 1 (land)',
+  'CH': 'Von der Steuer ausgenommen (Art. 21 Abs. 2 Ziff. 21 MWSTG)',
 };
 
 /// The country's usual rates as editable [VatRate]s, standard first and
@@ -281,7 +284,10 @@ String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase(
             'package of facilities is standard-rated. Keep the lines that '
             'apply.',
       'CH' =>
-        'The 3.8 % special rate applies to accommodation only. If the vote '
+        'A package of services is taxed at the normal rate; a bare letting '
+            'of rooms is exempt (art. 21 MWSTG) unless you opted (art. 22): '
+            'say which on the legal identity. The 3.8 % special rate applies '
+            'to accommodation only. If the vote '
             'of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: '
             'change them by law then.${_swissReform2028Approved ? ' '
                 'The vote passed: "Change by law" proposes the new rate and '

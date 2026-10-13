@@ -2772,6 +2772,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get carnetsTitle => 'Bonos';
 
   @override
+  String get chBareLetting => 'Solo alquilamos locales desnudos';
+
+  @override
+  String get chBareLettingHelp =>
+      'Desactivado: cada línea es un paquete, al tipo normal. Activado: exento, salvo opción.';
+
+  @override
+  String get chLettingHelp =>
+      'Un puesto u oficina con servicios (centro de negocios) tributa al tipo normal. El simple alquiler de locales está exento sin deducción del impuesto soportado (art. 21 apdo. 2 n.º 21 LIVA suiza), salvo que opte por la tributación (art. 22), mostrando el impuesto abiertamente en la factura.';
+
+  @override
+  String get chLettingTitle => 'Alquiler y opción (Suiza)';
+
+  @override
+  String get chOptionToTax => 'Hemos optado (art. 22 LIVA suiza)';
+
+  @override
+  String get chOptionToTaxDate => 'Opción efectiva desde (AAAA-MM-DD)';
+
+  @override
   String get coOwnerAction => 'Copropiedad';
 
   @override

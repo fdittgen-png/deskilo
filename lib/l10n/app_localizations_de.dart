@@ -2780,6 +2780,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get carnetsTitle => 'Mehrfachkarten';
 
   @override
+  String get chBareLetting => 'Wir vermieten nur Räume';
+
+  @override
+  String get chBareLettingHelp =>
+      'Aus: jede Zeile ist ein Paket und wird zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.';
+
+  @override
+  String get chLettingHelp =>
+      'Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.';
+
+  @override
+  String get chLettingTitle => 'Vermietung und Option (Schweiz)';
+
+  @override
+  String get chOptionToTax => 'Wir haben optiert (Art. 22 MWSTG)';
+
+  @override
+  String get chOptionToTaxDate => 'Option wirksam ab (JJJJ-MM-TT)';
+
+  @override
   String get coOwnerAction => 'Mit-Inhaberschaft';
 
   @override

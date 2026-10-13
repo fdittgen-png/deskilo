@@ -17,10 +17,13 @@ class UkLandTaxationForm extends ChangeNotifier {
   final reference = TextEditingController();
   bool optionToTax = false;
   bool facilitiesPackage = false;
+  // #2360 — Switzerland: rooms only (exempt, art. 21) instead of a package.
+  bool bareLetting = false;
 
   void load(InvoiceLegal legal) {
     optionToTax = legal.optionToTax;
     facilitiesPackage = legal.facilitiesPackage;
+    bareLetting = legal.lettingKind == 'bare';
     date.text = legal.optionToTaxDate;
     reference.text = legal.optionToTaxReference;
   }
@@ -30,11 +33,13 @@ class UkLandTaxationForm extends ChangeNotifier {
     optionToTaxDate: date.text,
     optionToTaxReference: reference.text,
     facilitiesPackage: facilitiesPackage,
+    lettingKind: bareLetting ? 'bare' : '',
   );
 
-  void choose({bool? option, bool? package}) {
+  void choose({bool? option, bool? package, bool? bare}) {
     optionToTax = option ?? optionToTax;
     facilitiesPackage = package ?? facilitiesPackage;
+    bareLetting = bare ?? bareLetting;
     notifyListeners();
   }
 

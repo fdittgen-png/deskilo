@@ -1,0 +1,26 @@
+{
+  "chLettingTitle": "Locazione e opzione (Svizzera)",
+  "@chLettingTitle": {
+    "description": "#2360: chLettingTitle"
+  },
+  "chLettingHelp": "Una postazione o un ufficio con servizi (business center) è imponibile all'aliquota normale. La semplice locazione di locali è esclusa dall'imposta, senza deduzione dell'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo che optiate per l'imposizione (art. 22), indicando l'imposta apertamente in fattura.",
+  "@chLettingHelp": {
+    "description": "#2360: chLettingHelp"
+  },
+  "chBareLetting": "Affittiamo solo locali nudi",
+  "@chBareLetting": {
+    "description": "#2360: chBareLetting"
+  },
+  "chBareLettingHelp": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
+  "@chBareLettingHelp": {
+    "description": "#2360: chBareLettingHelp"
+  },
+  "chOptionToTax": "Abbiamo optato (art. 22 LIVA)",
+  "@chOptionToTax": {
+    "description": "#2360: chOptionToTax"
+  },
+  "chOptionToTaxDate": "Opzione efficace dal (AAAA-MM-GG)",
+  "@chOptionToTaxDate": {
+    "description": "#2360: chOptionToTaxDate"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "chLettingTitle": "Vermietung und Option (Schweiz)",
+  "@chLettingTitle": {
+    "description": "#2360: chLettingTitle"
+  },
+  "chLettingHelp": "Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.",
+  "@chLettingHelp": {
+    "description": "#2360: chLettingHelp"
+  },
+  "chBareLetting": "Wir vermieten nur Räume",
+  "@chBareLetting": {
+    "description": "#2360: chBareLetting"
+  },
+  "chBareLettingHelp": "Aus: jede Zeile ist ein Paket und wird zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
+  "@chBareLettingHelp": {
+    "description": "#2360: chBareLettingHelp"
+  },
+  "chOptionToTax": "Wir haben optiert (Art. 22 MWSTG)",
+  "@chOptionToTax": {
+    "description": "#2360: chOptionToTax"
+  },
+  "chOptionToTaxDate": "Option wirksam ab (JJJJ-MM-TT)",
+  "@chOptionToTaxDate": {
+    "description": "#2360: chOptionToTaxDate"
+  }
+}

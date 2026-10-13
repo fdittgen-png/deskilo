@@ -621,7 +621,12 @@ window.SETUP_L10N={
    "legalOptionDate": "Option effective from",
    "legalOptionRef": "HMRC notification reference",
    "legalFacilitiesPackage": "We sell a serviced package of facilities",
-   "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not."
+   "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not.",
+   "legalLetting": "Letting and the option (Switzerland)",
+   "legalLettingHint": "A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22) by showing the tax openly on the invoice.",
+   "legalBareLetting": "We only let bare rooms",
+   "legalBareLettingDesc": "Off: every property line is a package, taxed at the normal rate. On: exempt unless you opted.",
+   "legalChOption": "We opted for taxation (art. 22 MWSTG)"
   },
   "feature": {
    "calendarTab": [
@@ -1983,7 +1988,12 @@ window.SETUP_L10N={
    "legalOptionDate": "Option en vigueur depuis le",
    "legalOptionRef": "Référence de notification au HMRC",
    "legalFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
-   "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option."
+   "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option.",
+   "legalLetting": "Location et option (Suisse)",
+   "legalLettingHint": "Un poste ou un bureau avec des services (centre d'affaires) est imposable au taux normal. La simple location de locaux est exclue du champ de l'impôt, sans déduction de l'impôt préalable (art. 21 al. 2 ch. 21 LTVA), sauf option pour l'imposition (art. 22), en indiquant l'impôt ouvertement sur la facture.",
+   "legalBareLetting": "Nous ne louons que des locaux nus",
+   "legalBareLettingDesc": "Désactivé : chaque ligne est une prestation globale, imposée au taux normal. Activé : exclue, sauf option.",
+   "legalChOption": "Nous avons opté (art. 22 LTVA)"
   },
   "feature": {
    "calendarTab": [
@@ -3345,7 +3355,12 @@ window.SETUP_L10N={
    "legalOptionDate": "Option wirksam ab",
    "legalOptionRef": "Mitteilungsreferenz beim HMRC",
    "legalFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
-   "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option."
+   "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option.",
+   "legalLetting": "Vermietung und Option (Schweiz)",
+   "legalLettingHint": "Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.",
+   "legalBareLetting": "Wir vermieten nur Räume",
+   "legalBareLettingDesc": "Aus: jede Zeile ist ein Paket, zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
+   "legalChOption": "Wir haben optiert (Art. 22 MWSTG)"
   },
   "feature": {
    "calendarTab": [
@@ -4707,7 +4722,12 @@ window.SETUP_L10N={
    "legalOptionDate": "Opción vigente desde",
    "legalOptionRef": "Referencia de notificación a HMRC",
    "legalFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
-   "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción."
+   "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción.",
+   "legalLetting": "Alquiler y opción (Suiza)",
+   "legalLettingHint": "Un puesto u oficina con servicios (centro de negocios) tributa al tipo normal. El simple alquiler de locales está exento sin deducción del impuesto soportado (art. 21 apdo. 2 n.º 21 LIVA suiza), salvo que opte por la tributación (art. 22), mostrando el impuesto abiertamente en la factura.",
+   "legalBareLetting": "Solo alquilamos locales desnudos",
+   "legalBareLettingDesc": "Desactivado: cada línea es un paquete, al tipo normal. Activado: exento, salvo opción.",
+   "legalChOption": "Hemos optado (art. 22 LIVA suiza)"
   },
   "feature": {
    "calendarTab": [
@@ -6069,7 +6089,12 @@ window.SETUP_L10N={
    "legalOptionDate": "Opzione efficace dal",
    "legalOptionRef": "Riferimento di notifica all'HMRC",
    "legalFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
-   "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione."
+   "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione.",
+   "legalLetting": "Locazione e opzione (Svizzera)",
+   "legalLettingHint": "Una postazione o un ufficio con servizi (business center) è imponibile all'aliquota normale. La semplice locazione di locali è esclusa dall'imposta, senza deduzione dell'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo opzione per l'imposizione (art. 22), indicando l'imposta apertamente in fattura.",
+   "legalBareLetting": "Affittiamo solo locali nudi",
+   "legalBareLettingDesc": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
+   "legalChOption": "Abbiamo optato (art. 22 LIVA)"
   },
   "feature": {
    "calendarTab": [

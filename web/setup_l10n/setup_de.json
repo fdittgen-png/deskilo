@@ -616,5 +616,10 @@
  "legalOptionDate": "Option wirksam ab",
  "legalOptionRef": "Mitteilungsreferenz beim HMRC",
  "legalFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
- "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option."
+ "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option.",
+ "legalLetting": "Vermietung und Option (Schweiz)",
+ "legalLettingHint": "Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.",
+ "legalBareLetting": "Wir vermieten nur Räume",
+ "legalBareLettingDesc": "Aus: jede Zeile ist ein Paket, zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
+ "legalChOption": "Wir haben optiert (Art. 22 MWSTG)"
 }

@@ -2779,6 +2779,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get carnetsTitle => 'Carnets';
 
   @override
+  String get chBareLetting => 'Nous ne louons que des locaux nus';
+
+  @override
+  String get chBareLettingHelp =>
+      'Désactivé : chaque ligne est une prestation globale, imposée au taux normal. Activé : exclue, sauf option.';
+
+  @override
+  String get chLettingHelp =>
+      'Un poste ou un bureau avec des services (centre d\'affaires) est imposable au taux normal. La simple location de locaux est exclue du champ de l\'impôt, sans déduction de l\'impôt préalable (art. 21 al. 2 ch. 21 LTVA), sauf si vous optez pour l\'imposition (art. 22), en indiquant l\'impôt ouvertement sur la facture.';
+
+  @override
+  String get chLettingTitle => 'Location et option (Suisse)';
+
+  @override
+  String get chOptionToTax => 'Nous avons opté (art. 22 LTVA)';
+
+  @override
+  String get chOptionToTaxDate => 'Option effective dès (AAAA-MM-JJ)';
+
+  @override
   String get coOwnerAction => 'Copropriété';
 
   @override

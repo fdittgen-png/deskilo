@@ -616,5 +616,10 @@
  "legalOptionDate": "Opción vigente desde",
  "legalOptionRef": "Referencia de notificación a HMRC",
  "legalFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
- "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción."
+ "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción.",
+ "legalLetting": "Alquiler y opción (Suiza)",
+ "legalLettingHint": "Un puesto u oficina con servicios (centro de negocios) tributa al tipo normal. El simple alquiler de locales está exento sin deducción del impuesto soportado (art. 21 apdo. 2 n.º 21 LIVA suiza), salvo que opte por la tributación (art. 22), mostrando el impuesto abiertamente en la factura.",
+ "legalBareLetting": "Solo alquilamos locales desnudos",
+ "legalBareLettingDesc": "Desactivado: cada línea es un paquete, al tipo normal. Activado: exento, salvo opción.",
+ "legalChOption": "Hemos optado (art. 22 LIVA suiza)"
 }

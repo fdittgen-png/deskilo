@@ -616,5 +616,10 @@
  "legalOptionDate": "Opzione efficace dal",
  "legalOptionRef": "Riferimento di notifica all'HMRC",
  "legalFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
- "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione."
+ "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione.",
+ "legalLetting": "Locazione e opzione (Svizzera)",
+ "legalLettingHint": "Una postazione o un ufficio con servizi (business center) è imponibile all'aliquota normale. La semplice locazione di locali è esclusa dall'imposta, senza deduzione dell'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo opzione per l'imposizione (art. 22), indicando l'imposta apertamente in fattura.",
+ "legalBareLetting": "Affittiamo solo locali nudi",
+ "legalBareLettingDesc": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
+ "legalChOption": "Abbiamo optato (art. 22 LIVA)"
 }
