@@ -1193,6 +1193,10 @@ window.SETUP_L10N={
    "inputVat": [
     "Input VAT",
     "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only."
+   ],
+   "configurableSettings": [
+    "Configurable settings",
+    "Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace's administrators their own values."
    ]
   },
   "process": {
@@ -2605,6 +2609,10 @@ window.SETUP_L10N={
    "inputVat": [
     "TVA déductible",
     "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée."
+   ],
+   "configurableSettings": [
+    "Réglages configurables",
+    "Limites, délais et valeurs par défaut que l'on modifie dans l'application sans attendre une version : l'opérateur fixe les valeurs par défaut, les administrateurs d'un espace les leurs."
    ]
   },
   "process": {
@@ -4017,6 +4025,10 @@ window.SETUP_L10N={
    "inputVat": [
     "Vorsteuer",
     "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer."
+   ],
+   "configurableSettings": [
+    "Konfigurierbare Einstellungen",
+    "Grenzen, Fristen und Standardwerte, die Sie in der App ändern, statt auf eine Version zu warten: Der Plattformbetreiber legt die Standardwerte fest, die Administratoren eines Arbeitsbereichs ihre eigenen."
    ]
   },
   "process": {
@@ -5429,6 +5441,10 @@ window.SETUP_L10N={
    "inputVat": [
     "IVA soportado",
     "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido."
+   ],
+   "configurableSettings": [
+    "Ajustes configurables",
+    "Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos."
    ]
   },
   "process": {
@@ -6841,6 +6857,10 @@ window.SETUP_L10N={
    "inputVat": [
     "IVA a credito",
     "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito."
+   ],
+   "configurableSettings": [
+    "Impostazioni configurabili",
+    "Limiti, termini e valori predefiniti che si modificano nell'app senza attendere una versione: l'operatore imposta i valori predefiniti, gli amministratori di uno spazio i propri."
    ]
   },
   "process": {

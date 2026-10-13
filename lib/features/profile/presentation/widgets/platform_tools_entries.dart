@@ -5,15 +5,20 @@
 // not to one workspace. Server-gated (`is_platform_owner`), no feature flag
 // (docs/AGENT_RULES.md, "The platform-owner overview has no feature flag").
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/settings.dart';
 import '../../../money/presentation/screens/tax_reference_screen.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/widgets/settings_editor.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 
-class PlatformToolsEntries extends StatelessWidget {
+class PlatformToolsEntries extends ConsumerWidget {
   const PlatformToolsEntries({super.key});
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context, WidgetRef ref) => Column(
         children: [
           // #2477 — rates, statutory texts and VAT id patterns.
           ListTile(
@@ -22,6 +27,21 @@ class PlatformToolsEntries extends StatelessWidget {
             title: Text(context.l10n.taxRefTitle),
             onTap: () => showTaxReferenceScreen(context, canEdit: true),
           ),
+          // #2484 — the platform's default values of the settings registry.
+          if (ref
+              .watch(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.configurableSettings))
+            ListTile(
+              key: const ValueKey('profiles-platform-settings'),
+              leading: const Icon(Icons.tune_outlined),
+              title: Text(context.l10n.settingsPlatformTitle),
+              onTap: () => showSettingsEditorSheet(
+                context,
+                title: context.l10n.settingsPlatformTitle,
+                scope: SettingScope.platform,
+                canEdit: true,
+              ),
+            ),
         ],
       );
 }

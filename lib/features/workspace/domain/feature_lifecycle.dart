@@ -385,6 +385,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.viesVerification: _legacy,
   WorkspaceFeature.recapitulativeStatement: _legacy,
   WorkspaceFeature.inputVat: _legacy,
+  WorkspaceFeature.configurableSettings: _legacy,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

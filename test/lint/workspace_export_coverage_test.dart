@@ -183,6 +183,11 @@ const Map<String, String> _notExported = {
       'who looked at what, written by the server. It is evidence about '
           'the operator, and an export they control must not be its only '
           'copy',
+  'setting_values':
+      '#2484 — the workspace\'s configured values of the settings registry: '
+          'configuration, not the workspace\'s data. The export of data does not '
+          'carry it; the configuration transfer will (S2 of #2483), which is why '
+          'the proof setting\'s old copy in the dunning rules is gone.',
   'platform_access_log':
       "the platform owner's audit of their own access — not the "
           "workspace's data at all",
