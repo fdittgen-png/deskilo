@@ -19436,6 +19436,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclFiled => 'Déposée';
 
   @override
+  String get vatDeclFilingBn =>
+      'Saisissez le numéro d\'entreprise de TPS/TVH de l\'espace avec son compte RT (123456789 RT0001) : le fichier le mentionne.';
+
+  @override
   String get vatDeclFilingPeriod =>
       'Une déclaration ELSTER anticipée couvre un mois ou un trimestre ; la déclaration annuelle se dépose à part.';
 
@@ -19456,6 +19460,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatDeclGenerate => 'Préparer';
+
+  @override
+  String get vatDeclGstQstCsv =>
+      'Déclaration TPS/TVH et TVQ (CSV : lignes GST34 et FPZ-500)';
 
   @override
   String get vatDeclInputVat => 'TVA déductible';

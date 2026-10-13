@@ -35,5 +35,13 @@
   "vatDeclMwstXml": "Rendiconto IVA, XML eCH-0217 (caricamento nell'ePortal)",
   "@vatDeclMwstXml": {
     "description": "#2360 VAT filing files: vatDeclMwstXml"
+  },
+  "vatDeclGstQstCsv": "Dichiarazione GST/HST e QST (CSV: righe GST34 e FPZ-500)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
+  },
+  "vatDeclFilingBn": "Inserisca il numero d'impresa GST/HST dello spazio con il conto RT (123456789 RT0001): il file lo riporta.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
   }
 }

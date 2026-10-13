@@ -35,5 +35,13 @@
   "vatDeclMwstXml": "MWST return, eCH-0217 XML (ePortal upload)",
   "@vatDeclMwstXml": {
     "description": "#2360 VAT filing files: vatDeclMwstXml"
+  },
+  "vatDeclGstQstCsv": "GST/HST and QST return (CSV: GST34 and FPZ-500 lines)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
+  },
+  "vatDeclFilingBn": "Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
   }
 }

@@ -33176,6 +33176,12 @@ abstract class AppLocalizations {
   /// **'Filed'**
   String get vatDeclFiled;
 
+  /// #2361 VAT filing files: vatDeclFilingBn
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.'**
+  String get vatDeclFilingBn;
+
   /// #2357 VAT filing files: vatDeclFilingPeriod
   ///
   /// In en, this message translates to:
@@ -33211,6 +33217,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prepare'**
   String get vatDeclGenerate;
+
+  /// #2361 VAT filing files: vatDeclGstQstCsv
+  ///
+  /// In en, this message translates to:
+  /// **'GST/HST and QST return (CSV: GST34 and FPZ-500 lines)'**
+  String get vatDeclGstQstCsv;
 
   /// #2357 input VAT: vatDeclInputVat
   ///

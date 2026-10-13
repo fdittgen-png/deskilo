@@ -35,5 +35,13 @@
   "vatDeclMwstXml": "Décompte TVA, XML eCH-0217 (téléversement ePortal)",
   "@vatDeclMwstXml": {
     "description": "#2360 VAT filing files: vatDeclMwstXml"
+  },
+  "vatDeclGstQstCsv": "Déclaration TPS/TVH et TVQ (CSV : lignes GST34 et FPZ-500)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
+  },
+  "vatDeclFilingBn": "Saisissez le numéro d'entreprise de TPS/TVH de l'espace avec son compte RT (123456789 RT0001) : le fichier le mentionne.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
   }
 }

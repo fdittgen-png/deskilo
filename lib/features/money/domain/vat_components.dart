@@ -56,6 +56,14 @@ class VatComponent {
   final int baseCents;
   final int taxCents;
 
+  Map<String, Object?> toJson() => {
+        'scheme': scheme,
+        'authority': authority,
+        'percent': percent,
+        'base_cents': baseCents,
+        'tax_cents': taxCents,
+      };
+
   factory VatComponent.fromReader(JsonReader r) {
     return VatComponent(
       scheme: r.stringOr('scheme'),

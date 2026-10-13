@@ -12137,6 +12137,10 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingBn": "Introduzca el número de empresa GST/HST del espacio con su cuenta RT (123456789 RT0001): el archivo lo indica.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
+  },
   "vatDeclFilingPeriod": "Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
@@ -12160,6 +12164,10 @@
   "vatDeclGenerate": "Preparar",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
+  },
+  "vatDeclGstQstCsv": "Declaración GST/HST y QST (CSV: líneas GST34 y FPZ-500)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
   },
   "vatDeclInputVat": "IVA deducible",
   "@vatDeclInputVat": {

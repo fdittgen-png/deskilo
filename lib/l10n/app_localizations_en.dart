@@ -19218,6 +19218,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFiled => 'Filed';
 
   @override
+  String get vatDeclFilingBn =>
+      'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.';
+
+  @override
   String get vatDeclFilingPeriod =>
       'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.';
 
@@ -19238,6 +19242,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclGenerate => 'Prepare';
+
+  @override
+  String get vatDeclGstQstCsv =>
+      'GST/HST and QST return (CSV: GST34 and FPZ-500 lines)';
 
   @override
   String get vatDeclInputVat => 'Deductible VAT';

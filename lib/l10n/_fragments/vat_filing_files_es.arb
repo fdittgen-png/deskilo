@@ -35,5 +35,13 @@
   "vatDeclMwstXml": "Declaración MWST, XML eCH-0217 (carga en el ePortal)",
   "@vatDeclMwstXml": {
     "description": "#2360 VAT filing files: vatDeclMwstXml"
+  },
+  "vatDeclGstQstCsv": "Declaración GST/HST y QST (CSV: líneas GST34 y FPZ-500)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
+  },
+  "vatDeclFilingBn": "Introduzca el número de empresa GST/HST del espacio con su cuenta RT (123456789 RT0001): el archivo lo indica.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
   }
 }
