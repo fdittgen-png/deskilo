@@ -78,8 +78,7 @@ Future<Uint8List> _pdf({
   AddressWindow window = AddressWindow.right,
   int lines = 1,
 }) =>
-    buildInvoicePdf(
-      invoice: _invoice(lines: lines),
+    buildInvoicePdf(InvoicePdfRequest(invoice: _invoice(lines: lines),
       strings: _strings,
       addressWindow: window,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} €',
@@ -88,8 +87,7 @@ Future<Uint8List> _pdf({
       dateLabel: '4 sept. 2026',
       periodLabel: 'août 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
 void main() {
   test('the sheet is A4 and the sender block starts at the 20 mm margin',

@@ -264,7 +264,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/fec.dart': 590, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/invoice_pdf_part2.dart': 801, // 2026-10-13 #2360: the invoice takes the QR-bill page as its second sheet. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/invoice_pdf_part2.dart': 772, // 801→772
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
