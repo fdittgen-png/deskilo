@@ -121,6 +121,18 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     }
   }
 
+  /// #2473 — says that some cards have no pin; nothing when all are placed.
+  static Widget _pinsMissing(BuildContext context, int count) => count == 0
+      ? const SizedBox.shrink()
+      : Padding(
+          padding: AppSpacing.smAll,
+          child: Text(
+            context.l10n.directoryPinsMissing(count),
+            key: const ValueKey('directory-pins-missing'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        );
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -131,10 +143,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     final needsLookup = target != null && target.location == null;
     final lookup = needsLookup && address.isNotEmpty
         ? ref.watch(directoryAddressLocationProvider(address)) : null;
-    // #2473 — every workspace is a pin, not only the selected one: a card
-    // without coordinates is placed from its public address (one cached
-    // lookup per address). A failed lookup leaves that workspace on the
-    // cards only; the selected one still says so above the map.
+    // #2473 — every workspace is a pin: a card without coordinates is placed
+    // from its public address (one cached lookup per address); a failed one stays a card.
     var lookups = 0;
     final failed = <Object>[];
     final located = [
@@ -176,15 +186,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
                 tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),
           ]),
         ),
-      if (failed.isNotEmpty)
-        Padding(
-          padding: AppSpacing.smAll,
-          child: Text(
-            l.directoryPinsMissing(failed.length),
-            key: const ValueKey('directory-pins-missing'),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ),
+      _pinsMissing(context, failed.length),
       Expanded(child: Stack(children: [FlutterMap(
       mapController: _controller,
       options: MapOptions(
