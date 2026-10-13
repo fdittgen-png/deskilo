@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-170 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+168 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -172,13 +172,11 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:168` | label | Reduced 5 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:169` | label | Zero 0 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:170` | label | Exempt (land) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:177` | label | GST 5 % (AB/NT/NU/YT) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:178` | label | HST 13 % (ON) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:179` | label | HST 14 % (NS) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:180` | label | HST 15 % (NB/NL/PE) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:181` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:182` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:183` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:182` | label | GST 5 % (AB/BC/MB/NT/NU/SK/YT) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:183` | label | HST 13 % (ON) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:184` | label | HST 14 % (NS) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:185` | label | HST 15 % (NB/NL/PE) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:186` | label | GST 5 % + QST 9,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
@@ -186,7 +184,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
-- **`lib/features/money/domain/vat_catalogue.dart`** (91) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
+- **`lib/features/money/domain/vat_catalogue.dart`** (89) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
 - **`lib/features/money/domain/coa_preview.dart`** (48) — the national charts of accounts (the French PCG, the Swiss KMU): «Clients», «TVA collectée», «Dienstleistungsertrag» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

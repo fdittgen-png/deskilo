@@ -170,17 +170,20 @@ const Map<String, List<({String label, double percent, VatGroup group})>>
     (label: 'Exempt (land)', percent: 0, group: VatGroup.exempt),
   ],
   // ── North America ──────────────────────────────────────────────────
-  // Canada: GST is federal; the usable rate depends on the PROVINCE, so
-  // the catalogue lists the per-province combined realities. The owner
-  // keeps the one that applies and deletes the rest.
+  // Canada: GST is federal; the usable rate depends on the PROVINCE of the
+  // building, so the catalogue lists the per-province realities and the
+  // owner keeps the one that applies. #2361: a rate that is two taxes
+  // (Quebec) is the exact sum of its components on the same base — the
+  // QST is levied on the price WITHOUT the GST — and the invoice states
+  // them apart (`vat_components.dart`). No "GST+PST" for a desk: BC, SK
+  // and MB do not apply their provincial tax to the rental of commercial
+  // premises or to a coworking membership, so those provinces are GST-only.
   'CA': [
-    (label: 'GST 5 % (AB/NT/NU/YT)', percent: 5, group: VatGroup.standard),
+    (label: 'GST 5 % (AB/BC/MB/NT/NU/SK/YT)', percent: 5, group: VatGroup.standard),
     (label: 'HST 13 % (ON)', percent: 13, group: VatGroup.standard),
     (label: 'HST 14 % (NS)', percent: 14, group: VatGroup.standard),
     (label: 'HST 15 % (NB/NL/PE)', percent: 15, group: VatGroup.standard),
-    (label: 'GST+QST 14,975 % (QC)', percent: 14.975, group: VatGroup.standard),
-    (label: 'GST+PST 12 % (BC/MB)', percent: 12, group: VatGroup.standard),
-    (label: 'GST+PST 11 % (SK)', percent: 11, group: VatGroup.standard),
+    (label: 'GST 5 % + QST 9,975 % (QC)', percent: 14.975, group: VatGroup.standard),
   ],
   // US: deliberately NO preset — there is no federal VAT/sales tax and
   // state+local rates vary by the seller's nexus; vatCatalogueNote says
