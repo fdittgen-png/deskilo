@@ -17,7 +17,6 @@
     {"p":"lib/app/route_access.dart","loc":90,"part":false,"fn":4,"cog":8,"cyc":6,"len":15,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/route_classes.dart","loc":144,"part":false,"fn":3,"cog":8,"cyc":6,"len":13,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/route_policy.dart","loc":230,"part":false,"fn":10,"cog":40,"cyc":48,"len":141,"params":3,"nest":3,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/app/router.dart","loc":773,"part":false,"fn":1,"cog":132,"cyc":107,"len":830,"params":1,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/app/schema_gate.dart","loc":12,"part":false,"fn":1,"cog":5,"cyc":6,"len":17,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/server_choice_app.dart","loc":47,"part":false,"fn":4,"cog":1,"cyc":2,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/development_banner.dart","loc":72,"part":false,"fn":2,"cog":4,"cyc":5,"len":44,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1486,7 +1485,6 @@
   "functions": [
     {"id":"lib/app/entry_intents.dart#EntryIntentDraft.decode(String raw)","cog":17,"cyc":26,"len":58,"params":1},
     {"id":"lib/app/route_policy.dart#resolveDestination(RouteRequest request,RouteFacts facts)","cog":40,"cyc":48,"len":141,"params":2},
-    {"id":"lib/app/router.dart#router(Ref ref)","cog":16,"cyc":22,"len":651,"params":1},
     {"id":"lib/app/shell/shell_drawer.dart#ShellDrawer.build(BuildContext context,WidgetRef ref)","cog":73,"cyc":66,"len":262,"params":2},
     {"id":"lib/app/shell/shell_screen.dart#ShellScreen.build(BuildContext context,WidgetRef ref)","cog":84,"cyc":55,"len":430,"params":2},
     {"id":"lib/core/backend/connection_outcome.dart#classifyConnectionError(Object error,{required String source,bool afterSend})","cog":23,"cyc":27,"len":55,"params":3},

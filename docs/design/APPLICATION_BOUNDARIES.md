@@ -144,7 +144,6 @@ Reciprocal:
 
 The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets there say what each one costs today.
 
-- `lib/app/router.dart`
 - `lib/core/demo/data/reservation_repository.dart`
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/calendar/presentation/screens/calendar_screen.dart`
