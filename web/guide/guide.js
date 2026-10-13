@@ -76,6 +76,8 @@
     });
   }
   apply();
+  // The WebMCP tools (guide_webmcp.js) read the reader's level from here.
+  window.GuideState = { ladder: ladder, level: function () { return level; } };
 
   // A link to a hidden section shows it: the reader asked for it.
   function reveal() {

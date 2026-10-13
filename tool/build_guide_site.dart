@@ -13,6 +13,7 @@
 //
 //   dart run tool/build_guide_site.dart            write web/guide
 //   dart run tool/build_guide_site.dart --check    fail when it is stale
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:markdown/markdown.dart' as md;
@@ -219,7 +220,7 @@ final _anchor = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9]*(?:\.[a-z0-9-]+)+)\s*--
 String _html(String markdown) => md.markdownToHtml(markdown, extensionSet: md.ExtensionSet.gitHubFlavored);
 
 /// One section's body: html, its screenshots and its roles.
-typedef Rendered = ({String body, List<String> figures, List<({String key, String label})> roles});
+typedef Rendered = ({String body, List<String> figures, List<({String src, String alt})> images, List<({String key, String label})> roles});
 
 Rendered renderBody(
   String lang,
@@ -244,6 +245,7 @@ Rendered renderBody(
   var html = _html(cleaned.join('\n'));
 
   final figures = <String>[];
+  final images = <({String src, String alt})>[];
   html = html.replaceAllMapped(RegExp(r'<p>\s*(<img [^>]*>)\s*</p>|(<img [^>]*>)'), (m) {
     final tag = (m[1] ?? m[2])!;
     final src = RegExp(r'src="images/([^"]+)"').firstMatch(tag)?[1];
@@ -251,6 +253,7 @@ Rendered renderBody(
     final wide = RegExp(r'width="(\d+)"').firstMatch(tag);
     final isWide = wide != null && int.parse(wide[1]!) > 400;
     // The phone scrolls (focus it, then the arrow keys); the button opens it large.
+    images.add((src: '$imageBase$src', alt: title));
     figures.add('<figure class="shot${isWide ? ' wide' : ''}"><div class="screen" tabindex="0"><img loading="lazy" src="$imageBase$src" alt="${esc(title)}"></div>'
         '<button class="zoom" type="button" aria-label="${esc(u.enlarge)}: ${esc(title)}">⤢</button></figure>');
     return '';
@@ -272,7 +275,7 @@ Rendered renderBody(
     return 'href="${other.page}${id == null ? '' : '#$id'}"';
   });
   html = html.replaceAllMapped(RegExp('<a href="(${RegExp.escape(webAppBase)}[^"]*)"'), (m) => '<a class="app-link" target="_blank" rel="noopener" href="${m[1]}"');
-  return (body: html, figures: figures, roles: roles.isEmpty ? [(key: 'all', label: _wordsFor(lang)['all']!)] : roles);
+  return (body: html, figures: figures, images: images, roles: roles.isEmpty ? [(key: 'all', label: _wordsFor(lang)['all']!)] : roles);
 }
 
 String renderPage(String lang, String markdown, {String book = 'user'}) {
@@ -343,7 +346,7 @@ String renderPage(String lang, String markdown, {String book = 'user'}) {
 <link rel="icon" href="../favicon.png">
 <link rel="stylesheet" href="guide.css">
 </head>
-<body>
+<body data-book="$book">
 <header class="bar">
   <button class="icon-btn menu-btn" type="button" aria-label="${esc(u.menu)}" aria-expanded="false">☰</button>
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>DesKilo</span></a>
@@ -371,7 +374,9 @@ String renderPage(String lang, String markdown, {String book = 'user'}) {
 </div>
 <button class="to-top" type="button" aria-label="${esc(u.top)}">↑</button>
 <dialog class="lightbox" aria-label="${esc(u.enlarge)}"><form method="dialog"><button class="icon-btn" type="submit" aria-label="${esc(u.close)}">✕</button></form><img alt=""></dialog>
+<script src="../webmcp.js"></script>
 <script src="guide.js"></script>
+<script src="guide_webmcp.js"></script>
 </body>
 </html>
 ''';
@@ -390,6 +395,98 @@ String _card(String id, String title, Rendered r, String tag) {
       '<header><$tag>${esc(title)} <a class="permalink" href="#$id" aria-label="link">#</a></$tag><div class="roles">$roles</div></header>'
       '<div class="body">${r.body}</div>$media</article>';
 }
+
+// ---------------------------------------------------------------- the index
+// What the WebMCP tools of the guide pages answer from (#2502). The pages'
+// CSP is `default-src 'none'; script-src 'self'`, so the index is a script
+// that defines `window.__guideIndex[lang]`, one file per language, loaded by
+// the page of that language only. One entry per section card, one line per
+// entry: changing a paragraph changes exactly that entry's line.
+
+/// The text of rendered markup: block ends become spaces, tags vanish,
+/// entities are decoded, whitespace is collapsed.
+String plainText(String html) {
+  final spaced = html.replaceAll(RegExp(r'</(p|li|h[1-6]|blockquote|tr|div|ol|ul)>|<br\s*/?>', caseSensitive: false), ' ');
+  return spaced
+      .replaceAll(RegExp(r'<[^>]*>'), '')
+      .replaceAll('&lt;', '<')
+      .replaceAll('&gt;', '>')
+      .replaceAll('&quot;', '"')
+      .replaceAll('&#39;', "'")
+      .replaceAll('&#x27;', "'")
+      .replaceAll('&amp;', '&')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+}
+
+const _summaryMax = 400;
+
+Map<String, Object> _entry(String id, String title, String book, Rendered r) {
+  final firstParagraph = RegExp(r'<p[^>]*>([\s\S]*?)</p>').firstMatch(r.body);
+  final text = plainText(r.body);
+  var summary = firstParagraph == null ? text : plainText(firstParagraph[1]!);
+  if (summary.length > _summaryMax) summary = '${summary.substring(0, _summaryMax - 1)}…';
+  final appLinks = <String>[
+    for (final m in RegExp('href="(${RegExp.escape(webAppBase)}[^"]*)"').allMatches(r.body)) m[1]!,
+  ];
+  return {
+    'id': id,
+    'family': book,
+    'title': title,
+    'roles': [for (final k in r.roles) k.key],
+    'summary': summary,
+    'text': text,
+    'images': [for (final i in r.images) {'src': i.src, 'alt': i.alt}],
+    'appLinks': appLinks,
+  };
+}
+
+/// The index entries of one page, in page order.
+List<Map<String, Object>> indexEntries(String lang, String markdown, {String book = 'user'}) {
+  final slugs = anchorSlugs(markdown);
+  final idBySlug = {for (final e in slugs.entries) e.value: e.key};
+  final cross = crossPages(lang);
+  final out = <Map<String, Object>>[];
+  for (final c in split(markdown).chapters) {
+    if (c.sections.isEmpty) {
+      out.add(_entry(c.id, c.title, book, renderBody(lang, c.intro, c.title, idBySlug, cross)));
+    }
+    for (final s in c.sections) {
+      out.add(_entry(s.id, s.title, book, renderBody(lang, s.lines, s.title, idBySlug, cross)));
+    }
+  }
+  return out;
+}
+
+/// `web/guide/guide_index_<lang>.js`, for every language, both books.
+Map<String, String> buildIndexes() {
+  final out = <String, String>{};
+  for (final lang in ui.keys) {
+    final entries = <Map<String, Object>>[];
+    for (final family in families) {
+      final file = family.files[lang];
+      if (file == null) continue;
+      final source = File('docs/wiki/$file');
+      if (!source.existsSync()) continue;
+      entries.addAll(indexEntries(lang, source.readAsStringSync(), book: family.name));
+    }
+    final b = StringBuffer('// Generated by tool/build_guide_site.dart — do not edit.\n')
+      ..write('window.__guideIndex=window.__guideIndex||{};\n')
+      ..write('window.__guideIndex[${jsonEncode(lang)}]=[\n');
+    for (var i = 0; i < entries.length; i++) {
+      b
+        ..write(jsonEncode(entries[i]).replaceAll('</', r'<\/'))
+        ..write(i == entries.length - 1 ? '\n' : ',\n');
+    }
+    b.write('];\n');
+    out['$outDir/guide_index_$lang.js'] = b.toString();
+  }
+  return out;
+}
+
+/// The paths among [expected] whose current content differs (the check).
+List<String> staleOutputs(Map<String, String> expected, String? Function(String path) read) =>
+    [for (final e in expected.entries) if (read(e.key) != e.value) e.key];
 
 void main(List<String> args) {
   final check = args.contains('--check');
@@ -410,6 +507,19 @@ void main(List<String> args) {
         target.writeAsStringSync(html);
         stdout.writeln('wrote ${target.path}');
       }
+    }
+  }
+  final indexes = buildIndexes();
+  if (check) {
+    final old = staleOutputs(indexes, (p) => File(p).existsSync() ? File(p).readAsStringSync() : null);
+    for (final p in old) {
+      stderr.writeln('$p is stale — run: dart run tool/build_guide_site.dart');
+      stale = true;
+    }
+  } else {
+    for (final e in indexes.entries) {
+      File(e.key).writeAsStringSync(e.value);
+      stdout.writeln('wrote ${e.key}');
     }
   }
   exitCode = stale ? 1 : 0;
