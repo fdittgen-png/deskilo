@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
 //
 // #1373 — what makes a `ProviderScope` the Demo environment.
@@ -42,6 +43,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
+import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
@@ -175,8 +177,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       eInvoiceInboxRepositoryProvider
           .overrideWithValue(FakeEInvoiceInboxRepository()), // #2358
-      // #1869 — book profiles in memory.
-      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
+      taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), // #2477 in memory
+      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles),
