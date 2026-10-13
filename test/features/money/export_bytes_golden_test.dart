@@ -23,6 +23,7 @@ import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
@@ -222,21 +223,17 @@ Map<String, String Function()> _files() => {
     createdAt: DateTime.utc(2026, 5, 1, 9),
     lineText: _lineText,
   ),
-  'invoice_ubl.xml': () => buildInvoiceUbl(
-    invoice: _invoices.first,
+  'invoice_ubl.xml': () => buildInvoiceUbl(EInvoiceInput(invoice: _invoices.first,
+    seller: _seller,
+    buyer: _buyer,
+    lineText: _lineText,
+    iban: 'FR7630006000011234567890189')),
+  'invoice_cii.xml': () => buildInvoiceCii(EInvoiceInput(invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
     lineText: _lineText,
     iban: 'FR7630006000011234567890189',
-  ),
-  'invoice_cii.xml': () => buildInvoiceCii(
-    invoice: _invoices.first,
-    seller: _seller,
-    buyer: _buyer,
-    lineText: _lineText,
-    iban: 'FR7630006000011234567890189',
-    dueDate: DateTime.utc(2026, 4, 3),
-  ),
+    dueDate: DateTime.utc(2026, 4, 3))),
   'vat_report.csv': () => vatReportCsv(
     buildVatReport(
       _invoices,

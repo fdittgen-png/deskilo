@@ -4,6 +4,7 @@
 // the legal registrations with their scheme (BT-30 / BT-47), the
 // payment terms and due date (BT-20 / BT-9, BR-CO-25), and the
 // readiness gap for a French business buyer without a SIREN.
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
@@ -29,10 +30,8 @@ Invoice _invoice() => Invoice(
     );
 
 XmlDocument _xml({InvoiceParty buyer = _kaloa, DateTime? dueDate, String terms = ''}) =>
-    XmlDocument.parse(buildInvoiceCii(
-      invoice: _invoice(), seller: _seller, buyer: buyer,
-      lineText: (l) => 'Abonnement 100 %', dueDate: dueDate, paymentTerms: terms,
-    ));
+    XmlDocument.parse(buildInvoiceCii(EInvoiceInput(invoice: _invoice(), seller: _seller, buyer: buyer,
+      lineText: (l) => 'Abonnement 100 %', dueDate: dueDate, paymentTerms: terms)));
 
 Iterable<XmlElement> _els(XmlDocument doc, String name) =>
     doc.findAllElements(name, namespace: '*');

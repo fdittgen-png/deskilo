@@ -252,14 +252,12 @@ Future<void> _exportEInvoice(
     errorText:
         l10n.workspaceGenericError,
     action: () async {
-      final xml = buildInvoiceUbl(
-        invoice: invoice,
+      final xml = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
         seller: seller,
         buyer: buyer,
         iban: workspaceIban(workspace),
         lineText: (line) => invoiceLineText(words, line,
-            association: association, period: invoice.period),
-      );
+            association: association, period: invoice.period)));
       final bytes = Uint8List.fromList(utf8.encode(xml));
       final fileName = '${safeFileSlug(invoice.number)}.xml';
       if (export == EInvoiceExport.share) {

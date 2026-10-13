@@ -7,6 +7,7 @@
 // accepted the deposit, the portal refused it, and nothing had warned.
 import 'dart:io';
 
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart' show buildInvoiceUbl;
@@ -47,8 +48,8 @@ void main() {
   group('UBL', () {
     test('carries BT-10 after the currency and BT-13 before any billing '
         'reference — the schema order a validator enforces', () {
-      final xml = buildInvoiceUbl(invoice: _invoice(_mairie), seller: _seller,
-          buyer: _mairie, lineText: (l) => l.label);
+      final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
+          buyer: _mairie, lineText: (l) => l.label));
       final doc = XmlDocument.parse(xml);
       expect(doc.findAllElements('cbc:BuyerReference').single.innerText, 'SERVICE-42');
       expect(doc.findAllElements('cac:OrderReference').single
@@ -59,8 +60,8 @@ void main() {
     });
 
     test('and says nothing for a member — a coworker is not a mairie', () {
-      final xml = buildInvoiceUbl(invoice: _invoice(_member), seller: _seller,
-          buyer: _member, lineText: (l) => l.label);
+      final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice(_member), seller: _seller,
+          buyer: _member, lineText: (l) => l.label));
       expect(xml, isNot(contains('BuyerReference')));
       expect(xml, isNot(contains('OrderReference')));
     });
@@ -68,8 +69,8 @@ void main() {
 
   group('CII / Factur-X', () {
     test('BT-10 leads the trade agreement, BT-13 follows the parties', () {
-      final xml = buildInvoiceCii(invoice: _invoice(_mairie), seller: _seller,
-          buyer: _mairie, lineText: (l) => l.label);
+      final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice(_mairie), seller: _seller,
+          buyer: _mairie, lineText: (l) => l.label));
       final doc = XmlDocument.parse(xml);
       final agreement = doc.findAllElements('ram:ApplicableHeaderTradeAgreement').single;
       expect(agreement.childElements.first.name.qualified, 'ram:BuyerReference');

@@ -8,6 +8,7 @@
 
 import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/core/vat/vat_treatment.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
@@ -184,16 +185,14 @@ void main() {
     test('exports as category AE with VATEX-EU-AE, in CII and UBL', () {
       final invoice = _invoice(vat: const [_ae]);
       for (final xml in [
-        buildInvoiceCii(
-            invoice: invoice,
+        buildInvoiceCii(EInvoiceInput(invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
-            lineText: (line) => line.label),
-        buildInvoiceUbl(
-            invoice: invoice,
+            lineText: (line) => line.label)),
+        buildInvoiceUbl(EInvoiceInput(invoice: invoice,
             seller: _seller,
             buyer: invoice.buyerParty!,
-            lineText: (line) => line.label),
+            lineText: (line) => line.label)),
       ]) {
         expect(xml, contains('AE'), reason: 'the category the norm wants');
         expect(xml, contains('VATEX-EU-AE'));

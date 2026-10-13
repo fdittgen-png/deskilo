@@ -6,6 +6,7 @@
 import 'dart:io';
 
 import 'package:deskilo/core/vat/vat_treatment.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart'
@@ -150,19 +151,17 @@ void main() {
       expect(invoice.counterpartyCategory, 'G');
       expect(exemptionCodeForCategory('G', 'FR', VatRegime.vatRegistered),
           'VATEX-EU-G');
-      final cii = buildInvoiceCii(
-          invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
-          lineText: (l) => l.label);
+          lineText: (l) => l.label));
       expect(cii, contains('<ram:CategoryCode>G</ram:CategoryCode>'));
       expect(cii, contains('VATEX-EU-G'));
       expect(cii, contains(exportMention('FR')));
-      final ubl = buildInvoiceUbl(
-          invoice: invoice,
+      final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(name: 'Zoé', country: 'US'),
-          lineText: (l) => l.label);
+          lineText: (l) => l.label));
       expect(ubl, contains('<cbc:ID>G</cbc:ID>'));
       expect(ubl, contains('VATEX-EU-G'));
     });
@@ -170,14 +169,13 @@ void main() {
     test('E from an exempt buyer prints the BUYER\'s reason', () {
       final invoice = doc('E');
       expect(invoice.counterpartyCategory, 'E');
-      final cii = buildInvoiceCii(
-          invoice: invoice,
+      final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
           seller: seller,
           buyer: const InvoiceParty(
               name: 'Ambassade',
               country: 'FR',
               taxExemptionReason: 'Exonération art. 261 CGI'),
-          lineText: (l) => l.label);
+          lineText: (l) => l.label));
       expect(cii, contains('<ram:CategoryCode>E</ram:CategoryCode>'));
       expect(cii, contains('Exonération art. 261 CGI'));
     });

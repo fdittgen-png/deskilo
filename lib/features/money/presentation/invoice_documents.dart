@@ -31,6 +31,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/address_window.dart';
 import '../domain/dunning.dart';
+import '../domain/einvoice_input.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_cii.dart';
 import '../domain/invoice_legal.dart';
@@ -480,8 +481,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
 }) async {
   final association = ref.read(sellerIsAssociationProvider);
   final words = reportStringsOf(context.l10n);
-  final xml = buildInvoiceCii(
-    invoice: invoice,
+  final xml = buildInvoiceCii(EInvoiceInput(invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
@@ -492,8 +492,7 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     // #1916 — an issued invoice states the terms frozen with it.
     paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
         memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
-        '',
-  );
+        ''));
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
   if (!context.mounted) {

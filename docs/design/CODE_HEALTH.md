@@ -26,8 +26,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
 | 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
-| 179 | 54 | 313 | 8 | `lib/features/money/domain/invoice_ubl.dart#buildInvoiceUbl` |
-| 178 | 41 | 305 | 7 | `lib/features/money/domain/invoice_cii.dart#buildInvoiceCii` |
 | 174 | 57 | 797 | 18 | `lib/features/money/domain/invoice_pdf_part2.dart#buildInvoicePdf` |
 | 140 | 39 | 322 | 8 | `lib/features/money/domain/invoice_fatturapa.dart#buildInvoiceFatturaPa` |
 | 132 | 107 | 830 | 1 | `lib/app/router.dart#router` |
@@ -50,4 +48,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 69 | 46 | 72 | 2 | `lib/features/workspace/domain/workspace_field_answer.dart#fieldProblem` |
 | 68 | 29 | 219 | 2 | `lib/features/profile/presentation/screens/profiles_screen.dart#ProfilesScreen.build` |
 | 68 | 53 | 224 | 2 | `lib/features/task_recorder/presentation/guide_host/guide_pane.dart#_Pane.build` |
+| 67 | 39 | 205 | 2 | `lib/core/instance/mcp_auth_checks.dart#federationChecks` |
+| 67 | 31 | 326 | 1 | `lib/features/directory/presentation/directory_screen.dart#_DirectoryState.build` |
 
