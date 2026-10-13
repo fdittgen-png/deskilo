@@ -21,7 +21,9 @@ import fs from 'fs';
 const html = fs.readFileSync(new URL('../../web/setup.html', import.meta.url), 'utf8');
 const l10nSource = fs.readFileSync(new URL('../../web/setup_l10n.js', import.meta.url), 'utf8');
 const catalogueSource = fs.readFileSync(new URL('../../web/setup_catalogue.js', import.meta.url), 'utf8');
-const src = /<script>([\s\S]*)<\/script>/.exec(html)[1];
+const webmcpSource = fs.readFileSync(new URL('../../web/webmcp.js', import.meta.url), 'utf8');
+const setupWebmcpSource = fs.readFileSync(new URL('../../web/setup_webmcp.js', import.meta.url), 'utf8');
+const src = /<script>([\s\S]*?)<\/script>/.exec(html)[1];
 const LOCALES = ['en', 'fr', 'de', 'es', 'it'];
 
 let created = [];
@@ -103,7 +105,7 @@ const answers = (features) => ({
 // One page load: fresh globals, the resource, the script. `locale` is the
 // ?lang= parameter (null for none); the browser says `browser`; `remembered`
 // is the language this page stored on an earlier visit.
-function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
+function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null } = {}) {
   created = [];
   const byId = {};
   for (const id of ['form','bar','rail','nav','saved','allmode','stepno','lang']) byId[id]=mk('div');
@@ -112,7 +114,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
   const store = stored ? { 'deskilo-setup-v1': JSON.stringify(stored) } : {};
   if (remembered) store['deskilo-setup-v1-lang'] = remembered;
   globalThis.document = {
-    createElement: mk, getElementById:(id)=>byId[id]||mk('div'), documentElement:{lang:''}, title:'',
+    createElement: mk, getElementById:(id)=>byId[id]||mk('div'), documentElement:{lang:''}, title:'', ...(modelContext ? { modelContext } : {}),
     querySelectorAll:(sel)=>sel==='[data-t]'?chrome['data-t'].map(x=>x.e):sel==='[data-th]'?chrome['data-th'].map(x=>x.e):[],
   };
   globalThis.window = { scrollTo(){} };
@@ -131,6 +133,10 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
   eval(src + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
 `);
+  // The shared module and the questionnaire's tools, as the page loads them
+  // after its own script (#2501).
+  eval(webmcpSource);
+  eval(setupWebmcpSource);
   return { byId, chrome, exportXml: () => { globalThis.__exportXml(); return xml; } };
 }
 
@@ -270,6 +276,146 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   const processes = globalThis.window.SETUP_PROCESSES.length;
   if (!processes) fail('the process catalogue is empty');
   console.log('processes:', processes);
+}
+
+// #2501 — the WebMCP tools, against a fake modelContext. An agent here is a
+// function that calls the tools the page registered.
+const fakeContext = () => {
+  const tools = new Map();
+  const ctx = { tools, registered: 0, aborted: 0,
+    registerTool(def, { signal } = {}) {
+      ctx.registered++;
+      tools.set(def.name, def);
+      signal?.addEventListener('abort', () => { ctx.aborted++; if (tools.get(def.name) === def) tools.delete(def.name); });
+      return Promise.resolve();
+    },
+    call: async (name, input = {}) => tools.get(name).execute(input, {}) };
+  return ctx;
+};
+{
+  const eq = (a, b, what) => { if (JSON.stringify(a) !== JSON.stringify(b)) fail(`webmcp: ${what}: got ${JSON.stringify(a)}, want ${JSON.stringify(b)}`); };
+  const toolNames = ['list_parameters', 'get_answers', 'set_answer', 'set_answers', 'explain_parameter', 'diff_with_default', 'export_configuration', 'reset', 'seed_vat_rates'];
+
+  // Registration happens once, with the nine tools.
+  let ctx = fakeContext();
+  load('en', null, { modelContext: ctx });
+  eq([...ctx.tools.keys()], toolNames, 'registered tools');
+  eq(ctx.registered, toolNames.length, 'registerTool calls');
+  const P = globalThis.window.__setup;
+
+  // Unsupported environment: no throw, nothing registered, the page lives.
+  load('en', null);
+  eq(globalThis.window.WebMcp.register([]).supported, false, 'unsupported reports supported:false');
+  eq(typeof globalThis.window.__setup.buildXml, 'function', 'page still exposes its surface');
+  // A modelContext that throws never reaches the page.
+  load('en', null, { modelContext: { registerTool() { throw new Error('boom'); } } });
+
+  // The tool list and the page agree on every parameter, both ways.
+  ctx = fakeContext();
+  load('en', null, { modelContext: ctx });
+  {
+    const Pg = globalThis.window.__setup;
+    const listed = (await ctx.call('list_parameters')).data.parameters.map(p => p.key);
+    const leaves = [];
+    const walk = (o, path) => {
+      for (const [k, v] of Object.entries(o)) {
+        const key = path ? `${path}.${k}` : k;
+        if (key in Pg.PARAM_EXCLUDED) continue;
+        if (v && typeof v === 'object' && !Array.isArray(v)) walk(v, key); else leaves.push(key);
+      }
+    };
+    walk(Pg.DEFAULTS, '');
+    const features = Pg.FEATURES.map(f => 'features.' + f[0]);
+    const missing = leaves.filter(k => !listed.includes(k));
+    if (missing.length) fail(`webmcp: answers in the page but not in list_parameters: ${missing.join(', ')} (add a PARAM_META row or a PARAM_EXCLUDED reason)`);
+    const extra = listed.filter(k => !leaves.includes(k) && !features.includes(k));
+    if (extra.length) fail(`webmcp: list_parameters offers answers the page does not have: ${extra.join(', ')}`);
+    const lacking = features.filter(k => !listed.includes(k));
+    if (lacking.length) fail(`webmcp: features missing from list_parameters: ${lacking.join(', ')}`);
+    const noWords = Pg.PARAM_META.filter(m => !(m[1] in globalThis.window.SETUP_L10N.en.s)).map(m => m[0]);
+    if (noWords.length) fail(`webmcp: PARAM_META rows whose label key is not in the l10n resource: ${noWords.join(', ')}`);
+    console.log('webmcp parameters:', listed.length, '(' + features.length + ' features)');
+
+    // set_answer validates like the UI.
+    let r = await ctx.call('set_answer', { key: 'granularity', value: 'quarterly' });
+    if (r.ok || r.error.code !== 'validation_error' || !r.error.allowed?.includes('half_day')) fail('webmcp: invalid granularity is not a validation_error with the allowed set');
+    r = await ctx.call('set_answer', { key: 'brandColor', value: 'blue' });
+    if (r.ok) fail('webmcp: brandColor "blue" accepted');
+    r = await ctx.call('set_answer', { key: 'nope', value: 1 });
+    if (r.ok || r.error.code !== 'not_found') fail('webmcp: unknown key is not not_found');
+    r = await ctx.call('set_answer', { key: 'sites', value: [] });
+    if (r.ok || r.error.code !== 'unsupported') fail('webmcp: a collection is not refused as unsupported');
+
+    // A REQUIRES violation names the parent.
+    await ctx.call('set_answer', { key: 'features.bookingPolicies', value: false });
+    r = await ctx.call('set_answer', { key: 'policies.allowPast', value: true });
+    if (r.ok || r.error.code !== 'requires_feature' || r.error.requires !== 'features.bookingPolicies' || !r.error.message.includes(Pg.featureTitle('bookingPolicies'))) fail('webmcp: a gated question does not name its feature');
+    r = await ctx.call('set_answer', { key: 'features.bookingPolicies', value: true });
+    r = await ctx.call('set_answer', { key: 'policies.allowPast', value: true });
+    if (!r.ok || Pg.S.policies.allowPast !== true) fail('webmcp: a gated question is refused with its feature on');
+
+    // A switch turns its parents on and says so.
+    await ctx.call('reset');
+    r = await ctx.call('set_answer', { key: 'features.vatReport', value: true });
+    if (!r.ok || !('features.vatDeclarations' in r.data.also_changed || 'features.vatManagement' in r.data.also_changed) && Pg.REQUIRES.vatReport) fail('webmcp: a switch does not report the parents it enabled');
+    await ctx.call('reset');
+
+    // set_answers is atomic.
+    const before = JSON.stringify(Pg.S);
+    r = await ctx.call('set_answers', { answers: { name: 'Atomic', country: 'ZZ', dayStart: 'noon' } });
+    if (r.ok || r.error.errors?.length !== 2) fail('webmcp: set_answers does not list one error per refused key');
+    eq(JSON.stringify(Pg.S), before, 'a refused set_answers leaves the state untouched');
+
+    // Secrets are masked.
+    await ctx.call('set_answer', { key: 'einvoice.token', value: 'sekret' });
+    const got = (await ctx.call('get_answers')).data.answers['einvoice.token'];
+    if (got === 'sekret') fail('webmcp: a secret is returned by get_answers');
+    await ctx.call('reset');
+    eq((await ctx.call('diff_with_default')).data.differences, [], 'no difference after reset');
+  }
+
+  // The representative questionnaire: the tools and the UI give one export.
+  {
+    const run = async () => {
+      const c = fakeContext();
+      const page = load('en', null, { modelContext: c });
+      const rates = globalThis.window.__setup.VAT_RATES.FR.map(([label, percent]) => ({ label, percent }));
+      const r1 = await c.call('set_answers', { answers: {
+        name: 'Agent Space', country: 'FR', vatRegime: 'registered', vatId: 'FR12345678901', regNumber: 'RCS 1', street: '1 Rue', postal: '34000', city: 'Montpellier',
+        'features.moneyTab': false, 'features.services': false, 'features.workingHours': true, 'features.bookingPolicies': true, 'features.kioskMode': true, 'policies.allowPast': true } });
+      if (!r1.ok) fail('webmcp: representative answers refused: ' + JSON.stringify(r1.error));
+      const r2 = await c.call('seed_vat_rates');
+      if (!r2.ok) fail('webmcp: seed_vat_rates refused');
+      const exported = await c.call('export_configuration', { format: 'xml' });
+      return { exported, rates, page };
+    };
+    const { exported, rates } = await run();
+    if (!exported.ok) fail('webmcp: export refused: ' + JSON.stringify(exported.error));
+    else {
+      // What clicking the same answers leaves in storage, loaded as a visit.
+      const ui = load('en', { name: 'Agent Space', country: 'FR', vatRegime: 'registered', vatId: 'FR12345678901', regNumber: 'RCS 1', street: '1 Rue', postal: '34000', city: 'Montpellier',
+        features: { moneyTab: false, services: false, workingHours: true, bookingPolicies: true, kioskMode: true }, policies: { allowPast: true }, vatRates: rates });
+      eq(exported.data.text, ui.exportXml(), 'the tools export equals the UI export for the same answers');
+    }
+    // The export refuses while a blocking finding remains.
+    const c = fakeContext();
+    load('en', null, { modelContext: c });
+    const blocked = await c.call('export_configuration');
+    if (blocked.ok || blocked.error.code !== 'blocked') fail('webmcp: export of an unnamed space is not blocked');
+  }
+
+  // A language switch re-registers with the new words.
+  {
+    const c = fakeContext();
+    load('en', null, { modelContext: c });
+    const english = c.tools.get('get_answers').description;
+    globalThis.window.__setup.setLang('de');
+    eq(c.registered, 2 * toolNames.length, 'registerTool calls after a language switch');
+    eq(c.aborted, toolNames.length, 'tools unregistered by the language switch');
+    eq([...c.tools.keys()], toolNames, 'tools after a language switch');
+    if (c.tools.get('get_answers').description === english) fail('webmcp: the description did not follow the language');
+    if (c.tools.get('get_answers').description !== globalThis.window.SETUP_L10N.de.s.webmcpGetAnswers) fail('webmcp: the German description is not the German string');
+  }
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));

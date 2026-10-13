@@ -125,6 +125,7 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
 </footer>
 <script src="setup_catalogue.js"></script>
 <script src="setup_l10n.js"></script>
+<script src="webmcp.js"></script>
 <script>
 'use strict';
 const LS='deskilo-setup-v1';
@@ -176,7 +177,7 @@ const opts=list=>list.map(([v,k,p])=>[v,T(k,p)]);
 // the setup guide; every section's id is its anchor (user.x.y / setup.x.y).
 const GUIDE_BASE='https://fdittgen-png.github.io/deskilo/guide/';
 const guideUrl=anchor=>GUIDE_BASE+(anchor.startsWith('setup.')?'setup-':'')+LANG+'.html#'+anchor;
-function setLang(l){if(!LOCALES.includes(l))return;LANG=l;try{localStorage.setItem(LANG_KEY,l)}catch(e){LANG=l}applyChrome();render()}
+function setLang(l){if(!LOCALES.includes(l))return;LANG=l;try{localStorage.setItem(LANG_KEY,l)}catch(e){LANG=l}applyChrome();render();window.__setup.hooks.forEach(f=>{try{f()}catch(e){}})}
 // The static chrome: <html lang>, the title, and every element carrying a
 // data-t (text) or data-th (trusted markup from the resource) key.
 function applyChrome(){
@@ -373,6 +374,7 @@ const VAT_RATES={
  NO:[['Alminnelig 25 %',25],['Næringsmidler 15 %',15],['Redusert 12 %',12]],
  CA:[['GST 5 % (AB/NT/NU/YT)',5],['HST 13 % (ON)',13],['HST 14 % (NS)',14],['HST 15 % (NB/NL/PE)',15],['GST+QST 14,975 % (QC)',14.975],['GST+PST 12 % (BC/MB)',12],['GST+PST 11 % (SK)',11]],
 };
+const seedVatRates=()=>{S.vatRates=(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent}));save()};
 const XML_LEVEL_FALLBACK='Étage',XML_SEAT_FALLBACK='Place';
 // l10n-exempt-end
 const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
@@ -490,6 +492,10 @@ const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
 const waitsFor=k=>{let f=REQUIRES[k];while(f&&S.features[f])f=REQUIRES[f];return f};
 // #800 — ticking a feature switches on everything it needs.
 const enableWith=k=>{S.features[k]=true;let f=REQUIRES[k];while(f){S.features[f]=true;f=REQUIRES[f]}};
+// The two answers whose change ripples: the UI inputs and the WebMCP tools
+// both go through these.
+const onCountry=v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[1];S.timezone=c[2];save()}};
+const applyFeature=(k,v)=>{if(v)enableWith(k);else S.features[k]=false;save()};
 const alsoEnabled=k=>{const r=[];let f=REQUIRES[k];while(f){if(!S.features[f])r.push(featureTitle(f));f=REQUIRES[f]}return r};
 const country=()=>COUNTRIES.find(c=>c[0]===S.country)||COUNTRIES[0];
 const scheme=()=>country()[3];
@@ -498,6 +504,61 @@ const registered=()=>S.vatRegime==='registered';
 
 // Where each answer lives in the app, and the guide section that explains it
 // (an anchor id of docs/guide, which is the section's id on the guide site).
+// ------------------------------------------------------------------ parameters (WebMCP)
+// What an agent may ask about and set: every scalar answer in DEFAULTS, plus
+// every switch in FEATURES (those need no row: key, default, REQUIRES and
+// words all come from FEATURES, REQUIRES and the catalogue). A row says how
+// the answer is worded and checked: [path, label key, kind, options]. Kinds:
+// text, bool, enum (options = () => allowed values), int / num (options =
+// {min,max}), time, date, color, days, dates. `needs` names the switch that
+// makes the question appear in the UI; `secret` hides the value from
+// get_answers. A new scalar answer is a row here (or a reasoned entry in
+// PARAM_EXCLUDED) — the harness fails otherwise — and no tool changes.
+const PARAM_META=[
+ ['name','identityName','text'],['environment','identityEnvironment','enum',()=>ENVIRONMENTS.map(x=>x[0])],
+ ['country','identityCountry','enum',()=>COUNTRIES.map(c=>c[0])],['currency','identityCurrency','enum',()=>CURRENCIES.slice()],
+ ['timezone','identityTimezone','enum',()=>TIMEZONES.slice()],['language','identityLanguage','enum',()=>LANGS.map(x=>x[0])],
+ ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
+ ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
+ ['weekdays','availOpenDays','days'],
+ ['granularity','availGranularity','enum',()=>(on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
+ ['dayStart','availDayStart','time'],['boundary','availBoundary','time'],['dayEnd','availDayEnd','time'],['closures','availClosures','dates'],
+ ['halfDayHours','availHalfDayHours','num',{min:0}],['fullDayHours','availFullDayHours','num',{min:0}],
+ ['deskOpacity','planDeskOpacity','int',{min:20,max:100}],
+ ['horizonDays','availHorizon','enum',()=>HORIZON.map(x=>x[0])],['minDuration','availMinDuration','enum',()=>DURATIONS.map(x=>x[0])],['maxDuration','availMaxDuration','enum',()=>DURATIONS.map(x=>x[0])],
+ ['policies.allowPast','availAllowPast','bool',null,{needs:'bookingPolicies'}],['policies.adminCheckout','availAdminCheckout','bool',null,{needs:'bookingPolicies'}],
+ ['policies.outsideHours','availOutsideHours','enum',()=>OUTSIDE.map(x=>x[0]),{needs:'bookingPolicies'}],
+ ['policies.simultaneous','availSimultaneous','int',{min:1},{needs:'bookingPolicies'}],
+ ['policies.legendProfile','availLegendProfile','enum',()=>['full','simple'],{needs:'bookingPolicies'}],
+ ['invites.fr','membersInvites','text'],['invites.en','membersInvites','text'],['invites.de','membersInvites','text'],['invites.es','membersInvites','text'],['invites.it','membersInvites','text'],
+ ['einvoice.url','einvoiceUrl','text'],['einvoice.token','einvoiceToken','text',null,{secret:true}],['einvoice.header','einvoiceHeader','text'],['einvoice.field','einvoiceField','text'],
+ ['einvoice.uatUrl','einvoiceUatUrl','text'],['einvoice.uatToken','einvoiceUatToken','text',null,{secret:true}],['einvoice.devUrl','einvoiceDevUrl','text'],['einvoice.devToken','einvoiceDevToken','text',null,{secret:true}],
+ ['einvoice.customerUrl','einvoiceCustomerUrl','text'],['einvoice.customerToken','einvoiceCustomerToken','text',null,{secret:true}],['einvoice.customerHeader','einvoiceCustomerHeader','text'],['einvoice.customerField','einvoiceCustomerField','text'],
+ ['vatPeriod','legalVatPeriod','enum',()=>VATPERIOD.map(x=>x[0])],
+ ['landTax.option','legalOptionToTax','bool'],['landTax.date','legalOptionDate','date'],['landTax.ref','legalOptionRef','text'],['landTax.bare','legalBareLetting','bool'],['landTax.qst','legalQstNumber','text'],['landTax.quick','legalQuickMethod','bool'],
+ ['freeLevel','billingFreeLevel','bool'],
+ ['pay.iban','payIbanIntl','text'],['pay.qr_iban','payQrIban','text'],['pay.reference','payReference','text'],['pay.wero','payWero','text'],['pay.lydia','payLydia','text'],['pay.wise','payWise','text'],
+ ['org','legalOrg','enum',()=>['association','company']],['customerCapacity','legalCustomerCapacity','enum',()=>['','business','consumer']],
+ ['vatRegime','legalVatRegime','enum',()=>['not_subject','exempt','registered']],['vatExigibility','legalVatExigibility','enum',()=>VATEXIGIBILITY.map(x=>x[0])],
+ ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
+ ['numbering.reset','numReset','enum',()=>RESETS_FOR[S.numbering.datePart]||['never']],
+ ['memberNumbering.prefix','fieldPrefix','text'],['memberNumbering.digits','fieldDigits','int',{min:1}],
+ ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],
+ ['mentions.legalForm','mentionLegalForm','text'],['mentions.terms','mentionTerms','text'],['mentions.penalty','mentionPenalty','text'],['mentions.recovery','mentionRecovery','text'],['mentions.escompte','mentionEscompte','text'],['mentions.insurance','mentionInsurance','text'],['mentions.special','mentionSpecial','text'],
+ ['reminders.levels','dunningLevels','int',{min:0},{needs:'dunning'}],['reminders.firstDays','dunningFirstDays','int',{min:0},{needs:'dunning'}],['reminders.betweenDays','dunningBetweenDays','int',{min:0},{needs:'dunning'}],
+ ['reminders.automatic','dunningAutomatic','bool',null,{needs:'paymentReminders'}],
+ ['validation.required','rolesRequired','int',{min:1}],['validation.ownerSignOff','rolesOwnerAlways','bool'],
+ ['autoValidate.owner','rolesAutoOwner','bool'],['autoValidate.admin','rolesAutoAdmin','bool'],
+];
+// Answers the tools do not set one by one, and why. Lists of records
+// (floor plan, members, tariffs, rates) and the permission matrix are
+// edited in the UI; the VAT rates are offered through seedVatRates.
+const PARAM_EXCLUDED={
+ sites:'collection',levels:'collection',accessories:'collection',services:'collection',tiers:'collection',subLevels:'collection',packages:'collection',
+ vatRates:'collection',members:'collection',perms:'collection',permsV:'internal',domains:'collection',features:'switches',
+ 'mentions.register':'no question of its own in the UI (the registration number is regNumber)','landTax.facilities':'no question of its own in the UI yet','pay.paypal_me':'unlabelled in the UI','pay.bank_name':'unlabelled in the UI',
+ 'pay.account_number':'unlabelled in the UI','pay.bank_code':'unlabelled in the UI','pay.bic':'unlabelled in the UI',
+};
 const HELP={
  identity:['helpAppIdentity','user.space.overview'],
  region:['helpAppRegion','user.workspace.settings.currency-timezone'],
@@ -648,7 +709,7 @@ const STEPS=[
  build(){return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
-  h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[1];S.timezone=c[2];save()}},'region'),
+  h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),onCountry,'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
@@ -665,7 +726,7 @@ const STEPS=[
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
   const row=k=>{const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
    const note=(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(waitsFor(k)))}):d);
-   const c=checkbox(name,note,S.features[k],v=>{if(v)enableWith(k);else S.features[k]=false;save()},(parent?'child':''));
+   const c=checkbox(name,note,S.features[k],v=>applyFeature(k,v),(parent?'child':''));
    const fh=helpIcon(FEATURE_HELP[k]);if(fh)c.querySelector('span').insertBefore(fh,c.querySelector('span div'));return c};
   // #1330 — one card per business process, the same switches underneath;
   // a switch no process lists yet (a reserved flag) is offered last.
@@ -773,7 +834,7 @@ const STEPS=[
   if(registered()){if(on('vatManagement')){const history=on('vatRateHistory')?[T('colValidFrom')]:[];k.push(lbl(T('legalVatRates'),'vat','vatRates'),h('p',{class:'hint'},T('legalVatRatesHint')),help('vat'),
     ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},T(VAT_NOTES[S.country]))]:[]),
     tableRows(on('vatGroups')?[T('colLabel'),T('colRate'),T('colGroup'),...history]:[T('colLabel'),T('colRate'),...history],S.vatRates,(r)=>on('vatGroups')?[bind(r,'label'),bind(r,'percent','number'),(()=>{const sel=h('select');opts(VAT_GROUPS).forEach(([v,l])=>sel.append(h('option',{value:v},l)));sel.value=r.group||'standard';sel.onchange=()=>{r.group=sel.value;save()};return sel})(),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])]:[bind(r,'label'),bind(r,'percent','number'),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:''}),'+ '+T('legalAddRate')),
-    VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},T('legalSuggestRates',{country:countryName(country()[0]),rates:VAT_RATES[S.country].map(r=>r[1]).join(', ')}));b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null)}
+    VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},T('legalSuggestRates',{country:countryName(country()[0]),rates:VAT_RATES[S.country].map(r=>r[1]).join(', ')}));b.onclick=()=>{seedVatRates();render()};return b})():null)}
    else k.push(needs('vatManagement'),h('p',{class:'hint'},T('legalNoVatManagementHint')));
    k.push(selectEl(T('legalVatExigibility'),'vatExigibility',opts(VATEXIGIBILITY),T('legalVatExigibilityHint'),null,'vat'));
    k.push(lbl(T('legalInvoiceNumbering'),'legal','numbering'),h('p',{class:'hint'},T('legalInvoiceNumberingHint')),
@@ -1170,8 +1231,16 @@ function configurationTree(){
    legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
  return {workspace:ws,tables:t};
 }
+// buildXml is the export itself (the WebMCP tool returns its text);
+// exportXml hands that same text to the browser as a download.
 function exportXml(){
- if(!S.name.trim()){alert(T('exportNeedsName'));return}
+ const text=buildXml();if(text==null)return;
+ const blob=new Blob([text],{type:'application/xml'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='deskilo-setup-'+S.name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.xml';a.click();
+}
+function buildXml(){
+ if(!S.name.trim()){alert(T('exportNeedsName'));return null}
  const x=[];const push=s=>x.push(s);
  push('<?xml version="1.0" encoding="UTF-8"?>');
  push('<deskilo-workspace version="3">');
@@ -1261,9 +1330,7 @@ function exportXml(){
  push('    </members>');
  push('  </setup>');
  push('</deskilo-workspace>');
- const blob=new Blob([x.join('\n')],{type:'application/xml'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);
- a.download='deskilo-setup-'+S.name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.xml';a.click();
+ return x.join('\n');
 }
 // ------------------------------------------------------------------ load back
 function loadFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{parseBack(r.result);save();render();alert(T('loadOk'))}catch(e){alert(T('loadError',{error:e.message}))}};r.readAsText(f)}
@@ -1304,8 +1371,20 @@ S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')|
    if(k==='reservation_delete'){S.autoValidate={admin:d.getAttribute('auto-validate-admin')==='true',owner:d.getAttribute('auto-validate-owner')==='true'}}})}
  S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
 }
+// The surface the WebMCP tools (setup_webmcp.js) use: the page's own state
+// and handlers, never a copy. `hooks` run after a language change.
+window.__setup={
+ get S(){return S},get LANG(){return LANG},get FEATURES(){return FEATURES},get REQUIRES(){return REQUIRES},
+ get DEFAULTS(){return DEFAULTS},get PROCESSES(){return PROCESSES},get PARAM_META(){return PARAM_META},get PARAM_EXCLUDED(){return PARAM_EXCLUDED},
+ get WD(){return WD},get COUNTRIES(){return COUNTRIES},
+ T,setLang,featureTitle,featureDesc,processTitle,subprocessTitle,weekdayName,on,mins,num,save,set,get,onCountry,applyFeature,enableWith,alsoEnabled,
+ get VAT_RATES(){return VAT_RATES},seedVatRates,buildXml,findings,restore,hooks:[],
+ reset(){S=restore(null);S.vatExigibility=taxPointOf(S.vatExigibility);save();render()},
+ rerender(){render()},
+};
 applyChrome();
 render();
 </script>
+<script src="setup_webmcp.js"></script>
 </body>
 </html>
