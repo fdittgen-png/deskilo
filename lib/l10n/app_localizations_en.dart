@@ -12524,6 +12524,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentProviderWero => 'Wero (via Mollie)';
 
   @override
+  String get paymentQrIbanLabel => 'QR-IBAN (Swiss QR-bill)';
+
+  @override
   String get paymentRemindersWhen =>
       'When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.';
 
@@ -13951,6 +13954,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushStatusRegistered => 'Push notifications are active';
+
+  @override
+  String get qrBillAcceptancePoint => 'Acceptance point';
+
+  @override
+  String get qrBillAccount => 'Account / Payable to';
+
+  @override
+  String get qrBillAdditionalInfo => 'Additional information';
+
+  @override
+  String get qrBillAmount => 'Amount';
+
+  @override
+  String get qrBillCurrency => 'Currency';
+
+  @override
+  String get qrBillPayableBy => 'Payable by';
+
+  @override
+  String get qrBillPayableByAddress => 'Payable by (name/address)';
+
+  @override
+  String get qrBillPaymentPart => 'Payment part';
+
+  @override
+  String get qrBillReceipt => 'Receipt';
+
+  @override
+  String get qrBillReference => 'Reference';
+
+  @override
+  String get qrBillSeparate => 'Separate before paying in';
 
   @override
   String get questionEditorActive => 'Asked now';

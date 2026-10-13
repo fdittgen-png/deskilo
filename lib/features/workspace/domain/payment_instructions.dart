@@ -16,6 +16,7 @@ class PaymentInstructions {
     this.bankCode = '',
     this.bankName = '',
     this.bic = '',
+    this.qrIban = '',
   });
 
   /// #711 — for countries that do not bank by IBAN: the account number
@@ -26,6 +27,11 @@ class PaymentInstructions {
   final String bankCode;
   final String bankName;
   final String bic;
+
+  /// #2360 — Switzerland: the QR-IBAN (institution identifier 30000–31999)
+  /// a QR-bill with a QRR reference is paid into; the ordinary IBAN stays
+  /// in [iban].
+  final String qrIban;
 
   bool get hasLocalBankDetails =>
       accountNumber.trim().isNotEmpty || bankCode.trim().isNotEmpty;
@@ -53,6 +59,7 @@ class PaymentInstructions {
   /// how-to-pay card at all.
   bool get isEmpty =>
       iban.trim().isEmpty &&
+      qrIban.trim().isEmpty &&
       paypalMe.trim().isEmpty &&
       reference.trim().isEmpty &&
       wero.trim().isEmpty &&
@@ -85,6 +92,7 @@ class PaymentInstructions {
         bankCode: db['bank_code'] as String? ?? '',
         bankName: db['bank_name'] as String? ?? '',
         bic: db['bic'] as String? ?? '',
+        qrIban: db['qr_iban'] as String? ?? '',
       );
 
   Map<String, dynamic> toDb() => {
@@ -98,6 +106,7 @@ class PaymentInstructions {
         'bank_code': bankCode.trim(),
         'bank_name': bankName.trim(),
         'bic': bic.trim(),
+        'qr_iban': qrIban.trim(),
       };
 }
 
@@ -115,5 +124,5 @@ String bankCodeLabelFor(BankingScheme scheme, {
       BankingScheme.uk => sortCode,
       BankingScheme.us => routingNumber,
       BankingScheme.ca => transitNumber,
-      BankingScheme.sepa => bankCode,
+      BankingScheme.sepa || BankingScheme.ch => bankCode,
     };

@@ -40,6 +40,7 @@ Future<Uint8List?> tryLayoutPdf({
   String signatureLabel = '',
   String signature = '',
   List<pw.Widget> additionalBody = const [],
+  pw.Page? lastPage,
 }) async {
   try {
     final document = renderLayoutDocument(layoutXml, data);
@@ -60,6 +61,7 @@ Future<Uint8List?> tryLayoutPdf({
       signatureLabel: signatureLabel,
       signature: signature,
       additionalBody: additionalBody,
+      lastPage: lastPage,
       baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
       boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
     );

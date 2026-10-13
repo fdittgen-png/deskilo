@@ -21530,6 +21530,12 @@ abstract class AppLocalizations {
   /// **'Wero (via Mollie)'**
   String get paymentProviderWero;
 
+  /// #2360: paymentQrIbanLabel
+  ///
+  /// In en, this message translates to:
+  /// **'QR-IBAN (Swiss QR-bill)'**
+  String get paymentQrIbanLabel;
+
   /// #2332: when automatic payment reminders run
   ///
   /// In en, this message translates to:
@@ -23965,6 +23971,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Push notifications are active'**
   String get pushStatusRegistered;
+
+  /// #2360: qrBillAcceptancePoint
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptance point'**
+  String get qrBillAcceptancePoint;
+
+  /// #2360: qrBillAccount
+  ///
+  /// In en, this message translates to:
+  /// **'Account / Payable to'**
+  String get qrBillAccount;
+
+  /// #2360: qrBillAdditionalInfo
+  ///
+  /// In en, this message translates to:
+  /// **'Additional information'**
+  String get qrBillAdditionalInfo;
+
+  /// #2360: qrBillAmount
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get qrBillAmount;
+
+  /// #2360: qrBillCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get qrBillCurrency;
+
+  /// #2360: qrBillPayableBy
+  ///
+  /// In en, this message translates to:
+  /// **'Payable by'**
+  String get qrBillPayableBy;
+
+  /// #2360: qrBillPayableByAddress
+  ///
+  /// In en, this message translates to:
+  /// **'Payable by (name/address)'**
+  String get qrBillPayableByAddress;
+
+  /// #2360: qrBillPaymentPart
+  ///
+  /// In en, this message translates to:
+  /// **'Payment part'**
+  String get qrBillPaymentPart;
+
+  /// #2360: qrBillReceipt
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get qrBillReceipt;
+
+  /// #2360: qrBillReference
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get qrBillReference;
+
+  /// #2360: qrBillSeparate
+  ///
+  /// In en, this message translates to:
+  /// **'Separate before paying in'**
+  String get qrBillSeparate;
 
   /// #1288 the question editor: questionEditorActive
   ///

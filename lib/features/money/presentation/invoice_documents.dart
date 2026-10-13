@@ -26,6 +26,7 @@ import '../../plan/providers/accessory_providers.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
+import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -41,6 +42,8 @@ import '../domain/invoice_report.dart';
 import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
+import '../domain/swiss_qr_bill_invoice.dart';
+import '../domain/swiss_qr_bill_pdf.dart';
 import '../providers/money_providers.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
@@ -390,6 +393,35 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
                 l10n: context.l10n,
               ))
       : null;
+  // #2360 — a Swiss seller's invoice ends on the QR-bill its customer pays with.
+  final qrBill = swissQrBillOf(
+    invoice,
+    instructions: PaymentInstructions.fromDb(
+      workspace?.paymentInstructions ?? const {},
+    ),
+    workspaceCountry: workspace?.countryCode ?? '',
+    proforma: proforma,
+  );
+  final qrPage = qrBill == null
+      ? null
+      : swissQrBillPage(
+          bill: qrBill,
+          strings: SwissQrBillStrings(
+            receipt: l10n.qrBillReceipt,
+            paymentPart: l10n.qrBillPaymentPart,
+            account: l10n.qrBillAccount,
+            reference: l10n.qrBillReference,
+            additionalInfo: l10n.qrBillAdditionalInfo,
+            payableBy: l10n.qrBillPayableBy,
+            payableByAddress: l10n.qrBillPayableByAddress,
+            currency: l10n.qrBillCurrency,
+            amount: l10n.qrBillAmount,
+            acceptancePoint: l10n.qrBillAcceptancePoint,
+            separate: l10n.qrBillSeparate,
+          ),
+          baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
+          boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
+        );
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(
       layoutXml: layoutXml,
@@ -407,6 +439,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       ),
       signatureLabel: strings.signature,
       signature: proforma ? '' : invoice.signature,
+      lastPage: qrPage,
     );
     if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
   }
@@ -430,6 +463,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   ).isAssociation;
   final words = reportStringsOf(l10n);
   final bytes = await buildInvoicePdf(
+    qrBillPage: qrPage,
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,

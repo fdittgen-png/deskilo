@@ -87,6 +87,8 @@ Future<Uint8List> buildLayoutPdf({
   String signatureLabel = '',
   String signature = '',
   List<pw.Widget> additionalBody = const [],
+  // #2360 — a page after the document's own (the Swiss QR-bill).
+  pw.Page? lastPage,
 }) async {
   final pageW = PdfPageFormat.a4.width;
   final pageH = PdfPageFormat.a4.height;
@@ -216,6 +218,7 @@ Future<Uint8List> buildLayoutPdf({
       ],
     ),
   );
+  if (lastPage != null) doc.addPage(lastPage);
   return doc.save();
 }
 

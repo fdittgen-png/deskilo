@@ -130,6 +130,7 @@ void main() {
       expect(CountryCatalog.byCode('US').scheme, BankingScheme.us);
       expect(CountryCatalog.byCode('CA').scheme, BankingScheme.ca);
       expect(CountryCatalog.byCode('FR').scheme, BankingScheme.sepa);
+      expect(CountryCatalog.byCode('CH').scheme, BankingScheme.ch);
     });
   });
 }

@@ -12648,6 +12648,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentProviderWero => 'Wero (via Mollie)';
 
   @override
+  String get paymentQrIbanLabel => 'QR-IBAN (facture QR suisse)';
+
+  @override
   String get paymentRemindersWhen =>
       'Quand cela s\'exécute : chaque matin sur le serveur, si l\'installation planifie des tâches (pg_cron) ; sinon quand un administrateur ouvre Finances. L\'opérateur de votre serveur sait ce qui s\'applique.';
 
@@ -14095,6 +14098,39 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pushStatusRegistered => 'Les notifications push sont actives';
+
+  @override
+  String get qrBillAcceptancePoint => 'Point de dépôt';
+
+  @override
+  String get qrBillAccount => 'Compte / Payable à';
+
+  @override
+  String get qrBillAdditionalInfo => 'Informations supplémentaires';
+
+  @override
+  String get qrBillAmount => 'Montant';
+
+  @override
+  String get qrBillCurrency => 'Monnaie';
+
+  @override
+  String get qrBillPayableBy => 'Payable par';
+
+  @override
+  String get qrBillPayableByAddress => 'Payable par (nom/adresse)';
+
+  @override
+  String get qrBillPaymentPart => 'Section paiement';
+
+  @override
+  String get qrBillReceipt => 'Récépissé';
+
+  @override
+  String get qrBillReference => 'Référence';
+
+  @override
+  String get qrBillSeparate => 'A détacher avant le versement';
 
   @override
   String get questionEditorActive => 'Posée actuellement';

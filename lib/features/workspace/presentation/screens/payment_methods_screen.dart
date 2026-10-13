@@ -33,6 +33,7 @@ class _PaymentMethodsScreenState
   final _bankCode = TextEditingController();
   final _bankName = TextEditingController();
   final _bic = TextEditingController();
+  final _qrIban = TextEditingController();
   final _paypalMe = TextEditingController();
   final _reference = TextEditingController();
   final _wero = TextEditingController();
@@ -48,6 +49,7 @@ class _PaymentMethodsScreenState
     _bankCode.dispose();
     _bankName.dispose();
     _bic.dispose();
+    _qrIban.dispose();
     _paypalMe.dispose();
     _reference.dispose();
     _wero.dispose();
@@ -73,6 +75,7 @@ class _PaymentMethodsScreenState
                 bankCode: _bankCode.text,
                 bankName: _bankName.text,
                 bic: _bic.text,
+                qrIban: _qrIban.text,
                 paypalMe: _paypalMe.text,
                 reference: _reference.text,
                 wero: _wero.text,
@@ -113,6 +116,7 @@ class _PaymentMethodsScreenState
       _bankCode.text = instructions.bankCode;
       _bankName.text = instructions.bankName;
       _bic.text = instructions.bic;
+      _qrIban.text = instructions.qrIban;
       _paypalMe.text = instructions.paypalMe;
       _reference.text = instructions.reference;
       _wero.text = instructions.wero;
@@ -176,6 +180,12 @@ class _PaymentMethodsScreenState
                     l10n.paymentTransitNumberLabel,
                 bankCode: l10n.paymentBankCodeLabel,
               )),
+          // #2360 — a Swiss space also states the QR-IBAN of its QR-bill.
+          if (CountryCatalog.byCode(
+                      ref.watch(currentWorkspaceProvider).value?.countryCode ?? '')
+                  .scheme ==
+              BankingScheme.ch)
+            field('workspaceSettingsQrIban', _qrIban, l10n.paymentQrIbanLabel),
           field('workspaceSettingsBic', _bic,
               l10n.paymentBicLabel),
           field('workspaceSettingsPaypalMe', _paypalMe,

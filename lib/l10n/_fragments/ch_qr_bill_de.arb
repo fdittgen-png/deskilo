@@ -1,0 +1,50 @@
+{
+  "qrBillReceipt": "Empfangsschein",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillPaymentPart": "Zahlteil",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillAccount": "Konto / Zahlbar an",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillReference": "Referenz",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillAdditionalInfo": "Zusätzliche Informationen",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillPayableBy": "Zahlbar durch",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Zahlbar durch (Name/Adresse)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillCurrency": "Währung",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillAmount": "Betrag",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillAcceptancePoint": "Annahmestelle",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillSeparate": "Vor der Einzahlung abzutrennen",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
+  },
+  "paymentQrIbanLabel": "QR-IBAN (Schweizer QR-Rechnung)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  }
+}
