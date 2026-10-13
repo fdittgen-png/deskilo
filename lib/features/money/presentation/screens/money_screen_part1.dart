@@ -185,10 +185,10 @@ extension _MoneyScreenStatePart1 on _MoneyScreenState {
       return (statementBands != null
               ? renderReportBands(bands: statementBands, data: withOwnerTexts(data, statementTexts))
               : null) ??
-          buildBillReport(statement: statement, sections: sections,
+          buildBillReport(BillDocument(statement: statement, sections: sections,
               currencyCode: workspace.currencyCode, workspaceName: workspace.name,
               memberName: memberName, periodLabel: monthLabel,
-              strings: strings, locale: locale);
+              strings: strings, locale: locale));
     }
 
     final report = renderStatement()!;
@@ -203,23 +203,21 @@ extension _MoneyScreenStatePart1 on _MoneyScreenState {
         final regular =
             await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
         final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-        final bytes = await buildBillPdf(
-            report: report,
-            reportImages: await resolveReportImages(ref, report),
-            statement: statement,
+        final bytes = await buildBillPdf(BillDocument(statement: statement,
             sections: sections,
             currencyCode: workspace.currencyCode,
             workspaceName: workspace.name,
             memberName: memberName,
             periodLabel: monthLabel,
             strings: strings,
+            locale: locale,
+            report: report,
+            reportImages: await resolveReportImages(ref, report)),
             baseFont: pw.Font.ttf(regular),
             boldFont: pw.Font.ttf(bold),
-            locale: locale,
             pageLabel: l10n.invoicePdfPage,
             watermark: workspace.isDevelopment
-                ? (l10n.developmentWatermark) : '',
-          );
+                ? (l10n.developmentWatermark) : '');
         return (
           bytes: bytes,
           fileName: 'deskilo-bill-${statement.period}.pdf',

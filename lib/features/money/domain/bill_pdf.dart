@@ -86,104 +86,181 @@ class BillPdfStrings {
 }
 
 
-/// Renders [statement] and its [sections] — the exact grouping the
-/// on-screen bill shows via [buildBillSections] — as an A4 PDF (#133,
-/// ADR 0008).
+/// What one bill renders from: the statement with its grouped
+/// [sections], and the words around them. One object for the quick view
+/// and the PDF, so the two cannot disagree.
+class BillDocument {
+  const BillDocument({
+    required this.statement,
+    required this.sections,
+    required this.currencyCode,
+    required this.workspaceName,
+    required this.memberName,
+    required this.periodLabel,
+    required this.strings,
+    this.locale,
+    this.report,
+    this.reportImages = const {},
+  });
+
+  final Statement statement;
+  final BillSections sections;
+  final String currencyCode;
+  final String workspaceName;
+  final String memberName;
+  final String periodLabel;
+  final BillPdfStrings strings;
+
+  /// #711 — the DOCUMENT locale, passed explicitly: a PDF is rendered
+  /// for its reader, not for whoever pressed the button.
+  final String? locale;
+
+  /// The owner's report bands already rendered for this bill, with their
+  /// images; null = the built-in layout ([buildBillReport]).
+  final InvoiceReport? report;
+  final Map<String, Uint8List> reportImages;
+}
+
+/// Renders [bill] — the exact grouping the on-screen bill shows via
+/// [buildBillSections] — as an A4 PDF (#133, ADR 0008).
 ///
 /// [baseFont]/[boldFont] must be real TTFs (the app embeds Roboto from
 /// assets/fonts): the pdf package's base-14 Type1 fonts cannot encode
 /// '€' (U+20AC) or the typographic minus '−' (U+2212) the bill uses.
-Future<Uint8List> buildBillPdf({
-  required Statement statement,
-  required BillSections sections,
-  required String currencyCode,
-  required String workspaceName,
-  required String memberName,
-  required String periodLabel,
-  required BillPdfStrings strings,
+Future<Uint8List> buildBillPdf(
+  BillDocument bill, {
   required pw.Font baseFont,
   required pw.Font boldFont,
-  String? locale,
   String pageLabel = 'Page',
   String watermark = '',
-  InvoiceReport? report,
-  Map<String, Uint8List> reportImages = const {},
 }) async {
   return buildBandedLetterPdf(
-    report: report ?? buildBillReport(statement: statement, sections: sections,
-        currencyCode: currencyCode, workspaceName: workspaceName,
-        memberName: memberName, periodLabel: periodLabel,
-        strings: strings, locale: locale),
-    pageLabel: pageLabel, documentTitle: strings.title,
+    report: bill.report ?? buildBillReport(bill),
+    pageLabel: pageLabel, documentTitle: bill.strings.title,
     baseFont: baseFont, boldFont: boldFont, watermark: watermark,
-    reportImages: reportImages,
+    reportImages: bill.reportImages,
   );
 }
 
 /// The same complete bill content drives quick view and PDF output.
-InvoiceReport buildBillReport({
-  required Statement statement,
-  required BillSections sections,
-  required String currencyCode,
-  required String workspaceName,
-  required String memberName,
-  required String periodLabel,
-  required BillPdfStrings strings,
-  String? locale,
-}) {
-  // #711 — the DOCUMENT locale, passed explicitly: a PDF is rendered
-  // for its reader, not for whoever pressed the button.
-  final currency = moneyFormat(currencyCode, locale: locale);
-  String charge(int cents) => '−${currency.formatMinor(cents)}';
-  String credit(int cents) => '+${currency.formatMinor(cents)}';
-  final dateFormat = DateFormat.yMMMd(locale);
-
+InvoiceReport buildBillReport(BillDocument bill) {
+  final rows = _BillRows(bill);
   return InvoiceReport(
-    header: [ReportHeading(workspaceName), ReportSubheading(strings.title),
-      ReportMuted('$memberName — $periodLabel'), const ReportDivider()],
-    continuation: [ReportText('$workspaceName — ${strings.title} — $memberName — $periodLabel'),
-      const ReportDivider()],
+    header: rows.header(),
+    continuation: rows.continuation(),
     body: [
-      ReportTableRow([strings.subscription, charge(statement.feeCents)], bold: true),
-      ReportMuted(strings.entitlement),
-      if (statement.extraHalfDays > 0)
-        ReportTableRow([strings.overage, charge(statement.overageCents)]),
-      if (statement.accessorySupplementCents > 0)
-        ReportTableRow([strings.accessorySupplements, charge(statement.accessorySupplementCents)]),
-      if (sections.serviceEntries.isNotEmpty) ...[
-        ReportSubheading(strings.services),
-        for (final entry in sections.serviceEntries)
-          ReportTableRow([if (entry.description.isEmpty) strings.serviceFallback else entry.description,
-            charge(entry.amountCents)]),
-        ReportTableRow([strings.servicesTotal, charge(sections.servicesTotalCents)], bold: true),
-      ],
-      if (sections.packageEntries.isNotEmpty) ...[
-        ReportSubheading(strings.packages),
-        for (final entry in sections.packageEntries)
-          ReportTableRow([if (entry.description.isEmpty) strings.packages else entry.description,
-            charge(entry.amountCents)]),
-      ],
-      if (sections.openPositions.isNotEmpty) ...[
-        ReportSubheading(strings.openPositions),
-        ReportMuted(strings.pendingBadge),
-        for (final position in sections.openPositions)
-          ReportTableRow([_openPositionLabel(strings, position.event),
-            if (position.isCredit) credit(position.amountCents) else charge(position.amountCents)]),
-      ],
-      if (sections.creditEntries.isNotEmpty) ...[
-        ReportSubheading(strings.paymentsCredits),
-        for (final entry in sections.creditEntries)
-          ReportTableRow([
-            '${entry.description.isEmpty ? _creditFallback(strings, entry) : entry.description} '
-                '(${dateFormat.format(entry.on.toLocal())})', credit(entry.amountCents)]),
-      ],
+      ...rows.charges(),
+      ...rows.services(),
+      ...rows.packages(),
+      ...rows.openPositions(),
+      ...rows.credits(),
       const ReportDivider(),
-      ReportTableRow([strings.balance,
-        if (statement.isSettled) strings.settled else strings.outstanding,
-        currency.formatMinor(statement.balanceCents)], bold: true),
+      rows.balance(),
     ],
     footer: const [],
   );
+}
+
+/// The bill's blocks, one method per section.
+class _BillRows {
+  _BillRows(this.bill)
+      : currency = moneyFormat(bill.currencyCode, locale: bill.locale),
+        dateFormat = DateFormat.yMMMd(bill.locale);
+
+  final BillDocument bill;
+  final MoneyFormat currency;
+  final DateFormat dateFormat;
+
+  BillPdfStrings get strings => bill.strings;
+  Statement get statement => bill.statement;
+  BillSections get sections => bill.sections;
+
+  String charge(int cents) => '−${currency.formatMinor(cents)}';
+  String credit(int cents) => '+${currency.formatMinor(cents)}';
+
+  List<ReportBlock> header() => [
+        ReportHeading(bill.workspaceName),
+        ReportSubheading(strings.title),
+        ReportMuted('${bill.memberName} — ${bill.periodLabel}'),
+        const ReportDivider(),
+      ];
+
+  List<ReportBlock> continuation() => [
+        ReportText('${bill.workspaceName} — ${strings.title} — '
+            '${bill.memberName} — ${bill.periodLabel}'),
+        const ReportDivider(),
+      ];
+
+  List<ReportBlock> charges() => [
+        ReportTableRow([strings.subscription, charge(statement.feeCents)],
+            bold: true),
+        ReportMuted(strings.entitlement),
+        if (statement.extraHalfDays > 0)
+          ReportTableRow([strings.overage, charge(statement.overageCents)]),
+        if (statement.accessorySupplementCents > 0)
+          ReportTableRow([
+            strings.accessorySupplements,
+            charge(statement.accessorySupplementCents),
+          ]),
+      ];
+
+  List<ReportBlock> services() => [
+        if (sections.serviceEntries.isNotEmpty) ...[
+          ReportSubheading(strings.services),
+          for (final entry in sections.serviceEntries)
+            ReportTableRow([
+              if (entry.description.isEmpty) strings.serviceFallback else entry.description,
+              charge(entry.amountCents),
+            ]),
+          ReportTableRow(
+              [strings.servicesTotal, charge(sections.servicesTotalCents)],
+              bold: true),
+        ],
+      ];
+
+  List<ReportBlock> packages() => [
+        if (sections.packageEntries.isNotEmpty) ...[
+          ReportSubheading(strings.packages),
+          for (final entry in sections.packageEntries)
+            ReportTableRow([
+              if (entry.description.isEmpty) strings.packages else entry.description,
+              charge(entry.amountCents),
+            ]),
+        ],
+      ];
+
+  List<ReportBlock> openPositions() => [
+        if (sections.openPositions.isNotEmpty) ...[
+          ReportSubheading(strings.openPositions),
+          ReportMuted(strings.pendingBadge),
+          for (final position in sections.openPositions)
+            ReportTableRow([
+              _openPositionLabel(strings, position.event),
+              if (position.isCredit)
+                credit(position.amountCents)
+              else
+                charge(position.amountCents),
+            ]),
+        ],
+      ];
+
+  List<ReportBlock> credits() => [
+        if (sections.creditEntries.isNotEmpty) ...[
+          ReportSubheading(strings.paymentsCredits),
+          for (final entry in sections.creditEntries)
+            ReportTableRow([
+              '${entry.description.isEmpty ? _creditFallback(strings, entry) : entry.description} '
+                  '(${dateFormat.format(entry.on.toLocal())})',
+              credit(entry.amountCents),
+            ]),
+        ],
+      ];
+
+  ReportBlock balance() => ReportTableRow([
+        strings.balance,
+        if (statement.isSettled) strings.settled else strings.outstanding,
+        currency.formatMinor(statement.balanceCents),
+      ], bold: true);
 }
 
 String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
