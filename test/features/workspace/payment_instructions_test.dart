@@ -28,10 +28,12 @@ void main() {
       'bank_code': '',
       'bank_name': '',
       'bic': '',
+      // #2360 — the QR-IBAN of a Swiss QR-bill.
+      'qr_iban': '',
     });
   });
 
-  test('fromDb → toDb round-trips all ten fields', () {
+  test('fromDb → toDb round-trips all eleven fields', () {
     const db = {
       'iban': 'FR76 1234',
       'paypal_me': 'somebody',
@@ -43,6 +45,7 @@ void main() {
       'bank_code': '40-00-01',
       'bank_name': 'Barclays',
       'bic': 'BUKBGB22',
+      'qr_iban': 'CH44 3199 9123 0008 8901 2',
     };
     final instructions = PaymentInstructions.fromDb(db);
     expect(instructions.wero, '+33 6 00 00 00 00');

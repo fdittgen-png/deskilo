@@ -7921,6 +7921,10 @@
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "paymentProviderStripe": "Tarjeta (Stripe)",
   "paymentProviderWero": "Wero (con Mollie)",
+  "paymentQrIbanLabel": "QR-IBAN (factura QR suiza)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  },
   "paymentRemindersWhen": "Cuándo se ejecuta: cada mañana en el servidor, si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.",
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
@@ -8867,6 +8871,50 @@
   "pushStatusNotConfigured": "Las notificaciones push aún no están configuradas",
   "pushStatusNotConfiguredHint": "El propietario completa la configuración de Firebase (guía push-setup).",
   "pushStatusRegistered": "Las notificaciones push están activas",
+  "qrBillAcceptancePoint": "Acceptance point",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillAccount": "Account / Payable to",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillAdditionalInfo": "Additional information",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillAmount": "Amount",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillCurrency": "Currency",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillPayableBy": "Payable by",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillPayableByAddress": "Payable by (name/address)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillPaymentPart": "Payment part",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillReceipt": "Receipt",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillReference": "Reference",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
+  "qrBillSeparate": "Separate before paying in",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate (the SIX guidelines define de, fr, it and en; es prints the English words)"
+  },
   "questionEditorActive": "Se pregunta ahora",
   "@questionEditorActive": {
     "description": "#1288 the question editor: questionEditorActive"

@@ -621,5 +621,8 @@
  "legalLettingHint": "Una postazione o un ufficio con servizi (business center) è imponibile all'aliquota normale. La semplice locazione di locali è esclusa dall'imposta, senza deduzione dell'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo opzione per l'imposizione (art. 22), indicando l'imposta apertamente in fattura.",
  "legalBareLetting": "Affittiamo solo locali nudi",
  "legalBareLettingDesc": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
- "legalChOption": "Abbiamo optato (art. 22 LIVA)"
+ "legalChOption": "Abbiamo optato (art. 22 LIVA)",
+ "payQrIban": "QR-IBAN (fattura QR svizzera)",
+ "payQrIbanHint": "Facoltativo: con esso la fattura QR porta un riferimento QRR",
+ "payErrQrIban": "Il QR-IBAN è un IBAN svizzero o liechtensteinese il cui identificativo dell'istituto (cifre da 5 a 9) è compreso tra 30000 e 31999."
 }

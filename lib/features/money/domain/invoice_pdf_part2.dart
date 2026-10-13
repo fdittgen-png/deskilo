@@ -50,6 +50,10 @@ Future<Uint8List> buildInvoicePdf({
   /// envelope. Resolved by the caller from the template and the seller's
   /// country, because only the caller knows both.
   AddressWindow addressWindow = AddressWindow.off,
+
+  /// #2360 — the Swiss QR-bill, on a page of its own after the invoice
+  /// (before any annex); null for every other document.
+  pw.Page? qrBillPage,
 }) async {
   final hybrid = facturXml.isNotEmpty && colorProfile != null;
   final doc = pw.Document(
@@ -778,6 +782,7 @@ Future<Uint8List> buildInvoicePdf({
     periodLabel: periodLabel,
     primary: true,
   );
+  if (qrBillPage != null) doc.addPage(qrBillPage);
   // The regrouped invoices behind this one, each stamped with where it
   // went. They are documentation, so they carry no report bands and are
   // never a proforma or a copy of anything.

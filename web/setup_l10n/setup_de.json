@@ -621,5 +621,8 @@
  "legalLettingHint": "Ein Arbeitsplatz oder Büro mit Dienstleistungen (Business-Center) ist zum Normalsatz steuerbar. Die blosse Vermietung von Räumen ist von der Steuer ausgenommen, ohne Vorsteuerabzug (Art. 21 Abs. 2 Ziff. 21 MWSTG), ausser Sie optieren für die Versteuerung (Art. 22), indem Sie die Steuer in der Rechnung offen ausweisen.",
  "legalBareLetting": "Wir vermieten nur Räume",
  "legalBareLettingDesc": "Aus: jede Zeile ist ein Paket, zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
- "legalChOption": "Wir haben optiert (Art. 22 MWSTG)"
+ "legalChOption": "Wir haben optiert (Art. 22 MWSTG)",
+ "payQrIban": "QR-IBAN (Schweizer QR-Rechnung)",
+ "payQrIbanHint": "Optional: damit trägt die QR-Rechnung eine QRR-Referenz",
+ "payErrQrIban": "Die QR-IBAN ist eine Schweizer oder liechtensteinische IBAN, deren Bankenclearing-Nummer (Stellen 5 bis 9) zwischen 30000 und 31999 liegt."
 }

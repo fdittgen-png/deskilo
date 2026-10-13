@@ -7921,6 +7921,10 @@
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "paymentProviderStripe": "Carte bancaire (Stripe)",
   "paymentProviderWero": "Wero (via Mollie)",
+  "paymentQrIbanLabel": "QR-IBAN (facture QR suisse)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  },
   "paymentRemindersWhen": "Quand cela s'exécute : chaque matin sur le serveur, si l'installation planifie des tâches (pg_cron) ; sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.",
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
@@ -8867,6 +8871,50 @@
   "pushStatusNotConfigured": "Les notifications push ne sont pas encore configurées",
   "pushStatusNotConfiguredHint": "Le propriétaire termine la configuration Firebase (guide push-setup).",
   "pushStatusRegistered": "Les notifications push sont actives",
+  "qrBillAcceptancePoint": "Point de dépôt",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillAccount": "Compte / Payable à",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillAdditionalInfo": "Informations supplémentaires",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillAmount": "Montant",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillCurrency": "Monnaie",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillPayableBy": "Payable par",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Payable par (nom/adresse)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillPaymentPart": "Section paiement",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillReceipt": "Récépissé",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillReference": "Référence",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillSeparate": "A détacher avant le versement",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
+  },
   "questionEditorActive": "Posée actuellement",
   "@questionEditorActive": {
     "description": "#1288 the question editor: questionEditorActive"

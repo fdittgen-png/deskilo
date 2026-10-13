@@ -15,6 +15,10 @@ enum BankingScheme {
 
   /// Transit number + institution number + account number.
   ca,
+
+  /// #2360 — Switzerland: an IBAN, and a QR-IBAN for the QR-bill's QRR
+  /// reference.
+  ch,
 }
 
 /// One country the app knows how to bill in (spec §3).
@@ -76,7 +80,7 @@ abstract final class CountryCatalog {
     Country('RO', 'RON', 'Europe/Bucharest'),
     Country('SE', 'SEK', 'Europe/Stockholm'),
     // ── Europe, outside the EU ──
-    Country('CH', 'CHF', 'Europe/Zurich'),
+    Country('CH', 'CHF', 'Europe/Zurich', scheme: BankingScheme.ch),
     Country('NO', 'NOK', 'Europe/Oslo'),
     Country('GB', 'GBP', 'Europe/London', scheme: BankingScheme.uk),
     // ── North America ──

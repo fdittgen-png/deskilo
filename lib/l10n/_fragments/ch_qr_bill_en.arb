@@ -1,0 +1,50 @@
+{
+  "qrBillReceipt": "Receipt",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillPaymentPart": "Payment part",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillAccount": "Account / Payable to",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillReference": "Reference",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillAdditionalInfo": "Additional information",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillPayableBy": "Payable by",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Payable by (name/address)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillCurrency": "Currency",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillAmount": "Amount",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillAcceptancePoint": "Acceptance point",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillSeparate": "Separate before paying in",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
+  },
+  "paymentQrIbanLabel": "QR-IBAN (Swiss QR-bill)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  }
+}

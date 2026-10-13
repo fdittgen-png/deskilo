@@ -49,6 +49,7 @@ import 'report_facts_of.dart';
 import 'report_layout_actions.dart';
 import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
+import 'swiss_qr_page.dart';
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
@@ -390,6 +391,15 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
                 l10n: context.l10n,
               ))
       : null;
+  // #2360 — a Swiss seller's invoice ends on the QR-bill its customer pays with.
+  final qrPage = await swissQrPageFor(
+    l10n,
+    invoice,
+    workspace?.paymentInstructions ?? const {},
+    workspace?.countryCode ?? '',
+    proforma: proforma,
+    font: font,
+  );
   if (layoutXml != null) {
     final bytes = await tryLayoutPdf(
       layoutXml: layoutXml,
@@ -407,6 +417,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       ),
       signatureLabel: strings.signature,
       signature: proforma ? '' : invoice.signature,
+      lastPage: qrPage,
     );
     if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
   }
@@ -430,6 +441,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   ).isAssociation;
   final words = reportStringsOf(l10n);
   final bytes = await buildInvoicePdf(
+    qrBillPage: qrPage,
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,

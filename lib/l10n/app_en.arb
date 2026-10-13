@@ -14633,6 +14633,10 @@
   "@paymentProviderWero": {
     "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
   },
+  "paymentQrIbanLabel": "QR-IBAN (Swiss QR-bill)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  },
   "paymentRemindersWhen": "When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.",
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
@@ -16180,6 +16184,50 @@
   "pushStatusRegistered": "Push notifications are active",
   "@pushStatusRegistered": {
     "description": "Settings status line: push pipeline registered (#424)"
+  },
+  "qrBillAcceptancePoint": "Acceptance point",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillAccount": "Account / Payable to",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillAdditionalInfo": "Additional information",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillAmount": "Amount",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillCurrency": "Currency",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillPayableBy": "Payable by",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Payable by (name/address)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillPaymentPart": "Payment part",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillReceipt": "Receipt",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillReference": "Reference",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillSeparate": "Separate before paying in",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
   },
   "questionEditorActive": "Asked now",
   "@questionEditorActive": {

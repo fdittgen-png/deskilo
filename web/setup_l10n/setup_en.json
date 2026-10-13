@@ -621,5 +621,8 @@
  "legalLettingHint": "A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22) by showing the tax openly on the invoice.",
  "legalBareLetting": "We only let bare rooms",
  "legalBareLettingDesc": "Off: every property line is a package, taxed at the normal rate. On: exempt unless you opted.",
- "legalChOption": "We opted for taxation (art. 22 MWSTG)"
+ "legalChOption": "We opted for taxation (art. 22 MWSTG)",
+ "payQrIban": "QR-IBAN (Swiss QR-bill)",
+ "payQrIbanHint": "Optional: with it, the QR-bill carries a QRR reference",
+ "payErrQrIban": "The QR-IBAN is a Swiss or Liechtenstein IBAN whose institution identifier (digits 5 to 9) lies between 30000 and 31999."
 }

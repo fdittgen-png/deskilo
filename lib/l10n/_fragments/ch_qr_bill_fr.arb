@@ -1,0 +1,50 @@
+{
+  "qrBillReceipt": "Récépissé",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillPaymentPart": "Section paiement",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillAccount": "Compte / Payable à",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillReference": "Référence",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillAdditionalInfo": "Informations supplémentaires",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillPayableBy": "Payable par",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Payable par (nom/adresse)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillCurrency": "Monnaie",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillAmount": "Montant",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillAcceptancePoint": "Point de dépôt",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillSeparate": "A détacher avant le versement",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
+  },
+  "paymentQrIbanLabel": "QR-IBAN (facture QR suisse)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  }
+}

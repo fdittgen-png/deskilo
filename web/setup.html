@@ -346,7 +346,7 @@ function upgradePerms(perms){for(const role of Object.keys(PERM_DEFAULTS)){const
 // Kingdom (0419): VAT in sterling, land exempt unless opted to tax.
 const INVOICING_COUNTRIES=['AT','BE','BG','CY','CZ','DE','DK','EE','FI','FR','GB','GR','HR','HU','IE','LT','LU','LV','MT','NL','PT','SE','SI','SK'];
 // [ISO code, currency, time zone, bank scheme]; names from the app's countryName* strings.
-const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','sepa'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
+const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','ch'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.
 const CURRENCIES=['AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','ILS','INR','ISK','JPY','KRW','MXN','NOK','NZD','PLN','RON','SEK','SGD','TRY','USD','ZAR'];
 const TIMEZONES=[...new Set(COUNTRIES.map(c=>c[2]).concat(['America/Los_Angeles','America/Chicago','America/Denver','America/Vancouver','America/Montreal','Australia/Sydney','Asia/Tokyo','Asia/Singapore','Europe/Dublin','Atlantic/Canary','UTC']))].sort();
@@ -436,7 +436,7 @@ const DEFAULTS={
  features:{...Object.fromEntries(FEATURES.map(f=>[f[0],!!f[1]])),configurationTransfer:true,dataExport:true},
  sites:[],levels:[{name:T('defaultFirstLevel'),offices:[newOffice(1)]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
- pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
+ pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:'',qr_iban:''},
  org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'standard',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
@@ -821,6 +821,7 @@ const STEPS=[
 {id:'pay',get title(){return T('payTitle')},get why(){return T('payWhy')},applies(){return on('moneyTab')},
  build(){const sc=scheme();const k=[help('pay'),h('p',{class:'hint'},T('payHint'))];
   if(sc==='sepa')k.push(h('div',{class:'row'},input('IBAN','pay.iban',''),input('BIC / SWIFT','pay.bic',T('payBicHint'))),input(T('payBankName'),'pay.bank_name',T('optional')));
+  if(sc==='ch')k.push(h('div',{class:'row'},input('IBAN','pay.iban',''),input(T('payQrIban'),'pay.qr_iban',T('payQrIbanHint'))),h('div',{class:'row'},input('BIC / SWIFT','pay.bic',T('payBicHint')),input(T('payBankName'),'pay.bank_name',T('optional'))));
   if(sc==='uk')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('paySortCode'),'pay.bank_code','')),input(T('payBankName'),'pay.bank_name',''),input(T('payIbanIntl'),'pay.iban',T('optional')));
   if(sc==='us')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('payRoutingNumber'),'pay.bank_code','')),input(T('payBankName'),'pay.bank_name',''));
   if(sc==='ca')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('payTransit'),'pay.bank_code',T('payTransitHint'))),input(T('payBankName'),'pay.bank_name',''));
@@ -829,7 +830,8 @@ const STEPS=[
   if(on('onlinePayments'))k.push(dep(T('payOnlineDep'),'features'),help('online'));
   return k},
  check(){const any=Object.values(S.pay).some(v=>String(v).trim());const f=[];if(!any&&!on('onlinePayments'))f.push(F.warn(T('payWarnNone'),'pay'));else f.push(F.ok(T(any?'payOkInstructions':'payOkOnlineOnly')));
-  if(scheme()==='sepa'&&S.pay.iban.trim()&&!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(S.pay.iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrIban'),'pay'));return f}},
+  if((scheme()==='sepa'||scheme()==='ch')&&S.pay.iban.trim()&&!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(S.pay.iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrIban'),'pay'));
+  if(scheme()==='ch'&&S.pay.qr_iban.trim()&&!/^(CH|LI)\d{2}3[01]\d{3}[A-Z0-9]{12}$/.test(S.pay.qr_iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrQrIban'),'pay'));return f}},
 
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(){const k=[];

@@ -1,0 +1,50 @@
+{
+  "qrBillReceipt": "Ricevuta",
+  "@qrBillReceipt": {
+    "description": "#2360: qrBillReceipt"
+  },
+  "qrBillPaymentPart": "Sezione di pagamento",
+  "@qrBillPaymentPart": {
+    "description": "#2360: qrBillPaymentPart"
+  },
+  "qrBillAccount": "Conto / Pagabile a",
+  "@qrBillAccount": {
+    "description": "#2360: qrBillAccount"
+  },
+  "qrBillReference": "Riferimento",
+  "@qrBillReference": {
+    "description": "#2360: qrBillReference"
+  },
+  "qrBillAdditionalInfo": "Informazioni aggiuntive",
+  "@qrBillAdditionalInfo": {
+    "description": "#2360: qrBillAdditionalInfo"
+  },
+  "qrBillPayableBy": "Pagabile da",
+  "@qrBillPayableBy": {
+    "description": "#2360: qrBillPayableBy"
+  },
+  "qrBillPayableByAddress": "Pagabile da (nome/indirizzo)",
+  "@qrBillPayableByAddress": {
+    "description": "#2360: qrBillPayableByAddress"
+  },
+  "qrBillCurrency": "Valuta",
+  "@qrBillCurrency": {
+    "description": "#2360: qrBillCurrency"
+  },
+  "qrBillAmount": "Importo",
+  "@qrBillAmount": {
+    "description": "#2360: qrBillAmount"
+  },
+  "qrBillAcceptancePoint": "Punto di accettazione",
+  "@qrBillAcceptancePoint": {
+    "description": "#2360: qrBillAcceptancePoint"
+  },
+  "qrBillSeparate": "Da staccare prima del versamento",
+  "@qrBillSeparate": {
+    "description": "#2360: qrBillSeparate"
+  },
+  "paymentQrIbanLabel": "QR-IBAN (fattura QR svizzera)",
+  "@paymentQrIbanLabel": {
+    "description": "#2360: paymentQrIbanLabel"
+  }
+}
