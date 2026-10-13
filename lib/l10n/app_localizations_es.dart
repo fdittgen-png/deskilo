@@ -18347,6 +18347,118 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un borrador privado de un archivo: nada de él se considera fiable ni se envía.';
 
   @override
+  String get taxRefAdd => 'Añadir un valor';
+
+  @override
+  String get taxRefCategory => 'Categoría EN 16931';
+
+  @override
+  String get taxRefConfirmed => 'Confirmado';
+
+  @override
+  String get taxRefCouldNotSave => 'No se pudo guardar la versión';
+
+  @override
+  String get taxRefCountry => 'País (código ISO, o * para todos)';
+
+  @override
+  String get taxRefDomainEuMember => 'Miembros de la UE';
+
+  @override
+  String get taxRefDomainExemptionText => 'Textos legales';
+
+  @override
+  String get taxRefDomainRate => 'Tipos';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'Formatos de NIF-IVA';
+
+  @override
+  String get taxRefEmpty => 'Sin valores.';
+
+  @override
+  String get taxRefExemptionReason => 'Motivo de exención';
+
+  @override
+  String get taxRefGroup => 'Grupo';
+
+  @override
+  String get taxRefHistory => 'Historial';
+
+  @override
+  String get taxRefIntro =>
+      'Tipos, textos de exención, formatos de NIF-IVA y países miembros de la UE. Un cambio es una nueva versión desde una fecha; la versión vigente se cierra, nunca se edita.';
+
+  @override
+  String get taxRefInvalidDate => 'Introduzca la fecha como AAAA-MM-DD';
+
+  @override
+  String get taxRefInvalidNumber => 'Introduzca un número de 0 a 99,999';
+
+  @override
+  String get taxRefKey => 'Clave';
+
+  @override
+  String get taxRefLabel => 'Etiqueta';
+
+  @override
+  String get taxRefLoadFailed =>
+      'No se pudieron cargar los datos de referencia.';
+
+  @override
+  String get taxRefMemberEmpty => 'Un Estado miembro no tiene más campos.';
+
+  @override
+  String get taxRefNewVersion => 'Nueva versión';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Solo el operador de la plataforma gestiona los datos de referencia fiscales.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Se muestra la copia incluida en la aplicación: no se pudo contactar con el servidor.';
+
+  @override
+  String get taxRefPattern => 'Formato';
+
+  @override
+  String get taxRefPercent => 'Porcentaje';
+
+  @override
+  String get taxRefPosition => 'Posición';
+
+  @override
+  String get taxRefRegime => 'Régimen';
+
+  @override
+  String get taxRefRequired => 'Obligatorio';
+
+  @override
+  String get taxRefSave => 'Guardar la versión';
+
+  @override
+  String get taxRefSaved => 'Versión guardada';
+
+  @override
+  String get taxRefSource => 'Fuente';
+
+  @override
+  String get taxRefText => 'Texto';
+
+  @override
+  String get taxRefTitle => 'Datos de referencia fiscales';
+
+  @override
+  String get taxRefUnconfirmed => 'Sin confirmar';
+
+  @override
+  String get taxRefValidFrom => 'Válido desde';
+
+  @override
+  String get taxRefValidUntil => 'hasta';
+
+  @override
   String get templateApplyConflict =>
       'Esta solicitud ya se usó para otra cosa. No se aplicó nada.';
 

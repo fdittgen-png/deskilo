@@ -174,6 +174,9 @@ const Set<String> _knownPairs = {
   'plan -> workspace',
   'profile -> auth',
   'profile -> members',
+  // #2477 — the platform owner's tax reference editor opens from the
+  // platform section of the profile list.
+  'profile -> money',
   // #586 — Settings surfaces the member's default reservation period.
   'profile -> reservations',
   'profile -> workspace',

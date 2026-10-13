@@ -975,6 +975,15 @@ constraint space_inquiry_messages.space_inquiry_messages_body_check CHECK (((len
 constraint space_inquiry_messages.space_inquiry_messages_inquiry_id_fkey FOREIGN KEY (inquiry_id) REFERENCES space_inquiries(id) ON DELETE CASCADE
 constraint space_inquiry_messages.space_inquiry_messages_pkey PRIMARY KEY (id)
 constraint space_inquiry_messages.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint tax_reference.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint tax_reference.tax_reference_country_check CHECK (((country = '*'::text) OR (country ~ '^[A-Z]{2}$'::text)))
+constraint tax_reference.tax_reference_key_check CHECK ((btrim(key) <> ''::text))
+constraint tax_reference.tax_reference_no_overlap EXCLUDE USING gist (domain WITH =, country WITH =, key WITH =, daterange(valid_from, valid_to, '[)'::text) WITH &&)
+constraint tax_reference.tax_reference_period CHECK (((valid_to IS NULL) OR (valid_to > valid_from)))
+constraint tax_reference.tax_reference_pkey PRIMARY KEY (id)
+constraint tax_reference.tax_reference_shape CHECK (tax_reference_valid(domain, value))
+constraint tax_reference.tax_reference_source_check CHECK ((btrim(source) <> ''::text))
+constraint tax_reference.tax_reference_version UNIQUE (domain, country, key, valid_from)
 constraint usage_records.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint usage_records.system_company_present CHECK ((company_id IS NOT NULL))
 constraint usage_records.usage_records_basis_check CHECK ((basis = ANY (ARRAY['reserved'::text, 'corrected'::text])))
@@ -1876,6 +1885,7 @@ routine public.set_repartition_rule(p_workspace_id uuid, p_rule jsonb) -> void |
 routine public.set_role_permission(p_workspace_id uuid, p_role text, p_permission text, p_enabled boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d7cd84d7fda5
 routine public.set_role_permissions(p_workspace_id uuid, p_role text, p_permissions text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:75d64e57ab19
 routine public.set_seat_block(p_seat_id uuid, p_blocked_from timestamp with time zone, p_blocked_to timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:f81dc944c6c3
+routine public.set_tax_reference(p_domain text, p_country text, p_key text, p_value jsonb, p_source text, p_confirmed boolean, p_valid_from date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6fbadd0c7203
 routine public.set_vat_rates(p_workspace_id uuid, p_rates jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:b1aa551ade20
 routine public.set_visibility(p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:46ce2c8861bb
 routine public.set_workspace_branding(p_workspace_id uuid, p_branding jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ebab45e4070
@@ -1915,6 +1925,9 @@ routine public.swiss_uid_valid(p_uid text, p_require_suffix boolean) -> boolean 
 routine public.sync_person_preferences() -> trigger | function | definer | volatile | exec:service_role | body:7deaaebe6dfa
 routine public.system_column_names() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:a9f38911774d
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
+routine public.tax_reference(p_domain text, p_country text, p_on date) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:7a175f70fb39
+routine public.tax_reference_history(p_domain text, p_country text, p_key text) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:6d2fb6df5d0a
+routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:a2dead6bf40a
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
@@ -2208,6 +2221,7 @@ trigger sites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEF
 trigger space_inquiries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger space_inquiry_messages.inquiry_messages_refs_guard CREATE TRIGGER inquiry_messages_refs_guard BEFORE INSERT OR UPDATE OF body ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION inquiry_messages_refs_guard()
 trigger space_inquiry_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()

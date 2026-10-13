@@ -399,6 +399,12 @@ is written to `platform_access_log`, readable by that workspace's owners.
 An owner must always have an e-mail address (`user_has_email`, enforced at
 `create_workspace` and `activate_co_owner`). Do not "fix" the missing flag.
 
+The tax reference editor (#2477) is the same kind of tool and has the same
+exemption: reference data is the platform's, not a workspace's. Everyone
+signed in reads `tax_reference`; only `set_tax_reference` writes it, and it
+refuses anyone but `is_platform_owner()` (and any delegated assistant token).
+The screen is a section of the platform-owner list, not a flagged feature.
+
 ## The Features screen's process overview has no feature flag (#1327)
 
 The third exception. The overview is a second presentation of the

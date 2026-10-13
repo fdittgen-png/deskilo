@@ -18370,6 +18370,117 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.';
 
   @override
+  String get taxRefAdd => 'Aggiungi un valore';
+
+  @override
+  String get taxRefCategory => 'Categoria EN 16931';
+
+  @override
+  String get taxRefConfirmed => 'Confermato';
+
+  @override
+  String get taxRefCouldNotSave => 'Impossibile salvare la versione';
+
+  @override
+  String get taxRefCountry => 'Paese (codice ISO, o * per tutti)';
+
+  @override
+  String get taxRefDomainEuMember => 'Membri UE';
+
+  @override
+  String get taxRefDomainExemptionText => 'Testi di legge';
+
+  @override
+  String get taxRefDomainRate => 'Aliquote';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'Formati di partita IVA';
+
+  @override
+  String get taxRefEmpty => 'Nessun valore.';
+
+  @override
+  String get taxRefExemptionReason => 'Motivo di esenzione';
+
+  @override
+  String get taxRefGroup => 'Gruppo';
+
+  @override
+  String get taxRefHistory => 'Cronologia';
+
+  @override
+  String get taxRefIntro =>
+      'Aliquote, testi di esenzione, formati delle partite IVA e Stati membri dell\'UE. Una modifica è una nuova versione da una data; la versione in vigore viene chiusa, mai modificata.';
+
+  @override
+  String get taxRefInvalidDate => 'Inserisci la data come AAAA-MM-GG';
+
+  @override
+  String get taxRefInvalidNumber => 'Inserisci un numero da 0 a 99,999';
+
+  @override
+  String get taxRefKey => 'Chiave';
+
+  @override
+  String get taxRefLabel => 'Etichetta';
+
+  @override
+  String get taxRefLoadFailed => 'Impossibile caricare i dati di riferimento.';
+
+  @override
+  String get taxRefMemberEmpty => 'Uno Stato membro non ha altri campi.';
+
+  @override
+  String get taxRefNewVersion => 'Nuova versione';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Solo l\'operatore della piattaforma gestisce i dati di riferimento fiscali.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Copia inclusa nell\'app: il server non è raggiungibile.';
+
+  @override
+  String get taxRefPattern => 'Formato';
+
+  @override
+  String get taxRefPercent => 'Percentuale';
+
+  @override
+  String get taxRefPosition => 'Posizione';
+
+  @override
+  String get taxRefRegime => 'Regime';
+
+  @override
+  String get taxRefRequired => 'Obbligatorio';
+
+  @override
+  String get taxRefSave => 'Salva la versione';
+
+  @override
+  String get taxRefSaved => 'Versione salvata';
+
+  @override
+  String get taxRefSource => 'Fonte';
+
+  @override
+  String get taxRefText => 'Testo';
+
+  @override
+  String get taxRefTitle => 'Dati di riferimento fiscali';
+
+  @override
+  String get taxRefUnconfirmed => 'Non confermato';
+
+  @override
+  String get taxRefValidFrom => 'Valido dal';
+
+  @override
+  String get taxRefValidUntil => 'fino al';
+
+  @override
   String get templateApplyConflict =>
       'Questa richiesta è già stata usata per altro. Non è stato applicato nulla.';
 
