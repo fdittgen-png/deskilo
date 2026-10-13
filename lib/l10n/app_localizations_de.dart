@@ -19325,6 +19325,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Steuernummer';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Tragen Sie die Umsatzsteuer-Registriernummer des Workspace ein (GB und neun Ziffern): die Datei nennt sie.';
+
+  @override
   String get vatDeclGenerate => 'Vorbereiten';
 
   @override
@@ -19339,6 +19343,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Bestätigen Sie, dass Sie diese Voranmeldung selbst beim Finanzamt abgegeben haben (ELSTER oder Ihr Steuerberater), und geben Sie die Referenz der Eingangsbestätigung ein. Danach ist sie unveränderlich.';
+
+  @override
+  String get vatDeclMtdCsv => 'MTD-Brückendatei (CSV, neun Felder)';
 
   @override
   String get vatDeclNet => 'Bemessungsgrundlage';

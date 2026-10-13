@@ -19,5 +19,13 @@
   "vatDeclFilingTaxNumberField": "Tax number (Steuernummer)",
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  },
+  "vatDeclMtdCsv": "MTD bridging file (CSV, nine boxes)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclFilingVatNumber": "Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
   }
 }

@@ -12017,6 +12017,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Prepara",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12036,6 +12040,10 @@
   "vatDeclMarkFiledConfirm": "Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "File MTD (CSV, nove caselle)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Imponibile",
   "@vatDeclNet": {

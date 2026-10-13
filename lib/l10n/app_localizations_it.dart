@@ -19306,6 +19306,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Numero fiscale (Steuernummer)';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.';
+
+  @override
   String get vatDeclGenerate => 'Prepara';
 
   @override
@@ -19320,6 +19324,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.';
+
+  @override
+  String get vatDeclMtdCsv => 'File MTD (CSV, nove caselle)';
 
   @override
   String get vatDeclNet => 'Imponibile';

@@ -15,6 +15,14 @@
 //    address), the period, and one LIN per CA3 line with its code and
 //    its amounts in whole euros — MOA 125 the base, MOA 124 the tax.
 //
+//  * GB — Making Tax Digital for VAT through bridging software (#2359):
+//    one CSV row of the nine boxes under HMRC's own field names (boxes
+//    1–5 in pounds and pence, 6–9 in whole pounds). The file IS the
+//    digital link: the bridging software imports it as it is and a person
+//    never retypes a figure. Submitting through HMRC's API, with its
+//    fraud-prevention headers, needs a developer account and is not done
+//    here.
+//
 // Both read the boxes `vatFormBoxes` fills, so the file and the PDF can
 // never disagree.
 import 'package:meta/meta.dart';
@@ -30,6 +38,9 @@ enum VatFilingFileProblem {
 
   /// The declarant's tax number (Steuernummer, SIREN) is missing.
   taxNumber,
+
+  /// A UK return names the VAT registration number (nine digits).
+  vatNumber,
 }
 
 class VatFilingFileException implements Exception {
@@ -66,6 +77,7 @@ class VatFilingParty {
   String? get fileCountry => switch (countryCode.trim().toUpperCase()) {
     'DE' => 'DE',
     'FR' => 'FR',
+    'GB' || 'UK' => 'GB',
     _ => null,
   };
 }
@@ -107,8 +119,61 @@ class VatFilingParty {
         createdAt: now,
       ),
     ),
+    'GB' => (
+      fileName: 'mtd-vat-return-$start.csv',
+      text: mtdBridgingCsv(declaration: declaration, vatId: party.vatId),
+    ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),
   };
+}
+
+/// The HMRC field names of the nine boxes, in the order of the form.
+const _mtdFields = [
+  'vatDueSales',
+  'vatDueAcquisitions',
+  'totalVatDue',
+  'vatReclaimedCurrPeriod',
+  'netVatDue',
+  'totalValueSalesExVAT',
+  'totalValuePurchasesExVAT',
+  'totalValueGoodsSuppliedExVAT',
+  'totalAcquisitionsExVAT',
+];
+
+/// The nine boxes of the UK return as one CSV row for MTD bridging
+/// software (#2359). [vatId] is the registration number; the row names its
+/// nine digits as `vrn`.
+@visibleForTesting
+String mtdBridgingCsv({
+  required VatDeclaration declaration,
+  required String vatId,
+}) {
+  final upper = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  final digits = _digits(upper.startsWith('GB') || upper.startsWith('XI') ? upper.substring(2) : upper);
+  if (digits.length < 9) {
+    throw const VatFilingFileException(VatFilingFileProblem.vatNumber);
+  }
+  final values = <String, String>{};
+  for (final box in vatFormBoxes(
+    'GB',
+    declaration.lines,
+    periodEnd: declaration.periodEnd,
+  )) {
+    if (box.hasBase && box.baseKey.isNotEmpty) {
+      values[box.baseKey] = (box.netCents ~/ 100).toString();
+    }
+    if (box.hasTax && box.taxKey.isNotEmpty) {
+      values[box.taxKey] = _euros(box.vatCents);
+    }
+  }
+  final header = ['vrn', 'periodStart', 'periodEnd', ..._mtdFields];
+  final row = [
+    digits.substring(0, 9),
+    isoDay(declaration.periodStart),
+    isoDay(declaration.periodEnd),
+    for (final field in _mtdFields) values[field] ?? '0',
+  ];
+  return '${header.join(',')}\r\n${row.join(',')}\r\n';
 }
 
 /// The SIREN of a French seller: the registration number's first nine
