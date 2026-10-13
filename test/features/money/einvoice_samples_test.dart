@@ -304,8 +304,7 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyer,
     lineText: _line,
     iban: 'FR7630006000011234567890189'));
-  final pdf = await buildInvoicePdf(
-    invoice: invoice,
+  final pdf = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
     strings: _pdfStrings,
     money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
     lineText: _line,
@@ -314,8 +313,7 @@ Future<Map<String, Uint8List>> _samples() async {
     facturXml: cii,
     colorProfile: File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
     baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-    boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-  );
+    boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
   final fatturaPa = buildInvoiceFatturaPa(
     invoice: _nationalInvoice(
       currency: 'EUR',

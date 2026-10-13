@@ -156,8 +156,7 @@ void main() {
       qrIban: _instructions.qrIban,
       workspaceCountry: 'CH',
     )!;
-    Future<Uint8List> render({bool withBill = true}) => buildInvoicePdf(
-      invoice: _invoice(),
+    Future<Uint8List> render({bool withBill = true}) => buildInvoicePdf(InvoicePdfRequest(invoice: _invoice(),
       strings: _strings,
       money: (c) => '${(c / 100).toStringAsFixed(2)} CHF',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -172,8 +171,7 @@ void main() {
               baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
               boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
             )
-          : null,
-    );
+          : null));
     int pages(Uint8List b) =>
         RegExp(r'/MediaBox[^\]]*595')
             .allMatches(String.fromCharCodes(b))

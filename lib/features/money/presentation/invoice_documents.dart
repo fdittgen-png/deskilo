@@ -441,8 +441,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
   final words = reportStringsOf(l10n);
-  final bytes = await buildInvoicePdf(
-    qrBillPage: qrPage,
+  final bytes = await buildInvoicePdf(InvoicePdfRequest(qrBillPage: qrPage,
     addressWindow: addressWindow,
     invoice: invoice,
     reportImages: reportImages,
@@ -462,8 +461,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     colorProfile: colorProfile,
     report: report,
     baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
-    boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
-  );
+    boldFont: await font('assets/fonts/Roboto-Bold.ttf')));
   return (bytes: bytes, fileName: '$stem.pdf');
 }
 
