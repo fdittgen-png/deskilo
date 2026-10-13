@@ -110,6 +110,10 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'sage50',
     state: QualificationState.implemented,
   ),
+  'ch_kmu': AccountingCapability(
+    formatId: 'ch_kmu',
+    state: QualificationState.implemented,
+  ),
   'accountant_csv': AccountingCapability(
     formatId: 'accountant_csv',
     state: QualificationState.implemented,

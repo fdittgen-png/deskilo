@@ -116,10 +116,11 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'language no Austrian form uses.',
   ),
   'lib/features/money/domain/coa_preview.dart': (
-    allowed: 45,
-    reason: 'the French chart of accounts (PCG): «Clients», «TVA '
-        'collectée» are the legal names of the accounts a bookkeeper '
-        'reads. A translated account name is the wrong account.',
+    allowed: 48,
+    reason: 'the national charts of accounts (the French PCG, the Swiss '
+        'KMU): «Clients», «TVA collectée», «Dienstleistungsertrag» are the '
+        'legal names of the accounts a bookkeeper reads. A translated '
+        'account name is the wrong account.',
   ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,

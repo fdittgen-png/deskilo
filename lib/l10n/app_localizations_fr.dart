@@ -8212,6 +8212,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (journal d’audit)';
 
   @override
+  String get invoiceExportSwissKmu =>
+      'Journal des écritures suisse (CSV, comptes PME)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Émettez cette facture hors de l’application';
 
@@ -16924,6 +16928,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get supportTitle => 'Détails pour l’assistance';
+
+  @override
+  String get swissKmuAccountsIntro =>
+      'Les valeurs par défaut sont les propositions du plan comptable suisse PME. Chaque ligne nomme le chiffre du décompte TVA sur lequel elle tombe ; vérifiez les comptes avec votre fiduciaire.';
+
+  @override
+  String get swissKmuAccountsTitle => 'Journal des écritures suisse';
+
+  @override
+  String get swissKmuRevenueExempt =>
+      'Produits exclus de l\'impôt, exportés ou à l\'étranger';
+
+  @override
+  String get swissKmuRevenueNormal => 'Produits au taux normal';
+
+  @override
+  String get swissKmuRevenueReduced =>
+      'Produits au taux réduit ou d\'hébergement';
 
   @override
   String get symbolHint =>

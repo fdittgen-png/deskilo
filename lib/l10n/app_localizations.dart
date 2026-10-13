@@ -13986,6 +13986,12 @@ abstract class AppLocalizations {
   /// **'Sage 50 (audit trail)'**
   String get invoiceExportSage;
 
+  /// #2360: invoiceExportSwissKmu
+  ///
+  /// In en, this message translates to:
+  /// **'Swiss booking journal (CSV, KMU accounts)'**
+  String get invoiceExportSwissKmu;
+
   /// No description provided for @invoiceExternalIssuingTitle.
   ///
   /// In en, this message translates to:
@@ -28903,6 +28909,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support details'**
   String get supportTitle;
+
+  /// #2360: swissKmuAccountsIntro
+  ///
+  /// In en, this message translates to:
+  /// **'The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.'**
+  String get swissKmuAccountsIntro;
+
+  /// #2360: swissKmuAccountsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Swiss booking journal'**
+  String get swissKmuAccountsTitle;
+
+  /// #2360: swissKmuRevenueExempt
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue exempt, exported or abroad'**
+  String get swissKmuRevenueExempt;
+
+  /// #2360: swissKmuRevenueNormal
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue at the normal rate'**
+  String get swissKmuRevenueNormal;
+
+  /// #2360: swissKmuRevenueReduced
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue at the reduced or accommodation rate'**
+  String get swissKmuRevenueReduced;
 
   /// workspace symbol
   ///

@@ -1,0 +1,26 @@
+{
+  "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas KMU)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
+  "swissKmuAccountsTitle": "Diario de asientos suizo",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuAccountsIntro": "Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuRevenueNormal": "Ingresos al tipo normal",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Ingresos al tipo reducido o de alojamiento",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
+  "swissKmuRevenueExempt": "Ingresos exentos, exportados o en el extranjero",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  }
+}

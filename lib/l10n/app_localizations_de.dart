@@ -8206,6 +8206,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (Audit-Journal)';
 
   @override
+  String get invoiceExportSwissKmu =>
+      'Schweizer Buchungsjournal (CSV, KMU-Konten)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Diese Rechnung außerhalb der App ausstellen';
 
@@ -16914,6 +16918,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get supportTitle => 'Supportdetails';
+
+  @override
+  String get swissKmuAccountsIntro =>
+      'Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.';
+
+  @override
+  String get swissKmuAccountsTitle => 'Schweizer Buchungsjournal';
+
+  @override
+  String get swissKmuRevenueExempt =>
+      'Ertrag ausgenommen, exportiert oder im Ausland';
+
+  @override
+  String get swissKmuRevenueNormal => 'Ertrag zum Normalsatz';
+
+  @override
+  String get swissKmuRevenueReduced =>
+      'Ertrag zum reduzierten oder Beherbergungssatz';
 
   @override
   String get symbolHint =>

@@ -9397,6 +9397,10 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
   "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
   "invoiceFacturXDownload": "Download Factur-X (PDF)",
   "@invoiceFacturXDownload": {
@@ -19031,6 +19035,26 @@
     }
   },
   "supportTitle": "Support details",
+  "swissKmuAccountsIntro": "The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuAccountsTitle": "Swiss booking journal",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuRevenueExempt": "Revenue exempt, exported or abroad",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  },
+  "swissKmuRevenueNormal": "Revenue at the normal rate",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Revenue at the reduced or accommodation rate",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
   "symbolHint": "A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.",
   "@symbolHint": {
     "description": "workspace symbol"

@@ -1,0 +1,26 @@
+{
+  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
+  "swissKmuAccountsTitle": "Swiss booking journal",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuAccountsIntro": "The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuRevenueNormal": "Revenue at the normal rate",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Revenue at the reduced or accommodation rate",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
+  "swissKmuRevenueExempt": "Revenue exempt, exported or abroad",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  }
+}

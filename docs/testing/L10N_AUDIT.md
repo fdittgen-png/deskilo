@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-167 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+170 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -76,15 +76,18 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/coa_preview.dart:249` | label | IVA liquidado | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:250` | label | Fornecimentos e serviços externos | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:260` | label | Forderungen aus Lieferungen und Leistungen | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:265` | label | Dienstleistungsertrag | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:267` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:271` | label | Geschuldete MWST | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:273` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:285` | label | Accounts receivable | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:290` | label | Service revenue | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:292` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:293` | label | Sales tax payable | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:294` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:267` | label | Dienstleistungsertrag zum Normalsatz | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:272` | label | Dienstleistungsertrag zum reduzierten Satz und Beherbergung | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:277` | label | Dienstleistungsertrag, von der Steuer ausgenommen | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:279` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:283` | label | Geschuldete MWST | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:288` | label | Abrechnungskonto MWST | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:290` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:302` | label | Accounts receivable | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:307` | label | Service revenue | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:309` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:310` | label | Sales tax payable | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/coa_preview.dart:311` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:18` | label | Normalsatz 20 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:19` | label | Ermäßigt 13 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:20` | label | Ermäßigt 10 % | features/money | KEEP_NON_UI_LITERAL |
@@ -184,6 +187,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/features/money/domain/vat_catalogue.dart`** (91) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
-- **`lib/features/money/domain/coa_preview.dart`** (45) — the French chart of accounts (PCG): «Clients», «TVA collectée» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
+- **`lib/features/money/domain/coa_preview.dart`** (48) — the national charts of accounts (the French PCG, the Swiss KMU): «Clients», «TVA collectée», «Dienstleistungsertrag» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

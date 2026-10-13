@@ -259,16 +259,33 @@ CoaChart coaChartFor({
             number: '1100',
             label: 'Forderungen aus Lieferungen und Leistungen'
           ),
+          // #2360 — the turnover is kept apart by treatment: the MWST
+          // return asks it per rate and for the exempt letting.
           (
             role: CoaAccountRole.revenue,
             number: '3400',
-            label: 'Dienstleistungsertrag'
+            label: 'Dienstleistungsertrag zum Normalsatz'
+          ),
+          (
+            role: CoaAccountRole.revenue,
+            number: '3401',
+            label: 'Dienstleistungsertrag zum reduzierten Satz und Beherbergung'
+          ),
+          (
+            role: CoaAccountRole.revenue,
+            number: '3402',
+            label: 'Dienstleistungsertrag, von der Steuer ausgenommen'
           ),
           (role: CoaAccountRole.bank, number: '1020', label: 'Bank'),
           (
             role: CoaAccountRole.vat,
             number: '2200',
             label: 'Geschuldete MWST'
+          ),
+          (
+            role: CoaAccountRole.vat,
+            number: '2201',
+            label: 'Abrechnungskonto MWST'
           ),
           (role: CoaAccountRole.expenses, number: '6500', label: 'Übriger Betriebsaufwand'),
         ]),

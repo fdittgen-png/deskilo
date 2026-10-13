@@ -5415,6 +5415,10 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
   "invoiceExternalIssuingTitle": "Emetti questa fattura fuori dall’app",
   "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
   "invoiceFacturXExplain": "Un unico file: la fattura che legge una persona, con l'XML leggibile dalle macchine al suo interno. È ciò che si aspettano la maggior parte delle piattaforme.",
@@ -11127,6 +11131,26 @@
     }
   },
   "supportTitle": "Dettagli per l’assistenza",
+  "swissKmuAccountsIntro": "I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuAccountsTitle": "Giornale delle registrazioni svizzero",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuRevenueExempt": "Ricavi esclusi, esportati o all'estero",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  },
+  "swissKmuRevenueNormal": "Ricavi all'aliquota normale",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Ricavi all'aliquota ridotta o di alloggio",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
   "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usi una foto qui sotto.",
   "@symbolHint": {
     "description": "workspace symbol"

@@ -103,6 +103,7 @@ void main() {
         'saft_pt': 'buildSafTFile',
         'datev': 'buildDatevFile',
         'sage50': 'buildSageFile',
+        'ch_kmu': 'buildSwissKmuFile',
         'accountant_csv': 'buildAccountantCsv',
         'audit_trail': 'buildAuditTrailCsv',
       }.entries) {
@@ -133,6 +134,16 @@ void main() {
       expect(formatsFor('DE').map((f) => f.id), contains('datev'));
       expect(formatsFor('AT').map((f) => f.id), contains('datev'));
       expect(formatsFor('CH').map((f) => f.id), isNot(contains('datev')));
+    });
+
+    test('Switzerland gets the KMU journal, nobody else does (#2360)', () {
+      expect(formatsFor('CH').map((f) => f.id), contains('ch_kmu'));
+      expect(formatsFor('DE').map((f) => f.id), isNot(contains('ch_kmu')));
+      expect(
+        formatsFor('CH').firstWhere((f) => f.id == 'ch_kmu').claim,
+        FormatClaim.exchange,
+        reason: 'neither Banana nor bexio publishes a template to claim',
+      );
     });
 
     test('Portugal gets its own SAF-T', () {

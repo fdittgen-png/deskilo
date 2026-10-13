@@ -5415,6 +5415,10 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSwissKmu": "Journal des écritures suisse (CSV, comptes PME)",
+  "@invoiceExportSwissKmu": {
+    "description": "#2360: invoiceExportSwissKmu"
+  },
   "invoiceExternalIssuingTitle": "Émettez cette facture hors de l’application",
   "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
   "invoiceFacturXExplain": "Un seul fichier : la facture qu'un humain lit, avec le XML lisible par machine à l'intérieur. C'est ce qu'attendent la plupart des plateformes.",
@@ -11127,6 +11131,26 @@
     }
   },
   "supportTitle": "Détails pour l’assistance",
+  "swissKmuAccountsIntro": "Les valeurs par défaut sont les propositions du plan comptable suisse PME. Chaque ligne nomme le chiffre du décompte TVA sur lequel elle tombe ; vérifiez les comptes avec votre fiduciaire.",
+  "@swissKmuAccountsIntro": {
+    "description": "#2360: swissKmuAccountsIntro"
+  },
+  "swissKmuAccountsTitle": "Journal des écritures suisse",
+  "@swissKmuAccountsTitle": {
+    "description": "#2360: swissKmuAccountsTitle"
+  },
+  "swissKmuRevenueExempt": "Produits exclus de l'impôt, exportés ou à l'étranger",
+  "@swissKmuRevenueExempt": {
+    "description": "#2360: swissKmuRevenueExempt"
+  },
+  "swissKmuRevenueNormal": "Produits au taux normal",
+  "@swissKmuRevenueNormal": {
+    "description": "#2360: swissKmuRevenueNormal"
+  },
+  "swissKmuRevenueReduced": "Produits au taux réduit ou d'hébergement",
+  "@swissKmuRevenueReduced": {
+    "description": "#2360: swissKmuRevenueReduced"
+  },
   "symbolHint": "Une pastille ronde d’une ou deux lettres sur une couleur, unique à cet espace — ou utilisez plutôt une photo ci-dessous.",
   "@symbolHint": {
     "description": "workspace symbol"

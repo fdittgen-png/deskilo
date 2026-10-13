@@ -8136,6 +8136,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (audit trail)';
 
   @override
+  String get invoiceExportSwissKmu =>
+      'Swiss booking journal (CSV, KMU accounts)';
+
+  @override
   String get invoiceExternalIssuingTitle =>
       'Issue this invoice outside the app';
 
@@ -16743,6 +16747,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportTitle => 'Support details';
+
+  @override
+  String get swissKmuAccountsIntro =>
+      'The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.';
+
+  @override
+  String get swissKmuAccountsTitle => 'Swiss booking journal';
+
+  @override
+  String get swissKmuRevenueExempt => 'Revenue exempt, exported or abroad';
+
+  @override
+  String get swissKmuRevenueNormal => 'Revenue at the normal rate';
+
+  @override
+  String get swissKmuRevenueReduced =>
+      'Revenue at the reduced or accommodation rate';
 
   @override
   String get symbolHint =>
