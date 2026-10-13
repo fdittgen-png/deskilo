@@ -100,7 +100,7 @@ void main() {
     }
     test('outside the Union, and where a national e-invoicing channel is '
         'still missing (#2358), nothing is automatic', () {
-      for (final country in ['CH', 'NO', 'US', ...nationalChannelRequired]) {
+      for (final country in ['NO', 'US', ...nationalChannelRequired]) {
         expect(
           legalProfileOf(LegalClauseSnapshot(
             sellerCountry: country,
@@ -116,6 +116,29 @@ void main() {
   // #2359 — the United Kingdom is not in the Union but issues: its own
   // profile, the owner's own wording, the €40 indemnity of the Directive
   // never invented (the Act's fixed sums are GBP 40, 70 and 100).
+  // #2360 — Switzerland the same: its own profile, no Directive default.
+  test('a Swiss seller has its own profile and no default clause (#2360)', () {
+    for (final capacity in [CustomerCapacity.business, CustomerCapacity.consumer]) {
+      final snap = LegalClauseSnapshot(
+        sellerCountry: 'CH',
+        buyerCapacity: capacity,
+        clauses: const PaymentTerms(recoveryIndemnity: 'CHF 40'),
+      );
+      expect(
+        legalProfileOf(snap),
+        capacity == CustomerCapacity.business
+            ? LegalProfile.chBusiness
+            : LegalProfile.chConsumer,
+      );
+      final q = qualifyClauses(snap, const ReportStrings());
+      expect(q.latePenalty.text, isEmpty);
+      expect(
+        q.recoveryIndemnity.text,
+        capacity == CustomerCapacity.business ? 'CHF 40' : isEmpty,
+      );
+    }
+  });
+
   test('a UK seller has its own profile and no default clause (#2359)', () {
     for (final capacity in [CustomerCapacity.business, CustomerCapacity.consumer]) {
       final snap = LegalClauseSnapshot(

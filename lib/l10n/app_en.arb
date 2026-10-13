@@ -9831,7 +9831,7 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union or the United Kingdom for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app",
   "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
