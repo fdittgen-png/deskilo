@@ -35,6 +35,7 @@ class InvoiceLegal {
     this.optionToTaxDate = '',
     this.optionToTaxReference = '',
     this.facilitiesPackage = false,
+    this.lettingKind = '',
   });
 
   /// '' (company/business, the default) or 'association' (#484) — a
@@ -147,12 +148,19 @@ class InvoiceLegal {
   final String optionToTaxReference;
   final bool facilitiesPackage;
 
+  /// #2360 — Switzerland: '' (a package of services, taxed at the normal
+  /// rate, the ESTV's view of a business centre) or 'bare' (rooms only:
+  /// exempt under art. 21 Abs. 2 Ziff. 21 MWSTG unless [optionToTax],
+  /// art. 22, is in force). Read by `workspace_taxes_land`.
+  final String lettingKind;
+
   /// The same identity with the UK land-taxation choice replaced.
   InvoiceLegal withLandTaxation({
     required bool optionToTax,
     required String optionToTaxDate,
     required String optionToTaxReference,
     required bool facilitiesPackage,
+    String lettingKind = '',
   }) => InvoiceLegal(
     sellerKind: sellerKind,
     customerCapacity: customerCapacity,
@@ -176,6 +184,7 @@ class InvoiceLegal {
     optionToTaxDate: optionToTaxDate,
     optionToTaxReference: optionToTaxReference,
     facilitiesPackage: facilitiesPackage,
+    lettingKind: lettingKind,
   );
 
   /// The same identity with the e-invoicing address fields replaced.
@@ -208,6 +217,7 @@ class InvoiceLegal {
     optionToTaxDate: optionToTaxDate,
     optionToTaxReference: optionToTaxReference,
     facilitiesPackage: facilitiesPackage,
+    lettingKind: lettingKind,
   );
 
   /// Client-side cap per field — these are printed lines, not essays.
@@ -249,6 +259,7 @@ class InvoiceLegal {
       optionToTaxDate: r.stringOr('option_to_tax_date'),
       optionToTaxReference: r.stringOr('option_to_tax_reference'),
       facilitiesPackage: r.boolOr('facilities_package', false),
+      lettingKind: r.stringOr('letting_kind'),
     );
   }
 
@@ -272,11 +283,12 @@ class InvoiceLegal {
         'subdivision': subdivision.trim(),
         'contact_email': contactEmail.trim(),
         'contact_phone': contactPhone.trim(),
-        if (optionToTax || facilitiesPackage) ...{
+        if (optionToTax || facilitiesPackage || lettingKind.isNotEmpty) ...{
           'option_to_tax': optionToTax,
           'option_to_tax_date': optionToTax ? optionToTaxDate.trim() : '',
           'option_to_tax_reference': optionToTax ? optionToTaxReference.trim() : '',
           'facilities_package': facilitiesPackage,
+          'letting_kind': lettingKind,
         },
       };
 
@@ -304,7 +316,8 @@ class InvoiceLegal {
       other.optionToTax == optionToTax &&
       other.optionToTaxDate == optionToTaxDate &&
       other.optionToTaxReference == optionToTaxReference &&
-      other.facilitiesPackage == facilitiesPackage;
+      other.facilitiesPackage == facilitiesPackage &&
+      other.lettingKind == lettingKind;
 
   @override
   int get hashCode => Object.hashAll([
@@ -313,6 +326,6 @@ class InvoiceLegal {
         recoveryIndemnity, escompte, insurance, specialMentions,
         einvoiceEndpointId, einvoiceEndpointScheme, subdivision, contactEmail,
         contactPhone, optionToTax, optionToTaxDate, optionToTaxReference,
-        facilitiesPackage,
+        facilitiesPackage, lettingKind,
       ]);
 }

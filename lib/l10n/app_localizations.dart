@@ -4765,6 +4765,42 @@ abstract class AppLocalizations {
   /// **'Carnets'**
   String get carnetsTitle;
 
+  /// #2360: chBareLetting
+  ///
+  /// In en, this message translates to:
+  /// **'We only let bare rooms'**
+  String get chBareLetting;
+
+  /// #2360: chBareLettingHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Off: every property line is a package, taxed at the normal rate. On: it is exempt unless you opted.'**
+  String get chBareLettingHelp;
+
+  /// #2360: chLettingHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22), which you do by showing the tax openly on the invoice.'**
+  String get chLettingHelp;
+
+  /// #2360: chLettingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Letting and the option (Switzerland)'**
+  String get chLettingTitle;
+
+  /// #2360: chOptionToTax
+  ///
+  /// In en, this message translates to:
+  /// **'We opted for taxation (art. 22 MWSTG)'**
+  String get chOptionToTax;
+
+  /// #2360: chOptionToTaxDate
+  ///
+  /// In en, this message translates to:
+  /// **'Option effective from (YYYY-MM-DD)'**
+  String get chOptionToTaxDate;
+
   /// Member-sheet action opening the co-owner dialog (0058)
   ///
   /// In en, this message translates to:

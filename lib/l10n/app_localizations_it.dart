@@ -2771,6 +2771,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get carnetsTitle => 'Carnet';
 
   @override
+  String get chBareLetting => 'Affittiamo solo locali nudi';
+
+  @override
+  String get chBareLettingHelp =>
+      'Disattivato: ogni riga è un pacchetto, all\'aliquota normale. Attivato: esclusa, salvo opzione.';
+
+  @override
+  String get chLettingHelp =>
+      'Una postazione o un ufficio con servizi (business center) è imponibile all\'aliquota normale. La semplice locazione di locali è esclusa dall\'imposta, senza deduzione dell\'imposta precedente (art. 21 cpv. 2 n. 21 LIVA), salvo che optiate per l\'imposizione (art. 22), indicando l\'imposta apertamente in fattura.';
+
+  @override
+  String get chLettingTitle => 'Locazione e opzione (Svizzera)';
+
+  @override
+  String get chOptionToTax => 'Abbiamo optato (art. 22 LIVA)';
+
+  @override
+  String get chOptionToTaxDate => 'Opzione efficace dal (AAAA-MM-GG)';
+
+  @override
   String get coOwnerAction => 'Comproprietà';
 
   @override

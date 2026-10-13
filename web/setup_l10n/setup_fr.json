@@ -616,5 +616,10 @@
  "legalOptionDate": "Option en vigueur depuis le",
  "legalOptionRef": "Référence de notification au HMRC",
  "legalFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
- "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option."
+ "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option.",
+ "legalLetting": "Location et option (Suisse)",
+ "legalLettingHint": "Un poste ou un bureau avec des services (centre d'affaires) est imposable au taux normal. La simple location de locaux est exclue du champ de l'impôt, sans déduction de l'impôt préalable (art. 21 al. 2 ch. 21 LTVA), sauf option pour l'imposition (art. 22), en indiquant l'impôt ouvertement sur la facture.",
+ "legalBareLetting": "Nous ne louons que des locaux nus",
+ "legalBareLettingDesc": "Désactivé : chaque ligne est une prestation globale, imposée au taux normal. Activé : exclue, sauf option.",
+ "legalChOption": "Nous avons opté (art. 22 LTVA)"
 }

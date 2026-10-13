@@ -2756,6 +2756,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carnetsTitle => 'Carnets';
 
   @override
+  String get chBareLetting => 'We only let bare rooms';
+
+  @override
+  String get chBareLettingHelp =>
+      'Off: every property line is a package, taxed at the normal rate. On: it is exempt unless you opted.';
+
+  @override
+  String get chLettingHelp =>
+      'A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22), which you do by showing the tax openly on the invoice.';
+
+  @override
+  String get chLettingTitle => 'Letting and the option (Switzerland)';
+
+  @override
+  String get chOptionToTax => 'We opted for taxation (art. 22 MWSTG)';
+
+  @override
+  String get chOptionToTaxDate => 'Option effective from (YYYY-MM-DD)';
+
+  @override
   String get coOwnerAction => 'Co-ownership';
 
   @override

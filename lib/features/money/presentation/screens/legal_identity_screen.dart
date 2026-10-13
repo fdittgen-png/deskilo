@@ -24,6 +24,7 @@ import '../../providers/money_providers.dart';
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
 import '../widgets/einvoice_identity_fields.dart';
+import '../widgets/swiss_letting_fields.dart';
 import '../widgets/uk_land_taxation_fields.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_field.dart';
@@ -626,6 +627,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           if (_regime == VatRegime.vatRegistered &&
               ref.watch(currentWorkspaceProvider).value?.countryCode == 'GB')
             UkLandTaxationFields(key: const ValueKey('legal-identity-land-tax'), form: _landTax),
+          // #2360 — Switzerland: a package is taxed, bare rooms are exempt unless opted.
+          if (_regime == VatRegime.vatRegistered &&
+              ref.watch(currentWorkspaceProvider).value?.countryCode == 'CH')
+            SwissLettingFields(key: const ValueKey('legal-identity-letting'), form: _landTax),
           if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
             EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
           const SizedBox(height: AppSpacing.md),

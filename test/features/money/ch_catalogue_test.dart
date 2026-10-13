@@ -40,8 +40,10 @@ void main() {
 
   test('the Swiss rates are dated and the 2028 plan waits for the vote', () {
     final rates = vatCatalogueFor('CH');
-    expect(rates.map((r) => r.percent), [8.1, 3.8, 2.6]);
-    expect(rates.every((r) => r.validFrom == '2024-01-01'), isTrue);
+    expect(rates.map((r) => r.percent), [8.1, 3.8, 2.6, 0]);
+    expect(rates.take(3).every((r) => r.validFrom == '2024-01-01'), isTrue);
+    expect(rates[3].category, 'E');
+    expect(rates[3].exemptionReason, contains('Art. 21 Abs. 2 Ziff. 21'));
     // The plan is data, ready; nothing applies until the one line flips.
     expect(vatPlannedChangeFor('CH', 8.1), isNull);
     final standard = vatPlannedChangeFor('CH', 8.1, approved: true)!;

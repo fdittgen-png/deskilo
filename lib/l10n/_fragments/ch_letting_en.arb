@@ -1,0 +1,26 @@
+{
+  "chLettingTitle": "Letting and the option (Switzerland)",
+  "@chLettingTitle": {
+    "description": "#2360: chLettingTitle"
+  },
+  "chLettingHelp": "A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22), which you do by showing the tax openly on the invoice.",
+  "@chLettingHelp": {
+    "description": "#2360: chLettingHelp"
+  },
+  "chBareLetting": "We only let bare rooms",
+  "@chBareLetting": {
+    "description": "#2360: chBareLetting"
+  },
+  "chBareLettingHelp": "Off: every property line is a package, taxed at the normal rate. On: it is exempt unless you opted.",
+  "@chBareLettingHelp": {
+    "description": "#2360: chBareLettingHelp"
+  },
+  "chOptionToTax": "We opted for taxation (art. 22 MWSTG)",
+  "@chOptionToTax": {
+    "description": "#2360: chOptionToTax"
+  },
+  "chOptionToTaxDate": "Option effective from (YYYY-MM-DD)",
+  "@chOptionToTaxDate": {
+    "description": "#2360: chOptionToTaxDate"
+  }
+}

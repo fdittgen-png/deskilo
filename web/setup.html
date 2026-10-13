@@ -428,7 +428,7 @@ const DEFAULTS={
            customerUrl:'',customerToken:'',customerHeader:'',customerField:''},
  vatPeriod:'quarter',
  // #2359 — the UK treats land as exempt unless the owner opted to tax it.
- landTax:{option:false,date:'',ref:'',facilities:false},
+ landTax:{option:false,date:'',ref:'',facilities:false,bare:false},
  // FEATURES says what a NEW workspace starts with (pinned to the registry);
  // the page's own answer for the configuration transfer starts ON (#2331):
  // every questionnaire carries configuration answers, and the switch is
@@ -779,6 +779,7 @@ const STEPS=[
    k.push(lbl(T('legalMemberNumbering'),'legal','memberNumbering'),h('p',{class:'hint'},T('legalMemberNumberingHint')),
     h('div',{class:'row'},input(T('fieldPrefix'),'memberNumbering.prefix','','text','M-'),input(T('fieldDigits'),'memberNumbering.digits','','number','4')));
    if(on('vatDeclarations'))k.push(selectEl(T('legalVatPeriod'),'vatPeriod',opts(VATPERIOD),T('legalVatPeriodHint'),null,'vat'));else k.push(needs('vatDeclarations'));
+   if(S.country==='CH')k.push(lbl(T('legalLetting'),'vat'),h('p',{class:'hint'},T('legalLettingHint')),checkbox(T('legalBareLetting'),T('legalBareLettingDesc'),S.landTax.bare,v=>{S.landTax.bare=v;save()},'','vat'),S.landTax.bare?checkbox(T('legalChOption'),'',S.landTax.option,v=>{S.landTax.option=v;save()},'','vat'):null,S.landTax.bare&&S.landTax.option?input(T('legalOptionDate'),'landTax.date','','date','','vat'):null);
    if(S.country==='GB')k.push(lbl(T('legalLandTax'),'vat'),h('p',{class:'hint'},T('legalLandTaxHint')),checkbox(T('legalOptionToTax'),'',S.landTax.option,v=>{S.landTax.option=v;save()},'','vat'),S.landTax.option?h('div',{class:'row'},input(T('legalOptionDate'),'landTax.date','','date','','vat'),input(T('legalOptionRef'),'landTax.ref','','text','','vat')):null,checkbox(T('legalFacilitiesPackage'),T('legalFacilitiesPackageDesc'),S.landTax.facilities,v=>{S.landTax.facilities=v;save()},'','vat'))}
   k.push(lbl(T('legalBillingAddress'),'legal'),h('div',{class:'row'},input(T('fieldStreet'),'street','','text','','legal'),input(T('fieldPostal'),'postal','','text','','legal'),input(T('fieldCity'),'city','','text','','legal')),
    lbl(T('legalMentions'),'legal','mentions'),help('legal'),
@@ -1131,6 +1132,7 @@ function configurationTree(){
    ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[taxPointOf(S.vatExigibility)]||{}),
    // #2357 — how often the return is filed: a stored parameter now.
    ...(on('vatDeclarations')&&registered()?{vat_declaration_period:vatPeriodOf(S.vatPeriod)}:{}),
+   ...(registered()&&S.country==='CH'?{letting_kind:S.landTax.bare?'bare':'',option_to_tax:!!(S.landTax.bare&&S.landTax.option),option_to_tax_date:S.landTax.bare&&S.landTax.option?S.landTax.date:''}:{}),
    ...(registered()&&S.country==='GB'?{option_to_tax:!!S.landTax.option,option_to_tax_date:S.landTax.option?S.landTax.date:'',option_to_tax_reference:S.landTax.option?S.landTax.ref.trim():'',facilities_package:!!S.landTax.facilities}:{})},
  };
  // #2331 — the role matrix, in the column's shape (role -> permission
@@ -1229,6 +1231,7 @@ function exportXml(){
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
  if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic===true}"/>`);
  if(on('vatDeclarations')&&registered())push(`      <vat-declaration period="${S.vatPeriod}"/>`);
+ if(registered()&&S.country==='CH')push(`      <land-taxation letting="${S.landTax.bare?'bare':'package'}" option-to-tax="${!!(S.landTax.bare&&S.landTax.option)}" date="${esc(S.landTax.date)}"/>`);
  if(registered()&&S.country==='GB')push(`      <land-taxation option-to-tax="${!!S.landTax.option}" date="${esc(S.landTax.date)}" reference="${esc(S.landTax.ref)}" facilities-package="${!!S.landTax.facilities}"/>`);
  push(`      <numbering journal="invoice" prefix="${esc(S.numbering.prefix)}" date-part="${S.numbering.datePart}" digits="${S.numbering.digits}" reset="${S.numbering.reset}"/>`);
  push(`      <numbering journal="member" prefix="${esc(S.memberNumbering.prefix)}" date-part="none" digits="${S.memberNumbering.digits}" reset="never"/>`);
@@ -1280,7 +1283,7 @@ function parseBack(text){
  const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=taxPointOf(le.getAttribute('vat-tax-point')||le.getAttribute('vat-exigibility')||S.vatExigibility);le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')==='true'}}
 S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')||'',street:st.getAttribute('street')||'',postal:st.getAttribute('postal-code')||'',city:st.getAttribute('city')||'',legalId:st.getAttribute('legal-id')||''}));
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
-  const lt=le.querySelector('land-taxation');if(lt)S.landTax={option:lt.getAttribute('option-to-tax')==='true',date:lt.getAttribute('date')||'',ref:lt.getAttribute('reference')||'',facilities:lt.getAttribute('facilities-package')==='true'};
+  const lt=le.querySelector('land-taxation');if(lt)S.landTax={option:lt.getAttribute('option-to-tax')==='true',date:lt.getAttribute('date')||'',ref:lt.getAttribute('reference')||'',facilities:lt.getAttribute('facilities-package')==='true',bare:lt.getAttribute('letting')==='bare'};
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));
  // #2331 — a file from before the page offered all 31 permissions.

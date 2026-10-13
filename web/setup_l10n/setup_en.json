@@ -616,5 +616,10 @@
  "legalOptionDate": "Option effective from",
  "legalOptionRef": "HMRC notification reference",
  "legalFacilitiesPackage": "We sell a serviced package of facilities",
- "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not."
+ "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not.",
+ "legalLetting": "Letting and the option (Switzerland)",
+ "legalLettingHint": "A desk or office with services (a business centre) is taxable at the normal rate. A bare letting of rooms is exempt without input tax deduction (art. 21 para. 2 no. 21 MWSTG) unless you opt for taxation (art. 22) by showing the tax openly on the invoice.",
+ "legalBareLetting": "We only let bare rooms",
+ "legalBareLettingDesc": "Off: every property line is a package, taxed at the normal rate. On: exempt unless you opted.",
+ "legalChOption": "We opted for taxation (art. 22 MWSTG)"
 }

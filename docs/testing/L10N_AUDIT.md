@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-166 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+167 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -161,20 +161,21 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:151` | label | Normal 8,1 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:152` | label | Hébergement 3,8 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:153` | label | Réduit 2,6 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:156` | label | Alminnelig 25 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:157` | label | Næringsmidler 15 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:158` | label | Redusert 12 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:165` | label | Standard 20 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:166` | label | Reduced 5 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:167` | label | Zero 0 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:168` | label | Exempt (land) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:175` | label | GST 5 % (AB/NT/NU/YT) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:176` | label | HST 13 % (ON) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:177` | label | HST 14 % (NS) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:178` | label | HST 15 % (NB/NL/PE) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:179` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:180` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_catalogue.dart:181` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:155` | label | Ausgenommen (Vermietung) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:158` | label | Alminnelig 25 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:159` | label | Næringsmidler 15 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:160` | label | Redusert 12 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:167` | label | Standard 20 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:168` | label | Reduced 5 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:169` | label | Zero 0 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:170` | label | Exempt (land) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:177` | label | GST 5 % (AB/NT/NU/YT) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:178` | label | HST 13 % (ON) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:179` | label | HST 14 % (NS) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:180` | label | HST 15 % (NB/NL/PE) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:181` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:182` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_catalogue.dart:183` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
@@ -182,7 +183,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
-- **`lib/features/money/domain/vat_catalogue.dart`** (90) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
+- **`lib/features/money/domain/vat_catalogue.dart`** (91) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
 - **`lib/features/money/domain/coa_preview.dart`** (45) — the French chart of accounts (PCG): «Clients», «TVA collectée» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.
