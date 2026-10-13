@@ -18816,6 +18816,30 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pour nommer les choses à votre façon — places, niveaux, réservations : changez les termes.';
 
   @override
+  String get ukFacilitiesPackage =>
+      'Nous vendons un forfait de services de bureau équipé';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'Un poste avec services et équipements en un seul forfait est taxé au taux normal, avec ou sans option.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'Au Royaume-Uni, une licence d\'occupation d\'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l\'immeuble. L\'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.';
+
+  @override
+  String get ukLandTaxTitle => 'Immobilier et option pour la taxation';
+
+  @override
+  String get ukOptionToTax => 'Nous avons opté pour la taxation de l\'immeuble';
+
+  @override
+  String get ukOptionToTaxDate => 'Option en vigueur depuis le (AAAA-MM-JJ)';
+
+  @override
+  String get ukOptionToTaxReference => 'Référence de notification au HMRC';
+
+  @override
   String get unblockAction => 'Débloquer';
 
   @override

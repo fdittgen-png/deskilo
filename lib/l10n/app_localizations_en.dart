@@ -18609,6 +18609,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'To call things your own way — seats, levels, bookings: change the wording.';
 
   @override
+  String get ukFacilitiesPackage => 'We sell a serviced package of facilities';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'A desk with services and facilities as one package is standard-rated, option or not.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'A licence to occupy a desk or an office is exempt in the United Kingdom (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.';
+
+  @override
+  String get ukLandTaxTitle => 'Land and the option to tax';
+
+  @override
+  String get ukOptionToTax => 'We opted to tax the building';
+
+  @override
+  String get ukOptionToTaxDate => 'Option effective from (YYYY-MM-DD)';
+
+  @override
+  String get ukOptionToTaxReference => 'HMRC notification reference';
+
+  @override
   String get unblockAction => 'Unblock';
 
   @override

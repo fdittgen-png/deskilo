@@ -1,0 +1,30 @@
+{
+  "ukLandTaxTitle": "Immobili e opzione per l'imposizione",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukLandTaxHelp": "Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l'imposizione dell'edificio. L'opzione rende il canone imponibile all'aliquota ordinaria e consente di detrarre l'IVA sui costi; l'HMRC va informato.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukOptionToTax": "Abbiamo optato per l'imposizione dell'edificio",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Opzione efficace dal (AAAA-MM-GG)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Riferimento di notifica all'HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
+  "ukFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Una postazione con servizi e dotazioni in un unico pacchetto è imponibile all'aliquota ordinaria, con o senza opzione.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  }
+}

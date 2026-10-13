@@ -18810,6 +18810,31 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dinge auf Ihre Art benennen – Plätze, Ebenen, Buchungen: die Begriffe ändern.';
 
   @override
+  String get ukFacilitiesPackage =>
+      'Wir verkaufen ein Servicepaket (Serviced Office)';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'Ein Arbeitsplatz mit Leistungen und Ausstattung als ein Paket wird zum Regelsatz besteuert, mit oder ohne Option.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'Im Vereinigten Königreich ist die Überlassung eines Arbeitsplatzes oder Büros steuerfrei (VAT Act 1994, Schedule 9, Group 1), außer Sie haben für das Gebäude zur Besteuerung optiert. Die Option macht die Miete steuerpflichtig zum Regelsatz und erlaubt den Vorsteuerabzug auf die Kosten; das HMRC muss informiert werden.';
+
+  @override
+  String get ukLandTaxTitle => 'Grundstücke und Option zur Besteuerung';
+
+  @override
+  String get ukOptionToTax =>
+      'Wir haben für das Gebäude zur Besteuerung optiert';
+
+  @override
+  String get ukOptionToTaxDate => 'Option wirksam ab (JJJJ-MM-TT)';
+
+  @override
+  String get ukOptionToTaxReference => 'Mitteilungsreferenz beim HMRC';
+
+  @override
   String get unblockAction => 'Blockierung aufheben';
 
   @override

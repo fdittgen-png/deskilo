@@ -21340,6 +21340,34 @@
   "@tipWorkspaceSettingsWording": {
     "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /settings/wording."
   },
+  "ukFacilitiesPackage": "We sell a serviced package of facilities",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "A desk with services and facilities as one package is standard-rated, option or not.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  },
+  "ukLandTaxHelp": "A licence to occupy a desk or an office is exempt in the United Kingdom (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukLandTaxTitle": "Land and the option to tax",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukOptionToTax": "We opted to tax the building",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Option effective from (YYYY-MM-DD)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "HMRC notification reference",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
   "unblockAction": "Unblock",
   "unblockDone": "Unblocked.",
   "usageAsk": "Bill the time I was here",

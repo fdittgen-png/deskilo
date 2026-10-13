@@ -24,6 +24,7 @@ import '../../providers/money_providers.dart';
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
 import '../widgets/einvoice_identity_fields.dart';
+import '../widgets/uk_land_taxation_fields.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_field.dart';
 
@@ -60,6 +61,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _escompte = TextEditingController();
   final _insurance = TextEditingController();
   final _einvoice = EInvoiceIdentityForm(); // #2358
+  final _landTax = UkLandTaxationForm(); // #2359
   final _special = TextEditingController();
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
@@ -98,6 +100,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     _escompte.dispose();
     _insurance.dispose();
     _einvoice.dispose();
+    _landTax.dispose();
     _special.dispose();
     super.dispose();
   }
@@ -126,7 +129,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               city: _city.text,
               postalCode: _postalCode.text,
               vatAccount: _vatAccount.text,
-              invoiceLegal: _einvoice.applyTo(InvoiceLegal(
+              invoiceLegal: _landTax.applyTo(_einvoice.applyTo(InvoiceLegal(
                 sellerKind: _sellerKind,
                 customerCapacity: _customerCapacity,
                 legalForm: _legalForm.text,
@@ -140,7 +143,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 reverseChargeOptIn: _reverseCharge,
                 vatTaxPoint: _taxPoint,
                 declarationPeriod: _declarationPeriod,
-              )).toJson(),
+              ))).toJson(),
               addressWindow: _addressWindow,
             ),
             currentTemplate: ref.read(invoicePdfTemplateProvider).value ??
@@ -235,6 +238,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _insurance.text = legal.insurance;
       _special.text = legal.specialMentions;
       _einvoice.load(legal);
+      _landTax.load(legal);
     }
 
     return Scaffold(
@@ -618,6 +622,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             l10n.invoiceLegalSpecialField,
             anchor: HelpAnchor.legalSpecialMentions,
           ),
+          // #2359 — the UK treats land as exempt unless the owner opted to tax.
+          if (_regime == VatRegime.vatRegistered &&
+              ref.watch(currentWorkspaceProvider).value?.countryCode == 'GB')
+            UkLandTaxationFields(key: const ValueKey('legal-identity-land-tax'), form: _landTax),
           if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
             EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
           const SizedBox(height: AppSpacing.md),
