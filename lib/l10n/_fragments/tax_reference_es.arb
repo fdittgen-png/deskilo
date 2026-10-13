@@ -1,0 +1,147 @@
+{
+  "@@locale": "es",
+  "taxRefTitle": "Datos de referencia fiscales",
+  "@taxRefTitle": {
+    "description": "#2477 tax reference: Screen title: the VAT reference values the platform owner maintains."
+  },
+  "taxRefIntro": "Tipos, textos de exención, formatos de NIF-IVA y países miembros de la UE. Un cambio es una nueva versión desde una fecha; la versión vigente se cierra, nunca se edita.",
+  "@taxRefIntro": {
+    "description": "#2477 tax reference: Intro line under the title of the tax reference screen."
+  },
+  "taxRefDomainRate": "Tipos",
+  "@taxRefDomainRate": {
+    "description": "#2477 tax reference: Domain filter: rates."
+  },
+  "taxRefDomainEuMember": "Miembros de la UE",
+  "@taxRefDomainEuMember": {
+    "description": "#2477 tax reference: Domain filter: EU member states."
+  },
+  "taxRefDomainExemptionText": "Textos legales",
+  "@taxRefDomainExemptionText": {
+    "description": "#2477 tax reference: Domain filter: statutory mentions."
+  },
+  "taxRefDomainVatIdPattern": "Formatos de NIF-IVA",
+  "@taxRefDomainVatIdPattern": {
+    "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
+  },
+  "taxRefConfirmed": "Confirmado",
+  "@taxRefConfirmed": {
+    "description": "#2477 tax reference: Badge: the value was checked against its source."
+  },
+  "taxRefUnconfirmed": "Sin confirmar",
+  "@taxRefUnconfirmed": {
+    "description": "#2477 tax reference: Badge: nobody checked the value against its source."
+  },
+  "taxRefValidFrom": "Válido desde",
+  "@taxRefValidFrom": {
+    "description": "#2477 tax reference: Field: first day a version is in force."
+  },
+  "taxRefValidUntil": "hasta",
+  "@taxRefValidUntil": {
+    "description": "#2477 tax reference: Word before the day a version ends."
+  },
+  "taxRefSource": "Fuente",
+  "@taxRefSource": {
+    "description": "#2477 tax reference: Field: where the value comes from (a law, a table)."
+  },
+  "taxRefCountry": "País (código ISO, o * para todos)",
+  "@taxRefCountry": {
+    "description": "#2477 tax reference: Field: country of a reference value."
+  },
+  "taxRefKey": "Clave",
+  "@taxRefKey": {
+    "description": "#2477 tax reference: Field: key naming a value within a country."
+  },
+  "taxRefLabel": "Etiqueta",
+  "@taxRefLabel": {
+    "description": "#2477 tax reference: Field: label of a rate."
+  },
+  "taxRefPercent": "Porcentaje",
+  "@taxRefPercent": {
+    "description": "#2477 tax reference: Field: percentage of a rate."
+  },
+  "taxRefGroup": "Grupo",
+  "@taxRefGroup": {
+    "description": "#2477 tax reference: Field: fiscal group of a rate."
+  },
+  "taxRefCategory": "Categoría EN 16931",
+  "@taxRefCategory": {
+    "description": "#2477 tax reference: Field: VAT category code of a rate."
+  },
+  "taxRefExemptionReason": "Motivo de exención",
+  "@taxRefExemptionReason": {
+    "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
+  },
+  "taxRefPosition": "Posición",
+  "@taxRefPosition": {
+    "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRegime": "Régimen",
+  "@taxRefRegime": {
+    "description": "#2477 tax reference: Field: the regime a statutory text belongs to."
+  },
+  "taxRefText": "Texto",
+  "@taxRefText": {
+    "description": "#2477 tax reference: Field: statutory text."
+  },
+  "taxRefPattern": "Formato",
+  "@taxRefPattern": {
+    "description": "#2477 tax reference: Field: regular expression for the identifier body."
+  },
+  "taxRefNewVersion": "Nueva versión",
+  "@taxRefNewVersion": {
+    "description": "#2477 tax reference: Button and sheet title: create a new version of a value."
+  },
+  "taxRefAdd": "Añadir un valor",
+  "@taxRefAdd": {
+    "description": "#2477 tax reference: Button: add a new reference value."
+  },
+  "taxRefHistory": "Historial",
+  "@taxRefHistory": {
+    "description": "#2477 tax reference: Button and sheet title: every version of a value."
+  },
+  "taxRefSave": "Guardar la versión",
+  "@taxRefSave": {
+    "description": "#2477 tax reference: Button: save the new version."
+  },
+  "taxRefSaved": "Versión guardada",
+  "@taxRefSaved": {
+    "description": "#2477 tax reference: Snackbar after a save."
+  },
+  "taxRefInvalidDate": "Introduzca la fecha como AAAA-MM-DD",
+  "@taxRefInvalidDate": {
+    "description": "#2477 tax reference: Validation: date format."
+  },
+  "taxRefRequired": "Obligatorio",
+  "@taxRefRequired": {
+    "description": "#2477 tax reference: Validation: a required field is empty."
+  },
+  "taxRefInvalidNumber": "Introduzca un número de 0 a 99,999",
+  "@taxRefInvalidNumber": {
+    "description": "#2477 tax reference: Validation: percentage."
+  },
+  "taxRefCouldNotSave": "No se pudo guardar la versión",
+  "@taxRefCouldNotSave": {
+    "description": "#2477 tax reference: Snackbar: the server refused the version."
+  },
+  "taxRefOfflineCopy": "Se muestra la copia incluida en la aplicación: no se pudo contactar con el servidor.",
+  "@taxRefOfflineCopy": {
+    "description": "#2477 tax reference: Banner: values come from the bundled copy."
+  },
+  "taxRefEmpty": "Sin valores.",
+  "@taxRefEmpty": {
+    "description": "#2477 tax reference: Empty list."
+  },
+  "taxRefNotAllowed": "Solo el operador de la plataforma gestiona los datos de referencia fiscales.",
+  "@taxRefNotAllowed": {
+    "description": "#2477 tax reference: Shown to anyone else who opens the screen."
+  },
+  "taxRefMemberEmpty": "Un Estado miembro no tiene más campos.",
+  "@taxRefMemberEmpty": {
+    "description": "#2477 tax reference: Hint in the form of an EU member."
+  },
+  "taxRefLoadFailed": "No se pudieron cargar los datos de referencia.",
+  "@taxRefLoadFailed": {
+    "description": "#2477 tax reference: error text when the list cannot load."
+  }
+}

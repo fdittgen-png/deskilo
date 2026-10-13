@@ -115,8 +115,7 @@ Future<Uint8List> _build({
   int accessorySupplementCents = 0,
   String? locale,
 }) =>
-    buildBillPdf(
-      statement: _statement.copyWith(
+    buildBillPdf(BillDocument(statement: _statement.copyWith(
         accessorySupplementCents: accessorySupplementCents,
       ),
       sections: _sections(serviceCount: serviceCount),
@@ -125,17 +124,16 @@ Future<Uint8List> _build({
       memberName: 'Flo',
       periodLabel: 'July 2026',
       strings: _strings,
+      locale: locale),
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-      locale: locale,
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'));
 
 void main() {
   test('the engine keeps all confirmed and pending sections distinct', () async {
     await initializeDateFormatting('en');
-    final report = buildBillReport(statement: _statement, sections: _sections(),
+    final report = buildBillReport(BillDocument(statement: _statement, sections: _sections(),
         currencyCode: 'EUR', workspaceName: 'Space', memberName: 'Member',
-        periodLabel: 'July', strings: _strings, locale: 'en');
+        periodLabel: 'July', strings: _strings, locale: 'en'));
     final headings = report.body.whereType<ReportSubheading>().map((b) => b.text);
     expect(headings, containsAll([_strings.services,
         _strings.openPositions, _strings.paymentsCredits]));

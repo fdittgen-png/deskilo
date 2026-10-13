@@ -63,8 +63,6 @@ const Map<String, String> _allowed = {
   // beside the data they describe.
   'lib/features/money/domain/address_window.dart::addressWindowTopLimit':
       '#869 — the envelope bound the conformance tests assert',
-  'lib/features/money/domain/vat_catalogue.dart::vatCatalogueCountries':
-      '#534 — the catalogue enumerated, walked by vat_versions_test',
   'lib/features/workspace/domain/holiday_import.dart::holidaySourceCoverage':
       '#2051 — measured coverage, pinned to the country catalogue',
   'lib/features/workspace/domain/kpi_contract.dart::kpiRegistryJson':

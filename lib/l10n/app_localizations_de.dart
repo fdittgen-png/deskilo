@@ -18405,6 +18405,120 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.';
 
   @override
+  String get taxRefAdd => 'Wert hinzufügen';
+
+  @override
+  String get taxRefCategory => 'EN-16931-Kategorie';
+
+  @override
+  String get taxRefConfirmed => 'Bestätigt';
+
+  @override
+  String get taxRefCouldNotSave =>
+      'Die Version konnte nicht gespeichert werden';
+
+  @override
+  String get taxRefCountry => 'Land (ISO-Code, oder * für alle)';
+
+  @override
+  String get taxRefDomainEuMember => 'EU-Mitglieder';
+
+  @override
+  String get taxRefDomainExemptionText => 'Gesetzliche Texte';
+
+  @override
+  String get taxRefDomainRate => 'Steuersätze';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'USt-IdNr.-Muster';
+
+  @override
+  String get taxRefEmpty => 'Keine Werte.';
+
+  @override
+  String get taxRefExemptionReason => 'Befreiungsgrund';
+
+  @override
+  String get taxRefGroup => 'Gruppe';
+
+  @override
+  String get taxRefHistory => 'Verlauf';
+
+  @override
+  String get taxRefIntro =>
+      'Steuersätze, Befreiungstexte, USt-IdNr.-Muster und die EU-Mitgliedstaaten. Eine Änderung ist eine neue Version ab einem Datum; die gültige Version wird beendet, nie überschrieben.';
+
+  @override
+  String get taxRefInvalidDate => 'Datum als JJJJ-MM-TT eingeben';
+
+  @override
+  String get taxRefInvalidNumber => 'Zahl von 0 bis 99,999 eingeben';
+
+  @override
+  String get taxRefKey => 'Schlüssel';
+
+  @override
+  String get taxRefLabel => 'Bezeichnung';
+
+  @override
+  String get taxRefLoadFailed =>
+      'Die Referenzdaten konnten nicht geladen werden.';
+
+  @override
+  String get taxRefMemberEmpty =>
+      'Ein Mitgliedstaat hat keine weiteren Felder.';
+
+  @override
+  String get taxRefNewVersion => 'Neue Version';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Nur der Plattformbetreiber pflegt Steuer-Referenzdaten.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Es wird die in der App enthaltene Kopie gezeigt: Der Server ist nicht erreichbar.';
+
+  @override
+  String get taxRefPattern => 'Muster';
+
+  @override
+  String get taxRefPercent => 'Prozent';
+
+  @override
+  String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRegime => 'Regelung';
+
+  @override
+  String get taxRefRequired => 'Pflichtfeld';
+
+  @override
+  String get taxRefSave => 'Version speichern';
+
+  @override
+  String get taxRefSaved => 'Version gespeichert';
+
+  @override
+  String get taxRefSource => 'Quelle';
+
+  @override
+  String get taxRefText => 'Text';
+
+  @override
+  String get taxRefTitle => 'Steuer-Referenzdaten';
+
+  @override
+  String get taxRefUnconfirmed => 'Nicht bestätigt';
+
+  @override
+  String get taxRefValidFrom => 'Gültig ab';
+
+  @override
+  String get taxRefValidUntil => 'bis';
+
+  @override
   String get templateApplyConflict =>
       'Diese Anfrage wurde bereits für etwas anderes verwendet. Es wurde nichts übernommen.';
 

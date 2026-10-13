@@ -18414,6 +18414,118 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un brouillon privé issu d\'un fichier : rien n\'y est considéré comme fiable ni envoyé.';
 
   @override
+  String get taxRefAdd => 'Ajouter une valeur';
+
+  @override
+  String get taxRefCategory => 'Catégorie EN 16931';
+
+  @override
+  String get taxRefConfirmed => 'Confirmé';
+
+  @override
+  String get taxRefCouldNotSave => 'La version n\'a pas pu être enregistrée';
+
+  @override
+  String get taxRefCountry => 'Pays (code ISO, ou * pour tous)';
+
+  @override
+  String get taxRefDomainEuMember => 'Membres de l\'UE';
+
+  @override
+  String get taxRefDomainExemptionText => 'Mentions légales';
+
+  @override
+  String get taxRefDomainRate => 'Taux';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'Formats de n° de TVA';
+
+  @override
+  String get taxRefEmpty => 'Aucune valeur.';
+
+  @override
+  String get taxRefExemptionReason => 'Motif d\'exonération';
+
+  @override
+  String get taxRefGroup => 'Groupe';
+
+  @override
+  String get taxRefHistory => 'Historique';
+
+  @override
+  String get taxRefIntro =>
+      'Taux, mentions d\'exonération, formats de numéros de TVA et pays membres de l\'UE. Un changement est une nouvelle version à partir d\'une date ; la version en vigueur est clôturée, jamais modifiée.';
+
+  @override
+  String get taxRefInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
+
+  @override
+  String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';
+
+  @override
+  String get taxRefKey => 'Clé';
+
+  @override
+  String get taxRefLabel => 'Libellé';
+
+  @override
+  String get taxRefLoadFailed =>
+      'Les données de référence n\'ont pas pu être chargées.';
+
+  @override
+  String get taxRefMemberEmpty => 'Un État membre n\'a pas d\'autres champs.';
+
+  @override
+  String get taxRefNewVersion => 'Nouvelle version';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Seul l\'opérateur de la plateforme gère les données de référence fiscales.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Copie intégrée à l\'application : le serveur est injoignable.';
+
+  @override
+  String get taxRefPattern => 'Format';
+
+  @override
+  String get taxRefPercent => 'Pourcentage';
+
+  @override
+  String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRegime => 'Régime';
+
+  @override
+  String get taxRefRequired => 'Obligatoire';
+
+  @override
+  String get taxRefSave => 'Enregistrer la version';
+
+  @override
+  String get taxRefSaved => 'Version enregistrée';
+
+  @override
+  String get taxRefSource => 'Source';
+
+  @override
+  String get taxRefText => 'Texte';
+
+  @override
+  String get taxRefTitle => 'Données de référence fiscales';
+
+  @override
+  String get taxRefUnconfirmed => 'Non confirmé';
+
+  @override
+  String get taxRefValidFrom => 'Valable à partir du';
+
+  @override
+  String get taxRefValidUntil => 'jusqu\'au';
+
+  @override
   String get templateApplyConflict =>
       'Cette demande a déjà servi pour autre chose. Rien n\'a été appliqué.';
 

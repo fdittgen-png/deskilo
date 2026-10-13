@@ -108,16 +108,14 @@ void main() {
       signature: 'f' * 64,
     );
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
       activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 13, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     // A4 pages (595.28 × 841.89 pt MediaBox); the compact invoice fits
@@ -171,16 +169,14 @@ void main() {
       ],
     );
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
       activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 31, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     final raw = String.fromCharCodes(bytes);
@@ -218,16 +214,14 @@ void main() {
       replacesNumber: 'INV-2026-0001',
     );
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
       activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 14, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     expect(String.fromCharCodes(bytes.take(5)), '%PDF-');
     final raw = String.fromCharCodes(bytes);
@@ -268,8 +262,7 @@ void main() {
     );
     const xml = '<rsm:CrossIndustryInvoice>probe</rsm:CrossIndustryInvoice>';
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -280,8 +273,7 @@ void main() {
         File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
       ),
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     final raw = String.fromCharCodes(bytes);
     expect(raw, contains('/EmbeddedFile'));
@@ -300,8 +292,7 @@ void main() {
     expect(raw, contains('/OutputIntent'));
 
     // Without a colour profile it stays an ordinary PDF: no half-Factur-X.
-    final plain = await buildInvoicePdf(
-      invoice: invoice,
+    final plain = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -309,8 +300,7 @@ void main() {
       dateLabel: 'Jul 27, 2026',
       facturXml: xml,
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
     expect(String.fromCharCodes(plain), isNot(contains('factur-x.xml')));
   });
 
@@ -360,8 +350,7 @@ void main() {
     expect(report, isNotNull);
     expect(reportImageRefs(report!), contains('logo'));
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -372,16 +361,14 @@ void main() {
       // The window ON is the case that used to lose it.
       addressWindow: AddressWindow.left,
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
     final raw = String.fromCharCodes(bytes);
     expect(raw, contains('/Subtype/Image'),
         reason: 'the logo must reach the page, not be clipped out of it');
 
     // And with the window OFF it was always there — the guard must not
     // have traded one case for the other.
-    final plain = await buildInvoicePdf(
-      invoice: invoice,
+    final plain = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -390,8 +377,7 @@ void main() {
       report: report,
       reportImages: {'logo': logo},
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
     expect(String.fromCharCodes(plain), contains('/Subtype/Image'));
     });
   });
@@ -443,8 +429,7 @@ void main() {
     expect(report, isNotNull);
     expect(reportImageRefs(report!), contains('logo'));
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -455,16 +440,14 @@ void main() {
       // The window ON is the case that used to lose it.
       addressWindow: AddressWindow.left,
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
     final raw = String.fromCharCodes(bytes);
     expect(raw, contains('/Subtype/Image'),
         reason: 'the logo must reach the page, not be clipped out of it');
 
     // And with the window OFF it was always there — the guard must not
     // have traded one case for the other.
-    final plain = await buildInvoicePdf(
-      invoice: invoice,
+    final plain = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '\${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -473,8 +456,7 @@ void main() {
       report: report,
       reportImages: {'logo': logo},
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
     expect(String.fromCharCodes(plain), contains('/Subtype/Image'));
     });
   });
@@ -504,8 +486,7 @@ void main() {
       signature: '',
     );
 
-    Future<Uint8List> render({required bool proforma}) => buildInvoicePdf(
-          invoice: proforma
+    Future<Uint8List> render({required bool proforma}) => buildInvoicePdf(InvoicePdfRequest(invoice: proforma
               ? invoice
               : invoice.copyWith(
                   number: 'INV-2026-0005', signature: 'f' * 64),
@@ -516,8 +497,7 @@ void main() {
           dateLabel: 'Jul 27, 2026',
           proforma: proforma,
           baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-          boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-        );
+          boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     final proforma = await render(proforma: true);
     final issued = await render(proforma: false);
@@ -575,16 +555,14 @@ void main() {
       ],
     );
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       money: (cents) => '${(cents / 100).toStringAsFixed(2)} EUR',
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
       activityText: (entry) => annexEntryText(const ReportStrings(), entry),
       dateLabel: 'Jul 31, 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     final pages = RegExp(r'/MediaBox[^\]]*595')
         .allMatches(String.fromCharCodes(bytes))

@@ -26,7 +26,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
 | 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
-| 174 | 57 | 797 | 18 | `lib/features/money/domain/invoice_pdf_part2.dart#buildInvoicePdf` |
 | 132 | 107 | 830 | 1 | `lib/app/router.dart#router` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
@@ -50,4 +49,5 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 67 | 31 | 326 | 1 | `lib/features/directory/presentation/directory_screen.dart#_DirectoryState.build` |
 | 67 | 92 | 301 | 11 | `lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet` |
 | 66 | 64 | 382 | 2 | `lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build` |
+| 65 | 36 | 229 | 13 | `lib/features/workspace/domain/workspace_excel.dart#buildWorkspaceExcelExport` |
 

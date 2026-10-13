@@ -177,6 +177,10 @@ const Map<String, String> _vatIdBodies = {
   'CH': r'E\d{9}(MWST|TVA|IVA)?',
 };
 
+/// #2477 — the table, for `tool/build_tax_reference_seed.dart`, which turns
+/// it into `vat_id_pattern` rows. Read-only: nothing else may depend on it.
+Map<String, String> get vatIdBodiesForSeed => _vatIdBodies;
+
 /// The mention such a document must carry (BT-120), in the seller's
 /// language — the customer reads it as the reason no tax is charged.
 String reverseChargeMention(String sellerCountry) =>

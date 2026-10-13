@@ -31502,6 +31502,222 @@ abstract class AppLocalizations {
   /// **'A private draft from a file: nothing in it is trusted or sent.'**
   String get taskWorkbenchUntrusted;
 
+  /// #2477 tax reference: Button: add a new reference value.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a value'**
+  String get taxRefAdd;
+
+  /// #2477 tax reference: Field: VAT category code of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'EN 16931 category'**
+  String get taxRefCategory;
+
+  /// #2477 tax reference: Badge: the value was checked against its source.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get taxRefConfirmed;
+
+  /// #2477 tax reference: Snackbar: the server refused the version.
+  ///
+  /// In en, this message translates to:
+  /// **'The version could not be saved'**
+  String get taxRefCouldNotSave;
+
+  /// #2477 tax reference: Field: country of a reference value.
+  ///
+  /// In en, this message translates to:
+  /// **'Country (ISO code, or * for all)'**
+  String get taxRefCountry;
+
+  /// #2477 tax reference: Domain filter: EU member states.
+  ///
+  /// In en, this message translates to:
+  /// **'EU members'**
+  String get taxRefDomainEuMember;
+
+  /// #2477 tax reference: Domain filter: statutory mentions.
+  ///
+  /// In en, this message translates to:
+  /// **'Statutory texts'**
+  String get taxRefDomainExemptionText;
+
+  /// #2477 tax reference: Domain filter: rates.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates'**
+  String get taxRefDomainRate;
+
+  /// #2477 tax reference: Domain filter: VAT identification number patterns.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT id patterns'**
+  String get taxRefDomainVatIdPattern;
+
+  /// #2477 tax reference: Empty list.
+  ///
+  /// In en, this message translates to:
+  /// **'No values here.'**
+  String get taxRefEmpty;
+
+  /// #2477 tax reference: Field: statutory reason printed on an exempt line.
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption reason'**
+  String get taxRefExemptionReason;
+
+  /// #2477 tax reference: Field: fiscal group of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get taxRefGroup;
+
+  /// #2477 tax reference: Button and sheet title: every version of a value.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get taxRefHistory;
+
+  /// #2477 tax reference: Intro line under the title of the tax reference screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.'**
+  String get taxRefIntro;
+
+  /// #2477 tax reference: Validation: date format.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the date as YYYY-MM-DD'**
+  String get taxRefInvalidDate;
+
+  /// #2477 tax reference: Validation: percentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 0 to 99.999'**
+  String get taxRefInvalidNumber;
+
+  /// #2477 tax reference: Field: key naming a value within a country.
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get taxRefKey;
+
+  /// #2477 tax reference: Field: label of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get taxRefLabel;
+
+  /// #2477 tax reference: error text when the list cannot load.
+  ///
+  /// In en, this message translates to:
+  /// **'The reference data could not be loaded.'**
+  String get taxRefLoadFailed;
+
+  /// #2477 tax reference: Hint in the form of an EU member.
+  ///
+  /// In en, this message translates to:
+  /// **'A member state has no further fields.'**
+  String get taxRefMemberEmpty;
+
+  /// #2477 tax reference: Button and sheet title: create a new version of a value.
+  ///
+  /// In en, this message translates to:
+  /// **'New version'**
+  String get taxRefNewVersion;
+
+  /// #2477 tax reference: Shown to anyone else who opens the screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the platform owner maintains tax reference data.'**
+  String get taxRefNotAllowed;
+
+  /// #2477 tax reference: Banner: values come from the bundled copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the copy bundled with the app: the server could not be reached.'**
+  String get taxRefOfflineCopy;
+
+  /// #2477 tax reference: Field: regular expression for the identifier body.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern'**
+  String get taxRefPattern;
+
+  /// #2477 tax reference: Field: percentage of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Percent'**
+  String get taxRefPercent;
+
+  /// #2477 tax reference: Field: order of a rate in its country; the first is the default.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get taxRefPosition;
+
+  /// #2477 tax reference: Field: the regime a statutory text belongs to.
+  ///
+  /// In en, this message translates to:
+  /// **'Regime'**
+  String get taxRefRegime;
+
+  /// #2477 tax reference: Validation: a required field is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get taxRefRequired;
+
+  /// #2477 tax reference: Button: save the new version.
+  ///
+  /// In en, this message translates to:
+  /// **'Save version'**
+  String get taxRefSave;
+
+  /// #2477 tax reference: Snackbar after a save.
+  ///
+  /// In en, this message translates to:
+  /// **'Version saved'**
+  String get taxRefSaved;
+
+  /// #2477 tax reference: Field: where the value comes from (a law, a table).
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get taxRefSource;
+
+  /// #2477 tax reference: Field: statutory text.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get taxRefText;
+
+  /// #2477 tax reference: Screen title: the VAT reference values the platform owner maintains.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax reference data'**
+  String get taxRefTitle;
+
+  /// #2477 tax reference: Badge: nobody checked the value against its source.
+  ///
+  /// In en, this message translates to:
+  /// **'Not confirmed'**
+  String get taxRefUnconfirmed;
+
+  /// #2477 tax reference: Field: first day a version is in force.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from'**
+  String get taxRefValidFrom;
+
+  /// #2477 tax reference: Word before the day a version ends.
+  ///
+  /// In en, this message translates to:
+  /// **'until'**
+  String get taxRefValidUntil;
+
   /// #1658 template_exact_apply
   ///
   /// In en, this message translates to:
