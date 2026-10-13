@@ -18346,6 +18346,117 @@ class AppLocalizationsEn extends AppLocalizations {
       'A private draft from a file: nothing in it is trusted or sent.';
 
   @override
+  String get taxRefAdd => 'Add a value';
+
+  @override
+  String get taxRefCategory => 'EN 16931 category';
+
+  @override
+  String get taxRefConfirmed => 'Confirmed';
+
+  @override
+  String get taxRefCouldNotSave => 'The version could not be saved';
+
+  @override
+  String get taxRefCountry => 'Country (ISO code, or * for all)';
+
+  @override
+  String get taxRefDomainEuMember => 'EU members';
+
+  @override
+  String get taxRefDomainExemptionText => 'Statutory texts';
+
+  @override
+  String get taxRefDomainRate => 'Rates';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'VAT id patterns';
+
+  @override
+  String get taxRefEmpty => 'No values here.';
+
+  @override
+  String get taxRefExemptionReason => 'Exemption reason';
+
+  @override
+  String get taxRefGroup => 'Group';
+
+  @override
+  String get taxRefHistory => 'History';
+
+  @override
+  String get taxRefIntro =>
+      'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.';
+
+  @override
+  String get taxRefInvalidDate => 'Enter the date as YYYY-MM-DD';
+
+  @override
+  String get taxRefInvalidNumber => 'Enter a number from 0 to 99.999';
+
+  @override
+  String get taxRefKey => 'Key';
+
+  @override
+  String get taxRefLabel => 'Label';
+
+  @override
+  String get taxRefLoadFailed => 'The reference data could not be loaded.';
+
+  @override
+  String get taxRefMemberEmpty => 'A member state has no further fields.';
+
+  @override
+  String get taxRefNewVersion => 'New version';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Only the platform owner maintains tax reference data.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Showing the copy bundled with the app: the server could not be reached.';
+
+  @override
+  String get taxRefPattern => 'Pattern';
+
+  @override
+  String get taxRefPercent => 'Percent';
+
+  @override
+  String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRegime => 'Regime';
+
+  @override
+  String get taxRefRequired => 'Required';
+
+  @override
+  String get taxRefSave => 'Save version';
+
+  @override
+  String get taxRefSaved => 'Version saved';
+
+  @override
+  String get taxRefSource => 'Source';
+
+  @override
+  String get taxRefText => 'Text';
+
+  @override
+  String get taxRefTitle => 'Tax reference data';
+
+  @override
+  String get taxRefUnconfirmed => 'Not confirmed';
+
+  @override
+  String get taxRefValidFrom => 'Valid from';
+
+  @override
+  String get taxRefValidUntil => 'until';
+
+  @override
   String get templateApplyConflict =>
       'This request was already used for something else. Nothing was applied.';
 

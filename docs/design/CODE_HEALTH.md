@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `c07d2d707fff683e145fefe2ebb8285f212f0c7e` on 2026-10-13.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ee8bf2b4799aac8e86b43460b707f7dc0ca14152` on 2026-10-13.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,15 +10,15 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1460 |
-| functions | 8252 |
-| cyclomatic>=9 | 935 |
-| cyclomatic>=25 | 147 |
+| files | 1478 |
+| functions | 8461 |
+| cyclomatic>=9 | 940 |
+| cyclomatic>=25 | 143 |
 | cognitive>=15 | 407 |
-| cognitive>=30 | 132 |
-| length>=150 | 113 |
-| parameters>=5 | 392 |
-| parameters>=7 | 155 |
+| cognitive>=30 | 128 |
+| length>=150 | 109 |
+| parameters>=5 | 389 |
+| parameters>=7 | 148 |
 | partOfFiles | 87 |
 
 ## Worst functions by cognitive complexity (baseline)
@@ -26,10 +26,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
 | 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
-| 179 | 54 | 313 | 8 | `lib/features/money/domain/invoice_ubl.dart#buildInvoiceUbl` |
-| 178 | 41 | 305 | 7 | `lib/features/money/domain/invoice_cii.dart#buildInvoiceCii` |
 | 174 | 57 | 797 | 18 | `lib/features/money/domain/invoice_pdf_part2.dart#buildInvoicePdf` |
-| 140 | 39 | 322 | 8 | `lib/features/money/domain/invoice_fatturapa.dart#buildInvoiceFatturaPa` |
 | 132 | 107 | 830 | 1 | `lib/app/router.dart#router` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
@@ -38,7 +35,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 101 | 56 | 463 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
 | 84 | 55 | 430 | 2 | `lib/app/shell/shell_screen.dart#ShellScreen.build` |
-| 84 | 33 | 279 | 9 | `lib/features/money/domain/invoice_ksef_fa3.dart#buildInvoiceKsefFa3` |
 | 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 82 | 21 | 143 | 7 | `lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml` |
 | 76 | 57 | 258 | 1 | `lib/features/reservations/presentation/screens/reserve_screen_part2.dart#_ReserveScreenStatePart2._buildImpl` |
@@ -50,4 +46,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 69 | 46 | 72 | 2 | `lib/features/workspace/domain/workspace_field_answer.dart#fieldProblem` |
 | 68 | 29 | 219 | 2 | `lib/features/profile/presentation/screens/profiles_screen.dart#ProfilesScreen.build` |
 | 68 | 53 | 224 | 2 | `lib/features/task_recorder/presentation/guide_host/guide_pane.dart#_Pane.build` |
+| 67 | 39 | 205 | 2 | `lib/core/instance/mcp_auth_checks.dart#federationChecks` |
+| 67 | 31 | 326 | 1 | `lib/features/directory/presentation/directory_screen.dart#_DirectoryState.build` |
+| 67 | 92 | 301 | 11 | `lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet` |
+| 66 | 64 | 382 | 2 | `lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build` |
 

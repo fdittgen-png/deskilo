@@ -11,6 +11,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_fatturapa.dart';
@@ -293,20 +294,16 @@ const _pdfStrings = InvoicePdfStrings(
 /// format id → file name and bytes.
 Future<Map<String, Uint8List>> _samples() async {
   final invoice = _invoice();
-  final ubl = buildInvoiceUbl(
-    invoice: invoice,
+  final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189',
-  );
-  final cii = buildInvoiceCii(
-    invoice: invoice,
+    iban: 'FR7630006000011234567890189'));
+  final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189',
-  );
+    iban: 'FR7630006000011234567890189'));
   final pdf = await buildInvoicePdf(
     invoice: invoice,
     strings: _pdfStrings,
@@ -319,8 +316,7 @@ Future<Map<String, Uint8List>> _samples() async {
     baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
     boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
   );
-  final fatturaPa = buildInvoiceFatturaPa(
-    invoice: _nationalInvoice(
+  final fatturaPa = buildInvoiceFatturaPa(EInvoiceInput(invoice: _nationalInvoice(
       currency: 'EUR',
       percent: 22,
       gross: 24400,
@@ -330,10 +326,8 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerIt,
     lineText: _line,
     iban: 'IT60X0542811101000000123456',
-    dueDate: DateTime(2026, 10, 30),
-  );
-  final ksef = buildInvoiceKsefFa3(
-    invoice: _nationalInvoice(
+    dueDate: DateTime(2026, 10, 30)));
+  final ksef = buildInvoiceKsefFa3(EInvoiceInput(invoice: _nationalInvoice(
       currency: 'PLN',
       percent: 23,
       gross: 24600,
@@ -343,24 +337,21 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerPl,
     lineText: _line,
     iban: 'PL61109010140000071219812874',
-    dueDate: DateTime(2026, 10, 30),
-  );
+    dueDate: DateTime(2026, 10, 30)));
   String profiled(
     UblProfile profile,
     Invoice invoice,
     InvoiceParty seller,
     InvoiceParty buyer,
     String iban,
-  ) => buildInvoiceUbl(
-    invoice: invoice,
+  ) => buildInvoiceUbl(EInvoiceInput(invoice: invoice,
     seller: seller,
     buyer: buyer,
     lineText: _line,
     iban: iban,
-    profile: profile,
     dueDate: DateTime(2026, 10, 30),
-    paymentTerms: '30 days net',
-  );
+    paymentTerms: '30 days net'),
+    profile: profile);
   return {
     'en16931-ubl.xml': utf8.encode(ubl),
     'peppol-bis.xml': utf8.encode(

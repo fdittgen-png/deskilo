@@ -6,6 +6,7 @@ import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
+import 'einvoice_input.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -44,84 +45,94 @@ export 'vat_compliance.dart' show euMemberStates, isEuCountry;
 /// document is rejected before any business rule is even evaluated.
 /// Everything renders from the invoice's own SNAPSHOT (`seller`/`buyer`);
 /// [lineText] supplies the localized position wording like the PDF.
-String buildInvoiceUbl({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String Function(InvoiceLine line) lineText,
-  /// BT-84, the account the payer must transfer to; '' = omit the group.
-  String iban = '',
+String buildInvoiceUbl(
+  EInvoiceInput input, {
   /// #2358 — the profile the document claims. Every element a profile
   /// adds is emitted for that profile only: the bare EN 16931 file stays
   /// byte-identical to what was always downloaded.
   UblProfile profile = UblProfile.en16931,
-  /// BT-9 / BT-20 — when the money is due and on what terms (BR-CO-25).
-  DateTime? dueDate,
-  String paymentTerms = '',
 }) {
-  final profiled = profile != UblProfile.en16931;
-  // #1077 — the currency's own grain, not the euro's.
-  String amount(int minor) => minorToText(minor, invoice.currency);
-  // #1154 — the totals rule lives once, in e_invoice_totals.dart.
-  final EInvoiceTotals(
-    :regime,
-    :category,
-    :exemptionCode,
-    :exemptionText,
-    :supplies,
-    :supplyBreakdown,
-    :moneyCents,
-  ) = eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
-  // #1919 — a negative document is a CREDIT NOTE: its own root, type
-  // code and lines, every amount stated as what is credited (positive),
-  // so a charge netted on it is a negative credit-note line. Money lines
-  // (no rate) can only be a prepaid amount on an INVOICE; a credit note
-  // carrying them has no truthful UBL form, and the readiness check
-  // refuses it before export (EInvoiceGap.creditNoteWithPayments).
-  final creditNote = invoice.isCreditNote;
-  final int sign = creditNote ? -1 : 1;
-  if (creditNote && moneyCents != 0) {
+  final writer = _UblWriter(input, profile);
+  // #1919 — a credit note carrying payments has no truthful UBL form, and
+  // the readiness check refuses it before export (EInvoiceGap.creditNoteWithPayments).
+  if (writer.creditNote && writer.totals.moneyCents != 0) {
     throw ArgumentError(
         'a credit note that nets payments has no EN 16931 credit-note form');
   }
-  final docName = creditNote ? 'CreditNote' : 'Invoice';
-  final netCents = sign * supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netCents);
-  final taxCents = sign * supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
-  final issueDate = invoice.issuedAt.toIso8601String().split('T').first;
-  final currency = invoice.currency;
+  return writer.write();
+}
 
-  final builder = XmlBuilder()
-    ..processing('xml', 'version="1.0" encoding="UTF-8"');
-  builder.element(docName, nest: () {
-    builder
-      ..namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2')
-      ..namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:'
-        'CommonBasicComponents-2',
-        'cbc')
-      ..namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:'
-        'CommonAggregateComponents-2',
-        'cac');
+/// The UBL document, one method per section of it.
+class _UblWriter {
+  _UblWriter(this.input, this.profile)
+      : totals = eInvoiceTotalsOf(
+          invoice: input.invoice,
+          seller: input.seller,
+          buyer: input.buyer,
+        ),
+        // #1919 — a negative document is a CREDIT NOTE: its own root, type
+        // code and lines, every amount stated as what is credited
+        // (positive), so a charge netted on it is a negative line.
+        creditNote = input.invoice.isCreditNote;
 
-    void cbc(String name, String text,
-        [Map<String, String> attrs = const {}]) {
-      builder.element('cbc:$name', nest: () {
-        attrs.forEach(builder.attribute);
-        builder.text(text);
-      });
-    }
+  final EInvoiceInput input;
+  final UblProfile profile;
+  final EInvoiceTotals totals;
+  final bool creditNote;
+  final XmlBuilder builder = XmlBuilder();
 
-    void money(String name, int cents) =>
-        cbc(name, amount(cents), {'currencyID': currency});
+  Invoice get invoice => input.invoice;
+  bool get profiled => profile != UblProfile.en16931;
+  int get sign => creditNote ? -1 : 1;
+  String get docName => creditNote ? 'CreditNote' : 'Invoice';
 
+  void cbc(String name, String text, [Map<String, String> attrs = const {}]) {
+    builder.element('cbc:$name', nest: () {
+      attrs.forEach(builder.attribute);
+      builder.text(text);
+    });
+  }
+
+  /// #1077 — the currency's own grain, not the euro's.
+  void money(String name, int cents) => cbc(
+      name, minorToText(cents, invoice.currency), {'currencyID': invoice.currency});
+
+  String write() {
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element(docName, nest: () {
+      builder
+        ..namespace('urn:oasis:names:specification:ubl:schema:xsd:$docName-2')
+        ..namespace(
+            'urn:oasis:names:specification:ubl:schema:xsd:'
+            'CommonBasicComponents-2',
+            'cbc')
+        ..namespace(
+            'urn:oasis:names:specification:ubl:schema:xsd:'
+            'CommonAggregateComponents-2',
+            'cac');
+      header();
+      references();
+      party('AccountingSupplierParty', input.seller, isSeller: true);
+      party('AccountingCustomerParty', input.buyer, isSeller: false);
+      payment();
+      taxTotal();
+      monetaryTotal();
+      for (final (i, line) in totals.supplies.indexed) {
+        invoiceLine(i, line);
+      }
+    });
+    return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+  }
+
+  /// Identification, dates, type and currency.
+  void header() {
     cbc('CustomizationID', profile.customizationId);
     if (profile.profileId.isNotEmpty) cbc('ProfileID', profile.profileId);
     cbc('ID', invoice.number);
-    cbc('IssueDate', issueDate);
+    cbc('IssueDate', invoice.issuedAt.toIso8601String().split('T').first);
     // BT-9 — the schema places it right after the issue date, on an
     // invoice only (a credit note states no due date there).
+    final dueDate = input.dueDate;
     if (profiled && !creditNote && dueDate != null) {
       cbc('DueDate', dueDate.toIso8601String().split('T').first);
     }
@@ -133,7 +144,12 @@ String buildInvoiceUbl({
       cbc('InvoiceTypeCode',
           invoice.replacesNumber.isNotEmpty ? '384' : '380');
     }
-    cbc('DocumentCurrencyCode', currency);
+    cbc('DocumentCurrencyCode', invoice.currency);
+  }
+
+  /// The buyer reference, the period, the order and the replaced invoice.
+  void references() {
+    final buyer = input.buyer;
     // #922 — BT-10, the buyer reference (Chorus Pro: code service). The
     // schema orders it here, after the currency and before the period.
     if (buyer.reference.isNotEmpty) cbc('BuyerReference', buyer.reference);
@@ -160,66 +176,75 @@ String buildInvoiceUbl({
         });
       });
     }
+  }
 
-    void party(String aggregate, InvoiceParty p, {required bool isSeller}) {
-      builder.element('cac:$aggregate', nest: () {
-        builder.element('cac:Party', nest: () {
-          // BT-34 / BT-49 — the electronic address comes first in the
-          // party; Peppol and XRechnung route by it.
-          if (profiled && p.endpointId.isNotEmpty) {
-            cbc('EndpointID', p.endpointId,
-                {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
-          }
-          builder.element('cac:PostalAddress', nest: () {
-            if (p.street.isNotEmpty) {
-              cbc('StreetName', p.street.replaceAll('\n', ', '));
-            }
-            if (p.city.isNotEmpty) cbc('CityName', p.city);
-            if (p.postalCode.isNotEmpty) cbc('PostalZone', p.postalCode);
-            // BT-39 / BT-54 — CIUS-RO requires the county.
-            if (profiled && p.subdivision.isNotEmpty) {
-              cbc('CountrySubentity', p.subdivision);
-            }
-            builder.element('cac:Country', nest: () {
-              cbc('IdentificationCode', p.country.toUpperCase());
-            });
-          });
-          // BT-31 / BT-48. A category-O seller must NOT carry one
-          // (BR-O-02) — its identifier is the legal registration below.
-          final showVat =
-              p.vatId.isNotEmpty && (!isSeller || !regime.forbidsVatId);
-          if (showVat) {
-            builder.element('cac:PartyTaxScheme', nest: () {
-              cbc('CompanyID', p.vatId);
-              builder.element('cac:TaxScheme', nest: () {
-                cbc('ID', 'VAT');
-              });
-            });
-          }
-          builder.element('cac:PartyLegalEntity', nest: () {
-            cbc('RegistrationName', p.name);
-            // BT-30 — with BT-31 absent this is what satisfies BR-CO-26.
-            if (p.legalId.isNotEmpty) cbc('CompanyID', p.legalId);
-          });
-          // BG-6 — the seller's contact; XRechnung makes all three
-          // mandatory (BR-DE-2/5/6/7).
-          if (profiled && isSeller &&
-              (p.email.isNotEmpty || p.phone.isNotEmpty)) {
-            builder.element('cac:Contact', nest: () {
-              final name = p.person.isNotEmpty ? p.person : invoice.issuerName;
-              if (name.isNotEmpty) cbc('Name', name);
-              if (p.phone.isNotEmpty) cbc('Telephone', p.phone);
-              if (p.email.isNotEmpty) cbc('ElectronicMail', p.email);
-            });
-          }
+  void party(String aggregate, InvoiceParty p, {required bool isSeller}) {
+    builder.element('cac:$aggregate', nest: () {
+      builder.element('cac:Party', nest: () {
+        // BT-34 / BT-49 — the electronic address comes first in the
+        // party; Peppol and XRechnung route by it.
+        if (profiled && p.endpointId.isNotEmpty) {
+          cbc('EndpointID', p.endpointId,
+              {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
+        }
+        partyAddress(p);
+        partyTaxScheme(p, isSeller: isSeller);
+        builder.element('cac:PartyLegalEntity', nest: () {
+          cbc('RegistrationName', p.name);
+          // BT-30 — with BT-31 absent this is what satisfies BR-CO-26.
+          if (p.legalId.isNotEmpty) cbc('CompanyID', p.legalId);
         });
+        if (isSeller) partyContact(p);
       });
-    }
+    });
+  }
 
-    party('AccountingSupplierParty', seller, isSeller: true);
-    party('AccountingCustomerParty', buyer, isSeller: false);
+  void partyAddress(InvoiceParty p) {
+    builder.element('cac:PostalAddress', nest: () {
+      if (p.street.isNotEmpty) {
+        cbc('StreetName', p.street.replaceAll('\n', ', '));
+      }
+      if (p.city.isNotEmpty) cbc('CityName', p.city);
+      if (p.postalCode.isNotEmpty) cbc('PostalZone', p.postalCode);
+      // BT-39 / BT-54 — CIUS-RO requires the county.
+      if (profiled && p.subdivision.isNotEmpty) {
+        cbc('CountrySubentity', p.subdivision);
+      }
+      builder.element('cac:Country', nest: () {
+        cbc('IdentificationCode', p.country.toUpperCase());
+      });
+    });
+  }
 
-    // BT-81/84 — where to pay. 30 = credit transfer.
+  /// BT-31 / BT-48. A category-O seller must NOT carry one (BR-O-02) —
+  /// its identifier is the legal registration.
+  void partyTaxScheme(InvoiceParty p, {required bool isSeller}) {
+    final showVat =
+        p.vatId.isNotEmpty && (!isSeller || !totals.regime.forbidsVatId);
+    if (!showVat) return;
+    builder.element('cac:PartyTaxScheme', nest: () {
+      cbc('CompanyID', p.vatId);
+      builder.element('cac:TaxScheme', nest: () {
+        cbc('ID', 'VAT');
+      });
+    });
+  }
+
+  /// BG-6 — the seller's contact; XRechnung makes all three mandatory
+  /// (BR-DE-2/5/6/7).
+  void partyContact(InvoiceParty p) {
+    if (!profiled || (p.email.isEmpty && p.phone.isEmpty)) return;
+    builder.element('cac:Contact', nest: () {
+      final name = p.person.isNotEmpty ? p.person : invoice.issuerName;
+      if (name.isNotEmpty) cbc('Name', name);
+      if (p.phone.isNotEmpty) cbc('Telephone', p.phone);
+      if (p.email.isNotEmpty) cbc('ElectronicMail', p.email);
+    });
+  }
+
+  /// BT-81/84 — where to pay (30 = credit transfer) and on what terms.
+  void payment() {
+    final iban = input.iban;
     if (iban.isNotEmpty) {
       builder.element('cac:PaymentMeans', nest: () {
         cbc('PaymentMeansCode', '30');
@@ -228,45 +253,58 @@ String buildInvoiceUbl({
         });
       });
     }
-    if (profiled && paymentTerms.isNotEmpty) {
+    if (profiled && input.paymentTerms.isNotEmpty) {
       builder.element('cac:PaymentTerms', nest: () {
-        cbc('Note', paymentTerms);
+        cbc('Note', input.paymentTerms);
       });
     }
+  }
 
+  int get netCents =>
+      sign * totals.supplyBreakdown.fold<int>(0, (sum, t) => sum + t.netCents);
+  int get taxCents =>
+      sign * totals.supplyBreakdown.fold<int>(0, (sum, t) => sum + t.vatCents);
+
+  void taxTotal() {
     builder.element('cac:TaxTotal', nest: () {
       money('TaxAmount', taxCents);
       // One subtotal per rate (BR-CO-18): the breakdown is per rate, not
       // per line, and its sum is the tax above.
-      for (final total in supplyBreakdown) {
-        builder.element('cac:TaxSubtotal', nest: () {
-          money('TaxableAmount', sign * total.netCents);
-          money('TaxAmount', sign * total.vatCents);
-          builder.element('cac:TaxCategory', nest: () {
-            cbc('ID', total.category);
-            // BR-S-05 wants the real rate; BR-E-05 the 0 spelled out;
-            // BR-O-05 forbids a rate at all.
-            if (total.category != 'O') cbc('Percent', percentText(total.percent));
-            if (total.category != 'S') {
-              if (exemptionCode.isNotEmpty) {
-                cbc('TaxExemptionReasonCode', exemptionCode);
-              }
-              // #2440 — BT-120 per category: the rate's own reason first.
-              final reason = total.exemptionReason.isNotEmpty
-                  ? total.exemptionReason
-                  : exemptionText;
-              if (reason.isNotEmpty) {
-                cbc('TaxExemptionReason', reason);
-              }
-            }
-            builder.element('cac:TaxScheme', nest: () {
-              cbc('ID', 'VAT');
-            });
-          });
-        });
+      for (final total in totals.supplyBreakdown) {
+        taxSubtotal(total);
       }
     });
+  }
 
+  void taxSubtotal(InvoiceVatTotal total) {
+    builder.element('cac:TaxSubtotal', nest: () {
+      money('TaxableAmount', sign * total.netCents);
+      money('TaxAmount', sign * total.vatCents);
+      builder.element('cac:TaxCategory', nest: () {
+        cbc('ID', total.category);
+        // BR-S-05 wants the real rate; BR-E-05 the 0 spelled out;
+        // BR-O-05 forbids a rate at all.
+        if (total.category != 'O') cbc('Percent', percentText(total.percent));
+        if (total.category != 'S') {
+          if (totals.exemptionCode.isNotEmpty) {
+            cbc('TaxExemptionReasonCode', totals.exemptionCode);
+          }
+          // #2440 — BT-120 per category: the rate's own reason first.
+          final reason = total.exemptionReason.isNotEmpty
+              ? total.exemptionReason
+              : totals.exemptionText;
+          if (reason.isNotEmpty) {
+            cbc('TaxExemptionReason', reason);
+          }
+        }
+        builder.element('cac:TaxScheme', nest: () {
+          cbc('ID', 'VAT');
+        });
+      });
+    });
+  }
+
+  void monetaryTotal() {
     builder.element('cac:LegalMonetaryTotal', nest: () {
       // BR-CO-10/13: the sum of the line nets IS the tax-exclusive total.
       money('LineExtensionAmount', netCents);
@@ -274,58 +312,55 @@ String buildInvoiceUbl({
       // BR-CO-15 — net plus tax; a rated reversal reduces both.
       money('TaxInclusiveAmount', netCents + taxCents);
       // BT-113 — money already received; never a reversed supply (#1919).
-      if (!creditNote && moneyCents > 0) money('PrepaidAmount', moneyCents);
+      if (!creditNote && totals.moneyCents > 0) {
+        money('PrepaidAmount', totals.moneyCents);
+      }
       money('PayableAmount', sign * invoice.totalCents);
     });
+  }
 
-    for (final (i, line) in supplies.indexed) {
-      // The norm's line amount is tax-EXCLUSIVE (BT-131), so the gross
-      // price is split exactly as the breakdown above splits it. #1919 —
-      // signed as the document states it: a reversal on an invoice and a
-      // charge on a credit note are negative lines.
-      final lineNet =
-          sign * vatSplit(line.amountCents, line.vatPercent).netCents;
-      // #1091 — keep quantity × unit price arithmetically consistent on
-      // the amount actually EMITTED. This tested the GROSS for
-      // divisibility and then emitted the NET, so a line whose gross
-      // divides but whose net does not (4 × €10.00 at 20% → net 8.33)
-      // shipped 2.08 × 4 = 8.32 against a stated 8.33, and a strict
-      // EN 16931 validator rejects the document.
-      final units =
-          line.quantity > 1 && lineNet.abs() % line.quantity == 0
-              ? line.quantity
-              : 1;
-      // BR-27 — the item price is never negative: a negative line is a
-      // negative QUANTITY at a positive price.
-      final quantity = lineNet < 0 ? -units : units;
-      final unitCents = lineNet.abs() ~/ units;
-      // #2356 — the category the server froze on the line wins (a Z
-      // zero-rated line of a VAT-registered seller); an older line derives it.
-      final lineCategory = line.vatCategory.isNotEmpty
-          ? line.vatCategory
-          : line.vatPercent > 0 ? 'S' : category;
-      builder.element('cac:${docName}Line', nest: () {
-        cbc('ID', '${i + 1}');
-        cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',
-            {'unitCode': 'C62'});
-        money('LineExtensionAmount', lineNet);
-        builder.element('cac:Item', nest: () {
-          cbc('Name', lineText(line));
-          builder.element('cac:ClassifiedTaxCategory', nest: () {
-            cbc('ID', lineCategory);
-            if (lineCategory != 'O') cbc('Percent', percentText(line.vatPercent));
-            builder.element('cac:TaxScheme', nest: () {
-              cbc('ID', 'VAT');
-            });
+  void invoiceLine(int index, InvoiceLine line) {
+    // The norm's line amount is tax-EXCLUSIVE (BT-131), so the gross
+    // price is split exactly as the breakdown above splits it. #1919 —
+    // signed as the document states it: a reversal on an invoice and a
+    // charge on a credit note are negative lines.
+    final lineNet =
+        sign * vatSplit(line.amountCents, line.vatPercent).netCents;
+    // #1091 — keep quantity × unit price arithmetically consistent on
+    // the amount actually EMITTED (the NET, not the gross: 4 × €10.00 at
+    // 20% → net 8.33 must not ship 2.08 × 4 = 8.32).
+    final units = line.quantity > 1 && lineNet.abs() % line.quantity == 0
+        ? line.quantity
+        : 1;
+    // BR-27 — the item price is never negative: a negative line is a
+    // negative QUANTITY at a positive price.
+    final quantity = lineNet < 0 ? -units : units;
+    final unitCents = lineNet.abs() ~/ units;
+    // #2356 — the category the server froze on the line wins (a Z
+    // zero-rated line of a VAT-registered seller); an older line derives it.
+    final lineCategory = line.vatCategory.isNotEmpty
+        ? line.vatCategory
+        : line.vatPercent > 0 ? 'S' : totals.category;
+    builder.element('cac:${docName}Line', nest: () {
+      cbc('ID', '${index + 1}');
+      cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',
+          {'unitCode': 'C62'});
+      money('LineExtensionAmount', lineNet);
+      builder.element('cac:Item', nest: () {
+        cbc('Name', input.lineText(line));
+        builder.element('cac:ClassifiedTaxCategory', nest: () {
+          cbc('ID', lineCategory);
+          if (lineCategory != 'O') cbc('Percent', percentText(line.vatPercent));
+          builder.element('cac:TaxScheme', nest: () {
+            cbc('ID', 'VAT');
           });
         });
-        builder.element('cac:Price', nest: () {
-          money('PriceAmount', unitCents);
-        });
       });
-    }
-  });
-  return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+      builder.element('cac:Price', nest: () {
+        money('PriceAmount', unitCents);
+      });
+    });
+  }
 }
 
 

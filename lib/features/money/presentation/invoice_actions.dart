@@ -28,6 +28,7 @@ import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_format.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/einvoice_input.dart';
 import '../domain/einvoice_mandates.dart';
 import '../domain/einvoice_validation.dart';
 import '../domain/invoice.dart';

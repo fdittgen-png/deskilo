@@ -5,6 +5,7 @@
 // the database back-filled; the catalogue proposes the legal groups per
 // country; a not-subject line beside taxed lines is refused (BR-O-11).
 
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
@@ -103,14 +104,14 @@ void main() {
     expect(invoice.vatBreakdown(zeroCategory: 'O').map((t) => t.category), ['S', 'E', 'Z']);
     const seller = InvoiceParty(name: 'W', country: 'FR', legalId: '123456789', vatId: 'FR12123456789', vatRegime: 'vat_registered', street: '1 rue', city: 'Pézenas', postalCode: '34120');
     const buyer = InvoiceParty(name: 'B', country: 'FR', street: '2 rue', city: 'Pézenas', postalCode: '34120');
-    final ubl = buildInvoiceUbl(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label);
+    final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label));
     final lineIds = RegExp(r'<cac:ClassifiedTaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
         .allMatches(ubl).map((m) => m.group(1)).toList();
     expect(lineIds, ['S', 'Z', 'E']);
     final subtotalIds = RegExp(r'<cac:TaxSubtotal>[\s\S]*?<cac:TaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
         .allMatches(ubl).map((m) => m.group(1)).toList();
     expect(subtotalIds, ['S', 'E', 'Z']);
-    final cii = buildInvoiceCii(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label);
+    final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label));
     final ciiLines = RegExp(r'<ram:IncludedSupplyChainTradeLineItem>[\s\S]*?<ram:CategoryCode>(\w+)</ram:CategoryCode>')
         .allMatches(cii).map((m) => m.group(1)).toList();
     expect(ciiLines, ['S', 'Z', 'E']);

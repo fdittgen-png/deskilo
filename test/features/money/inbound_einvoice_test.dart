@@ -4,6 +4,7 @@
 // our own generators write; the hand-written documents pin the figures,
 // the credit note and every refusal.
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/inbound_einvoice.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
@@ -87,29 +88,25 @@ void _expectOurInvoice(InboundEInvoice p, InboundEInvoiceSyntax syntax) {
 
 void main() {
   test('reads the UBL our generator writes', () {
-    final xml = buildInvoiceUbl(
-      invoice: _invoice,
+    final xml = buildInvoiceUbl(EInvoiceInput(invoice: _invoice,
       seller: _seller,
       buyer: _buyer,
       lineText: _lineText,
-      profile: UblProfile.peppolBis,
       dueDate: DateTime(2026, 10, 30),
-      paymentTerms: '30 days net',
-    );
+      paymentTerms: '30 days net'),
+      profile: UblProfile.peppolBis);
     final p = parseInboundEInvoice(xml);
     _expectOurInvoice(p, InboundEInvoiceSyntax.ubl);
     expect(p.supplierEndpoint, 'billing@test.example');
   });
 
   test('reads the CII our generator writes', () {
-    final xml = buildInvoiceCii(
-      invoice: _invoice,
+    final xml = buildInvoiceCii(EInvoiceInput(invoice: _invoice,
       seller: _seller,
       buyer: _buyer,
       lineText: _lineText,
       dueDate: DateTime(2026, 10, 30),
-      paymentTerms: '30 days net',
-    );
+      paymentTerms: '30 days net'));
     _expectOurInvoice(parseInboundEInvoice(xml), InboundEInvoiceSyntax.cii);
   });
 

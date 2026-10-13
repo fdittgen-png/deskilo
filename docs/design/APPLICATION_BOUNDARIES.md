@@ -86,6 +86,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `profile -> directory`
 - `profile -> mcp`
 - `profile -> members`
+- `profile -> money`
 - `profile -> reservations`
 - `profile -> workspace`
 - `reservations -> calendar`
@@ -128,6 +129,7 @@ Reciprocal:
 - `members <-> reservations`
 - `members <-> workspace`
 - `money <-> plan`
+- `money <-> profile`
 - `money <-> reservations`
 - `money <-> workspace`
 - `plan <-> reservations`

@@ -302,6 +302,7 @@ void main() {
 const Set<String> demoOverriddenProviders = {
   'bookProfileRepositoryProvider', // #1869
   'settingsRepositoryProvider', // #2484
+  'taxReferenceRepositoryProvider', // #2477
   'clockProvider',
   'authRepositoryProvider',
   'identityBindingRepositoryProvider',

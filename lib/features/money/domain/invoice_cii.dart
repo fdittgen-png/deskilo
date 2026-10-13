@@ -6,6 +6,7 @@ import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
 import 'e_invoice_totals.dart';
+import 'einvoice_input.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -27,80 +28,89 @@ import 'vat_regime.dart';
 /// Element ORDER is the whole game in CII: every group is an XSD sequence,
 /// and a document out of order is rejected before a single business rule is
 /// read. The order below follows the norm's own mapping table.
-String buildInvoiceCii({
-  required Invoice invoice,
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String Function(InvoiceLine line) lineText,
-  String iban = '',
-  // #941 — BT-9 / BT-20: when the money is due and on what terms.
-  // BR-CO-25 wants one of them on any document with an amount due.
-  DateTime? dueDate,
-  String paymentTerms = '',
-}) {
-  // #1077 — the currency's own grain, not the euro's.
-  String amount(int minor) => minorToText(minor, invoice.currency);
+String buildInvoiceCii(EInvoiceInput input) =>
+    _CiiWriter(input).write();
 
-  // #1154 — the totals rule lives once, in e_invoice_totals.dart.
-  final EInvoiceTotals(
-    :regime,
-    :category,
-    :exemptionCode,
-    :exemptionText,
-    :charges,
-    :chargesCents,
-    :breakdown,
-    :netCents,
-    :taxCents,
-    :prepaidCents,
-  ) = eInvoiceTotalsOf(invoice: invoice, seller: seller, buyer: buyer);
-  final currency = invoice.currency;
+/// The CII document, one method per section of it.
+class _CiiWriter {
+  _CiiWriter(this.input)
+      : totals = eInvoiceTotalsOf(
+          invoice: input.invoice,
+          seller: input.seller,
+          buyer: input.buyer,
+        );
 
-  final builder = XmlBuilder()
-    ..processing('xml', 'version="1.0" encoding="UTF-8"');
-  builder.element('rsm:CrossIndustryInvoice', nest: () {
-    builder
-      ..namespace(
-        'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100', 'rsm')
-      ..namespace(
-        'urn:un:unece:uncefact:data:standard:'
-        'ReusableAggregateBusinessInformationEntity:100',
-        'ram')
-      ..namespace(
-        'urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100', 'udt');
+  final EInvoiceInput input;
+  final EInvoiceTotals totals;
+  final XmlBuilder builder = XmlBuilder();
 
-    void ram(String name, String text,
-        [Map<String, String> attrs = const {}]) {
-      builder.element('ram:$name', nest: () {
-        attrs.forEach(builder.attribute);
-        builder.text(text);
+  Invoice get invoice => input.invoice;
+  InvoiceParty get seller => input.seller;
+  InvoiceParty get buyer => input.buyer;
+
+  void ram(String name, String text, [Map<String, String> attrs = const {}]) {
+    builder.element('ram:$name', nest: () {
+      attrs.forEach(builder.attribute);
+      builder.text(text);
+    });
+  }
+
+  /// #1077 — the currency's own grain, not the euro's.
+  void money(String name, int cents, [Map<String, String> attrs = const {}]) =>
+      ram(name, minorToText(cents, invoice.currency), attrs);
+
+  void date(String name, DateTime value) {
+    builder.element('ram:$name', nest: () {
+      builder.element('udt:DateTimeString', nest: () {
+        // CII dates are `format="102"` — YYYYMMDD, no separators.
+        builder
+          ..attribute('format', '102')
+          ..text(ymd(value));
       });
-    }
+    });
+  }
 
-    void money(String name, int cents,
-            [Map<String, String> attrs = const {}]) =>
-        ram(name, amount(cents), attrs);
-
-    void date(String name, DateTime value) {
-      builder.element('ram:$name', nest: () {
-        builder.element('udt:DateTimeString', nest: () {
-          // CII dates are `format="102"` — YYYYMMDD, no separators.
-          builder
-            ..attribute('format', '102')
-            ..text(ymd(value));
-        });
+  String write() {
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+    builder.element('rsm:CrossIndustryInvoice', nest: () {
+      builder
+        ..namespace(
+            'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100',
+            'rsm')
+        ..namespace(
+            'urn:un:unece:uncefact:data:standard:'
+            'ReusableAggregateBusinessInformationEntity:100',
+            'ram')
+        ..namespace(
+            'urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100',
+            'udt');
+      context();
+      document();
+      builder.element('rsm:SupplyChainTradeTransaction', nest: () {
+        for (final (i, line) in totals.charges.indexed) {
+          tradeLine(i, line);
+        }
+        agreement();
+        // Mandatory even when empty: services have no delivery event.
+        builder.element('ram:ApplicableHeaderTradeDelivery', nest: () {});
+        settlement();
       });
-    }
+    });
+    return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+  }
 
-    // ── Context: which guideline this document claims to follow ────────
+  /// Which guideline this document claims to follow.
+  void context() {
     builder.element('rsm:ExchangedDocumentContext', nest: () {
       builder.element('ram:GuidelineSpecifiedDocumentContextParameter',
           nest: () {
         ram('ID', 'urn:cen.eu:en16931:2017');
       });
     });
+  }
 
-    // ── The document itself ────────────────────────────────────────────
+  /// The document itself: number, type, date and the legal notes.
+  void document() {
     builder.element('rsm:ExchangedDocument', nest: () {
       ram('ID', invoice.number);
       // 380 = commercial invoice; 384 = corrective (a replacement);
@@ -109,211 +119,236 @@ String buildInvoiceCii({
               ? '381'
               : invoice.replacesNumber.isNotEmpty ? '384' : '380');
       date('IssueDateTime', invoice.issuedAt);
-      // #2358 — BT-22 with the French CIUS subject codes (BR-FR-05): the
-      // recovery indemnity (PMT), the late-payment penalties (PMD) and
-      // the early-payment discount (AAB), as frozen with the invoice.
-      final clauses = invoice.legalClauses?.clauses;
-      if (clauses != null && seller.country.toUpperCase() == 'FR') {
-        for (final (code, text) in [
-          ('PMT', clauses.recoveryIndemnity),
-          ('PMD', clauses.latePenalty),
-          ('AAB', clauses.escompte),
-        ]) {
-          if (text.trim().isEmpty) continue;
-          builder.element('ram:IncludedNote', nest: () {
-            ram('Content', text.trim());
-            ram('SubjectCode', code);
-          });
-        }
-      }
+      legalNotes();
     });
+  }
 
-    builder.element('rsm:SupplyChainTradeTransaction', nest: () {
-      // ── Lines ────────────────────────────────────────────────────────
-      for (final (i, line) in charges.indexed) {
-        // BT-131/BT-146 are tax-exclusive: split the gross like the
-        // breakdown does.
-        final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
-        // #1091 — divisibility is tested on the NET, which is what the
-        // unit price is emitted from. See invoice_ubl.dart.
-        final quantity = line.quantity > 1 && lineNet % line.quantity == 0
-            ? line.quantity
-            : 1;
-        final unitCents = lineNet ~/ quantity;
-        // #2356 — the category the server froze on the line wins (a Z
-        // zero-rated line of a VAT-registered seller); an older line derives it.
-        final lineCategory = line.vatCategory.isNotEmpty
-            ? line.vatCategory
-            : line.vatPercent > 0 ? 'S' : category;
-        builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {
-          builder
-            ..element('ram:AssociatedDocumentLineDocument', nest: () {
-            ram('LineID', '${i + 1}');
-          })
-            ..element('ram:SpecifiedTradeProduct', nest: () {
-            ram('Name', lineText(line));
-          });
-          builder.element('ram:SpecifiedLineTradeAgreement', nest: () {
-            builder.element('ram:NetPriceProductTradePrice', nest: () {
-              money('ChargeAmount', unitCents);
-            });
-          });
-          builder.element('ram:SpecifiedLineTradeDelivery', nest: () {
-            ram('BilledQuantity', '$quantity', {'unitCode': 'C62'});
-          });
-          builder.element('ram:SpecifiedLineTradeSettlement', nest: () {
-            builder
-              ..element('ram:ApplicableTradeTax', nest: () {
-              ram('TypeCode', 'VAT');
-              ram('CategoryCode', lineCategory);
-              // BR-S-05 wants the real rate, BR-E-05 the zero spelled
-              // out; BR-O-05 forbids any rate at all.
-              if (lineCategory != 'O') {
-                ram('RateApplicablePercent', percentText(line.vatPercent));
-              }
-            })
-              ..element(
-                'ram:SpecifiedTradeSettlementLineMonetarySummation',
-                nest: () {
-              money('LineTotalAmount', lineNet);
-            });
-          });
-        });
-      }
-
-      // ── Who trades with whom ─────────────────────────────────────────
-      void party(String element, InvoiceParty p, {required bool isSeller}) {
-        builder.element('ram:$element', nest: () {
-          ram('Name', p.name);
-          // BT-30 — the identifier a category-O seller is allowed to carry
-          // (BR-O-02 forbids the tax registration below).
-          // #941 — BT-30 / BT-47: the legal registration of EITHER party,
-          // with the scheme a reader needs to interpret it — SIREN (9
-          // digits, ISO 6523 ICD 0002) or SIRET (14, ICD 0009). The
-          // buyer's was never emitted, and the seller's had no scheme.
-          if (p.legalId.isNotEmpty) {
-            builder.element('ram:SpecifiedLegalOrganization', nest: () {
-              final scheme = legalIdScheme(p.legalId, p.country);
-              ram('ID', p.legalId.replaceAll(' ', ''),
-                  scheme.isEmpty ? const {} : {'schemeID': scheme});
-            });
-          }
-          builder.element('ram:PostalTradeAddress', nest: () {
-            // Postcode FIRST — the CII sequence is not the human order.
-            if (p.postalCode.isNotEmpty) ram('PostcodeCode', p.postalCode);
-            if (p.street.isNotEmpty) {
-              ram('LineOne', p.street.replaceAll('\n', ', '));
-            }
-            if (p.city.isNotEmpty) ram('CityName', p.city);
-            ram('CountryID', p.country.toUpperCase());
-            // #2358 — BT-39 / BT-54, after the country in CII's sequence.
-            if (p.subdivision.isNotEmpty) {
-              ram('CountrySubDivisionName', p.subdivision);
-            }
-          });
-          // #2358 — BT-34 / BT-49: the electronic address a platform
-          // routes by (BR-FR-12/13 make both mandatory in France).
-          if (p.endpointId.isNotEmpty) {
-            builder.element('ram:URIUniversalCommunication', nest: () {
-              ram('URIID', p.endpointId,
-                  {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
-            });
-          }
-          final showVat =
-              p.vatId.isNotEmpty && (!isSeller || !regime.forbidsVatId);
-          if (showVat) {
-            builder.element('ram:SpecifiedTaxRegistration', nest: () {
-              ram('ID', p.vatId, {'schemeID': 'VA'});
-            });
-          }
-        });
-      }
-
-      builder.element('ram:ApplicableHeaderTradeAgreement', nest: () {
-        // #922 — BT-10 leads the agreement in CII's element order.
-        if (buyer.reference.isNotEmpty) ram('BuyerReference', buyer.reference);
-        party('SellerTradeParty', seller, isSeller: true);
-        party('BuyerTradeParty', buyer, isSeller: false);
-        // #922 — BT-13 follows the parties.
-        if (buyer.orderReference.isNotEmpty) {
-          builder.element('ram:BuyerOrderReferencedDocument', nest: () {
-            ram('IssuerAssignedID', buyer.orderReference);
-          });
-        }
+  /// #2358 — BT-22 with the French CIUS subject codes (BR-FR-05): the
+  /// recovery indemnity (PMT), the late-payment penalties (PMD) and the
+  /// early-payment discount (AAB), as frozen with the invoice.
+  void legalNotes() {
+    final clauses = invoice.legalClauses?.clauses;
+    if (clauses == null || seller.country.toUpperCase() != 'FR') return;
+    for (final (code, text) in [
+      ('PMT', clauses.recoveryIndemnity),
+      ('PMD', clauses.latePenalty),
+      ('AAB', clauses.escompte),
+    ]) {
+      if (text.trim().isEmpty) continue;
+      builder.element('ram:IncludedNote', nest: () {
+        ram('Content', text.trim());
+        ram('SubjectCode', code);
       });
-      // Mandatory even when empty: services have no delivery event.
-      builder.element('ram:ApplicableHeaderTradeDelivery', nest: () {});
+    }
+  }
 
-      builder.element('ram:ApplicableHeaderTradeSettlement', nest: () {
-        ram('InvoiceCurrencyCode', currency);
-        if (iban.isNotEmpty) {
-          builder.element('ram:SpecifiedTradeSettlementPaymentMeans',
-              nest: () {
-            // 30 = credit transfer.
-            ram('TypeCode', '30');
-            builder.element('ram:PayeePartyCreditorFinancialAccount',
-                nest: () {
-              ram('IBANID', iban.replaceAll(' ', ''));
-            });
-          });
-        }
-        // One group per rate — CII's equivalent of the UBL subtotals.
-        for (final total in breakdown) {
-          builder.element('ram:ApplicableTradeTax', nest: () {
-            money('CalculatedAmount', total.vatCents);
+  void tradeLine(int index, InvoiceLine line) {
+    // BT-131/BT-146 are tax-exclusive: split the gross like the
+    // breakdown does.
+    final lineNet = vatSplit(line.amountCents, line.vatPercent).netCents;
+    // #1091 — divisibility is tested on the NET, which is what the
+    // unit price is emitted from. See invoice_ubl.dart.
+    final quantity = line.quantity > 1 && lineNet % line.quantity == 0
+        ? line.quantity
+        : 1;
+    final unitCents = lineNet ~/ quantity;
+    // #2356 — the category the server froze on the line wins (a Z
+    // zero-rated line of a VAT-registered seller); an older line derives it.
+    final lineCategory = line.vatCategory.isNotEmpty
+        ? line.vatCategory
+        : line.vatPercent > 0 ? 'S' : totals.category;
+    builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {
+      builder
+        ..element('ram:AssociatedDocumentLineDocument', nest: () {
+          ram('LineID', '${index + 1}');
+        })
+        ..element('ram:SpecifiedTradeProduct', nest: () {
+          ram('Name', input.lineText(line));
+        });
+      builder.element('ram:SpecifiedLineTradeAgreement', nest: () {
+        builder.element('ram:NetPriceProductTradePrice', nest: () {
+          money('ChargeAmount', unitCents);
+        });
+      });
+      builder.element('ram:SpecifiedLineTradeDelivery', nest: () {
+        ram('BilledQuantity', '$quantity', {'unitCode': 'C62'});
+      });
+      builder.element('ram:SpecifiedLineTradeSettlement', nest: () {
+        builder
+          ..element('ram:ApplicableTradeTax', nest: () {
             ram('TypeCode', 'VAT');
-            if (total.category != 'S') {
-              // #2440 — BT-120 per category: the rate's own reason first.
-              final reason = total.exemptionReason.isNotEmpty
-                  ? total.exemptionReason
-                  : exemptionText;
-              if (reason.isNotEmpty) ram('ExemptionReason', reason);
+            ram('CategoryCode', lineCategory);
+            // BR-S-05 wants the real rate, BR-E-05 the zero spelled
+            // out; BR-O-05 forbids any rate at all.
+            if (lineCategory != 'O') {
+              ram('RateApplicablePercent', percentText(line.vatPercent));
             }
-            money('BasisAmount', total.netCents);
-            ram('CategoryCode', total.category);
-            if (total.category != 'S' && exemptionCode.isNotEmpty) {
-              ram('ExemptionReasonCode', exemptionCode);
-            }
-            if (total.category != 'O') {
-              ram('RateApplicablePercent', percentText(total.percent));
-            }
+          })
+          ..element('ram:SpecifiedTradeSettlementLineMonetarySummation',
+              nest: () {
+            money('LineTotalAmount', lineNet);
           });
-        }
-        final period = _periodDates(invoice.period);
-        if (period != null) {
-          builder.element('ram:BillingSpecifiedPeriod', nest: () {
-            date('StartDateTime', period.start);
-            date('EndDateTime', period.end);
-          });
-        }
-        if (dueDate != null || paymentTerms.trim().isNotEmpty) {
-          builder.element('ram:SpecifiedTradePaymentTerms', nest: () {
-            if (paymentTerms.trim().isNotEmpty) {
-              ram('Description', paymentTerms.trim());
-            }
-            if (dueDate != null) date('DueDateDateTime', dueDate);
-          });
-        }
-        builder.element('ram:SpecifiedTradeSettlementHeaderMonetarySummation',
-            nest: () {
-          money('LineTotalAmount', netCents);
-          money('TaxBasisTotalAmount', netCents);
-          money('TaxTotalAmount', taxCents, {'currencyID': currency});
-          // The grand total is the gross the member was charged.
-          money('GrandTotalAmount', chargesCents);
-          if (prepaidCents > 0) money('TotalPrepaidAmount', prepaidCents);
-          // The solde — what is left to pay.
-          money('DuePayableAmount', invoice.totalCents);
-        });
-        if (invoice.replacesNumber.isNotEmpty) {
-          builder.element('ram:InvoiceReferencedDocument', nest: () {
-            ram('IssuerAssignedID', invoice.replacesNumber);
-          });
-        }
       });
     });
-  });
-  return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+  }
+
+  /// Who trades with whom, and the references the buyer asked for.
+  void agreement() {
+    builder.element('ram:ApplicableHeaderTradeAgreement', nest: () {
+      // #922 — BT-10 leads the agreement in CII's element order.
+      if (buyer.reference.isNotEmpty) ram('BuyerReference', buyer.reference);
+      party('SellerTradeParty', seller, isSeller: true);
+      party('BuyerTradeParty', buyer, isSeller: false);
+      // #922 — BT-13 follows the parties.
+      if (buyer.orderReference.isNotEmpty) {
+        builder.element('ram:BuyerOrderReferencedDocument', nest: () {
+          ram('IssuerAssignedID', buyer.orderReference);
+        });
+      }
+    });
+  }
+
+  void party(String element, InvoiceParty p, {required bool isSeller}) {
+    builder.element('ram:$element', nest: () {
+      ram('Name', p.name);
+      partyLegalId(p);
+      partyAddress(p);
+      // #2358 — BT-34 / BT-49: the electronic address a platform
+      // routes by (BR-FR-12/13 make both mandatory in France).
+      if (p.endpointId.isNotEmpty) {
+        builder.element('ram:URIUniversalCommunication', nest: () {
+          ram('URIID', p.endpointId,
+              {if (p.endpointScheme.isNotEmpty) 'schemeID': p.endpointScheme});
+        });
+      }
+      final showVat =
+          p.vatId.isNotEmpty && (!isSeller || !totals.regime.forbidsVatId);
+      if (showVat) {
+        builder.element('ram:SpecifiedTaxRegistration', nest: () {
+          ram('ID', p.vatId, {'schemeID': 'VA'});
+        });
+      }
+    });
+  }
+
+  /// BT-30 — the identifier a category-O seller is allowed to carry
+  /// (BR-O-02 forbids the tax registration). #941 — BT-30 / BT-47: the
+  /// legal registration of EITHER party, with the scheme a reader needs to
+  /// interpret it — SIREN (ICD 0002) or SIRET (ICD 0009).
+  void partyLegalId(InvoiceParty p) {
+    if (p.legalId.isEmpty) return;
+    builder.element('ram:SpecifiedLegalOrganization', nest: () {
+      final scheme = legalIdScheme(p.legalId, p.country);
+      ram('ID', p.legalId.replaceAll(' ', ''),
+          scheme.isEmpty ? const {} : {'schemeID': scheme});
+    });
+  }
+
+  void partyAddress(InvoiceParty p) {
+    builder.element('ram:PostalTradeAddress', nest: () {
+      // Postcode FIRST — the CII sequence is not the human order.
+      if (p.postalCode.isNotEmpty) ram('PostcodeCode', p.postalCode);
+      if (p.street.isNotEmpty) {
+        ram('LineOne', p.street.replaceAll('\n', ', '));
+      }
+      if (p.city.isNotEmpty) ram('CityName', p.city);
+      ram('CountryID', p.country.toUpperCase());
+      // #2358 — BT-39 / BT-54, after the country in CII's sequence.
+      if (p.subdivision.isNotEmpty) {
+        ram('CountrySubDivisionName', p.subdivision);
+      }
+    });
+  }
+
+  /// Currency, payment means, tax groups, period, terms, totals.
+  void settlement() {
+    builder.element('ram:ApplicableHeaderTradeSettlement', nest: () {
+      ram('InvoiceCurrencyCode', invoice.currency);
+      paymentMeans();
+      // One group per rate — CII's equivalent of the UBL subtotals.
+      for (final total in totals.breakdown) {
+        taxGroup(total);
+      }
+      billingPeriod();
+      paymentTerms();
+      monetarySummation();
+      if (invoice.replacesNumber.isNotEmpty) {
+        builder.element('ram:InvoiceReferencedDocument', nest: () {
+          ram('IssuerAssignedID', invoice.replacesNumber);
+        });
+      }
+    });
+  }
+
+  void paymentMeans() {
+    final iban = input.iban;
+    if (iban.isEmpty) return;
+    builder.element('ram:SpecifiedTradeSettlementPaymentMeans', nest: () {
+      // 30 = credit transfer.
+      ram('TypeCode', '30');
+      builder.element('ram:PayeePartyCreditorFinancialAccount', nest: () {
+        ram('IBANID', iban.replaceAll(' ', ''));
+      });
+    });
+  }
+
+  void taxGroup(InvoiceVatTotal total) {
+    builder.element('ram:ApplicableTradeTax', nest: () {
+      money('CalculatedAmount', total.vatCents);
+      ram('TypeCode', 'VAT');
+      if (total.category != 'S') {
+        // #2440 — BT-120 per category: the rate's own reason first.
+        final reason = total.exemptionReason.isNotEmpty
+            ? total.exemptionReason
+            : totals.exemptionText;
+        if (reason.isNotEmpty) ram('ExemptionReason', reason);
+      }
+      money('BasisAmount', total.netCents);
+      ram('CategoryCode', total.category);
+      if (total.category != 'S' && totals.exemptionCode.isNotEmpty) {
+        ram('ExemptionReasonCode', totals.exemptionCode);
+      }
+      if (total.category != 'O') {
+        ram('RateApplicablePercent', percentText(total.percent));
+      }
+    });
+  }
+
+  void billingPeriod() {
+    final period = _periodDates(invoice.period);
+    if (period == null) return;
+    builder.element('ram:BillingSpecifiedPeriod', nest: () {
+      date('StartDateTime', period.start);
+      date('EndDateTime', period.end);
+    });
+  }
+
+  void paymentTerms() {
+    final dueDate = input.dueDate;
+    final terms = input.paymentTerms.trim();
+    if (dueDate == null && terms.isEmpty) return;
+    builder.element('ram:SpecifiedTradePaymentTerms', nest: () {
+      if (terms.isNotEmpty) ram('Description', terms);
+      if (dueDate != null) date('DueDateDateTime', dueDate);
+    });
+  }
+
+  void monetarySummation() {
+    builder.element('ram:SpecifiedTradeSettlementHeaderMonetarySummation',
+        nest: () {
+      money('LineTotalAmount', totals.netCents);
+      money('TaxBasisTotalAmount', totals.netCents);
+      money('TaxTotalAmount', totals.taxCents,
+          {'currencyID': invoice.currency});
+      // The grand total is the gross the member was charged.
+      money('GrandTotalAmount', totals.chargesCents);
+      if (totals.prepaidCents > 0) {
+        money('TotalPrepaidAmount', totals.prepaidCents);
+      }
+      // The solde — what is left to pay.
+      money('DuePayableAmount', invoice.totalCents);
+    });
+  }
 }
 
 
