@@ -25,7 +25,7 @@ Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md
 ## Non-negotiables in one breath
 
 One registry-touching branch at a time. Harness a migration before you apply it.
-Every user-facing string in ARB ×5. Every functionality behind a `WorkspaceFeature`.
+Every user-facing string in ARB ×5. Every functionality behind a `WorkspaceFeature`. No hardcoded business value — configuration with a UI point (`docs/AGENT_RULES.md`).
 `web/setup.html` in the same PR as any parameter. Before a push: `dart analyze --fatal-infos`,
 `flutter test test/lint` and the affected test folders — the full suite runs in CI only. Never format whole directories. Never use the `alpha1`
 track — `alpha` is the closed test the testers are enrolled in, and the train ships to it.

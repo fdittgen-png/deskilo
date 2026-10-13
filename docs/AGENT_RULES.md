@@ -19,11 +19,38 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - No `setState` for shared state — Riverpod providers only; `@riverpod` codegen, no manual `Provider`/`StateProvider`.
 - `presentation/` never imports `data/` — go through `providers/`. `domain/` is pure Dart.
 - After `await` in widget code: `if (!context.mounted) return;`.
-- No magic strings/numbers in business logic — constants class + pinning test.
+- No magic strings/numbers in business logic. A constant that is not a choice (arithmetic, a standard's fixed code, a UI size) lives in a constants class with a pinning test; a business value follows "No hardcoded values" below.
 - Dates, numbers, currency: locale-aware formatting only (`intl`), never raw string formatting. Currency follows the workspace country.
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No third-party tracking, no GPL dependencies (ADR 0009). FCM is the push transport (ADR 0011).
 - A public top-level declaration in `lib/` has a reader outside its file; otherwise it is `_private`, or `@visibleForTesting` when tests read it (`test/lint/public_surface_test.dart`, #2384). Nothing in `lib/` is dead or read only by tests (`test/lint/dead_code_test.dart`, #2383). `dart run tool/dead_code.dart [--surface]` lists the findings.
+
+## No hardcoded values — every configurable value has a UI point (#2476)
+
+A **business value** is never written in code: a rate, an amount, a
+threshold, a limit, a date, a country or currency list, a text a law or a
+contract dictates, a tax or account code, a default an owner might want
+otherwise. It is **configuration or reference data**, stored with its source
+and validity (a change is a new version, never an edit), delivered to the app
+and to the SQL functions from ONE place — never a Dart constant and a SQL
+copy of the same value.
+
+**Every configurable value has a UI point**: a screen where the person who is
+responsible for it changes it, with the permission that person holds, a
+readable history and five locales. A value with no UI point is not
+configurable, whatever the table says — the PR that adds the value adds its
+editor, or states in the issue which existing screen carries it.
+
+What stays in code is what is not a choice: arithmetic and rounding, the
+fixed codes of a standard (EN 16931, UNCL5305), the structure of a document,
+a layout size. When in doubt, ask whether an owner, an accountant or a
+platform administrator could legitimately need to change it without a
+release; if so it is data.
+
+A PR that adds a literal of this kind is reviewed as a defect. The epic #2476
+pins the VAT files with a ratchet (`test/lint/tax_literals_test.dart`) that
+only goes down; the rule applies to every new feature from now on, not only
+to VAT.
 
 ## Feature management (lifetime rule, #502)
 
