@@ -251,6 +251,7 @@ window.SETUP_PROCESSES=[
      "environmentPairs",
      "deployments",
      "configurationTransfer",
+     "configurableSettings",
      "workspaceLibrary",
      "instanceWizard"
     ]

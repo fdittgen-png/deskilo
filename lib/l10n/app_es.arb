@@ -3665,6 +3665,14 @@
   "featureChangedMeanwhile": "Las funciones cambiaron mientras tanto, así que no se guardó nada. Revise la lista y vuelva a intentarlo.",
   "featureCoOwner": "Copropietarios",
   "featureCoOwnerDesc": "Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo).",
+  "featureConfigurableSettingsDesc": "Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos.",
+  "@featureConfigurableSettingsDesc": {
+    "description": "#2484 settings: Feature description."
+  },
+  "featureConfigurableSettingsTitle": "Ajustes configurables",
+  "@featureConfigurableSettingsTitle": {
+    "description": "#2484 settings: Feature title."
+  },
   "featureConfigurationTransfer": "Configuración en el archivo del espacio",
   "@featureConfigurationTransfer": {
     "description": "#916 configuration transfer: featureConfigurationTransfer"
@@ -10820,9 +10828,216 @@
   "servicesNew": "Nuevo servicio",
   "servicesPrice": "Precio",
   "servicesTitle": "Servicios",
+  "settingCouldNotSave": "No se pudo guardar el ajuste",
+  "@settingCouldNotSave": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingCurrentValue": "Ahora: {value} {unit}",
+  "@settingCurrentValue": {
+    "description": "#2484 settings: Current value.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingEdit": "Cambiar",
+  "@settingEdit": {
+    "description": "#2484 settings: Edit button."
+  },
+  "settingFloorNote": "Mínimo de seguridad: nunca por debajo de {floor} {unit}.",
+  "@settingFloorNote": {
+    "description": "#2484 settings: Security floor.",
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingGroupDunning": "Recordatorios y plazos de pago",
+  "@settingGroupDunning": {
+    "description": "#2484 settings: Settings group title."
+  },
+  "settingGuardrail": "Salvaguarda fija",
+  "@settingGuardrail": {
+    "description": "#2484 settings: Read-only guardrail."
+  },
+  "settingGuardrailFallback": "Fijado por el software; se muestra para que sepa que existe.",
+  "@settingGuardrailFallback": {
+    "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintDunningFirstAfterDays": "Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.",
+  "@settingHintDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting hint."
+  },
+  "settingHistory": "Historial",
+  "@settingHistory": {
+    "description": "#2484 settings: History button."
+  },
+  "settingHistoryEmpty": "Ninguna versión guardada: se aplica el valor por defecto.",
+  "@settingHistoryEmpty": {
+    "description": "#2484 settings: History empty."
+  },
+  "settingLabelDunningFirstAfterDays": "Días antes de un primer recordatorio",
+  "@settingLabelDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting label."
+  },
+  "settingMaxOnly": "Como máximo {max} {unit}",
+  "@settingMaxOnly": {
+    "description": "#2484 settings: Upper bound.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMinOnly": "Al menos {min} {unit}",
+  "@settingMinOnly": {
+    "description": "#2484 settings: Lower bound.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingNoteField": "Nota (opcional)",
+  "@settingNoteField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingOriginDefault": "Valor por defecto integrado",
+  "@settingOriginDefault": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginPlatform": "Valor por defecto de la plataforma",
+  "@settingOriginPlatform": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginWorkspace": "Definido para este espacio",
+  "@settingOriginWorkspace": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingProblemAboveMax": "Por encima del máximo",
+  "@settingProblemAboveMax": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowFloor": "Por debajo del mínimo de seguridad",
+  "@settingProblemBelowFloor": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowMin": "Por debajo del mínimo",
+  "@settingProblemBelowMin": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotAChoice": "No es una de las opciones",
+  "@settingProblemNotAChoice": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotANumber": "Introduzca un número entero",
+  "@settingProblemNotANumber": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemWrongType": "Valor no válido",
+  "@settingProblemWrongType": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingRange": "Entre {min} y {max} {unit}",
+  "@settingRange": {
+    "description": "#2484 settings: Allowed range.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingSave": "Guardar",
+  "@settingSave": {
+    "description": "#2484 settings: Save button."
+  },
+  "settingSaved": "Ajuste guardado",
+  "@settingSaved": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingUnitDays": "días",
+  "@settingUnitDays": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitHours": "horas",
+  "@settingUnitHours": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitMinutes": "minutos",
+  "@settingUnitMinutes": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitSeconds": "segundos",
+  "@settingUnitSeconds": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingValueField": "Valor",
+  "@settingValueField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingVersionLine": "{value} {unit} · desde {from}",
+  "@settingVersionLine": {
+    "description": "#2484 settings: A history line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "settingVersionUntil": "hasta {to}",
+  "@settingVersionUntil": {
+    "description": "#2484 settings: History line end.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "settingsBillingReports": "Facturación e informes",
+  "settingsEmpty": "No hay ajustes aquí.",
+  "@settingsEmpty": {
+    "description": "#2484 settings: Empty editor."
+  },
   "settingsFrontCamera": "Escanear con la cámara frontal",
   "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
+  "settingsLoadFailed": "No se pudieron cargar los ajustes.",
+  "@settingsLoadFailed": {
+    "description": "#2484 settings: Error text."
+  },
+  "settingsOfflineRegistry": "Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.",
+  "@settingsOfflineRegistry": {
+    "description": "#2484 settings: Banner: the editor shows the bundled registry."
+  },
+  "settingsPlatformTitle": "Ajustes de la plataforma (valores por defecto)",
+  "@settingsPlatformTitle": {
+    "description": "#2484 settings: Title of the platform settings editor."
+  },
   "settingsSectionAccount": "Mi cuenta",
   "settingsSectionAdministration": "Administración",
   "settingsSectionAdvanced": "Avanzado",
@@ -10831,6 +11046,10 @@
   "settingsSectionMembership": "Mi membresía",
   "settingsSectionWorkspace": "Este espacio",
   "settingsTitle": "Ajustes",
+  "settingsWorkspaceTitle": "Valores de los ajustes",
+  "@settingsWorkspaceTitle": {
+    "description": "#2484 settings: Title of the workspace settings editor section."
+  },
   "settlementAction": "Agrupar en una factura",
   "settlementAnnexAlone": "Solo esta factura",
   "settlementAnnexBody": "{count, plural, =1{La factura que esta sustituye puede seguirla, en sus propias páginas y sellada como reagrupada.} other{Las {count} facturas que esta sustituye pueden seguirla, cada una en sus propias páginas y sellada como reagrupada.}}",

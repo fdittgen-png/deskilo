@@ -390,7 +390,10 @@ enum WorkspaceFeature {
   /// share, and the VAT return subtracts the deductible VAT from the VAT
   /// collected. Platform, default ON, under vatDeclarations; OFF hides the
   /// fields and the return declares output VAT only.
-  inputVat;
+  inputVat,
+
+  /// #2484 — the settings editor (platform tier, default ON; OFF hides it).
+  configurableSettings;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

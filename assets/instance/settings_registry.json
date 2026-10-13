@@ -1,0 +1,3 @@
+[
+{"key":"dunning.first_after_days","type":"int","default_value":14,"min":1,"max":365,"unit":"days","group_key":"dunning","scopes":["platform","workspace"],"edit_permission":"workspaceSettings","floor_value":null,"editable":true,"choices":null,"source":"DunningRules (#472, 0093, 0134, 0144, 0145)","note":"Days after issue before a first reminder is suggested and before an invoice falls due when the workspace stated no payment term."}
+]

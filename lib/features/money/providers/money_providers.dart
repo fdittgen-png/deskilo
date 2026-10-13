@@ -4,12 +4,15 @@ import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/settings/settings.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/trace/traced.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/settings_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/book_repartition.dart';
 import '../application/declare_vat.dart';
@@ -324,11 +327,21 @@ Future<Uint8List?> reportImageBytes(Ref ref, String name) async {
 /// is stored. The Open tab derives reminder suggestions from it.
 @Riverpod(keepAlive: true)
 Future<DunningRules> dunningRules(Ref ref) async {
+  // #2484 — the first reminder's delay is a SETTING (the workspace's
+  // snapshot); without one (server and bundled registry both unreachable)
+  // the rules keep the registry's own default.
+  final settings = ref.watch(currentSettingsProvider.future).then<SettingsSet?>(
+        (s) => s,
+        onError: (Object e, StackTrace st) {
+          TraceLogger.instance.warn('settings', 'dunning delay from the registry default',
+              error: e, stackTrace: st);
+          return null;
+        },
+      );
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return DunningRules.defaults;
-  return ref
-      .watch(moneyRepositoryProvider)
-      .fetchDunningRules(workspace.id);
+  final rules = await ref.watch(moneyRepositoryProvider).fetchDunningRules(workspace.id);
+  return rules.withSettings(await settings);
 }
 
 /// #802 — when the two automatic invoice runs happen; defaults while

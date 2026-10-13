@@ -332,6 +332,24 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     ),
                     onTap: () => showDunningRulesDialog(context, ref),
                   ),
+                  // #2484 — the registry of business values, edited here.
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.configurableSettings))
+                    ListTile(
+                      key: const Key('workspaceSettingsConfigurable'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.tune_outlined),
+                      title: Text(l10n.settingsWorkspaceTitle),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => showSettingsEditorSheet(
+                        context,
+                        title: l10n.settingsWorkspaceTitle,
+                        scope: SettingScope.workspace,
+                        workspaceId: ref.read(currentWorkspaceProvider).value?.id,
+                        canEdit: true,
+                      ),
+                    ),
                   // #802 — WHEN the two automatic invoice runs happen.
                   // Beside the reminder rules on purpose: issuing and
                   // chasing are the same conversation with a member.

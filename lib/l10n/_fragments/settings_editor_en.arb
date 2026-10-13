@@ -1,0 +1,222 @@
+{
+  "@@locale": "en",
+  "featureConfigurableSettingsTitle": "Configurable settings",
+  "@featureConfigurableSettingsTitle": {
+    "description": "#2484 settings: Feature title."
+  },
+  "featureConfigurableSettingsDesc": "Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace's administrators their own values.",
+  "@featureConfigurableSettingsDesc": {
+    "description": "#2484 settings: Feature description."
+  },
+  "settingsWorkspaceTitle": "Settings values",
+  "@settingsWorkspaceTitle": {
+    "description": "#2484 settings: Title of the workspace settings editor section."
+  },
+  "settingsPlatformTitle": "Platform settings (defaults)",
+  "@settingsPlatformTitle": {
+    "description": "#2484 settings: Title of the platform settings editor."
+  },
+  "settingsEmpty": "No settings here.",
+  "@settingsEmpty": {
+    "description": "#2484 settings: Empty editor."
+  },
+  "settingsLoadFailed": "The settings could not be loaded.",
+  "@settingsLoadFailed": {
+    "description": "#2484 settings: Error text."
+  },
+  "settingsOfflineRegistry": "Showing the built-in defaults: the server could not be reached, so nothing can be changed now.",
+  "@settingsOfflineRegistry": {
+    "description": "#2484 settings: Banner: the editor shows the bundled registry."
+  },
+  "settingGroupDunning": "Reminders and payment terms",
+  "@settingGroupDunning": {
+    "description": "#2484 settings: Settings group title."
+  },
+  "settingLabelDunningFirstAfterDays": "Days before a first reminder",
+  "@settingLabelDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting label."
+  },
+  "settingHintDunningFirstAfterDays": "Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.",
+  "@settingHintDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting hint."
+  },
+  "settingUnitSeconds": "seconds",
+  "@settingUnitSeconds": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitMinutes": "minutes",
+  "@settingUnitMinutes": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitHours": "hours",
+  "@settingUnitHours": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitDays": "days",
+  "@settingUnitDays": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingRange": "Between {min} and {max} {unit}",
+  "@settingRange": {
+    "description": "#2484 settings: Allowed range.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMinOnly": "At least {min} {unit}",
+  "@settingMinOnly": {
+    "description": "#2484 settings: Lower bound.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMaxOnly": "At most {max} {unit}",
+  "@settingMaxOnly": {
+    "description": "#2484 settings: Upper bound.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingFloorNote": "Security floor: never below {floor} {unit}.",
+  "@settingFloorNote": {
+    "description": "#2484 settings: Security floor.",
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingCurrentValue": "Now: {value} {unit}",
+  "@settingCurrentValue": {
+    "description": "#2484 settings: Current value.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingOriginWorkspace": "Set for this workspace",
+  "@settingOriginWorkspace": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginPlatform": "Platform default",
+  "@settingOriginPlatform": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginDefault": "Built-in default",
+  "@settingOriginDefault": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingGuardrail": "Fixed guardrail",
+  "@settingGuardrail": {
+    "description": "#2484 settings: Read-only guardrail."
+  },
+  "settingGuardrailFallback": "Fixed by the software; it is shown so you know it exists.",
+  "@settingGuardrailFallback": {
+    "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingEdit": "Change",
+  "@settingEdit": {
+    "description": "#2484 settings: Edit button."
+  },
+  "settingHistory": "History",
+  "@settingHistory": {
+    "description": "#2484 settings: History button."
+  },
+  "settingValueField": "Value",
+  "@settingValueField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingNoteField": "Note (optional)",
+  "@settingNoteField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingSave": "Save",
+  "@settingSave": {
+    "description": "#2484 settings: Save button."
+  },
+  "settingSaved": "Setting saved",
+  "@settingSaved": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingCouldNotSave": "The setting could not be saved",
+  "@settingCouldNotSave": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingProblemNotANumber": "Enter a whole number",
+  "@settingProblemNotANumber": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowMin": "Below the minimum",
+  "@settingProblemBelowMin": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemAboveMax": "Above the maximum",
+  "@settingProblemAboveMax": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowFloor": "Below the security floor",
+  "@settingProblemBelowFloor": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemWrongType": "Not a valid value",
+  "@settingProblemWrongType": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotAChoice": "Not one of the choices",
+  "@settingProblemNotAChoice": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingHistoryEmpty": "No stored version: the default applies.",
+  "@settingHistoryEmpty": {
+    "description": "#2484 settings: History empty."
+  },
+  "settingVersionLine": "{value} {unit} · from {from}",
+  "@settingVersionLine": {
+    "description": "#2484 settings: A history line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "settingVersionUntil": "until {to}",
+  "@settingVersionUntil": {
+    "description": "#2484 settings: History line end.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  }
+}

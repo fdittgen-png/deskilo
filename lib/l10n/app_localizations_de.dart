@@ -5236,6 +5236,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).';
 
   @override
+  String get featureConfigurableSettingsDesc =>
+      'Grenzen, Fristen und Standardwerte, die Sie in der App ändern, statt auf eine Version zu warten: Der Plattformbetreiber legt die Standardwerte fest, die Administratoren eines Arbeitsbereichs ihre eigenen.';
+
+  @override
+  String get featureConfigurableSettingsTitle =>
+      'Konfigurierbare Einstellungen';
+
+  @override
   String get featureConfigurationTransfer => 'Konfiguration in der Raumdatei';
 
   @override
@@ -16385,7 +16393,127 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesTitle => 'Leistungen';
 
   @override
+  String get settingCouldNotSave =>
+      'Die Einstellung konnte nicht gespeichert werden';
+
+  @override
+  String settingCurrentValue(String value, String unit) {
+    return 'Aktuell: $value $unit';
+  }
+
+  @override
+  String get settingEdit => 'Ändern';
+
+  @override
+  String settingFloorNote(String floor, String unit) {
+    return 'Sicherheitsuntergrenze: nie unter $floor $unit.';
+  }
+
+  @override
+  String get settingGroupDunning => 'Mahnungen und Zahlungsfristen';
+
+  @override
+  String get settingGuardrail => 'Feste Schutzgrenze';
+
+  @override
+  String get settingGuardrailFallback =>
+      'Von der Software festgelegt; sie wird angezeigt, damit Sie wissen, dass es sie gibt.';
+
+  @override
+  String get settingHintDunningFirstAfterDays =>
+      'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
+
+  @override
+  String get settingHistory => 'Verlauf';
+
+  @override
+  String get settingHistoryEmpty =>
+      'Keine gespeicherte Version: Der Standardwert gilt.';
+
+  @override
+  String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String settingMaxOnly(String max, String unit) {
+    return 'Höchstens $max $unit';
+  }
+
+  @override
+  String settingMinOnly(String min, String unit) {
+    return 'Mindestens $min $unit';
+  }
+
+  @override
+  String get settingNoteField => 'Notiz (optional)';
+
+  @override
+  String get settingOriginDefault => 'Eingebauter Standard';
+
+  @override
+  String get settingOriginPlatform => 'Plattform-Standard';
+
+  @override
+  String get settingOriginWorkspace => 'Für diesen Arbeitsbereich festgelegt';
+
+  @override
+  String get settingProblemAboveMax => 'Über dem Maximum';
+
+  @override
+  String get settingProblemBelowFloor => 'Unter der Sicherheitsuntergrenze';
+
+  @override
+  String get settingProblemBelowMin => 'Unter dem Minimum';
+
+  @override
+  String get settingProblemNotAChoice => 'Keine der Auswahlmöglichkeiten';
+
+  @override
+  String get settingProblemNotANumber => 'Ganze Zahl eingeben';
+
+  @override
+  String get settingProblemWrongType => 'Kein gültiger Wert';
+
+  @override
+  String settingRange(String min, String max, String unit) {
+    return 'Zwischen $min und $max $unit';
+  }
+
+  @override
+  String get settingSave => 'Speichern';
+
+  @override
+  String get settingSaved => 'Einstellung gespeichert';
+
+  @override
+  String get settingUnitDays => 'Tage';
+
+  @override
+  String get settingUnitHours => 'Stunden';
+
+  @override
+  String get settingUnitMinutes => 'Minuten';
+
+  @override
+  String get settingUnitSeconds => 'Sekunden';
+
+  @override
+  String get settingValueField => 'Wert';
+
+  @override
+  String settingVersionLine(String value, String unit, String from) {
+    return '$value $unit · ab $from';
+  }
+
+  @override
+  String settingVersionUntil(String to) {
+    return 'bis $to';
+  }
+
+  @override
   String get settingsBillingReports => 'Abrechnung & Berichte';
+
+  @override
+  String get settingsEmpty => 'Hier gibt es keine Einstellungen.';
 
   @override
   String get settingsFrontCamera => 'Mit der Frontkamera scannen';
@@ -16393,6 +16521,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'Badges werden mit der Kamera auf der Bildschirmseite gelesen — ausschalten für die Rückkamera.';
+
+  @override
+  String get settingsLoadFailed =>
+      'Die Einstellungen konnten nicht geladen werden.';
+
+  @override
+  String get settingsOfflineRegistry =>
+      'Es werden die eingebauten Standardwerte gezeigt: Der Server ist nicht erreichbar, daher lässt sich jetzt nichts ändern.';
+
+  @override
+  String get settingsPlatformTitle => 'Plattform-Einstellungen (Standardwerte)';
 
   @override
   String get settingsSectionAccount => 'Mein Konto';
@@ -16417,6 +16556,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Einstellungen';
+
+  @override
+  String get settingsWorkspaceTitle => 'Einstellungswerte';
 
   @override
   String get settlementAction => 'Zu einer Rechnung zusammenfassen';

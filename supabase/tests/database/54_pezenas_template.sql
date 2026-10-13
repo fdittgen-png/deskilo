@@ -157,6 +157,7 @@ begin
       "captureProtection": true,
       "carnets": true,
       "coOwner": false,
+      "configurableSettings": false,
       "configurationTransfer": false,
       "customFields": false,
       "customRoles": true,

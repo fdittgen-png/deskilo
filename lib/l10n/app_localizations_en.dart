@@ -5194,6 +5194,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).';
 
   @override
+  String get featureConfigurableSettingsDesc =>
+      'Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace\'s administrators their own values.';
+
+  @override
+  String get featureConfigurableSettingsTitle => 'Configurable settings';
+
+  @override
   String get featureConfigurationTransfer => 'Configuration in the space file';
 
   @override
@@ -16221,7 +16228,126 @@ class AppLocalizationsEn extends AppLocalizations {
   String get servicesTitle => 'Services';
 
   @override
+  String get settingCouldNotSave => 'The setting could not be saved';
+
+  @override
+  String settingCurrentValue(String value, String unit) {
+    return 'Now: $value $unit';
+  }
+
+  @override
+  String get settingEdit => 'Change';
+
+  @override
+  String settingFloorNote(String floor, String unit) {
+    return 'Security floor: never below $floor $unit.';
+  }
+
+  @override
+  String get settingGroupDunning => 'Reminders and payment terms';
+
+  @override
+  String get settingGuardrail => 'Fixed guardrail';
+
+  @override
+  String get settingGuardrailFallback =>
+      'Fixed by the software; it is shown so you know it exists.';
+
+  @override
+  String get settingHintDunningFirstAfterDays =>
+      'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
+
+  @override
+  String get settingHistory => 'History';
+
+  @override
+  String get settingHistoryEmpty => 'No stored version: the default applies.';
+
+  @override
+  String get settingLabelDunningFirstAfterDays =>
+      'Days before a first reminder';
+
+  @override
+  String settingMaxOnly(String max, String unit) {
+    return 'At most $max $unit';
+  }
+
+  @override
+  String settingMinOnly(String min, String unit) {
+    return 'At least $min $unit';
+  }
+
+  @override
+  String get settingNoteField => 'Note (optional)';
+
+  @override
+  String get settingOriginDefault => 'Built-in default';
+
+  @override
+  String get settingOriginPlatform => 'Platform default';
+
+  @override
+  String get settingOriginWorkspace => 'Set for this workspace';
+
+  @override
+  String get settingProblemAboveMax => 'Above the maximum';
+
+  @override
+  String get settingProblemBelowFloor => 'Below the security floor';
+
+  @override
+  String get settingProblemBelowMin => 'Below the minimum';
+
+  @override
+  String get settingProblemNotAChoice => 'Not one of the choices';
+
+  @override
+  String get settingProblemNotANumber => 'Enter a whole number';
+
+  @override
+  String get settingProblemWrongType => 'Not a valid value';
+
+  @override
+  String settingRange(String min, String max, String unit) {
+    return 'Between $min and $max $unit';
+  }
+
+  @override
+  String get settingSave => 'Save';
+
+  @override
+  String get settingSaved => 'Setting saved';
+
+  @override
+  String get settingUnitDays => 'days';
+
+  @override
+  String get settingUnitHours => 'hours';
+
+  @override
+  String get settingUnitMinutes => 'minutes';
+
+  @override
+  String get settingUnitSeconds => 'seconds';
+
+  @override
+  String get settingValueField => 'Value';
+
+  @override
+  String settingVersionLine(String value, String unit, String from) {
+    return '$value $unit · from $from';
+  }
+
+  @override
+  String settingVersionUntil(String to) {
+    return 'until $to';
+  }
+
+  @override
   String get settingsBillingReports => 'Billing & reports';
+
+  @override
+  String get settingsEmpty => 'No settings here.';
 
   @override
   String get settingsFrontCamera => 'Scan with the front camera';
@@ -16229,6 +16355,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'Badges are read with the screen-side camera — turn off to use the back camera.';
+
+  @override
+  String get settingsLoadFailed => 'The settings could not be loaded.';
+
+  @override
+  String get settingsOfflineRegistry =>
+      'Showing the built-in defaults: the server could not be reached, so nothing can be changed now.';
+
+  @override
+  String get settingsPlatformTitle => 'Platform settings (defaults)';
 
   @override
   String get settingsSectionAccount => 'My account';
@@ -16253,6 +16389,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsWorkspaceTitle => 'Settings values';
 
   @override
   String get settlementAction => 'Regroup into one invoice';
