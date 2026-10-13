@@ -314,8 +314,7 @@ Future<Map<String, Uint8List>> _samples() async {
     colorProfile: File('assets/pdf/sRGB2014.icc').readAsBytesSync(),
     baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
     boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
-  final fatturaPa = buildInvoiceFatturaPa(
-    invoice: _nationalInvoice(
+  final fatturaPa = buildInvoiceFatturaPa(EInvoiceInput(invoice: _nationalInvoice(
       currency: 'EUR',
       percent: 22,
       gross: 24400,
@@ -325,10 +324,8 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerIt,
     lineText: _line,
     iban: 'IT60X0542811101000000123456',
-    dueDate: DateTime(2026, 10, 30),
-  );
-  final ksef = buildInvoiceKsefFa3(
-    invoice: _nationalInvoice(
+    dueDate: DateTime(2026, 10, 30)));
+  final ksef = buildInvoiceKsefFa3(EInvoiceInput(invoice: _nationalInvoice(
       currency: 'PLN',
       percent: 23,
       gross: 24600,
@@ -338,8 +335,7 @@ Future<Map<String, Uint8List>> _samples() async {
     buyer: _buyerPl,
     lineText: _line,
     iban: 'PL61109010140000071219812874',
-    dueDate: DateTime(2026, 10, 30),
-  );
+    dueDate: DateTime(2026, 10, 30)));
   String profiled(
     UblProfile profile,
     Invoice invoice,
