@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="welcome.css">
 <script src="i18n.js" defer></script>
 <script src="welcome.js" defer></script>
+<script src="../webmcp.js" defer></script>
+<script src="welcome_webmcp.js" defer></script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -91,7 +93,7 @@
       </label>
       <button class="icon-btn" id="theme" type="button" aria-label="Switch light or dark" data-i18n-aria="nav.theme"><svg class="ic only-light"><use href="#i-moon"/></svg><svg class="ic only-dark"><use href="#i-sun"/></svg></button>
       <a class="icon-btn gh" href="https://github.com/fdittgen-png/deskilo" aria-label="GitHub"><svg class="ic"><use href="#i-github"/></svg></a>
-      <a class="btn btn-primary btn-sm nav-cta" href="https://fdittgen-png.github.io/deskilo/" data-i18n="nav.open">Open the app</a>
+      <a class="btn btn-primary btn-sm nav-cta" data-entry="app" href="https://fdittgen-png.github.io/deskilo/" data-i18n="nav.open">Open the app</a>
       <button class="icon-btn burger" id="burger" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu" data-i18n-aria="nav.menu"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -667,19 +669,19 @@
         <span class="tl-n">1</span>
         <h3 data-i18n="t1.t">Look around</h3>
         <p data-i18n="t1.p">Open the demo: a short note explains it, then you visit a fictional community as owner, admin or member.</p>
-        <a class="link" href="https://fdittgen-png.github.io/deskilo/#/auth?demo=1"><span data-i18n="t1.a">Open the demo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="link" data-entry="demo" href="https://fdittgen-png.github.io/deskilo/#/auth?demo=1"><span data-i18n="t1.a">Open the demo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </li>
       <li class="tl reveal">
         <span class="tl-n">2</span>
         <h3 data-i18n="t2.t">Build your space</h3>
         <p data-i18n="t2.p">Create an account, pick where the space lives, name it, draw the plan and set opening times. Prepare money and governance rules first with the setup questionnaire if you like.</p>
-        <a class="link" href="https://fdittgen-png.github.io/deskilo/setup.html"><span data-i18n="t2.a">Setup questionnaire</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="link" data-entry="setup" href="https://fdittgen-png.github.io/deskilo/setup.html"><span data-i18n="t2.a">Setup questionnaire</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </li>
       <li class="tl reveal">
         <span class="tl-n">3</span>
         <h3 data-i18n="t3.t">Invite people</h3>
         <p data-i18n="t3.p">Share the workspace QR code, or send an invitation by WhatsApp, SMS or any other app. Members join, you approve, and the first booking appears on the plan.</p>
-        <a class="link guide-link" href="https://fdittgen-png.github.io/deskilo/guide/en.html"><span data-i18n="t3.a">Read the user guide</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="link guide-link" data-entry="guide" href="https://fdittgen-png.github.io/deskilo/guide/en.html"><span data-i18n="t3.a">Read the user guide</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </li>
     </ol>
 
@@ -762,7 +764,7 @@
         <a href="https://fdittgen-png.github.io/deskilo/" data-i18n="foot.app">Web app</a>
         <a class="guide-link" href="https://fdittgen-png.github.io/deskilo/guide/en.html" data-i18n="foot.guide">User guide</a>
         <a href="https://fdittgen-png.github.io/deskilo/setup.html" data-i18n="foot.setup">Setup questionnaire</a>
-        <a href="https://fdittgen-png.github.io/deskilo/product.html" data-i18n="foot.eval">Evaluation &amp; cost planner</a>
+        <a href="https://fdittgen-png.github.io/deskilo/product.html" data-entry="product" data-i18n="foot.eval">Evaluation &amp; cost planner</a>
       </div>
       <div>
         <h4 data-i18n="foot.project">Project</h4>

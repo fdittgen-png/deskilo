@@ -4,6 +4,15 @@ export const CAPABILITIES = [
   {
     "id": "booking",
     "status": "shipped",
+    "outcome": "A member finds a free place on the plan and holds it for a period; the database refuses a second booking of the same place at the same time, whoever asks and however many clients race.",
+    "features": [
+      "bookingGate",
+      "bookingPolicies",
+      "seriesBooking",
+      "autoCheckInOut"
+    ],
+    "prerequisites": "A workspace with a published plan and opening hours; booking rules in Settings.",
+    "limitations": "Single-workspace timezone per booking; recovery of a booking made against a stale plan is manual.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -12,6 +21,13 @@ export const CAPABILITIES = [
   {
     "id": "membership.allowances",
     "status": "shipped",
+    "outcome": "A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.",
+    "features": [
+      "carnets",
+      "usageRecords"
+    ],
+    "prerequisites": "Membership plans configured; an allowance per plan.",
+    "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -20,6 +36,14 @@ export const CAPABILITIES = [
   {
     "id": "statements.shared_expenses",
     "status": "shipped",
+    "outcome": "Every member has a ledger: subscription charges, extra usage, approved shared expenses split by a repartition key, recorded payments; a monthly statement reads it back and the ledger is append-only.",
+    "features": [
+      "expenseRepartition",
+      "supplyExpenses",
+      "financeFaces"
+    ],
+    "prerequisites": "The money module enabled; a repartition key per shared expense.",
+    "limitations": "Statements are a view of the ledger, not an accounting ledger of the association; see accounting.export for the books.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -28,6 +52,14 @@ export const CAPABILITIES = [
   {
     "id": "approvals",
     "status": "shipped",
+    "outcome": "A join, an expense, a deletion or a settings change waits for the quorum the workspace configured; the decision trail records who decided and the database enforces the rule it records.",
+    "features": [
+      "validationScopes",
+      "validationChain",
+      "deletionRequests"
+    ],
+    "prerequisites": "Roles assigned; a quorum per decision kind in Settings.",
+    "limitations": "Quorums count distinct people by membership, not by device or session.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -36,6 +68,12 @@ export const CAPABILITIES = [
   {
     "id": "payments.stripe",
     "status": "shipped",
+    "outcome": "A member pays a bill through Stripe hosted checkout; the webhook settles the payment once and posts one credit.",
+    "features": [
+      "onlinePayments"
+    ],
+    "prerequisites": "Stripe credentials in Settings; the webhook endpoint reachable from Stripe.",
+    "limitations": "CI runs the real order and webhook handlers against a stateful local stub through ten settlement scenarios; no Stripe sandbox has been exercised from this repository: scripts/payment_sandbox_check.sh is the opt-in test-mode runner, and without test keys it records not_run, never a pass. Refunds are recorded by hand.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -44,6 +82,12 @@ export const CAPABILITIES = [
   {
     "id": "payments.paypal",
     "status": "shipped",
+    "outcome": "A member pays a bill through PayPal checkout; the webhook settles the payment once.",
+    "features": [
+      "onlinePayments"
+    ],
+    "prerequisites": "PayPal credentials in Settings; the webhook endpoint reachable from PayPal.",
+    "limitations": "No CI check reaches the PayPal handler; the Stripe stub says nothing about PayPal.",
     "evidence": [
       "unit:gated"
     ]
@@ -51,6 +95,12 @@ export const CAPABILITIES = [
   {
     "id": "payments.mollie",
     "status": "shipped",
+    "outcome": "A member pays a bill through Mollie checkout; the webhook settles the payment once, and a replayed capture reconciles clean.",
+    "features": [
+      "onlinePayments"
+    ],
+    "prerequisites": "Mollie credentials in Settings; the webhook endpoint reachable from Mollie.",
+    "limitations": "The reconciliation is proved in a replayed database; no Mollie sandbox has been exercised from this repository.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -59,6 +109,12 @@ export const CAPABILITIES = [
   {
     "id": "payments.wero",
     "status": "shipped",
+    "outcome": "A member pays a bill with Wero, offered through the Mollie checkout.",
+    "features": [
+      "onlinePayments"
+    ],
+    "prerequisites": "Mollie credentials with Wero enabled on the Mollie account.",
+    "limitations": "Wero rides Mollie's checkout; nothing beyond the client's method handling cites Wero, so the Mollie reconciliation does not count here.",
     "evidence": [
       "unit:gated"
     ]
@@ -66,6 +122,13 @@ export const CAPABILITIES = [
   {
     "id": "accounting.export",
     "status": "shipped",
+    "outcome": "The books of a period leave as FEC, SAF-T or DATEV files an accountant can load.",
+    "features": [
+      "dataExport",
+      "vatManagement"
+    ],
+    "prerequisites": "A chart of accounts mapping; a VAT regime.",
+    "limitations": "Format conformance is proved against the published specifications, not against any accounting software's import; no certification is claimed.",
     "evidence": [
       "unit:gated"
     ]
@@ -73,6 +136,13 @@ export const CAPABILITIES = [
   {
     "id": "einvoice.generate",
     "status": "shipped",
+    "outcome": "An invoice becomes an EN 16931 document (UBL 2.1 or Factur-X) with the references its destination platform requires.",
+    "features": [
+      "invoicing",
+      "vatManagement"
+    ],
+    "prerequisites": "A complete legal identity for the workspace; VAT configured.",
+    "limitations": "Validated against the norm's arithmetic and structure here; acceptance by a given platform's validator is not claimed.",
     "evidence": [
       "unit:gated"
     ]
@@ -80,6 +150,12 @@ export const CAPABILITIES = [
   {
     "id": "einvoice.transmit",
     "status": "shipped",
+    "outcome": "With a platform configured, the app hands the document to the send-e-invoice function, which holds the credential, transmits and logs the attempt.",
+    "features": [
+      "einvoiceCustomerDelivery"
+    ],
+    "prerequisites": "Platform credentials configured by the operator.",
+    "limitations": "The client's hand-off is unit-tested against a fake function; no transmission to a real or sandbox platform has been recorded.",
     "evidence": [
       "unit:gated"
     ]
@@ -87,6 +163,10 @@ export const CAPABILITIES = [
   {
     "id": "recovery.database_restore",
     "status": "shipped",
+    "outcome": "A dump of the public and auth schemas restores into a fresh database with equal counts and a clean reconciliation.",
+    "features": [],
+    "prerequisites": "Someone responsible for taking and keeping the dumps, per the operations guide.",
+    "limitations": "The drill restores the database only: Storage objects and the Auth service's own configuration are outside it.",
     "evidence": [
       "local_integration:gated"
     ]
@@ -94,11 +174,21 @@ export const CAPABILITIES = [
   {
     "id": "recovery.storage_auth",
     "status": "roadmap",
+    "outcome": "Storage objects, Auth configuration and the running application recover to a known state.",
+    "features": [],
+    "prerequisites": "A rehearsed procedure, which does not exist yet.",
+    "limitations": "Nothing is rehearsed; do not plan a pilot on it.",
     "evidence": []
   },
   {
     "id": "demo",
     "status": "shipped",
+    "outcome": "A self-contained workspace with invented people, bookings and money, and no backend behind it, so a visitor can try every module without reaching a real space.",
+    "features": [
+      "demoMode"
+    ],
+    "prerequisites": "None: the Demo is built into every client.",
+    "limitations": "The Demo's reach over the screens is pinned by a lint, not by an end-to-end run of every journey.",
     "evidence": [
       "unit:gated"
     ]
@@ -106,6 +196,10 @@ export const CAPABILITIES = [
   {
     "id": "mcp.read",
     "status": "shipped",
+    "outcome": "An MCP client reads a workspace's plan, bookings and members within the scopes the owner granted.",
+    "features": [],
+    "prerequisites": "MCP ships off. The infrastructure operator switches it on for one installation after mcp-inspect has measured that target (docs/guides/OPERATIONS.md, MCP section); the workspace feature mcpAccess, default off, and an exposure policy decide what a workspace offers.",
+    "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here. Whether MCP is switched on for a given installation is that installation's state, not the code's.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -114,6 +208,10 @@ export const CAPABILITIES = [
   {
     "id": "mcp.write",
     "status": "shipped",
+    "outcome": "An MCP client books, cancels or submits on a member's behalf through the same business RPCs the app uses, idempotently.",
+    "features": [],
+    "prerequisites": "mcp.read switched on; the workspace's exposure policy and the person's own permissions for the operation; high-impact actions are confirmed by the person in the app.",
+    "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -122,6 +220,10 @@ export const CAPABILITIES = [
   {
     "id": "mcp.consent",
     "status": "shipped",
+    "outcome": "A member consents to an MCP client per installation, sees what it may do, and revokes it.",
+    "features": [],
+    "prerequisites": "mcp.read switched on; the installation's own OAuth consent and per-workspace exposure policies.",
+    "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
     "evidence": [
       "unit:gated",
       "local_integration:gated"
@@ -130,6 +232,10 @@ export const CAPABILITIES = [
   {
     "id": "calendar.interchange",
     "status": "roadmap",
+    "outcome": "A member exports owned reservations as a standards-based calendar file.",
+    "features": [],
+    "prerequisites": "None beyond the calendar module.",
+    "limitations": "Not delivered; the in-app calendar is not an interchange format.",
     "evidence": []
   }
 ];
