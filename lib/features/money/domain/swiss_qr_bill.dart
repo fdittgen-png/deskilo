@@ -94,7 +94,7 @@ String clean(String text) {
 }
 
 /// An IBAN's checksum (ISO 13616, modulus 97).
-bool ibanChecksumOk(String iban) {
+bool _ibanChecksumOk(String iban) {
   final s = iban.replaceAll(' ', '').toUpperCase();
   if (!RegExp(r'^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$').hasMatch(s)) return false;
   final rearranged = s.substring(4) + s.substring(0, 4);
@@ -108,6 +108,7 @@ bool ibanChecksumOk(String iban) {
 
 /// Whether [iban] is a QR-IBAN: a Swiss or Liechtenstein IBAN whose
 /// institution identifier (positions 5–9) lies in 30000–31999.
+@visibleForTesting
 bool isQrIban(String iban) {
   final s = iban.replaceAll(' ', '').toUpperCase();
   if (s.length != 21 || !(s.startsWith('CH') || s.startsWith('LI'))) {
@@ -118,17 +119,19 @@ bool isQrIban(String iban) {
 }
 
 /// A CH or LI IBAN with a valid checksum (21 characters).
+@visibleForTesting
 bool isSwissIban(String iban) {
   final s = iban.replaceAll(' ', '').toUpperCase();
   return s.length == 21 &&
       (s.startsWith('CH') || s.startsWith('LI')) &&
-      ibanChecksumOk(s);
+      _ibanChecksumOk(s);
 }
 
 const _qrrTable = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5];
 
 /// The recursive modulus-10 check digit of [digits] (the QRR reference's
 /// 27th digit).
+@visibleForTesting
 int qrrCheckDigit(String digits) {
   var carry = 0;
   for (final c in digits.codeUnits) {
@@ -140,6 +143,7 @@ int qrrCheckDigit(String digits) {
 /// The QRR reference of [number]: its digits, left-padded with zeros to
 /// 26, plus the check digit; null when [number] has no digit or more than
 /// 26.
+@visibleForTesting
 String? qrrReferenceOf(String number) {
   final digits = number.replaceAll(RegExp(r'\D'), '');
   if (digits.isEmpty || digits.length > 26) return null;
@@ -147,6 +151,7 @@ String? qrrReferenceOf(String number) {
   return '$body${qrrCheckDigit(body)}';
 }
 
+@visibleForTesting
 bool isValidQrr(String reference) =>
     RegExp(r'^\d{27}$').hasMatch(reference) &&
     qrrCheckDigit(reference.substring(0, 26)) ==
@@ -154,6 +159,7 @@ bool isValidQrr(String reference) =>
 
 /// The ISO 11649 creditor reference of [text] (letters and digits only,
 /// at most 21 of them); null when nothing usable is left.
+@visibleForTesting
 String? scorReferenceOf(String text) {
   final body = text.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
   if (body.isEmpty || body.length > 21) return null;
@@ -162,6 +168,7 @@ String? scorReferenceOf(String text) {
   return 'RF$check$body';
 }
 
+@visibleForTesting
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
   if (!RegExp(r'^RF\d{2}[A-Z0-9]{1,21}$').hasMatch(s)) return false;

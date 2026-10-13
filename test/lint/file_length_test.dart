@@ -107,7 +107,7 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_documents.dart': 632, // 2026-10-11 #2389 630→632: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-03 #1916 614→630: memberCapacityFor and the frozen BT-20 payment terms; 2026-10-02 #1913 610→614: the printed due date reads the date frozen at issue first. 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
+  'lib/features/money/presentation/invoice_documents.dart': 644, // 2026-10-13 #2360: the Swiss QR-bill page is asked for and handed to both renderers. 2026-10-11 #2389 630→632: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-03 #1916 614→630: memberCapacityFor and the frozen BT-20 payment terms; 2026-10-02 #1913 610→614: the printed due date reads the date frozen at issue first. 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
 
   // 2026-09-05 #919 an association is steered off the exempt scheme:
   // the regime that demands a VAT number it cannot have.
@@ -260,7 +260,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/fec.dart': 590, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/invoice_pdf_part2.dart': 796, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/invoice_pdf_part2.dart': 801, // 2026-10-13 #2360: the invoice takes the QR-bill page as its second sheet. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

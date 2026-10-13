@@ -100,7 +100,8 @@ void main() {
   test('a Swiss invoice has a bill from its parties, total and number', () {
     final bill = swissQrBillOf(
       _invoice(),
-      instructions: _instructions,
+      iban: _instructions.iban,
+      qrIban: _instructions.qrIban,
       workspaceCountry: 'CH',
     )!;
     expect(bill.problems, isEmpty);
@@ -113,9 +114,8 @@ void main() {
     // Without a QR-IBAN the ordinary account takes a creditor reference.
     final plain = swissQrBillOf(
       _invoice(currency: 'EUR'),
-      instructions: const PaymentInstructions(
-        iban: 'CH93 0076 2011 6238 5295 7',
-      ),
+      iban: 'CH93 0076 2011 6238 5295 7',
+      qrIban: '',
       workspaceCountry: 'CH',
     )!;
     expect(plain.referenceType, 'SCOR');
@@ -129,7 +129,8 @@ void main() {
       bool proforma = false,
     }) => swissQrBillOf(
       i,
-      instructions: p,
+      iban: p.iban,
+      qrIban: p.qrIban,
       workspaceCountry: 'CH',
       proforma: proforma,
     );
@@ -151,7 +152,8 @@ void main() {
   test('the invoice PDF carries the bill on a page of its own', () async {
     final bill = swissQrBillOf(
       _invoice(),
-      instructions: _instructions,
+      iban: _instructions.iban,
+      qrIban: _instructions.qrIban,
       workspaceCountry: 'CH',
     )!;
     Future<Uint8List> render({bool withBill = true}) => buildInvoicePdf(
