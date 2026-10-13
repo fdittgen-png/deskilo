@@ -315,6 +315,52 @@ void main() {
     });
   });
 
+  group('Sage 50 UK: credit notes and one code per rate (#2359)', () {
+    List<String> rows(Invoice invoice) => buildSageFile(
+          invoices: [invoice],
+          matches: const {},
+          accounts: const SageAccounts(),
+          customerRef: (i) => i.memberId,
+        ).trim().split('\r\n');
+
+    test('a credit note is an SC with positive amounts, never a negative SI',
+        () {
+      final credit = inv(totalCents: -12000, vat: [
+        const InvoiceVatTotal(
+          percent: 20,
+          category: 'S',
+          grossCents: -12000,
+          netCents: -10000,
+          vatCents: -2000,
+        ),
+      ]);
+      final row = rows(credit)[1].split(',');
+      expect(row[0], 'SC');
+      expect(row[7], '100.00');
+      expect(row[8], 'T1');
+      expect(row[9], '20.00');
+    });
+
+    test('T1 standard, T5 reduced, T0 zero-rated, T2 exempt: a row per rate',
+        () {
+      const parts = [
+        InvoiceVatTotal(
+            percent: 20, category: 'S', grossCents: 12000, netCents: 10000, vatCents: 2000),
+        InvoiceVatTotal(
+            percent: 5, category: 'S', grossCents: 10500, netCents: 10000, vatCents: 500),
+        InvoiceVatTotal(
+            percent: 0, category: 'Z', grossCents: 3000, netCents: 3000, vatCents: 0),
+        InvoiceVatTotal(
+            percent: 0, category: 'E', grossCents: 4000, netCents: 4000, vatCents: 0),
+      ];
+      final lines = rows(inv(totalCents: 29500, vat: parts)).skip(1).toList();
+      expect(lines.map((l) => l.split(',')[8]), ['T1', 'T5', 'T0', 'T2']);
+      expect(lines.map((l) => l.split(',')[0]).toSet(), {'SI'});
+      expect(lines.map((l) => l.split(',')[7]),
+          ['100.00', '100.00', '30.00', '40.00']);
+    });
+  });
+
   group('the honest CSV keeps what the mapped formats must drop', () {
     String build({Invoice? invoice, InvoiceMatch? m}) => buildAccountantCsv(
           invoices: [invoice ?? inv(vat: _vat20)],
