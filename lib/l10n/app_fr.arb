@@ -11989,6 +11989,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Saisissez le numéro d'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Préparer",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12008,6 +12012,10 @@
   "vatDeclMarkFiledConfirm": "Confirmez avoir déposé vous-même cette déclaration auprès de l’administration fiscale (son portail ou votre comptable) et saisissez la référence de l’accusé de réception. Elle devient ensuite immuable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "Fichier MTD (CSV, neuf cases)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Base HT",
   "@vatDeclNet": {

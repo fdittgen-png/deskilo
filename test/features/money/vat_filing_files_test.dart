@@ -59,6 +59,11 @@ VatDeclaration _declaration(
   number: number,
 );
 
+final _british = [
+  _line(20, 100099, 20020),
+  _line(20, 69468, 13894, direction: 'input'),
+];
+
 final _german = [
   _line(19, 100099, 19019),
   _line(0, 20099, 0, category: 'AE'),
@@ -77,6 +82,68 @@ String _elster(VatDeclaration d, {String taxNumber = '21/815/08150'}) =>
     );
 
 void main() {
+  group('MTD bridging file (GB)', () {
+    final lines = [
+      _line(20, 100099, 20020),
+      _line(0, 20099, 0, category: 'Z'),
+      _line(20, 69468, 13894, direction: 'input'),
+    ];
+    final d = _declaration(DateTime(2026, 7), DateTime(2026, 9, 30), lines);
+
+    test('one row: the nine boxes under HMRC field names, pence in 1-5, '
+        'whole pounds in 6-9', () {
+      final csv = mtdBridgingCsv(declaration: d, vatId: 'GB 123 4567 89');
+      final rows = csv.trim().split('\r\n');
+      expect(rows, hasLength(2));
+      final head = rows[0].split(',');
+      final row = rows[1].split(',');
+      final byName = {for (var i = 0; i < head.length; i++) head[i]: row[i]};
+      expect(byName['vrn'], '123456789');
+      expect(byName['periodStart'], '2026-07-01');
+      expect(byName['periodEnd'], '2026-09-30');
+      expect(byName['vatDueSales'], '200.20');
+      expect(byName['vatDueAcquisitions'], '0.00');
+      expect(byName['totalVatDue'], '200.20');
+      expect(byName['vatReclaimedCurrPeriod'], '138.94');
+      expect(byName['netVatDue'], '61.26');
+      expect(
+        byName['totalValueSalesExVAT'],
+        '1201',
+        reason: 'sales and zero-rated supplies, the pence dropped',
+      );
+      expect(byName['totalValuePurchasesExVAT'], '694');
+      expect(byName['totalValueGoodsSuppliedExVAT'], '0');
+      expect(byName['totalAcquisitionsExVAT'], '0');
+      expect(csv, endsWith('\r\n'));
+    });
+
+    test('without a registration number there is no file', () {
+      expect(
+        () => mtdBridgingCsv(declaration: d, vatId: 'GB12'),
+        throwsA(isA<VatFilingFileException>()),
+      );
+    });
+
+    test('a UK space gets this file', () {
+      const party = VatFilingParty(
+        countryCode: 'GB',
+        name: 'Desks Ltd',
+        street: '1 High St',
+        postalCode: 'N1 1AA',
+        city: 'London',
+        vatId: 'GB123456789',
+        legalId: '12345678',
+      );
+      final file = vatFilingFile(
+        declaration: d,
+        party: party,
+        now: DateTime(2026, 10, 2),
+      );
+      expect(file.fileName, 'mtd-vat-return-2026-07-01.csv');
+      expect(file.text, startsWith('vrn,periodStart,'));
+    });
+  });
+
   group('ELSTER UStVA', () {
     test('a month: the period, the tax number and the filled Kennzahlen', () {
       final xml = XmlDocument.parse(
@@ -263,6 +330,52 @@ void main() {
     expect(
       String.fromCharCodes(saved.values.single),
       contains('<Steuernummer>2181508150</Steuernummer>'),
+    );
+  });
+
+  testWidgets('a UK space saves the MTD bridging file of a prepared return', (
+    tester,
+  ) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      vatRegime: 'vat_registered',
+      countryCode: 'GB',
+      vatId: 'GB123456789',
+    );
+    final money = FakeMoneyRepository()
+      ..vatDeclarations.add(
+        _declaration(DateTime(2026, 9), DateTime(2026, 9, 30), _british),
+      );
+    final saved = <String, List<int>>{};
+    await tester.binding.setSurfaceSize(const Size(900, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money, workspace: workspace),
+          fileSaverProvider.overrideWithValue(({
+            required List<int> bytes,
+            required String fileName,
+          }) async {
+            saved[fileName] = bytes;
+            return '/tmp/$fileName';
+          }),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    unawaited(GoRouter.of(context).push('/vat-declarations'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('vat-decl-filing-d1')));
+    await tester.pumpAndSettle();
+    // The VAT number is the workspace's own: no question is asked.
+    expect(saved.keys, ['mtd-vat-return-2026-09-01.csv']);
+    expect(
+      String.fromCharCodes(saved.values.single),
+      contains('123456789,2026-09-01,2026-09-30,'),
     );
   });
 }

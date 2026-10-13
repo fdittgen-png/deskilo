@@ -32954,6 +32954,12 @@ abstract class AppLocalizations {
   /// **'Tax number (Steuernummer)'**
   String get vatDeclFilingTaxNumberField;
 
+  /// #2359 VAT filing files: vatDeclFilingVatNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.'**
+  String get vatDeclFilingVatNumber;
+
   /// Generate-declaration button
   ///
   /// In en, this message translates to:
@@ -32983,6 +32989,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.'**
   String get vatDeclMarkFiledConfirm;
+
+  /// #2359 VAT filing files: vatDeclMtdCsv
+  ///
+  /// In en, this message translates to:
+  /// **'MTD bridging file (CSV, nine boxes)'**
+  String get vatDeclMtdCsv;
 
   /// Net taxable base column
   ///

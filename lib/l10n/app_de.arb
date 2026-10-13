@@ -11989,6 +11989,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Tragen Sie die Umsatzsteuer-Registriernummer des Workspace ein (GB und neun Ziffern): die Datei nennt sie.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Vorbereiten",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12008,6 +12012,10 @@
   "vatDeclMarkFiledConfirm": "Bestätigen Sie, dass Sie diese Voranmeldung selbst beim Finanzamt abgegeben haben (ELSTER oder Ihr Steuerberater), und geben Sie die Referenz der Eingangsbestätigung ein. Danach ist sie unveränderlich.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "MTD-Brückendatei (CSV, neun Felder)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Bemessungsgrundlage",
   "@vatDeclNet": {

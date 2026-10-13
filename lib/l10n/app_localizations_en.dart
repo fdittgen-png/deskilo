@@ -19096,6 +19096,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Tax number (Steuernummer)';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.';
+
+  @override
   String get vatDeclGenerate => 'Prepare';
 
   @override
@@ -19110,6 +19114,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.';
+
+  @override
+  String get vatDeclMtdCsv => 'MTD bridging file (CSV, nine boxes)';
 
   @override
   String get vatDeclNet => 'Net base';

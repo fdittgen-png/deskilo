@@ -21,6 +21,7 @@ String? vatFilingFileLabel(AppLocalizations l10n, String? country) =>
     switch (country) {
       'DE' => l10n.vatDeclElster,
       'FR' => l10n.vatDeclEdiTva,
+      'GB' => l10n.vatDeclMtdCsv,
       _ => null,
     };
 
@@ -57,6 +58,7 @@ Future<void> exportVatFilingFile(
         AppSnack.error(context, switch (e.problem) {
           VatFilingFileProblem.period => l10n.vatDeclFilingPeriod,
           VatFilingFileProblem.taxNumber => l10n.vatDeclFilingTaxNumber,
+          VatFilingFileProblem.vatNumber => l10n.vatDeclFilingVatNumber,
         });
         return;
       }

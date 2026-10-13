@@ -11989,6 +11989,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Introduzca el número de registro de IVA del espacio (GB y nueve dígitos): el archivo lo indica.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Preparar",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12008,6 +12012,10 @@
   "vatDeclMarkFiledConfirm": "Confirme que presentó usted mismo esta declaración ante la administración tributaria (su portal o su gestor) e introduzca la referencia del justificante. Después será inmutable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "Archivo MTD (CSV, nueve casillas)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Base imponible",
   "@vatDeclNet": {

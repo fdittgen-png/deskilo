@@ -19311,6 +19311,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Numéro fiscal (Steuernummer)';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Saisissez le numéro d\'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.';
+
+  @override
   String get vatDeclGenerate => 'Préparer';
 
   @override
@@ -19325,6 +19329,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Confirmez avoir déposé vous-même cette déclaration auprès de l’administration fiscale (son portail ou votre comptable) et saisissez la référence de l’accusé de réception. Elle devient ensuite immuable.';
+
+  @override
+  String get vatDeclMtdCsv => 'Fichier MTD (CSV, neuf cases)';
 
   @override
   String get vatDeclNet => 'Base HT';
