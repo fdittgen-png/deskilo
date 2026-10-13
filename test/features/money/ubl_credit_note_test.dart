@@ -7,6 +7,7 @@
 // line, with its VAT), and only a line with no rate is money already
 // received (PrepaidAmount). Expected figures are worked out by hand
 // below, not read back from the generator.
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
@@ -55,12 +56,10 @@ Invoice _doc(List<InvoiceLine> lines, {String replacesNumber = ''}) => Invoice(
 );
 
 XmlDocument _ubl(Invoice invoice) => XmlDocument.parse(
-  buildInvoiceUbl(
-    invoice: invoice,
+  buildInvoiceUbl(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
-    lineText: (line) => invoiceLineText(const ReportStrings(), line),
-  ),
+    lineText: (line) => invoiceLineText(const ReportStrings(), line))),
 );
 
 String _total(XmlDocument d, String name) =>

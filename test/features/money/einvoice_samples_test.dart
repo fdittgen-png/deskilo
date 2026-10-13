@@ -11,6 +11,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/einvoice_format.dart';
+import 'package:deskilo/features/money/domain/einvoice_input.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_fatturapa.dart';
@@ -293,20 +294,16 @@ const _pdfStrings = InvoicePdfStrings(
 /// format id → file name and bytes.
 Future<Map<String, Uint8List>> _samples() async {
   final invoice = _invoice();
-  final ubl = buildInvoiceUbl(
-    invoice: invoice,
+  final ubl = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189',
-  );
-  final cii = buildInvoiceCii(
-    invoice: invoice,
+    iban: 'FR7630006000011234567890189'));
+  final cii = buildInvoiceCii(EInvoiceInput(invoice: invoice,
     seller: _seller,
     buyer: _buyer,
     lineText: _line,
-    iban: 'FR7630006000011234567890189',
-  );
+    iban: 'FR7630006000011234567890189'));
   final pdf = await buildInvoicePdf(
     invoice: invoice,
     strings: _pdfStrings,
@@ -351,16 +348,14 @@ Future<Map<String, Uint8List>> _samples() async {
     InvoiceParty seller,
     InvoiceParty buyer,
     String iban,
-  ) => buildInvoiceUbl(
-    invoice: invoice,
+  ) => buildInvoiceUbl(EInvoiceInput(invoice: invoice,
     seller: seller,
     buyer: buyer,
     lineText: _line,
     iban: iban,
-    profile: profile,
     dueDate: DateTime(2026, 10, 30),
-    paymentTerms: '30 days net',
-  );
+    paymentTerms: '30 days net'),
+    profile: profile);
   return {
     'en16931-ubl.xml': utf8.encode(ubl),
     'peppol-bis.xml': utf8.encode(

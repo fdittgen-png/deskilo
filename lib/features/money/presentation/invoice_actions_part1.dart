@@ -120,19 +120,15 @@ Future<void> sendEInvoice(
         // download uses.
         final words = reportStringsOf(l10n);
         final association = ref.read(sellerIsAssociationProvider);
-        final xml = buildChannelEInvoiceXml(
-          format: format,
-          invoice: invoice,
-          seller: seller,
-          buyer: buyer,
-          iban: iban,
+        final xml = buildChannelEInvoiceXml(format, EInvoiceInput(
+          invoice: invoice, seller: seller, buyer: buyer, iban: iban,
           lineText: (line) => invoiceLineText(words, line,
               association: association, period: invoice.period),
           dueDate: invoiceDueAt(ref, invoice),
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
               '',
-        );
+        ));
         file = (
           bytes: utf8.encode(xml),
           fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
