@@ -54,7 +54,7 @@ to VAT.
 
 ## Feature management (lifetime rule, #502)
 
-- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, its assessment line in `feature_lifecycle.dart` and its row in the generated process catalogue (#1863 retired the count pin: `test/lint/feature_registry_test.dart` now checks completeness, stable keys, tiers and dependencies).
+- EVERY user-facing functionality ships behind a `WorkspaceFeature` flag — for the lifetime of this project. A new functionality lands with: the enum value, a `featureManifest` entry (defaultOn/requires), `featureXxx`/`featureXxxDesc` l10n keys ×5, `features.contains(...)` gates on its UI surfaces, its assessment line in `feature_lifecycle.dart` (a new shipped feature starts **beta by owner decision**, `_ownerBeta`, basis `ownerDecision`, never stable; evidence ids move it to basis `evidence`, and only evidence raises it to stable — #2519; `unreviewed` is for a reserved flag nothing consumes) and its row in the generated process catalogue (#1863 retired the count pin: `test/lint/feature_registry_test.dart` now checks completeness, stable keys, tiers and dependencies).
 - Default ON unless the feature is risky or needs owner setup; dependent features declare `requires` so the Features screen explains the chain.
 - OFF must degrade honestly: the entry points disappear (and their routes redirect); already-stored data stays untouched.
 

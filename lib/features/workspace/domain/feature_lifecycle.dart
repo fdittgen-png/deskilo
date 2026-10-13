@@ -32,6 +32,13 @@ enum FeatureMaturity { unreviewed, alpha, beta, stable }
 /// The life axis.
 enum FeatureLifecycle { active, deprecated, retired }
 
+/// What a classification rests on. [evidence] is the assessment of #1850:
+/// capability ids of the evidence ledger. [ownerDecision] is the owner's
+/// declaration (#2519, 2026-10-13: every shipped feature is beta): it can
+/// say beta, never stable, and it says so in its rationale — so a reader can
+/// tell a declared beta from an evidenced one.
+enum AssessmentBasis { evidence, ownerDecision }
+
 /// A stored or transported maturity name, read safely: anything unknown —
 /// a newer build's value, a typo, nothing at all — is
 /// [FeatureMaturity.unreviewed], never an assurance it did not state.
@@ -62,6 +69,7 @@ class FeatureAssessment {
     required this.rationale,
     this.lifecycle = FeatureLifecycle.active,
     this.evidence = const [],
+    this.basis = AssessmentBasis.evidence,
     this.limitations = '',
     this.replacedBy = const [],
     this.introducedIn,
@@ -74,6 +82,7 @@ class FeatureAssessment {
     : maturity = FeatureMaturity.unreviewed,
       lifecycle = FeatureLifecycle.active,
       evidence = const [],
+      basis = AssessmentBasis.evidence,
       limitations = '',
       replacedBy = const [],
       introducedIn = null,
@@ -88,6 +97,9 @@ class FeatureAssessment {
   /// Capability ids of the evidence ledger (docs/product/capabilities.json,
   /// #1634) the classification rests on. Beta and stable need at least one.
   final List<String> evidence;
+
+  /// Whether [evidence] or the owner's declaration carries the maturity.
+  final AssessmentBasis basis;
   final String limitations;
 
   /// Registry keys that take over once this one is deprecated or retired.
@@ -100,6 +112,23 @@ const _legacy = FeatureAssessment.unreviewed(
   'No shipped capability in the evidence ledger '
   '(docs/product/capabilities.json) covers it yet; it stays unreviewed '
   'until one does, whatever its age, issue state or test count.',
+);
+
+/// The date of the owner's declaration; an [AssessmentBasis.ownerDecision]
+/// rationale must carry it so the claim is traceable (#2519).
+const ownerBetaDecisionDate = '2026-10-13';
+
+const _ownerBeta = FeatureAssessment(
+  maturity: FeatureMaturity.beta,
+  basis: AssessmentBasis.ownerDecision,
+  rationale:
+      'Owner decision of $ownerBetaDecisionDate (#2519): every shipped '
+      'feature is declared beta. The evidence-based review of #1850 '
+      'continues: a feature may gain evidence ids, be raised to stable only '
+      'on evidence, or be lowered by the owner.',
+  limitations:
+      'Declared by the owner; not assessed against the evidence ledger '
+      '(docs/product/capabilities.json).',
 );
 
 // #1850 B — one assessment per shipped capability of the evidence ledger
@@ -255,136 +284,136 @@ const _demo = FeatureAssessment(
 /// new flag cannot be added without deciding what it is (the lint fails
 /// on a missing key). Unreviewed until evidence says otherwise.
 const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
-  WorkspaceFeature.calendarTab: _legacy,
-  WorkspaceFeature.eventsTab: _legacy,
-  WorkspaceFeature.moneyTab: _legacy,
-  WorkspaceFeature.services: _legacy,
-  WorkspaceFeature.accessorySupplements: _legacy,
+  WorkspaceFeature.calendarTab: _ownerBeta,
+  WorkspaceFeature.eventsTab: _ownerBeta,
+  WorkspaceFeature.moneyTab: _ownerBeta,
+  WorkspaceFeature.services: _ownerBeta,
+  WorkspaceFeature.accessorySupplements: _ownerBeta,
   WorkspaceFeature.onlinePayments: _onlinePayments,
-  WorkspaceFeature.pdfExport: _legacy,
+  WorkspaceFeature.pdfExport: _ownerBeta,
   WorkspaceFeature.seriesBooking: _booking,
-  WorkspaceFeature.bookForOthers: _legacy,
-  WorkspaceFeature.pushNotifications: _legacy,
-  WorkspaceFeature.adminSeatBlocking: _legacy,
-  WorkspaceFeature.levelBooking: _legacy,
-  WorkspaceFeature.adminLevelAssign: _legacy,
-  WorkspaceFeature.kioskMode: _legacy,
-  WorkspaceFeature.nfcBadges: _legacy,
-  WorkspaceFeature.membersDirectory: _legacy,
-  WorkspaceFeature.whatsappIntegration: _legacy,
-  WorkspaceFeature.spaceQrCodes: _legacy,
-  WorkspaceFeature.coOwner: _legacy,
+  WorkspaceFeature.bookForOthers: _ownerBeta,
+  WorkspaceFeature.pushNotifications: _ownerBeta,
+  WorkspaceFeature.adminSeatBlocking: _ownerBeta,
+  WorkspaceFeature.levelBooking: _ownerBeta,
+  WorkspaceFeature.adminLevelAssign: _ownerBeta,
+  WorkspaceFeature.kioskMode: _ownerBeta,
+  WorkspaceFeature.nfcBadges: _ownerBeta,
+  WorkspaceFeature.membersDirectory: _ownerBeta,
+  WorkspaceFeature.whatsappIntegration: _ownerBeta,
+  WorkspaceFeature.spaceQrCodes: _ownerBeta,
+  WorkspaceFeature.coOwner: _ownerBeta,
   WorkspaceFeature.invoicing: _invoicing,
-  WorkspaceFeature.adminInvoicing: _legacy,
+  WorkspaceFeature.adminInvoicing: _ownerBeta,
   WorkspaceFeature.autoCheckInOut: _booking,
   WorkspaceFeature.dataExport: _accountingExport,
-  WorkspaceFeature.workingHours: _legacy,
-  WorkspaceFeature.invoicePdfTemplate: _legacy,
-  WorkspaceFeature.invoiceAddressWindow: _legacy,
-  WorkspaceFeature.memberNotifications: _legacy,
-  WorkspaceFeature.documents: _legacy,
-  WorkspaceFeature.dunning: _legacy,
-  WorkspaceFeature.memberReports: _legacy,
+  WorkspaceFeature.workingHours: _ownerBeta,
+  WorkspaceFeature.invoicePdfTemplate: _ownerBeta,
+  WorkspaceFeature.invoiceAddressWindow: _ownerBeta,
+  WorkspaceFeature.memberNotifications: _ownerBeta,
+  WorkspaceFeature.documents: _ownerBeta,
+  WorkspaceFeature.dunning: _ownerBeta,
+  WorkspaceFeature.memberReports: _ownerBeta,
   WorkspaceFeature.deletionRequests: _approvals,
-  WorkspaceFeature.roleManagement: _legacy,
+  WorkspaceFeature.roleManagement: _ownerBeta,
   WorkspaceFeature.vatManagement: _vat,
-  WorkspaceFeature.vatDeclarations: _legacy,
+  WorkspaceFeature.vatDeclarations: _ownerBeta,
   WorkspaceFeature.einvoiceCustomerDelivery: _einvoiceTransmit,
-  WorkspaceFeature.planObjectDelete: _legacy,
-  WorkspaceFeature.notificationGrouping: _legacy,
+  WorkspaceFeature.planObjectDelete: _ownerBeta,
+  WorkspaceFeature.notificationGrouping: _ownerBeta,
   WorkspaceFeature.bookingPolicies: _booking,
-  WorkspaceFeature.nfcSeatTags: _legacy,
-  WorkspaceFeature.qrBadges: _legacy,
-  WorkspaceFeature.kioskMemberPhotos: _legacy,
-  WorkspaceFeature.formHelpHints: _legacy,
-  WorkspaceFeature.uiAnimations: _legacy,
-  WorkspaceFeature.planMemberPhotos: _legacy,
-  WorkspaceFeature.badgeSignIn: _legacy,
-  WorkspaceFeature.regionalFormats: _legacy,
-  WorkspaceFeature.calendarHub: _legacy,
-  WorkspaceFeature.dataAccessLog: _legacy,
-  WorkspaceFeature.memberDataExport: _legacy,
+  WorkspaceFeature.nfcSeatTags: _ownerBeta,
+  WorkspaceFeature.qrBadges: _ownerBeta,
+  WorkspaceFeature.kioskMemberPhotos: _ownerBeta,
+  WorkspaceFeature.formHelpHints: _ownerBeta,
+  WorkspaceFeature.uiAnimations: _ownerBeta,
+  WorkspaceFeature.planMemberPhotos: _ownerBeta,
+  WorkspaceFeature.badgeSignIn: _ownerBeta,
+  WorkspaceFeature.regionalFormats: _ownerBeta,
+  WorkspaceFeature.calendarHub: _ownerBeta,
+  WorkspaceFeature.dataAccessLog: _ownerBeta,
+  WorkspaceFeature.memberDataExport: _ownerBeta,
   WorkspaceFeature.financeFaces: _sharedExpenses,
-  WorkspaceFeature.paymentReminders: _legacy,
+  WorkspaceFeature.paymentReminders: _ownerBeta,
   WorkspaceFeature.supplyExpenses: _sharedExpenses,
   WorkspaceFeature.validationScopes: _approvals,
   WorkspaceFeature.validationChain: _approvals,
-  WorkspaceFeature.richMessageRefs: _legacy,
-  WorkspaceFeature.calendarValidations: _legacy,
+  WorkspaceFeature.richMessageRefs: _ownerBeta,
+  WorkspaceFeature.calendarValidations: _ownerBeta,
   WorkspaceFeature.usageRecords: _allowances,
-  WorkspaceFeature.reportDesignExchange: _legacy,
-  WorkspaceFeature.reportLayouts: _legacy,
-  WorkspaceFeature.personalInfo: _legacy,
-  WorkspaceFeature.managedProfiles: _legacy,
-  WorkspaceFeature.managedProfileAccess: _legacy,
-  WorkspaceFeature.numberSequences: _legacy,
-  WorkspaceFeature.workspaceStatus: _legacy,
-  WorkspaceFeature.expenseRepartitionWizard: _legacy,
-  WorkspaceFeature.multiSite: _legacy,
+  WorkspaceFeature.reportDesignExchange: _ownerBeta,
+  WorkspaceFeature.reportLayouts: _ownerBeta,
+  WorkspaceFeature.personalInfo: _ownerBeta,
+  WorkspaceFeature.managedProfiles: _ownerBeta,
+  WorkspaceFeature.managedProfileAccess: _ownerBeta,
+  WorkspaceFeature.numberSequences: _ownerBeta,
+  WorkspaceFeature.workspaceStatus: _ownerBeta,
+  WorkspaceFeature.expenseRepartitionWizard: _ownerBeta,
+  WorkspaceFeature.multiSite: _ownerBeta,
   WorkspaceFeature.siteDocuments: _legacy,
-  WorkspaceFeature.vatGroups: _legacy,
-  WorkspaceFeature.vatRateHistory: _legacy,
-  WorkspaceFeature.vatCounterparty: _legacy,
-  WorkspaceFeature.environmentPairs: _legacy,
-  WorkspaceFeature.deployments: _legacy,
-  WorkspaceFeature.seatDayTimeline: _legacy,
-  WorkspaceFeature.memberPaymentTerms: _legacy,
-  WorkspaceFeature.reportTexts: _legacy,
-  WorkspaceFeature.usageReport: _legacy,
-  WorkspaceFeature.vatReport: _legacy,
-  WorkspaceFeature.letterStandard: _legacy,
-  WorkspaceFeature.priceNegotiations: _legacy,
-  WorkspaceFeature.scheduledExpenses: _legacy,
-  WorkspaceFeature.uniqueMonograms: _legacy,
-  WorkspaceFeature.messageGestures: _legacy,
-  WorkspaceFeature.subscriptionInvoices: _legacy,
-  WorkspaceFeature.usageInvoices: _legacy,
-  WorkspaceFeature.invoiceSettlement: _legacy,
-  WorkspaceFeature.invoiceJourney: _legacy,
+  WorkspaceFeature.vatGroups: _ownerBeta,
+  WorkspaceFeature.vatRateHistory: _ownerBeta,
+  WorkspaceFeature.vatCounterparty: _ownerBeta,
+  WorkspaceFeature.environmentPairs: _ownerBeta,
+  WorkspaceFeature.deployments: _ownerBeta,
+  WorkspaceFeature.seatDayTimeline: _ownerBeta,
+  WorkspaceFeature.memberPaymentTerms: _ownerBeta,
+  WorkspaceFeature.reportTexts: _ownerBeta,
+  WorkspaceFeature.usageReport: _ownerBeta,
+  WorkspaceFeature.vatReport: _ownerBeta,
+  WorkspaceFeature.letterStandard: _ownerBeta,
+  WorkspaceFeature.priceNegotiations: _ownerBeta,
+  WorkspaceFeature.scheduledExpenses: _ownerBeta,
+  WorkspaceFeature.uniqueMonograms: _ownerBeta,
+  WorkspaceFeature.messageGestures: _ownerBeta,
+  WorkspaceFeature.subscriptionInvoices: _ownerBeta,
+  WorkspaceFeature.usageInvoices: _ownerBeta,
+  WorkspaceFeature.invoiceSettlement: _ownerBeta,
+  WorkspaceFeature.invoiceJourney: _ownerBeta,
   WorkspaceFeature.bookingGate: _booking,
-  WorkspaceFeature.calendarViews: _legacy,
-  WorkspaceFeature.messagesHub: _legacy,
-  WorkspaceFeature.reportDesigner: _legacy,
-  WorkspaceFeature.memberPage: _legacy,
-  WorkspaceFeature.invoicingWizard: _legacy,
+  WorkspaceFeature.calendarViews: _ownerBeta,
+  WorkspaceFeature.messagesHub: _ownerBeta,
+  WorkspaceFeature.reportDesigner: _ownerBeta,
+  WorkspaceFeature.memberPage: _ownerBeta,
+  WorkspaceFeature.invoicingWizard: _ownerBeta,
   WorkspaceFeature.expenseRepartition: _sharedExpenses,
-  WorkspaceFeature.settlementFold: _legacy,
-  WorkspaceFeature.configurationTransfer: _legacy,
-  WorkspaceFeature.navigationStyle: _legacy,
+  WorkspaceFeature.settlementFold: _ownerBeta,
+  WorkspaceFeature.configurationTransfer: _ownerBeta,
+  WorkspaceFeature.navigationStyle: _ownerBeta,
   WorkspaceFeature.demoMode: _demo,
-  WorkspaceFeature.instanceWizard: _legacy,
-  WorkspaceFeature.memberOrigin: _legacy,
-  WorkspaceFeature.memberEnvironments: _legacy,
-  WorkspaceFeature.workspaceLibrary: _legacy,
-  WorkspaceFeature.singleRoomLevelNames: _legacy,
-  WorkspaceFeature.publicHolidays: _legacy,
-  WorkspaceFeature.workspaceVocabulary: _legacy,
+  WorkspaceFeature.instanceWizard: _ownerBeta,
+  WorkspaceFeature.memberOrigin: _ownerBeta,
+  WorkspaceFeature.memberEnvironments: _ownerBeta,
+  WorkspaceFeature.workspaceLibrary: _ownerBeta,
+  WorkspaceFeature.singleRoomLevelNames: _ownerBeta,
+  WorkspaceFeature.publicHolidays: _ownerBeta,
+  WorkspaceFeature.workspaceVocabulary: _ownerBeta,
   WorkspaceFeature.carnets: _allowances,
-  WorkspaceFeature.workspaceBranding: _legacy,
-  WorkspaceFeature.customRoles: _legacy,
-  WorkspaceFeature.customFields: _legacy,
-  WorkspaceFeature.decisionSurface: _legacy,
-  WorkspaceFeature.recordingPrivacy: _legacy,
-  WorkspaceFeature.memberAccountMenu: _legacy,
-  WorkspaceFeature.mcpAccess: _legacy,
-  WorkspaceFeature.calendarFileExport: _legacy,
-  WorkspaceFeature.memberGettingStarted: _legacy,
-  WorkspaceFeature.placeFeedback: _legacy,
-  WorkspaceFeature.publicListings: _legacy,
-  WorkspaceFeature.spaceInquiries: _legacy,
-  WorkspaceFeature.messageForwarding: _legacy,
-  WorkspaceFeature.captureProtection: _legacy,
-  WorkspaceFeature.holidayImport: _legacy,
-  WorkspaceFeature.capacityKpi: _legacy,
-  WorkspaceFeature.accountingBook: _legacy,
-  WorkspaceFeature.roleAssignment: _legacy,
-  WorkspaceFeature.taskRecorder: _legacy,
-  WorkspaceFeature.guestParticipation: _legacy,
-  WorkspaceFeature.messageMentions: _legacy,
-  WorkspaceFeature.supplyClassification: _legacy,
-  WorkspaceFeature.viesVerification: _legacy,
-  WorkspaceFeature.recapitulativeStatement: _legacy,
-  WorkspaceFeature.inputVat: _legacy,
+  WorkspaceFeature.workspaceBranding: _ownerBeta,
+  WorkspaceFeature.customRoles: _ownerBeta,
+  WorkspaceFeature.customFields: _ownerBeta,
+  WorkspaceFeature.decisionSurface: _ownerBeta,
+  WorkspaceFeature.recordingPrivacy: _ownerBeta,
+  WorkspaceFeature.memberAccountMenu: _ownerBeta,
+  WorkspaceFeature.mcpAccess: _ownerBeta,
+  WorkspaceFeature.calendarFileExport: _ownerBeta,
+  WorkspaceFeature.memberGettingStarted: _ownerBeta,
+  WorkspaceFeature.placeFeedback: _ownerBeta,
+  WorkspaceFeature.publicListings: _ownerBeta,
+  WorkspaceFeature.spaceInquiries: _ownerBeta,
+  WorkspaceFeature.messageForwarding: _ownerBeta,
+  WorkspaceFeature.captureProtection: _ownerBeta,
+  WorkspaceFeature.holidayImport: _ownerBeta,
+  WorkspaceFeature.capacityKpi: _ownerBeta,
+  WorkspaceFeature.accountingBook: _ownerBeta,
+  WorkspaceFeature.roleAssignment: _ownerBeta,
+  WorkspaceFeature.taskRecorder: _ownerBeta,
+  WorkspaceFeature.guestParticipation: _ownerBeta,
+  WorkspaceFeature.messageMentions: _ownerBeta,
+  WorkspaceFeature.supplyClassification: _ownerBeta,
+  WorkspaceFeature.viesVerification: _ownerBeta,
+  WorkspaceFeature.recapitulativeStatement: _ownerBeta,
+  WorkspaceFeature.inputVat: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a
@@ -438,8 +467,17 @@ List<String> validateFeatureAssessments({
     if (live.contains(key) && a.lifecycle == FeatureLifecycle.retired) {
       problems.add('$key: retired but still registered');
     }
-    if (a.maturity.index >= FeatureMaturity.beta.index && a.evidence.isEmpty) {
+    final owned = a.basis == AssessmentBasis.ownerDecision;
+    if (a.maturity.index >= FeatureMaturity.beta.index &&
+        a.evidence.isEmpty &&
+        !owned) {
       problems.add('$key: ${a.maturity.name} without evidence');
+    }
+    if (owned && a.maturity == FeatureMaturity.stable) {
+      problems.add('$key: stable on an owner decision');
+    }
+    if (owned && !a.rationale.contains(ownerBetaDecisionDate)) {
+      problems.add('$key: an owner decision that does not name its date');
     }
     for (final ref in a.evidence) {
       if (!evidenceIds.contains(ref)) {
