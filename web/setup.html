@@ -343,8 +343,10 @@ function upgradePerms(perms){for(const role of Object.keys(PERM_DEFAULTS)){const
 // refusal). #2356 — every member state of the European Union (0409) but
 // those whose law routes invoices through a national channel the app does
 // not speak yet: IT, ES, PL, RO (0410, #2358). #2359 — and the United
-// Kingdom (0419): VAT in sterling, land exempt unless opted to tax.
-const INVOICING_COUNTRIES=['AT','BE','BG','CY','CZ','DE','DK','EE','FI','FR','GB','GR','HR','HU','IE','LT','LU','LV','MT','NL','PT','SE','SI','SK'];
+// Kingdom (0419): VAT in sterling, land exempt unless opted to tax. #2360 —
+// and Switzerland (0422): the UID with its MWST suffix, MWST in francs, the
+// letting a package or exempt unless opted.
+const INVOICING_COUNTRIES=['AT','BE','BG','CH','CY','CZ','DE','DK','EE','FI','FR','GB','GR','HR','HU','IE','LT','LU','LV','MT','NL','PT','SE','SI','SK'];
 // [ISO code, currency, time zone, bank scheme]; names from the app's countryName* strings.
 const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','ch'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.

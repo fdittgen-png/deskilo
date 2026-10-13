@@ -102,8 +102,8 @@ select is(pg_temp.issue(c.cc, c.cur),
 
 -- ── the country rules ─────────────────────────────────────────────────
 select ok('seller_country_unsupported' = any(pg_temp.missing(
-          pg_temp.seller('CH','CHF','vat_registered','CHE123456789','REG-CH'))),
-          'outside the Union: still issued outside the app');
+          pg_temp.seller('NO','NOK','vat_registered','NO123456789MVA','REG-NO'))),
+          'outside the Union, the United Kingdom and Switzerland: still issued outside the app');
 select ok('vat_national_currency' = any(pg_temp.missing(
           pg_temp.seller('PL','EUR','vat_registered','PL1234567890','REG-PL', tag => '-eur'))),
           'a Polish seller invoicing VAT in euros: refused, the VAT must be in złoty (art. 230)');
