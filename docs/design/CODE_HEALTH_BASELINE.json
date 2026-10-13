@@ -1486,7 +1486,7 @@
   "functions": [
     {"id":"lib/app/entry_intents.dart#EntryIntentDraft.decode(String raw)","cog":17,"cyc":26,"len":58,"params":1},
     {"id":"lib/app/route_policy.dart#resolveDestination(RouteRequest request,RouteFacts facts)","cog":40,"cyc":48,"len":141,"params":2},
-    {"id":"lib/app/router.dart#router(Ref ref)","cog":132,"cyc":107,"len":830,"params":1},
+    {"id":"lib/app/router.dart#router(Ref ref)","cog":16,"cyc":22,"len":651,"params":1},
     {"id":"lib/app/shell/shell_drawer.dart#ShellDrawer.build(BuildContext context,WidgetRef ref)","cog":73,"cyc":66,"len":262,"params":2},
     {"id":"lib/app/shell/shell_screen.dart#ShellScreen.build(BuildContext context,WidgetRef ref)","cog":84,"cyc":55,"len":430,"params":2},
     {"id":"lib/core/backend/connection_outcome.dart#classifyConnectionError(Object error,{required String source,bool afterSend})","cog":23,"cyc":27,"len":55,"params":3},
