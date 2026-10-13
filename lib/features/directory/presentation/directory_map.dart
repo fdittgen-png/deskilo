@@ -41,6 +41,16 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
   bool _ready = false;
   static const _detailZoom = 16.0;
 
+  /// Addresses geocoded per page; the cards beyond stay unpinned.
+  static const _maxLookups = 20;
+
+  static DirectoryLocation? _lookedUp(PublicWorkspace w, WidgetRef ref, bool allowed) {
+    if (!allowed || w.location != null) return null;
+    final address = w.text('address').trim();
+    if (address.isEmpty) return null;
+    return ref.watch(directoryAddressLocationProvider(address)).value;
+  }
+
   @override
   void dispose() {
     _glide.dispose();
@@ -116,9 +126,18 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     final needsLookup = target != null && target.location == null;
     final lookup = needsLookup && address.isNotEmpty
         ? ref.watch(directoryAddressLocationProvider(address)) : null;
+    // #2473 — every workspace is a pin, not only the selected one: a card
+    // without coordinates is placed from its public address (one cached
+    // lookup per address). A failed lookup leaves that workspace on the
+    // cards only; the selected one still says so above the map.
+    var lookups = 0;
     final located = [
       for (final w in widget.workspaces)
-        if (w.location ?? (w == target ? lookup?.value : null) case final point?)
+        if (w.location ??
+                (w == target
+                    ? lookup?.value
+                    : _lookedUp(w, ref, lookups++ < _maxLookups))
+            case final point?)
           (workspace: w, location: point),
     ];
     final view = '${widget.selected}:${located.map((p) =>
@@ -174,7 +193,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         ),
         MarkerClusterLayerWidget(
           options: MarkerClusterLayerOptions(
-            maxClusterRadius: 64,
+            // The pill is ~130 px wide: cluster before two of them overlap.
+            maxClusterRadius: 120,
             size: const Size(48, 48),
             markers: [
               for (final p in located)

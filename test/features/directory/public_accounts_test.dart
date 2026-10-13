@@ -206,7 +206,37 @@ void main() {
     final controller = MapController.of(tester.element(find.byType(TileLayer)));
     expect(controller.camera.center.latitude, closeTo(43.46, .001));
     expect(find.text('Next'), findsOneWidget);
+    // #2473 — the old answer places its own pin far away; the camera stays
+    // on the selection, so that pin is out of view.
     expect(find.text('Old'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('every workspace without coordinates gets a pin once its address '
+      'resolves; close ones fold into a count (#2473)', (tester) async {
+    const a = PublicWorkspace('a', 'https://host.example', '', {
+      'name': 'Alpha', 'address': 'Street A',
+    });
+    const b = PublicWorkspace('b', 'https://host.example', '', {
+      'name': 'Beta', 'address': 'Street B',
+    });
+    const c = PublicWorkspace('c', 'https://host.example', '', {
+      'name': 'Gamma', 'address': 'Street C',
+    });
+    await tester.pumpWidget(ProviderScope(overrides: [
+      directoryAddressLocationProvider('Street A').overrideWith(
+          (ref) async => const DirectoryLocation(43.46, 3.42, label: 'A')),
+      directoryAddressLocationProvider('Street B').overrideWith(
+          (ref) async => const DirectoryLocation(48.86, 2.35, label: 'B')),
+      directoryAddressLocationProvider('Street C').overrideWith(
+          (ref) async => const DirectoryLocation(48.8601, 2.3501, label: 'C')),
+    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
+      workspaces: const [a, b, c], selected: null,
+      onSelect: (_) {}, tileProvider: _BlankTiles(),
+    )))));
+    await tester.pumpAndSettle();
+    expect(find.text('2'), findsOneWidget);
+    expect(find.byKey(const ValueKey('directory-pin-https://host.example/b')), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
