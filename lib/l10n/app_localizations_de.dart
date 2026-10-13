@@ -19425,6 +19425,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclFiled => 'Abgegeben';
 
   @override
+  String get vatDeclFilingBn =>
+      'Tragen Sie die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto ein (123456789 RT0001): die Datei nennt sie.';
+
+  @override
   String get vatDeclFilingPeriod =>
       'Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
 
@@ -19445,6 +19449,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatDeclGenerate => 'Vorbereiten';
+
+  @override
+  String get vatDeclGstQstCsv =>
+      'GST/HST- und QST-Meldung (CSV: Zeilen GST34 und FPZ-500)';
 
   @override
   String get vatDeclInputVat => 'Abziehbare Vorsteuer';

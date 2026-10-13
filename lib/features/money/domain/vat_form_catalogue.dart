@@ -53,6 +53,7 @@ VatTerm _sales({
   bool? correction,
   int vatSign = 0,
   int factor = 1,
+  Set<String>? schemes,
 }) => VatTerm.lines(
   VatLineSelector(
     rates: rates,
@@ -60,6 +61,7 @@ VatTerm _sales({
     categories: categories,
     correction: correction,
     vatSign: vatSign,
+    schemes: schemes,
   ),
   factor: factor,
 );
@@ -69,12 +71,14 @@ VatTerm _input({
   bool? correction,
   int vatSign = 0,
   int factor = 1,
+  Set<String>? schemes,
 }) => VatTerm.lines(
   VatLineSelector(
     input: true,
     categories: categories,
     correction: correction,
     vatSign: vatSign,
+    schemes: schemes,
   ),
   factor: factor,
 );
@@ -98,6 +102,9 @@ final List<VatFormSpec> vatFormCatalogue = [
   _modelo303,
   _lipe,
 ];
+
+/// #2361 — Revenu Québec's FPZ-500, QST part.
+VatFormSpec get qstFormSpec => _fpz500Qst;
 
 /// The form [country] files for a period ending on [periodEnd]: the
 /// latest layout already in force, the earliest one for an older period;

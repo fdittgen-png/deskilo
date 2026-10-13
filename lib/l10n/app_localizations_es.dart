@@ -19378,6 +19378,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclFiled => 'Presentada';
 
   @override
+  String get vatDeclFilingBn =>
+      'Introduzca el número de empresa GST/HST del espacio con su cuenta RT (123456789 RT0001): el archivo lo indica.';
+
+  @override
   String get vatDeclFilingPeriod =>
       'Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.';
 
@@ -19398,6 +19402,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclGenerate => 'Preparar';
+
+  @override
+  String get vatDeclGstQstCsv =>
+      'Declaración GST/HST y QST (CSV: líneas GST34 y FPZ-500)';
 
   @override
   String get vatDeclInputVat => 'IVA deducible';

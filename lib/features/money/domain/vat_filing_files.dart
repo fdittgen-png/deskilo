@@ -26,6 +26,12 @@
 //    never retypes a figure. Submitting through HMRC's API, with its
 //    fraud-prevention headers, needs a developer account and is not done
 //    here.
+//  * CA — the GST/HST return (GST34, lines 101-109) and, when the QST is
+//    charged or claimed, the QST part of Revenu Québec's FPZ-500 (lines
+//    203-209), as one CSV of line, label and amount that the owner keys
+//    into My Business Account or Mon dossier (#2361). Filing is the
+//    owner's: both channels need their own registration and are not used
+//    here.
 //
 // Both read the boxes `vatFormBoxes` fills, so the file and the PDF can
 // never disagree.
@@ -34,6 +40,7 @@ import 'package:xml/xml.dart';
 
 import '../../../core/time/date_text.dart';
 import 'vat_declaration.dart';
+import 'vat_filing_ca.dart';
 import 'vat_filing_ech0217.dart';
 
 /// Why a filing file cannot be written for a declaration.
@@ -49,6 +56,9 @@ enum VatFilingFileProblem {
 
   /// A Swiss return names the UID (CHE-123.456.789 and its check digit).
   uid,
+
+  /// A Canadian return names the business number with its RT account.
+  businessNumber,
 }
 
 class VatFilingFileException implements Exception {
@@ -92,6 +102,7 @@ class VatFilingParty {
     'FR' => 'FR',
     'GB' || 'UK' => 'GB',
     'CH' => 'CH',
+    'CA' => 'CA',
     _ => null,
   };
 }
@@ -146,6 +157,10 @@ class VatFilingParty {
         onReceipts: party.onReceipts,
         generatedAt: now,
       ),
+    ),
+    'CA' => (
+      fileName: 'gst-hst-qst-return-$start.csv',
+      text: gstQstReturnCsv(declaration: declaration, businessNumber: party.vatId),
     ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),
   };

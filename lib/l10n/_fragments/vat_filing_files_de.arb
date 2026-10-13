@@ -35,5 +35,13 @@
   "vatDeclMwstXml": "MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)",
   "@vatDeclMwstXml": {
     "description": "#2360 VAT filing files: vatDeclMwstXml"
+  },
+  "vatDeclGstQstCsv": "GST/HST- und QST-Meldung (CSV: Zeilen GST34 und FPZ-500)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
+  },
+  "vatDeclFilingBn": "Tragen Sie die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto ein (123456789 RT0001): die Datei nennt sie.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
   }
 }

@@ -4,6 +4,7 @@ import 'package:xml/xml.dart';
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'invoice.dart';
+import 'vat_components.dart';
 import 'vat_form_catalogue.dart';
 import 'vat_forms.dart';
 import 'vat_tax_point.dart';
@@ -24,6 +25,7 @@ class VatDeclarationLine {
     this.correctsStart,
     this.correctsEnd,
     this.direction = 'output',
+    this.components = const [],
   });
 
   final double percent;
@@ -52,6 +54,10 @@ class VatDeclarationLine {
   final String direction;
   bool get isInput => direction == 'input';
 
+  /// #2361 — the taxes this line is made of (GST and QST of a Canadian
+  /// line), as the server froze them (0425); empty when it did not split.
+  final List<VatComponent> components;
+
   Map<String, dynamic> toJson() => {
         'percent': percent,
         if (category.isNotEmpty) 'category': category,
@@ -60,6 +66,8 @@ class VatDeclarationLine {
         'vat_cents': vatCents,
         'invoice_count': invoiceCount,
         if (isInput) 'direction': 'input',
+        if (components.isNotEmpty)
+          'components': [for (final c in components) c.toJson()],
         if (isCorrection) ...{
           'correction': true,
           'corrects': corrects,
@@ -82,6 +90,7 @@ class VatDeclarationLine {
       correctsStart: correction ? row.dateTimeOrNull('corrects_start') : null,
       correctsEnd: correction ? row.dateTimeOrNull('corrects_end') : null,
       direction: row.stringOr('direction') == 'input' ? 'input' : 'output',
+      components: row.objects('components', VatComponent.fromReader),
     );
   }
 }
@@ -200,6 +209,16 @@ List<VatFormBox> vatFormBoxes(
       genericVatForm(lines),
   lines,
 );
+
+/// #2361 — the QST part of Revenu Québec's FPZ-500, for a Canadian
+/// declaration that charged or claimed the QST; empty otherwise.
+List<VatFormBox> vatQstFormBoxes(List<VatDeclarationLine> lines) {
+  final hasQst = lines.any((l) => (l.components.isNotEmpty
+          ? l.components
+          : vatComponentsOf('CA', l.percent, l.netCents, l.vatCents))
+      .any((c) => c.scheme == 'QST' && c.taxCents != 0));
+  return hasQst ? fillVatForm(qstFormSpec, lines) : const [];
+}
 
 /// The machine-readable export (#534): a compact self-describing XML any
 /// EDI partner, accountant tool or spreadsheet can ingest. Amounts in

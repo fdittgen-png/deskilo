@@ -21960,6 +21960,10 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingBn": "Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.",
+  "@vatDeclFilingBn": {
+    "description": "#2361 VAT filing files: vatDeclFilingBn"
+  },
   "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
@@ -21983,6 +21987,10 @@
   "vatDeclGenerate": "Prepare",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
+  },
+  "vatDeclGstQstCsv": "GST/HST and QST return (CSV: GST34 and FPZ-500 lines)",
+  "@vatDeclGstQstCsv": {
+    "description": "#2361 VAT filing files: vatDeclGstQstCsv"
   },
   "vatDeclInputVat": "Deductible VAT",
   "@vatDeclInputVat": {

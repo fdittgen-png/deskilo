@@ -13,6 +13,7 @@
 // fixed asset), a direction (sales or deductible VAT) and whether it
 // corrects a filed return. A box selects lines by those four and adds up
 // their base or their tax.
+import 'vat_components.dart';
 import 'vat_declaration.dart';
 
 /// How a form rounds an amount kept in cents.
@@ -42,7 +43,13 @@ class VatLineSelector {
     this.categories,
     this.correction,
     this.vatSign = 0,
+    this.schemes,
   });
+
+  /// #2361 — only these taxes of a line that is made of several (`GST`,
+  /// `HST`, `QST`): the term then adds up the matching components, not the
+  /// whole line. A line the server did not split counts as GST/HST.
+  final Set<String>? schemes;
 
   /// Deductible VAT (true) or sales (false).
   final bool input;
@@ -69,6 +76,26 @@ class VatLineSelector {
       (categories == null || categories!.contains(_category(line))) &&
       (correction == null || line.isCorrection == correction) &&
       (vatSign == 0 || line.vatCents.sign == vatSign);
+}
+
+/// What [line] contributes to a term: the whole base or tax, or with
+/// [VatLineSelector.schemes] the part of the matching taxes. A Canadian line
+/// without the server's split is split here with the same arithmetic.
+int _amountOf(VatLineSelector selector, VatDeclarationLine line, bool ofTax) {
+  final schemes = selector.schemes;
+  if (schemes == null) return ofTax ? line.vatCents : line.netCents;
+  final parts = line.components.isNotEmpty
+      ? line.components
+      : vatComponentsOf('CA', line.percent, line.netCents, line.vatCents);
+  if (parts.isEmpty) {
+    final federal = schemes.contains('GST') || schemes.contains('HST');
+    return !federal ? 0 : (ofTax ? line.vatCents : line.netCents);
+  }
+  var total = 0;
+  for (final c in parts) {
+    if (schemes.contains(c.scheme)) total += ofTax ? c.taxCents : c.baseCents;
+  }
+  return total;
 }
 
 /// A line's category, a zero-rate line an older client stored without one
@@ -192,7 +219,7 @@ List<VatFormBox> fillVatForm(VatFormSpec spec, List<VatDeclarationLine> lines) {
       if (selector != null) {
         for (final l in lines) {
           if (selector.matches(l)) {
-            total += t.factor * (ofTax ? l.vatCents : l.netCents);
+            total += t.factor * _amountOf(selector, l, ofTax);
           }
         }
       } else {
