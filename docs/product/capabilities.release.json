@@ -721,31 +721,31 @@
   "features": [
     {
       "key": "accessorySupplements",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "accountingBook",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "adminInvoicing",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "adminLevelAssign",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "adminSeatBlocking",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -759,13 +759,13 @@
     },
     {
       "key": "badgeSignIn",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "bookForOthers",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -787,43 +787,43 @@
     },
     {
       "key": "calendarFileExport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "calendarHub",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "calendarTab",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "calendarValidations",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "calendarViews",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "capacityKpi",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "captureProtection",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -837,31 +837,31 @@
     },
     {
       "key": "coOwner",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "configurationTransfer",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "customFields",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "customRoles",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "dataAccessLog",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -875,7 +875,7 @@
     },
     {
       "key": "decisionSurface",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -897,19 +897,19 @@
     },
     {
       "key": "deployments",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "documents",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "dunning",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -923,13 +923,13 @@
     },
     {
       "key": "environmentPairs",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "eventsTab",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -943,7 +943,7 @@
     },
     {
       "key": "expenseRepartitionWizard",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -957,55 +957,55 @@
     },
     {
       "key": "formHelpHints",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "guestParticipation",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "holidayImport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "inputVat",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "instanceWizard",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "invoiceAddressWindow",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "invoiceJourney",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "invoicePdfTemplate",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "invoiceSettlement",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1019,175 +1019,175 @@
     },
     {
       "key": "invoicingWizard",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "kioskMemberPhotos",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "kioskMode",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "letterStandard",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "levelBooking",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "managedProfileAccess",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "managedProfiles",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "mcpAccess",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberAccountMenu",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberDataExport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberEnvironments",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberGettingStarted",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberNotifications",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberOrigin",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberPage",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberPaymentTerms",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "memberReports",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "membersDirectory",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "messageForwarding",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "messageGestures",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "messageMentions",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "messagesHub",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "moneyTab",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "multiSite",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "navigationStyle",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "nfcBadges",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "nfcSeatTags",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "notificationGrouping",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "numberSequences",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1204,139 +1204,139 @@
     },
     {
       "key": "paymentReminders",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "pdfExport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "personalInfo",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "placeFeedback",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "planMemberPhotos",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "planObjectDelete",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "priceNegotiations",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "publicHolidays",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "publicListings",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "pushNotifications",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "qrBadges",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "recapitulativeStatement",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "recordingPrivacy",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "regionalFormats",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "reportDesignExchange",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "reportDesigner",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "reportLayouts",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "reportTexts",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "richMessageRefs",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "roleAssignment",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "roleManagement",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "scheduledExpenses",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "seatDayTimeline",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1350,19 +1350,19 @@
     },
     {
       "key": "services",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "settlementFold",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "singleRoomLevelNames",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1374,25 +1374,25 @@
     },
     {
       "key": "spaceInquiries",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "spaceQrCodes",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "subscriptionInvoices",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "supplyClassification",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1406,25 +1406,25 @@
     },
     {
       "key": "taskRecorder",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "uiAnimations",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "uniqueMonograms",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "usageInvoices",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1438,7 +1438,7 @@
     },
     {
       "key": "usageReport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1460,19 +1460,19 @@
     },
     {
       "key": "vatCounterparty",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "vatDeclarations",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "vatGroups",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1487,55 +1487,55 @@
     },
     {
       "key": "vatRateHistory",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "vatReport",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "viesVerification",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "whatsappIntegration",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "workingHours",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "workspaceBranding",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "workspaceLibrary",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "workspaceStatus",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
     {
       "key": "workspaceVocabulary",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     }

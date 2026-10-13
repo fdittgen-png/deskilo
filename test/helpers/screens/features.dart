@@ -82,3 +82,14 @@ SwitchListTile switchTitled(WidgetTester tester, String title) =>
         matching: find.byType(SwitchListTile),
       ),
     );
+
+/// #2519 — every shipped feature is beta, and switching a beta feature ON
+/// asks for consent first (#1851): accept it when it is asked, do nothing
+/// when it is not. A switch OFF never asks.
+Future<void> acceptOptInIfAsked(WidgetTester tester) async {
+  await tester.pumpAndSettle();
+  final confirm = find.byKey(const ValueKey('feature-opt-in-confirm'));
+  if (confirm.evaluate().isEmpty) return;
+  await tester.tap(confirm);
+  await tester.pumpAndSettle();
+}

@@ -116,13 +116,13 @@ const _legacy = FeatureAssessment.unreviewed(
 
 /// The date of the owner's declaration; an [AssessmentBasis.ownerDecision]
 /// rationale must carry it so the claim is traceable (#2519).
-const ownerBetaDecisionDate = '2026-10-13';
+const _ownerBetaDecisionDate = '2026-10-13';
 
 const _ownerBeta = FeatureAssessment(
   maturity: FeatureMaturity.beta,
   basis: AssessmentBasis.ownerDecision,
   rationale:
-      'Owner decision of $ownerBetaDecisionDate (#2519): every shipped '
+      'Owner decision of $_ownerBetaDecisionDate (#2519): every shipped '
       'feature is declared beta. The evidence-based review of #1850 '
       'continues: a feature may gain evidence ids, be raised to stable only '
       'on evidence, or be lowered by the owner.',
@@ -428,6 +428,23 @@ FeatureAssessment featureAssessmentOf(
   Map<WorkspaceFeature, FeatureAssessment> assessments = featureAssessments,
 }) => assessments[feature] ?? _legacy;
 
+/// What is wrong with how [a] is backed: beta or stable needs evidence
+/// unless it is the owner's declaration (#2519), which is beta only and
+/// names its date.
+List<String> _basisProblems(String key, FeatureAssessment a) {
+  final owned = a.basis == AssessmentBasis.ownerDecision;
+  return [
+    if (a.maturity.index >= FeatureMaturity.beta.index &&
+        a.evidence.isEmpty &&
+        !owned)
+      '$key: ${a.maturity.name} without evidence',
+    if (owned && a.maturity == FeatureMaturity.stable)
+      '$key: stable on an owner decision',
+    if (owned && !a.rationale.contains(_ownerBetaDecisionDate))
+      '$key: an owner decision that does not name its date',
+  ];
+}
+
 /// What is wrong with a ledger, as one sentence per problem — empty when
 /// it is sound. [evidenceIds] are the capability ids the evidence ledger
 /// actually declares.
@@ -467,18 +484,7 @@ List<String> validateFeatureAssessments({
     if (live.contains(key) && a.lifecycle == FeatureLifecycle.retired) {
       problems.add('$key: retired but still registered');
     }
-    final owned = a.basis == AssessmentBasis.ownerDecision;
-    if (a.maturity.index >= FeatureMaturity.beta.index &&
-        a.evidence.isEmpty &&
-        !owned) {
-      problems.add('$key: ${a.maturity.name} without evidence');
-    }
-    if (owned && a.maturity == FeatureMaturity.stable) {
-      problems.add('$key: stable on an owner decision');
-    }
-    if (owned && !a.rationale.contains(ownerBetaDecisionDate)) {
-      problems.add('$key: an owner decision that does not name its date');
-    }
+    problems.addAll(_basisProblems(key, a));
     for (final ref in a.evidence) {
       if (!evidenceIds.contains(ref)) {
         problems.add('$key: unknown evidence "$ref"');

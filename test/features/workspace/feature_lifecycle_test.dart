@@ -110,7 +110,7 @@ void main() {
           WorkspaceFeature.carnets: const FeatureAssessment(
             maturity: FeatureMaturity.beta,
             basis: AssessmentBasis.ownerDecision,
-            rationale: 'Owner decision of $ownerBetaDecisionDate: declared beta',
+            rationale: 'Owner decision of 2026-10-13: declared beta',
           ),
         }),
         isEmpty,
@@ -120,7 +120,7 @@ void main() {
           WorkspaceFeature.carnets: const FeatureAssessment(
             maturity: FeatureMaturity.stable,
             basis: AssessmentBasis.ownerDecision,
-            rationale: 'Owner decision of $ownerBetaDecisionDate: declared',
+            rationale: 'Owner decision of 2026-10-13: declared',
           ),
         }),
         ['carnets: stable on an owner decision'],
