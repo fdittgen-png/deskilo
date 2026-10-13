@@ -60,6 +60,15 @@ int accountantGrossCents(Invoice invoice) => invoice.isCreditNote
 /// The columns, in order — the handoff report quotes them.
 const List<String> accountantCsvColumns = _columns;
 
+/// #2361 — appended, for a file that holds an invoice with its taxes apart
+/// (Canada): the GST/HST, the QST and the PST of each invoice in their own
+/// column. A file without such an invoice keeps the columns it always had.
+const List<String> _taxColumns = [
+  'vat_gst_hst',
+  'vat_qst',
+  'vat_pst',
+];
+
 const _columns = [
   'invoice_number',
   'issued_on',
@@ -106,6 +115,12 @@ String buildAccountantCsv({
     });
   final rows = ordered.where((i) => i.kind != InvoiceKind.settlement);
 
+  // #2361 — the taxes apart, only when an invoice states them.
+  final withTaxes = rows.any(
+    (i) => i.vatTotals.any((t) => t.components.isNotEmpty),
+  );
+  final columns = [..._columns, if (withTaxes) ..._taxColumns];
+
   final buffer = StringBuffer()
     ..writeln('# DesKilo accounting export — ${_inertPreamble(workspaceName)}')
     ..writeln('# generated ${generatedAt.toIso8601String()}')
@@ -116,7 +131,7 @@ String buildAccountantCsv({
     // an accountant must not mistake it for a mapped journal.
     ..writeln('# NOT a journal: no account numbers, no double entry. '
         'These are the documents as issued.')
-    ..writeln(_columns.join(','));
+    ..writeln(columns.join(','));
 
   for (final invoice in rows) {
     final match = matches[invoice.id];
@@ -142,7 +157,11 @@ String buildAccountantCsv({
       // them — the single most common surprise in a coworking ledger.
       _accountantCsvText([
         for (final total in invoice.vatTotals)
-          '${total.percent.toStringAsFixed(2)}%',
+          // #2361 — a Canadian rate is the taxes it is made of.
+          if (total.components.isNotEmpty)
+            total.components.map((c) => '${c.scheme} ${_rateText(c.percent)}%').join(' + ')
+          else
+            '${total.percent.toStringAsFixed(2)}%',
       ].join(' ')),
       if (invoice.isVoided) 'voided' else 'issued',
       day(invoice.voidedAt),
@@ -157,7 +176,29 @@ String buildAccountantCsv({
       // looking unpaid when someone is mid-validation on it.
       _accountantCsvText(match?.status),
       _accountantCsvText(match?.note),
+      if (withTaxes)
+        for (final schemes in const [
+          {'GST', 'HST'},
+          {'QST'},
+          {'PST'},
+        ])
+          minorToText(_taxOf(invoice, schemes), invoice.currency),
     ].join(','));
   }
   return buffer.toString();
 }
+
+/// The tax of [invoice] in the given schemes, from the components it froze.
+int _taxOf(Invoice invoice, Set<String> schemes) => invoice.vatTotals.fold(
+  0,
+  (sum, t) =>
+      sum +
+      t.components
+          .where((c) => schemes.contains(c.scheme))
+          .fold(0, (a, c) => a + c.taxCents),
+);
+
+/// 5 -> 5, 9.975 -> 9.975.
+String _rateText(double value) => value == value.roundToDouble()
+    ? value.toStringAsFixed(0)
+    : value.toString();
