@@ -11739,6 +11739,34 @@
   "tipWorkspaceSettingsPay": "Pour indiquer aux membres comment vous payer : remplissez les instructions de paiement.",
   "tipWorkspaceSettingsSave": "Pour garder vos changements : touchez « Enregistrer » en bas avant de quitter.",
   "tipWorkspaceSettingsWording": "Pour nommer les choses à votre façon — places, niveaux, réservations : changez les termes.",
+  "ukFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Un poste avec services et équipements en un seul forfait est taxé au taux normal, avec ou sans option.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  },
+  "ukLandTaxHelp": "Au Royaume-Uni, une licence d'occupation d'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l'immeuble. L'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukLandTaxTitle": "Immobilier et option pour la taxation",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukOptionToTax": "Nous avons opté pour la taxation de l'immeuble",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Option en vigueur depuis le (AAAA-MM-JJ)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Référence de notification au HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
   "unblockAction": "Débloquer",
   "unblockDone": "Débloqué.",
   "usageAsk": "Facturer le temps où j'étais là",
@@ -11989,6 +12017,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Saisissez le numéro d'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Préparer",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12008,6 +12040,10 @@
   "vatDeclMarkFiledConfirm": "Confirmez avoir déposé vous-même cette déclaration auprès de l’administration fiscale (son portail ou votre comptable) et saisissez la référence de l’accusé de réception. Elle devient ensuite immuable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "Fichier MTD (CSV, neuf cases)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Base HT",
   "@vatDeclNet": {

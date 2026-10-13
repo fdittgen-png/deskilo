@@ -614,7 +614,14 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
    "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
    "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
-   "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."
+   "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration.",
+   "legalLandTax": "Land and the option to tax",
+   "legalLandTaxHint": "In the United Kingdom a licence to occupy a desk or an office is exempt (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.",
+   "legalOptionToTax": "We opted to tax the building",
+   "legalOptionDate": "Option effective from",
+   "legalOptionRef": "HMRC notification reference",
+   "legalFacilitiesPackage": "We sell a serviced package of facilities",
+   "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not."
   },
   "feature": {
    "calendarTab": [
@@ -1969,7 +1976,14 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
    "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
    "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
-   "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."
+   "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration.",
+   "legalLandTax": "Immobilier et option pour la taxation",
+   "legalLandTaxHint": "Au Royaume-Uni, une licence d'occupation d'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l'immeuble. L'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.",
+   "legalOptionToTax": "Nous avons opté pour la taxation de l'immeuble",
+   "legalOptionDate": "Option en vigueur depuis le",
+   "legalOptionRef": "Référence de notification au HMRC",
+   "legalFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
+   "legalFacilitiesPackageDesc": "Poste, services et équipements en un seul forfait sont taxés au taux normal, avec ou sans option."
   },
   "feature": {
    "calendarTab": [
@@ -3324,7 +3338,14 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
    "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
    "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
-   "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."
+   "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration.",
+   "legalLandTax": "Grundstücke und Option zur Besteuerung",
+   "legalLandTaxHint": "Im Vereinigten Königreich ist die Überlassung eines Arbeitsplatzes oder Büros steuerfrei (VAT Act 1994, Schedule 9, Group 1), außer Sie haben für das Gebäude zur Besteuerung optiert. Die Option macht die Miete steuerpflichtig zum Regelsatz und erlaubt den Vorsteuerabzug auf die Kosten; das HMRC muss informiert werden.",
+   "legalOptionToTax": "Wir haben für das Gebäude zur Besteuerung optiert",
+   "legalOptionDate": "Option wirksam ab",
+   "legalOptionRef": "Mitteilungsreferenz beim HMRC",
+   "legalFacilitiesPackage": "Wir verkaufen ein Servicepaket (Serviced Office)",
+   "legalFacilitiesPackageDesc": "Arbeitsplatz, Leistungen und Ausstattung als ein Paket werden zum Regelsatz besteuert, mit oder ohne Option."
   },
   "feature": {
    "calendarTab": [
@@ -4679,7 +4700,14 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Conectar el proveedor de pagos en línea en la app: sus claves nunca van en el archivo.",
    "todoEinvoice": "Introducir en la app la dirección y las credenciales de la plataforma de facturación electrónica: el archivo nunca las aplica.",
    "todoInvoiceOutside": "Las facturas de un espacio en {country} se emiten fuera de la app.",
-   "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración."
+   "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración.",
+   "legalLandTax": "Inmuebles y opción de tributación",
+   "legalLandTaxHint": "En el Reino Unido, la cesión de un puesto o de una oficina está exenta (VAT Act 1994, anexo 9, grupo 1) salvo que se haya optado por gravar el edificio. La opción grava el alquiler al tipo general y permite deducir el IVA de sus costes; hay que informar a HMRC.",
+   "legalOptionToTax": "Hemos optado por gravar el edificio",
+   "legalOptionDate": "Opción vigente desde",
+   "legalOptionRef": "Referencia de notificación a HMRC",
+   "legalFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
+   "legalFacilitiesPackageDesc": "Puesto, servicios e instalaciones en un solo paquete tributan al tipo general, con o sin opción."
   },
   "feature": {
    "calendarTab": [
@@ -6034,7 +6062,14 @@ window.SETUP_L10N={
    "todoOnlineProvider": "Collegare il fornitore di pagamenti online nell'app: le sue chiavi non vanno mai nel file.",
    "todoEinvoice": "Inserire nell'app l'indirizzo e le credenziali della piattaforma di fatturazione elettronica: il file non le applica mai.",
    "todoInvoiceOutside": "Le fatture di uno spazio in {country} si emettono fuori dall'app.",
-   "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione."
+   "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione.",
+   "legalLandTax": "Immobili e opzione per l'imposizione",
+   "legalLandTaxHint": "Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l'imposizione dell'edificio. L'opzione rende il canone imponibile all'aliquota ordinaria e consente di detrarre l'IVA sui costi; l'HMRC va informato.",
+   "legalOptionToTax": "Abbiamo optato per l'imposizione dell'edificio",
+   "legalOptionDate": "Opzione efficace dal",
+   "legalOptionRef": "Riferimento di notifica all'HMRC",
+   "legalFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
+   "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione."
   },
   "feature": {
    "calendarTab": [

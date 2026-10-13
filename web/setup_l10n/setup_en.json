@@ -609,5 +609,12 @@
  "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
  "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
  "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
- "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."
+ "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration.",
+ "legalLandTax": "Land and the option to tax",
+ "legalLandTaxHint": "In the United Kingdom a licence to occupy a desk or an office is exempt (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.",
+ "legalOptionToTax": "We opted to tax the building",
+ "legalOptionDate": "Option effective from",
+ "legalOptionRef": "HMRC notification reference",
+ "legalFacilitiesPackage": "We sell a serviced package of facilities",
+ "legalFacilitiesPackageDesc": "Desk, services and facilities as one package are standard-rated, option or not."
 }

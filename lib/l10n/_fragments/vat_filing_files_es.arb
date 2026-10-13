@@ -19,5 +19,13 @@
   "vatDeclFilingTaxNumberField": "Número fiscal (Steuernummer)",
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  },
+  "vatDeclMtdCsv": "Archivo MTD (CSV, nueve casillas)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclFilingVatNumber": "Introduzca el número de registro de IVA del espacio (GB y nueve dígitos): el archivo lo indica.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
   }
 }

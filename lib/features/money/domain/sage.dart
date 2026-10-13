@@ -4,6 +4,7 @@ import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
+import 'vat_rate.dart';
 
 /// Sage 50's **audit-trail CSV** (#669) — the import shape the British
 /// and Irish Sage lines read.
@@ -53,6 +54,24 @@ class SageAccounts {
   /// which is the one an exempt workspace wants, and getting it wrong
   /// puts turnover on a VAT return that should never have seen it.
   final String taxCode;
+
+  /// #2359 — Sage 50 UK's own codes by treatment: T0 zero-rated, T2
+  /// exempt, T5 the 5 % reduced rate. A zero-rated supply stays on the
+  /// VAT return (Box 6) and so does an exempt one, but they are not the
+  /// same line on a partial-exemption calculation.
+  static const String zeroRatedCode = 'T0';
+  static const String exemptCode = 'T2';
+  static const String reducedCode = 'T5';
+
+  /// The Sage code of one VAT breakdown line.
+  String codeFor(InvoiceVatTotal total) => switch (total.category) {
+        'Z' => zeroRatedCode,
+        'E' => exemptCode,
+        'S' when total.percent == 5 => reducedCode,
+        'S' when total.percent > 0 => taxCode,
+        'S' => zeroRatedCode,
+        _ => noTaxCode,
+      };
 
   /// The code for a line that carries no tax. `T9` — out of scope —
   /// rather than `T0`, because a zero-RATED supply still belongs on the
@@ -123,19 +142,33 @@ String buildSageFile({
     // The tax split comes from the invoice's own 0072 snapshot, which is
     // what the signature covers. Deriving it here would risk disagreeing
     // with the document the customer holds.
-    final net = invoice.netCents;
-    final tax = invoice.vatCents;
-    row(
-      type: 'SI',
-      nominal: accounts.sales,
-      on: invoice.issuedAt,
-      reference: invoice.number,
-      details: invoice.title,
-      netCents: net,
-      taxCode: tax > 0 ? accounts.taxCode : SageAccounts.noTaxCode,
-      taxCents: tax,
-      customer: customer,
-    );
+    //
+    // #2359 — a credit note is an SC with POSITIVE amounts; a negative SI
+    // is read by Sage as an invoice of negative value and the debtor
+    // balance moves the wrong way. One row per VAT rate and category, each
+    // with its own code (T1, T5, T0, T2).
+    int amount(int cents) => invoice.isCreditNote ? cents.abs() : cents;
+    final type = invoice.isCreditNote ? 'SC' : 'SI';
+    final parts = invoice.vatTotals.isEmpty
+        ? [(net: invoice.netCents, tax: invoice.vatCents,
+            code: invoice.vatCents > 0 ? accounts.taxCode : SageAccounts.noTaxCode)]
+        : [
+            for (final t in invoice.vatTotals)
+              (net: t.netCents, tax: t.vatCents, code: accounts.codeFor(t)),
+          ];
+    for (final part in parts) {
+      row(
+        type: type,
+        nominal: accounts.sales,
+        on: invoice.issuedAt,
+        reference: invoice.number,
+        details: invoice.title,
+        netCents: amount(part.net),
+        taxCode: part.code,
+        taxCents: amount(part.tax),
+        customer: customer,
+      );
+    }
 
     final match = matches[invoice.id];
     // A PENDING match is a settlement still awaiting validation (0067).

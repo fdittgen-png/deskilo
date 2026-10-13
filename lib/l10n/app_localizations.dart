@@ -32084,6 +32084,48 @@ abstract class AppLocalizations {
   /// **'To call things your own way — seats, levels, bookings: change the wording.'**
   String get tipWorkspaceSettingsWording;
 
+  /// #2359: ukFacilitiesPackage
+  ///
+  /// In en, this message translates to:
+  /// **'We sell a serviced package of facilities'**
+  String get ukFacilitiesPackage;
+
+  /// #2359: ukFacilitiesPackageHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A desk with services and facilities as one package is standard-rated, option or not.'**
+  String get ukFacilitiesPackageHelp;
+
+  /// #2359: ukLandTaxHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A licence to occupy a desk or an office is exempt in the United Kingdom (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.'**
+  String get ukLandTaxHelp;
+
+  /// #2359: ukLandTaxTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Land and the option to tax'**
+  String get ukLandTaxTitle;
+
+  /// #2359: ukOptionToTax
+  ///
+  /// In en, this message translates to:
+  /// **'We opted to tax the building'**
+  String get ukOptionToTax;
+
+  /// #2359: ukOptionToTaxDate
+  ///
+  /// In en, this message translates to:
+  /// **'Option effective from (YYYY-MM-DD)'**
+  String get ukOptionToTaxDate;
+
+  /// #2359: ukOptionToTaxReference
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC notification reference'**
+  String get ukOptionToTaxReference;
+
   /// No description provided for @unblockAction.
   ///
   /// In en, this message translates to:
@@ -32954,6 +32996,12 @@ abstract class AppLocalizations {
   /// **'Tax number (Steuernummer)'**
   String get vatDeclFilingTaxNumberField;
 
+  /// #2359 VAT filing files: vatDeclFilingVatNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.'**
+  String get vatDeclFilingVatNumber;
+
   /// Generate-declaration button
   ///
   /// In en, this message translates to:
@@ -32983,6 +33031,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.'**
   String get vatDeclMarkFiledConfirm;
+
+  /// #2359 VAT filing files: vatDeclMtdCsv
+  ///
+  /// In en, this message translates to:
+  /// **'MTD bridging file (CSV, nine boxes)'**
+  String get vatDeclMtdCsv;
 
   /// Net taxable base column
   ///

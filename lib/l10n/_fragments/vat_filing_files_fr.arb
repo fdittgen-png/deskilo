@@ -19,5 +19,13 @@
   "vatDeclFilingTaxNumberField": "Numéro fiscal (Steuernummer)",
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
+  },
+  "vatDeclMtdCsv": "Fichier MTD (CSV, neuf cases)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclFilingVatNumber": "Saisissez le numéro d'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
   }
 }

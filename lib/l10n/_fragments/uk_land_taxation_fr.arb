@@ -1,0 +1,30 @@
+{
+  "ukLandTaxTitle": "Immobilier et option pour la taxation",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukLandTaxHelp": "Au Royaume-Uni, une licence d'occupation d'un bureau est exonérée (VAT Act 1994, annexe 9, groupe 1) sauf option pour la taxation de l'immeuble. L'option rend le loyer taxable au taux normal et permet de récupérer la TVA sur ses coûts ; le HMRC doit en être informé.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukOptionToTax": "Nous avons opté pour la taxation de l'immeuble",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Option en vigueur depuis le (AAAA-MM-JJ)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Référence de notification au HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
+  "ukFacilitiesPackage": "Nous vendons un forfait de services de bureau équipé",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Un poste avec services et équipements en un seul forfait est taxé au taux normal, avec ou sans option.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  }
+}

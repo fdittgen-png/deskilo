@@ -31,6 +31,10 @@ class InvoiceLegal {
     this.subdivision = '',
     this.contactEmail = '',
     this.contactPhone = '',
+    this.optionToTax = false,
+    this.optionToTaxDate = '',
+    this.optionToTaxReference = '',
+    this.facilitiesPackage = false,
   });
 
   /// '' (company/business, the default) or 'association' (#484) — a
@@ -133,6 +137,47 @@ class InvoiceLegal {
   final String contactEmail;
   final String contactPhone;
 
+  /// #2359 — United Kingdom: land is exempt unless the owner opted to tax
+  /// the building (VAT Notice 742). The date the option took effect (ISO,
+  /// empty: always), HMRC's notification reference, and whether the
+  /// workspace sells a serviced package of facilities, which is standard
+  /// rated either way. The server reads them in `workspace_taxes_land`.
+  final bool optionToTax;
+  final String optionToTaxDate;
+  final String optionToTaxReference;
+  final bool facilitiesPackage;
+
+  /// The same identity with the UK land-taxation choice replaced.
+  InvoiceLegal withLandTaxation({
+    required bool optionToTax,
+    required String optionToTaxDate,
+    required String optionToTaxReference,
+    required bool facilitiesPackage,
+  }) => InvoiceLegal(
+    sellerKind: sellerKind,
+    customerCapacity: customerCapacity,
+    reverseChargeOptIn: reverseChargeOptIn,
+    vatTaxPoint: vatTaxPoint,
+    declarationPeriod: declarationPeriod,
+    legalForm: legalForm,
+    registration: registration,
+    paymentTerms: paymentTerms,
+    latePenalty: latePenalty,
+    recoveryIndemnity: recoveryIndemnity,
+    escompte: escompte,
+    insurance: insurance,
+    specialMentions: specialMentions,
+    einvoiceEndpointId: einvoiceEndpointId,
+    einvoiceEndpointScheme: einvoiceEndpointScheme,
+    subdivision: subdivision,
+    contactEmail: contactEmail,
+    contactPhone: contactPhone,
+    optionToTax: optionToTax,
+    optionToTaxDate: optionToTaxDate,
+    optionToTaxReference: optionToTaxReference,
+    facilitiesPackage: facilitiesPackage,
+  );
+
   /// The same identity with the e-invoicing address fields replaced.
   InvoiceLegal withEInvoiceAddress({
     required String endpointId,
@@ -159,6 +204,10 @@ class InvoiceLegal {
     subdivision: subdivision,
     contactEmail: contactEmail,
     contactPhone: contactPhone,
+    optionToTax: optionToTax,
+    optionToTaxDate: optionToTaxDate,
+    optionToTaxReference: optionToTaxReference,
+    facilitiesPackage: facilitiesPackage,
   );
 
   /// Client-side cap per field — these are printed lines, not essays.
@@ -196,6 +245,10 @@ class InvoiceLegal {
       subdivision: r.stringOr('subdivision'),
       contactEmail: r.stringOr('contact_email'),
       contactPhone: r.stringOr('contact_phone'),
+      optionToTax: r.boolOr('option_to_tax', false),
+      optionToTaxDate: r.stringOr('option_to_tax_date'),
+      optionToTaxReference: r.stringOr('option_to_tax_reference'),
+      facilitiesPackage: r.boolOr('facilities_package', false),
     );
   }
 
@@ -219,6 +272,12 @@ class InvoiceLegal {
         'subdivision': subdivision.trim(),
         'contact_email': contactEmail.trim(),
         'contact_phone': contactPhone.trim(),
+        if (optionToTax || facilitiesPackage) ...{
+          'option_to_tax': optionToTax,
+          'option_to_tax_date': optionToTax ? optionToTaxDate.trim() : '',
+          'option_to_tax_reference': optionToTax ? optionToTaxReference.trim() : '',
+          'facilities_package': facilitiesPackage,
+        },
       };
 
   @override
@@ -241,11 +300,19 @@ class InvoiceLegal {
       other.einvoiceEndpointScheme == einvoiceEndpointScheme &&
       other.subdivision == subdivision &&
       other.contactEmail == contactEmail &&
-      other.contactPhone == contactPhone;
+      other.contactPhone == contactPhone &&
+      other.optionToTax == optionToTax &&
+      other.optionToTaxDate == optionToTaxDate &&
+      other.optionToTaxReference == optionToTaxReference &&
+      other.facilitiesPackage == facilitiesPackage;
 
   @override
-  int get hashCode => Object.hash(vatTaxPoint, declarationPeriod, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
-      paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
-      specialMentions, einvoiceEndpointId, einvoiceEndpointScheme, subdivision,
-      contactEmail, contactPhone);
+  int get hashCode => Object.hashAll([
+        vatTaxPoint, declarationPeriod, reverseChargeOptIn, sellerKind,
+        customerCapacity, legalForm, registration, paymentTerms, latePenalty,
+        recoveryIndemnity, escompte, insurance, specialMentions,
+        einvoiceEndpointId, einvoiceEndpointScheme, subdivision, contactEmail,
+        contactPhone, optionToTax, optionToTaxDate, optionToTaxReference,
+        facilitiesPackage,
+      ]);
 }

@@ -11739,6 +11739,34 @@
   "tipWorkspaceSettingsPay": "Per indicare ai membri come pagarla: compili le istruzioni di pagamento.",
   "tipWorkspaceSettingsSave": "Per conservare le modifiche: tocchi «Salva» in basso prima di uscire.",
   "tipWorkspaceSettingsWording": "Per chiamare le cose a modo suo — posti, piani, prenotazioni: cambi i termini.",
+  "ukFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Una postazione con servizi e dotazioni in un unico pacchetto è imponibile all'aliquota ordinaria, con o senza opzione.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  },
+  "ukLandTaxHelp": "Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l'imposizione dell'edificio. L'opzione rende il canone imponibile all'aliquota ordinaria e consente di detrarre l'IVA sui costi; l'HMRC va informato.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukLandTaxTitle": "Immobili e opzione per l'imposizione",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukOptionToTax": "Abbiamo optato per l'imposizione dell'edificio",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Opzione efficace dal (AAAA-MM-GG)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Riferimento di notifica all'HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
   "unblockAction": "Sblocca",
   "unblockDone": "Sbloccata.",
   "usageAsk": "Fattura il tempo in cui c’ero",
@@ -11989,6 +12017,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingVatNumber": "Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.",
+  "@vatDeclFilingVatNumber": {
+    "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
   "vatDeclGenerate": "Prepara",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
@@ -12008,6 +12040,10 @@
   "vatDeclMarkFiledConfirm": "Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
+  },
+  "vatDeclMtdCsv": "File MTD (CSV, nove caselle)",
+  "@vatDeclMtdCsv": {
+    "description": "#2359 VAT filing files: vatDeclMtdCsv"
   },
   "vatDeclNet": "Imponibile",
   "@vatDeclNet": {

@@ -18786,6 +18786,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Per chiamare le cose a modo suo — posti, piani, prenotazioni: cambi i termini.';
 
   @override
+  String get ukFacilitiesPackage =>
+      'Vendiamo un pacchetto di servizi per ufficio';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'Una postazione con servizi e dotazioni in un unico pacchetto è imponibile all\'aliquota ordinaria, con o senza opzione.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l\'imposizione dell\'edificio. L\'opzione rende il canone imponibile all\'aliquota ordinaria e consente di detrarre l\'IVA sui costi; l\'HMRC va informato.';
+
+  @override
+  String get ukLandTaxTitle => 'Immobili e opzione per l\'imposizione';
+
+  @override
+  String get ukOptionToTax =>
+      'Abbiamo optato per l\'imposizione dell\'edificio';
+
+  @override
+  String get ukOptionToTaxDate => 'Opzione efficace dal (AAAA-MM-GG)';
+
+  @override
+  String get ukOptionToTaxReference => 'Riferimento di notifica all\'HMRC';
+
+  @override
   String get unblockAction => 'Sblocca';
 
   @override
@@ -19281,6 +19306,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Numero fiscale (Steuernummer)';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.';
+
+  @override
   String get vatDeclGenerate => 'Prepara';
 
   @override
@@ -19295,6 +19324,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.';
+
+  @override
+  String get vatDeclMtdCsv => 'File MTD (CSV, nove caselle)';
 
   @override
   String get vatDeclNet => 'Imponibile';

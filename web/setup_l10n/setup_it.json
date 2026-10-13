@@ -609,5 +609,12 @@
  "todoOnlineProvider": "Collegare il fornitore di pagamenti online nell'app: le sue chiavi non vanno mai nel file.",
  "todoEinvoice": "Inserire nell'app l'indirizzo e le credenziali della piattaforma di fatturazione elettronica: il file non le applica mai.",
  "todoInvoiceOutside": "Le fatture di uno spazio in {country} si emettono fuori dall'app.",
- "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione."
+ "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione.",
+ "legalLandTax": "Immobili e opzione per l'imposizione",
+ "legalLandTaxHint": "Nel Regno Unito la concessione di una postazione o di un ufficio è esente (VAT Act 1994, allegato 9, gruppo 1) salvo opzione per l'imposizione dell'edificio. L'opzione rende il canone imponibile all'aliquota ordinaria e consente di detrarre l'IVA sui costi; l'HMRC va informato.",
+ "legalOptionToTax": "Abbiamo optato per l'imposizione dell'edificio",
+ "legalOptionDate": "Opzione efficace dal",
+ "legalOptionRef": "Riferimento di notifica all'HMRC",
+ "legalFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
+ "legalFacilitiesPackageDesc": "Postazione, servizi e dotazioni in un unico pacchetto sono imponibili all'aliquota ordinaria, con o senza opzione."
 }

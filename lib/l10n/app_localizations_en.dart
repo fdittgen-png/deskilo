@@ -18609,6 +18609,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'To call things your own way — seats, levels, bookings: change the wording.';
 
   @override
+  String get ukFacilitiesPackage => 'We sell a serviced package of facilities';
+
+  @override
+  String get ukFacilitiesPackageHelp =>
+      'A desk with services and facilities as one package is standard-rated, option or not.';
+
+  @override
+  String get ukLandTaxHelp =>
+      'A licence to occupy a desk or an office is exempt in the United Kingdom (VAT Act 1994, Schedule 9, Group 1) unless you opted to tax the building. Opting makes the rent standard-rated and lets you reclaim the VAT on its costs; HMRC must be notified.';
+
+  @override
+  String get ukLandTaxTitle => 'Land and the option to tax';
+
+  @override
+  String get ukOptionToTax => 'We opted to tax the building';
+
+  @override
+  String get ukOptionToTaxDate => 'Option effective from (YYYY-MM-DD)';
+
+  @override
+  String get ukOptionToTaxReference => 'HMRC notification reference';
+
+  @override
   String get unblockAction => 'Unblock';
 
   @override
@@ -19096,6 +19119,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Tax number (Steuernummer)';
 
   @override
+  String get vatDeclFilingVatNumber =>
+      'Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.';
+
+  @override
   String get vatDeclGenerate => 'Prepare';
 
   @override
@@ -19110,6 +19137,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatDeclMarkFiledConfirm =>
       'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.';
+
+  @override
+  String get vatDeclMtdCsv => 'MTD bridging file (CSV, nine boxes)';
 
   @override
   String get vatDeclNet => 'Net base';

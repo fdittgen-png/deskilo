@@ -1,0 +1,30 @@
+{
+  "ukLandTaxTitle": "Inmuebles y opción de tributación",
+  "@ukLandTaxTitle": {
+    "description": "#2359: ukLandTaxTitle"
+  },
+  "ukLandTaxHelp": "En el Reino Unido, la cesión de un puesto o de una oficina está exenta (VAT Act 1994, anexo 9, grupo 1) salvo que se haya optado por gravar el edificio. La opción grava el alquiler al tipo general y permite deducir el IVA de sus costes; hay que informar a HMRC.",
+  "@ukLandTaxHelp": {
+    "description": "#2359: ukLandTaxHelp"
+  },
+  "ukOptionToTax": "Hemos optado por gravar el edificio",
+  "@ukOptionToTax": {
+    "description": "#2359: ukOptionToTax"
+  },
+  "ukOptionToTaxDate": "Opción vigente desde (AAAA-MM-DD)",
+  "@ukOptionToTaxDate": {
+    "description": "#2359: ukOptionToTaxDate"
+  },
+  "ukOptionToTaxReference": "Referencia de notificación a HMRC",
+  "@ukOptionToTaxReference": {
+    "description": "#2359: ukOptionToTaxReference"
+  },
+  "ukFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
+  "@ukFacilitiesPackage": {
+    "description": "#2359: ukFacilitiesPackage"
+  },
+  "ukFacilitiesPackageHelp": "Un puesto con servicios e instalaciones en un solo paquete tributa al tipo general, con o sin opción.",
+  "@ukFacilitiesPackageHelp": {
+    "description": "#2359: ukFacilitiesPackageHelp"
+  }
+}
