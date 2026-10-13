@@ -109,7 +109,7 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'space stores them',
   ),
   'lib/features/money/domain/vat_catalogue.dart': (
-    allowed: 91,
+    allowed: 89,
     reason: 'statutory VAT rate names, each in the language its own tax '
         'authority uses (Normalsatz, Standaard, Snižena…). Translating '
         '«Ermäßigt 10 %» into French would name an Austrian rate in a '

@@ -1,6 +1,7 @@
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'accounting_amount.dart';
+import 'vat_components.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
@@ -281,6 +282,7 @@ class InvoiceVatTotal {
     required this.netCents,
     required this.vatCents,
     this.exemptionReason = '',
+    this.components = const [],
   });
 
   final double percent;
@@ -294,6 +296,10 @@ class InvoiceVatTotal {
   /// was attributable; documents then fall back to the seller's text.
   final String exemptionReason;
 
+  /// #2361 — the taxes this rate is made of (GST and QST of a Quebec
+  /// invoice), frozen at issue; empty where the rate is not split.
+  final List<VatComponent> components;
+
   factory InvoiceVatTotal.fromJson(Map<dynamic, dynamic> json) {
     final r = JsonReader.of(json, context: 'invoice_vat_total');
     return InvoiceVatTotal(
@@ -303,6 +309,7 @@ class InvoiceVatTotal {
       netCents: r.intOrNull('net_cents') ?? 0,
       vatCents: r.intOrNull('vat_cents') ?? 0,
       exemptionReason: r.stringOr('exemption_reason'),
+      components: r.objects('components', VatComponent.fromReader),
     );
   }
 }
@@ -313,6 +320,7 @@ class InvoiceVatTotal {
 List<InvoiceVatTotal> vatTotalsOf(
   Iterable<({int amountCents, double vatPercent})> lines, {
   required String zeroCategory,
+  String sellerCountry = '',
 }) {
   final gross = <double, int>{};
   final net = <double, int>{};
@@ -335,6 +343,12 @@ List<InvoiceVatTotal> vatTotalsOf(
         grossCents: gross[percent]!,
         netCents: net[percent]!,
         vatCents: gross[percent]! - net[percent]!,
+        components: vatComponentsOf(
+          sellerCountry,
+          percent,
+          net[percent]!,
+          gross[percent]! - net[percent]!,
+        ),
       ),
   ];
 }
