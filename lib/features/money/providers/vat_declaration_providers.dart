@@ -5,6 +5,7 @@ import '../../../core/files/file_saver.dart';
 import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_vat_filing_file.dart';
+import '../domain/invoice_legal.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import 'money_providers.dart';
@@ -40,6 +41,9 @@ SaveVatFilingFile saveVatFilingFile(Ref ref) {
             city: w.city,
             vatId: w.vatId,
             legalId: w.legalId,
+            onReceipts: InvoiceLegal.fromJson(w.invoiceLegal)
+                .taxPointBasis(w.countryCode)
+                .onReceipts,
           ),
   );
 }

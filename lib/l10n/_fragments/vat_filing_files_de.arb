@@ -27,5 +27,13 @@
   "vatDeclFilingVatNumber": "Tragen Sie die Umsatzsteuer-Registriernummer des Workspace ein (GB und neun Ziffern): die Datei nennt sie.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
+  },
+  "vatDeclFilingUid": "Tragen Sie die UID des Workspace ein (CHE-123.456.789 mit gültiger Prüfziffer): die Datei nennt sie.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
+  "vatDeclMwstXml": "MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   }
 }

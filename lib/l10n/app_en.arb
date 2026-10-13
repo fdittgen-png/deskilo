@@ -21892,6 +21892,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingUid": "Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
   "vatDeclFilingVatNumber": "Enter the VAT registration number (GB and nine digits) of the workspace: the file names it.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
@@ -21919,6 +21923,10 @@
   "vatDeclMtdCsv": "MTD bridging file (CSV, nine boxes)",
   "@vatDeclMtdCsv": {
     "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclMwstXml": "MWST return, eCH-0217 XML (ePortal upload)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   },
   "vatDeclNet": "Net base",
   "@vatDeclNet": {

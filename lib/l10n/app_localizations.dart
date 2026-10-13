@@ -33074,6 +33074,12 @@ abstract class AppLocalizations {
   /// **'Tax number (Steuernummer)'**
   String get vatDeclFilingTaxNumberField;
 
+  /// #2360 VAT filing files: vatDeclFilingUid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.'**
+  String get vatDeclFilingUid;
+
   /// #2359 VAT filing files: vatDeclFilingVatNumber
   ///
   /// In en, this message translates to:
@@ -33115,6 +33121,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'MTD bridging file (CSV, nine boxes)'**
   String get vatDeclMtdCsv;
+
+  /// #2360 VAT filing files: vatDeclMwstXml
+  ///
+  /// In en, this message translates to:
+  /// **'MWST return, eCH-0217 XML (ePortal upload)'**
+  String get vatDeclMwstXml;
 
   /// Net taxable base column
   ///

@@ -19324,6 +19324,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclFilingTaxNumberField => 'Número fiscal (Steuernummer)';
 
   @override
+  String get vatDeclFilingUid =>
+      'Introduzca el UID del espacio (CHE-123.456.789 con un dígito de control válido): el archivo lo cita.';
+
+  @override
   String get vatDeclFilingVatNumber =>
       'Introduzca el número de registro de IVA del espacio (GB y nueve dígitos): el archivo lo indica.';
 
@@ -19345,6 +19349,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclMtdCsv => 'Archivo MTD (CSV, nueve casillas)';
+
+  @override
+  String get vatDeclMwstXml =>
+      'Declaración MWST, XML eCH-0217 (carga en el ePortal)';
 
   @override
   String get vatDeclNet => 'Base imponible';

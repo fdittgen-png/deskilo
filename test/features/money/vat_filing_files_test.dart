@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_filing_ech0217.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,6 +83,99 @@ String _elster(VatDeclaration d, {String taxNumber = '21/815/08150'}) =>
     );
 
 void main() {
+  group('eCH-0217 (CH)', () {
+    final d = _declaration(DateTime(2026, 7), DateTime(2026, 9, 30), [
+      _line(8.1, 100049, 8104),
+      _line(2.6, 20000, 520),
+      _line(0, 20050, 0, category: 'E'),
+      _line(0, 5000, 0, category: 'G'),
+      _line(8.1, 6000, 486, direction: 'input'),
+      _line(8.1, 3000, 243, direction: 'input', category: 'asset'),
+    ]);
+    String text({
+      bool onReceipts = false,
+      String uid = 'CHE-109.322.551 MWST',
+    }) => ech0217Xml(
+      declaration: d,
+      uid: uid,
+      organisationName: 'Cowork AG',
+      onReceipts: onReceipts,
+      generatedAt: DateTime.utc(2026, 10, 13, 8, 5, 9),
+    );
+
+    test('the declaration: header, turnover, the rates, the tax to pay', () {
+      final root = XmlDocument.parse(text()).rootElement;
+      expect(root.name.local, 'VATDeclaration');
+      expect(root.getAttribute('xmlns'), 'http://www.ech.ch/xmlns/eCH-0217/2');
+      String at(String path) {
+        var node = root;
+        for (final part in path.split('/')) {
+          node = node.getElement(part)!;
+        }
+        return node.innerText;
+      }
+
+      expect(
+        text(),
+        contains('<eCH-0058:manufacturer>DesKilo</eCH-0058:manufacturer>'),
+        reason: 'the application block lives in the eCH-0058 namespace',
+      );
+      expect(at('generalInformation/uid'), 'CHE109322551');
+      expect(at('generalInformation/generationTime'), '2026-10-13T08:05:09');
+      expect(at('generalInformation/reportingPeriodFrom'), '2026-07-01');
+      expect(at('generalInformation/reportingPeriodTill'), '2026-09-30');
+      expect(at('generalInformation/typeOfSubmission'), '1');
+      expect(at('generalInformation/formOfReporting'), '1');
+      expect(at('turnoverComputation/totalConsideration'), '1450.99');
+      expect(at('turnoverComputation/suppliesToForeignCountries'), '50.00');
+      expect(at('turnoverComputation/suppliesExemptFromTax'), '200.50');
+      expect(
+        root.getElement('turnoverComputation')!.getElement('suppliesAbroad'),
+        isNull,
+        reason: 'a zero amount is omitted, never sent empty',
+      );
+      final method = root.getElement('effectiveReportingMethod')!;
+      expect(method.getElement('grossOrNet')!.innerText, '1');
+      final rates = method
+          .findElements('suppliesPerTaxRate')
+          .map(
+            (XmlElement e) => (
+              e.getElement('taxRate')!.innerText,
+              e.getElement('turnover')!.innerText,
+            ),
+          )
+          .toList();
+      expect(rates, [('8.10', '1000.49'), ('2.60', '200.00')]);
+      expect(
+        method.getElement('inputTaxMaterialAndServices')!.innerText,
+        '4.86',
+      );
+      expect(method.getElement('inputTaxInvestments')!.innerText, '2.43');
+      // 8.1 % of 1000.49 + 2.6 % of 200.00 - 4.86 - 2.43, summed unrounded.
+      expect(root.getElement('payableTax')!.innerText, '78.95');
+    });
+
+    test('a space on the received consideration says so', () {
+      expect(
+        text(onReceipts: true, uid: 'CHE109322551'),
+        contains('<formOfReporting>2</formOfReporting>'),
+      );
+    });
+
+    test('a UID without a valid check digit gives no file', () {
+      expect(
+        () => text(uid: 'CHE-109.322.552 MWST'),
+        throwsA(
+          isA<VatFilingFileException>().having(
+            (e) => e.problem,
+            'problem',
+            VatFilingFileProblem.uid,
+          ),
+        ),
+      );
+    });
+  });
+
   group('MTD bridging file (GB)', () {
     final lines = [
       _line(20, 100099, 20020),

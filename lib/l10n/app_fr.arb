@@ -12069,6 +12069,10 @@
   "@vatDeclFilingTaxNumberField": {
     "description": "#2357 VAT filing files: vatDeclFilingTaxNumberField"
   },
+  "vatDeclFilingUid": "Saisissez l'IDE de l'espace (CHE-123.456.789 avec un chiffre de contrôle valide) : le fichier le mentionne.",
+  "@vatDeclFilingUid": {
+    "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
   "vatDeclFilingVatNumber": "Saisissez le numéro d'immatriculation TVA du workspace (GB et neuf chiffres) : le fichier le mentionne.",
   "@vatDeclFilingVatNumber": {
     "description": "#2359 VAT filing files: vatDeclFilingVatNumber"
@@ -12096,6 +12100,10 @@
   "vatDeclMtdCsv": "Fichier MTD (CSV, neuf cases)",
   "@vatDeclMtdCsv": {
     "description": "#2359 VAT filing files: vatDeclMtdCsv"
+  },
+  "vatDeclMwstXml": "Décompte TVA, XML eCH-0217 (téléversement ePortal)",
+  "@vatDeclMwstXml": {
+    "description": "#2360 VAT filing files: vatDeclMwstXml"
   },
   "vatDeclNet": "Base HT",
   "@vatDeclNet": {
