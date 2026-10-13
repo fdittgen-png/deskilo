@@ -279,8 +279,11 @@ void main() {
 
     test('every key the page asks for exists, and no key is orphaned', () {
       final en = strings('en');
+      // The WebMCP tools (#2501) speak through the same resource.
+      final tools = File('web/setup_webmcp.js').readAsStringSync();
       final asked = {
-        for (final m in RegExp(r"\bT\('(\w+)'").allMatches(html)) m.group(1)!,
+        for (final m in RegExp(r"\bT\('(\w+)'").allMatches('$html\n$tools'))
+          m.group(1)!,
         for (final m in RegExp(r'data-th?="(\w+)"').allMatches(html))
           m.group(1)!,
       };
@@ -293,7 +296,10 @@ void main() {
       );
       final orphans = [
         for (final key in en.keys)
-          if (!html.contains("'$key'") && !html.contains('"$key"')) key,
+          if (!html.contains("'$key'") &&
+              !html.contains('"$key"') &&
+              !tools.contains("'$key'"))
+            key,
       ];
       expect(
         orphans,

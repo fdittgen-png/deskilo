@@ -234,6 +234,8 @@ and commit after touching either source. `test/lint/setup_l10n_test.dart` gates 
 parity and French literals left in the page; the step harness renders every locale and
 requires byte-identical XML for the same answers.
 
+The WebMCP tools (`web/setup_webmcp.js`, #2500) read the page's own parameter definitions: adding a parameter needs no tool change, only its `PARAM_META` row in `web/setup.html` (or a reasoned `PARAM_EXCLUDED` entry) — the step harness fails otherwise.
+
 **Backward compatibility is part of the contract.** A questionnaire someone exported last
 month must still load: keep reading retired keys on import (`grid_within_hours` →
 `walkup_only`, `admin-checkout` → `admin-check-out`) even though nothing writes them any
