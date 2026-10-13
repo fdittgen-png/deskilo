@@ -36,6 +36,7 @@ class InvoiceLegal {
     this.optionToTaxReference = '',
     this.facilitiesPackage = false,
     this.lettingKind = '',
+    this.quickMethod = false,
   });
 
   /// '' (company/business, the default) or 'association' (#484) — a
@@ -154,6 +155,12 @@ class InvoiceLegal {
   /// art. 22, is in force). Read by `workspace_taxes_land`.
   final String lettingKind;
 
+  /// #2361 — Canada: the registrant elected the quick method of accounting
+  /// for GST/HST (ETA s. 227; remits a fixed share of the tax-included
+  /// sales instead of the difference). The return flags it; the remittance
+  /// rate is the CRA's, not computed here.
+  final bool quickMethod;
+
   /// The same identity with the UK land-taxation choice replaced.
   InvoiceLegal withLandTaxation({
     required bool optionToTax,
@@ -161,6 +168,7 @@ class InvoiceLegal {
     required String optionToTaxReference,
     required bool facilitiesPackage,
     String lettingKind = '',
+    bool quickMethod = false,
   }) => InvoiceLegal(
     sellerKind: sellerKind,
     customerCapacity: customerCapacity,
@@ -185,6 +193,7 @@ class InvoiceLegal {
     optionToTaxReference: optionToTaxReference,
     facilitiesPackage: facilitiesPackage,
     lettingKind: lettingKind,
+    quickMethod: quickMethod,
   );
 
   /// The same identity with the e-invoicing address fields replaced.
@@ -218,6 +227,7 @@ class InvoiceLegal {
     optionToTaxReference: optionToTaxReference,
     facilitiesPackage: facilitiesPackage,
     lettingKind: lettingKind,
+    quickMethod: quickMethod,
   );
 
   /// Client-side cap per field — these are printed lines, not essays.
@@ -260,6 +270,7 @@ class InvoiceLegal {
       optionToTaxReference: r.stringOr('option_to_tax_reference'),
       facilitiesPackage: r.boolOr('facilities_package', false),
       lettingKind: r.stringOr('letting_kind'),
+      quickMethod: r.boolOr('quick_method', false),
     );
   }
 
@@ -290,6 +301,7 @@ class InvoiceLegal {
           'facilities_package': facilitiesPackage,
           'letting_kind': lettingKind,
         },
+        if (quickMethod) 'quick_method': true,
       };
 
   @override
@@ -317,7 +329,8 @@ class InvoiceLegal {
       other.optionToTaxDate == optionToTaxDate &&
       other.optionToTaxReference == optionToTaxReference &&
       other.facilitiesPackage == facilitiesPackage &&
-      other.lettingKind == lettingKind;
+      other.lettingKind == lettingKind &&
+      other.quickMethod == quickMethod;
 
   @override
   int get hashCode => Object.hashAll([
@@ -326,6 +339,6 @@ class InvoiceLegal {
         recoveryIndemnity, escompte, insurance, specialMentions,
         einvoiceEndpointId, einvoiceEndpointScheme, subdivision, contactEmail,
         contactPhone, optionToTax, optionToTaxDate, optionToTaxReference,
-        facilitiesPackage, lettingKind,
+        facilitiesPackage, lettingKind, quickMethod,
       ]);
 }

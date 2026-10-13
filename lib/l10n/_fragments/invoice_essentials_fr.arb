@@ -85,5 +85,13 @@
   "invoiceMissingSellerUidFormat": "L'IDE de l'espace au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
+  },
+  "invoiceMissingSellerBnFormat": "Le numéro d'entreprise de TPS/TVH de l'espace avec son compte RT, sous la forme 123456789 RT0001 (LTA, par. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
+  "invoiceMissingSellerQstNumber": "Le numéro d'inscription à la TVQ de l'espace délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l'identité légale (la facture perçoit la TVQ)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
   }
 }

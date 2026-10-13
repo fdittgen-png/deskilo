@@ -49,6 +49,11 @@ String defaultExemptionMention(
         'NL' => 'Vrijgesteld van btw (kleineondernemersregeling, '
             'art. 25 Wet OB).',
         'LU' => 'Franchise de TVA, art. 57 de la loi TVA.',
+        // #2361 — a small supplier (ETA s. 148, under CAD 30 000 in four
+        // consecutive quarters) neither registers nor charges GST/HST;
+        // Quebec customers are served in French (Charter, Bill 96).
+        'CA' => 'Small supplier — not registered for GST/HST (Excise Tax '
+            'Act, s. 148). / Petit fournisseur — non inscrit à la TPS/TVH.',
         _ => 'VAT exempt — Council Directive 2006/112/EC (small '
             'enterprise scheme, art. 282–292).',
       },
@@ -114,6 +119,26 @@ String formatSwissUid(String uid) {
   final m = RegExp(r'^CHE(\d{3})(\d{3})(\d{3})(MWST|TVA|IVA)?$').firstMatch(id);
   if (m == null) return uid;
   return 'CHE-${m[1]}.${m[2]}.${m[3]}${m[4] == null ? '' : ' ${m[4]}'}';
+}
+
+/// #2361 — the business number of a GST/HST registrant with its RT account:
+/// `123456789 RT0001` (ETA s. 169(4); Input Tax Credit Information
+/// Regulations). The server twin is the pattern in
+/// `invoice_essentials_missing` (migration 0424).
+bool isValidCanadianBn(String bn) => RegExp(r'^\d{9}RT\d{4}$')
+    .hasMatch(bn.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), ''));
+
+/// #2361 — Revenu Québec's QST registration number: `1234567890 TQ0001`.
+bool isValidQstNumber(String number) => RegExp(r'^\d{10}TQ\d{4}$')
+    .hasMatch(number.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), ''));
+
+/// A Canadian registration number as it prints: `123456789 RT0001`,
+/// `1234567890 TQ0001`. Anything else is returned as typed.
+String formatCanadianRegistration(String number) {
+  final id = number.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
+  final m = RegExp(r'^(\d{9}|\d{10})(RT|TQ)(\d{4})$').firstMatch(id);
+  if (m == null) return number;
+  return '${m[1]} ${m[2]}${m[3]}';
 }
 
 /// The identifier body per member state (VIES formats; EL is Greece's
@@ -272,6 +297,9 @@ List<String> nationalInvoiceMentions({
   required bool correction,
   String rectifies = '',
   String correctionReason = '',
+  String sellerVatId = '',
+  String sellerLegalId = '',
+  bool qstCharged = false,
 }) {
   final country = euCountryCode(sellerCountry);
   final reason = _spanishCorrectionReasonText(correctionReason);
@@ -286,6 +314,19 @@ List<String> nationalInvoiceMentions({
           '${rectifies.trim()}${reason.isEmpty ? '.' : '. Motivo: $reason.'}',
     if (country == 'FR' && regime == VatRegime.vatRegistered)
       "Catégorie de l'opération : prestation de services.",
+    // #2361 — a Canadian invoice states the registrant's numbers (ETA s.
+    // 169(4); the Act respecting the QST, s. 425), in both languages: the
+    // customer's decides which is read, the law asks for the number.
+    if (country == 'CA' &&
+        regime == VatRegime.vatRegistered &&
+        sellerVatId.trim().isNotEmpty)
+      'GST/HST No. · N° de TPS/TVH : '
+          '${formatCanadianRegistration(sellerVatId)}',
+    if (country == 'CA' &&
+        regime == VatRegime.vatRegistered &&
+        qstCharged &&
+        sellerLegalId.trim().isNotEmpty)
+      'QST No. · N° de TVQ : ${formatCanadianRegistration(sellerLegalId)}',
   ];
 }
 

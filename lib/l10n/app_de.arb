@@ -1436,6 +1436,30 @@
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",
   "buyPackageNone": "Noch keine Pakete verfügbar.",
   "buyPackageTitle": "Paket kaufen",
+  "caQstNumber": "QST-Registrierungsnummer (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — steht neben der GST/HST-Nummer auf Rechnungen mit QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Wir nutzen die Quick Method",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "Die Meldung kennzeichnet es. Die Abführungssätze sind die der CRA und werden von der App nicht berechnet.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  },
+  "caTaxHelp": "Tragen Sie Ihre GST/HST-Geschäftsnummer mit RT-Konto (123456789 RT0001) oben als USt-IdNr. ein. Erheben Sie die QST, ergänzen Sie unten Ihre Nummer bei Revenu Québec: beide stehen auf der Rechnung. Unter 30 000 CAD steuerpflichtigen Umsätzen in vier aufeinanderfolgenden Quartalen sind Sie Kleinlieferant: wählen Sie „USt-befreit“, dann wird nichts berechnet.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caTaxTitle": "GST/HST und QST (Kanada)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
   "calendarAgendaEmpty": "Nichts geplant in den nächsten {days} Tagen.",
   "@calendarAgendaEmpty": {
     "placeholders": {
@@ -5738,7 +5762,15 @@
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
+  "invoiceMissingSellerBnFormat": "Die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto im Format 123456789 RT0001 (ETA s. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
   "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich oder die Schweiz sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Arbeitsbereichs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
+  },
   "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

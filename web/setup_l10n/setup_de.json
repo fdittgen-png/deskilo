@@ -622,6 +622,11 @@
  "legalBareLetting": "Wir vermieten nur Räume",
  "legalBareLettingDesc": "Aus: jede Zeile ist ein Paket, zum Normalsatz versteuert. Ein: ausgenommen, ausser Sie haben optiert.",
  "legalChOption": "Wir haben optiert (Art. 22 MWSTG)",
+ "legalCaTax": "GST/HST und QST (Kanada)",
+ "legalCaTaxHint": "Die USt-IdNr. oben ist Ihre GST/HST-Geschäftsnummer mit RT-Konto (123456789 RT0001). Erheben Sie die QST, ergänzen Sie Ihre Nummer bei Revenu Québec: beide stehen auf der Rechnung.",
+ "legalQstNumber": "QST-Registrierungsnummer (Revenu Québec)",
+ "legalQuickMethod": "Wir nutzen die Quick Method",
+ "legalQuickMethodDesc": "Die Meldung kennzeichnet es. Die Abführungssätze sind die der CRA und werden von der App nicht berechnet.",
  "payQrIban": "QR-IBAN (Schweizer QR-Rechnung)",
  "payQrIbanHint": "Optional: damit trägt die QR-Rechnung eine QRR-Referenz",
  "payErrQrIban": "Die QR-IBAN ist eine Schweizer oder liechtensteinische IBAN, deren Bankenclearing-Nummer (Stellen 5 bis 9) zwischen 30000 und 31999 liegt."

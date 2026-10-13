@@ -1,0 +1,26 @@
+{
+  "caTaxTitle": "GST/HST y QST (Canadá)",
+  "@caTaxTitle": {
+    "description": "#2361: caTaxTitle"
+  },
+  "caTaxHelp": "Introduzca su número de empresa de GST/HST con su cuenta RT (123456789 RT0001) como NIF-IVA arriba. Si cobra el QST, añada abajo su número de Revenu Québec: ambos figuran en la factura. Por debajo de 30 000 CAD de ventas imponibles en cuatro trimestres consecutivos es un pequeño proveedor: elija «Exento de IVA» y no se cobra nada.",
+  "@caTaxHelp": {
+    "description": "#2361: caTaxHelp"
+  },
+  "caQstNumber": "Número de registro del QST (Revenu Québec)",
+  "@caQstNumber": {
+    "description": "#2361: caQstNumber"
+  },
+  "caQstNumberHelp": "1234567890 TQ0001 — se imprime junto al número de GST/HST en las facturas que cobran el QST.",
+  "@caQstNumberHelp": {
+    "description": "#2361: caQstNumberHelp"
+  },
+  "caQuickMethod": "Usamos el método rápido de contabilidad",
+  "@caQuickMethod": {
+    "description": "#2361: caQuickMethod"
+  },
+  "caQuickMethodHelp": "La declaración lo señala. Los tipos de ingreso son los de la CRA y la aplicación no los calcula.",
+  "@caQuickMethodHelp": {
+    "description": "#2361: caQuickMethodHelp"
+  }
+}

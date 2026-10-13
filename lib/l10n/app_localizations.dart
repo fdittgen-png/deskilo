@@ -4057,6 +4057,42 @@ abstract class AppLocalizations {
   /// **'Buy a package'**
   String get buyPackageTitle;
 
+  /// #2361: caQstNumber
+  ///
+  /// In en, this message translates to:
+  /// **'QST registration number (Revenu Québec)'**
+  String get caQstNumber;
+
+  /// #2361: caQstNumberHelp
+  ///
+  /// In en, this message translates to:
+  /// **'1234567890 TQ0001 — printed beside the GST/HST number on invoices that charge the QST.'**
+  String get caQstNumberHelp;
+
+  /// #2361: caQuickMethod
+  ///
+  /// In en, this message translates to:
+  /// **'We use the quick method of accounting'**
+  String get caQuickMethod;
+
+  /// #2361: caQuickMethodHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The return flags it. The remittance rates are the CRA\'s and are not computed by the app.'**
+  String get caQuickMethodHelp;
+
+  /// #2361: caTaxHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your GST/HST business number with its RT account (123456789 RT0001) as the VAT ID above. If you charge the QST, add your Revenu Québec number below: both are printed on the invoice. Below CAD 30 000 of taxable sales in four consecutive quarters you are a small supplier: choose \"VAT exempt\" and nothing is charged.'**
+  String get caTaxHelp;
+
+  /// #2361: caTaxTitle
+  ///
+  /// In en, this message translates to:
+  /// **'GST/HST and QST (Canada)'**
+  String get caTaxTitle;
+
   /// No description provided for @calendarAgendaEmpty.
   ///
   /// In en, this message translates to:
@@ -14598,11 +14634,23 @@ abstract class AppLocalizations {
   /// **'The workspace\'s postal address (street or city)'**
   String get invoiceMissingSellerAddress;
 
+  /// #2361: invoiceMissingSellerBnFormat
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))'**
+  String get invoiceMissingSellerBnFormat;
+
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
   /// **'The workspace country must be a member state of the European Union, the United Kingdom or Switzerland for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
+
+  /// #2361: invoiceMissingSellerQstNumber
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
+  String get invoiceMissingSellerQstNumber;
 
   /// #2356: invoiceMissingSellerTaxNumber
   ///

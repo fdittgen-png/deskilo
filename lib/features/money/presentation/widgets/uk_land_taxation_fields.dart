@@ -19,11 +19,14 @@ class UkLandTaxationForm extends ChangeNotifier {
   bool facilitiesPackage = false;
   // #2360 — Switzerland: rooms only (exempt, art. 21) instead of a package.
   bool bareLetting = false;
+  // #2361 — Canada: the quick method of accounting for GST/HST.
+  bool quickMethod = false;
 
   void load(InvoiceLegal legal) {
     optionToTax = legal.optionToTax;
     facilitiesPackage = legal.facilitiesPackage;
     bareLetting = legal.lettingKind == 'bare';
+    quickMethod = legal.quickMethod;
     date.text = legal.optionToTaxDate;
     reference.text = legal.optionToTaxReference;
   }
@@ -34,12 +37,14 @@ class UkLandTaxationForm extends ChangeNotifier {
     optionToTaxReference: reference.text,
     facilitiesPackage: facilitiesPackage,
     lettingKind: bareLetting ? 'bare' : '',
+    quickMethod: quickMethod,
   );
 
-  void choose({bool? option, bool? package, bool? bare}) {
+  void choose({bool? option, bool? package, bool? bare, bool? quick}) {
     optionToTax = option ?? optionToTax;
     facilitiesPackage = package ?? facilitiesPackage;
     bareLetting = bare ?? bareLetting;
+    quickMethod = quick ?? quickMethod;
     notifyListeners();
   }
 

@@ -534,6 +534,8 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'seller_vat_id_format' => l10n.invoiceMissingSellerVatIdFormat,
       // #2360 — the Swiss UID with its MWST suffix.
       'seller_uid_format' => l10n.invoiceMissingSellerUidFormat,
+      'seller_bn_format' => l10n.invoiceMissingSellerBnFormat,
+      'seller_qst_number' => l10n.invoiceMissingSellerQstNumber,
       // #2440 — RD 1619/2012 art. 15.
       'correction_reason' => l10n.invoiceMissingCorrectionReason,
       'vat_rate_unresolved' => l10n.invoiceMissingVatRate,

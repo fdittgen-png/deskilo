@@ -23,6 +23,7 @@ import '../../domain/vat_tax_point.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
+import '../widgets/canada_tax_fields.dart';
 import '../widgets/einvoice_identity_fields.dart';
 import '../widgets/swiss_letting_fields.dart';
 import '../widgets/uk_land_taxation_fields.dart';
@@ -631,6 +632,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           if (_regime == VatRegime.vatRegistered &&
               ref.watch(currentWorkspaceProvider).value?.countryCode == 'CH')
             SwissLettingFields(key: const ValueKey('legal-identity-letting'), form: _landTax),
+          // #2361 — Canada: the QST number beside the GST/HST number, the quick method.
+          if (_regime == VatRegime.vatRegistered &&
+              ref.watch(currentWorkspaceProvider).value?.countryCode == 'CA')
+            CanadaTaxFields(
+              key: const ValueKey('legal-identity-canada'),
+              form: _landTax,
+              qstNumber: _legalId,
+            ),
           if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
             EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
           const SizedBox(height: AppSpacing.md),

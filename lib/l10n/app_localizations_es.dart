@@ -2354,6 +2354,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get buyPackageTitle => 'Comprar un paquete';
 
   @override
+  String get caQstNumber => 'Número de registro del QST (Revenu Québec)';
+
+  @override
+  String get caQstNumberHelp =>
+      '1234567890 TQ0001 — se imprime junto al número de GST/HST en las facturas que cobran el QST.';
+
+  @override
+  String get caQuickMethod => 'Usamos el método rápido de contabilidad';
+
+  @override
+  String get caQuickMethodHelp =>
+      'La declaración lo señala. Los tipos de ingreso son los de la CRA y la aplicación no los calcula.';
+
+  @override
+  String get caTaxHelp =>
+      'Introduzca su número de empresa de GST/HST con su cuenta RT (123456789 RT0001) como NIF-IVA arriba. Si cobra el QST, añada abajo su número de Revenu Québec: ambos figuran en la factura. Por debajo de 30 000 CAD de ventas imponibles en cuatro trimestres consecutivos es un pequeño proveedor: elija «Exento de IVA» y no se cobra nada.';
+
+  @override
+  String get caTaxTitle => 'GST/HST y QST (Canadá)';
+
+  @override
   String calendarAgendaEmpty(int days) {
     return 'Nada previsto en los próximos $days días.';
   }
@@ -8555,8 +8576,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'La dirección postal del espacio (calle o ciudad)';
 
   @override
+  String get invoiceMissingSellerBnFormat =>
+      'El número de empresa GST/HST del espacio con su cuenta RT, con el formato 123456789 RT0001 (ETA s. 169(4))';
+
+  @override
   String get invoiceMissingSellerCountry =>
       'El país del espacio debe ser un Estado miembro de la Unión Europea, el Reino Unido o Suiza para emitir aquí — los demás países se emiten fuera de la aplicación';
+
+  @override
+  String get invoiceMissingSellerQstNumber =>
+      'El número de registro del QST del espacio, de Revenu Québec, con el formato 1234567890 TQ0001, en la identidad legal (la factura cobra el QST)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

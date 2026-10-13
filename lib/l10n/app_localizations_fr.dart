@@ -2358,6 +2358,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buyPackageTitle => 'Acheter un forfait';
 
   @override
+  String get caQstNumber => 'Numéro d\'inscription à la TVQ (Revenu Québec)';
+
+  @override
+  String get caQstNumberHelp =>
+      '1234567890 TQ0001 — imprimé à côté du numéro de TPS/TVH sur les factures qui perçoivent la TVQ.';
+
+  @override
+  String get caQuickMethod =>
+      'Nous utilisons la méthode rapide de comptabilité';
+
+  @override
+  String get caQuickMethodHelp =>
+      'La déclaration le signale. Les taux de versement sont ceux de l\'ARC et ne sont pas calculés par l\'application.';
+
+  @override
+  String get caTaxHelp =>
+      'Saisissez votre numéro d\'entreprise de TPS/TVH avec son compte RT (123456789 RT0001) comme numéro de TVA ci-dessus. Si vous percevez la TVQ, ajoutez ci-dessous votre numéro de Revenu Québec : les deux figurent sur la facture. En dessous de 30 000 CAD de ventes taxables sur quatre trimestres consécutifs vous êtes petit fournisseur : choisissez « Exonéré de TVA » et rien n\'est facturé.';
+
+  @override
+  String get caTaxTitle => 'TPS/TVH et TVQ (Canada)';
+
+  @override
   String calendarAgendaEmpty(int days) {
     return 'Rien de prévu dans les $days prochains jours.';
   }
@@ -8572,8 +8594,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'adresse postale de l\'espace (rue ou ville)';
 
   @override
+  String get invoiceMissingSellerBnFormat =>
+      'Le numéro d\'entreprise de TPS/TVH de l\'espace avec son compte RT, sous la forme 123456789 RT0001 (LTA, par. 169(4))';
+
+  @override
   String get invoiceMissingSellerCountry =>
       'Le pays de l\'espace doit être un État membre de l\'Union européenne, le Royaume-Uni ou la Suisse pour émettre ici — les autres pays sont émis hors de l\'application';
+
+  @override
+  String get invoiceMissingSellerQstNumber =>
+      'Le numéro d\'inscription à la TVQ de l\'espace délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l\'identité légale (la facture perçoit la TVQ)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

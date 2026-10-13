@@ -85,5 +85,13 @@
   "invoiceMissingSellerUidFormat": "El UID del espacio en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
+  },
+  "invoiceMissingSellerBnFormat": "El número de empresa GST/HST del espacio con su cuenta RT, con el formato 123456789 RT0001 (ETA s. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
+  "invoiceMissingSellerQstNumber": "El número de registro del QST del espacio, de Revenu Québec, con el formato 1234567890 TQ0001, en la identidad legal (la factura cobra el QST)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
   }
 }

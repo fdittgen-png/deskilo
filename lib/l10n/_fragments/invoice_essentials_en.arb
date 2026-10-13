@@ -91,5 +91,13 @@
   "invoiceMissingSellerUidFormat": "The workspace's UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
+  },
+  "invoiceMissingSellerBnFormat": "The workspace's GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))",
+  "@invoiceMissingSellerBnFormat": {
+    "description": "#2361: invoiceMissingSellerBnFormat"
+  },
+  "invoiceMissingSellerQstNumber": "The workspace's QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)",
+  "@invoiceMissingSellerQstNumber": {
+    "description": "#2361: invoiceMissingSellerQstNumber"
   }
 }

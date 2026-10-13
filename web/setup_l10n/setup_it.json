@@ -622,6 +622,11 @@
  "legalBareLetting": "Affittiamo solo locali nudi",
  "legalBareLettingDesc": "Disattivato: ogni riga è un pacchetto, all'aliquota normale. Attivato: esclusa, salvo opzione.",
  "legalChOption": "Abbiamo optato (art. 22 LIVA)",
+ "legalCaTax": "GST/HST e QST (Canada)",
+ "legalCaTaxHint": "La partita IVA sopra è il suo numero d'impresa GST/HST con il conto RT (123456789 RT0001). Se applica la QST, aggiunga il numero di Revenu Québec: entrambi compaiono in fattura.",
+ "legalQstNumber": "Numero di registrazione QST (Revenu Québec)",
+ "legalQuickMethod": "Utilizziamo il quick method",
+ "legalQuickMethodDesc": "La dichiarazione lo segnala. Le aliquote di versamento sono quelle della CRA e l'app non le calcola.",
  "payQrIban": "QR-IBAN (fattura QR svizzera)",
  "payQrIbanHint": "Facoltativo: con esso la fattura QR porta un riferimento QRR",
  "payErrQrIban": "Il QR-IBAN è un IBAN svizzero o liechtensteinese il cui identificativo dell'istituto (cifre da 5 a 9) è compreso tra 30000 e 31999."
