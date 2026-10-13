@@ -8,7 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../core/backend/backend_uri.dart';
 import '../core/backend/schema_version.dart';
 import '../core/i18n/regional_formats_section.dart';
-import '../core/instance/schema_compatibility.dart';
 import '../core/ui/wizard_navigation.dart';
 import '../features/auth/presentation/screens/auth_screen.dart';
 import '../features/auth/presentation/screens/linked_accounts_screen.dart';
@@ -77,9 +76,7 @@ import '../features/task_recorder/presentation/screens/task_wizard_screen.dart';
 import '../features/task_recorder/presentation/screens/task_workbench_screen.dart';
 import '../features/task_recorder/presentation/ui_capture.dart'
     show RecorderWindowObserver;
-import '../features/workspace/application/pending_invitation.dart';
 import '../features/workspace/domain/bi_modules.dart';
-import '../features/workspace/domain/member.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/presentation/screens/attention_screen.dart';
@@ -109,15 +106,13 @@ import '../features/workspace/presentation/screens/workspace_settings_screen.dar
 import '../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../features/workspace/providers/workspace_providers.dart';
-import '../features/workspace/providers/workspace_roles_providers.dart';
-import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
 import 'oauth_consent_route.dart';
 import 'page_routes.dart';
 import 'route_access.dart';
-import 'route_classes.dart';
-import 'route_policy.dart';
+import 'route_env.dart';
+import 'route_redirect.dart';
 import 'schema_gate.dart';
 import 'shell/shell_screen.dart';
 
@@ -162,29 +157,7 @@ GoRouter router(Ref ref) {
     // the way to sign-in: its destination is where sign-in returns to.
     ..listen(entryIntentsProvider, (_, _) => reask());
 
-  /// Whether [feature] is enabled for the active workspace (#146).
-  /// Defaults (everything ON) while the workspace is still loading, so
-  /// deep links are never bounced during startup.
-  bool featureEnabled(WorkspaceFeature feature) =>
-      !ref.mounted || ref.read(enabledFeaturesSyncProvider).contains(feature);
-
-  /// #1085 — a permission-gated route. The door asks EXACTLY what the
-  /// entry point's tile asks: `myPermissions` is the one client-side
-  /// gate, and a route that reads a role flag instead drifts from its
-  /// own menu entry the moment an owner delegates. A redirect is not a
-  /// refusal message, so the drift showed up as a tap that silently
-  /// bounced to /messages.
-  GoRouterRedirect needs(
-    WorkspacePermission permission, {
-    WorkspaceFeature? feature,
-    String to = '/messages',
-  }) =>
-      (context, state) => !ref.mounted ||
-                  ref.read(myPermissionsProvider).contains(permission) &&
-                  (feature == null || featureEnabled(feature))
-              ? null
-              : to;
-
+  final env = RouteEnv(ref);
   final onboardingNavigation = WizardNavigationController();
   router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
@@ -197,88 +170,7 @@ GoRouter router(Ref ref) {
     // #1650 — the rules live in route_policy.dart as a pure function over
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.
-    redirect: (context, state) {
-      if (!ref.mounted) return null; // a rebuilt router may be asked once more
-      // #1652 — an invitation link opened from outside: the link (and the
-      // code in it) leaves the location at once, is held in memory for
-      // the join field, and Join is selected. Nothing is joined here.
-      if (isInvitationLink(state.uri)) {
-        ref.read(arrivedInvitationsProvider).hold(
-            Uri(scheme: 'deskilo', host: 'join', query: state.uri.query).toString());
-        return const EntryIntent.join('invitation-link').destination;
-      }
-      final intent = ref.read(entryIntentsProvider);
-      final auth = ref.read(authStateProvider);
-      // Nothing else is read until the session is known: a read flushes a
-      // provider the scheduler is about to rebuild, and while a scope is
-      // being updated that is a rebuild twice in one frame. The policy
-      // knows AuthFact.loading for its table; the router never sends it.
-      if (auth.isLoading) return null;
-      final profile = ref.read(myProfileProvider);
-      final workspaces = ref.read(myWorkspacesProvider);
-      final member = ref.read(myMemberProvider);
-      final chosen = ref.read(activeWorkspaceIdProvider);
-      final me = member.value;
-      final kioskAccount = me != null &&
-          me.isKiosk &&
-          featureEnabled(WorkspaceFeature.kioskMode);
-      final facts = RouteFacts(
-        schema: ref.read(schemaCompatibilityProvider).value ??
-            SchemaCompatibility.unknown,
-        auth: auth.value == null ? AuthFact.signedOut : AuthFact.signedIn,
-        privacy: privacyFactOf(loading: profile.isLoading, failed: profile.hasError,
-            accepted: profile.value?.privacyAcceptedVersion ==
-                ref.read(requiredPrivacyVersionProvider)),
-        // A list being REFRESHED is loading, whatever it held before: the
-        // signed-out answer is an empty list, and reading it as "none"
-        // in the frame after sign-in sent everybody through onboarding.
-        workspaces: workspacesFactOf(loading: workspaces.isLoading,
-            count: workspaces.value?.length, failed: workspaces.hasError),
-        membership: member.isLoading && !member.hasValue
-            ? MembershipFact.loading
-            : switch (me?.status) {
-                null => MembershipFact.none,
-                MemberStatus.active => MembershipFact.active,
-                MemberStatus.pending => MembershipFact.pending,
-                _ => MembershipFact.inactive,
-              },
-        space: spaceFactOf(resolving: chosen.isLoading, // #1823: a refresh is not an answer
-            chosen: chosen.value, spaces: [...?workspaces.value?.map((w) => w.id)]),
-        kiosk: !kioskAccount
-            ? KioskFact.notKiosk
-            : switch (ref.read(kioskModeProvider)) {
-                KioskModeDecision.pending => KioskFact.gatePending,
-                KioskModeDecision.accepted => KioskFact.locked,
-                KioskModeDecision.rejected => KioskFact.released,
-              },
-        featureEnabled: featureEnabled,
-        home: intent?.destination ?? kDefaultHome,
-      );
-      final request =
-          RouteRequest(state.uri.path, query: state.uri.queryParameters);
-      final decision = settleDestination(request, facts);
-      // #1650 — the one write the redirect asks for: a signed-out
-      // person's request, kept as the place to come back to. Spending
-      // happens on arrival (entry_resumption.dart), never here.
-      if (decision.reason == RouteReason.signInRequired) {
-        captureRequest(ref, state.uri, intent);
-      }
-      // Beyond what every member has, a screen opens only for someone who
-      // holds one of its permissions (route_access.dart). Skipped while
-      // the roles are still being read: a delegate's grants arrive with
-      // them, and a deep link must not bounce on the first frame.
-      if (decision.redirect == null &&
-          facts.membership == MembershipFact.active &&
-          !kioskAccount &&
-          !ref.read(workspaceRoleAssignmentsProvider).isLoading &&
-          // Permissions come from the workspace's matrix: until it is read,
-          // nobody holds anything yet and nobody is bounced for it.
-          ref.read(currentWorkspaceProvider).value != null &&
-          !mayOpen(state.uri.path, ref.read(myPermissionsProvider))) {
-        return landingFor(ref.read(myPermissionsProvider));
-      }
-      return decision.redirect;
-    },
+    redirect: (context, state) => appRedirect(env, state),
     routes: [
       GoRoute(path: '/auth', builder: (_, s) => AuthScreen(offerDemo: s.uri.queryParameters['demo'] == '1')),
       for (final page in openedPages) page.route(), // #2388
@@ -315,9 +207,9 @@ GoRouter router(Ref ref) {
                 // The calendar hub holds the alerts and events: this path
                 // (a fallback target all over the router) opens it.
                 redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.calendarTab) &&
-                            featureEnabled(WorkspaceFeature.calendarHub) &&
-                            featureEnabled(WorkspaceFeature.eventsTab)
+                    env.featureEnabled(WorkspaceFeature.calendarTab) &&
+                            env.featureEnabled(WorkspaceFeature.calendarHub) &&
+                            env.featureEnabled(WorkspaceFeature.eventsTab)
                         ? '/calendar'
                         : null,
                 // The workspace's alerts and requests, plus one door to the
@@ -330,10 +222,7 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/calendar',
-                redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.calendarTab)
-                    ? null
-                    : '/messages',
+                redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.calendarTab])),
                 // #718 — the hub when the feature is on, the classic
                 // reservations calendar when it is off; picked per build.
                 builder: (context, state) => const CalendarBranch(),
@@ -347,10 +236,7 @@ GoRouter router(Ref ref) {
                 // inbox face in #702, a tab again in #707) — gated by
                 // the membersDirectory feature.
                 path: '/directory',
-                redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.membersDirectory)
-                    ? null
-                    : '/messages',
+                redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.membersDirectory])),
                 builder: (context, state) => const DirectoryScreen(),
               ),
             ],
@@ -359,10 +245,7 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/money',
-                redirect: (context, state) =>
-                    featureEnabled(WorkspaceFeature.moneyTab)
-                    ? null
-                    : '/messages',
+                redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.moneyTab])),
                 builder: (context, state) => const MoneyScreen(),
               ),
             ],
@@ -436,8 +319,7 @@ GoRouter router(Ref ref) {
         // #734 — Region & formats as a screen of its own.
         path: '/formats',
         // #1151 — gated like every feature-owned route.
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.regionalFormats) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.regionalFormats], to: '/settings')),
         builder: (context, state) => const RegionalFormatsScreen(),
       ),
       GoRoute(
@@ -454,10 +336,10 @@ GoRouter router(Ref ref) {
         // were asking for.
         path: '/events',
         redirect: (context, state) {
-          if (!featureEnabled(WorkspaceFeature.eventsTab)) return '/messages';
+          if (!env.featureEnabled(WorkspaceFeature.eventsTab)) return '/messages';
           // The calendar hub holds the alerts: ask it for its Alerts view.
-          final inCalendar = featureEnabled(WorkspaceFeature.calendarTab) &&
-              featureEnabled(WorkspaceFeature.calendarHub);
+          final inCalendar = env.featureEnabled(WorkspaceFeature.calendarTab) &&
+              env.featureEnabled(WorkspaceFeature.calendarHub);
           // Off the routing frame: setting a provider mid-redirect is
           // modifying state while the tree is building.
           unawaited(Future.microtask(
@@ -485,8 +367,7 @@ GoRouter router(Ref ref) {
         path: '/conversation/:conversationId',
         // #1151 — the deep links ride the memberNotifications gate the
         // comment above always claimed; now the route does too.
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.memberNotifications])),
         builder: (context, state) => ConversationThreadPage(
           conversationId: state.pathParameters['conversationId'] ?? '',
         ),
@@ -495,8 +376,7 @@ GoRouter router(Ref ref) {
         path: '/res/:id',
         // #1151 — the deep links ride the memberNotifications gate the
         // comment above always claimed; now the route does too.
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.memberNotifications])),
         builder: (context, state) => ReferenceLinkScreen.reservation(
           id: state.pathParameters['id'] ?? '',
         ),
@@ -505,8 +385,7 @@ GoRouter router(Ref ref) {
         path: '/space/:kind/:id',
         // #1151 — the deep links ride the memberNotifications gate the
         // comment above always claimed; now the route does too.
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.memberNotifications) ? null : '/messages',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.memberNotifications])),
         builder: (context, state) => ReferenceLinkScreen.space(
           kind:
               SpaceKind.values.asNameMap()[state.pathParameters['kind'] ??
@@ -518,13 +397,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         // #1120 — the workspace library.
         path: '/library',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.workspaceLibrary) ? null : '/workspace-settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.workspaceLibrary], to: '/workspace-settings')),
         builder: (context, state) => const WorkspaceLibraryScreen(),
       ),
       GoRoute(
         path: '/workspace-code',
-        redirect: needs(WorkspacePermission.manageConfiguration),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageConfiguration)),
         builder: (context, state) => const WorkspaceCodeScreen(),
       ),
       GoRoute(
@@ -560,14 +438,14 @@ GoRouter router(Ref ref) {
       // behind mcpAccess, so it can always be narrowed or switched off.
       GoRoute(
         path: '/settings/assistants',
-        redirect: needs(WorkspacePermission.manageIntegrations),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageIntegrations)),
         builder: (context, state) => const McpPolicyScreen(),
       ),
       // #1827 — the guided setup, for the same people. Not behind mcpAccess:
       // turning it on is one of its steps.
       GoRoute(
         path: '/settings/assistant-setup',
-        redirect: needs(WorkspacePermission.manageIntegrations),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageIntegrations)),
         builder: (context, state) => const AssistantSetupScreen(),
       ),
       // #1648 — the protected client purpose selects identity or MCP consent.
@@ -579,49 +457,43 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: '/nfc-config',
-        redirect: needs(WorkspacePermission.operateKiosk,
-            feature: WorkspaceFeature.nfcBadges),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.operateKiosk, features: [WorkspaceFeature.nfcBadges])),
         builder: (context, state) => const NfcConfigScreen(),
       ),
       GoRoute(
         path: '/payment-config',
-        redirect: needs(WorkspacePermission.manageIntegrations,
-            feature: WorkspaceFeature.onlinePayments),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageIntegrations, features: [WorkspaceFeature.onlinePayments])),
         builder: (context, state) => const PaymentConfigScreen(),
       ),
       GoRoute(
         path: '/billing',
-        redirect: needs(WorkspacePermission.manageBilling),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageBilling)),
         builder: (context, state) => const BillingScreen(),
       ),
       GoRoute(
         path: '/invoices',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money')),
         builder: (context, state) => const InvoicesScreen(),
       ),
       // The sortable register (0072): every member reads their own, an
       // issuer the whole workspace's.
       GoRoute(
         path: '/invoice-register',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.invoicing) ? null : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money')),
         builder: (context, state) => const InvoiceRegisterScreen(),
       ),
       // Where invoices are POSTED (0073) — owner-only.
       GoRoute(
         path: '/einvoice-config',
         // #2137 — the credentials RPCs ask manageIntegrations.
-        redirect: needs(WorkspacePermission.manageIntegrations,
-            feature: WorkspaceFeature.invoicing, to: '/money'),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageIntegrations, features: [WorkspaceFeature.invoicing], to: '/money')),
         builder: (context, state) => const EInvoiceConfigScreen(),
       ),
       // The workspace document library (#500) — every member, gated by
       // the documents feature; RLS decides which rows each role sees.
       GoRoute(
         path: '/documents',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.documents) ? null : '/messages',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.documents])),
         builder: (context, state) => const DocumentsScreen(),
       ),
       // #513 — the central role→permission matrix. Anyone with a role
@@ -630,8 +502,7 @@ GoRouter router(Ref ref) {
       // #827 — the invoicing wizard.
       GoRoute(
         path: '/invoicing/wizard',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.invoicingWizard) ? null : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.invoicingWizard], to: '/money')),
         builder: (context, state) => InvoicingWizardScreen(
           initialRun: WizardRun.values
               .asNameMap()[state.uri.queryParameters['run'] ?? ''],
@@ -640,116 +511,91 @@ GoRouter router(Ref ref) {
       // #825 — one page per member.
       GoRoute(
         path: '/member/:memberId',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.memberPage) ? null : '/directory',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.memberPage], to: '/directory')),
         builder: (context, state) =>
             MemberPage(memberId: state.pathParameters['memberId'] ?? ''),
       ),
       // #822 — the report editor as a full-screen designer.
       GoRoute(
         path: '/report-editor',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.reportDesigner) ? null : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.reportDesigner], to: '/money')),
         builder: (context, state) => const ReportEditorScreen(),
       ),
       GoRoute(
         path: '/roles',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.roleManagement)
-            ? null
-            : '/messages',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.roleManagement])),
         builder: (context, state) => const RolesScreen(),
       ),
       // #886 — the person's identity as the documents print it.
       GoRoute(
         path: '/settings/personal-info',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.personalInfo) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.personalInfo], to: '/settings')),
         builder: (context, state) => const PersonalInfoScreen(),
       ),
       // #902 — the conditions this member's documents print, read-only.
       GoRoute(
         path: '/settings/payment-terms',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.memberPaymentTerms)
-                ? null
-                : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.memberPaymentTerms], to: '/settings')),
         builder: (context, state) => const MyPaymentTermsScreen(),
       ),
       // #945 — the workspace's sites.
       GoRoute(
         path: '/settings/sites',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.multiSite) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.multiSite], to: '/settings')),
         builder: (context, state) => const SitesScreen(),
       ),
       // #934 — the treasurer's view, and the guided repartition.
       GoRoute(
         path: '/money/status',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.workspaceStatus) ? null : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.workspaceStatus], to: '/money')),
         builder: (context, state) => const WorkspaceStatusScreen(),
       ),
       GoRoute(
         path: '/money/repartition-wizard',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.expenseRepartitionWizard)
-                ? null
-                : '/money',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.expenseRepartitionWizard], to: '/money')),
         builder: (context, state) => const RepartitionWizardScreen(),
       ),
       // #1277 — the words this space uses instead of the product's.
       GoRoute(
         path: '/settings/wording',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.workspaceVocabulary)
-                ? null
-                : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.workspaceVocabulary], to: '/settings')),
         builder: (context, state) => const WordingScreen(),
       ),
       // #1289 — the colour this space gives the app.
       GoRoute(
         path: '/settings/colours',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.workspaceBranding)
-                ? null
-                : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.workspaceBranding], to: '/settings')),
         builder: (context, state) => const ColoursScreen(),
       ),
       // #1528 — the roles this space defines for itself.
       GoRoute(
         path: '/settings/roles-of-this-space',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.customRoles) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.customRoles], to: '/settings')),
         builder: (context, state) => const RolesOfSpaceScreen(),
       ),
       // #1288 — the questions this space asks its members.
       GoRoute(
         path: '/settings/questions',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.customFields) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.customFields], to: '/settings')),
         builder: (context, state) => const QuestionsScreen(),
       ),
       // #1247 — one place that answers "does anything need me?".
       // Appended last: route pins are positional.
       GoRoute(
         path: '/attention',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.decisionSurface) ? null : '/',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.decisionSurface], to: '/')),
         builder: (context, state) => const AttentionScreen(),
       ),
       // #925 — how every journal numbers its documents, one screen.
       GoRoute(
         path: '/settings/number-sequences',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.numberSequences) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.numberSequences], to: '/settings')),
         builder: (context, state) => const NumberSequencesScreen(),
       ),
       // #887 — create or edit a managed member's identity.
       GoRoute(
         path: '/members/managed',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.managedProfiles) ? null : '/members',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.managedProfiles], to: '/members')),
         builder: (context, state) => ManagedProfileScreen(
           memberId: state.uri.queryParameters['member'],
         ),
@@ -757,20 +603,17 @@ GoRouter router(Ref ref) {
       // The workspace's manual payment methods (#486) — owner-only.
       GoRoute(
         path: '/payment-methods',
-        redirect: needs(WorkspacePermission.manageIntegrations, to: '/money'),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageIntegrations, to: '/money')),
         builder: (context, state) => const PaymentMethodsScreen(),
       ),
       // The workspace's legal identity (0069) — owner-only, and only
       // where invoices exist at all.
       GoRoute(
         path: '/legal-identity',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner && featureEnabled(WorkspaceFeature.invoicing)
-              ? null
-              : '/money';
-        },
+        redirect: env.guard(const RouteAccess(
+            features: [WorkspaceFeature.invoicing],
+            bypass: RoleBypass.owner,
+            to: '/money')),
         builder: (context, state) => const LegalIdentityScreen(),
       ),
       // The workspace's VAT rates (0072) — owner-only, like the identity
@@ -781,124 +624,99 @@ GoRouter router(Ref ref) {
       // the feature, a deploy permission, and a twin to deploy to.
       GoRoute(
         path: '/deployment',
-        redirect: (context, state) {
-          final perms = ref.read(myPermissionsProvider);
-          final workspace = ref.read(currentWorkspaceProvider).value;
-          return featureEnabled(WorkspaceFeature.deployments) &&
-                  perms.contains(WorkspacePermission.deployToDev) &&
-                  (workspace?.pairId.isNotEmpty ?? false)
-              ? null
-              : '/settings';
-        },
+        redirect: env.guard(RouteAccess(
+            features: const [WorkspaceFeature.deployments],
+            permission: WorkspacePermission.deployToDev,
+            when: (c) => c.hasPairedTwin,
+            to: '/settings')),
         builder: (context, state) => const DeploymentScreen(),
       ),
       GoRoute(
         path: '/vat-declarations',
-        redirect: (context, state) {
-          final isOwner =
-              ref.read(myMemberProvider).value?.actsAsOwner ?? false;
-          return isOwner &&
-                  featureEnabled(WorkspaceFeature.invoicing) &&
-                  featureEnabled(WorkspaceFeature.vatDeclarations)
-              ? null
-              : '/money';
-        },
+        redirect: env.guard(const RouteAccess(
+            features: [
+              WorkspaceFeature.invoicing,
+              WorkspaceFeature.vatDeclarations,
+            ],
+            bypass: RoleBypass.owner,
+            to: '/money')),
         builder: (context, state) => const VatDeclarationsScreen(),
       ),
       GoRoute(
         path: '/vat',
         // #2137 — set_vat_rates asks manageBilling.
-        redirect: needs(WorkspacePermission.manageBilling,
-            feature: WorkspaceFeature.vatManagement, to: '/money'),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageBilling, features: [WorkspaceFeature.vatManagement], to: '/money')),
         builder: (context, state) => const VatScreen(),
       ),
       GoRoute(
         path: '/services',
-        redirect: needs(WorkspacePermission.manageServices,
-            feature: WorkspaceFeature.services),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageServices, features: [WorkspaceFeature.services])),
         builder: (context, state) => const ServicesScreen(),
       ),
       GoRoute(
         // Owner AND admins (#167, epic decision): catalog management is a
         // canAdminister capability, not owner-only.
         path: '/accessories',
-        redirect: (context, state) {
-          final canAdminister =
-              (ref.read(myMemberProvider).value?.canAdminister ?? false) ||
-                  ref
-                      .read(myPermissionsProvider)
-                      .contains(WorkspacePermission.manageServices);
-          return canAdminister &&
-                  featureEnabled(WorkspaceFeature.accessorySupplements)
-              ? null
-              : '/messages';
-        },
+        redirect: env.guard(const RouteAccess(
+            features: [WorkspaceFeature.accessorySupplements],
+            permission: WorkspacePermission.manageServices,
+            bypass: RoleBypass.administrator)),
         builder: (context, state) => const AccessoriesScreen(),
       ),
       GoRoute(
         path: '/features',
-        redirect: needs(WorkspacePermission.manageConfiguration),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.manageConfiguration)),
         builder: (context, state) => const FeaturesScreen(),
       ),
       GoRoute(
         path: '/reports',
-        redirect: (context, state) => workspaceReportsAvailable(
-          ref.read(enabledFeaturesSyncProvider), ref.read(myPermissionsProvider), isAdmin: ref.read(myMemberProvider).value?.isAdmin ?? false) ? null : '/settings',
+        redirect: env.guard(RouteAccess(
+            when: (c) => workspaceReportsAvailable(c.enabledFeatures, c.permissions,
+                isAdmin: c.isAdmin),
+            to: '/settings')),
         builder: (context, state) => WorkspaceSettingsScreen(reportsOnly: true, reportSection: state.uri.queryParameters['section']), // #2313
       ),
       GoRoute(
         path: '/workspace-settings',
-        redirect: needs(WorkspacePermission.workspaceSettings),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.workspaceSettings)),
         builder: (context, state) => const WorkspaceSettingsScreen(),
       ),
       GoRoute(
         path: '/validation',
-        redirect: (context, state) {
-          // #816 — the `manageValidation` permission, which the server's
-          // write policy now asks too (0144); owners always hold it.
-          final allowed = ref
-              .read(myPermissionsProvider)
-              .contains(WorkspacePermission.manageValidation);
-          return allowed ? null : '/messages';
-        },
+        // #816 — the `manageValidation` permission, which the server's
+        // write policy now asks too (0144); owners always hold it.
+        redirect: env.guard(
+            const RouteAccess(permission: WorkspacePermission.manageValidation)),
         builder: (context, state) => const ValidationSettingsScreen(),
       ),
       // #1923 — Business analytics: only with a module this reader may see.
       GoRoute(
         path: '/bi',
-        redirect: (context, state) => biAvailable(
-                features: ref.read(enabledFeaturesSyncProvider),
-                permissions: ref.read(myPermissionsProvider))
-            ? null
-            : '/messages',
+        redirect: env.guard(RouteAccess(
+            when: (c) => biAvailable(
+                features: c.enabledFeatures, permissions: c.permissions))),
         builder: (context, state) => const BiScreen(),
       ),
       GoRoute(
         path: '/availability',
-        redirect: needs(WorkspacePermission.workspaceSettings),
+        redirect: env.guard(const RouteAccess(permission: WorkspacePermission.workspaceSettings)),
         builder: (context, state) => const AvailabilityScreen(),
       ),
       GoRoute(
         path: '/members',
         // Admins reach member management too (0044: they set reservation
         // limits and issue badges); owner-only controls gate inside.
-        redirect: (context, state) {
-          final canAdminister =
-              (ref.read(myMemberProvider).value?.canAdminister ?? false) ||
-                  ref
-                      .read(myPermissionsProvider)
-                      .contains(WorkspacePermission.manageMembers);
-          return canAdminister ? null : '/messages';
-        },
+        redirect: env.guard(const RouteAccess(
+            permission: WorkspacePermission.manageMembers,
+            bypass: RoleBypass.administrator)),
         builder: (context, state) => const MembersScreen(),
       ),
       GoRoute(
         path: '/editor',
         // #2137 — the owner, or whoever holds manageSites (0363).
-        redirect: (context, state) =>
-            (ref.read(myMemberProvider).value?.actsAsOwner ?? false)
-                ? null
-                : needs(WorkspacePermission.manageSites)(context, state),
+        redirect: env.guard(const RouteAccess(
+            permission: WorkspacePermission.manageSites,
+            bypass: RoleBypass.owner)),
         builder: (context, state) => const EditorScreen(),
         routes: [
           GoRoute(
@@ -920,15 +738,14 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/connections',builder:(context,state)=>const ConnectionsScreen()),
       GoRoute(path: '/account-messages',builder:(context,state)=>AccountMessengerScreen(
         source:state.uri.queryParameters['source']??'',recipient:state.uri.queryParameters['recipient'],name:state.uri.queryParameters['name']??'')),
-      GoRoute(path: '/settings/public-page',redirect:(context,state)=>(ref.read(myMemberProvider).value?.actsAsOwner??false)?null:'/profiles',builder:(context,state)=>const PublicPageEditor()),
+      GoRoute(path: '/settings/public-page',redirect:env.guard(const RouteAccess(bypass:RoleBypass.owner,to:'/profiles')),builder:(context,state)=>const PublicPageEditor()),
       GoRoute(path: '/applications',
           builder: (context, state) => const WorkspaceApplicationsScreen()),
       // #2085 — what my roles give me here (or, for whoever administers
       // members or roles, what someone else's give them).
       GoRoute(
         path: '/settings/what-you-can-do',
-        redirect: (context, state) =>
-            featureEnabled(WorkspaceFeature.roleAssignment) ? null : '/settings',
+        redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.roleAssignment], to: '/settings')),
         builder: (context, state) => WhatYouCanDoScreen(
             memberId: state.uri.queryParameters['member']),
       ),
@@ -945,8 +762,7 @@ GoRouter router(Ref ref) {
           builder: (context, state) => const TaskWorkbenchScreen()),
       // #2145 — Connect an assistant, for every member where mcpAccess is on.
       GoRoute(path: connectAssistantRoute,
-          redirect: (context, state) =>
-              featureEnabled(WorkspaceFeature.mcpAccess) ? null : '/assistants',
+          redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.mcpAccess], to: '/assistants')),
           builder: (context, state) => const ConnectAssistantScreen()),
     ],
   );
