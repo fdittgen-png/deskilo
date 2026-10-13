@@ -1,0 +1,7 @@
+List<int> coll(bool a, bool b, bool c) {
+  return [
+    if (a && b || c) 1,
+    for (final i in [1]) i,
+    a ? 2 : 3,
+  ];
+}

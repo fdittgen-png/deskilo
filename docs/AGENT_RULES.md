@@ -93,6 +93,24 @@ path before a push: the quality job runs the whole suite on every pull
 request, and several local full suites on a shared machine starve each
 other into timeouts. Docs-only changes need only the lint/doc tests.
 
+## Code health: measure, never regress (#2491)
+
+`dart run tool/code_health.dart lib out.json` measures every function
+(cognitive and cyclomatic complexity, length, parameters) from the syntax
+tree; `--hotspots` joins that with the commits since a date; `--cycles`
+lists the features that import each other; `--baseline` rewrites
+`docs/design/CODE_HEALTH_BASELINE.json` and `CODE_HEALTH.md`. A file the
+parser rejects is a failure, not a smaller measurement.
+
+`flutter test test/lint` (`code_health_test`, `file_length_test`,
+`part_of_test`) holds the result. The baseline names the functions at or
+over a limit; each may only stay or fall, a function it does not name must
+be under every limit (a rename or an extraction is a new function), and a
+function that improves lowers its baseline line in the same pull request:
+the failing test prints the line to write. A budget that sits far above its
+file, and a new `part of` file, fail the same way. Do not run the whole
+measurement as a separate pre-push step; the lint run already does.
+
 ## Generated files must merge cleanly (#2121)
 
 A committed generated file is rewritten by every pull request that moves

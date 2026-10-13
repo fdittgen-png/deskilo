@@ -36,6 +36,12 @@ import 'lint_sources.dart';
 // add the public directory/account destinations and publication flag.
 const int _budget = 500; // 2026-10-11 #2386: 600→500 for new files; the files over it are listed below.
 
+/// #2491 — how far above its file's length an entry may sit. Within it the
+/// number is headroom for an edit; beyond it the budget has stopped
+/// meaning anything (a 2015-line cap on a 507-line file lets the file
+/// quadruple unnoticed), and the failing test prints the line to write.
+const int _headroom = 20;
+
 /// Grandfathered files at their size when this ratchet landed
 /// (2026-08-01), rounded up to the next 10 for edit headroom.
 const Map<String, int> _baseline = {
@@ -53,11 +59,10 @@ const Map<String, int> _baseline = {
   // the interface each implements, not a file that grew: MoneyRepository
   // alone is ~90 methods. They are budgeted, so a NEW method still has
   // to be a decision, and they may only shrink.
-  'lib/core/demo/data/workspace_repository.dart': 2015, // 2026-10-11 #2389 2012→2015: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-05 workspace symbol 2010→2012: the letters-and-colour pair is refused when taken (0378); 2026-10-04 2000→2010: the fixture workspaces start from an explicit everyday matrix (three lines). Earlier: 2026-10-03 #1916 1991→2000: the demo twin of set_member_customer_capacity; 2026-10-01 #2051 1942→1991: importClosureDays on the fake — invoiced months, present days and the calls a test reads, the same verdict import_closure_days answers.  2026-09-28 #1652 1889→1942: previewInvitation/joinByInvitation on the fake — the same classification the 0309 functions answer, and the counters the journey tests read to prove a review writes nothing.  2026-09-28 #1791: admission route, comment and expected-account wiring; implementation lives in separate files.  // 2026-09-27 #1658 1865→1885: the fake keeps the request ids a publication used, replays a retry and loses one answer on demand, the same contract the real function keeps; // 2026-09-25 #1655 1840→1865: inspectWorkspaceTemplate on the fake — the seeded map and the default built from the outline, the same shape as templateOutlines; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines // 2026-09-25 #1650 1830→1840: fetchFailure — the one knob that lets a test say the membership list could not be FETCHED, as opposed to being empty; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
+  'lib/core/demo/data/workspace_repository.dart': 507, // 2026-10-13 #2491 2015→507: the budget follows the file down. 2026-10-11 #2389 2012→2015: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-05 workspace symbol 2010→2012: the letters-and-colour pair is refused when taken (0378); 2026-10-04 2000→2010: the fixture workspaces start from an explicit everyday matrix (three lines). Earlier: 2026-10-03 #1916 1991→2000: the demo twin of set_member_customer_capacity; 2026-10-01 #2051 1942→1991: importClosureDays on the fake — invoiced months, present days and the calls a test reads, the same verdict import_closure_days answers.  2026-09-28 #1652 1889→1942: previewInvitation/joinByInvitation on the fake — the same classification the 0309 functions answer, and the counters the journey tests read to prove a review writes nothing.  2026-09-28 #1791: admission route, comment and expected-account wiring; implementation lives in separate files.  // 2026-09-27 #1658 1865→1885: the fake keeps the request ids a publication used, replays a retry and loses one answer on demand, the same contract the real function keeps; // 2026-09-25 #1655 1840→1865: inspectWorkspaceTemplate on the fake — the seeded map and the default built from the outline, the same shape as templateOutlines; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines // 2026-09-25 #1650 1830→1840: fetchFailure — the one knob that lets a test say the membership list could not be FETCHED, as opposed to being empty; // 2026-09-19 #1281 1827→1830: setLegendProfile, the fake's mirror of the booking-rule write // 2026-09-19 #1373 moved out of test/helpers/mock_providers.dart, which is 2358→408 lines
 
   'lib/features/task_recorder/domain/action_registry.dart': 620, // 2026-10-04 #1884 B 600→620: the management-form actions and outcomes (permission, role, validation rule) join the registry.
 
-  'lib/features/workspace/presentation/feature_copy.dart': 602, // 2026-10-11 #2357 600→602: inputVat — one description per flag, the registry's shape.
 
   'lib/core/demo/data/reservation_repository.dart': 760, // 2026-10-03 #1855 700→760: the fake mirrors the server's request claim (same id → the original booking, a changed payload refused by name, a lost answer after a commit) and the own-result lookup; // 2026-09-19 #1562 695→700: convertToSeries takes the chosen window, and says why it is not the stored one // 2026-09-19 #1565 678→695: the signed-in member is READ on every call instead of captured once, so a Demo persona switch re-attributes the bookings that follow it — the constructor seam, the getter and the paragraph saying why // 2026-09-19 #1373 moved from test/helpers/fake_reservation_repository.dart
 
@@ -137,20 +142,20 @@ const Map<String, int> _baseline = {
   // documents. A flat registry of constants is the one shape where
   // extraction is the wrong answer: splitting it would put one identity
   // in two files and the lint's left-hand side in neither.
-  'lib/core/help/help_anchors.dart': 651, // 2026-09-18 #1289 650→651: the colours anchor — this file IS the anchor registry and grows by one entry per documented surface
+  'lib/core/help/help_anchors.dart': 515, // 2026-10-13 #2491 651→515: the budget follows the file down. 2026-09-18 #1289 650→651: the colours anchor — this file IS the anchor registry and grows by one entry per documented surface
   // 600→660 (2026-08-05): #488 the editor's mode toggle + image insert
   // flow; the visual editor itself is its own file.
   // new→840 (2026-08-05): #498 the WYSIWYG design surface — styled
   // band rendering, column groups, token palette, in-place editor.
   // #825 (2026-09-02): the member page and the shared admin actions.
   // 900→948 (2026-09-06): #945 sites.
-  'lib/features/members/presentation/screens/member_page.dart': 970, // 2026-10-03 #2137 966→970: "Add a service" also for manageServices, as record_service_charge accepts it;  2026-10-03 #1916 955→966: the Customer capacity row (the dialog is workspace/presentation/member_customer_capacity.dart); 2026-10-02 #2085 947→955: hosts MemberRolesCard behind roleAssignment and hides the single Administrator row it replaces; the card itself is workspace/presentation/widgets/member_roles_card.dart;  2026-09-17 #1279 hosts MemberCarnetTile behind the carnets flag (the tile is its own file) 944→947; // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
+  'lib/features/members/presentation/screens/member_page.dart': 758, // 2026-10-13 #2491 970→758: the budget follows the file down. 2026-10-03 #2137 966→970: "Add a service" also for manageServices, as record_service_charge accepts it;  2026-10-03 #1916 955→966: the Customer capacity row (the dialog is workspace/presentation/member_customer_capacity.dart); 2026-10-02 #2085 947→955: hosts MemberRolesCard behind roleAssignment and hides the single Administrator row it replaces; the card itself is workspace/presentation/widgets/member_roles_card.dart;  2026-09-17 #1279 hosts MemberCarnetTile behind the carnets flag (the tile is its own file) 944→947; // 2026-09-05 #887 the managed-member tiles (edit identity, hand over, revoke) + chip
   // 720→779 (2026-09-06): #945 sites.
   'lib/features/workspace/presentation/widgets/conversation_thread.dart': 653, // 2026-10-11 #2389 651→653: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-09 #2313 648→651: every control keyed for the task recorder; 2026-10-07 #2216 646→648: the group mention picker names people by id and my own mentions stand out; 2026-10-06 messenger: reactions, stars, edits, group posting rules and @mentions are read and drawn here — the thread is the one place that knows the roster and the marks.
 
   'lib/features/directory/presentation/messenger/context_thread_screen.dart': 631, // 2026-10-09 #2313 629→631: every control keyed for the task recorder; 2026-10-07 #2216 620→629: cross-workspace groups get the mention picker: the members other than me, by account; 2026-10-06 groups of people: the thread asks which workspaces every member shares, closes posting in an announcement-only group and opens the group sheet.
 
-  'lib/features/workspace/presentation/member_admin_actions.dart': 780, // 2026-09-11 #1061 779→780: one import, the letter builders' new home
+  'lib/features/workspace/presentation/member_admin_actions.dart': 697, // 2026-10-13 #2491 780→697: the budget follows the file down. 2026-09-11 #1061 779→780: one import, the letter builders' new home
   // #828 (2026-09-02): the expense_repartition flag and repository methods.
   // 2026-09-04 #864: one more flag. This file is the feature
   // registry — it grows by ~5 lines per flag by design, and
@@ -184,7 +189,7 @@ const Map<String, int> _baseline = {
   // (picker, resolution with inactive-rate fallback, immediate save).
   // 700→740 (2026-08-31): #763 thirteen help dots across bands, levels
   // and packages — each beside the field it explains.
-  'lib/features/money/presentation/screens/billing_screen.dart': 781, // 2026-10-09 #2313 767→781: every control keyed for the task recorder; 2026-09-17 #1279 hosts CarnetsEditor behind the carnets flag (the editor is its own file) 763→767; // 2026-09-08 #1019 thirteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
+  'lib/features/money/presentation/screens/billing_screen.dart': 736, // 2026-10-13 #2491 781→736: the budget follows the file down. 2026-10-09 #2313 767→781: every control keyed for the task recorder; 2026-09-17 #1279 hosts CarnetsEditor behind the carnets flag (the editor is its own file) 763→767; // 2026-09-08 #1019 thirteen help symbols now name the exact field they document (HelpAnchor), one named argument per symbol
   // 600→615 (2026-08-31): #771 the kiosk consent exemption and its
   // rationale live where the gate lives.
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
@@ -202,7 +207,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/reservations/presentation/reserve_seat_actions.dart': 834, // 2026-10-10 #2328 825→834: my seat sheet offers cancel or request deletion by the same rule as the booking's detail sheet, and files the request; 2026-10-06 task recorder values +5: the booking's window and resource are handed to the recorder as typed values (opt-in per recording); 2026-10-03 #1855 +23: the plain booking goes through the durable intent; a lost answer opens the recovery sheet; 2026-10-02 #1881 786→797: the recorder seams for check-in, check-out, cancel and close on my reservation; 2026-10-02 #1865 765→786: the task recorder attempt before the booking command and its outcome after, the cancel and the field-commit hook; 2026-10-01 #2016 T08 +3: a sheet choice made before a workspace switch is dropped. 2026-10-01 #2016 720→762: the live free-seat tap OFFERS the walk-up (its own window and cap beside the reservation's), opens when either action is allowed, and writes the action confirmed in the sheet; the overlap check for the edited window.  2026-09-28 #1813 751→720: someone else's booking moved to the part file others_booking_tap.dart, so a seat-day row and a seat tap share it // 2026-09-15 #1301 S4 740→751: availabilityKnown on the interface and the tap guard that says "checking" instead of opening a sheet on an unknown day // 2026-09-05 #903 the seat's day: segments for the plan, the timeline behind a shared seat
   // the validated amount and the member's explanation.
-  'lib/features/events/presentation/screens/events_screen.dart': 921, // 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
+  'lib/features/events/presentation/screens/events_screen.dart': 624, // 2026-10-13 #2491 921→624: the budget follows the file down. 2026-09-02 #821 mark seen only when showing // 2026-09-05 #881 member payment conditions: effective terms threaded to every document
 
   'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 542, // 2026-10-02 #1922 540→542: the reminder history line and its import; the list lives in reminder_evidence_list.dart. 2026-10-02 #1913 519→540: the hold and the unreviewed-term notes for the issuer, and the held reason handed to the action list. 2026-09-13 #1217 640→530: the action list became widgets/invoice_sheet_actions.dart — it is the half that grows every time an invoice learns a new verb // 2026-09-02 #831 folded banner // 2026-09-02 #822 image size/alignment
   // 670→680 (2026-08-04): #446 out-of-shell WorkHours install — the
@@ -254,11 +259,8 @@ const Map<String, int> _baseline = {
 
   'lib/features/directory/domain/messenger.dart': 506, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/mcp/presentation/assistant_setup_screen.dart': 535, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/mcp/presentation/eligibility_review_screen.dart': 503, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/mcp/presentation/mcp_consent_screen.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/fec.dart': 590, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -315,6 +317,7 @@ void main() {
   test('no lib/ file outgrows its budget unnoticed', () {
     final over = <String>[];
     final stale = <String>[];
+    final loose = <String>[];
 
     final seen = <String>{};
     for (final file in handWrittenDartFiles('lib')) {
@@ -323,6 +326,12 @@ void main() {
       final cap = _baseline[file.path] ?? _budget;
       if (count > cap) {
         over.add('${file.path}: $count lines (cap $cap)');
+      }
+      if (_baseline.containsKey(file.path) && cap > count + _headroom) {
+        loose.add(count <= _budget
+            ? "${file.path}: $count lines, under the default budget of "
+                "$_budget — delete its entry"
+            : "  '${file.path}': $count, // $cap→$count");
       }
     }
 
@@ -339,6 +348,13 @@ void main() {
           'the right call, raise this file\'s baseline in the same PR and '
           'say why in the PR description — the number changing in review '
           'IS the mechanism.',
+    );
+    expect(
+      loose,
+      isEmpty,
+      reason: 'Budgets more than $_headroom lines above their file — the '
+          'budget follows the file down (#2491). Write these lines:\n'
+          '${loose.join('\n')}',
     );
     expect(
       stale,
