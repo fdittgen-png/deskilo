@@ -5234,6 +5234,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo).';
 
   @override
+  String get featureConfigurableSettingsDesc =>
+      'Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos.';
+
+  @override
+  String get featureConfigurableSettingsTitle => 'Ajustes configurables';
+
+  @override
   String get featureConfigurationTransfer =>
       'Configuración en el archivo del espacio';
 
@@ -16355,7 +16362,127 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesTitle => 'Servicios';
 
   @override
+  String get settingCouldNotSave => 'No se pudo guardar el ajuste';
+
+  @override
+  String settingCurrentValue(String value, String unit) {
+    return 'Ahora: $value $unit';
+  }
+
+  @override
+  String get settingEdit => 'Cambiar';
+
+  @override
+  String settingFloorNote(String floor, String unit) {
+    return 'Mínimo de seguridad: nunca por debajo de $floor $unit.';
+  }
+
+  @override
+  String get settingGroupDunning => 'Recordatorios y plazos de pago';
+
+  @override
+  String get settingGuardrail => 'Salvaguarda fija';
+
+  @override
+  String get settingGuardrailFallback =>
+      'Fijado por el software; se muestra para que sepa que existe.';
+
+  @override
+  String get settingHintDunningFirstAfterDays =>
+      'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
+
+  @override
+  String get settingHistory => 'Historial';
+
+  @override
+  String get settingHistoryEmpty =>
+      'Ninguna versión guardada: se aplica el valor por defecto.';
+
+  @override
+  String get settingLabelDunningFirstAfterDays =>
+      'Días antes de un primer recordatorio';
+
+  @override
+  String settingMaxOnly(String max, String unit) {
+    return 'Como máximo $max $unit';
+  }
+
+  @override
+  String settingMinOnly(String min, String unit) {
+    return 'Al menos $min $unit';
+  }
+
+  @override
+  String get settingNoteField => 'Nota (opcional)';
+
+  @override
+  String get settingOriginDefault => 'Valor por defecto integrado';
+
+  @override
+  String get settingOriginPlatform => 'Valor por defecto de la plataforma';
+
+  @override
+  String get settingOriginWorkspace => 'Definido para este espacio';
+
+  @override
+  String get settingProblemAboveMax => 'Por encima del máximo';
+
+  @override
+  String get settingProblemBelowFloor => 'Por debajo del mínimo de seguridad';
+
+  @override
+  String get settingProblemBelowMin => 'Por debajo del mínimo';
+
+  @override
+  String get settingProblemNotAChoice => 'No es una de las opciones';
+
+  @override
+  String get settingProblemNotANumber => 'Introduzca un número entero';
+
+  @override
+  String get settingProblemWrongType => 'Valor no válido';
+
+  @override
+  String settingRange(String min, String max, String unit) {
+    return 'Entre $min y $max $unit';
+  }
+
+  @override
+  String get settingSave => 'Guardar';
+
+  @override
+  String get settingSaved => 'Ajuste guardado';
+
+  @override
+  String get settingUnitDays => 'días';
+
+  @override
+  String get settingUnitHours => 'horas';
+
+  @override
+  String get settingUnitMinutes => 'minutos';
+
+  @override
+  String get settingUnitSeconds => 'segundos';
+
+  @override
+  String get settingValueField => 'Valor';
+
+  @override
+  String settingVersionLine(String value, String unit, String from) {
+    return '$value $unit · desde $from';
+  }
+
+  @override
+  String settingVersionUntil(String to) {
+    return 'hasta $to';
+  }
+
+  @override
   String get settingsBillingReports => 'Facturación e informes';
+
+  @override
+  String get settingsEmpty => 'No hay ajustes aquí.';
 
   @override
   String get settingsFrontCamera => 'Escanear con la cámara frontal';
@@ -16363,6 +16490,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.';
+
+  @override
+  String get settingsLoadFailed => 'No se pudieron cargar los ajustes.';
+
+  @override
+  String get settingsOfflineRegistry =>
+      'Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.';
+
+  @override
+  String get settingsPlatformTitle =>
+      'Ajustes de la plataforma (valores por defecto)';
 
   @override
   String get settingsSectionAccount => 'Mi cuenta';
@@ -16387,6 +16525,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Ajustes';
+
+  @override
+  String get settingsWorkspaceTitle => 'Valores de los ajustes';
 
   @override
   String get settlementAction => 'Agrupar en una factura';

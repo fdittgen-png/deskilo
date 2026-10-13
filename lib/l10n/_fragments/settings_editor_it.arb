@@ -1,0 +1,222 @@
+{
+  "@@locale": "it",
+  "featureConfigurableSettingsTitle": "Impostazioni configurabili",
+  "@featureConfigurableSettingsTitle": {
+    "description": "#2484 settings: Feature title."
+  },
+  "featureConfigurableSettingsDesc": "Limiti, termini e valori predefiniti che si modificano nell'app senza attendere una versione: l'operatore imposta i valori predefiniti, gli amministratori di uno spazio i propri.",
+  "@featureConfigurableSettingsDesc": {
+    "description": "#2484 settings: Feature description."
+  },
+  "settingsWorkspaceTitle": "Valori delle impostazioni",
+  "@settingsWorkspaceTitle": {
+    "description": "#2484 settings: Title of the workspace settings editor section."
+  },
+  "settingsPlatformTitle": "Impostazioni della piattaforma (valori predefiniti)",
+  "@settingsPlatformTitle": {
+    "description": "#2484 settings: Title of the platform settings editor."
+  },
+  "settingsEmpty": "Nessuna impostazione qui.",
+  "@settingsEmpty": {
+    "description": "#2484 settings: Empty editor."
+  },
+  "settingsLoadFailed": "Impossibile caricare le impostazioni.",
+  "@settingsLoadFailed": {
+    "description": "#2484 settings: Error text."
+  },
+  "settingsOfflineRegistry": "Valori predefiniti incorporati: il server non è raggiungibile, per ora non si può modificare nulla.",
+  "@settingsOfflineRegistry": {
+    "description": "#2484 settings: Banner: the editor shows the bundled registry."
+  },
+  "settingGroupDunning": "Solleciti e termini di pagamento",
+  "@settingGroupDunning": {
+    "description": "#2484 settings: Settings group title."
+  },
+  "settingLabelDunningFirstAfterDays": "Giorni prima di un primo sollecito",
+  "@settingLabelDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting label."
+  },
+  "settingHintDunningFirstAfterDays": "Giorni dopo l'emissione prima che venga proposto un primo sollecito e prima della scadenza di una fattura senza termine di pagamento.",
+  "@settingHintDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting hint."
+  },
+  "settingUnitSeconds": "secondi",
+  "@settingUnitSeconds": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitMinutes": "minuti",
+  "@settingUnitMinutes": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitHours": "ore",
+  "@settingUnitHours": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitDays": "giorni",
+  "@settingUnitDays": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingRange": "Tra {min} e {max} {unit}",
+  "@settingRange": {
+    "description": "#2484 settings: Allowed range.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMinOnly": "Almeno {min} {unit}",
+  "@settingMinOnly": {
+    "description": "#2484 settings: Lower bound.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMaxOnly": "Al massimo {max} {unit}",
+  "@settingMaxOnly": {
+    "description": "#2484 settings: Upper bound.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingFloorNote": "Soglia di sicurezza: mai sotto {floor} {unit}.",
+  "@settingFloorNote": {
+    "description": "#2484 settings: Security floor.",
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingCurrentValue": "Ora: {value} {unit}",
+  "@settingCurrentValue": {
+    "description": "#2484 settings: Current value.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingOriginWorkspace": "Impostato per questo spazio",
+  "@settingOriginWorkspace": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginPlatform": "Predefinito della piattaforma",
+  "@settingOriginPlatform": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginDefault": "Predefinito incorporato",
+  "@settingOriginDefault": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingGuardrail": "Protezione fissa",
+  "@settingGuardrail": {
+    "description": "#2484 settings: Read-only guardrail."
+  },
+  "settingGuardrailFallback": "Fissato dal software; è mostrato perché Lei sappia che esiste.",
+  "@settingGuardrailFallback": {
+    "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingEdit": "Modifica",
+  "@settingEdit": {
+    "description": "#2484 settings: Edit button."
+  },
+  "settingHistory": "Cronologia",
+  "@settingHistory": {
+    "description": "#2484 settings: History button."
+  },
+  "settingValueField": "Valore",
+  "@settingValueField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingNoteField": "Nota (facoltativa)",
+  "@settingNoteField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingSave": "Salva",
+  "@settingSave": {
+    "description": "#2484 settings: Save button."
+  },
+  "settingSaved": "Impostazione salvata",
+  "@settingSaved": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingCouldNotSave": "Impossibile salvare l'impostazione",
+  "@settingCouldNotSave": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingProblemNotANumber": "Inserisci un numero intero",
+  "@settingProblemNotANumber": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowMin": "Sotto il minimo",
+  "@settingProblemBelowMin": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemAboveMax": "Sopra il massimo",
+  "@settingProblemAboveMax": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowFloor": "Sotto la soglia di sicurezza",
+  "@settingProblemBelowFloor": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemWrongType": "Valore non valido",
+  "@settingProblemWrongType": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotAChoice": "Non è una delle scelte",
+  "@settingProblemNotAChoice": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingHistoryEmpty": "Nessuna versione salvata: vale il predefinito.",
+  "@settingHistoryEmpty": {
+    "description": "#2484 settings: History empty."
+  },
+  "settingVersionLine": "{value} {unit} · dal {from}",
+  "@settingVersionLine": {
+    "description": "#2484 settings: A history line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "settingVersionUntil": "fino al {to}",
+  "@settingVersionUntil": {
+    "description": "#2484 settings: History line end.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  }
+}

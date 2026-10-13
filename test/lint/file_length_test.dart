@@ -165,7 +165,7 @@ const Map<String, int> _baseline = {
   // by an enum value and a manifest entry per flag, by design.
   // 1273→1284 (2026-09-16): #1277 S2 — the workspaceVocabulary flag: one enum value and one
   // manifest entry. The registry grows by a flag per functionality.
-  'lib/features/workspace/domain/workspace_feature.dart': 611, // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
+  'lib/features/workspace/domain/workspace_feature.dart': 614, // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
 
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
@@ -284,7 +284,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 552, // 2026-10-13 #2361: the Canadian BN and QST number refusals have their messages. 2026-10-12 #2360: the Swiss UID refusal has its message. 2026-10-12 #2359: the sterling VRN refusal has its message. 2026-10-12 #2440: the correction reason joins readiness and the result (the field itself is its own file). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/providers/money_providers.dart': 588, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/providers/money_providers.dart': 601, // 2026-10-13 #2484 588→601: the dunning rules provider reads the workspace's settings snapshot for the first reminder's delay (a setting now). // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/task_recorder/application/recorder_controller.dart': 548, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

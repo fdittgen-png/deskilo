@@ -9012,6 +9012,18 @@ abstract class AppLocalizations {
   /// **'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).'**
   String get featureCoOwnerDesc;
 
+  /// #2484 settings: Feature description.
+  ///
+  /// In en, this message translates to:
+  /// **'Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace\'s administrators their own values.'**
+  String get featureConfigurableSettingsDesc;
+
+  /// #2484 settings: Feature title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configurable settings'**
+  String get featureConfigurableSettingsTitle;
+
   /// #916 configuration transfer: featureConfigurationTransfer
   ///
   /// In en, this message translates to:
@@ -28010,11 +28022,215 @@ abstract class AppLocalizations {
   /// **'Services'**
   String get servicesTitle;
 
+  /// #2484 settings: Snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'The setting could not be saved'**
+  String get settingCouldNotSave;
+
+  /// #2484 settings: Current value.
+  ///
+  /// In en, this message translates to:
+  /// **'Now: {value} {unit}'**
+  String settingCurrentValue(String value, String unit);
+
+  /// #2484 settings: Edit button.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get settingEdit;
+
+  /// #2484 settings: Security floor.
+  ///
+  /// In en, this message translates to:
+  /// **'Security floor: never below {floor} {unit}.'**
+  String settingFloorNote(String floor, String unit);
+
+  /// #2484 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders and payment terms'**
+  String get settingGroupDunning;
+
+  /// #2484 settings: Read-only guardrail.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed guardrail'**
+  String get settingGuardrail;
+
+  /// #2484 settings: Reason when a guardrail has no note.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the software; it is shown so you know it exists.'**
+  String get settingGuardrailFallback;
+
+  /// #2484 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
+  String get settingHintDunningFirstAfterDays;
+
+  /// #2484 settings: History button.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get settingHistory;
+
+  /// #2484 settings: History empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No stored version: the default applies.'**
+  String get settingHistoryEmpty;
+
+  /// #2484 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Days before a first reminder'**
+  String get settingLabelDunningFirstAfterDays;
+
+  /// #2484 settings: Upper bound.
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max} {unit}'**
+  String settingMaxOnly(String max, String unit);
+
+  /// #2484 settings: Lower bound.
+  ///
+  /// In en, this message translates to:
+  /// **'At least {min} {unit}'**
+  String settingMinOnly(String min, String unit);
+
+  /// #2484 settings: Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get settingNoteField;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in default'**
+  String get settingOriginDefault;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform default'**
+  String get settingOriginPlatform;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set for this workspace'**
+  String get settingOriginWorkspace;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the maximum'**
+  String get settingProblemAboveMax;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the security floor'**
+  String get settingProblemBelowFloor;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the minimum'**
+  String get settingProblemBelowMin;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Not one of the choices'**
+  String get settingProblemNotAChoice;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number'**
+  String get settingProblemNotANumber;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid value'**
+  String get settingProblemWrongType;
+
+  /// #2484 settings: Allowed range.
+  ///
+  /// In en, this message translates to:
+  /// **'Between {min} and {max} {unit}'**
+  String settingRange(String min, String max, String unit);
+
+  /// #2484 settings: Save button.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get settingSave;
+
+  /// #2484 settings: Snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting saved'**
+  String get settingSaved;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get settingUnitDays;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get settingUnitHours;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get settingUnitMinutes;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'seconds'**
+  String get settingUnitSeconds;
+
+  /// #2484 settings: Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get settingValueField;
+
+  /// #2484 settings: A history line.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} {unit} · from {from}'**
+  String settingVersionLine(String value, String unit, String from);
+
+  /// #2484 settings: History line end.
+  ///
+  /// In en, this message translates to:
+  /// **'until {to}'**
+  String settingVersionUntil(String to);
+
   /// Admin settings entry to the invoicing hub (#478)
   ///
   /// In en, this message translates to:
   /// **'Billing & reports'**
   String get settingsBillingReports;
+
+  /// #2484 settings: Empty editor.
+  ///
+  /// In en, this message translates to:
+  /// **'No settings here.'**
+  String get settingsEmpty;
 
   /// Settings switch: badge QR scanning uses the screen-side camera (default on)
   ///
@@ -28027,6 +28243,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
   String get settingsFrontCameraDesc;
+
+  /// #2484 settings: Error text.
+  ///
+  /// In en, this message translates to:
+  /// **'The settings could not be loaded.'**
+  String get settingsLoadFailed;
+
+  /// #2484 settings: Banner: the editor shows the bundled registry.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the built-in defaults: the server could not be reached, so nothing can be changed now.'**
+  String get settingsOfflineRegistry;
+
+  /// #2484 settings: Title of the platform settings editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform settings (defaults)'**
+  String get settingsPlatformTitle;
 
   /// #1307 Settings section: who I am and how the app looks, on every workspace
   ///
@@ -28075,6 +28309,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsTitle;
+
+  /// #2484 settings: Title of the workspace settings editor section.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings values'**
+  String get settingsWorkspaceTitle;
 
   /// No description provided for @settlementAction.
   ///

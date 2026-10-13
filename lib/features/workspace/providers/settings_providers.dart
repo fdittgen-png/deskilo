@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/cache/cache_store.dart';
+import '../../../core/instance/settings_bundle_asset.dart';
+import '../../../core/settings/settings.dart';
+import '../../auth/providers/auth_providers.dart';
+import '../application/settings_commands.dart';
+import '../data/supabase_settings_repository.dart';
+import 'workspace_providers.dart';
+
+part 'settings_providers.g.dart';
+
+/// #2484 -- the settings registry: read and written.
+@Riverpod(keepAlive: true)
+SettingsStore settingsRepository(Ref ref) =>
+    SupabaseSettingsRepository(Supabase.instance.client, ref.watch(cacheStoreProvider));
+
+/// The registry, falling back to the definitions bundled with the app
+/// (defaults only) when the installation cannot answer.
+@Riverpod(keepAlive: true)
+SettingsSource settingsSource(Ref ref) => BundledFallbackSettingsSource(
+      ref.watch(settingsRepositoryProvider),
+      ref.watch(settingsBundleLoaderProvider),
+    );
+
+/// Changing a setting (the editor's decision).
+@riverpod
+SettingsCommands settingsCommands(Ref ref) =>
+    SettingsCommands(ref.watch(settingsRepositoryProvider));
+
+/// The registry and every effective value for [workspaceId] (null: the
+/// platform's own view). A different person re-reads it (the provider
+/// watches the session); a write invalidates it.
+@Riverpod(keepAlive: true)
+Future<SettingsSet> settingsSet(Ref ref, String? workspaceId) async {
+  final source = ref.watch(settingsSourceProvider);
+  final signedIn = ref.watch(authStateProvider).value != null;
+  if (!signedIn) return SettingsSet.defaults(const []);
+  return source.load(workspaceId);
+}
+
+/// The ACTIVE workspace's settings snapshot, for the code that works in it
+/// (dunning, booking...). Re-read for a different person or workspace;
+/// invalidate it after a write.
+@Riverpod(keepAlive: true)
+Future<SettingsSet> currentSettings(Ref ref) async {
+  final source = ref.watch(settingsSourceProvider);
+  final signedIn = ref.watch(authStateProvider).value != null;
+  final workspace = ref.watch(currentWorkspaceProvider.future);
+  if (!signedIn) return SettingsSet.defaults(const []);
+  return source.load((await workspace)?.id);
+}

@@ -242,6 +242,13 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
           l10n.featureCustomRolesDesc,
         WorkspaceFeature.customFields =>
           l10n.featureCustomFieldsDesc,
+      _ => _lateDescription(l10n, feature),
+      };
+
+/// The Features screen's later entries (#2484): the main switch above is a
+/// held function that may only stay or fall, so a new flag lands here.
+String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
+    switch (feature) {
         WorkspaceFeature.decisionSurface =>
           l10n.featureDecisionSurfaceDesc,
         WorkspaceFeature.recordingPrivacy =>
@@ -256,4 +263,6 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
           l10n.featureMemberGettingStartedDesc,
         WorkspaceFeature.placeFeedback =>
           l10n.featurePlaceFeedbackDesc,
-      };
+        WorkspaceFeature.configurableSettings => l10n.featureConfigurableSettingsDesc,
+      _ => feature.name,
+    };
