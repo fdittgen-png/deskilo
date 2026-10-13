@@ -2651,6 +2651,7 @@
   "directoryNoUpcoming": "Aucune réservation à venir",
   "directoryOnline": "En ligne",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
+  "directoryPinsMissing": "{count, plural, =1{1 espace n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} espaces n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
   "directoryReservationsHeading": "Réservations",
   "directoryReservedNow": "Réservé maintenant",
   "directoryReservedNowSeat": "Réservé maintenant · {seat}",

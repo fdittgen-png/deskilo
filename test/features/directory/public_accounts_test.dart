@@ -240,6 +240,30 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('an unselected workspace whose lookup fails says so (#2473)',
+      (tester) async {
+    const a = PublicWorkspace('a', 'https://host.example', '', {
+      'name': 'Alpha', 'address': 'Street A',
+    });
+    const b = PublicWorkspace('b', 'https://host.example', '', {
+      'name': 'Beta', 'address': 'Street B',
+    });
+    await tester.pumpWidget(ProviderScope(overrides: [
+      directoryAddressLocationProvider('Street A').overrideWith(
+          (ref) async => const DirectoryLocation(43.46, 3.42, label: 'A')),
+      directoryAddressLocationProvider('Street B')
+          .overrideWith((ref) async => throw StateError('offline')),
+    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
+      workspaces: const [a, b], selected: null,
+      onSelect: (_) {}, tileProvider: _BlankTiles(),
+    )))));
+    await tester.pumpAndSettle();
+    expect(find.text('Alpha'), findsOneWidget);
+    expect(find.byKey(const ValueKey('directory-pins-missing')), findsOneWidget);
+    expect(find.textContaining('1 workspace could not be placed'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('locate card action opens the map without opening workspace details', (tester) async {
     const workspace = PublicWorkspace('unlocated', 'https://host.example', '', {
       'name': 'No address yet',

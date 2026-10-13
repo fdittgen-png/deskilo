@@ -29,9 +29,9 @@ t('no network, no inline or foreign script', () => {
   assert.match(html, /Content-Security-Policy[^>]*connect-src 'none'/);
   assert.match(html, /script-src 'self'/);
   const scripts = [...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];
-  assert.equal(scripts.length, 1);
-  assert.match(scripts[0][1], /src="product\.js"/);
-  assert.equal(scripts[0][2].trim(), '');
+  // The WebMCP tools (#2503): the shared module and the page's declaration.
+  assert.deepEqual(scripts.map((s) => /src="([^"]+)"/.exec(s[1])[1]), ['webmcp.js', 'product.js', 'product_webmcp.js']);
+  for (const s of scripts) assert.equal(s[2].trim(), '');
   const js = fs.readFileSync(new URL('../../web/product.js', import.meta.url), 'utf8');
   for (const banned of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'innerHTML', 'eval(']) {
     assert.ok(!js.includes(banned), banned);

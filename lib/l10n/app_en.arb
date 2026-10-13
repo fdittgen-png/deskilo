@@ -4471,6 +4471,14 @@
   "@directoryOpenGroup": {
     "description": "Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set"
   },
+  "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
+  "@directoryPinsMissing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "directoryReservationsHeading": "Reservations",
   "@directoryReservationsHeading": {
     "description": "Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail"

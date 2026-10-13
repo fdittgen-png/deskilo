@@ -44,11 +44,16 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
   /// Addresses geocoded per page; the cards beyond stay unpinned.
   static const _maxLookups = 20;
 
-  static DirectoryLocation? _lookedUp(PublicWorkspace w, WidgetRef ref, bool allowed) {
+  /// The lookup of an unselected workspace; [failed] counts the ones that
+  /// errored so the map can say that some cards have no pin (#2473).
+  static DirectoryLocation? _lookedUp(
+      PublicWorkspace w, WidgetRef ref, bool allowed, List<Object> failed) {
     if (!allowed || w.location != null) return null;
     final address = w.text('address').trim();
     if (address.isEmpty) return null;
-    return ref.watch(directoryAddressLocationProvider(address)).value;
+    final answer = ref.watch(directoryAddressLocationProvider(address));
+    if (answer.hasError) failed.add(w);
+    return answer.value;
   }
 
   @override
@@ -131,12 +136,13 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     // lookup per address). A failed lookup leaves that workspace on the
     // cards only; the selected one still says so above the map.
     var lookups = 0;
+    final failed = <Object>[];
     final located = [
       for (final w in widget.workspaces)
         if (w.location ??
                 (w == target
                     ? lookup?.value
-                    : _lookedUp(w, ref, lookups++ < _maxLookups))
+                    : _lookedUp(w, ref, lookups++ < _maxLookups, failed))
             case final point?)
           (workspace: w, location: point),
     ];
@@ -169,6 +175,15 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
               IconButton(key: const ValueKey('directory-map-retry'), onPressed: () => ref.invalidate(directoryAddressLocationProvider(address)),
                 tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),
           ]),
+        ),
+      if (failed.isNotEmpty)
+        Padding(
+          padding: AppSpacing.smAll,
+          child: Text(
+            l.directoryPinsMissing(failed.length),
+            key: const ValueKey('directory-pins-missing'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ),
       Expanded(child: Stack(children: [FlutterMap(
       mapController: _controller,

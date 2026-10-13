@@ -3,5 +3,6 @@
   "directoryLocating": "Ricerca dell’indirizzo pubblico…",
   "directoryApproximate": "Posizione approssimativa dell’indirizzo",
   "directoryLocationMissing": "Posizione non disponibile. Il proprietario può pubblicare coordinate precise.",
-  "meSpaceOpen": "Apri"
+  "meSpaceOpen": "Apri",
+  "directoryPinsMissing": "{count, plural, =1{1 spazio non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.} other{{count} spazi non è stato possibile collocarli sulla mappa; le loro schede sono sotto.}}"
 }

@@ -14,7 +14,7 @@ import { chromium } from 'playwright';
 import { TEXT, LOCALES } from '../../web/product.js';
 
 const root = process.env.DESKILO_WEB_ROOT ?? fileURLToPath(new URL('../../web', import.meta.url));
-const files = new Set(['product.html', 'product.js', 'cost_planner.js', 'product_capabilities.js']);
+const files = new Set(['product.html', 'product.js', 'cost_planner.js', 'product_capabilities.js', 'webmcp.js', 'product_webmcp.js']);
 const server = createServer(async (req, res) => {
   const name = new URL(req.url, 'http://localhost').pathname.replace(/^\/(nested\/)?/, '');
   if (!files.has(name)) { res.writeHead(404).end(); return; }

@@ -145,7 +145,9 @@ String renderRelease(Map<String, Object?> projection) =>
     '${const JsonEncoder.withIndent('  ').convert(projection)}\n';
 
 /// #1635 — the evaluation page's copy: id, status and the scopes that
-/// hold evidence, nothing else. The page decides the words.
+/// hold evidence, and (#2503) the manifest's public prose the WebMCP tools
+/// answer from: outcome, features, prerequisites, limitations. The page
+/// decides the words of everything else.
 String renderWeb(Map<String, Object?> projection) {
   final caps = [
     for (final c in (projection['capabilities'] as List)
@@ -153,6 +155,10 @@ String renderWeb(Map<String, Object?> projection) {
       {
         'id': c['id'],
         'status': c['status'],
+        'outcome': c['outcome'],
+        'features': c['features'],
+        'prerequisites': c['prerequisites'],
+        'limitations': c['limitations'],
         'evidence': [
           for (final e in (c['scopes'] as Map).entries)
             if (e.value == 'gated' || e.value == 'recorded') '${e.key}:${e.value}',

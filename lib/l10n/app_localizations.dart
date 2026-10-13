@@ -6769,6 +6769,12 @@ abstract class AppLocalizations {
   /// **'Open WhatsApp group'**
   String get directoryOpenGroup;
 
+  /// No description provided for @directoryPinsMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
+  String directoryPinsMissing(int count);
+
   /// Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail
   ///
   /// In en, this message translates to:

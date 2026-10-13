@@ -1,0 +1,12 @@
+# Reviewed exceptions to the code-health ratchet (#2491).
+#
+# A function that is NOT in docs/design/CODE_HEALTH_BASELINE.json must stay
+# under every limit (cognitive < 30, cyclomatic < 25, length < 150, parameters
+# < 7). A new function that cannot, and has a reason, is listed here:
+#
+#   <function id> | #<issue> | <reason>
+#
+# The id is exactly what the failing test prints: file#Type.name(signature).
+# An entry for a function that is under the limits, that the baseline already
+# holds, or that no longer exists is itself a failure. Nothing is listed
+# today; adding a line is a reviewed decision, like raising a file budget.

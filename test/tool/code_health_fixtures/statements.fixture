@@ -1,0 +1,24 @@
+void loops(List<int> xs) {
+  for (final x in xs) {
+    while (x > 0) {
+      try {
+        run();
+      } catch (e) {
+        break;
+      }
+    }
+  }
+  do {
+    run();
+  } while (xs.isEmpty);
+  switch (xs.length) {
+    case 1:
+      run();
+    case 2:
+      run();
+    default:
+      run();
+  }
+}
+
+void run() {}
