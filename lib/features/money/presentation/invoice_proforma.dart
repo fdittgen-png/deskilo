@@ -77,16 +77,16 @@ Future<void> shareProforma(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-        memberTerms: memberTermsFor(ref, invoice.memberId),
+    InvoicePdfFileOptions(
+      // #920 — through layoutImage, so the shipped layouts' `logo`
+      // resolves to whatever the owner actually called theirs.
+      reportImage: (String name) => layoutImage(ref, name),
+      memberTerms: memberTermsFor(ref, invoice.memberId),
             memberCapacity: memberCapacityFor(ref, invoice.memberId),
         dueAt: invoiceDueAt(ref, invoice),
         proforma: true,
         template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value,
-        // #920 — through layoutImage, so the shipped layouts' `logo`
-    // resolves to whatever the owner actually called theirs.
-    reportImage: (name) => layoutImage(ref, name),
-      );
+        workspace: ref.read(currentWorkspaceProvider).value));
       return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
     },
   );

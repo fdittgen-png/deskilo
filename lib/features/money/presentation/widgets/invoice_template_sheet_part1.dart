@@ -276,8 +276,7 @@ extension _ReportTemplateEditorStatePart1 on _ReportTemplateEditorState {
       if (_doc == 'invoice' || _doc == 'proforma') {
         final invoicePdf = await buildInvoicePdfFile(
           context,
-          invoices.first,
-          proforma: _doc == 'proforma',
+          invoices.first, InvoicePdfFileOptions(proforma: _doc == 'proforma',
           copy: true,
           template: _doc == 'proforma'
               ? InvoicePdfTemplate(proforma: _currentBands)
@@ -290,8 +289,7 @@ extension _ReportTemplateEditorStatePart1 on _ReportTemplateEditorState {
                 ),
           workspace: ref.read(currentWorkspaceProvider).value,
           reportImage: (name) =>
-              ref.read(reportImageBytesProvider(name).future),
-        );
+              ref.read(reportImageBytesProvider(name).future)));
         pdf = (bytes: invoicePdf.bytes, fileName: invoicePdf.fileName);
       } else if (_doc == 'statement' ||
           reportKindById(_doc, reminderLevels: _reminderLevels)?.slot
