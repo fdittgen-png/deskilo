@@ -1,136 +1,108 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'invoice_pdf.dart';
 
-
-Future<Uint8List> buildInvoicePdf({
-  required Invoice invoice,
-  required InvoicePdfStrings strings,
-  Map<String, Uint8List> reportImages = const {},
-  required String Function(int cents) money,
-  required String Function(InvoiceLine line) lineText,
-  required String Function(InvoiceDetailEntry entry) activityText,
-  required String dateLabel,
-  required pw.Font baseFont,
-  required pw.Font boldFont,
-  /// What the invoice COVERS, in words ('July 2026'). The stored
-  /// [Invoice.title] is the raw period ('2026-07'), which no reader should
-  /// have to decode; empty falls back to it (legacy 0060 free-form titles).
-  String periodLabel = '',
-  /// Renders the SAME figures as a proforma: a quote for a month, not a
-  /// document of record. It carries no signature (there is nothing to
-  /// certify), says PROFORMA where an invoice says its number, and wears
-  /// the same diagonal watermark so the two can never be confused on a
-  /// desk. An issued invoice can also be re-rendered this way — as a
-  /// payment request that does not pass for the original.
-  bool proforma = false,
-  /// Stamps the render as a duplicate: the issuer holds the original, the
-  /// member re-renders it on demand. Ignored on a proforma (which is not a
-  /// copy of anything) and on an erroneous invoice (whose own stamp wins).
-  bool copy = false,
-  /// FACTUR-X: the EN 16931 invoice as CII, embedded in the PDF itself.
-  /// Turns the document into PDF/A-3 (the format's requirement) carrying
-  /// `factur-x.xml` — one file a human reads and a machine parses, which
-  /// is what French and German small businesses actually exchange.
-  /// Requires [colorProfile] (PDF/A demands an output intent).
-  String facturXml = '',
-
-  /// Owner report bands (#454/#470), already rendered by
-  /// `renderReportBands`. Null = the built-in layout. PDF only — the
-  /// XML never carries them; the void banner/watermark, signature,
-  /// annex and page numbers stay non-templated regardless.
-  InvoiceReport? report,
-  Uint8List? colorProfile,
-
-  /// #837 — invoices appended AFTER this one as reference, in order.
-  /// A settlement uses it to carry the invoices it regrouped, each
-  /// stamped with the number that now owes their balance.
-  List<InvoiceAnnex> annexes = const [],
-
-  /// #869 — where the recipient sits so it shows through a window
-  /// envelope. Resolved by the caller from the template and the seller's
-  /// country, because only the caller knows both.
-  AddressWindow addressWindow = AddressWindow.off,
-
-  /// #2360 — the Swiss QR-bill, on a page of its own after the invoice
-  /// (before any annex); null for every other document.
-  pw.Page? qrBillPage,
-}) async {
-  final hybrid = facturXml.isNotEmpty && colorProfile != null;
-  final doc = pw.Document(
-    title: '${strings.invoiceTitle} ${invoice.number}',
-    author: invoice.workspaceName,
-    creator: _producer,
-    producer: _producer,
-    subject: periodLabel,
-    metadata: hybrid
-        ? PdfaRdf(
-            title: '${strings.invoiceTitle} ${invoice.number}',
-            author: invoice.workspaceName,
-            creator: _producer,
-            producer: _producer,
-            subject: periodLabel,
-            invoiceRdf: PdfaFacturxRdf().create(
-              conformanceLevel: 'EN 16931',
-            ),
-          ).create()
-        : null,
-  );
-  if (hybrid) {
-    // PDF/A-3: an embedded output intent, and the XML as an /Alternative
-    // attachment — the two halves of the same invoice.
-    PdfaColorProfile(doc.document, colorProfile);
-    PdfaAttachedFiles(doc.document, [
-      PdfaAttachedFile(
-        name: 'factur-x.xml',
-        data: facturXml,
-      ),
-    ]);
-  }
-  final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
-  // Composed outside the widget calls (HARD RULE #1 lints inline
-  // literals).
-  // #837 — ONE invoice's sheets. Called for the document itself and then
-  // once per appended reference, so every annex starts on a fresh page
-  // and can never overlap the pages before it.
-  void addSheets({
-    required Invoice invoice,
-    required bool proforma,
-    required bool copy,
-    required InvoiceReport? report,
-    required String dateLabel,
-    required String periodLabel,
-    String? watermarkOverride,
+/// #837 — ONE invoice's sheets. Used for the document itself and then once
+/// per appended reference, so every annex starts on a fresh page and can
+/// never overlap the pages before it. One method per part of the sheet.
+class _InvoiceSheet {
+  _InvoiceSheet(
+    this.request,
+    this.theme, {
+    required this.invoice,
+    required this.proforma,
+    required this.copy,
+    required this.report,
+    required this.dateLabel,
+    required this.periodLabel,
+    this.watermarkOverride,
     // #869 — only the sheet that goes in the envelope carries the
     // address window; an annex is documentation behind it.
-    bool primary = false,
-  }) {
-    final windowOn = primary && addressWindow.isOn;
-    final numberLine = proforma
-        ? (invoice.number.isEmpty
-            ? strings.proforma
-            : '${strings.proforma} · ${invoice.number}')
-        : '${strings.invoiceTitle} ${invoice.number}';
-    final issuedOnLine = '${strings.issuedOn} $dateLabel';
-    final issuedByLine = '${strings.issuedBy} ${invoice.issuerName}';
-    final replacesLine = '${strings.replaces} ${invoice.replacesNumber}';
+    this.primary = false,
+  });
 
-    final chargesCents = invoice.lines
-        .where((l) => l.amountCents > 0)
-        .fold(0, (sum, l) => sum + l.amountCents);
-    final paymentsCents = invoice.lines
-        .where((l) => l.amountCents < 0)
-        .fold(0, (sum, l) => sum + l.amountCents);
-    // The VAT contained in the charges (0072). Prices are VAT-inclusive, so
-    // the breakdown EXPLAINS the total rather than adding to it — which is
-    // why the net sits above the charges line, not beside it.
-    final vatTotals = invoice.vatTotals.where((t) => t.vatCents > 0).toList();
-    final showVat = vatTotals.isNotEmpty;
-    /// '20 %', '5.5 %' — beside the caption, so one row reads 'VAT 20 %'.
-    String ratePercent(double percent) =>
-        '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+  final InvoicePdfRequest request;
+  final pw.ThemeData theme;
+  final Invoice invoice;
+  final bool proforma;
+  final bool copy;
+  final InvoiceReport? report;
+  final String dateLabel;
+  final String periodLabel;
+  final String? watermarkOverride;
+  final bool primary;
 
-    // #470: the header band replaces the letterhead wholesale.
-    final List<pw.Widget> headerWidgets = report == null
+  InvoicePdfStrings get strings => request.strings;
+  AddressWindow get addressWindow => request.addressWindow;
+  Map<String, Uint8List> get reportImages => request.reportImages;
+  String Function(int cents) get money => request.money;
+  String Function(InvoiceLine line) get lineText => request.lineText;
+  String Function(InvoiceDetailEntry entry) get activityText =>
+      request.activityText;
+
+  bool get windowOn => primary && addressWindow.isOn;
+  String get numberLine => proforma
+      ? (invoice.number.isEmpty
+          ? strings.proforma
+          : '${strings.proforma} · ${invoice.number}')
+      : '${strings.invoiceTitle} ${invoice.number}';
+  String get issuedOnLine => '${strings.issuedOn} $dateLabel';
+  String get issuedByLine => '${strings.issuedBy} ${invoice.issuerName}';
+  String get replacesLine => '${strings.replaces} ${invoice.replacesNumber}';
+
+  int get chargesCents => invoice.lines
+      .where((l) => l.amountCents > 0)
+      .fold(0, (sum, l) => sum + l.amountCents);
+  int get paymentsCents => invoice.lines
+      .where((l) => l.amountCents < 0)
+      .fold(0, (sum, l) => sum + l.amountCents);
+  // The VAT contained in the charges (0072). Prices are VAT-inclusive, so
+  // the breakdown EXPLAINS the total rather than adding to it — which is
+  // why the net sits above the charges line, not beside it.
+  List<InvoiceVatTotal> get vatTotals =>
+      invoice.vatTotals.where((t) => t.vatCents > 0).toList();
+  bool get showVat => vatTotals.isNotEmpty;
+
+  /// '20 %', '5.5 %' — beside the caption, so one row reads 'VAT 20 %'.
+  String ratePercent(double percent) =>
+      '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+
+  late final List<pw.Widget> headerWidgets = _headerWidgets();
+  late final List<pw.Widget> windowHeaderWidgets = _windowHeaderWidgets();
+  late final List<pw.Widget> footerWidgets = _footerWidgets();
+  late final pw.Widget continuationHeader = _continuationHeader();
+  late final pw.Widget windowRecipient = addressWindowRecipient(
+      name: invoice.clientName, address: invoice.memberAddress);
+
+  // An erroneous invoice must be unmistakable even at arm's length, or
+  // photocopied, or seen upside down on someone's desk (0071): the word
+  // runs across the whole sheet, diagonally, BEHIND the content — every
+  // page of it, annex included.
+  // #837 — an appended reference carries the stamp that says where it
+  // went; everything else follows the document's own state.
+  // #917 — the development mark is absolute: even an appended annex,
+  // which normally carries the stamp saying where it went, is first of
+  // all a page that is not real.
+  late final String watermark = _stamp();
+  // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
+  // inside the sheet. (The package's own Watermark scales to the rotated
+  // bounding box it computes, which runs the ends off the corners.)
+  late final double markSize =
+      math.min(120.0, 820 / math.max(watermark.length, 1));
+
+  String _stamp() =>strings.development.isNotEmpty
+        ? strings.development.toUpperCase()
+        : watermarkOverride ??
+            invoiceWatermark(
+              strings,
+              proforma: proforma,
+              voided: invoice.isVoided,
+              copy: copy,
+            );
+
+  /// #470: the header band replaces the letterhead wholesale.
+  List<pw.Widget> _headerWidgets() {
+    final report = this.report;
+    return report == null
         ? <pw.Widget>[
           // ── Letterhead ────────────────────────────────────────────
           pw.Row(
@@ -188,23 +160,32 @@ Future<Uint8List> buildInvoicePdf({
               color: _accent),
         ]
         : reportBlockWidgets(report.header, images: reportImages);
+  }
 
-    // #923 — inside the envelope's 25 mm sender band a picture the design
-    // did not size gets a ceiling, so the letterhead fits instead of
-    // being cut off at the top where the logo lives.
-    final List<pw.Widget> windowHeaderWidgets = report == null
+  /// #923 — inside the envelope's 25 mm sender band a picture the design
+  /// did not size gets a ceiling, so the letterhead fits instead of
+  /// being cut off at the top where the logo lives.
+  List<pw.Widget> _windowHeaderWidgets() {
+    final report = this.report;
+    return report == null
         ? headerWidgets
         : reportBlockWidgets(report.header,
             images: reportImages, maxImageHeight: senderLogoMaxHeight);
+  }
 
-    final List<pw.Widget> footerWidgets = report == null
+  List<pw.Widget> _footerWidgets() {
+    final report = this.report;
+    return report == null
         ? const <pw.Widget>[]
         : reportBlockWidgets(report.footer, images: reportImages);
+  }
 
-    // #872 — what a page 2 says when the design does not say it: the
-    // document's own title and number over a hairline. Enough to pair a
-    // loose sheet with the invoice it belongs to, and nothing more.
-    final pw.Widget continuationHeader = report != null &&
+  /// #872 — what a page 2 says when the design does not say it: the
+  /// document's own title and number over a hairline. Enough to pair a
+  /// loose sheet with the invoice it belongs to, and nothing more.
+  pw.Widget _continuationHeader() {
+    final report = this.report;
+    return report != null &&
             report.continuation.isNotEmpty
         ? pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.stretch,
@@ -227,9 +208,7 @@ Future<Uint8List> buildInvoicePdf({
               ],
             ),
           );
-
-    final pw.Widget windowRecipient = addressWindowRecipient(
-        name: invoice.clientName, address: invoice.memberAddress);
+  }
 
     pw.Widget label(String text) => pw.Text(text,
         style: pw.TextStyle(
@@ -249,32 +228,27 @@ Future<Uint8List> buildInvoicePdf({
                       bold ? pw.FontWeight.bold : pw.FontWeight.normal)),
         );
 
-    // An erroneous invoice must be unmistakable even at arm's length, or
-    // photocopied, or seen upside down on someone's desk (0071): the word
-    // runs across the whole sheet, diagonally, BEHIND the content — every
-    // page of it, annex included.
-    // #837 — an appended reference carries the stamp that says where it
-    // went; everything else follows the document's own state.
-    // #917 — the development mark is absolute: even an appended annex,
-    // which normally carries the stamp saying where it went, is first of
-    // all a page that is not real.
-    final watermark = strings.development.isNotEmpty
-        ? strings.development.toUpperCase()
-        : watermarkOverride ??
-            invoiceWatermark(
-              strings,
-              proforma: proforma,
-              voided: invoice.isVoided,
-              copy: copy,
-            );
-    // Its size follows its LENGTH: 'ERRATA' and 'FEHLERHAFT' must both land
-    // inside the sheet. (The package's own Watermark scales to the rotated
-    // bounding box it computes, which runs the ends off the corners.)
-    final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
-
+  /// Adds this invoice's sheet to [doc].
+  void addTo(pw.Document doc) {
     doc.addPage(
       pw.MultiPage(
-        pageTheme: pw.PageTheme(
+        pageTheme: _pageTheme(),
+        // #872 — the letterhead is page furniture, not flow: page one
+        // carries it (and reserves the envelope window under it), every
+        // later page carries the short strip that says which document
+        // this is instead of repeating an address block nobody rereads.
+        header: _header,
+        // #872 — and the footer is pinned to EVERY page, so the terms,
+        // the account to pay into and the page number are on whichever
+        // sheet the reader is holding.
+        footer: (context) => reportPageFooter(context,
+            content: footerWidgets, pageLabel: strings.page),
+        build: _body,
+      ),
+    );
+  }
+
+  pw.PageTheme _pageTheme() => pw.PageTheme(
           pageFormat: PdfPageFormat.a4,
           theme: theme,
           // #873 — 20 mm all round: the sender block sits at 20 mm
@@ -308,12 +282,9 @@ Future<Uint8List> buildInvoicePdf({
                       ),
                     ),
                   ),
-        ),
-        // #872 — the letterhead is page furniture, not flow: page one
-        // carries it (and reserves the envelope window under it), every
-        // later page carries the short strip that says which document
-        // this is instead of repeating an address block nobody rereads.
-        header: (context) => context.pageNumber == 1
+        );
+
+  pw.Widget _header(pw.Context context) => context.pageNumber == 1
             ? pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                 children: [
@@ -362,16 +333,35 @@ Future<Uint8List> buildInvoicePdf({
                         height: addressWindowFlowResume - addressWindowTop),
                 ],
               )
-            : continuationHeader,
-        // #872 — and the footer is pinned to EVERY page, so the terms,
-        // the account to pay into and the page number are on whichever
-        // sheet the reader is holding.
-        footer: (context) => reportPageFooter(context,
-            content: footerWidgets, pageLabel: strings.page),
-        build: (context) => [
-          // #873 — "Facture", its number and the dates, at 90 mm: the
-          // first thing under the address field, as the spec requires.
-          if (windowOn && report == null) ...[
+            : continuationHeader;
+
+  List<pw.Widget> _body(pw.Context context) {
+    final report = this.report;
+    return [
+      ..._identification(),
+      ..._voidedBanner(),
+      // #470: the body band replaces billed-to, positions and
+      // totals — the detail band of the report.
+      ...(report == null
+          ? <pw.Widget>[
+              _billedTo(),
+              pw.SizedBox(height: 16),
+              _positions(),
+              pw.SizedBox(height: 10),
+              _totals(),
+            ]
+          : reportBlockWidgets(report.body, images: reportImages)),
+      ..._annex(),
+      pw.SizedBox(height: 24),
+      ..._signature(),
+    ];
+  }
+
+  /// #873 — "Facture", its number and the dates, at 90 mm: the first thing
+  /// under the address field, as the spec requires.
+  List<pw.Widget> _identification() {
+    if (!(windowOn && report == null)) return const <pw.Widget>[];
+    return [
             pw.Text(numberLine,
                 style: pw.TextStyle(
                     fontSize: 14,
@@ -386,9 +376,13 @@ Future<Uint8List> buildInvoicePdf({
               pw.Text(replacesLine,
                   style: const pw.TextStyle(fontSize: 9, color: _muted)),
             pw.SizedBox(height: 12),
-          ],
-          // ── Erroneous banner (0061) ───────────────────────────────
-          if (invoice.isVoided && !proforma)
+    ];
+  }
+
+  /// ── Erroneous banner (0061) ──
+  List<pw.Widget> _voidedBanner() {
+    if (!(invoice.isVoided && !proforma)) return const <pw.Widget>[];
+    return [
             pw.Container(
               margin: const pw.EdgeInsets.only(bottom: 12),
               padding:
@@ -402,13 +396,13 @@ Future<Uint8List> buildInvoicePdf({
                       fontSize: 10,
                       color: _accent,
                       fontWeight: pw.FontWeight.bold)),
-            ),
-          // #470: the body band replaces billed-to, positions and
-          // totals — the detail band of the report.
-          ...(report == null
-              ? <pw.Widget>[
-          // ── Billed to + invoiced month ────────────────────────────
-          pw.Row(
+            )
+    ];
+  }
+
+  /// ── Billed to + invoiced month ──
+  pw.Widget _billedTo() =>
+pw.Row(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               // #869 — the window already shows the recipient; repeating
@@ -459,10 +453,11 @@ Future<Uint8List> buildInvoicePdf({
                         color: _ink)),
               ),
             ],
-          ),
-          pw.SizedBox(height: 16),
-          // ── Positions ─────────────────────────────────────────────
-          pw.Table(
+          );
+
+  /// ── Positions ──
+  pw.Widget _positions() =>
+pw.Table(
             columnWidths: showVat
                 ? const {
                     0: pw.FlexColumnWidth(4),
@@ -561,10 +556,11 @@ Future<Uint8List> buildInvoicePdf({
                 ),
               ],
             ],
-          ),
-          pw.SizedBox(height: 10),
-          // ── Totals: charges / payments / SOLDE ────────────────────
-          pw.Row(
+          );
+
+  /// ── Totals: charges / payments / SOLDE ──
+  pw.Widget _totals() =>
+pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.end,
             children: [
               pw.SizedBox(
@@ -645,11 +641,12 @@ Future<Uint8List> buildInvoicePdf({
                 ]),
               ),
             ],
-          ),
-                ]
-              : reportBlockWidgets(report.body, images: reportImages)),
-          // ── Annex (0064) ──────────────────────────────────────────
-          if (invoice.detailed) ...[
+          );
+
+  /// ── Annex (0064) ──
+  List<pw.Widget> _annex() {
+    if (!invoice.detailed) return const <pw.Widget>[];
+    return [
             pw.SizedBox(height: 22),
             pw.Text(strings.annex,
                 style: pw.TextStyle(
@@ -747,12 +744,14 @@ Future<Uint8List> buildInvoicePdf({
                 ],
               ),
             ],
-          ],
-          pw.SizedBox(height: 24),
-          // ── Digital signature ─────────────────────────────────────
-          // A proforma has none: nothing was issued, so there is nothing to
-          // fingerprint.
-          if (!proforma)
+    ];
+  }
+
+  /// ── Digital signature ── A proforma has none: nothing was issued, so
+  /// there is nothing to fingerprint.
+  List<pw.Widget> _signature() {
+    if (proforma) return const <pw.Widget>[];
+    return [
           pw.Container(
             padding: const pw.EdgeInsets.only(top: 6),
             decoration: const pw.BoxDecoration(
@@ -767,35 +766,7 @@ Future<Uint8List> buildInvoicePdf({
                     style: const pw.TextStyle(fontSize: 7, color: _muted)),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          )
+    ];
   }
-
-  addSheets(
-    invoice: invoice,
-    proforma: proforma,
-    copy: copy,
-    report: report,
-    dateLabel: dateLabel,
-    periodLabel: periodLabel,
-    primary: true,
-  );
-  if (qrBillPage != null) doc.addPage(qrBillPage);
-  // The regrouped invoices behind this one, each stamped with where it
-  // went. They are documentation, so they carry no report bands and are
-  // never a proforma or a copy of anything.
-  for (final annex in annexes) {
-    addSheets(
-      invoice: annex.invoice,
-      proforma: false,
-      copy: false,
-      report: null,
-      dateLabel: annex.dateLabel,
-      periodLabel: annex.periodLabel,
-      watermarkOverride: annex.watermark,
-    );
-  }
-  return doc.save();
 }
