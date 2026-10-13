@@ -159,7 +159,7 @@ String buildAccountantCsv({
         for (final total in invoice.vatTotals)
           // #2361 — a Canadian rate is the taxes it is made of.
           if (total.components.isNotEmpty)
-            total.components.map((c) => '${c.scheme} ${_percent(c.percent)}%').join(' + ')
+            total.components.map((c) => '${c.scheme} ${_rateText(c.percent)}%').join(' + ')
           else
             '${total.percent.toStringAsFixed(2)}%',
       ].join(' ')),
@@ -199,6 +199,6 @@ int _taxOf(Invoice invoice, Set<String> schemes) => invoice.vatTotals.fold(
 );
 
 /// 5 -> 5, 9.975 -> 9.975.
-String _percent(double value) => value == value.roundToDouble()
+String _rateText(double value) => value == value.roundToDouble()
     ? value.toStringAsFixed(0)
     : value.toString();
