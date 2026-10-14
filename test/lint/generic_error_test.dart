@@ -18,7 +18,7 @@ import 'lint_sources.dart';
 
 /// Files still falling back to the generic sentence → how many times.
 const Map<String, int> _baseline = {
-  'lib/core/i18n/regional_formats_section.dart': 1,
+  'lib/features/profile/presentation/widgets/regional_formats_section.dart': 1,
   'lib/core/trace/guarded.dart': 1,
   'lib/features/auth/presentation/screens/linked_accounts_screen.dart': 1,
   'lib/features/calendar/presentation/screens/calendar_hub_screen.dart': 1,

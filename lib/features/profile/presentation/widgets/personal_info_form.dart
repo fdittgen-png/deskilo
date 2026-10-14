@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../workspace/presentation/country_names.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
 

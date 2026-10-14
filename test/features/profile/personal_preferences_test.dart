@@ -3,14 +3,15 @@
 // writes/reset real scoped preferences rather than changing personal defaults.
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
-import 'package:deskilo/core/i18n/regional_formats_section.dart';
 import 'package:deskilo/features/profile/domain/personal_preferences.dart';
+import 'package:deskilo/features/profile/presentation/widgets/regional_formats_section.dart';
 import 'package:deskilo/features/profile/providers/personal_preferences_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../../helpers/mock_providers.dart';
 
 void main() {
