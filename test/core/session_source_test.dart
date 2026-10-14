@@ -5,6 +5,8 @@
 // fake included); unwired (the server-choice scope) it is signed out and
 // nothing throws.
 import 'package:deskilo/core/demo/data/auth_repository.dart';
+import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,5 +41,12 @@ void main() {
     container.listen(sessionStateProvider, (_, _) {});
     expect(container.read(sessionSourceProvider).currentUserId, isNull);
     expect(await container.read(sessionStateProvider.future), isNull);
+  });
+
+  test('in the demo scope core sees the demo session, not the real one', () {
+    final fixture = DemoFixture.build();
+    final container = ProviderContainer(overrides: demoOverrides(fixture));
+    addTearDown(container.dispose);
+    expect(container.read(sessionSourceProvider), same(fixture.auth));
   });
 }

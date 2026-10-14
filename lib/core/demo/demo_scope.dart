@@ -138,6 +138,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // is, which is what makes an external effect impossible rather
       // than refused.
       authRepositoryProvider.overrideWithValue(fixture.auth),
+      sessionSourceFromAuth, // #2495: core reads the DEMO session, not the real one
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
