@@ -24,6 +24,7 @@ import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../report_strings_l10n.dart';
 import 'invoice_correction_reason_field.dart';
+import 'invoice_missing_sales_tax.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -521,8 +522,7 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'seller_address' => l10n.invoiceMissingSellerAddress,
       'seller_vat_id' => l10n.invoiceMissingSellerVatId,
       'exemption_reason' => l10n.invoiceMissingExemptionReason,
-      'buyer_name' =>
-        l10n.invoiceMissingBuyerName,
+      'buyer_name' => l10n.invoiceMissingBuyerName,
       'buyer_address' => l10n.invoiceMissingBuyerAddress,
       'buyer_vat_id' => l10n.invoiceMissingBuyerVatId,
       'seller_country_unsupported' => l10n.invoiceMissingSellerCountry,
@@ -548,5 +548,5 @@ String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
       'buyer_capacity_unknown' =>
         l10n
             .invoiceMissingBuyerCapacity,
-      _ => key,
+      _ => salesTaxMissingLabel(l10n, key),
     };

@@ -1335,6 +1335,12 @@
       "capabilities": []
     },
     {
+      "key": "salesTax",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "scheduledExpenses",
       "maturity": "unreviewed",
       "lifecycle": "active",

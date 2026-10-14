@@ -201,7 +201,8 @@ window.SETUP_PROCESSES=[
      "supplyClassification",
      "viesVerification",
      "recapitulativeStatement",
-     "inputVat"
+     "inputVat",
+     "salesTax"
     ]
    }
   ]
