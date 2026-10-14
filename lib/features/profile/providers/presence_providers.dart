@@ -2,9 +2,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/auth/providers/auth_providers.dart';
-import '../../features/profile/providers/profile_providers.dart';
-import 'presence_heartbeat.dart';
+import '../../../core/presence/presence_heartbeat.dart';
+import '../../auth/providers/auth_providers.dart';
+import 'profile_providers.dart';
 
 part 'presence_providers.g.dart';
 
