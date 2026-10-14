@@ -11,6 +11,8 @@
 // whole-space booking is hatched.
 import 'package:flutter/material.dart';
 
+import '../../domain/grid_geometry.dart';
+
 void drawLabel(
   Canvas canvas,
   String text,
@@ -147,3 +149,11 @@ void drawReservedChip(
         canvas, Offset(x, center.dy - textPainter.height / 2));
   }
 }
+
+/// A grid rectangle in pixels at [cellSize] pixels per cell.
+Rect gridRectToPx(GridRect r, double cellSize) => Rect.fromLTWH(
+      r.x * cellSize,
+      r.y * cellSize,
+      r.w * cellSize,
+      r.h * cellSize,
+    );
