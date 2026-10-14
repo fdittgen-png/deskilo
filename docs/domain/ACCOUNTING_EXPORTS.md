@@ -27,7 +27,7 @@ authority. Widening one needs the authority's own spec in hand.
 
 | format | claim | countries | verified by |
 |---|---|---|---|
-| FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM |
+| FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM, `DateLet` on every lettered row |
 | SAF-T (PT), `TaxAccountingBasis` **F** | regulatory | PT | declared invoicing-only, `SoftwareCertificateNumber` 0 |
 | DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header, first 20 fields per row, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM** |
 | Sage 50 audit trail | exchange | GB, IE | |
