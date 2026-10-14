@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-79 literal(s) in 6 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+31 literal(s) in 5 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -40,54 +40,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/instance/instance_builder.dart:22` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:23` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:24` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:122` | label | Clients | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:126` | label | Prestations de services | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:128` | label | Banques | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:129` | label | TVA collectée | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:130` | label | Achats non stockés de matières et fournitures | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:142` | label | Debitoren | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:147` | label | Erlöse 19 % USt | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:149` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:153` | label | Umsatzsteuer 19 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:155` | label | Sonstige betriebliche Aufwendungen | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:162` | label | Clientes | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:166` | label | Prestaciones de servicios | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:168` | label | Bancos | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:172` | label | IVA repercutido | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:174` | label | Otros servicios | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:181` | label | Clienti | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:185` | label | Ricavi per servizi | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:187` | label | Banca c/c | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:191` | label | IVA a debito | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:193` | label | Costi per servizi | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:200` | label | Clients | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:204` | label | Prestations de services | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:209` | label | Établissements de crédit | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:211` | label | TVA à payer | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:212` | label | Services et biens divers | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:219` | label | Debiteuren | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:223` | label | Opbrengst diensten | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:225` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:229` | label | Af te dragen btw | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:231` | label | Algemene kosten | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:238` | label | Clientes | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:242` | label | Prestações de serviços | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:247` | label | Depósitos à ordem | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:249` | label | IVA liquidado | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:250` | label | Fornecimentos e serviços externos | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:260` | label | Forderungen aus Lieferungen und Leistungen | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:267` | label | Dienstleistungsertrag zum Normalsatz | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:272` | label | Dienstleistungsertrag zum reduzierten Satz und Beherbergung | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:277` | label | Dienstleistungsertrag, von der Steuer ausgenommen | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:279` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:283` | label | Geschuldete MWST | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:288` | label | Abrechnungskonto MWST | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:290` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:302` | label | Accounts receivable | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:307` | label | Service revenue | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:309` | label | Bank | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:310` | label | Sales tax payable | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/coa_preview.dart:311` | label | Übriger Betriebsaufwand | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
@@ -95,6 +47,5 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
-- **`lib/features/money/domain/coa_preview.dart`** (48) — the national charts of accounts (the French PCG, the Swiss KMU): «Clients», «TVA collectée», «Dienstleistungsertrag» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

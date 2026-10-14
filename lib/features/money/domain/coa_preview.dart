@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_regime.dart';
 
 /// A **preview** of the chart of accounts a bookkeeper would likely use
@@ -88,228 +90,38 @@ class CoaChart {
 /// shown a `TVA collectée` line would be told to book something it never
 /// owes.
 ///
-/// An unknown country falls back to the OECD-ish generic numbering
-/// rather than to France: a wrong-country chart that LOOKS national is
-/// more misleading than one that is obviously generic.
+/// #2481 -- the chart is the country's `account_map` rows (its `chart` row
+/// names it, the others are its accounts in order), read from [reference]
+/// or the installed snapshot. An unknown country falls back to the shared
+/// generic numbering rather than to France: a wrong-country chart that LOOKS
+/// national is more misleading than one that is obviously generic.
 CoaChart coaChartFor({
   required String countryCode,
   required VatRegime regime,
   required String Function(CoaAccountRole role) noteFor,
+  TaxReferenceSet? reference,
 }) {
   final charging = regime == VatRegime.vatRegistered;
-
-  List<CoaAccount> build(
-    List<({CoaAccountRole role, String number, String label})> rows,
-  ) =>
-      [
-        for (final r in rows)
-          if (r.role != CoaAccountRole.vat || charging)
-            CoaAccount(
-              role: r.role,
-              number: r.number,
-              label: r.label,
-              note: noteFor(r.role),
-            ),
-      ];
-
-  return switch (countryCode.toUpperCase()) {
-    // Plan comptable général. Already the FEC's defaults, so the preview
-    // and the export agree by construction.
-    'FR' => CoaChart(
-        code: 'PCG',
-        name: 'Plan comptable général',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '411000', label: 'Clients'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '706000',
-            label: 'Prestations de services'
-          ),
-          (role: CoaAccountRole.bank, number: '512000', label: 'Banques'),
-          (role: CoaAccountRole.vat, number: '445710', label: 'TVA collectée'),
-          (role: CoaAccountRole.expenses, number: '606000', label: 'Achats non stockés de matières et fournitures'),
-        ]),
-      ),
-    // SKR03 — the commonest German chart for a small service business,
-    // and the DATEV export's defaults.
-    'DE' || 'AT' => CoaChart(
-        code: 'SKR03',
-        name: 'DATEV-Standardkontenrahmen 03',
-        accounts: build(const [
-          (
-            role: CoaAccountRole.customers,
-            number: '10000',
-            label: 'Debitoren'
-          ),
-          (
-            role: CoaAccountRole.revenue,
-            number: '8400',
-            label: 'Erlöse 19 % USt'
-          ),
-          (role: CoaAccountRole.bank, number: '1200', label: 'Bank'),
-          (
-            role: CoaAccountRole.vat,
-            number: '1776',
-            label: 'Umsatzsteuer 19 %'
-          ),
-          (role: CoaAccountRole.expenses, number: '4900', label: 'Sonstige betriebliche Aufwendungen'),
-        ]),
-      ),
-    'ES' => CoaChart(
-        code: 'PGC',
-        name: 'Plan General de Contabilidad',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '430', label: 'Clientes'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '705',
-            label: 'Prestaciones de servicios'
-          ),
-          (role: CoaAccountRole.bank, number: '572', label: 'Bancos'),
-          (
-            role: CoaAccountRole.vat,
-            number: '477',
-            label: 'IVA repercutido'
-          ),
-          (role: CoaAccountRole.expenses, number: '629', label: 'Otros servicios'),
-        ]),
-      ),
-    'IT' => CoaChart(
-        code: 'CC',
-        name: 'Codice civile — schema di bilancio',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '1510', label: 'Clienti'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '5810',
-            label: 'Ricavi per servizi'
-          ),
-          (role: CoaAccountRole.bank, number: '1820', label: 'Banca c/c'),
-          (
-            role: CoaAccountRole.vat,
-            number: '2610',
-            label: 'IVA a debito'
-          ),
-          (role: CoaAccountRole.expenses, number: '7100', label: 'Costi per servizi'),
-        ]),
-      ),
-    'BE' || 'LU' => CoaChart(
-        code: 'PCMN',
-        name: 'Plan comptable minimum normalisé',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '400', label: 'Clients'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '700',
-            label: 'Prestations de services'
-          ),
-          (
-            role: CoaAccountRole.bank,
-            number: '550',
-            label: 'Établissements de crédit'
-          ),
-          (role: CoaAccountRole.vat, number: '451', label: 'TVA à payer'),
-          (role: CoaAccountRole.expenses, number: '610', label: 'Services et biens divers'),
-        ]),
-      ),
-    'NL' => CoaChart(
-        code: 'RGS',
-        name: 'Referentie Grootboekschema',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '1300', label: 'Debiteuren'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '8000',
-            label: 'Opbrengst diensten'
-          ),
-          (role: CoaAccountRole.bank, number: '1100', label: 'Bank'),
-          (
-            role: CoaAccountRole.vat,
-            number: '1500',
-            label: 'Af te dragen btw'
-          ),
-          (role: CoaAccountRole.expenses, number: '4000', label: 'Algemene kosten'),
-        ]),
-      ),
-    'PT' => CoaChart(
-        code: 'SNC',
-        name: 'Sistema de Normalização Contabilística',
-        accounts: build(const [
-          (role: CoaAccountRole.customers, number: '211', label: 'Clientes'),
-          (
-            role: CoaAccountRole.revenue,
-            number: '721',
-            label: 'Prestações de serviços'
-          ),
-          (
-            role: CoaAccountRole.bank,
-            number: '12',
-            label: 'Depósitos à ordem'
-          ),
-          (role: CoaAccountRole.vat, number: '2433', label: 'IVA liquidado'),
-          (role: CoaAccountRole.expenses, number: '62', label: 'Fornecimentos e serviços externos'),
-        ]),
-      ),
-    'CH' => CoaChart(
-        code: 'KMU',
-        name: 'Kontenrahmen KMU',
-        accounts: build(const [
-          (
-            role: CoaAccountRole.customers,
-            number: '1100',
-            label: 'Forderungen aus Lieferungen und Leistungen'
-          ),
-          // #2360 — the turnover is kept apart by treatment: the MWST
-          // return asks it per rate and for the exempt letting.
-          (
-            role: CoaAccountRole.revenue,
-            number: '3400',
-            label: 'Dienstleistungsertrag zum Normalsatz'
-          ),
-          (
-            role: CoaAccountRole.revenue,
-            number: '3401',
-            label: 'Dienstleistungsertrag zum reduzierten Satz und Beherbergung'
-          ),
-          (
-            role: CoaAccountRole.revenue,
-            number: '3402',
-            label: 'Dienstleistungsertrag, von der Steuer ausgenommen'
-          ),
-          (role: CoaAccountRole.bank, number: '1020', label: 'Bank'),
-          (
-            role: CoaAccountRole.vat,
-            number: '2200',
-            label: 'Geschuldete MWST'
-          ),
-          (
-            role: CoaAccountRole.vat,
-            number: '2201',
-            label: 'Abrechnungskonto MWST'
-          ),
-          (role: CoaAccountRole.expenses, number: '6500', label: 'Übriger Betriebsaufwand'),
-        ]),
-      ),
-    // No national chart is imposed in these; the numbering below is the
-    // conventional shape an accountant will recognise and re-point.
-    _ => CoaChart(
-        code: 'GEN',
-        name: 'Generic',
-        accounts: build(const [
-          (
-            role: CoaAccountRole.customers,
-            number: '1200',
-            label: 'Accounts receivable'
-          ),
-          (
-            role: CoaAccountRole.revenue,
-            number: '4000',
-            label: 'Service revenue'
-          ),
-          (role: CoaAccountRole.bank, number: '1000', label: 'Bank'),
-          (role: CoaAccountRole.vat, number: '2200', label: 'Sales tax payable'),
-          (role: CoaAccountRole.expenses, number: '6500', label: 'Übriger Betriebsaufwand'),
-        ]),
-      ),
-  };
+  final rows = (reference ?? ActiveTaxReference.current).chartOf(countryCode);
+  final header = rows.where((r) => r.role == 'chart').firstOrNull;
+  if (header == null) {
+    throw TaxReferenceUnavailable('no chart of accounts for $countryCode');
+  }
+  return CoaChart(
+    code: header.account,
+    name: header.label,
+    accounts: [
+      for (final r in rows)
+        if (r.role != 'chart')
+          if (CoaAccountRole.values.where((x) => x.name == r.role).firstOrNull
+              case final role?)
+            if (role != CoaAccountRole.vat || charging)
+              CoaAccount(
+                role: role,
+                number: r.account,
+                label: r.label,
+                note: noteFor(role),
+              ),
+    ],
+  );
 }

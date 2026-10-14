@@ -98,4 +98,64 @@ extension TaxReferenceQueries on TaxReferenceSet {
         for (final row in resolved(asOf).where(TaxDomain.issuingGate))
           if ((row.value as IssuingGateValue).nationalChannelRequired) row.country,
       };
+
+  /// The export default of [role] in [format] for [country] (its own row, the
+  /// shared `*` row otherwise): an account number, or with [tax] a tax code.
+  /// A missing row is a defect of the data, never a blank account.
+  String accountOf(String format, String role, String country,
+      {bool tax = false, String? asOf}) {
+    // A chart lists its accounts in order under `coa/NN-<role>`: the first
+    // account of the role is the one an export proposes.
+    final v = format == 'coa'
+        ? chartOf(country, asOf: asOf).where((a) => a.role == role).firstOrNull
+        : resolved(asOf).lookup(TaxDomain.accountMap, country, '$format/$role')?.value
+            as AccountMapValue?;
+    final text = tax ? v?.taxCode : v?.account;
+    if (text == null || text.isEmpty) {
+      throw TaxReferenceUnavailable(
+          'no account_map row "$format/$role" for $country');
+    }
+    return text;
+  }
+
+  /// The accounts of [country]'s suggested chart in order, the `chart` row
+  /// (code and name) first; the shared chart where the country has none.
+  List<AccountMapValue> chartOf(String country, {String? asOf}) {
+    final c = country.trim().toUpperCase();
+    List<AccountMapValue> of(String code) => [
+          for (final r in [
+            for (final r in resolved(asOf).rows)
+              if (r.domain == TaxDomain.accountMap &&
+                  r.country == code &&
+                  r.key.startsWith('coa/'))
+                r,
+          ]..sort((a, b) => a.key.compareTo(b.key)))
+            r.value as AccountMapValue,
+        ];
+    final own = of(c);
+    return own.isNotEmpty ? own : of(taxReferenceAnyCountry);
+  }
+
+  /// The fiscal group (`VatGroup.wire`) of the rate [percent] / [category]
+  /// in [country]: the version in force on [asOf] first, any other version
+  /// after it; '' where no rate row has it.
+  String groupOfRate(String country, double percent, String category,
+      {String? asOf}) {
+    final c = country.trim().toUpperCase();
+    final rows = [
+      for (final r in this.rows)
+        if (r.domain == TaxDomain.rate && r.country == c) r,
+    ]..sort((a, b) {
+        final aIn = asOf != null && a.isInForceOn(asOf) ? 0 : 1;
+        final bIn = asOf != null && b.isInForceOn(asOf) ? 0 : 1;
+        return aIn != bIn ? aIn - bIn : b.validFrom.compareTo(a.validFrom);
+      });
+    for (final r in rows) {
+      final rate = r.value as RateValue;
+      if (rate.category == category && (rate.percent - percent).abs() < 1e-9) {
+        return rate.group;
+      }
+    }
+    return '';
+  }
 }

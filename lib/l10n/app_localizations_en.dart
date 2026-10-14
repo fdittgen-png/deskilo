@@ -18346,6 +18346,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A private draft from a file: nothing in it is trusted or sent.';
 
   @override
+  String get taxRefAccount => 'Account number (or chart code)';
+
+  @override
   String get taxRefAdd => 'Add a value';
 
   @override
@@ -18374,6 +18377,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefCurrency => 'Currency (ISO code)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Export accounts and codes';
 
   @override
   String get taxRefDomainCatalogueNote => 'Catalogue notes';
@@ -18424,6 +18430,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefExemptionReason => 'Exemption reason';
 
   @override
+  String get taxRefFormat => 'Format';
+
+  @override
   String get taxRefFrom => 'Applies from (YYYY-MM-DD)';
 
   @override
@@ -18438,6 +18447,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefIntro =>
       'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.';
+
+  @override
+  String get taxRefInvalidAccount => 'Give an account number or a tax code';
 
   @override
   String get taxRefInvalidDate => 'Enter the date as YYYY-MM-DD';
@@ -18497,6 +18509,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Tax number required';
 
   @override
+  String get taxRefRole => 'Role';
+
+  @override
   String get taxRefSave => 'Save version';
 
   @override
@@ -18510,6 +18525,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefSupported => 'Issuing supported';
+
+  @override
+  String get taxRefTaxCode => 'Tax code';
 
   @override
   String get taxRefText => 'Text';

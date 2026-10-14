@@ -18547,6 +18547,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.';
 
   @override
+  String get taxRefAccount => 'Kontonummer (oder Kontenrahmen)';
+
+  @override
   String get taxRefAdd => 'Wert hinzufügen';
 
   @override
@@ -18577,6 +18580,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefCurrency => 'Währung (ISO-Code)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Exportkonten und -schlüssel';
 
   @override
   String get taxRefDomainCatalogueNote => 'Katalog-Hinweise';
@@ -18628,6 +18634,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefExemptionReason => 'Befreiungsgrund';
 
   @override
+  String get taxRefFormat => 'Format';
+
+  @override
   String get taxRefFrom => 'Gilt ab (JJJJ-MM-TT)';
 
   @override
@@ -18643,6 +18652,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefIntro =>
       'Steuersätze, Befreiungstexte, USt-IdNr.-Muster und die EU-Mitgliedstaaten. Eine Änderung ist eine neue Version ab einem Datum; die gültige Version wird beendet, nie überschrieben.';
+
+  @override
+  String get taxRefInvalidAccount =>
+      'Eine Kontonummer oder einen Steuerschlüssel angeben';
 
   @override
   String get taxRefInvalidDate => 'Datum als JJJJ-MM-TT eingeben';
@@ -18705,6 +18718,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Steuernummer erforderlich';
 
   @override
+  String get taxRefRole => 'Rolle';
+
+  @override
   String get taxRefSave => 'Version speichern';
 
   @override
@@ -18718,6 +18734,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefSupported => 'Ausstellung unterstützt';
+
+  @override
+  String get taxRefTaxCode => 'Steuerschlüssel';
 
   @override
   String get taxRefText => 'Text';

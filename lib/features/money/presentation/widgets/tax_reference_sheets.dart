@@ -33,6 +33,8 @@ String taxValueSummary(TaxValue v) => switch (v) {
       IssuingGateValue() =>
         v.issues ? v.currency : '-',
       FormBoxValue() => v.label,
+      AccountMapValue() =>
+        '${v.role}: ${v.account.isNotEmpty ? v.account : v.taxCode}',
     };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -47,6 +49,7 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
       TaxDomain.mandate => context.l10n.taxRefDomainMandate,
       TaxDomain.issuingGate => context.l10n.taxRefDomainIssuingGate,
       TaxDomain.formBox => context.l10n.taxRefDomainFormBox,
+      TaxDomain.accountMap => context.l10n.taxRefDomainAccountMap,
     };
 
 /// The state of one version form: its text fields and its three choices.
@@ -60,6 +63,19 @@ class _VersionForm {
           'label': switch (from?.value) {
             RateValue(:final label) => label,
             FormBoxValue(:final label) => label,
+            AccountMapValue(:final label) => label,
+            _ => '',
+          },
+          'role': switch (from?.value) {
+            AccountMapValue(:final role) => role,
+            _ => '',
+          },
+          'account': switch (from?.value) {
+            AccountMapValue(:final account) => account,
+            _ => '',
+          },
+          'tax_code': switch (from?.value) {
+            AccountMapValue(:final taxCode) => taxCode,
             _ => '',
           },
           'groups': switch (from?.value) {
@@ -139,6 +155,7 @@ class _VersionForm {
         'standard': v is TaxPointValue ? v.standard : 'invoice',
         'cash_backstop': v is TaxPointValue ? v.cashBackstop : 'none',
         'duty': v is MandateValue ? v.duty : MandateDuty.receiveAll.wire,
+        'format': v is AccountMapValue ? v.format : 'coa',
       };
 
   static Map<String, bool> _flagsOf(TaxValue? v) => {
@@ -201,6 +218,13 @@ class _VersionForm {
             groups: _groupList('groups'),
             excludeGroups: _groupList('exclude_groups'),
           ),
+        TaxDomain.accountMap => AccountMapValue(
+            format: choice['format']!,
+            role: fields.text('role'),
+            account: fields.text('account'),
+            taxCode: fields.text('tax_code'),
+            label: fields.text('label'),
+          ),
         TaxDomain.euMember => EuMemberValue(aliasOf: fields.text('alias_of')),
         TaxDomain.mention => ExemptionTextValue(
             regime: fields.text('regime'), text: fields.text('text')),
@@ -231,20 +255,12 @@ class _VersionForm {
       source: fields.text('source'),
     );
     String? need(String k) => fields.text(k).isEmpty ? l10n.taxRefRequired : null;
-    final p = percent;
     return {
       if (problems.contains(TaxVersionProblem.country)) 'country': l10n.taxRefCountry,
       if (problems.contains(TaxVersionProblem.key)) 'key': l10n.taxRefRequired,
       if (problems.contains(TaxVersionProblem.date)) 'valid_from': l10n.taxRefInvalidDate,
       if (problems.contains(TaxVersionProblem.source)) 'source': l10n.taxRefRequired,
-      if (domain == TaxDomain.rate) ...{
-        'label': ?need('label'),
-        if (p == null || p < 0 || p > 99.999) 'percent': l10n.taxRefInvalidNumber,
-      },
-      if (domain == TaxDomain.formBox) ...{
-        'label': ?need('label'),
-        if (!groupListsValid) 'groups': l10n.taxRefInvalidGroups,
-      },
+      ..._keyedErrors(l10n),
       if (domain == TaxDomain.mention) ...{
         'regime': ?need('regime'),
         'text': ?need('text'),
@@ -260,6 +276,28 @@ class _VersionForm {
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
         'from': l10n.taxRefInvalidDate,
+    };
+  }
+
+  /// The refusals of the domains whose value carries a label or a key of its
+  /// own (rates, return boxes, export accounts).
+  FieldErrors _keyedErrors(AppLocalizations l10n) {
+    String? need(String k) => fields.text(k).isEmpty ? l10n.taxRefRequired : null;
+    final p = percent;
+    return {
+      if (domain == TaxDomain.rate) ...{
+        'label': ?need('label'),
+        if (p == null || p < 0 || p > 99.999) 'percent': l10n.taxRefInvalidNumber,
+      },
+      if (domain == TaxDomain.formBox) ...{
+        'label': ?need('label'),
+        if (!groupListsValid) 'groups': l10n.taxRefInvalidGroups,
+      },
+      if (domain == TaxDomain.accountMap) ...{
+        'role': ?need('role'),
+        if (fields.text('account').isEmpty && fields.text('tax_code').isEmpty)
+          'account': l10n.taxRefInvalidAccount,
+      },
     };
   }
 
@@ -342,6 +380,14 @@ class _VersionForm {
             _text('label', l10n.taxRefLabel),
             _text('groups', l10n.taxRefGroups),
             _text('exclude_groups', l10n.taxRefExcludeGroups),
+          ],
+        TaxDomain.accountMap => [
+            _pick('format', l10n.taxRefFormat,
+                const ['coa', 'fec', 'datev', 'sage', 'saf_t']),
+            _text('role', l10n.taxRefRole),
+            _text('account', l10n.taxRefAccount),
+            _text('tax_code', l10n.taxRefTaxCode),
+            _text('label', l10n.taxRefLabel),
           ],
         TaxDomain.euMember => [
             Text(l10n.taxRefMemberEmpty),
