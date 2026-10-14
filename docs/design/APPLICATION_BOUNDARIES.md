@@ -140,6 +140,12 @@ Reciprocal:
 - `reservations <-> workspace`
 - `task_recorder <-> workspace`
 
+## Strongly connected components (#2495)
+
+Mutual pairs are only the shortest cycles; a component is a set of features that can all reach each other through imports. The architecture is acyclic only when this list is empty.
+
+- `calendar`, `directory`, `events`, `mcp`, `members`, `money`, `plan`, `profile`, `reservations`, `task_recorder`, `workspace` — e.g. `calendar -> money -> calendar`
+
 ## Hand-written files over 600 lines
 
 The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets there say what each one costs today.
