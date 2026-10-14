@@ -34,7 +34,7 @@ authority. Widening one needs the authority's own spec in hand.
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted on purpose |
 | Accountant CSV | exchange | everywhere | |
-| Audit trail | exchange | everywhere | called a trail, never an "audit file" |
+| Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip |
 
 ## What each country mandates that this app does not produce
