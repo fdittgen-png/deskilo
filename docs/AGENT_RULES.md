@@ -57,10 +57,14 @@ Dart reader `SettingsSet.read<T>(key)` need nothing else; there is no
 `read(key, fallback)`, the registry default is the fallback. Then delete the
 literal and its entry in `test/lint/business_literals_test.dart`.
 
-A PR that adds a literal of this kind is reviewed as a defect. The epic #2476
-pins the VAT files with a ratchet (`test/lint/tax_literals_test.dart`) that
-only goes down; the rule applies to every new feature from now on, not only
-to VAT.
+A PR that adds a literal of this kind is reviewed as a defect. **A tax value
+is a `tax_reference` row** (ADR 0041): a rate, a threshold, a text, a pattern,
+a country list, a form box's groups, an export account or tax code. The VAT
+files are pinned by `test/lint/tax_literals_test.dart` at zero outside the
+reviewed allow-list `test/lint/tax_literals_allowed.txt` (a standard's code, UI
+wording, a capability -- each with its reason); a literal that is not listed
+fails, and so does a listed line that moved. The rule applies to every new
+feature from now on, not only to VAT.
 
 ## Feature management (lifetime rule, #502)
 

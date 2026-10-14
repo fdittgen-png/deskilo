@@ -11954,6 +11954,10 @@
   "taskWorkbenchTitle": "Taller de tareas",
   "taskWorkbenchTranscriptOnly": "Algunos pasos vienen de una versión más reciente: se muestran solo como transcripción.",
   "taskWorkbenchUntrusted": "Un borrador privado de un archivo: nada de él se considera fiable ni se envía.",
+  "taxRefAccount": "Número de cuenta (o código del plan)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
   "taxRefAdd": "Añadir un valor",
   "@taxRefAdd": {
     "description": "#2477 tax reference: Button: add a new reference value."
@@ -11993,6 +11997,10 @@
   "taxRefCurrency": "Moneda (código ISO)",
   "@taxRefCurrency": {
     "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefDomainAccountMap": "Cuentas y códigos de exportación",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
   },
   "taxRefDomainCatalogueNote": "Notas del catálogo",
   "@taxRefDomainCatalogueNote": {
@@ -12058,6 +12066,10 @@
   "@taxRefExemptionReason": {
     "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
   },
+  "taxRefFormat": "Formato",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
   "taxRefFrom": "Se aplica desde (AAAA-MM-DD)",
   "@taxRefFrom": {
     "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
@@ -12077,6 +12089,10 @@
   "taxRefIntro": "Tipos, textos de exención, formatos de NIF-IVA y países miembros de la UE. Un cambio es una nueva versión desde una fecha; la versión vigente se cierra, nunca se edita.",
   "@taxRefIntro": {
     "description": "#2477 tax reference: Intro line under the title of the tax reference screen."
+  },
+  "taxRefInvalidAccount": "Indique un número de cuenta o un código de impuesto",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
   },
   "taxRefInvalidDate": "Introduzca la fecha como AAAA-MM-DD",
   "@taxRefInvalidDate": {
@@ -12150,6 +12166,10 @@
   "@taxRefRequiresTaxNumber": {
     "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
   },
+  "taxRefRole": "Función",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
   "taxRefSave": "Guardar la versión",
   "@taxRefSave": {
     "description": "#2477 tax reference: Button: save the new version."
@@ -12169,6 +12189,10 @@
   "taxRefSupported": "Emisión admitida",
   "@taxRefSupported": {
     "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefTaxCode": "Código de impuesto",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
   },
   "taxRefText": "Texto",
   "@taxRefText": {

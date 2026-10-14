@@ -44,7 +44,10 @@ enum TaxDomain {
   issuingGate('issuing_gate'),
 
   /// Which fiscal groups a rated box of a return form adds up, and its label.
-  formBox('form_box');
+  formBox('form_box'),
+
+  /// An account number or a tax code an accounting export proposes.
+  accountMap('account_map');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -123,6 +126,13 @@ sealed class TaxValue {
           label: r.string('label'),
           groups: r.strings('groups'),
           excludeGroups: r.strings('exclude_groups'),
+        ),
+      TaxDomain.accountMap => AccountMapValue(
+          format: r.string('format'),
+          role: r.string('role'),
+          account: r.stringOr('account'),
+          taxCode: r.stringOr('tax_code'),
+          label: r.stringOr('label'),
         ),
     };
   }
@@ -368,5 +378,46 @@ class FormBoxValue extends TaxValue {
         'label': label,
         if (groups.isNotEmpty) 'groups': groups,
         if (excludeGroups.isNotEmpty) 'exclude_groups': excludeGroups,
+      };
+}
+
+/// `account_map`: {format, role, account?, tax_code?, label?} -- a default an
+/// accounting export or the chart-of-accounts preview proposes. [format] is
+/// `coa` (the country's suggested chart: [role] is `chart` for its code and
+/// name, else the account's role, the key's number orders them), `fec`,
+/// `datev`, `sage` or `saf_t` (what that file asks for beyond the chart).
+/// The workspace's own chart stays its `book_profile`; the accountant's
+/// correction at export time always wins over these.
+class AccountMapValue extends TaxValue {
+  const AccountMapValue({
+    required this.format,
+    required this.role,
+    this.account = '',
+    this.taxCode = '',
+    this.label = '',
+  });
+
+  final String format;
+  final String role;
+
+  /// The account number (or, for the `chart` role, the chart's code).
+  final String account;
+
+  /// The export's own tax code (`T1`).
+  final String taxCode;
+
+  /// The account's name in the chart's own language.
+  final String label;
+
+  @override
+  TaxDomain get domain => TaxDomain.accountMap;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'format': format,
+        'role': role,
+        if (account.isNotEmpty) 'account': account,
+        if (taxCode.isNotEmpty) 'tax_code': taxCode,
+        if (label.isNotEmpty) 'label': label,
       };
 }

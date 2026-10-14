@@ -31742,6 +31742,12 @@ abstract class AppLocalizations {
   /// **'A private draft from a file: nothing in it is trusted or sent.'**
   String get taskWorkbenchUntrusted;
 
+  /// #2481 tax reference: Field: the account number of an export row.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number (or chart code)'**
+  String get taxRefAccount;
+
   /// #2477 tax reference: Button: add a new reference value.
   ///
   /// In en, this message translates to:
@@ -31801,6 +31807,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Currency (ISO code)'**
   String get taxRefCurrency;
+
+  /// #2481 tax reference: Tab: the accounts and tax codes accounting exports propose.
+  ///
+  /// In en, this message translates to:
+  /// **'Export accounts and codes'**
+  String get taxRefDomainAccountMap;
 
   /// #2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue.
   ///
@@ -31898,6 +31910,12 @@ abstract class AppLocalizations {
   /// **'Exemption reason'**
   String get taxRefExemptionReason;
 
+  /// #2481 tax reference: Field: the export format of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get taxRefFormat;
+
   /// #2479 tax reference: Field: first day the duty applies (YYYY-MM-DD).
   ///
   /// In en, this message translates to:
@@ -31927,6 +31945,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.'**
   String get taxRefIntro;
+
+  /// #2481 tax reference: Error: an export row needs an account or a code.
+  ///
+  /// In en, this message translates to:
+  /// **'Give an account number or a tax code'**
+  String get taxRefInvalidAccount;
 
   /// #2477 tax reference: Validation: date format.
   ///
@@ -32036,6 +32060,12 @@ abstract class AppLocalizations {
   /// **'Tax number required'**
   String get taxRefRequiresTaxNumber;
 
+  /// #2481 tax reference: Field: the role of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get taxRefRole;
+
   /// #2477 tax reference: Button: save the new version.
   ///
   /// In en, this message translates to:
@@ -32065,6 +32095,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issuing supported'**
   String get taxRefSupported;
+
+  /// #2481 tax reference: Field: the export tax code.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax code'**
+  String get taxRefTaxCode;
 
   /// #2477 tax reference: Field: statutory text.
   ///

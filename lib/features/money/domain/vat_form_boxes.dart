@@ -9,6 +9,7 @@
 // and how they total -- stays in the form's code.
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_declaration.dart';
 import 'vat_forms.dart';
 
@@ -83,28 +84,14 @@ String Function(VatDeclarationLine) lineGroupsFor(
   DateTime periodEnd,
 ) {
   final day = isoDay(periodEnd);
-  final code = country.trim().toUpperCase();
-  final rows =
-      [
-        for (final r in reference.rows)
-          if (r.domain == TaxDomain.rate && r.country == code) r,
-      ]..sort((a, b) {
-        final aIn = a.isInForceOn(day) ? 0 : 1;
-        final bIn = b.isInForceOn(day) ? 0 : 1;
-        return aIn != bIn ? aIn - bIn : b.validFrom.compareTo(a.validFrom);
-      });
   final cache = <String, String>{};
-  return (line) => cache.putIfAbsent('${line.percent}|${line.category}', () {
-    final category = line.category.isNotEmpty
-        ? line.category
-        : (line.percent > 0 ? 'S' : 'O');
-    for (final r in rows) {
-      final rate = r.value as RateValue;
-      if (rate.category == category &&
-          (rate.percent - line.percent).abs() < 1e-9) {
-        return rate.group;
-      }
-    }
-    return '';
-  });
+  return (line) => cache.putIfAbsent(
+        '${line.percent}|${line.category}',
+        () => reference.groupOfRate(
+          country,
+          line.percent,
+          line.category.isNotEmpty ? line.category : (line.percent > 0 ? 'S' : 'O'),
+          asOf: day,
+        ),
+      );
 }

@@ -18555,6 +18555,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un brouillon privé issu d\'un fichier : rien n\'y est considéré comme fiable ni envoyé.';
 
   @override
+  String get taxRefAccount => 'Numéro de compte (ou code du plan)';
+
+  @override
   String get taxRefAdd => 'Ajouter une valeur';
 
   @override
@@ -18583,6 +18586,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefCurrency => 'Devise (code ISO)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Comptes et codes d\'export';
 
   @override
   String get taxRefDomainCatalogueNote => 'Notes du catalogue';
@@ -18634,6 +18640,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefExemptionReason => 'Motif d\'exonération';
 
   @override
+  String get taxRefFormat => 'Format';
+
+  @override
   String get taxRefFrom => 'S\'applique à partir du (AAAA-MM-JJ)';
 
   @override
@@ -18649,6 +18658,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get taxRefIntro =>
       'Taux, mentions d\'exonération, formats de numéros de TVA et pays membres de l\'UE. Un changement est une nouvelle version à partir d\'une date ; la version en vigueur est clôturée, jamais modifiée.';
+
+  @override
+  String get taxRefInvalidAccount =>
+      'Indiquez un numéro de compte ou un code de taxe';
 
   @override
   String get taxRefInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
@@ -18709,6 +18722,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Numéro fiscal obligatoire';
 
   @override
+  String get taxRefRole => 'Rôle';
+
+  @override
   String get taxRefSave => 'Enregistrer la version';
 
   @override
@@ -18722,6 +18738,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefSupported => 'Émission prise en charge';
+
+  @override
+  String get taxRefTaxCode => 'Code de taxe';
 
   @override
   String get taxRefText => 'Texte';

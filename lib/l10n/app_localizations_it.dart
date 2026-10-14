@@ -18523,6 +18523,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.';
 
   @override
+  String get taxRefAccount => 'Numero di conto (o codice del piano)';
+
+  @override
   String get taxRefAdd => 'Aggiungi un valore';
 
   @override
@@ -18552,6 +18555,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefCurrency => 'Valuta (codice ISO)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Conti e codici di esportazione';
 
   @override
   String get taxRefDomainCatalogueNote => 'Note del catalogo';
@@ -18603,6 +18609,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefExemptionReason => 'Motivo di esenzione';
 
   @override
+  String get taxRefFormat => 'Formato';
+
+  @override
   String get taxRefFrom => 'Si applica dal (AAAA-MM-GG)';
 
   @override
@@ -18617,6 +18626,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefIntro =>
       'Aliquote, testi di esenzione, formati delle partite IVA e Stati membri dell\'UE. Una modifica è una nuova versione da una data; la versione in vigore viene chiusa, mai modificata.';
+
+  @override
+  String get taxRefInvalidAccount =>
+      'Indicare un numero di conto o un codice imposta';
 
   @override
   String get taxRefInvalidDate => 'Inserisci la data come AAAA-MM-GG';
@@ -18676,6 +18689,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Numero fiscale obbligatorio';
 
   @override
+  String get taxRefRole => 'Ruolo';
+
+  @override
   String get taxRefSave => 'Salva la versione';
 
   @override
@@ -18689,6 +18705,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefSupported => 'Emissione supportata';
+
+  @override
+  String get taxRefTaxCode => 'Codice imposta';
 
   @override
   String get taxRefText => 'Testo';

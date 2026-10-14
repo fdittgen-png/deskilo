@@ -235,5 +235,29 @@
   "taxRefInvalidGroups": "Bekannte Steuergruppen nennen (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), keine in beiden Listen",
   "@taxRefInvalidGroups": {
     "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
+  },
+  "taxRefDomainAccountMap": "Exportkonten und -schlüssel",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
+  },
+  "taxRefFormat": "Format",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
+  "taxRefRole": "Rolle",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
+  "taxRefAccount": "Kontonummer (oder Kontenrahmen)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
+  "taxRefTaxCode": "Steuerschlüssel",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
+  },
+  "taxRefInvalidAccount": "Eine Kontonummer oder einen Steuerschlüssel angeben",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
   }
 }
