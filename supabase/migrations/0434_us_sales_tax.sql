@@ -135,7 +135,8 @@ create policy tax_exemption_certificates_select on public.tax_exemption_certific
   for select to authenticated
   using (public.has_permission(workspace_id, 'manageBilling')
          or member_id in (select m.id from public.members m
-                           where m.user_id = auth.uid() and m.workspace_id = tax_exemption_certificates.workspace_id));
+                           where m.user_id = (select auth.uid())
+                             and m.workspace_id = tax_exemption_certificates.workspace_id));
 drop policy if exists mcp_delegated_deny on public.tax_exemption_certificates;
 create policy mcp_delegated_deny on public.tax_exemption_certificates as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
@@ -535,15 +536,24 @@ $new$)
   end loop;
   execute v_def;
 
-  -- A subject-access request returns the customer's own certificates.
+  -- A subject-access request returns the customer's own certificates in this
+  -- space. Appended with `||`: the main object is at the 100-argument limit of
+  -- jsonb_build_object.
   select pg_get_functiondef('public.export_my_data(uuid)'::regprocedure) into v_def;
   v_def := pg_temp.anchor_replace(v_def,
-    $a$    'exported_at', now(),$a$,
-    $a$    'exported_at', now(),
+    $a$
+  );
+end;
+$function$$a$,
+    $a$
+  ) || jsonb_build_object(
     'tax_exemption_certificates', (select coalesce(jsonb_agg(to_jsonb(c)), '[]'::jsonb)
                                      from public.tax_exemption_certificates c
-                                    where c.member_id in (select m.id from public.members m
-                                                           where m.user_id = auth.uid())),$a$);
+                                    where c.workspace_id = p_workspace_id
+                                      and c.member_id = v_me.id)
+  );
+end;
+$function$$a$);
   if v_def is null then raise exception '0434: export_my_data anchor missing'; end if;
   execute v_def;
 end
