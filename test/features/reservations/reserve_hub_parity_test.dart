@@ -24,7 +24,7 @@ void main() {
     late String shell;
 
     setUpAll(() {
-      shell = sourceOf('lib/app/shell/shell_screen.dart');
+      shell = sourceOf('lib/app/shell/shell_app_bar.dart');  // #2493: the app bar's actions moved here
     });
 
     // #685 put the editor on BOTH map surfaces. #687 then deleted the
@@ -96,7 +96,7 @@ void main() {
       // control rows because its width was what pushed the window chips
       // onto a third one.
       expect(
-        sourceOf('lib/app/shell/shell_screen.dart'),
+        sourceOf('lib/app/shell/shell_app_bar.dart'),
         contains("ValueKey('reserve-scan-button')"),
       );
       for (final key in [
