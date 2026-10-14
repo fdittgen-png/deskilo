@@ -28,7 +28,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
-| 112 | 65 | 381 | 2 | `lib/features/plan/presentation/widgets/floor_plan_painter_part1.dart#_FloorPlanPainterPart1._paintImpl` |
 | 109 | 56 | 489 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
 | 94 | 54 | 460 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
@@ -50,4 +49,5 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 65 | 33 | 154 | 1 | `lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build` |
 | 65 | 39 | 207 | 1 | `lib/features/workspace/presentation/widgets/template_gallery.dart#_TemplateGalleryState.build` |
 | 64 | 45 | 229 | 10 | `lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent` |
+| 63 | 25 | 80 | 2 | `lib/features/money/domain/report_layout/layout_xml.dart#_writeElement` |
 
