@@ -288,7 +288,7 @@ const Map<String, int> _pairBudget = {
   // 2026-09-15 #1273 10→11: floor_plan_providers reads the
   // singleRoomLevelNames flag once for every map surface.
   'plan -> workspace': 12, // 2026-10-04 11→12: the plan focus starts over when the active workspace changes
-  'profile -> auth': 6,
+  'profile -> auth': 7, // 2026-10-14 #2495 6→7: the presence heartbeat's wiring moved from core/presence into profile (a downward import, unavoidable: it reads the session); core-to-feature imports fell by 2.
   'profile -> calendar': 2,
   'profile -> members': 1,
   'profile -> reservations': 5,

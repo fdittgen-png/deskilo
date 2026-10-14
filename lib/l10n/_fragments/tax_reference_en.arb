@@ -24,6 +24,18 @@
   "@taxRefDomainVatIdPattern": {
     "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
   },
+  "taxRefDomainCatalogueNote": "Catalogue notes",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainGroupExample": "Group examples",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
+  },
+  "taxRefAliasOf": "Alias of (ISO code, empty for a member state)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
   "taxRefConfirmed": "Confirmed",
   "@taxRefConfirmed": {
     "description": "#2477 tax reference: Badge: the value was checked against its source."
@@ -143,5 +155,109 @@
   "taxRefLoadFailed": "The reference data could not be loaded.",
   "@taxRefLoadFailed": {
     "description": "#2477 tax reference: error text when the list cannot load."
+  },
+  "taxRefDomainThreshold": "Thresholds",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
+  },
+  "taxRefDomainTaxPoint": "Tax point",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainMandate": "E-invoicing mandates",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
+  "taxRefDomainIssuingGate": "Issuing gates",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefCents": "Amount (minor units)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefEffect": "Effect when passed (next_year or immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
+  },
+  "taxRefCurrency": "Currency (ISO code)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefStandardRule": "Default rule",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefInvoiceOption": "Option for the invoice date",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
+  },
+  "taxRefCashOption": "Option for cash accounting",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
+  "taxRefCashBackstop": "Cash backstop",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefDuty": "Duty",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefFrom": "Applies from (YYYY-MM-DD)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
+  },
+  "taxRefSupported": "Issuing supported",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefRequiresTaxNumber": "Tax number required",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
+  "taxRefNationalChannel": "National channel required",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
+  },
+  "taxRefDomainFormBox": "Return form boxes",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
+  "taxRefGroups": "Fiscal groups it adds up (comma separated)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
+  },
+  "taxRefExcludeGroups": "Every group except (comma separated)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
+  },
+  "taxRefInvalidGroups": "Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
+  },
+  "taxRefDomainAccountMap": "Export accounts and codes",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
+  },
+  "taxRefFormat": "Format",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
+  "taxRefRole": "Role",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
+  "taxRefAccount": "Account number (or chart code)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
+  "taxRefTaxCode": "Tax code",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
+  },
+  "taxRefInvalidAccount": "Give an account number or a tax code",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
   }
 }

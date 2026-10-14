@@ -1,24 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2477 -- the seed reproduces today's Dart constants EXACTLY, and the two
-// places it lands (the migration's seed block and the app's bundled copy)
-// are what the generator writes. Pinned against the constants themselves,
-// not against the generated files alone: a pin that validates generated
-// output against itself proves nothing.
+// #2477/#2478 -- the seed of the tax reference store. The Dart constants it
+// was once READ from are gone (the rows are the only copy, and
+// `vat_reference_golden_test.dart` pins what they answer against a golden
+// captured before the move), so this file pins the plumbing: the bundled
+// copy is what the generator writes, every migration's seed block is the
+// rows no earlier migration seeded, and together the blocks hold exactly the
+// rows the app ships.
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference.dart';
-import 'package:deskilo/features/money/domain/vat_catalogue.dart';
-import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/tax_reference/seed.dart';
 
-TaxReferenceSet _seedSet() => TaxReferenceSet.parse(
-      [
-        for (final r in buildTaxReferenceSeed())
-          {
+List<File> _migrationsWithSeed() => Directory('supabase/migrations')
+    .listSync()
+    .whereType<File>()
+    .where((f) => f.path.endsWith('.sql') && f.readAsStringSync().contains(seedBegin))
+    .toList()
+  ..sort((a, b) => a.path.compareTo(b.path));
+
+void main() {
+  final rows = buildTaxReferenceSeed();
+
+  test('the bundled copy is what the generator writes', () {
+    expect(
+      File(bundledSeedPath).readAsStringSync(),
+      taxReferenceBundleJson(rows),
+      reason: 'dart run tool/build_tax_reference_seed.dart',
+    );
+  });
+
+  test('the bundled copy parses into typed rows, every one with a source', () {
+    final set = TaxReferenceSet.parse(
+      rows.map((r) => {
             'domain': r.domain,
             'country': r.country,
             'key': r.key,
@@ -27,91 +43,53 @@ TaxReferenceSet _seedSet() => TaxReferenceSet.parse(
             'value': r.value,
             'source': r.source,
             'confirmed': r.confirmed,
-          },
-      ],
+          }).toList(),
     );
-
-File _migration() => Directory('supabase/migrations')
-    .listSync()
-    .whereType<File>()
-    .singleWhere((f) => f.path.endsWith('_tax_reference.sql'));
-
-void main() {
-  final set = _seedSet().on('2026-10-13');
-
-  test('every country\'s rates are the catalogue\'s, in order, with the same dates', () {
-    for (final country in vatCatalogueCountries) {
-      final stored = [
-        for (final r in set.where(TaxDomain.rate, country: country))
-          if (r.country == country) r,
-      ]..sort((a, b) =>
-          (a.value as RateValue).position.compareTo((b.value as RateValue).position));
-      final code = vatCatalogueFor(country);
-      expect(stored, hasLength(code.length), reason: country);
-      for (final (i, r) in code.indexed) {
-        final v = stored[i].value as RateValue;
-        expect(v.label, r.label, reason: country);
-        expect(v.percent, r.percent, reason: country);
-        expect(v.group, r.groupKey, reason: country);
-        expect(v.category, r.category, reason: country);
-        expect(v.exemptionReason, r.exemptionReason, reason: country);
-        expect(stored[i].validFrom, r.validFrom, reason: country);
-      }
-    }
-  });
-
-  test('the EU member set is the code\'s', () {
-    expect(
-      {for (final r in set.where(TaxDomain.euMember)) r.country},
-      euMemberStates,
-    );
-  });
-
-  test('the VAT id patterns are the code\'s', () {
-    expect(
-      {for (final r in set.where(TaxDomain.vatIdPattern)) r.country: (r.value as VatIdPatternValue).pattern},
-      vatIdBodiesForSeed,
-    );
-  });
-
-  test('a statutory mention resolves to what the function prints, country by country', () {
-    String text(String regime, String country) =>
-        (set.lookup(TaxDomain.mention, country, regime)!.value as ExemptionTextValue).text;
-    for (final c in {...vatCatalogueCountries, ...euMemberStates, 'ZZ'}) {
-      expect(text('exempt', c), defaultExemptionMention(c, VatRegime.exempt), reason: c);
-      expect(text('not_subject', c), defaultExemptionMention(c, VatRegime.notSubject), reason: c);
-      expect(text('reverse_charge', c), reverseChargeMention(c), reason: c);
-      expect(text('export', c), exportMention(c), reason: c);
-      expect(
-        text('exigibility_receipts', c),
-        exigibilityMention(regime: VatRegime.vatRegistered, sellerCountry: c, onPaymentBasis: true),
-        reason: c,
-      );
+    expect(set.rows, hasLength(rows.length));
+    for (final r in set.rows) {
+      expect(r.source.trim(), isNotEmpty, reason: '${r.country} ${r.key}');
     }
   });
 
   test('an unverified value is not marked confirmed', () {
-    for (final r in set.rows) {
-      if (r.domain == TaxDomain.mention || r.domain == TaxDomain.vatIdPattern) {
-        expect(r.confirmed, isFalse, reason: '${r.country} ${r.key}');
+    for (final r in rows) {
+      if (const {'exemption_text', 'vat_id_pattern', 'catalogue_note', 'group_example'}
+          .contains(r.domain)) {
+        expect(r.confirmed, isFalse, reason: '${r.domain} ${r.country} ${r.key}');
       }
-      expect(r.source.trim(), isNotEmpty);
     }
   });
 
-  test('the migration\'s seed block is what the generator writes', () {
-    expect(
-      seedBlockOf(_migration().readAsStringSync()),
-      taxReferenceSeedSql(buildTaxReferenceSeed()),
-      reason: 'dart run tool/build_tax_reference_seed.dart --migration ${_migration().path}',
-    );
-  });
-
-  test('the bundled copy is what the generator writes', () {
-    expect(
-      File('assets/instance/tax_reference.json').readAsStringSync(),
-      taxReferenceBundleJson(buildTaxReferenceSeed()),
-      reason: 'dart run tool/build_tax_reference_seed.dart',
-    );
+  test('each migration seeds rows of the bundle that no earlier one seeded, and together all of them', () {
+    final files = _migrationsWithSeed();
+    expect(files, isNotEmpty);
+    final texts = [for (final f in files) f.readAsStringSync()];
+    final inBundle = rows.map(seedLine).toSet();
+    final seeded = <String>{};
+    for (final (i, f) in files.indexed) {
+      final block = seedBlockOf(texts[i])!
+          .split('\n')
+          .where((l) => l.startsWith('('))
+          .map((l) => l.replaceAll(RegExp(r'[,;]$'), ''))
+          .toList();
+      for (final line in block) {
+        expect(inBundle.contains(line), isTrue,
+            reason: '${f.path}: a seeded row is not in the bundle: $line');
+        expect(seeded.contains(line), isFalse,
+            reason: '${f.path}: a row an earlier migration seeded: $line');
+      }
+      seeded.addAll(block);
+      // The newest block is what the generator writes; an older one is
+      // history and is never regenerated.
+      if (i == files.length - 1 && i > 0) {
+        expect(
+          seedBlockOf(texts[i]),
+          taxReferenceSeedSql(rowsNotSeededBy(rows, texts.take(i))),
+          reason: 'dart run tool/build_tax_reference_seed.dart --migration ${f.path}',
+        );
+      }
+    }
+    expect(seeded, inBundle,
+        reason: 'a row of the bundle that no migration seeds is missing on the server');
   });
 }

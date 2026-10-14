@@ -3,6 +3,8 @@ import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
@@ -61,37 +63,56 @@ import 'vat_tax_point.dart';
 /// so.
 class DatevAccounts {
   const DatevAccounts({
-    this.customers = '10000',
-    this.revenue = '8400',
-    this.bank = '1200',
-    this.vat = '1776',
-    this.chart = 'SKR03',
-    this.expenses = '4900',
-  });
+    String? customers,
+    String? revenue,
+    String? bank,
+    String? vat,
+    String? chart,
+    String? expenses,
+    this.reference,
+  }) : _givenCustomers = customers,
+       _givenRevenue = revenue,
+       _givenBank = bank,
+       _givenVat = vat,
+       _givenChart = chart,
+       _givenExpenses = expenses;
+
+  /// #2481 -- the snapshot the defaults are read from (the German chart's
+  /// rows); the installed one when null.
+  final TaxReferenceSet? reference;
+  final String? _givenCustomers;
+  final String? _givenRevenue;
+  final String? _givenBank;
+  final String? _givenVat;
+  final String? _givenChart;
+  final String? _givenExpenses;
+
+  String _default(String role) =>
+      (reference ?? ActiveTaxReference.current).accountOf('coa', role, 'DE');
 
   /// SKR03 debtor range starts at 10000. A real chart numbers each
   /// customer; one collective account keeps the export honest about
   /// what the app actually knows.
-  final String customers;
+  String get customers => _givenCustomers ?? _default('customers');
 
   /// SKR03 8400 — Erlöse 19 % USt. The accountant re-points this when
   /// the workspace charges a different rate or none.
-  final String revenue;
+  String get revenue => _givenRevenue ?? _default('revenue');
 
   /// SKR03 1200 — Bank.
-  final String bank;
+  String get bank => _givenBank ?? _default('bank');
 
   /// SKR03 1776 — Umsatzsteuer 19 %. Only reached when the workspace is
   /// VAT-registered; an exempt one never books to it.
-  final String vat;
+  String get vat => _givenVat ?? _default('vat');
 
   /// Named on the export sheet so the accountant can see which chart the
   /// numbers belong to before importing.
-  final String chart;
+  String get chart => _givenChart ?? _default('chart');
 
   /// #936 — reimbursed expenses and shared costs; 4900 "sonstige
   /// betriebliche Aufwendungen" in SKR03.
-  final String expenses;
+  String get expenses => _givenExpenses ?? _default('expenses');
 }
 
 /// The UTF-8 byte-order mark, as the character that encodes to it.

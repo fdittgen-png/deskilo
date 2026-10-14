@@ -31742,17 +31742,47 @@ abstract class AppLocalizations {
   /// **'A private draft from a file: nothing in it is trusted or sent.'**
   String get taskWorkbenchUntrusted;
 
+  /// #2481 tax reference: Field: the account number of an export row.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number (or chart code)'**
+  String get taxRefAccount;
+
   /// #2477 tax reference: Button: add a new reference value.
   ///
   /// In en, this message translates to:
   /// **'Add a value'**
   String get taxRefAdd;
 
+  /// #2478 tax reference: Field: the member state an alias code stands for.
+  ///
+  /// In en, this message translates to:
+  /// **'Alias of (ISO code, empty for a member state)'**
+  String get taxRefAliasOf;
+
+  /// #2479 tax reference: Field: when an unpaid part falls due under cash accounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash backstop'**
+  String get taxRefCashBackstop;
+
+  /// #2479 tax reference: Switch: the seller may opt for cash accounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Option for cash accounting'**
+  String get taxRefCashOption;
+
   /// #2477 tax reference: Field: VAT category code of a rate.
   ///
   /// In en, this message translates to:
   /// **'EN 16931 category'**
   String get taxRefCategory;
+
+  /// #2479 tax reference: Field: the threshold in minor units of the currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (minor units)'**
+  String get taxRefCents;
 
   /// #2477 tax reference: Badge: the value was checked against its source.
   ///
@@ -31772,6 +31802,24 @@ abstract class AppLocalizations {
   /// **'Country (ISO code, or * for all)'**
   String get taxRefCountry;
 
+  /// #2479 tax reference: Field: ISO currency code.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency (ISO code)'**
+  String get taxRefCurrency;
+
+  /// #2481 tax reference: Tab: the accounts and tax codes accounting exports propose.
+  ///
+  /// In en, this message translates to:
+  /// **'Export accounts and codes'**
+  String get taxRefDomainAccountMap;
+
+  /// #2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue notes'**
+  String get taxRefDomainCatalogueNote;
+
   /// #2477 tax reference: Domain filter: EU member states.
   ///
   /// In en, this message translates to:
@@ -31784,11 +31832,47 @@ abstract class AppLocalizations {
   /// **'Statutory texts'**
   String get taxRefDomainExemptionText;
 
+  /// #2480 tax reference: Tab: the rated boxes of a return form.
+  ///
+  /// In en, this message translates to:
+  /// **'Return form boxes'**
+  String get taxRefDomainFormBox;
+
+  /// #2478 tax reference: Domain filter: what falls in each fiscal group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group examples'**
+  String get taxRefDomainGroupExample;
+
+  /// #2479 tax reference: Domain filter: the countries DesKilo issues invoices for.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing gates'**
+  String get taxRefDomainIssuingGate;
+
+  /// #2479 tax reference: Domain filter: e-invoicing mandate calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing mandates'**
+  String get taxRefDomainMandate;
+
   /// #2477 tax reference: Domain filter: rates.
   ///
   /// In en, this message translates to:
   /// **'Rates'**
   String get taxRefDomainRate;
+
+  /// #2479 tax reference: Domain filter: the tax point policy of a country.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax point'**
+  String get taxRefDomainTaxPoint;
+
+  /// #2479 tax reference: Domain filter: small-business turnover thresholds.
+  ///
+  /// In en, this message translates to:
+  /// **'Thresholds'**
+  String get taxRefDomainThreshold;
 
   /// #2477 tax reference: Domain filter: VAT identification number patterns.
   ///
@@ -31796,11 +31880,29 @@ abstract class AppLocalizations {
   /// **'VAT id patterns'**
   String get taxRefDomainVatIdPattern;
 
+  /// #2479 tax reference: Field: the e-invoicing duty.
+  ///
+  /// In en, this message translates to:
+  /// **'Duty'**
+  String get taxRefDuty;
+
+  /// #2479 tax reference: Field: what passing the threshold does.
+  ///
+  /// In en, this message translates to:
+  /// **'Effect when passed (next_year or immediate)'**
+  String get taxRefEffect;
+
   /// #2477 tax reference: Empty list.
   ///
   /// In en, this message translates to:
   /// **'No values here.'**
   String get taxRefEmpty;
+
+  /// #2480 tax reference: Field: a catch-all return box adds up every group except these.
+  ///
+  /// In en, this message translates to:
+  /// **'Every group except (comma separated)'**
+  String get taxRefExcludeGroups;
 
   /// #2477 tax reference: Field: statutory reason printed on an exempt line.
   ///
@@ -31808,11 +31910,29 @@ abstract class AppLocalizations {
   /// **'Exemption reason'**
   String get taxRefExemptionReason;
 
+  /// #2481 tax reference: Field: the export format of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get taxRefFormat;
+
+  /// #2479 tax reference: Field: first day the duty applies (YYYY-MM-DD).
+  ///
+  /// In en, this message translates to:
+  /// **'Applies from (YYYY-MM-DD)'**
+  String get taxRefFrom;
+
   /// #2477 tax reference: Field: fiscal group of a rate.
   ///
   /// In en, this message translates to:
   /// **'Group'**
   String get taxRefGroup;
+
+  /// #2480 tax reference: Field: fiscal groups a return box adds up.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal groups it adds up (comma separated)'**
+  String get taxRefGroups;
 
   /// #2477 tax reference: Button and sheet title: every version of a value.
   ///
@@ -31826,17 +31946,35 @@ abstract class AppLocalizations {
   /// **'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.'**
   String get taxRefIntro;
 
+  /// #2481 tax reference: Error: an export row needs an account or a code.
+  ///
+  /// In en, this message translates to:
+  /// **'Give an account number or a tax code'**
+  String get taxRefInvalidAccount;
+
   /// #2477 tax reference: Validation: date format.
   ///
   /// In en, this message translates to:
   /// **'Enter the date as YYYY-MM-DD'**
   String get taxRefInvalidDate;
 
+  /// #2480 tax reference: Error: the group lists of a return box are invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists'**
+  String get taxRefInvalidGroups;
+
   /// #2477 tax reference: Validation: percentage.
   ///
   /// In en, this message translates to:
   /// **'Enter a number from 0 to 99.999'**
   String get taxRefInvalidNumber;
+
+  /// #2479 tax reference: Switch: the seller may opt for the invoice date.
+  ///
+  /// In en, this message translates to:
+  /// **'Option for the invoice date'**
+  String get taxRefInvoiceOption;
 
   /// #2477 tax reference: Field: key naming a value within a country.
   ///
@@ -31861,6 +31999,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A member state has no further fields.'**
   String get taxRefMemberEmpty;
+
+  /// #2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet.
+  ///
+  /// In en, this message translates to:
+  /// **'National channel required'**
+  String get taxRefNationalChannel;
 
   /// #2477 tax reference: Button and sheet title: create a new version of a value.
   ///
@@ -31910,6 +32054,18 @@ abstract class AppLocalizations {
   /// **'Required'**
   String get taxRefRequired;
 
+  /// #2479 tax reference: Switch: the seller must state a VAT or tax number.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number required'**
+  String get taxRefRequiresTaxNumber;
+
+  /// #2481 tax reference: Field: the role of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get taxRefRole;
+
   /// #2477 tax reference: Button: save the new version.
   ///
   /// In en, this message translates to:
@@ -31927,6 +32083,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Source'**
   String get taxRefSource;
+
+  /// #2479 tax reference: Field: the legal default rule of the tax point.
+  ///
+  /// In en, this message translates to:
+  /// **'Default rule'**
+  String get taxRefStandardRule;
+
+  /// #2479 tax reference: Switch: DesKilo issues invoices for sellers of this country.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing supported'**
+  String get taxRefSupported;
+
+  /// #2481 tax reference: Field: the export tax code.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax code'**
+  String get taxRefTaxCode;
 
   /// #2477 tax reference: Field: statutory text.
   ///

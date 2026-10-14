@@ -11954,13 +11954,33 @@
   "taskWorkbenchTitle": "Atelier de tâches",
   "taskWorkbenchTranscriptOnly": "Certaines étapes viennent d'une version plus récente : affichées comme simple transcription.",
   "taskWorkbenchUntrusted": "Un brouillon privé issu d'un fichier : rien n'y est considéré comme fiable ni envoyé.",
+  "taxRefAccount": "Numéro de compte (ou code du plan)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
   "taxRefAdd": "Ajouter une valeur",
   "@taxRefAdd": {
     "description": "#2477 tax reference: Button: add a new reference value."
   },
+  "taxRefAliasOf": "Alias de (code ISO, vide pour un État membre)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
+  "taxRefCashBackstop": "Échéance ultime en encaissements",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefCashOption": "Option pour les encaissements",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
   "taxRefCategory": "Catégorie EN 16931",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
+  },
+  "taxRefCents": "Montant (plus petite unité)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
   "taxRefConfirmed": "Confirmé",
   "@taxRefConfirmed": {
@@ -11974,6 +11994,18 @@
   "@taxRefCountry": {
     "description": "#2477 tax reference: Field: country of a reference value."
   },
+  "taxRefCurrency": "Devise (code ISO)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefDomainAccountMap": "Comptes et codes d'export",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
+  },
+  "taxRefDomainCatalogueNote": "Notes du catalogue",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
   "taxRefDomainEuMember": "Membres de l'UE",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -11982,25 +12014,73 @@
   "@taxRefDomainExemptionText": {
     "description": "#2477 tax reference: Domain filter: statutory mentions."
   },
+  "taxRefDomainFormBox": "Cases de la déclaration",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
+  "taxRefDomainGroupExample": "Exemples par groupe",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
+  },
+  "taxRefDomainIssuingGate": "Autorisations d'émission",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefDomainMandate": "Obligations de facturation électronique",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
   "taxRefDomainRate": "Taux",
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
+  },
+  "taxRefDomainTaxPoint": "Exigibilité",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainThreshold": "Seuils",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
   },
   "taxRefDomainVatIdPattern": "Formats de n° de TVA",
   "@taxRefDomainVatIdPattern": {
     "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
   },
+  "taxRefDuty": "Obligation",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefEffect": "Effet du dépassement (next_year ou immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
+  },
   "taxRefEmpty": "Aucune valeur.",
   "@taxRefEmpty": {
     "description": "#2477 tax reference: Empty list."
+  },
+  "taxRefExcludeGroups": "Tous les groupes sauf (séparés par des virgules)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
   },
   "taxRefExemptionReason": "Motif d'exonération",
   "@taxRefExemptionReason": {
     "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
   },
+  "taxRefFormat": "Format",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
+  "taxRefFrom": "S'applique à partir du (AAAA-MM-JJ)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
+  },
   "taxRefGroup": "Groupe",
   "@taxRefGroup": {
     "description": "#2477 tax reference: Field: fiscal group of a rate."
+  },
+  "taxRefGroups": "Groupes fiscaux additionnés (séparés par des virgules)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
   },
   "taxRefHistory": "Historique",
   "@taxRefHistory": {
@@ -12010,13 +12090,25 @@
   "@taxRefIntro": {
     "description": "#2477 tax reference: Intro line under the title of the tax reference screen."
   },
+  "taxRefInvalidAccount": "Indiquez un numéro de compte ou un code de taxe",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
+  },
   "taxRefInvalidDate": "Saisissez la date au format AAAA-MM-JJ",
   "@taxRefInvalidDate": {
     "description": "#2477 tax reference: Validation: date format."
   },
+  "taxRefInvalidGroups": "Indiquez des groupes fiscaux connus (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), aucun dans les deux listes",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
+  },
   "taxRefInvalidNumber": "Saisissez un nombre de 0 à 99,999",
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
+  },
+  "taxRefInvoiceOption": "Option pour les débits",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
   },
   "taxRefKey": "Clé",
   "@taxRefKey": {
@@ -12033,6 +12125,10 @@
   "taxRefMemberEmpty": "Un État membre n'a pas d'autres champs.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
+  },
+  "taxRefNationalChannel": "Canal national obligatoire",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
   },
   "taxRefNewVersion": "Nouvelle version",
   "@taxRefNewVersion": {
@@ -12066,6 +12162,14 @@
   "@taxRefRequired": {
     "description": "#2477 tax reference: Validation: a required field is empty."
   },
+  "taxRefRequiresTaxNumber": "Numéro fiscal obligatoire",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
+  "taxRefRole": "Rôle",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
   "taxRefSave": "Enregistrer la version",
   "@taxRefSave": {
     "description": "#2477 tax reference: Button: save the new version."
@@ -12077,6 +12181,18 @@
   "taxRefSource": "Source",
   "@taxRefSource": {
     "description": "#2477 tax reference: Field: where the value comes from (a law, a table)."
+  },
+  "taxRefStandardRule": "Règle par défaut",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefSupported": "Émission prise en charge",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefTaxCode": "Code de taxe",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
   },
   "taxRefText": "Texte",
   "@taxRefText": {

@@ -18523,10 +18523,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una bozza privata da un file: nulla al suo interno è considerato affidabile né inviato.';
 
   @override
+  String get taxRefAccount => 'Numero di conto (o codice del piano)';
+
+  @override
   String get taxRefAdd => 'Aggiungi un valore';
 
   @override
+  String get taxRefAliasOf =>
+      'Alias di (codice ISO, vuoto per uno Stato membro)';
+
+  @override
+  String get taxRefCashBackstop => 'Termine massimo per cassa';
+
+  @override
+  String get taxRefCashOption => 'Opzione per cassa';
+
+  @override
   String get taxRefCategory => 'Categoria EN 16931';
+
+  @override
+  String get taxRefCents => 'Importo (unità minore)';
 
   @override
   String get taxRefConfirmed => 'Confermato';
@@ -18538,25 +18554,71 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefCountry => 'Paese (codice ISO, o * per tutti)';
 
   @override
+  String get taxRefCurrency => 'Valuta (codice ISO)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Conti e codici di esportazione';
+
+  @override
+  String get taxRefDomainCatalogueNote => 'Note del catalogo';
+
+  @override
   String get taxRefDomainEuMember => 'Membri UE';
 
   @override
   String get taxRefDomainExemptionText => 'Testi di legge';
 
   @override
+  String get taxRefDomainFormBox => 'Caselle della dichiarazione';
+
+  @override
+  String get taxRefDomainGroupExample => 'Esempi per gruppo';
+
+  @override
+  String get taxRefDomainIssuingGate => 'Autorizzazioni all\'emissione';
+
+  @override
+  String get taxRefDomainMandate => 'Obblighi di fatturazione elettronica';
+
+  @override
   String get taxRefDomainRate => 'Aliquote';
+
+  @override
+  String get taxRefDomainTaxPoint => 'Esigibilità';
+
+  @override
+  String get taxRefDomainThreshold => 'Soglie';
 
   @override
   String get taxRefDomainVatIdPattern => 'Formati di partita IVA';
 
   @override
+  String get taxRefDuty => 'Obbligo';
+
+  @override
+  String get taxRefEffect => 'Effetto al superamento (next_year o immediate)';
+
+  @override
   String get taxRefEmpty => 'Nessun valore.';
+
+  @override
+  String get taxRefExcludeGroups =>
+      'Tutti i gruppi tranne (separati da virgole)';
 
   @override
   String get taxRefExemptionReason => 'Motivo di esenzione';
 
   @override
+  String get taxRefFormat => 'Formato';
+
+  @override
+  String get taxRefFrom => 'Si applica dal (AAAA-MM-GG)';
+
+  @override
   String get taxRefGroup => 'Gruppo';
+
+  @override
+  String get taxRefGroups => 'Gruppi fiscali che somma (separati da virgole)';
 
   @override
   String get taxRefHistory => 'Cronologia';
@@ -18566,10 +18628,21 @@ class AppLocalizationsIt extends AppLocalizations {
       'Aliquote, testi di esenzione, formati delle partite IVA e Stati membri dell\'UE. Una modifica è una nuova versione da una data; la versione in vigore viene chiusa, mai modificata.';
 
   @override
+  String get taxRefInvalidAccount =>
+      'Indicare un numero di conto o un codice imposta';
+
+  @override
   String get taxRefInvalidDate => 'Inserisci la data come AAAA-MM-GG';
 
   @override
+  String get taxRefInvalidGroups =>
+      'Indicare gruppi fiscali noti (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), nessuno in entrambi gli elenchi';
+
+  @override
   String get taxRefInvalidNumber => 'Inserisci un numero da 0 a 99,999';
+
+  @override
+  String get taxRefInvoiceOption => 'Opzione per la data fattura';
 
   @override
   String get taxRefKey => 'Chiave';
@@ -18582,6 +18655,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefMemberEmpty => 'Uno Stato membro non ha altri campi.';
+
+  @override
+  String get taxRefNationalChannel => 'Canale nazionale obbligatorio';
 
   @override
   String get taxRefNewVersion => 'Nuova versione';
@@ -18610,6 +18686,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefRequired => 'Obbligatorio';
 
   @override
+  String get taxRefRequiresTaxNumber => 'Numero fiscale obbligatorio';
+
+  @override
+  String get taxRefRole => 'Ruolo';
+
+  @override
   String get taxRefSave => 'Salva la versione';
 
   @override
@@ -18617,6 +18699,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefSource => 'Fonte';
+
+  @override
+  String get taxRefStandardRule => 'Regola predefinita';
+
+  @override
+  String get taxRefSupported => 'Emissione supportata';
+
+  @override
+  String get taxRefTaxCode => 'Codice imposta';
 
   @override
   String get taxRefText => 'Testo';
