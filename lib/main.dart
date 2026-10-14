@@ -47,6 +47,7 @@ Future<void> main() async {
       overrides: [
         enabledFeaturesSyncProvider
             .overrideWithValue(ServerChoiceApp.features),
+        enabledFeatureKeysFromWorkspace, // #2495
       ],
       child: ServerChoiceApp(onChosen: chosen.complete),
     ));
@@ -99,6 +100,7 @@ Future<void> main() async {
       observers: const [TraceProviderObserver()],
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
+        enabledFeatureKeysFromWorkspace, // #2495
       ],
       child: const DeskiloRoot(),
     ),

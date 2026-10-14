@@ -87,10 +87,10 @@ const Map<String, int> _coreToFeature = {
   'core/backend': 1,
   'core/cache': 1,
   'core/capture': 1,
-  'core/help': 5,
+  'core/help': 1,
   'core/i18n': 9,
   'core/locale': 1,
-  'core/privacy': 5,
+  'core/privacy': 3,
   'core/push': 2,
   'core/realtime': 10,
 };
