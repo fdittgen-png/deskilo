@@ -22,6 +22,10 @@ const Map<String, String> _allowed = {
   // walks them (it did before the move, over the constant it replaced).
   'lib/features/money/domain/vat_catalogue.dart::vatCatalogueCountries':
       '#2478 — read by vat_versions_test, which pins every country\'s seed',
+  // Every form the app fills, resolved against the store: the unchanged
+  // vat_forms_test walks it (the field it was before 0432 was read by lib).
+  'lib/features/money/domain/vat_form_catalogue.dart::vatFormCatalogue':
+      '#2480 — read by vat_forms_test, which pins every box of every form',
   // Spanish Verifactu: built and pinned before its register exists.
   'lib/features/money/domain/verifactu.dart::verifactuLegend':
       '#2358 — the Verifactu register slice (chain table, PDF legend and QR) wires it',

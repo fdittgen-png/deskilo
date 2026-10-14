@@ -18563,6 +18563,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefDomainExemptionText => 'Testi di legge';
 
   @override
+  String get taxRefDomainFormBox => 'Caselle della dichiarazione';
+
+  @override
   String get taxRefDomainGroupExample => 'Esempi per gruppo';
 
   @override
@@ -18593,6 +18596,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefEmpty => 'Nessun valore.';
 
   @override
+  String get taxRefExcludeGroups =>
+      'Tutti i gruppi tranne (separati da virgole)';
+
+  @override
   String get taxRefExemptionReason => 'Motivo di esenzione';
 
   @override
@@ -18600,6 +18607,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefGroup => 'Gruppo';
+
+  @override
+  String get taxRefGroups => 'Gruppi fiscali che somma (separati da virgole)';
 
   @override
   String get taxRefHistory => 'Cronologia';
@@ -18610,6 +18620,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefInvalidDate => 'Inserisci la data come AAAA-MM-GG';
+
+  @override
+  String get taxRefInvalidGroups =>
+      'Indicare gruppi fiscali noti (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), nessuno in entrambi gli elenchi';
 
   @override
   String get taxRefInvalidNumber => 'Inserisci un numero da 0 a 99,999';

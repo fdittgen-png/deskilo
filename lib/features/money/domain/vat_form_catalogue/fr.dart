@@ -1,19 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 part of '../vat_form_catalogue.dart';
 
-/// The period's own sales at [rates] plus the corrections in the
-/// Treasury's favour (FR: they add to their rate line).
-List<VatTerm> _frRate({Set<double>? rates, Set<double>? otherRatesThan}) => [
-  _sales(rates: rates, otherRatesThan: otherRatesThan, correction: false),
-  _sales(
-    rates: rates,
-    otherRatesThan: otherRatesThan,
-    correction: true,
-    vatSign: 1,
-  ),
+/// The period's own sales plus the corrections in the Treasury's favour (FR:
+/// they add to their rate line). A rated box names its `form_box` row, which
+/// says which fiscal groups the line takes.
+List<VatTerm> _frRate() => [
+  _sales(correction: false),
+  _sales(correction: true, vatSign: 1),
 ];
-
-final _frNamed = <double>{20, 10, 5.5, 2.1};
 
 final _ca3 = VatFormSpec(
   country: 'FR',
@@ -47,9 +41,10 @@ final _ca3 = VatFormSpec(
     ),
     VatBoxSpec(
       '08',
-      'Taux normal 20 %',
-      base: _frRate(rates: {20}),
-      tax: _frRate(rates: {20}),
+      '',
+      formBox: 'ca3/08',
+      base: _frRate(),
+      tax: _frRate(),
       baseKey: '0207',
       taxKey: '0207',
       baseRounding: _w,
@@ -57,9 +52,10 @@ final _ca3 = VatFormSpec(
     ),
     VatBoxSpec(
       '09',
-      'Taux réduit 5,5 %',
-      base: _frRate(rates: {5.5}),
-      tax: _frRate(rates: {5.5}),
+      '',
+      formBox: 'ca3/09',
+      base: _frRate(),
+      tax: _frRate(),
       baseKey: '0105',
       taxKey: '0105',
       baseRounding: _w,
@@ -67,9 +63,10 @@ final _ca3 = VatFormSpec(
     ),
     VatBoxSpec(
       '9B',
-      'Taux réduit 10 %',
-      base: _frRate(rates: {10}),
-      tax: _frRate(rates: {10}),
+      '',
+      formBox: 'ca3/9B',
+      base: _frRate(),
+      tax: _frRate(),
       baseKey: '0151',
       taxKey: '0151',
       baseRounding: _w,
@@ -77,9 +74,10 @@ final _ca3 = VatFormSpec(
     ),
     VatBoxSpec(
       '11',
-      'Taux particulier 2,1 %',
-      base: _frRate(rates: {2.1}),
-      tax: _frRate(rates: {2.1}),
+      '',
+      formBox: 'ca3/11',
+      base: _frRate(),
+      tax: _frRate(),
       baseKey: '0100',
       taxKey: '0100',
       baseRounding: _w,
@@ -87,9 +85,10 @@ final _ca3 = VatFormSpec(
     ),
     VatBoxSpec(
       '14',
-      'Opérations imposables à un autre taux',
-      base: _frRate(otherRatesThan: _frNamed),
-      tax: _frRate(otherRatesThan: _frNamed),
+      '',
+      formBox: 'ca3/14',
+      base: _frRate(),
+      tax: _frRate(),
       baseKey: '0950',
       taxKey: '0950',
       baseRounding: _w,

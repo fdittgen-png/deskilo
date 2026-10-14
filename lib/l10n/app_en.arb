@@ -21164,6 +21164,10 @@
   "@taxRefDomainExemptionText": {
     "description": "#2477 tax reference: Domain filter: statutory mentions."
   },
+  "taxRefDomainFormBox": "Return form boxes",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
   "taxRefDomainGroupExample": "Group examples",
   "@taxRefDomainGroupExample": {
     "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
@@ -21204,6 +21208,10 @@
   "@taxRefEmpty": {
     "description": "#2477 tax reference: Empty list."
   },
+  "taxRefExcludeGroups": "Every group except (comma separated)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
+  },
   "taxRefExemptionReason": "Exemption reason",
   "@taxRefExemptionReason": {
     "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
@@ -21216,6 +21224,10 @@
   "@taxRefGroup": {
     "description": "#2477 tax reference: Field: fiscal group of a rate."
   },
+  "taxRefGroups": "Fiscal groups it adds up (comma separated)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
+  },
   "taxRefHistory": "History",
   "@taxRefHistory": {
     "description": "#2477 tax reference: Button and sheet title: every version of a value."
@@ -21227,6 +21239,10 @@
   "taxRefInvalidDate": "Enter the date as YYYY-MM-DD",
   "@taxRefInvalidDate": {
     "description": "#2477 tax reference: Validation: date format."
+  },
+  "taxRefInvalidGroups": "Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
   },
   "taxRefInvalidNumber": "Enter a number from 0 to 99.999",
   "@taxRefInvalidNumber": {

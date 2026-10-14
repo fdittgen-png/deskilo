@@ -32,6 +32,7 @@ String taxValueSummary(TaxValue v) => switch (v) {
       MandateValue() => '${v.duty}: ${v.from}',
       IssuingGateValue() =>
         v.issues ? v.currency : '-',
+      FormBoxValue() => v.label,
     };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -45,6 +46,7 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
       TaxDomain.taxPoint => context.l10n.taxRefDomainTaxPoint,
       TaxDomain.mandate => context.l10n.taxRefDomainMandate,
       TaxDomain.issuingGate => context.l10n.taxRefDomainIssuingGate,
+      TaxDomain.formBox => context.l10n.taxRefDomainFormBox,
     };
 
 /// The state of one version form: its text fields and its three choices.
@@ -55,7 +57,19 @@ class _VersionForm {
           'key': from?.key ?? '',
           'valid_from': today,
           'source': from?.source ?? '',
-          'label': from?.value is RateValue ? (from!.value as RateValue).label : '',
+          'label': switch (from?.value) {
+            RateValue(:final label) => label,
+            FormBoxValue(:final label) => label,
+            _ => '',
+          },
+          'groups': switch (from?.value) {
+            FormBoxValue(:final groups) => groups.join(', '),
+            _ => '',
+          },
+          'exclude_groups': switch (from?.value) {
+            FormBoxValue(:final excludeGroups) => excludeGroups.join(', '),
+            _ => '',
+          },
           'percent': from?.value is RateValue
               ? percentText((from!.value as RateValue).percent)
               : '',
@@ -136,6 +150,22 @@ class _VersionForm {
             v is IssuingGateValue && v.nationalChannelRequired,
       };
 
+  List<String> _groupList(String k) => [
+        for (final g in fields.text(k).split(','))
+          if (g.trim().isNotEmpty) g.trim(),
+      ];
+
+  /// Whether the lists of a return box name known groups, at least one, and
+  /// none twice over (a group cannot be both taken and excluded).
+  bool get groupListsValid {
+    final known = VatGroup.values.map((g) => g.wire).toSet();
+    final taken = _groupList('groups');
+    final left = _groupList('exclude_groups');
+    return (taken.isNotEmpty || left.isNotEmpty) &&
+        [...taken, ...left].every(known.contains) &&
+        !taken.any(left.contains);
+  }
+
   double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
 
   TaxValue value() => switch (domain) {
@@ -165,6 +195,11 @@ class _VersionForm {
             requiresTaxNumber: flag['requires_tax_number']!,
             nationalChannelRequired: flag['national_channel_required']!,
             currency: fields.text('currency').toUpperCase(),
+          ),
+        TaxDomain.formBox => FormBoxValue(
+            label: fields.text('label'),
+            groups: _groupList('groups'),
+            excludeGroups: _groupList('exclude_groups'),
           ),
         TaxDomain.euMember => EuMemberValue(aliasOf: fields.text('alias_of')),
         TaxDomain.mention => ExemptionTextValue(
@@ -205,6 +240,10 @@ class _VersionForm {
       if (domain == TaxDomain.rate) ...{
         'label': ?need('label'),
         if (p == null || p < 0 || p > 99.999) 'percent': l10n.taxRefInvalidNumber,
+      },
+      if (domain == TaxDomain.formBox) ...{
+        'label': ?need('label'),
+        if (!groupListsValid) 'groups': l10n.taxRefInvalidGroups,
       },
       if (domain == TaxDomain.mention) ...{
         'regime': ?need('regime'),
@@ -298,6 +337,11 @@ class _VersionForm {
                 const ['S', 'Z', 'E', 'O'], (x) => category = x),
             _text('reason', l10n.taxRefExemptionReason),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
+          ],
+        TaxDomain.formBox => [
+            _text('label', l10n.taxRefLabel),
+            _text('groups', l10n.taxRefGroups),
+            _text('exclude_groups', l10n.taxRefExcludeGroups),
           ],
         TaxDomain.euMember => [
             Text(l10n.taxRefMemberEmpty),

@@ -18594,6 +18594,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefDomainExemptionText => 'Mentions légales';
 
   @override
+  String get taxRefDomainFormBox => 'Cases de la déclaration';
+
+  @override
   String get taxRefDomainGroupExample => 'Exemples par groupe';
 
   @override
@@ -18624,6 +18627,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefEmpty => 'Aucune valeur.';
 
   @override
+  String get taxRefExcludeGroups =>
+      'Tous les groupes sauf (séparés par des virgules)';
+
+  @override
   String get taxRefExemptionReason => 'Motif d\'exonération';
 
   @override
@@ -18631,6 +18638,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefGroup => 'Groupe';
+
+  @override
+  String get taxRefGroups =>
+      'Groupes fiscaux additionnés (séparés par des virgules)';
 
   @override
   String get taxRefHistory => 'Historique';
@@ -18641,6 +18652,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
+
+  @override
+  String get taxRefInvalidGroups =>
+      'Indiquez des groupes fiscaux connus (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), aucun dans les deux listes';
 
   @override
   String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';

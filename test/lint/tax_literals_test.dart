@@ -46,7 +46,7 @@ final _kinds = [
 
 /// The ceilings: today's counts. They only go down.
 const _ceilings = <String, int>{
-  'percent values': 52,
+  'percent values': 16,
   'country-keyed branches': 30,
   'country-keyed map entries': 11,
   'country lists': 2,

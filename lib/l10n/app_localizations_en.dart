@@ -18385,6 +18385,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefDomainExemptionText => 'Statutory texts';
 
   @override
+  String get taxRefDomainFormBox => 'Return form boxes';
+
+  @override
   String get taxRefDomainGroupExample => 'Group examples';
 
   @override
@@ -18415,6 +18418,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefEmpty => 'No values here.';
 
   @override
+  String get taxRefExcludeGroups => 'Every group except (comma separated)';
+
+  @override
   String get taxRefExemptionReason => 'Exemption reason';
 
   @override
@@ -18422,6 +18428,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefGroup => 'Group';
+
+  @override
+  String get taxRefGroups => 'Fiscal groups it adds up (comma separated)';
 
   @override
   String get taxRefHistory => 'History';
@@ -18432,6 +18441,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefInvalidDate => 'Enter the date as YYYY-MM-DD';
+
+  @override
+  String get taxRefInvalidGroups =>
+      'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists';
 
   @override
   String get taxRefInvalidNumber => 'Enter a number from 0 to 99.999';

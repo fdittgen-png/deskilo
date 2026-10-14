@@ -41,7 +41,10 @@ enum TaxDomain {
   mandate('mandate'),
 
   /// Whether, and on what terms, DesKilo issues for a seller of a country.
-  issuingGate('issuing_gate');
+  issuingGate('issuing_gate'),
+
+  /// Which fiscal groups a rated box of a return form adds up, and its label.
+  formBox('form_box');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -115,6 +118,11 @@ sealed class TaxValue {
           requiresTaxNumber: r.boolOr('requires_tax_number', false),
           nationalChannelRequired: r.boolOr('national_channel_required', false),
           currency: r.stringOr('currency'),
+        ),
+      TaxDomain.formBox => FormBoxValue(
+          label: r.string('label'),
+          groups: r.strings('groups'),
+          excludeGroups: r.strings('exclude_groups'),
         ),
     };
   }
@@ -331,5 +339,34 @@ class IssuingGateValue extends TaxValue {
         'requires_tax_number': requiresTaxNumber,
         'national_channel_required': nationalChannelRequired,
         if (currency.isNotEmpty) 'currency': currency,
+      };
+}
+
+/// `form_box`: {label, groups?, exclude_groups?} -- a rated box of a return
+/// form (the key is `<form>/<box code>`, e.g. `ustva/Kz 81`). The box adds up
+/// the taxed lines whose fiscal group (`VatGroup.wire`) is in [groups], or --
+/// for a catch-all box -- is in none of [excludeGroups]; never a percent, so a
+/// change of a country's rate needs no change here. Which boxes exist and how
+/// they total stays in the form's code; the printed [label] is the form's own
+/// wording, in its language.
+class FormBoxValue extends TaxValue {
+  const FormBoxValue({
+    required this.label,
+    this.groups = const [],
+    this.excludeGroups = const [],
+  });
+
+  final String label;
+  final List<String> groups;
+  final List<String> excludeGroups;
+
+  @override
+  TaxDomain get domain => TaxDomain.formBox;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'label': label,
+        if (groups.isNotEmpty) 'groups': groups,
+        if (excludeGroups.isNotEmpty) 'exclude_groups': excludeGroups,
       };
 }
