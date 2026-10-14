@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ee8bf2b4799aac8e86b43460b707f7dc0ca14152` on 2026-10-13.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7239dc29d5a3b841df58be0a6deb2fea74ad97eb` on 2026-10-13.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,22 +10,22 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1478 |
-| functions | 8461 |
-| cyclomatic>=9 | 940 |
-| cyclomatic>=25 | 143 |
+| files | 1511 |
+| functions | 8662 |
+| cyclomatic>=9 | 951 |
+| cyclomatic>=25 | 138 |
 | cognitive>=15 | 407 |
-| cognitive>=30 | 128 |
-| length>=150 | 109 |
-| parameters>=5 | 389 |
-| parameters>=7 | 148 |
+| cognitive>=30 | 124 |
+| length>=150 | 102 |
+| parameters>=5 | 393 |
+| parameters>=7 | 144 |
 | partOfFiles | 87 |
 
 ## Worst functions by cognitive complexity (baseline)
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
-| 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
+| 218 | 51 | 407 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
 | 112 | 65 | 381 | 2 | `lib/features/plan/presentation/widgets/floor_plan_painter_part1.dart#_FloorPlanPainterPart1._paintImpl` |
