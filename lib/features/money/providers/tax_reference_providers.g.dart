@@ -240,7 +240,7 @@ final class ActiveTaxReferenceProvider
         argument: null,
         retry: null,
         name: r'activeTaxReferenceProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -268,4 +268,4 @@ final class ActiveTaxReferenceProvider
 }
 
 String _$activeTaxReferenceHash() =>
-    r'613e603623815c39013e01b5df8860623b22ccb1';
+    r'2fc30719078b88cf46d205573305583a508d0000';

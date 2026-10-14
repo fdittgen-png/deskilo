@@ -47,7 +47,7 @@ Future<TaxReferenceSet> taxReferenceSet(Ref ref) async {
 
 /// #2478 -- the installation's rows become the snapshot the VAT functions run
 /// on (the bundled copy stands until they arrive, and when they cannot).
-@Riverpod(keepAlive: true)
+@riverpod
 void activeTaxReference(Ref ref) {
   final set = ref.watch(taxReferenceSetProvider).value;
   if (set != null && !set.isEmpty) ActiveTaxReference.install(set);
