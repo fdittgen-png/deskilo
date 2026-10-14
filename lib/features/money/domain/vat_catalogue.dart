@@ -1,208 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/time/date_text.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_rate.dart';
 
-/// The rates a country actually charges, so a workspace can start from its
-/// own reality instead of typing percentages out of a tax leaflet (0072,
-/// expanded #534 to every EU member state, Switzerland, Norway and the
-/// Canadian provinces).
-///
-/// These are STARTING POINTS the owner then edits, not tax advice: rates
-/// move, and which one applies to a given supply is a question for an
-/// accountant. Only the standard rate is marked default — that is what
-/// coworking membership normally falls under. Verified 2026-08 against the
-/// Tax Foundation EU table + skatteetaten.no + estv.admin.ch + CRA.
-const Map<String, List<({String label, double percent, VatGroup group})>>
-    _catalogue = {
-  // ── EU 27 ──────────────────────────────────────────────────────────
-  'AT': [
-    (label: 'Normalsatz 20 %', percent: 20, group: VatGroup.standard),
-    (label: 'Ermäßigt 13 %', percent: 13, group: VatGroup.intermediate),
-    (label: 'Ermäßigt 10 %', percent: 10, group: VatGroup.reduced),
-  ],
-  'BE': [
-    (label: 'Standaard 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Verlaagd 12 %', percent: 12, group: VatGroup.intermediate),
-    (label: 'Verlaagd 6 %', percent: 6, group: VatGroup.reduced),
-  ],
-  'BG': [
-    (label: 'Стандартна 20 %', percent: 20, group: VatGroup.standard),
-    (label: 'Намалена 9 %', percent: 9, group: VatGroup.reduced),
-  ],
-  'HR': [
-    (label: 'Standardna 25 %', percent: 25, group: VatGroup.standard),
-    (label: 'Snižena 13 %', percent: 13, group: VatGroup.intermediate),
-    (label: 'Snižena 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'CY': [
-    (label: 'Standard 19 %', percent: 19, group: VatGroup.standard),
-    (label: 'Reduced 9 %', percent: 9, group: VatGroup.intermediate),
-    (label: 'Reduced 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'CZ': [
-    (label: 'Základní 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Snížená 12 %', percent: 12, group: VatGroup.reduced),
-  ],
-  'DK': [
-    (label: 'Standard 25 %', percent: 25, group: VatGroup.standard),
-  ],
-  'EE': [
-    (label: 'Standardmäär 24 %', percent: 24, group: VatGroup.standard),
-    (label: 'Vähendatud 13 %', percent: 13, group: VatGroup.intermediate),
-    (label: 'Vähendatud 9 %', percent: 9, group: VatGroup.reduced),
-  ],
-  'FI': [
-    (label: 'Yleinen 25,5 %', percent: 25.5, group: VatGroup.standard),
-    (label: 'Alennettu 13,5 %', percent: 13.5, group: VatGroup.intermediate),
-    (label: 'Alennettu 10 %', percent: 10, group: VatGroup.reduced),
-  ],
-  'FR': [
-    (label: 'Standard 20 %', percent: 20, group: VatGroup.standard),
-    (label: 'Intermédiaire 10 %', percent: 10, group: VatGroup.intermediate),
-    (label: 'Réduit 5,5 %', percent: 5.5, group: VatGroup.reduced),
-    (label: 'Particulier 2,1 %', percent: 2.1, group: VatGroup.superReduced),
-  ],
-  'DE': [
-    (label: 'Regelsatz 19 %', percent: 19, group: VatGroup.standard),
-    (label: 'Ermäßigt 7 %', percent: 7, group: VatGroup.reduced),
-  ],
-  'GR': [
-    (label: 'Κανονικός 24 %', percent: 24, group: VatGroup.standard),
-    (label: 'Μειωμένος 13 %', percent: 13, group: VatGroup.intermediate),
-    (label: 'Μειωμένος 6 %', percent: 6, group: VatGroup.reduced),
-  ],
-  'HU': [
-    (label: 'Általános 27 %', percent: 27, group: VatGroup.standard),
-    (label: 'Kedvezményes 18 %', percent: 18, group: VatGroup.intermediate),
-    (label: 'Kedvezményes 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'IE': [
-    (label: 'Standard 23 %', percent: 23, group: VatGroup.standard),
-    (label: 'Reduced 13.5 %', percent: 13.5, group: VatGroup.intermediate),
-    (label: 'Reduced 9 %', percent: 9, group: VatGroup.reduced),
-    (label: 'Livestock 4.8 %', percent: 4.8, group: VatGroup.superReduced),
-  ],
-  'IT': [
-    (label: 'Ordinaria 22 %', percent: 22, group: VatGroup.standard),
-    (label: 'Ridotta 10 %', percent: 10, group: VatGroup.intermediate),
-    (label: 'Ridotta 5 %', percent: 5, group: VatGroup.reduced),
-    (label: 'Minima 4 %', percent: 4, group: VatGroup.superReduced),
-  ],
-  'LV': [
-    (label: 'Standarta 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Samazinātā 12 %', percent: 12, group: VatGroup.intermediate),
-    (label: 'Samazinātā 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'LT': [
-    (label: 'Standartinis 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Lengvatinis 9 %', percent: 9, group: VatGroup.intermediate),
-    (label: 'Lengvatinis 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'LU': [
-    (label: 'Normal 17 %', percent: 17, group: VatGroup.standard),
-    (label: 'Intermédiaire 14 %', percent: 14, group: VatGroup.intermediate),
-    (label: 'Réduit 8 %', percent: 8, group: VatGroup.reduced),
-    (label: 'Super-réduit 3 %', percent: 3, group: VatGroup.superReduced),
-  ],
-  'MT': [
-    (label: 'Standard 18 %', percent: 18, group: VatGroup.standard),
-    (label: 'Reduced 7 %', percent: 7, group: VatGroup.intermediate),
-    (label: 'Reduced 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'NL': [
-    (label: 'Hoog 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Laag 9 %', percent: 9, group: VatGroup.reduced),
-  ],
-  'PL': [
-    (label: 'Podstawowa 23 %', percent: 23, group: VatGroup.standard),
-    (label: 'Obniżona 8 %', percent: 8, group: VatGroup.intermediate),
-    (label: 'Obniżona 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'PT': [
-    (label: 'Normal 23 %', percent: 23, group: VatGroup.standard),
-    (label: 'Intermédia 13 %', percent: 13, group: VatGroup.intermediate),
-    (label: 'Reduzida 6 %', percent: 6, group: VatGroup.reduced),
-  ],
-  'RO': [
-    (label: 'Standard 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Redusă 11 %', percent: 11, group: VatGroup.reduced),
-  ],
-  'SK': [
-    (label: 'Základná 23 %', percent: 23, group: VatGroup.standard),
-    (label: 'Znížená 19 %', percent: 19, group: VatGroup.intermediate),
-    (label: 'Znížená 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'SI': [
-    (label: 'Splošna 22 %', percent: 22, group: VatGroup.standard),
-    (label: 'Znižana 9,5 %', percent: 9.5, group: VatGroup.intermediate),
-    (label: 'Znižana 5 %', percent: 5, group: VatGroup.reduced),
-  ],
-  'ES': [
-    (label: 'General 21 %', percent: 21, group: VatGroup.standard),
-    (label: 'Reducido 10 %', percent: 10, group: VatGroup.reduced),
-    (label: 'Superreducido 4 %', percent: 4, group: VatGroup.superReduced),
-  ],
-  'SE': [
-    (label: 'Standard 25 %', percent: 25, group: VatGroup.standard),
-    (label: 'Reducerad 12 %', percent: 12, group: VatGroup.intermediate),
-    (label: 'Reducerad 6 %', percent: 6, group: VatGroup.reduced),
-  ],
-  // ── Non-EU Europe ──────────────────────────────────────────────────
-  'CH': [
-    (label: 'Normal 8,1 %', percent: 8.1, group: VatGroup.standard),
-    (label: 'Hébergement 3,8 %', percent: 3.8, group: VatGroup.intermediate),
-    (label: 'Réduit 2,6 %', percent: 2.6, group: VatGroup.reduced),
-    // #2360 — a bare letting of rooms (art. 21 Abs. 2 Ziff. 21 MWSTG).
-    (label: 'Ausgenommen (Vermietung)', percent: 0, group: VatGroup.exempt),
-  ],
-  'NO': [
-    (label: 'Alminnelig 25 %', percent: 25, group: VatGroup.standard),
-    (label: 'Næringsmidler 15 %', percent: 15, group: VatGroup.intermediate),
-    (label: 'Redusert 12 %', percent: 12, group: VatGroup.reduced),
-  ],
-  // #2359 — the United Kingdom (VAT Act 1994). The zero rate and the
-  // exempt line are two different things on a return (Box 6 counts both,
-  // only the zero rate lets the seller reclaim input VAT): a bare desk
-  // licence is exempt (Sch 9 Group 1) unless the owner opted to tax.
-  'GB': [
-    (label: 'Standard 20 %', percent: 20, group: VatGroup.standard),
-    (label: 'Reduced 5 %', percent: 5, group: VatGroup.reduced),
-    (label: 'Zero 0 %', percent: 0, group: VatGroup.zero),
-    (label: 'Exempt (land)', percent: 0, group: VatGroup.exempt),
-  ],
-  // ── North America ──────────────────────────────────────────────────
-  // Canada: GST is federal; the usable rate depends on the PROVINCE of the
-  // building, so the catalogue lists the per-province realities and the
-  // owner keeps the one that applies. #2361: a rate that is two taxes
-  // (Quebec) is the exact sum of its components on the same base — the
-  // QST is levied on the price WITHOUT the GST — and the invoice states
-  // them apart (`vat_components.dart`). No "GST+PST" for a desk: BC, SK
-  // and MB do not apply their provincial tax to the rental of commercial
-  // premises or to a coworking membership, so those provinces are GST-only.
-  'CA': [
-    (label: 'GST 5 % (AB/BC/MB/NT/NU/SK/YT)', percent: 5, group: VatGroup.standard),
-    (label: 'HST 13 % (ON)', percent: 13, group: VatGroup.standard),
-    (label: 'HST 14 % (NS)', percent: 14, group: VatGroup.standard),
-    (label: 'HST 15 % (NB/NL/PE)', percent: 15, group: VatGroup.standard),
-    (label: 'GST 5 % + QST 9,975 % (QC)', percent: 14.975, group: VatGroup.standard),
-  ],
-  // US: deliberately NO preset — there is no federal VAT/sales tax and
-  // state+local rates vary by the seller's nexus; vatCatalogueNote says
-  // so. The owner types the local combined rate.
-};
-
-/// #2356 — the day a rate that moved took its current value, so the
-/// seeded rate is a dated version (0182) and not a timeless number: the
-/// change after it is a new version, never an edit. Only the rates that
-/// moved recently are dated; the rest stand since 1900-01-01.
-final Map<String, Map<double, String>> _since = {
-  'EE': {24: '2025-07-01'},
-  'FI': {25.5: '2024-09-01', 13.5: '2025-01-01'},
-  'RO': {21: '2025-08-01', 11: '2025-08-01'},
-  'SK': {23: '2025-01-01', 19: '2025-01-01', 5: '2025-01-01'},
-  'CH': {8.1: '2024-01-01', 3.8: '2024-01-01', 2.6: '2024-01-01'},
-  // #2359 — the standard rate since 2011-01-04, the reduced one since 1997.
-  'GB': {20: '2011-01-04', 5: '1997-09-01'},
-};
+// #2478 (C2 of #2476) — the rates a country actually charges, so a
+// workspace can start from its own reality instead of typing percentages
+// out of a tax leaflet (0072, expanded #534 to every EU member state,
+// Switzerland, Norway, the United Kingdom and the Canadian provinces), are
+// ROWS of the tax reference store (`rate`, `catalogue_note`,
+// `group_example`), each with its source and a `confirmed` flag. Nothing of
+// them is written in code: this file only assembles the rows into the
+// editable [VatRate]s the seed button offers.
+//
+// They are STARTING POINTS the owner then edits, not tax advice: rates
+// move, and which one applies to a given supply is a question for an
+// accountant. Only the first rate (the standard one) is marked default.
 
 /// #2360 — a change of rate already decided or proposed: the new value
 /// from a date, applied by the owner's "change by law" (a successor
@@ -237,96 +50,104 @@ PlannedRateChange? vatPlannedChangeFor(String countryCode, double percent,
   return null;
 }
 
-/// #2359 — the statutory reason a country's exempt line prints (BT-120):
-/// VAT Act 1994, Schedule 9 Group 1 for a licence to occupy land.
-const Map<String, String> _exemptionReasons = {
-  'GB': 'VAT Act 1994, Schedule 9, Group 1 (land)',
-  'CH': 'Von der Steuer ausgenommen (Art. 21 Abs. 2 Ziff. 21 MWSTG)',
-};
+/// The ISO day of [on], null while no day is given (the newest versions).
+String? _dayOf(DateTime? on) => on == null ? null : isoDay(on);
+
+/// Every country the catalogue knows.
+Iterable<String> get vatCatalogueCountries => {
+      for (final row in ActiveTaxReference.current.where(TaxDomain.rate))
+        row.country,
+    }.toList()
+      ..sort();
 
 /// The country's usual rates as editable [VatRate]s, standard first and
-/// marked as the default.
-/// Every country the catalogue knows.
-Iterable<String> get vatCatalogueCountries => _catalogue.keys;
+/// marked as the default: the versions in force on [asOf] (the newest ones
+/// without it), in the order of their `position`.
+List<VatRate> vatCatalogueFor(
+  String countryCode, {
+  String? asOf,
+  DateTime? on,
+  TaxReferenceSet? reference,
+}) {
+  final rows = (reference ?? ActiveTaxReference.current)
+      .ownRows(TaxDomain.rate, countryCode, asOf: asOf ?? _dayOf(on))
+    ..sort((a, b) => (a.value as RateValue)
+        .position
+        .compareTo((b.value as RateValue).position));
+  return [
+    for (final (index, row) in rows.indexed)
+      _vatRateOf(row.value as RateValue, row.validFrom, isDefault: index == 0),
+  ];
+}
 
-List<VatRate> vatCatalogueFor(String countryCode) => [
-      for (final (index, rate)
-          in (_catalogue[countryCode.toUpperCase()] ?? const []).indexed)
-        VatRate(
-          label: rate.label,
-          percent: rate.percent,
-          isDefault: index == 0,
-          // #985 — the group is the catalogue's, not a guess from the number.
-          category: rate.group.category,
-          groupKey: rate.group.wire,
-          outsideBase: rate.group.outsideBase,
-          validFrom:
-              _since[countryCode.toUpperCase()]?[rate.percent] ?? '1900-01-01',
-          exemptionReason: rate.group == VatGroup.exempt
-              ? _exemptionReasons[countryCode.toUpperCase()] ?? ''
-              : '',
-        ),
-    ];
+VatRate _vatRateOf(RateValue v, String validFrom, {required bool isDefault}) {
+  final group = VatGroup.fromWire(v.group);
+  return VatRate(
+    label: v.label,
+    percent: v.percent,
+    isDefault: isDefault,
+    // #985 — the group is the catalogue's, not a guess from the number.
+    category: v.category,
+    groupKey: group.wire,
+    outsideBase: group.outsideBase,
+    validFrom: validFrom,
+    exemptionReason: v.exemptionReason,
+  );
+}
 
-/// Which of the seeded rates should NOT default: Canada seeds several
-/// per-province realities — the first (plain GST) defaults, the rest are
-/// alternatives to prune. Everything else keeps rate[0] as default.
-///
 /// A short country-specific caveat shown next to the seed button (#534):
 /// the moments where "here are your country's rates" needs an asterisk.
-String? vatCatalogueNote(String countryCode) => switch (countryCode.toUpperCase()) {
-      'US' =>
-        'The US has no federal VAT — sales tax is set by state and locality. '
-            'Add your local combined rate manually.',
-      'CA' =>
-        'Canada taxes by province: keep the line for yours (GST, HST, or '
-            'GST+PST/QST) and delete the rest.',
-      'GB' =>
-        'A bare desk or office licence is exempt (VAT Act 1994 Sch 9 '
-            'Group 1) unless you opted to tax the building; a serviced '
-            'package of facilities is standard-rated. Keep the lines that '
-            'apply.',
-      'CH' =>
-        'A package of services is taxed at the normal rate; a bare letting '
-            'of rooms is exempt (art. 21 MWSTG) unless you opted (art. 22): '
-            'say which on the legal identity. The 3.8 % special rate applies '
-            'to accommodation only. If the vote '
-            'of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: '
-            'change them by law then.${_swissReform2028Approved ? ' '
-                'The vote passed: "Change by law" proposes the new rate and '
-                'its date.' : ''}',
-      _ => null,
-    };
+String? vatCatalogueNote(
+  String countryCode, {
+  String? asOf,
+  DateTime? on,
+  TaxReferenceSet? reference,
+  bool reformApproved = _swissReform2028Approved,
+}) {
+  final set = (reference ?? ActiveTaxReference.current).resolved(asOf ?? _dayOf(on));
+  final country = countryCode.trim().toUpperCase();
+  String? text(String key) {
+    for (final row in set.where(TaxDomain.catalogueNote, country: country)) {
+      if (row.country == country && row.key == key) {
+        return (row.value as CatalogueNoteValue).text;
+      }
+    }
+    return null;
+  }
 
+  final note = text('note');
+  if (note == null) return null;
+  // #2360 — once the Swiss vote has passed, the note says what to do.
+  final passed = reformApproved ? text('note_vote_passed') : null;
+  return passed == null ? note : '$note $passed';
+}
 
 /// #947 — what falls in each group, country by country: starting points
 /// for the owner, not tax advice. A country with no entry gets the
-/// EU-wide shape.
-List<({VatGroup group, String example})> vatGroupExamples(String countryCode) =>
-    switch (countryCode.toUpperCase()) {
-      'FR' => const [
-          (group: VatGroup.standard, example: 'Prestations, boissons alcoolisées, sodas (taxe soda en sus)'),
-          (group: VatGroup.intermediate, example: 'Repas et boissons sans alcool consommés sur place'),
-          (group: VatGroup.reduced, example: 'Livres, boissons sans alcool à emporter, produits alimentaires'),
-          (group: VatGroup.superReduced, example: 'Presse'),
-          (group: VatGroup.excise, example: 'Bière, spiritueux : accises dans le prix, TVA 20 %'),
-          (group: VatGroup.deposit, example: 'Consigne remboursable — hors champ de la TVA'),
-          (group: VatGroup.exempt, example: 'Formation, opérations exonérées (art. 261 CGI)'),
-          (group: VatGroup.notSubject, example: 'Association non assujettie (art. 293 B CGI)'),
-        ],
-      'DE' || 'AT' => const [
-          (group: VatGroup.standard, example: 'Dienstleistungen, Getränke, Pfand (mit der Ware besteuert)'),
-          (group: VatGroup.reduced, example: 'Bücher, Zeitungen, Lebensmittel zum Mitnehmen'),
-          (group: VatGroup.excise, example: 'Bier, Spirituosen: Verbrauchsteuer im Preis, Regelsatz'),
-          (group: VatGroup.exempt, example: 'Steuerfreie Umsätze (§ 4 UStG)'),
-          (group: VatGroup.notSubject, example: 'Kleinunternehmer (§ 19 UStG)'),
-        ],
-      _ => const [
-          (group: VatGroup.standard, example: 'Services, alcoholic and sugar drinks'),
-          (group: VatGroup.reduced, example: 'Books, periodicals, food, non-alcoholic drinks'),
-          (group: VatGroup.excise, example: 'Beer, spirits: excise inside the price, standard VAT'),
-          (group: VatGroup.deposit, example: 'Refundable deposit'),
-          (group: VatGroup.exempt, example: 'Exempt supplies'),
-          (group: VatGroup.notSubject, example: 'Not subject to VAT'),
-        ],
-    };
+/// EU-wide shape (the `*` rows).
+List<({VatGroup group, String example})> vatGroupExamples(
+  String countryCode, {
+  String? asOf,
+  TaxReferenceSet? reference,
+}) {
+  final set = (reference ?? ActiveTaxReference.current).resolved(asOf);
+  final own = set.ownRows(TaxDomain.groupExample, countryCode);
+  final rows = own.isNotEmpty
+      ? own
+      : [
+          for (final row in set.rows)
+            if (row.domain == TaxDomain.groupExample &&
+                row.country == taxReferenceAnyCountry)
+              row,
+        ];
+  final ordered = [...rows]..sort((a, b) => (a.value as GroupExampleValue)
+      .position
+      .compareTo((b.value as GroupExampleValue).position));
+  return [
+    for (final row in ordered)
+      (
+        group: VatGroup.fromWire((row.value as GroupExampleValue).group),
+        example: (row.value as GroupExampleValue).text,
+      ),
+  ];
+}

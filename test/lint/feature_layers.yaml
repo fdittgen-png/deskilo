@@ -1,0 +1,13 @@
+# #2495 — the declared direction of the feature graph.
+#
+# Layers, lowest first. A feature may import its own layer and the ones
+# below it; an import that goes UP is a violation. Violations are not
+# forbidden today (the graph is one big component), they are a baseline
+# that may only fall: test/lint/feature_cycles_test.dart fails when a pair
+# not listed below appears or a listed count rises, and asks for the line
+# to be lowered or deleted when it falls.
+layers:
+  - [auth, help, visits, profile]
+  - [workspace]
+  - [calendar, directory, editor, events, kiosk, members, mcp, money, plan, reservations, task_recorder]
+  - [me]

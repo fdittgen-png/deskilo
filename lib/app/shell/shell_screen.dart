@@ -1,74 +1,35 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
-import '../../core/badge/app_badge.dart';
-import '../../core/i18n/format_controller.dart';
-import '../../core/i18n/workspace_currency.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
-import '../../core/notifications/notification_providers.dart';
-import '../../core/notifications/reminder_sync.dart';
-import '../../core/push/push_providers.dart';
-import '../../core/realtime/realtime_providers.dart';
-import '../../core/storage/note_seen_store.dart';
-import '../../core/time/clock.dart';
-import '../../core/time/work_hours.dart';
-import '../../core/time/workspace_time.dart';
-import '../../core/trace/trace_logger.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
-import '../../features/plan/providers/floor_plan_providers.dart';
-import '../../features/reservations/domain/check_in_reminders.dart';
-import '../../features/reservations/presentation/widgets/space_scan.dart';
-import '../../features/reservations/providers/reservation_providers.dart';
-import '../../features/workspace/domain/member_note_refs.dart';
-import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'shell_app_bar.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer.dart';
+import 'shell_effects.dart';
 import 'shell_slot.dart';
+import 'shell_tabs.dart';
 import 'shell_title_bar.dart';
 import 'space_chip.dart';
 
-/// #821 — the conversations I muted; empty when the list cannot be
-/// read, so a failing fetch silences nothing by accident.
-Future<Set<String>> _mutedConversationIds(WidgetRef ref) async {
-  try {
-    final list = await ref.read(conversationsProvider.future);
-    return {for (final c in list) if (c.muted) c.id};
-  } on Object catch (e, st) {
-    TraceLogger.instance.warn('inbox', 'muted conversations unavailable',
-        error: e, stackTrace: st);
-    return const {};
-  }
-}
-
-/// Note ids already announced THIS SESSION — belt to the persisted
-/// NOTIFIED stamp's braces: two racing provider refreshes must not
-/// announce the same note twice before the stamp lands.
-final Set<String> _sessionNotifiedNoteIds = <String>{};
-
-/// Bottom-navigation shell hosting the four tab branches
-/// Plan · Calendar · Members · Money (spec §13, members since #230).
+/// Bottom-navigation shell hosting the branch destinations (spec §13).
 /// Settings is not a tab — it is the top-right app-bar action, as in
 /// Sparkilo; the events feed sits behind the app-bar bell beside it.
-/// A destination icon — Messages (#687), and Calendar when it carries the
-/// decisions (#1306) — badged only when there is something to badge. The count comes from the SAME query the list renders,
-/// so the badge cannot disagree with the screen it points at.
-Widget _messagesIcon(IconData icon, int unread) => unread > 0
-    ? Badge.count(count: unread, maxCount: 99, child: Icon(icon))
-    : Icon(icon);
-
+///
+/// #2493 — build only composes: the session-wide effects live in
+/// shell_effects.dart (owned by the ShellSession), the destinations in
+/// shell_tabs.dart and the app bar's actions in shell_app_bar.dart.
 class ShellScreen extends ConsumerWidget {
   const ShellScreen({required this.navigationShell, super.key});
 
@@ -77,195 +38,8 @@ class ShellScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final isOwner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
-
-    // #711 — resolve the member's format locale, clock and zone for
-    // every screen under the shell. Watching it here is what sets
-    // Intl.defaultLocale (#701) and WorkspaceTime.displayMode; nothing
-    // below has to know.
-    ref
-      ..watch(appFormatProvider)
-
-    // Fire-and-forget push start (#72); no-op while Firebase is unconfigured.
-      ..watch(pushBootstrapProvider)
-
-    // Push-driven freshness (#413): DB changes invalidate their cached
-    // providers on every device, this one included — no restarts, no
-    // manual refresh.
-      ..watch(realtimeInvalidatorProvider);
-
-    // App-icon badge (#426) + notification mirror (#432): launchers
-    // like One UI ignore app-set badge numbers and count ACTIVE
-    // notifications instead — so each pending confirmation is mirrored
-    // as one notification (resolved ones vanish), and the explicit
-    // count still serves iOS/macOS and honoring launchers.
-    ref.listen(myPendingEventsProvider, (_, next) {
-      final pending = next.value;
-      if (pending == null) return;
-      unawaited(ref.read(appBadgeProvider).update(
-          pending.length + (ref.read(unreadNoteCountProvider).value ?? 0)));
-      unawaited(ref.read(notificationServiceProvider).syncPendingNotifications([
-        for (final e in pending)
-          (
-            id: e.id,
-            title: l10n.pushPendingTitle,
-            body: l10n.pushPendingBody,
-          ),
-      ]));
-    });
-
-    // Member notes (#456/#464): every note for me that this DEVICE has
-    // not yet announced pops as a local notification with sender and
-    // text — INCLUDING catch-up: without the owner's Firebase setup no
-    // push endpoint exists, so notes sent while the app was closed
-    // must be announced on the next start. The persisted NOTIFIED
-    // stamp makes each note announce exactly once per device.
-    ref.listen(myNotesProvider, (previous, next) {
-      final notes = next.value;
-      if (notes == null || notes.isEmpty) return;
-      unawaited(() async {
-        // AWAIT the caches (#464): at boot the notes can land before
-        // the member/name fetches — a sync read then yields a null id
-        // (announcing nothing) or a nameless title.
-        try {
-          final myId = (await ref.read(myMemberProvider.future))?.id;
-          if (myId == null) return;
-          final names = await ref.read(memberNamesProvider.future);
-          final store = ref.read(noteSeenStoreProvider);
-          final notifiedUntil = await store.readNotified();
-          // #821 — a MUTED conversation is announced by nobody: its
-          // notes still count on the row and the badge, they just stay
-          // quiet. The stamp still advances past them, so unmuting later
-          // never replays what was muted.
-          final muted = await _mutedConversationIds(ref);
-          DateTime? newest;
-          // Oldest → newest so multiple catch-up notes read in order.
-          for (final note in notes.reversed) {
-            if (note.fromMemberId == myId) continue;
-            if (notifiedUntil != null &&
-                !note.createdAt.isAfter(notifiedUntil)) {
-              continue;
-            }
-            if (!_sessionNotifiedNoteIds.add(note.id)) continue;
-            if (muted.contains(note.conversationId)) {
-              if (newest == null || note.createdAt.isAfter(newest)) {
-                newest = note.createdAt;
-              }
-              continue;
-            }
-            // The names cache can lag a fresh boot — a nameless "Message
-            // from" reads broken, so fall back to the app title (#460).
-            final sender = names[note.fromMemberId] ?? '';
-            await ref.read(notificationServiceProvider).showNow(
-                  title: sender.isEmpty
-                      ? (l10n.pushPendingTitle)
-                      : (l10n.memberNoteReceived(sender)),
-                  // #523 — reference tokens read as their labels.
-                  body: notePlainText(note.body),
-                );
-            if (newest == null || note.createdAt.isAfter(newest)) {
-              newest = note.createdAt;
-            }
-          }
-          if (newest != null) await store.writeNotified(newest);
-        } on Object catch (e, st) {
-          // A missed local announcement is not worth a crash; the note
-          // is still in the inbox and on the badge.
-          TraceLogger.instance.warn('inbox', 'note announcement failed',
-              error: e, stackTrace: st);
-        }
-      }());
-    });
-
-    // Unread notes count on the app icon too (#464) — refresh the
-    // badge when unread changes without a pending-events change.
-    ref.listen(unreadNoteCountProvider, (_, next) {
-      final unread = next.value;
-      if (unread == null) return;
-      final pending =
-          ref.read(myPendingEventsProvider).value?.length ?? 0;
-      unawaited(ref.read(appBadgeProvider).update(pending + unread));
-    });
-
-    // Day-based booking windows anchor to the WORKSPACE clock — install
-    // the active workspace's zone (re-installs on profile switch). A
-    // device hours away must still book the workspace's midnights.
-    WorkspaceTime.install(
-      ref.watch(currentWorkspaceProvider).value?.timezone,
-    );
-
-    // The working day (#446) is ambient for the same reason as the
-    // clock: the HalfDayWindows builders travel as function references.
-    WorkHours.install(ref.watch(workHoursProvider).value);
-
-    // #1277 — and the workspace's own words, ambient for the same
-    // reason: the legend, the shell destinations and the booking sheet
-    // all render deep inside widgets that were never handed a `ref`.
-    Lexicon.install(ref.watch(lexiconProvider).value);
-
-    // #1077 — and the currency's GRAIN, for the same reason again: the
-    // major-unit editor helpers are called from three dozen forms, and a
-    // yen has no minor unit at all.
-    WorkspaceCurrency.install(
-      ref.watch(currentWorkspaceProvider).value?.currencyCode,
-    );
-
-    // Keep the local check-in reminders in sync with my upcoming bookings
-    // (spec §4.3). Best-effort; failures never disturb the UI — but they
-    // are traced rather than swallowed (#1094), and the whole body is
-    // guarded because the two provider reads can fail too.
-    ref.listen(myUpcomingReservationsProvider, (_, next) async {
-      final upcoming = next.value;
-      if (upcoming == null) return;
-      try {
-        final member = await ref.read(myMemberProvider.future);
-        if (member == null) return;
-        final targets = await ref.read(targetNamesProvider.future);
-        final timeFormat = DateFormat.Hm();
-        final reminders = upcomingCheckInReminders(
-          reservations: upcoming,
-          myMemberId: member.id,
-          now: ref.read(clockProvider).now(),
-          targetNames: targets,
-          titleOf: (target, startsAt) =>
-              l10n.reminderTitle,
-          // #1082 — the reminder names the hour the SPACE opens the
-          // booking, which is what the member read when they booked it
-          // and what the plan shows. `toLocal()` is the device's clock,
-          // and #711 made the workspace's the default everywhere else.
-          bodyOf: (target, startsAt) {
-            final at = timeFormat.format(WorkspaceTime.wall(startsAt));
-            return l10n.reminderBody(target, at);
-          },
-        );
-        await scheduleCheckInReminders(
-          ref.read(notificationServiceProvider),
-          reminders,
-        );
-      } on Object catch (e, st) {
-        // The two provider reads and the reminder build. The schedule
-        // itself traces its own failure and never throws.
-        TraceLogger.instance.warn(
-          'notifications',
-          'check-in reminders: could not read who I am or what I booked',
-          error: e,
-          stackTrace: st,
-        );
-      }
-    });
-    final tabTitles = [
-      // #687 — the first destination is Messages now; the plan lives on
-      // Réserver, which draws the same canvas.
-      // Discussions moved to Me › Messages: this destination is the
-      // workspace's alerts.
-      l10n.inboxAlertsTab,
-      lexiconText(context, key: 'tabCalendar', fallback: l10n.tabCalendar),
-      lexiconText(context, key: 'directoryTitle', fallback: l10n.directoryTitle),
-      lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
-      // The centre button's branch (#reserve-as-branch): not a bar
-      // destination, but it owns the app-bar title while active.
-      lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
-    ];
+    watchShellEffects(ref, l10n);
+    final tabTitles = shellTabTitles(context, l10n);
 
     // Per-workspace feature gating (#146): the router branches stay fixed,
     // but disabled features drop their destination — so the bottom-bar
@@ -274,14 +48,6 @@ class ShellScreen extends ConsumerWidget {
     // a workspace with no messaging surface has no way to reach a
     // conversation someone already sent it.
     final features = ref.watch(enabledFeaturesSyncProvider);
-    // #1598 — a member who administers nothing meets My account where the
-    // gear was. WATCHED, not read: a delegation or a workspace switch
-    // must rename the entry on the same frame the permissions change,
-    // never leave a stale one behind.
-    final accountMenu = showsMemberAccountMenu(
-      features: features,
-      permissions: ref.watch(myPermissionsProvider),
-    );
     // #707 — the two counts SEPARATE again. The Messages badge counts
     // unread conversations; the bell counts pending confirmations. #702
     // had summed them onto one destination, and one number for two
@@ -292,7 +58,8 @@ class ShellScreen extends ConsumerWidget {
     final calendarBadge =
         decisionSignalOnCalendar(features) ? pendingEvents : 0;
     // #1306 — the one destination list the drawer renders too.
-    final visibleBranches = visibleShellBranches(features, ref.watch(myPermissionsProvider));
+    final visibleBranches =
+        visibleShellBranches(features, ref.watch(myPermissionsProvider));
     // Unknown permissions (the membership did not load) hide nothing: the
     // hub itself explains what went wrong.
     final showReserve = ref.watch(myMemberProvider).value == null ||
@@ -301,40 +68,6 @@ class ShellScreen extends ConsumerWidget {
             .contains(WorkspacePermission.makeReservations);
     final selectedPosition =
         visibleBranches.indexOf(navigationShell.currentIndex);
-
-    ShellDestination destinationFor(int branch) => switch (branch) {
-          // #1306 S2 — with the bell off, the pending decisions badge the
-          // Calendar, which opens on them.
-          ShellBranch.calendar => ShellDestination(
-              icon: _messagesIcon(shellBranchIcon(branch), calendarBadge),
-              selectedIcon: _messagesIcon(
-                  shellBranchIcon(branch, selected: true), calendarBadge),
-              label: tabTitles[ShellBranch.calendar],
-            ),
-          ShellBranch.directory => ShellDestination(
-              icon: Icon(shellBranchIcon(branch)),
-              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
-              label: tabTitles[ShellBranch.directory],
-            ),
-          ShellBranch.money => ShellDestination(
-              icon: _messagesIcon(shellBranchIcon(branch), attention.money),
-              selectedIcon: _messagesIcon(shellBranchIcon(branch, selected: true), attention.money),
-              label: tabTitles[ShellBranch.money],
-            ),
-          // #687 — the messaging centre, carrying its own unread count.
-          // The count comes from the SAME query the list renders, so the
-          // badge cannot disagree with the screen it points at.
-          // No unread, NO BADGE WIDGET — not a hidden one. An
-          // always-present badge with isLabelVisible:false renders
-          // nothing and still answers find.byType(Badge), which is a
-          // widget in the tree lying about an empty inbox.
-          _ => ShellDestination(
-              icon: _messagesIcon(shellBranchIcon(branch), unreadMessages),
-              selectedIcon: _messagesIcon(
-                  shellBranchIcon(branch, selected: true), unreadMessages),
-              label: tabTitles[ShellBranch.messages],
-            ),
-        };
 
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
@@ -357,85 +90,10 @@ class ShellScreen extends ConsumerWidget {
       appBar: ShellTitleBar(
         collapsible: !webShell && visibleBranches.isNotEmpty,
         appBar: AppBar(
-        // #1823 — the chip names the space; the tab sits under it.
-        title: SpaceChip(tabTitle: tabTitles[navigationShell.currentIndex]),
-        actions: [
-          // The editor sits on BOTH map surfaces (field request). Plan
-          // and Réserver draw the same canvas from the same providers,
-          // so an owner who spots a wrong desk while booking had to
-          // leave the hub, switch tab and come back — for the same fix
-          // they could make where they saw the problem.
-          // #687 — Réserver is the only map surface now, so the editor
-          // sits there and nowhere else.
-          // Space QR scan (field request): a desk/office/level card opens
-          // that space's permitted actions.
-          //
-          // #699 — it used to sit in the hub's control rows, where it
-          // cost the width that pushed the window chips onto a third
-          // line. It reads better here anyway: scanning a card is an
-          // action ON the whole surface, like opening the editor beside
-          // it, not a control that changes what the plan below shows.
-          if (navigationShell.currentIndex == ShellBranch.reserve &&
-              features.contains(WorkspaceFeature.spaceQrCodes))
-            IconButton(
-              key: const ValueKey('reserve-scan-button'),
-              icon: const Icon(Icons.qr_code_scanner_outlined),
-              tooltip: l10n.spaceScanTitle,
-              onPressed: () => scanSpace(context, ref),
-            ),
-          // #2137 — the owner, and whoever holds manageSites.
-          if ((isOwner ||
-                  ref
-                      .watch(myPermissionsProvider)
-                      .contains(WorkspacePermission.manageSites)) &&
-              navigationShell.currentIndex == ShellBranch.reserve)
-            IconButton(
-              key: const ValueKey('shell-editor-button'),
-              icon: const Icon(Icons.design_services_outlined),
-              tooltip: l10n.editorOpenTooltip,
-              onPressed: () => context.push('/editor'),
-            ),
-          // #707 — the bell is back, as a SHORTCUT: it opens the inbox
-          // on its Événements face rather than a screen of its own. That
-          // keeps the #687 rule intact — one place holds the alerts, so
-          // reading one there is reading it everywhere — while the count
-          // stays visible from every tab, which a tab inside the inbox
-          // could not offer. Hidden when the workspace gated events off.
-          // #719 → the GDPR rights moved to Me › Me with the rest of the
-          // person's own pages (#1823); the avatar below is one tap away.
-          if (features.contains(WorkspaceFeature.eventsTab))
-            IconButton(
-              key: const ValueKey('shell-events-bell'),
-              icon: attention.total == 0
-                  ? const Icon(Icons.inbox_outlined)
-                  : Badge.count(
-                      count: attention.total,
-                      maxCount: 99,
-                      child: const Icon(Icons.inbox_outlined),
-                    ),
-              tooltip: '${lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents)} — ${l10n.uxAttentionSummary(attention.updates, attention.pending)}',
-              // The /events path lands on the alerts (the calendar's Alerts
-              // view when the hub holds them).
-              onPressed: () => context.go('/events'),
-            ),
-          // #1598 — the SAME destination under two names. Hiding an
-          // entry is not access control: /settings already shows a
-          // member only what their permissions earn, and every
-          // administrative route behind it keeps its own guard, so what
-          // changes here is the word and the icon on the door.
-          IconButton(
-            key: ValueKey(
-                accountMenu ? 'shell-account-button' : 'shell-settings-button'),
-            icon: Icon(accountMenu
-                ? Icons.account_circle_outlined
-                : Icons.settings_outlined),
-            tooltip: accountMenu
-                ? (l10n.memberAccountTitle)
-                : (l10n.settingsTitle),
-            onPressed: () => context.push('/settings'),
-          ),
-          const BackToMeButton(), // #1823
-        ],
+          // #1823 — the chip names the space; the tab sits under it.
+          title: SpaceChip(tabTitle: tabTitles[navigationShell.currentIndex]),
+          actions: shellBarActions(context, ref,
+              currentIndex: navigationShell.currentIndex),
         ),
       ),
       // #611 — the tab switch fades the incoming branch in. The
@@ -491,7 +149,14 @@ class ShellScreen extends ConsumerWidget {
                     visibleBranches[position] == navigationShell.currentIndex,
               ),
               destinations: [
-                for (final branch in visibleBranches) destinationFor(branch),
+                for (final branch in visibleBranches)
+                  shellDestinationFor(
+                    branch,
+                    tabTitles: tabTitles,
+                    calendarBadge: calendarBadge,
+                    moneyBadge: attention.money,
+                    unreadMessages: unreadMessages,
+                  ),
               ],
               reserveLabel: lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
               // A branch switch, not a push — the bar (and this button)

@@ -2,6 +2,7 @@
 import 'package:xml/xml.dart';
 
 import '../../../core/money/money_text.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
@@ -400,11 +401,14 @@ class _Foreign extends _BuyerId {
 
 class _NoId extends _BuyerId {}
 
-const _euCodes = {
-  'AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'HR', //
-  'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'RO', 'SK', 'SI',
-  'ES', 'SE', 'XI',
-};
+/// Northern Ireland's VAT prefix: not a member state, but KSeF files its
+/// buyers' VAT numbers as an EU number, as the Union does for goods.
+const _northernIreland = 'XI';
+
+/// Whether KSeF files [code] as an EU VAT prefix: a member state of the
+/// installed reference data (Greece's `EL` included) or Northern Ireland.
+bool _isEuPrefix(String code) =>
+    code == _northernIreland || ActiveTaxReference.current.isEu(code);
 
 /// A Polish buyer is identified by its NIP, another EU business by its
 /// VAT number, anyone else by what they have — or BrakID.
@@ -420,8 +424,8 @@ _BuyerId _buyerId(InvoiceParty buyer) {
   if (vat.isNotEmpty) {
     final match = RegExp(r'^([A-Z]{2})([0-9A-Z+*]{1,12})$').firstMatch(vat);
     final code = match?.group(1) == 'GR' ? 'EL' : match?.group(1);
-    if (match != null && _euCodes.contains(code)) {
-      return _EuVat(code!, match.group(2)!);
+    if (match != null && code != null && _isEuPrefix(code)) {
+      return _EuVat(code, match.group(2)!);
     }
     return _Foreign(country, vat.length > 50 ? vat.substring(0, 50) : vat);
   }

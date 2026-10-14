@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/small_business_threshold.dart';
 import '../../providers/money_providers.dart';
@@ -36,6 +37,7 @@ class SmallBusinessNotice extends ConsumerWidget {
       country: country,
       currency: currency,
       turnoverCents: turnover,
+      asOf: isoDay(now),
     );
     if (alerts.isEmpty) return const SizedBox.shrink();
     final l10n = context.l10n;

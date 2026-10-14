@@ -18555,10 +18555,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un brouillon privé issu d\'un fichier : rien n\'y est considéré comme fiable ni envoyé.';
 
   @override
+  String get taxRefAccount => 'Numéro de compte (ou code du plan)';
+
+  @override
   String get taxRefAdd => 'Ajouter une valeur';
 
   @override
+  String get taxRefAliasOf => 'Alias de (code ISO, vide pour un État membre)';
+
+  @override
+  String get taxRefCashBackstop => 'Échéance ultime en encaissements';
+
+  @override
+  String get taxRefCashOption => 'Option pour les encaissements';
+
+  @override
   String get taxRefCategory => 'Catégorie EN 16931';
+
+  @override
+  String get taxRefCents => 'Montant (plus petite unité)';
 
   @override
   String get taxRefConfirmed => 'Confirmé';
@@ -18570,25 +18585,72 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCountry => 'Pays (code ISO, ou * pour tous)';
 
   @override
+  String get taxRefCurrency => 'Devise (code ISO)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Comptes et codes d\'export';
+
+  @override
+  String get taxRefDomainCatalogueNote => 'Notes du catalogue';
+
+  @override
   String get taxRefDomainEuMember => 'Membres de l\'UE';
 
   @override
   String get taxRefDomainExemptionText => 'Mentions légales';
 
   @override
+  String get taxRefDomainFormBox => 'Cases de la déclaration';
+
+  @override
+  String get taxRefDomainGroupExample => 'Exemples par groupe';
+
+  @override
+  String get taxRefDomainIssuingGate => 'Autorisations d\'émission';
+
+  @override
+  String get taxRefDomainMandate => 'Obligations de facturation électronique';
+
+  @override
   String get taxRefDomainRate => 'Taux';
+
+  @override
+  String get taxRefDomainTaxPoint => 'Exigibilité';
+
+  @override
+  String get taxRefDomainThreshold => 'Seuils';
 
   @override
   String get taxRefDomainVatIdPattern => 'Formats de n° de TVA';
 
   @override
+  String get taxRefDuty => 'Obligation';
+
+  @override
+  String get taxRefEffect => 'Effet du dépassement (next_year ou immediate)';
+
+  @override
   String get taxRefEmpty => 'Aucune valeur.';
+
+  @override
+  String get taxRefExcludeGroups =>
+      'Tous les groupes sauf (séparés par des virgules)';
 
   @override
   String get taxRefExemptionReason => 'Motif d\'exonération';
 
   @override
+  String get taxRefFormat => 'Format';
+
+  @override
+  String get taxRefFrom => 'S\'applique à partir du (AAAA-MM-JJ)';
+
+  @override
   String get taxRefGroup => 'Groupe';
+
+  @override
+  String get taxRefGroups =>
+      'Groupes fiscaux additionnés (séparés par des virgules)';
 
   @override
   String get taxRefHistory => 'Historique';
@@ -18598,10 +18660,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Taux, mentions d\'exonération, formats de numéros de TVA et pays membres de l\'UE. Un changement est une nouvelle version à partir d\'une date ; la version en vigueur est clôturée, jamais modifiée.';
 
   @override
+  String get taxRefInvalidAccount =>
+      'Indiquez un numéro de compte ou un code de taxe';
+
+  @override
   String get taxRefInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
 
   @override
+  String get taxRefInvalidGroups =>
+      'Indiquez des groupes fiscaux connus (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), aucun dans les deux listes';
+
+  @override
   String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';
+
+  @override
+  String get taxRefInvoiceOption => 'Option pour les débits';
 
   @override
   String get taxRefKey => 'Clé';
@@ -18615,6 +18688,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefMemberEmpty => 'Un État membre n\'a pas d\'autres champs.';
+
+  @override
+  String get taxRefNationalChannel => 'Canal national obligatoire';
 
   @override
   String get taxRefNewVersion => 'Nouvelle version';
@@ -18643,6 +18719,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefRequired => 'Obligatoire';
 
   @override
+  String get taxRefRequiresTaxNumber => 'Numéro fiscal obligatoire';
+
+  @override
+  String get taxRefRole => 'Rôle';
+
+  @override
   String get taxRefSave => 'Enregistrer la version';
 
   @override
@@ -18650,6 +18732,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefSource => 'Source';
+
+  @override
+  String get taxRefStandardRule => 'Règle par défaut';
+
+  @override
+  String get taxRefSupported => 'Émission prise en charge';
+
+  @override
+  String get taxRefTaxCode => 'Code de taxe';
 
   @override
   String get taxRefText => 'Texte';

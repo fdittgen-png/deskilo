@@ -32,7 +32,10 @@
 // year's [VatFormSpec.validFrom]; `vatFormSpecFor` picks by period.
 import 'package:meta/meta.dart';
 
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_declaration.dart';
+import 'vat_form_boxes.dart';
 import 'vat_forms.dart';
 
 part 'vat_form_catalogue/ca.dart';
@@ -48,7 +51,6 @@ const _asset = {'asset'};
 
 VatTerm _sales({
   Set<double>? rates,
-  Set<double>? otherRatesThan,
   Set<String>? categories = _taxable,
   bool? correction,
   int vatSign = 0,
@@ -57,7 +59,6 @@ VatTerm _sales({
 }) => VatTerm.lines(
   VatLineSelector(
     rates: rates,
-    otherRatesThan: otherRatesThan,
     categories: categories,
     correction: correction,
     vatSign: vatSign,
@@ -91,9 +92,10 @@ const _nothing = VatTerm.lines(VatLineSelector(categories: <String>{}));
 
 const _wd = VatRounding.wholeDown;
 
-/// Every form the app fills, oldest layout first per country.
-@visibleForTesting
-final List<VatFormSpec> vatFormCatalogue = [
+/// Every form's structure: its boxes, how they total, how they round. The
+/// rated boxes name their `form_box` row (label and fiscal groups); read the
+/// forms through [vatFormCatalogue] or [vatFormSpecFor], which resolve them.
+final List<VatFormSpec> _vatFormTemplates = [
   _ca3,
   _ustva,
   _vat100,
@@ -103,25 +105,41 @@ final List<VatFormSpec> vatFormCatalogue = [
   _lipe,
 ];
 
+/// Every form the app fills, oldest layout first per country, as the
+/// installed reference data words and groups them today.
+@visibleForTesting
+List<VatFormSpec> get vatFormCatalogue => [
+  for (final f in _vatFormTemplates)
+    resolveFormBoxes(f, ActiveTaxReference.current, DateTime(9999)),
+];
+
 /// #2361 — Revenu Québec's FPZ-500, QST part.
 VatFormSpec get qstFormSpec => _fpz500Qst;
 
 /// The form [country] files for a period ending on [periodEnd]: the
 /// latest layout already in force, the earliest one for an older period;
 /// null for a country without one.
-VatFormSpec? vatFormSpecFor(String country, DateTime periodEnd) {
+VatFormSpec? vatFormSpecFor(
+  String country,
+  DateTime periodEnd, {
+  TaxReferenceSet? reference,
+}) {
   final code = switch (country.trim().toUpperCase()) {
     'UK' => 'GB',
     final c => c,
   };
   final forms = [
-    for (final f in vatFormCatalogue)
+    for (final f in _vatFormTemplates)
       if (f.country == code) f,
   ]..sort((a, b) => a.validFrom.compareTo(b.validFrom));
   if (forms.isEmpty) return null;
-  return forms.lastWhere(
-    (f) => !f.validFrom.isAfter(periodEnd),
-    orElse: () => forms.first,
+  return resolveFormBoxes(
+    forms.lastWhere(
+      (f) => !f.validFrom.isAfter(periodEnd),
+      orElse: () => forms.first,
+    ),
+    reference ?? ActiveTaxReference.current,
+    periodEnd,
   );
 }
 

@@ -6,48 +6,13 @@ import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
+import 'fec_accounts.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
 import 'vat_regime.dart';
 import 'vat_tax_point.dart';
 
-/// The accounts a FEC cannot be written without. Defaults follow the
-/// French *plan comptable général*; an accountant using a different chart
-/// corrects them at export time — which is also the moment the exporter
-/// shows what it is about to book, rather than inventing it silently.
-class FecAccounts {
-  const FecAccounts({
-    this.customers = '411000',
-    this.revenue = '706000',
-    this.bank = '512000',
-    this.vat = '445710',
-    this.expenses = '606000',
-    this.vatPending = '445740',
-  });
-
-  /// PCG 411 — Clients (the receivable).
-  final String customers;
-
-  /// PCG 706 — Prestations de services (what a coworking sells).
-  final String revenue;
-
-  /// PCG 512 — Banques (where the money lands).
-  final String bank;
-
-  /// PCG 44571 — TVA collectée. Only used when the invoice carries VAT
-  /// (0072); a workspace that charges none never books to it.
-  final String vat;
-
-  /// #936 — what the workspace spends: reimbursed expenses and shared
-  /// costs. 606 "achats non stockés" by default; the accountant's chart
-  /// wins at export time like the others.
-  final String expenses;
-
-  /// #2355 — PCG 44574, TVA collectée en attente: the VAT an invoice
-  /// carries but whose tax point has not come yet (services on receipts,
-  /// a service month still to come). It moves to [vat] on the tax point.
-  final String vatPending;
-}
+export 'fec_accounts.dart';
 
 /// Journal codes and labels. Two journals are enough for an invoicing-only
 /// export: sales, and cash.
