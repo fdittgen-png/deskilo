@@ -8,37 +8,28 @@ final _ustva = VatFormSpec(
   boxes: [
     VatBoxSpec(
       'Kz 81',
-      'Steuerpflichtige Umsätze zum Steuersatz von 19 %',
-      base: [
-        _sales(rates: {19}),
-      ],
-      tax: [
-        _sales(rates: {19}),
-      ],
+      '',
+      formBox: 'ustva/Kz 81',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: 'Kz81',
       baseRounding: _wd,
     ),
     VatBoxSpec(
       'Kz 86',
-      'Steuerpflichtige Umsätze zum Steuersatz von 7 %',
-      base: [
-        _sales(rates: {7}),
-      ],
-      tax: [
-        _sales(rates: {7}),
-      ],
+      '',
+      formBox: 'ustva/Kz 86',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: 'Kz86',
       baseRounding: _wd,
     ),
     VatBoxSpec(
       'Kz 35/36',
-      'Umsätze, die anderen Steuersätzen unterliegen',
-      base: [
-        _sales(otherRatesThan: {19, 7}),
-      ],
-      tax: [
-        _sales(otherRatesThan: {19, 7}),
-      ],
+      '',
+      formBox: 'ustva/Kz 35/36',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: 'Kz35',
       taxKey: 'Kz36',
       baseRounding: _wd,

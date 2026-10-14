@@ -12006,6 +12006,10 @@
   "@taxRefDomainExemptionText": {
     "description": "#2477 tax reference: Domain filter: statutory mentions."
   },
+  "taxRefDomainFormBox": "Cases de la déclaration",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
   "taxRefDomainGroupExample": "Exemples par groupe",
   "@taxRefDomainGroupExample": {
     "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
@@ -12046,6 +12050,10 @@
   "@taxRefEmpty": {
     "description": "#2477 tax reference: Empty list."
   },
+  "taxRefExcludeGroups": "Tous les groupes sauf (séparés par des virgules)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
+  },
   "taxRefExemptionReason": "Motif d'exonération",
   "@taxRefExemptionReason": {
     "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
@@ -12058,6 +12066,10 @@
   "@taxRefGroup": {
     "description": "#2477 tax reference: Field: fiscal group of a rate."
   },
+  "taxRefGroups": "Groupes fiscaux additionnés (séparés par des virgules)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
+  },
   "taxRefHistory": "Historique",
   "@taxRefHistory": {
     "description": "#2477 tax reference: Button and sheet title: every version of a value."
@@ -12069,6 +12081,10 @@
   "taxRefInvalidDate": "Saisissez la date au format AAAA-MM-JJ",
   "@taxRefInvalidDate": {
     "description": "#2477 tax reference: Validation: date format."
+  },
+  "taxRefInvalidGroups": "Indiquez des groupes fiscaux connus (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), aucun dans les deux listes",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
   },
   "taxRefInvalidNumber": "Saisissez un nombre de 0 à 99,999",
   "@taxRefInvalidNumber": {

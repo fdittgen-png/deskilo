@@ -65,37 +65,28 @@ final _mwst = VatFormSpec(
     ),
     VatBoxSpec(
       '303',
-      'Normalsatz 8,1 %',
-      base: [
-        _sales(rates: {8.1}),
-      ],
-      tax: [
-        _sales(rates: {8.1}),
-      ],
+      '',
+      formBox: 'mwst/303',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '303',
       taxKey: '303',
     ),
     VatBoxSpec(
       '313',
-      'Reduzierter Satz 2,6 %',
-      base: [
-        _sales(rates: {2.6}),
-      ],
-      tax: [
-        _sales(rates: {2.6}),
-      ],
+      '',
+      formBox: 'mwst/313',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '313',
       taxKey: '313',
     ),
     VatBoxSpec(
       '343',
-      'Beherbergungssatz 3,8 %',
-      base: [
-        _sales(rates: {3.8}),
-      ],
-      tax: [
-        _sales(rates: {3.8}),
-      ],
+      '',
+      formBox: 'mwst/343',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '343',
       taxKey: '343',
     ),

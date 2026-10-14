@@ -31820,6 +31820,12 @@ abstract class AppLocalizations {
   /// **'Statutory texts'**
   String get taxRefDomainExemptionText;
 
+  /// #2480 tax reference: Tab: the rated boxes of a return form.
+  ///
+  /// In en, this message translates to:
+  /// **'Return form boxes'**
+  String get taxRefDomainFormBox;
+
   /// #2478 tax reference: Domain filter: what falls in each fiscal group.
   ///
   /// In en, this message translates to:
@@ -31880,6 +31886,12 @@ abstract class AppLocalizations {
   /// **'No values here.'**
   String get taxRefEmpty;
 
+  /// #2480 tax reference: Field: a catch-all return box adds up every group except these.
+  ///
+  /// In en, this message translates to:
+  /// **'Every group except (comma separated)'**
+  String get taxRefExcludeGroups;
+
   /// #2477 tax reference: Field: statutory reason printed on an exempt line.
   ///
   /// In en, this message translates to:
@@ -31898,6 +31910,12 @@ abstract class AppLocalizations {
   /// **'Group'**
   String get taxRefGroup;
 
+  /// #2480 tax reference: Field: fiscal groups a return box adds up.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal groups it adds up (comma separated)'**
+  String get taxRefGroups;
+
   /// #2477 tax reference: Button and sheet title: every version of a value.
   ///
   /// In en, this message translates to:
@@ -31915,6 +31933,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the date as YYYY-MM-DD'**
   String get taxRefInvalidDate;
+
+  /// #2480 tax reference: Error: the group lists of a return box are invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists'**
+  String get taxRefInvalidGroups;
 
   /// #2477 tax reference: Validation: percentage.
   ///

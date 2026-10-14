@@ -8,49 +8,37 @@ final _modelo303 = VatFormSpec(
   boxes: [
     VatBoxSpec(
       '01/03',
-      'Régimen general 4 %',
-      base: [
-        _sales(rates: {4}),
-      ],
-      tax: [
-        _sales(rates: {4}),
-      ],
+      '',
+      formBox: 'modelo303/01/03',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '01',
       taxKey: '03',
     ),
     VatBoxSpec(
       '04/06',
-      'Régimen general 10 %',
-      base: [
-        _sales(rates: {10}),
-      ],
-      tax: [
-        _sales(rates: {10}),
-      ],
+      '',
+      formBox: 'modelo303/04/06',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '04',
       taxKey: '06',
     ),
     VatBoxSpec(
       '07/09',
-      'Régimen general 21 %',
-      base: [
-        _sales(rates: {21}),
-      ],
-      tax: [
-        _sales(rates: {21}),
-      ],
+      '',
+      formBox: 'modelo303/07/09',
+      base: [_sales()],
+      tax: [_sales()],
       baseKey: '07',
       taxKey: '09',
     ),
     VatBoxSpec(
       'Otros',
-      'Régimen general, otros tipos',
-      base: [
-        _sales(otherRatesThan: {4, 10, 21}),
-      ],
-      tax: [
-        _sales(otherRatesThan: {4, 10, 21}),
-      ],
+      '',
+      formBox: 'modelo303/Otros',
+      base: [_sales()],
+      tax: [_sales()],
     ),
     VatBoxSpec(
       '27',
