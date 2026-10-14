@@ -165,7 +165,7 @@ const Map<String, int> _baseline = {
   // by an enum value and a manifest entry per flag, by design.
   // 1273→1284 (2026-09-16): #1277 S2 — the workspaceVocabulary flag: one enum value and one
   // manifest entry. The registry grows by a flag per functionality.
-  'lib/features/workspace/domain/workspace_feature.dart': 614, // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
+  'lib/features/workspace/domain/workspace_feature.dart': 620, // 2026-10-14 #2362 614→620: the salesTax enum value and its doc comment (a flag's enum value goes here, unavoidable). // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
 
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.

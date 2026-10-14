@@ -6868,6 +6868,14 @@
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
+  "featureSalesTaxDesc": "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "featureSalesTaxTitle": "Sales tax (United States)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
+  },
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
   "featureScheduledExpensesTitle": "Scheduled expenses",
   "featureSeatDayTimeline": "Seat day timeline",
@@ -9866,6 +9874,14 @@
   "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingSalesTaxRate": "The sales tax of the site's postal code: the platform owner has not entered it",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
   "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
   "@invoiceMissingSellerAddress": {
@@ -21140,6 +21156,10 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
   "taxRefConfirmed": "Confirmed",
   "@taxRefConfirmed": {
     "description": "#2477 tax reference: Badge: the value was checked against its source."
@@ -21192,9 +21212,17 @@
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
   },
+  "taxRefDomainSalesTax": "Sales tax by ZIP code",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
   "taxRefDomainTaxPoint": "Tax point",
   "@taxRefDomainTaxPoint": {
     "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainTaxability": "Taxability by state",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
   },
   "taxRefDomainThreshold": "Thresholds",
   "@taxRefDomainThreshold": {
@@ -21252,6 +21280,10 @@
   "@taxRefInvalidAccount": {
     "description": "#2481 tax reference: Error: an export row needs an account or a code."
   },
+  "taxRefInvalidComponents": "One jurisdiction per line as level, name, percent (0 to 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
   "taxRefInvalidDate": "Enter the date as YYYY-MM-DD",
   "@taxRefInvalidDate": {
     "description": "#2477 tax reference: Validation: date format."
@@ -21263,6 +21295,10 @@
   "taxRefInvalidNumber": "Enter a number from 0 to 99.999",
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
+  },
+  "taxRefInvalidState": "Enter the two-letter state code",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
   },
   "taxRefInvoiceOption": "Option for the invoice date",
   "@taxRefInvoiceOption": {
@@ -21344,6 +21380,14 @@
   "@taxRefStandardRule": {
     "description": "#2479 tax reference: Field: the legal default rule of the tax point."
   },
+  "taxRefState": "State (two letters)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefStatus": "Status",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
   "taxRefSupported": "Issuing supported",
   "@taxRefSupported": {
     "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
@@ -21351,6 +21395,10 @@
   "taxRefTaxCode": "Tax code",
   "@taxRefTaxCode": {
     "description": "#2481 tax reference: Field: the export tax code."
+  },
+  "taxRefTaxSystem": "Tax system (vat or sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
   },
   "taxRefText": "Text",
   "@taxRefText": {

@@ -7,6 +7,9 @@
 // `switch` over either must be revisited. `tax_reference.dart` re-exports
 // this file.
 import '../data/json_reader.dart';
+import 'sales_tax_component.dart';
+
+export 'sales_tax_component.dart';
 
 /// The kinds of reference value the store holds. A domain's `value` shape
 /// is validated in SQL (`tax_reference_valid`) and read here into a typed
@@ -47,7 +50,13 @@ enum TaxDomain {
   formBox('form_box'),
 
   /// An account number or a tax code an accounting export proposes.
-  accountMap('account_map');
+  accountMap('account_map'),
+
+  /// The sales tax a US postal code carries, one component per jurisdiction.
+  salesTax('sales_tax'),
+
+  /// Whether a kind of line is taxed in a state.
+  taxability('taxability');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -121,6 +130,7 @@ sealed class TaxValue {
           requiresTaxNumber: r.boolOr('requires_tax_number', false),
           nationalChannelRequired: r.boolOr('national_channel_required', false),
           currency: r.stringOr('currency'),
+          taxSystem: r.stringOr('tax_system', 'vat'),
         ),
       TaxDomain.formBox => FormBoxValue(
           label: r.string('label'),
@@ -134,6 +144,11 @@ sealed class TaxValue {
           taxCode: r.stringOr('tax_code'),
           label: r.stringOr('label'),
         ),
+      TaxDomain.salesTax => SalesTaxValue(
+          state: r.string('state'),
+          components: r.objects('components', SalesTaxComponent.fromReader),
+        ),
+      TaxDomain.taxability => TaxabilityValue(status: r.string('status')),
     };
   }
 }
@@ -327,6 +342,7 @@ class IssuingGateValue extends TaxValue {
     this.requiresTaxNumber = false,
     this.nationalChannelRequired = false,
     this.currency = '',
+    this.taxSystem = 'vat',
   });
 
   final bool supported;
@@ -335,6 +351,13 @@ class IssuingGateValue extends TaxValue {
 
   /// The currency the VAT must be stated in; '' where any will do.
   final String currency;
+
+  /// `vat` (the tax is inside the price) or `sales_tax` (added to a net
+  /// price, per jurisdiction): how a seller of this country issues.
+  final String taxSystem;
+
+  /// Whether the seller issues in sales-tax mode.
+  bool get salesTaxMode => taxSystem == salesTaxSystem;
 
   /// Whether the app issues for this country: supported and no national
   /// channel it does not speak.
@@ -349,7 +372,53 @@ class IssuingGateValue extends TaxValue {
         'requires_tax_number': requiresTaxNumber,
         'national_channel_required': nationalChannelRequired,
         if (currency.isNotEmpty) 'currency': currency,
+        if (taxSystem != 'vat') 'tax_system': taxSystem,
       };
+}
+
+/// The `tax_system` of an issuing gate whose sellers add the tax to a net price.
+const String salesTaxSystem = 'sales_tax';
+
+/// `sales_tax`: {state, components} -- the tax a postal code carries (the key
+/// is its five digits, the country `US`). A ZIP code only approximates a
+/// jurisdiction; the row's source says how it was checked. Rates change by
+/// jurisdiction constantly: none is shipped, the platform owner enters them.
+class SalesTaxValue extends TaxValue {
+  const SalesTaxValue({required this.state, required this.components});
+
+  final String state;
+  final List<SalesTaxComponent> components;
+
+  /// The combined percent of every component.
+  double get percent => components.fold(0, (sum, c) => sum + c.percent);
+
+  @override
+  TaxDomain get domain => TaxDomain.salesTax;
+
+  @override
+  Map<String, Object?> toJson() => {
+    'state': state,
+    'components': [for (final c in components) c.toJson()],
+  };
+}
+
+/// The three answers about a kind of line in a state.
+const List<String> taxabilityStatuses = ['taxable', 'exempt', 'not_applicable'];
+
+/// `taxability`: {status} -- whether a kind of line is taxed in a state (the
+/// key is `<STATE>:<kind>` or `<STATE>:<supply>`, the country `US`). No row for
+/// anything but a licence to occupy space means nobody has said: such an
+/// invoice is refused, never guessed.
+class TaxabilityValue extends TaxValue {
+  const TaxabilityValue({required this.status});
+
+  final String status;
+
+  @override
+  TaxDomain get domain => TaxDomain.taxability;
+
+  @override
+  Map<String, Object?> toJson() => {'status': status};
 }
 
 /// `form_box`: {label, groups?, exclude_groups?} -- a rated box of a return
