@@ -268,7 +268,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/money_repository.dart': 610, // 2026-10-12 #2440: createInvoice and invoiceIssueReadiness take the correction reason. 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/saf_t.dart': 477, // 2026-10-13 #2365: the ledger postings moved to saf_t_ledger.dart.
 
   'lib/features/money/domain/vat_tax_point.dart': 410, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
