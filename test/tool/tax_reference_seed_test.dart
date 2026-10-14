@@ -60,39 +60,36 @@ void main() {
     }
   });
 
-  test('each migration seeds the rows no earlier one seeded, and together all of them', () {
+  test('each migration seeds rows of the bundle that no earlier one seeded, and together all of them', () {
     final files = _migrationsWithSeed();
     expect(files, isNotEmpty);
     final texts = [for (final f in files) f.readAsStringSync()];
+    final inBundle = rows.map(seedLine).toSet();
     final seeded = <String>{};
     for (final (i, f) in files.indexed) {
-      final expected = rowsNotSeededBy(rows, texts.take(i));
-      if (i == 0) {
-        // The first block is history: it holds the rows of its day, which
-        // the bundle still holds unchanged.
-        final block = seedBlockOf(texts[i])!;
-        for (final line in block.split('\n').where((l) => l.startsWith('('))) {
-          expect(
-            rows.map(seedLine).contains(line.replaceAll(RegExp(r'[,;]$'), '')),
-            isTrue,
-            reason: '${f.path}: a seeded row is not in the bundle: $line',
-          );
-        }
-      } else {
+      final block = seedBlockOf(texts[i])!
+          .split('\n')
+          .where((l) => l.startsWith('('))
+          .map((l) => l.replaceAll(RegExp(r'[,;]$'), ''))
+          .toList();
+      for (final line in block) {
+        expect(inBundle.contains(line), isTrue,
+            reason: '${f.path}: a seeded row is not in the bundle: $line');
+        expect(seeded.contains(line), isFalse,
+            reason: '${f.path}: a row an earlier migration seeded: $line');
+      }
+      seeded.addAll(block);
+      // The newest block is what the generator writes; an older one is
+      // history and is never regenerated.
+      if (i == files.length - 1 && i > 0) {
         expect(
           seedBlockOf(texts[i]),
-          taxReferenceSeedSql(expected),
+          taxReferenceSeedSql(rowsNotSeededBy(rows, texts.take(i))),
           reason: 'dart run tool/build_tax_reference_seed.dart --migration ${f.path}',
         );
       }
-      seeded.addAll(
-        seedBlockOf(texts[i])!
-            .split('\n')
-            .where((l) => l.startsWith('('))
-            .map((l) => l.replaceAll(RegExp(r'[,;]$'), '')),
-      );
     }
-    expect(seeded, rows.map(seedLine).toSet(),
+    expect(seeded, inBundle,
         reason: 'a row of the bundle that no migration seeds is missing on the server');
   });
 }

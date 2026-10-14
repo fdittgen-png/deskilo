@@ -11962,9 +11962,21 @@
   "@taxRefAliasOf": {
     "description": "#2478 tax reference: Field: the member state an alias code stands for."
   },
+  "taxRefCashBackstop": "Plazo máximo en criterio de caja",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefCashOption": "Opción por el criterio de caja",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
   "taxRefCategory": "Categoría EN 16931",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
+  },
+  "taxRefCents": "Importe (unidad menor)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
   "taxRefConfirmed": "Confirmado",
   "@taxRefConfirmed": {
@@ -11977,6 +11989,10 @@
   "taxRefCountry": "País (código ISO, o * para todos)",
   "@taxRefCountry": {
     "description": "#2477 tax reference: Field: country of a reference value."
+  },
+  "taxRefCurrency": "Moneda (código ISO)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
   },
   "taxRefDomainCatalogueNote": "Notas del catálogo",
   "@taxRefDomainCatalogueNote": {
@@ -11994,13 +12010,37 @@
   "@taxRefDomainGroupExample": {
     "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
   },
+  "taxRefDomainIssuingGate": "Autorizaciones de emisión",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefDomainMandate": "Obligaciones de facturación electrónica",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
   "taxRefDomainRate": "Tipos",
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
   },
+  "taxRefDomainTaxPoint": "Devengo",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainThreshold": "Umbrales",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
+  },
   "taxRefDomainVatIdPattern": "Formatos de NIF-IVA",
   "@taxRefDomainVatIdPattern": {
     "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
+  },
+  "taxRefDuty": "Obligación",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefEffect": "Efecto al superarlo (next_year o immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
   },
   "taxRefEmpty": "Sin valores.",
   "@taxRefEmpty": {
@@ -12009,6 +12049,10 @@
   "taxRefExemptionReason": "Motivo de exención",
   "@taxRefExemptionReason": {
     "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
+  },
+  "taxRefFrom": "Se aplica desde (AAAA-MM-DD)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
   },
   "taxRefGroup": "Grupo",
   "@taxRefGroup": {
@@ -12030,6 +12074,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvoiceOption": "Opción por la fecha de factura",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
+  },
   "taxRefKey": "Clave",
   "@taxRefKey": {
     "description": "#2477 tax reference: Field: key naming a value within a country."
@@ -12045,6 +12093,10 @@
   "taxRefMemberEmpty": "Un Estado miembro no tiene más campos.",
   "@taxRefMemberEmpty": {
     "description": "#2477 tax reference: Hint in the form of an EU member."
+  },
+  "taxRefNationalChannel": "Canal nacional obligatorio",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
   },
   "taxRefNewVersion": "Nueva versión",
   "@taxRefNewVersion": {
@@ -12078,6 +12130,10 @@
   "@taxRefRequired": {
     "description": "#2477 tax reference: Validation: a required field is empty."
   },
+  "taxRefRequiresTaxNumber": "Número fiscal obligatorio",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
   "taxRefSave": "Guardar la versión",
   "@taxRefSave": {
     "description": "#2477 tax reference: Button: save the new version."
@@ -12089,6 +12145,14 @@
   "taxRefSource": "Fuente",
   "@taxRefSource": {
     "description": "#2477 tax reference: Field: where the value comes from (a law, a table)."
+  },
+  "taxRefStandardRule": "Regla por defecto",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefSupported": "Emisión admitida",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
   },
   "taxRefText": "Texto",
   "@taxRefText": {

@@ -270,7 +270,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/vat_tax_point.dart': 544, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/vat_tax_point.dart': 410, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/presentation/screens/my_finances_screen.dart': 574, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
