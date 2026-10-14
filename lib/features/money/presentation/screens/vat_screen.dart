@@ -316,8 +316,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       _load(ratesAsync.value ?? const []);
     }
     final regime = vatRegimeFromWire(workspace.vatRegime);
-    final catalogue = vatCatalogueFor(workspace.countryCode);
-    final catalogueNote = vatCatalogueNote(workspace.countryCode);
+    final catalogue = vatCatalogueFor(workspace.countryCode, on: ref.read(clockProvider).now());
+    final catalogueNote = vatCatalogueNote(workspace.countryCode, on: ref.read(clockProvider).now());
 
     return Scaffold(
       appBar: AppBar(title: title),

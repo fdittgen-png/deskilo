@@ -46,10 +46,10 @@ final _kinds = [
 
 /// The ceilings: today's counts. They only go down.
 const _ceilings = <String, int>{
-  'percent values': 241,
-  'country-keyed branches': 68,
-  'country-keyed map entries': 80,
-  'country lists': 5,
+  'percent values': 52,
+  'country-keyed branches': 37,
+  'country-keyed map entries': 11,
+  'country lists': 3,
 };
 
 final _sqlKinds = [

@@ -21116,6 +21116,10 @@
   "@taxRefAdd": {
     "description": "#2477 tax reference: Button: add a new reference value."
   },
+  "taxRefAliasOf": "Alias of (ISO code, empty for a member state)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
   "taxRefCategory": "EN 16931 category",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -21132,6 +21136,10 @@
   "@taxRefCountry": {
     "description": "#2477 tax reference: Field: country of a reference value."
   },
+  "taxRefDomainCatalogueNote": "Catalogue notes",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
   "taxRefDomainEuMember": "EU members",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -21139,6 +21147,10 @@
   "taxRefDomainExemptionText": "Statutory texts",
   "@taxRefDomainExemptionText": {
     "description": "#2477 tax reference: Domain filter: statutory mentions."
+  },
+  "taxRefDomainGroupExample": "Group examples",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
   },
   "taxRefDomainRate": "Rates",
   "@taxRefDomainRate": {

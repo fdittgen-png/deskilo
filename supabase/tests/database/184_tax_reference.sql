@@ -24,7 +24,7 @@ insert into public.platform_admins (user_id) values ('00000000-0000-4000-8000-00
 
 -- ── the seed is there, and everyone signed in reads it ─────────────────
 select pg_temp.act_as('00000000-0000-4000-8000-0000002477a2');
-select is((select count(*)::int from public.tax_reference where domain = 'eu_member'), 27,
+select is((select count(*)::int from public.tax_reference where domain = 'eu_member' and key = 'member'), 27,
           'a member reads the 27 EU member states of the seed');
 select is((select value ->> 'percent' from public.tax_reference('rate', 'DE', '2026-06-01') where key = 'standard'),
           '19.0', 'Germany''s standard rate in the seed is 19');

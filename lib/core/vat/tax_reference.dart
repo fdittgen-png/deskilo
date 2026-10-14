@@ -24,7 +24,13 @@ enum TaxDomain {
   mention('exemption_text'),
 
   /// The shape of a national VAT identification number.
-  vatIdPattern('vat_id_pattern');
+  vatIdPattern('vat_id_pattern'),
+
+  /// The caveat shown beside the seed button of a country's rates.
+  catalogueNote('catalogue_note'),
+
+  /// What falls in a fiscal group, a starting point for the owner.
+  groupExample('group_example');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -44,9 +50,6 @@ enum TaxDomain {
 /// The country every country shares: a row for `*` applies where the
 /// country has no row of its own for the same key.
 const String taxReferenceAnyCountry = '*';
-
-/// The first day of the calendar: a value that never changed starts here.
-const String taxReferenceEpoch = '1900-01-01';
 
 /// One typed `value` of a row. Sealed: a new domain adds a case, and every
 /// exhaustive `switch` over it must be revisited.
@@ -69,12 +72,18 @@ sealed class TaxValue {
           exemptionReason: r.stringOr('exemption_reason'),
           position: r.intOrNull('position') ?? 0,
         ),
-      TaxDomain.euMember => const EuMemberValue(),
+      TaxDomain.euMember => EuMemberValue(aliasOf: r.stringOr('alias_of')),
       TaxDomain.mention => ExemptionTextValue(
           regime: r.string('regime'),
           text: r.string('text'),
         ),
       TaxDomain.vatIdPattern => VatIdPatternValue(pattern: r.string('pattern')),
+      TaxDomain.catalogueNote => CatalogueNoteValue(text: r.string('text')),
+      TaxDomain.groupExample => GroupExampleValue(
+          group: r.string('group'),
+          text: r.string('text'),
+          position: r.intOrNull('position') ?? 0,
+        ),
     };
   }
 }
@@ -114,15 +123,21 @@ class RateValue extends TaxValue {
       };
 }
 
-/// `eu_member`: {} — the row's country is a member state.
+/// `eu_member`: {} — the row's country is a member state; or
+/// {alias_of} — the row's code is another spelling of that member
+/// (Greece's VAT prefix `EL` is `GR`), not a member of its own.
 class EuMemberValue extends TaxValue {
-  const EuMemberValue();
+  const EuMemberValue({this.aliasOf = ''});
+
+  final String aliasOf;
+
+  bool get isAlias => aliasOf.isNotEmpty;
 
   @override
   TaxDomain get domain => TaxDomain.euMember;
 
   @override
-  Map<String, Object?> toJson() => const {};
+  Map<String, Object?> toJson() => isAlias ? {'alias_of': aliasOf} : const {};
 }
 
 /// `exemption_text`: {regime, text} — the key names the regime too.
@@ -150,6 +165,40 @@ class VatIdPatternValue extends TaxValue {
 
   @override
   Map<String, Object?> toJson() => {'pattern': pattern};
+}
+
+/// `catalogue_note`: {text} — the caveat of a country's rate catalogue.
+class CatalogueNoteValue extends TaxValue {
+  const CatalogueNoteValue({required this.text});
+
+  final String text;
+
+  @override
+  TaxDomain get domain => TaxDomain.catalogueNote;
+
+  @override
+  Map<String, Object?> toJson() => {'text': text};
+}
+
+/// `group_example`: {group, text, position?} — what falls in a fiscal
+/// group; [position] orders a country's examples.
+class GroupExampleValue extends TaxValue {
+  const GroupExampleValue({
+    required this.group,
+    required this.text,
+    this.position = 0,
+  });
+
+  final String group;
+  final String text;
+  final int position;
+
+  @override
+  TaxDomain get domain => TaxDomain.groupExample;
+
+  @override
+  Map<String, Object?> toJson() =>
+      {'group': group, 'text': text, 'position': position};
 }
 
 /// One version of one value: valid from [validFrom] (inclusive) to

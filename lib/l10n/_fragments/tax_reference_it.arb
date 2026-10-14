@@ -24,6 +24,18 @@
   "@taxRefDomainVatIdPattern": {
     "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
   },
+  "taxRefDomainCatalogueNote": "Note del catalogo",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainGroupExample": "Esempi per gruppo",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
+  },
+  "taxRefAliasOf": "Alias di (codice ISO, vuoto per uno Stato membro)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
   "taxRefConfirmed": "Confermato",
   "@taxRefConfirmed": {
     "description": "#2477 tax reference: Badge: the value was checked against its source."

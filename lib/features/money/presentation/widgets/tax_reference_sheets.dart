@@ -21,9 +21,11 @@ import '../../domain/vat_rate.dart';
 /// A one-line reading of a value, for lists.
 String taxValueSummary(TaxValue v) => switch (v) {
       RateValue() => '${v.label} (${percentText(v.percent)} %)',
-      EuMemberValue() => '',
+      EuMemberValue() => v.aliasOf,
       ExemptionTextValue() => v.text,
       VatIdPatternValue() => v.pattern,
+      CatalogueNoteValue() => v.text,
+      GroupExampleValue() => '${v.group}: ${v.text}',
     };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -31,6 +33,8 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
       TaxDomain.euMember => context.l10n.taxRefDomainEuMember,
       TaxDomain.mention => context.l10n.taxRefDomainExemptionText,
       TaxDomain.vatIdPattern => context.l10n.taxRefDomainVatIdPattern,
+      TaxDomain.catalogueNote => context.l10n.taxRefDomainCatalogueNote,
+      TaxDomain.groupExample => context.l10n.taxRefDomainGroupExample,
     };
 
 /// The state of one version form: its text fields and its three choices.
@@ -48,7 +52,11 @@ class _VersionForm {
           'reason': from?.value is RateValue
               ? (from!.value as RateValue).exemptionReason
               : '',
-          'position': from?.value is RateValue ? '${(from!.value as RateValue).position}' : '0',
+          'position': switch (from?.value) {
+            RateValue(:final position) => '$position',
+            GroupExampleValue(:final position) => '$position',
+            _ => '0',
+          },
           'regime': from?.value is ExemptionTextValue
               ? (from!.value as ExemptionTextValue).regime
               : '',
@@ -58,10 +66,20 @@ class _VersionForm {
           'pattern': from?.value is VatIdPatternValue
               ? (from!.value as VatIdPatternValue).pattern
               : '',
+          'alias_of': from?.value is EuMemberValue
+              ? (from!.value as EuMemberValue).aliasOf
+              : '',
+          'note': switch (from?.value) {
+            CatalogueNoteValue(:final text) => text,
+            GroupExampleValue(:final text) => text,
+            _ => '',
+          },
         }),
-        group = from?.value is RateValue
-            ? (from!.value as RateValue).group
-            : VatGroup.standard.wire,
+        group = switch (from?.value) {
+          RateValue(:final group) => group,
+          GroupExampleValue(:final group) => group,
+          _ => VatGroup.standard.wire,
+        },
         category = from?.value is RateValue ? (from!.value as RateValue).category : 'S',
         confirmed = from?.confirmed ?? false;
 
@@ -83,10 +101,16 @@ class _VersionForm {
             exemptionReason: fields.text('reason'),
             position: int.tryParse(fields.text('position')) ?? 0,
           ),
-        TaxDomain.euMember => const EuMemberValue(),
+        TaxDomain.euMember => EuMemberValue(aliasOf: fields.text('alias_of')),
         TaxDomain.mention => ExemptionTextValue(
             regime: fields.text('regime'), text: fields.text('text')),
         TaxDomain.vatIdPattern => VatIdPatternValue(pattern: fields.text('pattern')),
+        TaxDomain.catalogueNote => CatalogueNoteValue(text: fields.text('note')),
+        TaxDomain.groupExample => GroupExampleValue(
+            group: group,
+            text: fields.text('note'),
+            position: int.tryParse(fields.text('position')) ?? 0,
+          ),
       };
 
   TaxVersionDraft draft() => TaxVersionDraft(
@@ -122,6 +146,8 @@ class _VersionForm {
         'text': ?need('text'),
       },
       if (domain == TaxDomain.vatIdPattern) 'pattern': ?need('pattern'),
+      if (domain == TaxDomain.catalogueNote || domain == TaxDomain.groupExample)
+        'note': ?need('note'),
     };
   }
 
@@ -162,12 +188,22 @@ class _VersionForm {
             _text('reason', l10n.taxRefExemptionReason),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
           ],
-        TaxDomain.euMember => [Text(l10n.taxRefMemberEmpty)],
+        TaxDomain.euMember => [
+            Text(l10n.taxRefMemberEmpty),
+            _text('alias_of', l10n.taxRefAliasOf),
+          ],
         TaxDomain.mention => [
             _text('regime', l10n.taxRefRegime),
             _text('text', l10n.taxRefText),
           ],
         TaxDomain.vatIdPattern => [_text('pattern', l10n.taxRefPattern)],
+        TaxDomain.catalogueNote => [_text('note', l10n.taxRefText)],
+        TaxDomain.groupExample => [
+            _choice('group', l10n.taxRefGroup, group,
+                VatGroup.values.map((g) => g.wire), (x) => group = x),
+            _text('note', l10n.taxRefText),
+            _text('position', l10n.taxRefPosition, type: TextInputType.number),
+          ],
       };
 
   List<Widget> build(AppLocalizations l10n, VoidCallback refresh) => [
