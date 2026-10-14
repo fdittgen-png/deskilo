@@ -38,7 +38,7 @@
 import 'package:meta/meta.dart';
 
 import '../../../core/data/json_reader.dart';
-import 'einvoice_mandates.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
@@ -275,9 +275,9 @@ class LegalClauseSnapshot {
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  // #2358 — a national clearance channel the app does not speak yet.
-  if (!(isEuCountry(country) || country == 'GB' || country == 'CH' || country == 'CA') ||
-      nationalChannelRequired.contains(euCountryCode(country))) {
+  // #2358 — a national clearance channel the app does not speak yet, or a
+  // country without an `issuing_gate` row (#2479).
+  if (!ActiveTaxReference.current.issuesFor(country)) {
     return LegalProfile.unsupported;
   }
   return switch ((country, snapshot.buyerCapacity)) {

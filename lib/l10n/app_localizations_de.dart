@@ -18554,7 +18554,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alias von (ISO-Code, leer bei einem Mitgliedstaat)';
 
   @override
+  String get taxRefCashBackstop => 'Spätester Zeitpunkt bei Ist-Versteuerung';
+
+  @override
+  String get taxRefCashOption => 'Option für die Ist-Versteuerung';
+
+  @override
   String get taxRefCategory => 'EN-16931-Kategorie';
+
+  @override
+  String get taxRefCents => 'Betrag (kleinste Einheit)';
 
   @override
   String get taxRefConfirmed => 'Bestätigt';
@@ -18565,6 +18574,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefCountry => 'Land (ISO-Code, oder * für alle)';
+
+  @override
+  String get taxRefCurrency => 'Währung (ISO-Code)';
 
   @override
   String get taxRefDomainCatalogueNote => 'Katalog-Hinweise';
@@ -18579,16 +18591,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefDomainGroupExample => 'Beispiele je Gruppe';
 
   @override
+  String get taxRefDomainIssuingGate => 'Ausstellungs-Freigaben';
+
+  @override
+  String get taxRefDomainMandate => 'E-Rechnungs-Pflichten';
+
+  @override
   String get taxRefDomainRate => 'Steuersätze';
 
   @override
+  String get taxRefDomainTaxPoint => 'Zeitpunkt der Steuerentstehung';
+
+  @override
+  String get taxRefDomainThreshold => 'Schwellenwerte';
+
+  @override
   String get taxRefDomainVatIdPattern => 'USt-IdNr.-Muster';
+
+  @override
+  String get taxRefDuty => 'Pflicht';
+
+  @override
+  String get taxRefEffect =>
+      'Wirkung bei Überschreitung (next_year oder immediate)';
 
   @override
   String get taxRefEmpty => 'Keine Werte.';
 
   @override
   String get taxRefExemptionReason => 'Befreiungsgrund';
+
+  @override
+  String get taxRefFrom => 'Gilt ab (JJJJ-MM-TT)';
 
   @override
   String get taxRefGroup => 'Gruppe';
@@ -18607,6 +18641,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefInvalidNumber => 'Zahl von 0 bis 99,999 eingeben';
 
   @override
+  String get taxRefInvoiceOption => 'Option für das Rechnungsdatum';
+
+  @override
   String get taxRefKey => 'Schlüssel';
 
   @override
@@ -18619,6 +18656,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefMemberEmpty =>
       'Ein Mitgliedstaat hat keine weiteren Felder.';
+
+  @override
+  String get taxRefNationalChannel =>
+      'Nationaler Übermittlungsweg vorgeschrieben';
 
   @override
   String get taxRefNewVersion => 'Neue Version';
@@ -18647,6 +18688,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefRequired => 'Pflichtfeld';
 
   @override
+  String get taxRefRequiresTaxNumber => 'Steuernummer erforderlich';
+
+  @override
   String get taxRefSave => 'Version speichern';
 
   @override
@@ -18654,6 +18698,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefSource => 'Quelle';
+
+  @override
+  String get taxRefStandardRule => 'Gesetzliche Regel';
+
+  @override
+  String get taxRefSupported => 'Ausstellung unterstützt';
 
   @override
   String get taxRefText => 'Text';

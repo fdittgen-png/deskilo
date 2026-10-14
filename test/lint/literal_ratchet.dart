@@ -39,15 +39,23 @@ List<String> codeLines(File file, {String comment = '//'}) => [
         if (line.trim().isNotEmpty && !line.trimLeft().startsWith(comment)) line,
     ];
 
-/// Matches of each kind per file (only files with at least one).
+/// The text an anchored patch QUOTES in order to remove it: the `$old$ ... $old$`
+/// blocks of a migration (#2479). A literal there is the thing being deleted,
+/// not one being added, so it is not counted; the `$new$` side is.
+final RegExp anchoredOldText = RegExp(r'\$old\$.*?\$old\$', dotAll: true);
+
+/// Matches of each kind per file (only files with at least one). [skip] cuts
+/// text out of a file before counting.
 Map<String, Map<String, int>> countLiterals(
   Iterable<File> files,
   Iterable<LiteralKind> kinds, {
   String comment = '//',
+  RegExp? skip,
 }) {
   final byKind = {for (final k in kinds) k.name: <String, int>{}};
   for (final file in files) {
-    final text = codeLines(file, comment: comment).join('\n');
+    var text = codeLines(file, comment: comment).join('\n');
+    if (skip != null) text = text.replaceAll(skip, '');
     for (final k in kinds) {
       final n = k.pattern.allMatches(text).length;
       if (n > 0) byKind[k.name]![file.path] = n;

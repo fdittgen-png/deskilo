@@ -79,4 +79,23 @@ extension TaxReferenceQueries on TaxReferenceSet {
     if (row == null || row.country != prefix.trim().toUpperCase()) return null;
     return (row.value as VatIdPatternValue).pattern;
   }
+
+  /// The issuing terms of a seller in [country] (an alias such as `EL`
+  /// resolved); null where the data holds no row, and then the app refuses.
+  IssuingGateValue? gateOf(String country, {String? asOf}) {
+    final code = euCode(country, asOf: asOf);
+    final row = resolved(asOf).lookup(TaxDomain.issuingGate, code, 'gate');
+    return row == null || row.country != code ? null : row.value as IssuingGateValue;
+  }
+
+  /// Whether the app issues for a seller in [country].
+  bool issuesFor(String country, {String? asOf}) =>
+      gateOf(country, asOf: asOf)?.issues ?? false;
+
+  /// The countries whose law routes every invoice through a national channel
+  /// the app does not speak yet.
+  Set<String> nationalChannelCountries({String? asOf}) => {
+        for (final row in resolved(asOf).where(TaxDomain.issuingGate))
+          if ((row.value as IssuingGateValue).nationalChannelRequired) row.country,
+      };
 }

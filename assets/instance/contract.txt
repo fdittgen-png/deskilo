@@ -1473,6 +1473,7 @@ routine public.is_platform_owner() -> boolean | function | definer | stable | ex
 routine public.is_this_installation(p_installation_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4473eb2d259f
 routine public.issue_member_badge(p_workspace_id uuid, p_member_id uuid, p_label text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e4540f0e7a1d
 routine public.issue_my_badge(p_workspace_id uuid, p_label text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:63032df30762
+routine public.issuing_gate_of(p_country text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3f66c6bb9542
 routine public.issuing_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:817af7b50436
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6574246b0cba
 routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8c5d5fe02470
@@ -1951,7 +1952,7 @@ routine public.system_column_names() -> text[] | function | invoker | immutable 
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
 routine public.tax_reference(p_domain text, p_country text, p_on date) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:7a175f70fb39
 routine public.tax_reference_history(p_domain text, p_country text, p_key text) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:6d2fb6df5d0a
-routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:5a7784540605
+routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:004afa60b338
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
@@ -2003,7 +2004,7 @@ routine public.vat_return_summary(p_workspace_id uuid, p_start date, p_end date)
 routine public.vat_split_net(p_gross bigint, p_percent numeric) -> bigint | function | invoker | immutable | exec:authenticated,service_role | body:9614bff5ba9f
 routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c
 routine public.vat_tax_point_basis(p_country text, p_option text) -> TABLE(rule text, backstop text) | function | invoker | immutable | exec:authenticated,service_role | body:69909a2a7c2b
-routine public.vat_tax_point_policy(p_country text) -> TABLE(standard text, invoice_option boolean, cash_option boolean, cash_backstop text) | function | invoker | immutable | exec:authenticated,service_role | body:9d2a74e93df1
+routine public.vat_tax_point_policy(p_country text) -> TABLE(standard text, invoice_option boolean, cash_option boolean, cash_backstop text) | function | definer | stable | exec:authenticated,service_role | body:27d45d7d186e
 routine public.vat_zero_category(p_workspace_id uuid, p_regime text, p_on date) -> text | function | definer | stable | exec:service_role | body:11653c3f2162
 routine public.vat_zero_exemption_reason(p_workspace_id uuid, p_on date) -> text | function | definer | stable | exec:service_role | body:8761ea42ca18
 routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:65e617ac44a2

@@ -47,9 +47,9 @@ final _kinds = [
 /// The ceilings: today's counts. They only go down.
 const _ceilings = <String, int>{
   'percent values': 52,
-  'country-keyed branches': 37,
+  'country-keyed branches': 30,
   'country-keyed map entries': 11,
-  'country lists': 3,
+  'country lists': 2,
 };
 
 final _sqlKinds = [
@@ -84,7 +84,7 @@ void main() {
       final n = int.tryParse(f.uri.pathSegments.last.split('_').first) ?? 0;
       return n >= _firstCountedMigration;
     });
-    final sql = countLiterals(files, _sqlKinds, comment: '--');
+    final sql = countLiterals(files, _sqlKinds, comment: '--', skip: anchoredOldText);
     for (final kind in _sqlKinds) {
       expect(total(sql[kind.name]!), 0,
           reason: '$_rule: "${kind.name}" in a migration after the store: '

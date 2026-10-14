@@ -155,5 +155,69 @@
   "taxRefLoadFailed": "Die Referenzdaten konnten nicht geladen werden.",
   "@taxRefLoadFailed": {
     "description": "#2477 tax reference: error text when the list cannot load."
+  },
+  "taxRefDomainThreshold": "Schwellenwerte",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
+  },
+  "taxRefDomainTaxPoint": "Zeitpunkt der Steuerentstehung",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainMandate": "E-Rechnungs-Pflichten",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
+  "taxRefDomainIssuingGate": "Ausstellungs-Freigaben",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefCents": "Betrag (kleinste Einheit)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefEffect": "Wirkung bei Überschreitung (next_year oder immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
+  },
+  "taxRefCurrency": "Währung (ISO-Code)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefStandardRule": "Gesetzliche Regel",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefInvoiceOption": "Option für das Rechnungsdatum",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
+  },
+  "taxRefCashOption": "Option für die Ist-Versteuerung",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
+  "taxRefCashBackstop": "Spätester Zeitpunkt bei Ist-Versteuerung",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefDuty": "Pflicht",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefFrom": "Gilt ab (JJJJ-MM-TT)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
+  },
+  "taxRefSupported": "Ausstellung unterstützt",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefRequiresTaxNumber": "Steuernummer erforderlich",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
+  "taxRefNationalChannel": "Nationaler Übermittlungsweg vorgeschrieben",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
   }
 }

@@ -16,6 +16,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/vat/tax_reference.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
+import '../../domain/einvoice_mandates.dart';
 import '../../domain/vat_rate.dart';
 
 /// A one-line reading of a value, for lists.
@@ -26,6 +27,11 @@ String taxValueSummary(TaxValue v) => switch (v) {
       VatIdPatternValue() => v.pattern,
       CatalogueNoteValue() => v.text,
       GroupExampleValue() => '${v.group}: ${v.text}',
+      ThresholdValue() => '${v.cents} ${v.currency} (${v.effect})',
+      TaxPointValue() => v.standard,
+      MandateValue() => '${v.duty}: ${v.from}',
+      IssuingGateValue() =>
+        v.issues ? v.currency : '-',
     };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -35,6 +41,10 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
       TaxDomain.vatIdPattern => context.l10n.taxRefDomainVatIdPattern,
       TaxDomain.catalogueNote => context.l10n.taxRefDomainCatalogueNote,
       TaxDomain.groupExample => context.l10n.taxRefDomainGroupExample,
+      TaxDomain.threshold => context.l10n.taxRefDomainThreshold,
+      TaxDomain.taxPoint => context.l10n.taxRefDomainTaxPoint,
+      TaxDomain.mandate => context.l10n.taxRefDomainMandate,
+      TaxDomain.issuingGate => context.l10n.taxRefDomainIssuingGate,
     };
 
 /// The state of one version form: its text fields and its three choices.
@@ -66,6 +76,19 @@ class _VersionForm {
           'pattern': from?.value is VatIdPatternValue
               ? (from!.value as VatIdPatternValue).pattern
               : '',
+          'cents': switch (from?.value) {
+            ThresholdValue(:final cents) => '$cents',
+            _ => '',
+          },
+          'currency': switch (from?.value) {
+            ThresholdValue(:final currency) => currency,
+            IssuingGateValue(:final currency) => currency,
+            _ => '',
+          },
+          'from': switch (from?.value) {
+            MandateValue(:final from) => from,
+            _ => '',
+          },
           'alias_of': from?.value is EuMemberValue
               ? (from!.value as EuMemberValue).aliasOf
               : '',
@@ -81,6 +104,8 @@ class _VersionForm {
           _ => VatGroup.standard.wire,
         },
         category = from?.value is RateValue ? (from!.value as RateValue).category : 'S',
+        choice = _choicesOf(from?.value),
+        flag = _flagsOf(from?.value),
         confirmed = from?.confirmed ?? false;
 
   final TaxDomain domain;
@@ -89,6 +114,27 @@ class _VersionForm {
   String group;
   String category;
   bool confirmed;
+
+  /// The closed-list choices (threshold effect, tax point rule, backstop,
+  /// mandate duty) and the yes/no switches of the typed forms.
+  final Map<String, String> choice;
+  final Map<String, bool> flag;
+
+  static Map<String, String> _choicesOf(TaxValue? v) => {
+        'effect': v is ThresholdValue ? v.effect : 'next_year',
+        'standard': v is TaxPointValue ? v.standard : 'invoice',
+        'cash_backstop': v is TaxPointValue ? v.cashBackstop : 'none',
+        'duty': v is MandateValue ? v.duty : MandateDuty.receiveAll.wire,
+      };
+
+  static Map<String, bool> _flagsOf(TaxValue? v) => {
+        'invoice_option': v is TaxPointValue && v.invoiceOption,
+        'cash_option': v is! TaxPointValue || v.cashOption,
+        'supported': v is IssuingGateValue && v.supported,
+        'requires_tax_number': v is IssuingGateValue && v.requiresTaxNumber,
+        'national_channel_required':
+            v is IssuingGateValue && v.nationalChannelRequired,
+      };
 
   double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
 
@@ -100,6 +146,25 @@ class _VersionForm {
             category: category,
             exemptionReason: fields.text('reason'),
             position: int.tryParse(fields.text('position')) ?? 0,
+          ),
+        TaxDomain.threshold => ThresholdValue(
+            cents: int.tryParse(fields.text('cents')) ?? 0,
+            effect: choice['effect']!,
+            currency: fields.text('currency').toUpperCase(),
+          ),
+        TaxDomain.taxPoint => TaxPointValue(
+            standard: choice['standard']!,
+            invoiceOption: flag['invoice_option']!,
+            cashOption: flag['cash_option']!,
+            cashBackstop: choice['cash_backstop']!,
+          ),
+        TaxDomain.mandate =>
+          MandateValue(duty: choice['duty']!, from: fields.text('from')),
+        TaxDomain.issuingGate => IssuingGateValue(
+            supported: flag['supported']!,
+            requiresTaxNumber: flag['requires_tax_number']!,
+            nationalChannelRequired: flag['national_channel_required']!,
+            currency: fields.text('currency').toUpperCase(),
           ),
         TaxDomain.euMember => EuMemberValue(aliasOf: fields.text('alias_of')),
         TaxDomain.mention => ExemptionTextValue(
@@ -148,6 +213,14 @@ class _VersionForm {
       if (domain == TaxDomain.vatIdPattern) 'pattern': ?need('pattern'),
       if (domain == TaxDomain.catalogueNote || domain == TaxDomain.groupExample)
         'note': ?need('note'),
+      if (domain == TaxDomain.threshold) ...{
+        if ((int.tryParse(fields.text('cents')) ?? 0) <= 0)
+          'cents': l10n.taxRefInvalidNumber,
+        if (fields.text('currency').length != 3) 'currency': l10n.taxRefRequired,
+      },
+      if (domain == TaxDomain.mandate &&
+          !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
+        'from': l10n.taxRefInvalidDate,
     };
   }
 
@@ -177,7 +250,45 @@ class _VersionForm {
         ),
       );
 
-  List<Widget> _domainFields(AppLocalizations l10n) => switch (domain) {
+  Widget _switch(String k, String label, VoidCallback refresh) => SwitchListTile(
+        key: ValueKey('tax-ref-$k'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(label),
+        value: flag[k]!,
+        onChanged: (x) {
+          flag[k] = x;
+          refresh();
+        },
+      );
+
+  Widget _pick(String k, String label, Iterable<String> items) =>
+      _choice(k, label, choice[k]!, items, (x) => choice[k] = x);
+
+  List<Widget> _domainFields(AppLocalizations l10n, VoidCallback refresh) =>
+      switch (domain) {
+        TaxDomain.threshold => [
+            _text('cents', l10n.taxRefCents, type: TextInputType.number),
+            _pick('effect', l10n.taxRefEffect, const ['next_year', 'immediate']),
+            _text('currency', l10n.taxRefCurrency),
+          ],
+        TaxDomain.taxPoint => [
+            _pick('standard', l10n.taxRefStandardRule,
+                const ['invoice', 'receipt', 'service_period', 'earlier_of']),
+            _switch('invoice_option', l10n.taxRefInvoiceOption, refresh),
+            _switch('cash_option', l10n.taxRefCashOption, refresh),
+            _pick('cash_backstop', l10n.taxRefCashBackstop,
+                const ['none', 'end_of_following_year', 'one_year_after_issue']),
+          ],
+        TaxDomain.mandate => [
+            _pick('duty', l10n.taxRefDuty, MandateDuty.values.map((d) => d.wire)),
+            _text('from', l10n.taxRefFrom),
+          ],
+        TaxDomain.issuingGate => [
+            _switch('supported', l10n.taxRefSupported, refresh),
+            _switch('requires_tax_number', l10n.taxRefRequiresTaxNumber, refresh),
+            _switch('national_channel_required', l10n.taxRefNationalChannel, refresh),
+            _text('currency', l10n.taxRefCurrency),
+          ],
         TaxDomain.rate => [
             _text('label', l10n.taxRefLabel),
             _text('percent', l10n.taxRefPercent, type: TextInputType.number),
@@ -209,7 +320,7 @@ class _VersionForm {
   List<Widget> build(AppLocalizations l10n, VoidCallback refresh) => [
         _text('country', l10n.taxRefCountry, enabled: from == null),
         _text('key', l10n.taxRefKey, enabled: from == null),
-        ..._domainFields(l10n),
+        ..._domainFields(l10n, refresh),
         _text('valid_from', l10n.taxRefValidFrom),
         _text('source', l10n.taxRefSource),
         SwitchListTile(
