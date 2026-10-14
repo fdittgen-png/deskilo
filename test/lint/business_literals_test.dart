@@ -55,7 +55,7 @@ const _allowed = <String, String>{};
 /// The currency fallback: `'EUR'` written in lib/ (S5 moves the fallback to
 /// the workspace country's currency). Counted over lib/, minus generated
 /// files, l10n output and the demo dataset (fixtures, not defaults).
-const _eurCeiling = 64; // measured 2026-10-14 (#2479: the threshold rows carry their currency)
+const _eurCeiling = 63; // measured 2026-10-14 (#2479: the threshold rows carry their currency)
 
 int _count(String file, String pattern) {
   final f = File(file);

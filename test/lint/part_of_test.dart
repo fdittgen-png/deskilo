@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// `part of` files under lib/ (2026-10-13).
-const int _partOfFiles = 85;
+const int _partOfFiles = 82;
 
 void main() {
   test('the number of `part of` files under lib/ only falls (#2491)', () {
