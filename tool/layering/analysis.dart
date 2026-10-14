@@ -166,3 +166,130 @@ String libraryPathOf(File file) {
   }
   return out.join('/');
 }
+
+// ---- #2495 — the whole feature graph, not only its mutual pairs --------
+
+/// Strongly connected components of size > 1 over the directed feature
+/// graph given as `a -> b` keys (Tarjan), each sorted, the list sorted by
+/// its first member. A component is a set of features every one of which
+/// can reach every other: `money -> members -> workspace -> money` is one
+/// even though no two of them import each other.
+List<List<String>> stronglyConnected(Iterable<String> edges) {
+  final graph = <String, Set<String>>{};
+  for (final e in edges) {
+    final parts = e.split(' -> ');
+    graph.putIfAbsent(parts[0], () => {}).add(parts[1]);
+    graph.putIfAbsent(parts[1], () => {});
+  }
+  var counter = 0;
+  final index = <String, int>{}, low = <String, int>{};
+  final onStack = <String>{}, stack = <String>[];
+  final out = <List<String>>[];
+  void visit(String v) {
+    index[v] = low[v] = counter++;
+    stack.add(v);
+    onStack.add(v);
+    for (final w in (graph[v]!.toList()..sort())) {
+      if (!index.containsKey(w)) {
+        visit(w);
+        low[v] = low[v]! < low[w]! ? low[v]! : low[w]!;
+      } else if (onStack.contains(w)) {
+        low[v] = low[v]! < index[w]! ? low[v]! : index[w]!;
+      }
+    }
+    if (low[v] == index[v]) {
+      final component = <String>[];
+      String w;
+      do {
+        w = stack.removeLast();
+        onStack.remove(w);
+        component.add(w);
+      } while (w != v);
+      if (component.length > 1) out.add(component..sort());
+    }
+  }
+
+  for (final v in (graph.keys.toList()..sort())) {
+    if (!index.containsKey(v)) visit(v);
+  }
+  return out..sort((a, b) => a.first.compareTo(b.first));
+}
+
+/// One shortest cycle through [members] over [edges], as
+/// `a -> b -> c -> a`; ties go to the alphabetically first start.
+String shortestCycle(Iterable<String> members, Iterable<String> edges) {
+  final inside = members.toSet();
+  final next = <String, List<String>>{};
+  for (final e in edges) {
+    final p = e.split(' -> ');
+    if (inside.contains(p[0]) && inside.contains(p[1])) {
+      (next[p[0]] ??= []).add(p[1]);
+    }
+  }
+  List<String>? best;
+  for (final start in inside.toList()..sort()) {
+    final prev = <String, String>{};
+    final queue = [start];
+    var found = false;
+    for (var i = 0; i < queue.length && !found; i++) {
+      for (final w in (next[queue[i]] ?? <String>[])..sort()) {
+        if (w == start) {
+          final path = [queue[i]];
+          while (path.first != start) {
+            path.insert(0, prev[path.first]!);
+          }
+          if (best == null || path.length < best.length) best = path;
+          found = true;
+          break;
+        }
+        if (!prev.containsKey(w) && w != start) {
+          prev[w] = queue[i];
+          queue.add(w);
+        }
+      }
+    }
+  }
+  if (best == null) return '';
+  return [...best, best.first].join(' -> ');
+}
+
+/// Imports from `lib/core` (outside `core/demo`, which mirrors the
+/// features by design) into a feature, counted per `core/<area>`.
+Map<String, int> coreToFeatureImports(Iterable<File> files) {
+  final counts = <String, int>{};
+  for (final file in files) {
+    final parts = file.path.split('/');
+    if (parts.length < 4 || parts[0] != 'lib' || parts[1] != 'core') continue;
+    if (parts[2] == 'demo') continue;
+    for (final m in importRe.allMatches(file.readAsStringSync())) {
+      final imp = m.group(1)!;
+      final resolved = imp.startsWith('package:deskilo/')
+          ? imp.replaceFirst('package:deskilo/', 'lib/')
+          : resolveRelative(file.path.substring(0, file.path.lastIndexOf('/')), imp);
+      if (resolved != null && featureOf(resolved) != null) {
+        counts.update('core/${parts[2]}', (n) => n + 1, ifAbsent: () => 1);
+      }
+    }
+  }
+  return counts;
+}
+
+/// The `a -> b` pairs of [counts] that import UPWARD in [layers] (an
+/// ordered list, lowest first; a feature in no layer is ignored), with
+/// their import counts.
+Map<String, int> layerViolations(
+  Map<String, int> counts,
+  List<List<String>> layers,
+) {
+  final rank = <String, int>{
+    for (var i = 0; i < layers.length; i++)
+      for (final f in layers[i]) f: i,
+  };
+  return {
+    for (final e in counts.entries)
+      if (rank[e.key.split(' -> ')[0]] != null &&
+          rank[e.key.split(' -> ')[1]] != null &&
+          rank[e.key.split(' -> ')[0]]! < rank[e.key.split(' -> ')[1]]!)
+        e.key: e.value,
+  };
+}
