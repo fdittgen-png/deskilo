@@ -32,12 +32,10 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 109 | 56 | 489 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 101 | 56 | 463 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
-| 84 | 55 | 430 | 2 | `lib/app/shell/shell_screen.dart#ShellScreen.build` |
 | 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 82 | 21 | 143 | 7 | `lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml` |
 | 76 | 57 | 258 | 1 | `lib/features/reservations/presentation/screens/reserve_screen_part2.dart#_ReserveScreenStatePart2._buildImpl` |
 | 75 | 60 | 311 | 1 | `lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build` |
-| 73 | 66 | 262 | 2 | `lib/app/shell/shell_drawer.dart#ShellDrawer.build` |
 | 73 | 29 | 313 | 1 | `lib/features/money/presentation/screens/vat_declarations_screen.dart#_VatDeclarationsScreenState.build` |
 | 71 | 47 | 215 | 2 | `lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build` |
 | 69 | 46 | 234 | 7 | `lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions` |
@@ -50,4 +48,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 66 | 64 | 382 | 2 | `lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build` |
 | 65 | 36 | 229 | 13 | `lib/features/workspace/domain/workspace_excel.dart#buildWorkspaceExcelExport` |
 | 65 | 33 | 154 | 1 | `lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build` |
+| 65 | 39 | 207 | 1 | `lib/features/workspace/presentation/widgets/template_gallery.dart#_TemplateGalleryState.build` |
+| 64 | 45 | 229 | 10 | `lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent` |
 

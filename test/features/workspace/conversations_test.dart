@@ -309,8 +309,9 @@ void main() {
       // Événements face, never a second surface: it navigates, it does
       // not push. Its count is the pending confirmations; the Messages
       // badge is the unread conversations. Two numbers, two meanings.
-      final shell =
-          File('lib/app/shell/shell_screen.dart').readAsStringSync();
+      // #2493 — the bell is in the app bar's actions, the counts in the screen.
+      final shell = File('lib/app/shell/shell_screen.dart').readAsStringSync() +
+          File('lib/app/shell/shell_app_bar.dart').readAsStringSync();
       expect(shell, isNot(contains("push('/events')")),
           reason: 'a pushed feed would be a second home for the alerts');
       expect(shell, contains("go('/events')"));

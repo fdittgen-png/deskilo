@@ -195,7 +195,6 @@ const Map<String, int> _baseline = {
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
   // 747→757 (2026-09-16): #1277 S3 — /settings/wording: the import and one GoRoute with its
   // feature redirect. The router grows by a route per destination.
-  'lib/app/router.dart': 775, // 959→775 (#2493): the global redirect moved to route_redirect.dart and the access declarations to RouteAccess; route lists follow.
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 637, // 2026-10-11 #2389 635→637: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-11 #2384 632→635: @visibleForTesting on the symbols its tests read; #2003 configuration and BI kind registrations.
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
@@ -235,7 +234,6 @@ const Map<String, int> _baseline = {
   // 2026-09-28 #1791: one import for the separately implemented account requests entry.
   'lib/features/workspace/presentation/screens/onboarding_screen.dart': 637, // 2026-10-09 #2313 633→637: every control keyed for the task recorder; 2026-09-28 #1652 602→633: Join is selected by an invitation errand, a link the app was opened with, or an invitation kept for this server; the join journey itself moved to widgets/invitation_join_panel.dart.
 
-  'lib/app/shell/shell_screen.dart': 507, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/core/backend/backend_settings.dart': 572, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
