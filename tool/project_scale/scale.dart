@@ -89,10 +89,20 @@ List<Measure> measures({String root = '.'}) {
         ..sort((a, b) => a.path.compareTo(b.path)))
       : <File>[];
 
-  final router = File('$root/lib/app/router.dart');
-  final routes = router.existsSync()
-      ? RegExp(r'\bGoRoute\(').allMatches(router.readAsStringSync()).length
-      : 0;
+  // #2493 — the routes live in the feature route lists, composed by
+  // router.dart.
+  final routeDirectory = Directory('$root/lib/app/routes');
+  final routeFiles = [
+    File('$root/lib/app/router.dart'),
+    File('$root/lib/app/shell/shell_routes.dart'),
+    if (routeDirectory.existsSync())
+      ...routeDirectory.listSync().whereType<File>(),
+  ].where((f) => f.existsSync() && f.path.endsWith('.dart'));
+  final routes = routeFiles.fold<int>(
+    0,
+    (sum, f) =>
+        sum + RegExp(r'\bGoRoute\(').allMatches(f.readAsStringSync()).length,
+  );
 
   final featureEnum = File(
       '$root/lib/features/workspace/domain/workspace_feature.dart');
@@ -115,7 +125,7 @@ List<Measure> measures({String root = '.'}) {
     Measure('ARB translation keys per locale', keys,
         'lib/l10n/app_en.arb, ignoring the @ metadata'),
     Measure('ARB fragment groups', groups, 'lib/l10n/_fragments/*_en.arb'),
-    Measure('go_router routes', routes, 'GoRoute( in lib/app/router.dart'),
+    Measure('go_router routes', routes, 'GoRoute( in lib/app/router.dart and lib/app/routes'),
     Measure('Toggleable per-workspace features', features,
         'the WorkspaceFeature enum'),
     Measure('GitHub Actions workflows', _countIn('$root/.github/workflows', '.yml'),
