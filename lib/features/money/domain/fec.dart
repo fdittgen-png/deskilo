@@ -8,10 +8,10 @@ import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
 import 'invoice.dart';
+import 'invoice_line_cash.dart';
 import 'ledger_entry.dart';
 import 'vat_regime.dart';
 import 'vat_tax_point.dart';
-
 export 'fec_accounts.dart';
 
 /// Journal codes and labels. Two journals are enough for an invoicing-only
@@ -375,7 +375,7 @@ String buildFecFile({
 
     // The credits the invoice netted: money that had already arrived.
     var creditOrdinal = 0;
-    for (final line in invoice.lines.where((l) => l.amountCents < 0)) {
+    for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
       // The invoice's lines are frozen, so the ordinal is stable.
       creditOrdinal++;
       final cashEntry = '$_bankJournal-${invoice.number}-C$creditOrdinal';

@@ -8,6 +8,7 @@ import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
+import 'invoice_line_cash.dart';
 import 'ledger_entry.dart';
 import 'vat_tax_point.dart';
 
@@ -307,7 +308,7 @@ String buildDatevFile({
     // cleared, on the invoice's own date. The FEC's BQ journal books
     // exactly these.
     for (final line in invoice.lines) {
-      if (line.amountCents >= 0) continue;
+      if (!line.isMoneyIn) continue;
       book(
         cents: -line.amountCents,
         debit: accounts.bank,
