@@ -7,7 +7,7 @@
 -- country with no row is refused. The tax point policy follows its rows, and
 -- the value shapes refuse what is not one. Rolled back.
 begin;
-select plan(17);
+select plan(15);
 
 create or replace function pg_temp.seller(
   tag text, currency text, vat_id text, legal_id text, pct numeric, amount int,
