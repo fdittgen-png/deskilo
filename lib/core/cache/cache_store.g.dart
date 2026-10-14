@@ -48,4 +48,4 @@ final class CacheStoreProvider
   }
 }
 
-String _$cacheStoreHash() => r'f29565e15de920f7663e558c78967f671dfef818';
+String _$cacheStoreHash() => r'4ce09d262339545e9778884580ff40067b0decfe';
