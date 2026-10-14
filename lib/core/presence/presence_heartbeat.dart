@@ -25,7 +25,7 @@ Timer _defaultTimerFactory(Duration interval, void Function() onTick) =>
 ///
 /// Pure `dart:async` + injected callbacks: no Supabase, no Riverpod, no
 /// platform channels (and per the epic's hard rule, no third-party
-/// presence service). Wiring lives in presence_providers.dart.
+/// presence service). Wiring lives in features/profile/providers/presence_providers.dart.
 class PresenceHeartbeat {
   PresenceHeartbeat({
     required this._touch,
