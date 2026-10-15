@@ -9,6 +9,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const _sinceMigration = 183;
 
@@ -57,12 +58,7 @@ void main() {
 
   test('every table created after 0183 calls ensure_system_columns in the '
       'same migration', () {
-    final files = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations');
     final createTable = RegExp(
         r'create table (?:if not exists )?public\.([a-z_]+)',
         caseSensitive: false);
