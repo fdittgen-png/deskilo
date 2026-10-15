@@ -96,9 +96,12 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.guestParticipation,
 };
 
-/// Every other feature ships ON.
-final Set<WorkspaceFeature> registryDefaults =
-    WorkspaceFeature.values.toSet()..removeAll(defaultOffFeatures);
+/// #2566 — what a key nobody has chosen resolves to: a core feature that
+/// ships ON. A platform feature is asked for, never assumed.
+final Set<WorkspaceFeature> registryDefaults = {
+  for (final e in featureManifest.values)
+    if (e.tier == FeatureTier.core && e.defaultOn) e.feature,
+};
 
 void main() {
   _existingWorkspacesUnmoved();
@@ -134,7 +137,9 @@ void main() {
 
   test('a stored true override enables the default-OFF features '
       '(#161, #170, 0043, 0050, 0060, #662)', () {
-    final enabled = resolveEnabledFeatures(const {
+    final enabled = resolveEnabledFeatures({
+      // #2566 — the platform features that ship on are stated, not inherited.
+      ...platformFeaturesOnByDefault,
       'adminSeatBlocking': true,
       'accessorySupplements': true,
       'onlinePayments': true,
@@ -203,7 +208,8 @@ void main() {
       'eventsTab': false,
     });
 
-    expect(enabled.contains(WorkspaceFeature.pdfExport), isTrue);
+    expect(enabled.contains(WorkspaceFeature.pdfExport),
+        registryDefaults.contains(WorkspaceFeature.pdfExport));
     expect(enabled.contains(WorkspaceFeature.eventsTab), isFalse);
     expect(
       enabled,
@@ -215,8 +221,9 @@ void main() {
     test('a child is EFFECTIVE only while its parent is on', () {
       final raw = resolveEnabledFeatures(const {
         'kioskMode': false,
+        'nfcBadges': true,
       });
-      // nfcBadges stays in the RAW set (its own flag defaults on)…
+      // nfcBadges stays in the RAW set (its own flag is stored on)…
       expect(raw.contains(WorkspaceFeature.nfcBadges), isTrue);
       // …but drops from the EFFECTIVE set with its parent.
       final effective = effectiveFeatures(raw);
@@ -356,8 +363,10 @@ void main() {
   });
 }
 
-// #1063 — the constraint that makes the tier split safe: it changes NO
-// existing workspace.
+// #1063 — the tier split, and what it does to a workspace that already
+// exists. #2566 supersedes the "no existing workspace moves" half: a key
+// absent from the stored flags now resolves like a new workspace stores
+// it (core on, platform off); a STORED choice is never touched.
 //
 // The whole design rests on WHERE the tier is applied. It decides what
 // `defaultFeatureFlagsForNewWorkspace` writes at CREATION, and nothing
@@ -371,15 +380,16 @@ void main() {
 // data-loss bug wearing a feature flag, and these are the tests that
 // would have caught it.
 void _existingWorkspacesUnmoved() {
-  test('an OLD workspace with no stored flags resolves to the registry '
-      'defaults, not to Core', () {
+  test('an OLD workspace with no stored flags resolves like a new one (#2566)',
+      () {
     final resolved = resolveEnabledFeatures(const {});
-    expect(resolved, registryDefaults,
-        reason: 'this is the pre-#1063 answer and it must not have moved');
-    // Concretely: a platform feature that shipped ON is still ON for a
-    // workspace that never chose.
+    expect(resolved, registryDefaults);
+    expect(resolved, resolveEnabledFeatures(defaultFeatureFlagsForNewWorkspace()),
+        reason: 'a key nobody chose is what a new workspace would store');
+    // A core feature stays on, a platform one that ships "on" is not
+    // switched on behind the owner's back.
     expect(resolved.contains(WorkspaceFeature.invoicing), isTrue);
-    expect(resolved.contains(WorkspaceFeature.reportDesigner), isTrue);
+    expect(resolved.contains(WorkspaceFeature.reportDesigner), isFalse);
   });
 
   test('an OLD workspace that stored a platform feature keeps it', () {

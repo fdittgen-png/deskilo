@@ -6,7 +6,14 @@
 // or data the demo does not invent (MCP access, several sites, a
 // development twin, guest visits, public listings, the capacity KPI,
 // the accounting book).
-const Map<String, dynamic> demoFeatureFlags = {
+//
+// #2566 — a key absent from the stored map is off for a platform feature,
+// so the platform features the demo has always shown are stored here
+// explicitly (`platformFeaturesOnByDefault`), then the literal below.
+import '../../../features/workspace/domain/workspace_feature.dart';
+
+final Map<String, dynamic> demoFeatureFlags = {
+  ...platformFeaturesOnByDefault,
   'accessorySupplements': true,
   'onlinePayments': true,
   'adminInvoicing': true,

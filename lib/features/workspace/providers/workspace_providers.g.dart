@@ -1260,7 +1260,7 @@ final class EnabledFeaturesProvider
   }
 }
 
-String _$enabledFeaturesHash() => r'838e424e27423aebcbb620c0d2d369b6347f995c';
+String _$enabledFeaturesHash() => r'3cdae7c540a790a1dcb964d0fa339848a21c9579';
 
 /// Sync convenience over [enabledFeatures] for build methods and router
 /// redirects. While the workspace is still loading it falls back to ALL
@@ -1322,7 +1322,7 @@ final class EnabledFeaturesSyncProvider
 }
 
 String _$enabledFeaturesSyncHash() =>
-    r'c52b3f67c83044e46408ec70a8fcdfda35485b80';
+    r'1adc324ae1a32af7ba00b774dbbf1aa22b023e7c';
 
 /// #1289 — the active workspace's brand seed (opaque ARGB), or null for
 /// the product's own palette: null while the flag is off, while nothing
