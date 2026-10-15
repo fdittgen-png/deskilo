@@ -7,6 +7,9 @@
 // stay pure Dart: the moment it imports Flutter it needs the app's
 // toolchain and the whole point is lost. Both are checked here, the
 // second by reading the source rather than trusting a comment.
+@Timeout(Duration(minutes: 3))
+library;
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,10 +18,29 @@ import 'package:flutter_test/flutter_test.dart';
 
 const _sample = 'tool/report/samples/invoice-fr.xml';
 
+/// `tool/report.dart` compiled ONCE per file (#2601): every `dart run`
+/// spawn paid about 9 s of compile; running the kernel keeps the process
+/// boundary — exit code, stdout, stderr, a fresh VM per case — and drops
+/// the repeated compile. The sources are the same; only the runner differs.
+late final Directory _build;
+late final String _kernel;
+
 Future<ProcessResult> _run(List<String> args) =>
-    Process.run('dart', ['run', 'tool/report.dart', ...args]);
+    Process.run('dart', [_kernel, ...args]);
 
 void main() {
+  setUpAll(() async {
+    _build = Directory.systemTemp.createTempSync('report-cli-kernel');
+    _kernel = '${_build.path}/report.dill';
+    final compiled = await Process.run(
+      'dart',
+      ['compile', 'kernel', 'tool/report.dart', '-o', _kernel],
+    );
+    expect(compiled.exitCode, 0,
+        reason: 'compile failed:\n${compiled.stdout}\n${compiled.stderr}');
+  });
+  tearDownAll(() => _build.deleteSync(recursive: true));
+
   test('the runner imports no Flutter and no generated l10n', () {
     final src = File('tool/report.dart').readAsStringSync();
     expect(src, isNot(contains("package:flutter")),
