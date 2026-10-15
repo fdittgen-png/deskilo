@@ -39,7 +39,8 @@ class VatLineSelector {
   const VatLineSelector({
     this.input = false,
     this.rates,
-    this.otherRatesThan,
+    this.groups,
+    this.excludeGroups,
     this.categories,
     this.correction,
     this.vatSign = 0,
@@ -57,8 +58,13 @@ class VatLineSelector {
   /// Only these rates; null for any.
   final Set<double>? rates;
 
-  /// Every rate but these (FR line 14, DE Kz 35); null for no exclusion.
-  final Set<double>? otherRatesThan;
+  /// #2480 -- only lines whose fiscal group (`VatGroup.wire`) is one of
+  /// these; null for any. Set from a `form_box` row, never written in code.
+  final Set<String>? groups;
+
+  /// Every group but these (FR line 14, DE Kz 35); a line whose rate is in
+  /// none of the country's groups counts as "other". Null for no exclusion.
+  final Set<String>? excludeGroups;
 
   /// Only these categories; null for any.
   final Set<String>? categories;
@@ -69,10 +75,29 @@ class VatLineSelector {
   /// Only lines whose VAT is positive (1) or negative (-1); 0 for both.
   final int vatSign;
 
+  /// This selector, restricted by a `form_box` row.
+  VatLineSelector withGroups({
+    required Set<String> groups,
+    required Set<String> excludeGroups,
+  }) =>
+      VatLineSelector(
+        input: input,
+        rates: rates,
+        groups: groups.isEmpty ? this.groups : groups,
+        excludeGroups: excludeGroups.isEmpty ? this.excludeGroups : excludeGroups,
+        categories: categories,
+        correction: correction,
+        vatSign: vatSign,
+        schemes: schemes,
+      );
+
+  /// Whether [line] is picked; [VatDeclarationLine.group] is the fiscal
+  /// group the line was taxed in ('' when the rate is in none of them).
   bool matches(VatDeclarationLine line) =>
       line.isInput == input &&
       (rates == null || rates!.contains(line.percent)) &&
-      (otherRatesThan == null || !otherRatesThan!.contains(line.percent)) &&
+      (groups == null || groups!.contains(line.group)) &&
+      (excludeGroups == null || !excludeGroups!.contains(line.group)) &&
       (categories == null || categories!.contains(_category(line))) &&
       (correction == null || line.isCorrection == correction) &&
       (vatSign == 0 || line.vatCents.sign == vatSign);
@@ -136,7 +161,13 @@ class VatBoxSpec {
     this.always = false,
     this.clampAtZero = false,
     this.absolute = false,
+    this.formBox,
   });
+
+  /// #2480 -- the key (`<form>/<box code>`) of the `form_box` row that
+  /// supplies this box's label and the groups its line terms select; null
+  /// for a box with no rate selection. The box's arithmetic stays here.
+  final String? formBox;
 
   final String code;
   final String label;
@@ -161,6 +192,34 @@ class VatBoxSpec {
 
   bool get hasBase => base.isNotEmpty;
   bool get hasTax => tax.isNotEmpty;
+
+  /// This box with the wording and the group selection of its `form_box`.
+  VatBoxSpec resolvedBy({
+    required String label,
+    required Set<String> groups,
+    required Set<String> excludeGroups,
+  }) {
+    VatTerm pick(VatTerm t) => t.selector == null
+        ? t
+        : VatTerm.lines(
+            t.selector!.withGroups(groups: groups, excludeGroups: excludeGroups),
+            factor: t.factor,
+          );
+    return VatBoxSpec(
+      code,
+      label,
+      base: [for (final t in base) pick(t)],
+      tax: [for (final t in tax) pick(t)],
+      baseKey: baseKey,
+      taxKey: taxKey,
+      baseRounding: baseRounding,
+      taxRounding: taxRounding,
+      always: always,
+      clampAtZero: clampAtZero,
+      absolute: absolute,
+      formBox: formBox,
+    );
+  }
 }
 
 /// A country's return form, from the year it applies.

@@ -16,6 +16,7 @@
 // directory, one's own account, the shared documents — are listed: a
 // member holds them only through a role, and never by default.
 import 'package:meta/meta.dart';
+import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 
 typedef _P = WorkspacePermission;
@@ -118,3 +119,87 @@ String landingFor(Set<WorkspacePermission> held) {
   }
   return '/settings';
 }
+
+/// What a route's access is asked about: the person and the workspace as
+/// they are now. The router answers it from providers (route_env.dart);
+/// a test answers it from a record.
+abstract interface class AccessContext {
+  /// Whether [feature] is enabled for the active workspace (everything is
+  /// ON while the workspace is still loading, so a deep link is never
+  /// bounced during startup).
+  bool featureEnabled(WorkspaceFeature feature);
+
+  /// Every enabled feature, for the few rules that read the whole set.
+  Set<WorkspaceFeature> get enabledFeatures;
+
+  /// The permissions the person holds in the active workspace.
+  Set<WorkspacePermission> get permissions;
+
+  /// Owner, or a co-owner whose status is active.
+  bool get actsAsOwner;
+
+  /// Owner or administrator with an active membership.
+  bool get canAdminister;
+
+  /// The membership's administrator flag.
+  bool get isAdmin;
+
+  /// Whether the active workspace is one half of a dev/prod pair.
+  bool get hasPairedTwin;
+}
+
+/// Who may open a route, declared beside the route and evaluated by ONE
+/// function ([redirectFor]): every listed feature enabled, the person
+/// holding [permission] (or being [bypass]), and [when] true; otherwise
+/// the route sends the person to [to].
+///
+/// This is NAVIGATION policy, not security: it keeps a person from a
+/// screen their menu would not offer. The backend (RLS and the RPCs) stays
+/// authoritative and asks the same permissions again for everything these
+/// screens write.
+class RouteAccess {
+  const RouteAccess({
+    this.features = const [],
+    this.permission,
+    this.bypass = RoleBypass.none,
+    this.when,
+    this.to = '/messages',
+  });
+
+  /// Every one of these must be enabled.
+  final List<WorkspaceFeature> features;
+
+  /// Held by the person. With no permission and no [bypass] anyone passes.
+  final WorkspacePermission? permission;
+
+  /// A role that opens the route without holding [permission].
+  final RoleBypass bypass;
+
+  /// A further condition no table can state (a twin, a report registry).
+  final bool Function(AccessContext)? when;
+
+  /// Where a refused person goes.
+  final String to;
+
+  /// The redirect for [context]: null to open, [to] to refuse.
+  String? redirectFor(AccessContext context) {
+    final allowed =
+        features.every(context.featureEnabled) &&
+        _personMay(context) &&
+        (when?.call(context) ?? true);
+    return allowed ? null : to;
+  }
+
+  bool _personMay(AccessContext c) {
+    if (permission == null && bypass == RoleBypass.none) return true;
+    return switch (bypass) {
+          RoleBypass.owner => c.actsAsOwner,
+          RoleBypass.administrator => c.canAdminister,
+          RoleBypass.none => false,
+        } ||
+        (permission != null && c.permissions.contains(permission));
+  }
+}
+
+/// A role that passes a [RouteAccess] without the permission.
+enum RoleBypass { none, owner, administrator }

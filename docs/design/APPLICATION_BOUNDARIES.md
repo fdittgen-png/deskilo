@@ -14,7 +14,7 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `plan` | 2 |
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
-| Finance | `money` | 21 |
+| Finance | `money` | 20 |
 | Workspace configuration | `workspace` | 27 |
 | Workspace configuration | `members` | 3 |
 | Workspace configuration | `profile` | 7 |
@@ -86,6 +86,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `profile -> directory`
 - `profile -> mcp`
 - `profile -> members`
+- `profile -> money`
 - `profile -> reservations`
 - `profile -> workspace`
 - `reservations -> calendar`
@@ -128,6 +129,7 @@ Reciprocal:
 - `members <-> reservations`
 - `members <-> workspace`
 - `money <-> plan`
+- `money <-> profile`
 - `money <-> reservations`
 - `money <-> workspace`
 - `plan <-> reservations`
@@ -138,11 +140,16 @@ Reciprocal:
 - `reservations <-> workspace`
 - `task_recorder <-> workspace`
 
+## Strongly connected components (#2495)
+
+Mutual pairs are only the shortest cycles; a component is a set of features that can all reach each other through imports. The architecture is acyclic only when this list is empty.
+
+- `calendar`, `directory`, `events`, `mcp`, `members`, `money`, `plan`, `profile`, `reservations`, `task_recorder`, `workspace` — e.g. `calendar -> money -> calendar`
+
 ## Hand-written files over 600 lines
 
 The budget line of `test/lint/file_length_test.dart`. A file here is not necessarily wrong; it is where a decomposition would pay, and the budgets there say what each one costs today.
 
-- `lib/app/router.dart`
 - `lib/core/demo/data/reservation_repository.dart`
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/calendar/presentation/screens/calendar_screen.dart`
@@ -156,6 +163,7 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/money/presentation/report_defaults.dart`
 - `lib/features/money/presentation/screens/billing_screen.dart`
 - `lib/features/money/presentation/screens/legal_identity_screen.dart`
+- `lib/features/money/providers/money_providers.dart`
 - `lib/features/plan/data/supabase_floor_plan_repository.dart`
 - `lib/features/reservations/presentation/reserve_seat_actions.dart`
 - `lib/features/reservations/presentation/widgets/booking_sheet.dart`

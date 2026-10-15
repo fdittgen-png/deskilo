@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/settings/settings.dart';
 
 /// Mahnwesen (#472): the parameterizable dunning policy of a workspace,
 /// stored in `workspaces.dunning_rules` (migration 0093) — and the pure
@@ -12,25 +14,39 @@ import '../../../core/data/json_reader.dart';
 class DunningRules {
   const DunningRules({
     this.levels = 3,
-    this.firstAfterDays = 14,
+    this.firstAfterDays = SettingDefaults.dunningFirstAfterDays,
     this.betweenDays = 14,
     this.automatic = false,
   });
 
-  factory DunningRules.fromJson(Map<String, dynamic> json) {
+  /// [settings] is the workspace's settings snapshot (#2484): the first
+  /// reminder's delay is a SETTING (`dunning.first_after_days`), so with a
+  /// snapshot it comes from there. The rules keep a mirror of it for the
+  /// configuration transfer (the server keeps the two in step); without a
+  /// snapshot the mirror, then the registry's own default, answer.
+  factory DunningRules.fromJson(Map<String, dynamic> json, {SettingsSet? settings}) {
     final r = JsonReader(json, context: 'dunning_rules');
     int read(String key, int fallback, {int min = 1, int max = 365}) =>
         (r.intOrNull(key) ?? fallback).clamp(min, max);
 
     return DunningRules(
       levels: read(keyLevels, 3, max: 9),
-      firstAfterDays: read(keyFirstAfterDays, 14),
+      firstAfterDays: (settings?.read<int>(settingFirstAfterDays) ??
+              r.intOrNull(keyFirstAfterDays) ??
+              SettingDefaults.dunningFirstAfterDays)
+          .clamp(1, 365),
       betweenDays: read(keyBetweenDays, 14),
       // #1913: automation is an explicit owner choice; a missing key
       // means off, never on.
       automatic: r.boolOr(keyAutomatic, false),
     );
   }
+
+  /// These rules with the first reminder's delay taken from [settings]
+  /// (null: unchanged, the registry's own default stands).
+  DunningRules withSettings(SettingsSet? settings) => settings == null
+      ? this
+      : copyWith(firstAfterDays: settings.read<int>(settingFirstAfterDays).clamp(1, 365));
 
   /// Maximum number of reminder levels (level 1 = the friendly
   /// Zahlungserinnerung; higher levels read firmer).
@@ -49,6 +65,9 @@ class DunningRules {
 
   static const String keyLevels = 'levels';
   static const String keyFirstAfterDays = 'first_after_days';
+
+  /// The registry key of the first reminder's delay (#2484).
+  static const String settingFirstAfterDays = 'dunning.first_after_days';
   static const String keyBetweenDays = 'between_days';
   static const String keyAutomatic = 'automatic';
 

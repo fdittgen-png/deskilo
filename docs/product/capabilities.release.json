@@ -842,6 +842,12 @@
       "capabilities": []
     },
     {
+      "key": "configurableSettings",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "configurationTransfer",
       "maturity": "beta",
       "lifecycle": "active",

@@ -7,6 +7,8 @@
 // is #895). Reviewed against Council Directive 2006/112/EC (art. 226,
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
 import '../../../core/vat/place_of_supply.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_regime.dart';
 
 // #2354 — the EU set and the place-of-supply rule live in core/vat (pure,
@@ -17,54 +19,31 @@ export '../../../core/vat/place_of_supply.dart';
 /// used when the owner left the exemption reason empty (BT-120 must
 /// not be blank on a category E invoice, BR-E-10).
 ///
+/// #2478 — the texts are rows of the tax reference store (`exemption_text`,
+/// a country's own row or the shared `*` one); [asOf] names the day of the
+/// document, so a text changed later never reaches an issued one.
+///
 /// #2356 — an exempt seller using the small-enterprise scheme of ANOTHER
 /// member state (Directive 2020/285, since 2025) prints the identification
-/// number with the `EX` suffix that state gave it, and says which scheme.
+/// number with the `EX` suffix that state gave it, and says which scheme
+/// (the `exempt_ex` text, whose `{vat_id}` is the number).
 String defaultExemptionMention(
   String countryCode,
   VatRegime regime, {
   String vatId = '',
+  String? asOf,
+  TaxReferenceSet? reference,
 }) {
-  final country = countryCode.trim().toUpperCase();
+  final set = reference ?? ActiveTaxReference.current;
   if (regime == VatRegime.exempt && _isExNumber(vatId)) {
-    return 'VAT exempt — small enterprise scheme for a supplier established '
-        'in another member state (art. 284 of Council Directive 2006/112/EC), '
-        'identification number ${vatId.trim()}.';
+    return (set.mentionFor('exempt_ex', countryCode, asOf: asOf) ?? '')
+        .replaceAll('{vat_id}', vatId.trim());
   }
   return switch (regime) {
     VatRegime.vatRegistered => '',
-    VatRegime.exempt => switch (country) {
-        'FR' => 'TVA non applicable, art. 293 B du CGI',
-        // #2356 — the wording since the 2025 reform (§ 34a UStDV): the
-        // small-business turnover is exempt, and the invoice says so.
-        'DE' => 'Steuerbefreiung für Kleinunternehmer, § 19 UStG.',
-        'AT' => 'Umsatzsteuerbefreit gemäß § 6 Abs. 1 Z 27 UStG '
-            '(Kleinunternehmer).',
-        'ES' => 'Operación exenta de IVA (régimen de franquicia, '
-            'art. 163 quinquies Ley 37/1992).',
-        'IT' => "Operazione senza applicazione dell'IVA ai sensi "
-            "dell'art. 1, commi 54-89, L. 190/2014.",
-        'BE' => 'Régime particulier de franchise des petites entreprises '
-            '(art. 56bis CTVA) — TVA non applicable.',
-        'NL' => 'Vrijgesteld van btw (kleineondernemersregeling, '
-            'art. 25 Wet OB).',
-        'LU' => 'Franchise de TVA, art. 57 de la loi TVA.',
-        // #2361 — a small supplier (ETA s. 148, under CAD 30 000 in four
-        // consecutive quarters) neither registers nor charges GST/HST;
-        // Quebec customers are served in French (Charter, Bill 96).
-        'CA' => 'Small supplier — not registered for GST/HST (Excise Tax '
-            'Act, s. 148). / Petit fournisseur — non inscrit à la TPS/TVH.',
-        _ => 'VAT exempt — Council Directive 2006/112/EC (small '
-            'enterprise scheme, art. 282–292).',
-      },
-    VatRegime.notSubject => switch (country) {
-        'FR' => 'TVA non applicable — opération hors champ '
-            '(art. 256 B du CGI).',
-        'DE' => 'Nicht umsatzsteuerbar — kein Unternehmer im Sinne '
-            'des § 2 UStG.',
-        _ => 'Not subject to VAT — outside the scope of Council '
-            'Directive 2006/112/EC.',
-      },
+    VatRegime.exempt => set.mentionFor('exempt', countryCode, asOf: asOf) ?? '',
+    VatRegime.notSubject =>
+      set.mentionFor('not_subject', countryCode, asOf: asOf) ?? '',
   };
 }
 
@@ -80,7 +59,7 @@ bool _isExNumber(String vatId) {
 /// does not know is NOT flagged — the check exists to catch typos in
 /// the countries an e-invoice will actually meet, not to refuse the
 /// world. An empty id is not a VAT id at all and returns false.
-bool looksLikeEuVatId(String vatId) {
+bool looksLikeEuVatId(String vatId, {String? asOf, TaxReferenceSet? reference}) {
   var id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
   // #2356 — the EU small-enterprise scheme's number is the national one
   // with an `EX` suffix (art. 284(3) of the Directive).
@@ -88,7 +67,7 @@ bool looksLikeEuVatId(String vatId) {
   if (id.length < 4) return false;
   final prefix = id.substring(0, 2);
   final body = id.substring(2);
-  final pattern = _vatIdBodies[prefix];
+  final pattern = (reference ?? ActiveTaxReference.current).vatIdBody(prefix, asOf: asOf);
   if (pattern == null) return true;
   return RegExp('^(?:$pattern)\$').hasMatch(body);
 }
@@ -141,59 +120,13 @@ String formatCanadianRegistration(String number) {
   return '${m[1]} ${m[2]}${m[3]}';
 }
 
-/// The identifier body per member state (VIES formats; EL is Greece's
-/// prefix, XI Northern Ireland's).
-const Map<String, String> _vatIdBodies = {
-  'AT': r'U\d{8}',
-  'BE': r'[01]\d{9}',
-  'BG': r'\d{9,10}',
-  'CY': r'\d{8}[A-Z]',
-  'CZ': r'\d{8,10}',
-  'DE': r'\d{9}',
-  'DK': r'\d{8}',
-  'EE': r'\d{9}',
-  'EL': r'\d{9}',
-  'ES': r'[A-Z0-9]\d{7}[A-Z0-9]',
-  'FI': r'\d{8}',
-  // #2359 — HMRC: nine digits, a branch trader's twelve, or GD/HA + 3 digits.
-  'GB': r'\d{9}|\d{12}|GD\d{3}|HA\d{3}',
-  'FR': r'[A-Z0-9]{2}\d{9}',
-  'HR': r'\d{11}',
-  'HU': r'\d{8}',
-  'IE': r'\d{7}[A-Z]{1,2}|\d[A-Z+*]\d{5}[A-Z]',
-  'IT': r'\d{11}',
-  'LT': r'\d{9}|\d{12}',
-  'LU': r'\d{8}',
-  'LV': r'\d{11}',
-  'MT': r'\d{8}',
-  'NL': r'\d{9}B\d{2}',
-  'PL': r'\d{10}',
-  'PT': r'\d{9}',
-  'RO': r'\d{2,10}',
-  'SE': r'\d{12}',
-  'SI': r'\d{8}',
-  'SK': r'\d{10}',
-  'XI': r'\d{9}|\d{12}|GD\d{3}|HA\d{3}',
-  'CH': r'E\d{9}(MWST|TVA|IVA)?',
-};
-
 /// The mention such a document must carry (BT-120), in the seller's
 /// language — the customer reads it as the reason no tax is charged.
-String reverseChargeMention(String sellerCountry) =>
-    switch (sellerCountry.trim().toUpperCase()) {
-      'FR' => 'Autoliquidation — TVA due par le preneur '
-          '(art. 196 de la directive 2006/112/CE).',
-      'DE' || 'AT' => 'Steuerschuldnerschaft des Leistungsempfängers '
-          '(Art. 196 der Richtlinie 2006/112/EG).',
-      'ES' => 'Inversión del sujeto pasivo '
-          '(art. 196 de la Directiva 2006/112/CE).',
-      'IT' => "Inversione contabile — imposta assolta dal committente "
-          "(art. 196 della direttiva 2006/112/CE).",
-      'NL' => 'Btw verlegd (art. 196 richtlijn 2006/112/EG).',
-      'PT' => 'Autoliquidação (art. 196.º da Diretiva 2006/112/CE).',
-      _ => 'Reverse charge — VAT due by the customer '
-          '(art. 196 of Council Directive 2006/112/EC).',
-    };
+String reverseChargeMention(String sellerCountry,
+        {String? asOf, TaxReferenceSet? reference}) =>
+    (reference ?? ActiveTaxReference.current)
+        .mentionFor('reverse_charge', sellerCountry, asOf: asOf) ??
+    '';
 
 /// The VATEX code for a category, when the code lists have one.
 String exemptionCodeForCategory(
@@ -211,19 +144,11 @@ String exemptionCodeForCategory(
 /// #985 — the mention a supply outside the EU prints. #2354: only a
 /// general service to a business established outside the EU is one
 /// (art. 44) — never a desk, which is supplied where the building stands.
-String exportMention(String sellerCountry) =>
-    switch (sellerCountry.trim().toUpperCase()) {
-      'FR' => 'TVA non applicable — prestation de services située hors de '
-          "l'Union européenne (art. 44 de la directive 2006/112/CE).",
-      'DE' || 'AT' => 'Nicht im Inland steuerbare Leistung — Leistungsort '
-          'außerhalb der EU (Art. 44 der Richtlinie 2006/112/EG).',
-      'ES' => 'Operación no sujeta — localizada fuera de la Unión Europea '
-          '(art. 44 de la Directiva 2006/112/CE).',
-      'IT' => 'Operazione non soggetta — territorialmente fuori '
-          "dall'Unione europea (art. 44 della direttiva 2006/112/CE).",
-      _ => 'VAT not applicable — service supplied outside the European '
-          'Union (art. 44 of Council Directive 2006/112/EC).',
-    };
+String exportMention(String sellerCountry,
+        {String? asOf, TaxReferenceSet? reference}) =>
+    (reference ?? ActiveTaxReference.current)
+        .mentionFor('export', sellerCountry, asOf: asOf) ??
+    '';
 
 /// #985 — the exemption text a document prints for [category]: the
 /// statutory mention for AE and G, the buyer's own reason for an exempt
@@ -234,10 +159,11 @@ String exemptionMentionFor({
   required String sellerReason,
   required String buyerReason,
   required VatRegime regime,
+  String? asOf,
 }) =>
     switch (category) {
-      'AE' => reverseChargeMention(sellerCountry),
-      'G' => exportMention(sellerCountry),
+      'AE' => reverseChargeMention(sellerCountry, asOf: asOf),
+      'G' => exportMention(sellerCountry, asOf: asOf),
       'E' when regime == VatRegime.vatRegistered &&
               buyerReason.trim().isNotEmpty =>
         buyerReason.trim(),
@@ -257,25 +183,16 @@ String exigibilityMention({
   required VatRegime regime,
   required String sellerCountry,
   required bool onPaymentBasis,
+  String? asOf,
+  TaxReferenceSet? reference,
 }) {
   if (regime != VatRegime.vatRegistered) return '';
-  return switch (sellerCountry.trim().toUpperCase()) {
-    'FR' => onPaymentBasis
-        ? 'TVA acquittée sur les encaissements.'
-        : "Option pour le paiement de la taxe d'après les débits.",
-    'DE' || 'AT' => onPaymentBasis
-        ? 'Umsatzsteuer nach vereinnahmten Entgelten (Ist-Versteuerung).'
-        : 'Umsatzsteuer nach vereinbarten Entgelten (Soll-Versteuerung).',
-    'IT' => onPaymentBasis
-        ? 'IVA per cassa (art. 32-bis D.L. 83/2012).'
-        : 'IVA esigibile secondo il criterio ordinario.',
-    'ES' => onPaymentBasis
-        ? 'Régimen especial del criterio de caja.'
-        : 'Devengo del IVA según el criterio general.',
-    _ => onPaymentBasis
-        ? 'VAT accounted for on receipts (cash accounting).'
-        : 'VAT accounted for on invoices (accrual accounting).',
-  };
+  return (reference ?? ActiveTaxReference.current).mentionFor(
+        onPaymentBasis ? 'exigibility_receipts' : 'exigibility_invoices',
+        sellerCountry,
+        asOf: asOf,
+      ) ??
+      '';
 }
 
 /// #2356 — what a member state's own law adds to an invoice beyond the

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'invoice.dart';
 
 /// #2440 — when the turnover of an exempt (small-business) seller leaves
@@ -33,51 +35,36 @@ class SmallBusinessThreshold {
   final bool confirmed;
 }
 
-/// The thresholds, in euro cents of NET turnover.
+/// #2478/#2479 -- the thresholds are rows of the tax reference store
+/// (`threshold`, key `small_business_<effect>`), in minor units of NET
+/// turnover, each with its source and whether somebody confirmed it.
 ///
-/// Germany — § 19 Abs. 1 UStG as worded by the Jahressteuergesetz 2024
+/// Germany -- § 19 Abs. 1 UStG as worded by the Jahressteuergesetz 2024
 /// (BGBl. 2024 I Nr. 387), in force since 2025-01-01: the Kleinunternehmer
 /// regime applies while the turnover of the PREVIOUS year did not pass
-/// € 25 000 and the turnover of the RUNNING year does not pass € 100 000;
-/// passing € 100 000 ends it on that very supply.
-///
-/// France — CGI art. 293 B (franchise en base de TVA), services: € 37 500,
-/// with a tolerance up to € 41 250 within the year (passing the tolerance
-/// ends the franchise at once, passing only the base figure ends it with
-/// the year). These are the figures of the 2023-2025 revaluation. The
-/// reform of the loi de finances 2025 (a single € 25 000 threshold from
-/// 2025-03-01) was suspended and the loi de finances 2026 reopened the
-/// matter; the 2026 figure was NOT verified here, so the rows are marked
-/// unconfirmed and an owner is told to check them (the warning says so).
-/// When the figure is confirmed, change the rows — nothing else.
-const _thresholds = <SmallBusinessThreshold>[
-  SmallBusinessThreshold(
-    country: 'DE',
-    cents: 2500000,
-    effect: ThresholdEffect.nextYear,
-    source: '§ 19 Abs. 1 UStG (JStG 2024)',
-  ),
-  SmallBusinessThreshold(
-    country: 'DE',
-    cents: 10000000,
-    effect: ThresholdEffect.immediate,
-    source: '§ 19 Abs. 1 UStG (JStG 2024)',
-  ),
-  SmallBusinessThreshold(
-    country: 'FR',
-    cents: 3750000,
-    effect: ThresholdEffect.nextYear,
-    source: 'CGI art. 293 B (services)',
-    confirmed: false,
-  ),
-  SmallBusinessThreshold(
-    country: 'FR',
-    cents: 4125000,
-    effect: ThresholdEffect.immediate,
-    source: 'CGI art. 293 B (services, tolerance)',
-    confirmed: false,
-  ),
-];
+/// € 25 000 and the turnover of the RUNNING year does not pass € 100 000.
+/// France -- CGI art. 293 B (franchise en base de TVA), services, with a
+/// tolerance within the year; the 2026 figure was NOT verified, so those
+/// rows are unconfirmed and an owner is told to check them.
+List<SmallBusinessThreshold> _thresholdsOf(
+  String country,
+  String currency,
+  TaxReferenceSet set,
+) =>
+    [
+      for (final row in set.where(TaxDomain.threshold, country: country))
+        if (row.country == country &&
+            (row.value as ThresholdValue).currency == currency)
+          SmallBusinessThreshold(
+            country: row.country,
+            cents: (row.value as ThresholdValue).cents,
+            effect: (row.value as ThresholdValue).effect == 'immediate'
+                ? ThresholdEffect.immediate
+                : ThresholdEffect.nextYear,
+            source: row.source,
+            confirmed: row.confirmed,
+          ),
+    ];
 
 /// Where a turnover stands against one row.
 enum ThresholdLevel { near, passed }
@@ -110,13 +97,14 @@ List<SmallBusinessAlert> smallBusinessAlerts({
   required String country,
   required String currency,
   required int turnoverCents,
+  String? asOf,
+  TaxReferenceSet? reference,
 }) {
-  if (currency.toUpperCase() != 'EUR') return const [];
-  final code = country.trim().toUpperCase();
-  final rows = [
-    for (final t in _thresholds)
-      if (t.country == code) t,
-  ]..sort((a, b) => b.cents.compareTo(a.cents));
+  final rows = _thresholdsOf(
+    country.trim().toUpperCase(),
+    currency.toUpperCase(),
+    (reference ?? ActiveTaxReference.current).resolved(asOf),
+  )..sort((a, b) => b.cents.compareTo(a.cents));
   return [
     for (final t in rows)
       if (turnoverCents >= t.cents)

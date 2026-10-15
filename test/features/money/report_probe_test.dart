@@ -116,8 +116,7 @@ void main() {
             ],
           });
 
-    final bytes = await buildInvoicePdf(
-      invoice: invoice,
+    final bytes = await buildInvoicePdf(InvoicePdfRequest(invoice: invoice,
       strings: _strings,
       report: report,
       addressWindow: window,
@@ -127,8 +126,7 @@ void main() {
       dateLabel: '4 sept. 2026',
       periodLabel: 'août 2026',
       baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
-      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
-    );
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf')));
 
     final path = saveForInspection(bytes, 'probe-invoice.pdf');
     final ink = textPositions(bytes).where((i) => i.page == 1).toList();

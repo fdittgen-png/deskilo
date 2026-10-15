@@ -113,5 +113,6 @@ divide cleanly:
 - every DATEV row has 20 fields, a positive amount, an `S` flag, a
   four-digit `Belegdatum`, and never posts an account against itself;
 - the two files reconcile on revenue;
+- a ledger expense netted on an invoice is booked once (purchases), never also as money in on the bank (#2365);
 - every supported country is offered something, and `regulatory` is
   claimed only for FR and PT.

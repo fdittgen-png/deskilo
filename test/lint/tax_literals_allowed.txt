@@ -1,0 +1,52 @@
+# #2481 (C5 of #2476) -- the tax literals that stay in the VAT code, each with the reason it is not a
+# tax value in force. `test/lint/tax_literals_test.dart` fails on a literal that is not listed here and on an
+# entry that no longer matches the code. Format:  path :: code line :: count :: reason
+# A tax value is a `tax_reference` row (docs/AGENT_RULES.md) -- these are the exceptions, and the two that are
+# tax values are named with the issue that removes them.
+
+lib/features/money/domain/accounting_tax.dart :: throw TaxBlocker('deductible share $deductiblePercent is not 0–100 %'); :: 1 :: arithmetic: the message of a 0-100 percent bound, not a tax value
+lib/features/money/domain/address_window.dart :: 'FR' || 'MC' => AddressWindow.right, :: 1 :: the postal window side is a layout convention of the country, not a tax value
+lib/features/money/domain/e_invoice_routing.dart :: 'FR': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'DE': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'BE': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'IT': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'PL': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'RO': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'ES': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'NL': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'PT': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/e_invoice_routing.dart :: 'LU': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
+lib/features/money/domain/invoice_fatturapa.dart :: 'AE' => buyer.country.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
+lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? '10' : '9', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
+lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? 'oo' : 'np II', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
+lib/features/money/domain/vat_catalogue.dart :: 'CH': [ :: 1 :: TAX VALUE still in code, the Swiss planned rate change: moves in #2539
+lib/features/money/domain/vat_compliance.dart :: 'AE' => 'VATEX-EU-AE', :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code
+lib/features/money/domain/vat_compliance.dart :: 'AE' => reverseChargeMention(sellerCountry, asOf: asOf), :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code
+lib/features/money/domain/vat_components.dart :: const gst = (scheme: 'GST', authority: 'CA', percent: 5.0); :: 1 :: TAX VALUE still in code, the split of a Canadian combined rate (SQL twin vat_percent_components): moves in #2539
+lib/features/money/domain/vat_components.dart :: (scheme: 'QST', authority: 'CA-QC', percent: 9.975), :: 1 :: TAX VALUE still in code, the split of a Canadian combined rate (SQL twin vat_percent_components): moves in #2539
+lib/features/money/domain/vat_components.dart :: 12.0 => const [gst, (scheme: 'PST', authority: 'CA-PST', percent: 7.0)], :: 1 :: TAX VALUE still in code, the split of a Canadian combined rate (SQL twin vat_percent_components): moves in #2539
+lib/features/money/domain/vat_components.dart :: 11.0 => const [gst, (scheme: 'PST', authority: 'CA-PST', percent: 6.0)], :: 1 :: TAX VALUE still in code, the split of a Canadian combined rate (SQL twin vat_percent_components): moves in #2539
+lib/features/money/domain/vat_filing_files.dart :: 'DE' => 'DE', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'FR' => 'FR', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'GB' || 'UK' => 'GB', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'CH' => 'CH', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'CA' => 'CA', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'DE' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'FR' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'GB' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'CH' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'CA' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_form_catalogue.dart :: r == 0 ? '0 % / out of scope' : 'Rate ${_pct(r)}', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
+lib/features/money/domain/vat_form_catalogue.dart :: 'UK' => 'GB', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
+lib/features/money/presentation/report_sample_data.dart :: 'vat_rate': '20 %', :: 2 :: sample data of the report designer's preview, not a rate in force
+lib/features/money/presentation/report_sample_data.dart :: {'rate': '20 %', 'net': '120,83 €', 'amount': '24,17 €'}, :: 1 :: sample data of the report designer's preview, not a rate in force
+lib/features/money/presentation/report_sample_data.dart :: {'number': 'INV-2026-0007', 'date': '2026-09-03', 'customer': 'Anne DUPONT', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''}, :: 1 :: sample data of the report designer's preview, not a rate in force
+lib/features/money/presentation/report_sample_data.dart :: {'number': 'INV-2026-0008', 'date': '2026-09-12', 'customer': 'Atelier Dupont SARL', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''}, :: 1 :: sample data of the report designer's preview, not a rate in force
+lib/features/money/presentation/report_sample_data.dart :: {'rate': '20 %', 'category': 'S', 'count': '2', 'net': '1 000,00 €', 'vat': '200,00 €', 'gross': '1 200,00 €'}, :: 1 :: sample data of the report designer's preview, not a rate in force
+lib/features/money/presentation/screens/vat_screen.dart :: onPressed: () => _add(const VatRate(label: '', percent: 0)), :: 1 :: the empty new-row default of the rate editor
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'DE' => l10n.vatDeclElster, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'FR' => l10n.vatDeclEdiTva, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'GB' => l10n.vatDeclMtdCsv, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'CH' => l10n.vatDeclMwstXml, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'CA' => l10n.vatDeclGstQstCsv, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value

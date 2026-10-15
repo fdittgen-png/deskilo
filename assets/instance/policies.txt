@@ -219,10 +219,16 @@ public.services.mcp_delegated_deny
 public.services.services_select
 public.services.services_write
 public.services.services_write_permitted
+public.setting_definitions.mcp_delegated_deny
+public.setting_definitions.setting_definitions_select
+public.setting_values.mcp_delegated_deny
+public.setting_values.setting_values_select
 public.sites.mcp_delegated_deny
 public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
 public.space_inquiry_messages.mcp_delegated_deny
+public.tax_reference.mcp_delegated_deny
+public.tax_reference.tax_reference_select
 public.usage_records.mcp_delegated_deny
 public.usage_records.usage_records_read
 public.validation_policies.mcp_delegated_deny

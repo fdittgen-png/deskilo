@@ -5234,6 +5234,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombrar copropietarios: permisos de propietario ya (activo) o sucesión en espera (pasivo).';
 
   @override
+  String get featureConfigurableSettingsDesc =>
+      'Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos.';
+
+  @override
+  String get featureConfigurableSettingsTitle => 'Ajustes configurables';
+
+  @override
   String get featureConfigurationTransfer =>
       'Configuración en el archivo del espacio';
 
@@ -16355,7 +16362,127 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesTitle => 'Servicios';
 
   @override
+  String get settingCouldNotSave => 'No se pudo guardar el ajuste';
+
+  @override
+  String settingCurrentValue(String value, String unit) {
+    return 'Ahora: $value $unit';
+  }
+
+  @override
+  String get settingEdit => 'Cambiar';
+
+  @override
+  String settingFloorNote(String floor, String unit) {
+    return 'Mínimo de seguridad: nunca por debajo de $floor $unit.';
+  }
+
+  @override
+  String get settingGroupDunning => 'Recordatorios y plazos de pago';
+
+  @override
+  String get settingGuardrail => 'Salvaguarda fija';
+
+  @override
+  String get settingGuardrailFallback =>
+      'Fijado por el software; se muestra para que sepa que existe.';
+
+  @override
+  String get settingHintDunningFirstAfterDays =>
+      'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
+
+  @override
+  String get settingHistory => 'Historial';
+
+  @override
+  String get settingHistoryEmpty =>
+      'Ninguna versión guardada: se aplica el valor por defecto.';
+
+  @override
+  String get settingLabelDunningFirstAfterDays =>
+      'Días antes de un primer recordatorio';
+
+  @override
+  String settingMaxOnly(String max, String unit) {
+    return 'Como máximo $max $unit';
+  }
+
+  @override
+  String settingMinOnly(String min, String unit) {
+    return 'Al menos $min $unit';
+  }
+
+  @override
+  String get settingNoteField => 'Nota (opcional)';
+
+  @override
+  String get settingOriginDefault => 'Valor por defecto integrado';
+
+  @override
+  String get settingOriginPlatform => 'Valor por defecto de la plataforma';
+
+  @override
+  String get settingOriginWorkspace => 'Definido para este espacio';
+
+  @override
+  String get settingProblemAboveMax => 'Por encima del máximo';
+
+  @override
+  String get settingProblemBelowFloor => 'Por debajo del mínimo de seguridad';
+
+  @override
+  String get settingProblemBelowMin => 'Por debajo del mínimo';
+
+  @override
+  String get settingProblemNotAChoice => 'No es una de las opciones';
+
+  @override
+  String get settingProblemNotANumber => 'Introduzca un número entero';
+
+  @override
+  String get settingProblemWrongType => 'Valor no válido';
+
+  @override
+  String settingRange(String min, String max, String unit) {
+    return 'Entre $min y $max $unit';
+  }
+
+  @override
+  String get settingSave => 'Guardar';
+
+  @override
+  String get settingSaved => 'Ajuste guardado';
+
+  @override
+  String get settingUnitDays => 'días';
+
+  @override
+  String get settingUnitHours => 'horas';
+
+  @override
+  String get settingUnitMinutes => 'minutos';
+
+  @override
+  String get settingUnitSeconds => 'segundos';
+
+  @override
+  String get settingValueField => 'Valor';
+
+  @override
+  String settingVersionLine(String value, String unit, String from) {
+    return '$value $unit · desde $from';
+  }
+
+  @override
+  String settingVersionUntil(String to) {
+    return 'hasta $to';
+  }
+
+  @override
   String get settingsBillingReports => 'Facturación e informes';
+
+  @override
+  String get settingsEmpty => 'No hay ajustes aquí.';
 
   @override
   String get settingsFrontCamera => 'Escanear con la cámara frontal';
@@ -16363,6 +16490,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingsFrontCameraDesc =>
       'Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.';
+
+  @override
+  String get settingsLoadFailed => 'No se pudieron cargar los ajustes.';
+
+  @override
+  String get settingsOfflineRegistry =>
+      'Se muestran los valores por defecto integrados: no se pudo contactar con el servidor, por ahora no se puede cambiar nada.';
+
+  @override
+  String get settingsPlatformTitle =>
+      'Ajustes de la plataforma (valores por defecto)';
 
   @override
   String get settingsSectionAccount => 'Mi cuenta';
@@ -16387,6 +16525,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Ajustes';
+
+  @override
+  String get settingsWorkspaceTitle => 'Valores de los ajustes';
 
   @override
   String get settlementAction => 'Agrupar en una factura';
@@ -18357,6 +18498,209 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get taskWorkbenchUntrusted =>
       'Un borrador privado de un archivo: nada de él se considera fiable ni se envía.';
+
+  @override
+  String get taxRefAccount => 'Número de cuenta (o código del plan)';
+
+  @override
+  String get taxRefAdd => 'Añadir un valor';
+
+  @override
+  String get taxRefAliasOf =>
+      'Alias de (código ISO, vacío para un Estado miembro)';
+
+  @override
+  String get taxRefCashBackstop => 'Plazo máximo en criterio de caja';
+
+  @override
+  String get taxRefCashOption => 'Opción por el criterio de caja';
+
+  @override
+  String get taxRefCategory => 'Categoría EN 16931';
+
+  @override
+  String get taxRefCents => 'Importe (unidad menor)';
+
+  @override
+  String get taxRefConfirmed => 'Confirmado';
+
+  @override
+  String get taxRefCouldNotSave => 'No se pudo guardar la versión';
+
+  @override
+  String get taxRefCountry => 'País (código ISO, o * para todos)';
+
+  @override
+  String get taxRefCurrency => 'Moneda (código ISO)';
+
+  @override
+  String get taxRefDomainAccountMap => 'Cuentas y códigos de exportación';
+
+  @override
+  String get taxRefDomainCatalogueNote => 'Notas del catálogo';
+
+  @override
+  String get taxRefDomainEuMember => 'Miembros de la UE';
+
+  @override
+  String get taxRefDomainExemptionText => 'Textos legales';
+
+  @override
+  String get taxRefDomainFormBox => 'Casillas de la declaración';
+
+  @override
+  String get taxRefDomainGroupExample => 'Ejemplos por grupo';
+
+  @override
+  String get taxRefDomainIssuingGate => 'Autorizaciones de emisión';
+
+  @override
+  String get taxRefDomainMandate => 'Obligaciones de facturación electrónica';
+
+  @override
+  String get taxRefDomainRate => 'Tipos';
+
+  @override
+  String get taxRefDomainTaxPoint => 'Devengo';
+
+  @override
+  String get taxRefDomainThreshold => 'Umbrales';
+
+  @override
+  String get taxRefDomainVatIdPattern => 'Formatos de NIF-IVA';
+
+  @override
+  String get taxRefDuty => 'Obligación';
+
+  @override
+  String get taxRefEffect => 'Efecto al superarlo (next_year o immediate)';
+
+  @override
+  String get taxRefEmpty => 'Sin valores.';
+
+  @override
+  String get taxRefExcludeGroups =>
+      'Todos los grupos salvo (separados por comas)';
+
+  @override
+  String get taxRefExemptionReason => 'Motivo de exención';
+
+  @override
+  String get taxRefFormat => 'Formato';
+
+  @override
+  String get taxRefFrom => 'Se aplica desde (AAAA-MM-DD)';
+
+  @override
+  String get taxRefGroup => 'Grupo';
+
+  @override
+  String get taxRefGroups => 'Grupos fiscales que suma (separados por comas)';
+
+  @override
+  String get taxRefHistory => 'Historial';
+
+  @override
+  String get taxRefIntro =>
+      'Tipos, textos de exención, formatos de NIF-IVA y países miembros de la UE. Un cambio es una nueva versión desde una fecha; la versión vigente se cierra, nunca se edita.';
+
+  @override
+  String get taxRefInvalidAccount =>
+      'Indique un número de cuenta o un código de impuesto';
+
+  @override
+  String get taxRefInvalidDate => 'Introduzca la fecha como AAAA-MM-DD';
+
+  @override
+  String get taxRefInvalidGroups =>
+      'Indique grupos fiscales conocidos (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), ninguno en ambas listas';
+
+  @override
+  String get taxRefInvalidNumber => 'Introduzca un número de 0 a 99,999';
+
+  @override
+  String get taxRefInvoiceOption => 'Opción por la fecha de factura';
+
+  @override
+  String get taxRefKey => 'Clave';
+
+  @override
+  String get taxRefLabel => 'Etiqueta';
+
+  @override
+  String get taxRefLoadFailed =>
+      'No se pudieron cargar los datos de referencia.';
+
+  @override
+  String get taxRefMemberEmpty => 'Un Estado miembro no tiene más campos.';
+
+  @override
+  String get taxRefNationalChannel => 'Canal nacional obligatorio';
+
+  @override
+  String get taxRefNewVersion => 'Nueva versión';
+
+  @override
+  String get taxRefNotAllowed =>
+      'Solo el operador de la plataforma gestiona los datos de referencia fiscales.';
+
+  @override
+  String get taxRefOfflineCopy =>
+      'Se muestra la copia incluida en la aplicación: no se pudo contactar con el servidor.';
+
+  @override
+  String get taxRefPattern => 'Formato';
+
+  @override
+  String get taxRefPercent => 'Porcentaje';
+
+  @override
+  String get taxRefPosition => 'Posición';
+
+  @override
+  String get taxRefRegime => 'Régimen';
+
+  @override
+  String get taxRefRequired => 'Obligatorio';
+
+  @override
+  String get taxRefRequiresTaxNumber => 'Número fiscal obligatorio';
+
+  @override
+  String get taxRefRole => 'Función';
+
+  @override
+  String get taxRefSave => 'Guardar la versión';
+
+  @override
+  String get taxRefSaved => 'Versión guardada';
+
+  @override
+  String get taxRefSource => 'Fuente';
+
+  @override
+  String get taxRefStandardRule => 'Regla por defecto';
+
+  @override
+  String get taxRefSupported => 'Emisión admitida';
+
+  @override
+  String get taxRefTaxCode => 'Código de impuesto';
+
+  @override
+  String get taxRefText => 'Texto';
+
+  @override
+  String get taxRefTitle => 'Datos de referencia fiscales';
+
+  @override
+  String get taxRefUnconfirmed => 'Sin confirmar';
+
+  @override
+  String get taxRefValidFrom => 'Válido desde';
+
+  @override
+  String get taxRefValidUntil => 'hasta';
 
   @override
   String get templateApplyConflict =>

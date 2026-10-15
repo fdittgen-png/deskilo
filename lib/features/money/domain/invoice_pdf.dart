@@ -11,11 +11,94 @@ import 'invoice_report.dart';
 import 'report_block_widgets.dart';
 import 'report_flow_page.dart';
 import 'report_page_footer.dart';
+import 'vat_rate.dart';
 
 part 'invoice_pdf_part1.dart';
 part 'invoice_pdf_part2.dart';
 part 'invoice_pdf_part3.dart';
 
+
+/// Everything [buildInvoicePdf] renders from. One object instead of a long
+/// argument list: a new document field is added here and in one section
+/// of the sheet.
+class InvoicePdfRequest {
+  const InvoicePdfRequest({
+    required this.invoice,
+    required this.strings,
+    this.reportImages = const {},
+    required this.money,
+    required this.lineText,
+    required this.activityText,
+    required this.dateLabel,
+    required this.baseFont,
+    required this.boldFont,
+    this.periodLabel = '',
+    this.proforma = false,
+    this.copy = false,
+    this.facturXml = '',
+    this.report,
+    this.colorProfile,
+    this.annexes = const [],
+    this.addressWindow = AddressWindow.off,
+    this.qrBillPage,
+  });
+
+  final Invoice invoice;
+  final InvoicePdfStrings strings;
+  final Map<String, Uint8List> reportImages;
+  final String Function(int cents) money;
+  final String Function(InvoiceLine line) lineText;
+  final String Function(InvoiceDetailEntry entry) activityText;
+  final String dateLabel;
+  final pw.Font baseFont;
+  final pw.Font boldFont;
+
+  /// What the invoice COVERS, in words ('July 2026'). The stored
+  /// [Invoice.title] is the raw period ('2026-07'), which no reader should
+  /// have to decode; empty falls back to it (legacy 0060 free-form titles).
+  final String periodLabel;
+
+  /// Renders the SAME figures as a proforma: a quote for a month, not a
+  /// document of record. It carries no signature (there is nothing to
+  /// certify), says PROFORMA where an invoice says its number, and wears
+  /// the same diagonal watermark so the two can never be confused on a
+  /// desk. An issued invoice can also be re-rendered this way — as a
+  /// payment request that does not pass for the original.
+  final bool proforma;
+
+  /// Stamps the render as a duplicate: the issuer holds the original, the
+  /// member re-renders it on demand. Ignored on a proforma (which is not a
+  /// copy of anything) and on an erroneous invoice (whose own stamp wins).
+  final bool copy;
+
+  /// FACTUR-X: the EN 16931 invoice as CII, embedded in the PDF itself.
+  /// Turns the document into PDF/A-3 (the format's requirement) carrying
+  /// `factur-x.xml` — one file a human reads and a machine parses, which
+  /// is what French and German small businesses actually exchange.
+  /// Requires [colorProfile] (PDF/A demands an output intent).
+  final String facturXml;
+
+  /// Owner report bands (#454/#470), already rendered by
+  /// `renderReportBands`. Null = the built-in layout. PDF only — the
+  /// XML never carries them; the void banner/watermark, signature,
+  /// annex and page numbers stay non-templated regardless.
+  final InvoiceReport? report;
+  final Uint8List? colorProfile;
+
+  /// #837 — invoices appended AFTER this one as reference, in order.
+  /// A settlement uses it to carry the invoices it regrouped, each
+  /// stamped with the number that now owes their balance.
+  final List<InvoiceAnnex> annexes;
+
+  /// #869 — where the recipient sits so it shows through a window
+  /// envelope. Resolved by the caller from the template and the seller's
+  /// country, because only the caller knows both.
+  final AddressWindow addressWindow;
+
+  /// #2360 — the Swiss QR-bill, on a page of its own after the invoice
+  /// (before any annex); null for every other document.
+  final pw.Page? qrBillPage;
+}
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {

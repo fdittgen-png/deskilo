@@ -94,8 +94,7 @@ Future<Uint8List> _build({
   List<String> featureLabels = const ['Calendar tab', 'Money tab'],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
 }) async {
-  final data = workspaceConfigurationReportData(
-      strings: _strings,
+  final data = workspaceConfigurationReportData(WorkspaceConfigDocument(strings: _strings,
       workspaceName: 'Test Space',
       generatedOnLabel: 'Generated on Jul 19, 2026',
       countryLabel: 'France',
@@ -118,8 +117,7 @@ Future<Uint8List> _build({
         ),
       ],
       levelPrices: const {},
-    hasCustomInvitationTemplate: false,
-    );
+    hasCustomInvitationTemplate: false));
   final report = renderReportBands(bands: configurationReportBands(_strings.title), data: data)!;
   final rows = report.body.whereType<ReportTableRow>().expand((row) => row.cells);
   for (final name in members.map((m) => m.name)) {

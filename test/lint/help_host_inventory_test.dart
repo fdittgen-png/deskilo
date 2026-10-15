@@ -28,7 +28,7 @@ const Map<String, int> _inventory = {
   'lib/features/editor/presentation/screens/editor_screen.dart': 1,
   'lib/features/events/presentation/screens/events_screen.dart': 1,
   'lib/features/events/presentation/screens/validation_settings_screen.dart': 1,
-  'lib/features/money/presentation/screens/money_screen.dart': 2,
+  'lib/features/money/presentation/screens/money_body.dart': 2,
   'lib/features/money/presentation/widgets/money_faces_view.dart': 1,
   'lib/features/profile/presentation/screens/privacy_screen.dart': 1,
   // The host itself: the tips OR the Get started card, never both.

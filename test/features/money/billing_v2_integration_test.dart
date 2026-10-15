@@ -567,18 +567,16 @@ void main() {
       final base = ttf('assets/fonts/Roboto-Regular.ttf');
       final bold = ttf('assets/fonts/Roboto-Bold.ttf');
       for (final locale in ['en', 'de', 'fr', 'es', 'it']) {
-        final bytes = await buildBillPdf(
-          statement: maximal,
+        final bytes = await buildBillPdf(BillDocument(statement: maximal,
           sections: sections,
           currencyCode: 'EUR',
           workspaceName: 'Test Space',
           memberName: 'Flo',
           periodLabel: 'July 2026',
           strings: pdfStrings,
+          locale: locale),
           baseFont: base,
-          boldFont: bold,
-          locale: locale,
-        );
+          boldFont: bold);
         expect(bytes, isNotEmpty, reason: 'empty PDF for $locale');
         expect(String.fromCharCodes(bytes.sublist(0, 5)), '%PDF-',
             reason: 'bad header for $locale');
@@ -622,8 +620,7 @@ void main() {
       expect(sections.servicesTotalCents, 380);
       expect(sections.creditEntries, hasLength(1));
 
-      final bytes = await buildBillPdf(
-        statement: statement(
+      final bytes = await buildBillPdf(BillDocument(statement: statement(
           includedHalfDays: 22,
           openDays: 22,
           usedHalfDays: 20,
@@ -634,10 +631,9 @@ void main() {
         memberName: 'Flo',
         periodLabel: 'July 2026',
         strings: pdfStrings,
+        locale: 'en'),
         baseFont: ttf('assets/fonts/Roboto-Regular.ttf'),
-        boldFont: ttf('assets/fonts/Roboto-Bold.ttf'),
-        locale: 'en',
-      );
+        boldFont: ttf('assets/fonts/Roboto-Bold.ttf'));
       expect(String.fromCharCodes(bytes.sublist(0, 5)), '%PDF-');
     });
   });

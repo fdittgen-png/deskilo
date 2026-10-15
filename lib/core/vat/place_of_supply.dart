@@ -1,49 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'supply_class.dart';
+import 'tax_reference.dart';
+import 'tax_reference_active.dart';
 import 'vat_treatment.dart';
 
-/// #2354 — the 27 member states, ONE set for the whole app and the
-/// twin of `public.is_eu_country` (pinned by `place_of_supply_test`).
-/// Greece is `GR` here, as ISO says; `EL` is only its VAT-number prefix,
-/// accepted on input and normalised by [euCountryCode].
-const Set<String> euMemberStates = {
-  'AT',
-  'BE',
-  'BG',
-  'CY',
-  'CZ',
-  'DE',
-  'DK',
-  'EE',
-  'ES',
-  'FI',
-  'FR',
-  'GR',
-  'HR',
-  'HU',
-  'IE',
-  'IT',
-  'LT',
-  'LU',
-  'LV',
-  'MT',
-  'NL',
-  'PL',
-  'PT',
-  'RO',
-  'SE',
-  'SI',
-  'SK',
-};
+/// #2354 — the member states, ONE set for the whole app. #2478: the rows of
+/// the `eu_member` domain of the tax reference store, no list in code; the
+/// SQL `public.is_eu_country` reads the same rows. Greece is `GR` here, as
+/// ISO says; `EL` is only its VAT-number prefix, an alias row accepted on
+/// input and normalised by [euCountryCode].
+Set<String> get euMemberStates => ActiveTaxReference.current.euMembers();
 
-/// The canonical code for [code]: trimmed, upper case, `EL` → `GR`
-/// (`public.eu_country_code`).
-String euCountryCode(String code) {
-  final c = code.trim().toUpperCase();
-  return c == 'EL' ? 'GR' : c;
-}
+/// The canonical code for [code]: trimmed, upper case, an alias row
+/// resolved (`EL` → `GR`, `public.eu_country_code`).
+String euCountryCode(String code, {TaxReferenceSet? reference}) =>
+    (reference ?? ActiveTaxReference.current).euCode(code);
 
-bool isEuCountry(String code) => euMemberStates.contains(euCountryCode(code));
+bool isEuCountry(String code, {TaxReferenceSet? reference}) =>
+    (reference ?? ActiveTaxReference.current).isEu(code);
 
 /// #2354 — the VAT category a line takes from WHERE it is supplied, the
 /// twin of `public.supply_vat_category` (pinned case by case against
