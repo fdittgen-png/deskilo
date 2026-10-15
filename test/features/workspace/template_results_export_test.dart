@@ -16,12 +16,12 @@ import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/template_gallery.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _button = ValueKey('template-export-results');
 
@@ -68,9 +68,14 @@ Future<List<({String name, Uint8List bytes})>> _pump(
   for (final t in templates) {
     workspace.templateInspections[t.id] = _inspection(t.id);
   }
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
+  await pumpApp(tester, Scaffold(
+          body: TemplateGallery(
+            sections: [
+              TemplateGallerySection(title: 'All', templates: templates),
+            ],
+            onSelected: picker ? (_) {} : null,
+          ),
+        ), overrides: [
         ...standardTestOverrides(workspace: workspace),
         fileSaverProvider.overrideWithValue(({
           required bytes,
@@ -79,21 +84,7 @@ Future<List<({String name, Uint8List bytes})>> _pump(
           saved.add((name: fileName, bytes: bytes));
           return fileName;
         }),
-      ],
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
-          body: TemplateGallery(
-            sections: [
-              TemplateGallerySection(title: 'All', templates: templates),
-            ],
-            onSelected: picker ? (_) {} : null,
-          ),
-        ),
-      ),
-    ),
-  );
+      ]);
   await tester.pumpAndSettle();
   return saved;
 }

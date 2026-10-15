@@ -3,9 +3,7 @@ import 'dart:ui';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/profile/providers/profile_providers.dart';
 import '../storage/prefs_stores.dart';
-import '../trace/trace_logger.dart';
 
 part 'locale_controller.g.dart';
 
@@ -37,23 +35,11 @@ class LocaleController extends _$LocaleController {
     return code == null ? null : Locale(code);
   }
 
-  Future<void> set(Locale? locale, {bool updateProfile = true}) async {
+  /// Applies [locale] and keeps it on this device. The account's own copy
+  /// of the language is saved by the profile feature (preference scopes);
+  /// this controller knows nothing of it.
+  Future<void> set(Locale? locale) async {
     state = AsyncData(locale);
     await ref.read(localeStoreProvider).write(locale?.languageCode);
-    // Scoped preferences already saved with an expected-account guard.
-    if (!updateProfile) return;
-    // #496 — the pick also becomes the member's DOCUMENT language,
-    // server-side, so reports for them print in it. Best effort:
-    // offline or signed out must not break the local switch.
-    try {
-      await ref
-          .read(profileRepositoryProvider)
-          .setPreferredLocale(locale?.languageCode ?? '');
-      ref.invalidate(myProfileProvider);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-          'profile', 'preferred locale save failed',
-          error: e, stackTrace: st);
-    }
   }
 }

@@ -44,7 +44,7 @@ void main() {
   test('the required job runs the gate after l10n and before the suite, '
       'and the F-Droid audit runs the same call, neither tolerated', () {
     for (final (workflow, job) in [
-      ('quality.yml', 'code'),
+      ('quality.yml', 'gate'),
       ('fdroid-foss.yml', 'foss-apk'),
     ]) {
       final steps = _steps(workflow, job);
@@ -55,7 +55,7 @@ void main() {
       final script = steps.map((s) => '${s['run'] ?? ''}').join('\n');
       expect(script.indexOf(_call), lessThan(script.indexOf('flutter test')),
           reason: '$workflow: the gate precedes the suite');
-      if (job == 'code') {
+      if (job == 'gate') {
         final l10n = steps.indexWhere((s) => '${s['name']}'.startsWith('l10n gate'));
         expect(i, l10n + 1, reason: 'beside the l10n gate');
       }

@@ -12,9 +12,9 @@
 // what is left out has to be an argument rather than an accident. Each
 // exemption below carries its reason; a new table with a member column
 // and no decision fails this test.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The LATEST definition of `export_my_data` across every migration —
 /// an anchored patch may redefine it, and reading the first definition
@@ -27,13 +27,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// that way). Reading only the restatements would report a table as
 /// missing that the database has returned for months.
 String _latestExportBody() {
-  final dir = Directory('supabase/migrations');
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
   var body = '';
   final patches = <String>[];
   for (final f in files) {
-    if (!f.path.endsWith('.sql')) continue;
     final sql = f.readAsStringSync();
     final at = sql.indexOf(
         'create or replace function public.export_my_data');
@@ -117,6 +114,7 @@ const Set<String> _exported = {
   'privacy_notice_acknowledgments', // #1914: which notice versions the person acknowledged.
   'rights_requests', // #1915: the person's own rights requests and their outcome.
   'account_blocks', // 0387: the blocks the person set (anchored patch).
+  'tax_exemption_certificates', // 0434: the customer's own exemption certificates (anchored patch).
   'account_public_profiles', // 0389: whether I published my public profile (anchored patch).
   'public_person_cards', // 0390: what my published profile shows (anchored patch).
   'account_group_members', 'account_group_messages', // 0384: my groups, my memberships and what I wrote (anchored patch).
@@ -150,7 +148,6 @@ const Set<String> _exported = {
 
 Set<String> _tablesWithAMemberColumn() {
   final found = <String>{};
-  final dir = Directory('supabase/migrations');
   final create = RegExp(
     r'create table (?:if not exists )?public\.(\w+)\s*\((.*?)\n\);',
     caseSensitive: false,
@@ -160,8 +157,7 @@ Set<String> _tablesWithAMemberColumn() {
     r'\b(member_id|user_id|from_member_id|subject_member_id|actor_member_id)\b',
     caseSensitive: false,
   );
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
   for (final f in files) {
     if (!f.path.endsWith('.sql')) continue;
     for (final m in create.allMatches(f.readAsStringSync())) {

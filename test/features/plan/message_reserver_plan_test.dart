@@ -9,8 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'plan_screen_test.dart'
-    show foreignReservation, pumpPlan, seatCenter;
+import '../../helpers/screens/plan_screen.dart' show foreignReservation, pumpPlan, seatCenter;
 
 void main() {
   testWidgets(

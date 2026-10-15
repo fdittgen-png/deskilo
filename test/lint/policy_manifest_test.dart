@@ -23,6 +23,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/instance/instance_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 final _create = RegExp(
   r'create\s+policy\s+([a-z0-9_"]+)\s+on\s+([a-z0-9_."]+)',
@@ -93,12 +94,7 @@ bool _loopDeclared(List<File> files) => files.any((f) =>
     f.readAsStringSync().contains("create policy $_loopPolicy on %I.%I"));
 
 void main() {
-  final files = Directory('supabase/migrations')
-      .listSync()
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.sql'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
 
   test('every policy a migration creates is in the manifest the doctor '
       'reads', () {

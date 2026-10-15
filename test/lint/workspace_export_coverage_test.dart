@@ -15,17 +15,15 @@
 //
 // The same shape as `gdpr_export_coverage_test` (#1238), which asks the
 // same question of the member's subject-access export.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Every `public.<table>` in the migrations that carries a
 /// `workspace_id` column — read from the migrations rather than a live
 /// database, because CI has the files and not the project.
 Set<String> _workspaceScopedTables() {
-  final dir = Directory('supabase/migrations');
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
 
   final create = RegExp(
     r'create table (?:if not exists )?public\.(\w+)\s*\((.*?)\n\);',
@@ -183,6 +181,12 @@ const Map<String, String> _notExported = {
       'who looked at what, written by the server. It is evidence about '
           'the operator, and an export they control must not be its only '
           'copy',
+  'tax_exemption_certificates':
+      '#2362 — a customer\'s exemption certificate, kept as the seller\'s tax '
+          'evidence: the customer\'s own subject-access export carries it '
+          '(export_my_data), the issued invoice cites it, and the file it '
+          'points to stays in the documents bucket; the workbook has no tab '
+          'for it',
   'setting_values':
       '#2484 — the workspace\'s configured values of the settings registry: '
           'configuration, not the workspace\'s data. The export of data does not '

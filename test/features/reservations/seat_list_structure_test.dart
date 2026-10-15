@@ -16,12 +16,11 @@ import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/seat_list_view.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _rect = GridRect(x: 0, y: 0, w: 2, h: 2);
 
@@ -86,14 +85,7 @@ Future<List<(String?, String?)>> _pump(
   workspace.myMember = workspace.myMember.copyWith(
     canReserveLevel: mayReserveWhole,
   );
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides:
-          standardTestOverrides(floorPlan: floorPlan, workspace: workspace),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
+  await pumpApp(tester, Scaffold(
           body: SeatListView(
             plan: _plan(officeWhole: officeWhole),
             reservations: reservations,
@@ -104,10 +96,7 @@ Future<List<(String?, String?)>> _pump(
             onSeatTap: (_) {},
             onSpaceTap: mayReserveWhole ? (d, o) => taps.add((d, o)) : null,
           ),
-        ),
-      ),
-    ),
-  );
+        ), overrides: standardTestOverrides(floorPlan: floorPlan, workspace: workspace));
   await tester.pumpAndSettle();
   return taps;
 }

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/reserve_view.dart';
-import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 
 void main() {
   testWidgets('a failed day read is unavailable, then retry restores it',

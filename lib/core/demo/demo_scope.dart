@@ -138,7 +138,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // from `Supabase.instance.client`; inside this scope none of them
       // is, which is what makes an external effect impossible rather
       // than refused.
-      authRepositoryProvider.overrideWithValue(fixture.auth), ...realtimeWiringFromApp, // #2495
+      authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, // #2495
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.

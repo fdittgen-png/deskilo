@@ -63,17 +63,15 @@ jobs:
         with:
           artifact: quality-classification
 
-  code:
-    # The name is the REQUIRED STATUS CHECK on master, and this job is
-    # what now does that work — the l10n gate, analyze, the suite with
-    # coverage — plus the disciplines. Renaming it would silently make
-    # every pull request unmergeable, because branch protection waits
-    # for a context that would never report again. (It waited for
-    # exactly that for one push; ci.yml's own comment said the
-    # repository had no protection, and it was out of date.)
-    name: analyze · l10n gate · test · coverage
+  # #2600 — the quality suite runs as three shards on three runners, and
+  # the required context below is the AGGREGATE of them. This is the fast
+  # gate: the preconditions (l10n, codegen, the push package, analyze) and
+  # every test outside test/features — lint, tool, i18n, a11y, ux, perf,
+  # app, core and anything a new root folder adds. It fails first.
+  gate:
+    name: quality · test · gates
     runs-on: ubuntu-latest
-    timeout-minutes: 60 # 2026-10-09 #2302: two 45-minute runs cut off passing tests before coverage.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -127,39 +125,302 @@ jobs:
         # Direct Dart analysis waits for analyzer plugins to finish.
         run: dart analyze --fatal-infos
 
-      # #1446 C1 — ONE run of the suite, with coverage, for the whole
-      # report. The discipline rows below are derived from this run's JSON
-      # stream by test identity (tool/quality_rows.dart against
-      # .github/quality-manifest.psv) instead of starting Flutter five more
-      # times for the same tests. The exit code is captured as the verdict
-      # and written beside the stream; nothing in between may replace it.
-      - name: Tests with coverage
+      # #2600 — this shard's files come from tool/quality_shard.dart, the
+      # same walk of test/ the aggregate job proves the plan against; the
+      # list is never typed in this file. The exit code is captured as the
+      # verdict and written beside the stream; the envelope records it with
+      # hashes of what this run produced, and nothing in between may
+      # replace it.
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard gate --out shard/files.txt
+
+      - name: Tests with coverage (fast gate)
         id: tests
         continue-on-error: true
         run: |
-          mkdir -p report
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
           set +e
-          flutter test --coverage --file-reporter json:report/tests.jsonl
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
           code=$?
           set -e
-          echo "$code" > report/tests-exit.txt
-          echo "exit=$code" >> "$GITHUB_OUTPUT"
+          echo "$code" > shard/tests-exit.txt
           exit "$code"
 
-      # Every discipline row, from that one stream. A stream that was cut
-      # short, loaded nothing, or holds something the reader does not
-      # understand makes every row red and this step red — a reporting
-      # failure is a failure, not a green table.
-      - name: Discipline rows from the test stream
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard gate \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard gate)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-gate
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
+  # #2600 — the features, in two shards of similar cost. The split is a
+  # rule in tool/quality_rows/selection.dart; a new feature folder lands in
+  # the second by default.
+  money:
+    name: quality · test · money and workspace
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      # #2600 — this shard's files come from tool/quality_shard.dart, the
+      # same walk of test/ the aggregate job proves the plan against; the
+      # list is never typed in this file. The exit code is captured as the
+      # verdict and written beside the stream; the envelope records it with
+      # hashes of what this run produced, and nothing in between may
+      # replace it.
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard money --out shard/files.txt
+
+      - name: Tests with coverage (money, workspace)
+        id: tests
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
+          set +e
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
+          code=$?
+          set -e
+          echo "$code" > shard/tests-exit.txt
+          exit "$code"
+
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard money \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard money)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-money
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
+  rest:
+    name: quality · test · other features
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      # #2600 — this shard's files come from tool/quality_shard.dart, the
+      # same walk of test/ the aggregate job proves the plan against; the
+      # list is never typed in this file. The exit code is captured as the
+      # verdict and written beside the stream; the envelope records it with
+      # hashes of what this run produced, and nothing in between may
+      # replace it.
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard rest --out shard/files.txt
+
+      - name: Tests with coverage (other features)
+        id: tests
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
+          set +e
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
+          code=$?
+          set -e
+          echo "$code" > shard/tests-exit.txt
+          exit "$code"
+
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard rest \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard rest)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-rest
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
+  code:
+    # The name is the REQUIRED STATUS CHECK on master, and this job is
+    # still what carries it: now the aggregate of the preconditions and
+    # the three test shards, plus the disciplines and the coverage floors.
+    # Renaming it would silently make every pull request unmergeable,
+    # because branch protection waits for a context that would never
+    # report again. (It waited for exactly that for one push; ci.yml's
+    # own comment said the repository had no protection, and it was out
+    # of date.)
+    #
+    # #2600 — it waits for ALL the work and is evaluated whatever happened
+    # to it: a failed, cancelled or missing shard is red here, never a
+    # skipped (and therefore green) required context. It reads each
+    # shard's envelope and stream ALONE (tool/quality_rows/shards.dart) and
+    # combines only what validated.
+    name: analyze · l10n gate · test · coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [gate, money, rest]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          pattern: testshard-*
+          path: shards
+
+      # What the shards were promised, re-derived from this tree: every
+      # test file exactly once, none unclassified, none shared.
+      - name: Test plan — every required file in exactly one shard
+        id: plan
+        if: always()
+        run: |
+          mkdir -p report
+          dart run tool/quality_shard.dart plan \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" --out report/plan.json
+
+      # Every discipline row, from the validated shards. A stream that was
+      # cut short, a shard that never reported, an envelope for another
+      # candidate or selection, a file that ran twice or not at all makes
+      # every row red and this step red — a reporting failure is a
+      # failure, not a green table.
+      - name: Discipline rows from the test streams
         id: rows
         if: always()
         continue-on-error: true
         run: |
           dart run tool/quality_rows.dart \
-            --events report/tests.jsonl \
-            --exit-code "$(cat report/tests-exit.txt 2>/dev/null || echo 1)" \
+            --plan report/plan.json --shards shards \
             --manifest .github/quality-manifest.psv \
             --out report/tests.psv
+
+      - name: Merge the shards' coverage
+        id: lcov
+        if: always()
+        continue-on-error: true
+        run: |
+          dart run tool/quality_shard.dart merge-lcov \
+            --plan report/plan.json --shards shards --out coverage/lcov.info
 
       - name: Coverage
         id: coverage
@@ -167,19 +428,19 @@ jobs:
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
 
-      # #1864 B — where that one run spent its time, read from the same
-      # stream (no second run): load apart from test bodies, the overlap
-      # of parallel files instead of a false sum, keyed to this candidate.
-      # Advisory: it reports and never decides a verdict. The bounded
-      # copy keeps identities and times only, no printed or error text.
-      - name: Test timings from the test stream
+      # #1864 B — where the runs spent their time, read from the same
+      # streams (no second run), one clock per shard: wall clocks are not
+      # added, the slowest shard is the critical path. Advisory: it
+      # reports and never decides a verdict. The bounded copy keeps
+      # identities and times only, no printed or error text.
+      - name: Test timings from the test streams
         if: always()
         continue-on-error: true
         run: |
           dart run tool/test_timings.dart \
-            --events report/tests.jsonl \
+            --plan report/plan.json --shards shards \
             --candidate "$GITHUB_SHA" \
-            --profile 'quality.yml: flutter test --coverage' \
+            --profile 'quality.yml: flutter test --coverage, 3 shards' \
             --runtime "$(flutter --version | head -n 1)" \
             --out report/test-timings.md \
             --raw-out report/test-events.jsonl
@@ -246,20 +507,21 @@ jobs:
         if: always()
         with:
           name: quality-code
-          path: |
-            report/*.psv
-            report/tests-exit.txt
+          path: report/*.psv
 
       # #1446 — the required context carries the WHOLE result of this job.
-      # Until now the coverage gate ran continue-on-error and only the
-      # final report noticed, and the report is not a required context:
-      # a coverage regression could not block a merge. It can now.
+      # #2600 — and of every job it waited for: the outcome of a needed job
+      # is exactly `success` or the context is red.
       - name: Gate
         if: always()
         run: |
           bash scripts/job_gate.sh \
-            "Tests=${{ steps.tests.outcome }}" \
+            "Fast gate and its tests=${{ needs.gate.result }}" \
+            "Money and workspace tests=${{ needs.money.result }}" \
+            "Other feature tests=${{ needs.rest.result }}" \
+            "Test plan=${{ steps.plan.outcome }}" \
             "Discipline rows=${{ steps.rows.outcome }}" \
+            "Coverage merge=${{ steps.lcov.outcome }}" \
             "Coverage=${{ steps.coverage.outcome }}"
 
   database:
@@ -658,7 +920,7 @@ jobs:
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [classify, code, database]
+    needs: [classify, gate, money, rest, code, database]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -683,5 +945,8 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "classify the change=${{ needs.classify.result }}" \
+            "quality · test · gates=${{ needs.gate.result }}" \
+            "quality · test · money and workspace=${{ needs.money.result }}" \
+            "quality · test · other features=${{ needs.rest.result }}" \
             "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
             "quality · database=${{ needs.database.result }}"

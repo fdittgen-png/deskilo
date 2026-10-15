@@ -18,10 +18,9 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import '../plan/plan_closed_day_test.dart'
-    show ThrowingReservationRepository, pumpAvailabilityPlan;
-import '../plan/plan_screen_test.dart' show chooseCheckInNow, seatCenter;
-import 'money_screen_test.dart' show pumpMoney;
+import '../../helpers/screens/money_screen.dart' show pumpMoney;
+import '../../helpers/screens/plan_closed_day.dart' show ThrowingReservationRepository, pumpAvailabilityPlan;
+import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, seatCenter;
 
 void main() {
   testWidgets(

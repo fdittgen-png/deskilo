@@ -14,12 +14,11 @@ import 'package:deskilo/core/trace/act_trace.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/presentation/screens/scan_join_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'reserve_hub_test.dart' show pickHubDate, pumpHub, seatCenter;
+import '../../helpers/pump_app.dart';
+import '../../helpers/screens/reserve_hub.dart' show pickHubDate, pumpHub, seatCenter;
 
 /// The trace lines this test session produced, oldest first.
 List<String> _lines() =>
@@ -32,12 +31,7 @@ bool _has(String fragment) => _lines().any((l) => l.contains(fragment));
 /// emits payloads on demand.
 Future<FakeQrScanner> _pumpJoinScan(WidgetTester tester) async {
   final scanner = FakeQrScanner();
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(qrScan: scanner),
-      child: const MaterialApp(home: ScanJoinScreen()),
-    ),
-  );
+  await pumpApp(tester, const ScanJoinScreen(), overrides: standardTestOverrides(qrScan: scanner));
   await tester.pumpAndSettle();
   return scanner;
 }

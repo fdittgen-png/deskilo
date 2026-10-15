@@ -26,6 +26,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The migration that introduced the marker. Files before it predate the
 /// contract; the marker's first value covers them.
@@ -81,7 +82,7 @@ String _stripTrailingComments(String sql) {
 
 List<(int, File)> _migrationsFrom(int first) {
   final out = <(int, File)>[];
-  for (final f in Directory('supabase/migrations').listSync().whereType<File>()) {
+  for (final f in sqlFiles('supabase/migrations')) {
     final m = _fileName.firstMatch(f.uri.pathSegments.last);
     if (m == null) continue;
     final n = int.parse(m.group(1)!);

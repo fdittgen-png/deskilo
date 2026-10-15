@@ -4,7 +4,7 @@
 # This is the evidence behind the numbers, not a regulated audit file. Nothing is filtered: voided documents, pending settlements and reversals are all included.
 happened_on,kind,reference,relates_to,description,amount,counterparty,actor,status
 2026-03-04,invoice,"INV-2026-0001",,"Coworking ""March"" second line; part",130.55,"Müller, Ana ""AM""","Owner, Ops","issued"
-2026-03-20,invoice,"INV-2026-0002","INV-2026-0001","Credit note",0.00,"Müller, Ana ""AM""","Owner, Ops","issued"
+2026-03-20,invoice,"INV-2026-0002","INV-2026-0001","Credit note",-30.00,"Müller, Ana ""AM""","Owner, Ops","issued"
 2026-03-28,invoice,"INV-2026-0003",,"Press",50.00,"Bob","Owner, Ops","voided"
 2026-03-29,void,"INV-2026-0003","INV-2026-0003","Voided",-50.00,"Bob","Auditor","voided"
 2026-04-02,payment,"INV-2026-0001","INV-2026-0001","Payment",130.55,"Müller, Ana ""AM""",,"confirmed"

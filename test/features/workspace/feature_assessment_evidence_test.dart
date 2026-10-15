@@ -64,6 +64,13 @@ void main() {
       };
       for (final e in featureAssessments.entries) {
         if (named.contains(e.key.name)) continue;
+        // #2519 — the owner declared every shipped feature beta; that is a
+        // different basis, and it never claims evidence it does not have.
+        if (e.value.basis == AssessmentBasis.ownerDecision) {
+          expect(e.value.maturity, FeatureMaturity.beta, reason: e.key.name);
+          expect(e.value.evidence, isEmpty, reason: e.key.name);
+          continue;
+        }
         expect(
           e.value.maturity,
           FeatureMaturity.unreviewed,

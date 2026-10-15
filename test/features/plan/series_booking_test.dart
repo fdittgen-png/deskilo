@@ -6,10 +6,9 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/screens/plan_screen.dart' show pumpPlan, seatCenter;
+import '../../helpers/screens/time_scroller.dart' show pickChipTime;
 import '../../helpers/test_clock.dart';
-
-import 'plan_screen_test.dart' show pumpPlan, seatCenter;
-import 'time_scroller_test.dart' show pickChipTime;
 
 Future<void> openFutureBookingSheet(WidgetTester tester) async {
   // Browse to 20:00 via the from chip (#184) — the clock-dial picker in

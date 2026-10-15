@@ -227,6 +227,8 @@ public.sites.mcp_delegated_deny
 public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
 public.space_inquiry_messages.mcp_delegated_deny
+public.tax_exemption_certificates.mcp_delegated_deny
+public.tax_exemption_certificates.tax_exemption_certificates_select
 public.tax_reference.mcp_delegated_deny
 public.tax_reference.tax_reference_select
 public.usage_records.mcp_delegated_deny

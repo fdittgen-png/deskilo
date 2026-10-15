@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'book_for_others_test.dart' show pumpPlanWithRoster;
-import 'plan_screen_test.dart' show foreignReservation, pumpPlan, seatCenter;
-import 'time_scroller_test.dart' show pickChipTime;
+import '../../helpers/screens/book_for_others.dart' show pumpPlanWithRoster;
+import '../../helpers/screens/plan_screen.dart' show foreignReservation, pumpPlan, seatCenter;
+import '../../helpers/screens/time_scroller.dart' show pickChipTime;
 
 void main() {
   // #490 — the fixture workspace is Europe/Berlin; anchor the SEEDS to

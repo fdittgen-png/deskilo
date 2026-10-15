@@ -5,6 +5,7 @@
 // person asked for and resolve no repository themselves.
 import 'dart:typed_data';
 
+import '../../../core/i18n/format_prefs.dart';
 import '../domain/profile_repository.dart';
 
 class MyProfileEdits {
@@ -29,4 +30,9 @@ class MyProfileEdits {
         countryCode: countryCode,
         vatId: vatId,
       );
+
+  /// My account's regional formats (#2495: the section that reads them
+  /// resolves no repository itself).
+  Future<void> saveFormatPrefs(FormatPrefs prefs) =>
+      _profiles.setFormatPrefs(prefs);
 }

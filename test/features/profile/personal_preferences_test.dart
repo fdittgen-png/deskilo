@@ -3,15 +3,16 @@
 // writes/reset real scoped preferences rather than changing personal defaults.
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
-import 'package:deskilo/core/i18n/regional_formats_section.dart';
 import 'package:deskilo/features/profile/domain/personal_preferences.dart';
+import 'package:deskilo/features/profile/presentation/widgets/regional_formats_section.dart';
 import 'package:deskilo/features/profile/providers/personal_preferences_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 void main() {
   test('explicit workspace values win, reset resumes latest default', () async {
@@ -41,13 +42,9 @@ void main() {
     final repository = FakePersonalPreferencesRepository();
     repository.defaults[PersonalPreference.clock] = '24h';
     final workspace = FakeWorkspaceRepository.withWorkspace();
-    await tester.pumpWidget(ProviderScope(overrides: [
+    await pumpApp(tester, const RegionalFormatsScreen(), overrides: [
       ...standardTestOverrides(workspace: workspace, pinFormats: false, personalPreferences: repository),
-    ], child: const MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: RegionalFormatsScreen(),
-    )));
+    ]);
     await tester.pumpAndSettle();
     final container = ProviderScope.containerOf(tester.element(find.byType(RegionalFormatsScreen)));
     final id = container.read(currentWorkspaceProvider).value!.id;

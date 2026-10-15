@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 /// Localized display name for a [CountryCatalog] code (#153 — shared by
 /// the onboarding form and the workspace settings screen; the catalog

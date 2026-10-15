@@ -17,6 +17,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The repository reads that answer with a person.
 const Map<String, String> _personalReads = {
@@ -51,12 +52,7 @@ const Map<String, String> _exempt = {
       'writes a spreadsheet, not a frame — an export must be true',
 };
 
-Iterable<File> _sources() => Directory('lib')
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.dart'))
-    .where((f) => !f.path.endsWith('.g.dart'))
-    .where((f) => !f.path.endsWith('.freezed.dart'))
+Iterable<File> _sources() => handWrittenDartFiles('lib')
     // The in-memory repositories ARE the reads; they implement them.
     .where((f) => !f.path.startsWith('lib/core/demo/data/'))
     // And the Supabase implementations, for the same reason.

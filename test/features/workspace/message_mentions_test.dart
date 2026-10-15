@@ -7,8 +7,8 @@
 import 'package:deskilo/features/workspace/domain/member_note_refs.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/member_note_composer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/pump_app.dart';
 
 const _ana = '0b8e3c1a-1111-4c2b-9a77-5d0e1f2a3b4c';
 
@@ -29,10 +29,7 @@ void main() {
 
   Future<String> pick(WidgetTester tester, {required bool tokens}) async {
     String? sent;
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp(
-          home: Scaffold(
+    await pumpApp(tester, Scaffold(
             body: MemberNoteComposer(
               autofocus: false,
               referencesAllowed: false,
@@ -43,10 +40,7 @@ void main() {
                 return true;
               },
             ),
-          ),
-        ),
-      ),
-    );
+          ));
     await tester.tap(find.byKey(const ValueKey('member-note-mention')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('mention-Ana')));

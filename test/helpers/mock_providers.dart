@@ -287,6 +287,7 @@ List<Override> standardTestOverrides({
 
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
+    enabledFeatureKeysFromWorkspace, // #2495
     ...realtimeWiringFromApp, // #2495
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
