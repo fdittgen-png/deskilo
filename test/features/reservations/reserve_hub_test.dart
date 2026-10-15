@@ -9,9 +9,7 @@
 // Week is the seat × day occupancy grid of the selected day's ISO week
 // (#236) with AM/PM half-slots and tappable day headers; closed days
 // (#186) gate booking with the banner.
-import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
@@ -27,15 +25,13 @@ import 'package:deskilo/features/reservations/presentation/widgets/month_grid.da
 import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/reserve_view.dart';
-import '../calendar/day_timeline_test.dart' show addSecondLevel;
-import '../plan/time_scroller_test.dart' show pickChipTime;
+import '../../helpers/screens/reserve_hub.dart' show pickHubDate, pumpHub, reservationOn, seatCenter;
+import '../../helpers/screens/time_scroller.dart' show pickChipTime;
 
 const _amChip = ValueKey('reserve-am-chip');
 const _pmChip = ValueKey('reserve-pm-chip');
@@ -44,74 +40,7 @@ const _fromChip = ValueKey('reserve-from-chip');
 const _toChip = ValueKey('reserve-to-chip');
 const _canvasKey = ValueKey('reserve-plan-canvas');
 
-/// Pumps the app and enters the Reserve hub through the bar's raised
-/// centre button (#207), on the seeded small plan (one seat 'A1' =
-/// seat-4 at grid (2,2)). Open every day by default so booking flows
-/// never hit the closed-day gate (#186) — pass [openWeekdays] to test it.
-Future<FakeReservationRepository> pumpHub(
-  WidgetTester tester, {
-  List<Reservation> seed = const [],
-  BookingGranularity? granularity,
-  List<int> openWeekdays = const [1, 2, 3, 4, 5, 6, 7],
-  bool twoLevels = false,
-  FakeReservationRepository? repo,
-  FakeFloorPlanRepository? floorPlans,
-  Clock? clock,
-  // #1183 — a test that is ABOUT the sideways layout starts there.
-  Size size = const Size(800, 1400),
-  double pixelRatio = 1.0,
-  void Function(FakeWorkspaceRepository)? configureWorkspace,
-}) async {
-  // Portrait viewport: these tests exercise the hub's feature behaviour,
-  // not the landscape split (which is covered separately). The 800×600
-  // default is landscape and would engage the side-panel layout.
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = pixelRatio;
-  addTearDown(tester.view.reset);
-  final plans = (floorPlans ?? FakeFloorPlanRepository())..seedSmallPlan();
-  if (twoLevels) addSecondLevel(plans);
-  final reservations = (repo ?? FakeReservationRepository())
-    ..reservations.addAll(seed);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
-    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
-    ..openWeekdays['ws-1'] = openWeekdays;
-  if (granularity != null) {
-    workspace.bookingGranularities['ws-1'] = granularity;
-  }
-  configureWorkspace?.call(workspace);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
-        floorPlan: plans,
-        reservations: reservations,
-        workspace: workspace,
-        clock: clock,
-      ),
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  // #1246 — by TYPE, not by the English tooltip: this helper is
-  // reused by the locale sweep, where 'Reserve' is 'Reservieren'.
-  await tester.tap(find.byType(ShellCenterButton));
-  await tester.pumpAndSettle();
-  return reservations;
-}
 
-/// Centre of seat 'A1' on the hub's canvas (footprint (2,2)..(8,6)).
-/// Transform-aware (#278 idiom): the fit scale follows the viewport.
-Offset seatCenter(WidgetTester tester) {
-  final topLeft = tester.getTopLeft(find.byKey(_canvasKey));
-  final scale = (tester.getTopRight(find.byKey(_canvasKey)).dx -
-          topLeft.dx) /
-      (PlanCanvasMetrics.cells * PlanCanvasMetrics.cellSize);
-  return topLeft +
-      const Offset(
-            5 * PlanCanvasMetrics.cellSize,
-            4 * PlanCanvasMetrics.cellSize,
-          ) *
-          scale;
-}
 
 /// The painter of the hub's plan canvas.
 FloorPlanPainter hubPainter(WidgetTester tester) {
@@ -123,22 +52,6 @@ FloorPlanPainter hubPainter(WidgetTester tester) {
 bool chipSelected(WidgetTester tester, Key key) =>
     tester.widget<ChoiceChip>(find.byKey(key)).selected;
 
-/// Selects [day] through the hub's date chip + calendar dialog (the
-/// 7-day pill strip is gone — UX pass). Handles a month rollover with
-/// the picker's next-month chevron.
-Future<void> pickHubDate(WidgetTester tester, DateTime day) async {
-  await tester.tap(find.byKey(const ValueKey('reserve-date-button')));
-  await tester.pumpAndSettle();
-  final now = kTestNow;
-  if (day.month != now.month || day.year != now.year) {
-    await tester.tap(find.byTooltip('Next month'));
-    await tester.pumpAndSettle();
-  }
-  await tester.tap(find.text('${day.day}').last);
-  await tester.pumpAndSettle();
-  await tester.tap(find.text('OK'));
-  await tester.pumpAndSettle();
-}
 
 DateTime get _today {
   final now = kTestNow;
@@ -192,24 +105,6 @@ class _LoggingReservationRepository extends FakeReservationRepository {
   }
 }
 
-/// A reservation on the seeded seat covering [day] [startHour]–[endHour].
-Reservation reservationOn(
-  DateTime day, {
-  required String id,
-  String memberId = 'member-1',
-  int startHour = 9,
-  int endHour = 11,
-}) {
-  return Reservation(
-    id: id,
-    workspaceId: 'ws-1',
-    seatId: 'seat-4',
-    memberId: memberId,
-    startsAt: DateTime(day.year, day.month, day.day, startHour),
-    endsAt: DateTime(day.year, day.month, day.day, endHour),
-    status: ReservationStatus.reserved,
-  );
-}
 
 // test-inventory: structure is the invariant — the hub and week-grid metrics
 // (#208, #236), chip selection and the painter's inputs are what this file

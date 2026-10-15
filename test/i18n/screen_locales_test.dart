@@ -19,13 +19,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../features/editor/level_canvas_test.dart' show pumpCanvas;
-import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
-import '../features/reservations/reserve_hub_test.dart' show pumpHub;
+import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
 import '../helpers/screens/events.dart' show pumpEvents;
 import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/invoices.dart' show pumpInvoices;
+import '../helpers/screens/level_canvas.dart' show pumpCanvas;
 import '../helpers/screens/money_faces.dart' show pumpFaces;
+import '../helpers/screens/reserve_hub.dart' show pumpHub;
 import '../helpers/screens/validation_settings.dart'
     show pumpValidationSettings;
 

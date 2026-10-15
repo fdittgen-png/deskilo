@@ -11,22 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/onboarding_flow.dart' show pumpWithoutWorkspace;
 
-Future<FakeWorkspaceRepository> pumpWithoutWorkspace(
-  WidgetTester tester,
-) async {
-  final repo = FakeWorkspaceRepository();
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: repo),
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('me-home-create')));
-  await tester.pumpAndSettle();
-  return repo;
-}
 
 /// #1652 — the review, then the explicit Join.
 Future<void> reviewAndJoin(WidgetTester tester) async {

@@ -10,8 +10,8 @@ import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'getting_started_card_test.dart' show pumpCard;
-import 'reserve_hub_test.dart' show seatCenter;
+import '../../helpers/screens/getting_started_card.dart' show pumpCard;
+import '../../helpers/screens/reserve_hub.dart' show seatCenter;
 
 const _gettingStarted = ValueKey('getting-started-card');
 const _tips = ValueKey('help-hint-reserve');

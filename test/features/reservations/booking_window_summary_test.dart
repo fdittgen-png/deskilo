@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart';
+import '../../helpers/screens/reserve_hub.dart';
 
 void main() {
   testWidgets('period selection updates a visible date, name, hours and zone', (

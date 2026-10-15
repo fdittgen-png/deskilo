@@ -12,38 +12,12 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'installation_auth_storage_test.dart' show MemorySecrets;
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
+import '../../helpers/native_federation_flow.dart' show session, user;
 
 const installation = '00000000-0000-4000-8000-000000001791';
 const issuer = 'https://identity.example/auth/v1';
 const authority = FederationAuthority(installation, issuer);
-Map<String, Object?> user(String id) => {
-  'id': id,
-  'aud': 'authenticated',
-  'role': 'authenticated',
-  'created_at': '2026-09-28T00:00:00Z',
-  'app_metadata': <String, Object?>{},
-  'user_metadata': <String, Object?>{},
-};
-Map<String, Object?> session(String id) {
-  final jwt = base64Url.encode(
-    utf8.encode(
-      jsonEncode({
-        'sub': id,
-        'iss': 'https://target.example/auth/v1',
-        'exp':
-            4102444800 /* fixed year 2100: the SDK checks real token expiry */,
-      }),
-    ),
-  );
-  return {
-    'access_token': 'e30.$jwt.signature',
-    'refresh_token': 'target-refresh-$id',
-    'expires_in': 3600,
-    'token_type': 'bearer',
-    'user': user(id),
-  };
-}
 
 void main() {
   for (final scenario in [

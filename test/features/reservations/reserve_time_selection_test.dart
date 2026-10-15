@@ -21,7 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_reservation_repository.dart';
-import 'reserve_hub_test.dart' show pickHubDate, pumpHub, seatCenter;
+import '../../helpers/screens/reserve_hub.dart' show pickHubDate, pumpHub, seatCenter;
 
 final _day = DateTime(2026, 5, 13);
 HalfDayWindow get _am => HalfDayWindows.morning(_day);

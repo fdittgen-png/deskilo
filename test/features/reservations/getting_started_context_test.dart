@@ -30,7 +30,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'getting_started_card_test.dart' show kOrdinaryMember, pumpCard;
+import '../../helpers/screens/getting_started_card.dart' show kOrdinaryMember, pumpCard;
 
 const _card = ValueKey('getting-started-card');
 const _title = ValueKey('getting-started-title');

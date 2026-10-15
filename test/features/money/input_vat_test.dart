@@ -19,8 +19,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'money_screen_test.dart' show pumpMoney;
-import 'supply_expense_test.dart' show openExpenseSheet;
+import '../../helpers/screens/money_screen.dart' show pumpMoney;
+import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 
 const _input = VatDeclarationLine(
   percent: 20,

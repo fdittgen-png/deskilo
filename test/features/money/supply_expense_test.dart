@@ -9,17 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
-import 'money_screen_test.dart' show pumpMoney;
+import '../../helpers/screens/money_screen.dart' show pumpMoney;
+import '../../helpers/screens/supply_expense.dart' show openExpenseSheet;
 
-Future<void> openExpenseSheet(WidgetTester tester) async {
-  await tester.scrollUntilVisible(
-    find.text('Submit an expense'),
-    200,
-    scrollable: find.byType(Scrollable).first,
-  );
-  await tester.tap(find.text('Submit an expense'));
-  await tester.pumpAndSettle();
-}
 
 void main() {
   testWidgets('a supply expense carries item, quantity and unit price',

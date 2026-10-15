@@ -7,8 +7,7 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
-import 'level_canvas_test.dart'
-    show cellCenter, dragCells, pumpCanvas, seedOffice;
+import '../../helpers/screens/level_canvas.dart' show cellCenter, dragCells, pumpCanvas, seedOffice;
 
 Future<FakeFloorPlanRepository> pumpWithDeskAndSeat(
   WidgetTester tester,
