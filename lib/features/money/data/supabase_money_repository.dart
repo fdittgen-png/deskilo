@@ -38,6 +38,7 @@ import '../domain/vat_rate.dart';
 import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
 import 'invoice_preview_decoder.dart';
+import 'invoice_reminder_fold.dart';
 import 'report_image_read.dart';
 
 part 'supabase_money_repository_part1.dart';
@@ -65,21 +66,17 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
     String workspaceId,
   ) async {
-    final rows = await _client
-        .from('invoice_reminders')
-        .select('invoice_id, sent_at')
-        .eq('workspace_id', workspaceId);
-    final result = <String, ({int count, DateTime last})>{};
-    for (final row in rows) {
-      final id = row['invoice_id'] as String;
-      final at = DateTime.parse(row['sent_at'] as String).toLocal();
-      final prev = result[id];
-      result[id] = (
-        count: (prev?.count ?? 0) + 1,
-        last: prev == null || at.isAfter(prev.last) ? at : prev.last,
-      );
-    }
-    return result;
+    // #2587 — paged to the end in a total order: one request is cut at the
+    // server's cap, which made the reminder count and the latest date wrong.
+    final rows = await fetchAllPages(
+      table: 'invoice_reminders',
+      build: () => _client
+          .from('invoice_reminders')
+          .select('id, invoice_id, sent_at')
+          .eq('workspace_id', workspaceId)
+          .order('id', ascending: true),
+    );
+    return foldInvoiceReminders(rows);
   }
 
   SupabaseMoneyRepository(this._client);
