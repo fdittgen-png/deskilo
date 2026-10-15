@@ -155,8 +155,11 @@ void main() {
 
   group('the pieces the widget tree cannot show', () {
     test('the payment-order function knows a yen has no cents', () {
-      final ts = File('supabase/functions/create-payment-order/index.ts')
-          .readAsStringSync();
+      // #2595 — the adapters format the amount; index.ts only orchestrates.
+      final ts = [
+        for (final f in ['paypal.ts', 'mollie.ts'])
+          File('supabase/functions/create-payment-order/$f').readAsStringSync(),
+      ].join('\n');
       // #1137 — the rule moved to _shared/money.ts so the webhooks share
       // it; the order still converts through it and never by hand.
       final shared = File('supabase/functions/_shared/money.ts')
@@ -164,7 +167,7 @@ void main() {
       expect(shared, contains('ZERO_DECIMAL'));
       expect(ts, contains('from "../_shared/money.ts"'));
       expect(ts, isNot(contains('(cents / 100).toFixed(2)')));
-      expect(ts, contains('major(amountCents, currency)'));
+      expect(ts, contains('toMajor(order.amountCents, order.currency)'));
     });
   });
 }
