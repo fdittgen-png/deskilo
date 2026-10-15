@@ -39,6 +39,7 @@ import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
 import 'invoice_preview_decoder.dart';
 import 'invoice_reminder_fold.dart';
+import 'report_image_read.dart';
 
 part 'supabase_money_repository_part1.dart';
 part 'supabase_money_repository_part2.dart';

@@ -109,15 +109,10 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
 
   Future<Uint8List?> _fetchReportImageImpl(
       String workspaceId, String name) async {
-    try {
-      return await _client.storage
-          .from('floor-plans')
-          .download('$workspaceId/report/$name');
-    } on StorageException {
-      // trace-exempt: an image deleted from the library is a normal
-      // miss — the template renders without it by contract.
-      return null;
-    }
+    return readReportImage(
+      name,
+      () => _client.storage.from('floor-plans').download('$workspaceId/report/$name'),
+    );
   }
 
   Future<void> _settleCreditInvoiceImpl(String invoiceId,

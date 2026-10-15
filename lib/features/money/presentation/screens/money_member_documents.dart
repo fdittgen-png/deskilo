@@ -265,7 +265,7 @@ class MoneyMemberDocuments {
             strings: document.strings,
             locale: document.locale,
             report: report,
-            reportImages: await resolveReportImages(_ref, report)),
+            reportImages: await resolveReportImages(_ref, report, strict: true)),
         baseFont: pw.Font.ttf(regular),
         boldFont: pw.Font.ttf(bold),
         pageLabel: l10n.invoicePdfPage,

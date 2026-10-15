@@ -116,7 +116,7 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_documents.dart': 628, // 644→628
+  'lib/features/money/presentation/invoice_documents.dart': 607, // 628→607
 
   'lib/features/money/presentation/accounting_export.dart': 505, // 2026-10-13 #2360: the Swiss booking journal is one more export case.
 
