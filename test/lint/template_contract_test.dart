@@ -18,6 +18,7 @@ import 'package:deskilo/features/workspace/domain/template_feature_profile.dart'
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/lint/template_contract.dart' show TemplateContractRules, checkTemplate;
+import 'lint_sources.dart';
 
 
 
@@ -54,12 +55,7 @@ void main() {
   });
 
   test('the builtin file and the migration that inserts it agree', () {
-    final migrations = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final migrations = sqlFiles('supabase/migrations');
     for (final b in _builtins()) {
       final key = b['key'];
       final insert = RegExp(

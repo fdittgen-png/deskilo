@@ -15,17 +15,15 @@
 //
 // The same shape as `gdpr_export_coverage_test` (#1238), which asks the
 // same question of the member's subject-access export.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Every `public.<table>` in the migrations that carries a
 /// `workspace_id` column — read from the migrations rather than a live
 /// database, because CI has the files and not the project.
 Set<String> _workspaceScopedTables() {
-  final dir = Directory('supabase/migrations');
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
 
   final create = RegExp(
     r'create table (?:if not exists )?public\.(\w+)\s*\((.*?)\n\);',

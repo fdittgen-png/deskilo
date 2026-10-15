@@ -22,7 +22,6 @@
 // verified against the live database and had kept their patches. The
 // set is frozen so that NEW pairs must be argued for; it may shrink,
 // never grow.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
@@ -236,9 +235,7 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
   test('the reviewed set has not gone stale', () {
     // Every entry must still describe a real pair; a removed migration
     // or a renamed function should shrink this list, not be forgotten.
-    final numbers = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
+    final numbers = sqlFiles('supabase/migrations')
         .map((f) => f.uri.pathSegments.last.substring(0, 4))
         .toSet();
     for (final key in _reviewed) {
