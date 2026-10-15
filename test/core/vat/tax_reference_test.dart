@@ -75,12 +75,12 @@ void main() {
 
   test('the revision changes when a planned version is confirmed or withdrawn (#2565)',
       () async {
-    final planned = TaxReferenceRow(
+    const planned = TaxReferenceRow(
       id: 'p',
       country: 'FR',
       key: 'standard',
       validFrom: '2028-01-01',
-      value: const RateValue(
+      value: RateValue(
           label: 'Standard 21 %', percent: 21, group: 'standard', category: 'S'),
       source: 'Bill',
       confirmed: false,
