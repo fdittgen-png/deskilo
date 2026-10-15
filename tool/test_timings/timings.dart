@@ -281,3 +281,95 @@ String renderTimings(
   table('Slowest test bodies', (f) => f.body);
   return b.toString();
 }
+
+/// #2600 — several runs, each on its own clock. Their `time` values all
+/// start at zero on different machines, so they are NEVER added or
+/// interleaved: each shard keeps its own [RunTimings], the longest wall
+/// clock is the critical path, and work is summed only as work.
+class ShardedTimings {
+  ShardedTimings(this.shards);
+
+  /// Shard id to its own run, in plan order.
+  final Map<String, RunTimings> shards;
+
+  /// The slowest shard's own wall clock: what a parallel run waited for.
+  int get criticalPath =>
+      shards.values.fold(0, (m, r) => r.wall > m ? r.wall : m);
+
+  /// Load plus test bodies over every shard: machine time, not elapsed.
+  int get summedWork =>
+      shards.values.fold(0, (n, r) => n + r.loadTotal + r.bodyTotal);
+
+  List<String> get problems => [
+    for (final e in shards.entries)
+      for (final p in e.value.problems) '[${e.key}] $p',
+  ];
+
+  /// The bounded event lines of every shard, each tagged with its shard
+  /// so that two clocks never read as one.
+  List<String> get kept => [
+    for (final e in shards.entries)
+      for (final line in e.value.kept)
+        jsonEncode({
+          ...(jsonDecode(line) as Map<String, dynamic>),
+          'shard': e.key,
+        }),
+  ];
+}
+
+/// The hotspot view of a sharded run.
+String renderShardedTimings(
+  ShardedTimings run, {
+  required String candidate,
+  required String profile,
+  required String runtime,
+  int top = 15,
+}) {
+  final b = StringBuffer()
+    ..writeln('# Test timings')
+    ..writeln()
+    ..writeln('| candidate | profile | runtime | shards |')
+    ..writeln('|---|---|---|---:|')
+    ..writeln('| `$candidate` | $profile | $runtime | ${run.shards.length} |')
+    ..writeln()
+    ..writeln('| shard | ended | wall clock | files | load s | bodies s | overlap |')
+    ..writeln('|---|---|---:|---:|---:|---:|---:|');
+  for (final e in run.shards.entries) {
+    final r = e.value;
+    b.writeln(
+      '| `${e.key}` | ${r.end.name} | ${_s(r.wall)} s | ${r.files.length} | '
+      '${_s(r.loadTotal)} | ${_s(r.bodyTotal)} | '
+      '${r.overlap.toStringAsFixed(1)}× |',
+    );
+  }
+  b
+    ..writeln()
+    ..writeln(
+      'Each shard has its own clock. The slowest shard took '
+      '${_s(run.criticalPath)} s (the critical path of a parallel run); '
+      'summed over shards the work is ${_s(run.summedWork)} s of load and '
+      'test bodies. Wall clocks are never added.',
+    );
+  if (run.problems.isNotEmpty) {
+    b
+      ..writeln()
+      ..writeln('**A stream is incomplete:** ${run.problems.join('; ')}.');
+  }
+  final all = [
+    for (final e in run.shards.entries)
+      for (final f in e.value.files) (e.key, f),
+  ]..sort((a, c) => c.$2.body.compareTo(a.$2.body));
+  b
+    ..writeln()
+    ..writeln('## Slowest test bodies')
+    ..writeln()
+    ..writeln('| shard | file | load s | bodies s | tests | failed | skipped |')
+    ..writeln('|---|---|---:|---:|---:|---:|---:|');
+  for (final (shard, f) in all.take(top)) {
+    b.writeln(
+      '| `$shard` | `${f.path}` | ${_s(f.load)} | ${_s(f.body)} | '
+      '${f.tests} | ${f.failed} | ${f.skipped} |',
+    );
+  }
+  return b.toString();
+}

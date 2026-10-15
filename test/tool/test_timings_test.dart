@@ -74,6 +74,7 @@ List<Map<String, Object?>> _twoFiles({
 ];
 
 void main() {
+  shardedTimingsTests();
   test('load and bodies apart, and overlap instead of a sum', () {
     final run = readTimings(_stream(_twoFiles()));
     expect(run.end, RunEnd.passed);
@@ -141,5 +142,54 @@ void main() {
       contains('`abc123` | quality | 3.47.5 | passed | 1.0 s | 2 | 1.9× |'),
     );
     expect(md, contains('| `test/a_test.dart` | 0.4 | 0.6 | 1 | 0 | 0 |'));
+  });
+}
+
+// #2600 — shards keep independent clocks.
+void shardedTimingsTests() {
+  group('sharded timings', () {
+    test('wall clocks are never added; the critical path is the slowest',
+        () {
+      final fast = readTimings(_stream(_twoFiles()));
+      final slow = readTimings(
+        _stream([
+          {'type': 'start', 'time': 0},
+          _suite(0, 'test/c_test.dart', 0),
+          _start(1, 0, 'c one', 10),
+          _done(1, 5000),
+          {'type': 'done', 'success': true, 'time': 5000},
+        ]),
+      );
+      final both = ShardedTimings({'gate': fast, 'rest': slow});
+      expect(both.criticalPath, 5000);
+      expect(both.criticalPath, isNot(fast.wall + slow.wall));
+      final md = renderShardedTimings(
+        both,
+        candidate: 'abc',
+        profile: 'p',
+        runtime: 'r',
+      );
+      expect(md, contains('Wall clocks are never added'));
+      expect(md, contains('| `gate` |'));
+      expect(md, contains('| `rest` |'));
+    });
+
+    test('the bounded copy tags each line with its shard', () {
+      final one = ShardedTimings({
+        'gate': readTimings(_stream(_twoFiles())),
+        'rest': readTimings(_stream(_twoFiles())),
+      });
+      final shards = {
+        for (final l in one.kept) (jsonDecode(l) as Map)['shard'],
+      };
+      expect(shards, {'gate', 'rest'});
+    });
+
+    test('a cut-short shard is named in the problems with its id', () {
+      final cut = ShardedTimings({
+        'gate': readTimings(_stream(_twoFiles(done: false))),
+      });
+      expect(cut.problems, contains(contains('[gate]')));
+    });
   });
 }
