@@ -433,7 +433,7 @@ constraint invoices.invoices_workspace_id_number_key UNIQUE (workspace_id, numbe
 constraint invoices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint invoices.system_company_present CHECK ((company_id IS NOT NULL))
 constraint ledger_entries.ledger_entries_amount_cents_check CHECK ((amount_cents > 0))
-constraint ledger_entries.ledger_entries_category_check CHECK ((category = ANY (ARRAY['subscription'::text, 'overage'::text, 'expense'::text, 'payment'::text, 'adjustment'::text, 'service'::text, 'package'::text])))
+constraint ledger_entries.ledger_entries_category_check CHECK ((category = ANY (ARRAY['subscription'::text, 'overage'::text, 'expense'::text, 'payment'::text, 'adjustment'::text, 'service'::text, 'package'::text, 'refund'::text])))
 constraint ledger_entries.ledger_entries_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE SET NULL
 constraint ledger_entries.ledger_entries_kind_check CHECK ((kind = ANY (ARRAY['charge'::text, 'credit'::text])))
 constraint ledger_entries.ledger_entries_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE RESTRICT
@@ -1941,7 +1941,7 @@ routine public.setting_history(p_workspace uuid, p_key text) -> jsonb | function
 routine public.setting_origin(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:49631a185341
 routine public.setting_value(p_workspace uuid, p_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:465a3755568e
 routine public.setting_value_problem(p_type text, p_value jsonb, p_min numeric, p_max numeric, p_floor numeric, p_choices jsonb) -> text | function | invoker | immutable | exec:service_role | body:ea8d59b59e20
-routine public.settle_credit_invoice(p_invoice_id uuid, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:b2a2a974416b
+routine public.settle_credit_invoice(p_invoice_id uuid, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:86f6092cf8ec
 routine public.settle_invoices(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:be298f3521a0
 routine public.settle_online_payment(p_provider text, p_order_id text, p_capture_id text, p_amount_cents integer) -> void | function | definer | volatile | exec:service_role | body:a0e1b0cafb37
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
