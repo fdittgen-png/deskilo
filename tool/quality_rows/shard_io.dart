@@ -2,11 +2,12 @@
 //
 // #2600 C1 — where the shard artifacts are read from.
 //
-// The report job downloads one artifact per shard next to the plan:
+// The aggregate job downloads one artifact per shard (named so that the
+// `quality-*` pattern of the report job never flattens them together):
 //
-//   <dir>/quality-shard-<id>/envelope.json   who ran what, how it ended
-//   <dir>/quality-shard-<id>/tests.jsonl     the reporter stream, as written
-//   <dir>/quality-shard-<id>/lcov.info       the shard's own coverage
+//   <dir>/testshard-<id>/envelope.json   who ran what, how it ended
+//   <dir>/testshard-<id>/tests.jsonl     the reporter stream, as written
+//   <dir>/testshard-<id>/lcov.info       the shard's own coverage
 //
 // A file that is absent is passed on as absent (null): `readShard` turns
 // that into a violation, so a missing artifact can never read as success.
@@ -15,7 +16,7 @@ import 'dart:io';
 
 import 'shards.dart';
 
-const shardArtifactPrefix = 'quality-shard-';
+const shardArtifactPrefix = 'testshard-';
 
 String? _read(String path) {
   final f = File(path);
