@@ -152,7 +152,7 @@ Future<void> exportBiPdf(
     bytes ??= await buildBiReportPdf(
       title: title, workspaceName: workspaceName, subtitle: subtitle,
       producedOn: producedOn, estimateNote: estimateNote, sections: sections,
-      report: report, images: await resolveReportImages(ref, report),
+      report: report, images: await resolveReportImages(ref, report, strict: true),
       pageLabel: pageLabel, watermark: mark,
       baseFont: pw.Font.ttf(regular), boldFont: pw.Font.ttf(bold),
     );

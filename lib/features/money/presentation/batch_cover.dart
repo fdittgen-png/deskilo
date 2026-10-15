@@ -28,7 +28,7 @@ Future<({
   await warmLetterDocProviders(ref, docId);
   if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return null;
   final report = renderLetterDoc(context, ref, docId: docId, data: data);
-  final images = await resolveReportImages(ref, report);
+  final images = await resolveReportImages(ref, report, strict: true);
   if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return null;
   return (
     continuation: reportBlockWidgets(report.continuation, images: images),

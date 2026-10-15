@@ -109,15 +109,10 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
 
   Future<Uint8List?> _fetchReportImageImpl(
       String workspaceId, String name) async {
-    try {
-      return await _client.storage
-          .from('floor-plans')
-          .download('$workspaceId/report/$name');
-    } on StorageException {
-      // trace-exempt: an image deleted from the library is a normal
-      // miss — the template renders without it by contract.
-      return null;
-    }
+    return readReportImage(
+      name,
+      () => _client.storage.from('floor-plans').download('$workspaceId/report/$name'),
+    );
   }
 
   Future<void> _settleCreditInvoiceImpl(String invoiceId,
@@ -131,10 +126,17 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
   }
 
   Future<Set<String>> _fetchConsumedPaymentIdsImpl(String workspaceId) async {
-    final rows = await _client
-        .from('invoice_match_payments')
-        .select('payment_ledger_id')
-        .eq('workspace_id', workspaceId);
+    // #2587 — paged to the end: a list cut at the server's cap would offer
+    // an already-consumed payment again. The match command still rechecks
+    // (and the unique payment_ledger_id refuses) the stale candidate.
+    final rows = await fetchAllPages(
+      table: 'invoice_match_payments',
+      build: () => _client
+          .from('invoice_match_payments')
+          .select('id, payment_ledger_id')
+          .eq('workspace_id', workspaceId)
+          .order('id', ascending: true),
+    );
     return {
       for (final row in rows) row['payment_ledger_id'] as String,
     };

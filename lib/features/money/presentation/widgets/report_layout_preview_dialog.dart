@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../domain/report_layout/layout_model.dart';
 import '../../domain/report_layout/layout_render.dart';
 import '../../domain/report_layout/layout_units.dart';
@@ -54,8 +55,15 @@ Future<void> showLayoutQuickPreview(
   }
   final images = <String, Uint8List>{};
   for (final name in layoutImageNames(document)) {
-    final bytes = await ref.read(reportImageBytesProvider(name).future);
-    if (bytes != null) images[name] = bytes;
+    // #2586 — a preview leaves a failed image out (its slot shows the
+    // name); only a truly absent one is silent.
+    try {
+      final bytes = await ref.read(reportImageBytesProvider(name).future);
+      if (bytes != null) images[name] = bytes;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('money', 'report image fetch failed',
+          error: e, stackTrace: st);
+    }
   }
   if (!context.mounted) return;
   await showDialog<void>(

@@ -19,6 +19,8 @@ import 'package:meta/meta.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'read_provenance.dart';
+
 /// Rows per request. Under Supabase's default `max_rows` of 1000; a
 /// lower cap only means more, shorter pages (#1848).
 const int _kExportPageSize = 500;
@@ -71,17 +73,70 @@ Future<List<Map<String, dynamic>>> fetchAllPages({
   int pageSize = _kExportPageSize,
   int maxRows = _kExportMaxRows,
   Future<int> Function()? count,
-}) =>
-    fetchPages(
-      count: count,
-      table: table,
-      page: (from, to) async => [
-        for (final row in await build().range(from, to))
-          Map<String, dynamic>.from(row),
-      ],
-      pageSize: pageSize,
-      maxRows: maxRows,
-    );
+}) async => (await _fetchAllPagesRead(
+  table: table,
+  build: build,
+  pageSize: pageSize,
+  maxRows: maxRows,
+  count: count,
+)).rows;
+
+/// [fetchAllPages] with what it may claim (#2587): the rows of a bounded
+/// TRAVERSAL, never a snapshot. See [fetchPagesRead].
+Future<ProvenancedRows<Map<String, Object?>>> _fetchAllPagesRead({
+  required String table,
+  required PostgrestTransformBuilder<PostgrestList> Function() build,
+  int pageSize = _kExportPageSize,
+  int maxRows = _kExportMaxRows,
+  Future<int> Function()? count,
+}) => fetchPagesRead(
+  count: count,
+  table: table,
+  page: (from, to) async => [
+    for (final row in await build().range(from, to))
+      Map<String, dynamic>.from(row),
+  ],
+  pageSize: pageSize,
+  maxRows: maxRows,
+);
+
+/// [fetchPages] with the honest provenance of what it read (#2587).
+///
+/// The closing exact [count] and unique ids DETECT some instability (the
+/// read is repeated, then refused with [IncompleteReadException]); an
+/// agreeing count never promotes the traversal to a snapshot — a delete
+/// plus an insert between two pages keeps both the count and the number of
+/// unique ids while omitting a row and keeping a deleted one. The
+/// completeness is therefore always [ReadCompleteness.boundedTraversal];
+/// an exact financial or BI result comes from ONE server response under one
+/// statement snapshot instead.
+@visibleForTesting
+Future<ProvenancedRows<Map<String, Object?>>> fetchPagesRead({
+  required String table,
+  required Future<List<Map<String, Object?>>> Function(int from, int to) page,
+  int pageSize = _kExportPageSize,
+  int maxRows = _kExportMaxRows,
+  Future<int> Function()? count,
+  int attempts = 3,
+}) async {
+  final rows = await fetchPages(
+    table: table,
+    page: page,
+    pageSize: pageSize,
+    maxRows: maxRows,
+    count: count,
+    attempts: attempts,
+  );
+  return ProvenancedRows(
+    rows,
+    ReadProvenance.traversal(
+      queryFingerprint: table,
+      reason: count == null
+          ? 'offset traversal, no closing count'
+          : 'offset traversal, count and ids agreed (not a snapshot)',
+    ),
+  );
+}
 
 /// #1848 — the paging loop, with the page read handed in (tests drive it
 /// with a server that caps below the page size).
@@ -111,10 +166,11 @@ Future<List<Map<String, dynamic>>> fetchPages({
       }
     }
     if (count == null) return all;
-    // Offset traversal is not a snapshot (#1848): a row inserted, deleted
-    // or retimed between two pages repeats or skips rows. The read is
-    // complete only when no id repeats and the closing exact count agrees;
-    // otherwise it is read again, and after [attempts] it is refused.
+    // Offset traversal is not a snapshot (#1848, #2587): a row inserted,
+    // deleted or retimed between two pages repeats or skips rows. A repeat
+    // or a count mismatch is DETECTED: the read is made again and after
+    // [attempts] refused. Agreement only means "not visibly unstable" —
+    // see [fetchPagesRead], which never calls it a snapshot.
     final ids = {for (final r in all) r['id']};
     if (ids.length == all.length && await count() == all.length) return all;
     if (attempt >= attempts) throw IncompleteReadException(table);
