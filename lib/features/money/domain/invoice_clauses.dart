@@ -93,6 +93,12 @@ enum LegalProfile {
   caBusiness,
   caConsumer,
 
+  /// #2362 — the United States: no VAT, state law (the UCC and each state's
+  /// prompt-payment rules). Nothing is automatic: the owner's own wording
+  /// prints, a business customer only.
+  usBusiness,
+  usConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
@@ -291,6 +297,8 @@ LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
     ('CH', CustomerCapacity.consumer) => LegalProfile.chConsumer,
     ('CA', CustomerCapacity.business) => LegalProfile.caBusiness,
     ('CA', CustomerCapacity.consumer) => LegalProfile.caConsumer,
+    ('US', CustomerCapacity.business) => LegalProfile.usBusiness,
+    ('US', CustomerCapacity.consumer) => LegalProfile.usConsumer,
     (_, CustomerCapacity.business) => LegalProfile.euBusiness,
     (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
@@ -346,7 +354,8 @@ QualifiedClauses qualifyClauses(
     LegalProfile.euBusiness ||
     LegalProfile.gbBusiness ||
     LegalProfile.chBusiness ||
-    LegalProfile.caBusiness => QualifiedClauses(
+    LegalProfile.caBusiness ||
+    LegalProfile.usBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
@@ -358,7 +367,8 @@ QualifiedClauses qualifyClauses(
     LegalProfile.euConsumer ||
     LegalProfile.gbConsumer ||
     LegalProfile.chConsumer ||
-    LegalProfile.caConsumer => QualifiedClauses(
+    LegalProfile.caConsumer ||
+    LegalProfile.usConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),

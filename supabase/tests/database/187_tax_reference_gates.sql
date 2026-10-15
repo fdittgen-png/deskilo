@@ -82,8 +82,8 @@ update public.tax_reference set valid_to = current_date, valid_from = current_da
 select ok(pg_temp.issue(pg_temp.seller('none', 'CAD', '123456789 RT0001', '', 13, 11300)) like '%seller_country_unsupported%',
           'a country whose row ended has no row: refused');
 
-select ok(not exists (select 1 from public.tax_reference where domain = 'issuing_gate' and country = 'US'),
-          'the United States have no row');
+select is(public.issuing_gate_of('US') ->> 'tax_system', 'sales_tax',
+          'the United States issue in sales-tax mode (0437), not as a VAT country');
 select is(public.issuing_gate_of('el') ->> 'supported', 'true', 'EL reads the Greek row');
 select is(public.issuing_gate_of('IT') ->> 'national_channel_required', 'true', 'Italy is behind a national channel');
 select is(public.issuing_gate_of('ES') ->> 'requires_tax_number', 'true', 'Spain asks for a tax number');

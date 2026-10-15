@@ -8703,6 +8703,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePdfDueOn => 'Vencimiento';
 
   @override
+  String get invoicePdfExemptCertificate => 'Certificado de exención';
+
+  @override
   String get invoicePdfIssuedBy => 'Emitida por';
 
   @override
@@ -8727,12 +8730,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePdfReserved => 'reservado';
 
   @override
+  String get invoicePdfSalesTax => 'Impuesto sobre las ventas';
+
+  @override
   String invoicePdfSettledIn(String number) {
     return 'Reagrupada en $number';
   }
 
   @override
   String get invoicePdfSignature => 'Firma digital (SHA-256)';
+
+  @override
+  String get invoicePdfSubtotal => 'Subtotal';
 
   @override
   String get invoicePdfTitle => 'Factura';
@@ -16080,6 +16089,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sageTaxCode => 'Código de IVA (T1 / T0 / T9)';
 
   @override
+  String get salesTaxWorksheetCsv => 'Hoja del impuesto sobre las ventas (CSV)';
+
+  @override
+  String get salesTaxWorksheetEmpty =>
+      'No se emitió ninguna factura con impuesto sobre las ventas en este período.';
+
+  @override
   String get scanCameraWebUnavailable =>
       'El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).';
 
@@ -18513,6 +18529,75 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get taskWorkbenchUntrusted =>
       'Un borrador privado de un archivo: nada de él se considera fiable ni se envía.';
+
+  @override
+  String get taxCertAdd => 'Añadir un certificado';
+
+  @override
+  String get taxCertEmpty => 'Ningún certificado archivado.';
+
+  @override
+  String get taxCertEnd => 'Terminar hoy';
+
+  @override
+  String get taxCertFailed => 'No se pudo guardar el certificado';
+
+  @override
+  String get taxCertInvalidDate => 'Introduzca la fecha como AAAA-MM-DD';
+
+  @override
+  String get taxCertInvalidState => 'Dos letras, o *';
+
+  @override
+  String get taxCertKind => 'Tipo';
+
+  @override
+  String get taxCertKindGovernment => 'Administración pública';
+
+  @override
+  String get taxCertKindNonprofit => 'Sin ánimo de lucro';
+
+  @override
+  String get taxCertKindOther => 'Otro';
+
+  @override
+  String get taxCertKindResale => 'Reventa';
+
+  @override
+  String get taxCertNumber => 'Número del certificado';
+
+  @override
+  String taxCertOpenEnded(String from) {
+    return 'desde $from, sin fin';
+  }
+
+  @override
+  String get taxCertRequired => 'Obligatorio';
+
+  @override
+  String get taxCertSave => 'Guardar el certificado';
+
+  @override
+  String get taxCertState =>
+      'Estado (dos letras, o * para un certificado multiestatal)';
+
+  @override
+  String get taxCertSubtitle =>
+      'Impuesto sobre las ventas: las líneas de este cliente salen sin impuesto mientras haya un certificado vigente';
+
+  @override
+  String get taxCertTitle => 'Certificados de exención';
+
+  @override
+  String get taxCertValidFrom => 'Válido desde (AAAA-MM-DD)';
+
+  @override
+  String get taxCertValidTo => 'Válido hasta (AAAA-MM-DD, opcional)';
+
+  @override
+  String taxCertValidity(String from, String to) {
+    return '$from a $to';
+  }
 
   @override
   String get taxRefAccount => 'Número de cuenta (o código del plan)';

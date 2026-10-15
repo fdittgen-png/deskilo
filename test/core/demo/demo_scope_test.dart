@@ -301,6 +301,7 @@ void main() {
 /// overrides, and against the repository providers the app declares.
 const Set<String> demoOverriddenProviders = {
   'bookProfileRepositoryProvider', // #1869
+  'salesTaxRepositoryProvider', // #2362
   'settingsRepositoryProvider', // #2484
   'taxReferenceRepositoryProvider', // #2477
   'clockProvider',

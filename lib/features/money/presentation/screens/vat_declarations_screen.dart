@@ -36,6 +36,7 @@ import '../invoice_documents.dart';
 import '../recapitulative_actions.dart';
 import '../report_actions.dart';
 import '../report_layout_actions.dart';
+import '../sales_tax_worksheet_actions.dart';
 import '../vat_filing_file_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
@@ -344,6 +345,7 @@ class _VatDeclarationsScreenState
                       ),
                     ),
                   ),
+                SalesTaxWorksheetButton(start: period.start, end: period.end),
                 const SizedBox(height: AppSpacing.lg),
                 switch (declarationsAsync) {
                   AsyncData(value: final declarations)
