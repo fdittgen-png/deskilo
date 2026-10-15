@@ -123,7 +123,20 @@ over a limit; each may only stay or fall, a function it does not name must
 be under every limit (a rename or an extraction is a new function), and a
 function that improves lowers its baseline line in the same pull request:
 the failing test prints the line to write. A budget that sits far above its
-file, and a new `part of` file, fail the same way. Do not run the whole
+file, and a new `part of` file, fail the same way.
+
+Every per-file budget (#2598) is one generated block, `budgets`, of
+`docs/design/CODE_HEALTH_BASELINE.json`: file length, `setState` per
+library, repositories in widgets per feature, imports per feature pair and
+the `part of` count. `dart run tool/code_health.dart --baseline` rewrites
+all of them; it lowers a number and refuses (exit 1, nothing written) to
+raise one. An entry that has to exist anyway is written once with
+`--allow-new=<category>:<key>`, and its reason is one line in
+`docs/design/CODE_HEALTH_BUDGET_REASONS.txt`
+(`<category> <key> // #issue reason`, no number, no change log). A failing
+test prints the command, never a line to write by hand. Allow-lists with a
+test-specific scanner (`generic_error`, `visual_tokens`, `state_primitives`,
+`help_host_inventory`) are not part of the block. Do not run the whole
 measurement as a separate pre-push step; the lint run already does.
 
 ## Generated files must merge cleanly (#2121)

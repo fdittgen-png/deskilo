@@ -20,6 +20,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_arb.dart' show encodeArb;
+import '../../tool/code_health_budgets.dart' show Budgets;
 import '../../tool/dependency_map.dart' show render;
 
 /// A three-way merge as git does it: null when it conflicts.
@@ -97,23 +98,25 @@ void main() {
     expect(_merge(old(base, 10), old(one, 14), old(two, 12)), isNull);
   });
 
-  test('file-length budgets: raising two neighbouring files merges cleanly '
-      'when entries are not on adjacent lines', () {
-    String budgets(int a, int b, {String gap = '\n'}) =>
-        "const _baseline = {\n  'lib/a.dart': $a,$gap  'lib/b.dart': $b,\n};\n";
-    final merged =
-        _merge(budgets(700, 800, gap: '\n\n'), budgets(710, 800, gap: '\n\n'),
-            budgets(700, 820, gap: '\n\n'));
-    expect(merged, budgets(710, 820, gap: '\n\n'));
+  test('file-length budgets: lowering two neighbouring files merges cleanly '
+      'in the generated block (#2598)', () {
+    String budgets(int a, int b) => Budgets(partOfFiles: 1, maps: {
+          'fileLength': {'lib/a.dart': a, 'lib/b.dart': b},
+          'setState': {},
+          'repositoryInWidgets': {},
+          'pairBudget': {},
+        }).render();
+    final merged = _merge(budgets(700, 800), budgets(690, 800), budgets(700, 780));
+    expect(merged, budgets(690, 780));
 
-    // Negative control: the same raises on adjacent lines conflict.
-    expect(_merge(budgets(700, 800), budgets(710, 800), budgets(700, 820)),
+    // Negative control: the same entries on adjacent lines conflict.
+    String adjacent(int a, int b) =>
+        '"fileLength": {\n  "lib/a.dart": $a,\n  "lib/b.dart": $b\n}\n';
+    expect(_merge(adjacent(700, 800), adjacent(690, 800), adjacent(700, 780)),
         isNull);
-    // And two raises of the SAME file still conflict, which is right:
-    // the combined line count needs a new number.
-    expect(
-        _merge(budgets(700, 800, gap: '\n\n'), budgets(710, 800, gap: '\n\n'),
-            budgets(720, 800, gap: '\n\n')),
+    // And two lowerings of the SAME file still conflict, which is right:
+    // the combined count needs a new number.
+    expect(_merge(budgets(700, 800), budgets(690, 800), budgets(680, 800)),
         isNull);
   });
 }

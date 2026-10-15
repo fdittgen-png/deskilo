@@ -21,6 +21,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/code_health_budgets.dart';
 import '../../tool/layering/analysis.dart' as layering;
 
 import 'lint_sources.dart';
@@ -31,7 +32,7 @@ import 'lint_sources.dart';
 /// either using an existing seam instead, or adding the pair HERE with a
 /// one-line justification in the PR description.
 ///
-/// #1233 — the counts ARE tracked now, in [_pairBudget] below. Tracking
+/// #1233 — the counts ARE tracked now, in `budgets.pairBudget` (see below). Tracking
 /// only the pair names was the hole: all 54 were live, and behind them
 /// sat 656 import statements. A pair already on the list could grow
 /// without limit, and `money -> workspace` had reached 111, which is not
@@ -41,34 +42,17 @@ import 'lint_sources.dart';
 /// directly (#1234). 66 of them, and this is the ratchet that empties
 /// them.
 ///
-/// A count and not a list of names, for the same reason `_pairBudget`
+/// A count and not a list of names, for the same reason the pair budget
 /// counts imports rather than listing pairs: presence tells you nothing
 /// about progress. `reservations` went 5 → 4 when
 /// `application/book_seat.dart` took the booking decision out of a
 /// 740-line widget method, and that is exactly the kind of step this has
 /// to be able to see.
 ///
-/// Every number may only go DOWN. A feature that reaches zero is deleted
-/// from the map, after which any widget in it touching a repository
-/// fails.
-const Map<String, int> _repositoryInWidgets = {
-  'money': 20, // 2026-10-13 #2494 21→20: the money screen's operations are classes now; 2026-09-26 #1449 A3 then A2: 17→16 (the expense sheet asks application/submit_expense.dart), then the A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing accesses visible — 17→22: invoice_proforma (read), number_sequences_screen, dunning_rules_dialog, invoice_template_sheet, billing_rules_dialog (server-owned settings writes);  // 2026-09-20 #1449 18→17: the consumption sheet asks application/record_consumption.dart whether the shelf holds that many and which month the charge lands on — a period that was not a month used to close the sheet and write nothing, silently // 2026-09-20 #1449 20→18: the VAT screen asks application/declare_vat.dart which documents a period declares on its basis, and whether the platform GRANTED the filing; the expense-schedule sheet asks application/schedule_expense.dart what answering at a different amount means, and is refused when the explanation is missing // 2026-09-19 #1449 21→20: the settlement sheet asks application/settle_invoices.dart which invoices may be regrouped and what the new document is called // 2026-09-19 #1449 23→21: Repartitions is a class behind a provider, so BOTH the wizard and the expense sheet stopped resolving the repository — the free-function form had left each caller reading one // 2026-09-19 #1449 24→23: the legal-identity screen asks application/save_legal_identity.dart which aggregate is written first, and resolves no repository at all // 2026-09-18 #1449 25→24: the register-payment sheet asks application/record_payment.dart which month a payment belongs to
-  'workspace': 27, // 2026-10-06 #2210 28→27: the legacy conversation list left lib/; // 2026-09-26 #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing accesses visible — 18→28 (member_subscription_action already moved by A4): member_vat_treatment, workspace_code_screen, nfc_config_screen, my_badge_tile, badge_manager_dialog, group_info_sheet (server-owned writes), pending_approval_screen, message_search_screen, open_conversation, legend_profile_tile (reads);  // 2026-09-20 #1449 19→18: the onboarding wizard asks application/start_workspace.dart what a creation needs before it is one, and sends the request id that makes a retry the SAME creation rather than a second dev/prod pair // 2026-09-20 #1449 20→19: the deployment screen asks application/deploy_configuration.dart what a tick carries and deploys the PREVIEWED set, never the ticks as they stand when the sheet closes // 2026-09-19 #1449 21→20: the new-conversation sheet asks application/start_conversation.dart what a second person means and whether a taken name is a correction; it resolves no repository // 2026-09-19 #1528 20→21: the screen that defines a workspace's own roles resolves the roles repository, the same shape the questions editor has and the same one every settings screen has; // 2026-09-19 #1288 S4 19→20: the question editor screen resolves the fields repository to define a question — the same shape every settings screen has, and the decision it makes is the server's; // 2026-09-17 #1280 S3 20→19: the save sheet publishes through application/publish_template.dart
-  'auth': 4,
-  // Still 4 after #1234: `space_act_sheet.dart` moved its DECISION to
-  // `application/act_on_space.dart` but still resolves the repository
-  // from a provider to hand it over — exactly as
-  // `reserve_seat_actions.dart` does for `bookSeat`. This ratchet
-  // counts provider reads, and a command's caller still makes one.
-  'reservations': 5, // 2026-09-26 #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing accesses visible — 4→5: widgets/reference_open (read); 
-  'editor': 3,
-  'profile': 7, // 2026-09-26 #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing accesses visible — 3→7: consent_screen, whatsapp_dialog (server-owned writes), developer_screen, workspace_owners_sheet (reads); 
-  'members': 3, // 2026-09-26 #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing accesses visible — 2→3: widgets/managed_access_editor (server-owned write); 
-  'plan': 2,
-  'calendar': 1,
-  'events': 1,
-  'kiosk': 1,
-};
+/// Every number may only go DOWN. A feature that reaches zero leaves
+/// `budgets.repositoryInWidgets` of docs/design/CODE_HEALTH_BASELINE.json
+/// (written by `dart run tool/code_health.dart --baseline`, #2598), after
+/// which any widget in it touching a repository fails.
 
 const Set<String> _knownPairs = {
   // #1865 — the task recorder: the help screen offers "Record this
@@ -210,154 +194,11 @@ const Set<String> _knownPairs = {
 };
 
 
-/// The number of imports behind each committed pair — a ceiling, never
-/// a target. It may only go DOWN: a refactor that removes coupling
-/// lowers its line, and a change that adds an import to an existing pair
-/// has to say so here.
-const Map<String, int> _pairBudget = {
-  // 2026-10-02 #1865 — the task recorder's seam and adapter (see the
-  // pairs above).
-  'reservations -> task_recorder': 8,
-  'task_recorder -> reservations': 1,
-  'task_recorder -> workspace': 6, // 2026-10-03 #1884 B +2: a permission and its label
-  'workspace -> task_recorder': 9, // 2026-10-03 #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
-  // 2026-10-03 #2142 — the labelled entry in Me → Account.
-  'me -> money': 2, // 2026-10-06 ADR 0035: the home's finance summary reads the overview and opens the finances route
-  'me -> task_recorder': 2, // 2026-10-04 task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
-  // 2026-10-03 #1881 B — the calendar's seams (hub and classic), the
-  // decision seam, and the recorder's calendar-kind label.
-  'calendar -> task_recorder': 8,
-  'events -> task_recorder': 4, // 2026-10-03 #1884 B +2: the validation rules
-  'task_recorder -> calendar': 1,
-  // 2026-10-03 #1884 B — the event type and its label, for a rule.
-  'task_recorder -> events': 2,
-  // 2026-09-16 #1306 S2 — the calendar carries the pending decisions when
-  // the events bell is off: one import of the events feature's widget.
-  'calendar -> events': 4,
-  'calendar -> money': 6,
-  'calendar -> plan': 8, // #2276: feed rows reuse authorized location providers.
-  // 2026-09-14 #1269 7→8: the day view reads `browsedLevelProvider`.
-  // The browsed level is ONE value the plan, the day and the week
-  // share — three private copies is what made it snap back to the
-  // first floor on every view switch — and it belongs to the feature
-  // that owns booking, not to the calendar.
-  'calendar -> reservations': 9, // #2276: feed rows reuse the month reservation cache.
-  'calendar -> workspace': 15,
-  'editor -> plan': 20,
-  'editor -> workspace': 6,
-  'events -> money': 5,
-  // 2026-09-16 #1306 — +1 each on plan, reservations and workspace: the
-  // pending-decisions section left events_screen.dart so the calendar can
-  // carry it when the bell is off, and names, targets and the currency
-  // are read in both files now.
-  'events -> plan': 2,
-  'events -> reservations': 4,
-  'events -> workspace': 21, // #2295: remove the obsolete inbox-tab visibility dependency.
-  'kiosk -> events': 1,
-  'kiosk -> members': 1,
-  'kiosk -> plan': 7,
-  'kiosk -> profile': 2,
-  // 9→10 (2026-09-16): #1234 — `SpaceAction`/`SpaceActChoice` moved
-  // from `presentation/widgets/space_act_form.dart` to
-  // `domain/space_act.dart` so the application layer could name them
-  // without importing a widget file. kiosk_act_sheet needs both (it
-  // renders the form AND names the choice); kiosk_screen needed only
-  // the types, and its now-dead form import was removed — so this is
-  // +1, not +2.
-  'kiosk -> reservations': 10,
-  'kiosk -> workspace': 7,
-  'members -> money': 9, // 2026-09-17 #1279 the member page hosts the carnet tile 8→9
-  'members -> plan': 3,
-  'members -> profile': 9,
-  'members -> reservations': 14,
-  'members -> workspace': 37, // 2026-10-11 #2358 36→37: the member page states the customer's e-invoicing address through workspace/presentation/member_einvoice_address_tile.dart. // 2026-10-03 #1916 35→36: the member page states the customer capacity through workspace/presentation/member_customer_capacity.dart, beside the VAT treatment dialog it mirrors; 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
-  'money -> calendar': 1,
-  'money -> events': 35, // 2026-10-13 #2494 32→35: the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; no new dependency. // #2295: Finance reads the existing authorized attention count and opens its filtered feed; no repository access.
-  'money -> members': 2,
-  'money -> plan': 14,
-  'money -> profile': 8, // 2026-09-28 #1791: payment choice reads and edits existing personal defaults; checkout consumes that same preference.
-  'money -> reservations': 13,
-  // 2026-09-15 #1310 S0 112→113: the invoice register asks for the
-  // exportData permission before offering the accounting export.
-  'money -> workspace': 139, // 2026-10-13 #2494 130→139: the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; coupling unchanged. // 2026-10-13 #2484 128→130: the dunning delay is a setting — the dunning rules provider and the rules dialog ask the workspace's settings snapshot (the editor and the registry live with the workspace). // 2026-10-11 #2357 126→128: the expense VAT fields (one widget for the one-off and the scheduled expense) ask whether input VAT is on and the space VAT-registered. // 2026-10-05 125→126: Me › Finances opens an invoice's workspace (selects the active workspace id). // #2003 cancel cover preparation when its workspace changes. // 2026-10-04 123→125: the session state of money (period, face, wizard) starts over when the active workspace changes, so it watches the active workspace id; 2026-10-03 #1916 122→123: the legal identity screen names the capacities with the same customerCapacityName the member page uses; 2026-10-02 #1869 B 120→122: the chart sheet names its issuer site and reads the current workspace, as the book sheet does; 2026-10-02 #1869 117→120: a book profile belongs to an issuer, which IS a workspace site, and is read for the current workspace — the book sheet names the site, the providers the current workspace; // 2026-09-19 #1449 116→117: save_legal_identity.dart names WorkspaceRepository — the command writes both aggregates, which is the point of it; the SCREEN stopped importing it, so the coupling moved from presentation into application where it is one line // 2026-09-17 #1279 carnets read the current workspace and its feature flag 113→116
-  'plan -> events': 1,
-  'plan -> members': 1,
-  'plan -> money': 4,
-  'plan -> profile': 2,
-  'plan -> reservations': 10, // 2026-10-13 #2494 9→10: the floor-plan painter's furniture layers became their own file (one library became two), both naming SeatState; coupling unchanged.
-  // 2026-09-15 #1273 10→11: floor_plan_providers reads the
-  // singleRoomLevelNames flag once for every map surface.
-  'plan -> workspace': 12, // 2026-10-04 11→12: the plan focus starts over when the active workspace changes
-  'profile -> auth': 7, // 2026-10-14 #2495 6→7: the presence heartbeat's wiring moved from core/presence into profile (a downward import, unavoidable: it reads the session); core-to-feature imports fell by 2.
-  'profile -> calendar': 2,
-  'profile -> members': 1,
-  'profile -> reservations': 5,
-  // 2026-09-15 #1310 S0 30→31: the developer reservation dump asks for
-  // the exportData permission before exporting anyone but the exporter.
-  //
-  // 2026-09-16 #1307 31→35, and this one is a DELIBERATE trade, not
-  // drift. settings_screen.dart sat at exactly its length cap, so
-  // Settings could not be reorganized by ownership until something
-  // left; the Advanced section moved to widgets/. Splitting one file
-  // into two re-states the imports BOTH halves need —
-  // workspace_feature, workspace_permission and workspace_providers are
-  // each now imported twice inside profile/, because the screen still
-  // uses them for the personal and preferences sections.
-  //
-  // The fourth is application/set_workspace_dev_mode.dart. Keeping that
-  // decision in the widget would have cost one import less and broken
-  // `profile: 4 > 3` instead — a widget in profile/ reaching
-  // workspace/'s repository. ADR 0024 is the stronger rule, so the
-  // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 43, // 2026-10-14 #2495 45→43: country_names moved to core/i18n (two imports gone). // 2026-10-13 #2484 42→45: the platform-owner tools list opens the settings editor (flag, feature gate, editor widget). // #2301: shared Reports visibility with route and drawer. // 2026-10-03 #1823: paired workspace cards reuse WorkspaceAvatar so the chooser and workspace show the same uploaded mark. // 2026-09-29 #1829 39→40: the Settings entry that names the instance owner (widgets/instance_owner_tile.dart) — a workspace-scope widget every member sees; it decides nothing.  // 2026-09-28 #1791: profile switcher links to account admission history.  // 2026-09-20 #1598 37→38: the settings screen asks `showsMemberAccountMenu` what to call itself. The predicate reads the effective PERMISSION set, so it lives with the matrix in workspace/domain; re-deciding in profile/ what counts as administering something is exactly the drift #1085 was about. One import, and the one definition both the shell and the screen read; // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
-  'reservations -> calendar': 1,
-  'reservations -> events': 5,
-  'reservations -> members': 2,
-  'reservations -> money': 1,
-  // 2026-09-15 #1273 62→63: the seat list names a level's only room by
-  // the level through floor_plan_providers, like the day and week views.
-  // 2026-09-16 #1301 S1 — +5 plan, +3 workspace: reserve_canvas.dart left
-  // the at-cap reserve_screen.dart and imports the plan and workspace types
-  // the screen still needs for its list view and controls — one file split
-  // in two, no new dependency.
-  // 2026-09-25 #1643 68→69: `providers/reservation_providers.dart` reads
-  // the plan's `targetNamesProvider` so the calendar-file command can name
-  // the booked space — the widget that asks for the file imports no plan
-  // provider of its own, which is the point of the command.
-  'reservations -> plan': 83, // 2026-10-13 #2494 73→83: the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no new dependency. // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
-  'reservations -> profile': 1,
-  // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
-  // `domain/space_act.dart` both need `BookingGranularity`: the
-  // check-in window rule widens with the grid step, so the decision
-  // cannot be made without it. Two imports, both load-bearing.
-  // 2026-09-20 #1580 53→51: `booking_gate_scope.dart` stopped importing
-  // `booking_policies` and `booking_granularity` — they were there only
-  // to supply the invented defaults it no longer substitutes.
-  // 2026-09-25 #1643 51→52: `widgets/calendar_file_button.dart` reads
-  // `myMemberProvider` to say WHOSE file is being asked for, the same
-  // import the detail sheet it sits in already makes.
-  // 2026-09-26 #1654 52→54: the hub adapts existing membership/policy
-  // facts; the card has no cross-feature reads. Workspace environment and
-  // BookingPolicies remain owned by workspace, not duplicated in the card.
-  // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
-  // the workspace readiness check (domain, provider, section labels).
-  'reservations -> workspace': 73, // 2026-10-13 #2494 65→73: the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no new dependency. // 2026-10-04 61→65: favourites and ratings (#2185) read the current workspace, its feature flag and the person's permission in their providers and commands; earlier: 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
-  'workspace -> auth': 11, // 2026-10-13 #2484 10→11: the settings snapshot is re-read for a different signed-in person. // // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
-  // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
-  // *does anything need me?* by ASSEMBLING signals that already exist:
-  // the events awaiting my decision (the type, to tell money from a
-  // person, and the provider that applies the validation policy) and
-  // the month's members with billable data and no invoice. Reading them
-  // where they are computed is the whole point — a second copy of
-  // "which events are pending" is the coupling worth refusing, not
-  // three imports in one provider file.
-  'workspace -> events': 15, // 2026-09-27 #1657 13→15: widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
-  'workspace -> members': 4,
-  'workspace -> money': 45, // 2026-10-06 the reference picker derives an invoice's standing (open / paid / cancelled) from the one lifecycle the archive and the open cards use; #2003 badge/QR covers and BI exports reuse report pagination, designs and image resolution.
-  'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
-  'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
-  'workspace -> reservations': 17, // 2026-10-10 #2383 18→17: the legacy new-conversation sheet left lib/; // 2026-10-06 #2210 19→18: the legacy conversation list left lib/; // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
-};
+/// The number of imports behind each committed pair is a ceiling, never a
+/// target (#1233): `budgets.pairBudget` in
+/// docs/design/CODE_HEALTH_BASELINE.json, written by
+/// `dart run tool/code_health.dart --baseline` (#2598), which lowers it and
+/// refuses a raise.
 
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');
 
@@ -444,50 +285,17 @@ void main() {
   // the remaining entries below are what is left to move there.
   test('presentation/ reaches repositories only where the application '
       'layer has not arrived yet (#1234)', () {
-    final offenders = <String, List<String>>{};
-    for (final file in _featureFiles()) {
-      if (!file.path.contains('/presentation/')) continue;
-      final feature = layering.featureOf(file.path);
-      if (feature == null) continue;
-      final text = layering.withoutComments(file.readAsStringSync());
-      if (!layering.repositoryUse.hasMatch(text)) continue;
-      // #2386 — a part file counts as its library.
-      final list = offenders[feature] ??= [];
-      final library = layering.libraryPathOf(file);
-      if (!list.contains(library)) list.add(library);
-    }
-
-    final grew = <String>[];
-    final shrank = <String>[];
-    for (final entry in offenders.entries) {
-      final budget = _repositoryInWidgets[entry.key];
-      if (budget == null) {
-        grew.add('${entry.key}: ${entry.value.length} files, and this '
-            'feature is supposed to be finished:\n    '
-            '${entry.value.join('\n    ')}');
-      } else if (entry.value.length > budget) {
-        grew.add('${entry.key}: ${entry.value.length} > $budget');
-      } else if (entry.value.length < budget) {
-        shrank.add('${entry.key}: ${entry.value.length} (budget $budget)');
-      }
-    }
-
+    final failures = budgetFailures(Budgets.load(), measureBudgetActuals(),
+        only: 'repositoryInWidgets');
     expect(
-      grew,
+      failures,
       isEmpty,
-      reason: 'a widget started calling a repository directly:\n'
-          '${grew.join('\n')}\n\n'
+      reason: 'a widget started calling a repository directly, or a budget '
+          'can fall:\n${failures.join('\n')}\n\n'
           'Put the DECISION in lib/features/<feature>/application/ and '
           'let the widget say what the member asked for. ADR 0024, and '
           'lib/features/reservations/application/book_seat.dart is the '
           'worked example.',
-    );
-    expect(
-      shrank,
-      isEmpty,
-      reason: 'good — lower these in _repositoryInWidgets in the same '
-          'commit, so the next person inherits the ground you took:\n'
-          '${shrank.join('\n')}',
     );
   });
 
@@ -577,7 +385,6 @@ void main() {
   test('cross-feature import pairs stay inside the committed set (ratchet)',
       () {
     final live = <String>{};
-    final counts = <String, int>{};
     for (final file in _featureFiles()) {
       final src = layering.featureOf(file.path)!;
       for (final m in layering.importRe.allMatches(file.readAsStringSync())) {
@@ -592,7 +399,6 @@ void main() {
         }
         if (target != null && target != src) {
           live.add('$src -> $target');
-          counts.update('$src -> $target', (n) => n + 1, ifAbsent: () => 1);
         }
       }
     }
@@ -618,25 +424,12 @@ void main() {
     );
 
     // #1233 — and the VOLUME behind each pair, which is the half the
-    // name-only ratchet could never see.
-    final grew = <String>[];
-    final shrank = <String>[];
-    for (final entry in counts.entries) {
-      final budget = _pairBudget[entry.key];
-      if (budget == null) continue; // a new pair; `added` already failed
-      if (entry.value > budget) {
-        grew.add('${entry.key}: ${entry.value} > $budget');
-      } else if (entry.value < budget) {
-        shrank.add('${entry.key}: ${entry.value} (budget $budget)');
-      }
-    }
-    expect(grew, isEmpty,
-        reason: 'coupling GREW behind an already-committed pair. Route it '
-            'through a seam, or raise the line in _pairBudget and say why '
-            'in the PR:\n${grew.join('\n')}');
-    expect(shrank, isEmpty,
-        reason: 'coupling shrank — lower these in _pairBudget in the same '
-            'commit, or the ceiling stops meaning anything:\n'
-            '${shrank.join('\n')}');
+    // name-only ratchet could never see (#2598: budgets.pairBudget).
+    final volume = budgetFailures(Budgets.load(), measureBudgetActuals(),
+        only: 'pairBudget');
+    expect(volume, isEmpty,
+        reason: 'coupling moved behind a committed pair. Route growth '
+            'through a seam; a fall is written by the command:\n'
+            '${volume.join('\n')}');
   });
 }
