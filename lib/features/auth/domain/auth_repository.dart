@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/session/session_source.dart';
 import 'auth_outcome.dart';
 import 'badge_sign_in.dart';
 import 'federation_port.dart';
@@ -6,13 +7,15 @@ import 'social_provider.dart';
 
 /// Pure-Dart auth boundary (spec §2). Implemented by Supabase in data/,
 /// faked in tests — presentation never sees supabase_flutter types.
-abstract class AuthRepository {
+abstract class AuthRepository implements SessionSource {
   /// Emits the signed-in user id, or null when signed out. Emits the
   /// current state to new listeners immediately.
+  @override
   Stream<String?> authStateChanges();
   /// Browser-return failures are asynchronous; keep the existing form usable.
   Stream<AuthResult> authFeedback();
 
+  @override
   String? get currentUserId;
 
   /// [AuthOutcome.authenticated], or why not. Never throws for an

@@ -167,7 +167,7 @@ extension _FakeMoneyRepositoryPart2 on FakeMoneyRepository {
       id: 'ledger-refund-${ledger.length + 1}',
       memberId: invoice.memberId,
       kind: LedgerKind.charge,
-      category: LedgerCategory.adjustment,
+      category: LedgerCategory.refund,
       amountCents: -invoice.totalCents,
       description: 'Refund ${invoice.number}'
           '${trimmed.isEmpty ? '' : ' — $trimmed'}',

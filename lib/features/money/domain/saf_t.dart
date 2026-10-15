@@ -4,8 +4,11 @@ import 'package:xml/xml.dart';
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import 'invoice.dart';
+import 'saf_t_ledger.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
+
+export 'saf_t_ledger.dart' show SafTLedgerAccounts;
 
 /// The app version SAF-T records as the producing software
 /// (`SoftwareVersion`). Cross-pinned to `pubspec.yaml` by test — an audit
@@ -34,25 +37,6 @@ const String safTSoftwareVersion = '1.0.3';
 /// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
 /// VAT-inclusive prices that means the extracted net, and the tax sits
 /// beside it in `TaxInformation` (0072).
-/// The four accounts the derived postings book to (#669).
-///
-/// Deliberately the same four the FEC, DATEV and Sage ask for, because
-/// they are the same four postings — one mapping, asked for once, and no
-/// second opinion about which account revenue lands in.
-class SafTLedgerAccounts {
-  const SafTLedgerAccounts({
-    required this.customers,
-    required this.revenue,
-    required this.bank,
-    required this.vat,
-  });
-
-  final String customers;
-  final String revenue;
-  final String bank;
-  final String vat;
-}
-
 /// Which national declaration the file makes about itself (#669).
 ///
 /// One tree, two headers. Every SAF-T variant is a restriction of the
@@ -249,7 +233,9 @@ String buildSafTFile({
                   'the accounts named at export time. It is NOT the '
                   'complete books of the entity: purchases, payroll, bank '
                   'charges and fixed assets never pass through this '
-                  'system and are absent.',
+                  'system and are absent. Credit notes reverse the sale; '
+                  'expense reimbursements and goodwill adjustments netted '
+                  'on an invoice, and write-offs, are not posted.',
         );
       });
     }
@@ -312,85 +298,65 @@ String buildSafTFile({
     // numbers would look complete and create work: every wrong code is
     // unbooked by hand.
     if (ledgerAccounts case final accounts?) {
-      var debitTotal = 0;
-      var creditTotal = 0;
       var lineNo = 0;
-      // Counted first: SAF-T states the totals BEFORE the entries, so
-      // they cannot be accumulated while writing them.
-      for (final invoice in live) {
-        debitTotal += invoice.chargesCents;
-        creditTotal += invoice.chargesCents;
-      }
-      for (final e in settled) {
-        debitTotal += e.match.paidCents;
-        creditTotal += e.match.paidCents;
-      }
+      // Built first: SAF-T states the totals BEFORE the entries, so they
+      // are the sums of the transactions about to be written.
+      final sales = safTSalesTransactions(live, accounts);
+      final bank = [
+        ...safTNettedReceipts(live, accounts),
+        for (final e in settled)
+          SafTLedgerTransaction(
+            // Dated when the money MOVED (0070), not when it was
+            // recorded — or the ledger disagrees with the bank
+            // statement it is reconciled against.
+            id: '${e.invoice.number}-P',
+            date: e.match.matchedAt,
+            description: 'Payment ${e.invoice.number}',
+            lines: [
+              SafTLedgerLine(
+                  accounts.bank, e.match.paidCents, 0, e.invoice.number),
+              SafTLedgerLine(
+                  accounts.customers, 0, e.match.paidCents, e.invoice.number),
+            ],
+          ),
+      ];
+      final all = [...sales, ...bank];
 
       builder.element('GeneralLedgerEntries', nest: () {
         // Two journals, matching what the FEC writes: sales and bank.
-        tag('NumberOfEntries', '${live.length + settled.length}');
-        tag('TotalDebit', amount(debitTotal));
-        tag('TotalCredit', amount(creditTotal));
+        tag('NumberOfEntries', '${all.length}');
+        tag('TotalDebit', amount(all.fold(0, (s, t) => s + t.debitTotal)));
+        tag('TotalCredit', amount(all.fold(0, (s, t) => s + t.creditTotal)));
 
-        void line(String account, int debit, int credit, String text) {
-          lineNo++;
-          builder.element(debit > 0 ? 'DebitLine' : 'CreditLine', nest: () {
-            tag('RecordID', '$lineNo');
-            tag('AccountID', account);
-            tag('SystemEntryDate', day(createdAt));
-            tag('Description', text);
-            tag(debit > 0 ? 'DebitAmount' : 'CreditAmount',
-                amount(debit > 0 ? debit : credit));
+        void journal(String id, String name, List<SafTLedgerTransaction> txs) {
+          builder.element('Journal', nest: () {
+            tag('JournalID', id);
+            tag('Description', name);
+            for (final t in txs) {
+              builder.element('Transaction', nest: () {
+                tag('TransactionID', t.id);
+                tag('Period', '${t.date.month}');
+                tag('TransactionDate', day(t.date));
+                tag('Description', t.description);
+                for (final l in t.lines) {
+                  lineNo++;
+                  builder.element(l.debit > 0 ? 'DebitLine' : 'CreditLine',
+                      nest: () {
+                    tag('RecordID', '$lineNo');
+                    tag('AccountID', l.account);
+                    tag('SystemEntryDate', day(createdAt));
+                    tag('Description', l.text);
+                    tag(l.debit > 0 ? 'DebitAmount' : 'CreditAmount',
+                        amount(l.debit > 0 ? l.debit : l.credit));
+                  });
+                }
+              });
+            }
           });
         }
 
-        builder.element('Journal', nest: () {
-          tag('JournalID', 'VE');
-          tag('Description', 'Sales');
-          for (final invoice in live) {
-            builder.element('Transaction', nest: () {
-              tag('TransactionID', invoice.number);
-              tag('Period', '${invoice.issuedAt.month}');
-              tag('TransactionDate', day(invoice.issuedAt));
-              tag('Description', invoice.title);
-              // The receivable at the GROSS, against revenue NET of tax
-              // and the VAT beside it — one credit pair per rate, which
-              // is what lets a mixed-rate month reconcile.
-              line(accounts.customers, invoice.chargesCents, 0,
-                  invoice.number);
-              if (invoice.vatTotals.isEmpty) {
-                line(accounts.revenue, 0, invoice.chargesCents,
-                    invoice.number);
-              } else {
-                for (final total in invoice.vatTotals) {
-                  line(accounts.revenue, 0, total.netCents, invoice.number);
-                  if (total.vatCents > 0) {
-                    line(accounts.vat, 0, total.vatCents, invoice.number);
-                  }
-                }
-              }
-            });
-          }
-        });
-
-        builder.element('Journal', nest: () {
-          tag('JournalID', 'BQ');
-          tag('Description', 'Bank');
-          for (final e in settled) {
-            builder.element('Transaction', nest: () {
-              tag('TransactionID', '${e.invoice.number}-P');
-              // Dated when the money MOVED (0070), not when it was
-              // recorded — or the ledger disagrees with the bank
-              // statement it is reconciled against.
-              tag('Period', '${e.match.matchedAt.month}');
-              tag('TransactionDate', day(e.match.matchedAt));
-              tag('Description', 'Payment ${e.invoice.number}');
-              line(accounts.bank, e.match.paidCents, 0, e.invoice.number);
-              line(accounts.customers, 0, e.match.paidCents,
-                  e.invoice.number);
-            });
-          }
-        });
+        journal('VE', 'Sales', sales);
+        journal('BQ', 'Bank', bank);
       });
     }
 

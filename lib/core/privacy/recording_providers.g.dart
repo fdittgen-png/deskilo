@@ -55,4 +55,4 @@ final class RecordingPrivacyProvider
   }
 }
 
-String _$recordingPrivacyHash() => r'54efd4366d813846510c1d4affafcb6f52bfe233';
+String _$recordingPrivacyHash() => r'45bdc0b04d332abee5c4fbd667068d2840096215';

@@ -29,7 +29,8 @@ const _screenFloor = 18;
 /// reason and date.
 // #1653: Create workspace adds six measured cells.
 // #1974: member/settings forms and the reports destination add measured cells.
-const _cellFloor = 101;
+// #2601: the locale axis is part of the matrix; its nine screens are cells.
+const _cellFloor = 110;
 
 /// Every gap reason carries the issue that owns it and the date it was
 /// written, so a reason cannot rot unnoticed into a permanent excuse.
@@ -79,6 +80,7 @@ void main() {
     for (final path in const [
       'test/a11y/responsive_matrix_test.dart',
       'test/a11y/screen_guidelines_test.dart',
+      'test/i18n/screen_locales_test.dart',
     ]) {
       final source = File(path).readAsStringSync();
       for (final match

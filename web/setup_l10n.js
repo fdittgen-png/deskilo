@@ -1197,6 +1197,10 @@ window.SETUP_L10N={
    "configurableSettings": [
     "Configurable settings",
     "Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace's administrators their own values."
+   ],
+   "salesTax": [
+    "Sales tax (United States)",
+    "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue."
    ]
   },
   "process": {
@@ -2613,6 +2617,10 @@ window.SETUP_L10N={
    "configurableSettings": [
     "Réglages configurables",
     "Limites, délais et valeurs par défaut que l'on modifie dans l'application sans attendre une version : l'opérateur fixe les valeurs par défaut, les administrateurs d'un espace les leurs."
+   ],
+   "salesTax": [
+    "Taxe de vente (États-Unis)",
+    "Un vendeur aux États-Unis facture des prix hors taxe et la taxe de vente du code postal du site, indiquée à part par juridiction ; le certificat d'exonération d'un client retire une ligne de la taxe. Désactivé : un tel vendeur ne peut pas facturer."
    ]
   },
   "process": {
@@ -4029,6 +4037,10 @@ window.SETUP_L10N={
    "configurableSettings": [
     "Konfigurierbare Einstellungen",
     "Grenzen, Fristen und Standardwerte, die Sie in der App ändern, statt auf eine Version zu warten: Der Plattformbetreiber legt die Standardwerte fest, die Administratoren eines Arbeitsbereichs ihre eigenen."
+   ],
+   "salesTax": [
+    "Sales Tax (USA)",
+    "Ein Verkäufer in den USA stellt Nettopreise aus und weist die Sales Tax der Postleitzahl des Standorts getrennt je Jurisdiktion aus; die Befreiungsbescheinigung eines Kunden nimmt eine Zeile aus der Steuer. Aus: ein solcher Verkäufer kann keine Rechnung stellen."
    ]
   },
   "process": {
@@ -5445,6 +5457,10 @@ window.SETUP_L10N={
    "configurableSettings": [
     "Ajustes configurables",
     "Límites, plazos y valores por defecto que se cambian en la aplicación sin esperar a una versión: el operador fija los valores por defecto, los administradores de un espacio los suyos."
+   ],
+   "salesTax": [
+    "Impuesto sobre las ventas (EE. UU.)",
+    "Un vendedor en Estados Unidos factura con precios netos y el impuesto sobre las ventas del código postal de la sede, indicado aparte por jurisdicción; el certificado de exención de un cliente saca una línea del impuesto. Desactivado: ese vendedor no puede facturar."
    ]
   },
   "process": {
@@ -6861,6 +6877,10 @@ window.SETUP_L10N={
    "configurableSettings": [
     "Impostazioni configurabili",
     "Limiti, termini e valori predefiniti che si modificano nell'app senza attendere una versione: l'operatore imposta i valori predefiniti, gli amministratori di uno spazio i propri."
+   ],
+   "salesTax": [
+    "Imposta sulle vendite (Stati Uniti)",
+    "Un venditore negli Stati Uniti fattura prezzi al netto e indica a parte la sales tax del codice postale della sede, per giurisdizione; il certificato di esenzione di un cliente toglie una riga dall'imposta. Disattivato: un tale venditore non può fatturare."
    ]
   },
   "process": {

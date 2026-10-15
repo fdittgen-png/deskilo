@@ -19,6 +19,7 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Member _member(
   int n, {
@@ -129,17 +130,12 @@ Future<void> _pumpPage(
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final s = _seed(viewerOwner: viewerOwner, flags: flags);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(timeZoneMode: TimeZoneMode.device, 
+  await pumpApp(tester, MemberPage(memberId: memberId), overrides: standardTestOverrides(timeZoneMode: TimeZoneMode.device, 
         workspace: s.workspace,
         reservations: s.reservations,
         floorPlan: s.floorPlan,
         profile: s.profile,
-      ),
-      child: MaterialApp(home: MemberPage(memberId: memberId)),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 

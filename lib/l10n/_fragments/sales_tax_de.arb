@@ -1,0 +1,51 @@
+{
+  "@@locale": "de",
+  "featureSalesTaxTitle": "Sales Tax (USA)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
+  },
+  "featureSalesTaxDesc": "Ein Verkäufer in den USA stellt Nettopreise aus und weist die Sales Tax der Postleitzahl des Standorts getrennt je Jurisdiktion aus; die Befreiungsbescheinigung eines Kunden nimmt eine Zeile aus der Steuer. Aus: ein solcher Verkäufer kann keine Rechnung stellen.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "taxRefDomainSalesTax": "Sales Tax je Postleitzahl",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
+  "taxRefDomainTaxability": "Steuerbarkeit je Bundesstaat",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
+  },
+  "taxRefState": "Bundesstaat (zwei Buchstaben)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefComponents": "Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefStatus": "Status",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
+  "taxRefTaxSystem": "Steuersystem (vat oder sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
+  },
+  "taxRefInvalidState": "Zweibuchstabigen Bundesstaat-Code eingeben",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
+  },
+  "taxRefInvalidComponents": "Eine Jurisdiktion je Zeile: Ebene, Name, Prozent (0 bis 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
+  "invoiceMissingSalesTaxRate": "Die Sales Tax der Postleitzahl des Standorts: der Plattformbetreiber hat sie nicht erfasst",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Ob eine Zeilenart dieser Rechnung im Bundesstaat steuerbar ist: niemand hat es festgelegt (Steuerbarkeit je Bundesstaat)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
+  }
+}

@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
-import 'demo_journeys_test.dart' show pumpDemo;
+import '../helpers/screens/demo_journeys.dart' show pumpDemo;
 
 Future<void> _go(WidgetTester tester, String route) async {
   GoRouter.of(tester.element(find.byType(Scaffold).first)).go(route);

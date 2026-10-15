@@ -11,12 +11,11 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/directory/application/directory_actions.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/public_page_editor.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _ws = 'ws-1';
 
@@ -28,19 +27,10 @@ Future<void> _pumpEditor(
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, const PublicPageEditor(), overrides: standardTestOverrides(
         auth: FakeAuthRepository.signedIn(),
         directory: repo,
-      ),
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: PublicPageEditor(),
-      ),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 

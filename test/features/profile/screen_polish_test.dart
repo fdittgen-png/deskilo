@@ -6,11 +6,11 @@
 import 'package:deskilo/features/profile/presentation/widgets/pair_card.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'backend_settings_test.dart' show pumpServerScreen;
+import '../../helpers/pump_app.dart';
+import '../../helpers/screens/backend_settings.dart' show pumpServerScreen;
 
 void main() {
   group('#1194 — the Server screen', () {
@@ -47,11 +47,7 @@ void main() {
   group('#1188 — a paired workspace row', () {
     testWidgets('roles use supporting text rather than a selection control',
         (tester) async {
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: standardTestOverrides(),
-          child: MaterialApp(
-            home: Scaffold(
+      await pumpApp(tester, Scaffold(
               body: WorkspacePairCard(
                 dev: _workspace,
                 prod: _workspace.copyWith(id: 'ws-prod', environment: 'prod'),
@@ -59,10 +55,7 @@ void main() {
                 activeId: 'ws-dev',
                 onSelect: (_) async {},
               ),
-            ),
-          ),
-        ),
-      );
+            ), overrides: standardTestOverrides());
       await tester.pumpAndSettle();
       expect(
         find.text('Owner'), findsOneWidget,

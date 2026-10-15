@@ -6,7 +6,7 @@
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'day_timeline_test.dart' show pumpTimeline, todayReservation;
+import '../../helpers/screens/day_timeline.dart' show pumpTimeline, todayReservation;
 
 void main() {
   testWidgets('a few seats share the screen: rows grow past the compact '

@@ -2,12 +2,11 @@
 //
 // #1289 S2 — the screen where a space chooses its colour.
 import 'package:deskilo/features/workspace/presentation/screens/colours_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Future<FakeWorkspaceRepository> _pump(
   WidgetTester tester, {
@@ -22,16 +21,7 @@ Future<FakeWorkspaceRepository> _pump(
   );
   workspace.workspaces[0] =
       workspace.workspaces[0].copyWith(branding: branding);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: ColoursScreen(),
-      ),
-    ),
-  );
+  await pumpApp(tester, const ColoursScreen(), overrides: standardTestOverrides(workspace: workspace));
   await tester.pumpAndSettle();
   return workspace;
 }

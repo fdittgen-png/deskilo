@@ -9,31 +9,22 @@
 // nothing; Not now stores exactly one scoped key and the next start
 // shows no card, while another account on the same phone still gets
 // its own; the flag OFF hides the card and leaves booking usable.
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
-import 'package:deskilo/core/backend/backend_settings.dart';
-import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
-import 'package:deskilo/core/locale/locale_controller.dart';
-import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/features/editor/presentation/screens/editor_screen.dart';
-import 'package:deskilo/features/help/providers/help_providers.dart';
 import 'package:deskilo/features/profile/presentation/screens/settings_screen.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
-import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
-import 'reserve_hub_test.dart' show seatCenter;
+import '../../helpers/screens/getting_started_card.dart' show kOrdinaryMember, pumpCard;
+import '../../helpers/screens/reserve_hub.dart' show seatCenter;
 
 const _card = ValueKey('getting-started-card');
 const _title = ValueKey('getting-started-title');
@@ -41,15 +32,6 @@ const _primary = ValueKey('getting-started-primary');
 const _dismiss = ValueKey('getting-started-dismiss');
 const _booking = ValueKey('getting-started-booking');
 
-/// An ordinary member of ws-1: no role, no admin power.
-const kOrdinaryMember = Member(
-  id: 'member-1',
-  workspaceId: 'ws-1',
-  userId: 'user-1',
-  isAdmin: false,
-  isOwner: false,
-  status: MemberStatus.active,
-);
 
 /// My membership cannot be read at all.
 class _MembershipDown extends FakeWorkspaceRepository {
@@ -78,78 +60,7 @@ class _RefusingReservations extends FakeReservationRepository {
   }
 }
 
-typedef Hub = ({
-  FakeReservationRepository reservations,
-  FakeWorkspaceRepository workspace,
-  InMemoryHelpHintStore hints,
-});
 
-/// The app, entered on the Reserve hub as [member] would see it.
-Future<Hub> pumpCard(
-  WidgetTester tester, {
-  Member member = kOrdinaryMember,
-  FakeWorkspaceRepository? workspace,
-  FakeReservationRepository? reservations,
-  FakeFloorPlanRepository? plans,
-  InMemoryHelpHintStore? hints,
-  Map<String, dynamic> featureFlags = const {},
-  FakeAuthRepository? auth,
-  // #1654 C3 — the structural and scoping cases.
-  Size size = const Size(800, 1400),
-  BackendSettingsStore? backendSettings,
-  String? languageCode,
-  FakeLocalSetupRepository? localSetup,
-  LinkLauncher? launcher,
-}) async {
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  final plan = plans ?? (FakeFloorPlanRepository()..seedSmallPlan());
-  final repo = reservations ?? FakeReservationRepository();
-  final ws =
-      workspace ??
-      (FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
-        ..myMember = member
-        ..memberNames = {'member-1': 'Flo'}
-        ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7]);
-  final store = hints ?? InMemoryHelpHintStore();
-  // #606 idiom — the help screen's visibility detector must not leave a
-  // timer behind a test that navigates to it.
-  VisibilityDetectorController.instance.updateInterval = Duration.zero;
-  await tester.pumpWidget(
-    ProviderScope(
-      // A fresh container on every pump: without the key, a second pump
-      // updates the SAME scope and its kept-alive providers, so "the next
-      // start" would never re-read the store.
-      key: UniqueKey(),
-      overrides: [
-        ...standardTestOverrides(
-          floorPlan: plan,
-          reservations: repo,
-          workspace: ws,
-          helpHints: store,
-          auth: auth,
-          backendSettings: backendSettings,
-          localSetup: localSetup,
-        ),
-        if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
-        if (languageCode != null)
-          localeStoreProvider.overrideWithValue(
-            InMemoryLocaleStore()..languageCode = languageCode,
-          ),
-        helpContentProvider.overrideWith(
-          (ref, languageCode) async =>
-              '# User Guide\n\n## 4. Reserve hub\n\nHi.\n',
-        ),
-      ],
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.tap(find.byType(ShellCenterButton));
-  await tester.pumpAndSettle();
-  return (reservations: repo, workspace: ws, hints: store);
-}
 
 String _text(WidgetTester tester, Key key) =>
     tester.widget<Text>(find.byKey(key)).data ?? '';

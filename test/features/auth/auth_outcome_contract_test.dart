@@ -24,7 +24,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../core/backend/installation_auth_storage_test.dart' show MemorySecrets;
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
 
 class _MemoryStorage extends GotrueAsyncStorage {
   final Map<String, String> _items = {};

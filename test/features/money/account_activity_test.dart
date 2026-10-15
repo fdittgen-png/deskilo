@@ -8,12 +8,11 @@ import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/presentation/screens/account_activity_screen.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 AccountActivity entry(int number, {String currency = 'EUR'}) => AccountActivity(
   id: '$number',
@@ -32,15 +31,10 @@ Future<void> showHistory(
   FakeAccountActivityRepository repo,
   FakeAuthRepository auth,
 ) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(auth: auth, accountActivity: repo),
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: AccountActivityScreen(),
-      ),
-    ),
+  await pumpApp(
+    tester,
+    const AccountActivityScreen(),
+    overrides: standardTestOverrides(auth: auth, accountActivity: repo),
   );
   await tester.pumpAndSettle();
 }
@@ -50,9 +44,10 @@ void main() {
     'foreign invoices remain visible when home and another server are offline',
     (tester) async {
       final auth = FakeAuthRepository.signedIn();
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
+      await pumpApp(
+        tester,
+        const AccountActivityScreen(),
+        overrides: [
             ...standardTestOverrides(
               auth: auth,
               accountActivity: FakeAccountActivityRepository()
@@ -77,13 +72,7 @@ void main() {
               'https://two.example',
               AccountActivityKind.invoices,
             ).overrideWith((ref) async => throw StateError('offline')),
-          ],
-          child: const MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            home: AccountActivityScreen(),
-          ),
-        ),
+        ],
       );
       await tester.pumpAndSettle();
       expect(find.text('Office 99'), findsOneWidget);
@@ -103,17 +92,12 @@ void main() {
     tester,
   ) async {
     final preferences = FakePersonalPreferencesRepository();
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: standardTestOverrides(
-          auth: FakeAuthRepository.signedIn(),
-          personalPreferences: preferences,
-        ),
-        child: const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: AccountActivityScreen(),
-        ),
+    await pumpApp(
+      tester,
+      const AccountActivityScreen(),
+      overrides: standardTestOverrides(
+        auth: FakeAuthRepository.signedIn(),
+        personalPreferences: preferences,
       ),
     );
     await tester.pumpAndSettle();

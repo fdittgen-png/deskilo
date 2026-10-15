@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
-import 'level_canvas_test.dart' show cellCenter, pumpCanvas, seedOffice;
+import '../../helpers/screens/level_canvas.dart' show cellCenter, pumpCanvas, seedOffice;
 
 Finder get _toolbar => find.byType(EditorToolbar);
 Finder get _selectionBar => find.byType(EditorSelectionBar);

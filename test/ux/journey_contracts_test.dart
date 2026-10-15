@@ -31,9 +31,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/workspace/onboarding_flow_test.dart'
-    show pumpWithoutWorkspace;
 import '../helpers/mock_providers.dart';
+import '../helpers/screens/onboarding_flow.dart' show pumpWithoutWorkspace;
 
 /// Jumps the create wizard to a named step, the way its stepper header
 /// lets a member jump once the first two steps are filled in.

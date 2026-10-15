@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/workspace/domain/workspace_feature.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../features/enabled_feature_keys.dart';
 import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import 'guide_site.dart';
@@ -89,8 +88,8 @@ class _HelpHintState extends ConsumerState<HelpHint> {
   @override
   Widget build(BuildContext context) {
     final id = widget.id;
-    final features = ref.watch(enabledFeaturesSyncProvider);
-    if (!features.contains(WorkspaceFeature.formHelpHints)) {
+    final features = ref.watch(enabledFeatureKeysProvider);
+    if (!featureOn(features, formHelpHintsKey, byDefault: true)) {
       return const SizedBox.shrink();
     }
     // #1867 — one help at a time: a guide step or a blocker outranks tips.
@@ -109,7 +108,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     // #2313 — a scenario of a switched-off feature is not offered.
     final tips = [
       for (final tip in HelpHint.tips(l10n, id))
-        if (tip.feature == null || features.contains(tip.feature)) tip,
+        if (tip.feature == null || featureOn(features, tip.feature!.dbKey, byDefault: true)) tip,
     ];
     if (tips.isEmpty) return const SizedBox.shrink();
     if (_page >= tips.length) _page = 0;

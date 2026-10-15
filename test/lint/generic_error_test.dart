@@ -18,7 +18,7 @@ import 'lint_sources.dart';
 
 /// Files still falling back to the generic sentence → how many times.
 const Map<String, int> _baseline = {
-  'lib/core/i18n/regional_formats_section.dart': 1,
+  'lib/features/profile/presentation/widgets/regional_formats_section.dart': 1,
   'lib/core/trace/guarded.dart': 1,
   'lib/features/auth/presentation/screens/linked_accounts_screen.dart': 1,
   'lib/features/calendar/presentation/screens/calendar_hub_screen.dart': 1,
@@ -79,14 +79,15 @@ const Map<String, int> _baseline = {
   'lib/features/profile/presentation/screens/privacy_screen.dart': 2,
   'lib/features/profile/presentation/screens/settings_screen.dart': 1, // 2026-09-29 #1823 2→1: the address dialog moved to account_settings_dialogs.dart and says what failed
   'lib/features/reservations/presentation/reserve_seat_actions.dart': 3,
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 1,
+  'lib/features/reservations/presentation/screens/reserve_hub_views.dart': 1,
   'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 1,
   'lib/features/reservations/presentation/widgets/space_act_sheet.dart': 1,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 4,
   'lib/features/workspace/presentation/excel_export.dart': 1,
   'lib/features/workspace/presentation/member_admin_actions.dart': 13,
   'lib/features/workspace/presentation/member_vat_treatment.dart': 1,
-  'lib/features/workspace/presentation/screens/availability_screen.dart': 2,
+  'lib/features/workspace/presentation/screens/availability_actions.dart': 1,
+  'lib/features/workspace/presentation/screens/availability_screen.dart': 1,
   'lib/features/workspace/presentation/screens/deployment_screen.dart': 3,
   'lib/features/workspace/presentation/screens/documents_screen.dart': 3,
   'lib/features/workspace/presentation/screens/members_screen.dart': 1,

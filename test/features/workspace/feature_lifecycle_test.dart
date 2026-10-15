@@ -75,6 +75,9 @@ void main() {
       );
       for (final a in featureAssessments.values) {
         if (a.maturity == FeatureMaturity.unreviewed) continue;
+        // #2519 — an owner's declaration (beta, never stable) carries no
+        // evidence by design and says so in its rationale.
+        if (a.basis == AssessmentBasis.ownerDecision) continue;
         expect(a.evidence, isNotEmpty);
       }
     });
@@ -98,6 +101,39 @@ void main() {
           ),
         }),
         isEmpty,
+      );
+    });
+
+    test('an owner decision is beta only, names its date, needs no evidence', () {
+      expect(
+        _check({
+          WorkspaceFeature.carnets: const FeatureAssessment(
+            maturity: FeatureMaturity.beta,
+            basis: AssessmentBasis.ownerDecision,
+            rationale: 'Owner decision of 2026-10-13: declared beta',
+          ),
+        }),
+        isEmpty,
+      );
+      expect(
+        _check({
+          WorkspaceFeature.carnets: const FeatureAssessment(
+            maturity: FeatureMaturity.stable,
+            basis: AssessmentBasis.ownerDecision,
+            rationale: 'Owner decision of 2026-10-13: declared',
+          ),
+        }),
+        ['carnets: stable on an owner decision'],
+      );
+      expect(
+        _check({
+          WorkspaceFeature.carnets: const FeatureAssessment(
+            maturity: FeatureMaturity.beta,
+            basis: AssessmentBasis.ownerDecision,
+            rationale: 'declared beta',
+          ),
+        }),
+        ['carnets: an owner decision that does not name its date'],
       );
     });
 

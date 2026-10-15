@@ -11,15 +11,14 @@ import 'package:deskilo/features/plan/presentation/widgets/check_in_sheets.dart'
 import 'package:deskilo/features/reservations/domain/own_booking_removal.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Reservation _booking(
   ReservationStatus status, {
@@ -45,20 +44,11 @@ Future<void> _pumpApp(WidgetTester tester, Widget home) async {
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, Scaffold(body: home), overrides: standardTestOverrides(
         floorPlan: plans,
         reservations: FakeReservationRepository(),
         accessories: FakeAccessoryRepository(),
-      ),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: home),
-      ),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 
