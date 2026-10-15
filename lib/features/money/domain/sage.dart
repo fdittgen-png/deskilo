@@ -6,6 +6,7 @@ import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
+import 'invoice_line_cash.dart';
 import 'vat_rate.dart';
 
 /// Sage 50's **audit-trail CSV** (#669) — the import shape the British
@@ -204,6 +205,25 @@ String buildSageFile({
       );
     }
 
+    // #2365 — the payments the invoice itself netted were money in on its
+    // date; without them the debtor stays open on a document whose total
+    // is already net of them.
+    if (!invoice.isCreditNote) {
+      for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
+        row(
+          type: 'SR',
+          nominal: accounts.bank,
+          on: invoice.issuedAt,
+          reference: invoice.number,
+          details: 'Payment ${invoice.number}',
+          netCents: -line.amountCents,
+          taxCode: accounts.noTax,
+          taxCents: 0,
+          customer: customer,
+        );
+      }
+    }
+
     final match = matches[invoice.id];
     // A PENDING match is a settlement still awaiting validation (0067).
     // Booking it would put money in Sage the workspace has not agreed it
@@ -212,12 +232,17 @@ String buildSageFile({
       // A receipt carries NO tax: the tax was accounted for on the
       // invoice, and repeating it here would double it on the VAT
       // return. T9 is what says so.
+      // #2365 — the refund of a credit note is money OUT: SP, a payment to
+      // the customer, never a receipt.
+      final refund = refundedCents(invoice, match);
       row(
-        type: 'SR',
+        type: refund > 0 ? 'SP' : 'SR',
         nominal: accounts.bank,
         on: match.matchedAt,
         reference: invoice.number,
-        details: 'Payment ${invoice.number}',
+        details: refund > 0
+            ? 'Refund ${invoice.number}'
+            : 'Payment ${invoice.number}',
         netCents: match.paidCents,
         taxCode: accounts.noTax,
         taxCents: 0,

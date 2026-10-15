@@ -288,6 +288,32 @@ String buildFecFile({
         letter: letter, validDate: invoice.issuedAt,
       );
       if (pending) releaseVat(invoice, label);
+      // #2365 — the refund of the credit note: money out, the receivable
+      // the note opened is cleared (lettered with the note).
+      final refund = refundedCents(invoice, matches[invoice.id]);
+      if (refund > 0) {
+        final refundEntry = '$_bankJournal-${invoice.number}-R';
+        final refundDate = matches[invoice.id]!.matchedAt;
+        final refundLabel = 'Remboursement ${invoice.number}';
+        write(
+          journal: _bankJournal, journalLabel: _bankJournalLabel,
+          number: refundEntry, date: refundDate,
+          account: accounts.customers, accountLabel: customersLabel,
+          auxNumber: invoice.memberId, auxLabel: invoice.memberName,
+          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+          label: refundLabel, debitCents: refund, creditCents: 0,
+          letter: letter, validDate: refundDate,
+        );
+        write(
+          journal: _bankJournal, journalLabel: _bankJournalLabel,
+          number: refundEntry, date: refundDate,
+          account: accounts.bank, accountLabel: bankLabel,
+          auxNumber: '', auxLabel: '',
+          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+          label: refundLabel, debitCents: 0, creditCents: refund,
+          letter: letter, validDate: refundDate,
+        );
+      }
       continue;
     }
     final charges = invoice.lines

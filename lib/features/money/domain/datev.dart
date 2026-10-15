@@ -281,6 +281,19 @@ String buildDatevFile({
         credit: accounts.customers,
         text: 'Gutschrift ${invoice.number}',
       );
+      // #2365 — the refund of the note is money OUT: customers debited,
+      // bank credited, on the day it moved.
+      final refund = refundedCents(invoice, matches[invoice.id]);
+      if (refund > 0) {
+        book(
+          cents: refund,
+          debit: accounts.customers,
+          credit: accounts.bank,
+          date: matches[invoice.id]!.matchedAt,
+          documentRef: invoice.number,
+          text: 'Erstattung ${invoice.number}',
+        );
+      }
       continue;
     }
     // Receivable against revenue, at what the invoice CHARGES — DATEV
