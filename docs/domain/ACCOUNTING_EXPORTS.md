@@ -29,7 +29,7 @@ authority. Widening one needs the authority's own spec in hand.
 |---|---|---|---|
 | FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM |
 | SAF-T (PT), `TaxAccountingBasis` **F** | regulatory | PT | declared invoicing-only, `SoftwareCertificateNumber` 0 |
-| DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header, first 20 fields per row, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM** |
+| DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header (SKR in field 27, fiscal-year start from the book profile), first 20 fields per row, Belegfeld 1 cut at 36 and Buchungstext at 60, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM** |
 | Sage 50 audit trail | exchange | GB, IE | |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted on purpose |
