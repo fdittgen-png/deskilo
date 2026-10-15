@@ -4,25 +4,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:deskilo/core/backend/auth_secret_store.dart';
 import 'package:deskilo/core/backend/installation_auth_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
 
-class MemorySecrets implements AuthSecretStore {
-  final values = <String, String>{};
-  Completer<void>? delay;
-  @override
-  Future<String?> read(String key) async => values[key];
-  @override
-  Future<void> write(String key, String value) async {
-    await delay?.future;
-    values[key] = value;
-  }
-
-  @override
-  Future<void> delete(String key) async => values.remove(key);
-}
 
 class LegacySession extends EmptyLocalStorage {
   LegacySession(this.value);

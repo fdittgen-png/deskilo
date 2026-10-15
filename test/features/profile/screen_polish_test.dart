@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'backend_settings_test.dart' show pumpServerScreen;
+import '../../helpers/screens/backend_settings.dart' show pumpServerScreen;
 
 void main() {
   group('#1194 — the Server screen', () {

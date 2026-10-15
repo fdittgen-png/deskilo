@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../money/my_finances_screen_test.dart' show invoice;
+import '../../helpers/screens/my_finances_screen.dart' show invoice;
 import 'me_app.dart';
 
 void main() {

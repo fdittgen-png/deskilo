@@ -20,7 +20,7 @@ import 'package:deskilo/features/workspace/domain/template_feature_profile.dart'
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_builtin_templates.dart';
-import 'template_contract_test.dart' show TemplateContractRules, checkTemplate;
+import '../helpers/lint/template_contract.dart' show TemplateContractRules, checkTemplate;
 
 const _dir = 'supabase/templates/variants';
 const _key = 'pezenas_coworking';

@@ -17,7 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'plan_screen_test.dart' show pumpPlan, seatCenter;
+import '../../helpers/screens/plan_screen.dart' show pumpPlan, seatCenter;
 
 // #908 — o'clock on the WORKSPACE clock, which is what a stored
 // reservation and the open day both anchor to. Building these on the

@@ -27,15 +27,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../features/reservations/reserve_hub_test.dart'
-    show pumpHub, seatCenter;
-import '../features/workspace/onboarding_flow_test.dart'
-    show pumpWithoutWorkspace;
 import '../helpers/fake_event_repository.dart';
 import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
 import '../helpers/screens/events.dart' show event, pumpEvents;
 import '../helpers/screens/money_faces.dart' show openInvoice, pumpFaces;
+import '../helpers/screens/onboarding_flow.dart' show pumpWithoutWorkspace;
+import '../helpers/screens/reserve_hub.dart' show pumpHub, seatCenter;
 
 /// Counts the taps a path costs.
 ///

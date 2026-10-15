@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_realtime_sync.dart';
-import 'kiosk_screen_test.dart' show pumpKiosk, seatCenter;
+import '../../helpers/screens/kiosk_screen.dart' show pumpKiosk, seatCenter;
 
 void main() {
   testWidgets('the kiosk arms the realtime subscription itself (#430)',

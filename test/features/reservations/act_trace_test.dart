@@ -19,7 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'reserve_hub_test.dart' show pickHubDate, pumpHub, seatCenter;
+import '../../helpers/screens/reserve_hub.dart' show pickHubDate, pumpHub, seatCenter;
 
 /// The trace lines this test session produced, oldest first.
 List<String> _lines() =>

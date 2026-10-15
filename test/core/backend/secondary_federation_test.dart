@@ -18,8 +18,8 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'installation_auth_storage_test.dart' show MemorySecrets;
-import 'native_federation_flow_test.dart' show session, user;
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
+import '../../helpers/native_federation_flow.dart' show session, user;
 
 const home = 'https://home.example';
 const target = 'https://target.example';

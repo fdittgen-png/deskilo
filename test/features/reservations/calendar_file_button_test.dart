@@ -24,7 +24,7 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/in_memory_default_level_store.dart';
 import '../../helpers/mock_providers.dart';
-import '../calendar/reservation_detail_sheet_test.dart' show reservationAt;
+import '../../helpers/screens/reservation_detail_sheet.dart' show reservationAt;
 
 /// The captured local save.
 class Saves {
