@@ -88,7 +88,7 @@ const Map<String, int> _coreToFeature = {
   'core/i18n': 4,
   'core/privacy': 3,
   'core/push': 2,
-  'core/realtime': 10,
+  'core/realtime': 0,
 };
 
 List<List<String>> _declaredLayers() {

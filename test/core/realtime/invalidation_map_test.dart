@@ -3,6 +3,7 @@
 // #577 — the ONE table → providers map both freshness paths share.
 // These tests pin the contract that used to drift when realtime and
 // manual invalidation each kept a private copy.
+import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';

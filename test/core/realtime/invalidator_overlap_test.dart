@@ -7,6 +7,7 @@
 // a workspace the member has left.
 import 'dart:async';
 
+import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -58,6 +59,7 @@ void main() {
     var gate = Completer<Workspace?>();
     final container = ProviderContainer(
       overrides: [
+        ...realtimeWiringFromApp,
         realtimeSyncProvider.overrideWithValue(sync),
         currentWorkspaceProvider.overrideWith((ref) => gate.future),
       ],
