@@ -166,8 +166,7 @@ class BookingSheet extends StatefulWidget {
   /// #814 — the booking gate, asked for every window the member picks:
   /// a refusal disables the confirm button and names its reason. Null
   /// (feature off) keeps the server as the only judge.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final BookingRefusal? Function(DateTime start, DateTime end, bool walkUp)?
+  final BookingRefusal? Function(DateTime start, DateTime end, {required bool walkUp})?
       refusalOf;
   final String Function(BookingRefusal refusal)? refusalTextOf;
 
@@ -295,7 +294,7 @@ class _BookingSheetState extends State<BookingSheet> {
         gridStep != null && maxDuration >= gridStep && !widget.fixedEnd;
     // #814 — asked on EVERY build: the window changes with each chip,
     // picker and slider tick, and the verdict must follow it.
-    final refusal = widget.refusalOf?.call(_start, _end, _walkUp);
+    final refusal = widget.refusalOf?.call(_start, _end, walkUp: _walkUp);
     // #2016 — a reservation may not overlap another booking on the seat;
     // a walk-up is already capped at the next one.
     final overlap =

@@ -28,7 +28,6 @@ class WorkspaceSymbols {
         BrandingKeys.symbolText: letters,
         BrandingKeys.symbolColor: colourHex.toUpperCase(),
       });
-      // ignore: catch_no_st
     } on WorkspaceSymbolTaken {
       // trace-exempt: a stated outcome the member reads.
       return SymbolOutcome.taken;

@@ -79,8 +79,7 @@ String bookingSuccessText(
 String _hm(String locale, DateTime at) {
   try {
     return DateFormat.Hm(locale).format(at);
-    // ignore: catch_no_st
-  } on Object catch (_) {
+  } on Object {
     // trace-exempt: a formatting fallback is not a failure to report,
     // and this runs on the SUCCESS path where a logged error would read
     // as the booking having gone wrong. domain/ is pure Dart besides —
@@ -93,8 +92,7 @@ String _hm(String locale, DateTime at) {
 String _md(String locale, DateTime at) {
   try {
     return DateFormat.MMMEd(locale).format(at);
-    // ignore: catch_no_st
-  } on Object catch (_) {
+  } on Object {
     // trace-exempt: same reasoning as _hm above.
     return isoDay(at);
   }

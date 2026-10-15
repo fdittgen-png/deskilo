@@ -55,14 +55,16 @@ class SupabaseDirectoryParticipantRepository
   ) async {
     try {
       await call();
-      // ignore: catch_no_st — rethrows, or throws the typed refusal.
-    } on PostgrestException catch (e) {
+    } on PostgrestException catch (e, st) {
       if (e.message != publicNetworkVersionRefusal) rethrow;
       negotiator.forget(origin);
-      throw PublicActionRefusal(
-        negotiation.operation.id,
-        PublicRefusalReason.versionUnsupported,
-        byServer: true,
+      Error.throwWithStackTrace(
+        PublicActionRefusal(
+          negotiation.operation.id,
+          PublicRefusalReason.versionUnsupported,
+          byServer: true,
+        ),
+        st,
       );
     }
   }

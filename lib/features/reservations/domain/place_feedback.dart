@@ -32,7 +32,7 @@ class PlaceFeedback {
   factory PlaceFeedback.fromJson(Map<String, dynamic> json) {
     final r = JsonReader(json, context: 'place_feedback');
     return PlaceFeedback(
-      favorite: r.boolOr('favorite', false),
+      favorite: r.boolOr('favorite', fallback: false),
       average: r.doubleOrNull('average'),
       count: r.intOrNull('count') ?? 0,
       mine: r.intOrNull('mine'),

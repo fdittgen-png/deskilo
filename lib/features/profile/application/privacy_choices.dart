@@ -27,5 +27,5 @@ Future<void> setPushOnThisDevice(WidgetRef ref, {required bool on}) async {
   if (!on) {
     await ref.read(pushBootstrapProvider).value?.optOut();
   }
-  await ref.read(pushOptedOutProvider.notifier).set(!on);
+  await ref.read(pushOptedOutProvider.notifier).set(optedOut: !on);
 }

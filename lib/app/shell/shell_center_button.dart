@@ -97,7 +97,7 @@ class ShellCenterButton extends ConsumerWidget {
     // than toggling — makes the second call a no-op instead of undoing
     // the first.
     Future<void> toggleBar() async {
-      await ref.read(shellBarHiddenProvider.notifier).set(!hidden);
+      await ref.read(shellBarHiddenProvider.notifier).set(hidden: !hidden);
       await ref.read(shellSwipeCoachSeenProvider.notifier).markSeen();
       if (!context.mounted) return;
       unawaited(

@@ -182,7 +182,7 @@ class _AvailabilitySwitch extends ConsumerWidget {
                     l.portalActionFailed,
                 action: () => ref
                     .read(accountContactActionsProvider(source: source))
-                    .setAvailability(value),
+                    .setAvailability(value: value),
               );
               if (ok && context.mounted) {
                 ref.invalidate(contactAvailabilityProvider(source: source));

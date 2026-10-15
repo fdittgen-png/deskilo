@@ -155,7 +155,7 @@ class FakeMeRepository implements MeRepository {
   Future<bool> myPublicProfile() async => published.contains(_currentUser());
 
   @override
-  Future<void> setPublicProfile(bool publish) async {
+  Future<void> setPublicProfile({required bool publish}) async {
     if (failure != null) throw failure!;
     publish ? published.add(_currentUser()) : published.remove(_currentUser());
   }

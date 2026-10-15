@@ -70,7 +70,7 @@ void main() {
   });
 
   testWidgets('an upward swipe brings it back', (tester) async {
-    await pumpApp(tester, hiddenStore: InMemoryShellFlagStore(true));
+    await pumpApp(tester, hiddenStore: InMemoryShellFlagStore(value: true));
     expect(isHidden(tester), isTrue, reason: 'the stored choice is restored');
 
     await fling(tester, -300);
@@ -139,7 +139,7 @@ void main() {
 
   testWidgets('the hidden bar is excluded from semantics, so a screen '
       'reader cannot land on a tab that is gone', (tester) async {
-    await pumpApp(tester, hiddenStore: InMemoryShellFlagStore(true));
+    await pumpApp(tester, hiddenStore: InMemoryShellFlagStore(value: true));
     final excluder = tester.widget<ExcludeSemantics>(
       find.byKey(const ValueKey('shell-bar-surface-semantics')),
     );
@@ -175,7 +175,7 @@ void main() {
     testWidgets('never appears over an already-hidden bar', (tester) async {
       await pumpApp(
         tester,
-        hiddenStore: InMemoryShellFlagStore(true),
+        hiddenStore: InMemoryShellFlagStore(value: true),
         coachStore: InMemoryShellFlagStore(),
       );
       expect(find.byType(ShellSwipeCoachMark), findsNothing,

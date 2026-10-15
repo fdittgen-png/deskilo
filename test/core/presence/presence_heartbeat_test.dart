@@ -58,7 +58,7 @@ void main() {
   test('signed in + foregrounded: touches immediately and arms the '
       'pinned interval', () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
+    h.heartbeat.setSignedIn(signedIn: true);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.touches, 1);
@@ -68,7 +68,7 @@ void main() {
 
   test('each tick touches again', () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
+    h.heartbeat.setSignedIn(signedIn: true);
     h.lastTimer.fire();
     h.lastTimer.fire();
     await Future<void>.delayed(Duration.zero);
@@ -78,8 +78,8 @@ void main() {
 
   test('backgrounding cancels the timer; no further touches', () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
-    h.heartbeat.setForeground(false);
+    h.heartbeat.setSignedIn(signedIn: true);
+    h.heartbeat.setForeground(foreground: false);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.heartbeat.isRunning, isFalse);
@@ -90,9 +90,9 @@ void main() {
   test('resuming touches immediately again and re-arms a fresh timer',
       () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
-    h.heartbeat.setForeground(false);
-    h.heartbeat.setForeground(true);
+    h.heartbeat.setSignedIn(signedIn: true);
+    h.heartbeat.setForeground(foreground: false);
+    h.heartbeat.setForeground(foreground: true);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.touches, 2);
@@ -103,10 +103,10 @@ void main() {
   test('signing out stops the heartbeat; foreground flips alone never '
       'restart it', () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
-    h.heartbeat.setSignedIn(false);
-    h.heartbeat.setForeground(false);
-    h.heartbeat.setForeground(true);
+    h.heartbeat.setSignedIn(signedIn: true);
+    h.heartbeat.setSignedIn(signedIn: false);
+    h.heartbeat.setForeground(foreground: false);
+    h.heartbeat.setForeground(foreground: true);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.heartbeat.isRunning, isFalse);
@@ -116,8 +116,8 @@ void main() {
   test('signed out from the start: backgrounded/foregrounded, it never '
       'touches at all', () async {
     final h = _Harness();
-    h.heartbeat.setForeground(false);
-    h.heartbeat.setForeground(true);
+    h.heartbeat.setForeground(foreground: false);
+    h.heartbeat.setForeground(foreground: true);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.touches, 0);
@@ -127,7 +127,7 @@ void main() {
   test('touch failures are swallowed and the timer keeps running',
       () async {
     final h = _Harness(failing: true);
-    h.heartbeat.setSignedIn(true);
+    h.heartbeat.setSignedIn(signedIn: true);
     h.lastTimer.fire();
     await Future<void>.delayed(Duration.zero);
 
@@ -137,7 +137,7 @@ void main() {
 
   test('dispose cancels the timer', () async {
     final h = _Harness();
-    h.heartbeat.setSignedIn(true);
+    h.heartbeat.setSignedIn(signedIn: true);
     h.heartbeat.dispose();
 
     expect(h.heartbeat.isRunning, isFalse);

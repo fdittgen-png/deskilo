@@ -214,11 +214,11 @@ enum ReviewOutcome { applied, stale, invalid }
       for (final r in f.redactions) {
         s = s.addRedaction(i, r);
       }
-      if (s.frames[i].omitted != f.omitted) s = s.setOmitted(i, f.omitted);
+      if (s.frames[i].omitted != f.omitted) s = s.setOmitted(i, omitted: f.omitted);
     }
     for (var i = 0; i < review.frames.length; i++) {
       if (review.frames[i].approved && !s.frames[i].approved) {
-        s = s.setApproved(i, true);
+        s = s.setApproved(i, approved: true);
       }
     }
     return (storyboard: s, outcome: ReviewOutcome.applied);

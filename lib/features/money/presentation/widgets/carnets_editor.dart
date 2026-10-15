@@ -94,7 +94,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
               context,
               domain: 'money',
               message: 'carnet toggle failed',
-              action: () => setCarnetActive(ref, p.id, on),
+              action: () => setCarnetActive(ref, p.id, active: on),
             ),
           ),
         TextField(

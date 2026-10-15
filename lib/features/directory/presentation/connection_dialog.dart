@@ -59,11 +59,10 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
       action: () async {
         try {
           await _connect(endpoint, requestCode: requestCode);
-        // ignore: catch_no_st
-        } on ConnectionFailure catch (f) {
+        } on ConnectionFailure catch (f, st) {
           // trace-exempt: rethrown unchanged; runGuarded traces it.
           failure = f;
-          rethrow;
+          Error.throwWithStackTrace(f, st);
         }
       },
     );

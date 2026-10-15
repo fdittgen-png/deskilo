@@ -278,7 +278,7 @@ class InstanceLoopbackSwitch extends ConsumerWidget {
               'loopback switch failed',
               () => ref
                   .read(mcpOnboardingCommandsProvider)
-                  .allowLoopbackClients(on),
+                  .allowLoopbackClients(allowed: on),
             )
           : null,
     );

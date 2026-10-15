@@ -149,7 +149,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                       showHint: _query.isEmpty &&
                           !_changedOnly &&
                           _maturity == FeatureMaturityFilter.all,
-                      onChanged: (feature, value) => switchWorkspaceFeature(
+                      onChanged: (feature, {required value}) => switchWorkspaceFeature(
                         context,
                         ref,
                         workspace: workspace,

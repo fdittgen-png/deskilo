@@ -89,7 +89,7 @@ class SettingDefinition {
       },
       editPermission: r.stringOr('edit_permission'),
       floor: r.numOrNull('floor_value'),
-      editable: r.boolOr('editable', true),
+      editable: r.boolOr('editable', fallback: true),
       choices: r.listOrAbsent('choices').isEmpty ? const [] : r.strings('choices'),
       source: r.stringOr('source'),
       note: r.stringOr('note'),

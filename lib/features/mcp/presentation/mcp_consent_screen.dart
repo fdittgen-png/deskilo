@@ -72,11 +72,11 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
                       e.key: e.value.toList()..sort(),
                 },
               );
-        } catch (e) { // ignore: catch_no_st
+        } catch (e, st) {
           // trace-exempt: rethrown to runGuarded, which traces it; kept
           // here only to say WHY in the screen instead of nothing.
           failure = e;
-          rethrow;
+          Error.throwWithStackTrace(e, st);
         }
       },
     );

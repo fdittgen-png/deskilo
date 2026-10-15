@@ -110,8 +110,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             for (final entry in _controllers.entries)
               entry.key: entry.value.text.trim(),
           },
-          _published,
           following: _following,
+          published: _published,
         );
       },
     );

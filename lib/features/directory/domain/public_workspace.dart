@@ -90,10 +90,9 @@ abstract interface class PublicationRepository {
   /// Saves and publishes or withdraws; answers the public projection.
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    bool published,
-  );
+    Map<String, String> document, {
+    required bool published,
+  });
 }
 
 /// #1847 — the PARTICIPANT interface: a signed-in account acting for
@@ -123,8 +122,7 @@ enum DirectoryLinkState {
 
 abstract interface class AccountContactRepository {
   Future<bool> availability();
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setAvailability(bool value);
+  Future<void> setAvailability({required bool value});
   Future<bool> adminVisibility(String workspace, {bool? visible});
   Future<bool> employment(String member, {bool? employed});
   Future<List<Map<String, dynamic>>> search(String query, {String? before});

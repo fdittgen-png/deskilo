@@ -53,7 +53,7 @@ List<Widget> advancedSettingsTiles(
             ),
             value: ref.watch(frontCameraScanProvider).value ?? true,
             onChanged: (v) =>
-                ref.read(frontCameraScanProvider.notifier).setEnabled(v),
+                ref.read(frontCameraScanProvider.notifier).setEnabled(enabled: v),
           ),
           // #419: admins/owners flip dev mode for EVERYONE; other
           // members inherit the state without seeing the switch.
@@ -66,7 +66,7 @@ List<Widget> advancedSettingsTiles(
                 l10n.developerModeWorkspaceHint,
               ),
               value: devMode,
-              onChanged: (v) => setWorkspaceDevMode(ref, v),
+              onChanged: (v) => setWorkspaceDevMode(ref, enabled: v),
             ),
           if (devMode)
             ListTile(

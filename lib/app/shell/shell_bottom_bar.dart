@@ -150,7 +150,7 @@ class ShellBottomBar extends ConsumerWidget {
   /// [ShellBarCollapse] — and two copies of one latch is precisely the
   /// drift this change exists to remove.
   Future<void> _setHidden(WidgetRef ref, bool hidden) async {
-    await ref.read(shellBarHiddenProvider.notifier).set(hidden);
+    await ref.read(shellBarHiddenProvider.notifier).set(hidden: hidden);
     // Performing the gesture is the best possible proof it was learned.
     await ref.read(shellSwipeCoachSeenProvider.notifier).markSeen();
   }

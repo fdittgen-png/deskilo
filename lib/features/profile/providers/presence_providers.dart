@@ -28,7 +28,7 @@ void presenceBootstrap(Ref ref) {
   );
   final lifecycle = AppLifecycleListener(
     onStateChange: (state) =>
-        heartbeat.setForeground(state == AppLifecycleState.resumed),
+        heartbeat.setForeground(foreground: state == AppLifecycleState.resumed),
   );
   ref.onDispose(() {
     lifecycle.dispose();
@@ -39,7 +39,7 @@ void presenceBootstrap(Ref ref) {
   // i.e. foregrounded — PresenceHeartbeat already defaults to that.
   final initial = WidgetsBinding.instance.lifecycleState;
   if (initial != null) {
-    heartbeat.setForeground(initial == AppLifecycleState.resumed);
+    heartbeat.setForeground(foreground: initial == AppLifecycleState.resumed);
   }
-  heartbeat.setSignedIn(true);
+  heartbeat.setSignedIn(signedIn: true);
 }

@@ -25,9 +25,8 @@ Future<void> addCarnet(
   ref.invalidate(creditProductsProvider);
 }
 
-// ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-Future<void> setCarnetActive(WidgetRef ref, String productId, bool active) async {
-  await ref.read(creditRepositoryProvider).setCreditProductActive(productId, active);
+Future<void> setCarnetActive(WidgetRef ref, String productId, {required bool active}) async {
+  await ref.read(creditRepositoryProvider).setCreditProductActive(productId, active: active);
   ref.invalidate(creditProductsProvider);
 }
 

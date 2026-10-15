@@ -131,7 +131,7 @@ class _ScanCameraBoxState extends ConsumerState<ScanCameraBox> {
                 icon: const Icon(Icons.flip_camera_android_outlined),
                 onPressed: () => ref
                     .read(frontCameraScanProvider.notifier)
-                    .setEnabled(!front),
+                    .setEnabled(enabled: !front),
               ),
             ),
           ],

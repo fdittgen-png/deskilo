@@ -65,7 +65,7 @@ class MyBadgeTile extends ConsumerWidget {
                 // your badge'): an admin who could arm a member's badge
                 // could sign in as them, and every check-in afterwards
                 // would carry that member's name.
-                setAuthEnabled: (badgeId, enabled) => ref
+                setAuthEnabled: (badgeId, {required enabled}) => ref
                     .read(authRepositoryProvider)
                     .setBadgeAuthEnabled(
                       badgeId: badgeId,

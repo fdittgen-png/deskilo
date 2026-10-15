@@ -161,13 +161,12 @@ Future<T> _observeTaskCommand<T>(
   } on PendingValidationException {
     attempt.resolve(pending);
     rethrow;
-    // ignore: catch_no_st — recorded, then rethrown for the caller.
-  } catch (e) {
+  } catch (e, st) {
     attempt.resolveWith(
       errorObservation(e, refused: refused, unknown: unknown),
     );
     // The caller traces it, exactly as before.
-    rethrow;
+    Error.throwWithStackTrace(e, st);
   }
 }
 

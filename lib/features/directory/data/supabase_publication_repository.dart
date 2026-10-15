@@ -43,9 +43,9 @@ class SupabasePublicationRepository implements PublicationRepository {
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document,
-    bool published,
-  ) async {
+    Map<String, String> document, {
+    required bool published,
+  }) async {
     final input = encodePublicInput(_save.input['p_document']!, document);
     return decodePublicRecord(
       _save.output!,

@@ -49,11 +49,11 @@ class BillingRules {
   factory BillingRules.fromJson(Map<String, dynamic> json) {
     final r = JsonReader(json, context: 'billing_rules');
     return BillingRules(
-      subscriptionAuto: r.boolOr(keySubscriptionAuto, true),
+      subscriptionAuto: r.boolOr(keySubscriptionAuto, fallback: true),
       subscriptionAdvanceDays: (r.intOrNull(keySubscriptionAdvanceDays) ?? 3)
           .clamp(minAdvanceDays, maxAdvanceDays),
-      usageAuto: r.boolOr(keyUsageAuto, true),
-      usageWhenZero: r.boolOr(keyUsageWhenZero, false),
+      usageAuto: r.boolOr(keyUsageAuto, fallback: true),
+      usageWhenZero: r.boolOr(keyUsageWhenZero, fallback: false),
     );
   }
 

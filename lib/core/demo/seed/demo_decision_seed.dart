@@ -98,10 +98,9 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
     String id,
     String event,
     String member,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    bool ok,
-    int hoursAgo,
-  ) => EventDecision(
+    int hoursAgo, {
+    required bool ok,
+  }) => EventDecision(
     id: id,
     eventId: event,
     memberId: member,
@@ -110,10 +109,10 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
     decidedAt: now.subtract(Duration(hours: hoursAgo)),
   );
   events.decisions.addAll([
-    decision('demo-decision-1', 'demo-quota-done', 'member-1', true, 71),
-    decision('demo-decision-2', 'demo-expense-refused', 'member-1', false, 95),
+    decision('demo-decision-1', 'demo-quota-done', 'member-1', 71, ok: true),
+    decision('demo-decision-2', 'demo-expense-refused', 'member-1', 95, ok: false),
     // One of the two validations a negotiation needs is already given.
-    decision('demo-decision-3', 'demo-negotiation', 'member-3', true, 29),
+    decision('demo-decision-3', 'demo-negotiation', 'member-3', 29, ok: true),
   ]);
 
   // The rules: expenses need one admin, a negotiation two validations.

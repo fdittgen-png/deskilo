@@ -25,7 +25,7 @@ Future<FakeWorkspaceRepository> _pumpSettings(
     workspace.myMember =
         workspace.myMember.copyWith(isOwner: false, isAdmin: false);
   }
-  if (devMode) workspace.applyDevMode(true);
+  if (devMode) workspace.applyDevMode(enabled: true);
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(workspace: workspace),
@@ -65,7 +65,7 @@ void main() {
     final repo = FakeWorkspaceRepository.withWorkspace();
     repo.myMember = repo.myMember.copyWith(isOwner: false, isAdmin: false);
     await expectLater(
-      repo.setDevMode('ws-1', true),
+      repo.setDevMode('ws-1', enabled: true),
       throwsA(isA<PostgrestException>().having(
           (e) => e.message, 'message', contains('not an admin'))),
     );

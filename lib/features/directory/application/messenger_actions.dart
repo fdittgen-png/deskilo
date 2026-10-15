@@ -220,7 +220,7 @@ class MessengerActions {
     MessageKind kind,
     String messageId, {
     required bool locked,
-  }) => repository.setForwardLock(kind, messageId, locked);
+  }) => repository.setForwardLock(kind, messageId, locked: locked);
 
   Future<List<MessageEvent>> history(MessageKind kind, String messageId) =>
       repository.history(kind, messageId);

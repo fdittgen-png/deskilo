@@ -104,7 +104,7 @@ class FinanceReminder {
       workspaceName: r.stringOr('workspace_name'),
       sentAt: r.dateTime('sent_at'),
       level: r.intOrNull('level') ?? 1,
-      automatic: r.boolOr('automatic', false),
+      automatic: r.boolOr('automatic', fallback: false),
     );
   }
 }

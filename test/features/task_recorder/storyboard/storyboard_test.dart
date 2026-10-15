@@ -264,7 +264,7 @@ void main() {
     test('a redaction withdraws approval and changes the render key', () {
       final s = sb();
       final i = sceneIndex(s);
-      final approved = s.setApproved(i, true);
+      final approved = s.setApproved(i, approved: true);
       expect(approved.frames[i].approved, isTrue);
       final redacted = approved.addRedaction(
         i,
@@ -282,12 +282,12 @@ void main() {
     test('caption edits withdraw approval; omission and duration keep it', () {
       final s = sb();
       final i = sceneIndex(s);
-      final approved = s.setApproved(i, true);
+      final approved = s.setApproved(i, approved: true);
       expect(
         approved.setCaption(i, 'Pick tomorrow').frames[i].approved,
         isFalse,
       );
-      expect(approved.setOmitted(i, true).frames[i].approved, isTrue);
+      expect(approved.setOmitted(i, omitted: true).frames[i].approved, isTrue);
       expect(
         approved.setDuration(i, 999999).frames[i].durationMs,
         s.limits.maxDurationMs,
@@ -308,7 +308,7 @@ void main() {
         (f) => f.source != IllustrationSource.recreatedScene,
       );
       expect(
-        () => s.setApproved(text, true),
+        () => s.setApproved(text, approved: true),
         throwsA(isA<StoryboardEditException>()),
       );
     });

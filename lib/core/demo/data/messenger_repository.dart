@@ -482,9 +482,9 @@ class FakeMessengerRepository implements MessengerRepository {
   @override
   Future<void> setForwardLock(
     MessageKind kind,
-    String messageId,
-    bool locked,
-  ) async {
+    String messageId, {
+    required bool locked,
+  }) async {
     _check();
     final at = _find(messageId);
     if (at == null) return;

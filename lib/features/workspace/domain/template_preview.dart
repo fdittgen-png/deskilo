@@ -169,7 +169,7 @@ class TemplatePreview {
       state: TemplateGroupState.fromWire(g.stringOrNull('state')),
       itemCount: g.list('items').length,
       reason: g.stringOrNull('reason'),
-      customized: g.boolOr('customized', false),
+      customized: g.boolOr('customized', fallback: false),
       featureChanges: featureChangesOf(items is List ? items : null),
     );
   }

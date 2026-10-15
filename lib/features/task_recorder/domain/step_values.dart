@@ -24,7 +24,7 @@ sealed class RecordedValue {
 
   /// Reads one value, or null when it is not one the recorder keeps.
   static RecordedValue? parse(Object? raw) {
-    if (raw is bool) return FlagValue(raw);
+    if (raw is bool) return FlagValue(on: raw);
     if (raw is num) return raw.isFinite ? NumberValue(raw) : null;
     if (raw is String) return TextValue.tryParse(raw);
     if (raw is Map &&
@@ -87,8 +87,7 @@ final class NumberValue extends RecordedValue {
 }
 
 final class FlagValue extends RecordedValue {
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  const FlagValue(this.on);
+  const FlagValue({required this.on});
 
   final bool on;
 

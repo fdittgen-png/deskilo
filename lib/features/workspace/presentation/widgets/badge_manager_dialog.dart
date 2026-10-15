@@ -70,8 +70,7 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
   /// server refuses it too ('not your badge'), because an admin who
   /// could arm a member's badge could sign in as them, and every
   /// check-in after would carry that member's name.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final Future<void> Function(String badgeId, bool enabled)? setAuthEnabled;
+  final Future<void> Function(String badgeId, {required bool enabled})? setAuthEnabled;
 
   @override
   ConsumerState<BadgeManagerDialog> createState() =>
@@ -318,8 +317,7 @@ class _BadgeManagerDialogState
   Future<void> _setAuth(
     MemberBadge badge,
     bool enabled,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    Future<void> Function(String badgeId, bool enabled) arm,
+    Future<void> Function(String badgeId, {required bool enabled}) arm,
   ) async {
     if (_busy) return;
     setState(() => _busy = true);
@@ -329,7 +327,7 @@ class _BadgeManagerDialogState
       domain: 'workspace',
       message: 'badge auth toggle failed',
       errorText: l10n.badgeAuthNeedsPin,
-      action: () => arm(badge.id, enabled),
+      action: () => arm(badge.id, enabled: enabled),
     );
     if (mounted) setState(() => _busy = false);
   }

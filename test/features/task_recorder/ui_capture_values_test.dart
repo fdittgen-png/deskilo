@@ -156,7 +156,7 @@ void main() {
       const RedactedValue(_secret.length),
     );
     expect(of('me-activity').entries['value'], const RedactedValue(15));
-    expect(of('me-servers').entries['checked'], const FlagValue(true));
+    expect(of('me-servers').entries['checked'], const FlagValue(on: true));
 
     // The file never carries what must not travel.
     final text = encodeRecordingText(r);
@@ -196,7 +196,7 @@ void main() {
         for (final s in r.steps)
           if (s.target == 'me-servers') s.values.entries['checked'],
       ];
-      expect(states, [const FlagValue(true), const FlagValue(false)]);
+      expect(states, [const FlagValue(on: true), const FlagValue(on: false)]);
     },
   );
 }

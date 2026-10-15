@@ -77,7 +77,7 @@ class BookAccount {
       code: r.string('code'),
       name: r.string('name'),
       type: AccountType.values.byName(r.string('account_type')),
-      isPosting: r.boolOr('is_posting', false),
+      isPosting: r.boolOr('is_posting', fallback: false),
       origin: AccountOrigin.values.byName(r.string('origin')),
       revision: r.integer('revision'),
     );

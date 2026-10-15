@@ -133,7 +133,6 @@ class WorkspaceField {
   final Map<String, String> labels;
   final Map<String, String> helpTexts;
 
-  // ignore: avoid_positional_boolean_parameters
   final bool required;
   final bool personalData;
   final WorkspaceFieldVisibility visibility;

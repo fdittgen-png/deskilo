@@ -53,8 +53,7 @@ abstract class CreditRepository {
     int? validityMonths,
   });
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setCreditProductActive(String productId, bool active);
+  Future<void> setCreditProductActive(String productId, {required bool active});
 
   /// Sells [productId] to [memberId]; returns the credit's id.
   Future<String> sellCredit(

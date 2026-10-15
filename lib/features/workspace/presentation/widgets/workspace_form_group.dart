@@ -27,7 +27,7 @@ class WorkspaceFormGroup extends StatefulWidget {
     for (final field in invalid) {
       field.context.findAncestorStateOfType<_WorkspaceFormGroupState>()?._controller.expand();
     }
-    if (first != null && group != null) unawaited(group.reveal(first, wasClosed));
+    if (first != null && group != null) unawaited(group.reveal(first, wasClosed: wasClosed));
     return invalid.isEmpty;
   }
 
@@ -48,8 +48,7 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
     await Scrollable.ensureVisible(context,
       duration: motionDuration(context, MotionTokens.standard));
   }
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> reveal(FormFieldState<Object?> field, bool wasClosed) async {
+  Future<void> reveal(FormFieldState<Object?> field, {required bool wasClosed}) async {
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted || !field.mounted) return;
     if (wasClosed) {

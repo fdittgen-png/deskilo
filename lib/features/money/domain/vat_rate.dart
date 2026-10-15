@@ -10,26 +10,25 @@ import 'vat_components.dart';
 /// groups, not percentages: a rate change by law is one edit on the
 /// group, and the EN 16931 category and the outside-base rule follow.
 enum VatGroup {
-  standard('standard', 'S', false),
-  intermediate('intermediate', 'S', false),
-  reduced('reduced', 'S', false),
-  superReduced('super_reduced', 'S', false),
-  zero('zero', 'Z', false),
-  exempt('exempt', 'E', false),
-  notSubject('not_subject', 'O', false),
+  standard('standard', 'S', outsideBase: false),
+  intermediate('intermediate', 'S', outsideBase: false),
+  reduced('reduced', 'S', outsideBase: false),
+  superReduced('super_reduced', 'S', outsideBase: false),
+  zero('zero', 'Z', outsideBase: false),
+  exempt('exempt', 'E', outsideBase: false),
+  notSubject('not_subject', 'O', outsideBase: false),
 
   /// A refundable deposit (consigne, Pfand): outside the VAT base where
   /// the law puts it there; on a taxed invoice it cannot be e-invoiced
   /// under EN 16931 beside taxed lines (BR-O-11) — the readiness check
   /// says so.
-  deposit('deposit', 'O', true),
+  deposit('deposit', 'O', outsideBase: true),
 
   /// Alcohol, sugar drinks: the excise is inside the price and the VAT is
   /// the standard rate — a group because the accountant books it apart.
-  excise('excise', 'S', false);
+  excise('excise', 'S', outsideBase: false);
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  const VatGroup(this.wire, this.category, this.outsideBase);
+  const VatGroup(this.wire, this.category, {required this.outsideBase});
   final String wire;
 
   /// The EN 16931 VAT category code the group carries.

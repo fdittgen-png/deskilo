@@ -178,8 +178,7 @@ class InstanceAccessSection extends StatelessWidget {
     final people = {
       for (final p in [...o.administrators, ...o.candidates]) p.userId: p,
     }.values.where((p) => !granted.contains(p.userId)).toList();
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    String who(String name, bool me) =>
+    String who(String name, {required bool me}) =>
         me ? '$name (${l10n.instanceYou})' : name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -193,7 +192,7 @@ class InstanceAccessSection extends StatelessWidget {
             key: ValueKey('instance-eligible-${u.userId}'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.verified_user_outlined),
-            title: Text(who(u.name, u.me)),
+            title: Text(who(u.name, me: u.me)),
             subtitle: Text(
               [
                 if (u.expiresAt case final at?)
@@ -222,7 +221,7 @@ class InstanceAccessSection extends StatelessWidget {
               key: ValueKey('instance-grantee-${p.userId}'),
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.person_outline),
-              title: Text(who(p.name, p.me)),
+              title: Text(who(p.name, me: p.me)),
               trailing: OutlinedButton(
                 key: ValueKey('instance-grant-${p.userId}'),
                 onPressed: onGrant == null || !o.googleSession

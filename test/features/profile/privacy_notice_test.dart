@@ -62,7 +62,7 @@ class _MemoryOptOut implements PushOptOutStore {
   @override
   Future<bool> read() async => value;
   @override
-  Future<void> write(bool optedOut) async => value = optedOut;
+  Future<void> write({required bool optedOut}) async => value = optedOut;
 }
 
 Future<FakeProfileRepository> _pump(

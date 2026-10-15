@@ -81,9 +81,9 @@ class FakeDirectoryRepository
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document,
-    bool published,
-  ) async {
+    Map<String, String> document, {
+    required bool published,
+  }) async {
     pages[workspace] = {
       'published': published,
       'document': <String, dynamic>{...document},
@@ -134,7 +134,7 @@ class FakeAccountContactRepository implements AccountContactRepository {
   @override
   Future<bool> availability() async => available;
   @override
-  Future<void> setAvailability(bool value) async {
+  Future<void> setAvailability({required bool value}) async {
     available = value;
   }
 

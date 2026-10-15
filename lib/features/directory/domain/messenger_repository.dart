@@ -110,8 +110,7 @@ abstract interface class MessengerRepository {
     required MessageContextKind targetKind,
     required String targetId,
   });
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setForwardLock(MessageKind kind, String messageId, bool locked);
+  Future<void> setForwardLock(MessageKind kind, String messageId, {required bool locked});
   Future<List<MessageEvent>> history(MessageKind kind, String messageId);
 
   /// [kind] names the CONTEXT (`conversation | account_conversation |

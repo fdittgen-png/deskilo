@@ -22,6 +22,7 @@
 // repository handed in, because the order is the whole behaviour and a
 // rule that only a widget can exercise is a rule nothing checks.
 import 'package:meta/meta.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/money_repository.dart';
 import '../domain/workspace_status.dart';
@@ -148,11 +149,11 @@ Future<BookRepartitionOutcome> bookRepartition(
   if (remember) {
     try {
       await repository.setRepartitionRule(workspaceId, rule);
-      // ignore: catch_no_st
-    } on Object catch (e) {
-      // trace-exempt: the error is carried out in the outcome and the
-      // caller reports it; catching here is the point — nothing has
-      // been distributed, so nothing is half-done.
+    } on Object catch (e, st) {
+      // The error is carried out in the outcome and the caller reports
+      // it; catching here is the point — nothing has been distributed,
+      // so nothing is half-done.
+      TraceLogger.instance.warn('money', 'rule not saved', error: e, stackTrace: st);
       return RepartitionNotBooked(e);
     }
   }

@@ -38,8 +38,8 @@ Storyboard _reviewed(Storyboard s) {
     (f) => f.source == IllustrationSource.recreatedScene,
   );
   var out = s.setCaption(0, 'Open Reserve from the bar');
-  out = out.setOmitted(1, true);
-  if (drawn >= 0) out = out.setApproved(drawn, true);
+  out = out.setOmitted(1, omitted: true);
+  if (drawn >= 0) out = out.setApproved(drawn, approved: true);
   return out;
 }
 

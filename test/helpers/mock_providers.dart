@@ -240,7 +240,7 @@ List<Override> standardTestOverrides({
   final directoryFake = directory ?? FakeDirectoryRepository();
   final workspaceRepo = () {
     final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
-    if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(true);
+    if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(enabled: true);
     return repo;
   }();
   return [
@@ -402,7 +402,7 @@ List<Override> standardTestOverrides({
     shellBarHiddenStoreProvider
         .overrideWithValue(shellBarHidden ?? InMemoryShellFlagStore()),
     shellSwipeCoachStoreProvider
-        .overrideWithValue(shellSwipeCoach ?? InMemoryShellFlagStore(true)),
+        .overrideWithValue(shellSwipeCoach ?? InMemoryShellFlagStore(value: true)),
     profileRepositoryProvider
         .overrideWithValue(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),

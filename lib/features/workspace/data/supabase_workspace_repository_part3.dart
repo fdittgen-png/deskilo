@@ -191,10 +191,11 @@ extension _SupabaseWorkspaceRepositoryPart3 on SupabaseWorkspaceRepository {
         'p_workspace_id': workspaceId,
         'p_branding': delta,
       });
-      // ignore: catch_no_st
-    } on PostgrestException catch (e) {
+    } on PostgrestException catch (e, st) {
       // 0378 — the letters-and-colour pair is unique across workspaces.
-      if (e.code == '23505') throw const WorkspaceSymbolTaken();
+      if (e.code == '23505') {
+        Error.throwWithStackTrace(const WorkspaceSymbolTaken(), st);
+      }
       rethrow;
     }
     return Map<String, dynamic>.from(out as Map? ?? const <String, dynamic>{});

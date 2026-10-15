@@ -79,7 +79,7 @@ final class PushOptedOutProvider
   PushOptedOut create() => PushOptedOut();
 }
 
-String _$pushOptedOutHash() => r'287093a880da184f7b8cd2f040e5977b3c3ee39c';
+String _$pushOptedOutHash() => r'4ca0e88b77006781fd4448a0bdd4d4db6dccfbb3';
 
 /// True when the person turned push delivery off on this device.
 

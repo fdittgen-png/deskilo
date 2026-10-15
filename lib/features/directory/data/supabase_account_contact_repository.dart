@@ -18,7 +18,7 @@ class SupabaseAccountContactRepository implements AccountContactRepository {
   @override
   Future<bool> availability() => _rpc('my_contact_availability');
   @override
-  Future<void> setAvailability(bool value) =>
+  Future<void> setAvailability({required bool value}) =>
       _rpc('set_contact_availability', {'p_available': value});
   @override
   Future<bool> adminVisibility(String workspace, {bool? visible}) => _rpc(

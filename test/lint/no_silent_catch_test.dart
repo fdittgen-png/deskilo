@@ -3,11 +3,13 @@
 // Error-handling lints (from Sparkilo's CI, extended for #145):
 //  - no empty `catch (_) {}` — errors must never be swallowed silently.
 //  - every `catch (e)` must capture the stack trace: `catch (e, st)`.
-//    A rethrow-only block may carry `// ignore: catch_no_st`.
+//    There is no exemption: a block that only translates carries the
+//    stack on with `Error.throwWithStackTrace(typed, st)`.
 //  - every catch block must trace (#145): its body has to contain
 //    `TraceLogger`, an `ActTrace.` call, a named `traceX(...)` trace
 //    point, a provider-injected `logger.error(`/`logger.warn(`,
-//    `rethrow`, `throw `, or the marker `// trace-exempt: <reason>`.
+//    `rethrow`, `throw `, `Error.throwWithStackTrace(` (the same throw,
+//    stack kept), or the marker `// trace-exempt: <reason>`.
 //    lib/core/trace/ is excluded — the logger's own IO guards must never
 //    call the logger recursively.
 
@@ -33,7 +35,7 @@ final _tracedBody = RegExp(
   r'|\bActTrace\.'
   r'|\btrace[A-Z]\w*\('
   r'|\b(?:logger|trace)\.(?:error|warn|log)\('
-  r'|\brethrow\b|\bthrow |// trace-exempt:',
+  r'|\brethrow\b|\bthrow |\bError\.throwWithStackTrace\(|// trace-exempt:',
 );
 
 /// The `{...}` block body following the catch clause that starts at
@@ -74,19 +76,15 @@ void main() {
       for (var i = 0; i < lines.length; i++) {
         final match = _singleParamCatch.firstMatch(lines[i]);
         if (match == null) continue;
-        final ignored = lines[i].contains('// ignore: catch_no_st') ||
-            (i > 0 && lines[i - 1].contains('// ignore: catch_no_st'));
-        if (!ignored) {
-          violations.add('${file.path}:${i + 1}');
-        }
+        violations.add('${file.path}:${i + 1}');
       }
     }
     expect(
       violations,
       isEmpty,
       reason: 'catch without stack trace in: $violations — '
-          'use catch (e, st) and log st, or // ignore: catch_no_st '
-          'for a rethrow-only block.',
+          'use catch (e, st) and log st, or carry it on with '
+          'Error.throwWithStackTrace.',
     );
   });
 

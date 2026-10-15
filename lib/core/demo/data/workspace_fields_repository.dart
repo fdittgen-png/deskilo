@@ -42,14 +42,13 @@ class FakeWorkspaceFields implements WorkspaceFieldsRepository {
       final id = await _setField(workspaceId, field);
       if (options != null) await _setOptions(id, options);
       return id;
-      // ignore: catch_no_st
-    } catch (_) {
-      // Rethrow-only: the refusal is the caller's to report, and this
-      // block exists to put the fake back the way the server would.
+    } catch (e, st) {
+      // The refusal is the caller's to report; this block exists to put
+      // the fake back the way the server would.
       fields
         ..clear()
         ..addAll(before);
-      rethrow;
+      Error.throwWithStackTrace(e, st);
     }
   }
 

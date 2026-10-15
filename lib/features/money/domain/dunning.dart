@@ -38,7 +38,7 @@ class DunningRules {
       betweenDays: read(keyBetweenDays, 14),
       // #1913: automation is an explicit owner choice; a missing key
       // means off, never on.
-      automatic: r.boolOr(keyAutomatic, false),
+      automatic: r.boolOr(keyAutomatic, fallback: false),
     );
   }
 

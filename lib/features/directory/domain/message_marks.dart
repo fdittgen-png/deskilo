@@ -45,7 +45,7 @@ class MessageMarks {
           .add(ReactionCount(
             row.string('emoji'),
             row.intOrNull('count') ?? 1,
-            mine: row.boolOr('mine', false),
+            mine: row.boolOr('mine', fallback: false),
           ));
     }
     for (final list in byMessage.values) {

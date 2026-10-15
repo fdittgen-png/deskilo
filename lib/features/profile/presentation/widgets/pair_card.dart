@@ -37,8 +37,7 @@ class WorkspacePairCard extends StatelessWidget {
     final prodActive = activeId == prod.id;
     final active = devActive || prodActive;
     final theme = Theme.of(context);
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    Widget environment(Workspace workspace, bool selected, String label, String key) => Padding(
+    Widget environment(Workspace workspace, String label, String key, {required bool selected}) => Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: SizedBox(width: double.infinity, child: OutlinedButton(
         key: ValueKey(key),
@@ -74,8 +73,8 @@ class WorkspacePairCard extends StatelessWidget {
               : labels.uxProfileChooseEnvironment),
         ]),
         children: [
-          environment(dev, devActive, devLabel, 'profile-pair-dev-${dev.pairId}'),
-          environment(prod, prodActive, prodLabel, 'profile-pair-prod-${dev.pairId}'),
+          environment(dev, devLabel, 'profile-pair-dev-${dev.pairId}', selected: devActive),
+          environment(prod, prodLabel, 'profile-pair-prod-${dev.pairId}', selected: prodActive),
         ],
       ),
     );

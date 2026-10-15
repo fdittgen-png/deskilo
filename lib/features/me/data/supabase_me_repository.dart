@@ -59,7 +59,7 @@ class SupabaseMeRepository implements MeRepository {
       true;
 
   @override
-  Future<void> setPublicProfile(bool publish) => _client.rpc<void>(
+  Future<void> setPublicProfile({required bool publish}) => _client.rpc<void>(
         'set_public_profile',
         params: {'p_publish': publish},
       );

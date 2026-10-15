@@ -274,9 +274,8 @@ class PublicWorkspaceView extends ConsumerWidget {
                   action: () async {
                     try {
                       await ref.read(directoryActionsProvider).apply(workspace);
-                      // ignore: catch_no_st — rethrows, or hands the typed refusal to the line below, which traces it.
-                    } on PublicActionRefusal catch (r) {
-                      if (r.reason == PublicRefusalReason.unreachable) rethrow;
+                    } on PublicActionRefusal catch (r, st) {
+                      if (r.reason == PublicRefusalReason.unreachable) Error.throwWithStackTrace(r, st);
                       refusal = r;
                     }
                   },

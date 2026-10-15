@@ -22,8 +22,7 @@ class ValidationScopePicker extends StatelessWidget {
   final List<({String id, String name})> people;
   final Set<String> selected;
   final ValueChanged<String> onScope;
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final void Function(String id, bool selected) onToggle;
+  final void Function(String id, {required bool selected}) onToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +75,7 @@ class ValidationScopePicker extends StatelessWidget {
                     key: ValueKey('validation-person-${person.id}'),
                     label: Text(person.name),
                     selected: selected.contains(person.id),
-                    onSelected: (v) => onToggle(person.id, v),
+                    onSelected: (v) => onToggle(person.id, selected: v),
                   ),
               ],
             ),

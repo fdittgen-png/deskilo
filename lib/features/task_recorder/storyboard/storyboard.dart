@@ -242,8 +242,7 @@ class Storyboard {
     return _next(list);
   }
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Storyboard setOmitted(int index, bool omitted) =>
+  Storyboard setOmitted(int index, {required bool omitted}) =>
       _edit(index, (f) => f.copyWith(omitted: omitted));
 
   /// Clamped to the limits.
@@ -275,8 +274,7 @@ class Storyboard {
   }
 
   /// Approves (or withdraws) the frame's illustration.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Storyboard setApproved(int index, bool approved) => _edit(index, (f) {
+  Storyboard setApproved(int index, {required bool approved}) => _edit(index, (f) {
     if (approved && f.source != IllustrationSource.recreatedScene) {
       throw const StoryboardEditException('noIllustration');
     }

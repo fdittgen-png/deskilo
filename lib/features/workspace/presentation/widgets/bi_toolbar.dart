@@ -61,8 +61,7 @@ class BiToolbar extends StatelessWidget {
         l10n.biNotOffered;
     final current = query.current(today);
 
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    DropdownMenuItem<T> item<T>(T value, String label, bool supported) =>
+    DropdownMenuItem<T> item<T>(T value, String label, {required bool supported}) =>
         DropdownMenuItem<T>(
           value: value,
           enabled: supported,
@@ -146,7 +145,7 @@ class BiToolbar extends StatelessWidget {
                   BiGrain.month => l10n.biGrainMonth,
                   BiGrain.quarter => l10n.biGrainQuarter,
                   BiGrain.year => l10n.biGrainYear,
-                }, modules.any((m) => m.grains.contains(g))),
+                }, supported: modules.any((m) => m.grains.contains(g))),
             ],
             onSelected: (g) => onChanged(query.copyWith(grain: g)),
           ),
@@ -175,7 +174,7 @@ class BiToolbar extends StatelessWidget {
                     l10n.biComparePreviousYear,
                   BiComparison.custom =>
                     l10n.biCompareCustom,
-                }, modules.any((m) => m.comparisons.contains(c))),
+                }, supported: modules.any((m) => m.comparisons.contains(c))),
             ],
             onSelected: (c) => onChanged(
               query.copyWith(
@@ -198,12 +197,12 @@ class BiToolbar extends StatelessWidget {
             label: l10n.biGroupBy,
             value: query.groupBy ?? '',
             items: [
-              item('', l10n.biGroupNone, true),
+              item('', l10n.biGroupNone, supported: true),
               for (final d in biDimensions)
                 item(
                   d,
                   biDimensionName(l10n, d),
-                  modules.any((m) => m.groupings.contains(d)),
+                  supported: modules.any((m) => m.groupings.contains(d)),
                 ),
             ],
             onSelected: (d) => onChanged(
@@ -227,7 +226,7 @@ class BiToolbar extends StatelessWidget {
                     l10n.biSortDescending,
                   BiSort.valueAscending =>
                     l10n.biSortAscending,
-                }, true),
+                }, supported: true),
             ],
             onSelected: (s) => onChanged(query.copyWith(sort: s)),
           ),

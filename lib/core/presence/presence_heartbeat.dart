@@ -44,14 +44,12 @@ class PresenceHeartbeat {
   /// True while the periodic timer is armed (signed in + foregrounded).
   bool get isRunning => _timer != null;
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  void setSignedIn(bool signedIn) {
+  void setSignedIn({required bool signedIn}) {
     _signedIn = signedIn;
     _recompute();
   }
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  void setForeground(bool foreground) {
+  void setForeground({required bool foreground}) {
     _foreground = foreground;
     _recompute();
   }

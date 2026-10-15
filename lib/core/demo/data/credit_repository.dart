@@ -29,7 +29,7 @@ class FakeCreditRepository implements CreditRepository {
   }
 
   @override
-  Future<void> setCreditProductActive(String productId, bool active) async {
+  Future<void> setCreditProductActive(String productId, {required bool active}) async {
     final i = products.indexWhere((p) => p.id == productId);
     final p = products[i];
     products[i] = CreditProduct(
