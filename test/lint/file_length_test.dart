@@ -57,7 +57,7 @@ const Map<String, int> _baseline = {
   // 2026-10-13 #2520 — the feature ledger gained its basis (evidence or the
   // owner's declaration, #2519): the enum, one field and the owner-beta
   // assessment. The ledger of 130 assessments is data; splitting it is #2522's call.
-  'lib/features/workspace/domain/feature_lifecycle.dart': 523,
+  'lib/features/workspace/domain/feature_lifecycle.dart': 525, // 2026-10-15 523→525: master's two newest features join the owner-beta map
   // ADR 0028 (#1373) — the suite's in-memory repositories moved here so
   // Demo can run the real app against them. Their size is the surface of
   // the interface each implements, not a file that grew: MoneyRepository

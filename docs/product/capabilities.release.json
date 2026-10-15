@@ -843,7 +843,7 @@
     },
     {
       "key": "configurableSettings",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1336,7 +1336,7 @@
     },
     {
       "key": "salesTax",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1380,7 +1380,7 @@
     },
     {
       "key": "siteDocuments",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
