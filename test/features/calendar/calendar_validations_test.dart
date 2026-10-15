@@ -7,12 +7,11 @@
 // often days apart, and "when was this released" is the question.
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/calendar_item_row.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 import '../../helpers/screens/calendar_hub.dart' show pumpHub;
 
 CalendarItem _decision({required bool accepted, String type = 'expense'}) =>
@@ -29,20 +28,13 @@ CalendarItem _decision({required bool accepted, String type = 'expense'}) =>
 Future<void> _pumpRow(WidgetTester tester, CalendarItem item) async {
   // A ConsumerWidget: it reads the workspace clock and the theme tokens,
   // so it needs the same scope the app gives it.
-  await tester.pumpWidget(ProviderScope(
-    overrides: standardTestOverrides(),
-    child: MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(
+  await pumpApp(tester, Scaffold(
         body: CalendarItemRow(
           item: item,
           memberName: 'Ana',
           onTap: () {},
         ),
-      ),
-    ),
-  ));
+      ), overrides: standardTestOverrides());
   await tester.pumpAndSettle();
 }
 

@@ -7,13 +7,12 @@ import 'dart:ui' as ui;
 
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/workspace/presentation/screens/colours_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 import '../../helpers/real_async.dart';
 
 Future<Uint8List> _png(int size) async {
@@ -40,23 +39,14 @@ Future<FakeWorkspaceRepository> _pump(
     featureFlags: const {'workspaceBranding': true},
   );
   if (existing != null) workspace.emblems['ws-1'] = existing;
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
+  await pumpApp(tester, const ColoursScreen(), overrides: [
         ...standardTestOverrides(workspace: workspace),
         filePickerProvider.overrideWithValue(
           (group) async => picked == null
               ? null
               : XFile.fromData(picked, name: 'mark.png', mimeType: 'image/png'),
         ),
-      ],
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: ColoursScreen(),
-      ),
-    ),
-  );
+      ]);
   await tester.pumpAndSettle();
   return workspace;
 }

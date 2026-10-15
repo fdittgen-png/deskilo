@@ -4,12 +4,12 @@
 // admin roles — offered to admins, hidden from members.
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/group_info_sheet.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 final _group = Conversation(
   id: 'g1',
@@ -31,13 +31,7 @@ Future<({FakeWorkspaceRepository workspace, FakeMessengerRepository messenger})>
       const ConversationParticipant(memberId: 'member-2', isAdmin: false),
     ];
   final messenger = FakeMessengerRepository();
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace, messenger: messenger),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Consumer(
+  await pumpApp(tester, Consumer(
           builder: (context, ref, _) => Scaffold(
             body: TextButton(
               key: const ValueKey('open-group'),
@@ -46,10 +40,7 @@ Future<({FakeWorkspaceRepository workspace, FakeMessengerRepository messenger})>
               child: const Text('open'),
             ),
           ),
-        ),
-      ),
-    ),
-  );
+        ), overrides: standardTestOverrides(workspace: workspace, messenger: messenger));
   await tester.tap(find.byKey(const ValueKey('open-group')));
   await tester.pumpAndSettle();
   return (workspace: workspace, messenger: messenger);

@@ -7,12 +7,11 @@ import 'package:deskilo/features/workspace/domain/template_process_view.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/template_apply_sheet.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _template = WorkspaceTemplate(
   id: 'tpl-1',
@@ -28,18 +27,9 @@ Future<void> _pump(WidgetTester tester, TemplatePreview preview) async {
   final workspace = FakeWorkspaceRepository()
     ..templates.add(_template)
     ..templatePreviews['tpl-1'] = preview;
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
+  await pumpApp(tester, const Scaffold(
           body: TemplateApplySheet(workspaceId: 'ws-1', template: _template),
-        ),
-      ),
-    ),
-  );
+        ), overrides: standardTestOverrides(workspace: workspace));
   await tester.pumpAndSettle();
 }
 

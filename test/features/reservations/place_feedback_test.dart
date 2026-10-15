@@ -9,10 +9,10 @@ import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/place_feedback_bar.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Future<FakePlaceFeedbackRepository> _pump(
   WidgetTester tester, {
@@ -20,16 +20,11 @@ Future<FakePlaceFeedbackRepository> _pump(
   FakeWorkspaceRepository? workspace,
 }) async {
   final repo = FakePlaceFeedbackRepository()..others['seat:s1'] = [5, 3];
-  await tester.pumpWidget(ProviderScope(
-    overrides: [
+  await pumpApp(tester, const Scaffold(body: PlaceFeedbackBar(kind: PlaceKind.seat, id: 's1')), overrides: [
       ...standardTestOverrides(
           workspace: workspace ?? FakeWorkspaceRepository.withWorkspace(featureFlags: flags),
           placeFeedback: repo),
-    ],
-    child: const MaterialApp(
-      home: Scaffold(body: PlaceFeedbackBar(kind: PlaceKind.seat, id: 's1')),
-    ),
-  ));
+    ]);
   await tester.pumpAndSettle();
   return repo;
 }
@@ -40,13 +35,10 @@ Future<void> _pumpChips(
   List<Widget> chips, {
   bool Function(String)? local,
 }) async {
-  await tester.pumpWidget(ProviderScope(
-    overrides: [
+  await pumpApp(tester, Scaffold(body: Column(children: chips)), overrides: [
       ...standardTestOverrides(placeFeedback: repo),
       if (local != null) directorySourceIsLocalProvider.overrideWithValue(local),
-    ],
-    child: MaterialApp(home: Scaffold(body: Column(children: chips))),
-  ));
+    ]);
   await tester.pumpAndSettle();
 }
 

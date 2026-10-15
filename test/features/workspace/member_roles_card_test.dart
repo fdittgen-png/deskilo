@@ -30,10 +30,10 @@ import 'package:deskilo/features/workspace/presentation/widgets/member_roles_car
 import 'package:deskilo/features/workspace/presentation/widgets/role_editor_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/role_holders_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Member _member(String id, {bool admin = false, bool owner = false}) => Member(
       id: id,
@@ -91,16 +91,11 @@ Future<void> _pump(
   tester.view.physicalSize = const Size(800, 2400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, home, overrides: standardTestOverrides(
         timeZoneMode: TimeZoneMode.device,
         workspace: workspace,
         roles: roles,
-      ),
-      child: MaterialApp(home: home),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 
@@ -335,14 +330,7 @@ void main() {
     tester.view.physicalSize = const Size(800, 2400);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          ...standardTestOverrides(workspace: s.workspace, roles: s.roles),
-          linkLauncherProvider.overrideWithValue((uri) async => true),
-        ],
-        child: MaterialApp(
-          home: Builder(
+    await pumpApp(tester, Builder(
             builder: (context) => TextButton(
               onPressed: () => showInviteSheet(
                 context,
@@ -351,10 +339,10 @@ void main() {
               ),
               child: const Text('open'),
             ),
-          ),
-        ),
-      ),
-    );
+          ), overrides: [
+          ...standardTestOverrides(workspace: s.workspace, roles: s.roles),
+          linkLauncherProvider.overrideWithValue((uri) async => true),
+        ]);
     await tester.pumpAndSettle();
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();

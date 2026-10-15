@@ -17,10 +17,10 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/features_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _beta = FeatureAssessment(
   maturity: FeatureMaturity.beta,
@@ -96,22 +96,13 @@ void main() {
       final workspace = FakeWorkspaceRepository.withWorkspace(
         featureFlags: {_parent.dbKey: false, _child.dbKey: false},
       );
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: standardTestOverrides(workspace: workspace),
-          child: MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            home: FeaturesScreen(
+      await pumpApp(tester, FeaturesScreen(
               assessments: {
                 for (final f in WorkspaceFeature.values)
                   f: const FeatureAssessment.unreviewed('fixture'),
                 _child: _beta,
               },
-            ),
-          ),
-        ),
-      );
+            ), overrides: standardTestOverrides(workspace: workspace));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('features-view-switches')));
       await tester.pumpAndSettle();

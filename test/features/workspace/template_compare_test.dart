@@ -11,12 +11,11 @@ import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
 import 'package:deskilo/features/workspace/presentation/screens/template_compare_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 TemplateInspection _inspection(String id, List<TemplateFieldRecord> fields) =>
     TemplateInspection(
@@ -65,16 +64,7 @@ Future<void> _pump(
     ..templateInspections['c'] = _inspection('c', [
       _f('workspace.booking_rules.open_weekdays', [1, 2, 3]),
     ]);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: TemplateCompareScreen(templates: templates),
-      ),
-    ),
-  );
+  await pumpApp(tester, TemplateCompareScreen(templates: templates), overrides: standardTestOverrides(workspace: workspace));
   await tester.pumpAndSettle();
 }
 

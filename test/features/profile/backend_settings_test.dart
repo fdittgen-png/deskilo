@@ -22,12 +22,12 @@ import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/profile/presentation/widgets/server_facts_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 import '../../helpers/screens/backend_settings.dart' show ScriptedProbes, pumpServerScreen;
 
 const publishable = 'sb_publishable_0123456789abcdefghij';
@@ -395,16 +395,11 @@ void main() {
         (tester) async {
       // The app refuses to start on an older schema, so the card is read on
       // its own here — the same card the gate's Server link opens.
-      await tester.pumpWidget(ProviderScope(
-        overrides: standardTestOverrides(
-            schemaVersion:
-                const FixedSchemaVersionSource(requiredSchemaVersion - 1)),
-        child: const MaterialApp(
-          home: Scaffold(
+      await pumpApp(tester, const Scaffold(
             body: ServerFactsCard(endpoint: custom, isDefault: false),
-          ),
-        ),
-      ));
+          ), overrides: standardTestOverrides(
+            schemaVersion:
+                const FixedSchemaVersionSource(requiredSchemaVersion - 1)));
       await tester.pumpAndSettle();
       expect(
           find.text(

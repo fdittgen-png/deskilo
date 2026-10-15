@@ -27,6 +27,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 typedef _Seen = ({bool pending, bool hasGate});
 
@@ -53,17 +54,12 @@ Future<_Seen> _pump(
   List<Override> extra = const [],
 }) async {
   _Seen? seen;
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
+  await pumpApp(tester, _Probe((s) => seen = s), overrides: [
         ...standardTestOverrides(
           workspace: FakeWorkspaceRepository.withWorkspace(featureFlags: flags),
         ),
         ...extra,
-      ],
-      child: MaterialApp(home: _Probe((s) => seen = s)),
-    ),
-  );
+      ]);
   await tester.pumpAndSettle();
   return seen!;
 }

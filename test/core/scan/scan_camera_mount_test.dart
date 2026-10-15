@@ -24,10 +24,10 @@ import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/scan/qr_scan_widget.dart';
 import 'package:deskilo/core/scan/scan_camera_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 /// Counts how many times the scanner widget is CREATED, and how many
 /// distinct element instances existed — a remount shows up as a second
@@ -75,25 +75,18 @@ Future<void> _pumpBox(
   required FrontCameraStore store,
   required List<int> mounts,
 }) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
+  await pumpApp(tester, Scaffold(
+          body: ScanCameraBox(
+            cameraKey: const ValueKey('camera'),
+            onCode: (_) {},
+          ),
+        ), overrides: [
         frontCameraStoreProvider.overrideWithValue(store),
         qrScanWidgetBuilderProvider.overrideWithValue(
           ({required onCode, bool front = true}) =>
               _CountingScanner(mounts: mounts),
         ),
-      ],
-      child: MaterialApp(
-        home: Scaffold(
-          body: ScanCameraBox(
-            cameraKey: const ValueKey('camera'),
-            onCode: (_) {},
-          ),
-        ),
-      ),
-    ),
-  );
+      ]);
 }
 
 void main() {
@@ -135,26 +128,19 @@ void main() {
   testWidgets('flipping the lens deliberately DOES remount — the camera '
       'has to reopen on the other hardware', (tester) async {
     final mounts = <int>[];
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
+    await pumpApp(tester, Scaffold(
+            body: ScanCameraBox(
+              cameraKey: const ValueKey('camera'),
+              onCode: (_) {},
+            ),
+          ), overrides: [
           frontCameraStoreProvider
               .overrideWithValue(InMemoryFrontCameraStore()),
           qrScanWidgetBuilderProvider.overrideWithValue(
             ({required onCode, bool front = true}) =>
               _CountingScanner(mounts: mounts),
           ),
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: ScanCameraBox(
-              cameraKey: const ValueKey('camera'),
-              onCode: (_) {},
-            ),
-          ),
-        ),
-      ),
-    );
+        ]);
     await tester.pumpAndSettle();
     expect(mounts.length, 1);
 
@@ -169,9 +155,13 @@ void main() {
   testWidgets('an UNSET preference resolves to the surface default — a '
       'handheld scan opens the BACK lens (#773)', (tester) async {
     final mounts = <int>[];
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
+    await pumpApp(tester, Scaffold(
+            body: ScanCameraBox(
+              cameraKey: const ValueKey('scan-test-camera'),
+              onCode: (_) {},
+              defaultFront: false,
+            ),
+          ), overrides: [
           frontCameraStoreProvider.overrideWithValue(
             InMemoryFrontCameraStore(), // value stays null: never chosen
           ),
@@ -179,18 +169,7 @@ void main() {
             ({required onCode, bool front = true}) =>
                 _CountingScanner(mounts: mounts),
           ),
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: ScanCameraBox(
-              cameraKey: const ValueKey('scan-test-camera'),
-              onCode: (_) {},
-              defaultFront: false,
-            ),
-          ),
-        ),
-      ),
-    );
+        ]);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('scan-camera-false')), findsOneWidget);
     expect(mounts.length, 1);
