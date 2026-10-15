@@ -101,7 +101,7 @@ final class WorkspacePreferenceEditingProvider
 }
 
 String _$workspacePreferenceEditingHash() =>
-    r'382ad2a7ceda5753ab7bcaaaf023720ea13ea0e8';
+    r'6551050cdf17f98a07baec861b8e9f988ae9b3b8';
 
 /// Editing defaults remains the initial behavior. An explicit, optional switch
 /// scopes edits to this workspace; account/workspace changes reset that choice.

@@ -92,7 +92,7 @@ final class FrontCameraScanProvider
   FrontCameraScan create() => FrontCameraScan();
 }
 
-String _$frontCameraScanHash() => r'd969b359955001b078877358ffb3bf327658fedc';
+String _$frontCameraScanHash() => r'bd3a0c3ce9156a89956c2b6d28c0a71dfa700266';
 
 /// Whether badge scanning uses the FRONT (screen-side) camera — the
 /// default: a wall-mounted kiosk tablet has its back camera against the

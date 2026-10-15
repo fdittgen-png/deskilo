@@ -70,4 +70,4 @@ final class PresenceBootstrapProvider
   }
 }
 
-String _$presenceBootstrapHash() => r'eff474acb663f61ef719975e2c3cf36c6b78125d';
+String _$presenceBootstrapHash() => r'530664d687d03ab6a615431b4754b8aaf2519141';
