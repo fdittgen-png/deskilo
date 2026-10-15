@@ -350,7 +350,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.workspaceStatus: _ownerBeta,
   WorkspaceFeature.expenseRepartitionWizard: _ownerBeta,
   WorkspaceFeature.multiSite: _ownerBeta,
-  WorkspaceFeature.siteDocuments: _ownerBeta,
+  WorkspaceFeature.siteDocuments: _legacy,
   WorkspaceFeature.vatGroups: _ownerBeta,
   WorkspaceFeature.vatRateHistory: _ownerBeta,
   WorkspaceFeature.vatCounterparty: _ownerBeta,

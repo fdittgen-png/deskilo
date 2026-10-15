@@ -1380,7 +1380,7 @@
     },
     {
       "key": "siteDocuments",
-      "maturity": "beta",
+      "maturity": "unreviewed",
       "lifecycle": "active",
       "capabilities": []
     },
