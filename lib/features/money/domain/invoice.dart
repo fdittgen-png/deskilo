@@ -5,6 +5,7 @@ import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'billing_rules.dart';
 import 'invoice_clauses.dart';
+import 'invoice_line_snapshot.dart';
 import 'vat_rate.dart';
 
 part 'invoice.freezed.dart';
@@ -38,6 +39,11 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// E, O, AE, G; 0403); '' on a line issued before it, where readers
     /// derive the category from the rate and the regime as they always did.
     @Default('') String vatCategory,
+
+    /// #2362 — a sales-tax line: the price quoted ([amountCents] adds its
+    /// [taxCents]); null on a VAT document, where [amountCents] is quoted.
+    int? netCents,
+    @Default(0) int taxCents,
   }) = _InvoiceLine;
 }
 
@@ -240,15 +246,7 @@ sealed class SettledSource with _$SettledSource {
         totalCents: (json['total_cents'] as num?)?.toInt() ?? 0,
         lines: [
           for (final line in (json['lines'] as List? ?? const []))
-            InvoiceLine(
-              kind: (line as Map)['kind'] as String? ?? '',
-              label: line['label'] as String? ?? '',
-              quantity: (line['quantity'] as num?)?.toInt() ?? 1,
-              amountCents: (line['amount_cents'] as num?)?.toInt() ?? 0,
-              vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
-              sourceNumber: line['source_number'] as String? ?? '',
-              vatCategory: line['vat_category'] as String? ?? '',
-            ),
+            invoiceLineFromSnapshot(line as Map),
         ],
       );
 }
@@ -426,15 +424,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     title: row['title'] as String,
     lines: [
       for (final line in (row['lines'] as List? ?? const []))
-        InvoiceLine(
-          kind: (line as Map)['kind'] as String? ?? '',
-          label: line['label'] as String? ?? '',
-          quantity: (line['quantity'] as num?)?.toInt() ?? 1,
-          amountCents: (line['amount_cents'] as num).toInt(),
-          vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
-          sourceNumber: line['source_number'] as String? ?? '',
-          vatCategory: line['vat_category'] as String? ?? '',
-        ),
+        invoiceLineFromSnapshot(line as Map),
     ],
     kind: InvoiceKind.fromWire(row['kind'] as String?),
     settledByInvoiceId: row['settled_by_invoice_id'] as String?,

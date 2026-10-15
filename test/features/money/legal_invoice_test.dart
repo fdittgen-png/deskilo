@@ -100,7 +100,7 @@ void main() {
     }
     test('outside the Union, and where a national e-invoicing channel is '
         'still missing (#2358), nothing is automatic', () {
-      for (final country in ['NO', 'US', ...nationalChannelRequired]) {
+      for (final country in ['NO', 'JP', ...nationalChannelRequired]) {
         expect(
           legalProfileOf(LegalClauseSnapshot(
             sellerCountry: country,

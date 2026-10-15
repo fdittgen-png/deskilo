@@ -56,7 +56,7 @@ select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered"
 update public.vat_rates set active = false where workspace_id = '00000000-0000-4000-8000-0000001917b1';
 select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}'),
   array['vat_rate_unresolved'], 'an inactive default rate never falls back to 0 %');
-update public.workspaces set country_code = 'US' where id = '00000000-0000-4000-8000-0000001917b1';
+update public.workspaces set country_code = 'JP' where id = '00000000-0000-4000-8000-0000001917b1';
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B"}}'),
   array['seller_country_unsupported'], 'a country the clauses were not reviewed for refuses issuing');
 select is(pg_temp.missing('{"seller":{"city":"c","country":"DE"},"buyer":{"name":"B"}}'),

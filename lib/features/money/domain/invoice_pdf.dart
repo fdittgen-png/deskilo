@@ -7,7 +7,9 @@ import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
 import 'invoice.dart';
+import 'invoice_pdf_sales_tax.dart';
 import 'invoice_report.dart';
+import 'invoice_sales_tax.dart';
 import 'report_block_widgets.dart';
 import 'report_flow_page.dart';
 import 'report_page_footer.dart';
@@ -121,6 +123,8 @@ class InvoicePdfStrings {
     required this.payments,
     this.net = '',
     this.vat = '',
+    this.subtotal = '',
+    this.exemptCertificate = '',
     required this.annex,
     required this.attendance,
     required this.activity,
@@ -177,6 +181,11 @@ class InvoicePdfStrings {
   /// a caller from before VAT existed still compiles.
   final String net;
   final String vat;
+
+  /// #2362 -- a sales-tax invoice: the caption of the net subtotal and the
+  /// words before the certificate that exempted lines. '' falls back to [net].
+  final String subtotal;
+  final String exemptCertificate;
 
   /// Annex section titles (0064).
   final String annex;

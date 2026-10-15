@@ -5850,6 +5850,10 @@
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
   },
+  "invoicePdfExemptCertificate": "Certificado de exención",
+  "@invoicePdfExemptCertificate": {
+    "description": "#2362 sales tax: invoicePdfExemptCertificate"
+  },
   "invoicePdfIssuedBy": "Emitida por",
   "invoicePdfIssuedOn": "Emitida el",
   "invoicePdfPage": "Página",
@@ -5861,6 +5865,10 @@
   },
   "invoicePdfReplaces": "Reemplaza a",
   "invoicePdfReserved": "reservado",
+  "invoicePdfSalesTax": "Impuesto sobre las ventas",
+  "@invoicePdfSalesTax": {
+    "description": "#2362 sales tax: invoicePdfSalesTax"
+  },
   "invoicePdfSettledIn": "Reagrupada en {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {
@@ -5870,6 +5878,10 @@
     }
   },
   "invoicePdfSignature": "Firma digital (SHA-256)",
+  "invoicePdfSubtotal": "Subtotal",
+  "@invoicePdfSubtotal": {
+    "description": "#2362 sales tax: invoicePdfSubtotal"
+  },
   "invoicePdfTitle": "Factura",
   "invoicePdfVoided": "ERRÓNEA — anulada el",
   "invoicePickMember": "Elija un miembro para ver lo que registró su mes.",
@@ -10726,6 +10738,14 @@
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
   },
+  "salesTaxWorksheetCsv": "Hoja del impuesto sobre las ventas (CSV)",
+  "@salesTaxWorksheetCsv": {
+    "description": "#2362 sales tax: salesTaxWorksheetCsv"
+  },
+  "salesTaxWorksheetEmpty": "No se emitió ninguna factura con impuesto sobre las ventas en este período.",
+  "@salesTaxWorksheetEmpty": {
+    "description": "#2362 sales tax: salesTaxWorksheetEmpty"
+  },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
   "scanJoinHelp": "Apunte la cámara al QR de invitación — verá el espacio antes de unirse.",
   "@scanJoinHelp": {
@@ -11970,6 +11990,103 @@
   "taskWorkbenchTitle": "Taller de tareas",
   "taskWorkbenchTranscriptOnly": "Algunos pasos vienen de una versión más reciente: se muestran solo como transcripción.",
   "taskWorkbenchUntrusted": "Un borrador privado de un archivo: nada de él se considera fiable ni se envía.",
+  "taxCertAdd": "Añadir un certificado",
+  "@taxCertAdd": {
+    "description": "#2362 sales tax: taxCertAdd"
+  },
+  "taxCertEmpty": "Ningún certificado archivado.",
+  "@taxCertEmpty": {
+    "description": "#2362 sales tax: taxCertEmpty"
+  },
+  "taxCertEnd": "Terminar hoy",
+  "@taxCertEnd": {
+    "description": "#2362 sales tax: taxCertEnd"
+  },
+  "taxCertFailed": "No se pudo guardar el certificado",
+  "@taxCertFailed": {
+    "description": "#2362 sales tax: taxCertFailed"
+  },
+  "taxCertInvalidDate": "Introduzca la fecha como AAAA-MM-DD",
+  "@taxCertInvalidDate": {
+    "description": "#2362 sales tax: taxCertInvalidDate"
+  },
+  "taxCertInvalidState": "Dos letras, o *",
+  "@taxCertInvalidState": {
+    "description": "#2362 sales tax: taxCertInvalidState"
+  },
+  "taxCertKind": "Tipo",
+  "@taxCertKind": {
+    "description": "#2362 sales tax: taxCertKind"
+  },
+  "taxCertKindGovernment": "Administración pública",
+  "@taxCertKindGovernment": {
+    "description": "#2362 sales tax: taxCertKindGovernment"
+  },
+  "taxCertKindNonprofit": "Sin ánimo de lucro",
+  "@taxCertKindNonprofit": {
+    "description": "#2362 sales tax: taxCertKindNonprofit"
+  },
+  "taxCertKindOther": "Otro",
+  "@taxCertKindOther": {
+    "description": "#2362 sales tax: taxCertKindOther"
+  },
+  "taxCertKindResale": "Reventa",
+  "@taxCertKindResale": {
+    "description": "#2362 sales tax: taxCertKindResale"
+  },
+  "taxCertNumber": "Número del certificado",
+  "@taxCertNumber": {
+    "description": "#2362 sales tax: taxCertNumber"
+  },
+  "taxCertOpenEnded": "desde {from}, sin fin",
+  "@taxCertOpenEnded": {
+    "description": "#2362 sales tax: taxCertOpenEnded",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "taxCertRequired": "Obligatorio",
+  "@taxCertRequired": {
+    "description": "#2362 sales tax: taxCertRequired"
+  },
+  "taxCertSave": "Guardar el certificado",
+  "@taxCertSave": {
+    "description": "#2362 sales tax: taxCertSave"
+  },
+  "taxCertState": "Estado (dos letras, o * para un certificado multiestatal)",
+  "@taxCertState": {
+    "description": "#2362 sales tax: taxCertState"
+  },
+  "taxCertSubtitle": "Impuesto sobre las ventas: las líneas de este cliente salen sin impuesto mientras haya un certificado vigente",
+  "@taxCertSubtitle": {
+    "description": "#2362 sales tax: taxCertSubtitle"
+  },
+  "taxCertTitle": "Certificados de exención",
+  "@taxCertTitle": {
+    "description": "#2362 sales tax: taxCertTitle"
+  },
+  "taxCertValidFrom": "Válido desde (AAAA-MM-DD)",
+  "@taxCertValidFrom": {
+    "description": "#2362 sales tax: taxCertValidFrom"
+  },
+  "taxCertValidTo": "Válido hasta (AAAA-MM-DD, opcional)",
+  "@taxCertValidTo": {
+    "description": "#2362 sales tax: taxCertValidTo"
+  },
+  "taxCertValidity": "{from} a {to}",
+  "@taxCertValidity": {
+    "description": "#2362 sales tax: taxCertValidity",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "taxRefAccount": "Número de cuenta (o código del plan)",
   "@taxRefAccount": {
     "description": "#2481 tax reference: Field: the account number of an export row."

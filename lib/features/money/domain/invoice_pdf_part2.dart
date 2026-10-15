@@ -62,6 +62,9 @@ class _InvoiceSheet {
       invoice.vatTotals.where((t) => t.vatCents > 0).toList();
   bool get showVat => vatTotals.isNotEmpty;
 
+  /// The per-line rate column: VAT documents only (a sales-tax line quotes a net price).
+  bool get showRates => showVat && !invoice.isSalesTax;
+
   /// '20 %', '5.5 %' — beside the caption, so one row reads 'VAT 20 %'.
   String ratePercent(double percent) =>
       '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
@@ -458,7 +461,7 @@ pw.Row(
   /// ── Positions ──
   pw.Widget _positions() =>
 pw.Table(
-            columnWidths: showVat
+            columnWidths: showRates
                 ? const {
                     0: pw.FlexColumnWidth(4),
                     1: pw.FlexColumnWidth(0.8),
@@ -481,7 +484,7 @@ pw.Table(
                             color: PdfColors.white,
                             fontWeight: pw.FontWeight.bold)),
                   ),
-                  if (showVat)
+                  if (showRates)
                     pw.Padding(
                       padding: const pw.EdgeInsets.symmetric(
                           vertical: 5, horizontal: 8),
@@ -522,7 +525,7 @@ pw.Table(
                                 color: _muted,
                                 fontWeight: pw.FontWeight.bold)),
                       ),
-                      if (showVat) pw.SizedBox(),
+                      if (showRates) pw.SizedBox(),
                       pw.SizedBox(),
                     ],
                   ),
@@ -537,7 +540,7 @@ pw.Table(
                           style:
                               const pw.TextStyle(fontSize: 10, color: _ink)),
                     ),
-                    if (showVat)
+                    if (showRates)
                       pw.Padding(
                         padding: const pw.EdgeInsets.symmetric(
                             vertical: 5, horizontal: 8),
@@ -551,7 +554,7 @@ pw.Table(
                             style: const pw.TextStyle(
                                 fontSize: 9, color: _muted)),
                       ),
-                    amountCell(line.amountCents),
+                    amountCell(invoice.quotedCents(line)),
                   ],
                 ),
               ],
@@ -559,66 +562,45 @@ pw.Table(
           );
 
   /// ── Totals: charges / payments / SOLDE ──
-  pw.Widget _totals() =>
-pw.Row(
+  /// One caption and its amount, on the two ends of a line.
+  pw.Widget _summaryRow(String caption, String amount) => pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(caption,
+            style: const pw.TextStyle(fontSize: 9, color: _muted)),
+        pw.Text(amount,
+            style: const pw.TextStyle(fontSize: 9, color: _muted)),
+      ]);
+
+  pw.Widget _totals() => invoice.isSalesTax
+      ? salesTaxTotals(
+          invoice: invoice,
+          strings: strings,
+          money: money,
+          paymentsCents: paymentsCents,
+          palette: (ink: _ink, muted: _muted, accent: _accent))
+      : pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.end,
             children: [
               pw.SizedBox(
                 width: 220,
                 child: pw.Column(children: [
                   if (showVat) ...[
-                    pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                        children: [
-                          pw.Text(strings.net,
-                              style: const pw.TextStyle(
-                                  fontSize: 9, color: _muted)),
-                          pw.Text(money(invoice.netCents),
-                              style: const pw.TextStyle(
-                                  fontSize: 9, color: _muted)),
-                        ]),
+                    _summaryRow(strings.net, money(invoice.netCents)),
                     for (final total in vatTotals)
                       pw.Padding(
                         padding: const pw.EdgeInsets.only(top: 2),
-                        child: pw.Row(
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
-                            children: [
-                              pw.Text(
-                                  '${strings.vat} ${ratePercent(total.percent)}',
-                                  style: const pw.TextStyle(
-                                      fontSize: 9, color: _muted)),
-                              pw.Text(money(total.vatCents),
-                                  style: const pw.TextStyle(
-                                      fontSize: 9, color: _muted)),
-                            ]),
+                        child: _summaryRow(
+                            '${strings.vat} ${ratePercent(total.percent)}',
+                            money(total.vatCents)),
                       ),
                     pw.SizedBox(height: 2),
                   ],
-                  pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      children: [
-                        pw.Text(strings.charges,
-                            style: const pw.TextStyle(
-                                fontSize: 9, color: _muted)),
-                        pw.Text(money(chargesCents),
-                            style: const pw.TextStyle(
-                                fontSize: 9, color: _muted)),
-                      ]),
+                  _summaryRow(strings.charges, money(chargesCents)),
                   if (paymentsCents != 0)
                     pw.Padding(
                       padding: const pw.EdgeInsets.only(top: 2),
-                      child: pw.Row(
-                          mainAxisAlignment:
-                              pw.MainAxisAlignment.spaceBetween,
-                          children: [
-                            pw.Text(strings.payments,
-                                style: const pw.TextStyle(
-                                    fontSize: 9, color: _muted)),
-                            pw.Text(money(paymentsCents),
-                                style: const pw.TextStyle(
-                                    fontSize: 9, color: _muted)),
-                          ]),
+                      child: _summaryRow(strings.payments, money(paymentsCents)),
                     ),
                   pw.Container(
                       margin: const pw.EdgeInsets.symmetric(vertical: 5),

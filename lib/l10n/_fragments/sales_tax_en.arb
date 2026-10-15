@@ -47,5 +47,122 @@
   "invoiceMissingSalesTaxTaxability": "Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)",
   "@invoiceMissingSalesTaxTaxability": {
     "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
+  },
+  "invoicePdfSubtotal": "Subtotal",
+  "@invoicePdfSubtotal": {
+    "description": "#2362 sales tax: invoicePdfSubtotal"
+  },
+  "invoicePdfExemptCertificate": "Exemption certificate",
+  "@invoicePdfExemptCertificate": {
+    "description": "#2362 sales tax: invoicePdfExemptCertificate"
+  },
+  "invoicePdfSalesTax": "Sales tax",
+  "@invoicePdfSalesTax": {
+    "description": "#2362 sales tax: invoicePdfSalesTax"
+  },
+  "salesTaxWorksheetCsv": "Sales tax worksheet (CSV)",
+  "@salesTaxWorksheetCsv": {
+    "description": "#2362 sales tax: salesTaxWorksheetCsv"
+  },
+  "salesTaxWorksheetEmpty": "No sales-tax invoice was issued in this period.",
+  "@salesTaxWorksheetEmpty": {
+    "description": "#2362 sales tax: salesTaxWorksheetEmpty"
+  },
+  "taxCertTitle": "Exemption certificates",
+  "@taxCertTitle": {
+    "description": "#2362 sales tax: taxCertTitle"
+  },
+  "taxCertSubtitle": "Sales tax: lines of this customer go out untaxed while one is in force",
+  "@taxCertSubtitle": {
+    "description": "#2362 sales tax: taxCertSubtitle"
+  },
+  "taxCertAdd": "Add a certificate",
+  "@taxCertAdd": {
+    "description": "#2362 sales tax: taxCertAdd"
+  },
+  "taxCertEmpty": "No certificate on file.",
+  "@taxCertEmpty": {
+    "description": "#2362 sales tax: taxCertEmpty"
+  },
+  "taxCertKind": "Kind",
+  "@taxCertKind": {
+    "description": "#2362 sales tax: taxCertKind"
+  },
+  "taxCertKindResale": "Resale",
+  "@taxCertKindResale": {
+    "description": "#2362 sales tax: taxCertKindResale"
+  },
+  "taxCertKindNonprofit": "Nonprofit",
+  "@taxCertKindNonprofit": {
+    "description": "#2362 sales tax: taxCertKindNonprofit"
+  },
+  "taxCertKindGovernment": "Government",
+  "@taxCertKindGovernment": {
+    "description": "#2362 sales tax: taxCertKindGovernment"
+  },
+  "taxCertKindOther": "Other",
+  "@taxCertKindOther": {
+    "description": "#2362 sales tax: taxCertKindOther"
+  },
+  "taxCertState": "State (two letters, or * for a multistate certificate)",
+  "@taxCertState": {
+    "description": "#2362 sales tax: taxCertState"
+  },
+  "taxCertNumber": "Certificate number",
+  "@taxCertNumber": {
+    "description": "#2362 sales tax: taxCertNumber"
+  },
+  "taxCertValidFrom": "Valid from (YYYY-MM-DD)",
+  "@taxCertValidFrom": {
+    "description": "#2362 sales tax: taxCertValidFrom"
+  },
+  "taxCertValidTo": "Valid until (YYYY-MM-DD, optional)",
+  "@taxCertValidTo": {
+    "description": "#2362 sales tax: taxCertValidTo"
+  },
+  "taxCertInvalidState": "Two letters, or *",
+  "@taxCertInvalidState": {
+    "description": "#2362 sales tax: taxCertInvalidState"
+  },
+  "taxCertInvalidDate": "Enter the date as YYYY-MM-DD",
+  "@taxCertInvalidDate": {
+    "description": "#2362 sales tax: taxCertInvalidDate"
+  },
+  "taxCertRequired": "Required",
+  "@taxCertRequired": {
+    "description": "#2362 sales tax: taxCertRequired"
+  },
+  "taxCertSave": "Save certificate",
+  "@taxCertSave": {
+    "description": "#2362 sales tax: taxCertSave"
+  },
+  "taxCertEnd": "End today",
+  "@taxCertEnd": {
+    "description": "#2362 sales tax: taxCertEnd"
+  },
+  "taxCertFailed": "The certificate could not be saved",
+  "@taxCertFailed": {
+    "description": "#2362 sales tax: taxCertFailed"
+  },
+  "taxCertValidity": "{from} to {to}",
+  "@taxCertValidity": {
+    "description": "#2362 sales tax: taxCertValidity",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "taxCertOpenEnded": "from {from}, no end",
+  "@taxCertOpenEnded": {
+    "description": "#2362 sales tax: taxCertOpenEnded",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
   }
 }

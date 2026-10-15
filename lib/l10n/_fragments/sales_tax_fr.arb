@@ -47,5 +47,122 @@
   "invoiceMissingSalesTaxTaxability": "Si un type de ligne de cette facture est imposable dans l'État : personne ne l'a indiqué (imposabilité par État)",
   "@invoiceMissingSalesTaxTaxability": {
     "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
+  },
+  "invoicePdfSubtotal": "Sous-total",
+  "@invoicePdfSubtotal": {
+    "description": "#2362 sales tax: invoicePdfSubtotal"
+  },
+  "invoicePdfExemptCertificate": "Certificat d'exonération",
+  "@invoicePdfExemptCertificate": {
+    "description": "#2362 sales tax: invoicePdfExemptCertificate"
+  },
+  "invoicePdfSalesTax": "Taxe de vente",
+  "@invoicePdfSalesTax": {
+    "description": "#2362 sales tax: invoicePdfSalesTax"
+  },
+  "salesTaxWorksheetCsv": "Feuille de taxe de vente (CSV)",
+  "@salesTaxWorksheetCsv": {
+    "description": "#2362 sales tax: salesTaxWorksheetCsv"
+  },
+  "salesTaxWorksheetEmpty": "Aucune facture avec taxe de vente n'a été émise sur cette période.",
+  "@salesTaxWorksheetEmpty": {
+    "description": "#2362 sales tax: salesTaxWorksheetEmpty"
+  },
+  "taxCertTitle": "Certificats d'exonération",
+  "@taxCertTitle": {
+    "description": "#2362 sales tax: taxCertTitle"
+  },
+  "taxCertSubtitle": "Taxe de vente : les lignes de ce client sortent hors taxe tant qu'un certificat est en vigueur",
+  "@taxCertSubtitle": {
+    "description": "#2362 sales tax: taxCertSubtitle"
+  },
+  "taxCertAdd": "Ajouter un certificat",
+  "@taxCertAdd": {
+    "description": "#2362 sales tax: taxCertAdd"
+  },
+  "taxCertEmpty": "Aucun certificat au dossier.",
+  "@taxCertEmpty": {
+    "description": "#2362 sales tax: taxCertEmpty"
+  },
+  "taxCertKind": "Type",
+  "@taxCertKind": {
+    "description": "#2362 sales tax: taxCertKind"
+  },
+  "taxCertKindResale": "Revente",
+  "@taxCertKindResale": {
+    "description": "#2362 sales tax: taxCertKindResale"
+  },
+  "taxCertKindNonprofit": "Association à but non lucratif",
+  "@taxCertKindNonprofit": {
+    "description": "#2362 sales tax: taxCertKindNonprofit"
+  },
+  "taxCertKindGovernment": "Administration publique",
+  "@taxCertKindGovernment": {
+    "description": "#2362 sales tax: taxCertKindGovernment"
+  },
+  "taxCertKindOther": "Autre",
+  "@taxCertKindOther": {
+    "description": "#2362 sales tax: taxCertKindOther"
+  },
+  "taxCertState": "État (deux lettres, ou * pour un certificat multi-États)",
+  "@taxCertState": {
+    "description": "#2362 sales tax: taxCertState"
+  },
+  "taxCertNumber": "Numéro du certificat",
+  "@taxCertNumber": {
+    "description": "#2362 sales tax: taxCertNumber"
+  },
+  "taxCertValidFrom": "Valable à partir du (AAAA-MM-JJ)",
+  "@taxCertValidFrom": {
+    "description": "#2362 sales tax: taxCertValidFrom"
+  },
+  "taxCertValidTo": "Valable jusqu'au (AAAA-MM-JJ, facultatif)",
+  "@taxCertValidTo": {
+    "description": "#2362 sales tax: taxCertValidTo"
+  },
+  "taxCertInvalidState": "Deux lettres, ou *",
+  "@taxCertInvalidState": {
+    "description": "#2362 sales tax: taxCertInvalidState"
+  },
+  "taxCertInvalidDate": "Saisissez la date au format AAAA-MM-JJ",
+  "@taxCertInvalidDate": {
+    "description": "#2362 sales tax: taxCertInvalidDate"
+  },
+  "taxCertRequired": "Obligatoire",
+  "@taxCertRequired": {
+    "description": "#2362 sales tax: taxCertRequired"
+  },
+  "taxCertSave": "Enregistrer le certificat",
+  "@taxCertSave": {
+    "description": "#2362 sales tax: taxCertSave"
+  },
+  "taxCertEnd": "Terminer aujourd'hui",
+  "@taxCertEnd": {
+    "description": "#2362 sales tax: taxCertEnd"
+  },
+  "taxCertFailed": "Le certificat n'a pas pu être enregistré",
+  "@taxCertFailed": {
+    "description": "#2362 sales tax: taxCertFailed"
+  },
+  "taxCertValidity": "{from} au {to}",
+  "@taxCertValidity": {
+    "description": "#2362 sales tax: taxCertValidity",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "taxCertOpenEnded": "depuis le {from}, sans fin",
+  "@taxCertOpenEnded": {
+    "description": "#2362 sales tax: taxCertOpenEnded",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
   }
 }
