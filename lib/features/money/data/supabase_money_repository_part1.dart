@@ -127,7 +127,7 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
       'p_invoice_id': invoiceId,
       'p_note': note,
     });
-    applyOrPending(answer as Map);
+    applyOrPendingVoid(answer);
   }
 
   Future<Set<String>> _fetchConsumedPaymentIdsImpl(String workspaceId) async {
