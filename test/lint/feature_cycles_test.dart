@@ -92,7 +92,7 @@ const Map<String, int> _coreToFeature = {
   'core/locale': 1,
   'core/privacy': 5,
   'core/push': 2,
-  'core/realtime': 10,
+  'core/realtime': 0,
 };
 
 List<List<String>> _declaredLayers() {

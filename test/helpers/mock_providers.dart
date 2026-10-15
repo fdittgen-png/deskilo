@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:ui' show Locale;
 
+import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvider;
 import 'package:deskilo/core/backend/backend_settings.dart';
@@ -286,6 +287,7 @@ List<Override> standardTestOverrides({
 
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
+    ...realtimeWiringFromApp, // #2495
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
     connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),

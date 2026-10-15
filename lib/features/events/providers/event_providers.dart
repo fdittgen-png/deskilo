@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/realtime/invalidation_map.dart';
+import '../../../core/realtime/realtime_wiring.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
 import '../domain/event_decision.dart';
@@ -121,7 +122,7 @@ Future<int> myPendingEventCount(Ref ref) async =>
 /// cannot drift apart again.
 void invalidateBookingData(WidgetRef ref) {
   for (final table in bookingMutationTables) {
-    for (final provider in invalidationFor(table).providers) {
+    for (final provider in ref.read(invalidationLookupProvider)(table).providers) {
       ref.invalidate(provider);
     }
   }

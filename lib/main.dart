@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/app.dart';
 import 'app/app_initializer.dart';
 import 'app/bootstrap.dart';
+import 'app/realtime_invalidations.dart';
 import 'app/server_choice_app.dart';
 import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
@@ -99,6 +100,7 @@ Future<void> main() async {
       observers: const [TraceProviderObserver()],
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
+        ...realtimeWiringFromApp, // #2495
       ],
       child: const DeskiloRoot(),
     ),

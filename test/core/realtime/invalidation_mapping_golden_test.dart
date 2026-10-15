@@ -7,6 +7,7 @@
 // file unchanged. Rewrite deliberately with UPDATE_INVALIDATION_MAP=1.
 import 'dart:io';
 
+import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:flutter_test/flutter_test.dart';
 

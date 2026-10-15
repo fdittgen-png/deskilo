@@ -52,6 +52,7 @@ import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/realtime_invalidations.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
@@ -137,7 +138,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // from `Supabase.instance.client`; inside this scope none of them
       // is, which is what makes an external effect impossible rather
       // than refused.
-      authRepositoryProvider.overrideWithValue(fixture.auth),
+      authRepositoryProvider.overrideWithValue(fixture.auth), ...realtimeWiringFromApp, // #2495
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.

@@ -8,6 +8,7 @@
 // provider once.
 import 'dart:async';
 
+import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
@@ -48,6 +49,7 @@ void main() {
     var current = _ws('ws-a');
     final container = ProviderContainer(
       overrides: [
+        ...realtimeWiringFromApp,
         realtimeSyncProvider.overrideWithValue(sync),
         floorPlanRepositoryProvider.overrideWithValue(plans),
         currentWorkspaceProvider.overrideWith((ref) async => current),
@@ -91,6 +93,7 @@ void main() {
     var current = _ws('ws-a');
     final container = ProviderContainer(
       overrides: [
+        ...realtimeWiringFromApp,
         realtimeSyncProvider.overrideWithValue(sync),
         floorPlanRepositoryProvider.overrideWithValue(_SlowBust()),
         currentWorkspaceProvider.overrideWith((ref) async => current),

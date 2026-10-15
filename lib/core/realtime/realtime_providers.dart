@@ -5,12 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
-import '../../features/plan/providers/floor_plan_providers.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
 import '../trace/trace_logger.dart';
 import '../ui/app_durations.dart';
 import 'invalidation_map.dart';
 import 'realtime_sync.dart';
+import 'realtime_wiring.dart';
 
 part 'realtime_providers.g.dart';
 
@@ -64,7 +63,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   Future<void> build() async {
     final generation = ++_generation;
     ref.onDispose(_teardown);
-    final workspace = await ref.watch(currentWorkspaceProvider.future);
+    final workspaceId = await ref.watch(realtimeWorkspaceIdProvider.future);
     // A build superseded while it awaited installs nothing: the build
     // that superseded it owns the channel and will tear this one's
     // predecessor down itself.
@@ -73,7 +72,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     // while the new workspace is being read, so there is no window in
     // which changes are missed.
     _teardown();
-    if (workspace == null) return;
+    if (workspaceId == null) return;
     _observer = ResumeResyncObserver(() {
       _pending.add(kResyncSignal);
       _batchWindow ??= Timer(kRealtimeDebounce, _flush);
@@ -81,7 +80,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     WidgetsBinding.instance.addObserver(_observer!);
     _sub = ref
         .read(realtimeSyncProvider)
-        .watch(workspace.id)
+        .watch(workspaceId)
         .listen((table) {
       _pending.add(table);
       _batchWindow ??= Timer(kRealtimeDebounce, _flush);
@@ -111,9 +110,10 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     _pending.clear();
     if (!ref.mounted) return;
     // A resync subsumes every per-table signal in the batch.
+    final lookup = ref.read(invalidationLookupProvider);
     final entries = tables.contains(kResyncSignal)
-        ? mappedTables.map(invalidationFor)
-        : tables.map(invalidationFor);
+        ? mappedTables.map(lookup)
+        : tables.map(lookup);
     unawaited(_applyAll(entries.toList(growable: false), _generation));
   }
 
@@ -136,7 +136,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   ) async {
     if (entries.any((e) => e.bustsPlanCache)) {
       try {
-        await ref.read(floorPlanRepositoryProvider).invalidateCache();
+        await ref.read(planCacheBusterProvider)();
       } on Object catch (e, st) {
         // A cache that refuses to clear must not stop the repaint — the
         // refetch may still be network-true.
