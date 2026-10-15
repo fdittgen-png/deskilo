@@ -25,9 +25,9 @@ insert into auth.users (id, instance_id, aud, role, email, encrypted_password, e
 delete from public.platform_admins;
 insert into public.platform_admins (user_id) values ('00000000-0000-4000-8000-0000002484a1');
 
-insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, dunning_rules) values
- ('00000000-0000-4000-8000-0000002484b1', 'Settings 2484 A', 'FR', 'EUR', 'Europe/Paris', '00000000-0000-4000-8000-0000002484a2', '{"levels": 3}'),
- ('00000000-0000-4000-8000-0000002484b2', 'Settings 2484 B', 'FR', 'EUR', 'Europe/Paris', '00000000-0000-4000-8000-0000002484a4', '{}');
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, dunning_rules, feature_flags) values
+ ('00000000-0000-4000-8000-0000002484b1', 'Settings 2484 A', 'FR', 'EUR', 'Europe/Paris', '00000000-0000-4000-8000-0000002484a2', '{"levels": 3}', '{"configurableSettings": true, "dunning": true}'),
+ ('00000000-0000-4000-8000-0000002484b2', 'Settings 2484 B', 'FR', 'EUR', 'Europe/Paris', '00000000-0000-4000-8000-0000002484a4', '{}', '{"configurableSettings": true, "dunning": true}');
 insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at) values
  ('00000000-0000-4000-8000-0000002484b1', '00000000-0000-4000-8000-0000002484a2', true, true, '2026-01-01'),
  ('00000000-0000-4000-8000-0000002484b1', '00000000-0000-4000-8000-0000002484a3', false, false, '2026-01-01'),

@@ -29,7 +29,7 @@ begin
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by,
                                  vat_regime, feature_flags)
   values ('Input FR', 'FR', 'EUR', 'Europe/Paris', u_o, 'vat_registered',
-          '{"moneyTab": true, "invoicing": true, "accountingBook": true}')
+          '{"moneyTab": true, "invoicing": true, "accountingBook": true, "vatManagement": true, "vatDeclarations": true}')
   returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_o, true, true) returning id into mo;

@@ -36,7 +36,7 @@ values ('sales_tax', 'US', '10001', '2026-01-01',
        ('taxability', 'US', 'NY:package', '2026-01-01', '{"status":"exempt"}', 'fixture of 190_us_sales_tax.sql', false);
 
 create or replace function pg_temp.seller(
-  tag text, postal text, currency text default 'USD', flags text default '{"invoicing":true}'
+  tag text, postal text, currency text default 'USD', flags text default '{"invoicing":true,"salesTax":true}'
 ) returns uuid language plpgsql as $seed$
 declare
   uo uuid := gen_random_uuid();

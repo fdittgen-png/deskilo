@@ -25,10 +25,10 @@ select ('00000000-0000-4000-8000-0000001913'||suffix)::uuid,'00000000-0000-0000-
   from unnest(array['a1','a2','a3','a4','a5']) suffix;
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags,dunning_rules) values
  ('00000000-0000-4000-8000-0000001913b1','Dunning','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001913a1','dev',
-  '{"paymentReminders":true}','{"levels":3,"first_after_days":30,"between_days":14,"automatic":true}'),
+  '{"dunning":true,"paymentReminders":true}','{"levels":3,"first_after_days":30,"between_days":14,"automatic":true}'),
  ('00000000-0000-4000-8000-0000001913b2','Foreign dunning','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001913a4','dev','{}','{}'),
  ('00000000-0000-4000-8000-0000001913b3','No terms','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001913a5','dev',
-  '{"paymentReminders":true}','{"levels":3}');
+  '{"dunning":true,"paymentReminders":true}','{"levels":3}');
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
  ('00000000-0000-4000-8000-0000001913c1','00000000-0000-4000-8000-0000001913b1','00000000-0000-4000-8000-0000001913a1',true,true,'active'),
  ('00000000-0000-4000-8000-0000001913c2','00000000-0000-4000-8000-0000001913b1','00000000-0000-4000-8000-0000001913a2',false,false,'active'),

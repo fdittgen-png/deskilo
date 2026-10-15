@@ -13,9 +13,9 @@ values ('00000000-0000-4000-8000-0000002361a2','00000000-0000-0000-0000-00000000
  'authenticated','authenticated','a2@ca2361.test','',now(),now(),now());
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,vat_regime,vat_id,feature_flags,invoice_legal) values
  ('00000000-0000-4000-8000-0000002361b2','CA return','CA','CAD','America/Toronto','00000000-0000-4000-8000-0000002361a2','dev',
-  'vat_registered','123456789 RT0001','{"invoicing":true,"inputVat":true}', '{}'),
+  'vat_registered','123456789 RT0001','{"invoicing":true,"vatManagement":true,"vatDeclarations":true,"inputVat":true}', '{}'),
  ('00000000-0000-4000-8000-0000002361b3','DE return','DE','EUR','Europe/Berlin','00000000-0000-4000-8000-0000002361a2','dev',
-  'vat_registered','DE123456789','{"invoicing":true,"inputVat":true}', '{}');
+  'vat_registered','DE123456789','{"invoicing":true,"vatManagement":true,"vatDeclarations":true,"inputVat":true}', '{}');
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
  ('00000000-0000-4000-8000-0000002361c2','00000000-0000-4000-8000-0000002361b2','00000000-0000-4000-8000-0000002361a2',true,true,'active'),
  ('00000000-0000-4000-8000-0000002361c3','00000000-0000-4000-8000-0000002361b3','00000000-0000-4000-8000-0000002361a2',true,true,'active');

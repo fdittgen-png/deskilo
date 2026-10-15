@@ -57,7 +57,7 @@ select is(
 -- An absent key compares through the registry default, as the client reads it.
 select is(
   public.set_feature_flags(current_setting('deskilo.ff.ws')::uuid, '{"kioskMode": true}'::jsonb,
-    jsonb_build_object('kioskMode', (public.feature_registry()->'kioskMode'->>'default')::boolean,
+    jsonb_build_object('kioskMode', public.feature_raw('{}'::jsonb, 'kioskMode'),
                        'multiSite', true))->'kioskMode',
   'true'::jsonb, 'a fresh read-set writes the exact delta');
 
