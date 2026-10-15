@@ -6,6 +6,7 @@ import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
+import 'invoice_line_cash.dart';
 import 'vat_rate.dart';
 
 /// Sage 50's **audit-trail CSV** (#669) — the import shape the British
@@ -204,6 +205,8 @@ String buildSageFile({
       );
     }
 
+    _bookNettedReceipts(row, invoice, accounts, customer);
+
     final match = matches[invoice.id];
     // A PENDING match is a settlement still awaiting validation (0067).
     // Booking it would put money in Sage the workspace has not agreed it
@@ -212,12 +215,14 @@ String buildSageFile({
       // A receipt carries NO tax: the tax was accounted for on the
       // invoice, and repeating it here would double it on the VAT
       // return. T9 is what says so.
+      // #2365 — a refunded credit note is money OUT: SP, never a receipt.
+      final (type: settleType, :details) = _settlement(invoice, match);
       row(
-        type: 'SR',
+        type: settleType,
         nominal: accounts.bank,
         on: match.matchedAt,
         reference: invoice.number,
-        details: 'Payment ${invoice.number}',
+        details: details,
         netCents: match.paidCents,
         taxCode: accounts.noTax,
         taxCents: 0,
@@ -230,3 +235,47 @@ String buildSageFile({
   // has been seen to drop a last line that does not end in one.
   return '${rows.join('\r\n')}\r\n';
 }
+
+typedef _SageRow = void Function({
+  required String type,
+  required String nominal,
+  required DateTime on,
+  required String reference,
+  required String details,
+  required int netCents,
+  required String taxCode,
+  required int taxCents,
+  required String customer,
+});
+
+/// #2365 -- the payments an invoice itself netted were money in on its
+/// date; without them the debtor stays open on a document whose total is
+/// already net of them. A receipt carries no tax (T9).
+void _bookNettedReceipts(
+  _SageRow row,
+  Invoice invoice,
+  SageAccounts accounts,
+  String customer,
+) {
+  if (invoice.isCreditNote) return;
+  for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
+    row(
+      type: 'SR',
+      nominal: accounts.bank,
+      on: invoice.issuedAt,
+      reference: invoice.number,
+      details: 'Payment ${invoice.number}',
+      netCents: -line.amountCents,
+      taxCode: accounts.noTax,
+      taxCents: 0,
+      customer: customer,
+    );
+  }
+}
+
+/// #2365 -- what a standing match is in Sage: a receipt (SR), or for a
+/// refunded credit note a payment to the customer (SP).
+({String type, String details}) _settlement(Invoice invoice, InvoiceMatch m) =>
+    refundedCents(invoice, m) > 0
+    ? (type: 'SP', details: 'Refund ${invoice.number}')
+    : (type: 'SR', details: 'Payment ${invoice.number}');

@@ -234,10 +234,8 @@ String buildDatevFile({
     required String text,
     DateTime? taxPeriodDate,
   }) {
-    // Direction: we always state the DEBIT account in `Konto` and the
-    // credit in `Gegenkonto`, so the flag is always 'S'. Writing the
-    // pair the other way round with 'H' would post the same booking
-    // twice-mirrored, which is the classic DATEV import error.
+    // Always 'S': the DEBIT account in `Konto`, the credit in `Gegenkonto`
+    // (the pair the other way round with 'H' posts it twice-mirrored).
     rows.add([
       amount(cents), '"S"',
       csvCell(currency, dialect: datev, quoteEmpty: true), '', '', '',
@@ -308,6 +306,7 @@ String buildDatevFile({
         credit: accounts.customers,
         text: 'Gutschrift ${invoice.number}',
       );
+      _bookRefund(book, invoice, matches[invoice.id], accounts);
       continue;
     }
     // Receivable against revenue, at what the invoice CHARGES — DATEV
@@ -452,3 +451,33 @@ final List<String> _datevColumns21To116 = List.unmodifiable([
   'Leistungsdatum',
   'Datum Zuord. Steuerperiode',
 ]);
+
+typedef _DatevBook = void Function({
+  required int cents,
+  required String debit,
+  required String credit,
+  required DateTime date,
+  required String documentRef,
+  required String text,
+  DateTime? taxPeriodDate,
+});
+
+/// #2365 — the refund of a credit note is money OUT: customers debited,
+/// bank credited, on the day it moved.
+void _bookRefund(
+  _DatevBook book,
+  Invoice invoice,
+  InvoiceMatch? match,
+  DatevAccounts accounts,
+) {
+  final refund = refundedCents(invoice, match);
+  if (refund == 0) return;
+  book(
+    cents: refund,
+    debit: accounts.customers,
+    credit: accounts.bank,
+    date: match!.matchedAt,
+    documentRef: invoice.number,
+    text: 'Erstattung ${invoice.number}',
+  );
+}

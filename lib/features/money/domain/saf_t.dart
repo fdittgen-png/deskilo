@@ -304,21 +304,7 @@ String buildSafTFile({
       final sales = safTSalesTransactions(live, accounts);
       final bank = [
         ...safTNettedReceipts(live, accounts),
-        for (final e in settled)
-          SafTLedgerTransaction(
-            // Dated when the money MOVED (0070), not when it was
-            // recorded — or the ledger disagrees with the bank
-            // statement it is reconciled against.
-            id: '${e.invoice.number}-P',
-            date: e.match.matchedAt,
-            description: 'Payment ${e.invoice.number}',
-            lines: [
-              SafTLedgerLine(
-                  accounts.bank, e.match.paidCents, 0, e.invoice.number),
-              SafTLedgerLine(
-                  accounts.customers, 0, e.match.paidCents, e.invoice.number),
-            ],
-          ),
+        ...safTSettlements(settled, accounts),
       ];
       final all = [...sales, ...bank];
 
