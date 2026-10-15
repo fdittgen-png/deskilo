@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/profile/domain/personal_preferences.dart';
-import '../../features/profile/presentation/widgets/preference_scope_controls.dart';
-import '../../features/profile/providers/personal_preferences_providers.dart';
-import '../../features/profile/providers/profile_providers.dart';
-import '../../l10n/app_localizations.dart';
-import '../help/help_anchors.dart';
-import '../help/help_dot.dart';
-import '../l10n/context_l10n.dart';
-import '../theme/app_spacing.dart';
-import '../time/clock.dart';
-import '../trace/guarded.dart';
-import '../ui/app_sheet.dart';
-import 'app_format.dart';
-import 'format_controller.dart';
-import 'format_prefs.dart';
-import 'locale_names.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/format_prefs.dart';
+import '../../../../core/i18n/locale_names.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/personal_preferences.dart';
+import '../../providers/personal_preferences_providers.dart';
+import '../../providers/profile_providers.dart';
+import 'preference_scope_controls.dart';
 
 /// Settings → Region & formats (#711): the member's own numbers, dates,
 /// clock and time zone. The tile previews what the choices add up to;
@@ -76,7 +76,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
                   if (prefs.toDb()[entry.key] != entry.value) entry.key: entry.value as String,
               }, workspaceOnly: true);
             } else {
-              await ref.read(profileRepositoryProvider).setFormatPrefs(next);
+              await ref.read(myProfileEditsProvider).saveFormatPrefs(next);
               ref.invalidate(personalSettingsProvider);
             }
           },

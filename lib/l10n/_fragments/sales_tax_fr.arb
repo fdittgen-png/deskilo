@@ -1,0 +1,51 @@
+{
+  "@@locale": "fr",
+  "featureSalesTaxTitle": "Taxe de vente (États-Unis)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
+  },
+  "featureSalesTaxDesc": "Un vendeur aux États-Unis facture des prix hors taxe et la taxe de vente du code postal du site, indiquée à part par juridiction ; le certificat d'exonération d'un client retire une ligne de la taxe. Désactivé : un tel vendeur ne peut pas facturer.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "taxRefDomainSalesTax": "Taxe de vente par code postal",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
+  "taxRefDomainTaxability": "Imposabilité par État",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
+  },
+  "taxRefState": "État (deux lettres)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefComponents": "Juridictions, une par ligne : niveau, nom, pourcentage (niveau : state, county, city ou district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefStatus": "Statut",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
+  "taxRefTaxSystem": "Régime de taxe (vat ou sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
+  },
+  "taxRefInvalidState": "Saisissez le code de l'État sur deux lettres",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
+  },
+  "taxRefInvalidComponents": "Une juridiction par ligne : niveau, nom, pourcentage (0 à 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
+  "invoiceMissingSalesTaxRate": "La taxe de vente du code postal du site : le propriétaire de la plateforme ne l'a pas saisie",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Si un type de ligne de cette facture est imposable dans l'État : personne ne l'a indiqué (imposabilité par État)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
+  }
+}

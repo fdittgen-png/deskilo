@@ -71,7 +71,7 @@ const Map<String, int> _upwardImports = {
   'profile -> members': 1,
   'profile -> money': 1,
   'profile -> reservations': 5,
-  'profile -> workspace': 45,
+  'profile -> workspace': 43,
   'workspace -> directory': 21,
   'workspace -> events': 15,
   'workspace -> members': 4,
@@ -84,12 +84,7 @@ const Map<String, int> _upwardImports = {
 /// Imports from `lib/core` into a feature, per core area (the real
 /// inversions; `core/demo` mirrors the features by design).
 const Map<String, int> _coreToFeature = {
-  'core/backend': 1,
-  'core/cache': 1,
-  'core/capture': 1,
-  'core/help': 1,
-  'core/i18n': 9,
-  'core/locale': 1,
+  'core/i18n': 4,
   'core/privacy': 3,
   'core/push': 2,
   'core/realtime': 10,

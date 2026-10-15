@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'reserve_screen.dart';
+
+
+
+
+
 
 
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
 /// magic numbers.
-@visibleForTesting
 abstract final class ReserveHubMetrics {
   /// Day pills on the date strip, starting today.
   static const int stripDayCount = 14;

@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/auth/providers/auth_providers.dart';
 import '../backend/reference_backend.dart';
+import '../session/session_source.dart';
 import '../trace/trace_logger.dart';
 import 'cache_scope.dart';
 
@@ -472,6 +472,6 @@ CacheStore cacheStore(Ref ref) => ScopedCacheStore(
             bootBackendUrl.isEmpty
                 ? (compiledDefaultEndpoint ?? referenceEndpoint).url
                 : bootBackendUrl,
-        userId: ref.read(authRepositoryProvider).currentUserId,
+        userId: ref.read(sessionSourceProvider).currentUserId,
       ),
     );

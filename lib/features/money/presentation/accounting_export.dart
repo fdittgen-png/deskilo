@@ -30,6 +30,7 @@ import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
+import 'export_year_books.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
 import 'report_strings_l10n.dart';
@@ -78,7 +79,9 @@ Future<void> exportAccountingFile(
   // payment allocated to the invoices they regroup.
   final view = accountingView(
       invoices, ref.read(invoiceMatchesProvider).value ?? const {});
-  final exported = view.invoices;
+  final year = invoices
+      .map((invoice) => invoice.issuedAt.year)
+      .reduce((a, b) => a > b ? a : b);
   final matches = view.matches;
   final company = sellerOf(invoices.last, workspace);
   final country = workspace.countryCode.toUpperCase();
@@ -108,8 +111,9 @@ Future<void> exportAccountingFile(
   // development workspace's books are marked as such.
   final development = workspace.environment != 'prod';
   final repo = ref.read(moneyRepositoryProvider);
-  final ledger = await repo.fetchWorkspaceLedger(workspace.id);
-  final repartitions = await repo.fetchExpenseRepartitions(workspace.id);
+  // #2365 — the books of the export year only.
+  final (invoices: exported, :ledger, :repartitions) =
+      await exportYearBooks(repo, workspace.id, year, view.invoices);
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
@@ -128,9 +132,6 @@ Future<void> exportAccountingFile(
       l10n.accountingExportDevelopment,
     );
   }
-  final year = invoices
-      .map((invoice) => invoice.issuedAt.year)
-      .reduce((a, b) => a > b ? a : b);
 
   Future<void> save(String content, String fileName) async {
     final bytes = Uint8List.fromList(utf8.encode(content));
@@ -385,10 +386,7 @@ Future<void> exportAccountingFile(
         message: 'archive bundle failed',
         errorText: l10n.workspaceGenericError,
         action: () async {
-          final yearInvoices = [
-            for (final i in exported)
-              if (i.issuedAt.year == year) i,
-          ];
+          final yearInvoices = exported;
           // #1154 — the signature checks are independent server calls:
           // all of them in flight at once, not one round-trip per invoice.
           // The PDFs stay sequential: each needs the context and the

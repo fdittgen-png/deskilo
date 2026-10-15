@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/capture/capture_providers.dart';
 import '../../../core/privacy/privacy_policy.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
@@ -21,6 +22,13 @@ import '../domain/profile_repository.dart';
 import '../domain/rights_request.dart';
 
 part 'profile_providers.g.dart';
+
+/// #2495 — the reader's name for core/capture's watermark, from the
+/// profile; the composition root puts it in its scope's overrides.
+final Override captureReaderNameFromProfile =
+    captureReaderNameProvider.overrideWith(
+  (ref) => ref.watch(myProfileProvider).value?.fullName ?? '',
+);
 
 @Riverpod(keepAlive: true)
 ProfileRepository profileRepository(Ref ref) =>
