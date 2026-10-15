@@ -1329,6 +1329,7 @@ routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) ->
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
 routine public.confirm_expense_occurrence(p_occurrence_id uuid, p_amount_cents integer, p_reason text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:2e9422068815
+routine public.confirm_tax_reference(p_id uuid, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c66188a7e04a
 routine public.conversation_details(p_conversation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b69531430df5
 routine public.convert_to_series(p_reservation_id uuid, p_pattern text, p_until timestamp with time zone, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1bc75036b58
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
@@ -2032,6 +2033,7 @@ routine public.who_can_access_me(p_workspace_id uuid) -> jsonb | function | defi
 routine public.window_outside_working_hours(p_local_start timestamp without time zone, p_local_end timestamp without time zone, p_ws_start integer, p_ws_end integer) -> boolean | function | invoker | immutable | exec:service_role | body:1f792252b736
 routine public.withdraw_instance_delegation(p_user uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c6fe02abd94f
 routine public.withdraw_mcp_eligibility() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:60fa13bb036f
+routine public.withdraw_tax_reference(p_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2e852ebaacb5
 routine public.work_hours_provenance(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:55b4b4acd88c
 routine public.workspace_application_thread(p_event_id uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:526d8c191121
 routine public.workspace_charges_vat(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:02505152fd8a

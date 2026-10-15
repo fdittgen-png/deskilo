@@ -46,6 +46,13 @@ of law was a release, and the two copies drifted (#2476 measured nine kinds).
    `test/lint/tax_literals_allowed.txt`, and on an entry that no longer matches
    the code. Seed migrations and tests are outside it.
 
+## Confirming and withdrawing (#2565)
+Confirming is the one update a version ever receives: it sets `confirmed` and may
+complete the source, it changes no value. A planned version (in the future,
+unconfirmed) can be withdrawn when the change does not come into force: it is
+deleted, its predecessor is open again, and the act is audited with the full
+row. A version in force or confirmed is history and is only superseded.
+
 ## Consequences
 - A change of law is a data change by the platform administrator; the next
   invoice, return or export uses it.

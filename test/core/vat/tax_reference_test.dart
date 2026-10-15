@@ -73,6 +73,33 @@ void main() {
     expect(one.revision, TaxReferenceSet([_rate('2020-01-01', 20)]).revision);
   });
 
+  test('the revision changes when a planned version is confirmed or withdrawn (#2565)',
+      () async {
+    const planned = TaxReferenceRow(
+      id: 'p',
+      country: 'FR',
+      key: 'standard',
+      validFrom: '2028-01-01',
+      value: RateValue(
+          label: 'Standard 21 %', percent: 21, group: 'standard', category: 'S'),
+      source: 'Bill',
+      confirmed: false,
+    );
+    final store = FakeTaxReferenceRepository(
+        [_rate('2020-01-01', 20, to: '2028-01-01'), planned]);
+    final planned0 = (await store.load()).revision;
+    await store.confirm('p');
+    final confirmed = (await store.load()).revision;
+    expect(confirmed, isNot(planned0));
+    final other = FakeTaxReferenceRepository(
+        [_rate('2020-01-01', 20, to: '2028-01-01'), planned]);
+    await other.withdraw('p', 'vote failed');
+    expect((await other.load()).revision, isNot(planned0));
+    expect((await other.load()).rows.single.validTo, isNull);
+    expect(() => store.withdraw('p', 'x'), throwsStateError,
+        reason: 'a confirmed version is only superseded');
+  });
+
   test('the bundled copy stands in when the installation cannot answer', () async {
     final server = FakeTaxReferenceRepository([_rate('2020-01-01', 20)])
       ..failWith = Exception('offline');

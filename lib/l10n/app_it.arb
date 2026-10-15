@@ -11974,6 +11974,10 @@
   "@taxRefAccount": {
     "description": "#2481 tax reference: Field: the account number of an export row."
   },
+  "taxRefActionFailed": "Impossibile salvare la modifica",
+  "@taxRefActionFailed": {
+    "description": "#2565 tax reference: taxRefActionFailed"
+  },
   "taxRefAdd": "Aggiungi un valore",
   "@taxRefAdd": {
     "description": "#2477 tax reference: Button: add a new reference value."
@@ -12001,6 +12005,10 @@
   "taxRefComponents": "Giurisdizioni, una per riga: livello, nome, percentuale (livello: state, county, city o district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefConfirm": "Conferma",
+  "@taxRefConfirm": {
+    "description": "#2565 tax reference: taxRefConfirm"
   },
   "taxRefConfirmed": "Confermato",
   "@taxRefConfirmed": {
@@ -12261,6 +12269,14 @@
   "taxRefValidUntil": "fino al",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
+  },
+  "taxRefWithdraw": "Ritira",
+  "@taxRefWithdraw": {
+    "description": "#2565 tax reference: taxRefWithdraw"
+  },
+  "taxRefWithdrawReason": "Motivo del ritiro di questa versione prevista",
+  "@taxRefWithdrawReason": {
+    "description": "#2565 tax reference: taxRefWithdrawReason"
   },
   "templateApplyConflict": "Questa richiesta è già stata usata per altro. Non è stato applicato nulla.",
   "templateChangedSinceReview": "Questo modello è cambiato da quando l'ha esaminato. Non è stato applicato nulla; lo riapra per esaminare la nuova versione.",

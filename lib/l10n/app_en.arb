@@ -21132,6 +21132,10 @@
   "@taxRefAccount": {
     "description": "#2481 tax reference: Field: the account number of an export row."
   },
+  "taxRefActionFailed": "The change could not be saved",
+  "@taxRefActionFailed": {
+    "description": "#2565 tax reference: taxRefActionFailed"
+  },
   "taxRefAdd": "Add a value",
   "@taxRefAdd": {
     "description": "#2477 tax reference: Button: add a new reference value."
@@ -21159,6 +21163,10 @@
   "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefConfirm": "Confirm",
+  "@taxRefConfirm": {
+    "description": "#2565 tax reference: taxRefConfirm"
   },
   "taxRefConfirmed": "Confirmed",
   "@taxRefConfirmed": {
@@ -21419,6 +21427,14 @@
   "taxRefValidUntil": "until",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
+  },
+  "taxRefWithdraw": "Withdraw",
+  "@taxRefWithdraw": {
+    "description": "#2565 tax reference: taxRefWithdraw"
+  },
+  "taxRefWithdrawReason": "Reason for withdrawing this planned version",
+  "@taxRefWithdrawReason": {
+    "description": "#2565 tax reference: taxRefWithdrawReason"
   },
   "templateApplyConflict": "This request was already used for something else. Nothing was applied.",
   "@templateApplyConflict": {

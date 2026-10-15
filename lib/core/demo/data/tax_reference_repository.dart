@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../vat/tax_reference.dart';
+import 'fixture_clock.dart';
 
 /// #2477 — the tax reference store in memory, with the server's versioning
 /// rule: a new version closes the one in force on its first day, a version
@@ -7,6 +8,9 @@ import '../../vat/tax_reference.dart';
 class FakeTaxReferenceRepository implements TaxReferenceStore {
   FakeTaxReferenceRepository([Iterable<TaxReferenceRow> seed = const []])
       : rows = [...seed];
+
+  /// The day "in force" is judged on (the demo's session day).
+  String today = kTestNow.toIso8601String().substring(0, 10);
 
   final List<TaxReferenceRow> rows;
 
@@ -52,5 +56,41 @@ class FakeTaxReferenceRepository implements TaxReferenceStore {
     );
     rows.add(created);
     return created;
+  }
+
+  @override
+  Future<TaxReferenceRow> confirm(String id, {String? source}) async {
+    final i = rows.indexWhere((r) => r.id == id);
+    if (i < 0) throw ArgumentError('unknown version');
+    if (rows[i].confirmed) throw StateError('the version is already confirmed');
+    return rows[i] = rows[i].confirmedWith(source);
+  }
+
+  @override
+  Future<void> withdraw(String id, String reason) async {
+    if (reason.trim().isEmpty) throw ArgumentError('a reason is required');
+    final i = rows.indexWhere((r) => r.id == id);
+    if (i < 0) throw ArgumentError('unknown version');
+    final row = rows[i];
+    if (row.confirmed || row.validFrom.compareTo(today) <= 0) {
+      throw StateError('a version in force or confirmed is only superseded');
+    }
+    rows.removeAt(i);
+    final prev = rows.lastIndexWhere((r) =>
+        r.domain == row.domain &&
+        r.country == row.country &&
+        r.key == row.key &&
+        r.validFrom.compareTo(row.validFrom) < 0 &&
+        r.validTo == row.validFrom);
+    if (prev < 0) return;
+    final later = [
+      for (final r in rows)
+        if (r.domain == row.domain &&
+            r.country == row.country &&
+            r.key == row.key &&
+            r.validFrom.compareTo(row.validFrom) > 0)
+          r.validFrom,
+    ]..sort();
+    rows[prev] = rows[prev].reopenedUntil(later.isEmpty ? null : later.first);
   }
 }

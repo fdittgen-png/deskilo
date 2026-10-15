@@ -14,6 +14,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/vat/tax_reference.dart';
 import '../../providers/tax_reference_providers.dart';
+import '../widgets/tax_reference_history_sheet.dart';
 import '../widgets/tax_reference_sheets.dart';
 
 /// Opens the editor as a full-height sheet: the platform owner's tools are
@@ -150,8 +151,14 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
                   key: ValueKey('tax-reference-history-${r.domain.wire}-${r.country}-${r.key}'),
                   tooltip: l10n.taxRefHistory,
                   icon: const Icon(Icons.history),
-                  onPressed: () =>
-                      showTaxReferenceHistorySheet(context, set: set, row: r),
+                  onPressed: () => showTaxReferenceHistorySheet(
+                    context,
+                    set: set,
+                    row: r,
+                    commands: ref.read(taxReferenceCommandsProvider),
+                    today: today,
+                    onDone: () => ref.invalidate(taxReferenceSetProvider),
+                  ),
                 ),
                 onTap: () => _openForm(r.domain, from: r),
               ),
