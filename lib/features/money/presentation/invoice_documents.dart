@@ -48,37 +48,16 @@ import 'invoice_status.dart';
 import 'period_label.dart';
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
+import 'report_image_resolve.dart';
 import 'report_layout_actions.dart';
 import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
+export 'report_image_resolve.dart' show resolveReportImages;
+
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
-/// Resolves every `![name]` a rendered report references to bytes
-/// (#488) — misses are skipped; the document renders without them.
-Future<Map<String, Uint8List>> resolveReportImages(
-  WidgetRef ref,
-  InvoiceReport? report,
-) async {
-  if (report == null) return const {};
-  final images = <String, Uint8List>{};
-  for (final name in reportImageRefs(report)) {
-    try {
-      final bytes = await ref.read(reportImageBytesProvider(name).future);
-      if (bytes != null) images[name] = bytes;
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-        'money',
-        'report image fetch failed',
-        error: e,
-        stackTrace: st,
-      );
-    }
-  }
-  return images;
-}
-
 /// The active workspace's PDF template (#454) — empty when the
 /// invoicePdfTemplate feature is off, so switching the flag off takes
 /// the text off every future render without touching the template. A
@@ -237,7 +216,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
       return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');
     }
   }
-  final images = await resolveReportImages(ref, report);
+  final images = await resolveReportImages(ref, report, strict: true);
   final bytes = await buildBandedLetterPdf(
     report: report,
     reportImages: images,
