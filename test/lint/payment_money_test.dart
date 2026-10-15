@@ -27,8 +27,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Code lines only: a comment that NAMES the mistake must not trip the
 /// rule that forbids it.
-String _src(String slug) => File('supabase/functions/$slug/index.ts')
-    .readAsLinesSync()
+///
+/// #2595 — the modules that format an amount carry the money rule, not
+/// the orchestrator; a webhook is still its one `index.ts`.
+const _modules = {
+  'create-payment-order': ['index.ts', 'paypal.ts', 'mollie.ts', 'stripe.ts'],
+};
+
+String _src(String slug) => [
+      for (final f in _modules[slug] ?? const ['index.ts'])
+        ...File('supabase/functions/$slug/$f').readAsLinesSync(),
+    ]
     .where((l) => !l.trimLeft().startsWith('//') && !l.trimLeft().startsWith('*'))
     .join('\n');
 
