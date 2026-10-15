@@ -20,7 +20,6 @@ import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
-import '../domain/datev_fields.dart';
 import '../domain/fec.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice.dart';
@@ -29,8 +28,8 @@ import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
-import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
+import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -191,27 +190,16 @@ Future<void> exportAccountingFile(
       // the wrong company's books.
       final datev = await showDatevAccountsDialog(context);
       if (datev == null || !context.mounted) return;
-      // #2365 — the fiscal year starts where the book profile says (every
-      // issuer agreeing); without one, on 1 January.
-      final profiles = await ref.read(bookProfilesProvider.future);
-      if (!context.mounted) return;
-      final fiscalStart = datevProfileFiscalStart(
-        profiles,
-        DateTime(year),
-        DateTime(year, 12, 31),
-      );
       await runGuarded(
         context,
         domain: 'money',
         message: 'DATEV export failed',
         errorText: l10n.workspaceGenericError,
-        action: () => save(
+        action: () async => save(
           buildDatevFile(
             invoices: exported,
             matches: matches,
-            accounts: fiscalStart == null
-                ? datev.accounts
-                : datev.accounts.withFiscalYearStart(fiscalStart),
+            accounts: await datevAccountsFor(ref, datev.accounts, year),
             from: DateTime(year),
             to: DateTime(year, 12, 31),
             generatedAt: now,

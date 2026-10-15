@@ -18,9 +18,11 @@ String datevSkrDigits(String chart) =>
 
 /// #2365 — header field 13: the first day of the fiscal year that contains
 /// [from], for a fiscal year starting on [month]/[day] (the book profile).
-DateTime datevFiscalYearStart(int month, int day, DateTime from) {
+DateTime _fiscalYearStart(int month, int day, DateTime from) {
   final thisYear = DateTime(from.year, month, day);
-  return thisYear.isAfter(from) ? DateTime(from.year - 1, month, day) : thisYear;
+  return thisYear.isAfter(from)
+      ? DateTime(from.year - 1, month, day)
+      : thisYear;
 }
 
 /// The fiscal-year start the book profiles agree on for the period
@@ -41,7 +43,7 @@ DateTime? datevProfileFiscalStart(
   }
   final starts = {
     for (final p in latest.values)
-      datevFiscalYearStart(p.fiscalYearStartMonth, p.fiscalYearStartDay, from),
+      _fiscalYearStart(p.fiscalYearStartMonth, p.fiscalYearStartDay, from),
   };
   return starts.length == 1 ? starts.single : null;
 }

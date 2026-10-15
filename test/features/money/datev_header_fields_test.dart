@@ -96,19 +96,27 @@ void main() {
     );
     // The later version of an issuer wins; a version not yet in force is ignored.
     expect(
-      datevProfileFiscalStart([
-        profile('a', 4, 1, DateTime(2020)),
-        profile('a', 1, 1, DateTime(2025)),
-        profile('a', 7, 1, DateTime(2027)),
-      ], from, to),
+      datevProfileFiscalStart(
+        [
+          profile('a', 4, 1, DateTime(2020)),
+          profile('a', 1, 1, DateTime(2025)),
+          profile('a', 7, 1, DateTime(2027)),
+        ],
+        from,
+        to,
+      ),
       DateTime(2026),
     );
     // Issuers that disagree: no guess.
     expect(
-      datevProfileFiscalStart([
-        profile('a', 4, 1, DateTime(2020)),
-        profile('b', 1, 1, DateTime(2020)),
-      ], from, to),
+      datevProfileFiscalStart(
+        [
+          profile('a', 4, 1, DateTime(2020)),
+          profile('b', 1, 1, DateTime(2020)),
+        ],
+        from,
+        to,
+      ),
       isNull,
     );
   });
