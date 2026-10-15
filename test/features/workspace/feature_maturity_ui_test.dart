@@ -5,12 +5,11 @@ import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/features_screen.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/feature_maturity_badge.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 // Independent fixtures: the shipped ledger classifies nothing yet, so
 // the combinations the screen must render are stated here.
@@ -38,20 +37,13 @@ Future<void> _pumpScreen(
   Map<WorkspaceFeature, FeatureAssessment>? assessments,
   Map<String, dynamic> featureFlags = const {},
 }) async {
-  tester.view.physicalSize = const Size(800, 24000);
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
-        workspace: FakeWorkspaceRepository.withWorkspace(
-          featureFlags: featureFlags,
-        ),
-      ),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: FeaturesScreen(assessments: assessments ?? featureAssessments),
+  await pumpApp(
+    tester,
+    FeaturesScreen(assessments: assessments ?? featureAssessments),
+    size: const Size(800, 24000),
+    overrides: standardTestOverrides(
+      workspace: FakeWorkspaceRepository.withWorkspace(
+        featureFlags: featureFlags,
       ),
     ),
   );
@@ -73,18 +65,13 @@ Future<void> _pumpBadge(
   FeatureAssessment a, {
   Locale locale = const Locale('en'),
   double textScale = 1,
-}) => tester.pumpWidget(
-  MaterialApp(
-    locale: locale,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: MediaQuery(
-      data: MediaQueryData(textScaler: TextScaler.linear(textScale)),
-      child: Scaffold(
-        body: SizedBox(width: 200, child: FeatureMaturityBadge(assessment: a)),
-      ),
-    ),
+}) => pumpApp(
+  tester,
+  Scaffold(
+    body: SizedBox(width: 200, child: FeatureMaturityBadge(assessment: a)),
   ),
+  locale: locale,
+  textScale: textScale,
 );
 
 void main() {
