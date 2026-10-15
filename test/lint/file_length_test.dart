@@ -54,6 +54,10 @@ const Map<String, int> _baseline = {
   // `recordingMember` in lib/core/privacy/recording_privacy.dart, so
   // the seam stays one file.
   'lib/features/workspace/providers/workspace_providers.dart': 667, // 2026-10-07 #2216 662→667: messageMentionsOn, the one switch both message screens read; 2026-10-04 642→662: resetOnWorkspaceSwitch — the one helper that starts a workspace's session state over when the person moves to another; 2026-10-03 #2137 632→642: actsForReservations, the one staff check the reservation surfaces share (keeps reservations->workspace flat); 2026-10-02 #2085 630→632: myPermissions adds what the workspace's own roles grant, as has_permission has since 0247 — one argument and its import;
+  // 2026-10-13 #2520 — the feature ledger gained its basis (evidence or the
+  // owner's declaration, #2519): the enum, one field and the owner-beta
+  // assessment. The ledger of 130 assessments is data; splitting it is #2522's call.
+  'lib/features/workspace/domain/feature_lifecycle.dart': 525, // 2026-10-15 523→525: master's two newest features join the owner-beta map
   // ADR 0028 (#1373) — the suite's in-memory repositories moved here so
   // Demo can run the real app against them. Their size is the surface of
   // the interface each implements, not a file that grew: MoneyRepository

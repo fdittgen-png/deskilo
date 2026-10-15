@@ -134,7 +134,8 @@ const Set<String> _promotionScopes = {
 /// the CURRENT standing of the evidence it cites ([standings]: capability
 /// id → scope → standing).
 ///
-/// * beta: at least one cited capability holds evidence that is gated or
+/// * beta (on evidence; an owner's declaration, #2519, is not checked here):
+///   at least one cited capability holds evidence that is gated or
 ///   recorded — stale or unverified evidence certifies nothing;
 /// * stable: at least one cited capability holds a [_promotionScopes]
 ///   record against its current component, and none of the cited
@@ -152,6 +153,9 @@ List<String> validatePromotions({
     final key = e.key.name;
     final a = e.value;
     if (a.maturity.index < FeatureMaturity.beta.index) continue;
+    // #2519 — an owner's declaration cites no evidence and claims no
+    // standing; only an evidence-based claim is checked against it.
+    if (a.basis == AssessmentBasis.ownerDecision) continue;
     final cited = [
       for (final id in a.evidence) (id, standings[id] ?? const {}),
     ];
