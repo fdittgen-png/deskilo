@@ -29,6 +29,7 @@ import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/money_providers.dart';
+import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -194,11 +195,11 @@ Future<void> exportAccountingFile(
         domain: 'money',
         message: 'DATEV export failed',
         errorText: l10n.workspaceGenericError,
-        action: () => save(
+        action: () async => save(
           buildDatevFile(
             invoices: exported,
             matches: matches,
-            accounts: datev.accounts,
+            accounts: await datevAccountsFor(ref, datev.accounts, year),
             from: DateTime(year),
             to: DateTime(year, 12, 31),
             generatedAt: now,
