@@ -43,7 +43,7 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
       'p_buyer_reference': buyerReference.isEmpty ? null : buyerReference,
       'p_purchase_order': purchaseOrder.isEmpty ? null : purchaseOrder,
     });
-    return applyOrPending(answer as Map);
+    return applyOrPending(answer);
   }
 
   Future<List<String>> _invoiceIssueReadinessImpl({
@@ -68,7 +68,7 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
   Future<void> _voidInvoiceImpl(String invoiceId) async {
     await _client
         .rpc<dynamic>('request_invoice_void', params: {'p_invoice_id': invoiceId})
-        .then((answer) => applyOrPending(answer as Map));
+        .then(applyOrPendingVoid);
   }
 
   Future<void> _remindInvoiceImpl(String invoiceId) async {

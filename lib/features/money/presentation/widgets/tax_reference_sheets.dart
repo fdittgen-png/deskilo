@@ -10,9 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/number_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/vat/tax_reference.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
@@ -462,39 +460,5 @@ Future<bool> showTaxReferenceVersionSheet(
       },
       builder: (context, refresh) => form.build(l10n, refresh),
     ),
-  );
-}
-
-/// Every version of one value, newest first.
-Future<void> showTaxReferenceHistorySheet(
-  BuildContext context, {
-  required TaxReferenceSet set,
-  required TaxReferenceRow row,
-}) {
-  final versions = set.history(row.domain, row.country, row.key);
-  return showAppSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) {
-      final l10n = context.l10n;
-      return SheetShell(
-        title: l10n.taxRefHistory,
-        children: [
-          Text('${row.country} · ${row.key}',
-              style: Theme.of(context).textTheme.titleMedium),
-          for (final v in versions)
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(taxValueSummary(v.value).isEmpty
-                  ? v.country
-                  : taxValueSummary(v.value)),
-              subtitle: Text('${l10n.taxRefValidFrom} ${v.validFrom}'
-                  '${v.validTo == null ? '' : ' · ${l10n.taxRefValidUntil} ${v.validTo}'}'
-                  ' · ${v.source}'),
-              trailing: Text(v.confirmed ? l10n.taxRefConfirmed : l10n.taxRefUnconfirmed),
-            ),
-        ],
-      );
-    },
   );
 }

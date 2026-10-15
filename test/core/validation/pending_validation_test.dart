@@ -13,7 +13,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('applyOrPending: the id when applied, the exception when held', () {
     expect(applyOrPending({'pending': false, 'invoice_id': 'inv-1'}), 'inv-1');
-    expect(applyOrPending({'pending': false}), '');
     expect(() => applyOrPending({'pending': true, 'event_id': 'ev-9'}),
         throwsA(isA<PendingValidationException>()
             .having((e) => e.eventId, 'eventId', 'ev-9')));

@@ -94,7 +94,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
       'p_permission': permission,
       'p_enabled': enabled,
     });
-    applyOrPending(answer as Map);
+    applyOrPendingVoid(answer);
   }
 
   Future<void> _setRolePermissionsImpl(
@@ -108,7 +108,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
       'p_role': role,
       'p_permissions': permissions,
     });
-    applyOrPending(answer as Map);
+    applyOrPendingVoid(answer);
   }
 
   /// Every write to a `workspaces` row goes through here (#1269).
@@ -229,7 +229,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
       'p_member_id': memberId,
       'p_pct': pct,
     });
-    applyOrPending(answer as Map);
+    applyOrPendingVoid(answer);
   }
 
   Future<void> _updateMemberOveragePolicyImpl(
@@ -414,7 +414,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
       'p_member_id': memberId,
       'p_status': status.name,
     });
-    applyOrPending(answer as Map);
+    applyOrPendingVoid(answer);
   }
 
   Future<List<Member>> _fetchMyMembersImpl() async {

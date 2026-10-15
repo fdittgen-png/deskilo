@@ -39,4 +39,14 @@ class TaxReferenceCommands {
         confirmed: draft.confirmed,
         validFrom: draft.validFrom.trim(),
       ));
+
+  /// #2565 — the planned version is confirmed; [source] completes its source.
+  Future<TaxReferenceRow> confirmVersion(String id, {String? source}) =>
+      _admin.confirm(id, source: source?.trim().isEmpty ?? true ? null : source!.trim());
+
+  /// #2565 — the planned version is withdrawn; a reason is required.
+  Future<void> withdrawVersion(String id, String reason) {
+    if (reason.trim().isEmpty) throw ArgumentError('a reason is required');
+    return _admin.withdraw(id, reason.trim());
+  }
 }

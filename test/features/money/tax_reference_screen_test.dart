@@ -51,7 +51,60 @@ Future<void> _pump(WidgetTester tester, FakeTaxReferenceRepository store,
   await tester.pumpAndSettle();
 }
 
+const _planned = TaxReferenceRow(
+  id: 't2',
+  country: 'FR',
+  key: 'standard',
+  validFrom: '2028-01-01',
+  value: RateValue(
+      label: 'Standard 21 %', percent: 21, group: 'standard', category: 'S'),
+  source: 'Bill 2027',
+  confirmed: false,
+);
+
+FakeTaxReferenceRepository _storeWithPlanned() {
+  final store = _store();
+  store.rows[0] = store.rows[0].closedOn('2028-01-01');
+  store.rows.add(_planned);
+  return store;
+}
+
 void main() {
+  // #2565 -- a planned change is confirmed when the law passes or withdrawn
+  // when it does not come into force; a version in force offers neither.
+  testWidgets('the owner withdraws a planned version; the one in force is open again',
+      (tester) async {
+    final store = _storeWithPlanned();
+    await _pump(tester, store, owner: true);
+    await tester.tap(find.byKey(const ValueKey('tax-reference-history-rate-FR-standard')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('tax-ref-withdraw-t1')), findsNothing,
+        reason: 'a confirmed version in force offers nothing');
+    expect(find.byKey(const ValueKey('tax-ref-confirm-t1')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('tax-ref-withdraw-t2')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.byKey(const ValueKey('tax-ref-withdraw-reason')), 'The vote failed');
+    await tester.tap(find.byKey(const ValueKey('tax-ref-withdraw-submit')));
+    await tester.pumpAndSettle();
+    expect(store.rows, hasLength(1));
+    expect(store.rows.single.validTo, isNull);
+  });
+
+  testWidgets('the owner confirms a planned version; only the flag moves',
+      (tester) async {
+    final store = _storeWithPlanned();
+    await _pump(tester, store, owner: true);
+    await tester.tap(find.byKey(const ValueKey('tax-reference-history-rate-FR-standard')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('tax-ref-confirm-t2')));
+    await tester.pumpAndSettle();
+    expect(store.rows, hasLength(2));
+    expect(store.rows.last.confirmed, isTrue);
+    expect((store.rows.last.value as RateValue).percent, 21);
+    expect(store.rows.last.validFrom, '2028-01-01');
+  });
+
   testWidgets('the owner creates a new version; the old one is closed and the history lists both',
       (tester) async {
     final store = _store();
