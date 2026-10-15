@@ -31772,6 +31772,12 @@ abstract class AppLocalizations {
   /// **'Account number (or chart code)'**
   String get taxRefAccount;
 
+  /// #2565 tax reference: taxRefActionFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The change could not be saved'**
+  String get taxRefActionFailed;
+
   /// #2477 tax reference: Button: add a new reference value.
   ///
   /// In en, this message translates to:
@@ -31813,6 +31819,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Jurisdictions, one per line: level, name, percent (level: state, county, city or district)'**
   String get taxRefComponents;
+
+  /// #2565 tax reference: taxRefConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get taxRefConfirm;
 
   /// #2477 tax reference: Badge: the value was checked against its source.
   ///
@@ -32203,6 +32215,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'until'**
   String get taxRefValidUntil;
+
+  /// #2565 tax reference: taxRefWithdraw
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get taxRefWithdraw;
+
+  /// #2565 tax reference: taxRefWithdrawReason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for withdrawing this planned version'**
+  String get taxRefWithdrawReason;
 
   /// #1658 template_exact_apply
   ///

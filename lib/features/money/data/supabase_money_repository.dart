@@ -37,6 +37,7 @@ import '../domain/vat_declaration.dart';
 import '../domain/vat_rate.dart';
 import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
+import 'invoice_preview_decoder.dart';
 import 'report_image_read.dart';
 
 part 'supabase_money_repository_part1.dart';
@@ -56,22 +57,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_workspace_id': workspaceId,
       'p_member_id': memberId,
       'p_period': period,
-    }) as Map<String, dynamic>;
-    return (
-      lines: [
-        for (final line in (raw['lines'] as List? ?? const []))
-          InvoiceLine(
-            kind: (line as Map)['kind'] as String? ?? '',
-            label: line['label'] as String? ?? '',
-            quantity: (line['quantity'] as num?)?.toInt() ?? 1,
-            amountCents: (line['amount_cents'] as num).toInt(),
-            // 0072 — so the preview can show the same VAT the document
-            // will carry.
-            vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
-          ),
-      ],
-      totalCents: (raw['total_cents'] as num?)?.toInt() ?? 0,
-    );
+    });
+    return decodeInvoicePreview(raw);
   }
 
   @override

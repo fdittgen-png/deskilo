@@ -18565,6 +18565,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefAccount => 'Kontonummer (oder Kontenrahmen)';
 
   @override
+  String get taxRefActionFailed =>
+      'Die Änderung konnte nicht gespeichert werden';
+
+  @override
   String get taxRefAdd => 'Wert hinzufügen';
 
   @override
@@ -18586,6 +18590,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefComponents =>
       'Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)';
+
+  @override
+  String get taxRefConfirm => 'Bestätigen';
 
   @override
   String get taxRefConfirmed => 'Bestätigt';
@@ -18793,6 +18800,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefValidUntil => 'bis';
+
+  @override
+  String get taxRefWithdraw => 'Zurückziehen';
+
+  @override
+  String get taxRefWithdrawReason =>
+      'Grund für das Zurückziehen dieser geplanten Version';
 
   @override
   String get templateApplyConflict =>

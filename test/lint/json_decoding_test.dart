@@ -22,7 +22,7 @@ const _rawReadBudget = 207;
 /// split the demo repositories: four forwarders repeat a signature). Most are
 /// `Map<String, dynamic>` signatures of the decoders; they go as the
 /// signatures move to `Map<String, Object?>`.
-const _dynamicBudget = 687;
+const _dynamicBudget = 685;
 
 void main() {
   final files = handWrittenDartFiles('lib').toList();
