@@ -14,7 +14,6 @@ import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,7 +23,8 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/in_memory_default_level_store.dart';
 import '../../helpers/mock_providers.dart';
-import '../calendar/reservation_detail_sheet_test.dart' show reservationAt;
+import '../../helpers/pump_app.dart';
+import '../../helpers/screens/reservation_detail_sheet.dart' show reservationAt;
 
 /// The captured local save.
 class Saves {
@@ -248,21 +248,12 @@ void main() {
     // The Calendar tab lists only my own bookings, so the sheet is
     // pumped directly on a foreign one — the same widget, same providers.
     final foreign = todayAt23().copyWith(memberId: 'member-9');
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: standardTestOverrides(
+    await pumpApp(tester, Scaffold(body: ReservationDetailSheet(reservation: foreign)), overrides: standardTestOverrides(
           workspace: FakeWorkspaceRepository.withWorkspace(),
           floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
           reservations: FakeReservationRepository()..reservations.add(foreign),
           accessories: FakeAccessoryRepository(),
-        ),
-        child: MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(body: ReservationDetailSheet(reservation: foreign)),
-        ),
-      ),
-    );
+        ));
     await tester.pumpAndSettle();
     expect(find.text('Show on plan'), findsOneWidget,
         reason: 'the sheet itself is open');

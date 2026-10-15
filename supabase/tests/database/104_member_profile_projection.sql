@@ -137,7 +137,7 @@ select throws_ok($$select * from public.account_badge_pins$$,'42501',null,'nobod
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833a5","role":"authenticated"}',true);
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])::text like '%$2%',false,'the operational projection never carries the PIN hash');
 reset role;
-update public.workspaces set feature_flags = '{"badgeSignIn":true}' where id = '00000000-0000-4000-8000-0000001833b2';
+update public.workspaces set feature_flags = '{"badgeSignIn":true,"nfcBadges":true,"kioskMode":true}' where id = '00000000-0000-4000-8000-0000001833b2';
 insert into public.member_badges(workspace_id,member_id,token_hash,auth_enabled) values
  ('00000000-0000-4000-8000-0000001833b2','00000000-0000-4000-8000-0000001833c8',public.badge_token_hash('UID-1833'),true);
 select is(public.badge_auth_verify('UID-1833','4826')->>'user_id','00000000-0000-4000-8000-0000001833a2','the right PIN still signs in through the moved hash');

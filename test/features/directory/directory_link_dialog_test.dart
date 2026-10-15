@@ -21,8 +21,8 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/pump_app.dart';
 
 const _server = BackendEndpoint(
   'https://own.example',
@@ -46,23 +46,14 @@ Future<void> _pump(WidgetTester tester, FakeDirectoryRepository repo) async {
   tester.view.physicalSize = const Size(900, 1400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
+  await pumpApp(tester, const Scaffold(body: DirectoryLinkDialog(initial: _server)), overrides: [
         directoryParticipantRepositoryProvider.overrideWith((ref) => repo),
         publicDiscoveryRepositoryProvider.overrideWith((ref) => repo),
         connectedInstallationsProvider.overrideWith(
           (ref) => FakeConnectedInstallations(),
         ),
         enabledFeaturesSyncProvider.overrideWithValue(const {}),
-      ],
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: DirectoryLinkDialog(initial: _server)),
-      ),
-    ),
-  );
+      ]);
   await tester.pumpAndSettle();
 }
 

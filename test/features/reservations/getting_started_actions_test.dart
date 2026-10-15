@@ -4,7 +4,7 @@ import 'package:deskilo/core/help/help_hint_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 
 void main() {
   testWidgets('guidance opens the existing date picker without a write', (tester) async {

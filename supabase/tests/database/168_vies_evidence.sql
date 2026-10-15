@@ -20,7 +20,7 @@ begin
   insert into public.workspaces(name,country_code,currency_code,timezone,created_by,street,city,postal_code,
                                 vat_regime,vat_id,feature_flags)
    values ('Vies 2354','FR','EUR','Europe/Paris',uo,'1 rue du Pilote','Pézenas','34120',
-           'vat_registered','FR12345678901','{"invoicing":true}')
+           'vat_registered','FR12345678901','{"invoicing":true,"vatManagement":true,"supplyClassification":true,"viesVerification":true}')
    returning id into ws;
   insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (ws,uo,true,true,'2026-01-01')
    returning id into om;

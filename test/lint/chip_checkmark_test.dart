@@ -6,18 +6,15 @@
 // one. What renders is a dark smudge where a symbol should be.
 //
 // The avatar IS the state on these chips, so the tick is suppressed.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Every `ChoiceChip(`/`FilterChip(` in lib/, with the slice of source
 /// that holds its arguments (the next 900 characters, which comfortably
 /// covers the longest of them).
 Iterable<({String file, int offset, String body})> _chips() sync* {
-  for (final file in Directory('lib')
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.dart') && !f.path.endsWith('.g.dart'))) {
+  for (final file in handWrittenDartFiles('lib')) {
     final src = file.readAsStringSync();
     for (final m in RegExp(r'(ChoiceChip|FilterChip)\(').allMatches(src)) {
       final end = (m.start + 900).clamp(0, src.length);

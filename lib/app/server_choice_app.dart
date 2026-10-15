@@ -32,7 +32,7 @@ class ServerChoiceApp extends StatefulWidget {
   /// The features the choice screens may read: the registry defaults,
   /// without the help links — the guide is a route of the real app.
   static Set<WorkspaceFeature> get features =>
-      effectiveFeatures(resolveEnabledFeatures(const {}))
+      effectiveFeatures(resolveEnabledFeatures(platformFeaturesOnByDefault))
         ..remove(WorkspaceFeature.formHelpHints);
 
   @override

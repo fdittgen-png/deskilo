@@ -9,10 +9,9 @@ import 'package:deskilo/core/demo/data/instance_repository.dart';
 import 'package:deskilo/features/workspace/domain/instance_responsibles.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/instance_owner_tile.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/pump_app.dart';
 
 const _owner = InstanceResponsible(
   name: 'Ada OWNER',
@@ -36,16 +35,7 @@ Future<FakeInstanceRepository> pumpTile(
   tester.view.physicalSize = const Size(800, 2000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [instanceRepositoryProvider.overrideWithValue(repo)],
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: InstanceOwnerTile()),
-      ),
-    ),
-  );
+  await pumpApp(tester, const Scaffold(body: InstanceOwnerTile()), overrides: [instanceRepositoryProvider.overrideWithValue(repo)]);
   await tester.pumpAndSettle();
   return repo;
 }

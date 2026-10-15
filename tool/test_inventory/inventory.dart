@@ -16,6 +16,7 @@
 import 'dart:io';
 
 import '../layering/analysis.dart' show withoutComments;
+import '../quality_rows/selection.dart' show shardOf;
 
 /// One classified test file.
 class TestFileEntry {
@@ -118,7 +119,8 @@ const runnerFamilies = <RunnerFamily>[
     name: 'root suite',
     root: 'test',
     suffix: '_test.dart',
-    owner: 'quality.yml: flutter test, once, with coverage and the report stream',
+    owner: 'quality.yml: flutter test --coverage in three shards '
+        '(tool/quality_shard.dart), one report stream each',
     workflow: 'quality.yml',
     command: 'flutter test --coverage',
   ),
@@ -300,7 +302,11 @@ String _execution(String path, String source, RunnerFamily family, String root) 
   final constEnv = RegExp(r"""const\s+\w+\s*=\s*'(DESKILO_\w+)'""").firstMatch(source);
   if (constEnv != null) env.add(constEnv.group(1)!);
   final gated = source.contains('skip:') && env.any((e) => e.startsWith('DESKILO_'));
-  if (!gated) return family.owner;
+  // #2600 — the root suite runs in shards; say which one runs the file.
+  final owner = family.name == 'root suite'
+      ? '${family.owner}; shard ${shardOf(path)}'
+      : family.owner;
+  if (!gated) return owner;
   final vars = env.where((e) => e.startsWith('DESKILO_')).toList()..sort();
   final owners = <String>[];
   for (final dir in ['scripts', '.github/workflows']) {

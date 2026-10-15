@@ -14,10 +14,10 @@ import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/wording_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 void main() {
   setUp(Lexicon.reset);
@@ -27,12 +27,7 @@ void main() {
     final workspace = FakeWorkspaceRepository.withWorkspace(
       featureFlags: {WorkspaceFeature.workspaceVocabulary.name: true},
     );
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [...standardTestOverrides(workspace: workspace)],
-        child: const MaterialApp(home: WordingScreen()),
-      ),
-    );
+    await pumpApp(tester, const WordingScreen(), overrides: [...standardTestOverrides(workspace: workspace)]);
     await tester.pumpAndSettle();
     return workspace;
   }

@@ -9,6 +9,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const _sinceMigration = 183;
 
@@ -21,13 +22,7 @@ const _columns = [
   'modified_by_user',
 ];
 
-Iterable<File> _dartFiles(String dir) => Directory(dir)
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) =>
-        f.path.endsWith('.dart') &&
-        !f.path.endsWith('.g.dart') &&
-        !f.path.endsWith('.freezed.dart'));
+Iterable<File> _dartFiles(String dir) => handWrittenDartFiles(dir);
 
 void main() {
   test('0183 carries the stamp trigger, the helper and the sweep', () {
@@ -57,12 +52,7 @@ void main() {
 
   test('every table created after 0183 calls ensure_system_columns in the '
       'same migration', () {
-    final files = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations');
     final createTable = RegExp(
         r'create table (?:if not exists )?public\.([a-z_]+)',
         caseSensitive: false);

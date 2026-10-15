@@ -9,18 +9,10 @@ import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/screens/invoice_writeoff.dart' show partialMatch;
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 import '../../helpers/test_clock.dart';
 
-InvoiceMatch partialMatch(String invoiceId, {DateTime? writeoffAt}) =>
-    InvoiceMatch(
-      invoiceId: invoiceId,
-      paidCents: 10000,
-      resolution: 'under_accepted',
-      note: 'paid what they could',
-      matchedAt: kTestNow,
-      writeoffAt: writeoffAt,
-    );
 
 void main() {
   group('lifecycle (#504)', () {

@@ -223,7 +223,10 @@ void main() {
         }
       }
     }
-    expect(seen, 3, reason: 'cache steps counted on 2026-09-25: pub, pods, '
-        'avd — a new one is a deliberate decision, bump with a reason');
+    // 2026-10-15 #2600: the quality suite runs in four jobs (three test
+    // shards and their aggregate) and each restores the same lockfile-keyed
+    // pub cache the one job did before: 3 became 6.
+    expect(seen, 6, reason: 'cache steps counted on 2026-10-15: pub x4, '
+        'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }

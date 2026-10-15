@@ -117,6 +117,7 @@ RunResult readRun(String jsonLines) {
   final violations = <String>[];
   var completed = false;
   var success = false;
+  final finished = <int>{};
   var lines = 0;
 
   for (final line in const LineSplitter().convert(jsonLines)) {
@@ -134,11 +135,26 @@ RunResult readRun(String jsonLines) {
       continue;
     }
     final event = decoded;
+    // The reporter's terminal event belongs to one run, not to later shards.
+    if (completed) {
+      violations.add('line $lines follows "done": expected one test run');
+      continue;
+    }
+    try {
     switch (event['type']) {
+      case 'start':
+        if (lines != 1) {
+          violations.add('line $lines restarts the reporter: '
+              'validate each test run separately');
+        }
       case 'suite':
         final suite = event['suite'] as Map<String, dynamic>;
         final path = _relative('${suite['path']}');
-        suitePath[suite['id'] as int] = path;
+        final suiteId = suite['id'] as int;
+        if (suitePath.containsKey(suiteId)) {
+          violations.add('line $lines repeats suite id $suiteId');
+        }
+        suitePath[suiteId] = path;
         suites.putIfAbsent(path, () => SuiteResult(path));
       case 'testStart':
         final test = event['test'] as Map<String, dynamic>;
@@ -148,6 +164,9 @@ RunResult readRun(String jsonLines) {
           violations.add('test ${test['name']} started in an unknown suite');
           continue;
         }
+        if (testSuite.containsKey(id)) {
+          violations.add('line $lines starts test $id a second time');
+        }
         testSuite[id] = path;
         testName[id] = '${test['name']}';
       case 'testDone':
@@ -155,6 +174,10 @@ RunResult readRun(String jsonLines) {
         final path = testSuite[id];
         if (path == null) {
           violations.add('test $id finished without having started');
+          continue;
+        }
+        if (!finished.add(id)) {
+          violations.add('line $lines finishes test $id a second time');
           continue;
         }
         final suite = suites[path]!;
@@ -186,15 +209,25 @@ RunResult readRun(String jsonLines) {
       case 'done':
         completed = true;
         success = event['success'] == true;
-      case 'start' || 'allSuites' || 'group' || 'print' || 'debug':
+      case 'allSuites' || 'group' || 'print' || 'debug':
         break;
       default:
         violations.add('unknown event type "${event['type']}"');
     }
+    } on TypeError {
+      // A reference the reporter protocol does not allow (a suite id that
+      // is not a number, a test without its object): the stream is not
+      // one this reader can vouch for.
+      violations.add('line $lines is a malformed ${event['type']} event');
+    }
   }
 
   if (lines == 0) violations.add('the stream is empty');
-  if (!completed) violations.add('the stream never reached "done": the run was cut short');
+  if (!completed) {
+    violations.add('the stream never reached "done": the run was cut short');
+  } else if (finished.length != testSuite.length) {
+    violations.add('${testSuite.length - finished.length} tests started and never finished');
+  }
   if (suites.isEmpty) violations.add('no test suite was loaded');
   return RunResult(
     suites: suites,

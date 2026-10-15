@@ -20,6 +20,10 @@ REPO="${REPO:-fdittgen-png/deskilo}"
 GH="${GH:-gh}"
 N=${1:-20}
 CODE_JOB='analyze · l10n gate · test · coverage'
+# #2600 — since the suite runs as shards, the Flutter SDK / pub caches are
+# set up by the `quality · test · …` jobs; the aggregate named CODE_JOB only
+# merges. A run without a shard job is a legacy single-job run.
+SHARD_PREFIX='quality · test · '
 
 sample=$("$GH" api "repos/${REPO}/actions/workflows/quality.yml/runs?event=pull_request&status=completed&per_page=${N}" \
   --jq '.workflow_runs[] | "\(.id) \(.head_sha[0:9]) \(.conclusion) attempt \(.run_attempt)"')
@@ -33,6 +37,7 @@ all=$(for id in $runs; do
   "$GH" api "repos/${REPO}/actions/runs/${id}/jobs?per_page=10" --jq '
     .jobs[] | select(.started_at != null and .completed_at != null) |
     {id: .id, job: .name, conclusion: .conclusion,
+     start: (.created_at | fromdate), end: (.completed_at | fromdate),
      queue: ((.started_at | fromdate) - (.created_at | fromdate)),
      run_s: ((.completed_at | fromdate) - (.started_at | fromdate)),
      steps: [.steps[] | select(.started_at != null and .completed_at != null) |
@@ -54,15 +59,22 @@ cache_state() {
   echo "sdk:$sdk pub:$pub"
 }
 
-states=$(jq -r --arg job "$CODE_JOB" '.[] | select(.job == $job and .conclusion != "cancelled") | "\(.run) \(.id)"' <<< "$all" \
-  | while read -r run id; do echo "$run $(cache_state "$id")"; done)
+# The jobs that install the toolchain: every shard job, or the single code
+# job of a run that has no shard job.
+states=$(jq -r --arg code "$CODE_JOB" --arg pre "$SHARD_PREFIX" '
+  group_by(.run)[] | . as $r |
+  ($r | map(select(.job | startswith($pre))) | length > 0) as $sharded |
+  $r[] | select(.conclusion != "cancelled" and
+    (if $sharded then (.job | startswith($pre)) else .job == $code end)) |
+  "\(.run) \(.id)"' <<< "$all" \
+  | while read -r run id; do echo "$run $(cache_state "$id") $id"; done)
 
 # The run ids, so every number below can be re-derived rather than
 # believed (#1446 C0). Without them a table is a claim.
 echo
 echo "runs sampled (id, head, conclusion; the code job's cache state):"
 printf '%s\n' "$sample" | while read -r id rest; do
-  printf '  %s %s  %s\n' "$id" "$rest" "$(printf '%s\n' "$states" | awk -v r="$id" '$1 == r {print $2, $3}')"
+  printf '  %s %s  %s\n' "$id" "$rest" "$(printf '%s\n' "$states" | awk -v r="$id" '$1 == r {printf "%s%s %s", sep, $2, $3; sep=", "}')"
 done
 
 echo
@@ -76,12 +88,24 @@ jq -r '
 ' <<< "$all"
 
 echo
-echo "code job run time by cache state (median, n):"
-jq -r --arg job "$CODE_JOB" --arg states "$states" '
+echo "run wall clock, first job created to last job completed (runs with a cancelled job left out):"
+jq -r '
+  def pct(f): sort | .[ ((length - 1) * f | round) ];
+  [ group_by(.run)[] | select(all(.[]; .conclusion != "cancelled")) |
+    ((map(.end) | max) - (map(.start) | min)) ] as $w |
+  "  n=\($w | length) p50 \($w | pct(0.5))s p95 \($w | pct(0.95))s"
+' <<< "$all"
+
+echo
+echo "toolchain job (shard, or the single code job of a legacy run) run time by cache state (median, n):"
+jq -r --arg code "$CODE_JOB" --arg pre "$SHARD_PREFIX" --arg states "$states" '
   def median: sort | .[ ((length - 1) * 0.5 | round) ];
-  ($states | split("\n") | map(select(length > 0) | split(" ") | {run: .[0], state: (.[1] + " " + .[2])})
-    | map({key: .run, value: .state}) | from_entries) as $st |
-  [ .[] | select(.job == $job and .conclusion != "cancelled") | {state: ($st[.run] // "sdk:? pub:?"), s: .run_s} ] |
+  ($states | split("\n") | map(select(length > 0) | split(" ") | {id: .[3], state: (.[1] + " " + .[2])})
+    | map({key: .id, value: .state}) | from_entries) as $st |
+  (group_by(.run) | map(select(map(.job | startswith($pre)) | any) | .[0].run)) as $shardedRuns |
+  [ .[] | .run as $r | select(.conclusion != "cancelled" and
+      (if ($shardedRuns | index($r)) != null then (.job | startswith($pre)) else .job == $code end)) |
+    {state: ($st[.id | tostring] // "sdk:? pub:?"), s: .run_s} ] |
   group_by(.state)[] | "  \(.[0].state): \(map(.s) | median)s (n=\(length))"
 ' <<< "$all"
 

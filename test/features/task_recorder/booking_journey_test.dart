@@ -29,8 +29,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
-import '../reservations/reserve_hub_test.dart'
-    show pickHubDate, reservationOn, seatCenter;
+import '../../helpers/screens/reserve_hub.dart' show pickHubDate, reservationOn, seatCenter;
 import 'fixtures/recording_fixtures.dart';
 
 final _tomorrow = kTestNow.add(const Duration(days: 1));

@@ -12,10 +12,10 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Member _member({
   String id = 'member-1',
@@ -56,12 +56,7 @@ Future<void> _pumpPage(WidgetTester tester, FakeWorkspaceRoles roles) async {
         ..myMember = _member()
         ..otherMembers.add(_member(id: 'member-3'))
         ..memberNames = {'member-1': 'Flo', 'member-3': 'Ben'};
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace, roles: roles),
-      child: const MaterialApp(home: MemberPage(memberId: 'member-3')),
-    ),
-  );
+  await pumpApp(tester, const MemberPage(memberId: 'member-3'), overrides: standardTestOverrides(workspace: workspace, roles: roles));
   await tester.pumpAndSettle();
 }
 

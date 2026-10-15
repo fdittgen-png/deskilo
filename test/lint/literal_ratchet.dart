@@ -85,3 +85,41 @@ String ratchetMessage({
       : 'went DOWN: record the win by lowering the ceiling to $actual';
   return '$rule: "$kind" $verb.\n  ceiling $ceiling, now $actual.\n$top';
 }
+
+/// #2572 -- the text of the LIVE definition of `public.[name]`: the last
+/// `create [or replace] function public.<name>(` in the latest migration (by
+/// file name) that holds one, from that header to the closing dollar quote,
+/// SQL line comments removed. An anchored patch that rewrites a value is
+/// caught by `anchored_patch_test.dart`, so the text of the latest definition
+/// is the right thing to count (the modelling of `_latestRegistry()` in
+/// `feature_registry_sql_test.dart`). Throws when no migration defines it.
+String latestFunctionDefinition(String name,
+    {String dir = 'supabase/migrations'}) {
+  final header = RegExp(
+    r'create\s+(?:or\s+replace\s+)?function\s+public\.' +
+        RegExp.escape(name) +
+        r'\s*\(',
+    caseSensitive: false,
+  );
+  final files = filesUnder([dir], suffix: '.sql').reversed;
+  for (final file in files) {
+    final text = file.readAsStringSync();
+    final hits = header.allMatches(text).toList();
+    if (hits.isEmpty) continue;
+    final from = hits.last.start;
+    final open = RegExp(r'\bas\s+(\$\w*\$)', caseSensitive: false)
+        .firstMatch(text.substring(hits.last.end));
+    if (open == null) {
+      throw StateError('${file.path}: public.$name has no dollar-quoted body');
+    }
+    final bodyFrom = hits.last.end + open.end;
+    final tag = open.group(1)!;
+    final close = text.indexOf(tag, bodyFrom);
+    final end = close < 0 ? text.length : close + tag.length;
+    return [
+      for (final line in text.substring(from, end).split('\n'))
+        if (!line.trimLeft().startsWith('--')) line,
+    ].join('\n');
+  }
+  throw StateError('no migration defines public.$name');
+}
