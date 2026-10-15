@@ -273,5 +273,6 @@ String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featurePlaceFeedbackTitle,
       WorkspaceFeature.configurableSettings =>
         l10n.featureConfigurableSettingsTitle,
+      WorkspaceFeature.salesTax => l10n.featureSalesTaxTitle,
       _ => feature.name,
     };

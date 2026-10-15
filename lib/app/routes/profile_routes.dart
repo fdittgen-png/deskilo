@@ -6,7 +6,6 @@
 import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
-import '../../core/i18n/regional_formats_section.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
 import '../../features/profile/presentation/screens/consent_screen.dart';
 import '../../features/profile/presentation/screens/developer_screen.dart';
@@ -16,6 +15,7 @@ import '../../features/profile/presentation/screens/privacy_screen.dart';
 import '../../features/profile/presentation/screens/profiles_screen.dart';
 import '../../features/profile/presentation/screens/schema_update_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
+import '../../features/profile/presentation/widgets/regional_formats_section.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';

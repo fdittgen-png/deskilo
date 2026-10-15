@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
+import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/images/emblem_bytes.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/storage/active_workspace_store.dart';
@@ -39,6 +40,12 @@ import '../domain/workspace_template.dart';
 import 'workspace_roles_providers.dart';
 
 part 'workspace_providers.g.dart';
+
+/// #2495 — the enabled features' keys for core/help and core/privacy; the
+/// composition root puts it in its scope's overrides.
+final enabledFeatureKeysFromWorkspace = enabledFeatureKeysProvider.overrideWith(
+  (ref) => {for (final f in ref.watch(enabledFeaturesSyncProvider)) f.dbKey},
+);
 
 @Riverpod(keepAlive: true)
 WorkspaceRepository workspaceRepository(Ref ref) =>

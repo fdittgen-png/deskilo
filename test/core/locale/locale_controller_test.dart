@@ -48,7 +48,7 @@ void main() {
     addTearDown(container.dispose);
     await container.read(localeControllerProvider.future);
     await container.read(localeControllerProvider.notifier)
-        .set(const Locale('fr'), updateProfile: false);
+        .set(const Locale('fr'));
     expect(store.code, 'fr');
     expect(profileReads, 0);
   });

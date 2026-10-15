@@ -135,4 +135,59 @@ void main() {
     expect(rows.single.outcome, 'failure');
     expect(rows.single.evidence, contains('no test ran'));
   });
+
+  final invalidRuns = <String, String>{
+    'two complete runs cannot be concatenated into one result':
+        '${_stream()}${_stream()}',
+    'a later run cannot supply the terminal event of a truncated run':
+        '${_stream(truncated: true)}${_stream()}',
+    'a second start before any suite is still a restarted run':
+        '${_event({'type': 'start'})}\n${_stream()}',
+    'a repeated terminal event invalidates a run':
+        '${_stream()}${_event({'type': 'done', 'success': true})}\n',
+    'an event after the terminal result invalidates a run':
+        '${_stream()}${_event({'type': 'print', 'message': 'late'})}\n',
+  };
+  for (final entry in invalidRuns.entries) {
+    test(entry.key, () {
+      final run = readRun(entry.value);
+      expect(run.violations, isNotEmpty);
+      expect(suiteRow(run, exitCode: 0).outcome, 'failure');
+      expect(deriveRows(manifest, run, job: 'code')
+          .every((row) => row.outcome == 'failure'), isTrue);
+    });
+  }
+
+  test('a later terminal success cannot overwrite the first result', () {
+    final run = readRun('${_stream(success: false)}'
+        '${_event({'type': 'done', 'success': true})}\n');
+    expect(run.success, isFalse);
+    expect(run.violations, isNotEmpty);
+    expect(suiteRow(run, exitCode: 0).outcome, 'failure');
+  });
+
+  test('asynchronous metadata and diagnostics before done remain valid', () {
+    final run = readRun('${_stream(truncated: true)}'
+        '${_event({'type': 'allSuites', 'count': 2})}\n'
+        '${_event({'type': 'print', 'testID': 3, 'message': 'diagnostic'})}\n'
+        '${_event({'type': 'done', 'success': true})}\n');
+    expect(run.violations, isEmpty);
+    expect(suiteRow(run, exitCode: 0).outcome, 'success');
+  });
+
+  test('blank lines around a single run do not create another event', () {
+    final run = readRun('\n \n${_stream()}\n \n');
+    expect(run.violations, isEmpty);
+    expect(suiteRow(run, exitCode: 0).outcome, 'success');
+  });
+
+  test('independent reads may use the same run-local test and suite IDs', () {
+    final first = readRun(_stream());
+    final second = readRun(_stream());
+    expect(first.violations, isEmpty);
+    expect(second.violations, isEmpty);
+    expect(suiteRow(first, exitCode: 0).outcome, 'success');
+    expect(suiteRow(second, exitCode: 0).outcome, 'success');
+    expect(second.testsRun, first.testsRun);
+  });
 }

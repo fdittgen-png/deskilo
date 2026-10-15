@@ -284,7 +284,7 @@ const Map<String, int> _pairBudget = {
   'plan -> members': 1,
   'plan -> money': 4,
   'plan -> profile': 2,
-  'plan -> reservations': 9,
+  'plan -> reservations': 10, // 2026-10-13 #2494 9→10: the floor-plan painter's furniture layers became their own file (one library became two), both naming SeatState; coupling unchanged.
   // 2026-09-15 #1273 10→11: floor_plan_providers reads the
   // singleRoomLevelNames flag once for every map surface.
   'plan -> workspace': 12, // 2026-10-04 11→12: the plan focus starts over when the active workspace changes
@@ -309,7 +309,7 @@ const Map<String, int> _pairBudget = {
   // `profile: 4 > 3` instead — a widget in profile/ reaching
   // workspace/'s repository. ADR 0024 is the stronger rule, so the
   // layer violation is fixed and the import ceiling pays for it.
-  'profile -> workspace': 45, // 2026-10-13 #2484 42→45: the platform-owner tools list opens the settings editor (flag, feature gate, editor widget). // #2301: shared Reports visibility with route and drawer. // 2026-10-03 #1823: paired workspace cards reuse WorkspaceAvatar so the chooser and workspace show the same uploaded mark. // 2026-09-29 #1829 39→40: the Settings entry that names the instance owner (widgets/instance_owner_tile.dart) — a workspace-scope widget every member sees; it decides nothing.  // 2026-09-28 #1791: profile switcher links to account admission history.  // 2026-09-20 #1598 37→38: the settings screen asks `showsMemberAccountMenu` what to call itself. The predicate reads the effective PERMISSION set, so it lives with the matrix in workspace/domain; re-deciding in profile/ what counts as administering something is exactly the drift #1085 was about. One import, and the one definition both the shell and the screen read; // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
+  'profile -> workspace': 43, // 2026-10-14 #2495 45→43: country_names moved to core/i18n (two imports gone). // 2026-10-13 #2484 42→45: the platform-owner tools list opens the settings editor (flag, feature gate, editor widget). // #2301: shared Reports visibility with route and drawer. // 2026-10-03 #1823: paired workspace cards reuse WorkspaceAvatar so the chooser and workspace show the same uploaded mark. // 2026-09-29 #1829 39→40: the Settings entry that names the instance owner (widgets/instance_owner_tile.dart) — a workspace-scope widget every member sees; it decides nothing.  // 2026-09-28 #1791: profile switcher links to account admission history.  // 2026-09-20 #1598 37→38: the settings screen asks `showsMemberAccountMenu` what to call itself. The predicate reads the effective PERMISSION set, so it lives with the matrix in workspace/domain; re-deciding in profile/ what counts as administering something is exactly the drift #1085 was about. One import, and the one definition both the shell and the screen read; // 2026-09-19 #1288 S4 38→37: the questions section moved to workspace/, where the questions are defined; // 2026-09-19 #1288 S2b 34→38: the identity form's section reads the workspace's own questions — the definitions, the validator, the repository and its providers all live in workspace/, and duplicating them in profile/ to keep a number down would be worse; // 2026-09-19 #1380 35→34: the demo-mode switch left Settings with its feature-flag import
   'reservations -> calendar': 1,
   'reservations -> events': 5,
   'reservations -> members': 2,
@@ -324,7 +324,7 @@ const Map<String, int> _pairBudget = {
   // the plan's `targetNamesProvider` so the calendar-file command can name
   // the booked space — the widget that asks for the file imports no plan
   // provider of its own, which is the point of the command.
-  'reservations -> plan': 73, // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
+  'reservations -> plan': 83, // 2026-10-13 #2494 73→83: the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no new dependency. // #1825 +1: whole_space_blocking (FloorPlan) — the whole-space rule now has ONE home shared by the plan sheet and the list. #1825 +3: list_space_tap (floor plan, level, half-day window)
   'reservations -> profile': 1,
   // 48→50 (2026-09-16): #1234 — `application/act_on_space.dart` and
   // `domain/space_act.dart` both need `BookingGranularity`: the
@@ -341,7 +341,7 @@ const Map<String, int> _pairBudget = {
   // BookingPolicies remain owned by workspace, not duplicated in the card.
   // 2026-09-27 #1636: +3 — the Get started card's owner guidance reads
   // the workspace readiness check (domain, provider, section labels).
-  'reservations -> workspace': 65, // 2026-10-04 61→65: favourites and ratings (#2185) read the current workspace, its feature flag and the person's permission in their providers and commands; earlier: 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
+  'reservations -> workspace': 73, // 2026-10-13 #2494 65→73: the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no new dependency. // 2026-10-04 61→65: favourites and ratings (#2185) read the current workspace, its feature flag and the person's permission in their providers and commands; earlier: 2026-10-04 60→61: the browsed level starts over when the active workspace changes; earlier: #1825 +3: list_space_tap (member, feature, providers)
   'workspace -> auth': 11, // 2026-10-13 #2484 10→11: the settings snapshot is re-read for a different signed-in person. // // 2026-09-28 #1652 9→10: the invitation review offers Change account (sign-out) beside Join, and a wrong-account answer offers the same.  // 2026-09-28 #1791: account-scoped applications and replies work without membership.  // 2026-09-26 #1636 3→4 and #1654 4→5: a pending creation draft names the account that sent it, so a restart resumes it for that account only (application/creation_intent.dart); #1654: the onboarding handoff listens to the auth stream to discard completions after an account change
   // 11→13 and 34→35 (2026-09-19): #1247 — the decision surface answers
   // *does anything need me?* by ASSEMBLING signals that already exist:

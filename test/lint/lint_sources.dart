@@ -31,6 +31,25 @@ Iterable<File> handWrittenDartFiles(String root) =>
 Iterable<File> handWrittenDartFilesIn(List<String> roots) =>
     roots.expand(handWrittenDartFiles);
 
+/// The `.sql` files directly under [root] (migrations, database tests),
+/// sorted by path so a lint reads them in numbered order. [recursive]
+/// descends. One definition of "the SQL of this repository" (#2604).
+List<File> sqlFiles(String root, {bool recursive = false}) =>
+    _filesWithExtension(root, '.sql', recursive: recursive);
+
+/// The `.md` files under [root] (guides, decisions, docs), sorted.
+List<File> markdownFiles(String root, {bool recursive = true}) =>
+    _filesWithExtension(root, '.md', recursive: recursive);
+
+List<File> _filesWithExtension(String root, String extension,
+        {required bool recursive}) =>
+    Directory(root)
+        .listSync(recursive: recursive)
+        .whereType<File>()
+        .where((f) => f.path.endsWith(extension))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+
 /// Scans [files] line by line and reports `path:line: content` for every
 /// line where [matches] is true. Comment lines are skipped by default —
 /// a comment explaining a rule is not a violation of it.

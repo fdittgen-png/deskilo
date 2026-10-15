@@ -13,9 +13,9 @@
 // until #1226 puts a database in CI. It catches the omission that
 // actually happened: a definer function that names a member or a
 // workspace and never mentions a caller check.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The helpers that constitute "the caller was checked".
 const _guards = [
@@ -43,9 +43,7 @@ const Map<String, String> _exempt = {
 void main() {
   test('every definer function granted to authenticated checks its caller',
       () {
-    final dir = Directory('supabase/migrations');
-    final files = dir.listSync().whereType<File>().toList()
-      ..sort((File a, File b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations');
 
     // Latest definition wins: an anchored patch may add the guard.
     final latest = <String, String>{};
@@ -55,7 +53,6 @@ void main() {
       caseSensitive: false,
     );
     for (final f in files) {
-      if (!f.path.endsWith('.sql')) continue;
       final sql = f.readAsStringSync();
       for (final m in definer.allMatches(sql)) {
         final end = sql.indexOf(r'$$;', m.start);

@@ -18,14 +18,10 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Every hand-written Dart file under `lib/`.
-Iterable<File> _sources() => Directory('lib')
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.dart'))
-    .where((f) => !f.path.endsWith('.g.dart'))
-    .where((f) => !f.path.endsWith('.freezed.dart'));
+Iterable<File> _sources() => handWrittenDartFiles('lib');
 
 /// What the old mechanism was made of, and why each is refused.
 const Map<String, String> _retired = {

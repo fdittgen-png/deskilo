@@ -19,10 +19,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../features/calendar/day_timeline_test.dart' show addSecondLevel;
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/day_timeline.dart' show addSecondLevel;
 
 /// Pragmatic chip floor — see the header comment for the rationale.
 const double _chipFloor = 44;

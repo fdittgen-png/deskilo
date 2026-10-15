@@ -33,7 +33,7 @@ void main() {
       helpers = sourceOf('lib/features/plan/presentation/widgets/'
               'plan_paint_helpers.dart');
       painter = sourceOf('lib/features/plan/presentation/widgets/'
-              'floor_plan_painter.dart');
+              'floor_plan_space_layers.dart');
     });
 
     test('the hatch exists and is applied to BOTH rooms and tables', () {

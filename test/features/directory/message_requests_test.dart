@@ -5,29 +5,19 @@
 // follows; with no request the card takes no room.
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/presentation/messenger/message_requests_card.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Future<void> _pump(
   WidgetTester tester,
   FakeMessengerRepository messenger,
 ) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(messenger: messenger),
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(
+  await pumpApp(tester, const Scaffold(
           body: SingleChildScrollView(child: MessageRequestsCard()),
-        ),
-      ),
-    ),
-  );
+        ), overrides: standardTestOverrides(messenger: messenger));
   await tester.pumpAndSettle();
 }
 

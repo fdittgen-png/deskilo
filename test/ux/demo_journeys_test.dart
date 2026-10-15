@@ -14,57 +14,22 @@
 // journey can affect live data — for a structural reason rather than a
 // promise: the fixture is an object graph with no client behind it, and
 // two fixtures share no instance.
-import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
-import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../features/reservations/reserve_hub_test.dart' show seatCenter;
 import '../helpers/demo_journey.dart';
+import '../helpers/screens/demo_journeys.dart' show pumpDemo;
+import '../helpers/screens/reserve_hub.dart' show seatCenter;
 
-/// Enters the app on the demonstration fixture and opens the Reserve hub,
-/// which is where a visitor lands.
-///
-/// The widget mounted is `DeskiloRoot`, not `DeskiloApp`: the
-/// demonstration bar, the Demo container and every override a visitor
-/// gets come from the product's own composition (#1564).
-Future<DemoJourney> pumpDemo(
-  WidgetTester tester, {
-  DemoPersona persona = initialDemoPersona,
-  bool openHub = true,
-}) async {
-  tester.view.physicalSize = const Size(800, 1400);
-  tester.view.devicePixelRatio = 1.0;
-  addTearDown(tester.view.reset);
-
-  final journey = DemoJourney.start(persona: persona);
-  addTearDown(journey.dispose);
-  // #2414 — at this size the device default is the menu; these journeys
-  // enter through the bar's round button, so the visitor has chosen it.
-  journey.fixture.prefs.navigationStyle.style = NavigationStyle.classic.wire;
-  await tester.pumpWidget(
-    UncontrolledProviderScope(
-      container: journey.root,
-      child: const DeskiloRoot(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  if (openHub) {
-    await tester.tap(find.byType(ShellCenterButton));
-    await tester.pumpAndSettle();
-  }
-  return journey;
-}
 
 /// Taps the demonstration bar's persona control until [persona] is
 /// active — the ring a visitor cycles, and the only way in the product

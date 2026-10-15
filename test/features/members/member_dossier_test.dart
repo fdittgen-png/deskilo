@@ -16,11 +16,11 @@ import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Member _member({
   String id = 'member-2',
@@ -95,11 +95,7 @@ Future<void> _pump(
     workspace.myMember =
         workspace.myMember.copyWith(isAdmin: false, isOwner: false);
   }
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(money: money, workspace: workspace),
-      child: MaterialApp(
-        home: Scaffold(
+  await pumpApp(tester, Scaffold(
           body: SingleChildScrollView(
             child: Column(children: [
               MemberContactCard(
@@ -109,10 +105,7 @@ Future<void> _pump(
               MemberMoneyCard(memberId: 'member-2', isSelf: isSelf),
             ]),
           ),
-        ),
-      ),
-    ),
-  );
+        ), overrides: standardTestOverrides(money: money, workspace: workspace));
   await tester.pumpAndSettle();
 }
 
@@ -160,16 +153,9 @@ void main() {
     final money = FakeMoneyRepository()
       ..accountFailure = Exception('not your account');
     final workspace = FakeWorkspaceRepository.withWorkspace();
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: standardTestOverrides(money: money, workspace: workspace),
-        child: const MaterialApp(
-          home: Scaffold(
+    await pumpApp(tester, const Scaffold(
             body: MemberMoneyCard(memberId: 'member-2', isSelf: true),
-          ),
-        ),
-      ),
-    );
+          ), overrides: standardTestOverrides(money: money, workspace: workspace));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('member-money-error')), findsOneWidget);
@@ -217,16 +203,9 @@ void main() {
     // Nothing seeded at all: no invoice, no ledger movement.
     final money = FakeMoneyRepository();
     final workspace = FakeWorkspaceRepository.withWorkspace();
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: standardTestOverrides(money: money, workspace: workspace),
-        child: const MaterialApp(
-          home: Scaffold(
+    await pumpApp(tester, const Scaffold(
             body: MemberMoneyCard(memberId: 'member-2', isSelf: true),
-          ),
-        ),
-      ),
-    );
+          ), overrides: standardTestOverrides(money: money, workspace: workspace));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('member-money-settled')), findsOneWidget);

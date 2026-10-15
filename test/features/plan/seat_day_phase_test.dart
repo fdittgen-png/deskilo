@@ -10,8 +10,8 @@ import 'package:deskilo/features/reservations/domain/seat_state_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/screens/plan_screen.dart' show pumpPlan;
 import '../../helpers/test_clock.dart';
-import 'plan_screen_test.dart' show pumpPlan;
 
 DateTime _at(int hour) =>
     DateTime(kTestNow.year, kTestNow.month, kTestNow.day, hour);

@@ -76,6 +76,7 @@ void main() {
     final before = Map.of(workspace.workspaces.single.featureFlags);
 
     await tester.tap(find.text('Money tab'));
+    await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
 
     expect(workspace.flagWrites.last, {'moneyTab': false},
@@ -90,6 +91,7 @@ void main() {
 
     // Toggling back re-enables it.
     await tester.tap(find.text('Money tab'));
+    await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
     expect(workspace.flagWrites.last, {'moneyTab': true});
     expect(switchTitled(tester, 'Money tab').value, isTrue);
@@ -101,6 +103,7 @@ void main() {
     final workspace = await pumpFeatures(tester);
 
     await tester.tap(find.text('Sites on documents'));
+    await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
 
     expect(workspace.flagWrites.last,
@@ -115,6 +118,7 @@ void main() {
     final workspace = await pumpFeatures(tester);
 
     await tester.tap(find.text('Accessory supplements'));
+    await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
 
     final flags = workspace.workspaces.single.featureFlags;
@@ -201,6 +205,7 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     await tester.tap(find.byKey(const ValueKey('feature-badgeSignIn')));
+    await acceptOptInIfAsked(tester);
     await tester.pumpAndSettle();
 
     final written = workspace.workspaces.single.featureFlags;

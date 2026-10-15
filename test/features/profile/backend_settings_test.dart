@@ -10,31 +10,25 @@
 // a probe verified, a probe that finishes into the void once the
 // candidate changed, and a saved-but-not-restarted switch shown as
 // pending with its undo.
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_config.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/backend/instance_facts.dart';
-import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/instance/instance_bundle_asset.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/profile/presentation/widgets/server_facts_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/settings_sections.dart';
+import '../../helpers/pump_app.dart';
+import '../../helpers/screens/backend_settings.dart' show ScriptedProbes, pumpServerScreen;
 
 const publishable = 'sb_publishable_0123456789abcdefghij';
 
@@ -53,112 +47,8 @@ const okReport = BackendProbeReport(
   compatibility: SchemaCompatibility.current,
 );
 
-/// A probe transport the test answers by hand, per candidate URL.
-class ScriptedProbes {
-  final probed = <String>[];
-  final completers = <String, Completer<BackendProbeReport>>{};
 
-  BackendProbeTransport call(BackendEndpoint endpoint) {
-    probed.add(endpoint.url);
-    return _Transport(this, endpoint.url);
-  }
 
-  /// The report [url]'s probe will answer with — completed by the test.
-  Completer<BackendProbeReport> pending(String url) =>
-      completers.putIfAbsent(url, Completer.new);
-}
-
-class _Transport implements BackendProbeTransport {
-  _Transport(this.owner, this.url);
-  final ScriptedProbes owner;
-  final String url;
-
-  /// Answers the way a real server would for the scripted report.
-  @override
-  Future<void> readOneWorkspace() async {
-    final report = await owner.pending(url).future;
-    switch (report.result) {
-      case BackendProbeResult.ok:
-      case BackendProbeResult.ahead:
-      case BackendProbeResult.behind:
-        return;
-      case BackendProbeResult.unreachable:
-        throw TimeoutException('12s');
-      case BackendProbeResult.badKey:
-        throw const PostgrestException(message: 'Invalid API key', code: '401');
-      case BackendProbeResult.schemaMissing:
-        throw const PostgrestException(
-            message: 'relation does not exist', code: '42P01');
-      case BackendProbeResult.attention:
-        throw const PostgrestException(message: 'odd', code: '500');
-    }
-  }
-
-  @override
-  Future<int?> readVersion() async {
-    final report = await owner.pending(url).future;
-    return switch (report.result) {
-      BackendProbeResult.ahead => requiredSchemaVersion + 1,
-      BackendProbeResult.behind => requiredSchemaVersion - 1,
-      _ => requiredSchemaVersion,
-    };
-  }
-
-  @override
-  Future<void> dispose() async {}
-}
-
-Future<InMemoryBackendSettingsStore> pumpServerScreen(
-  WidgetTester tester, {
-  BackendEndpoint? stored,
-  BackendSwitchRecord? pending,
-  String booted = '',
-  SchemaVersionSource? schemaVersion,
-  ScriptedProbes? probes,
-  List<Uri>? launched,
-  List<Override> extra = const [],
-}) async {
-  final store = InMemoryBackendSettingsStore()
-    ..value = stored
-    ..pending = pending;
-  tester.view.physicalSize = const Size(800, 1600);
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        ...standardTestOverrides(
-            backendSettings: store, schemaVersion: schemaVersion),
-        bootedBackendUrlProvider.overrideWithValue(booted),
-        backendProbeTransportProvider
-            .overrideWithValue((probes ?? ScriptedProbes()).call),
-        ...extra,
-        if (launched != null)
-          linkLauncherProvider.overrideWithValue((uri) async {
-            launched.add(uri);
-            return true;
-          }),
-      ],
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.tap(find.byTooltip('Settings'));
-  await tester.pumpAndSettle();
-  await openSettingsSection(tester, 'advanced');
-  await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('backend-server-tile')),
-    250,
-    scrollable: find.byType(Scrollable).first,
-  );
-  // The scroll stops as soon as the tile EXISTS — it may still sit under
-  // the fold; bring it fully in before tapping.
-  await tester.ensureVisible(find.byKey(const ValueKey('backend-server-tile')));
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('backend-server-tile')));
-  await tester.pumpAndSettle();
-  return store;
-}
 
 Future<void> chooseMode(WidgetTester tester, String key) async {
   final chip = find.byKey(ValueKey(key));
@@ -505,16 +395,11 @@ void main() {
         (tester) async {
       // The app refuses to start on an older schema, so the card is read on
       // its own here — the same card the gate's Server link opens.
-      await tester.pumpWidget(ProviderScope(
-        overrides: standardTestOverrides(
-            schemaVersion:
-                const FixedSchemaVersionSource(requiredSchemaVersion - 1)),
-        child: const MaterialApp(
-          home: Scaffold(
+      await pumpApp(tester, const Scaffold(
             body: ServerFactsCard(endpoint: custom, isDefault: false),
-          ),
-        ),
-      ));
+          ), overrides: standardTestOverrides(
+            schemaVersion:
+                const FixedSchemaVersionSource(requiredSchemaVersion - 1)));
       await tester.pumpAndSettle();
       expect(
           find.text(

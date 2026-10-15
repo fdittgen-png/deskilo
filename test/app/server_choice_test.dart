@@ -50,6 +50,7 @@ Future<({InMemoryBackendSettingsStore store, List<int> chosen})> _pump(
     ProviderScope(
       overrides: [
         enabledFeaturesSyncProvider.overrideWithValue(ServerChoiceApp.features),
+        enabledFeatureKeysFromWorkspace,
         backendProbeTransportProvider.overrideWithValue((_) => _UsableProbe()),
         supabaseManagementFactoryProvider.overrideWithValue(
           (_) => api ?? FakeSupabaseManagement(),

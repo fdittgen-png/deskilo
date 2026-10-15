@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:intl/intl.dart';
 
-import '../../features/workspace/presentation/country_names.dart';
 import '../../l10n/app_localizations.dart';
+import 'country_names.dart';
 
 /// A format locale as a PERSON reads it (#713): `fr_CH` →
 /// « Français (Suisse) · 1'234.56 ».

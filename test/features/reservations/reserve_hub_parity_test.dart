@@ -54,7 +54,7 @@ void main() {
 
     setUpAll(() {
       hub = sourceOf('lib/features/reservations/presentation/screens/'
-              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
+              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/screens/reserve_hub_header.dart') + sourceOf('lib/features/reservations/presentation/screens/reserve_hub_views.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
               'reserve_hub_layout.dart');
     });
 
@@ -86,7 +86,7 @@ void main() {
 
     setUpAll(() {
       hub = sourceOf('lib/features/reservations/presentation/screens/'
-              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
+              'reserve_screen.dart') + sourceOf('lib/features/reservations/presentation/screens/reserve_hub_header.dart') + sourceOf('lib/features/reservations/presentation/screens/reserve_hub_views.dart') + sourceOf('lib/features/reservations/presentation/widgets/'
               'reserve_hub_layout.dart');
     });
 

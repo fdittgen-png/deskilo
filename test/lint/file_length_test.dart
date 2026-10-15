@@ -54,6 +54,10 @@ const Map<String, int> _baseline = {
   // `recordingMember` in lib/core/privacy/recording_privacy.dart, so
   // the seam stays one file.
   'lib/features/workspace/providers/workspace_providers.dart': 667, // 2026-10-07 #2216 662→667: messageMentionsOn, the one switch both message screens read; 2026-10-04 642→662: resetOnWorkspaceSwitch — the one helper that starts a workspace's session state over when the person moves to another; 2026-10-03 #2137 632→642: actsForReservations, the one staff check the reservation surfaces share (keeps reservations->workspace flat); 2026-10-02 #2085 630→632: myPermissions adds what the workspace's own roles grant, as has_permission has since 0247 — one argument and its import;
+  // 2026-10-13 #2520 — the feature ledger gained its basis (evidence or the
+  // owner's declaration, #2519): the enum, one field and the owner-beta
+  // assessment. The ledger of 130 assessments is data; splitting it is #2522's call.
+  'lib/features/workspace/domain/feature_lifecycle.dart': 525, // 2026-10-15 523→525: master's two newest features join the owner-beta map
   // ADR 0028 (#1373) — the suite's in-memory repositories moved here so
   // Demo can run the real app against them. Their size is the surface of
   // the interface each implements, not a file that grew: MoneyRepository
@@ -165,7 +169,7 @@ const Map<String, int> _baseline = {
   // by an enum value and a manifest entry per flag, by design.
   // 1273→1284 (2026-09-16): #1277 S2 — the workspaceVocabulary flag: one enum value and one
   // manifest entry. The registry grows by a flag per functionality.
-  'lib/features/workspace/domain/workspace_feature.dart': 614, // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
+  'lib/features/workspace/domain/workspace_feature.dart': 620, // 2026-10-14 #2362 614→620: the salesTax enum value and its doc comment (a flag's enum value goes here, unavoidable). // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
 
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
@@ -268,7 +272,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/domain/money_repository.dart': 610, // 2026-10-12 #2440: createInvoice and invoiceIssueReadiness take the correction reason. 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/saf_t.dart': 477, // 2026-10-13 #2365: the ledger postings moved to saf_t_ledger.dart.
 
   'lib/features/money/domain/vat_tax_point.dart': 410, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

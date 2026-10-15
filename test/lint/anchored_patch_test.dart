@@ -22,9 +22,9 @@
 // verified against the live database and had kept their patches. The
 // set is frozen so that NEW pairs must be argued for; it may shrink,
 // never grow.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
@@ -173,10 +173,7 @@ List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0412
 void main() {
   test('#2392 no migration anchors a patch into an mcp_ function', () {
     final sources = {
-      for (final f in Directory('supabase/migrations')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.sql')))
+      for (final f in sqlFiles('supabase/migrations'))
         f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
     };
     expect(mcpAnchorPatches(sources), isEmpty,
@@ -196,12 +193,7 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
 
   test('no migration re-creates a function a later-unreviewed patch owns',
       () {
-    final files = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations');
 
     final patchedIn = <String, List<String>>{};
     final recreatedIn = <String, List<String>>{};
@@ -243,9 +235,7 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
   test('the reviewed set has not gone stale', () {
     // Every entry must still describe a real pair; a removed migration
     // or a renamed function should shrink this list, not be forgotten.
-    final numbers = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
+    final numbers = sqlFiles('supabase/migrations')
         .map((f) => f.uri.pathSegments.last.substring(0, 4))
         .toSet();
     for (final key in _reviewed) {

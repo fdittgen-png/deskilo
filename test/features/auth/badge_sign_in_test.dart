@@ -21,10 +21,10 @@ import 'package:deskilo/features/auth/domain/badge_sign_in.dart';
 import 'package:deskilo/features/auth/presentation/widgets/badge_pin_tile.dart';
 import 'package:deskilo/features/auth/presentation/widgets/badge_sign_in_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _alex = BadgeIdentity(
   userId: 'user-1',
@@ -41,11 +41,7 @@ void main() {
     FakeAuthRepository auth, {
     String? scannedUid,
   }) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: standardTestOverrides(auth: auth),
-        child: MaterialApp(
-          home: Builder(
+    await pumpApp(tester, Builder(
             builder: (context) => Scaffold(
               body: ElevatedButton(
                 onPressed: () =>
@@ -53,10 +49,7 @@ void main() {
                 child: const Text('open'),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          ), overrides: standardTestOverrides(auth: auth));
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
   }
@@ -130,12 +123,7 @@ void main() {
   group('a member sets their own PIN, and only their own', () {
     testWidgets('the tile opens a sheet that writes the PIN', (tester) async {
       final auth = FakeAuthRepository();
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: standardTestOverrides(auth: auth),
-          child: const MaterialApp(home: Scaffold(body: BadgePinTile())),
-        ),
-      );
+      await pumpApp(tester, const Scaffold(body: BadgePinTile()), overrides: standardTestOverrides(auth: auth));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const ValueKey('settings-badge-pin')));
@@ -156,12 +144,7 @@ void main() {
       // Typing a PIN wrong twice and having it SAVED is the failure that
       // locks a member out of a credential they cannot read back.
       final auth = FakeAuthRepository();
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: standardTestOverrides(auth: auth),
-          child: const MaterialApp(home: Scaffold(body: BadgePinTile())),
-        ),
-      );
+      await pumpApp(tester, const Scaffold(body: BadgePinTile()), overrides: standardTestOverrides(auth: auth));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('settings-badge-pin')));
       await tester.pumpAndSettle();
@@ -179,12 +162,7 @@ void main() {
 
     testWidgets('a too-short PIN is refused', (tester) async {
       final auth = FakeAuthRepository();
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: standardTestOverrides(auth: auth),
-          child: const MaterialApp(home: Scaffold(body: BadgePinTile())),
-        ),
-      );
+      await pumpApp(tester, const Scaffold(body: BadgePinTile()), overrides: standardTestOverrides(auth: auth));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('settings-badge-pin')));
       await tester.pumpAndSettle();

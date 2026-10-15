@@ -21,6 +21,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The sweep that closed the historical grants. Files up to and including
 /// it are covered by it; files after it answer for themselves.
@@ -49,16 +50,9 @@ Set<String> missingRevokes(String sql) {
 
 void main() {
   test('every migration after the sweep revokes what it creates', () {
-    final dir = Directory('supabase/migrations');
-    expect(dir.existsSync(), isTrue);
-
-    final after = dir
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
+    final after = sqlFiles('supabase/migrations')
         .where((f) => f.uri.pathSegments.last.compareTo(_sweep) > 0)
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+        .toList();
 
     final offenders = <String>[];
     for (final file in after) {

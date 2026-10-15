@@ -18,6 +18,8 @@ import 'core/notifications/notification_providers.dart';
 import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
+import 'features/auth/providers/auth_providers.dart';
+import 'features/profile/providers/profile_providers.dart';
 import 'features/workspace/providers/workspace_providers.dart';
 
 Future<void> main() async {
@@ -47,6 +49,7 @@ Future<void> main() async {
       overrides: [
         enabledFeaturesSyncProvider
             .overrideWithValue(ServerChoiceApp.features),
+        enabledFeatureKeysFromWorkspace, // #2495
       ],
       child: ServerChoiceApp(onChosen: chosen.complete),
     ));
@@ -99,6 +102,9 @@ Future<void> main() async {
       observers: const [TraceProviderObserver()],
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
+        sessionSourceFromAuth, // #2495
+        captureReaderNameFromProfile, // #2495
+        enabledFeatureKeysFromWorkspace, // #2495
       ],
       child: const DeskiloRoot(),
     ),

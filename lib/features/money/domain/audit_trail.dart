@@ -100,13 +100,17 @@ List<AuditEvent> buildAuditEvents({
   final events = <AuditEvent>[];
 
   for (final invoice in invoices) {
+    // #2365 — a credit note charges nothing (`chargesCents` is the
+    // positive positions): its value is its signed total, or the trail
+    // shows a correction of zero.
+    final worth = invoice.isCreditNote ? invoice.totalCents : invoice.chargesCents;
     events.add(AuditEvent(
       at: invoice.issuedAt,
       kind: 'invoice',
       reference: invoice.number,
       relatesTo: invoice.replacesNumber,
       description: invoice.title,
-      amountCents: invoice.chargesCents,
+      amountCents: worth,
       actor: invoice.issuerName,
       counterparty: invoice.memberName,
       status: invoice.isVoided ? 'voided' : 'issued',
@@ -123,7 +127,7 @@ List<AuditEvent> buildAuditEvents({
         relatesTo: invoice.number,
         description: 'Voided',
         // Negative: it takes back exactly what the invoice charged.
-        amountCents: -invoice.chargesCents,
+        amountCents: -worth,
         actor: invoice.voidedByName,
         counterparty: invoice.memberName,
         status: 'voided',
@@ -145,6 +149,22 @@ List<AuditEvent> buildAuditEvents({
         // show an invoice as unpaid while someone is mid-validation.
         status: match.status,
       ));
+      // #2365 — the write-off is its own event, on its own date: what was
+      // still owed when the owner gave it up. Negative, like a credit.
+      if (match.writeoffAt case final writtenOffAt?) {
+        final owed = invoice.totalCents - match.paidCents;
+        events.add(AuditEvent(
+          at: writtenOffAt,
+          kind: 'writeoff',
+          reference: invoice.number,
+          relatesTo: invoice.number,
+          description: 'Written off',
+          amountCents: owed > 0 ? -owed : 0,
+          actor: match.byName,
+          counterparty: invoice.memberName,
+          status: match.status,
+        ));
+      }
     }
   }
 

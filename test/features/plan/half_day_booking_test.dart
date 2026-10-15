@@ -23,10 +23,9 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'plan_closed_day_test.dart' show ThrowingReservationRepository;
-import 'plan_screen_test.dart'
-    show chooseCheckInNow, pumpPlan, seatCenter;
-import 'time_scroller_test.dart' show planPainter;
+import '../../helpers/screens/plan_closed_day.dart' show ThrowingReservationRepository;
+import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, pumpPlan, seatCenter;
+import '../../helpers/screens/time_scroller.dart' show planPainter;
 
 const _amChip = ValueKey('reserve-am-chip');
 const _pmChip = ValueKey('reserve-pm-chip');

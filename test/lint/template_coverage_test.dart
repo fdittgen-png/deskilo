@@ -39,8 +39,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'configuration_classification_test.dart'
-    show deployableEntityKeys, workspaceColumns;
+import '../helpers/lint/configuration_classification.dart' show deployableEntityKeys, workspaceColumns;
 
 final _registry = templateFieldRegistry();
 final _ids = {for (final s in _registry) s.id};

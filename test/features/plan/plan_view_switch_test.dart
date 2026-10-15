@@ -9,7 +9,7 @@ import 'package:deskilo/core/ui/motion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'plan_screen_test.dart' show pumpPlan;
+import '../../helpers/screens/plan_screen.dart' show pumpPlan;
 
 const _canvasKey = ValueKey('reserve-canvas-view');
 const _listKey = ValueKey('reserve-list-view');

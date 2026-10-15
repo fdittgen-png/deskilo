@@ -236,4 +236,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
   ),
+  // #2362 — sales tax is an invoicing mode of a seller in the United States.
+  WorkspaceFeature.salesTax: FeatureManifestEntry(
+    feature: WorkspaceFeature.salesTax,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+  ),
 };
