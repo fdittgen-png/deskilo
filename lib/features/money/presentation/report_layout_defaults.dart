@@ -5,6 +5,7 @@
 // (positioned OR banded) in front. The layouts themselves are pure
 // Dart in the domain so the CLI prints them too.
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_kind.dart';
@@ -15,11 +16,12 @@ import 'report_kind_labels.dart';
 export '../domain/report_letter_layouts.dart'
     show LetterStrings, defaultLetterLayoutXml, isPersonFacingKind, resolveLayoutXml;
 
-LetterStrings _letterStringsOf(AppLocalizations l10n) => LetterStrings(
+LetterStrings _letterStringsOf(AppLocalizations l10n, {bool salesTax = false}) => LetterStrings(
       creditNote: l10n.invoicePdfCreditNote,
       replaces: l10n.invoicePdfReplaces,
-      net: l10n.vatPdfNet,
-      vat: l10n.vatPdfVat,
+      // #2362 -- a sales-tax invoice speaks of a subtotal and a sales tax.
+      net: salesTax ? l10n.invoicePdfSubtotal : l10n.vatPdfNet,
+      vat: salesTax ? l10n.invoicePdfSalesTax : l10n.vatPdfVat,
       vatNumber: l10n.legalIdentityVatId,
       usage: l10n.reportDocUsage,
       status: l10n.reportDocStatus,
@@ -62,7 +64,12 @@ String? resolveLayoutXmlFor({
     kindId: kindId,
     letterStandard: letterStandard,
     bandsDesigned: bandsDesigned,
-    strings: _letterStringsOf(l10n ?? englishL10n),
+    // #2362 -- a seller whose country's gate says sales tax speaks of a
+    // subtotal and a sales tax, never of VAT.
+    strings: _letterStringsOf(l10n ?? englishL10n,
+        salesTax: ActiveTaxReference.isInstalled &&
+            (ActiveTaxReference.current.gateOf(countryCode)?.salesTaxMode ??
+                false)),
     countryCode: countryCode,
   );
   if (resolved == null || template.layoutFor(kindId) != null ||

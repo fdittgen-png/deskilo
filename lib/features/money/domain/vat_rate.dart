@@ -283,6 +283,10 @@ class InvoiceVatTotal {
     required this.vatCents,
     this.exemptionReason = '',
     this.components = const [],
+    this.state = '',
+    this.jurisdiction = '',
+    this.exemptionBasis = '',
+    this.certificate = const {},
   });
 
   final double percent;
@@ -300,6 +304,17 @@ class InvoiceVatTotal {
   /// invoice), frozen at issue; empty where the rate is not split.
   final List<VatComponent> components;
 
+  /// #2362 — a sales-tax total: the state and the ZIP code whose tax it
+  /// carries ('' on every VAT total), why an exempt one is exempt (`statute`
+  /// or `certificate`) and the certificate cited ({kind, state, number}).
+  final String state;
+  final String jurisdiction;
+  final String exemptionBasis;
+  final Map<String, Object?> certificate;
+
+  /// Whether this total was priced by a US seller's sales tax.
+  bool get isSalesTax => jurisdiction.isNotEmpty;
+
   factory InvoiceVatTotal.fromJson(Map<dynamic, dynamic> json) {
     final r = JsonReader.of(json, context: 'invoice_vat_total');
     return InvoiceVatTotal(
@@ -310,6 +325,10 @@ class InvoiceVatTotal {
       vatCents: r.intOrNull('vat_cents') ?? 0,
       exemptionReason: r.stringOr('exemption_reason'),
       components: r.objects('components', VatComponent.fromReader),
+      state: r.stringOr('state'),
+      jurisdiction: r.stringOr('jurisdiction'),
+      exemptionBasis: r.stringOr('exemption_basis'),
+      certificate: r.objectOrEmpty('certificate'),
     );
   }
 }

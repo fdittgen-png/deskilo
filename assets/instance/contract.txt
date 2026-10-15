@@ -1850,6 +1850,7 @@ routine public.role_permission_catalog() -> text[] | function | invoker | immuta
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.sales_tax_certificate_of(p_workspace_id uuid, p_member_id uuid, p_state text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:ce15de3fbda0
 routine public.sales_tax_invoice(p_workspace_id uuid, p_member_id uuid, p_postal text, p_lines jsonb, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:70826a03239e
+routine public.sales_tax_return(p_workspace_id uuid, p_start date, p_end date) -> TABLE(state text, kind text, authority text, level text, name text, percent numeric, base_cents bigint, tax_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:6989283a542f
 routine public.sales_tax_status(p_state text, p_kind text, p_supply text, p_on date) -> text | function | definer | stable | exec:service_role | body:e391117473d6
 routine public.sales_tax_zip(p_postal text) -> text | function | invoker | immutable | exec:service_role | body:dbc6a0ce027e
 routine public.sales_tax_zip_rate(p_postal text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:7ad97ea5cbcf

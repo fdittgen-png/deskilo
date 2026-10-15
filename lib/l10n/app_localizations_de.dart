@@ -8716,6 +8716,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicePdfDueOn => 'Fällig am';
 
   @override
+  String get invoicePdfExemptCertificate => 'Befreiungsbescheinigung';
+
+  @override
   String get invoicePdfIssuedBy => 'Ausgestellt von';
 
   @override
@@ -8740,12 +8743,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicePdfReserved => 'reserviert';
 
   @override
+  String get invoicePdfSalesTax => 'Sales Tax';
+
+  @override
   String invoicePdfSettledIn(String number) {
     return 'Zusammengefasst in $number';
   }
 
   @override
   String get invoicePdfSignature => 'Digitale Signatur (SHA-256)';
+
+  @override
+  String get invoicePdfSubtotal => 'Zwischensumme';
 
   @override
   String get invoicePdfTitle => 'Rechnung';
@@ -16112,6 +16121,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sageTaxCode => 'Steuerschlüssel (T1 / T0 / T9)';
 
   @override
+  String get salesTaxWorksheetCsv => 'Sales-Tax-Arbeitsblatt (CSV)';
+
+  @override
+  String get salesTaxWorksheetEmpty =>
+      'In diesem Zeitraum wurde keine Rechnung mit Sales Tax ausgestellt.';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).';
 
@@ -18560,6 +18576,76 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taskWorkbenchUntrusted =>
       'Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.';
+
+  @override
+  String get taxCertAdd => 'Bescheinigung hinzufügen';
+
+  @override
+  String get taxCertEmpty => 'Keine Bescheinigung hinterlegt.';
+
+  @override
+  String get taxCertEnd => 'Heute beenden';
+
+  @override
+  String get taxCertFailed =>
+      'Die Bescheinigung konnte nicht gespeichert werden';
+
+  @override
+  String get taxCertInvalidDate => 'Datum als JJJJ-MM-TT eingeben';
+
+  @override
+  String get taxCertInvalidState => 'Zwei Buchstaben oder *';
+
+  @override
+  String get taxCertKind => 'Art';
+
+  @override
+  String get taxCertKindGovernment => 'Behörde';
+
+  @override
+  String get taxCertKindNonprofit => 'Gemeinnützig';
+
+  @override
+  String get taxCertKindOther => 'Sonstige';
+
+  @override
+  String get taxCertKindResale => 'Wiederverkauf';
+
+  @override
+  String get taxCertNumber => 'Nummer der Bescheinigung';
+
+  @override
+  String taxCertOpenEnded(String from) {
+    return 'ab $from, ohne Ende';
+  }
+
+  @override
+  String get taxCertRequired => 'Pflichtfeld';
+
+  @override
+  String get taxCertSave => 'Bescheinigung speichern';
+
+  @override
+  String get taxCertState =>
+      'Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)';
+
+  @override
+  String get taxCertSubtitle =>
+      'Sales Tax: Zeilen dieses Kunden bleiben unversteuert, solange eine Bescheinigung gilt';
+
+  @override
+  String get taxCertTitle => 'Befreiungsbescheinigungen';
+
+  @override
+  String get taxCertValidFrom => 'Gültig ab (JJJJ-MM-TT)';
+
+  @override
+  String get taxCertValidTo => 'Gültig bis (JJJJ-MM-TT, optional)';
+
+  @override
+  String taxCertValidity(String from, String to) {
+    return '$from bis $to';
+  }
 
   @override
   String get taxRefAccount => 'Kontonummer (oder Kontenrahmen)';

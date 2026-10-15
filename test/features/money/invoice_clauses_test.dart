@@ -135,19 +135,25 @@ void main() {
       );
     });
 
-    test('US: unsupported — nothing automatic, no EU indemnity at all', () {
-      for (final capacity in CustomerCapacity.values) {
+    test('US: its own profile — the owner\'s wording only, no EU indemnity (#2362)', () {
+      for (final capacity in [CustomerCapacity.business, CustomerCapacity.consumer]) {
         final q = qualifyClauses(
           _snap('US', capacity, clauses: _ownerTerms),
           _en,
         );
-        expect(q.profile, LegalProfile.unsupported);
-        expect(q.recoveryIndemnity.text, isEmpty);
-        expect(q.deficiencies, contains('profile_unsupported'));
+        expect(q.profile, capacity == CustomerCapacity.business
+            ? LegalProfile.usBusiness
+            : LegalProfile.usConsumer);
+        expect(q.deficiencies, isNot(contains('profile_unsupported')));
       }
       final bare = qualifyClauses(_snap('US', CustomerCapacity.business), _en);
       expect(bare.latePenalty.text, isEmpty);
+      expect(bare.recoveryIndemnity.text, isEmpty);
       expect(bare.escompte.text, isEmpty);
+      // a country the data holds no row for is still unsupported
+      final jp = qualifyClauses(_snap('JP', CustomerCapacity.business, clauses: _ownerTerms), _en);
+      expect(jp.profile, LegalProfile.unsupported);
+      expect(jp.deficiencies, contains('profile_unsupported'));
     });
 
     test(
