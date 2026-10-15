@@ -22,13 +22,7 @@ const _columns = [
   'modified_by_user',
 ];
 
-Iterable<File> _dartFiles(String dir) => Directory(dir)
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) =>
-        f.path.endsWith('.dart') &&
-        !f.path.endsWith('.g.dart') &&
-        !f.path.endsWith('.freezed.dart'));
+Iterable<File> _dartFiles(String dir) => handWrittenDartFiles(dir);
 
 void main() {
   test('0183 carries the stamp trigger, the helper and the sweep', () {
