@@ -21,7 +21,7 @@ select ('00000000-0000-4000-8000-0000001922'||suffix)::uuid,'00000000-0000-0000-
   from unnest(array['a1','a2','a3','a4']) suffix;
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags,dunning_rules) values
  ('00000000-0000-4000-8000-0000001922b1','Evidence','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001922a1','dev',
-  '{"paymentReminders":true}','{"levels":3,"first_after_days":30,"between_days":14,"automatic":true}'),
+  '{"dunning":true,"paymentReminders":true}','{"levels":3,"first_after_days":30,"between_days":14,"automatic":true}'),
  ('00000000-0000-4000-8000-0000001922b2','Foreign evidence','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000001922a4','dev','{}','{}');
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
  ('00000000-0000-4000-8000-0000001922c1','00000000-0000-4000-8000-0000001922b1','00000000-0000-4000-8000-0000001922a1',true,true,'active'),

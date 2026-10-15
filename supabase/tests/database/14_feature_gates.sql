@@ -16,7 +16,7 @@
 -- regressions now. The two controls pin the gates that always worked, so
 -- the file cannot pass by testing nothing.
 begin;
-select plan(12);
+select plan(16);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -157,6 +157,18 @@ select is((select count(*)::int from jsonb_object_keys(
   (select count(*)::int from jsonb_object_keys(public.feature_registry())),
   'the export writes every registry key resolved');
 reset role;
+
+-- #2566 — a key nobody has chosen resolves as a new workspace stores it:
+-- a platform flag is off whatever its registry default, a core flag
+-- follows its default, a stored boolean wins.
+select is(public.feature_registry() -> 'salesTax' ->> 'default', 'true',
+  'precondition: salesTax is a platform flag registered with default true');
+select is(public.feature_raw('{}'::jsonb, 'salesTax'), false,
+  'a platform flag absent from the stored flags is off');
+select is(public.feature_raw('{"salesTax": true}'::jsonb, 'salesTax'), true,
+  'and a stored true wins');
+select is(public.feature_raw('{}'::jsonb, 'formHelpHints'), true,
+  'a core flag with default true stays on when absent');
 
 select * from finish();
 rollback;

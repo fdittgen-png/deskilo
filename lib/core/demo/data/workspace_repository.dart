@@ -55,7 +55,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
       : workspaces = workspaces ?? [];
 
   /// One seeded workspace; [featureFlags] seeds its feature overrides
-  /// (#146) — absent keys keep their registry default (ON).
+  /// (#146) over the platform features that ship on (#2566).
   FakeWorkspaceRepository.withWorkspace({
     Map<String, dynamic> featureFlags = const {},
   }) : workspaces = [
@@ -67,7 +67,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
             currencyCode: 'EUR',
             timezone: 'Europe/Berlin',
             inviteCode: 'GOODCODE22',
-            featureFlags: featureFlags,
+            featureFlags: {...platformFeaturesOnByDefault, ...featureFlags},
             // #917 — the shared fixture is a PRODUCTION workspace, so the
             // development strip does not steal a row from every layout
             // assertion in the suite. The strip has its own tests

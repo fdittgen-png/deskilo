@@ -499,15 +499,28 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ..._manifest1, ..._manifest2, ..._manifest3,
 };
 
-/// Resolves the stored [featureFlags] jsonb against the registry: start
-/// from the defaults, apply boolean overrides, ignore unknown keys and
-/// non-boolean values so old clients survive new flags (and vice versa).
+/// #2566 — a flag nobody has chosen is what a NEW workspace stores for it:
+/// a core flag follows `defaultOn`, a platform flag is off. SQL twin:
+/// `feature_raw`.
+bool _unchosenFeatureIsOn(FeatureManifestEntry entry) =>
+    entry.tier == FeatureTier.core && entry.defaultOn;
+
+/// #2566 — the platform flags registered on by default (what an absent key
+/// used to resolve to); the demo and the server choice state them.
+Map<String, bool> get platformFeaturesOnByDefault => {
+      for (final e in featureManifest.values)
+        if (e.tier == FeatureTier.platform && e.defaultOn) e.feature.dbKey: true,
+    };
+
+/// Resolves the stored [featureFlags] against the registry: unchosen flags
+/// ([_unchosenFeatureIsOn]), boolean overrides, unknown keys and
+/// non-boolean values ignored so old clients survive new flags.
 Set<WorkspaceFeature> resolveEnabledFeatures(
   Map<String, dynamic> featureFlags,
 ) {
   final enabled = <WorkspaceFeature>{
     for (final entry in featureManifest.entries)
-      if (entry.value.defaultOn) entry.key,
+      if (_unchosenFeatureIsOn(entry.value)) entry.key,
   };
   final byName = WorkspaceFeature.values.asNameMap();
   for (final entry in featureFlags.entries) {
@@ -594,12 +607,9 @@ List<WorkspaceFeature> alsoEnabledWith({
 
 /// #1063 — the flags a NEW workspace is created with.
 ///
-/// EXPLICIT, every key, rather than an empty object left to resolve
-/// against the registry defaults. That is the whole design: resolution
-/// is unchanged, so a workspace that already exists keeps exactly what
-/// it has, and the tier decides only what gets written the first time.
-/// An implicit rule would have reached backwards into every live
-/// workspace the moment it changed.
+/// EXPLICIT, every key, rather than an empty object. A stored value is
+/// never reinterpreted; a key absent from a stored map resolves the same
+/// way (#2566, [_unchosenFeatureIsOn]), so the two cannot disagree.
 ///
 /// A platform feature is written `false` rather than omitted, so that
 /// "nobody has chosen yet" and "chosen off" stay distinguishable, and so
@@ -615,6 +625,6 @@ Map<String, bool> defaultFeatureFlagsForNewWorkspace({
 }) =>
     {
       for (final entry in featureManifest.values)
-        entry.feature.dbKey: entry.tier == FeatureTier.core && entry.defaultOn,
+        entry.feature.dbKey: _unchosenFeatureIsOn(entry),
       if (withTwin) WorkspaceFeature.environmentPairs.dbKey: true,
     };

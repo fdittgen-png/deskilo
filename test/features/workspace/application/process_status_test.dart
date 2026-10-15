@@ -11,7 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 ProcessStatus _status(Map<String, dynamic> flags, String key) =>
     processStatuses(
-      resolveEnabledFeatures(flags),
+      // #2566 — the platform features that ship on are stated, not inherited.
+      resolveEnabledFeatures({...platformFeaturesOnByDefault, ...flags}),
     ).singleWhere((s) => s.process.key == key);
 
 void main() {

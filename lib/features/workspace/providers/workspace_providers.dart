@@ -434,9 +434,8 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   // Hierarchy applied here: gates all over the app see the EFFECTIVE
   // set, so switching a parent off takes its whole subtree with it.
-  return effectiveFeatures(
-    resolveEnabledFeatures(workspace?.featureFlags ?? const {}),
-  );
+  return effectiveFeatures(resolveEnabledFeatures(
+      workspace?.featureFlags ?? platformFeaturesOnByDefault)); // #2566
 }
 
 /// Sync convenience over [enabledFeatures] for build methods and router
@@ -446,7 +445,7 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
 @Riverpod(keepAlive: true)
 Set<WorkspaceFeature> enabledFeaturesSync(Ref ref) =>
     ref.watch(enabledFeaturesProvider).value ??
-    effectiveFeatures(resolveEnabledFeatures(const {}));
+    effectiveFeatures(resolveEnabledFeatures(platformFeaturesOnByDefault));
 
 /// #1289 — the active workspace's brand seed (opaque ARGB), or null for
 /// the product's own palette: null while the flag is off, while nothing

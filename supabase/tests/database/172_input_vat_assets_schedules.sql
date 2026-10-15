@@ -20,8 +20,9 @@ begin
   select u, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'vatassets-' || u || '@deskilo.test', '', now(), now(), now()
     from unnest(array[u_o, u_m]) u;
-  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, vat_regime)
-  values ('Assets FR', 'FR', 'EUR', 'Europe/Paris', u_o, 'vat_registered') returning id into ws;
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, vat_regime, feature_flags)
+  values ('Assets FR', 'FR', 'EUR', 'Europe/Paris', u_o, 'vat_registered',
+          '{"vatManagement": true, "vatDeclarations": true, "inputVat": true}') returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_o, true, true) returning id into mo;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
