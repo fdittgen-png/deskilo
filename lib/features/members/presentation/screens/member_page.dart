@@ -88,6 +88,11 @@ class MemberPage extends ConsumerWidget {
   }
 }
 
+List<Widget> _moneyTiles(Member m, Set<WorkspaceFeature> f, Set<WorkspacePermission> p) => [ // carnets, VIES, certificates
+  if (f.contains(WorkspaceFeature.carnets) && !m.isKiosk) MemberCarnetTile(memberId: m.id, canSell: p.contains(WorkspacePermission.issueInvoices)), // #1279
+  if (f.contains(WorkspaceFeature.viesVerification) && !m.isKiosk && p.contains(WorkspacePermission.issueInvoices)) ViesCheckTile(workspaceId: m.workspaceId, memberId: m.id), // #2354
+  if (f.contains(WorkspaceFeature.salesTax) && !m.isKiosk && p.contains(WorkspacePermission.manageBilling)) MemberTaxCertificatesTile(workspaceId: m.workspaceId, memberId: m.id, canManage: true), // #2362
+];
 class _MemberPageBody extends ConsumerWidget {
   const _MemberPageBody({required this.member, required this.name});
 
@@ -435,12 +440,7 @@ class _MemberPageBody extends ConsumerWidget {
       ],
     ];
     final billing = <Widget>[
-      if (features.contains(WorkspaceFeature.carnets) && !member.isKiosk)
-        MemberCarnetTile(memberId: member.id,
-            canSell: perms.contains(WorkspacePermission.issueInvoices)), // #1279
-      if (features.contains(WorkspaceFeature.viesVerification) && !member.isKiosk &&
-          perms.contains(WorkspacePermission.issueInvoices))
-        ViesCheckTile(workspaceId: member.workspaceId, memberId: member.id), // #2354
+      ..._moneyTiles(member, features, perms),
       if (isOwner && !member.isKiosk)
         _ManageTile(
           tileKey: const ValueKey('member-page-subscription'),

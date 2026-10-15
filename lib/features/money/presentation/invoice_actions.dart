@@ -17,6 +17,7 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -140,3 +141,21 @@ Future<void> settleCreditInvoiceDialog(
   if (!context.mounted) return;
   AppSnack.success(context, l10n.invoiceRefunded);
 }
+
+/// The current workspace when it issues in sales-tax mode (#2362): the
+/// feature is on and its seller country's gate row says so; else null.
+({String id, String currency})? salesTaxWorkspace(WidgetRef ref) {
+  final workspace = ref.watch(currentWorkspaceProvider).value;
+  if (workspace == null ||
+      !ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.salesTax) ||
+      !ActiveTaxReference.isInstalled ||
+      !(ActiveTaxReference.current.gateOf(workspace.countryCode)?.salesTaxMode ??
+          false)) {
+    return null;
+  }
+  return (id: workspace.id, currency: workspace.currencyCode);
+}
+
+bool salesTaxModeOn(WidgetRef ref) => salesTaxWorkspace(ref) != null;

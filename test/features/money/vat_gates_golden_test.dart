@@ -4,7 +4,9 @@
 // the issuing gate and the e-invoicing mandate calendar come from the tax
 // reference store. `golden/vat_gates_golden.json` was captured from the Dart
 // constants BEFORE they were deleted: every answer, country by country. The
-// store reproduces it exactly, and the golden stays.
+// store reproduces it exactly, and the golden stays -- except where a gate
+// was opened on purpose: the United States (0440, #2362) read `unsupported`
+// and now read their own profile.
 //
 // The second group is the history rule: change the data, regenerate nothing,
 // compare -- a change from a day changes the answers from that day only.

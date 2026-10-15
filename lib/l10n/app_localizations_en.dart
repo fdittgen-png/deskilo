@@ -8639,6 +8639,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePdfDueOn => 'Due on';
 
   @override
+  String get invoicePdfExemptCertificate => 'Exemption certificate';
+
+  @override
   String get invoicePdfIssuedBy => 'Issued by';
 
   @override
@@ -8663,12 +8666,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePdfReserved => 'reserved';
 
   @override
+  String get invoicePdfSalesTax => 'Sales tax';
+
+  @override
   String invoicePdfSettledIn(String number) {
     return 'Regrouped in $number';
   }
 
   @override
   String get invoicePdfSignature => 'Digital signature (SHA-256)';
+
+  @override
+  String get invoicePdfSubtotal => 'Subtotal';
 
   @override
   String get invoicePdfTitle => 'Invoice';
@@ -15948,6 +15957,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sageTaxCode => 'VAT code (T1 / T0 / T9)';
 
   @override
+  String get salesTaxWorksheetCsv => 'Sales tax worksheet (CSV)';
+
+  @override
+  String get salesTaxWorksheetEmpty =>
+      'No sales-tax invoice was issued in this period.';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).';
 
@@ -18359,6 +18375,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taskWorkbenchUntrusted =>
       'A private draft from a file: nothing in it is trusted or sent.';
+
+  @override
+  String get taxCertAdd => 'Add a certificate';
+
+  @override
+  String get taxCertEmpty => 'No certificate on file.';
+
+  @override
+  String get taxCertEnd => 'End today';
+
+  @override
+  String get taxCertFailed => 'The certificate could not be saved';
+
+  @override
+  String get taxCertInvalidDate => 'Enter the date as YYYY-MM-DD';
+
+  @override
+  String get taxCertInvalidState => 'Two letters, or *';
+
+  @override
+  String get taxCertKind => 'Kind';
+
+  @override
+  String get taxCertKindGovernment => 'Government';
+
+  @override
+  String get taxCertKindNonprofit => 'Nonprofit';
+
+  @override
+  String get taxCertKindOther => 'Other';
+
+  @override
+  String get taxCertKindResale => 'Resale';
+
+  @override
+  String get taxCertNumber => 'Certificate number';
+
+  @override
+  String taxCertOpenEnded(String from) {
+    return 'from $from, no end';
+  }
+
+  @override
+  String get taxCertRequired => 'Required';
+
+  @override
+  String get taxCertSave => 'Save certificate';
+
+  @override
+  String get taxCertState =>
+      'State (two letters, or * for a multistate certificate)';
+
+  @override
+  String get taxCertSubtitle =>
+      'Sales tax: lines of this customer go out untaxed while one is in force';
+
+  @override
+  String get taxCertTitle => 'Exemption certificates';
+
+  @override
+  String get taxCertValidFrom => 'Valid from (YYYY-MM-DD)';
+
+  @override
+  String get taxCertValidTo => 'Valid until (YYYY-MM-DD, optional)';
+
+  @override
+  String taxCertValidity(String from, String to) {
+    return '$from to $to';
+  }
 
   @override
   String get taxRefAccount => 'Account number (or chart code)';

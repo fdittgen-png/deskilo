@@ -21,6 +21,7 @@ import 'invoice.dart';
 import 'invoice_clauses.dart';
 import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
+import 'invoice_sales_tax.dart';
 import 'payment_terms.dart';
 import 'period_label.dart';
 import 'report_strings.dart';
@@ -227,6 +228,39 @@ Map<String, Object?> _invoiceLegalMentionData(
 /// else the frozen company (#910).
 String clientNameOf(Invoice invoice) => invoice.clientName;
 
+String _rateText(double percent) =>
+    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+
+/// One position of the invoice as the placeholders of a design read it.
+Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
+    InvoiceLine line, MoneyFormat currency,
+    {required bool association}) {
+  // #2362 -- a sales-tax line quotes its net price; its tax is stated below.
+  final quoted = invoice.quotedCents(line);
+  return {
+    'label': invoiceLineText(strings, line,
+        association: association, period: invoice.period),
+    // #1002 — what the line IS, its percentage and its month, so a design
+    // composes its own wording for the recurring position.
+    'kind': line.kind,
+    'pct': line.kind == 'subscription' ? line.label : '',
+    'month': monthNameOf(strings.localeName, invoice.period),
+    'amount': currency.formatMinor(quoted),
+    'negative': line.amountCents < 0,
+    // #480 — quantity, unit price and per-line VAT so a template can print
+    // the statutory line detail.
+    'qty': '${line.quantity}',
+    'unit_price': currency
+        .formatMinor(line.quantity > 1 ? quoted ~/ line.quantity : quoted),
+    'vat_rate': line.vatPercent > 0 && !invoice.isSalesTax
+        ? _rateText(line.vatPercent)
+        : '',
+    'net': currency.formatMinor(invoice.isSalesTax
+        ? quoted
+        : vatSplit(line.amountCents, line.vatPercent).netCents),
+  };
+}
+
 /// The report data model (#470/#474) — every value the Liquid bands
 /// can reference, resolved where formatting is at hand. Amounts arrive
 /// pre-formatted in the workspace currency; the flags feed
@@ -257,8 +291,6 @@ Map<String, Object?> invoiceReportData(
   final association = InvoiceLegal.fromJson(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
-  String rate(double percent) =>
-      '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
   final legalData = _invoiceLegalMentionData(strings, invoice, workspace,
       memberTerms: memberTerms, memberCapacity: memberCapacity);
   // #2356 — what the seller's own law adds (IT stamp duty, ES correcting
@@ -323,27 +355,7 @@ Map<String, Object?> invoiceReportData(
     'has_vat': invoice.vatTotals.any((t) => t.vatCents > 0),
     'lines': [
       for (final line in invoice.lines)
-        {
-          'label': invoiceLineText(strings, line,
-              association: association, period: invoice.period),
-          // #1002 — what the line IS, its percentage and its month, so
-          // a design composes its own wording for the recurring position.
-          'kind': line.kind,
-          'pct': line.kind == 'subscription' ? line.label : '',
-          'month': monthNameOf(strings.localeName, invoice.period),
-          'amount': currency.formatMinor(line.amountCents),
-          'negative': line.amountCents < 0,
-          // #480 — quantity, unit price and per-line VAT so a template
-          // can print the statutory line detail.
-          'qty': '${line.quantity}',
-          'unit_price': currency.formatMinor(
-            line.quantity > 1
-                ? line.amountCents ~/ line.quantity
-                : line.amountCents,
-          ),
-          'vat_rate': line.vatPercent > 0 ? rate(line.vatPercent) : '',
-          'net': currency.formatMinor(vatSplit(line.amountCents, line.vatPercent).netCents),
-        },
+        _lineData(strings, invoice, line, currency, association: association),
     ],
     'vat': [
       for (final t in invoice.vatTotals.where((t) => t.vatCents > 0))
@@ -351,15 +363,16 @@ Map<String, Object?> invoiceReportData(
         // its own base: GST 5 % 50.00, QST 9,975 % 99.75.
         if (t.components.isEmpty)
           {
-            'rate': rate(t.percent),
+            'rate': _rateText(t.percent),
             'net': currency.formatMinor(t.netCents),
             'amount': currency.formatMinor(t.vatCents),
           }
         else
           for (final c in t.components)
             {
-              'rate': '${taxSchemeName(c.scheme, strings.localeName ?? '')} '
-                  '${rate(c.percent)}',
+              // #2362 -- a sales tax goes by the jurisdiction that levies it.
+              'rate': '${c.name.isNotEmpty ? c.name : taxSchemeName(c.scheme, strings.localeName ?? '')} '
+                  '${_rateText(c.percent)}',
               'net': currency.formatMinor(c.baseCents),
               'amount': currency.formatMinor(c.taxCents),
             },

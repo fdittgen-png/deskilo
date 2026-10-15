@@ -13,6 +13,7 @@ import '../../domain/vies_check.dart';
 import '../../providers/vies_providers.dart';
 
 export 'member_carnet_tile.dart';
+export 'member_tax_certificates.dart';
 
 /// #2354 — on a member's page, for whoever issues invoices: the last
 /// check of the member's VAT number against VIES, and checking it again.

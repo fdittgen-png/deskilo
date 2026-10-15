@@ -46,11 +46,18 @@ class VatComponent {
     required this.percent,
     required this.baseCents,
     required this.taxCents,
+    this.name = '',
+    this.level = '',
   });
 
   final String scheme;
   final String authority;
   final double percent;
+
+  /// #2362 — the jurisdiction a sales tax is levied by ('New York City') and
+  /// its level (state, county, city, district); '' on a GST / HST / QST.
+  final String name;
+  final String level;
 
   /// The amount the tax is levied on (the price without the GST).
   final int baseCents;
@@ -62,6 +69,8 @@ class VatComponent {
         'percent': percent,
         'base_cents': baseCents,
         'tax_cents': taxCents,
+        if (name.isNotEmpty) 'name': name,
+        if (level.isNotEmpty) 'level': level,
       };
 
   factory VatComponent.fromReader(JsonReader r) {
@@ -71,6 +80,8 @@ class VatComponent {
       percent: r.doubleOrNull('percent') ?? 0,
       baseCents: r.intOrNull('base_cents') ?? 0,
       taxCents: r.intOrNull('tax_cents') ?? 0,
+      name: r.stringOr('name'),
+      level: r.stringOr('level'),
     );
   }
 }

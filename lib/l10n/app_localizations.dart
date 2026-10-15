@@ -14832,6 +14832,12 @@ abstract class AppLocalizations {
   /// **'Due on'**
   String get invoicePdfDueOn;
 
+  /// #2362 sales tax: invoicePdfExemptCertificate
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption certificate'**
+  String get invoicePdfExemptCertificate;
+
   /// PDF: label before the issuer name
   ///
   /// In en, this message translates to:
@@ -14880,6 +14886,12 @@ abstract class AppLocalizations {
   /// **'reserved'**
   String get invoicePdfReserved;
 
+  /// #2362 sales tax: invoicePdfSalesTax
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax'**
+  String get invoicePdfSalesTax;
+
   /// No description provided for @invoicePdfSettledIn.
   ///
   /// In en, this message translates to:
@@ -14891,6 +14903,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Digital signature (SHA-256)'**
   String get invoicePdfSignature;
+
+  /// #2362 sales tax: invoicePdfSubtotal
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get invoicePdfSubtotal;
 
   /// PDF: the word before the invoice number
   ///
@@ -27548,6 +27566,18 @@ abstract class AppLocalizations {
   /// **'VAT code (T1 / T0 / T9)'**
   String get sageTaxCode;
 
+  /// #2362 sales tax: salesTaxWorksheetCsv
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax worksheet (CSV)'**
+  String get salesTaxWorksheetCsv;
+
+  /// #2362 sales tax: salesTaxWorksheetEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No sales-tax invoice was issued in this period.'**
+  String get salesTaxWorksheetEmpty;
+
   /// No description provided for @scanCameraWebUnavailable.
   ///
   /// In en, this message translates to:
@@ -31765,6 +31795,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A private draft from a file: nothing in it is trusted or sent.'**
   String get taskWorkbenchUntrusted;
+
+  /// #2362 sales tax: taxCertAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add a certificate'**
+  String get taxCertAdd;
+
+  /// #2362 sales tax: taxCertEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No certificate on file.'**
+  String get taxCertEmpty;
+
+  /// #2362 sales tax: taxCertEnd
+  ///
+  /// In en, this message translates to:
+  /// **'End today'**
+  String get taxCertEnd;
+
+  /// #2362 sales tax: taxCertFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The certificate could not be saved'**
+  String get taxCertFailed;
+
+  /// #2362 sales tax: taxCertInvalidDate
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the date as YYYY-MM-DD'**
+  String get taxCertInvalidDate;
+
+  /// #2362 sales tax: taxCertInvalidState
+  ///
+  /// In en, this message translates to:
+  /// **'Two letters, or *'**
+  String get taxCertInvalidState;
+
+  /// #2362 sales tax: taxCertKind
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get taxCertKind;
+
+  /// #2362 sales tax: taxCertKindGovernment
+  ///
+  /// In en, this message translates to:
+  /// **'Government'**
+  String get taxCertKindGovernment;
+
+  /// #2362 sales tax: taxCertKindNonprofit
+  ///
+  /// In en, this message translates to:
+  /// **'Nonprofit'**
+  String get taxCertKindNonprofit;
+
+  /// #2362 sales tax: taxCertKindOther
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get taxCertKindOther;
+
+  /// #2362 sales tax: taxCertKindResale
+  ///
+  /// In en, this message translates to:
+  /// **'Resale'**
+  String get taxCertKindResale;
+
+  /// #2362 sales tax: taxCertNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate number'**
+  String get taxCertNumber;
+
+  /// #2362 sales tax: taxCertOpenEnded
+  ///
+  /// In en, this message translates to:
+  /// **'from {from}, no end'**
+  String taxCertOpenEnded(String from);
+
+  /// #2362 sales tax: taxCertRequired
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get taxCertRequired;
+
+  /// #2362 sales tax: taxCertSave
+  ///
+  /// In en, this message translates to:
+  /// **'Save certificate'**
+  String get taxCertSave;
+
+  /// #2362 sales tax: taxCertState
+  ///
+  /// In en, this message translates to:
+  /// **'State (two letters, or * for a multistate certificate)'**
+  String get taxCertState;
+
+  /// #2362 sales tax: taxCertSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax: lines of this customer go out untaxed while one is in force'**
+  String get taxCertSubtitle;
+
+  /// #2362 sales tax: taxCertTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption certificates'**
+  String get taxCertTitle;
+
+  /// #2362 sales tax: taxCertValidFrom
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from (YYYY-MM-DD)'**
+  String get taxCertValidFrom;
+
+  /// #2362 sales tax: taxCertValidTo
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until (YYYY-MM-DD, optional)'**
+  String get taxCertValidTo;
+
+  /// #2362 sales tax: taxCertValidity
+  ///
+  /// In en, this message translates to:
+  /// **'{from} to {to}'**
+  String taxCertValidity(String from, String to);
 
   /// #2481 tax reference: Field: the account number of an export row.
   ///

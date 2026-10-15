@@ -52,6 +52,8 @@ InvoicePdfStrings invoicePdfStringsOf(
     payments: l10n.invoicePdfPayments,
     net: l10n.vatPdfNet,
     vat: l10n.vatPdfVat,
+    subtotal: l10n.invoicePdfSubtotal,
+    exemptCertificate: l10n.invoicePdfExemptCertificate,
     annex: l10n.invoicePdfAnnex,
     attendance: l10n.invoicePdfAttendance,
     activity: l10n.invoicePdfActivity,

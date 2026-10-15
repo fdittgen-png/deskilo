@@ -5850,6 +5850,10 @@
   "@invoicePdfDueOn": {
     "description": "#910 invoice due date: invoicePdfDueOn"
   },
+  "invoicePdfExemptCertificate": "Befreiungsbescheinigung",
+  "@invoicePdfExemptCertificate": {
+    "description": "#2362 sales tax: invoicePdfExemptCertificate"
+  },
   "invoicePdfIssuedBy": "Ausgestellt von",
   "invoicePdfIssuedOn": "Ausgestellt am",
   "invoicePdfPage": "Seite",
@@ -5861,6 +5865,10 @@
   },
   "invoicePdfReplaces": "Ersetzt",
   "invoicePdfReserved": "reserviert",
+  "invoicePdfSalesTax": "Sales Tax",
+  "@invoicePdfSalesTax": {
+    "description": "#2362 sales tax: invoicePdfSalesTax"
+  },
   "invoicePdfSettledIn": "Zusammengefasst in {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {
@@ -5870,6 +5878,10 @@
     }
   },
   "invoicePdfSignature": "Digitale Signatur (SHA-256)",
+  "invoicePdfSubtotal": "Zwischensumme",
+  "@invoicePdfSubtotal": {
+    "description": "#2362 sales tax: invoicePdfSubtotal"
+  },
   "invoicePdfTitle": "Rechnung",
   "invoicePdfVoided": "FEHLERHAFT — storniert am",
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
@@ -10726,6 +10738,14 @@
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
   },
+  "salesTaxWorksheetCsv": "Sales-Tax-Arbeitsblatt (CSV)",
+  "@salesTaxWorksheetCsv": {
+    "description": "#2362 sales tax: salesTaxWorksheetCsv"
+  },
+  "salesTaxWorksheetEmpty": "In diesem Zeitraum wurde keine Rechnung mit Sales Tax ausgestellt.",
+  "@salesTaxWorksheetEmpty": {
+    "description": "#2362 sales tax: salesTaxWorksheetEmpty"
+  },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "scanJoinHelp": "Richten Sie die Kamera auf den Einladungs-QR — Sie sehen den Bereich, bevor Sie beitreten.",
   "@scanJoinHelp": {
@@ -11970,6 +11990,103 @@
   "taskWorkbenchTitle": "Aufgaben-Werkbank",
   "taskWorkbenchTranscriptOnly": "Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.",
   "taskWorkbenchUntrusted": "Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.",
+  "taxCertAdd": "Bescheinigung hinzufügen",
+  "@taxCertAdd": {
+    "description": "#2362 sales tax: taxCertAdd"
+  },
+  "taxCertEmpty": "Keine Bescheinigung hinterlegt.",
+  "@taxCertEmpty": {
+    "description": "#2362 sales tax: taxCertEmpty"
+  },
+  "taxCertEnd": "Heute beenden",
+  "@taxCertEnd": {
+    "description": "#2362 sales tax: taxCertEnd"
+  },
+  "taxCertFailed": "Die Bescheinigung konnte nicht gespeichert werden",
+  "@taxCertFailed": {
+    "description": "#2362 sales tax: taxCertFailed"
+  },
+  "taxCertInvalidDate": "Datum als JJJJ-MM-TT eingeben",
+  "@taxCertInvalidDate": {
+    "description": "#2362 sales tax: taxCertInvalidDate"
+  },
+  "taxCertInvalidState": "Zwei Buchstaben oder *",
+  "@taxCertInvalidState": {
+    "description": "#2362 sales tax: taxCertInvalidState"
+  },
+  "taxCertKind": "Art",
+  "@taxCertKind": {
+    "description": "#2362 sales tax: taxCertKind"
+  },
+  "taxCertKindGovernment": "Behörde",
+  "@taxCertKindGovernment": {
+    "description": "#2362 sales tax: taxCertKindGovernment"
+  },
+  "taxCertKindNonprofit": "Gemeinnützig",
+  "@taxCertKindNonprofit": {
+    "description": "#2362 sales tax: taxCertKindNonprofit"
+  },
+  "taxCertKindOther": "Sonstige",
+  "@taxCertKindOther": {
+    "description": "#2362 sales tax: taxCertKindOther"
+  },
+  "taxCertKindResale": "Wiederverkauf",
+  "@taxCertKindResale": {
+    "description": "#2362 sales tax: taxCertKindResale"
+  },
+  "taxCertNumber": "Nummer der Bescheinigung",
+  "@taxCertNumber": {
+    "description": "#2362 sales tax: taxCertNumber"
+  },
+  "taxCertOpenEnded": "ab {from}, ohne Ende",
+  "@taxCertOpenEnded": {
+    "description": "#2362 sales tax: taxCertOpenEnded",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "taxCertRequired": "Pflichtfeld",
+  "@taxCertRequired": {
+    "description": "#2362 sales tax: taxCertRequired"
+  },
+  "taxCertSave": "Bescheinigung speichern",
+  "@taxCertSave": {
+    "description": "#2362 sales tax: taxCertSave"
+  },
+  "taxCertState": "Bundesstaat (zwei Buchstaben, oder * für eine Mehrstaaten-Bescheinigung)",
+  "@taxCertState": {
+    "description": "#2362 sales tax: taxCertState"
+  },
+  "taxCertSubtitle": "Sales Tax: Zeilen dieses Kunden bleiben unversteuert, solange eine Bescheinigung gilt",
+  "@taxCertSubtitle": {
+    "description": "#2362 sales tax: taxCertSubtitle"
+  },
+  "taxCertTitle": "Befreiungsbescheinigungen",
+  "@taxCertTitle": {
+    "description": "#2362 sales tax: taxCertTitle"
+  },
+  "taxCertValidFrom": "Gültig ab (JJJJ-MM-TT)",
+  "@taxCertValidFrom": {
+    "description": "#2362 sales tax: taxCertValidFrom"
+  },
+  "taxCertValidTo": "Gültig bis (JJJJ-MM-TT, optional)",
+  "@taxCertValidTo": {
+    "description": "#2362 sales tax: taxCertValidTo"
+  },
+  "taxCertValidity": "{from} bis {to}",
+  "@taxCertValidity": {
+    "description": "#2362 sales tax: taxCertValidity",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "taxRefAccount": "Kontonummer (oder Kontenrahmen)",
   "@taxRefAccount": {
     "description": "#2481 tax reference: Field: the account number of an export row."
