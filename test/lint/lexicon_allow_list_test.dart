@@ -29,14 +29,10 @@ import 'lint_sources.dart';
 /// uses for `deployable_entities()`. Reading the newest definition
 /// matters: an earlier one would pin a set nobody serves.
 Set<String> _serverKeys() {
-  final defining = Directory('supabase/migrations')
-      .listSync()
-      .whereType<File>()
+  final defining = sqlFiles('supabase/migrations')
       .where((f) =>
-          f.path.endsWith('.sql') &&
           f.readAsStringSync().contains('function public.lexicon_allowed_keys'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+      .toList();
   expect(defining, isNotEmpty,
       reason: 'no migration defines lexicon_allowed_keys() — the allow-list '
           'has no server side, so nothing enforces it');

@@ -12,9 +12,9 @@
 // what is left out has to be an argument rather than an accident. Each
 // exemption below carries its reason; a new table with a member column
 // and no decision fails this test.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The LATEST definition of `export_my_data` across every migration —
 /// an anchored patch may redefine it, and reading the first definition
@@ -27,13 +27,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// that way). Reading only the restatements would report a table as
 /// missing that the database has returned for months.
 String _latestExportBody() {
-  final dir = Directory('supabase/migrations');
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
   var body = '';
   final patches = <String>[];
   for (final f in files) {
-    if (!f.path.endsWith('.sql')) continue;
     final sql = f.readAsStringSync();
     final at = sql.indexOf(
         'create or replace function public.export_my_data');
@@ -151,7 +148,6 @@ const Set<String> _exported = {
 
 Set<String> _tablesWithAMemberColumn() {
   final found = <String>{};
-  final dir = Directory('supabase/migrations');
   final create = RegExp(
     r'create table (?:if not exists )?public\.(\w+)\s*\((.*?)\n\);',
     caseSensitive: false,
@@ -161,8 +157,7 @@ Set<String> _tablesWithAMemberColumn() {
     r'\b(member_id|user_id|from_member_id|subject_member_id|actor_member_id)\b',
     caseSensitive: false,
   );
-  final files = dir.listSync().whereType<File>().toList()
-    ..sort((File a, File b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
   for (final f in files) {
     if (!f.path.endsWith('.sql')) continue;
     for (final m in create.allMatches(f.readAsStringSync())) {

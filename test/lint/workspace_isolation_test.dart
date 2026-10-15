@@ -13,6 +13,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Tables that carry a workspace_id, read from the migrations that create them.
 Set<String> _workspaceTables() {
@@ -21,8 +22,7 @@ Set<String> _workspaceTables() {
     r'create table (?:if not exists )?public\.(\w+)\s*\(([\s\S]*?)\n\);',
     caseSensitive: false,
   );
-  for (final f in Directory('supabase/migrations').listSync().whereType<File>()) {
-    if (!f.path.endsWith('.sql')) continue;
+  for (final f in sqlFiles('supabase/migrations')) {
     for (final m in create.allMatches(f.readAsStringSync())) {
       if (RegExp(r'\bworkspace_id\b').hasMatch(m.group(2)!)) out.add(m.group(1)!);
     }

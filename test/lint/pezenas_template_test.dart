@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_builtin_templates.dart';
 import '../helpers/lint/template_contract.dart' show TemplateContractRules, checkTemplate;
+import 'lint_sources.dart';
 
 const _dir = 'supabase/templates/variants';
 const _key = 'pezenas_coworking';
@@ -54,11 +55,8 @@ void main() {
     final v = _variant();
     expect(v['visibility'], 'private');
     expect(v['key'], _key);
-    final inserting = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) =>
-            f.path.endsWith('.sql') && f.readAsStringSync().contains(_key));
+    final inserting = sqlFiles('supabase/migrations')
+        .where((f) => f.readAsStringSync().contains(_key));
     expect(inserting, isEmpty,
         reason: 'a migration would make it everyone\'s: the issue asks for an '
             'owner-private template through the existing publication flow');
