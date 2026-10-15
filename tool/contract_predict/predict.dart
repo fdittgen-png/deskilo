@@ -90,14 +90,16 @@ MigrationScope scan(String migration) {
 /// The contract query of scripts/contract_check.sh, narrowed to [scope]
 /// and returned as ONE json array, in the file's order.
 String predictionSql(String contractCheckScript, MigrationScope scope) {
-  final start = contractCheckScript.indexOf('-At -c "');
+  // #2584: the query is the CONTRACT_SQL variable of the script.
+  const marker = 'CONTRACT_SQL="';
+  final start = contractCheckScript.indexOf(marker);
   final end = contractCheckScript.indexOf('order by 1"', start);
   if (start < 0 || end < 0) {
     throw const FormatException(
       'contract query not found in contract_check.sh',
     );
   }
-  final query = contractCheckScript.substring(start + 8, end);
+  final query = contractCheckScript.substring(start + marker.length, end);
   final patterns = [
     for (final r in scope.routines) "'routine public.$r(%'",
     for (final t in scope.tables) ...["'constraint $t.%'", "'trigger $t.%'"],
