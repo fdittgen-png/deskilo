@@ -2,282 +2,49 @@
 //
 // create-payment-order — starts a REAL online payment for a member's bill
 // (docs/design/payments-integration.md). Providers: PayPal (Orders v2),
-// Stripe (Checkout), Mollie (Payments).
+// Stripe (Checkout), Mollie (Payments) and Wero (through Mollie).
 //
 // Credentials are PER WORKSPACE, configured from the owner UI and stored in
 // the deny-all `payment_credentials` table (read here via the service role);
 // deployment-wide env vars are the fallback. A provider whose required
 // config is absent is not offered: {action:'config', workspace_id} lists the
 // configured providers and, per provider, the missing config fields.
+//
+// #2595 — this file orchestrates; each responsibility has its module:
+//   request.ts   the validated PaymentOrderRequest
+//   config.ts    the configuration resolver (and what "configured" means)
+//   adapters.ts  provider -> order adapter (stripe.ts, paypal.ts, mollie.ts),
+//                each given an injected transport and environment
+//   outcome.ts   what an answer means for the stored intent
+// Authentication stays here and stays one mode: the caller's verified native
+// session. The intent is opened AS that caller; credentials and the order-id
+// patch use the privileged client.
 
 import { refuseDelegated } from "../_shared/delegated.ts";
-import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
-import { toMajor } from "../_shared/money.ts";
-import { mollieApi, paypalApi } from "../_shared/providers.ts";
+import { ORDER_ADAPTERS } from "./adapters.ts";
+import { effectiveConfig, missingFields, REQUIRED } from "./config.ts";
+import { failureOutcome, idempotencyKey, ProviderRefusal, reuseVerdict } from "./outcome.ts";
+import { parsePaymentOrderRequest } from "./request.ts";
+import { runtimeDeps } from "./types.ts";
+import type { Provider } from "./types.ts";
 
-type Provider = "paypal" | "stripe" | "mollie" | "wero";
-
-/** Config field → env-var fallback, per provider. */
-const FIELD_ENV: Record<Provider, Record<string, string>> = {
-  paypal: {
-    client_id: "PAYPAL_CLIENT_ID",
-    secret: "PAYPAL_SECRET",
-    env: "PAYPAL_ENV",
-    webhook_id: "PAYPAL_WEBHOOK_ID",
-    return_url: "PAYMENT_RETURN_URL",
-  },
-  stripe: {
-    secret_key: "STRIPE_SECRET_KEY",
-    webhook_secret: "STRIPE_WEBHOOK_SECRET",
-    return_url: "PAYMENT_RETURN_URL",
-  },
-  mollie: {
-    api_key: "MOLLIE_API_KEY",
-    return_url: "PAYMENT_RETURN_URL",
-  },
-  // Wero rides Mollie (same API key), a distinct provider for the chooser.
-  wero: {
-    api_key: "MOLLIE_API_KEY",
-    return_url: "PAYMENT_RETURN_URL",
-  },
-};
-
-/** Fields a provider must have before it can be offered. */
-const REQUIRED: Record<Provider, string[]> = {
-  // #1555 — `webhook_id` belongs here: `paypal-webhook` refuses every
-  // event without it, so an instance configured without one advertises
-  // PayPal, takes the member to PayPal, and can never be told the money
-  // arrived. "Configured" has to mean the whole round trip.
-  paypal: ["client_id", "secret", "return_url", "webhook_id"],
-  // #2014 — and `webhook_secret`, for the same reason: without it the
-  // webhook cannot verify the payment, so the member pays and is never
-  // credited.
-  stripe: ["secret_key", "return_url", "webhook_secret"],
-  mollie: ["api_key", "return_url"],
-  wero: ["api_key", "return_url"],
-};
+// The pure pieces stay importable from here (index_test.ts, docs).
+export { effectiveConfig, isProvider, missingFields } from "./config.ts";
+export {
+  failureOutcome,
+  idempotencyKey,
+  KEY_RETENTION_S,
+  ProviderRefusal,
+  reuseVerdict,
+} from "./outcome.ts";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
     headers: { ...CORS, "Content-Type": "application/json" },
   });
-
-/** Minor digits per ISO 4217 code (#711). The app stores every amount
- * in MINOR units; PayPal and Mollie want a major-unit decimal string,
- * and `/ 100` was only ever right for two-decimal currencies — a yen
- * order came out 100× too small, a dinar one 10×. Stripe takes minor
- * units directly and needs no conversion. */
-const major = toMajor; // #1137 — one rule, shared with the webhooks.
-
-/** The effective config of a provider for a workspace: table row (owner UI)
- * overlaid on env-var fallbacks, per field. */
-/** #2014 — a provider name this handler supports, not an inherited
- * property (`"constructor" in REQUIRED` is true). */
-export const isProvider = (value: unknown): value is Provider =>
-  typeof value === "string" && Object.hasOwn(REQUIRED, value);
-
-/** #2014 — a failed credential READ is not an absent credential: it
- * throws, so no order is opened on the installation's fallback. A row
- * that is deliberately absent still falls back to the environment. */
-export async function effectiveConfig(
-  admin: SupabaseClient,
-  workspaceId: string,
-  provider: Provider,
-  env: (name: string) => string | undefined = (n) => Deno.env.get(n),
-): Promise<Record<string, string>> {
-  const { data, error } = await admin
-    .from("payment_credentials")
-    .select("config")
-    .eq("workspace_id", workspaceId)
-    .eq("provider", provider)
-    .maybeSingle();
-  if (error) throw new Error("payment credential lookup failed");
-  const stored = (data?.config ?? {}) as Record<string, string>;
-  const out: Record<string, string> = {};
-  for (const [field, envVar] of Object.entries(FIELD_ENV[provider])) {
-    const value = stored[field] ?? env(envVar) ?? "";
-    if (value) out[field] = value;
-  }
-  return out;
-}
-
-export const missingFields = (config: Record<string, string>, provider: Provider) =>
-  REQUIRED[provider].filter((f) => !config[f]);
-
-/** Stripe's API root. `STRIPE_API_BASE` exists for the CI check
- * (scripts/edge_payment_check.sh), which answers from a local stub so no
- * request ever leaves the runner. */
-const stripeApi = () =>
-  Deno.env.get("STRIPE_API_BASE") ?? "https://api.stripe.com";
-
-// ── providers ─────────────────────────────────────────────────────────
-
-/** #2014 — the provider ANSWERED and refused (HTTP status kept, body not). */
-export class ProviderRefusal extends Error {
-  constructor(readonly status: number) {
-    super(`provider refused: HTTP ${status}`);
-  }
-}
-
-/** #2014 — `failed` only for a definitive refusal (4xx); a timeout, a lost
- * connection or a provider 5xx is UNKNOWN: the order may exist, so the
- * intent stays pending for reconciliation instead of being declared failed. */
-export const failureOutcome = (e: unknown): "failed" | "unknown" =>
-  e instanceof ProviderRefusal && e.status >= 400 && e.status < 500
-    ? "failed"
-    : "unknown";
-
-/** #2014 — one provider order per intent: the same key on every retry. */
-export const idempotencyKey = (intentId: string) => `deskilo-intent-${intentId}`;
-
-/** #2014 B — the client's request id: a UUID, or absent (legacy). */
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-/** #2014 B — providers keep an idempotency key for about a day. A reused
- * intent older than that is never sent again: the key could have expired
- * and the provider would open a second order. */
-export const KEY_RETENTION_S = 23 * 3600;
-
-/** #2014 B — what a REUSED intent allows, from its stored state. */
-export function reuseVerdict(
-  intent: { status: string; created_at: string },
-  nowMs: number,
-): "paid" | "failed" | "stale" | "resend" {
-  if (intent.status === "captured") return "paid";
-  if (intent.status === "failed") return "failed";
-  const ageS = (nowMs - Date.parse(intent.created_at)) / 1000;
-  return ageS > KEY_RETENTION_S ? "stale" : "resend";
-}
-
-async function createPaypalOrder(
-  cfg: Record<string, string>,
-  amountCents: number,
-  currency: string,
-  reference: string,
-  key: string,
-): Promise<{ orderId: string; approveUrl: string }> {
-  const auth = btoa(`${cfg.client_id}:${cfg.secret}`);
-  const tokenRes = await fetch(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "grant_type=client_credentials",
-  });
-  if (!tokenRes.ok) {
-    throw new ProviderRefusal(tokenRes.status);
-  }
-  const { access_token } = await tokenRes.json();
-  const orderRes = await fetch(`${paypalApi(cfg.env)}/v2/checkout/orders`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-      "Content-Type": "application/json",
-      "PayPal-Request-Id": key,
-    },
-    body: JSON.stringify({
-      intent: "CAPTURE",
-      purchase_units: [{
-        amount: { currency_code: currency, value: major(amountCents, currency) },
-        custom_id: reference,
-      }],
-      application_context: {
-        return_url: cfg.return_url,
-        cancel_url: cfg.return_url,
-        user_action: "PAY_NOW",
-      },
-    }),
-  });
-  if (!orderRes.ok) {
-    throw new ProviderRefusal(orderRes.status);
-  }
-  const order = await orderRes.json();
-  const approve = (order.links ?? []).find(
-    (l: { rel: string }) => l.rel === "approve",
-  );
-  if (!approve) throw new Error("paypal order has no approve link");
-  return { orderId: order.id, approveUrl: approve.href };
-}
-
-async function createStripeSession(
-  cfg: Record<string, string>,
-  amountCents: number,
-  currency: string,
-  reference: string,
-  key: string,
-): Promise<{ orderId: string; approveUrl: string }> {
-  const params = new URLSearchParams({
-    mode: "payment",
-    success_url: cfg.return_url,
-    cancel_url: cfg.return_url,
-    client_reference_id: reference,
-    "line_items[0][quantity]": "1",
-    "line_items[0][price_data][currency]": currency.toLowerCase(),
-    "line_items[0][price_data][unit_amount]": String(amountCents),
-    "line_items[0][price_data][product_data][name]": `DesKilo ${reference}`,
-  });
-  const res = await fetch(`${stripeApi()}/v1/checkout/sessions`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${cfg.secret_key}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Idempotency-Key": key,
-    },
-    body: params,
-  });
-  if (!res.ok) {
-    throw new ProviderRefusal(res.status);
-  }
-  const session = await res.json();
-  return { orderId: session.id, approveUrl: session.url };
-}
-
-async function createMolliePayment(
-  cfg: Record<string, string>,
-  amountCents: number,
-  currency: string,
-  reference: string,
-  key: string,
-  method?: string,
-): Promise<{ orderId: string; approveUrl: string }> {
-  const res = await fetch(`${mollieApi()}/v2/payments`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${cfg.api_key}`,
-      "Content-Type": "application/json",
-      "Idempotency-Key": key,
-    },
-    body: JSON.stringify({
-      amount: { currency, value: major(amountCents, currency) },
-      description: `DesKilo ${reference}`,
-      redirectUrl: cfg.return_url,
-      // #1556 — where Mollie reports the outcome. Without it the
-      // payment is created, the member pays, and nothing ever tells us:
-      // `mollie-webhook` is the ONLY settlement path for Mollie and for
-      // Wero, and there is no polling behind it. The redirect proves the
-      // browser came back, never that the money moved.
-      //
-      // Derived from this deployment's own backend, never compiled in,
-      // so a self-hosted instance's callbacks land on its own project
-      // and not on somebody else's. `webhook_url` overrides it for an
-      // instance behind a custom domain — Mollie refuses a URL it
-      // cannot reach, localhost included, which is why the override
-      // exists at all.
-      webhookUrl: cfg.webhook_url ??
-        `${Deno.env.get("SUPABASE_URL")}/functions/v1/mollie-webhook`,
-      metadata: { reference },
-      ...(method ? { method } : {}),
-    }),
-  });
-  if (!res.ok) {
-    throw new ProviderRefusal(res.status);
-  }
-  const payment = await res.json();
-  return { orderId: payment.id, approveUrl: payment._links.checkout.href };
-}
 
 // ── handler ───────────────────────────────────────────────────────────
 
@@ -365,27 +132,11 @@ export async function handle(req: Request): Promise<Response> {
     }, 409);
   }
 
-  const provider = body.provider as Provider;
-  const memberId = body.member_id as string;
-  const amountCents = body.amount_cents as number;
-  const period = body.period as string;
-  // #1138 — the currency is the WORKSPACE's, never the body's. A client
-  // that names a cheaper currency would be charged in it and credited in
-  // the workspace's; the ledger is currency-blind by design. A body that
-  // disagrees is refused rather than corrected, so the mismatch is seen.
+  // #1138 — the currency is the WORKSPACE's, never the body's.
   const currency = String(ws?.currency_code ?? "EUR").toUpperCase();
-  const bodyCurrency = body.currency == null ? null : String(body.currency).toUpperCase();
-  if (bodyCurrency && bodyCurrency !== currency) {
-    return json({ error: "currency_mismatch", workspace: currency, sent: bodyCurrency }, 400);
-  }
-  const requestId = body.request_id == null ? null : String(body.request_id);
-  if (
-    !isProvider(provider) || !memberId ||
-    !Number.isInteger(amountCents) || amountCents <= 0 || !period ||
-    (requestId !== null && !UUID_RE.test(requestId))
-  ) {
-    return json({ error: "invalid_request" }, 400);
-  }
+  const parsed = parsePaymentOrderRequest(body, currency);
+  if (!parsed.ok) return json(parsed.body, parsed.status);
+  const { provider, memberId, amountCents, period, requestId } = parsed.request;
 
   let cfg: Record<string, string>;
   try {
@@ -467,13 +218,11 @@ export async function handle(req: Request): Promise<Response> {
   }
   const key = idempotencyKey(String(intent.id));
   try {
-    const order = provider === "paypal"
-      ? await createPaypalOrder(cfg, amountCents, currency, reference, key)
-      : provider === "stripe"
-      ? await createStripeSession(cfg, amountCents, currency, reference, key)
-      : provider === "wero"
-      ? await createMolliePayment(cfg, amountCents, currency, reference, key, "wero")
-      : await createMolliePayment(cfg, amountCents, currency, reference, key);
+    const order = await ORDER_ADAPTERS[provider](
+      cfg,
+      { amountCents, currency, reference, key },
+      runtimeDeps(),
+    );
 
     const { error: insertError } = await admin
       .from("payment_intents")
