@@ -55,7 +55,7 @@ final class ConnectedInstallationsProvider
 }
 
 String _$connectedInstallationsHash() =>
-    r'2dfd1252b2f6fb7b0dccbcbfdccc5810cf975330';
+    r'b6ccbd0769c1a1d30705177909410899d471b4e5';
 
 @ProviderFor(connectedSources)
 final connectedSourcesProvider = ConnectedSourcesProvider._();
@@ -96,7 +96,7 @@ final class ConnectedSourcesProvider
   }
 }
 
-String _$connectedSourcesHash() => r'0bae75747ba3a36a393ef4ffe496c133483df4e9';
+String _$connectedSourcesHash() => r'503dca252392bc521f4f047009a0ca31a7f069d4';
 
 /// #1832 A — whether one connected target can be used now, and if not,
 /// the typed reason; null means usable. Each target is asked on its own,

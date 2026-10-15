@@ -10158,6 +10158,18 @@ abstract class AppLocalizations {
   /// **'The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.'**
   String get featureRoleManagementDesc;
 
+  /// #2362 sales tax: featureSalesTaxDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A seller in the United States issues with net prices and the sales tax of the site\'s postal code stated apart, per jurisdiction; a customer\'s exemption certificate takes a line out of the tax. Off: such a seller cannot issue.'**
+  String get featureSalesTaxDesc;
+
+  /// #2362 sales tax: featureSalesTaxTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax (United States)'**
+  String get featureSalesTaxTitle;
+
   /// No description provided for @featureScheduledExpensesDesc.
   ///
   /// In en, this message translates to:
@@ -14645,6 +14657,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
   String get invoiceMissingNationalCurrency;
+
+  /// #2362 sales tax: invoiceMissingSalesTaxRate
+  ///
+  /// In en, this message translates to:
+  /// **'The sales tax of the site\'s postal code: the platform owner has not entered it'**
+  String get invoiceMissingSalesTaxRate;
+
+  /// #2362 sales tax: invoiceMissingSalesTaxTaxability
+  ///
+  /// In en, this message translates to:
+  /// **'Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)'**
+  String get invoiceMissingSalesTaxTaxability;
 
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
@@ -31784,6 +31808,12 @@ abstract class AppLocalizations {
   /// **'Amount (minor units)'**
   String get taxRefCents;
 
+  /// #2362 sales tax: taxRefComponents
+  ///
+  /// In en, this message translates to:
+  /// **'Jurisdictions, one per line: level, name, percent (level: state, county, city or district)'**
+  String get taxRefComponents;
+
   /// #2477 tax reference: Badge: the value was checked against its source.
   ///
   /// In en, this message translates to:
@@ -31862,11 +31892,23 @@ abstract class AppLocalizations {
   /// **'Rates'**
   String get taxRefDomainRate;
 
+  /// #2362 sales tax: taxRefDomainSalesTax
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax by ZIP code'**
+  String get taxRefDomainSalesTax;
+
   /// #2479 tax reference: Domain filter: the tax point policy of a country.
   ///
   /// In en, this message translates to:
   /// **'Tax point'**
   String get taxRefDomainTaxPoint;
+
+  /// #2362 sales tax: taxRefDomainTaxability
+  ///
+  /// In en, this message translates to:
+  /// **'Taxability by state'**
+  String get taxRefDomainTaxability;
 
   /// #2479 tax reference: Domain filter: small-business turnover thresholds.
   ///
@@ -31952,6 +31994,12 @@ abstract class AppLocalizations {
   /// **'Give an account number or a tax code'**
   String get taxRefInvalidAccount;
 
+  /// #2362 sales tax: taxRefInvalidComponents
+  ///
+  /// In en, this message translates to:
+  /// **'One jurisdiction per line as level, name, percent (0 to 20)'**
+  String get taxRefInvalidComponents;
+
   /// #2477 tax reference: Validation: date format.
   ///
   /// In en, this message translates to:
@@ -31969,6 +32017,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a number from 0 to 99.999'**
   String get taxRefInvalidNumber;
+
+  /// #2362 sales tax: taxRefInvalidState
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the two-letter state code'**
+  String get taxRefInvalidState;
 
   /// #2479 tax reference: Switch: the seller may opt for the invoice date.
   ///
@@ -32090,6 +32144,18 @@ abstract class AppLocalizations {
   /// **'Default rule'**
   String get taxRefStandardRule;
 
+  /// #2362 sales tax: taxRefState
+  ///
+  /// In en, this message translates to:
+  /// **'State (two letters)'**
+  String get taxRefState;
+
+  /// #2362 sales tax: taxRefStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get taxRefStatus;
+
   /// #2479 tax reference: Switch: DesKilo issues invoices for sellers of this country.
   ///
   /// In en, this message translates to:
@@ -32101,6 +32167,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tax code'**
   String get taxRefTaxCode;
+
+  /// #2362 sales tax: taxRefTaxSystem
+  ///
+  /// In en, this message translates to:
+  /// **'Tax system (vat or sales_tax)'**
+  String get taxRefTaxSystem;
 
   /// #2477 tax reference: Field: statutory text.
   ///

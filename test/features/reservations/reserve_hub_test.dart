@@ -21,7 +21,7 @@ import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/reservations/presentation/screens/reserve_screen.dart';
+import 'package:deskilo/features/reservations/presentation/screens/reserve_hub_metrics.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/month_grid.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';

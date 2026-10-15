@@ -28,7 +28,7 @@ const Map<String, int> _overBudget = {
   'lib/features/calendar/presentation/screens/calendar_hub_screen.dart': 15,
   'lib/features/money/presentation/screens/billing_screen.dart': 14,
   'lib/features/editor/presentation/screens/level_canvas_screen.dart': 14,
-  'lib/features/reservations/presentation/screens/reserve_screen.dart': 13,
+  'lib/features/reservations/presentation/screens/reserve_screen.dart': 10,
   'lib/features/events/presentation/widgets/policy_editor_sheet.dart': 13,
   'lib/features/mcp/presentation/eligibility_review_screen.dart': 12,
   'lib/features/money/presentation/screens/repartition_wizard_screen.dart': 12,

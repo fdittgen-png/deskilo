@@ -2,7 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../features/auth/providers/auth_providers.dart';
+import '../session/session_source.dart';
 import 'auth_callback_dispatch.dart';
 import 'auth_callback_guard.dart';
 import 'auth_secret_store.dart';
@@ -12,7 +12,7 @@ part 'connected_installation_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 ConnectedInstallations connectedInstallations(Ref ref) {
-  ref.watch(authStateProvider);
+  ref.watch(sessionStateProvider);
   final connections = ConnectedInstallations(
     Supabase.instance.client,
     const PlatformAuthSecretStore(),
@@ -23,7 +23,7 @@ ConnectedInstallations connectedInstallations(Ref ref) {
 
 @riverpod
 Future<List<ConnectedInstallation>> connectedSources(Ref ref) {
-  if (ref.watch(authStateProvider).value == null) return Future.value([]);
+  if (ref.watch(sessionStateProvider).value == null) return Future.value([]);
   return ref.watch(connectedInstallationsProvider).list();
 }
 
