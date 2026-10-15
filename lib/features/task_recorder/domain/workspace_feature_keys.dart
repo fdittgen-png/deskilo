@@ -139,4 +139,6 @@ const Set<String> workspaceFeatureKeys = {
   'viesVerification',
   'recapitulativeStatement',
   'inputVat',
+  'configurableSettings',
+  'salesTax',
 };

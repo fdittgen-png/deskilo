@@ -250,6 +250,13 @@ String featureName(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureCustomRolesTitle,
       WorkspaceFeature.customFields =>
         l10n.featureCustomFieldsTitle,
+      _ => _lateName(l10n, feature),
+    };
+
+/// The Features screen's later entries (#2484): the main switch above is a
+/// held function that may only stay or fall, so a new flag lands here.
+String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
+    switch (feature) {
       WorkspaceFeature.decisionSurface =>
         l10n.featureDecisionSurfaceTitle,
       WorkspaceFeature.recordingPrivacy =>
@@ -264,4 +271,8 @@ String featureName(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureMemberGettingStartedTitle,
       WorkspaceFeature.placeFeedback =>
         l10n.featurePlaceFeedbackTitle,
+      WorkspaceFeature.configurableSettings =>
+        l10n.featureConfigurableSettingsTitle,
+      WorkspaceFeature.salesTax => l10n.featureSalesTaxTitle,
+      _ => feature.name,
     };

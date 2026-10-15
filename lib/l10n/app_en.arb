@@ -6187,6 +6187,14 @@
   "@featureCoOwnerDesc": {
     "description": "Subtitle of the co-owner feature toggle"
   },
+  "featureConfigurableSettingsDesc": "Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace's administrators their own values.",
+  "@featureConfigurableSettingsDesc": {
+    "description": "#2484 settings: Feature description."
+  },
+  "featureConfigurableSettingsTitle": "Configurable settings",
+  "@featureConfigurableSettingsTitle": {
+    "description": "#2484 settings: Feature title."
+  },
   "featureConfigurationTransfer": "Configuration in the space file",
   "@featureConfigurationTransfer": {
     "description": "#916 configuration transfer: featureConfigurationTransfer"
@@ -6859,6 +6867,14 @@
   "featureRoleManagementDesc": "The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.",
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
+  },
+  "featureSalesTaxDesc": "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "featureSalesTaxTitle": "Sales tax (United States)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
   },
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
   "featureScheduledExpensesTitle": "Scheduled expenses",
@@ -9858,6 +9874,14 @@
   "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingSalesTaxRate": "The sales tax of the site's postal code: the platform owner has not entered it",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
   "invoiceMissingSellerAddress": "The workspace's postal address (street or city)",
   "@invoiceMissingSellerAddress": {
@@ -18593,9 +18617,204 @@
   "@servicesTitle": {
     "description": "App-bar title of the owner service-catalog editor and its settings tile"
   },
+  "settingCouldNotSave": "The setting could not be saved",
+  "@settingCouldNotSave": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingCurrentValue": "Now: {value} {unit}",
+  "@settingCurrentValue": {
+    "description": "#2484 settings: Current value.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingEdit": "Change",
+  "@settingEdit": {
+    "description": "#2484 settings: Edit button."
+  },
+  "settingFloorNote": "Security floor: never below {floor} {unit}.",
+  "@settingFloorNote": {
+    "description": "#2484 settings: Security floor.",
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingGroupDunning": "Reminders and payment terms",
+  "@settingGroupDunning": {
+    "description": "#2484 settings: Settings group title."
+  },
+  "settingGuardrail": "Fixed guardrail",
+  "@settingGuardrail": {
+    "description": "#2484 settings: Read-only guardrail."
+  },
+  "settingGuardrailFallback": "Fixed by the software; it is shown so you know it exists.",
+  "@settingGuardrailFallback": {
+    "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintDunningFirstAfterDays": "Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.",
+  "@settingHintDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting hint."
+  },
+  "settingHistory": "History",
+  "@settingHistory": {
+    "description": "#2484 settings: History button."
+  },
+  "settingHistoryEmpty": "No stored version: the default applies.",
+  "@settingHistoryEmpty": {
+    "description": "#2484 settings: History empty."
+  },
+  "settingLabelDunningFirstAfterDays": "Days before a first reminder",
+  "@settingLabelDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting label."
+  },
+  "settingMaxOnly": "At most {max} {unit}",
+  "@settingMaxOnly": {
+    "description": "#2484 settings: Upper bound.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMinOnly": "At least {min} {unit}",
+  "@settingMinOnly": {
+    "description": "#2484 settings: Lower bound.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingNoteField": "Note (optional)",
+  "@settingNoteField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingOriginDefault": "Built-in default",
+  "@settingOriginDefault": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginPlatform": "Platform default",
+  "@settingOriginPlatform": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginWorkspace": "Set for this workspace",
+  "@settingOriginWorkspace": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingProblemAboveMax": "Above the maximum",
+  "@settingProblemAboveMax": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowFloor": "Below the security floor",
+  "@settingProblemBelowFloor": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowMin": "Below the minimum",
+  "@settingProblemBelowMin": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotAChoice": "Not one of the choices",
+  "@settingProblemNotAChoice": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotANumber": "Enter a whole number",
+  "@settingProblemNotANumber": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemWrongType": "Not a valid value",
+  "@settingProblemWrongType": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingRange": "Between {min} and {max} {unit}",
+  "@settingRange": {
+    "description": "#2484 settings: Allowed range.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingSave": "Save",
+  "@settingSave": {
+    "description": "#2484 settings: Save button."
+  },
+  "settingSaved": "Setting saved",
+  "@settingSaved": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingUnitDays": "days",
+  "@settingUnitDays": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitHours": "hours",
+  "@settingUnitHours": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitMinutes": "minutes",
+  "@settingUnitMinutes": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitSeconds": "seconds",
+  "@settingUnitSeconds": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingValueField": "Value",
+  "@settingValueField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingVersionLine": "{value} {unit} · from {from}",
+  "@settingVersionLine": {
+    "description": "#2484 settings: A history line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "settingVersionUntil": "until {to}",
+  "@settingVersionUntil": {
+    "description": "#2484 settings: History line end.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "settingsBillingReports": "Billing & reports",
   "@settingsBillingReports": {
     "description": "Admin settings entry to the invoicing hub (#478)"
+  },
+  "settingsEmpty": "No settings here.",
+  "@settingsEmpty": {
+    "description": "#2484 settings: Empty editor."
   },
   "settingsFrontCamera": "Scan with the front camera",
   "@settingsFrontCamera": {
@@ -18604,6 +18823,18 @@
   "settingsFrontCameraDesc": "Badges are read with the screen-side camera — turn off to use the back camera.",
   "@settingsFrontCameraDesc": {
     "description": "Subtitle of the front-camera switch"
+  },
+  "settingsLoadFailed": "The settings could not be loaded.",
+  "@settingsLoadFailed": {
+    "description": "#2484 settings: Error text."
+  },
+  "settingsOfflineRegistry": "Showing the built-in defaults: the server could not be reached, so nothing can be changed now.",
+  "@settingsOfflineRegistry": {
+    "description": "#2484 settings: Banner: the editor shows the bundled registry."
+  },
+  "settingsPlatformTitle": "Platform settings (defaults)",
+  "@settingsPlatformTitle": {
+    "description": "#2484 settings: Title of the platform settings editor."
   },
   "settingsSectionAccount": "My account",
   "@settingsSectionAccount": {
@@ -18636,6 +18867,10 @@
   "settingsTitle": "Settings",
   "@settingsTitle": {
     "description": "Title of the settings screen and tooltip of the app-bar settings action"
+  },
+  "settingsWorkspaceTitle": "Settings values",
+  "@settingsWorkspaceTitle": {
+    "description": "#2484 settings: Title of the workspace settings editor section."
   },
   "settlementAction": "Regroup into one invoice",
   "settlementAnnexAlone": "This invoice only",
@@ -20892,6 +21127,298 @@
   "taskWorkbenchUntrusted": "A private draft from a file: nothing in it is trusted or sent.",
   "@taskWorkbenchUntrusted": {
     "description": "#1872 task workbench: taskWorkbenchUntrusted"
+  },
+  "taxRefAccount": "Account number (or chart code)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
+  "taxRefAdd": "Add a value",
+  "@taxRefAdd": {
+    "description": "#2477 tax reference: Button: add a new reference value."
+  },
+  "taxRefAliasOf": "Alias of (ISO code, empty for a member state)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
+  "taxRefCashBackstop": "Cash backstop",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefCashOption": "Option for cash accounting",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
+  "taxRefCategory": "EN 16931 category",
+  "@taxRefCategory": {
+    "description": "#2477 tax reference: Field: VAT category code of a rate."
+  },
+  "taxRefCents": "Amount (minor units)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefConfirmed": "Confirmed",
+  "@taxRefConfirmed": {
+    "description": "#2477 tax reference: Badge: the value was checked against its source."
+  },
+  "taxRefCouldNotSave": "The version could not be saved",
+  "@taxRefCouldNotSave": {
+    "description": "#2477 tax reference: Snackbar: the server refused the version."
+  },
+  "taxRefCountry": "Country (ISO code, or * for all)",
+  "@taxRefCountry": {
+    "description": "#2477 tax reference: Field: country of a reference value."
+  },
+  "taxRefCurrency": "Currency (ISO code)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefDomainAccountMap": "Export accounts and codes",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
+  },
+  "taxRefDomainCatalogueNote": "Catalogue notes",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainEuMember": "EU members",
+  "@taxRefDomainEuMember": {
+    "description": "#2477 tax reference: Domain filter: EU member states."
+  },
+  "taxRefDomainExemptionText": "Statutory texts",
+  "@taxRefDomainExemptionText": {
+    "description": "#2477 tax reference: Domain filter: statutory mentions."
+  },
+  "taxRefDomainFormBox": "Return form boxes",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
+  "taxRefDomainGroupExample": "Group examples",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
+  },
+  "taxRefDomainIssuingGate": "Issuing gates",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefDomainMandate": "E-invoicing mandates",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
+  "taxRefDomainRate": "Rates",
+  "@taxRefDomainRate": {
+    "description": "#2477 tax reference: Domain filter: rates."
+  },
+  "taxRefDomainSalesTax": "Sales tax by ZIP code",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
+  "taxRefDomainTaxPoint": "Tax point",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainTaxability": "Taxability by state",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
+  },
+  "taxRefDomainThreshold": "Thresholds",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
+  },
+  "taxRefDomainVatIdPattern": "VAT id patterns",
+  "@taxRefDomainVatIdPattern": {
+    "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
+  },
+  "taxRefDuty": "Duty",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefEffect": "Effect when passed (next_year or immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
+  },
+  "taxRefEmpty": "No values here.",
+  "@taxRefEmpty": {
+    "description": "#2477 tax reference: Empty list."
+  },
+  "taxRefExcludeGroups": "Every group except (comma separated)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
+  },
+  "taxRefExemptionReason": "Exemption reason",
+  "@taxRefExemptionReason": {
+    "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
+  },
+  "taxRefFormat": "Format",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
+  "taxRefFrom": "Applies from (YYYY-MM-DD)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
+  },
+  "taxRefGroup": "Group",
+  "@taxRefGroup": {
+    "description": "#2477 tax reference: Field: fiscal group of a rate."
+  },
+  "taxRefGroups": "Fiscal groups it adds up (comma separated)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
+  },
+  "taxRefHistory": "History",
+  "@taxRefHistory": {
+    "description": "#2477 tax reference: Button and sheet title: every version of a value."
+  },
+  "taxRefIntro": "Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.",
+  "@taxRefIntro": {
+    "description": "#2477 tax reference: Intro line under the title of the tax reference screen."
+  },
+  "taxRefInvalidAccount": "Give an account number or a tax code",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
+  },
+  "taxRefInvalidComponents": "One jurisdiction per line as level, name, percent (0 to 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
+  "taxRefInvalidDate": "Enter the date as YYYY-MM-DD",
+  "@taxRefInvalidDate": {
+    "description": "#2477 tax reference: Validation: date format."
+  },
+  "taxRefInvalidGroups": "Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
+  },
+  "taxRefInvalidNumber": "Enter a number from 0 to 99.999",
+  "@taxRefInvalidNumber": {
+    "description": "#2477 tax reference: Validation: percentage."
+  },
+  "taxRefInvalidState": "Enter the two-letter state code",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
+  },
+  "taxRefInvoiceOption": "Option for the invoice date",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
+  },
+  "taxRefKey": "Key",
+  "@taxRefKey": {
+    "description": "#2477 tax reference: Field: key naming a value within a country."
+  },
+  "taxRefLabel": "Label",
+  "@taxRefLabel": {
+    "description": "#2477 tax reference: Field: label of a rate."
+  },
+  "taxRefLoadFailed": "The reference data could not be loaded.",
+  "@taxRefLoadFailed": {
+    "description": "#2477 tax reference: error text when the list cannot load."
+  },
+  "taxRefMemberEmpty": "A member state has no further fields.",
+  "@taxRefMemberEmpty": {
+    "description": "#2477 tax reference: Hint in the form of an EU member."
+  },
+  "taxRefNationalChannel": "National channel required",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
+  },
+  "taxRefNewVersion": "New version",
+  "@taxRefNewVersion": {
+    "description": "#2477 tax reference: Button and sheet title: create a new version of a value."
+  },
+  "taxRefNotAllowed": "Only the platform owner maintains tax reference data.",
+  "@taxRefNotAllowed": {
+    "description": "#2477 tax reference: Shown to anyone else who opens the screen."
+  },
+  "taxRefOfflineCopy": "Showing the copy bundled with the app: the server could not be reached.",
+  "@taxRefOfflineCopy": {
+    "description": "#2477 tax reference: Banner: values come from the bundled copy."
+  },
+  "taxRefPattern": "Pattern",
+  "@taxRefPattern": {
+    "description": "#2477 tax reference: Field: regular expression for the identifier body."
+  },
+  "taxRefPercent": "Percent",
+  "@taxRefPercent": {
+    "description": "#2477 tax reference: Field: percentage of a rate."
+  },
+  "taxRefPosition": "Position",
+  "@taxRefPosition": {
+    "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRegime": "Regime",
+  "@taxRefRegime": {
+    "description": "#2477 tax reference: Field: the regime a statutory text belongs to."
+  },
+  "taxRefRequired": "Required",
+  "@taxRefRequired": {
+    "description": "#2477 tax reference: Validation: a required field is empty."
+  },
+  "taxRefRequiresTaxNumber": "Tax number required",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
+  "taxRefRole": "Role",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
+  "taxRefSave": "Save version",
+  "@taxRefSave": {
+    "description": "#2477 tax reference: Button: save the new version."
+  },
+  "taxRefSaved": "Version saved",
+  "@taxRefSaved": {
+    "description": "#2477 tax reference: Snackbar after a save."
+  },
+  "taxRefSource": "Source",
+  "@taxRefSource": {
+    "description": "#2477 tax reference: Field: where the value comes from (a law, a table)."
+  },
+  "taxRefStandardRule": "Default rule",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefState": "State (two letters)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefStatus": "Status",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
+  "taxRefSupported": "Issuing supported",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefTaxCode": "Tax code",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
+  },
+  "taxRefTaxSystem": "Tax system (vat or sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
+  },
+  "taxRefText": "Text",
+  "@taxRefText": {
+    "description": "#2477 tax reference: Field: statutory text."
+  },
+  "taxRefTitle": "Tax reference data",
+  "@taxRefTitle": {
+    "description": "#2477 tax reference: Screen title: the VAT reference values the platform owner maintains."
+  },
+  "taxRefUnconfirmed": "Not confirmed",
+  "@taxRefUnconfirmed": {
+    "description": "#2477 tax reference: Badge: nobody checked the value against its source."
+  },
+  "taxRefValidFrom": "Valid from",
+  "@taxRefValidFrom": {
+    "description": "#2477 tax reference: Field: first day a version is in force."
+  },
+  "taxRefValidUntil": "until",
+  "@taxRefValidUntil": {
+    "description": "#2477 tax reference: Word before the day a version ends."
   },
   "templateApplyConflict": "This request was already used for something else. Nothing was applied.",
   "@templateApplyConflict": {

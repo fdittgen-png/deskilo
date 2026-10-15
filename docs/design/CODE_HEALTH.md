@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `f4ad0cc9807f6ef28926947d913db93da1f50d7e` on 2026-10-13.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `d6fe46e3646f8417beacb9b49be38f2d45933a14` on 2026-10-13.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,36 +10,30 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1461 |
-| functions | 8337 |
-| cyclomatic>=9 | 931 |
-| cyclomatic>=25 | 143 |
+| files | 1526 |
+| functions | 8774 |
+| cyclomatic>=9 | 955 |
+| cyclomatic>=25 | 134 |
 | cognitive>=15 | 405 |
-| cognitive>=30 | 128 |
-| length>=150 | 109 |
-| parameters>=5 | 387 |
-| parameters>=7 | 150 |
-| partOfFiles | 87 |
+| cognitive>=30 | 121 |
+| length>=150 | 97 |
+| parameters>=5 | 401 |
+| parameters>=7 | 143 |
+| partOfFiles | 78 |
 
 ## Worst functions by cognitive complexity (baseline)
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
-| 230 | 55 | 425 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
-| 174 | 57 | 797 | 18 | `lib/features/money/domain/invoice_pdf_part2.dart#buildInvoicePdf` |
-| 132 | 107 | 830 | 1 | `lib/app/router.dart#router` |
+| 218 | 51 | 407 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
-| 112 | 65 | 381 | 2 | `lib/features/plan/presentation/widgets/floor_plan_painter_part1.dart#_FloorPlanPainterPart1._paintImpl` |
 | 109 | 56 | 489 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 101 | 56 | 463 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
-| 84 | 55 | 430 | 2 | `lib/app/shell/shell_screen.dart#ShellScreen.build` |
 | 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 82 | 21 | 143 | 7 | `lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml` |
-| 76 | 57 | 258 | 1 | `lib/features/reservations/presentation/screens/reserve_screen_part2.dart#_ReserveScreenStatePart2._buildImpl` |
 | 75 | 60 | 311 | 1 | `lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build` |
-| 73 | 66 | 262 | 2 | `lib/app/shell/shell_drawer.dart#ShellDrawer.build` |
 | 73 | 29 | 313 | 1 | `lib/features/money/presentation/screens/vat_declarations_screen.dart#_VatDeclarationsScreenState.build` |
 | 71 | 47 | 215 | 2 | `lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build` |
 | 69 | 46 | 234 | 7 | `lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions` |
@@ -50,4 +44,10 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 67 | 31 | 326 | 1 | `lib/features/directory/presentation/directory_screen.dart#_DirectoryState.build` |
 | 67 | 92 | 301 | 11 | `lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet` |
 | 66 | 64 | 382 | 2 | `lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build` |
+| 65 | 36 | 229 | 13 | `lib/features/workspace/domain/workspace_excel.dart#buildWorkspaceExcelExport` |
+| 65 | 33 | 154 | 1 | `lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build` |
+| 65 | 39 | 207 | 1 | `lib/features/workspace/presentation/widgets/template_gallery.dart#_TemplateGalleryState.build` |
+| 64 | 45 | 229 | 10 | `lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent` |
+| 63 | 25 | 80 | 2 | `lib/features/money/domain/report_layout/layout_xml.dart#_writeElement` |
+| 63 | 37 | 234 | 1 | `lib/features/workspace/presentation/widgets/bi_toolbar.dart#BiToolbar.build` |
 

@@ -50,13 +50,19 @@ void main() {
   });
 
   test('the router asks the policy and keeps no rule of its own', () {
-    final source = File('lib/app/router.dart').readAsStringSync();
+    // #2493 — the top-level redirect moved out of router() to
+    // route_redirect.dart; the router only hands it the environment.
+    expect(
+      File('lib/app/router.dart').readAsStringSync(),
+      contains('appRedirect(env, state)'),
+    );
+    final source = File('lib/app/route_redirect.dart').readAsStringSync();
     expect(source, contains('settleDestination('));
     // The top-level redirect decides nothing the policy decides: these
     // were the literals of the closure it replaced (#1650 C3).
     final closure = source.substring(
-      source.indexOf('redirect: (context, state) {'),
-      source.indexOf('routes: ['),
+      source.indexOf('String? appRedirect('),
+      source.indexOf('bool _refusedByPermissions('),
     );
     for (final literal in [
       "'/auth'",

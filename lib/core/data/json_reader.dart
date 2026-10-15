@@ -170,6 +170,10 @@ class JsonReader {
     return _shape(key, 'object?');
   }
 
+  /// The field as the wire sent it, untyped: for a registry value whose
+  /// type the row itself names (a setting's value is an int, a bool or text).
+  Object? raw(String key) => json[key];
+
   /// A JSON object field the wire may omit: empty then.
   Map<String, Object?> objectOrEmpty(String key) {
     final value = json[key];

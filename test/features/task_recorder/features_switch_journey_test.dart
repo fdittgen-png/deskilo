@@ -20,6 +20,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/features.dart' show acceptOptInIfAsked;
 import 'fixtures/recording_fixtures.dart';
 
 Future<({ProviderContainer c, FakeWorkspaceRepository ws})> _pump(
@@ -81,6 +82,8 @@ void main() {
     final p = await _pump(tester, record: true);
     await tester.tap(find.text('Accessory supplements'));
     await tester.pumpAndSettle();
+    // #2519 — every shipped feature is beta: switching one ON asks first.
+    await acceptOptInIfAsked(tester);
     final r = (await p.c.read(recorderControllerProvider).stop())!;
     final attempt = r.steps.firstWhere(
       (s) => s.action == RecorderActions.switchFeature,
@@ -113,6 +116,8 @@ void main() {
     final p = await _pump(tester, record: false);
     await tester.tap(find.text('Accessory supplements'));
     await tester.pumpAndSettle();
+    // #2519 — every shipped feature is beta: switching one ON asks first.
+    await acceptOptInIfAsked(tester);
     expect(p.ws.workspaces.single.featureFlags['accessorySupplements'], isTrue);
     expect(p.c.read(recorderControllerProvider).state, RecorderState.idle);
     await _done(tester, p.c);

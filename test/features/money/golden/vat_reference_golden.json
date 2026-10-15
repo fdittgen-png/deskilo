@@ -1,0 +1,2562 @@
+{
+ "countries": [
+  "",
+  "AT",
+  "BE",
+  "BG",
+  "CA",
+  "CH",
+  "CY",
+  "CZ",
+  "DE",
+  "DK",
+  "EE",
+  "EL",
+  "ES",
+  "FI",
+  "FR",
+  "GB",
+  "GR",
+  "HR",
+  "HU",
+  "IE",
+  "IT",
+  "LT",
+  "LU",
+  "LV",
+  "MT",
+  "NL",
+  "NO",
+  "PL",
+  "PT",
+  "RO",
+  "SE",
+  "SI",
+  "SK",
+  "US",
+  "ZZ"
+ ],
+ "catalogue": {
+  "": [],
+  "AT": [
+   {
+    "label": "Normalsatz 20 %",
+    "percent": 20.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ermäßigt 13 %",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ermäßigt 10 %",
+    "percent": 10.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "BE": [
+   {
+    "label": "Standaard 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Verlaagd 12 %",
+    "percent": 12.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Verlaagd 6 %",
+    "percent": 6.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "BG": [
+   {
+    "label": "Стандартна 20 %",
+    "percent": 20.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Намалена 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "CA": [
+   {
+    "label": "GST 5 % (AB/BC/MB/NT/NU/SK/YT)",
+    "percent": 5.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "HST 13 % (ON)",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "HST 14 % (NS)",
+    "percent": 14.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "HST 15 % (NB/NL/PE)",
+    "percent": 15.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "GST 5 % + QST 9,975 % (QC)",
+    "percent": 14.975,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "CH": [
+   {
+    "label": "Normal 8,1 %",
+    "percent": 8.1,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2024-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Hébergement 3,8 %",
+    "percent": 3.8,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "2024-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Réduit 2,6 %",
+    "percent": 2.6,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "2024-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ausgenommen (Vermietung)",
+    "percent": 0.0,
+    "isDefault": false,
+    "category": "E",
+    "groupKey": "exempt",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": "Von der Steuer ausgenommen (Art. 21 Abs. 2 Ziff. 21 MWSTG)"
+   }
+  ],
+  "CY": [
+   {
+    "label": "Standard 19 %",
+    "percent": 19.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "CZ": [
+   {
+    "label": "Základní 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Snížená 12 %",
+    "percent": 12.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "DE": [
+   {
+    "label": "Regelsatz 19 %",
+    "percent": 19.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ermäßigt 7 %",
+    "percent": 7.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "DK": [
+   {
+    "label": "Standard 25 %",
+    "percent": 25.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "EE": [
+   {
+    "label": "Standardmäär 24 %",
+    "percent": 24.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2025-07-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Vähendatud 13 %",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Vähendatud 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "EL": [],
+  "ES": [
+   {
+    "label": "General 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reducido 10 %",
+    "percent": 10.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Superreducido 4 %",
+    "percent": 4.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "super_reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "FI": [
+   {
+    "label": "Yleinen 25,5 %",
+    "percent": 25.5,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2024-09-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Alennettu 13,5 %",
+    "percent": 13.5,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "2025-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Alennettu 10 %",
+    "percent": 10.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "FR": [
+   {
+    "label": "Standard 20 %",
+    "percent": 20.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Intermédiaire 10 %",
+    "percent": 10.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Réduit 5,5 %",
+    "percent": 5.5,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Particulier 2,1 %",
+    "percent": 2.1,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "super_reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "GB": [
+   {
+    "label": "Standard 20 %",
+    "percent": 20.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2011-01-04",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1997-09-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Zero 0 %",
+    "percent": 0.0,
+    "isDefault": false,
+    "category": "Z",
+    "groupKey": "zero",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Exempt (land)",
+    "percent": 0.0,
+    "isDefault": false,
+    "category": "E",
+    "groupKey": "exempt",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": "VAT Act 1994, Schedule 9, Group 1 (land)"
+   }
+  ],
+  "GR": [
+   {
+    "label": "Κανονικός 24 %",
+    "percent": 24.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Μειωμένος 13 %",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Μειωμένος 6 %",
+    "percent": 6.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "HR": [
+   {
+    "label": "Standardna 25 %",
+    "percent": 25.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Snižena 13 %",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Snižena 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "HU": [
+   {
+    "label": "Általános 27 %",
+    "percent": 27.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Kedvezményes 18 %",
+    "percent": 18.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Kedvezményes 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "IE": [
+   {
+    "label": "Standard 23 %",
+    "percent": 23.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 13.5 %",
+    "percent": 13.5,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Livestock 4.8 %",
+    "percent": 4.8,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "super_reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "IT": [
+   {
+    "label": "Ordinaria 22 %",
+    "percent": 22.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ridotta 10 %",
+    "percent": 10.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Ridotta 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Minima 4 %",
+    "percent": 4.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "super_reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "LT": [
+   {
+    "label": "Standartinis 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Lengvatinis 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Lengvatinis 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "LU": [
+   {
+    "label": "Normal 17 %",
+    "percent": 17.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Intermédiaire 14 %",
+    "percent": 14.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Réduit 8 %",
+    "percent": 8.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Super-réduit 3 %",
+    "percent": 3.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "super_reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "LV": [
+   {
+    "label": "Standarta 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Samazinātā 12 %",
+    "percent": 12.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Samazinātā 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "MT": [
+   {
+    "label": "Standard 18 %",
+    "percent": 18.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 7 %",
+    "percent": 7.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduced 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "NL": [
+   {
+    "label": "Hoog 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Laag 9 %",
+    "percent": 9.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "NO": [
+   {
+    "label": "Alminnelig 25 %",
+    "percent": 25.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Næringsmidler 15 %",
+    "percent": 15.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Redusert 12 %",
+    "percent": 12.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "PL": [
+   {
+    "label": "Podstawowa 23 %",
+    "percent": 23.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Obniżona 8 %",
+    "percent": 8.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Obniżona 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "PT": [
+   {
+    "label": "Normal 23 %",
+    "percent": 23.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Intermédia 13 %",
+    "percent": 13.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reduzida 6 %",
+    "percent": 6.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "RO": [
+   {
+    "label": "Standard 21 %",
+    "percent": 21.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2025-08-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Redusă 11 %",
+    "percent": 11.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "2025-08-01",
+    "exemptionReason": ""
+   }
+  ],
+  "SE": [
+   {
+    "label": "Standard 25 %",
+    "percent": 25.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reducerad 12 %",
+    "percent": 12.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Reducerad 6 %",
+    "percent": 6.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "SI": [
+   {
+    "label": "Splošna 22 %",
+    "percent": 22.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Znižana 9,5 %",
+    "percent": 9.5,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Znižana 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "1900-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "SK": [
+   {
+    "label": "Základná 23 %",
+    "percent": 23.0,
+    "isDefault": true,
+    "category": "S",
+    "groupKey": "standard",
+    "outsideBase": false,
+    "validFrom": "2025-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Znížená 19 %",
+    "percent": 19.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "intermediate",
+    "outsideBase": false,
+    "validFrom": "2025-01-01",
+    "exemptionReason": ""
+   },
+   {
+    "label": "Znížená 5 %",
+    "percent": 5.0,
+    "isDefault": false,
+    "category": "S",
+    "groupKey": "reduced",
+    "outsideBase": false,
+    "validFrom": "2025-01-01",
+    "exemptionReason": ""
+   }
+  ],
+  "US": [],
+  "ZZ": []
+ },
+ "note": {
+  "": null,
+  "AT": null,
+  "BE": null,
+  "BG": null,
+  "CA": "Canada taxes by province: keep the line for yours (GST, HST, or GST+PST/QST) and delete the rest.",
+  "CH": "A package of services is taxed at the normal rate; a bare letting of rooms is exempt (art. 21 MWSTG) unless you opted (art. 22): say which on the legal identity. The 3.8 % special rate applies to accommodation only. If the vote of 29 November 2026 passes, 8.5 % and 4.0 % apply from 2028: change them by law then.",
+  "CY": null,
+  "CZ": null,
+  "DE": null,
+  "DK": null,
+  "EE": null,
+  "EL": null,
+  "ES": null,
+  "FI": null,
+  "FR": null,
+  "GB": "A bare desk or office licence is exempt (VAT Act 1994 Sch 9 Group 1) unless you opted to tax the building; a serviced package of facilities is standard-rated. Keep the lines that apply.",
+  "GR": null,
+  "HR": null,
+  "HU": null,
+  "IE": null,
+  "IT": null,
+  "LT": null,
+  "LU": null,
+  "LV": null,
+  "MT": null,
+  "NL": null,
+  "NO": null,
+  "PL": null,
+  "PT": null,
+  "RO": null,
+  "SE": null,
+  "SI": null,
+  "SK": null,
+  "US": "The US has no federal VAT — sales tax is set by state and locality. Add your local combined rate manually.",
+  "ZZ": null
+ },
+ "examples": {
+  "": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "AT": [
+   {
+    "group": "standard",
+    "example": "Dienstleistungen, Getränke, Pfand (mit der Ware besteuert)"
+   },
+   {
+    "group": "reduced",
+    "example": "Bücher, Zeitungen, Lebensmittel zum Mitnehmen"
+   },
+   {
+    "group": "excise",
+    "example": "Bier, Spirituosen: Verbrauchsteuer im Preis, Regelsatz"
+   },
+   {
+    "group": "exempt",
+    "example": "Steuerfreie Umsätze (§ 4 UStG)"
+   },
+   {
+    "group": "not_subject",
+    "example": "Kleinunternehmer (§ 19 UStG)"
+   }
+  ],
+  "BE": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "BG": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "CA": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "CH": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "CY": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "CZ": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "DE": [
+   {
+    "group": "standard",
+    "example": "Dienstleistungen, Getränke, Pfand (mit der Ware besteuert)"
+   },
+   {
+    "group": "reduced",
+    "example": "Bücher, Zeitungen, Lebensmittel zum Mitnehmen"
+   },
+   {
+    "group": "excise",
+    "example": "Bier, Spirituosen: Verbrauchsteuer im Preis, Regelsatz"
+   },
+   {
+    "group": "exempt",
+    "example": "Steuerfreie Umsätze (§ 4 UStG)"
+   },
+   {
+    "group": "not_subject",
+    "example": "Kleinunternehmer (§ 19 UStG)"
+   }
+  ],
+  "DK": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "EE": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "EL": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "ES": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "FI": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "FR": [
+   {
+    "group": "standard",
+    "example": "Prestations, boissons alcoolisées, sodas (taxe soda en sus)"
+   },
+   {
+    "group": "intermediate",
+    "example": "Repas et boissons sans alcool consommés sur place"
+   },
+   {
+    "group": "reduced",
+    "example": "Livres, boissons sans alcool à emporter, produits alimentaires"
+   },
+   {
+    "group": "super_reduced",
+    "example": "Presse"
+   },
+   {
+    "group": "excise",
+    "example": "Bière, spiritueux : accises dans le prix, TVA 20 %"
+   },
+   {
+    "group": "deposit",
+    "example": "Consigne remboursable — hors champ de la TVA"
+   },
+   {
+    "group": "exempt",
+    "example": "Formation, opérations exonérées (art. 261 CGI)"
+   },
+   {
+    "group": "not_subject",
+    "example": "Association non assujettie (art. 293 B CGI)"
+   }
+  ],
+  "GB": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "GR": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "HR": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "HU": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "IE": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "IT": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "LT": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "LU": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "LV": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "MT": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "NL": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "NO": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "PL": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "PT": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "RO": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "SE": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "SI": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "SK": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "US": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ],
+  "ZZ": [
+   {
+    "group": "standard",
+    "example": "Services, alcoholic and sugar drinks"
+   },
+   {
+    "group": "reduced",
+    "example": "Books, periodicals, food, non-alcoholic drinks"
+   },
+   {
+    "group": "excise",
+    "example": "Beer, spirits: excise inside the price, standard VAT"
+   },
+   {
+    "group": "deposit",
+    "example": "Refundable deposit"
+   },
+   {
+    "group": "exempt",
+    "example": "Exempt supplies"
+   },
+   {
+    "group": "not_subject",
+    "example": "Not subject to VAT"
+   }
+  ]
+ },
+ "mentions": {
+  "": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "AT": {
+   "exempt": "Umsatzsteuerbefreit gemäß § 6 Abs. 1 Z 27 UStG (Kleinunternehmer).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Steuerschuldnerschaft des Leistungsempfängers (Art. 196 der Richtlinie 2006/112/EG).",
+   "export": "Nicht im Inland steuerbare Leistung — Leistungsort außerhalb der EU (Art. 44 der Richtlinie 2006/112/EG).",
+   "receipts": "Umsatzsteuer nach vereinnahmten Entgelten (Ist-Versteuerung).",
+   "invoices": "Umsatzsteuer nach vereinbarten Entgelten (Soll-Versteuerung).",
+   "exigibility_exempt": ""
+  },
+  "BE": {
+   "exempt": "Régime particulier de franchise des petites entreprises (art. 56bis CTVA) — TVA non applicable.",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "BG": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "CA": {
+   "exempt": "Small supplier — not registered for GST/HST (Excise Tax Act, s. 148). / Petit fournisseur — non inscrit à la TPS/TVH.",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "CH": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "CY": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "CZ": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "DE": {
+   "exempt": "Steuerbefreiung für Kleinunternehmer, § 19 UStG.",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Nicht umsatzsteuerbar — kein Unternehmer im Sinne des § 2 UStG.",
+   "registered": "",
+   "reverse_charge": "Steuerschuldnerschaft des Leistungsempfängers (Art. 196 der Richtlinie 2006/112/EG).",
+   "export": "Nicht im Inland steuerbare Leistung — Leistungsort außerhalb der EU (Art. 44 der Richtlinie 2006/112/EG).",
+   "receipts": "Umsatzsteuer nach vereinnahmten Entgelten (Ist-Versteuerung).",
+   "invoices": "Umsatzsteuer nach vereinbarten Entgelten (Soll-Versteuerung).",
+   "exigibility_exempt": ""
+  },
+  "DK": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "EE": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "EL": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "ES": {
+   "exempt": "Operación exenta de IVA (régimen de franquicia, art. 163 quinquies Ley 37/1992).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Inversión del sujeto pasivo (art. 196 de la Directiva 2006/112/CE).",
+   "export": "Operación no sujeta — localizada fuera de la Unión Europea (art. 44 de la Directiva 2006/112/CE).",
+   "receipts": "Régimen especial del criterio de caja.",
+   "invoices": "Devengo del IVA según el criterio general.",
+   "exigibility_exempt": ""
+  },
+  "FI": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "FR": {
+   "exempt": "TVA non applicable, art. 293 B du CGI",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "TVA non applicable — opération hors champ (art. 256 B du CGI).",
+   "registered": "",
+   "reverse_charge": "Autoliquidation — TVA due par le preneur (art. 196 de la directive 2006/112/CE).",
+   "export": "TVA non applicable — prestation de services située hors de l'Union européenne (art. 44 de la directive 2006/112/CE).",
+   "receipts": "TVA acquittée sur les encaissements.",
+   "invoices": "Option pour le paiement de la taxe d'après les débits.",
+   "exigibility_exempt": ""
+  },
+  "GB": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "GR": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "HR": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "HU": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "IE": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "IT": {
+   "exempt": "Operazione senza applicazione dell'IVA ai sensi dell'art. 1, commi 54-89, L. 190/2014.",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Inversione contabile — imposta assolta dal committente (art. 196 della direttiva 2006/112/CE).",
+   "export": "Operazione non soggetta — territorialmente fuori dall'Unione europea (art. 44 della direttiva 2006/112/CE).",
+   "receipts": "IVA per cassa (art. 32-bis D.L. 83/2012).",
+   "invoices": "IVA esigibile secondo il criterio ordinario.",
+   "exigibility_exempt": ""
+  },
+  "LT": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "LU": {
+   "exempt": "Franchise de TVA, art. 57 de la loi TVA.",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "LV": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "MT": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "NL": {
+   "exempt": "Vrijgesteld van btw (kleineondernemersregeling, art. 25 Wet OB).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Btw verlegd (art. 196 richtlijn 2006/112/EG).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "NO": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "PL": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "PT": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Autoliquidação (art. 196.º da Diretiva 2006/112/CE).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "RO": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "SE": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "SI": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "SK": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "US": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  },
+  "ZZ": {
+   "exempt": "VAT exempt — Council Directive 2006/112/EC (small enterprise scheme, art. 282–292).",
+   "exempt_ex": "VAT exempt — small enterprise scheme for a supplier established in another member state (art. 284 of Council Directive 2006/112/EC), identification number FR12345678901EX.",
+   "not_subject": "Not subject to VAT — outside the scope of Council Directive 2006/112/EC.",
+   "registered": "",
+   "reverse_charge": "Reverse charge — VAT due by the customer (art. 196 of Council Directive 2006/112/EC).",
+   "export": "VAT not applicable — service supplied outside the European Union (art. 44 of Council Directive 2006/112/EC).",
+   "receipts": "VAT accounted for on receipts (cash accounting).",
+   "invoices": "VAT accounted for on invoices (accrual accounting).",
+   "exigibility_exempt": ""
+  }
+ },
+ "eu": [
+  "AT",
+  "BE",
+  "BG",
+  "CY",
+  "CZ",
+  "DE",
+  "DK",
+  "EE",
+  "ES",
+  "FI",
+  "FR",
+  "GR",
+  "HR",
+  "HU",
+  "IE",
+  "IT",
+  "LT",
+  "LU",
+  "LV",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SE",
+  "SI",
+  "SK"
+ ],
+ "isEu": {
+  "AT": true,
+  "BE": true,
+  "BG": true,
+  "CY": true,
+  "CZ": true,
+  "DE": true,
+  "DK": true,
+  "EE": true,
+  "EL": true,
+  "ES": true,
+  "FI": true,
+  "FR": true,
+  "GB": false,
+  "GR": true,
+  "HR": true,
+  "HU": true,
+  "IE": true,
+  "IS": false,
+  "IT": true,
+  "LI": false,
+  "LT": true,
+  "LU": true,
+  "LV": true,
+  "MC": false,
+  "MT": true,
+  "NL": true,
+  "NO": false,
+  "PL": true,
+  "PT": true,
+  "RO": true,
+  "SE": true,
+  "SI": true,
+  "SK": true,
+  "CH": false,
+  "CA": false,
+  "US": false,
+  "XI": false,
+  "TR": false,
+  "": false,
+  " de ": true,
+  "el": true
+ },
+ "euCode": {
+  "AT": "AT",
+  "BE": "BE",
+  "BG": "BG",
+  "CY": "CY",
+  "CZ": "CZ",
+  "DE": "DE",
+  "DK": "DK",
+  "EE": "EE",
+  "EL": "GR",
+  "ES": "ES",
+  "FI": "FI",
+  "FR": "FR",
+  "GB": "GB",
+  "GR": "GR",
+  "HR": "HR",
+  "HU": "HU",
+  "IE": "IE",
+  "IS": "IS",
+  "IT": "IT",
+  "LI": "LI",
+  "LT": "LT",
+  "LU": "LU",
+  "LV": "LV",
+  "MC": "MC",
+  "MT": "MT",
+  "NL": "NL",
+  "NO": "NO",
+  "PL": "PL",
+  "PT": "PT",
+  "RO": "RO",
+  "SE": "SE",
+  "SI": "SI",
+  "SK": "SK",
+  "CH": "CH",
+  "CA": "CA",
+  "US": "US",
+  "XI": "XI",
+  "TR": "TR",
+  "": "",
+  " de ": "DE",
+  "el": "GR"
+ },
+ "idBodies": {
+  "AT": "U\\d{8}",
+  "BE": "[01]\\d{9}",
+  "BG": "\\d{9,10}",
+  "CY": "\\d{8}[A-Z]",
+  "CZ": "\\d{8,10}",
+  "DE": "\\d{9}",
+  "DK": "\\d{8}",
+  "EE": "\\d{9}",
+  "EL": "\\d{9}",
+  "ES": "[A-Z0-9]\\d{7}[A-Z0-9]",
+  "FI": "\\d{8}",
+  "GB": "\\d{9}|\\d{12}|GD\\d{3}|HA\\d{3}",
+  "FR": "[A-Z0-9]{2}\\d{9}",
+  "HR": "\\d{11}",
+  "HU": "\\d{8}",
+  "IE": "\\d{7}[A-Z]{1,2}|\\d[A-Z+*]\\d{5}[A-Z]",
+  "IT": "\\d{11}",
+  "LT": "\\d{9}|\\d{12}",
+  "LU": "\\d{8}",
+  "LV": "\\d{11}",
+  "MT": "\\d{8}",
+  "NL": "\\d{9}B\\d{2}",
+  "PL": "\\d{10}",
+  "PT": "\\d{9}",
+  "RO": "\\d{2,10}",
+  "SE": "\\d{12}",
+  "SI": "\\d{8}",
+  "SK": "\\d{10}",
+  "XI": "\\d{9}|\\d{12}|GD\\d{3}|HA\\d{3}",
+  "CH": "E\\d{9}(MWST|TVA|IVA)?"
+ },
+ "idChecks": {
+  "DE123456789": true,
+  "ATU12345678": true,
+  "FR12345678901": true,
+  "FRAB123456789": true,
+  "EL123456789": true,
+  "GR123456789": true,
+  "XX1234": true,
+  "DE12": false,
+  "CHE-123.456.789 MWST": true,
+  "CHE123456789": true,
+  "NL123456789B01": true,
+  "GB123456789": true,
+  "GB123456789012": true,
+  "GBGD123": true,
+  "IE1234567T": true,
+  "IE1X23456T": true,
+  "ES12345678Z": true,
+  "ESA1234567B": true,
+  "IT12345678901": true,
+  "IT1234": false,
+  "PL1234567890": true,
+  "RO12": true,
+  "RO1234567890": true,
+  "SE123456789012": true,
+  "BE0123456789": true,
+  "BE2123456789": false,
+  "LT123456789": true,
+  "LT123456789012": true,
+  "DE123456789EX": true,
+  "": false
+ }
+}

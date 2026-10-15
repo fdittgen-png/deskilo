@@ -219,17 +219,17 @@ Future<void> downloadInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-        memberTerms: memberTermsFor(ref, invoice.memberId),
+    InvoicePdfFileOptions(
+      // #920 — through layoutImage, so the shipped layouts' `logo`
+      // resolves to whatever the owner actually called theirs.
+      reportImage: (String name) => layoutImage(ref, name),
+      memberTerms: memberTermsFor(ref, invoice.memberId),
         dueAt: invoiceDueAt(ref, invoice),
         copy: rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value,
-        // #920 — through layoutImage, so the shipped layouts' `logo`
-    // resolves to whatever the owner actually called theirs.
-    reportImage: (name) => layoutImage(ref, name),
-      );
+        workspace: ref.read(currentWorkspaceProvider).value));
       if (!context.mounted) return;
       await savePdfToDownloads(
         context,
@@ -330,17 +330,17 @@ Future<void> shareInvoicePdf(
       final pdf = await buildInvoicePdfFile(
         context,
         invoice,
-        memberTerms: memberTermsFor(ref, invoice.memberId),
+    InvoicePdfFileOptions(
+      // #920 — through layoutImage, so the shipped layouts' `logo`
+      // resolves to whatever the owner actually called theirs.
+      reportImage: (String name) => layoutImage(ref, name),
+      memberTerms: memberTermsFor(ref, invoice.memberId),
         dueAt: invoiceDueAt(ref, invoice),
         copy: rendersCopy(ref),
         settledIn: settledStampOf(context, ref, invoice),
         annexInvoices: annexes,
         template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value,
-        // #920 — through layoutImage, so the shipped layouts' `logo`
-    // resolves to whatever the owner actually called theirs.
-    reportImage: (name) => layoutImage(ref, name),
-      );
+        workspace: ref.read(currentWorkspaceProvider).value));
       await ref.read(fileSharerProvider)(
         bytes: Uint8List.fromList(pdf.bytes),
         fileName: pdf.fileName,

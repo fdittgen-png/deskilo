@@ -1634,7 +1634,7 @@ final class DunningRulesProvider
   }
 }
 
-String _$dunningRulesHash() => r'90ffaa72da35fcedb5dfd53caec09abec7bd18e5';
+String _$dunningRulesHash() => r'e98a6d7629a06d72cd8fd2178b01e750da684dcd';
 
 /// #802 — when the two automatic invoice runs happen; defaults while
 /// nothing is stored, which is what every workspace starts with.

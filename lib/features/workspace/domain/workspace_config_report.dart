@@ -87,99 +87,164 @@ class WorkspaceConfigPdfStrings {
   final String invitationSingleUse;
 }
 
-/// Data for the owner-only configuration snapshot. No financial values
-/// or membership permissions are recomputed by rendering a template.
-Map<String, Object?> workspaceConfigurationReportData({
-  required WorkspaceConfigPdfStrings strings,
-  required String workspaceName,
-  required String generatedOnLabel,
-  required String countryLabel,
-  required String currencyCode,
-  required String timezone,
-  required String granularityLabel,
-  required List<ConfigPdfMember> members,
-  required List<String> featureLabels,
-  required String openDaysLabel,
-  required List<String> closureLabels,
-  required List<ConfigPdfLevel> levels,
+/// What the owner-only configuration snapshot renders from: the workspace's
+/// settings, its members, its features, availability and floor plan, with
+/// every string pre-resolved by the call site.
+class WorkspaceConfigDocument {
+  const WorkspaceConfigDocument({
+    required this.strings,
+    required this.workspaceName,
+    required this.generatedOnLabel,
+    required this.countryLabel,
+    required this.currencyCode,
+    required this.timezone,
+    required this.granularityLabel,
+    required this.members,
+    required this.featureLabels,
+    required this.openDaysLabel,
+    required this.closureLabels,
+    required this.levels,
+    required this.levelPrices,
+    required this.hasCustomInvitationTemplate,
+  });
+
+  final WorkspaceConfigPdfStrings strings;
+  final String workspaceName;
+  final String generatedOnLabel;
+  final String countryLabel;
+  final String currencyCode;
+  final String timezone;
+  final String granularityLabel;
+  final List<ConfigPdfMember> members;
+  final List<String> featureLabels;
+  final String openDaysLabel;
+  final List<String> closureLabels;
+  final List<ConfigPdfLevel> levels;
 
   /// Pre-formatted price per bookable level id ('' = bookable, free).
   /// Absent id = level not bookable as a whole (0050).
-  required Map<String, String> levelPrices,
+  final Map<String, String> levelPrices;
 
   /// Whether the owner replaced the built-in invitation message (0049).
-  required bool hasCustomInvitationTemplate,
-}) {
-  Map<String, Object?> row(
-    String label, [
-    String value = '',
-    String detail = '',
-  ]) => {'label': label, 'value': value, 'detail': detail};
-  Map<String, Object?> heading(String label) => {
-    ...row(label),
-    'heading': true,
-  };
+  final bool hasCustomInvitationTemplate;
+}
+
+Map<String, Object?> _row(
+  String label, [
+  String value = '',
+  String detail = '',
+]) => {'label': label, 'value': value, 'detail': detail};
+
+Map<String, Object?> _heading(String label) => {
+  ..._row(label),
+  'heading': true,
+};
+
+/// Data for the owner-only configuration snapshot. No financial values
+/// or membership permissions are recomputed by rendering a template.
+Map<String, Object?> workspaceConfigurationReportData(
+  WorkspaceConfigDocument doc,
+) {
+  final strings = doc.strings;
   return {
-    'workspace': workspaceName,
-    'issued': generatedOnLabel,
+    'workspace': doc.workspaceName,
+    'issued': doc.generatedOnLabel,
     'configuration_rows': [
-      heading(strings.overview),
-      row(strings.country, countryLabel),
-      row(strings.currency, currencyCode),
-      row(strings.timezone, timezone),
-      row(strings.granularity, granularityLabel),
-      heading(strings.members),
-      {
-        ...row(strings.colName, strings.colRole, strings.colStatus),
-        'strong': true,
-      },
-      if (members.isEmpty) row(strings.none),
-      for (final member in members) ...[
-        row(member.name, member.role, member.status),
-        if (member.details.isNotEmpty) row(member.details),
-      ],
-      heading(strings.features),
-      if (featureLabels.isEmpty) row(strings.none),
-      for (final feature in featureLabels) row(feature),
-      heading(strings.availability),
-      row(strings.openDays, openDaysLabel),
-      row(strings.closures, closureLabels.isEmpty ? strings.none : ''),
-      for (final closure in closureLabels) row(closure),
-      heading(strings.invitations),
-      row(strings.invitationSingleUse),
-      row(
-        hasCustomInvitationTemplate
-            ? strings.invitationCustomTemplate
-            : strings.invitationDefault,
-      ),
-      heading(strings.floorPlan),
-      if (levels.isEmpty) row(strings.emptyLevel),
-      for (final entry in levels) ...[
-        heading(entry.level.name),
-        if (levelPrices.containsKey(entry.level.id))
-          row(strings.levelBookable(levelPrices[entry.level.id]!)),
-        if (entry.plan.offices.isEmpty) row(strings.emptyLevel),
-        for (final office in entry.plan.offices) ...[
-          {
-            ...row(
-              office.name,
-              office.bookableAsWhole ? strings.bookableWhole : '',
-            ),
-            'strong': true,
-          },
-          for (final desk in entry.plan.desksOf(office.id))
-            row(
-              desk.name,
-              strings.seatsLabel,
-              entry.plan.seatsOf(desk.id).isEmpty
-                  ? '—'
-                  : entry.plan
-                        .seatsOf(desk.id)
-                        .map((seat) => seat.name)
-                        .join(', '),
-            ),
-        ],
-      ],
+      ..._overviewRows(doc),
+      ..._memberRows(doc),
+      ..._featureRows(doc),
+      ..._availabilityRows(doc),
+      ..._invitationRows(doc),
+      _heading(strings.floorPlan),
+      if (doc.levels.isEmpty) _row(strings.emptyLevel),
+      for (final entry in doc.levels) ..._levelRows(doc, entry),
     ],
   };
+}
+
+List<Map<String, Object?>> _overviewRows(WorkspaceConfigDocument doc) {
+  final strings = doc.strings;
+  return [
+    _heading(strings.overview),
+    _row(strings.country, doc.countryLabel),
+    _row(strings.currency, doc.currencyCode),
+    _row(strings.timezone, doc.timezone),
+    _row(strings.granularity, doc.granularityLabel),
+  ];
+}
+
+List<Map<String, Object?>> _memberRows(WorkspaceConfigDocument doc) {
+  final strings = doc.strings;
+  return [
+    _heading(strings.members),
+    {..._row(strings.colName, strings.colRole, strings.colStatus), 'strong': true},
+    if (doc.members.isEmpty) _row(strings.none),
+    for (final member in doc.members) ...[
+      _row(member.name, member.role, member.status),
+      if (member.details.isNotEmpty) _row(member.details),
+    ],
+  ];
+}
+
+List<Map<String, Object?>> _featureRows(WorkspaceConfigDocument doc) {
+  final strings = doc.strings;
+  return [
+    _heading(strings.features),
+    if (doc.featureLabels.isEmpty) _row(strings.none),
+    for (final feature in doc.featureLabels) _row(feature),
+  ];
+}
+
+List<Map<String, Object?>> _availabilityRows(WorkspaceConfigDocument doc) {
+  final strings = doc.strings;
+  return [
+    _heading(strings.availability),
+    _row(strings.openDays, doc.openDaysLabel),
+    _row(strings.closures, doc.closureLabels.isEmpty ? strings.none : ''),
+    for (final closure in doc.closureLabels) _row(closure),
+  ];
+}
+
+List<Map<String, Object?>> _invitationRows(WorkspaceConfigDocument doc) {
+  final strings = doc.strings;
+  return [
+    _heading(strings.invitations),
+    _row(strings.invitationSingleUse),
+    _row(
+      doc.hasCustomInvitationTemplate
+          ? strings.invitationCustomTemplate
+          : strings.invitationDefault,
+    ),
+  ];
+}
+
+/// One level: its heading, its price, and every room with its desks.
+List<Map<String, Object?>> _levelRows(
+  WorkspaceConfigDocument doc,
+  ConfigPdfLevel entry,
+) {
+  final strings = doc.strings;
+  return [
+    _heading(entry.level.name),
+    if (doc.levelPrices.containsKey(entry.level.id))
+      _row(strings.levelBookable(doc.levelPrices[entry.level.id]!)),
+    if (entry.plan.offices.isEmpty) _row(strings.emptyLevel),
+    for (final office in entry.plan.offices) ...[
+      {
+        ..._row(
+          office.name,
+          office.bookableAsWhole ? strings.bookableWhole : '',
+        ),
+        'strong': true,
+      },
+      for (final desk in entry.plan.desksOf(office.id))
+        _row(
+          desk.name,
+          strings.seatsLabel,
+          entry.plan.seatsOf(desk.id).isEmpty
+              ? '—'
+              : entry.plan.seatsOf(desk.id).map((seat) => seat.name).join(', '),
+        ),
+    ],
+  ];
 }

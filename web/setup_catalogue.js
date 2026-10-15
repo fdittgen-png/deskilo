@@ -201,7 +201,8 @@ window.SETUP_PROCESSES=[
      "supplyClassification",
      "viesVerification",
      "recapitulativeStatement",
-     "inputVat"
+     "inputVat",
+     "salesTax"
     ]
    }
   ]
@@ -251,6 +252,7 @@ window.SETUP_PROCESSES=[
      "environmentPairs",
      "deployments",
      "configurationTransfer",
+     "configurableSettings",
      "workspaceLibrary",
      "instanceWizard"
     ]

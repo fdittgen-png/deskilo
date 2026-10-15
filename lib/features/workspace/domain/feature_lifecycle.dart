@@ -414,6 +414,8 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.viesVerification: _ownerBeta,
   WorkspaceFeature.recapitulativeStatement: _ownerBeta,
   WorkspaceFeature.inputVat: _ownerBeta,
+  WorkspaceFeature.configurableSettings: _ownerBeta,
+  WorkspaceFeature.salesTax: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

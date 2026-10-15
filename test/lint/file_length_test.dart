@@ -116,7 +116,7 @@ const Map<String, int> _baseline = {
   // invoice_proforma.dart. `unawaited_futures` needed one import here
   // and the file was exactly at its cap, which is the house rule's cue
   // to extract rather than raise the number.
-  'lib/features/money/presentation/invoice_documents.dart': 644, // 2026-10-13 #2360: the Swiss QR-bill page is asked for and handed to both renderers. 2026-10-11 #2389 630→632: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-03 #1916 614→630: memberCapacityFor and the frozen BT-20 payment terms; 2026-10-02 #1913 610→614: the printed due date reads the date frozen at issue first. 2026-09-11 #1061 born from the invoice_actions split: the PDF/e-invoice builders and the letter pipeline
+  'lib/features/money/presentation/invoice_documents.dart': 628, // 644→628
 
   'lib/features/money/presentation/accounting_export.dart': 505, // 2026-10-13 #2360: the Swiss booking journal is one more export case.
 
@@ -169,7 +169,7 @@ const Map<String, int> _baseline = {
   // by an enum value and a manifest entry per flag, by design.
   // 1273→1284 (2026-09-16): #1277 S2 — the workspaceVocabulary flag: one enum value and one
   // manifest entry. The registry grows by a flag per functionality.
-  'lib/features/workspace/domain/workspace_feature.dart': 611, // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
+  'lib/features/workspace/domain/workspace_feature.dart': 620, // 2026-10-14 #2362 614→620: the salesTax enum value and its doc comment (a flag's enum value goes here, unavoidable). // 2026-10-13 #2484 611→614: the configurableSettings enum value and its doc line (a flag's enum value goes here). // 2026-10-11 #2386 1684→611: the manifest's entries moved to feature_manifest_part1..3.dart (data); a new flag's entry goes at the end of the last part, its enum value here.
 
   // 750→780 (2026-08-02): #395 adds fetchWorkspaceLedger and
   // fetchPaymentIntents — two new repository surfaces, not accretion.
@@ -199,7 +199,6 @@ const Map<String, int> _baseline = {
   // 700→751 (2026-09-06): #934 two routes / three repository methods.
   // 747→757 (2026-09-16): #1277 S3 — /settings/wording: the import and one GoRoute with its
   // feature redirect. The router grows by a route per destination.
-  'lib/app/router.dart': 959, // 2026-10-11 #2388 957→959: the pages opened over another screen register here (one line) and import page_routes.dart; #2386 splits the router by feature. // 2026-10-11 #2389 955→957: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-11 954→955: a router whose provider was rebuilt answers "stay" instead of reading a disposed ref (the guide's embedded app threw). // #2301: Reports destination reuses existing exports (2026-10-09). // 2026-10-06 calendar holds the alerts +11: /messages and /events open the calendar hub, with the request that selects its Alerts view; 2026-10-04 task wizard 930→936: its route and import. 2026-10-04 915→930: the one permission door (route_access.dart) in the redirect. 2026-10-03 #2142 910→915: the task recorder's window observer and its import. 2026-10-03 #2145 904→910: /assistants/connect appended last, its mcpAccess redirect and import. // 2026-10-02 #1872 900→904: the /task-workbench route appended last and its import. // 2026-10-02 #1865 892→900: the /task-recorder route appended last and its two imports. // 2026-10-02 #1923 877→892: the /bi route, web-only and gated by the BI registry before any fetch, and its imports. // 2026-10-02 #1827 B 870→877: the instance operator's assistant console route (/installation/assistants). 2026-10-02 #1914 869→870: the consent gate asks for the version the server publishes — one listen line.  2026-10-02 #2085 859→869: /settings/what-you-can-do, its roleAssignment redirect and the member query parameter;  2026-10-01 #1827+#1823 merge 851→859: /settings/assistant-setup, its manageIntegrations redirect, comment and import — a route per destination.  2026-09-29 #1823 856→851: /me, the chosen-space fact and its listen — paid for by the three fact builders that moved into route_policy.dart as pure helpers; 2026-09-28 #1652 843→856: an invitation link opened from outside leaves the location at once for the join field; /server takes an invitation's candidate.  2026-09-28 #1791: admission route, comment and expected-account wiring; implementation lives in separate files.  // 2026-09-26 #1615/#1626/#1627/#1628 805→827: four assistant routes, the owner redirect on /settings/assistants and their imports — a route per destination; // 2026-09-19 #1247 790→805: /attention, its flag redirect and its import — the router grows by a route per destination; // 2026-09-19 #1288 773→790: /settings/questions, its flag redirect and its import; // 2026-09-16 #1312 757→773: the schema gate listens, redirects first and owns /server-update — its rule lives in schema_gate.dart // 2026-09-11 #1120 /library on top of the #1148/#1150/#1151 review batch (745→752) // 2026-09-02 #821/#822/#825/#827 the conversation, report-editor, member and wizard routes // 2026-09-05 #902 /settings/payment-terms // 2026-09-10 #1085 751→730: the nine repeated owner-guard closures became one `needs(...)` helper
   // default→660 (2026-09-06): #934 the status report kind / two flags.
   'lib/features/money/presentation/report_defaults.dart': 637, // 2026-10-11 #2389 635→637: the stricter lints — cascades one section per line, reasoned ignores, if-elements. 2026-10-11 #2384 632→635: @visibleForTesting on the symbols its tests read; #2003 configuration and BI kind registrations.
   // 600→620 (2026-09-01): #791 the tap dispatcher records the branch it
@@ -239,7 +238,6 @@ const Map<String, int> _baseline = {
   // 2026-09-28 #1791: one import for the separately implemented account requests entry.
   'lib/features/workspace/presentation/screens/onboarding_screen.dart': 637, // 2026-10-09 #2313 633→637: every control keyed for the task recorder; 2026-09-28 #1652 602→633: Join is selected by an invitation errand, a link the app was opened with, or an invitation kept for this server; the join journey itself moved to widgets/invitation_join_panel.dart.
 
-  'lib/app/shell/shell_screen.dart': 507, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/core/backend/backend_settings.dart': 572, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -266,17 +264,17 @@ const Map<String, int> _baseline = {
 
 
 
-  'lib/features/money/domain/fec.dart': 590, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/fec.dart': 555, // 590→555
 
-  'lib/features/money/domain/invoice_pdf_part2.dart': 801, // 2026-10-13 #2360: the invoice takes the QR-bill page as its second sheet. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/invoice_pdf_part2.dart': 772, // 801→772
 
   'lib/features/money/domain/invoice_pdf_template.dart': 568, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/domain/money_repository.dart': 610, // 2026-10-12 #2440: createInvoice and invoiceIssueReadiness take the correction reason. 2026-10-11 #2358 587→598: the send names the syntax and the receiver; the receipt request joins the interface. #2357 +7: setExpenseScheduleVat. 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/domain/saf_t.dart': 511, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/saf_t.dart': 477, // 2026-10-13 #2365: the ledger postings moved to saf_t_ledger.dart.
 
-  'lib/features/money/domain/vat_tax_point.dart': 544, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/domain/vat_tax_point.dart': 410, // 2026-10-11 #2384 540→544: @visibleForTesting on the declarations only tests read, and its import; 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/money/presentation/screens/my_finances_screen.dart': 574, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
@@ -288,7 +286,7 @@ const Map<String, int> _baseline = {
 
   'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 552, // 2026-10-13 #2361: the Canadian BN and QST number refusals have their messages. 2026-10-12 #2360: the Swiss UID refusal has its message. 2026-10-12 #2359: the sterling VRN refusal has its message. 2026-10-12 #2440: the correction reason joins readiness and the result (the field itself is its own file). 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
-  'lib/features/money/providers/money_providers.dart': 588, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
+  'lib/features/money/providers/money_providers.dart': 601, // 2026-10-13 #2484 588→601: the dunning rules provider reads the workspace's settings snapshot for the first reminder's delay (a setting now). // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 
   'lib/features/task_recorder/application/recorder_controller.dart': 548, // 2026-10-11 #2386: the budget fell 600→500; this file was within the old one.
 

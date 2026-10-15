@@ -842,6 +842,12 @@
       "capabilities": []
     },
     {
+      "key": "configurableSettings",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "configurationTransfer",
       "maturity": "beta",
       "lifecycle": "active",
@@ -1325,6 +1331,12 @@
     {
       "key": "roleManagement",
       "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "salesTax",
+      "maturity": "unreviewed",
       "lifecycle": "active",
       "capabilities": []
     },

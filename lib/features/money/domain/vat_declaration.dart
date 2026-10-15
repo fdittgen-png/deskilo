@@ -3,8 +3,11 @@ import 'package:xml/xml.dart';
 
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'invoice.dart';
 import 'vat_components.dart';
+import 'vat_form_boxes.dart';
 import 'vat_form_catalogue.dart';
 import 'vat_forms.dart';
 import 'vat_tax_point.dart';
@@ -26,9 +29,31 @@ class VatDeclarationLine {
     this.correctsEnd,
     this.direction = 'output',
     this.components = const [],
+    this.group = '',
   });
 
   final double percent;
+
+  /// #2480 -- the fiscal group (`VatGroup.wire`) the rate this line was taxed
+  /// at belongs to, read from the country's rate rows when a return form is
+  /// filled; '' where the rate is in none of them. Never stored.
+  final String group;
+
+  /// This line, tagged with the fiscal group of its rate.
+  VatDeclarationLine inGroup(String group) => VatDeclarationLine(
+        percent: percent,
+        grossCents: grossCents,
+        netCents: netCents,
+        vatCents: vatCents,
+        invoiceCount: invoiceCount,
+        category: category,
+        corrects: corrects,
+        correctsStart: correctsStart,
+        correctsEnd: correctsEnd,
+        direction: direction,
+        components: components,
+        group: group,
+      );
 
   /// #2357 — the UNCL5305 category the server keeps apart at one rate
   /// (S, AE, E, Z, G, O); '' on a line an older client computed.
@@ -204,11 +229,15 @@ List<VatFormBox> vatFormBoxes(
   String countryCode,
   List<VatDeclarationLine> lines, {
   DateTime? periodEnd,
-}) => fillVatForm(
-  vatFormSpecFor(countryCode, periodEnd ?? DateTime(9999)) ??
-      genericVatForm(lines),
-  lines,
-);
+  TaxReferenceSet? reference,
+}) {
+  final data = reference ?? ActiveTaxReference.current;
+  final end = periodEnd ?? DateTime(9999);
+  final spec =
+      vatFormSpecFor(countryCode, end, reference: data) ?? genericVatForm(lines);
+  final groupOf = lineGroupsFor(data, spec.country, end);
+  return fillVatForm(spec, [for (final l in lines) l.inGroup(groupOf(l))]);
+}
 
 /// #2361 — the QST part of Revenu Québec's FPZ-500, for a Canadian
 /// declaration that charged or claimed the QST; empty otherwise.

@@ -390,7 +390,16 @@ enum WorkspaceFeature {
   /// share, and the VAT return subtracts the deductible VAT from the VAT
   /// collected. Platform, default ON, under vatDeclarations; OFF hides the
   /// fields and the return declares output VAT only.
-  inputVat;
+  inputVat,
+
+  /// #2484 — the settings editor (platform tier, default ON; OFF hides it).
+  configurableSettings,
+
+  /// #2362 — a seller in the United States issues in sales-tax mode: net
+  /// prices, the tax of the site's postal code stated apart, taxability per
+  /// kind of line, exemption certificates. Platform, default ON, under
+  /// invoicing; OFF refuses such a seller as before.
+  salesTax;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

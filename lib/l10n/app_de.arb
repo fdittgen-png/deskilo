@@ -3665,6 +3665,14 @@
   "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
   "featureCoOwner": "Mitinhaber",
   "featureCoOwnerDesc": "Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).",
+  "featureConfigurableSettingsDesc": "Grenzen, Fristen und Standardwerte, die Sie in der App ändern, statt auf eine Version zu warten: Der Plattformbetreiber legt die Standardwerte fest, die Administratoren eines Arbeitsbereichs ihre eigenen.",
+  "@featureConfigurableSettingsDesc": {
+    "description": "#2484 settings: Feature description."
+  },
+  "featureConfigurableSettingsTitle": "Konfigurierbare Einstellungen",
+  "@featureConfigurableSettingsTitle": {
+    "description": "#2484 settings: Feature title."
+  },
   "featureConfigurationTransfer": "Konfiguration in der Raumdatei",
   "@featureConfigurationTransfer": {
     "description": "#916 configuration transfer: featureConfigurationTransfer"
@@ -4111,6 +4119,14 @@
   "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Der Inhaber entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
+  },
+  "featureSalesTaxDesc": "Ein Verkäufer in den USA stellt Nettopreise aus und weist die Sales Tax der Postleitzahl des Standorts getrennt je Jurisdiktion aus; die Befreiungsbescheinigung eines Kunden nimmt eine Zeile aus der Steuer. Aus: ein solcher Verkäufer kann keine Rechnung stellen.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "featureSalesTaxTitle": "Sales Tax (USA)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
   },
   "featureScheduledExpensesDesc": "Wiederkehrende Ausgaben (Internet, Telefon, Strom): jedes Mitglied plant sie mit ihrer Regel (alle X Tage/Wochen/Monate/Jahre, X Mal oder bis zu einem Datum); der Plan wird einmal validiert, und jede Fälligkeit wird dem Mitglied vorgelegt — der validierte Betrag zählt sofort, ein abweichender erklärt sich und durchläuft die Ausgaben-Validierung.",
   "featureScheduledExpensesTitle": "Geplante Ausgaben",
@@ -5758,6 +5774,14 @@
   "invoiceMissingNationalCurrency": "Die Mehrwertsteuer in Landeswährung: ein Verkäufer aus einem Mitgliedstaat außerhalb des Euro stellt die Steuer hier in seiner eigenen Währung in Rechnung (Art. 230 MwStSystRL)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"
+  },
+  "invoiceMissingSalesTaxRate": "Die Sales Tax der Postleitzahl des Standorts: der Plattformbetreiber hat sie nicht erfasst",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Ob eine Zeilenart dieser Rechnung im Bundesstaat steuerbar ist: niemand hat es festgelegt (Steuerbarkeit je Bundesstaat)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
   "invoiceMissingSellerAddress": "Die Postanschrift des Arbeitsbereichs (Straße oder Ort)",
   "@invoiceMissingSellerAddress": {
@@ -10820,9 +10844,216 @@
   "servicesNew": "Neue Leistung",
   "servicesPrice": "Preis",
   "servicesTitle": "Leistungen",
+  "settingCouldNotSave": "Die Einstellung konnte nicht gespeichert werden",
+  "@settingCouldNotSave": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingCurrentValue": "Aktuell: {value} {unit}",
+  "@settingCurrentValue": {
+    "description": "#2484 settings: Current value.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingEdit": "Ändern",
+  "@settingEdit": {
+    "description": "#2484 settings: Edit button."
+  },
+  "settingFloorNote": "Sicherheitsuntergrenze: nie unter {floor} {unit}.",
+  "@settingFloorNote": {
+    "description": "#2484 settings: Security floor.",
+    "placeholders": {
+      "floor": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingGroupDunning": "Mahnungen und Zahlungsfristen",
+  "@settingGroupDunning": {
+    "description": "#2484 settings: Settings group title."
+  },
+  "settingGuardrail": "Feste Schutzgrenze",
+  "@settingGuardrail": {
+    "description": "#2484 settings: Read-only guardrail."
+  },
+  "settingGuardrailFallback": "Von der Software festgelegt; sie wird angezeigt, damit Sie wissen, dass es sie gibt.",
+  "@settingGuardrailFallback": {
+    "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintDunningFirstAfterDays": "Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.",
+  "@settingHintDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting hint."
+  },
+  "settingHistory": "Verlauf",
+  "@settingHistory": {
+    "description": "#2484 settings: History button."
+  },
+  "settingHistoryEmpty": "Keine gespeicherte Version: Der Standardwert gilt.",
+  "@settingHistoryEmpty": {
+    "description": "#2484 settings: History empty."
+  },
+  "settingLabelDunningFirstAfterDays": "Tage bis zur ersten Mahnung",
+  "@settingLabelDunningFirstAfterDays": {
+    "description": "#2484 settings: Setting label."
+  },
+  "settingMaxOnly": "Höchstens {max} {unit}",
+  "@settingMaxOnly": {
+    "description": "#2484 settings: Upper bound.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingMinOnly": "Mindestens {min} {unit}",
+  "@settingMinOnly": {
+    "description": "#2484 settings: Lower bound.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingNoteField": "Notiz (optional)",
+  "@settingNoteField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingOriginDefault": "Eingebauter Standard",
+  "@settingOriginDefault": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginPlatform": "Plattform-Standard",
+  "@settingOriginPlatform": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingOriginWorkspace": "Für diesen Arbeitsbereich festgelegt",
+  "@settingOriginWorkspace": {
+    "description": "#2484 settings: Origin."
+  },
+  "settingProblemAboveMax": "Über dem Maximum",
+  "@settingProblemAboveMax": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowFloor": "Unter der Sicherheitsuntergrenze",
+  "@settingProblemBelowFloor": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemBelowMin": "Unter dem Minimum",
+  "@settingProblemBelowMin": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotAChoice": "Keine der Auswahlmöglichkeiten",
+  "@settingProblemNotAChoice": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemNotANumber": "Ganze Zahl eingeben",
+  "@settingProblemNotANumber": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingProblemWrongType": "Kein gültiger Wert",
+  "@settingProblemWrongType": {
+    "description": "#2484 settings: Validation."
+  },
+  "settingRange": "Zwischen {min} und {max} {unit}",
+  "@settingRange": {
+    "description": "#2484 settings: Allowed range.",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingSave": "Speichern",
+  "@settingSave": {
+    "description": "#2484 settings: Save button."
+  },
+  "settingSaved": "Einstellung gespeichert",
+  "@settingSaved": {
+    "description": "#2484 settings: Snackbar."
+  },
+  "settingUnitDays": "Tage",
+  "@settingUnitDays": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitHours": "Stunden",
+  "@settingUnitHours": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitMinutes": "Minuten",
+  "@settingUnitMinutes": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingUnitSeconds": "Sekunden",
+  "@settingUnitSeconds": {
+    "description": "#2484 settings: Unit."
+  },
+  "settingValueField": "Wert",
+  "@settingValueField": {
+    "description": "#2484 settings: Field label."
+  },
+  "settingVersionLine": "{value} {unit} · ab {from}",
+  "@settingVersionLine": {
+    "description": "#2484 settings: A history line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "settingVersionUntil": "bis {to}",
+  "@settingVersionUntil": {
+    "description": "#2484 settings: History line end.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "settingsBillingReports": "Abrechnung & Berichte",
+  "settingsEmpty": "Hier gibt es keine Einstellungen.",
+  "@settingsEmpty": {
+    "description": "#2484 settings: Empty editor."
+  },
   "settingsFrontCamera": "Mit der Frontkamera scannen",
   "settingsFrontCameraDesc": "Badges werden mit der Kamera auf der Bildschirmseite gelesen — ausschalten für die Rückkamera.",
+  "settingsLoadFailed": "Die Einstellungen konnten nicht geladen werden.",
+  "@settingsLoadFailed": {
+    "description": "#2484 settings: Error text."
+  },
+  "settingsOfflineRegistry": "Es werden die eingebauten Standardwerte gezeigt: Der Server ist nicht erreichbar, daher lässt sich jetzt nichts ändern.",
+  "@settingsOfflineRegistry": {
+    "description": "#2484 settings: Banner: the editor shows the bundled registry."
+  },
+  "settingsPlatformTitle": "Plattform-Einstellungen (Standardwerte)",
+  "@settingsPlatformTitle": {
+    "description": "#2484 settings: Title of the platform settings editor."
+  },
   "settingsSectionAccount": "Mein Konto",
   "settingsSectionAdministration": "Verwaltung",
   "settingsSectionAdvanced": "Erweitert",
@@ -10831,6 +11062,10 @@
   "settingsSectionMembership": "Meine Mitgliedschaft",
   "settingsSectionWorkspace": "Dieser Space",
   "settingsTitle": "Einstellungen",
+  "settingsWorkspaceTitle": "Einstellungswerte",
+  "@settingsWorkspaceTitle": {
+    "description": "#2484 settings: Title of the workspace settings editor section."
+  },
   "settlementAction": "Zu einer Rechnung zusammenfassen",
   "settlementAnnexAlone": "Nur diese Rechnung",
   "settlementAnnexBody": "{count, plural, =1{Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.} other{Die {count} Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.}}",
@@ -11735,6 +11970,298 @@
   "taskWorkbenchTitle": "Aufgaben-Werkbank",
   "taskWorkbenchTranscriptOnly": "Einige Schritte stammen aus einer neueren Version: nur als Mitschrift angezeigt.",
   "taskWorkbenchUntrusted": "Ein privater Entwurf aus einer Datei: nichts darin gilt als vertrauenswürdig oder wird gesendet.",
+  "taxRefAccount": "Kontonummer (oder Kontenrahmen)",
+  "@taxRefAccount": {
+    "description": "#2481 tax reference: Field: the account number of an export row."
+  },
+  "taxRefAdd": "Wert hinzufügen",
+  "@taxRefAdd": {
+    "description": "#2477 tax reference: Button: add a new reference value."
+  },
+  "taxRefAliasOf": "Alias von (ISO-Code, leer bei einem Mitgliedstaat)",
+  "@taxRefAliasOf": {
+    "description": "#2478 tax reference: Field: the member state an alias code stands for."
+  },
+  "taxRefCashBackstop": "Spätester Zeitpunkt bei Ist-Versteuerung",
+  "@taxRefCashBackstop": {
+    "description": "#2479 tax reference: Field: when an unpaid part falls due under cash accounting."
+  },
+  "taxRefCashOption": "Option für die Ist-Versteuerung",
+  "@taxRefCashOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
+  },
+  "taxRefCategory": "EN-16931-Kategorie",
+  "@taxRefCategory": {
+    "description": "#2477 tax reference: Field: VAT category code of a rate."
+  },
+  "taxRefCents": "Betrag (kleinste Einheit)",
+  "@taxRefCents": {
+    "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefComponents": "Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefConfirmed": "Bestätigt",
+  "@taxRefConfirmed": {
+    "description": "#2477 tax reference: Badge: the value was checked against its source."
+  },
+  "taxRefCouldNotSave": "Die Version konnte nicht gespeichert werden",
+  "@taxRefCouldNotSave": {
+    "description": "#2477 tax reference: Snackbar: the server refused the version."
+  },
+  "taxRefCountry": "Land (ISO-Code, oder * für alle)",
+  "@taxRefCountry": {
+    "description": "#2477 tax reference: Field: country of a reference value."
+  },
+  "taxRefCurrency": "Währung (ISO-Code)",
+  "@taxRefCurrency": {
+    "description": "#2479 tax reference: Field: ISO currency code."
+  },
+  "taxRefDomainAccountMap": "Exportkonten und -schlüssel",
+  "@taxRefDomainAccountMap": {
+    "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
+  },
+  "taxRefDomainCatalogueNote": "Katalog-Hinweise",
+  "@taxRefDomainCatalogueNote": {
+    "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
+  },
+  "taxRefDomainEuMember": "EU-Mitglieder",
+  "@taxRefDomainEuMember": {
+    "description": "#2477 tax reference: Domain filter: EU member states."
+  },
+  "taxRefDomainExemptionText": "Gesetzliche Texte",
+  "@taxRefDomainExemptionText": {
+    "description": "#2477 tax reference: Domain filter: statutory mentions."
+  },
+  "taxRefDomainFormBox": "Felder der Steuererklärung",
+  "@taxRefDomainFormBox": {
+    "description": "#2480 tax reference: Tab: the rated boxes of a return form."
+  },
+  "taxRefDomainGroupExample": "Beispiele je Gruppe",
+  "@taxRefDomainGroupExample": {
+    "description": "#2478 tax reference: Domain filter: what falls in each fiscal group."
+  },
+  "taxRefDomainIssuingGate": "Ausstellungs-Freigaben",
+  "@taxRefDomainIssuingGate": {
+    "description": "#2479 tax reference: Domain filter: the countries DesKilo issues invoices for."
+  },
+  "taxRefDomainMandate": "E-Rechnungs-Pflichten",
+  "@taxRefDomainMandate": {
+    "description": "#2479 tax reference: Domain filter: e-invoicing mandate calendar."
+  },
+  "taxRefDomainRate": "Steuersätze",
+  "@taxRefDomainRate": {
+    "description": "#2477 tax reference: Domain filter: rates."
+  },
+  "taxRefDomainSalesTax": "Sales Tax je Postleitzahl",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
+  "taxRefDomainTaxPoint": "Zeitpunkt der Steuerentstehung",
+  "@taxRefDomainTaxPoint": {
+    "description": "#2479 tax reference: Domain filter: the tax point policy of a country."
+  },
+  "taxRefDomainTaxability": "Steuerbarkeit je Bundesstaat",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
+  },
+  "taxRefDomainThreshold": "Schwellenwerte",
+  "@taxRefDomainThreshold": {
+    "description": "#2479 tax reference: Domain filter: small-business turnover thresholds."
+  },
+  "taxRefDomainVatIdPattern": "USt-IdNr.-Muster",
+  "@taxRefDomainVatIdPattern": {
+    "description": "#2477 tax reference: Domain filter: VAT identification number patterns."
+  },
+  "taxRefDuty": "Pflicht",
+  "@taxRefDuty": {
+    "description": "#2479 tax reference: Field: the e-invoicing duty."
+  },
+  "taxRefEffect": "Wirkung bei Überschreitung (next_year oder immediate)",
+  "@taxRefEffect": {
+    "description": "#2479 tax reference: Field: what passing the threshold does."
+  },
+  "taxRefEmpty": "Keine Werte.",
+  "@taxRefEmpty": {
+    "description": "#2477 tax reference: Empty list."
+  },
+  "taxRefExcludeGroups": "Jede Gruppe außer (durch Komma getrennt)",
+  "@taxRefExcludeGroups": {
+    "description": "#2480 tax reference: Field: a catch-all return box adds up every group except these."
+  },
+  "taxRefExemptionReason": "Befreiungsgrund",
+  "@taxRefExemptionReason": {
+    "description": "#2477 tax reference: Field: statutory reason printed on an exempt line."
+  },
+  "taxRefFormat": "Format",
+  "@taxRefFormat": {
+    "description": "#2481 tax reference: Field: the export format of an account row."
+  },
+  "taxRefFrom": "Gilt ab (JJJJ-MM-TT)",
+  "@taxRefFrom": {
+    "description": "#2479 tax reference: Field: first day the duty applies (YYYY-MM-DD)."
+  },
+  "taxRefGroup": "Gruppe",
+  "@taxRefGroup": {
+    "description": "#2477 tax reference: Field: fiscal group of a rate."
+  },
+  "taxRefGroups": "Steuergruppen, die es summiert (durch Komma getrennt)",
+  "@taxRefGroups": {
+    "description": "#2480 tax reference: Field: fiscal groups a return box adds up."
+  },
+  "taxRefHistory": "Verlauf",
+  "@taxRefHistory": {
+    "description": "#2477 tax reference: Button and sheet title: every version of a value."
+  },
+  "taxRefIntro": "Steuersätze, Befreiungstexte, USt-IdNr.-Muster und die EU-Mitgliedstaaten. Eine Änderung ist eine neue Version ab einem Datum; die gültige Version wird beendet, nie überschrieben.",
+  "@taxRefIntro": {
+    "description": "#2477 tax reference: Intro line under the title of the tax reference screen."
+  },
+  "taxRefInvalidAccount": "Eine Kontonummer oder einen Steuerschlüssel angeben",
+  "@taxRefInvalidAccount": {
+    "description": "#2481 tax reference: Error: an export row needs an account or a code."
+  },
+  "taxRefInvalidComponents": "Eine Jurisdiktion je Zeile: Ebene, Name, Prozent (0 bis 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
+  "taxRefInvalidDate": "Datum als JJJJ-MM-TT eingeben",
+  "@taxRefInvalidDate": {
+    "description": "#2477 tax reference: Validation: date format."
+  },
+  "taxRefInvalidGroups": "Bekannte Steuergruppen nennen (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), keine in beiden Listen",
+  "@taxRefInvalidGroups": {
+    "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
+  },
+  "taxRefInvalidNumber": "Zahl von 0 bis 99,999 eingeben",
+  "@taxRefInvalidNumber": {
+    "description": "#2477 tax reference: Validation: percentage."
+  },
+  "taxRefInvalidState": "Zweibuchstabigen Bundesstaat-Code eingeben",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
+  },
+  "taxRefInvoiceOption": "Option für das Rechnungsdatum",
+  "@taxRefInvoiceOption": {
+    "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
+  },
+  "taxRefKey": "Schlüssel",
+  "@taxRefKey": {
+    "description": "#2477 tax reference: Field: key naming a value within a country."
+  },
+  "taxRefLabel": "Bezeichnung",
+  "@taxRefLabel": {
+    "description": "#2477 tax reference: Field: label of a rate."
+  },
+  "taxRefLoadFailed": "Die Referenzdaten konnten nicht geladen werden.",
+  "@taxRefLoadFailed": {
+    "description": "#2477 tax reference: error text when the list cannot load."
+  },
+  "taxRefMemberEmpty": "Ein Mitgliedstaat hat keine weiteren Felder.",
+  "@taxRefMemberEmpty": {
+    "description": "#2477 tax reference: Hint in the form of an EU member."
+  },
+  "taxRefNationalChannel": "Nationaler Übermittlungsweg vorgeschrieben",
+  "@taxRefNationalChannel": {
+    "description": "#2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet."
+  },
+  "taxRefNewVersion": "Neue Version",
+  "@taxRefNewVersion": {
+    "description": "#2477 tax reference: Button and sheet title: create a new version of a value."
+  },
+  "taxRefNotAllowed": "Nur der Plattformbetreiber pflegt Steuer-Referenzdaten.",
+  "@taxRefNotAllowed": {
+    "description": "#2477 tax reference: Shown to anyone else who opens the screen."
+  },
+  "taxRefOfflineCopy": "Es wird die in der App enthaltene Kopie gezeigt: Der Server ist nicht erreichbar.",
+  "@taxRefOfflineCopy": {
+    "description": "#2477 tax reference: Banner: values come from the bundled copy."
+  },
+  "taxRefPattern": "Muster",
+  "@taxRefPattern": {
+    "description": "#2477 tax reference: Field: regular expression for the identifier body."
+  },
+  "taxRefPercent": "Prozent",
+  "@taxRefPercent": {
+    "description": "#2477 tax reference: Field: percentage of a rate."
+  },
+  "taxRefPosition": "Position",
+  "@taxRefPosition": {
+    "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRegime": "Regelung",
+  "@taxRefRegime": {
+    "description": "#2477 tax reference: Field: the regime a statutory text belongs to."
+  },
+  "taxRefRequired": "Pflichtfeld",
+  "@taxRefRequired": {
+    "description": "#2477 tax reference: Validation: a required field is empty."
+  },
+  "taxRefRequiresTaxNumber": "Steuernummer erforderlich",
+  "@taxRefRequiresTaxNumber": {
+    "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
+  },
+  "taxRefRole": "Rolle",
+  "@taxRefRole": {
+    "description": "#2481 tax reference: Field: the role of an account row."
+  },
+  "taxRefSave": "Version speichern",
+  "@taxRefSave": {
+    "description": "#2477 tax reference: Button: save the new version."
+  },
+  "taxRefSaved": "Version gespeichert",
+  "@taxRefSaved": {
+    "description": "#2477 tax reference: Snackbar after a save."
+  },
+  "taxRefSource": "Quelle",
+  "@taxRefSource": {
+    "description": "#2477 tax reference: Field: where the value comes from (a law, a table)."
+  },
+  "taxRefStandardRule": "Gesetzliche Regel",
+  "@taxRefStandardRule": {
+    "description": "#2479 tax reference: Field: the legal default rule of the tax point."
+  },
+  "taxRefState": "Bundesstaat (zwei Buchstaben)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefStatus": "Status",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
+  "taxRefSupported": "Ausstellung unterstützt",
+  "@taxRefSupported": {
+    "description": "#2479 tax reference: Switch: DesKilo issues invoices for sellers of this country."
+  },
+  "taxRefTaxCode": "Steuerschlüssel",
+  "@taxRefTaxCode": {
+    "description": "#2481 tax reference: Field: the export tax code."
+  },
+  "taxRefTaxSystem": "Steuersystem (vat oder sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
+  },
+  "taxRefText": "Text",
+  "@taxRefText": {
+    "description": "#2477 tax reference: Field: statutory text."
+  },
+  "taxRefTitle": "Steuer-Referenzdaten",
+  "@taxRefTitle": {
+    "description": "#2477 tax reference: Screen title: the VAT reference values the platform owner maintains."
+  },
+  "taxRefUnconfirmed": "Nicht bestätigt",
+  "@taxRefUnconfirmed": {
+    "description": "#2477 tax reference: Badge: nobody checked the value against its source."
+  },
+  "taxRefValidFrom": "Gültig ab",
+  "@taxRefValidFrom": {
+    "description": "#2477 tax reference: Field: first day a version is in force."
+  },
+  "taxRefValidUntil": "bis",
+  "@taxRefValidUntil": {
+    "description": "#2477 tax reference: Word before the day a version ends."
+  },
   "templateApplyConflict": "Diese Anfrage wurde bereits für etwas anderes verwendet. Es wurde nichts übernommen.",
   "templateChangedSinceReview": "Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.",
   "templateClearFilters": "Suche zurücksetzen",

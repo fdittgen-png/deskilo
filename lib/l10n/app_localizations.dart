@@ -9012,6 +9012,18 @@ abstract class AppLocalizations {
   /// **'Appoint co-owners: owner permissions now (active) or succession-in-waiting (passive).'**
   String get featureCoOwnerDesc;
 
+  /// #2484 settings: Feature description.
+  ///
+  /// In en, this message translates to:
+  /// **'Limits, windows and defaults you change in the app instead of waiting for a release: the platform owner sets the defaults, a workspace\'s administrators their own values.'**
+  String get featureConfigurableSettingsDesc;
+
+  /// #2484 settings: Feature title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configurable settings'**
+  String get featureConfigurableSettingsTitle;
+
   /// #916 configuration transfer: featureConfigurationTransfer
   ///
   /// In en, this message translates to:
@@ -10145,6 +10157,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The central role→permission matrix: the owner decides which role holds which permission; everyone else reads their own. Off, the defaults simply apply.'**
   String get featureRoleManagementDesc;
+
+  /// #2362 sales tax: featureSalesTaxDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A seller in the United States issues with net prices and the sales tax of the site\'s postal code stated apart, per jurisdiction; a customer\'s exemption certificate takes a line out of the tax. Off: such a seller cannot issue.'**
+  String get featureSalesTaxDesc;
+
+  /// #2362 sales tax: featureSalesTaxTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax (United States)'**
+  String get featureSalesTaxTitle;
 
   /// No description provided for @featureScheduledExpensesDesc.
   ///
@@ -14633,6 +14657,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
   String get invoiceMissingNationalCurrency;
+
+  /// #2362 sales tax: invoiceMissingSalesTaxRate
+  ///
+  /// In en, this message translates to:
+  /// **'The sales tax of the site\'s postal code: the platform owner has not entered it'**
+  String get invoiceMissingSalesTaxRate;
+
+  /// #2362 sales tax: invoiceMissingSalesTaxTaxability
+  ///
+  /// In en, this message translates to:
+  /// **'Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)'**
+  String get invoiceMissingSalesTaxTaxability;
 
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
@@ -28010,11 +28046,215 @@ abstract class AppLocalizations {
   /// **'Services'**
   String get servicesTitle;
 
+  /// #2484 settings: Snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'The setting could not be saved'**
+  String get settingCouldNotSave;
+
+  /// #2484 settings: Current value.
+  ///
+  /// In en, this message translates to:
+  /// **'Now: {value} {unit}'**
+  String settingCurrentValue(String value, String unit);
+
+  /// #2484 settings: Edit button.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get settingEdit;
+
+  /// #2484 settings: Security floor.
+  ///
+  /// In en, this message translates to:
+  /// **'Security floor: never below {floor} {unit}.'**
+  String settingFloorNote(String floor, String unit);
+
+  /// #2484 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders and payment terms'**
+  String get settingGroupDunning;
+
+  /// #2484 settings: Read-only guardrail.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed guardrail'**
+  String get settingGuardrail;
+
+  /// #2484 settings: Reason when a guardrail has no note.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the software; it is shown so you know it exists.'**
+  String get settingGuardrailFallback;
+
+  /// #2484 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
+  String get settingHintDunningFirstAfterDays;
+
+  /// #2484 settings: History button.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get settingHistory;
+
+  /// #2484 settings: History empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No stored version: the default applies.'**
+  String get settingHistoryEmpty;
+
+  /// #2484 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Days before a first reminder'**
+  String get settingLabelDunningFirstAfterDays;
+
+  /// #2484 settings: Upper bound.
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max} {unit}'**
+  String settingMaxOnly(String max, String unit);
+
+  /// #2484 settings: Lower bound.
+  ///
+  /// In en, this message translates to:
+  /// **'At least {min} {unit}'**
+  String settingMinOnly(String min, String unit);
+
+  /// #2484 settings: Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get settingNoteField;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in default'**
+  String get settingOriginDefault;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform default'**
+  String get settingOriginPlatform;
+
+  /// #2484 settings: Origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set for this workspace'**
+  String get settingOriginWorkspace;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the maximum'**
+  String get settingProblemAboveMax;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the security floor'**
+  String get settingProblemBelowFloor;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the minimum'**
+  String get settingProblemBelowMin;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Not one of the choices'**
+  String get settingProblemNotAChoice;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number'**
+  String get settingProblemNotANumber;
+
+  /// #2484 settings: Validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid value'**
+  String get settingProblemWrongType;
+
+  /// #2484 settings: Allowed range.
+  ///
+  /// In en, this message translates to:
+  /// **'Between {min} and {max} {unit}'**
+  String settingRange(String min, String max, String unit);
+
+  /// #2484 settings: Save button.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get settingSave;
+
+  /// #2484 settings: Snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting saved'**
+  String get settingSaved;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get settingUnitDays;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get settingUnitHours;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get settingUnitMinutes;
+
+  /// #2484 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'seconds'**
+  String get settingUnitSeconds;
+
+  /// #2484 settings: Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get settingValueField;
+
+  /// #2484 settings: A history line.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} {unit} · from {from}'**
+  String settingVersionLine(String value, String unit, String from);
+
+  /// #2484 settings: History line end.
+  ///
+  /// In en, this message translates to:
+  /// **'until {to}'**
+  String settingVersionUntil(String to);
+
   /// Admin settings entry to the invoicing hub (#478)
   ///
   /// In en, this message translates to:
   /// **'Billing & reports'**
   String get settingsBillingReports;
+
+  /// #2484 settings: Empty editor.
+  ///
+  /// In en, this message translates to:
+  /// **'No settings here.'**
+  String get settingsEmpty;
 
   /// Settings switch: badge QR scanning uses the screen-side camera (default on)
   ///
@@ -28027,6 +28267,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Badges are read with the screen-side camera — turn off to use the back camera.'**
   String get settingsFrontCameraDesc;
+
+  /// #2484 settings: Error text.
+  ///
+  /// In en, this message translates to:
+  /// **'The settings could not be loaded.'**
+  String get settingsLoadFailed;
+
+  /// #2484 settings: Banner: the editor shows the bundled registry.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the built-in defaults: the server could not be reached, so nothing can be changed now.'**
+  String get settingsOfflineRegistry;
+
+  /// #2484 settings: Title of the platform settings editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform settings (defaults)'**
+  String get settingsPlatformTitle;
 
   /// #1307 Settings section: who I am and how the app looks, on every workspace
   ///
@@ -28075,6 +28333,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsTitle;
+
+  /// #2484 settings: Title of the workspace settings editor section.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings values'**
+  String get settingsWorkspaceTitle;
 
   /// No description provided for @settlementAction.
   ///
@@ -31501,6 +31765,444 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A private draft from a file: nothing in it is trusted or sent.'**
   String get taskWorkbenchUntrusted;
+
+  /// #2481 tax reference: Field: the account number of an export row.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number (or chart code)'**
+  String get taxRefAccount;
+
+  /// #2477 tax reference: Button: add a new reference value.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a value'**
+  String get taxRefAdd;
+
+  /// #2478 tax reference: Field: the member state an alias code stands for.
+  ///
+  /// In en, this message translates to:
+  /// **'Alias of (ISO code, empty for a member state)'**
+  String get taxRefAliasOf;
+
+  /// #2479 tax reference: Field: when an unpaid part falls due under cash accounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash backstop'**
+  String get taxRefCashBackstop;
+
+  /// #2479 tax reference: Switch: the seller may opt for cash accounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Option for cash accounting'**
+  String get taxRefCashOption;
+
+  /// #2477 tax reference: Field: VAT category code of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'EN 16931 category'**
+  String get taxRefCategory;
+
+  /// #2479 tax reference: Field: the threshold in minor units of the currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (minor units)'**
+  String get taxRefCents;
+
+  /// #2362 sales tax: taxRefComponents
+  ///
+  /// In en, this message translates to:
+  /// **'Jurisdictions, one per line: level, name, percent (level: state, county, city or district)'**
+  String get taxRefComponents;
+
+  /// #2477 tax reference: Badge: the value was checked against its source.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get taxRefConfirmed;
+
+  /// #2477 tax reference: Snackbar: the server refused the version.
+  ///
+  /// In en, this message translates to:
+  /// **'The version could not be saved'**
+  String get taxRefCouldNotSave;
+
+  /// #2477 tax reference: Field: country of a reference value.
+  ///
+  /// In en, this message translates to:
+  /// **'Country (ISO code, or * for all)'**
+  String get taxRefCountry;
+
+  /// #2479 tax reference: Field: ISO currency code.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency (ISO code)'**
+  String get taxRefCurrency;
+
+  /// #2481 tax reference: Tab: the accounts and tax codes accounting exports propose.
+  ///
+  /// In en, this message translates to:
+  /// **'Export accounts and codes'**
+  String get taxRefDomainAccountMap;
+
+  /// #2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalogue notes'**
+  String get taxRefDomainCatalogueNote;
+
+  /// #2477 tax reference: Domain filter: EU member states.
+  ///
+  /// In en, this message translates to:
+  /// **'EU members'**
+  String get taxRefDomainEuMember;
+
+  /// #2477 tax reference: Domain filter: statutory mentions.
+  ///
+  /// In en, this message translates to:
+  /// **'Statutory texts'**
+  String get taxRefDomainExemptionText;
+
+  /// #2480 tax reference: Tab: the rated boxes of a return form.
+  ///
+  /// In en, this message translates to:
+  /// **'Return form boxes'**
+  String get taxRefDomainFormBox;
+
+  /// #2478 tax reference: Domain filter: what falls in each fiscal group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group examples'**
+  String get taxRefDomainGroupExample;
+
+  /// #2479 tax reference: Domain filter: the countries DesKilo issues invoices for.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing gates'**
+  String get taxRefDomainIssuingGate;
+
+  /// #2479 tax reference: Domain filter: e-invoicing mandate calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoicing mandates'**
+  String get taxRefDomainMandate;
+
+  /// #2477 tax reference: Domain filter: rates.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates'**
+  String get taxRefDomainRate;
+
+  /// #2362 sales tax: taxRefDomainSalesTax
+  ///
+  /// In en, this message translates to:
+  /// **'Sales tax by ZIP code'**
+  String get taxRefDomainSalesTax;
+
+  /// #2479 tax reference: Domain filter: the tax point policy of a country.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax point'**
+  String get taxRefDomainTaxPoint;
+
+  /// #2362 sales tax: taxRefDomainTaxability
+  ///
+  /// In en, this message translates to:
+  /// **'Taxability by state'**
+  String get taxRefDomainTaxability;
+
+  /// #2479 tax reference: Domain filter: small-business turnover thresholds.
+  ///
+  /// In en, this message translates to:
+  /// **'Thresholds'**
+  String get taxRefDomainThreshold;
+
+  /// #2477 tax reference: Domain filter: VAT identification number patterns.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT id patterns'**
+  String get taxRefDomainVatIdPattern;
+
+  /// #2479 tax reference: Field: the e-invoicing duty.
+  ///
+  /// In en, this message translates to:
+  /// **'Duty'**
+  String get taxRefDuty;
+
+  /// #2479 tax reference: Field: what passing the threshold does.
+  ///
+  /// In en, this message translates to:
+  /// **'Effect when passed (next_year or immediate)'**
+  String get taxRefEffect;
+
+  /// #2477 tax reference: Empty list.
+  ///
+  /// In en, this message translates to:
+  /// **'No values here.'**
+  String get taxRefEmpty;
+
+  /// #2480 tax reference: Field: a catch-all return box adds up every group except these.
+  ///
+  /// In en, this message translates to:
+  /// **'Every group except (comma separated)'**
+  String get taxRefExcludeGroups;
+
+  /// #2477 tax reference: Field: statutory reason printed on an exempt line.
+  ///
+  /// In en, this message translates to:
+  /// **'Exemption reason'**
+  String get taxRefExemptionReason;
+
+  /// #2481 tax reference: Field: the export format of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get taxRefFormat;
+
+  /// #2479 tax reference: Field: first day the duty applies (YYYY-MM-DD).
+  ///
+  /// In en, this message translates to:
+  /// **'Applies from (YYYY-MM-DD)'**
+  String get taxRefFrom;
+
+  /// #2477 tax reference: Field: fiscal group of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get taxRefGroup;
+
+  /// #2480 tax reference: Field: fiscal groups a return box adds up.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiscal groups it adds up (comma separated)'**
+  String get taxRefGroups;
+
+  /// #2477 tax reference: Button and sheet title: every version of a value.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get taxRefHistory;
+
+  /// #2477 tax reference: Intro line under the title of the tax reference screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates, exemption texts, VAT id patterns and the EU member set. A change is a new version from a date; the version in force is closed, never edited.'**
+  String get taxRefIntro;
+
+  /// #2481 tax reference: Error: an export row needs an account or a code.
+  ///
+  /// In en, this message translates to:
+  /// **'Give an account number or a tax code'**
+  String get taxRefInvalidAccount;
+
+  /// #2362 sales tax: taxRefInvalidComponents
+  ///
+  /// In en, this message translates to:
+  /// **'One jurisdiction per line as level, name, percent (0 to 20)'**
+  String get taxRefInvalidComponents;
+
+  /// #2477 tax reference: Validation: date format.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the date as YYYY-MM-DD'**
+  String get taxRefInvalidDate;
+
+  /// #2480 tax reference: Error: the group lists of a return box are invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists'**
+  String get taxRefInvalidGroups;
+
+  /// #2477 tax reference: Validation: percentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 0 to 99.999'**
+  String get taxRefInvalidNumber;
+
+  /// #2362 sales tax: taxRefInvalidState
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the two-letter state code'**
+  String get taxRefInvalidState;
+
+  /// #2479 tax reference: Switch: the seller may opt for the invoice date.
+  ///
+  /// In en, this message translates to:
+  /// **'Option for the invoice date'**
+  String get taxRefInvoiceOption;
+
+  /// #2477 tax reference: Field: key naming a value within a country.
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get taxRefKey;
+
+  /// #2477 tax reference: Field: label of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get taxRefLabel;
+
+  /// #2477 tax reference: error text when the list cannot load.
+  ///
+  /// In en, this message translates to:
+  /// **'The reference data could not be loaded.'**
+  String get taxRefLoadFailed;
+
+  /// #2477 tax reference: Hint in the form of an EU member.
+  ///
+  /// In en, this message translates to:
+  /// **'A member state has no further fields.'**
+  String get taxRefMemberEmpty;
+
+  /// #2479 tax reference: Switch: the law routes every invoice through a national channel the app does not speak yet.
+  ///
+  /// In en, this message translates to:
+  /// **'National channel required'**
+  String get taxRefNationalChannel;
+
+  /// #2477 tax reference: Button and sheet title: create a new version of a value.
+  ///
+  /// In en, this message translates to:
+  /// **'New version'**
+  String get taxRefNewVersion;
+
+  /// #2477 tax reference: Shown to anyone else who opens the screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the platform owner maintains tax reference data.'**
+  String get taxRefNotAllowed;
+
+  /// #2477 tax reference: Banner: values come from the bundled copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the copy bundled with the app: the server could not be reached.'**
+  String get taxRefOfflineCopy;
+
+  /// #2477 tax reference: Field: regular expression for the identifier body.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern'**
+  String get taxRefPattern;
+
+  /// #2477 tax reference: Field: percentage of a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Percent'**
+  String get taxRefPercent;
+
+  /// #2477 tax reference: Field: order of a rate in its country; the first is the default.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get taxRefPosition;
+
+  /// #2477 tax reference: Field: the regime a statutory text belongs to.
+  ///
+  /// In en, this message translates to:
+  /// **'Regime'**
+  String get taxRefRegime;
+
+  /// #2477 tax reference: Validation: a required field is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get taxRefRequired;
+
+  /// #2479 tax reference: Switch: the seller must state a VAT or tax number.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number required'**
+  String get taxRefRequiresTaxNumber;
+
+  /// #2481 tax reference: Field: the role of an account row.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get taxRefRole;
+
+  /// #2477 tax reference: Button: save the new version.
+  ///
+  /// In en, this message translates to:
+  /// **'Save version'**
+  String get taxRefSave;
+
+  /// #2477 tax reference: Snackbar after a save.
+  ///
+  /// In en, this message translates to:
+  /// **'Version saved'**
+  String get taxRefSaved;
+
+  /// #2477 tax reference: Field: where the value comes from (a law, a table).
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get taxRefSource;
+
+  /// #2479 tax reference: Field: the legal default rule of the tax point.
+  ///
+  /// In en, this message translates to:
+  /// **'Default rule'**
+  String get taxRefStandardRule;
+
+  /// #2362 sales tax: taxRefState
+  ///
+  /// In en, this message translates to:
+  /// **'State (two letters)'**
+  String get taxRefState;
+
+  /// #2362 sales tax: taxRefStatus
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get taxRefStatus;
+
+  /// #2479 tax reference: Switch: DesKilo issues invoices for sellers of this country.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing supported'**
+  String get taxRefSupported;
+
+  /// #2481 tax reference: Field: the export tax code.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax code'**
+  String get taxRefTaxCode;
+
+  /// #2362 sales tax: taxRefTaxSystem
+  ///
+  /// In en, this message translates to:
+  /// **'Tax system (vat or sales_tax)'**
+  String get taxRefTaxSystem;
+
+  /// #2477 tax reference: Field: statutory text.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get taxRefText;
+
+  /// #2477 tax reference: Screen title: the VAT reference values the platform owner maintains.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax reference data'**
+  String get taxRefTitle;
+
+  /// #2477 tax reference: Badge: nobody checked the value against its source.
+  ///
+  /// In en, this message translates to:
+  /// **'Not confirmed'**
+  String get taxRefUnconfirmed;
+
+  /// #2477 tax reference: Field: first day a version is in force.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from'**
+  String get taxRefValidFrom;
+
+  /// #2477 tax reference: Word before the day a version ends.
+  ///
+  /// In en, this message translates to:
+  /// **'until'**
+  String get taxRefValidUntil;
 
   /// #1658 template_exact_apply
   ///

@@ -47,10 +47,24 @@ a layout size. When in doubt, ask whether an owner, an accountant or a
 platform administrator could legitimately need to change it without a
 release; if so it is data.
 
-A PR that adds a literal of this kind is reviewed as a defect. The epic #2476
-pins the VAT files with a ratchet (`test/lint/tax_literals_test.dart`) that
-only goes down; the rule applies to every new feature from now on, not only
-to VAT.
+**How a business value that is not VAT becomes a setting (#2484).** Add one
+entry to `tool/settings/seed.dart` (key, type, default, bounds, unit, group,
+scopes, edit permission, floor, `editable: false` for a guardrail that is shown
+and not changed), one ARB label in `settings_labels.dart`, and a migration whose
+seed block `dart run tool/build_settings_seed.dart --migration ... --since ...`
+writes. The editor, the SQL resolver `setting_value(workspace, key)` and the
+Dart reader `SettingsSet.read<T>(key)` need nothing else; there is no
+`read(key, fallback)`, the registry default is the fallback. Then delete the
+literal and its entry in `test/lint/business_literals_test.dart`.
+
+A PR that adds a literal of this kind is reviewed as a defect. **A tax value
+is a `tax_reference` row** (ADR 0041): a rate, a threshold, a text, a pattern,
+a country list, a form box's groups, an export account or tax code. The VAT
+files are pinned by `test/lint/tax_literals_test.dart` at zero outside the
+reviewed allow-list `test/lint/tax_literals_allowed.txt` (a standard's code, UI
+wording, a capability -- each with its reason); a literal that is not listed
+fails, and so does a listed line that moved. The rule applies to every new
+feature from now on, not only to VAT.
 
 ## Feature management (lifetime rule, #502)
 
@@ -418,6 +432,12 @@ else rather than answer emptily. Every read of another workspace's owners
 is written to `platform_access_log`, readable by that workspace's owners.
 An owner must always have an e-mail address (`user_has_email`, enforced at
 `create_workspace` and `activate_co_owner`). Do not "fix" the missing flag.
+
+The tax reference editor (#2477) is the same kind of tool and has the same
+exemption: reference data is the platform's, not a workspace's. Everyone
+signed in reads `tax_reference`; only `set_tax_reference` writes it, and it
+refuses anyone but `is_platform_owner()` (and any delegated assistant token).
+The screen is a section of the platform-owner list, not a flagged feature.
 
 ## The Features screen's process overview has no feature flag (#1327)
 

@@ -230,4 +230,17 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,
   ),
+  // #2484 — the settings editor; the stored values apply whether or not it shows.
+  WorkspaceFeature.configurableSettings: FeatureManifestEntry(
+    feature: WorkspaceFeature.configurableSettings,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+  ),
+  // #2362 — sales tax is an invoicing mode of a seller in the United States.
+  WorkspaceFeature.salesTax: FeatureManifestEntry(
+    feature: WorkspaceFeature.salesTax,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+  ),
 };

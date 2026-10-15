@@ -117,6 +117,7 @@ const Set<String> _exported = {
   'privacy_notice_acknowledgments', // #1914: which notice versions the person acknowledged.
   'rights_requests', // #1915: the person's own rights requests and their outcome.
   'account_blocks', // 0387: the blocks the person set (anchored patch).
+  'tax_exemption_certificates', // 0434: the customer's own exemption certificates (anchored patch).
   'account_public_profiles', // 0389: whether I published my public profile (anchored patch).
   'public_person_cards', // 0390: what my published profile shows (anchored patch).
   'account_group_members', 'account_group_messages', // 0384: my groups, my memberships and what I wrote (anchored patch).

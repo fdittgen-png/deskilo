@@ -169,6 +169,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.viesVerification,
       WorkspaceFeature.recapitulativeStatement,
       WorkspaceFeature.inputVat,
+      WorkspaceFeature.salesTax,
     ]),
   ]),
   WorkspaceProcess('documentsInformation', [
@@ -203,6 +204,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.environmentPairs,
       WorkspaceFeature.deployments,
       WorkspaceFeature.configurationTransfer,
+      // #2484 — beside the other ways an administrator shapes the workspace.
+      WorkspaceFeature.configurableSettings,
       WorkspaceFeature.workspaceLibrary,
       WorkspaceFeature.instanceWizard,
     ]),

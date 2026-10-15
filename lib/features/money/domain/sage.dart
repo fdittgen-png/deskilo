@@ -2,6 +2,8 @@
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
@@ -33,50 +35,82 @@ import 'vat_rate.dart';
 ///     overstate turnover by the tax on every line.
 class SageAccounts {
   const SageAccounts({
-    this.debtors = '1100',
-    this.sales = '4000',
-    this.bank = '1200',
-    this.taxCode = 'T1',
-  });
+    String? debtors,
+    String? sales,
+    String? bank,
+    String? taxCode,
+    this.reference,
+  }) : _givenDebtors = debtors,
+       _givenSales = sales,
+       _givenBank = bank,
+       _givenTaxCode = taxCode;
 
-  /// Sage's shipped chart: 1100 Debtors Control Account.
-  final String debtors;
+  /// #2481 -- the snapshot the defaults and codes are read from (the `sage`
+  /// rows); the installed one when null.
+  final TaxReferenceSet? reference;
+  final String? _givenDebtors;
+  final String? _givenSales;
+  final String? _givenBank;
+  final String? _givenTaxCode;
 
-  /// 4000 Sales — Type A. The accountant re-points this when the
+  TaxReferenceSet get _data => reference ?? ActiveTaxReference.current;
+
+  String _account(String role) => _data.accountOf('sage', role, 'GB');
+
+  String _tax(String role) => _data.accountOf('sage', role, 'GB', tax: true);
+
+  /// Sage's shipped chart: the Debtors Control Account.
+  String get debtors => _givenDebtors ?? _account('debtors');
+
+  /// The Sales nominal — Type A. The accountant re-points this when the
   /// workspace sells something Sage classes differently.
-  final String sales;
+  String get sales => _givenSales ?? _account('sales');
 
-  /// 1200 Bank Current Account.
-  final String bank;
+  /// The Bank Current Account.
+  String get bank => _givenBank ?? _account('bank');
 
-  /// The VAT code for the standard rate. `T1` is Sage's shipped standard
-  /// rate; `T0` is zero-rated and `T9` is outside the scope of VAT —
-  /// which is the one an exempt workspace wants, and getting it wrong
+  /// The VAT code for the standard rate: Sage's shipped standard rate. The
+  /// zero-rated code and the out-of-scope code are the other ends of it —
+  /// out of scope is the one an exempt workspace wants, and getting it wrong
   /// puts turnover on a VAT return that should never have seen it.
-  final String taxCode;
+  String get taxCode => _givenTaxCode ?? _tax('tax_standard');
 
-  /// #2359 — Sage 50 UK's own codes by treatment: T0 zero-rated, T2
-  /// exempt, T5 the 5 % reduced rate. A zero-rated supply stays on the
-  /// VAT return (Box 6) and so does an exempt one, but they are not the
-  /// same line on a partial-exemption calculation.
-  static const String zeroRatedCode = 'T0';
-  static const String exemptCode = 'T2';
-  static const String reducedCode = 'T5';
+  /// #2359 — Sage 50 UK's own codes by treatment: zero-rated, exempt and the
+  /// reduced rate. A zero-rated supply stays on the VAT return (Box 6) and
+  /// so does an exempt one, but they are not the same line on a
+  /// partial-exemption calculation. Read from the installed snapshot; an
+  /// instance reads the one it was given.
+  static String get zeroRatedCode => _installed('tax_zero');
+  static String get exemptCode => _installed('tax_exempt');
+  static String get reducedCode => _installed('tax_reduced');
 
-  /// The Sage code of one VAT breakdown line.
-  String codeFor(InvoiceVatTotal total) => switch (total.category) {
-        'Z' => zeroRatedCode,
-        'E' => exemptCode,
-        'S' when total.percent == 5 => reducedCode,
-        'S' when total.percent > 0 => taxCode,
-        'S' => zeroRatedCode,
-        _ => noTaxCode,
-      };
+  /// The code for a line that carries no tax: out of scope rather than
+  /// zero-rated, because a zero-RATED supply still belongs on the VAT return
+  /// and an out-of-scope one does not.
+  static String get noTaxCode => _installed('tax_none');
 
-  /// The code for a line that carries no tax. `T9` — out of scope —
-  /// rather than `T0`, because a zero-RATED supply still belongs on the
-  /// VAT return and an out-of-scope one does not.
-  static const String noTaxCode = 'T9';
+  static String _installed(String role) => ActiveTaxReference.current
+      .accountOf('sage', role, 'GB', tax: true);
+
+  /// This instance's out-of-scope code.
+  String get noTax => _tax('tax_none');
+
+  /// The Sage code of one VAT breakdown line. The reduced code is the one of
+  /// the lines taxed in the United Kingdom's `reduced` rate group.
+  String codeFor(InvoiceVatTotal total) {
+    if (total.category == 'S' &&
+        total.percent > 0 &&
+        _data.groupOfRate('GB', total.percent, 'S') == 'reduced') {
+      return _tax('tax_reduced');
+    }
+    return switch (total.category) {
+      'Z' => _tax('tax_zero'),
+      'E' => _tax('tax_exempt'),
+      'S' when total.percent > 0 => taxCode,
+      'S' => _tax('tax_zero'),
+      _ => noTax,
+    };
+  }
 }
 
 String sageFileName(int year, int month) =>
@@ -151,7 +185,7 @@ String buildSageFile({
     final type = invoice.isCreditNote ? 'SC' : 'SI';
     final parts = invoice.vatTotals.isEmpty
         ? [(net: invoice.netCents, tax: invoice.vatCents,
-            code: invoice.vatCents > 0 ? accounts.taxCode : SageAccounts.noTaxCode)]
+            code: invoice.vatCents > 0 ? accounts.taxCode : accounts.noTax)]
         : [
             for (final t in invoice.vatTotals)
               (net: t.netCents, tax: t.vatCents, code: accounts.codeFor(t)),
@@ -185,7 +219,7 @@ String buildSageFile({
         reference: invoice.number,
         details: 'Payment ${invoice.number}',
         netCents: match.paidCents,
-        taxCode: SageAccounts.noTaxCode,
+        taxCode: accounts.noTax,
         taxCents: 0,
         customer: customer,
       );

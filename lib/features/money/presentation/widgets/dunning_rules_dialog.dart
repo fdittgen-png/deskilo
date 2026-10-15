@@ -7,6 +7,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../workspace/providers/settings_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
@@ -59,7 +60,11 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
       );
       return;
     }
-    ref.invalidate(dunningRulesProvider);
+    // #2484 — the first reminder's delay is stored as a setting.
+    ref
+      ..invalidate(settingsSetProvider(workspace.id))
+      ..invalidate(currentSettingsProvider)
+      ..invalidate(dunningRulesProvider);
     if (!mounted) return;
     Navigator.of(context).pop();
     AppSnack.info(
