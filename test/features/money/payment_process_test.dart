@@ -13,8 +13,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/money_screen.dart' show pumpMoney, workspaceWithInstructions;
 import '../../helpers/test_clock.dart';
-import 'money_screen_test.dart' show pumpMoney, workspaceWithInstructions;
 
 Invoice _invoice(
   String id, {

@@ -11,12 +11,11 @@ import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/reservations/domain/booking_intent.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_recovery_sheet.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/pending_booking_banner.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 final _now = DateTime.utc(2026, 10, 7, 8);
 
@@ -50,20 +49,11 @@ Future<void> _pump(
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, Scaffold(body: child), overrides: standardTestOverrides(
         reservations: repo,
         bookingIntents: store,
         clock: FixedClock(_now),
-      ),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: child),
-      ),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 

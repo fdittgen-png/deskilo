@@ -2,43 +2,14 @@
 //
 // #168 — the seat sheet assigns catalogue accessories and keeps the
 // assignment unless it is changed.
-import 'package:deskilo/features/plan/domain/grid_geometry.dart';
-import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_accessory_repository.dart';
-import '../../helpers/fake_floor_plan_repository.dart';
-import 'level_canvas_test.dart' show cellCenter, pumpCanvas, seedOffice;
+import '../../helpers/screens/level_canvas.dart' show pumpCanvas;
+import '../../helpers/screens/seat_accessories.dart' show openSeatSheet, seedSeat;
 
-/// Seeds one office, one desk and one seat; returns nothing — the seat is
-/// `plans.seats.single` afterwards.
-Future<void> seedSeat(FakeFloorPlanRepository plans, String levelId) async {
-  await seedOffice(plans, levelId);
-  final desk = await plans.createDesk(
-    workspaceId: 'ws-1',
-    officeId: plans.offices.single.id,
-    name: 'Desk',
-    rect: const GridRect(x: 4, y: 4, w: 12, h: 8),
-  );
-  await plans.createSeat(
-    workspaceId: 'ws-1',
-    deskId: desk.id,
-    name: 'A1',
-    x: 4,
-    y: 4,
-    orientation: SeatOrientation.n,
-  );
-}
 
-/// Opens the seat sheet: first tap selects (#101), second opens properties.
-Future<void> openSeatSheet(WidgetTester tester) async {
-  await tester.tapAt(cellCenter(tester, 5, 5));
-  await tester.pumpAndSettle();
-  await tester.tapAt(cellCenter(tester, 5, 5));
-  await tester.pumpAndSettle();
-  expect(find.text('Sitting direction'), findsOneWidget);
-}
 
 void main() {
   group('seat sheet accessories (#168)', () {

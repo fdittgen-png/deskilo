@@ -4,7 +4,7 @@
 import 'package:deskilo/core/backend/auth_callback_guard.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'installation_auth_storage_test.dart' show MemorySecrets;
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
 
 Uri returned(String redirect, {String code = 'one-use-code'}) {
   final uri = Uri.parse(redirect);

@@ -12,7 +12,7 @@ import 'package:deskilo/core/ui/canvas_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 
 void main() {
   // The report said the + and − vanished sideways, leaving only the

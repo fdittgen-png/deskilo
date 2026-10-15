@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/reserve_view.dart';
+import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 import '../../helpers/test_clock.dart';
-import 'reserve_hub_test.dart' show pumpHub;
 
 void main() {
   tearDown(WorkspaceTime.reset);

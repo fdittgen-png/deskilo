@@ -8,7 +8,7 @@ import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'my_finances_screen_test.dart' show invoice, show;
+import '../../helpers/screens/my_finances_screen.dart' show invoice, show;
 
 FinanceOverview _two() => FinanceOverview(
   invoices: [

@@ -21,9 +21,9 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/members_screen.dart' show openSheet, pumpMembers;
 import '../../helpers/screens/money_faces.dart' show face, pumpFaces;
 import '../../helpers/settings_sections.dart';
-import '../members/members_screen_test.dart' show openSheet, pumpMembers;
 
 final _deal = PriceNegotiation(
   defaultFeeCents: 25000,

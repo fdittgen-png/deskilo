@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'money_screen_test.dart' show pumpMoney;
+import '../../helpers/screens/money_screen.dart' show pumpMoney;
 
 void main() {
   testWidgets('submitting an expense captures amount, category, description',

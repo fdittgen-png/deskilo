@@ -7,7 +7,7 @@ import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart';
+import '../../helpers/screens/reserve_hub.dart';
 
 void main() {
   testWidgets(

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'my_finances_screen_test.dart' show invoice, show;
+import '../../helpers/screens/my_finances_screen.dart' show invoice, show;
 
 FakeWorkspaceRepository _spaces() {
   final repo = FakeWorkspaceRepository.withWorkspace();

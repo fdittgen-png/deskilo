@@ -9,9 +9,8 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/screens/level_canvas.dart' show cellCenter, pumpCanvas, seedOffice;
 import '../../helpers/test_clock.dart';
-
-import 'level_canvas_test.dart' show cellCenter, pumpCanvas, seedOffice;
 
 void main() {
   group('clampSeatAnchor', () {

@@ -12,57 +12,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/my_finances_screen.dart' show invoice, show;
 
-FinanceInvoice invoice(
-  String id, {
-  String ws = 'Office A',
-  FinanceState state = FinanceState.open,
-  DateTime? due,
-  int total = 10000,
-  int paid = 0,
-  String currency = 'EUR',
-  int reminders = 0,
-}) =>
-    FinanceInvoice(
-      id: id,
-      workspaceId: 'ws-$ws',
-      workspaceName: ws,
-      number: 'INV-$id',
-      issuedAt: DateTime.utc(2026, 9),
-      dueOn: due,
-      totalCents: total,
-      paidCents: paid,
-      currency: currency,
-      state: state,
-      reminderCount: reminders,
-    );
 
-Future<void> show(
-  WidgetTester tester,
-  FinanceOverview overview, {
-  String? workspaceId,
-  FakeWorkspaceRepository? workspace,
-}) async {
-  tester.view.physicalSize = const Size(800, 1400);
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  final repo = FakeAccountActivityRepository()..financeOverview = overview;
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
-        auth: FakeAuthRepository.signedIn(),
-        accountActivity: repo,
-        workspace: workspace,
-      ),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: MyFinancesScreen(workspaceId: workspaceId),
-      ),
-    ),
-  );
-  await tester.pumpAndSettle();
-}
 
 void main() {
   test('what remains per currency, and which invoice counts as owed', () {

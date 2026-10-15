@@ -12,8 +12,8 @@ import 'package:deskilo/core/capture/capture_providers.dart';
 import 'package:deskilo/core/capture/capture_shield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/pump_app.dart';
 
 void main() {
   const channel = MethodChannel(CaptureProtection.channelName);
@@ -39,14 +39,7 @@ void main() {
     bool shown = true,
     VoidCallback? onScreenshot,
     String reader = '',
-  }) => tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        captureProtectionProvider.overrideWithValue(protection),
-        captureReaderNameProvider.overrideWithValue(reader),
-      ],
-      child: MaterialApp(
-        home: Scaffold(
+  }) => pumpApp(tester, Scaffold(
           body: shown
               ? CaptureShield(
                   enabled: enabled,
@@ -54,10 +47,10 @@ void main() {
                   child: const Text('secret thread'),
                 )
               : const SizedBox.shrink(),
-        ),
-      ),
-    ),
-  );
+        ), overrides: [
+        captureProtectionProvider.overrideWithValue(protection),
+        captureReaderNameProvider.overrideWithValue(reader),
+      ]);
 
   Future<void> fromNative(
     WidgetTester tester,

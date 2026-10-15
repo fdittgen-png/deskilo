@@ -11,12 +11,11 @@ import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/feature_operation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/screens/features_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 const _f = WorkspaceFeature.spaceInquiries;
 
@@ -200,27 +199,18 @@ void main() {
       final workspace = FakeWorkspaceRepository.withWorkspace(
         featureFlags: flags,
       );
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            ...standardTestOverrides(workspace: workspace),
-            schemaCompatibilityProvider.overrideWith(
-              (_) async => compatibility,
-            ),
-          ],
-          child: MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            home: FeaturesScreen(
+      await pumpApp(tester, FeaturesScreen(
               assessments: {
                 for (final f in WorkspaceFeature.values)
                   f: const FeatureAssessment.unreviewed('fixture'),
                 WorkspaceFeature.accessorySupplements: _alpha,
               },
+            ), overrides: [
+            ...standardTestOverrides(workspace: workspace),
+            schemaCompatibilityProvider.overrideWith(
+              (_) async => compatibility,
             ),
-          ),
-        ),
-      );
+          ]);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('features-view-switches')));
       await tester.pumpAndSettle();

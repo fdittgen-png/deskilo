@@ -30,8 +30,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../core/backend/installation_auth_storage_test.dart'
-    show MemorySecrets;
+import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
 
 const _instA = 'aaaaaaaa-0000-4000-8000-00000000000a';
 const _instB = 'bbbbbbbb-0000-4000-8000-00000000000b';

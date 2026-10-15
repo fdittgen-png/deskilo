@@ -13,9 +13,9 @@
 // 0216 replaced every policy they created with `is_admin_of`, which the
 // pgTAP file `13_matrix_policies.sql` checks against the replayed
 // catalogue.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// First migration under the rule.
 const _firstGoverned = 216;
@@ -46,10 +46,7 @@ void main() {
 
   test('no migration from 0216 on creates a policy on is_admin_of', () {
     final offenders = <String>[];
-    for (final file in Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))) {
+    for (final file in sqlFiles('supabase/migrations')) {
       final name = file.uri.pathSegments.last;
       final number = int.tryParse(name.split('_').first) ?? 0;
       if (number < _firstGoverned) continue;

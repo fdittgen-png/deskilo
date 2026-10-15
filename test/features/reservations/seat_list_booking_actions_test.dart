@@ -7,7 +7,7 @@ import 'package:deskilo/features/reservations/presentation/widgets/place_feedbac
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart' show pumpHub;
+import '../../helpers/screens/reserve_hub.dart' show pumpHub;
 
 void main() {
   testWidgets('free list-seat body opens booking, feedback stays separate',
