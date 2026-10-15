@@ -399,9 +399,9 @@ class SupabaseMessengerRepository implements MessengerRepository {
   @override
   Future<void> setForwardLock(
     MessageKind kind,
-    String messageId,
-    bool locked,
-  ) => _rpc<void>('set_message_forward_lock', {
+    String messageId, {
+    required bool locked,
+  }) => _rpc<void>('set_message_forward_lock', {
     'p_kind': kind.wire,
     'p_message_id': messageId,
     'p_locked': locked,

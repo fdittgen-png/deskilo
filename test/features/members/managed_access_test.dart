@@ -34,7 +34,7 @@ void main() {
     test('narrowing the first time starts from the default, so turning '
         'ONE role off does not silently drop the other', () {
       final rule =
-          ManagedAccess.unnarrowed.withRole(ManagedAccess.roleAdmin, false);
+          ManagedAccess.unnarrowed.withRole(ManagedAccess.roleAdmin, on: false);
       expect(rule.isDefault, isFalse);
       expect(rule.hasRole(ManagedAccess.roleAdmin), isFalse);
       expect(rule.hasRole(ManagedAccess.roleOwner), isTrue,
@@ -42,7 +42,7 @@ void main() {
     });
 
     test('naming a person keeps the roles that applied', () {
-      final rule = ManagedAccess.unnarrowed.withMember('member-3', true);
+      final rule = ManagedAccess.unnarrowed.withMember('member-3', on: true);
       expect(rule.memberIds, {'member-3'});
       expect(rule.hasRole(ManagedAccess.roleOwner), isTrue);
       expect(rule.hasRole(ManagedAccess.roleAdmin), isTrue);

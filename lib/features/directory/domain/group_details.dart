@@ -16,7 +16,7 @@ class ConversationDetails {
     final r = JsonReader(json, context: 'conversation_details');
     return ConversationDetails(
       description: r.stringOr('description'),
-      announceOnly: r.boolOr('announce_only', false),
+      announceOnly: r.boolOr('announce_only', fallback: false),
     );
   }
 }

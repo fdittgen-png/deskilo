@@ -26,11 +26,10 @@ List<ReadinessCheck> evaluateMcpPilot({
   const area = ReadinessArea.mcpRuntime;
   ReadinessCheck check(
     String code,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    bool ok,
-    String failDetail, [
+    String failDetail, {
+    required bool ok,
     String passDetail = '',
-  ]) => ReadinessCheck(
+  }) => ReadinessCheck(
     area,
     code,
     ok ? CheckOutcome.pass : CheckOutcome.fail,
@@ -44,8 +43,8 @@ List<ReadinessCheck> evaluateMcpPilot({
   checks.add(
     check(
       'pilot_operation_read_only',
-      pilotOp is Map && pilotOp['mutation'] == 'read',
       '$mcpPilotOperation is not a read in this catalogue; the pilot refuses to run it',
+      ok: pilotOp is Map && pilotOp['mutation'] == 'read',
     ),
   );
 
@@ -67,9 +66,9 @@ List<ReadinessCheck> evaluateMcpPilot({
     checks.add(
       check(
         'pilot_tools_listed',
-        names.isNotEmpty,
         'the pilot user is offered no tool',
-        '${names.length} tool(s)',
+        ok: names.isNotEmpty,
+        passDetail: '${names.length} tool(s)',
       ),
     );
     final unknown = names.where(
@@ -78,8 +77,8 @@ List<ReadinessCheck> evaluateMcpPilot({
     checks.add(
       check(
         'pilot_tools_known',
-        unknown.isEmpty,
         '${unknown.length} offered tool(s) are not in this installation\'s catalogue',
+        ok: unknown.isEmpty,
       ),
     );
     final wrongHint = [
@@ -93,8 +92,8 @@ List<ReadinessCheck> evaluateMcpPilot({
     checks.add(
       check(
         'pilot_read_only_hints',
-        wrongHint.isEmpty,
         '${wrongHint.length} tool(s) are annotated read-only when they write, or the reverse',
+        ok: wrongHint.isEmpty,
       ),
     );
   }
@@ -116,16 +115,16 @@ List<ReadinessCheck> evaluateMcpPilot({
     ..add(
     check(
       'pilot_answered',
-      envelope['status'] == 'completed',
       'the read-only call answered ${envelope['status']}',
+      ok: envelope['status'] == 'completed',
     ),
   )
     ..add(
     check(
       'pilot_provenance',
-      envelope['operation'] == mcpPilotOperation &&
-          envelope['workspace_id'] == workspaceId,
       'the answer is not for $mcpPilotOperation on the workspace asked about',
+      ok: envelope['operation'] == mcpPilotOperation &&
+          envelope['workspace_id'] == workspaceId,
     ),
   );
   final allowed = <String>{
@@ -150,8 +149,8 @@ List<ReadinessCheck> evaluateMcpPilot({
   checks.add(
     check(
       'pilot_output_minimized',
-      leaked.isEmpty,
       '${leaked.length} unclassified field name(s) in the answer: ${(leaked.toList()..sort()).join(', ')}',
+      ok: leaked.isEmpty,
     ),
   );
   return checks;

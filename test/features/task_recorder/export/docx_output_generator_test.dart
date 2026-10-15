@@ -101,7 +101,7 @@ void main() {
     final i = sb.frames.indexWhere(
       (f) => f.source == IllustrationSource.recreatedScene,
     );
-    sb = sb.setApproved(i, true);
+    sb = sb.setApproved(i, approved: true);
     final result = await tester.runAsync(
       () => const DocxOutputGenerator().generate(
         TaskOutputRequest(

@@ -82,7 +82,7 @@ void main() {
       final values = StepValues.of({
         'title': TextValue('Board'),
         'qty': const NumberValue(3),
-        'checked': const FlagValue(true),
+        'checked': const FlagValue(on: true),
         'pwd': const RedactedValue(9),
       });
       final json = values.toJson();

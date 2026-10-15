@@ -84,13 +84,13 @@ void main() {
     final l = _l('en');
     var sb = buildStoryboard(r, l);
     final scenes = _sceneIndexes(sb);
-    sb = sb.setApproved(scenes[0], true).setApproved(scenes[1], true);
+    sb = sb.setApproved(scenes[0], approved: true).setApproved(scenes[1], approved: true);
     sb = sb.addRedaction(scenes[1], const NormalizedRect(0, 0, 0.3, 0.3));
-    sb = sb.setApproved(scenes[1], true);
+    sb = sb.setApproved(scenes[1], approved: true);
     final textFrame = sb.frames.indexWhere(
       (f) => f.source == IllustrationSource.textSlide,
     );
-    sb = sb.setOmitted(textFrame, true).move(0, 1);
+    sb = sb.setOmitted(textFrame, omitted: true).move(0, 1);
     final parts = await _export(tester, r, sb);
 
     // Two media parts, metadata-free, behind internal relationships.
@@ -174,7 +174,7 @@ void main() {
     final l = _l('fr');
     var sb = buildStoryboard(r, l);
     final i = _sceneIndexes(sb).first;
-    sb = sb.setApproved(i, true);
+    sb = sb.setApproved(i, approved: true);
     final first = await _export(tester, r, sb, code: 'fr');
     expect(first.keys.where((k) => k.startsWith('word/media/')), hasLength(1));
     sb = sb.addRedaction(i, const NormalizedRect(0.1, 0.1, 0.2, 0.2));
@@ -214,7 +214,7 @@ void main() {
       final r = recorded!.recording;
       var sb = buildStoryboard(r, _l('de'));
       for (final i in _sceneIndexes(sb)) {
-        sb = sb.setApproved(i, true);
+        sb = sb.setApproved(i, approved: true);
       }
       final parts = await _export(tester, r, sb, code: 'de');
       expect(parts.keys.where((k) => k.startsWith('word/media/')), isNotEmpty);

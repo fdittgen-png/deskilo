@@ -10,6 +10,7 @@
 import 'dart:typed_data';
 
 import '../../../core/images/emblem_refusal.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/workspace_branding.dart';
 import '../domain/workspace_repository.dart';
 
@@ -47,12 +48,14 @@ class Emblems {
     final Uint8List png;
     try {
       png = await _reEncode(bytes);
-      // A stated refusal carries no fault, and its reason is the whole
-      // payload: there is no stack worth keeping.
-      // ignore: catch_no_st
-    } on EmblemException catch (e) {
-      // trace-exempt: a stated refusal, turned into the sentence the
-      // member reads; the caller traces it.
+    } on EmblemException catch (e, st) {
+      // A stated refusal, turned into the sentence the member reads.
+      TraceLogger.instance.warn(
+        'workspace',
+        'emblem refused: ${e.refusal.name}',
+        error: e,
+        stackTrace: st,
+      );
       return switch (e.refusal) {
         EmblemRefusal.notAnImage => EmblemOutcome.notAnImage,
         EmblemRefusal.tooHeavy => EmblemOutcome.tooHeavy,

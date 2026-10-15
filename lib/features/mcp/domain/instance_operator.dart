@@ -31,8 +31,8 @@ class InstanceMember {
     return InstanceMember(
       userId: r.string('user_id'),
       name: r.stringOr('name'),
-      me: r.boolOr('me', false),
-      canProvision: r.boolOr('can_provision', false),
+      me: r.boolOr('me', fallback: false),
+      canProvision: r.boolOr('can_provision', fallback: false),
     );
   }
 }
@@ -105,8 +105,8 @@ class InstanceEligibleUser {
       name: r.stringOr('name'),
       expiresAt: r.dateTimeOrNull('expires_at'),
       grantedByOperator: r.stringOrNull('granted_by') == 'operator',
-      selfGrant: r.boolOr('self_grant', false),
-      me: r.boolOr('me', false),
+      selfGrant: r.boolOr('self_grant', fallback: false),
+      me: r.boolOr('me', fallback: false),
     );
   }
 }
@@ -158,9 +158,9 @@ class InstanceMcpOverview {
   factory InstanceMcpOverview.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'instance_mcp_overview');
     return InstanceMcpOverview(
-      enabled: r.boolOr('enabled', false),
+      enabled: r.boolOr('enabled', fallback: false),
       blockers: [for (final b in r.list('blockers')) '$b'],
-      secondFactor: r.boolOr('second_factor', false),
+      secondFactor: r.boolOr('second_factor', fallback: false),
       administrators: r.objects(
         'administrators',
         (row) => InstanceMember.fromJson(row.json),
@@ -168,7 +168,7 @@ class InstanceMcpOverview {
       candidates:
           r.objects('candidates', (row) => InstanceMember.fromJson(row.json)),
       clients: r.objects('clients', (row) => InstanceClient.fromJson(row.json)),
-      allowLoopbackClients: r.boolOr('allow_loopback_clients', false),
+      allowLoopbackClients: r.boolOr('allow_loopback_clients', fallback: false),
       endpoint: McpEndpointInfo.fromReader(r.objectOrAbsent('endpoint')),
       endpointProbe: r.objectOrNull('endpoint_probe') == null
           ? EndpointProbe.missing
@@ -177,8 +177,8 @@ class InstanceMcpOverview {
         'eligible_users',
         (row) => InstanceEligibleUser.fromJson(row.json),
       ),
-      operatorGrantAvailable: r.boolOr('operator_grant_available', false),
-      googleSession: r.boolOr('google_session', false),
+      operatorGrantAvailable: r.boolOr('operator_grant_available', fallback: false),
+      googleSession: r.boolOr('google_session', fallback: false),
     );
   }
 }

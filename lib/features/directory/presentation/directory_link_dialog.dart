@@ -95,11 +95,10 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
           await ref
               .read(directoryActionsProvider)
               .register(candidate.url, candidate.key);
-          // ignore: catch_no_st
-        } on ConnectionFailure catch (f) {
+        } on ConnectionFailure catch (f, st) {
           // trace-exempt: rethrown unchanged; runGuarded traces it.
           failure = f;
-          rethrow;
+          Error.throwWithStackTrace(f, st);
         }
       },
     );

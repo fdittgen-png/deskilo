@@ -190,7 +190,7 @@ class _ShellBarCollapseState extends ConsumerState<ShellBarCollapse>
 
     final hidden = target == 1;
     if ((ref.read(shellBarHiddenProvider).value ?? false) != hidden) {
-      await ref.read(shellBarHiddenProvider.notifier).set(hidden);
+      await ref.read(shellBarHiddenProvider.notifier).set(hidden: hidden);
     }
     // Performing the gesture is the best possible proof it was learned.
     await ref.read(shellSwipeCoachSeenProvider.notifier).markSeen();

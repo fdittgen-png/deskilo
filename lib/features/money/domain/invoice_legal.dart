@@ -241,7 +241,7 @@ class InvoiceLegal {
         final String c when c == 'business' || c == 'consumer' => c,
         _ => '',
       },
-      reverseChargeOptIn: r.boolOr('reverse_charge', true),
+      reverseChargeOptIn: r.boolOr('reverse_charge', fallback: true),
       vatTaxPoint:
           VatTaxPointOption.fromWire(r.stringOrNull('vat_tax_point')) ??
               switch (r.stringOrNull('vat_exigibility')) {
@@ -265,12 +265,12 @@ class InvoiceLegal {
       subdivision: r.stringOr('subdivision'),
       contactEmail: r.stringOr('contact_email'),
       contactPhone: r.stringOr('contact_phone'),
-      optionToTax: r.boolOr('option_to_tax', false),
+      optionToTax: r.boolOr('option_to_tax', fallback: false),
       optionToTaxDate: r.stringOr('option_to_tax_date'),
       optionToTaxReference: r.stringOr('option_to_tax_reference'),
-      facilitiesPackage: r.boolOr('facilities_package', false),
+      facilitiesPackage: r.boolOr('facilities_package', fallback: false),
       lettingKind: r.stringOr('letting_kind'),
-      quickMethod: r.boolOr('quick_method', false),
+      quickMethod: r.boolOr('quick_method', fallback: false),
     );
   }
 

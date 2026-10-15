@@ -29,7 +29,8 @@ class PreferenceScopeControls extends ConsumerWidget {
         title: Text(l10n.preferencesWorkspaceOnly),
         subtitle: Text(l10n.preferencesScopeHint),
         value: scoped,
-        onChanged: ref.read(workspacePreferenceEditingProvider.notifier).set,
+        onChanged: (v) =>
+            ref.read(workspacePreferenceEditingProvider.notifier).set(value: v),
       ),
       if (scoped && overrides.isNotEmpty)
         TextButton(

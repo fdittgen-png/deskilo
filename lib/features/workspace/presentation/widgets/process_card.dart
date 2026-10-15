@@ -64,8 +64,7 @@ class ProcessCard extends StatelessWidget {
   /// #1329 — switch a whole process, or one subprocess, on or off: the
   /// host opens the one preview-and-apply sheet. Null keeps the card
   /// read-only.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final void Function(bool activate, List<String> subprocessKeys)? onChange;
+  final void Function(List<String> subprocessKeys, {required bool activate})? onChange;
 
   /// Keys for the subprocess rows, so a search hit can scroll to one.
   final Map<String, GlobalKey> subprocessKeys;
@@ -236,8 +235,7 @@ class _Detail extends StatelessWidget {
   final ProcessStatus status;
   final Map<String, GlobalKey> subprocessKeys;
   final ValueChanged<WorkspaceFeature> onOpenFeature;
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final void Function(bool activate, List<String> subprocessKeys)? onChange;
+  final void Function(List<String> subprocessKeys, {required bool activate})? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -254,8 +252,8 @@ class _Detail extends StatelessWidget {
             canSwitchOn: status.state != ProcessState.active,
             canSwitchOff: status.enabledCount > 0,
             onChange: (activate) => change(
-              activate,
               [for (final s in status.subprocesses) s.subprocess.key],
+              activate: activate,
             ),
           ),
         Padding(
@@ -285,7 +283,7 @@ class _Detail extends StatelessWidget {
                     canSwitchOn: sub.state != ProcessState.active,
                     canSwitchOff: sub.enabled.isNotEmpty,
                     onChange: (activate) =>
-                        onChange!(activate, [sub.subprocess.key]),
+                        onChange!([sub.subprocess.key], activate: activate),
                   ),
           ),
           for (final feature in sub.subprocess.capabilities)

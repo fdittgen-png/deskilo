@@ -117,8 +117,8 @@ sealed class TaxValue {
         ),
       TaxDomain.taxPoint => TaxPointValue(
           standard: r.string('standard'),
-          invoiceOption: r.boolOr('invoice_option', false),
-          cashOption: r.boolOr('cash_option', true),
+          invoiceOption: r.boolOr('invoice_option', fallback: false),
+          cashOption: r.boolOr('cash_option', fallback: true),
           cashBackstop: r.stringOr('cash_backstop', 'none'),
         ),
       TaxDomain.mandate => MandateValue(
@@ -126,9 +126,9 @@ sealed class TaxValue {
           from: r.string('from'),
         ),
       TaxDomain.issuingGate => IssuingGateValue(
-          supported: r.boolOr('supported', false),
-          requiresTaxNumber: r.boolOr('requires_tax_number', false),
-          nationalChannelRequired: r.boolOr('national_channel_required', false),
+          supported: r.boolOr('supported', fallback: false),
+          requiresTaxNumber: r.boolOr('requires_tax_number', fallback: false),
+          nationalChannelRequired: r.boolOr('national_channel_required', fallback: false),
           currency: r.stringOr('currency'),
           taxSystem: r.stringOr('tax_system', 'vat'),
         ),

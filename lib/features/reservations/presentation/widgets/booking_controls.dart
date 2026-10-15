@@ -314,8 +314,7 @@ class DayHalvesGlyph extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = IconTheme.of(context).color ??
         Theme.of(context).colorScheme.onSurfaceVariant;
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    Widget half(bool filled) => Container(
+    Widget half({required bool filled}) => Container(
           width: (_width - _gap) / 2,
           height: _height,
           decoration: BoxDecoration(
@@ -329,9 +328,9 @@ class DayHalvesGlyph extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          half(am),
+          half(filled: am),
           const SizedBox(width: _gap),
-          half(pm),
+          half(filled: pm),
         ],
       ),
     );

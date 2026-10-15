@@ -48,8 +48,7 @@ class FeatureCapabilityList extends StatelessWidget {
   /// filtering: somebody who typed a name is past being introduced.
   final bool showHint;
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  final void Function(WorkspaceFeature feature, bool value) onChanged;
+  final void Function(WorkspaceFeature feature, {required bool value}) onChanged;
 
   /// #1850 — the maturity ledger the badges read.
   final Map<WorkspaceFeature, FeatureAssessment> assessments;
@@ -111,7 +110,7 @@ class FeatureCapabilityList extends StatelessWidget {
       alsoEnables: alsoEnabledWith(raw: raw, feature: entry.feature)
           .map((f) => featureName(l10n, f))
           .toList(),
-      onChanged: (value) => onChanged(entry.feature, value),
+      onChanged: (value) => onChanged(entry.feature, value: value),
     );
   }
 }

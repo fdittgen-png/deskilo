@@ -25,7 +25,7 @@ class WorkspaceApplication {
       applicantName: r.stringOr('applicant_name'),
       status: r.string('status'),
       createdAt: r.dateTime('created_at'),
-      isApplicant: r.boolOr('is_applicant', false),
+      isApplicant: r.boolOr('is_applicant', fallback: false),
     );
   }
 }
@@ -51,7 +51,7 @@ class ApplicationMessage {
       kind: r.string('kind'),
       body: r.string('body'),
       createdAt: r.dateTime('created_at'),
-      isMine: r.boolOr('is_mine', false),
+      isMine: r.boolOr('is_mine', fallback: false),
     );
   }
 }

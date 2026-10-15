@@ -78,14 +78,14 @@ class ManagedAccessEditor extends ConsumerWidget {
               label: Text(l10n.managedAccessOwners),
               selected: access.hasRole(ManagedAccess.roleOwner),
               onSelected: (on) =>
-                  save(access.withRole(ManagedAccess.roleOwner, on)),
+                  save(access.withRole(ManagedAccess.roleOwner, on: on)),
             ),
             FilterChip(
               key: const ValueKey('managed-access-admins'),
               label: Text(l10n.managedAccessAdmins),
               selected: access.hasRole(ManagedAccess.roleAdmin),
               onSelected: (on) =>
-                  save(access.withRole(ManagedAccess.roleAdmin, on)),
+                  save(access.withRole(ManagedAccess.roleAdmin, on: on)),
             ),
           ],
         ),
@@ -100,7 +100,7 @@ class ManagedAccessEditor extends ConsumerWidget {
                 key: ValueKey('managed-access-member-${m.id}'),
                 label: Text(names[m.id] ?? m.id),
                 selected: access.memberIds.contains(m.id),
-                onSelected: (on) => save(access.withMember(m.id, on)),
+                onSelected: (on) => save(access.withMember(m.id, on: on)),
               ),
           ],
         ),

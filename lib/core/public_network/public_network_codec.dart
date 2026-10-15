@@ -68,11 +68,12 @@ Map<String, Object?> decodePublicRecord(String schemaName, Object? raw) {
     final Object? kept;
     try {
       kept = _decodeValue(schemaName, name, field, value);
-    // ignore: catch_no_st — rethrows, or drops one optional descriptive field.
-    } on PublicContractRefusal catch (r) {
+    } on PublicContractRefusal catch (r, st) {
       // A must-understand term is never dropped, even inside an optional
       // object: the record it belongs to cannot be honoured.
-      if (field.required || r.reason == publicUnknownRequiredTerm) rethrow;
+      if (field.required || r.reason == publicUnknownRequiredTerm) {
+        Error.throwWithStackTrace(r, st);
+      }
       continue;
     }
     if (kept != null) out[name] = kept;

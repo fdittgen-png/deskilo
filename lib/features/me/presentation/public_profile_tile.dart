@@ -50,7 +50,7 @@ class PublicProfileTile extends ConsumerWidget {
       context,
       domain: 'me',
       message: 'publish public profile failed',
-      action: () => ref.read(meActionsProvider).publishProfile(publish),
+      action: () => ref.read(meActionsProvider).publishProfile(publish: publish),
     );
     if (done) ref.invalidate(myPublicProfileProvider);
   }

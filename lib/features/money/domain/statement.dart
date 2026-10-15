@@ -130,7 +130,7 @@ class NegotiatedTariff {
       overageFeeCents: r.intOrNull('overage_fee_cents'),
       discountPercent: r.doubleOrNull('discount_percent'),
       validFrom: r.dateTimeOrNull('valid_from'),
-      active: r.boolOr('active', false),
+      active: r.boolOr('active', fallback: false),
     );
   }
 

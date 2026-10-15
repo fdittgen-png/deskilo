@@ -87,7 +87,7 @@ void main() {
     final preview = await repository().savePage(workspace, {
       'host_type': 'company',
       'description': 'Open to all',
-    }, true);
+    }, published: true);
     expect(preview['description'], 'Open to all');
     expect('$preview', isNot(contains('CANARY')));
     final call = seen.single;
@@ -144,7 +144,7 @@ void main() {
   test('#2086 a save without the inherited fields is a valid input: they '
       'follow the workspace information', () async {
     answer = {'name': 'Mine', 'host_type': 'association'};
-    await repository().savePage(workspace, {'description': 'Desks'}, true);
+    await repository().savePage(workspace, {'description': 'Desks'}, published: true);
     expect(
       ((jsonDecode(seen.single.body) as Map)['p_document'] as Map).keys,
       ['description'],
@@ -157,7 +157,7 @@ void main() {
       repository().savePage(workspace, {
         'host_type': 'company',
         'internal_note': 'never public',
-      }, false),
+      }, published: false),
       throwsA(isA<PublicContractRefusal>()),
     );
     expect(seen, isEmpty);

@@ -234,14 +234,18 @@ WorkspaceXmlData parseWorkspaceXml(String input) {
   try {
     // rootElement throws StateError on a rootless (comments-only) doc.
     root = XmlDocument.parse(input).rootElement;
-    // Both catches only translate to the typed error — nothing to log here;
-    // the caller (#165 UI) traces the typed exception with its own stack.
-    // ignore: catch_no_st
-  } on XmlException catch (e) {
-    throw WorkspaceXmlException(WorkspaceXmlError.malformed, e.message);
-    // ignore: catch_no_st
-  } on StateError catch (e) {
-    throw WorkspaceXmlException(WorkspaceXmlError.malformed, e.message);
+    // Both catches only translate to the typed error, carrying the original
+    // stack; the caller (#165 UI) traces the typed exception.
+  } on XmlException catch (e, st) {
+    Error.throwWithStackTrace(
+      WorkspaceXmlException(WorkspaceXmlError.malformed, e.message),
+      st,
+    );
+  } on StateError catch (e, st) {
+    Error.throwWithStackTrace(
+      WorkspaceXmlException(WorkspaceXmlError.malformed, e.message),
+      st,
+    );
   }
   if (root.name.local != WorkspaceXmlSchema.rootElement) {
     throw WorkspaceXmlException(WorkspaceXmlError.wrongRoot,

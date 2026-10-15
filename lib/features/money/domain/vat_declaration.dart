@@ -103,7 +103,7 @@ class VatDeclarationLine {
 
   factory VatDeclarationLine.fromJson(Map<String, dynamic> json) {
     final row = JsonReader.of(json, context: 'vat_declarations.lines');
-    final correction = row.boolOr('correction', false);
+    final correction = row.boolOr('correction', fallback: false);
     return VatDeclarationLine(
       percent: row.doubleOrNull('percent') ?? 0,
       category: row.stringOr('category'),

@@ -164,7 +164,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
                       if (!_expanded.remove(key)) _expanded.add(key);
                     }),
                     onOpenFeature: _explain,
-                    onChange: (activate, keys) => _change(
+                    onChange: (keys, {required activate}) => _change(
                       context,
                       status.process.key,
                       keys,

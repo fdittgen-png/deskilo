@@ -65,7 +65,7 @@ class _SlowFrontCameraStore implements FrontCameraStore {
   Future<bool?> read() => completer.future;
 
   @override
-  Future<void> write(bool enabled) async {}
+  Future<void> write({required bool enabled}) async {}
 
   void resolve() => completer.complete(value);
 }

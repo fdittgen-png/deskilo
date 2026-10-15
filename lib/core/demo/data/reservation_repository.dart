@@ -268,16 +268,15 @@ class FakeReservationRepository implements ReservationRepository {
         break;
         // The retry below IS the handling: the first attempt snapped a
         // window the rules refuse, so it is tried again unsnapped. There
-        // is no fault to report and no stack worth keeping.
-        // ignore: catch_no_st
-      } catch (_) {
+        // is no fault to report.
+      } catch (e, st) {
         if (attempt == 1 &&
             snapped &&
             startsAt.isBefore(now()) &&
             now().isBefore(endsAt)) {
           startsAt = now();
         } else {
-          rethrow;
+          Error.throwWithStackTrace(e, st);
         }
       }
     }

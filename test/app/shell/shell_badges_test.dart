@@ -42,7 +42,7 @@ void main() {
       overrides: standardTestOverrides(
         events: _pending(),
         workspace: FakeWorkspaceRepository.withWorkspace(featureFlags: _bellOff),
-        shellBarHidden: InMemoryShellFlagStore(true),
+        shellBarHidden: InMemoryShellFlagStore(value: true),
       ),
       child: const DeskiloApp(),
     ));

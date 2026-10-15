@@ -429,8 +429,7 @@ abstract class WorkspaceRepository {
 
   /// Workspace-wide developer mode (#419, 0081): admin/owner only —
   /// the server enforces via set_dev_mode.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setDevMode(String workspaceId, bool enabled);
+  Future<void> setDevMode(String workspaceId, {required bool enabled});
 
   /// #917 — declares the workspace real, or back to a development one.
   /// OWNER only, enforced by `set_workspace_environment` (0160): an

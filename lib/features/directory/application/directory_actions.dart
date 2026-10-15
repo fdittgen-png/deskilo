@@ -14,10 +14,9 @@ class PublicationActions {
   /// value, even blank, is the owner's override.
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    bool published, {
+    Map<String, String> document, {
     Set<String> following = const {},
+    required bool published,
   }) {
     final normalized = {
       for (final entry in document.entries)
@@ -40,7 +39,7 @@ class PublicationActions {
         throw ArgumentError('public links require HTTPS');
       }
     }
-    return repository.savePage(workspace, normalized, published);
+    return repository.savePage(workspace, normalized, published: published);
   }
 
   /// #2086 — back to the workspace information: [fields], or every
@@ -78,8 +77,7 @@ class DirectoryActions {
 class AccountContactActions {
   const AccountContactActions(this.repository);
   final AccountContactRepository repository;
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setAvailability(bool value) => repository.setAvailability(value);
+  Future<void> setAvailability({required bool value}) => repository.setAvailability(value: value);
   Future<bool> adminVisibility(String workspace, {bool? visible}) =>
       repository.adminVisibility(workspace, visible: visible);
   Future<bool> employment(String member, {bool? employed}) =>

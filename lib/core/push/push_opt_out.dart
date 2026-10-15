@@ -12,8 +12,7 @@ part 'push_opt_out.g.dart';
 
 abstract class PushOptOutStore {
   Future<bool> read();
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> write(bool optedOut);
+  Future<void> write({required bool optedOut});
 }
 
 class _PrefsPushOptOutStore implements PushOptOutStore {
@@ -26,7 +25,7 @@ class _PrefsPushOptOutStore implements PushOptOutStore {
       (await SharedPreferences.getInstance()).getBool(_key) ?? false;
 
   @override
-  Future<void> write(bool optedOut) async =>
+  Future<void> write({required bool optedOut}) async =>
       (await SharedPreferences.getInstance()).setBool(_key, optedOut);
 }
 
@@ -39,9 +38,8 @@ class PushOptedOut extends _$PushOptedOut {
   @override
   Future<bool> build() => ref.watch(pushOptOutStoreProvider).read();
 
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> set(bool optedOut) async {
-    await ref.read(pushOptOutStoreProvider).write(optedOut);
+  Future<void> set({required bool optedOut}) async {
+    await ref.read(pushOptOutStoreProvider).write(optedOut: optedOut);
     state = AsyncData(optedOut);
   }
 }

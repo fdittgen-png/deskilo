@@ -24,9 +24,9 @@ class AccountGroupInfo {
       id: r.string('id'),
       title: r.stringOr('title'),
       description: r.stringOr('description'),
-      announceOnly: r.boolOr('announce_only', false),
+      announceOnly: r.boolOr('announce_only', fallback: false),
       memberCount: r.intOrNull('member_count') ?? 0,
-      iAmAdmin: r.boolOr('i_am_admin', false),
+      iAmAdmin: r.boolOr('i_am_admin', fallback: false),
     );
   }
 }
@@ -41,7 +41,7 @@ class GroupMember {
     return GroupMember(
       userId: r.string('user_id'),
       name: r.stringOr('name'),
-      isAdmin: r.boolOr('is_admin', false),
+      isAdmin: r.boolOr('is_admin', fallback: false),
     );
   }
 }

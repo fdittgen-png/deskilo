@@ -40,7 +40,7 @@ class SupabaseCreditRepository implements CreditRepository {
       });
 
   @override
-  Future<void> setCreditProductActive(String productId, bool active) => _client
+  Future<void> setCreditProductActive(String productId, {required bool active}) => _client
       .from('credit_products')
       .update({'active': active}).eq('id', productId);
 

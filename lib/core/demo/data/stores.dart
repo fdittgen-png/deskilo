@@ -78,7 +78,7 @@ class InMemoryFrontCameraStore implements FrontCameraStore {
   Future<bool?> read() async => value;
 
   @override
-  Future<void> write(bool enabled) async => value = enabled;
+  Future<void> write({required bool enabled}) async => value = enabled;
 }
 
 /// The account [InMemoryActiveWorkspaceStore.value] and

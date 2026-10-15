@@ -36,7 +36,7 @@ Future<ProviderContainer> _pump(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(
-          shellBarHidden: InMemoryShellFlagStore(hidden),
+          shellBarHidden: InMemoryShellFlagStore(value: hidden),
           events: events,
         ),
         if (web) webShellProvider.overrideWithValue(true),
@@ -108,7 +108,7 @@ void main() {
     final full = _titleHeight(tester);
     final progress = container.read(shellBarProgressProvider).progress;
 
-    await container.read(shellBarHiddenProvider.notifier).set(true);
+    await container.read(shellBarHiddenProvider.notifier).set(hidden: true);
     final heights = <double>[full];
     final frames = kShellBarHideDuration.inMilliseconds ~/ 16 + 2;
     var sawMiddle = false;
@@ -139,7 +139,7 @@ void main() {
   testWidgets('reduced motion: both bars jump together to the same end '
       'state', (tester) async {
     final container = await _pump(tester, disableAnimations: true);
-    await container.read(shellBarHiddenProvider.notifier).set(true);
+    await container.read(shellBarHiddenProvider.notifier).set(hidden: true);
     // The instant settle runs inside a build and is published one frame
     // later — an end state, never a journey.
     await tester.pump();

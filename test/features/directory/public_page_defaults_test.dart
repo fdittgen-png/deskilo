@@ -62,8 +62,8 @@ void main() {
       await const PublicationActions(_Recorder()).savePage(
         _ws,
         {'host_type': 'company', 'address': ' ', 'description': 'Desks'},
-        false,
         following: {'host_type', 'description'},
+        published: false,
       );
       expect(_Recorder.last, {'address': '', 'description': 'Desks'});
     });
@@ -72,7 +72,7 @@ void main() {
       expect(
         () =>
             const PublicationActions(_Recorder())
-                .savePage(_ws, {'host_type': 'castle'}, false),
+                .savePage(_ws, {'host_type': 'castle'}, published: false),
         throwsArgumentError,
       );
     });
@@ -152,7 +152,7 @@ void main() {
     await repo.savePage(_ws, {
       'host_type': 'person',
       'address': 'Desk 9, Public Row',
-    }, true);
+    }, published: true);
     await _pumpEditor(tester, repo);
     expect(_status('address', 'Customised'), findsOneWidget);
     expect(_status('host_type', 'Customised'), findsOneWidget);
@@ -186,7 +186,7 @@ void main() {
       'host_type': 'person',
       'address': 'Desk 9, Public Row',
       'description': 'Kept',
-    }, false);
+    }, published: false);
     await _pumpEditor(tester, repo);
     await tester.tap(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.pumpAndSettle();
@@ -227,9 +227,9 @@ class _Recorder implements PublicationRepository {
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document,
-    bool published,
-  ) async {
+    Map<String, String> document, {
+    required bool published,
+  }) async {
     last = document;
     return {};
   }

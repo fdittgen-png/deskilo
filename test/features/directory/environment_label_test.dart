@@ -16,8 +16,8 @@ void main() {
         home: Scaffold(
           body: Column(
             children: [
-              EnvironmentLabel('COWORKONTI', true),
-              EnvironmentLabel('COWORKONTI', false),
+              EnvironmentLabel('COWORKONTI', isProd: true),
+              EnvironmentLabel('COWORKONTI', isProd: false),
             ],
           ),
         ),

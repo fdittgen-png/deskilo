@@ -34,7 +34,7 @@ Future<ProviderContainer> pumpBar(
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
-        shellBarHidden: InMemoryShellFlagStore(hidden),
+        shellBarHidden: InMemoryShellFlagStore(value: hidden),
       ),
       // COPY the view's metrics rather than replacing them: a bare
       // MediaQueryData has a zero size, and `ShellBarMetrics.barHeightOf`
@@ -64,7 +64,7 @@ Future<List<double>> track(
   required bool toHidden,
 }) async {
   final samples = <double>[buttonY(tester)];
-  await container.read(shellBarHiddenProvider.notifier).set(toHidden);
+  await container.read(shellBarHiddenProvider.notifier).set(hidden: toHidden);
   const step = Duration(milliseconds: 16);
   // One frame past the declared duration, so the settle is included.
   final frames = kShellBarHideDuration.inMilliseconds ~/ 16 + 2;
@@ -150,7 +150,7 @@ void main() {
       final container = await pumpBar(tester, disableAnimations: true);
       final shown = buttonY(tester);
 
-      await container.read(shellBarHiddenProvider.notifier).set(true);
+      await container.read(shellBarHiddenProvider.notifier).set(hidden: true);
       await tester.pump();
       final afterOneFrame = buttonY(tester);
       await tester.pumpAndSettle();
@@ -195,7 +195,7 @@ void main() {
     testWidgets('and it gets there gradually', (tester) async {
       final container = await pumpBar(tester);
       final start = glow(tester).blurRadius;
-      await container.read(shellBarHiddenProvider.notifier).set(true);
+      await container.read(shellBarHiddenProvider.notifier).set(hidden: true);
       // The first pump rebuilds with the new target and STARTS the
       // controller; it does not advance it.
       await tester.pump();

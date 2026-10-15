@@ -215,7 +215,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                         _scope = v;
                         _notEnough = false;
                       }),
-                      onToggle: (id, selected) => setState(() {
+                      onToggle: (id, {required selected}) => setState(() {
                         selected
                             ? _selectedPeople.add(id)
                             : _selectedPeople.remove(id);

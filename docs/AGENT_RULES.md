@@ -14,7 +14,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 
 ## Coding rules
 
-- No `print` — use `debugPrint`. No `catch (_) {}`. Every `catch (e)` is `catch (e, st)` with the stack trace logged.
+- No `print` — use `debugPrint`. No `catch (_) {}`. Every `catch (e)` is `catch (e, st)` with the stack trace logged or carried on (`Error.throwWithStackTrace`); there is no `// ignore: catch_no_st`. A bool parameter is named (`{required bool x}`); there is no `// ignore: avoid_positional_boolean_parameters`.
 - No inline `BorderRadius.circular(n)` — use `AppRadius` tokens.
 - No `setState` for shared state — Riverpod providers only; `@riverpod` codegen, no manual `Provider`/`StateProvider`.
 - `presentation/` never imports `data/` — go through `providers/`. `domain/` is pure Dart.
@@ -23,6 +23,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - Dates, numbers, currency: locale-aware formatting only (`intl`), never raw string formatting. Currency follows the workspace country.
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No third-party tracking, no GPL dependencies (ADR 0009). FCM is the push transport (ADR 0011).
+- A comment states the invariant the code keeps, not the ticket that asked for it: the issue number goes in the commit message, where blame finds it. A reader should learn what a condition means without opening the tracker. New code follows this from the merge of this rule; existing comments are not swept.
 - A public top-level declaration in `lib/` has a reader outside its file; otherwise it is `_private`, or `@visibleForTesting` when tests read it (`test/lint/public_surface_test.dart`, #2384). Nothing in `lib/` is dead or read only by tests (`test/lint/dead_code_test.dart`, #2383). `dart run tool/dead_code.dart [--surface]` lists the findings.
 
 ## No hardcoded values — every configurable value has a UI point (#2476)

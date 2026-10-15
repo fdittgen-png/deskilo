@@ -372,9 +372,8 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
   final templateInspections = <String, TemplateInspection>{};
 
   // #2386 — the operations; each body is in a part file.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  void applyDevMode(bool enabled) => _applyDevModeImpl(enabled);
-  @override Future<void> setDevMode(String workspaceId, bool enabled) => _setDevModeImpl(workspaceId, enabled);
+  void applyDevMode({required bool enabled}) => _applyDevModeImpl(enabled);
+  @override Future<void> setDevMode(String workspaceId, {required bool enabled}) => _setDevModeImpl(workspaceId, enabled);
   @override Future<String> createInvitation(String workspaceId, {required bool isAdmin, String firstName = '', String lastName = '', String? memberId, bool alsoProd = false}) => _createInvitationImpl(workspaceId, isAdmin: isAdmin, firstName: firstName, lastName: lastName, memberId: memberId, alsoProd: alsoProd);
   @override Future<List<Workspace>> fetchMyWorkspaces() => _fetchMyWorkspacesImpl();
   @override Future<List<Site>> fetchSites(String workspaceId) => _fetchSitesImpl(workspaceId);

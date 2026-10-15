@@ -11,8 +11,7 @@ import '../../../../core/theme/status_colors.dart';
 /// Two spaces of one pair carry the same name, so the word is what tells them
 /// apart.
 class EnvironmentLabel extends StatelessWidget {
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  const EnvironmentLabel(this.name, this.isProd, {super.key});
+  const EnvironmentLabel(this.name, {required this.isProd, super.key});
   final String name;
   final bool isProd;
 

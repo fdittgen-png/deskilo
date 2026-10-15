@@ -25,7 +25,7 @@ class PrivacyRecipient {
     legalBasis: r.stringOr('legal_basis'),
     region: r.stringOr('region'),
     transferMechanism: r.stringOr('transfer_mechanism', 'unknown'),
-    essential: r.boolOr('essential', true),
+    essential: r.boolOr('essential', fallback: true),
   );
 
   final String name;

@@ -76,8 +76,7 @@ class InMemoryNavigationStyleStore implements NavigationStyleStore {
 
 /// #1173 — one of the two shell flags (bar swiped away, swipe hint seen).
 class InMemoryShellFlagStore implements ShellFlagStore {
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  InMemoryShellFlagStore([this.value = false]);
+  InMemoryShellFlagStore({this.value = false});
 
   bool value;
 
@@ -88,8 +87,8 @@ class InMemoryShellFlagStore implements ShellFlagStore {
   Future<bool> read() async => value;
 
   @override
-  Future<void> write(bool next) async {
-    value = next;
+  Future<void> write({required bool value}) async {
+    this.value = value;
     writes++;
   }
 }
@@ -104,7 +103,7 @@ class InMemoryPushOptOutStore implements PushOptOutStore {
   Future<bool> read() async => optedOut;
 
   @override
-  Future<void> write(bool next) async => optedOut = next;
+  Future<void> write({required bool optedOut}) async => this.optedOut = optedOut;
 }
 
 /// The set is not a judgement call: `demo_scope_test` reads the app's
@@ -120,7 +119,7 @@ class DemoDevicePrefs {
   /// The bar starts shown and the coach mark starts SEEN — a visitor who
   /// is being shown the product should not also be shown a gesture hint.
   final InMemoryShellFlagStore shellBarHidden = InMemoryShellFlagStore();
-  final InMemoryShellFlagStore shellSwipeCoach = InMemoryShellFlagStore(true);
+  final InMemoryShellFlagStore shellSwipeCoach = InMemoryShellFlagStore(value: true);
 
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();

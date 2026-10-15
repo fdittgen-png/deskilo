@@ -33,8 +33,8 @@ void main() {
     expect(r.stringOrNull('missing'), isNull);
     expect(r.intOrNull('n'), 3);
     expect(r.doubleOrNull('avg'), 2.0);
-    expect(r.boolOr('flag', false), isTrue);
-    expect(r.boolOr('missing', true), isTrue);
+    expect(r.boolOr('flag', fallback: false), isTrue);
+    expect(r.boolOr('missing', fallback: true), isTrue);
     expect(r.dateTime('at'), DateTime.utc(2026, 3, 4, 9, 5, 3));
     expect(r.dateTimeOrNull('missing'), isNull);
     expect(r.strings('tags'), ['x', 'y']);
@@ -61,7 +61,7 @@ void main() {
       () => r.stringOr('n'),
       throwsA(_shape('some_rpc', 'n', 'String?', 'double')),
     );
-    expect(() => r.boolOr('id', false), throwsA(isA<JsonShapeException>()));
+    expect(() => r.boolOr('id', fallback: false), throwsA(isA<JsonShapeException>()));
     expect(() => r.strings('rows'), throwsA(isA<JsonShapeException>()));
   });
 

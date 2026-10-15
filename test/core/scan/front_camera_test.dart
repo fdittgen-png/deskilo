@@ -47,7 +47,7 @@ void main() {
     addTearDown(container.dispose);
 
     expect(await container.read(frontCameraScanProvider.future), isNull);
-    await container.read(frontCameraScanProvider.notifier).setEnabled(false);
+    await container.read(frontCameraScanProvider.notifier).setEnabled(enabled: false);
     expect(store.value, isFalse);
   });
 }

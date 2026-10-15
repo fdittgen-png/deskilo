@@ -593,7 +593,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         // picks, so the Reserve button never offers a refused window.
         refusalOf: gate == null
             ? null
-            : (start, end, walkUp) => gate.refusalFor(
+            : (start, end, {required walkUp}) => gate.refusalFor(
                   start: start,
                   end: end,
                   walkUp: walkUp,
@@ -763,8 +763,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       return;
     }
     if (!mounted) return;
-    invalidateBookingData(ref);
-  }
+    invalidateBookingData(ref);}
   /// #903 — the day on this seat, when more than one booking shares it.
   /// Returns true when the tap was handled here.
   Future<bool> _seatDayHandled(

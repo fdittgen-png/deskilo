@@ -27,7 +27,7 @@ import '../../helpers/mock_providers.dart';
 late InMemoryShellFlagStore store;
 
 Future<void> pumpBar(WidgetTester tester, {bool hidden = false}) async {
-  store = InMemoryShellFlagStore(hidden);
+  store = InMemoryShellFlagStore(value: hidden);
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(shellBarHidden: store),

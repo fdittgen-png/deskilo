@@ -557,7 +557,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                         for (final w in workspaces)
                           DropdownMenuItem(
                             value: w.id,
-                            child: EnvironmentLabel(w.name, w.environment == 'prod'),
+                            child: EnvironmentLabel(w.name, isProd: w.environment == 'prod'),
                           ),
                       ],
                       onChanged: (id) {

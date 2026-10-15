@@ -39,7 +39,7 @@ class TaxReferenceRow {
       validTo: r.stringOrNull('valid_to'),
       value: TaxValue.parse(domain, r.objectOrNull('value') ?? JsonReader.orEmpty(null, context: 'tax_reference.value')),
       source: r.string('source'),
-      confirmed: r.boolOr('confirmed', false),
+      confirmed: r.boolOr('confirmed', fallback: false),
     );
   }
 

@@ -52,12 +52,12 @@ Element? toggleElementAt(HitTestResult result) {
 /// it is not one.
 FlagValue? toggleStateOf(Element from) {
   FlagValue? read(Widget w) => switch (w) {
-        Switch(:final value) => FlagValue(value),
-        SwitchListTile(:final value) => FlagValue(value),
-        Checkbox(:final value?) => FlagValue(value),
-        CheckboxListTile(:final value?) => FlagValue(value),
-        FilterChip(:final selected) => FlagValue(selected),
-        ChoiceChip(:final selected) => FlagValue(selected),
+        Switch(:final value) => FlagValue(on: value),
+        SwitchListTile(:final value) => FlagValue(on: value),
+        Checkbox(:final value?) => FlagValue(on: value),
+        CheckboxListTile(:final value?) => FlagValue(on: value),
+        FilterChip(:final selected) => FlagValue(on: selected),
+        ChoiceChip(:final selected) => FlagValue(on: selected),
         _ => null,
       };
   FlagValue? found = read(from.widget);

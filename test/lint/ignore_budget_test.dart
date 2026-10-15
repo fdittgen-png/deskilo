@@ -11,16 +11,16 @@ import 'lint_sources.dart';
 
 /// `// ignore:` comments in hand-written lib/ (26 when the budget began,
 /// none of them naming an issue; 72 once the staged rules of #2389 were
-/// turned on and their kept sites recorded below).
-const _ignoreBudget = 72;
+/// turned on and their kept sites recorded; 7 once #2606 named the 47
+/// positional bools and dropped the 18 stack-trace exemptions).
+const _ignoreBudget = 7;
 
-/// #2389 — `avoid_positional_boolean_parameters` is on for new code; the
-/// existing APIs that take a positional bool carry an ignore naming the
-/// issue, and this count only goes down as they become named.
-const _positionalBoolBudget = 47;
+/// #2389 — `avoid_positional_boolean_parameters` is on; since #2606 no
+/// hand-written API takes a positional bool, so the budget is zero.
+const _positionalBoolBudget = 0;
 
 /// Of those, the ones that name no issue (`#NNNN`).
-const _unexplainedBudget = 26;
+const _unexplainedBudget = 7;
 
 void main() {
   final ignore = RegExp(r'//\s*ignore(_for_file)?:');

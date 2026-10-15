@@ -93,7 +93,7 @@ class SupabaseWorkspaceRepository
   @override Future<void> setRolePermission(String workspaceId, String role, String permission, {required bool enabled}) => _setRolePermissionImpl(workspaceId, role, permission, enabled: enabled);
   @override Future<void> setRolePermissions(String workspaceId, String role, List<String> permissions) => _setRolePermissionsImpl(workspaceId, role, permissions);
   @override Future<void> setFeatureFlags(String workspaceId, Map<String, bool> flags, {Map<String, bool>? expected}) => _setFeatureFlagsImpl(workspaceId, flags, expected: expected);
-  @override Future<void> setDevMode(String workspaceId, bool enabled) => _setDevModeImpl(workspaceId, enabled);
+  @override Future<void> setDevMode(String workspaceId, {required bool enabled}) => _setDevModeImpl(workspaceId, enabled);
   @override Future<List<Member>> fetchMembers(String workspaceId) => _fetchMembersImpl(workspaceId);
   @override Future<void> updateMemberSubscription(String memberId, int pct) => _updateMemberSubscriptionImpl(memberId, pct);
   @override Future<void> updateMemberOveragePolicy(String memberId, OveragePolicy policy) => _updateMemberOveragePolicyImpl(memberId, policy);

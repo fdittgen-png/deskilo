@@ -37,8 +37,7 @@ part 'shell_bar_visibility.g.dart';
 /// channel (the `FrontCameraStore` shape).
 abstract class ShellFlagStore {
   Future<bool> read();
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> write(bool value);
+  Future<void> write({required bool value});
 }
 
 class _PrefsShellFlagStore implements ShellFlagStore {
@@ -51,7 +50,7 @@ class _PrefsShellFlagStore implements ShellFlagStore {
       (await SharedPreferences.getInstance()).getBool(key) ?? false;
 
   @override
-  Future<void> write(bool value) async =>
+  Future<void> write({required bool value}) async =>
       (await SharedPreferences.getInstance()).setBool(key, value);
 }
 
@@ -71,12 +70,11 @@ class ShellBarHidden extends _$ShellBarHidden {
   Future<bool> build() => ref.watch(shellBarHiddenStoreProvider).read();
 
   /// Hide or show the bar, remembering the choice.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> set(bool hidden) async {
+  Future<void> set({required bool hidden}) async {
     if (state.value == hidden) return;
     state = AsyncData(hidden);
     try {
-      await ref.read(shellBarHiddenStoreProvider).write(hidden);
+      await ref.read(shellBarHiddenStoreProvider).write(value: hidden);
     } on Object catch (e, st) {
       // The bar still moved; only the memory of it is lost.
       TraceLogger.instance.warn(
@@ -89,7 +87,7 @@ class ShellBarHidden extends _$ShellBarHidden {
   }
 
   /// Swap the state — the long-press and semantics paths.
-  Future<void> toggle() => set(!(state.value ?? false));
+  Future<void> toggle() => set(hidden: !(state.value ?? false));
 }
 
 /// Whether the swipe coach mark has been shown (#1173).
@@ -107,7 +105,7 @@ class ShellSwipeCoachSeen extends _$ShellSwipeCoachSeen {
     if (state.value == true) return;
     state = const AsyncData(true);
     try {
-      await ref.read(shellSwipeCoachStoreProvider).write(true);
+      await ref.read(shellSwipeCoachStoreProvider).write(value: true);
     } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'shell',

@@ -202,7 +202,7 @@ class _FrameTile extends StatelessWidget {
                 FilterChip(
                   label: Text(l.taskExportStoryboardInclude),
                   selected: !frame.omitted,
-                  onSelected: (v) => onChanged((s) => s.setOmitted(index, !v)),
+                  onSelected: (v) => onChanged((s) => s.setOmitted(index, omitted: !v)),
                 ),
                 if (frame.source == IllustrationSource.recreatedScene)
                   FilterChip(
@@ -210,7 +210,7 @@ class _FrameTile extends StatelessWidget {
                     selected: frame.approved,
                     onSelected: png == null
                         ? null
-                        : (v) => onChanged((s) => s.setApproved(index, v)),
+                        : (v) => onChanged((s) => s.setApproved(index, approved: v)),
                   ),
                 IconButton(
                   tooltip: l.taskExportStoryboardMoveUp,

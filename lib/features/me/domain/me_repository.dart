@@ -30,8 +30,7 @@ abstract interface class MeRepository {
   Future<bool> myPublicProfile();
 
   /// `set_public_profile(publish)`: the explicit publish / withdraw step.
-  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-  Future<void> setPublicProfile(bool publish);
+  Future<void> setPublicProfile({required bool publish});
 
   /// The public card (0390, `public_person_cards`): what anyone, signed in or not, may read of
   /// [userId] — null when the profile is not published (or unknown).

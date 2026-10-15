@@ -215,11 +215,13 @@ ReportDesignFile parseReportDesignFile(
   final Object? decoded;
   try {
     decoded = jsonDecode(content);
-    // Rethrow-only: the message becomes the refusal a person reads, and
-    // the caller logs it with its own stack.
-    // ignore: catch_no_st
-  } on FormatException catch (e) {
-    throw ReportDesignException(ReportDesignError.malformed, e.message);
+    // The message becomes the refusal a person reads; the original stack
+    // travels with it and the caller logs it.
+  } on FormatException catch (e, st) {
+    Error.throwWithStackTrace(
+      ReportDesignException(ReportDesignError.malformed, e.message),
+      st,
+    );
   }
   if (decoded is! Map<String, dynamic>) {
     throw ReportDesignException(

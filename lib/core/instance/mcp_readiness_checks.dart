@@ -232,11 +232,10 @@ List<ReadinessCheck> _runtime(
       ReadinessCheck(area, code, CheckOutcome.unknown, why);
   ReadinessCheck judge(
     String code,
-    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
-    bool ok,
-    String failDetail, [
+    String failDetail, {
+    required bool ok,
     String passDetail = '',
-  ]) => ReadinessCheck(
+  }) => ReadinessCheck(
     area,
     code,
     ok ? CheckOutcome.pass : CheckOutcome.fail,
@@ -251,9 +250,9 @@ List<ReadinessCheck> _runtime(
         ? unknown('facade_guard', noDb)
         : judge(
             'facade_guard',
-            guard['pre_request_installed'] == true &&
-                (guard['tables_without_denial'] as List?)?.isEmpty == true,
             'the delegated-token guard is incomplete: $guard',
+            ok: guard['pre_request_installed'] == true &&
+                (guard['tables_without_denial'] as List?)?.isEmpty == true,
           ),
   );
 
@@ -265,9 +264,9 @@ List<ReadinessCheck> _runtime(
     checks.add(
       judge(
         'mcp_client_registered',
-        clients.isNotEmpty,
         'no assistant client is approved on this installation',
-        '${clients.length} approved',
+        ok: clients.isNotEmpty,
+        passDetail: '${clients.length} approved',
       ),
     );
     final ids = e.oauthClientIds;
@@ -280,32 +279,32 @@ List<ReadinessCheck> _runtime(
             )
           : judge(
               'oauth_clients_registered',
-              clients.isNotEmpty && clients.every(ids.contains),
               '${clients.where((c) => !ids.contains(c)).length} approved client(s) are not registered in Auth',
+              ok: clients.isNotEmpty && clients.every(ids.contains),
             ),
     )
       ..add(
       judge(
         'output_classified',
-        (runtime['unclassified_operations'] as List?)?.isEmpty == true &&
-            _localOutputClassified(release.catalogue),
         'an implemented operation has no classified output',
+        ok: (runtime['unclassified_operations'] as List?)?.isEmpty == true &&
+            _localOutputClassified(release.catalogue),
       ),
     )
       ..add(
       judge(
         'disclosure_ceiling',
-        (runtime['unknown_ceiling_fields'] as List?)?.isEmpty == true,
         'the disclosure ceiling names a field the contract does not know',
+        ok: (runtime['unknown_ceiling_fields'] as List?)?.isEmpty == true,
       ),
     );
     final limits = runtime['limits'];
     checks.add(
       judge(
         'limits_bounded',
-        limits is Map && limits.values.every((v) => v is int && v > 0),
         'the MCP limits are missing or not positive',
-        '$limits',
+        ok: limits is Map && limits.values.every((v) => v is int && v > 0),
+        passDetail: '$limits',
       ),
     );
   }
@@ -324,8 +323,8 @@ List<ReadinessCheck> _runtime(
           )
         : judge(
             'oauth_server_enabled',
-            auth['oauth_server_enabled'] == true,
             'the OAuth 2.1 server is off in Auth',
+            ok: auth['oauth_server_enabled'] == true,
           ),
   );
 
@@ -338,8 +337,8 @@ List<ReadinessCheck> _runtime(
           )
         : judge(
             'catalogue_matches_release',
-            canonicalJson(catalogue) == canonicalJson(release.catalogue),
             'the target\'s operation catalogue is not this release\'s',
+            ok: canonicalJson(catalogue) == canonicalJson(release.catalogue),
           ),
   );
 
@@ -355,9 +354,9 @@ List<ReadinessCheck> _runtime(
     checks.add(
       judge(
         'contract_routines',
-        missing == 0 && extra == 0,
         '$missing routine line(s) differ from this release, $extra unexpected',
-        '${expected.length} routines match',
+        ok: missing == 0 && extra == 0,
+        passDetail: '${expected.length} routines match',
       ),
     );
   }
@@ -374,8 +373,8 @@ List<ReadinessCheck> _runtime(
     checks.add(
       judge(
         'endpoint_deployed',
-        functions.contains(mcpEndpointSlug),
         '$mcpEndpointSlug is not deployed',
+        ok: functions.contains(mcpEndpointSlug),
       ),
     );
     final unclassified = functions
@@ -384,8 +383,8 @@ List<ReadinessCheck> _runtime(
     checks.add(
       judge(
         'edge_functions_classified',
-        unclassified.isEmpty,
         'deployed but not classified in supabase/functions/exposure.json: ${unclassified.join(', ')}',
+        ok: unclassified.isEmpty,
       ),
     );
   }
