@@ -16,34 +16,17 @@
 // The helpers set generous viewports on purpose: they need every row
 // BUILT so a finder can reach it. So each screen is pumped the way its
 // own test pumps it, and then narrowed. The narrowing is the test.
+//
+// #2601 — the screens are the `locales` axis of `test/a11y/matrix.dart`
+// (kMatrix), the one list: a screen is added there once, and a row that does
+// not walk this axis says so with a dated reason. ARB parity proves key
+// existence, not layout, so a fixture below proves this walk fails when only
+// a translated label stops fitting.
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
-import '../helpers/screens/events.dart' show pumpEvents;
-import '../helpers/screens/features.dart' show pumpFeatures;
-import '../helpers/screens/invoices.dart' show pumpInvoices;
-import '../helpers/screens/level_canvas.dart' show pumpCanvas;
-import '../helpers/screens/money_faces.dart' show pumpFaces;
-import '../helpers/screens/reserve_hub.dart' show pumpHub;
-import '../helpers/screens/validation_settings.dart'
-    show pumpValidationSettings;
-
-typedef ScreenPump = Future<void> Function(WidgetTester tester);
-
-/// Adding a screen is a line, the same as in `test/a11y/`.
-final Map<String, ScreenPump> _screens = {
-  'Reserve hub': pumpHub,
-  'Money faces': pumpFaces,
-  'Invoices': pumpInvoices,
-  'Alerts': pumpEvents,
-  'Validation rules': pumpValidationSettings,
-  'Features': pumpFeatures,
-  // #1327 — the view the screen opens on.
-  'Process overview': (t) => pumpFeatures(t, switches: false),
-  'Accessories': pumpAccessories,
-  'Level canvas': pumpCanvas,
-};
+import '../a11y/matrix.dart';
 
 /// German first: the longest of the five, and the one a developer
 /// reading English is least likely to eyeball correctly.
@@ -53,27 +36,38 @@ const _locales = [Locale('de'), Locale('fr'), Locale('es'), Locale('it')];
 /// wide enough to be a real target rather than a synthetic worst case.
 const _phone = Size(360, 740);
 
+/// Pumps [pump] under [locale], narrows the view to a phone and returns the
+/// first exception the framework recorded (a RenderFlex overflow, almost
+/// always), or null.
+Future<Object?> exceptionAt(
+  WidgetTester tester,
+  Locale locale,
+  ScreenPump pump, {
+  Size size = _phone,
+}) async {
+  tester.platformDispatcher.localesTestValue = [locale];
+  tester.platformDispatcher.localeTestValue = locale;
+  addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+  addTearDown(tester.platformDispatcher.clearLocaleTestValue);
+
+  await pump(tester);
+  // Whatever the helper chose, the phone is what a member holds.
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = 1.0;
+  await tester.pumpAndSettle();
+  return tester.takeException();
+}
+
 void main() {
   for (final locale in _locales) {
-    for (final entry in _screens.entries) {
-      testWidgets('${entry.key} survives ${locale.languageCode} at phone width',
+    for (final row in matrixRowsFor(MatrixAxis.locales)) {
+      testWidgets('${row.screen} survives ${locale.languageCode} at phone width',
           (tester) async {
-        tester.platformDispatcher.localesTestValue = [locale];
-        tester.platformDispatcher.localeTestValue = locale;
-        addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-        addTearDown(tester.platformDispatcher.clearLocaleTestValue);
-
-        await entry.value(tester);
-        // Whatever the helper chose, the phone is what a member holds.
-        tester.view.physicalSize = _phone;
-        tester.view.devicePixelRatio = 1.0;
-        await tester.pumpAndSettle();
-
-        final e = tester.takeException();
+        final e = await exceptionAt(tester, locale, row.localePump!);
         expect(
           e,
           isNull,
-          reason: '"${entry.key}" under ${locale.languageCode} at '
+          reason: '"${row.screen}" under ${locale.languageCode} at '
               '${_phone.width.toInt()}px threw: $e — almost always a '
               'RenderFlex overflow from a string longer than the English '
               'this layout was built against. Wrap with Expanded or '
@@ -82,4 +76,47 @@ void main() {
       });
     }
   }
+
+  // Perfect ARB parity, and a label that only the German string breaks.
+  Future<void> labelRow(WidgetTester tester) => tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                final de = Localizations.localeOf(context).languageCode == 'de';
+                return Row(
+                  children: [
+                    Text(de ? 'Zugangsberechtigungsverwaltung' : 'Access'),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+  testWidgets('the walk fails when only a translated label stops fitting',
+      (tester) async {
+    expect(await exceptionAt(tester, const Locale('fr'), labelRow, size: const Size(120, 740)), isNull);
+    expect(await exceptionAt(tester, const Locale('de'), labelRow, size: const Size(120, 740)), isNotNull);
+  });
+
+  test('the locale axis names the nine screens it has always walked', () {
+    expect(
+      matrixRowsFor(MatrixAxis.locales).map((r) => r.screen).toSet(),
+      {
+        'Reserve hub',
+        'Money faces',
+        'Invoices',
+        'Alerts',
+        'Validation rules',
+        'Features',
+        'Process overview',
+        'Accessories',
+        'Level canvas',
+      },
+    );
+  });
 }
