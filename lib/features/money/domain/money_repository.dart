@@ -81,7 +81,7 @@ abstract class MoneyRepository {
     required String contentType,
   });
 
-  /// A library image's bytes; null when it does not exist.
+  /// Image bytes; null ONLY if absent, else a failed read throws (#2586).
   Future<Uint8List?> fetchReportImage(String workspaceId, String name);
 
   /// Settles a NEGATIVE invoice — a credit note the WORKSPACE pays
