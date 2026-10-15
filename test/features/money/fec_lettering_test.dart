@@ -2,6 +2,7 @@
 //
 // #2365 fix 5 — FEC: DateLet accompanies every EcritureLet, and ValidDate of
 // a recorded movement is the day it was recorded, not the day it happened.
+import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,7 +49,7 @@ void main() {
       amountCents: 1000,
       description: 'Taxi',
       period: '2026-02',
-      occurredOn: DateTime(2026, 2, 1),
+      occurredOn: DateTime(2026, 2),
       createdAt: DateTime(2026, 2, 10),
     );
     final row = _rows([entry]).firstWhere(
@@ -56,5 +57,13 @@ void main() {
     );
     expect(row['EcritureDate'], '20260201');
     expect(row['ValidDate'], '20260210');
+  });
+
+  test('only a French workspace archive carries a FEC', () {
+    for (final (country, has) in [('FR', true), ('fr', true), ('DE', false)]) {
+      final files = <String, List<int>>{};
+      addArchiveFec(files, country, 'JournalCode');
+      expect(files.containsKey('fec.txt'), has, reason: country);
+    }
   });
 }

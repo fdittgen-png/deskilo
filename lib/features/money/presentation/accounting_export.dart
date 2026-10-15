@@ -421,7 +421,7 @@ Future<void> exportAccountingFile(
             generatedAt: now,
             workspaceName: workspace.name,
           ));
-          files['fec.txt'] = textBytes(buildFecFile(
+          addArchiveFec(files, country, buildFecFile(
             invoices: yearInvoices,
             matches: matches,
             company: company,
