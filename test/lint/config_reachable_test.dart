@@ -15,6 +15,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The models whose fields ARE the owner's settings.
 const _configModels = <String>[
@@ -49,12 +50,7 @@ final _fieldPattern = RegExp(
 
 List<File> _presentationFiles() {
   final files = <File>[];
-  for (final entity in Directory('lib').listSync(recursive: true)) {
-    if (entity is! File || !entity.path.endsWith('.dart')) continue;
-    if (entity.path.endsWith('.g.dart') ||
-        entity.path.endsWith('.freezed.dart')) {
-      continue;
-    }
+  for (final entity in handWrittenDartFiles('lib')) {
     if (entity.path.contains('/presentation/')) files.add(entity);
   }
   return files;

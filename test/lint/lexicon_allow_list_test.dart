@@ -22,6 +22,7 @@ import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/core/l10n/lexicon_defaults.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The keys `lexicon_allowed_keys()` returns, from the LATEST migration
 /// that defines it — the same approach `configuration_classification_test`
@@ -72,13 +73,9 @@ Set<String> _renderedKeys() {
   // `word('x', l10n?.x` — a forwarding helper's call site.
   final forwarded = RegExp(r"'([A-Za-z]\w*)'\s*,\s*l10n[?!]?\.\1\b");
   final keys = <String>{};
-  for (final file in Directory('lib')
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.dart'))
+  for (final file in handWrittenDartFiles('lib')
       // The mechanism itself: its doc comments spell both shapes out.
-      .where((f) => !f.path.startsWith('lib/l10n/') &&
-          !f.path.startsWith('lib/core/l10n/'))) {
+      .where((f) => !f.path.startsWith('lib/core/l10n/'))) {
     final source = file.readAsStringSync();
     if (!source.contains('lexicon')) continue;
     for (final m in direct.allMatches(source)) {
@@ -137,11 +134,7 @@ void main() {
     // allow-listed while no widget read it, so an owner could have
     // renamed a word that changes nothing on screen. A term is only
     // renameable if something renders it.
-    final lib = Directory('lib')
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.dart') && !f.path.endsWith('.g.dart'))
-        .where((f) => !f.path.startsWith('lib/l10n/'))
+    final lib = handWrittenDartFiles('lib')
         .map((f) => f.readAsStringSync())
         .join('\n');
 
