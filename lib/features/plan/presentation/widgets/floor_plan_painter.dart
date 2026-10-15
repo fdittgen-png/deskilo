@@ -5,19 +5,13 @@ import 'package:flutter/foundation.dart' show listEquals, mapEquals, setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../../../core/theme/office_colors.dart';
-import '../../../../core/theme/seat_state_colors.dart';
-import '../../../../core/theme/status_colors.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/grid_geometry.dart';
 import '../../domain/seat.dart';
-import 'drop_target_paint.dart';
+import 'floor_plan_chrome_layers.dart';
+import 'floor_plan_space_layers.dart';
 import 'plan_paint_helpers.dart';
-import 'seat_identifier_paint.dart';
-
-part 'floor_plan_painter_part1.dart';
-part 'floor_plan_painter_part2.dart';
 
 /// Paints a level's grid, offices, desks and seats. Shared by the editor
 /// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
@@ -182,14 +176,96 @@ class FloorPlanPainter extends CustomPainter {
   final bool selectionResizable;
   final bool selectionValid;
 
-  bool get _labelsOffices => plan.labelsOffices(byLevel: singleRoomByLevel);
+  @override
+  void paint(Canvas canvas, Size size) {
+    paintFloorPlanBackdrop(canvas, size, this);
+    paintFloorPlanOffices(canvas, this);
+    paintFloorPlanDesks(canvas, this);
+    paintFloorPlanSeats(canvas, this);
+    paintFloorPlanHighlights(canvas, size, this);
+    paintFloorPlanEditorMarks(canvas, size, this);
+  }
 
-  // #2386 — the operations; each body is in a part file.
-  @override void paint(Canvas canvas, Size size) => _paintImpl(canvas, size);
-  @override bool shouldRepaint(FloorPlanPainter oldDelegate) => _shouldRepaintImpl(oldDelegate);
-  @override bool shouldRebuildSemantics(FloorPlanPainter oldDelegate) => _shouldRebuildSemanticsImpl(oldDelegate);
-  @override SemanticsBuilderCallback? get semanticsBuilder => _semanticsBuilderImpl;
+  @override
+  bool shouldRepaint(FloorPlanPainter oldDelegate) =>
+      _structureChanged(oldDelegate) ||
+      _seatsChanged(oldDelegate) ||
+      _highlightsChanged(oldDelegate);
 
+  /// The plan, its backdrop and the editor's marks.
+  bool _structureChanged(FloorPlanPainter old) =>
+      old.plan != plan ||
+      old.singleRoomByLevel != singleRoomByLevel ||
+      old.background != background ||
+      // Deep compares on the maps (perf audit): callers rebuild these maps
+      // every frame/minute-tick, so identity `!=` was ALWAYS true and every
+      // rebuild forced a full canvas repaint — including a TextPainter.layout
+      // per seat label — even when nothing changed.
+      !mapEquals(old.images, images) ||
+      old.marquee != marquee ||
+      !setEquals(old.dropTargets, dropTargets) ||
+      old.marqueeValid != marqueeValid ||
+      old.selection != selection ||
+      old.selectionResizable != selectionResizable ||
+      old.selectionValid != selectionValid ||
+      old.deskOpacity != deskOpacity ||
+      !listEquals(old.officePalette, officePalette) ||
+      old.cellSize != cellSize;
+
+  /// What the seats and the whole-space overlays show.
+  bool _seatsChanged(FloorPlanPainter old) =>
+      !mapEquals(old.seatPhotos, seatPhotos) ||
+      !mapEquals(old.seatStates, seatStates) ||
+      !mapEquals(old.previousSeatStates, previousSeatStates) ||
+      old.seatStateLerp != seatStateLerp ||
+      !mapEquals(old.seatDayPhases, seatDayPhases) ||
+      !_sameSegments(old.seatDaySegments, seatDaySegments) ||
+      !mapEquals(old.seatLabels, seatLabels) ||
+      !mapEquals(old.spaceOverlays, spaceOverlays) ||
+      !setEquals(old.onlineSeatIds, onlineSeatIds) ||
+      old.labelScale != labelScale ||
+      old.identifierStyle != identifierStyle;
+
+  bool _highlightsChanged(FloorPlanPainter old) =>
+      old.highlightedSeatId != highlightedSeatId ||
+      old.highlightedDeskId != highlightedDeskId ||
+      old.highlightedOfficeId != highlightedOfficeId ||
+      old.highlightLevel != highlightLevel;
+
+  // #2307 — a booking can change while the seat still reads "your seat".
+  // Semantic actions must then use the new closure, independently of ink.
+  @override
+  bool shouldRebuildSemantics(FloorPlanPainter oldDelegate) =>
+      oldDelegate.plan != plan ||
+      oldDelegate.cellSize != cellSize ||
+      oldDelegate.semanticsDirection != semanticsDirection ||
+      !mapEquals(oldDelegate.semanticLabels, semanticLabels) ||
+      oldDelegate.onSeatSemanticTap != onSeatSemanticTap;
+
+  /// One semantics node per seat (#402). Without this, the app's core
+  /// surface is a single unlabeled picture to TalkBack/VoiceOver — the
+  /// hidden cost of choosing a canvas over widgets, paid here.
+  @override
+  SemanticsBuilderCallback? get semanticsBuilder {
+    final labels = semanticLabels;
+    if (labels == null) return null;
+    return (Size size) => [
+          for (final seat in plan.seats)
+            CustomPainterSemantics(
+              key: ValueKey('plan-seat-semantics-${seat.id}'),
+              rect: gridRectToPx(seat.footprint, cellSize),
+              properties: SemanticsProperties(
+                label: labels[seat.id] ?? seat.name,
+                textDirection: semanticsDirection,
+                button: onSeatSemanticTap != null,
+                // recorder-key-exempt: the seat's node is keyed above.
+                onTap: onSeatSemanticTap == null
+                    ? null
+                    : () => onSeatSemanticTap!(seat),
+              ),
+            ),
+        ];
+  }
 }
 
 /// Map equality for the day segments: `mapEquals` compares lists by

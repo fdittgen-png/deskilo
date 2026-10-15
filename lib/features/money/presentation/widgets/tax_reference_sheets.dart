@@ -18,39 +18,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/vat_rate.dart';
+import 'tax_reference_labels.dart';
+import 'tax_reference_sales_fields.dart';
 
-/// A one-line reading of a value, for lists.
-String taxValueSummary(TaxValue v) => switch (v) {
-      RateValue() => '${v.label} (${percentText(v.percent)} %)',
-      EuMemberValue() => v.aliasOf,
-      ExemptionTextValue() => v.text,
-      VatIdPatternValue() => v.pattern,
-      CatalogueNoteValue() => v.text,
-      GroupExampleValue() => '${v.group}: ${v.text}',
-      ThresholdValue() => '${v.cents} ${v.currency} (${v.effect})',
-      TaxPointValue() => v.standard,
-      MandateValue() => '${v.duty}: ${v.from}',
-      IssuingGateValue() =>
-        v.issues ? v.currency : '-',
-      FormBoxValue() => v.label,
-      AccountMapValue() =>
-        '${v.role}: ${v.account.isNotEmpty ? v.account : v.taxCode}',
-    };
-
-String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
-      TaxDomain.rate => context.l10n.taxRefDomainRate,
-      TaxDomain.euMember => context.l10n.taxRefDomainEuMember,
-      TaxDomain.mention => context.l10n.taxRefDomainExemptionText,
-      TaxDomain.vatIdPattern => context.l10n.taxRefDomainVatIdPattern,
-      TaxDomain.catalogueNote => context.l10n.taxRefDomainCatalogueNote,
-      TaxDomain.groupExample => context.l10n.taxRefDomainGroupExample,
-      TaxDomain.threshold => context.l10n.taxRefDomainThreshold,
-      TaxDomain.taxPoint => context.l10n.taxRefDomainTaxPoint,
-      TaxDomain.mandate => context.l10n.taxRefDomainMandate,
-      TaxDomain.issuingGate => context.l10n.taxRefDomainIssuingGate,
-      TaxDomain.formBox => context.l10n.taxRefDomainFormBox,
-      TaxDomain.accountMap => context.l10n.taxRefDomainAccountMap,
-    };
+export 'tax_reference_labels.dart';
 
 /// The state of one version form: its text fields and its three choices.
 class _VersionForm {
@@ -74,6 +45,12 @@ class _VersionForm {
             AccountMapValue(:final account) => account,
             _ => '',
           },
+          'state': from?.value is SalesTaxValue
+              ? (from!.value as SalesTaxValue).state
+              : '',
+          'components': from?.value is SalesTaxValue
+              ? salesTaxComponentsText(from!.value as SalesTaxValue)
+              : '',
           'tax_code': switch (from?.value) {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
@@ -156,6 +133,8 @@ class _VersionForm {
         'cash_backstop': v is TaxPointValue ? v.cashBackstop : 'none',
         'duty': v is MandateValue ? v.duty : MandateDuty.receiveAll.wire,
         'format': v is AccountMapValue ? v.format : 'coa',
+        'status': v is TaxabilityValue ? v.status : taxabilityStatuses.first,
+        'tax_system': v is IssuingGateValue ? v.taxSystem : 'vat',
       };
 
   static Map<String, bool> _flagsOf(TaxValue? v) => {
@@ -212,7 +191,13 @@ class _VersionForm {
             requiresTaxNumber: flag['requires_tax_number']!,
             nationalChannelRequired: flag['national_channel_required']!,
             currency: fields.text('currency').toUpperCase(),
+            taxSystem: choice['tax_system']!,
           ),
+        TaxDomain.salesTax => SalesTaxValue(
+            state: fields.text('state').toUpperCase(),
+            components: parseSalesTaxComponents(fields.text('components')) ?? const [],
+          ),
+        TaxDomain.taxability => TaxabilityValue(status: choice['status']!),
         TaxDomain.formBox => FormBoxValue(
             label: fields.text('label'),
             groups: _groupList('groups'),
@@ -293,6 +278,12 @@ class _VersionForm {
         'label': ?need('label'),
         if (!groupListsValid) 'groups': l10n.taxRefInvalidGroups,
       },
+      if (domain == TaxDomain.salesTax) ...{
+        if (!RegExp(r'^[A-Za-z]{2}$').hasMatch(fields.text('state')))
+          'state': l10n.taxRefInvalidState,
+        if (parseSalesTaxComponents(fields.text('components')) == null)
+          'components': l10n.taxRefInvalidComponents,
+      },
       if (domain == TaxDomain.accountMap) ...{
         'role': ?need('role'),
         if (fields.text('account').isEmpty && fields.text('tax_code').isEmpty)
@@ -365,6 +356,17 @@ class _VersionForm {
             _switch('requires_tax_number', l10n.taxRefRequiresTaxNumber, refresh),
             _switch('national_channel_required', l10n.taxRefNationalChannel, refresh),
             _text('currency', l10n.taxRefCurrency),
+            _pick('tax_system', l10n.taxRefTaxSystem, const ['vat', salesTaxSystem]),
+          ],
+        TaxDomain.salesTax => [
+            _text('state', l10n.taxRefState),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
+              child: salesTaxComponentsField(fields, l10n),
+            ),
+          ],
+        TaxDomain.taxability => [
+            _pick('status', l10n.taxRefStatus, taxabilityStatuses),
           ],
         TaxDomain.rate => [
             _text('label', l10n.taxRefLabel),

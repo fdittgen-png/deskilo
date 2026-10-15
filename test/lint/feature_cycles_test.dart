@@ -84,8 +84,6 @@ const Map<String, int> _upwardImports = {
 /// Imports from `lib/core` into a feature, per core area (the real
 /// inversions; `core/demo` mirrors the features by design).
 const Map<String, int> _coreToFeature = {
-  'core/backend': 1,
-  'core/cache': 1,
   'core/help': 5,
   'core/i18n': 4,
   'core/privacy': 5,
