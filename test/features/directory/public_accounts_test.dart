@@ -25,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 Future<void> showPortal(
   WidgetTester tester,
@@ -33,21 +34,12 @@ Future<void> showPortal(
   FakeAccountContactRepository? contacts,
   FakeMessengerRepository? messenger,
 }) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, child, overrides: standardTestOverrides(
         auth: FakeAuthRepository.signedIn(),
         directory: directory,
         contacts: contacts,
         messenger: messenger,
-      ),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: child,
-      ),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
 }
 
@@ -150,12 +142,12 @@ void main() {
       'name': 'Address office', 'address': 'Public street',
     });
     final answer = Completer<DirectoryLocation?>();
-    await tester.pumpWidget(ProviderScope(overrides: [
-      directoryAddressLocationProvider('Public street').overrideWith((ref) => answer.future),
-    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
+    await pumpApp(tester, Scaffold(body: DirectoryMap(
       workspaces: const [workspace], selected: null,
       onSelect: (_) {}, tileProvider: _BlankTiles(),
-    )))));
+    )), overrides: [
+      directoryAddressLocationProvider('Public street').overrideWith((ref) => answer.future),
+    ]);
     await tester.pump();
     expect(find.text('Locating the public address…'), findsOneWidget);
     answer.complete(const DirectoryLocation(43.46, 3.42, label: 'Public street'));
@@ -183,17 +175,17 @@ void main() {
     var attempts = 0;
     String? selected = 'https://host.example/old';
     late StateSetter update;
-    await tester.pumpWidget(ProviderScope(overrides: [
+    await pumpApp(tester, Scaffold(body: StatefulBuilder(builder: (context, set) {
+      update = set;
+      return DirectoryMap(workspaces: const [old, next], selected: selected,
+        onSelect: (_) {}, tileProvider: _BlankTiles());
+    })), overrides: [
       directoryAddressLocationProvider('Old address').overrideWith((ref) => oldAnswer.future),
       directoryAddressLocationProvider('Next address').overrideWith((ref) async {
         if (++attempts == 1) throw StateError('offline');
         return const DirectoryLocation(43.46, 3.42, label: 'Next address');
       }),
-    ], child: MaterialApp(home: Scaffold(body: StatefulBuilder(builder: (context, set) {
-      update = set;
-      return DirectoryMap(workspaces: const [old, next], selected: selected,
-        onSelect: (_) {}, tileProvider: _BlankTiles());
-    })))));
+    ]);
     await tester.pump();
     update(() => selected = 'https://host.example/next');
     await tester.pumpAndSettle();
@@ -223,17 +215,17 @@ void main() {
     const c = PublicWorkspace('c', 'https://host.example', '', {
       'name': 'Gamma', 'address': 'Street C',
     });
-    await tester.pumpWidget(ProviderScope(overrides: [
+    await pumpApp(tester, Scaffold(body: DirectoryMap(
+      workspaces: const [a, b, c], selected: null,
+      onSelect: (_) {}, tileProvider: _BlankTiles(),
+    )), overrides: [
       directoryAddressLocationProvider('Street A').overrideWith(
           (ref) async => const DirectoryLocation(43.46, 3.42, label: 'A')),
       directoryAddressLocationProvider('Street B').overrideWith(
           (ref) async => const DirectoryLocation(48.86, 2.35, label: 'B')),
       directoryAddressLocationProvider('Street C').overrideWith(
           (ref) async => const DirectoryLocation(48.8601, 2.3501, label: 'C')),
-    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
-      workspaces: const [a, b, c], selected: null,
-      onSelect: (_) {}, tileProvider: _BlankTiles(),
-    )))));
+    ]);
     await tester.pumpAndSettle();
     expect(find.text('2'), findsOneWidget);
     expect(find.byKey(const ValueKey('directory-pin-https://host.example/b')), findsNothing);
@@ -248,15 +240,15 @@ void main() {
     const b = PublicWorkspace('b', 'https://host.example', '', {
       'name': 'Beta', 'address': 'Street B',
     });
-    await tester.pumpWidget(ProviderScope(overrides: [
+    await pumpApp(tester, Scaffold(body: DirectoryMap(
+      workspaces: const [a, b], selected: null,
+      onSelect: (_) {}, tileProvider: _BlankTiles(),
+    )), overrides: [
       directoryAddressLocationProvider('Street A').overrideWith(
           (ref) async => const DirectoryLocation(43.46, 3.42, label: 'A')),
       directoryAddressLocationProvider('Street B')
           .overrideWith((ref) async => throw StateError('offline')),
-    ], child: MaterialApp(home: Scaffold(body: DirectoryMap(
-      workspaces: const [a, b], selected: null,
-      onSelect: (_) {}, tileProvider: _BlankTiles(),
-    )))));
+    ]);
     await tester.pumpAndSettle();
     expect(find.text('Alpha'), findsOneWidget);
     expect(find.byKey(const ValueKey('directory-pins-missing')), findsOneWidget);

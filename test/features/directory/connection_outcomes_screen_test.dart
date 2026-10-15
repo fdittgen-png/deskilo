@@ -11,10 +11,9 @@ import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/directory/presentation/connection_outcome_text.dart';
 import 'package:deskilo/features/directory/presentation/connections_screen.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/pump_app.dart';
 
 ConnectedInstallation _row(String host) => ConnectedInstallation(
   endpoint: BackendEndpoint('https://$host.example', 'sb_publishable_$host'),
@@ -48,19 +47,10 @@ void main() {
           ConnectionFailureReason.unavailable,
         ),
       });
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
+    await pumpApp(tester, const ConnectionsScreen(), overrides: [
           connectedInstallationsProvider.overrideWith((ref) => registry),
           connectedSourcesProvider.overrideWith((ref) async => rows),
-        ],
-        child: const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: ConnectionsScreen(),
-        ),
-      ),
-    );
+        ]);
     await tester.pumpAndSettle();
 
     Finder inRow(String host, Finder f) => find.descendant(
@@ -112,19 +102,10 @@ void main() {
         'https://down.example',
         ConnectionFailureReason.unavailable,
       );
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
+    await pumpApp(tester, const ConnectionsScreen(), overrides: [
           connectedInstallationsProvider.overrideWith((ref) => registry),
           connectedSourcesProvider.overrideWith((ref) async => [row]),
-        ],
-        child: const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: ConnectionsScreen(),
-        ),
-      ),
-    );
+        ]);
     await tester.pumpAndSettle();
     registry.health['https://down.example'] = null;
     await tester.tap(_key('connection-action-retry'));

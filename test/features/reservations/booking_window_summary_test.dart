@@ -9,9 +9,9 @@ import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_window_summary.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/pump_app.dart';
 import '../../helpers/screens/reserve_hub.dart';
 
 void main() {
@@ -53,9 +53,13 @@ void main() {
         tester.view.physicalSize = const Size(360, 800);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
+        await pumpApp(tester, Scaffold(
+                body: BookingWindowSummary(
+                  window: HalfDayWindows.morning(day),
+                  today: DateTime(day.year, day.month, day.day - 1),
+                  timezone: 'Europe/Berlin',
+                ),
+              ), overrides: [
               appFormatProvider.overrideWithValue(
                 const AppFormat(
                   locale: 'en_US',
@@ -64,18 +68,7 @@ void main() {
                   timeZoneMode: TimeZoneMode.device,
                 ),
               ),
-            ],
-            child: MaterialApp(
-              home: Scaffold(
-                body: BookingWindowSummary(
-                  window: HalfDayWindows.morning(day),
-                  today: DateTime(day.year, day.month, day.day - 1),
-                  timezone: 'Europe/Berlin',
-                ),
-              ),
-            ),
-          ),
-        );
+            ]);
         await tester.pumpAndSettle();
         final summary = tester
             .widget<Text>(find.byKey(const ValueKey('booking-window-summary')))
