@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/workspace/domain/workspace_feature.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
+import '../features/enabled_feature_keys.dart';
 import '../l10n/context_l10n.dart';
 import 'guide_site.dart';
 
@@ -37,9 +36,11 @@ class HelpDot extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.formHelpHints)) {
+    if (!featureOn(
+      ref.watch(enabledFeatureKeysProvider),
+      formHelpHintsKey,
+      byDefault: true,
+    )) {
       return const SizedBox.shrink();
     }
     final l10n = context.l10n;

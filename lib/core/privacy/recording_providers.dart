@@ -10,14 +10,15 @@
 // the phone.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/workspace/domain/workspace_feature.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
+import '../features/enabled_feature_keys.dart';
 
 part 'recording_providers.g.dart';
 
 /// True while the workspace is showing invented people in place of its
 /// own (#1514).
 @Riverpod(keepAlive: true)
-bool recordingPrivacy(Ref ref) => ref
-    .watch(enabledFeaturesSyncProvider)
-    .contains(WorkspaceFeature.recordingPrivacy);
+bool recordingPrivacy(Ref ref) => featureOn(
+  ref.watch(enabledFeatureKeysProvider),
+  recordingPrivacyKey,
+  byDefault: false,
+);
