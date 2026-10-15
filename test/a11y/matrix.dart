@@ -34,10 +34,13 @@ import '../helpers/screens/validation_settings.dart'
     show pumpValidationSettings;
 import '../helpers/screens/workspace_settings_screen.dart' show pumpWorkspaceSettings;
 
-/// The six conditions the product claims to support: 360 dp (the phone
+/// The seven conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,
 /// Tab traversal, Flutter's WCAG guidelines (tap targets, labels,
-/// contrast as rendered), and the same final state with motion off.
+/// contrast as rendered), the same final state with motion off, and (#2601)
+/// the screen narrowed to a phone in each of the other four languages.
+/// `test/i18n/screen_locales_test.dart` walks [locales]; it is the only
+/// list of those screens now, so a screen is added once, here.
 enum MatrixAxis {
   narrow,
   wide,
@@ -45,7 +48,15 @@ enum MatrixAxis {
   keyboard,
   semantics,
   reducedMotion,
+  locales,
 }
+
+/// A screen pump for the locale axis: it takes the viewport its own helper
+/// chooses (the helper builds every row); the walker narrows it afterwards.
+typedef ScreenPump = Future<void> Function(WidgetTester tester);
+
+const _noLocaleWalk = 'not walked in the other four languages yet, an open '
+    'gap rather than a claim — #2601 (2026-10-15)';
 
 /// A screen pump that honours the viewport it is handed.
 typedef SizedPump = Future<void> Function(WidgetTester tester, Size size);
@@ -55,12 +66,22 @@ class MatrixRow {
   MatrixRow(
     this.screen, {
     this.pump,
-    this.axes = const {},
-    this.gaps = const {},
-  }) : assert(
-          MatrixAxis.values.every((a) => axes.contains(a) ^ gaps.containsKey(a)),
+    this.localePump,
+    Set<MatrixAxis> axes = const {},
+    Map<MatrixAxis, String> gaps = const {},
+  })  : _axes = axes,
+        _gaps = gaps,
+        assert(
+          MatrixAxis.values
+              .where((a) => a != MatrixAxis.locales)
+              .every((a) => axes.contains(a) ^ gaps.containsKey(a)),
           '$screen: every axis is measured or carries a reason, never both '
           'and never neither',
+        ),
+        assert(
+          !axes.contains(MatrixAxis.locales) &&
+              !gaps.containsKey(MatrixAxis.locales),
+          '$screen: the locale axis is declared by [localePump], not by hand',
         );
 
   /// The screen's name, as it appears in a failure.
@@ -69,9 +90,19 @@ class MatrixRow {
   /// How to build it at a given size. Null when nothing is measured.
   final SizedPump? pump;
 
-  /// The axes asserted for this screen, and why each other one is not.
-  final Set<MatrixAxis> axes;
-  final Map<MatrixAxis, String> gaps;
+  /// How to build it for the locale axis. Null: the axis is an open gap.
+  final ScreenPump? localePump;
+
+  final Set<MatrixAxis> _axes;
+  final Map<MatrixAxis, String> _gaps;
+
+  /// The axes asserted for this screen, and why each other one is not. The
+  /// locale axis follows [localePump]: measured when there is one, a dated
+  /// gap when there is not, so no row can omit it silently.
+  Set<MatrixAxis> get axes =>
+      {..._axes, if (localePump != null) MatrixAxis.locales};
+  Map<MatrixAxis, String> get gaps =>
+      {..._gaps, if (localePump == null) MatrixAxis.locales: _noLocaleWalk};
 
   bool covers(MatrixAxis axis) => axes.contains(axis);
 }
@@ -88,7 +119,10 @@ const _all = {
 
 /// Nothing measured, for one stated reason.
 Map<MatrixAxis, String> _unmeasured(String why) =>
-    {for (final a in MatrixAxis.values) a: why};
+    {
+      for (final a in MatrixAxis.values)
+        if (a != MatrixAxis.locales) a: why,
+    };
 
 /// Wrap a pump that sets no viewport of its own.
 SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
@@ -107,22 +141,30 @@ final List<MatrixRow> kMatrix = [
   MatrixRow('Create workspace',
       pump: (t, size) => pumpOnboardingLayout(t, size: size), axes: _all),
   MatrixRow('Reserve hub',
+      localePump: pumpHub,
       pump: (t, size) => pumpHub(t, size: size), axes: _all),
   MatrixRow('Money faces',
+      localePump: pumpFaces,
       pump: (t, size) => pumpFaces(t, size: size), axes: _all),
   MatrixRow('Invoices',
+      localePump: pumpInvoices,
       pump: (t, size) => pumpInvoices(t, size: size), axes: _all),
   MatrixRow('Validation rules',
+      localePump: pumpValidationSettings,
       pump: (t, size) => pumpValidationSettings(t, size: size), axes: _all),
   MatrixRow('Features',
+      localePump: pumpFeatures,
       pump: (t, size) => pumpFeatures(t, size: size), axes: _all),
   // #1327 — the view the screen opens on.
   MatrixRow('Process overview',
+      localePump: (t) => pumpFeatures(t, switches: false),
       pump: (t, size) => pumpFeatures(t, size: size, switches: false),
       axes: _all),
   MatrixRow('Accessories',
+      localePump: pumpAccessories,
       pump: (t, size) => pumpAccessories(t, size: size), axes: _all),
-  MatrixRow('Alerts', pump: _sized(pumpEvents), axes: _all),
+  MatrixRow('Alerts',
+      localePump: pumpEvents, pump: _sized(pumpEvents), axes: _all),
   // #1582 — two screens the slice never named. Both helpers already
   // take a size; nothing but the list was missing.
   MatrixRow('Sign in',
@@ -138,6 +180,7 @@ final List<MatrixRow> kMatrix = [
   MatrixRow('Calendar hub',
       pump: (t, size) => calendar.pumpHub(t, size: size), axes: _all),
   MatrixRow('Level canvas',
+      localePump: pumpCanvas,
       pump: _sized(pumpCanvas),
       axes: const {
         MatrixAxis.narrow,

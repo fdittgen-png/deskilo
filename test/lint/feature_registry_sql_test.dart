@@ -20,17 +20,13 @@ import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/feature_registry_sql.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const _definition = 'create or replace function public.feature_registry()';
 
 /// The latest migration that defines the registry, and its JSON literal.
 ({String file, Map<String, dynamic> registry})? _latestRegistry() {
-  final files = Directory('supabase/migrations')
-      .listSync()
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.sql'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final files = sqlFiles('supabase/migrations');
   for (final f in files.reversed) {
     final sql = f.readAsStringSync();
     final at = sql.indexOf(_definition);
