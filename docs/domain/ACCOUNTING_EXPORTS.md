@@ -113,6 +113,7 @@ divide cleanly:
 - every DATEV row has 20 fields, a positive amount, an `S` flag, a
   four-digit `Belegdatum`, and never posts an account against itself;
 - the two files reconcile on revenue;
+- a file for one fiscal year holds that year's invoices, ledger entries and repartitions only, and the export screen cuts them before DATEV, whose Belegdatum has no year, can re-date them (#2365);
 - every SAF-T ledger transaction balances, credit notes included, and its header totals are the sums of its lines (#2365);
 - a ledger expense netted on an invoice is booked once (purchases), never also as money in on the bank (#2365);
 - every supported country is offered something, and `regulatory` is

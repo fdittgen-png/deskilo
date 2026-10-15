@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7239dc29d5a3b841df58be0a6deb2fea74ad97eb` on 2026-10-13.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `84a8c829ead320b780474914c4fac54b7710e7d3` on 2026-10-13.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,16 +10,16 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1511 |
-| functions | 8662 |
-| cyclomatic>=9 | 951 |
-| cyclomatic>=25 | 138 |
-| cognitive>=15 | 407 |
-| cognitive>=30 | 124 |
-| length>=150 | 102 |
-| parameters>=5 | 393 |
-| parameters>=7 | 144 |
-| partOfFiles | 87 |
+| files | 1528 |
+| functions | 8775 |
+| cyclomatic>=9 | 955 |
+| cyclomatic>=25 | 134 |
+| cognitive>=15 | 405 |
+| cognitive>=30 | 121 |
+| length>=150 | 97 |
+| parameters>=5 | 401 |
+| parameters>=7 | 143 |
+| partOfFiles | 78 |
 
 ## Worst functions by cognitive complexity (baseline)
 
@@ -29,8 +29,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
 | 109 | 56 | 489 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
-| 101 | 56 | 463 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
+| 94 | 54 | 460 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 82 | 21 | 143 | 7 | `lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml` |
 | 75 | 60 | 311 | 1 | `lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build` |
