@@ -143,3 +143,50 @@ List<SafTLedgerTransaction> safTNettedReceipts(
           ],
         ),
 ];
+
+/// The bank journal's settlements. Dated when the money MOVED (0070), not
+/// when it was recorded, or the ledger disagrees with the bank statement it
+/// is reconciled against. #2365 -- a refunded credit note is money OUT: the
+/// receivable it opened is cleared against the bank, the other way round.
+List<SafTLedgerTransaction> safTSettlements(
+  Iterable<({Invoice invoice, InvoiceMatch match})> settled,
+  SafTLedgerAccounts accounts,
+) => [
+  for (final e in settled)
+    SafTLedgerTransaction(
+      id: '${e.invoice.number}-P',
+      date: e.match.matchedAt,
+      description: refundedCents(e.invoice, e.match) > 0
+          ? 'Refund ${e.invoice.number}'
+          : 'Payment ${e.invoice.number}',
+      lines: refundedCents(e.invoice, e.match) > 0
+          ? [
+              SafTLedgerLine(
+                accounts.customers,
+                e.match.paidCents,
+                0,
+                e.invoice.number,
+              ),
+              SafTLedgerLine(
+                accounts.bank,
+                0,
+                e.match.paidCents,
+                e.invoice.number,
+              ),
+            ]
+          : [
+              SafTLedgerLine(
+                accounts.bank,
+                e.match.paidCents,
+                0,
+                e.invoice.number,
+              ),
+              SafTLedgerLine(
+                accounts.customers,
+                0,
+                e.match.paidCents,
+                e.invoice.number,
+              ),
+            ],
+    ),
+];

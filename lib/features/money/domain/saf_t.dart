@@ -4,7 +4,6 @@ import 'package:xml/xml.dart';
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import 'invoice.dart';
-import 'invoice_line_cash.dart';
 import 'saf_t_ledger.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -305,32 +304,7 @@ String buildSafTFile({
       final sales = safTSalesTransactions(live, accounts);
       final bank = [
         ...safTNettedReceipts(live, accounts),
-        for (final e in settled)
-          SafTLedgerTransaction(
-            // Dated when the money MOVED (0070), not when it was
-            // recorded — or the ledger disagrees with the bank
-            // statement it is reconciled against.
-            id: '${e.invoice.number}-P',
-            date: e.match.matchedAt,
-            description: refundedCents(e.invoice, e.match) > 0
-                ? 'Refund ${e.invoice.number}'
-                : 'Payment ${e.invoice.number}',
-            // #2365 — a refunded credit note is money OUT: the receivable
-            // it opened is cleared against the bank, the other way round.
-            lines: refundedCents(e.invoice, e.match) > 0
-                ? [
-                    SafTLedgerLine(accounts.customers, e.match.paidCents, 0,
-                        e.invoice.number),
-                    SafTLedgerLine(
-                        accounts.bank, 0, e.match.paidCents, e.invoice.number),
-                  ]
-                : [
-                    SafTLedgerLine(
-                        accounts.bank, e.match.paidCents, 0, e.invoice.number),
-                    SafTLedgerLine(accounts.customers, 0, e.match.paidCents,
-                        e.invoice.number),
-                  ],
-          ),
+        ...safTSettlements(settled, accounts),
       ];
       final all = [...sales, ...bank];
 

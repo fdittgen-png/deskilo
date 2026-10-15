@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'fec_accounts.dart';
+import 'invoice.dart';
+import 'invoice_line_cash.dart';
+
+/// The bank journal's code and name.
+const fecBankJournal = 'BQ';
+const fecBankJournalLabel = 'Banque';
+
 /// #2365 — `DateLet` (column index 14) is mandatory whenever `EcritureLet`
 /// (index 13) is filled: it is the date the lettering was made, i.e. the
 /// date of the last entry that took part in it. The builders write the
@@ -22,4 +30,70 @@ List<List<String>> withLetteringDates(List<List<String>> rows) {
       else
         [...row.take(14), last[row[13]]!, ...row.skip(15)],
   ];
+}
+
+typedef FecWrite = void Function({
+  required String journal,
+  required String journalLabel,
+  required String number,
+  required DateTime date,
+  required String account,
+  required String accountLabel,
+  required String auxNumber,
+  required String auxLabel,
+  required String pieceRef,
+  required DateTime pieceDate,
+  required String label,
+  required int debitCents,
+  required int creditCents,
+  required String letter,
+  required DateTime validDate,
+});
+
+/// #2365 — the refund of a credit note is money OUT, in the bank journal:
+/// the receivable the note opened is cleared (customers debited, bank
+/// credited), lettered with the note's own letter.
+///
+/// #927 — an entry number is derived from the DOCUMENT it books, never from
+/// a per-file counter: a counter restarts at 1 on every export, so a
+/// January-to-June file and a full-year file both contained a VE0001 and
+/// they were different entries; EcritureNum identifies an entry uniquely
+/// and irreversibly (art. A47 A-1 du LPF).
+void bookFecRefund(
+  FecWrite write,
+  Invoice invoice,
+  InvoiceMatch? match,
+  FecAccounts accounts,
+  String customersLabel,
+  String bankLabel,
+) {
+  final refund = refundedCents(invoice, match);
+  if (refund == 0) return;
+  final on = match!.matchedAt;
+  final text = 'Remboursement ${invoice.number}';
+  final letter = invoice.replacesNumber.isEmpty
+      ? invoice.number
+      : invoice.replacesNumber;
+  for (final (account, accountLabel, debit) in [
+    (accounts.customers, customersLabel, true),
+    (accounts.bank, bankLabel, false),
+  ]) {
+    write(
+      journal: fecBankJournal,
+      journalLabel: fecBankJournalLabel,
+      number: '$fecBankJournal-${invoice.number}-R',
+      date: on,
+      account: account,
+      accountLabel: accountLabel,
+      auxNumber: debit ? invoice.memberId : '',
+      auxLabel: debit ? invoice.memberName : '',
+      pieceRef: invoice.number,
+      pieceDate: invoice.issuedAt,
+      label: text,
+      debitCents: debit ? refund : 0,
+      creditCents: debit ? 0 : refund,
+      letter: letter,
+      validDate: on,
+    );
+  }
 }

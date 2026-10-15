@@ -19,8 +19,8 @@ export 'fec_accounts.dart';
 /// export: sales, and cash.
 const _salesJournal = 'VE';
 const _salesJournalLabel = 'Ventes';
-const _bankJournal = 'BQ';
-const _bankJournalLabel = 'Banque';
+const _bankJournal = fecBankJournal;
+const _bankJournalLabel = fecBankJournalLabel;
 // #936 — purchases: what the workspace paid or owes, not what it sold.
 const _purchasesJournal = 'HA';
 const _purchasesJournalLabel = 'Achats';
@@ -126,17 +126,7 @@ String buildFecFile({
       text.replaceAll(RegExp(r'[\t\r\n]+'), ' ').trim();
 
   final rows = <List<String>>[];
-  // #927 — an entry number is derived from the DOCUMENT it books, never
-  // from a per-file counter. A counter restarts at 1 on every export, so
-  // a January-to-June file and a full-year file both contained a
-  // VE0001 — and they were different entries. EcritureNum exists to
-  // identify an entry uniquely and irreversibly (art. A47 A-1 du LPF);
-  // a number that changes with the range of the export cannot. Built
-  // from the invoice number (unique per workspace) plus, for the bank
-  // side, which of the invoice's cash movements it is, the number is
-  // the same in every file that carries the entry. Continuity of the
-  // series is #925's persisted sequence; this removes the collision.
-
+  // #927 — an entry number comes from the DOCUMENT it books (EcritureNum).
   void write({
     required String journal,
     required String journalLabel,
@@ -288,32 +278,8 @@ String buildFecFile({
         letter: letter, validDate: invoice.issuedAt,
       );
       if (pending) releaseVat(invoice, label);
-      // #2365 — the refund of the credit note: money out, the receivable
-      // the note opened is cleared (lettered with the note).
-      final refund = refundedCents(invoice, matches[invoice.id]);
-      if (refund > 0) {
-        final refundEntry = '$_bankJournal-${invoice.number}-R';
-        final refundDate = matches[invoice.id]!.matchedAt;
-        final refundLabel = 'Remboursement ${invoice.number}';
-        write(
-          journal: _bankJournal, journalLabel: _bankJournalLabel,
-          number: refundEntry, date: refundDate,
-          account: accounts.customers, accountLabel: customersLabel,
-          auxNumber: invoice.memberId, auxLabel: invoice.memberName,
-          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-          label: refundLabel, debitCents: refund, creditCents: 0,
-          letter: letter, validDate: refundDate,
-        );
-        write(
-          journal: _bankJournal, journalLabel: _bankJournalLabel,
-          number: refundEntry, date: refundDate,
-          account: accounts.bank, accountLabel: bankLabel,
-          auxNumber: '', auxLabel: '',
-          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-          label: refundLabel, debitCents: 0, creditCents: refund,
-          letter: letter, validDate: refundDate,
-        );
-      }
+      bookFecRefund(write, invoice, matches[invoice.id], accounts,
+          customersLabel, bankLabel);
       continue;
     }
     final charges = invoice.lines
