@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/auth_callback_guard.dart';
+import '../../../core/session/session_source.dart';
 import '../data/supabase_auth_repository.dart';
 import '../data/supabase_identity_binding_repository.dart';
 import '../data/supabase_second_factor_repository.dart';
@@ -21,6 +22,12 @@ AuthRepository authRepository(Ref ref) =>
 @Riverpod(keepAlive: true)
 Stream<String?> authState(Ref ref) =>
     ref.watch(authRepositoryProvider).authStateChanges();
+
+/// #2495 — hands the auth repository to core as its session source. The
+/// composition root puts it in its scope's overrides.
+final Override sessionSourceFromAuth = sessionSourceProvider.overrideWith(
+  (ref) => ref.watch(authRepositoryProvider),
+);
 
 @riverpod
 Stream<AuthResult> authFeedback(Ref ref) =>

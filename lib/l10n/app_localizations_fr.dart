@@ -5926,6 +5926,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'La matrice centrale rôle→permission : le propriétaire décide quelle permission revient à quel rôle ; les autres consultent les leurs. Désactivée, les valeurs par défaut s\'appliquent simplement.';
 
   @override
+  String get featureSalesTaxDesc =>
+      'Un vendeur aux États-Unis facture des prix hors taxe et la taxe de vente du code postal du site, indiquée à part par juridiction ; le certificat d\'exonération d\'un client retire une ligne de la taxe. Désactivé : un tel vendeur ne peut pas facturer.';
+
+  @override
+  String get featureSalesTaxTitle => 'Taxe de vente (États-Unis)';
+
+  @override
   String get featureScheduledExpensesDesc =>
       'Dépenses récurrentes (internet, téléphone, électricité) : chaque membre en programme une avec sa règle (tous les X jours/semaines/mois/ans, X fois ou jusqu\'à une date) ; la programmation est validée une fois, et chaque échéance est présentée au membre — le montant validé compte immédiatement, un montant différent s\'explique et passe la validation des dépenses.';
 
@@ -8607,6 +8614,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingNationalCurrency =>
       'La TVA dans la monnaie nationale : un vendeur d\'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)';
+
+  @override
+  String get invoiceMissingSalesTaxRate =>
+      'La taxe de vente du code postal du site : le propriétaire de la plateforme ne l\'a pas saisie';
+
+  @override
+  String get invoiceMissingSalesTaxTaxability =>
+      'Si un type de ligne de cette facture est imposable dans l\'État : personne ne l\'a indiqué (imposabilité par État)';
 
   @override
   String get invoiceMissingSellerAddress =>
@@ -18576,6 +18591,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCents => 'Montant (plus petite unité)';
 
   @override
+  String get taxRefComponents =>
+      'Juridictions, une par ligne : niveau, nom, pourcentage (niveau : state, county, city ou district)';
+
+  @override
   String get taxRefConfirmed => 'Confirmé';
 
   @override
@@ -18615,7 +18634,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefDomainRate => 'Taux';
 
   @override
+  String get taxRefDomainSalesTax => 'Taxe de vente par code postal';
+
+  @override
   String get taxRefDomainTaxPoint => 'Exigibilité';
+
+  @override
+  String get taxRefDomainTaxability => 'Imposabilité par État';
 
   @override
   String get taxRefDomainThreshold => 'Seuils';
@@ -18664,6 +18689,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Indiquez un numéro de compte ou un code de taxe';
 
   @override
+  String get taxRefInvalidComponents =>
+      'Une juridiction par ligne : niveau, nom, pourcentage (0 à 20)';
+
+  @override
   String get taxRefInvalidDate => 'Saisissez la date au format AAAA-MM-JJ';
 
   @override
@@ -18672,6 +18701,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';
+
+  @override
+  String get taxRefInvalidState =>
+      'Saisissez le code de l\'État sur deux lettres';
 
   @override
   String get taxRefInvoiceOption => 'Option pour les débits';
@@ -18737,10 +18770,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefStandardRule => 'Règle par défaut';
 
   @override
+  String get taxRefState => 'État (deux lettres)';
+
+  @override
+  String get taxRefStatus => 'Statut';
+
+  @override
   String get taxRefSupported => 'Émission prise en charge';
 
   @override
   String get taxRefTaxCode => 'Code de taxe';
+
+  @override
+  String get taxRefTaxSystem => 'Régime de taxe (vat ou sales_tax)';
 
   @override
   String get taxRefText => 'Texte';

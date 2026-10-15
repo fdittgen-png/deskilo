@@ -32,9 +32,9 @@ authority. Widening one needs the authority's own spec in hand.
 | DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header, first 20 fields per row, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM** |
 | Sage 50 audit trail | exchange | GB, IE | |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
-| SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted on purpose |
+| SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted |
 | Accountant CSV | exchange | everywhere | |
-| Audit trail | exchange | everywhere | called a trail, never an "audit file" |
+| Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip |
 
 ## What each country mandates that this app does not produce
@@ -113,6 +113,7 @@ divide cleanly:
 - every DATEV row has 20 fields, a positive amount, an `S` flag, a
   four-digit `Belegdatum`, and never posts an account against itself;
 - the two files reconcile on revenue;
+- every SAF-T ledger transaction balances, credit notes included, and its header totals are the sums of its lines (#2365);
 - a ledger expense netted on an invoice is booked once (purchases), never also as money in on the bank (#2365);
 - every supported country is offered something, and `regulatory` is
   claimed only for FR and PT.

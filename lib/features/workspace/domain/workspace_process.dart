@@ -169,6 +169,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.viesVerification,
       WorkspaceFeature.recapitulativeStatement,
       WorkspaceFeature.inputVat,
+      WorkspaceFeature.salesTax,
     ]),
   ]),
   WorkspaceProcess('documentsInformation', [

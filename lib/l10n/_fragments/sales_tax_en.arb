@@ -1,0 +1,51 @@
+{
+  "@@locale": "en",
+  "featureSalesTaxTitle": "Sales tax (United States)",
+  "@featureSalesTaxTitle": {
+    "description": "#2362 sales tax: featureSalesTaxTitle"
+  },
+  "featureSalesTaxDesc": "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue.",
+  "@featureSalesTaxDesc": {
+    "description": "#2362 sales tax: featureSalesTaxDesc"
+  },
+  "taxRefDomainSalesTax": "Sales tax by ZIP code",
+  "@taxRefDomainSalesTax": {
+    "description": "#2362 sales tax: taxRefDomainSalesTax"
+  },
+  "taxRefDomainTaxability": "Taxability by state",
+  "@taxRefDomainTaxability": {
+    "description": "#2362 sales tax: taxRefDomainTaxability"
+  },
+  "taxRefState": "State (two letters)",
+  "@taxRefState": {
+    "description": "#2362 sales tax: taxRefState"
+  },
+  "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
+  "@taxRefComponents": {
+    "description": "#2362 sales tax: taxRefComponents"
+  },
+  "taxRefStatus": "Status",
+  "@taxRefStatus": {
+    "description": "#2362 sales tax: taxRefStatus"
+  },
+  "taxRefTaxSystem": "Tax system (vat or sales_tax)",
+  "@taxRefTaxSystem": {
+    "description": "#2362 sales tax: taxRefTaxSystem"
+  },
+  "taxRefInvalidState": "Enter the two-letter state code",
+  "@taxRefInvalidState": {
+    "description": "#2362 sales tax: taxRefInvalidState"
+  },
+  "taxRefInvalidComponents": "One jurisdiction per line as level, name, percent (0 to 20)",
+  "@taxRefInvalidComponents": {
+    "description": "#2362 sales tax: taxRefInvalidComponents"
+  },
+  "invoiceMissingSalesTaxRate": "The sales tax of the site's postal code: the platform owner has not entered it",
+  "@invoiceMissingSalesTaxRate": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxRate"
+  },
+  "invoiceMissingSalesTaxTaxability": "Whether a kind of line on this invoice is taxable in the state: nobody has said (taxability by state)",
+  "@invoiceMissingSalesTaxTaxability": {
+    "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
+  }
+}

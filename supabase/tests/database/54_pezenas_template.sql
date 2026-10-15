@@ -236,6 +236,7 @@ begin
       "richMessageRefs": true,
       "roleAssignment": true,
       "roleManagement": true,
+      "salesTax": false,
       "scheduledExpenses": false,
       "seatDayTimeline": true,
       "seriesBooking": true,
