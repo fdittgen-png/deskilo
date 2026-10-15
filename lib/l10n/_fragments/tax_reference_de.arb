@@ -259,5 +259,21 @@
   "taxRefInvalidAccount": "Eine Kontonummer oder einen Steuerschlüssel angeben",
   "@taxRefInvalidAccount": {
     "description": "#2481 tax reference: Error: an export row needs an account or a code."
+  },
+  "taxRefConfirm": "Bestätigen",
+  "@taxRefConfirm": {
+    "description": "#2565 tax reference: taxRefConfirm"
+  },
+  "taxRefWithdraw": "Zurückziehen",
+  "@taxRefWithdraw": {
+    "description": "#2565 tax reference: taxRefWithdraw"
+  },
+  "taxRefWithdrawReason": "Grund für das Zurückziehen dieser geplanten Version",
+  "@taxRefWithdrawReason": {
+    "description": "#2565 tax reference: taxRefWithdrawReason"
+  },
+  "taxRefActionFailed": "Die Änderung konnte nicht gespeichert werden",
+  "@taxRefActionFailed": {
+    "description": "#2565 tax reference: taxRefActionFailed"
   }
 }

@@ -55,4 +55,23 @@ class SupabaseTaxReferenceRepository
     await _cache.invalidatePrefix(_prefix);
     return TaxReferenceRow.fromJson(row);
   }
+
+  @override
+  Future<TaxReferenceRow> confirm(String id, {String? source}) async {
+    final row = await _client.rpc<Object?>(
+      'confirm_tax_reference',
+      params: {'p_id': id, 'p_source': source},
+    );
+    await _cache.invalidatePrefix(_prefix);
+    return TaxReferenceRow.fromJson(row);
+  }
+
+  @override
+  Future<void> withdraw(String id, String reason) async {
+    await _client.rpc<Object?>(
+      'withdraw_tax_reference',
+      params: {'p_id': id, 'p_reason': reason},
+    );
+    await _cache.invalidatePrefix(_prefix);
+  }
 }

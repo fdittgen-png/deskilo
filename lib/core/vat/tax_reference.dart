@@ -59,6 +59,33 @@ class TaxReferenceRow {
       validFrom.compareTo(isoDate) <= 0 &&
       (validTo == null || validTo!.compareTo(isoDate) > 0);
 
+  /// This version, open again or running on until [day] (a withdrawn
+  /// successor no longer closes it).
+  TaxReferenceRow reopenedUntil(String? day) => TaxReferenceRow(
+        id: id,
+        country: country,
+        key: key,
+        validFrom: validFrom,
+        validTo: day,
+        value: value,
+        source: source,
+        confirmed: confirmed,
+      );
+
+  /// This version once confirmed (#2565); [extraSource] completes its source.
+  TaxReferenceRow confirmedWith(String? extraSource) => TaxReferenceRow(
+        id: id,
+        country: country,
+        key: key,
+        validFrom: validFrom,
+        validTo: validTo,
+        value: value,
+        source: (extraSource ?? '').trim().isEmpty
+            ? source
+            : '$source | confirmed: ${extraSource!.trim()}',
+        confirmed: true,
+      );
+
   /// This version, ended on [day] (the first day of its successor).
   TaxReferenceRow closedOn(String day) => TaxReferenceRow(
         id: id,
@@ -195,6 +222,15 @@ abstract class TaxReferenceAdmin {
   /// Creates a new version of a value from [TaxVersionDraft.validFrom] on;
   /// the version in force is closed on that day, never edited.
   Future<TaxReferenceRow> setVersion(TaxVersionDraft draft);
+
+  /// #2565 — the planned version [id] is confirmed (the law passed). The one
+  /// permitted update: no value changes; [source] completes the source.
+  Future<TaxReferenceRow> confirm(String id, {String? source});
+
+  /// #2565 — the planned version [id] does not come into force: it is
+  /// deleted and its predecessor is open again. Refused for a version that
+  /// is in force or confirmed (history is only superseded).
+  Future<void> withdraw(String id, String reason);
 }
 
 /// What the platform owner proposes: one value from a day on, with the
