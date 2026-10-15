@@ -116,7 +116,7 @@ void main() {
       // any open thread sitting on caches nothing refreshed. A messenger
       // where messages arrive when you pull down is not a messenger.
       final map =
-          File('lib/core/realtime/invalidation_map.dart').readAsStringSync();
+          File('lib/app/realtime_invalidations.dart').readAsStringSync();
       final mapping = map.substring(map.indexOf("'member_notes' =>"));
       expect(mapping, contains('conversationsProvider'));
       expect(mapping, contains('conversationMessagesProvider'));
