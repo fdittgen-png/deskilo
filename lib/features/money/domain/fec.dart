@@ -7,6 +7,7 @@ import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import 'expense_repartition.dart';
 import 'fec_accounts.dart';
+import 'fec_lettering.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
 import 'ledger_entry.dart';
@@ -168,8 +169,7 @@ String buildFecFile({
       minorToText(debitCents, 'EUR', decimalSeparator: ','),
       minorToText(creditCents, 'EUR', decimalSeparator: ','),
       letter,
-      // No automatic reconciliation date: the lettering is the app's, the
-      // date belongs to whoever reconciles the bank.
+      // DateLet: filled from the lettering group (`withLetteringDates`).
       '',
       ymd(validDate),
       '',
@@ -485,7 +485,7 @@ String buildFecFile({
       auxNumber: '', auxLabel: '',
       pieceRef: entry.id, pieceDate: entry.on,
       label: label, debitCents: entry.amountCents, creditCents: 0,
-      letter: '', validDate: entry.on,
+      letter: '', validDate: entry.createdAt,
     );
     write(
       journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
@@ -494,7 +494,7 @@ String buildFecFile({
       auxNumber: entry.memberId, auxLabel: memberNames[entry.memberId] ?? '',
       pieceRef: entry.id, pieceDate: entry.on,
       label: label, debitCents: 0, creditCents: entry.amountCents,
-      letter: '', validDate: entry.on,
+      letter: '', validDate: entry.createdAt,
     );
   }
   for (final r in [...repartitions]
@@ -509,7 +509,7 @@ String buildFecFile({
       auxNumber: '', auxLabel: '',
       pieceRef: r.id, pieceDate: on,
       label: r.title, debitCents: r.amountCents, creditCents: 0,
-      letter: '', validDate: on,
+      letter: '', validDate: r.createdAt,
     );
     write(
       journal: _purchasesJournal, journalLabel: _purchasesJournalLabel,
@@ -518,7 +518,7 @@ String buildFecFile({
       auxNumber: '', auxLabel: '',
       pieceRef: r.id, pieceDate: on,
       label: r.title, debitCents: 0, creditCents: r.amountCents,
-      letter: '', validDate: on,
+      letter: '', validDate: r.createdAt,
     );
   }
   // Chronological, then by journal and entry number.
@@ -542,7 +542,7 @@ String buildFecFile({
   // fixed: an entry's number comes from the document it books, never
   // from its position in the file.
   final indexed = [
-    for (var i = 0; i < rows.length; i++) (row: rows[i], at: i),
+    for (final (i, row) in withLetteringDates(rows).indexed) (row: row, at: i),
   ]..sort((a, b) {
       final byDate = a.row[3].compareTo(b.row[3]);
       return byDate != 0 ? byDate : a.at.compareTo(b.at);

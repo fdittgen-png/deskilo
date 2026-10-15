@@ -28,7 +28,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 218 | 51 | 407 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
 | 120 | 138 | 491 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
-| 109 | 56 | 489 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
+| 109 | 56 | 488 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
 | 94 | 54 | 460 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
 | 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |

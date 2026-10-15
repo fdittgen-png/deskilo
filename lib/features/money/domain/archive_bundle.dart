@@ -69,3 +69,13 @@ Uint8List zipBundle(Map<String, List<int>> files) {
 /// The text files of a bundle, UTF-8 with a BOM-free header the
 /// accountant's tools read.
 List<int> textBytes(String text) => utf8.encode(text);
+
+/// #2365 — the FEC is the French regulatory file: only a French workspace's
+/// archive carries one.
+void addArchiveFec(
+  Map<String, List<int>> files,
+  String countryCode,
+  String fec,
+) {
+  if (countryCode.toUpperCase() == 'FR') files['fec.txt'] = textBytes(fec);
+}
