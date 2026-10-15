@@ -14,6 +14,10 @@ enum LedgerCategory {
   adjustment,
   service,
   package,
+
+  /// A credit note paid back by bank transfer (0436, #2570): money returned,
+  /// never a charge for the next invoice.
+  refund,
 }
 
 /// One line on a member's ledger (spec §7.3).
