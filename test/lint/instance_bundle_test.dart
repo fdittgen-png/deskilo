@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_instance.dart';
+import 'lint_sources.dart';
 
 void main() {
   test('assets/instance/bundle.json equals a fresh build '
@@ -54,10 +55,7 @@ void main() {
   test('#1314 — every migration can run inside the one request that records '
       'it', () {
     final offenders = <String>[];
-    for (final file in Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))) {
+    for (final file in sqlFiles('supabase/migrations')) {
       final name = file.uri.pathSegments.last;
       // A comment may name what it forbids.
       final sql = file.readAsStringSync().split('\n').map((line) {

@@ -25,6 +25,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
@@ -173,10 +174,7 @@ List<String> mcpAnchorPatches(Map<String, String> sources, {String since = '0412
 void main() {
   test('#2392 no migration anchors a patch into an mcp_ function', () {
     final sources = {
-      for (final f in Directory('supabase/migrations')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.sql')))
+      for (final f in sqlFiles('supabase/migrations'))
         f.uri.pathSegments.last.substring(0, 4): f.readAsStringSync(),
     };
     expect(mcpAnchorPatches(sources), isEmpty,
@@ -196,12 +194,7 @@ select pg_temp.anchor_replace(pg_get_functiondef('public.mcp_authorize(uuid, uui
 
   test('no migration re-creates a function a later-unreviewed patch owns',
       () {
-    final files = Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations');
 
     final patchedIn = <String, List<String>>{};
     final recreatedIn = <String, List<String>>{};

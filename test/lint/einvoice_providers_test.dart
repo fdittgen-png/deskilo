@@ -11,6 +11,7 @@ import 'dart:io';
 
 import 'package:deskilo/features/money/domain/einvoice_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// provider → its required fields, as connectors.ts's switch states them.
 Map<String, List<String>> _functionFields(String source) {
@@ -33,12 +34,7 @@ Map<String, List<String>> _functionFields(String source) {
 /// The latest migration that restates einvoice_config_is_secret.
 String _latestSecretClassifier() {
   final files =
-      Directory('supabase/migrations')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.sql'))
-          .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+      sqlFiles('supabase/migrations');
   return files.reversed
       .map((f) => f.readAsStringSync())
       .firstWhere(
