@@ -5,25 +5,21 @@
 // default, a platform flag ("asked for, never assumed") is off. A platform
 // flag added after a workspace was created must not switch itself on there,
 // and the two definitions cannot drift apart again.
-import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 String _latestFeatureRaw() {
-  final files =
-      Directory('supabase/migrations')
-          .listSync()
-          .whereType<File>()
-          .where(
-            (f) => f.readAsStringSync().contains(
-              'create or replace function public.feature_raw(',
-            ),
-          )
-          .map((f) => f.path)
-          .toList()
-        ..sort();
-  final sql = File(files.last).readAsStringSync();
+  final files = sqlFiles('supabase/migrations')
+      .where(
+        (f) => f.readAsStringSync().contains(
+          'create or replace function public.feature_raw(',
+        ),
+      )
+      .toList();
+  final sql = files.last.readAsStringSync();
   final start = sql.indexOf('create or replace function public.feature_raw(');
   return sql.substring(start, sql.indexOf(r'$$;', start));
 }
