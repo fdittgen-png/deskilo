@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices, seededMoney;
-import 'money_screen_test.dart' show pumpMoney;
+import '../../helpers/screens/money_screen.dart' show pumpMoney;
 
 void main() {
   testWidgets(

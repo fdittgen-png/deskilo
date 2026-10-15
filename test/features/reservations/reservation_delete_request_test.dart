@@ -12,9 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_event_repository.dart';
+import '../../helpers/screens/reservation_detail_sheet.dart' show pumpCalendarApp, reservationAt;
 import '../../helpers/test_clock.dart';
-import '../calendar/reservation_detail_sheet_test.dart'
-    show pumpCalendarApp, reservationAt;
 
 void main() {
   setUpAll(() => WorkspaceTime.install('Europe/Berlin'));

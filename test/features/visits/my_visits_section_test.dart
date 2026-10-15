@@ -6,12 +6,11 @@
 // said, not swallowed; a declined visit offers no cancel.
 import 'package:deskilo/features/visits/domain/guest_participation.dart';
 import 'package:deskilo/features/visits/presentation/my_visits_section.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 GuestParticipation _visit(String id, GuestVisitStatus status) =>
     GuestParticipation(
@@ -31,16 +30,7 @@ Future<void> _pump(
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(guestVisits: fake),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: ListView(children: const [MyVisitsSection()])),
-      ),
-    ),
-  );
+  await pumpApp(tester, Scaffold(body: ListView(children: const [MyVisitsSection()])), overrides: standardTestOverrides(guestVisits: fake));
   await tester.pumpAndSettle();
 }
 

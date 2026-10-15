@@ -6,6 +6,7 @@ import '../../../core/time/workspace_time.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
+import 'datev_fields.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
@@ -71,6 +72,7 @@ class DatevAccounts {
     String? chart,
     String? expenses,
     this.reference,
+    this.fiscalYearStart,
   }) : _givenCustomers = customers,
        _givenRevenue = revenue,
        _givenBank = bank,
@@ -81,6 +83,8 @@ class DatevAccounts {
   /// #2481 -- the snapshot the defaults are read from (the German chart's
   /// rows); the installed one when null.
   final TaxReferenceSet? reference;
+  /// The book profile's fiscal-year start, when known (#2365).
+  final DateTime? fiscalYearStart;
   final String? _givenCustomers;
   final String? _givenRevenue;
   final String? _givenBank;
@@ -114,6 +118,29 @@ class DatevAccounts {
   /// #936 — reimbursed expenses and shared costs; 4900 "sonstige
   /// betriebliche Aufwendungen" in SKR03.
   String get expenses => _givenExpenses ?? _default('expenses');
+
+  /// #2365 — header field 27, the Standardkontenrahmen as DATEV writes it:
+  /// the digits of the chart's name ('03' for SKR03), empty when it has
+  /// none.
+  String get skr => datevSkrDigits(chart);
+
+  /// #2365 — the first day of the fiscal year (header field 13): the book
+  /// profile's, set with [withFiscalYearStart], else 1 January of [from]'s
+  /// year.
+  DateTime fiscalYearStartFor(DateTime from) =>
+      fiscalYearStart ?? DateTime(from.year);
+
+  /// These accounts with the fiscal year starting on [start].
+  DatevAccounts withFiscalYearStart(DateTime start) => DatevAccounts(
+    customers: _givenCustomers,
+    revenue: _givenRevenue,
+    bank: _givenBank,
+    vat: _givenVat,
+    chart: _givenChart,
+    expenses: _givenExpenses,
+    reference: reference,
+    fiscalYearStart: start,
+  );
 }
 
 /// The UTF-8 byte-order mark, as the character that encodes to it.
@@ -167,7 +194,7 @@ String buildDatevFile({
 
   // Belegdatum is DDMM (`ddmm`): the year is the header's, not the
   // booking's. Field 116 is TTMMJJJJ.
-  final fiscalYearStart = DateTime(from.year);
+  final fiscalYearStart = accounts.fiscalYearStartFor(from);
   final stamp = '${ymd(generatedAt)}${hhmmss(generatedAt, separator: '')}000';
 
   // Field order is fixed by DATEV; positions, not names, are what the
@@ -182,7 +209,7 @@ String buildDatevFile({
         dialect: datev, quoteEmpty: true),
     '""', '1', '', '0',
     csvCell(currency, dialect: datev, quoteEmpty: true),
-    '', '', '', '', '', '', '', '', '',
+    '', '', '', '', accounts.skr, '', '', '', '',
   ].join(';');
 
   final columns = [
@@ -216,8 +243,8 @@ String buildDatevFile({
       csvCell(currency, dialect: datev, quoteEmpty: true), '', '', '',
       debit, credit, '',
       ddmm(date),
-      csvCell(documentRef, dialect: datev, quoteEmpty: true), '', '',
-      csvCell(text, dialect: datev, quoteEmpty: true),
+      csvCell(datevClip(documentRef, 36), dialect: datev, quoteEmpty: true), '', '',
+      csvCell(datevClip(text, 60), dialect: datev, quoteEmpty: true),
       '', '', '', '', '', '',
       // Fields 21–115 stay empty; 116 is the tax period's date, TTMMJJJJ.
       for (var i = 21; i <= 115; i++) '',

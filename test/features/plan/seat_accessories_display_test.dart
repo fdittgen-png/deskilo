@@ -14,8 +14,7 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'plan_screen_test.dart'
-    show chooseCheckInNow, seatCenter;
+import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, seatCenter;
 
 /// Pumps the Plan tab (#169 harness): the seeded small plan plus the small
 /// accessory catalog (Monitor 1.00 active, Standing desk 0 active, Docking

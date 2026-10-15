@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 void main() {
   testWidgets('disposing an older frame preserves the active guard', (tester) async {
@@ -58,16 +59,9 @@ void main() {
 
   testWidgets('system Back edits; Escape and visible Back preserve or discard explicitly', (tester) async {
     final repo = FakeWorkspaceRepository();
-    await tester.pumpWidget(ProviderScope(
-      overrides: standardTestOverrides(workspace: repo),
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Builder(builder: (context) => Scaffold(body: TextButton(
+    await pumpApp(tester, Builder(builder: (context) => Scaffold(body: TextButton(
           onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-            builder: (_) => const OnboardingScreen())), child: const Text('Open')))),
-      ),
-    ));
+            builder: (_) => const OnboardingScreen())), child: const Text('Open')))), overrides: standardTestOverrides(workspace: repo));
     await tester.tap(find.text('Open'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));

@@ -9,8 +9,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'directory_screen_test.dart' as directory;
-import 'members_screen_test.dart' show pumpMembers;
+import '../../helpers/screens/directory_screen.dart' as directory;
+import '../../helpers/screens/members_screen.dart' show pumpMembers;
 
 void main() {
   test('fake mirrors the RPC gate: empty set for a plain member', () async {

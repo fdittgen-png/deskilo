@@ -13,10 +13,10 @@ import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 MemberNote note(String id, {String from = 'member-2', int minute = 0}) =>
     MemberNote.fromRow({
@@ -71,18 +71,11 @@ pumpSpaceThread(
       },
     ]);
   final protection = CaptureProtection(web: false);
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(
+  await pumpApp(tester, const Scaffold(body: ConversationThread(conversationId: 'c1')), overrides: standardTestOverrides(
         workspace: workspace,
         messenger: messenger,
         capture: protection,
-      ),
-      child: const MaterialApp(
-        home: Scaffold(body: ConversationThread(conversationId: 'c1')),
-      ),
-    ),
-  );
+      ));
   await tester.pumpAndSettle();
   return (messenger, calls, protection);
 }

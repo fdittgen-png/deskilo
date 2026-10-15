@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'plan_screen_test.dart' show pumpPlan;
+import '../../helpers/screens/plan_screen.dart' show pumpPlan;
 
 FloorPlanPainter _livePainter(WidgetTester tester) => tester
     .widget<CustomPaint>(find.byKey(const ValueKey('reserve-plan-canvas')))

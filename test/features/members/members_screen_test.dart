@@ -6,11 +6,9 @@
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
-import 'package:deskilo/features/workspace/presentation/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,69 +17,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/members_screen.dart' show openSheet, pumpMembers;
 import '../../helpers/settings_sections.dart';
 
-Future<FakeWorkspaceRepository> pumpMembers(
-  WidgetTester tester, {
-  FakeMoneyRepository? money,
-  FileSaver? saver,
-  FakeNfcUidReader? nfc,
-  Map<String, dynamic> featureFlags = const {},
-  Size size = const Size(800, 2200),
-}) async {
-  // The settings list grew (Help + Linked accounts, 0051): keep the
-  // Members & plans entry on-stage in the lazy list.
-  tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1;
-  addTearDown(tester.view.reset);
-  final workspace =
-      FakeWorkspaceRepository.withWorkspace(
-          // #825 — these tests drive the legacy sheet; the page has its own.
-          featureFlags: {'memberPage': false, ...featureFlags})
-    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
-    ..otherMembers.add(
-      const Member(
-        id: 'member-2',
-        workspaceId: 'ws-1',
-        userId: 'user-2',
-        isAdmin: false,
-        isOwner: false,
-        status: MemberStatus.active,
-      ),
-    );
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        ...standardTestOverrides(
-          workspace: workspace,
-          money: money,
-          nfc: nfc,
-        ),
-        if (saver != null) fileSaverProvider.overrideWithValue(saver),
-      ],
-      child: const DeskiloApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
-  await tester.pumpAndSettle();
-  await showWorkspaceSettings(tester);
-  await tester.ensureVisible(find.text('Members & plans'));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text('Members & plans'));
-  await tester.pumpAndSettle();
-  expect(find.byType(MembersScreen), findsOneWidget);
-  return workspace;
-}
 
-/// Opens [name]'s management sheet (the row tap).
-Future<void> openSheet(WidgetTester tester, String name) async {
-  await tester.ensureVisible(find.text(name));
-  await tester.pumpAndSettle();
-  expect(find.text(name).hitTestable(), findsOneWidget);
-  await tester.tap(find.text(name));
-  await tester.pumpAndSettle();
-}
 
 /// Pumps Members & plans with a CUSTOM viewer/roster (the field cases
 /// around kiosk rows need non-owner viewers and kiosk members).

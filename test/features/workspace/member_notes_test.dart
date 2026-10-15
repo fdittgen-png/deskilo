@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_notification_service.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'co_owner_test.dart' show pumpMembersWithAna;
+import '../../helpers/screens/co_owner.dart' show pumpMembersWithAna;
 
 void main() {
   group('MemberNote (#456)', () {

@@ -28,6 +28,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// A table whose name says it grants access to something else.
 final _grantTable = RegExp(r'_(grants|shares|invitations|permissions)$');
@@ -60,10 +61,7 @@ List<String> writePoliciesOnGrantTables(String sql) {
 void main() {
   test('no grant-shaped table carries a client write policy', () {
     final offenders = <String>[];
-    for (final file in Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))) {
+    for (final file in sqlFiles('supabase/migrations')) {
       for (final hit in writePoliciesOnGrantTables(file.readAsStringSync())) {
         offenders.add('${file.uri.pathSegments.last}: $hit');
       }

@@ -12,10 +12,10 @@ import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/member_note_refs.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 MemberNote note({
   required String id,
@@ -52,14 +52,7 @@ Future<FakeWorkspaceRepository> pumpThread(
       lastAt: DateTime.utc(2026, 9, 1, 9),
     ));
   workspace.conversationMessages['c1'] = [...messages];
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: standardTestOverrides(workspace: workspace),
-      child: const MaterialApp(
-        home: Scaffold(body: ConversationThread(conversationId: 'c1')),
-      ),
-    ),
-  );
+  await pumpApp(tester, const Scaffold(body: ConversationThread(conversationId: 'c1')), overrides: standardTestOverrides(workspace: workspace));
   await tester.pumpAndSettle();
   return workspace;
 }

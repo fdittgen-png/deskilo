@@ -97,4 +97,29 @@ void main() {
     expect(r.code, 0, reason: r.out);
     expect(r.out, contains('1 abcdef012 success attempt 1  sdk:? pub:?'));
   });
+
+  test('#2600: a sharded run is measured per shard job, the aggregate '
+      'is not given a cache state, and the run has a wall clock', () {
+    String job(int id, String name, int s, int e) =>
+        '{"id": $id, "name": "$name", "conclusion": "success", '
+        '"created_at": "2026-10-15T10:00:00Z", '
+        '"started_at": "2026-10-15T10:00:0${s}Z", '
+        '"completed_at": "2026-10-15T10:${e ~/ 60}:${(e % 60).toString().padLeft(2, '0')}Z", '
+        '"steps": []}';
+    final r = _run({
+      'runs.json': _runs([(1, 'success')]),
+      'jobs-1.json': '{"jobs": [${[
+        job(11, 'quality · test · gates', 3, 120),
+        job(12, 'quality · test · other features', 3, 100),
+        job(13, _code, 3, 130),
+      ].join(',')}]}',
+      'log-11.txt': 'Cache hit for: flutter-linux\nCache hit for: pub-Linux-3\n',
+      'log-12.txt': 'Cache not found for input keys: flutter-linux\n',
+    });
+    expect(r.code, 0, reason: r.out);
+    expect(r.out, contains('1 abcdef012 success attempt 1  sdk:hit pub:exact, sdk:miss pub:miss'));
+    expect(r.out, contains('sdk:hit pub:exact: 117s (n=1)'));
+    expect(r.out, contains('sdk:miss pub:miss: 97s (n=1)'));
+    expect(r.out, contains('n=1 p50 130s p95 130s'));
+  });
 }
