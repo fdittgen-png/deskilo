@@ -199,7 +199,7 @@ extension _ReportTemplateEditorStatePart1 on _ReportTemplateEditorState {
     _update(() => _busy = true);
     try {
       await ref
-          .read(moneyRepositoryProvider)
+          .read(reportTemplateRepositoryProvider)
           .setInvoicePdfTemplate(workspace.id, _assemble(levels));
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'set invoice template failed',

@@ -513,4 +513,5 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
       moneyRepositoryProvider.overrideWithValue(money),
       invoiceQueriesProvider.overrideWithValue(money),
       memberAccountQueriesProvider.overrideWithValue(money),
+      reportTemplateRepositoryProvider.overrideWithValue(money),
     ];

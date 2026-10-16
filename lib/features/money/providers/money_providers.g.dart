@@ -451,7 +451,7 @@ final class LegalIdentityProvider
   }
 }
 
-String _$legalIdentityHash() => r'48006c020ed354f6e11bb7a88371ce8ad6ac140d';
+String _$legalIdentityHash() => r'900ca70148b320eb45c9e72edf4847e8d4b64bed';
 
 @ProviderFor(myStatement)
 final myStatementProvider = MyStatementFamily._();
@@ -1457,7 +1457,7 @@ final class InvoicePdfTemplateProvider
 }
 
 String _$invoicePdfTemplateHash() =>
-    r'1b8881ae90b31cd2a288f773b931b553ca1ee079';
+    r'5dea8960777bb3d50de8ed26154edc129636d3e8';
 
 /// The workspace's report-image library (#488) — the names templates
 /// can reference with `![name]`.
@@ -1504,7 +1504,7 @@ final class ReportImagesProvider
   }
 }
 
-String _$reportImagesHash() => r'7f9d17251af945706263911cb12e3439baac22ab';
+String _$reportImagesHash() => r'dca9a62e5c4dd2a9251115d92dcb4570f15fd88f';
 
 /// One library image's bytes, cached per name (#488).
 
@@ -1565,7 +1565,7 @@ final class ReportImageBytesProvider
   }
 }
 
-String _$reportImageBytesHash() => r'd9499401aaa13666048ea19c92458ddd78ec9b58';
+String _$reportImageBytesHash() => r'aef59da402cb26d7718c1ee38f24aabdc1b4aea1';
 
 /// One library image's bytes, cached per name (#488).
 

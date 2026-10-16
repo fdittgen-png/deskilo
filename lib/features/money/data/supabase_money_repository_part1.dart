@@ -41,65 +41,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
     });
   }
 
-  Future<InvoicePdfTemplate> _fetchInvoicePdfTemplateImpl(
-    String workspaceId,
-  ) async {
-    final row = await _client
-        .from('workspaces')
-        .select('invoice_pdf_template')
-        .eq('id', workspaceId)
-        .single();
-    return InvoicePdfTemplate.fromJson(
-      row['invoice_pdf_template'] as Map<String, dynamic>? ?? const {},
-    );
-  }
-
-  Future<void> _setInvoicePdfTemplateImpl(
-    String workspaceId,
-    InvoicePdfTemplate template,
-  ) async {
-    // #982 — through the matrix (designDocuments), not the owner-only
-    // row update.
-    await _client.rpc<dynamic>('set_invoice_pdf_template', params: {
-      'p_workspace_id': workspaceId,
-      'p_template': template.toJson(),
-    });
-  }
-
-  Future<List<String>> _listReportImagesImpl(String workspaceId) async {
-    // #488 — the report-image library lives beside the level backgrounds
-    // in the private floor-plans bucket; the 0036 RLS (first path
-    // segment = workspace) covers it member-read / owner-write.
-    final entries = await _client.storage
-        .from('floor-plans')
-        .list(path: '$workspaceId/report');
-    return [
-      for (final entry in entries)
-        if (entry.name.isNotEmpty) entry.name,
-    ]..sort();
-  }
-
-  Future<void> _uploadReportImageImpl(
-    String workspaceId, {
-    required String name,
-    required List<int> bytes,
-    required String contentType,
-  }) async {
-    await _client.storage.from('floor-plans').uploadBinary(
-          '$workspaceId/report/$name',
-          Uint8List.fromList(bytes),
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
-  }
-
-  Future<Uint8List?> _fetchReportImageImpl(
-      String workspaceId, String name) async {
-    return readReportImage(
-      name,
-      () => _client.storage.from('floor-plans').download('$workspaceId/report/$name'),
-    );
-  }
-
   Future<void> _settleCreditInvoiceImpl(String invoiceId,
       {String note = ''}) async {
     // #982 — through the refund policy.

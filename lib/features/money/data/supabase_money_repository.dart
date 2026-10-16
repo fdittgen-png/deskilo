@@ -30,6 +30,7 @@ import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/reminder_evidence.dart';
+import '../domain/report_template_repository.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
@@ -38,9 +39,9 @@ import '../domain/vat_declaration.dart';
 import '../domain/vat_rate.dart';
 import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
-import 'report_image_read.dart';
 import 'supabase_invoice_queries.dart';
 import 'supabase_member_account_queries.dart';
+import 'supabase_report_template_repository.dart';
 
 part 'supabase_money_repository_part1.dart';
 part 'supabase_money_repository_part2.dart';
@@ -55,12 +56,15 @@ class SupabaseMoneyRepository implements MoneyRepository {
     this._client, {
     InvoiceQueries? invoices,
     MemberAccountQueries? accounts,
+    ReportTemplateRepository? templates,
   })  : _invoices = invoices ?? SupabaseInvoiceQueries(_client),
-        _accounts = accounts ?? SupabaseMemberAccountQueries(_client);
+        _accounts = accounts ?? SupabaseMemberAccountQueries(_client),
+        _templates = templates ?? SupabaseReportTemplateRepository(_client);
 
   final SupabaseClient _client;
   final InvoiceQueries _invoices;
   final MemberAccountQueries _accounts;
+  final ReportTemplateRepository _templates;
 
   @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
@@ -82,11 +86,11 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId) => _fetchVatDeclarationsImpl(workspaceId);
   @override Future<String> saveVatDeclaration({required String workspaceId, required DateTime periodStart, required DateTime periodEnd}) => _saveVatDeclarationImpl(workspaceId: workspaceId, periodStart: periodStart, periodEnd: periodEnd);
   @override Future<void> markVatDeclarationSubmitted({required String declarationId, required String channel, required String receipt}) => _markVatDeclarationSubmittedImpl(declarationId: declarationId, channel: channel, receipt: receipt);
-  @override Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId) => _fetchInvoicePdfTemplateImpl(workspaceId);
-  @override Future<void> setInvoicePdfTemplate(String workspaceId, InvoicePdfTemplate template) => _setInvoicePdfTemplateImpl(workspaceId, template);
-  @override Future<List<String>> listReportImages(String workspaceId) => _listReportImagesImpl(workspaceId);
-  @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _uploadReportImageImpl(workspaceId, name: name, bytes: bytes, contentType: contentType);
-  @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _fetchReportImageImpl(workspaceId, name);
+  @override Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId) => _templates.fetchInvoicePdfTemplate(workspaceId);
+  @override Future<void> setInvoicePdfTemplate(String workspaceId, InvoicePdfTemplate template) => _templates.setInvoicePdfTemplate(workspaceId, template);
+  @override Future<List<String>> listReportImages(String workspaceId) => _templates.listReportImages(workspaceId);
+  @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _templates.uploadReportImage(workspaceId, name: name, bytes: bytes, contentType: contentType);
+  @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _templates.fetchReportImage(workspaceId, name);
   @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => _settleCreditInvoiceImpl(invoiceId, note: note);
   @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => _invoices.fetchConsumedPaymentIds(workspaceId);
   @override Future<MemberAccount> fetchMemberAccount(String memberId) => _accounts.fetchMemberAccount(memberId);

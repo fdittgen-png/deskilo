@@ -109,3 +109,59 @@ final class MemberAccountQueriesProvider
 
 String _$memberAccountQueriesHash() =>
     r'd8c5a1021012aa5cb2c4dd95e317988a22b7ab45';
+
+/// #2591 C2 — the report template and image library: the preview and the
+/// editor depend on this and on nothing else of the money boundary.
+
+@ProviderFor(reportTemplateRepository)
+final reportTemplateRepositoryProvider = ReportTemplateRepositoryProvider._();
+
+/// #2591 C2 — the report template and image library: the preview and the
+/// editor depend on this and on nothing else of the money boundary.
+
+final class ReportTemplateRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ReportTemplateRepository,
+          ReportTemplateRepository,
+          ReportTemplateRepository
+        >
+    with $Provider<ReportTemplateRepository> {
+  /// #2591 C2 — the report template and image library: the preview and the
+  /// editor depend on this and on nothing else of the money boundary.
+  ReportTemplateRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reportTemplateRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reportTemplateRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReportTemplateRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ReportTemplateRepository create(Ref ref) {
+    return reportTemplateRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReportTemplateRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReportTemplateRepository>(value),
+    );
+  }
+}
+
+String _$reportTemplateRepositoryHash() =>
+    r'3613b080cd2f35e9ef5fcd903edf2b9269d8d31c';

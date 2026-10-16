@@ -39,7 +39,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final pick = ref.read(filePickerProvider);
-    final repository = ref.read(moneyRepositoryProvider);
+    final repository = ref.read(reportTemplateRepositoryProvider);
     setState(() => _uploading = true);
     await runGuarded(
       context,
