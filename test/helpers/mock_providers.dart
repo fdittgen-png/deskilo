@@ -31,6 +31,7 @@ import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
+import 'package:deskilo/core/demo/data/plan_resource_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/template_search_repository.dart';
@@ -82,8 +83,10 @@ import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
+import 'package:deskilo/features/plan/domain/charging_station_repository.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
+import 'package:deskilo/features/plan/providers/charging_station_providers.dart';
 import 'package:deskilo/features/plan/providers/default_level_controller.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
@@ -199,6 +202,7 @@ List<Override> standardTestOverrides({
   AuthRepository? auth,
   WorkspaceRepository? workspace,
   FloorPlanRepository? floorPlan,
+  ChargingStationRepository? chargingStations,
   BiViewRepository? biViews,
   FinanceKpiRepository? financeKpis,
   AccessoryRepository? accessories,
@@ -243,6 +247,7 @@ List<Override> standardTestOverrides({
     if (devMode && repo is FakeWorkspaceRepository) repo.applyDevMode(enabled: true);
     return repo;
   }();
+  final planRepo = floorPlan ?? FakeFloorPlanRepository();
   return [
     // No disk in a widget test: a recording lives in memory.
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
@@ -334,8 +339,12 @@ List<Override> standardTestOverrides({
     secondFactorRepositoryProvider
         .overrideWithValue(secondFactor ?? FakeSecondFactorRepository()),
     workspaceRepositoryProvider.overrideWithValue(workspaceRepo),
-    floorPlanRepositoryProvider
-        .overrideWithValue(floorPlan ?? FakeFloorPlanRepository()),
+    floorPlanRepositoryProvider.overrideWithValue(planRepo),
+    // #2631 — rooms, parking areas and chargers, in memory.
+    planResourceRepositoryProvider.overrideWithValue(FakePlanResourceRepository(
+        planRepo is FakeFloorPlanRepository ? planRepo : FakeFloorPlanRepository())),
+    chargingStationRepositoryProvider
+        .overrideWithValue(chargingStations ?? FakeChargingStationRepository()),
     // #1923 C — saved Web-BI views, in memory.
     biViewRepositoryProvider
         .overrideWithValue(biViews ?? InMemoryBiViewRepository()),

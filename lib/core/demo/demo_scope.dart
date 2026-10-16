@@ -65,6 +65,7 @@ import '../../features/mcp/providers/mcp_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
+import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/default_level_controller.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/profile/providers/personal_preferences_providers.dart';
@@ -121,9 +122,18 @@ import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
+import 'data/plan_resource_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
+
+/// #2631 — rooms, parking areas and chargers live in memory.
+List<Override> _resourceOverrides(DemoFixture fixture) => [
+      planResourceRepositoryProvider
+          .overrideWithValue(FakePlanResourceRepository(fixture.floorPlan)),
+      chargingStationRepositoryProvider
+          .overrideWithValue(fixture.chargingStations),
+    ];
 
 /// The overrides that turn a scope into the Demo environment.
 ///
@@ -175,6 +185,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(FakeSecondFactorRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
+      ..._resourceOverrides(fixture),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       eventRepositoryProvider.overrideWithValue(fixture.events),
