@@ -7,6 +7,15 @@ import 'billing_rules.dart';
 /// re-derives an amount or a rule in Dart, and a lost write response is
 /// never retried by the port.
 abstract interface class InvoiceCommands {
+  /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
+  /// admins per the adminInvoicing delegation. Returns its id. Since
+  /// 0062 the positions are DERIVED server-side from [period]'s tracked
+  /// data — nothing is entered at issue time. With [replacesId] (0061)
+  /// the new invoice references the erroneous one it replaces; the
+  /// server voids that one in the same transaction.
+  /// [detailed] (0064) snapshots the annex — the period's full ledger
+  /// and attendance — into the immutable document.
+  ///
   /// #827 — [kind] narrows the document to the subscription (ahead of
   /// the month) or the usage (after it); [InvoiceKind.full] is the
   /// historical whole-month invoice.

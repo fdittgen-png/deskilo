@@ -13,7 +13,7 @@ part 'expense_schedule_providers.g.dart';
 /// finance/expense permissions — RLS decides what comes back).
 @riverpod
 Future<List<ExpenseSchedule>> expenseSchedules(Ref ref, String workspaceId) =>
-    ref.watch(moneyRepositoryProvider).fetchExpenseSchedules(workspaceId);
+    ref.watch(expenseRepositoryProvider).fetchExpenseSchedules(workspaceId);
 
 /// The member's materialised occurrences — the awaiting and rejected
 /// ones are what the Payments face presents for confirmation.
@@ -22,7 +22,7 @@ Future<List<ExpenseOccurrence>> expenseOccurrences(
   Ref ref,
   String workspaceId,
 ) =>
-    ref.watch(moneyRepositoryProvider).fetchExpenseOccurrences(workspaceId);
+    ref.watch(expenseRepositoryProvider).fetchExpenseOccurrences(workspaceId);
 
 /// #767 — the client-side clock for scheduled expenses: the first member
 /// who opens Finances in a session materialises what is due (the
@@ -35,6 +35,6 @@ Future<int> expenseScheduleSweep(Ref ref, String workspaceId) async {
   return traced(
     'money',
     'sweep expense schedules',
-    () => ref.read(moneyRepositoryProvider).sweepExpenseSchedules(workspaceId),
+    () => ref.read(expenseRepositoryProvider).sweepExpenseSchedules(workspaceId),
   );
 }

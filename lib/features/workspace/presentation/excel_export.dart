@@ -81,7 +81,7 @@ Future<void> exportWorkspaceExcel(
         ],
         paymentIntents: await money.fetchPaymentIntents(workspace.id),
         services:
-            await money.fetchServices(workspace.id, includeInactive: true),
+            await ref.read(commercialTermsProvider).fetchServices(workspace.id, includeInactive: true),
         invoices: await invoiceQueries.fetchInvoices(workspace.id),
         transmissionsByInvoice: {
           for (final entry in transmissions.entries)

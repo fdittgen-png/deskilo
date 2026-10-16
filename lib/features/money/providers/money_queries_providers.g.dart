@@ -268,3 +268,113 @@ final class TaxReportingRepositoryProvider
 
 String _$taxReportingRepositoryHash() =>
     r'b39e8b86c69f843992b9d2360329491556e9c571';
+
+/// #2591 C4 — fee bands, subscription levels, services, packages and a
+/// member's negotiated deal.
+
+@ProviderFor(commercialTerms)
+final commercialTermsProvider = CommercialTermsProvider._();
+
+/// #2591 C4 — fee bands, subscription levels, services, packages and a
+/// member's negotiated deal.
+
+final class CommercialTermsProvider
+    extends
+        $FunctionalProvider<
+          CommercialTermsRepository,
+          CommercialTermsRepository,
+          CommercialTermsRepository
+        >
+    with $Provider<CommercialTermsRepository> {
+  /// #2591 C4 — fee bands, subscription levels, services, packages and a
+  /// member's negotiated deal.
+  CommercialTermsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'commercialTermsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$commercialTermsHash();
+
+  @$internal
+  @override
+  $ProviderElement<CommercialTermsRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CommercialTermsRepository create(Ref ref) {
+    return commercialTerms(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CommercialTermsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CommercialTermsRepository>(value),
+    );
+  }
+}
+
+String _$commercialTermsHash() => r'658460a1bfe1e8e64b8493609ce6aa6a6633a800';
+
+/// #2591 C4 — the narrow legacy expense adapter (#2573 takes its source
+/// bridge).
+
+@ProviderFor(expenseRepository)
+final expenseRepositoryProvider = ExpenseRepositoryProvider._();
+
+/// #2591 C4 — the narrow legacy expense adapter (#2573 takes its source
+/// bridge).
+
+final class ExpenseRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ExpenseRepository,
+          ExpenseRepository,
+          ExpenseRepository
+        >
+    with $Provider<ExpenseRepository> {
+  /// #2591 C4 — the narrow legacy expense adapter (#2573 takes its source
+  /// bridge).
+  ExpenseRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'expenseRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$expenseRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ExpenseRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ExpenseRepository create(Ref ref) {
+    return expenseRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExpenseRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExpenseRepository>(value),
+    );
+  }
+}
+
+String _$expenseRepositoryHash() => r'47e715506ef078e689536799b290b90cf9e34a0d';

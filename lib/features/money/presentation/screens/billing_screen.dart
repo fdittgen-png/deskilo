@@ -233,7 +233,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (!await _run(
       'fee band save failed',
       () => ref
-          .read(moneyRepositoryProvider)
+          .read(commercialTermsProvider)
           .replaceFeeBands(workspace.id, bands),
     )) {
       return;
@@ -271,7 +271,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (!await _run(
       'subscription levels save failed',
       () => ref
-          .read(moneyRepositoryProvider)
+          .read(commercialTermsProvider)
           .setSubscriptionLevels(workspace.id, levels),
     )) {
       return;
@@ -292,7 +292,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (name.isEmpty || days == null || days < 1 || price == null) return;
     if (!await _run(
       'package create failed',
-      () => ref.read(moneyRepositoryProvider).createPackage(
+      () => ref.read(commercialTermsProvider).createPackage(
             workspace.id,
             name: name,
             days: days,
@@ -317,7 +317,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (!await _run(
       'package toggle failed',
       () => ref
-          .read(moneyRepositoryProvider)
+          .read(commercialTermsProvider)
           .updatePackage(package.id, active: !package.active),
     )) {
       return;

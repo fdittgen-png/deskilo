@@ -53,4 +53,4 @@ final class ExpenseRepartitionsProvider
 }
 
 String _$expenseRepartitionsHash() =>
-    r'fd1d610f2bcddf55532db7ca1739f659dfbd3974';
+    r'8b96f1fe893cb9bce28cc5200836c4e722cbc565';
