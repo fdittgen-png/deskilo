@@ -48,6 +48,7 @@ import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_resource_seed.dart';
 import 'seed/demo_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
@@ -137,6 +138,7 @@ class DemoFixture {
     seedDemoClosures(workspaces, today);
     seedDemoHolidays(workspaces, today);
     seedDemoHistoryBookings(reservations, floorPlan, workspaces, today);
+    seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
     seedDemoMoney(money, today);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
