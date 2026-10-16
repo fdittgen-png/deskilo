@@ -285,6 +285,8 @@ requires byte-identical XML for the same answers.
 
 The WebMCP tools (`web/setup_webmcp.js`, #2500) read the page's own parameter definitions: adding a parameter needs no tool change, only its `PARAM_META` row in `web/setup.html` (or a reasoned `PARAM_EXCLUDED` entry) — the step harness fails otherwise.
 
+The app's own WebMCP tools (`lib/core/webmcp/webmcp_tools.g.dart`, #2504) are generated from `contracts/mcp/operations.json`, like every other MCP rendering; they run through the app's own commands with the in-app confirmation (ADR 0042).
+
 **Backward compatibility is part of the contract.** A questionnaire someone exported last
 month must still load: keep reading retired keys on import (`grid_within_hours` →
 `walkup_only`, `admin-checkout` → `admin-check-out`) even though nothing writes them any
