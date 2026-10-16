@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const _days = SettingDefinition(
+final _days = SettingDefinition(
   key: 'dunning.first_after_days',
   type: SettingType.integer,
   defaultValue: 14,
@@ -30,7 +30,7 @@ const _days = SettingDefinition(
   editPermission: 'workspaceSettings',
 );
 
-const _guardrail = SettingDefinition(
+final _guardrail = SettingDefinition(
   key: 'security.max_pin_length',
   type: SettingType.integer,
   defaultValue: 8,
@@ -45,17 +45,18 @@ const _guardrail = SettingDefinition(
 Future<FakeSettingsRepository> _pump(
   WidgetTester tester, {
   bool canEdit = true,
-  List<SettingDefinition> defs = const [_days],
+  List<SettingDefinition>? defs,
   Object? failWith,
 }) async {
-  final store = FakeSettingsRepository(defs)..failWith = failWith;
+  final defList = defs ?? [_days];
+  final store = FakeSettingsRepository(defList)..failWith = failWith;
   await tester.binding.setSurfaceSize(const Size(800, 1600));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(ProviderScope(
     overrides: [
       authStateProvider.overrideWith((ref) => Stream.value('u1')),
       settingsRepositoryProvider.overrideWithValue(store),
-      settingsBundleLoaderProvider.overrideWithValue(() async => defs),
+      settingsBundleLoaderProvider.overrideWithValue(() async => defList),
     ],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -122,7 +123,7 @@ void main() {
   });
 
   testWidgets('a guardrail is shown with its reason and cannot be edited', (tester) async {
-    await _pump(tester, defs: const [_days, _guardrail]);
+    await _pump(tester, defs: [_days, _guardrail]);
     expect(find.textContaining('The badge reader accepts at most eight digits.'), findsOneWidget);
     expect(find.byKey(const ValueKey('setting-edit-security.max_pin_length')), findsNothing);
     expect(find.byKey(const ValueKey('setting-edit-dunning.first_after_days')), findsOneWidget);

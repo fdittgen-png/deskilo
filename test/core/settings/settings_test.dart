@@ -9,7 +9,7 @@ import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const _days = SettingDefinition(
+final _days = SettingDefinition(
   key: 'dunning.first_after_days',
   type: SettingType.integer,
   defaultValue: 14,
@@ -21,7 +21,7 @@ const _days = SettingDefinition(
   editPermission: 'workspaceSettings',
 );
 
-const _lockout = SettingDefinition(
+final _lockout = SettingDefinition(
   key: 'security.lockout_minutes',
   type: SettingType.duration,
   defaultValue: 15,
@@ -33,7 +33,7 @@ const _lockout = SettingDefinition(
   floor: 10,
 );
 
-const _guardrail = SettingDefinition(
+final _guardrail = SettingDefinition(
   key: 'security.max_pin_length',
   type: SettingType.integer,
   defaultValue: 8,

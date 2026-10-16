@@ -55,8 +55,12 @@ enum SettingOrigin { workspace, platform, registryDefault }
 /// security bound a value may never go below (the server refuses it and the
 /// editor explains it), and a row that is not [editable] is a documented
 /// guardrail: shown read-only with its [note].
+///
+/// #2589 C1 -- immutable: [scopes] and [choices] are copied on construction
+/// into unmodifiable collections, so neither the caller's original nor a
+/// getter result can change a definition after the fact.
 class SettingDefinition {
-  const SettingDefinition({
+  SettingDefinition({
     required this.key,
     required this.type,
     required this.defaultValue,
@@ -64,14 +68,15 @@ class SettingDefinition {
     this.max,
     this.unit = '',
     required this.group,
-    required this.scopes,
+    required Set<SettingScope> scopes,
     this.editPermission = '',
     this.floor,
     this.editable = true,
-    this.choices = const [],
+    List<String> choices = const [],
     this.source = '',
     this.note = '',
-  });
+  })  : scopes = Set<SettingScope>.unmodifiable(scopes),
+        choices = List<String>.unmodifiable(choices);
 
   factory SettingDefinition.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'setting_definitions');
@@ -112,6 +117,24 @@ class SettingDefinition {
   final String note;
 
   bool allows(SettingScope scope) => scopes.contains(scope);
+
+  /// #2589 C1 -- the canonical fingerprint of everything that decides
+  /// whether a value is valid (type, default, bounds, unit, security
+  /// floor, editability, scopes, choice set). Two equivalent definitions
+  /// have the same one whatever order their scopes or choices were given
+  /// in; a changed bound, floor or choice never reuses an old one.
+  String get validationFingerprint => cacheDigest('setting-definition', [
+        key,
+        type.wire,
+        '$defaultValue',
+        '${min ?? ''}',
+        '${max ?? ''}',
+        unit,
+        '${floor ?? ''}',
+        '$editable',
+        (scopes.map((s) => s.wire).toList()..sort()).join(','),
+        (choices.toList()..sort()).join(','),
+      ], 16);
 
   /// Why [value] is not acceptable, or null: the type, the bounds and the
   /// security floor -- the same rules `set_setting` enforces in SQL.
@@ -196,9 +219,20 @@ class SettingVersion {
 /// An immutable snapshot: the registry and the EFFECTIVE value of every
 /// key for one workspace (workspace override, else platform value, else the
 /// registry default). A calculation takes one as a parameter.
+///
+/// #2589 C1 -- the maps are copied into unmodifiable ones on construction;
+/// mutating the originals afterwards changes nothing. Values stay the typed
+/// scalars the definitions allow (int, bool, String).
 class SettingsSet {
-  const SettingsSet(this.definitions, this.effective,
-      {this.origins = const {}, this.revision = ''});
+  SettingsSet(
+    Map<String, SettingDefinition> definitions,
+    Map<String, Object> effective, {
+    Map<String, SettingOrigin> origins = const {},
+    String revision = '',
+  })  : definitions = Map.unmodifiable(definitions),
+        effective = Map.unmodifiable(effective),
+        origins = Map.unmodifiable(origins),
+        revision = revision.isEmpty ? _valuesRevision(effective) : revision;
 
   /// A set where every key has its registry default.
   factory SettingsSet.defaults(Iterable<SettingDefinition> definitions) =>
@@ -230,17 +264,37 @@ class SettingsSet {
     }
     return SettingsSet(definitions, effective,
         origins: origins,
-        revision: cacheDigest('settings-revision', [
-          for (final k in effective.keys.toList()..sort()) '$k=${effective[k]}',
-        ], 16));
+        revision: _valuesRevision(effective));
   }
+
+  static String _valuesRevision(Map<String, Object> effective) =>
+      cacheDigest('settings-revision', [
+        for (final k in effective.keys.toList()..sort()) '$k=${effective[k]}',
+      ], 16);
 
   final Map<String, SettingDefinition> definitions;
   final Map<String, Object> effective;
   final Map<String, SettingOrigin> origins;
 
-  /// The data version: it changes whenever an effective value changes.
+  /// The data version: it changes whenever an effective value changes
+  /// (derived from the values when the caller names none).
   final String revision;
+
+  /// The semantic version of the VALIDATION rules: a digest of every
+  /// definition's [SettingDefinition.validationFingerprint], independent of
+  /// insertion order. A changed bound, unit, floor or choice set changes it
+  /// even when no effective value did.
+  late final String schemaRevision = cacheDigest('settings-schema', [
+    for (final k in definitions.keys.toList()..sort())
+      '$k:${definitions[k]!.validationFingerprint}',
+  ], 16);
+
+  /// One canonical fingerprint of both versions. It never carries identity:
+  /// installation, workspace and principal stay in the operation or cache
+  /// key (see `SettingsCapture.cacheKey`), so equal text on W-A and W-B
+  /// never implies equal authority.
+  String get fingerprint =>
+      cacheDigest('settings-fingerprint', [schemaRevision, revision], 16);
 
   /// The effective value of [key] as a [T] (`int`, `bool`, `String`, or
   /// [Duration] for a duration setting). An unknown key or a wrong type is
