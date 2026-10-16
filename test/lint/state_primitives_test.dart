@@ -22,38 +22,14 @@
 // state, and `LoadingView` would be wrong there. Sorting the honest
 // ones from the lazy ones is a per-file judgement nobody has made yet.
 //
-// So this counts them and refuses to let the number grow. A file that
-// keeps a spinner keeps its entry; a file that adopts a primitive drops
-// out of the baseline in the same commit — which is the mechanism, the
-// same one `l10n_audit_test` and `_repositoryInWidgets` use.
+// So this counts them and refuses to let the number grow. The per-file
+// numbers are `budgets.rawSpinner` in docs/design/CODE_HEALTH_BASELINE.json
+// (#2598), written by `dart run tool/code_health.dart --baseline`; a file
+// that adopts a primitive drops out of it there.
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/code_health_budgets.dart';
 import 'lint_sources.dart';
-
-/// Files still building a raw spinner → how many. Ratchet DOWN only.
-///
-/// Every entry is a place where somebody will eventually ask "loading
-/// what, and what if it never arrives?". Deleting a line here is the
-/// point of the file.
-const Map<String, int> _baseline = {
-  'lib/features/auth/presentation/screens/auth_screen.dart': 1,
-  'lib/features/auth/presentation/screens/linked_accounts_screen.dart': 1,
-  'lib/features/auth/presentation/widgets/badge_sign_in_sheet.dart': 1,
-  'lib/features/money/presentation/screens/report_editor_screen.dart': 1,
-  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 1,
-  'lib/features/money/presentation/widgets/usage_face.dart': 1,
-  'lib/features/profile/presentation/widgets/backend_candidate_form.dart': 1, // #1651 the Test button's in-flight spinner moved here with the form
-  'lib/features/profile/presentation/screens/developer_screen.dart': 1,
-  'lib/features/profile/presentation/screens/personal_info_screen.dart': 1,
-  'lib/features/profile/presentation/widgets/workspace_owners_sheet.dart': 1,
-  'lib/features/workspace/presentation/screens/workspace_code_screen.dart': 1,
-  'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart': 1,
-  'lib/features/workspace/presentation/widgets/conversation_thread.dart': 1,
-  'lib/features/workspace/presentation/widgets/member_note_composer.dart': 1,
-  'lib/features/workspace/presentation/widgets/public_holidays_sheet.dart': 1,
-};
-
-final _rawSpinner = RegExp(r'\bCircularProgressIndicator\(');
 
 /// The primitives a screen state should be expressed with. Counted so a
 /// fall in spinners that is really a fall in *state handling* is
@@ -62,53 +38,18 @@ const _primitives = ['LoadingView(', 'EmptyState(', 'InlineBanner('];
 
 void main() {
   test('no presentation file grows a raw spinner (#1305)', () {
-    final grew = <String>[];
-    final shrank = <String>[];
-    final seen = <String>{};
-
-    for (final file in handWrittenDartFiles('lib')) {
-      if (!file.path.contains('/presentation/') &&
-          !file.path.startsWith('lib/app/')) {
-        continue;
-      }
-      final count = _rawSpinner
-          .allMatches(file.readAsStringSync())
-          .length;
-      if (count > 0) seen.add(file.path);
-      final allowed = _baseline[file.path] ?? 0;
-      if (count > allowed) {
-        grew.add('${file.path}: $count raw spinner(s), baseline $allowed');
-      } else if (count < allowed) {
-        shrank.add('${file.path}: $count (baseline $allowed)');
-      }
-    }
-
+    final problems = budgetFailures(Budgets.load(), measureBudgetActuals(),
+        only: 'rawSpinner');
     expect(
-      grew,
+      problems,
       isEmpty,
       reason: 'a raw CircularProgressIndicator says "something is '
           'happening" and nothing else — not what is loading, not '
           'whether what is on screen is still valid, not what to do if '
-          'it never finishes:\n${grew.join('\n')}\n\n'
+          'it never finishes:\n${problems.join('\n')}\n\n'
           'Use LoadingView for a screen that has no data yet, keep '
           'existing content visible while refreshing, and say what '
           'failed with InlineBanner or AppSnack (#1305).',
-    );
-
-    expect(
-      shrank,
-      isEmpty,
-      reason: 'good — lower these in _baseline in the same commit, so '
-          'the next person inherits the ground you took:\n'
-          '${shrank.join('\n')}',
-    );
-
-    final gone = _baseline.keys.where((p) => !seen.contains(p)).toList();
-    expect(
-      gone,
-      isEmpty,
-      reason: 'these no longer build a raw spinner — delete them from '
-          '_baseline so the ratchet keeps its meaning:\n${gone.join('\n')}',
     );
   });
 
