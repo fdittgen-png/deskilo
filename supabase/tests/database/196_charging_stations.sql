@@ -75,9 +75,10 @@ select throws_ok($$update public.seats set parking_kind = 'standard' where id = 
 -- members read stations; only the layout permission writes
 select pg_temp.act_as('00000000-0000-4000-8000-0000002634a2');
 select is((select count(*)::int from public.charging_stations), 1, 'a member reads the stations');
-select is((with u as (update public.charging_stations set power_kw = 22 returning 1) select count(*)::int from u), 0,
-  'a member changes no station');
+update public.charging_stations set power_kw = 22;
 reset role;
+select is((select power_kw from public.charging_stations), 11.0,
+  'a member changes no station');
 
 update public.charging_stations set accessory_id = null where id = '00000000-0000-4000-8000-0000002634e1';
 select ok(not exists (select 1 from public.seat_accessories where seat_id = '00000000-0000-4000-8000-0000002634b5'),
