@@ -5,7 +5,7 @@
 -- parking area and only there, and is named apart in the capacity figures
 -- and in availability.
 begin;
-select plan(12);
+select plan(11);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
