@@ -6,6 +6,7 @@ import 'einvoice_gateway.dart';
 import 'expense_repartition.dart';
 import 'expense_schedule.dart';
 import 'fee_band.dart';
+import 'invoice_commands.dart';
 import 'invoice_queries.dart';
 import 'member_account_queries.dart';
 import 'number_sequence.dart';
@@ -17,52 +18,20 @@ import 'price_negotiation.dart';
 import 'report_template_repository.dart';
 import 'service_item.dart';
 import 'subscription_levels.dart';
-import 'vat_declaration.dart';
-import 'vat_rate.dart';
+import 'tax_reporting_repository.dart';
 import 'workspace_status.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
 /// before a ledger credit exists.
-abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, ReportTemplateRepository {
-  /// The workspace's VAT declarations (0107), newest period first.
-  Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
-
-  /// #2357 — prepares (or prepares again) the return of a period. The
-  /// SERVER computes its figures (`compute_vat_return`, 0402); the client
-  /// sends the period alone and then reads the stored row.
-  Future<String> saveVatDeclaration({
-    required String workspaceId,
-    required DateTime periodStart,
-    required DateTime periodEnd,
-  });
-
-  /// Records that the owner filed the prepared return with the tax
-  /// authority ([channel] `manual` or `export`), with the [receipt]
-  /// reference the authority gave — the only way a return is filed.
-  Future<void> markVatDeclarationSubmitted({
-    required String declarationId,
-    required String channel,
-    required String receipt,
-  });
-
-  /// Settles a NEGATIVE invoice — a credit note the WORKSPACE pays
-  /// (#508, 0102): books the payout charge and closes the avoir with
-  /// resolution 'refunded' (through the invoice_payment policy).
-  Future<void> settleCreditInvoice(String invoiceId, {String note = ''});
-
+abstract class MoneyRepository implements
+        InvoiceQueries,
+        MemberAccountQueries,
+        ReportTemplateRepository,
+        InvoiceCommands,
+        TaxReportingRepository {
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
-
-  /// #804 — regroups [invoiceIds] into ONE invoice the member pays.
-  /// The sources stay in the archive and stop being separately owed.
-  /// Answers the settlement's id.
-  Future<String> settleInvoices({
-    required String workspaceId,
-    required String memberId,
-    required List<String> invoiceIds,
-    String note = '',
-  });
 
   /// #802 — when the two automatic invoice runs happen.
   Future<BillingRules> fetchBillingRules(String workspaceId);
@@ -165,35 +134,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
   /// it when a rule says so. Returns the event id.
   Future<String> requestUsageRecordDelete(String recordId, {String reason});
 
-  /// #827 — [kind] narrows the document to the subscription (ahead of
-  /// the month) or the usage (after it); [InvoiceKind.full] is the
-  /// historical whole-month invoice.
-  Future<String> createInvoice({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    String? replacesId,
-    bool detailed = false,
-    InvoiceKind kind = InvoiceKind.full,
-
-    /// #922 — BT-10 and BT-13, for a public-sector buyer (Chorus Pro).
-    /// Frozen on the document; empty for everyone else.
-    String buyerReference = '',
-    String purchaseOrder = '',
-
-    /// #2440 — RD 1619/2012 art. 15: why a Spanish seller corrects a
-    /// document (R1-R5). Ignored for every other seller.
-    String correctionReason = '',
-  });
-
-  /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
-  /// one-way change the server permits on an issued invoice.
-  Future<void> voidInvoice(String invoiceId);
-
-  /// Records a payment reminder (RPC `record_invoice_reminder`, 0066)
-  /// — collection metadata beside the immutable document.
-  Future<void> remindInvoice(String invoiceId);
-
   /// #1913 (0331) — invoiceId → the reason of its ACTIVE dunning hold
   /// (`dispute`, `identity_error`, `insolvency`, `other`). A held invoice
   /// is not reminded, by hand or by the sweep.
@@ -209,18 +149,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
 
   /// #1913 — releases the active hold (RPC `release_dunning_hold`).
   Future<void> releaseDunningHold(String invoiceId);
-
-  /// Matches an open invoice to a REGISTERED payment (RPC
-  /// `match_invoice`, 0068): the amount comes from the selected ledger
-  /// payment — never typed. [resolution] ∈ exact | over_forced |
-  /// over_credit_note | under_accepted; the forced paths REQUIRE
-  /// [note].
-  Future<void> matchInvoice({
-    required String invoiceId,
-    required String paymentLedgerId,
-    required String resolution,
-    String note = '',
-  });
 
   /// All online-payment attempts of the workspace (0045) — the export's
   /// online-payments rows. Admin-readable by the 0045 policy.
@@ -289,16 +217,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
     String? vatRateId,
     SupplyClass? supplyClass,
   });
-
-  /// The VAT rates the workspace charges (0072), member-readable: they
-  /// appear on the bill and on every invoice.
-  Future<List<VatRate>> fetchVatRates(String workspaceId);
-
-  /// Owner-only (RPC `set_vat_rates`): replaces the whole rate set
-  /// atomically. Exactly one rate must be the default. A rate a service
-  /// still points at is deactivated rather than deleted, so no catalogue
-  /// entry is ever silently re-taxed.
-  Future<void> setVatRates(String workspaceId, List<VatRate> rates);
 
   /// Records consumed services onto the monthly bill (#129, ADR 0008).
   /// Creates a PENDING service_charge event with a name+price snapshot —

@@ -285,7 +285,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       message: 'vat rates save failed',
       errorText: l10n.workspaceGenericError,
       action: () =>
-          ref.read(moneyRepositoryProvider).setVatRates(workspace.id, rates),
+          ref.read(taxReportingRepositoryProvider).setVatRates(workspace.id, rates),
     );
     if (!mounted) return;
     setState(() => _saving = false);

@@ -19,7 +19,7 @@
 import 'package:meta/meta.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_queries.dart';
-import '../domain/money_repository.dart';
+import '../domain/tax_reporting_repository.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_report.dart';
 import '../domain/vat_tax_point.dart';
@@ -83,7 +83,7 @@ VatDeclarationDraft vatDeclarationDraft({
 class VatDeclarations {
   const VatDeclarations(this._money, this._invoices);
 
-  final MoneyRepository _money;
+  final TaxReportingRepository _money;
   final InvoiceQueries _invoices;
 
   /// Prepares the period's return: the server computes its figures.

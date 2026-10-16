@@ -62,22 +62,6 @@ extension _SupabaseMoneyRepositoryPart3 on SupabaseMoneyRepository {
 
   // ── VAT rates (0072) ────────────────────────────────────────────────
 
-  Future<List<VatRate>> _fetchVatRatesImpl(String workspaceId) async {
-    final rows = await _client
-        .from('vat_rates')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('percent', ascending: false);
-    return rows.map(VatRate.fromRow).toList();
-  }
-
-  Future<void> _setVatRatesImpl(String workspaceId, List<VatRate> rates) async {
-    await _client.rpc<void>('set_vat_rates', params: {
-      'p_workspace_id': workspaceId,
-      'p_rates': [for (final rate in rates) rate.toJson()],
-    });
-  }
-
   Future<List<ServiceItem>> _fetchServicesImpl(
     String workspaceId, {
     bool includeInactive = false,

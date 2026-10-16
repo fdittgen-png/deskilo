@@ -71,7 +71,7 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 /// person is told afterwards.
 @riverpod
 Settlements settlements(Ref ref) => Settlements(
-    ref.watch(moneyRepositoryProvider), ref.watch(invoiceQueriesProvider));
+    ref.watch(invoiceCommandsProvider), ref.watch(invoiceQueriesProvider));
 
 @riverpod
 Repartitions repartitions(Ref ref) =>
@@ -80,8 +80,8 @@ Repartitions repartitions(Ref ref) =>
 /// #1449 — what a VAT period declares on the basis the workspace
 /// declares on, and whether the platform took it.
 @riverpod
-VatDeclarations vatDeclarationCommand(Ref ref) => VatDeclarations(
-    ref.watch(moneyRepositoryProvider), ref.watch(invoiceQueriesProvider));
+VatDeclarations vatDeclarationCommand(Ref ref) => VatDeclarations(ref.watch(taxReportingRepositoryProvider),
+    ref.watch(invoiceQueriesProvider));
 
 /// #1449 — a recurring expense: what may still be ended, and what
 /// answering an occurrence at a different amount means.
@@ -279,7 +279,7 @@ Future<List<VatRate>> vatRates(Ref ref) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(taxReportingRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return repository.fetchVatRates(workspace.id);

@@ -46,7 +46,7 @@ Future<void> remindInvoice(
       // The ORDER is the decision, so it lives in the command (#1532):
       // the letter goes out, and the level is recorded only if it did.
       outcome = await sendReminder(
-        repository: ref.read(moneyRepositoryProvider),
+        repository: ref.read(invoiceCommandsProvider),
         share: ref.read(fileSharerProvider),
         invoiceId: invoice.id,
         level: level,
@@ -349,7 +349,7 @@ Future<void> matchInvoiceToPayment(
     errorText:
         l10n.workspaceGenericError,
     action: () => ref
-        .read(moneyRepositoryProvider)
+        .read(invoiceCommandsProvider)
         .matchInvoice(
           invoiceId: invoice.id,
           paymentLedgerId: choice.paymentLedgerId,
@@ -414,7 +414,7 @@ Future<void> issueInvoicesForAll(
   for (final entry in entries) {
     try {
       await ref
-          .read(moneyRepositoryProvider)
+          .read(invoiceCommandsProvider)
           .createInvoice(
             workspaceId: workspace.id,
             memberId: entry.memberId,

@@ -168,7 +168,7 @@ final class SettlementsProvider
   }
 }
 
-String _$settlementsHash() => r'9bd960abf6900c501cdcb5fdae7d12db64006f07';
+String _$settlementsHash() => r'3c97275740291bf2d9c2634a764f5c792c302e09';
 
 @ProviderFor(repartitions)
 final repartitionsProvider = RepartitionsProvider._();
@@ -260,7 +260,7 @@ final class VatDeclarationCommandProvider
 }
 
 String _$vatDeclarationCommandHash() =>
-    r'f8de6565355d6593ac043675d692a3736a0befb2';
+    r'e6c5805a6a67a31b325f55a2a46fd0b854877a0f';
 
 /// #1449 — a recurring expense: what may still be ended, and what
 /// answering an occurrence at a different amount means.
@@ -1357,7 +1357,7 @@ final class VatRatesProvider
   }
 }
 
-String _$vatRatesHash() => r'93e83a384d2a000a9e21cfcdff18b285ebe61fbf';
+String _$vatRatesHash() => r'332b811e91f49e8ec19a4c48800ed6b9eaceb37e';
 
 /// The invoice archive (0060): RLS scopes rows — members their own,
 /// admins the whole workspace.

@@ -16,7 +16,7 @@
 import 'dart:typed_data';
 
 import '../../../core/share/file_sharer.dart';
-import '../domain/money_repository.dart';
+import '../domain/invoice_commands.dart';
 
 /// What happened to a reminder somebody tried to send.
 sealed class SendReminderOutcome {
@@ -46,7 +46,7 @@ class ReminderNotSent extends SendReminderOutcome {
 /// ladder that never advances at all. That trade is the open question on
 /// #1532 and is pinned by a test so changing it is a decision.
 Future<SendReminderOutcome> sendReminder({
-  required MoneyRepository repository,
+  required InvoiceCommands repository,
   required FileSharer share,
   required String invoiceId,
   required int level,
