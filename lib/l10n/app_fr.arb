@@ -5745,7 +5745,11 @@
       }
     }
   },
+  "invoiceIssueCheckAgain": "Vérifier à nouveau",
+  "invoiceIssueNotFoundYet": "Introuvable pour l'instant. Rien n'a été renvoyé.",
   "invoiceIssueOne": "Facturer",
+  "invoiceIssueUnknownBody": "La facture a été envoyée mais la réponse n'est pas arrivée : elle existe peut-être déjà. Rien n'est renvoyé. Vérifiez à nouveau pour la chercher.",
+  "invoiceIssueUnknownTitle": "Résultat inconnu",
   "invoiceIssued": "Facture émise.",
   "invoiceIssuedCount": "{count} factures émises.",
   "@invoiceIssuedCount": {

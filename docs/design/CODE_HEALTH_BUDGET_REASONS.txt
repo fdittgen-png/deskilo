@@ -63,6 +63,7 @@ fileLength lib/features/workspace/presentation/widgets/member_note_composer.dart
 fileLength lib/features/workspace/presentation/widgets/ref_picker_sheet.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/workspace/presentation/widgets/template_gallery.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/workspace/providers/workspace_providers.dart // #2216 messageMentionsOn, the one switch both message screens read
+genericError lib/features/money/presentation/widgets/invoice_issue_runner.dart // #2585 the refusal fallback moved here unchanged from invoice_form_sheet.dart
 setState lib/features/profile/presentation/screens/settings_screen.dart // A library whose parts were each within 5 before #2386 counted them together.
 repositoryInWidgets members // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
 repositoryInWidgets money // #2494 the money screen's operations are classes now

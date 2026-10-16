@@ -1,5 +1,9 @@
 {
   "@@locale": "es",
+  "invoiceIssueUnknownTitle": "Resultado desconocido",
+  "invoiceIssueUnknownBody": "La factura se envió pero la respuesta no llegó, así que puede que ya exista. No se vuelve a enviar nada. Compruebe de nuevo para buscarla.",
+  "invoiceIssueCheckAgain": "Comprobar de nuevo",
+  "invoiceIssueNotFoundYet": "Aún no se encuentra. No se volvió a enviar nada.",
   "invoicesTitle": "Facturas",
   "invoicesEmpty": "Aún no hay facturas.",
   "invoiceCreate": "Nueva factura",

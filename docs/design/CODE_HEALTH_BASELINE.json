@@ -1,8 +1,8 @@
 {
-  "recordedSha": "8a5ed7208d40ab1c2d8961b76cb7c0e35f32e039",
+  "recordedSha": "bacb19385cab475e9ea431f343b553cb84897f3d",
   "recordedDate": "2026-10-16",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1597,"functions":8799,"cyclomatic>=9":943,"cyclomatic>=25":128,"cognitive>=15":396,"cognitive>=30":118,"length>=150":94,"parameters>=5":413,"parameters>=7":143,"partOfFiles":75},
+  "totals": {"files":1600,"functions":8808,"cyclomatic>=9":944,"cyclomatic>=25":128,"cognitive>=15":395,"cognitive>=30":118,"length>=150":94,"parameters>=5":413,"parameters>=7":143,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -462,7 +462,7 @@
 
       "lib/features/money/presentation/widgets/invoice_archive_tab.dart": 1,
 
-      "lib/features/money/presentation/widgets/invoice_form_sheet.dart": 1,
+      "lib/features/money/presentation/widgets/invoice_issue_runner.dart": 1,
 
       "lib/features/money/presentation/widgets/invoice_template_sheet.dart": 2,
 
@@ -1336,6 +1336,7 @@
     {"p":"lib/features/money/application/dunning_hold.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":11,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/einvoice_inbox.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":19,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/einvoice_receipt.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":14,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/issue_invoice.dart","loc":105,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":6,"len":26,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/record_consumption.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":5,"cyc":6,"len":27,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/record_payment.dart","loc":52,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":7,"len":34,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/sales_tax_commands.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":21,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1628,8 +1629,9 @@
     {"p":"lib/features/money/presentation/widgets/invoice_archive_tab.dart","loc":394,"part":false,"setState":5,"repositoryReads":0,"fn":8,"cog":40,"cyc":38,"len":143,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":440,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":66,"cyc":64,"len":382,"params":12,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":477,"part":false,"setState":7,"repositoryReads":0,"fn":9,"cog":59,"cyc":32,"len":255,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":466,"part":false,"setState":7,"repositoryReads":0,"fn":9,"cog":59,"cyc":32,"len":255,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":49,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":9,"len":36,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_journey_view.dart","loc":312,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":21,"cyc":22,"len":58,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_missing_sales_tax.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":5,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_overview.dart","loc":192,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":14,"cyc":9,"len":79,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1640,6 +1642,7 @@
     {"p":"lib/features/money/presentation/widgets/invoice_template_sheet_part1.dart","loc":347,"part":true,"setState":9,"repositoryReads":1,"fn":26,"cog":18,"cyc":17,"len":101,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_template_sheet_part2.dart","loc":176,"part":true,"setState":2,"repositoryReads":0,"fn":1,"cog":26,"cyc":21,"len":196,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_template_sheet_part3.dart","loc":35,"part":true,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":34,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_unknown_outcome_dialog.dart","loc":72,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":34,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoicing_dashboard.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part1.dart","loc":39,"part":true,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":39,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part2.dart","loc":195,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":10,"len":73,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
