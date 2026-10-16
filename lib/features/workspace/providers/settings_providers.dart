@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/settings_bundle_asset.dart';
+import '../../../core/settings/active_settings.dart';
 import '../../../core/settings/settings.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/settings_commands.dart';
@@ -52,3 +53,10 @@ Future<SettingsSet> currentSettings(Ref ref) async {
   if (!signedIn) return SettingsSet.defaults(const []);
   return source.load((await workspace)?.id);
 }
+
+/// #2486 -- the active workspace's settings for core/settings readers (the
+/// booking and directory windows); the composition root puts it in its
+/// scope's overrides.
+final activeSettingsFromWorkspace = activeSettingsProvider.overrideWith(
+  (ref) => ref.watch(currentSettingsProvider).asData?.value,
+);

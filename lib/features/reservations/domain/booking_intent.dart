@@ -10,6 +10,7 @@
 // of ids. Nothing here knows how the sheet looks or how the RPC is named.
 import 'dart:convert';
 import '../../../core/data/json_reader.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 
 /// Where an intent is valid: one account on one server. An intent made
 /// under another login or against another installation is never shown,
@@ -191,7 +192,7 @@ class BookingIntentLedger {
   /// More than this and the oldest settled entries go first, then the
   /// oldest open ones: a ledger is a short list of unanswered questions,
   /// not a history.
-  static const int cap = 20;
+  static const int cap = SettingDefaults.bookingIntentLedgerCap;
 
   final List<BookingIntent> intents;
 

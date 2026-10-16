@@ -6,6 +6,7 @@
 // reservation chip (checked in now > reserved now > next upcoming
 // reservation within [DirectoryReservationRules.upcomingWindow]).
 import '../../../core/presence/presence_rules.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../reservations/domain/reservation.dart';
 
 /// Reservation-chip tuning (#237), pinned by test (no magic numbers rule).
@@ -13,7 +14,8 @@ abstract final class DirectoryReservationRules {
   /// How far ahead the directory looks for a member's next reservation.
   /// A booking starting exactly `now + upcomingWindow` still shows; the
   /// 15th day does not.
-  static const Duration upcomingWindow = Duration(days: 14);
+  static const Duration upcomingWindow =
+      Duration(days: SettingDefaults.directoryUpcomingWindowDays);
 }
 
 /// The two presence states of the directory presence chip.
@@ -45,9 +47,10 @@ DirectoryPresence resolveDirectoryPresence({
   required DateTime? lastSeenAt,
   required DateTime now,
   bool isSelf = false,
+  Duration onlineWindow = PresenceRules.onlineWindow,
 }) {
   if (isSelf ||
-      resolvePresence(lastSeenAt: lastSeenAt, now: now) ==
+      resolvePresence(lastSeenAt: lastSeenAt, now: now, onlineWindow: onlineWindow) ==
           PresenceStatus.online) {
     return const DirectoryPresence._(DirectoryPresenceKind.online);
   }
@@ -100,12 +103,13 @@ ReservationInfo? resolveReservationInfo({
   required String memberId,
   required List<Reservation> reservations,
   required DateTime now,
+  Duration upcomingWindow = DirectoryReservationRules.upcomingWindow,
 }) {
   final mine = reservations.where((r) => r.memberId == memberId);
 
   Reservation? reservedNow;
   Reservation? upcoming;
-  final horizon = now.add(DirectoryReservationRules.upcomingWindow);
+  final horizon = now.add(upcomingWindow);
 
   for (final r in mine) {
     if (r.coversInstant(now)) {

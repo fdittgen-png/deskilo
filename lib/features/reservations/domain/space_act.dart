@@ -50,4 +50,7 @@ typedef SpaceActRequest = ({
   String? myMemberId,
   DateTime now,
   BookingGranularity granularity,
+
+  /// The workspace's check-in leeway (`booking.check_in_leeway_minutes`).
+  Duration checkInLeeway,
 });

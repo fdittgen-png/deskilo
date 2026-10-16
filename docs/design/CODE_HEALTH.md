@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `682931f00be2f0b3b68fb1e5d16e85a2195068da` on 2026-10-16.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `8a5ed7208d40ab1c2d8961b76cb7c0e35f32e039` on 2026-10-16.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,9 +10,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1597 |
-| functions | 8799 |
-| cyclomatic>=9 | 940 |
+| files | 1600 |
+| functions | 8806 |
+| cyclomatic>=9 | 942 |
 | cyclomatic>=25 | 128 |
 | cognitive>=15 | 396 |
 | cognitive>=30 | 118 |
@@ -27,7 +27,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 |---|---|---|---|---|
 | 215 | 50 | 393 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 128 | 85 | 314 | 1 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build` |
-| 116 | 133 | 486 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
+| 116 | 133 | 479 | 2 | `lib/features/members/presentation/screens/member_page.dart#_MemberPageBody.build` |
 | 109 | 56 | 480 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 98 | 46 | 369 | 1 | `lib/features/events/presentation/screens/events_screen.dart#_EventsScreenState.build` |
 | 94 | 54 | 461 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |

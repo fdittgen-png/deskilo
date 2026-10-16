@@ -21,6 +21,7 @@ import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
 import 'features/auth/providers/auth_providers.dart';
 import 'features/profile/providers/profile_providers.dart';
+import 'features/workspace/providers/settings_providers.dart';
 import 'features/workspace/providers/workspace_providers.dart';
 
 Future<void> main() async {
@@ -106,6 +107,7 @@ Future<void> main() async {
         sessionSourceFromAuth, // #2495
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495
+        activeSettingsFromWorkspace, // #2486
         ...realtimeWiringFromApp, // #2495
       ],
       child: const DeskiloRoot(),

@@ -155,7 +155,7 @@ void main() {
     expect(CanvasControls.defaultMinScale, 0.4);
     expect(CanvasControls.defaultMaxScale, 3.0);
     expect(CanvasControls.defaultBoundaryMargin, 200.0);
-    expect(ReserveHubMetrics.snapMinutes, 15);
+    expect(BookingGranularity.defaultStepMinutes, 15);
     expect(ReserveHubMetrics.defaultStay, const Duration(hours: 4));
     expect(ReserveHubMetrics.lastSlotHour, 23);
     expect(ReserveHubMetrics.lastSlotMinute, 45);

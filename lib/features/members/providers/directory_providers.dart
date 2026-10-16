@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
+import '../../../core/settings/directory_windows.dart';
 import '../../../core/time/clock.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
@@ -10,7 +11,6 @@ import '../../reservations/domain/reservation.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/directory_status.dart';
 
 part 'directory_providers.g.dart';
 
@@ -53,7 +53,7 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
 @riverpod
 Future<List<Reservation>> directoryReservations(Ref ref) async {
   final now = ref.read(clockProvider).now();
-  final horizon = now.add(DirectoryReservationRules.upcomingWindow);
+  final horizon = now.add(ref.watch(directoryWindowsProvider).upcomingWindow);
   // Set literal: both keys collapse to one when the window stays inside
   // a single month.
   final monthKeys = {monthKeyOf(now), monthKeyOf(horizon)};

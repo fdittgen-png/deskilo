@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -132,6 +133,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         me?.id,
         seatId: widget.seat.id,
         granularity: _granularity,
+        leeway: ref.read(bookingWindowsProvider).checkInLeeway,
       );
       ActTrace.booking.step('scan-check-in', {
         'seat': widget.seat.id,
@@ -154,6 +156,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
           myMemberId: me?.id,
           now: now,
           granularity: _granularity,
+          checkInLeeway: ref.read(bookingWindowsProvider).checkInLeeway,
         ),
       );
     } on Object catch (e, st) {
@@ -227,7 +230,9 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final mine = choice.action == SpaceAction.checkIn
         ? myCheckInTarget(reservations, now, me?.id,
-            seatId: widget.seat.id, granularity: _granularity)
+            seatId: widget.seat.id,
+            granularity: _granularity,
+            leeway: ref.watch(bookingWindowsProvider).checkInLeeway)
         : null;
     final blocking = _blocking(reservations, choice, me?.id);
     final name = blocking == null ? '' : (names[blocking.memberId] ?? '');
@@ -332,6 +337,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
         children: [
           SpaceActForm(
             granularity: _granularity,
+            windows: ref.watch(bookingWindowsProvider),
             now: now,
             // #1135 — already sitting here? Then the move is to leave.
             // Opening on "Check in" put the member one tap from a

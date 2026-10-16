@@ -9,6 +9,15 @@ import '../../../core/settings/settings.dart';
 import '../../../l10n/app_localizations.dart';
 
 String settingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'booking.check_in_leeway_minutes' => l10n.settingLabelBookingCheckInLeewayMinutes,
+      'booking.check_in_reminder_lead_minutes' => l10n.settingLabelBookingCheckInReminderLeadMinutes,
+      'booking.check_in_reminder_lookahead_days' => l10n.settingLabelBookingCheckInReminderLookaheadDays,
+      'booking.walk_up_window_minutes' => l10n.settingLabelBookingWalkUpWindowMinutes,
+      'booking.walk_up_floor_minutes' => l10n.settingLabelBookingWalkUpFloorMinutes,
+      'booking.intent_ledger_cap' => l10n.settingLabelBookingIntentLedgerCap,
+      'billing.max_advance_days' => l10n.settingLabelBillingMaxAdvanceDays,
+      'directory.upcoming_window_days' => l10n.settingLabelDirectoryUpcomingWindowDays,
+      'presence.online_window_minutes' => l10n.settingLabelPresenceOnlineWindowMinutes,
       'dunning.first_after_days' => l10n.settingLabelDunningFirstAfterDays,
       'security.badge_lockout_failures' => l10n.settingLabelSecurityBadgeLockoutFailures,
       'security.badge_lockout_minutes' => l10n.settingLabelSecurityBadgeLockoutMinutes,
@@ -21,6 +30,15 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
+      'booking.check_in_leeway_minutes' => l10n.settingHintBookingCheckInLeewayMinutes,
+      'booking.check_in_reminder_lead_minutes' => l10n.settingHintBookingCheckInReminderLeadMinutes,
+      'booking.check_in_reminder_lookahead_days' => l10n.settingHintBookingCheckInReminderLookaheadDays,
+      'booking.walk_up_window_minutes' => l10n.settingHintBookingWalkUpWindowMinutes,
+      'booking.walk_up_floor_minutes' => l10n.settingHintBookingWalkUpFloorMinutes,
+      'booking.intent_ledger_cap' => l10n.settingHintBookingIntentLedgerCap,
+      'billing.max_advance_days' => l10n.settingHintBillingMaxAdvanceDays,
+      'directory.upcoming_window_days' => l10n.settingHintDirectoryUpcomingWindowDays,
+      'presence.online_window_minutes' => l10n.settingHintPresenceOnlineWindowMinutes,
       'dunning.first_after_days' => l10n.settingHintDunningFirstAfterDays,
       'security.badge_lockout_failures' => l10n.settingHintSecurityBadgeLockoutFailures,
       'security.badge_lockout_minutes' => l10n.settingHintSecurityBadgeLockoutMinutes,
@@ -35,6 +53,10 @@ String? settingHint(AppLocalizations l10n, String key) => switch (key) {
 String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) {
       'dunning' => l10n.settingGroupDunning,
       'security' => l10n.settingGroupSecurity,
+      'booking' => l10n.settingGroupBooking,
+      'billing' => l10n.settingGroupBilling,
+      'directory' => l10n.settingGroupDirectory,
+      'presence' => l10n.settingGroupPresence,
       _ => group,
     };
 
@@ -46,6 +68,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'attempts' => l10n.settingUnitAttempts,
       'per hour' => l10n.settingUnitPerHour,
       'per day' => l10n.settingUnitPerDay,
+      'entries' => l10n.settingUnitEntries,
       _ => unit,
     };
 

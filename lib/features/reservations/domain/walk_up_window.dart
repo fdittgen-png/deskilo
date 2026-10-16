@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/settings/booking_windows.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../../workspace/domain/booking_granularity.dart';
@@ -13,8 +14,9 @@ import '../../workspace/domain/booking_granularity.dart';
 /// crosses midnight: a booking ends on the day it starts (#644).
 ({DateTime start, DateTime end}) walkUpWindow(
   BookingGranularity granularity,
-  DateTime now,
-) {
+  DateTime now, {
+  BookingWindows windows = BookingWindows.defaults,
+}) {
   if (granularity.isDayBased) {
     final window = HalfDayWindows.fullDay(now);
     if (window.end.isAfter(now)) {
@@ -26,7 +28,7 @@ import '../../workspace/domain/booking_granularity.dart';
     final dayEnd = HalfDayWindows.fullDay(now).end;
     if (dayEnd.isAfter(now)) return (start: now, end: dayEnd);
   }
-  var end = now.add(const Duration(hours: 4));
+  var end = now.add(windows.walkUpWindow);
   // #1143 — the day's bounds in the WORKSPACE zone, like the branches
   // above and like the server's "a booking ends on the day it starts".
   // A bare DateTime here was the device's day: a Paris space booked from
@@ -40,7 +42,7 @@ import '../../workspace/domain/booking_granularity.dart';
   if (!end.isAfter(now)) {
     final next = day.add(const Duration(days: 1));
     final midnight = WorkspaceTime.at(next.year, next.month, next.day);
-    final floor = now.add(const Duration(minutes: 15));
+    final floor = now.add(windows.walkUpFloor);
     end = floor.isAfter(midnight) ? midnight : floor;
   }
   return (start: now, end: end);

@@ -10,6 +10,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
+import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -108,6 +109,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
         ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
     // #1154 — grouped ONCE per build, not rescanned per row.
     final reservationsByMember = reservationsByMemberOf(reservations);
+    final windows = ref.watch(directoryWindowsProvider);
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     // WhatsApp affordances (swipe, chat buttons, group tile) ride the
@@ -175,12 +177,14 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                         lastSeenAt: profiles[member.userId]?.lastSeenAt,
                         now: now,
                         isSelf: member.id == myMemberId,
+                        onlineWindow: windows.onlineWindow,
                       ),
                       reservationInfo: resolveReservationInfo(
                         memberId: member.id,
                         reservations: reservationsByMember[member.id] ??
                             const <Reservation>[],
                         now: now,
+                        upcomingWindow: windows.upcomingWindow,
                       ),
                       memberReservations: upcomingReservationsFor(
                         member.id,

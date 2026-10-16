@@ -1,0 +1,95 @@
+{
+  "@@locale": "en",
+  "settingGroupBooking": "Booking and check-in",
+  "@settingGroupBooking": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupBilling": "Billing runs",
+  "@settingGroupBilling": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupDirectory": "Member directory",
+  "@settingGroupDirectory": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupPresence": "Presence",
+  "@settingGroupPresence": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingLabelBookingCheckInLeewayMinutes": "Check-in opens before the start",
+  "@settingLabelBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInLeewayMinutes": "Minutes before its start a booking can be checked in. A minute grid wider than this widens it to one grid step.",
+  "@settingHintBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLeadMinutes": "Check-in reminder lead time",
+  "@settingLabelBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLeadMinutes": "Minutes before a booking starts at which its check-in reminder is shown.",
+  "@settingHintBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLookaheadDays": "Check-in reminder horizon",
+  "@settingLabelBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLookaheadDays": "Fixed: how many days ahead a device schedules check-in reminders.",
+  "@settingHintBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpWindowMinutes": "On-the-spot stay",
+  "@settingLabelBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpWindowMinutes": "Length of the stay booked on the spot with a badge or a space code on a minute grid.",
+  "@settingHintBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpFloorMinutes": "Shortest on-the-spot stay",
+  "@settingLabelBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpFloorMinutes": "Shortest stay booked on the spot, used when the usual stay would run past the end of the day.",
+  "@settingHintBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingIntentLedgerCap": "Unanswered booking questions kept",
+  "@settingLabelBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingIntentLedgerCap": "Fixed: how many unanswered booking questions one device keeps.",
+  "@settingHintBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
+  "@settingLabelBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
+  "@settingHintBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelDirectoryUpcomingWindowDays": "Directory look-ahead",
+  "@settingLabelDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintDirectoryUpcomingWindowDays": "How many days ahead the member directory shows the next booking of a member.",
+  "@settingHintDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelPresenceOnlineWindowMinutes": "Online window",
+  "@settingLabelPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintPresenceOnlineWindowMinutes": "Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.",
+  "@settingHintPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingUnitEntries": "entries",
+  "@settingUnitEntries": {
+    "description": "#2486 settings: Unit."
+  }
+}

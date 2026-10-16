@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
+import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -55,6 +56,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         ref.read(bookingGranularityProvider).value ??
             BookingGranularity.flexible,
         ref.read(clockProvider).now(),
+        windows: ref.read(bookingWindowsProvider),
       );
 
   /// The subjects the reserve picker offers (#638): myself when I hold

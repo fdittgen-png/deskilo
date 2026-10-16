@@ -117,12 +117,13 @@ Reservation? myCheckInTarget(
   String? myMemberId, {
   required String seatId,
   required BookingGranularity granularity,
+  Duration leeway = Reservation.checkInLeeway,
 }) =>
     reservations
         .where((r) =>
             r.memberId == myMemberId &&
             r.seatId == seatId &&
-            r.checkInWindowOpen(now, granularity: granularity))
+            r.checkInWindowOpen(now, granularity: granularity, leeway: leeway))
         .firstOrNull;
 
 /// MY live check-in ON THIS SEAT (#1083).
@@ -171,6 +172,7 @@ Future<SpaceActOutcome> actOnSpace(
         request.myMemberId,
         seatId: request.seatId,
         granularity: request.granularity,
+        leeway: request.checkInLeeway,
       );
       if (mine != null) {
         await reservations.checkIn(mine.id);

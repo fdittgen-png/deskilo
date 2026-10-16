@@ -20,6 +20,7 @@ import '../../core/notifications/notification_providers.dart';
 import '../../core/notifications/reminder_sync.dart';
 import '../../core/push/push_providers.dart';
 import '../../core/realtime/realtime_providers.dart';
+import '../../core/settings/booking_windows.dart';
 import '../../core/storage/note_seen_store.dart';
 import '../../core/time/clock.dart';
 import '../../core/time/work_hours.dart';
@@ -247,6 +248,8 @@ void _scheduleCheckInReminders(WidgetRef ref, AppLocalizations l10n) {
         myMemberId: member.id,
         now: ref.read(clockProvider).now(),
         targetNames: targets,
+        lookahead: ref.read(bookingWindowsProvider).reminderLookahead,
+        before: ref.read(bookingWindowsProvider).reminderLead,
         titleOf: (target, startsAt) => l10n.reminderTitle,
         // #1082 — the reminder names the hour the SPACE opens the
         // booking, which is what the member read when they booked it

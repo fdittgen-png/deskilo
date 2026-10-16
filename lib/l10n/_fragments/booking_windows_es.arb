@@ -1,0 +1,95 @@
+{
+  "@@locale": "es",
+  "settingGroupBooking": "Reserva y registro de llegada",
+  "@settingGroupBooking": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupBilling": "Ciclos de facturación",
+  "@settingGroupBilling": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupDirectory": "Directorio de miembros",
+  "@settingGroupDirectory": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupPresence": "Presencia",
+  "@settingGroupPresence": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingLabelBookingCheckInLeewayMinutes": "Apertura del registro antes del inicio",
+  "@settingLabelBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInLeewayMinutes": "Minutos antes del inicio a partir de los cuales se puede registrar la llegada a una reserva. Una cuadrícula de minutos más ancha lo amplía a un paso de cuadrícula.",
+  "@settingHintBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLeadMinutes": "Antelación del recordatorio de registro",
+  "@settingLabelBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLeadMinutes": "Minutos antes del inicio de una reserva en que se muestra su recordatorio de registro.",
+  "@settingHintBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLookaheadDays": "Horizonte del recordatorio de registro",
+  "@settingLabelBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLookaheadDays": "Fijo: cuántos días antes programa un dispositivo los recordatorios de registro.",
+  "@settingHintBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpWindowMinutes": "Estancia inmediata",
+  "@settingLabelBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpWindowMinutes": "Duración de la estancia reservada en el momento con una credencial o un código de espacio en una cuadrícula de minutos.",
+  "@settingHintBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpFloorMinutes": "Estancia inmediata más corta",
+  "@settingLabelBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpFloorMinutes": "Estancia reservada en el momento más corta, usada cuando la habitual pasaría del fin del día.",
+  "@settingHintBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingIntentLedgerCap": "Preguntas de reserva guardadas",
+  "@settingLabelBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingIntentLedgerCap": "Fijo: cuántas preguntas de reserva sin respuesta guarda un dispositivo.",
+  "@settingHintBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBillingMaxAdvanceDays": "Antelación de la factura de suscripción",
+  "@settingLabelBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBillingMaxAdvanceDays": "Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.",
+  "@settingHintBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",
+  "@settingLabelDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
+  "@settingHintDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelPresenceOnlineWindowMinutes": "Ventana en línea",
+  "@settingLabelPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintPresenceOnlineWindowMinutes": "Minutos tras su última señal de vida durante los que una persona sigue contando como en línea. Manténgalo por encima del latido de 2 minutos.",
+  "@settingHintPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingUnitEntries": "entradas",
+  "@settingUnitEntries": {
+    "description": "#2486 settings: Unit."
+  }
+}
