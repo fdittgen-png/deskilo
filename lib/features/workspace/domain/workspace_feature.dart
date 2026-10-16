@@ -381,15 +381,13 @@ enum WorkspaceFeature {
   viesVerification,
 
   /// #2354 — the recapitulative statement (EU sales list: DES, ZM, 349):
-  /// the reverse-charged services per customer VAT number and month, as
-  /// a CSV beside the VAT declarations, and a notice on Invoicing while
-  /// one is due. Platform, default ON, under vatDeclarations.
+  /// reverse-charged services per customer VAT number and month as a CSV,
+  /// and a notice on Invoicing while one is due. Platform, default ON.
   recapitulativeStatement,
 
   /// #2357 — input VAT: an expense states its VAT rate and deductible
-  /// share, and the VAT return subtracts the deductible VAT from the VAT
-  /// collected. Platform, default ON, under vatDeclarations; OFF hides the
-  /// fields and the return declares output VAT only.
+  /// share, and the VAT return subtracts it. Platform, default ON, under
+  /// vatDeclarations; OFF hides the fields (output VAT only).
   inputVat,
 
   /// #2484 — the settings editor (platform tier, default ON; OFF hides it).
@@ -398,11 +396,13 @@ enum WorkspaceFeature {
   /// #2362 — a seller in the United States issues in sales-tax mode: net
   /// prices, the tax of the site's postal code stated apart, taxability per
   /// kind of line, exemption certificates. Platform, default ON, under
-  /// invoicing; OFF refuses such a seller as before.
+  /// invoicing; OFF: such a seller cannot issue.
   salesTax,
 
-  /// #2631 — a meeting room on the plan, booked in its own slot (default OFF).
-  meetingRooms;
+  /// #2631 — a meeting room on the plan, booked in its own slot; a parking
+  /// of standard, EV and accessible slots, booked per day (both default OFF).
+  meetingRooms,
+  parking;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

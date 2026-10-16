@@ -250,4 +250,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // #2631 — a parking area holds slots booked per day.
+  WorkspaceFeature.parking: FeatureManifestEntry(
+    feature: WorkspaceFeature.parking,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

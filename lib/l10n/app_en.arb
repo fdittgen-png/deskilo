@@ -6735,6 +6735,14 @@
   "@featureOptInTitle": {
     "description": "#1851 consent dialog title before switching on an alpha/beta feature"
   },
+  "featureParkingDesc": "A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  },
+  "featureParkingTitle": "Parking",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
   "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action.",
   "featurePaymentRemindersTitle": "Automatic payment reminders",
   "featurePdfExport": "PDF export",

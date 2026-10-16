@@ -66,7 +66,7 @@ void main() {
     // deliberately.
     // #1835 — guestParticipation is the thirty-sixth: a space admits
     // guests deliberately.
-    expect(onCount, featureManifest.length - 37);
+    expect(onCount, featureManifest.length - 38);
   });
 
   testWidgets(

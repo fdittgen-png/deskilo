@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "featureParkingTitle": "Parcheggio",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
+  "featureParkingDesc": "Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  }
+}

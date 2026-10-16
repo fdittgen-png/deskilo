@@ -675,7 +675,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         color: row['color'] as int,
         bookableAsWhole: row['bookable_as_whole'] as bool,
         priceCents: (row['price_cents'] as num?)?.toInt() ?? 0,
-        rect: _rectFromRow(row),
+        rect: _rectFromRow(row), areaKind: enumOr(AreaKind.values, row['area_kind'] as String?, AreaKind.workspace, area: 'plan'),
       );
 
   Desk _deskFromRow(Map<String, dynamic> row) => Desk(
@@ -702,13 +702,10 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
             row['orientation'] as String?, SeatOrientation.n, area: 'plan'),
         chair: row['chair'] as String,
         amenities: (row['amenities'] as List<dynamic>).cast<String>(),
-        blockedFrom: row['blocked_from'] == null
-            ? null
-            : DateTime.parse(row['blocked_from'] as String),
-        blockedTo: row['blocked_to'] == null
-            ? null
-            : DateTime.parse(row['blocked_to'] as String),
+        blockedFrom: row['blocked_from'] == null ? null : DateTime.parse(row['blocked_from'] as String),
+        blockedTo: row['blocked_to'] == null ? null : DateTime.parse(row['blocked_to'] as String),
         nfcUid: row['nfc_uid'] as String?, slotMinutes: row['slot_minutes'] as int?,
         capacity: row['capacity'] as int?, resourceKind: enumOr(ResourceKind.values, row['resource_kind'] as String?, ResourceKind.seat, area: 'plan'),
+        parkingKind: row['parking_kind'] == null ? null : enumOr(ParkingKind.values, row['parking_kind'] as String?, ParkingKind.standard, area: 'plan'),
       );
 }

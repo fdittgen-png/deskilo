@@ -4025,6 +4025,14 @@
   "featureOptInConfirm": "Activar",
   "featureOptInStage": "{feature}: {stage}",
   "featureOptInTitle": "¿Activar una función experimental?",
+  "featureParkingDesc": "Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  },
+  "featureParkingTitle": "Aparcamiento",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
   "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.",
   "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
   "featurePdfExport": "Exportar PDF",

@@ -142,4 +142,5 @@ const Set<String> workspaceFeatureKeys = {
   'configurableSettings',
   'salesTax',
   'meetingRooms',
+  'parking',
 };

@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureParkingTitle": "Parking",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
+  "featureParkingDesc": "A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  }
+}

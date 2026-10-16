@@ -217,6 +217,7 @@ begin
       "notificationGrouping": false,
       "numberSequences": false,
       "onlinePayments": false,
+      "parking": false,
       "paymentReminders": false,
       "pdfExport": true,
       "personalInfo": true,
