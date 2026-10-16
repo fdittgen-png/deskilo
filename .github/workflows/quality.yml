@@ -132,6 +132,12 @@ jobs:
         run: dart pub get && dart analyze --fatal-infos && dart test
         working-directory: packages/deskilo_document_pdf
 
+      # #2592 C2 - the editing primitives (selection, reorder, token
+      # insertion, undo history) are a pure-Dart package too.
+      - name: Tests of the document editor package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_document_editor
+
       # #2593 — the semantic recorder core is a pure-Dart package with a
       # neutral example host; it resolves and tests without the app.
       - name: Tests of the task recording package

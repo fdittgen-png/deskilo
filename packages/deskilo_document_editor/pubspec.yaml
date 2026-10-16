@@ -1,0 +1,11 @@
+name: deskilo_document_editor
+description: Editing primitives for ordered document elements - selection, insert, reorder, delete, caret-safe token insertion and an undo/redo history. Pure Dart; no application types.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

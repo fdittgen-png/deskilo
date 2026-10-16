@@ -313,8 +313,8 @@ extension _ReportVisualEditorStatePart2 on ReportVisualEditorState {
             key: ValueKey('${widget.bandKey}-add'),
             tooltip: l10n.reportDesignerInsert,
             onSelected: (kind) => _mutate(() {
-              _lines.add(ReportVisualLine(kind, ''));
-              _editing = _lines.length - 1;
+              _adopt(_edit.insertBelow(
+                  _lines.length - 1, ReportVisualLine(kind, '')));
               _editController.text = '';
             }),
             child: TextButton.icon(

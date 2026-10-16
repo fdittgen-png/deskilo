@@ -162,6 +162,15 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'document editor package',
+    root: 'packages/deskilo_document_editor/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test in packages/deskilo_document_editor',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_document_editor',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'task recording package',
     root: 'packages/deskilo_task_recording/test',
     suffix: '_test.dart',
