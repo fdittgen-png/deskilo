@@ -70,8 +70,8 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 /// #1449 — regrouping invoices: which may join, and the number the
 /// person is told afterwards.
 @riverpod
-Settlements settlements(Ref ref) =>
-    Settlements(ref.watch(moneyRepositoryProvider));
+Settlements settlements(Ref ref) => Settlements(
+    ref.watch(moneyRepositoryProvider), ref.watch(invoiceQueriesProvider));
 
 @riverpod
 Repartitions repartitions(Ref ref) =>
@@ -80,8 +80,8 @@ Repartitions repartitions(Ref ref) =>
 /// #1449 — what a VAT period declares on the basis the workspace
 /// declares on, and whether the platform took it.
 @riverpod
-VatDeclarations vatDeclarationCommand(Ref ref) =>
-    VatDeclarations(ref.watch(moneyRepositoryProvider));
+VatDeclarations vatDeclarationCommand(Ref ref) => VatDeclarations(
+    ref.watch(moneyRepositoryProvider), ref.watch(invoiceQueriesProvider));
 
 /// #1449 — a recurring expense: what may still be ended, and what
 /// answering an occurrence at a different amount means.
@@ -289,10 +289,10 @@ Future<List<VatRate>> vatRates(Ref ref) async {
 /// admins the whole workspace.
 @Riverpod(keepAlive: true)
 Future<List<Invoice>> invoices(Ref ref) async {
+  final queries = ref.watch(invoiceQueriesProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  final all = await ref.watch(moneyRepositoryProvider).fetchInvoices(workspace.id);
-  return all;
+  return queries.fetchInvoices(workspace.id);
 }
 
 /// Invoice-PDF template of the active workspace (#454); empty while no

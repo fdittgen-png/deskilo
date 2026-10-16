@@ -22,6 +22,7 @@
 // the sheet resolves no repository.
 import '../domain/billing_rules.dart';
 import '../domain/invoice.dart';
+import '../domain/invoice_queries.dart';
 import '../domain/money_repository.dart';
 
 /// The invoices of [memberId] that may be regrouped, from the open list.
@@ -51,9 +52,10 @@ bool isRegrouping(List<Invoice> chosen) => chosen.length >= 2;
 
 /// Regrouping, as the decision behind it.
 class Settlements {
-  const Settlements(this._money);
+  const Settlements(this._money, this._invoices);
 
   final MoneyRepository _money;
+  final InvoiceQueries _invoices;
 
   /// Settles [invoiceIds] into one document and returns the NUMBER a
   /// person is shown.
@@ -71,7 +73,7 @@ class Settlements {
       memberId: memberId,
       invoiceIds: invoiceIds,
     );
-    final fresh = await _money.fetchInvoices(workspaceId);
+    final fresh = await _invoices.fetchInvoices(workspaceId);
     return fresh.where((i) => i.id == id).firstOrNull?.number ?? id;
   }
 }

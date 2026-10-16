@@ -52,7 +52,7 @@ Future<void> showInvoiceIssueSheet(
   final names = await ref.read(memberNamesProvider.future);
   if (!context.mounted) return;
 
-  final repo = ref.read(moneyRepositoryProvider);
+  final repo = ref.read(invoiceQueriesProvider);
   // One instant for the whole sheet: the month ceiling and the default
   // period must not straddle a midnight (or month) tick.
   final now = ref.read(clockProvider).now();
