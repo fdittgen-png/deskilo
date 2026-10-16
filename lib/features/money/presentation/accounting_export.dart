@@ -112,16 +112,18 @@ Future<void> exportAccountingFile(
   // development workspace's books are marked as such.
   final development = workspace.environment != 'prod';
   final repo = ref.read(moneyRepositoryProvider);
+  final invoiceQueries = ref.read(invoiceQueriesProvider);
+  final accountQueries = ref.read(memberAccountQueriesProvider);
   // #2365 — the books of the export year only.
   final (invoices: exported, :ledger, :repartitions) =
-      await exportYearBooks(repo, workspace.id, year, view.invoices);
+      await exportYearBooks(accountQueries, repo, workspace.id, year, view.invoices);
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
   final taxPoints = vatTaxPointLedger(
     exported,
     matches: matches,
-    instalments: await repo.fetchInvoiceInstalments(workspace.id),
+    instalments: await invoiceQueries.fetchInvoiceInstalments(workspace.id),
     basis: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode),
   );
   final memberNames =
@@ -348,10 +350,10 @@ Future<void> exportAccountingFile(
           final ids = {for (final i in invoices) i.id};
           final fresh = accountingView(
             [
-              for (final i in await repo.fetchInvoices(workspace.id))
+              for (final i in await invoiceQueries.fetchInvoices(workspace.id))
                 if (ids.contains(i.id)) i,
             ],
-            await repo.fetchInvoiceMatches(workspace.id),
+            await invoiceQueries.fetchInvoiceMatches(workspace.id),
           );
           if (!context.mounted) return;
           if (ref.read(currentWorkspaceProvider).value?.id != workspace.id ||
@@ -462,7 +464,7 @@ Future<void> exportAccountingFile(
             start: DateTime(month.year, month.month),
             end: DateTime(month.year, month.month + 1, 0),
             matches: matches,
-            instalments: await repo.fetchInvoiceInstalments(workspace.id),
+            instalments: await invoiceQueries.fetchInvoiceInstalments(workspace.id),
             onReceipts: workspaceTaxPointBasis(
               workspace.invoiceLegal,
               workspace.countryCode,
@@ -483,8 +485,7 @@ Future<void> exportAccountingFile(
           // provider: a trail assembled from a stale cache would be
           // missing exactly the recent movements someone is asking
           // about.
-          final ledger = await ref
-              .read(moneyRepositoryProvider)
+          final ledger = await accountQueries
               .fetchWorkspaceLedger(workspace.id);
           await save(
             buildAuditTrailCsv(

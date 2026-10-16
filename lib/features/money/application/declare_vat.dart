@@ -18,6 +18,7 @@
 // with the receipt it gave: no upload marks a return filed.
 import 'package:meta/meta.dart';
 import '../domain/invoice.dart';
+import '../domain/invoice_queries.dart';
 import '../domain/money_repository.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_report.dart';
@@ -80,9 +81,10 @@ VatDeclarationDraft vatDeclarationDraft({
 
 /// Declaring VAT, as the decisions behind it.
 class VatDeclarations {
-  const VatDeclarations(this._money);
+  const VatDeclarations(this._money, this._invoices);
 
   final MoneyRepository _money;
+  final InvoiceQueries _invoices;
 
   /// Prepares the period's return: the server computes its figures.
   Future<void> declare({
@@ -115,7 +117,7 @@ class VatDeclarations {
         matches: matches,
         instalments: workspaceId.isEmpty
             ? const {}
-            : await _money.fetchInvoiceInstalments(workspaceId),
+            : await _invoices.fetchInvoiceInstalments(workspaceId),
         basis: basis,
       );
 
