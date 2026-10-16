@@ -364,8 +364,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(events ?? FakeEventRepository()),
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
-    moneyRepositoryProvider
-        .overrideWithValue(money ?? FakeMoneyRepository()),
+    ..._moneyOverrides(money ?? FakeMoneyRepository()),
     creditRepositoryProvider
         .overrideWithValue(credits ?? FakeCreditRepository()),
     notificationServiceProvider
@@ -508,3 +507,10 @@ class FixedSchemaVersionSource implements SchemaVersionSource {
     return version;
   }
 }
+
+/// #2591 — one fake serves the whole money boundary and its narrow reads.
+List<Override> _moneyOverrides(MoneyRepository money) => [
+      moneyRepositoryProvider.overrideWithValue(money),
+      invoiceQueriesProvider.overrideWithValue(money),
+      memberAccountQueriesProvider.overrideWithValue(money),
+    ];

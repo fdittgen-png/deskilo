@@ -10,4 +10,4 @@ part 'reminder_evidence_providers.g.dart';
 
 @riverpod
 Future<List<ReminderEvidence>> reminderEvidence(Ref ref, String invoiceId) =>
-    ref.read(moneyRepositoryProvider).fetchReminderEvidence(invoiceId);
+    ref.read(invoiceQueriesProvider).fetchReminderEvidence(invoiceId);

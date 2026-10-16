@@ -4,21 +4,6 @@ part of 'supabase_money_repository.dart';
 // #2386 — part 1 of SupabaseMoneyRepository, split out of supabase_money_repository.dart so no
 // file holds the whole class.
 extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
-  Future<List<Invoice>> _fetchInvoicesImpl(String workspaceId) async {
-    // #1310 S2 — paged: the register and the export both read all of
-    // them, and a workspace outlives 1000 invoices.
-    final rows = await fetchAllPages(
-      table: 'invoices',
-      build: () => _client
-          .from('invoices')
-          // #1913 — the frozen due date travels with the invoice.
-          .select('*, invoice_maturities(due_on, basis)')
-          .eq('workspace_id', workspaceId)
-          .order('issued_at', ascending: false)
-          .order('id', ascending: true),
-    );
-    return rows.map(Invoice.fromRow).toList();
-  }
 
   Future<List<VatDeclaration>> _fetchVatDeclarationsImpl(
       String workspaceId) async {
@@ -123,32 +108,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
       'p_note': note,
     });
     applyOrPendingVoid(answer);
-  }
-
-  Future<Set<String>> _fetchConsumedPaymentIdsImpl(String workspaceId) async {
-    // #2587 — paged to the end: a list cut at the server's cap would offer
-    // an already-consumed payment again. The match command still rechecks
-    // (and the unique payment_ledger_id refuses) the stale candidate.
-    final rows = await fetchAllPages(
-      table: 'invoice_match_payments',
-      build: () => _client
-          .from('invoice_match_payments')
-          .select('id, payment_ledger_id')
-          .eq('workspace_id', workspaceId)
-          .order('id', ascending: true),
-    );
-    return {
-      for (final row in rows) row['payment_ledger_id'] as String,
-    };
-  }
-
-  Future<MemberAccount> _fetchMemberAccountImpl(String memberId) async {
-    final result = await _client.rpc<dynamic>('member_account', params: {
-      'p_member_id': memberId,
-    });
-    return MemberAccount.fromJson(
-      Map<String, dynamic>.from(result as Map),
-    );
   }
 
   Future<DunningRules> _fetchDunningRulesImpl(String workspaceId) async {
@@ -351,23 +310,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
       'p_source_event_id': sourceEventId,
     });
     return id as String;
-  }
-
-  Future<List<UsageRecord>> _fetchUsageRecordsImpl({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  }) async {
-    final data = await _client.rpc<dynamic>('usage_records_for', params: {
-      'p_workspace_id': workspaceId,
-      'p_period': period,
-      'p_member_id': memberId,
-    });
-    final rows = (data as Map)['records'] as List? ?? const [];
-    return [
-      for (final row in rows)
-        UsageRecord.fromJson((row as Map).cast<String, dynamic>()),
-    ];
   }
 
   Future<String> _requestUsageCorrectionImpl(

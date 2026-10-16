@@ -42,14 +42,18 @@ import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
 import '../domain/workspace_status.dart';
+import 'money_queries_providers.dart';
 
 export '../domain/bill_sections.dart' show currentPeriod;
+export 'money_queries_providers.dart';
 
 part 'money_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-MoneyRepository moneyRepository(Ref ref) =>
-    SupabaseMoneyRepository(Supabase.instance.client);
+MoneyRepository moneyRepository(Ref ref) => SupabaseMoneyRepository(
+      Supabase.instance.client,
+      invoices: ref.watch(invoiceQueriesProvider),
+      accounts: ref.watch(memberAccountQueriesProvider));
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 /// #1449 — the decision behind Register payment: the sheet says what was
@@ -107,7 +111,7 @@ Future<Statement?> myStatement(Ref ref, String period) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(memberAccountQueriesProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return null;
   return repository.fetchStatement(member.id, period);
@@ -120,7 +124,7 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(memberAccountQueriesProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
   return repository.fetchLedger(member.id);
@@ -154,7 +158,7 @@ Future<List<PaymentIntent>> myPaymentIntents(Ref ref) async {
 Future<MemberAccount> memberAccount(Ref ref, String memberId) => traced(
       'money',
       'member account',
-      () => ref.read(moneyRepositoryProvider).fetchMemberAccount(memberId),
+      () => ref.read(memberAccountQueriesProvider).fetchMemberAccount(memberId),
     );
 
 /// One member's statement for a period ('yyyy-MM').
@@ -167,7 +171,7 @@ Future<Statement?> memberStatement(
     traced(
       'money',
       'member statement',
-      () => ref.read(moneyRepositoryProvider).fetchStatement(memberId, period),
+      () => ref.read(memberAccountQueriesProvider).fetchStatement(memberId, period),
     );
 
 /// One member's ledger, newest first — where their PAYMENTS are.
@@ -175,7 +179,7 @@ Future<Statement?> memberStatement(
 Future<List<LedgerEntry>> memberLedger(Ref ref, String memberId) => traced(
       'money',
       'member ledger',
-      () => ref.read(moneyRepositoryProvider).fetchLedger(memberId),
+      () => ref.read(memberAccountQueriesProvider).fetchLedger(memberId),
     );
 
 /// One member's invoices, newest first.
@@ -370,7 +374,7 @@ Future<MemberAccount> myAccount(Ref ref) async {
   // provider) trip Riverpod's pause bookkeeping when a screen hides.
   // Mutation sites invalidate this provider explicitly instead
   // (invalidateBookingData + the invoice actions).
-  return ref.read(moneyRepositoryProvider).fetchMemberAccount(member.id);
+  return ref.read(memberAccountQueriesProvider).fetchMemberAccount(member.id);
 }
 
 /// #1913 — invoiceId → reason of its active dunning hold.
@@ -386,9 +390,7 @@ Future<Map<String, String>> dunningHolds(Ref ref) async {
 Future<Map<String, InvoiceMatch>> invoiceMatches(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
-  return ref
-      .read(moneyRepositoryProvider)
-      .fetchInvoiceMatches(workspace.id);
+  return ref.read(invoiceQueriesProvider).fetchInvoiceMatches(workspace.id);
 }
 
 /// invoiceId → reminder count + last instant (0066), for the archive
@@ -399,9 +401,7 @@ Future<Map<String, ({int count, DateTime last})>> invoiceReminders(
 ) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
-  return ref
-      .read(moneyRepositoryProvider)
-      .fetchInvoiceReminders(workspace.id);
+  return ref.read(invoiceQueriesProvider).fetchInvoiceReminders(workspace.id);
 }
 
 /// Whether this workspace can SEND an e-invoice (0073) — the affordance

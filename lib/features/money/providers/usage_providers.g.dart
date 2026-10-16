@@ -153,7 +153,7 @@ final class UsageRecordsProvider
   }
 }
 
-String _$usageRecordsHash() => r'edffb2a4db2e49f72b1f68b06116c349fc324078';
+String _$usageRecordsHash() => r'38e3334302eb8d6a0687bdd16936ed4973b45c11';
 
 /// One month of usage records. The server backfills the month's
 /// no-shows before answering, so reading a month is what makes its

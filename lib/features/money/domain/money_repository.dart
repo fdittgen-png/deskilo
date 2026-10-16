@@ -8,34 +8,25 @@ import 'einvoice_gateway.dart';
 import 'expense_repartition.dart';
 import 'expense_schedule.dart';
 import 'fee_band.dart';
-import 'invoice.dart';
 import 'invoice_pdf_template.dart';
-import 'ledger_entry.dart';
-import 'member_account.dart';
+import 'invoice_queries.dart';
+import 'member_account_queries.dart';
 import 'number_sequence.dart';
 import 'package.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
 import 'price_negotiation.dart';
-import 'reminder_evidence.dart';
 import 'service_item.dart';
-import 'statement.dart';
 import 'subscription_levels.dart';
-import 'usage_record.dart';
 import 'vat_declaration.dart';
 import 'vat_rate.dart';
-import 'vat_tax_point.dart';
 import 'workspace_status.dart';
 
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
 /// before a ledger credit exists.
-abstract class MoneyRepository {
-  /// The invoice archive (0060): the member's own invoices — admins see
-  /// everyone's (RLS decides).
-  Future<List<Invoice>> fetchInvoices(String workspaceId);
-
+abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries {
   /// The workspace's VAT declarations (0107), newest period first.
   Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
 
@@ -88,14 +79,6 @@ abstract class MoneyRepository {
   /// (#508, 0102): books the payout charge and closes the avoir with
   /// resolution 'refunded' (through the invoice_payment policy).
   Future<void> settleCreditInvoice(String invoiceId, {String note = ''});
-
-  /// Every payment already consumed by a match (#506, 0101) — the
-  /// candidates list must not offer them again.
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId);
-
-  /// The member's real cross-month position (#512): credit on account,
-  /// open remainders, refunds due, net.
-  Future<MemberAccount> fetchMemberAccount(String memberId);
 
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
@@ -202,16 +185,6 @@ abstract class MoneyRepository {
   Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
       String workspaceId);
 
-  /// #833 — one month's usage records (RPC `usage_records_for`, 0151).
-  /// The server backfills the month's no-shows before answering, so
-  /// reading a month is what makes its uncounted bookings appear.
-  /// [memberId] null = everyone the caller may see.
-  Future<List<UsageRecord>> fetchUsageRecords({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  });
-
   /// #833 — "I left before the booking ended; bill the time I was
   /// actually here." Only the member concerned may ask, and never
   /// decides it themselves. Returns the event id.
@@ -242,27 +215,6 @@ abstract class MoneyRepository {
     String correctionReason = '',
   });
 
-  /// What [createInvoice] would issue for [period], without issuing
-  /// (RPC `preview_invoice`, 0062).
-  Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-  });
-
-  /// What stops [createInvoice] from issuing for [period] (RPC
-  /// `invoice_issue_readiness`, 0365): the essential details of a legal
-  /// invoice that are still missing, as stable keys; empty when nothing
-  /// is. A dry run of the very same issue, so the two cannot disagree.
-  Future<List<String>> invoiceIssueReadiness({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    InvoiceKind kind = InvoiceKind.full,
-    String? replacesId,
-    String correctionReason = '',
-  });
-
   /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
   /// one-way change the server permits on an issued invoice.
   Future<void> voidInvoice(String invoiceId);
@@ -287,16 +239,6 @@ abstract class MoneyRepository {
   /// #1913 — releases the active hold (RPC `release_dunning_hold`).
   Future<void> releaseDunningHold(String invoiceId);
 
-  /// invoiceId → reminder count + last reminder instant (0066).
-  /// #1922 (0334) — the reminders of one invoice and what is known about
-  /// their delivery (RPC `invoice_reminder_evidence`): issuers and the
-  /// invoice's own member only.
-  Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId);
-
-  Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
-    String workspaceId,
-  );
-
   /// Matches an open invoice to a REGISTERED payment (RPC
   /// `match_invoice`, 0068): the amount comes from the selected ledger
   /// payment — never typed. [resolution] ∈ exact | over_forced |
@@ -308,27 +250,6 @@ abstract class MoneyRepository {
     required String resolution,
     String note = '',
   });
-
-  /// invoiceId → its match (0067). status 'pending' while a validation
-  /// quorum decides; a reject deletes the row (the invoice reopens).
-  Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId);
-
-  /// #2355 — invoiceId → every payment matched to it, one by one
-  /// (`invoice_match_payments`, 0101): an invoice paid in instalments
-  /// falls into as many VAT periods as it had payments on a receipts
-  /// basis. Empty for an invoice whose match records no junction row.
-  Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(
-    String workspaceId,
-  );
-
-  Future<Statement> fetchStatement(String memberId, String period);
-
-  Future<List<LedgerEntry>> fetchLedger(String memberId);
-
-  /// EVERY member's ledger of the workspace — the payments/services tabs
-  /// of the data export (#395). RLS already grants admins the full table
-  /// (0008); a worker calling this gets only their own rows back.
-  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId);
 
   /// All online-payment attempts of the workspace (0045) — the export's
   /// online-payments rows. Admin-readable by the 0045 policy.

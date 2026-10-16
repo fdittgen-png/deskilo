@@ -49,7 +49,7 @@ final class MoneyRepositoryProvider
   }
 }
 
-String _$moneyRepositoryHash() => r'db19ef8c61f5e7ef3494784dfcae5ed1c82e378b';
+String _$moneyRepositoryHash() => r'd196b554931b44005209a89a572ef2650271f79e';
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 /// #1449 — the decision behind Register payment: the sheet says what was
@@ -507,7 +507,7 @@ final class MyStatementProvider
   }
 }
 
-String _$myStatementHash() => r'987ba26ea591e7d142bdfb733b7db94b95fc0364';
+String _$myStatementHash() => r'a1ef93b449c2d3d82e102145480236b2233be31b';
 
 final class MyStatementFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Statement?>, String> {
@@ -571,7 +571,7 @@ final class MyLedgerProvider
   }
 }
 
-String _$myLedgerHash() => r'39aa8825fdc47bb8a04eda359f85c57a5f15bcc0';
+String _$myLedgerHash() => r'05500e5874ab9bae45308b9a5ef1a88e34474987';
 
 /// #1637 — the signed-in member's own online-payment attempts, newest
 /// first. A session the provider never confirmed is PENDING and a
@@ -715,7 +715,7 @@ final class MemberAccountProvider
   }
 }
 
-String _$memberAccountHash() => r'6648d9551147885df9234afcd7ead96e8b9031f6';
+String _$memberAccountHash() => r'3a312d2c404b590f8d5b221c8d1459f03d94eb96';
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
 ///
@@ -812,7 +812,7 @@ final class MemberStatementProvider
   }
 }
 
-String _$memberStatementHash() => r'c9368c9fa0535c9a3e6da2f83baf2520ab71512f';
+String _$memberStatementHash() => r'b0815f9d0699fe43babb2970566a153a506f1be0';
 
 /// One member's statement for a period ('yyyy-MM').
 
@@ -898,7 +898,7 @@ final class MemberLedgerProvider
   }
 }
 
-String _$memberLedgerHash() => r'7e74db83ecdc24dab5bcdaaa739b186d8fb44be6';
+String _$memberLedgerHash() => r'0a212debdc4c6370a8c5cf1746c699e231a633b0';
 
 /// One member's ledger, newest first — where their PAYMENTS are.
 
@@ -1734,7 +1734,7 @@ final class MyAccountProvider
   }
 }
 
-String _$myAccountHash() => r'fbdff310a8809dd898b6a0193873f380d7b8c361';
+String _$myAccountHash() => r'8a8cce74cf418500e85e999420f5c3c93833696d';
 
 /// #1913 — invoiceId → reason of its active dunning hold.
 
@@ -1826,7 +1826,7 @@ final class InvoiceMatchesProvider
   }
 }
 
-String _$invoiceMatchesHash() => r'3d539ac3cb33fb5c67caa92edc50d1d4d14cbffb';
+String _$invoiceMatchesHash() => r'891a51c499a0be1c86e1c839fcb308faf819beba';
 
 /// invoiceId → reminder count + last instant (0066), for the archive
 /// badges.
@@ -1874,7 +1874,7 @@ final class InvoiceRemindersProvider
   }
 }
 
-String _$invoiceRemindersHash() => r'5528bee535a265ed0f9ba1da6ee36544cc3a428c';
+String _$invoiceRemindersHash() => r'4761da0a243894c3c04d4deacd32647cfedfdef0';
 
 /// Whether this workspace can SEND an e-invoice (0073) — the affordance
 /// only shows when the owner has configured a platform and the function is
