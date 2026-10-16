@@ -5,6 +5,7 @@
 //
 //   dart run tool/code_health.dart lib out.json     per-file and per-function metrics
 //   dart run tool/code_health.dart --baseline       rewrite docs/design/CODE_HEALTH_BASELINE.json
+//                                                   (functions and every per-file budget, #2598)
 //                                                   and docs/design/CODE_HEALTH.md
 //   dart run tool/code_health.dart --hotspots       churn x cognitive complexity
 //   dart run tool/code_health.dart --cycles         feature pairs that import each other
@@ -36,6 +37,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
+import 'code_health_budgets.dart';
 import 'layering/analysis.dart' as layering;
 
 /// The limits a function must stay under (the baseline header repeats them).
@@ -103,6 +105,8 @@ class FileHealth {
     required this.isPart,
     required this.functions,
     required this.errors,
+    this.setStateCalls = 0,
+    this.repositoryReads = 0,
   });
 
   final String path;
@@ -110,6 +114,12 @@ class FileHealth {
   /// Non-blank lines that are not `//` comments.
   final int loc;
   final bool isPart;
+
+  /// `setState(` / `_update(` calls in this file (#2598).
+  final int setStateCalls;
+
+  /// 1 when this presentation file resolves a repository directly (#1234).
+  final int repositoryReads;
   final List<FunctionHealth> functions;
 
   /// Parser diagnostics: any entry makes the whole run fail.
@@ -136,6 +146,8 @@ class FileHealth {
         'p': path,
         'loc': loc,
         'part': isPart,
+        'setState': setStateCalls,
+        'repositoryReads': repositoryReads,
         'fn': functions.length,
         'cog': maxCognitive,
         'cyc': maxCyclomatic,
@@ -384,6 +396,12 @@ FileHealth measureSource(String path, String source) {
     path: path,
     loc: nonBlank,
     isPart: isPart,
+    setStateCalls: setStateCallsOf(source),
+    repositoryReads: layering.featureOf(path) != null &&
+            path.contains('/presentation/') &&
+            layering.repositoryUse.hasMatch(layering.withoutComments(source))
+        ? 1
+        : 0,
     functions: functions,
     errors: errors,
   );
@@ -456,13 +474,15 @@ Map<String, int> totalsOf(List<FileHealth> files) {
 /// functions the ratchet holds (those at or over a limit), one entry per
 /// line and sorted, so two pull requests changing different functions
 /// merge cleanly (#2121).
-String baselineJson(List<FileHealth> files, {String? sha, String? date}) =>
+String baselineJson(List<FileHealth> files,
+        {String? sha, String? date, Budgets? budgets}) =>
     _document(
       [
         '"recordedSha": ${jsonEncode(sha)}',
         '"recordedDate": ${jsonEncode(date)}',
         '"thresholds": ${jsonEncode(thresholdsJson())}',
         '"totals": ${jsonEncode(totalsOf(files))}',
+        (budgets ?? Budgets.empty()).render(),
       ],
       files.map((f) => jsonEncode(f.toJson())),
       [
@@ -819,7 +839,22 @@ int run(List<String> args) {
     final sha = flag('sha', _git(['rev-parse', 'HEAD']) ?? 'unknown');
     final date =
         flag('date', _git(['show', '-s', '--format=%cs', 'HEAD']) ?? 'unknown');
-    final text = baselineJson(files, sha: sha, date: date);
+    final next = nextBudgets(
+      Budgets.load(),
+      measureBudgetActuals(),
+      allowNew: {
+        for (final f in flags)
+          if (f.startsWith('--allow-new=')) f.substring('--allow-new='.length),
+      },
+    );
+    if (next.refusals.isNotEmpty) {
+      stderr
+        ..writeln('refused: a budget is never raised, nothing written')
+        ..writeAll(next.refusals, '\n')
+        ..writeln();
+      return 1;
+    }
+    final text = baselineJson(files, sha: sha, date: date, budgets: next.budgets);
     File(baselinePath)
       ..parent.createSync(recursive: true)
       ..writeAsStringSync(text);
