@@ -41,7 +41,7 @@ final class GuideSessionProvider
   }
 }
 
-String _$guideSessionHash() => r'52282173b2b950cfb294bc607811bf95f9a0b9bb';
+String _$guideSessionHash() => r'f2f54f7696582516b82927696f97d774fc3c2c44';
 
 abstract class _$GuideSession extends $Notifier<GuideSessionState> {
   GuideSessionState build();
