@@ -39,6 +39,8 @@ import '../domain/workspace_repository.dart';
 import '../domain/workspace_template.dart';
 import 'workspace_roles_providers.dart';
 
+export 'operation_context_providers.dart'; // #2561 C1: the contexts
+
 part 'workspace_providers.g.dart';
 
 /// #2495 — the enabled features' keys for core/help and core/privacy; the

@@ -12,7 +12,9 @@ import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
-  SupabaseReservationRepository(this._client, this._cache);
+  SupabaseReservationRepository(SupabaseClient client, CacheStore cache)
+      : _client = client,
+        _cache = cache;
 
   final SupabaseClient _client;
 

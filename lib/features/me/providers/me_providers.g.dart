@@ -9,16 +9,22 @@ part of 'me_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// #1823 — the account layer's calls, this server's and the linked ones'.
+/// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
+/// never to the process-wide client or to a workspace host.
 
 @ProviderFor(meRepository)
 final meRepositoryProvider = MeRepositoryProvider._();
 
 /// #1823 — the account layer's calls, this server's and the linked ones'.
+/// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
+/// never to the process-wide client or to a workspace host.
 
 final class MeRepositoryProvider
     extends $FunctionalProvider<MeRepository, MeRepository, MeRepository>
     with $Provider<MeRepository> {
   /// #1823 — the account layer's calls, this server's and the linked ones'.
+  /// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
+  /// never to the process-wide client or to a workspace host.
   MeRepositoryProvider._()
     : super(
         from: null,
@@ -52,7 +58,7 @@ final class MeRepositoryProvider
   }
 }
 
-String _$meRepositoryHash() => r'4b004994d652d462af3b8d8c0c465078e6b54cb6';
+String _$meRepositoryHash() => r'40180374d4181d8ccc4ae12f299790dc927e6fc4';
 
 @ProviderFor(meActions)
 final meActionsProvider = MeActionsProvider._();

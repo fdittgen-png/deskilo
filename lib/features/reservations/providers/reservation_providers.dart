@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/instance/schema_compatibility.dart';
@@ -17,7 +18,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';
 import '../application/save_calendar_file.dart';
-import '../data/supabase_reservation_repository.dart';
+import '../data/context_reservation_repository.dart';
 import '../domain/booking_intent.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
@@ -26,9 +27,13 @@ part 'reservation_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 ReservationRepository reservationRepository(Ref ref) =>
-    SupabaseReservationRepository(
-      Supabase.instance.client,
+    ContextReservationRepository(
+      ref.watch(contextClientsProvider).legacyActive,
       ref.watch(cacheStoreProvider),
+      // #2561 C1 — the window read runs on the workspace context and its
+      // verified host's client; the other methods migrate with #2564.
+      context: () => ref.read(workspaceContextProvider.future),
+      clientFor: (id) => ref.read(workspaceClientProvider(id)),
     );
 
 /// #1855 — where a booking intent is valid: this account on this server.
