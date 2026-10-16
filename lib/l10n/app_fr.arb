@@ -10594,9 +10594,55 @@
   "reserveBookingFailed": "Réservation impossible — la place vient peut-être d'être prise.",
   "reserveClosedShort": "Fermé",
   "reserveDayView": "Jour",
+  "reserveEvMarker": "Recharge de véhicule électrique",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  },
   "reserveFullDayChip": "Journée entière",
+  "reserveMeetingRoom": "Salle de réunion",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
   "reserveMonthView": "Mois",
+  "reserveParkingAccessible": "Place de parking · accessible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveParkingEv": "Place de parking · électrique (borne incluse)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingStandard": "Place de parking",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
   "reservePickDateTooltip": "Choisir une date",
+  "reserveRoomFor": "Salle de réunion · {count} personnes",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Réservée à la journée",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveSlotHour": "Réservée à l'heure",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Réservée par créneaux de {minutes} minutes",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "reserveStaleAvailability": "Hors ligne — disponibilités au {time}. Une place affichée libre a pu être prise depuis.",
   "reserveStaleRetry": "Réessayer",
   "reserveViewMenu": "Vue",

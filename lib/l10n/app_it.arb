@@ -10594,9 +10594,55 @@
   "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato.",
   "reserveClosedShort": "Chiuso",
   "reserveDayView": "Giorno",
+  "reserveEvMarker": "Ricarica di veicoli elettrici",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  },
   "reserveFullDayChip": "Giornata intera",
+  "reserveMeetingRoom": "Sala riunioni",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
   "reserveMonthView": "Mese",
+  "reserveParkingAccessible": "Posto auto · accessibile",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveParkingEv": "Posto auto · elettrico (colonnina inclusa)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingStandard": "Posto auto",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
   "reservePickDateTooltip": "Scegli una data",
+  "reserveRoomFor": "Sala riunioni · {count} persone",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Prenotabile a giornate",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveSlotHour": "Prenotabile a ore",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Prenotabile a fasce di {minutes} minuti",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "reserveStaleAvailability": "Offline — disponibilità delle {time}. Un posto mostrato libero potrebbe essere stato preso nel frattempo.",
   "reserveStaleRetry": "Riprova",
   "reserveViewMenu": "Vista",

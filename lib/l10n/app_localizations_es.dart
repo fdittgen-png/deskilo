@@ -15962,13 +15962,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reserveDayView => 'Día';
 
   @override
+  String get reserveEvMarker => 'Carga de vehículos eléctricos';
+
+  @override
   String get reserveFullDayChip => 'Día completo';
+
+  @override
+  String get reserveMeetingRoom => 'Sala de reuniones';
 
   @override
   String get reserveMonthView => 'Mes';
 
   @override
+  String get reserveParkingAccessible => 'Plaza de aparcamiento · accesible';
+
+  @override
+  String get reserveParkingEv =>
+      'Plaza de aparcamiento · eléctrica (con punto de carga)';
+
+  @override
+  String get reserveParkingStandard => 'Plaza de aparcamiento';
+
+  @override
   String get reservePickDateTooltip => 'Elegir una fecha';
+
+  @override
+  String reserveRoomFor(int count) {
+    return 'Sala de reuniones · $count personas';
+  }
+
+  @override
+  String get reserveSlotDay => 'Reserva por días';
+
+  @override
+  String get reserveSlotHour => 'Reserva por horas';
+
+  @override
+  String reserveSlotMinutes(int minutes) {
+    return 'Reserva en franjas de $minutes minutos';
+  }
 
   @override
   String reserveStaleAvailability(String time) {

@@ -33,16 +33,15 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/book_seat.dart';
 import '../application/booking_recovery.dart';
 import '../domain/booking_error_text.dart';
-import '../domain/default_booking_period.dart';
 import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
-import '../domain/walk_up_window.dart';
 import '../providers/default_period_controller.dart';
 import '../providers/reservation_providers.dart';
 import 'booking_feedback.dart';
 import 'booking_gate_scope.dart';
 import 'booking_trace_points.dart';
+import 'screens/reserve_window_rules.dart';
 import 'widgets/booking_recovery_sheet.dart';
 import 'widgets/booking_sheet.dart';
 import 'widgets/message_reserver.dart';
@@ -439,12 +438,20 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     bool offerWalkUp = false,
   }) async {
     final liveWindow = !walkUp && windowIsNow;
+    // #2631 — a resource with its own slot is booked under that slot.
+    final rules = ReserveWindowRules(granularity);
+    final effective = BookingGranularity.forSlot(seat.slotMinutes, granularity);
+    final ownSlot = effective != granularity;
+    final booked = rules.resourceWindow(seat.slotMinutes,
+        asked: window,
+        now: ref.read(clockProvider).now(),
+        day: workDayWindow(window.start, hours: bookingGateOf(ref)?.hours));
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     // Defense in depth (#161): the tap handler never routes blocked seats
     // here, but a stale plan could — the RPCs reject them anyway.
-    if (seat.isBlockedAt(window.start)) {
+    if (seat.isBlockedAt(booked.start)) {
       AppSnack.info(
         context,
         l10n.planSeatBlocked,
@@ -453,7 +460,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
-    final dayBased = granularity.isDayBased;
+    final dayBased = effective.isDayBased;
     // #814 — the gate BEFORE the sheet: a Day-row or Week-cell tap on a
     // closed day, a window in the past, beyond the horizon or outside
     // the hours under 'off' used to open a full sheet and fail at the
@@ -461,8 +468,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     final gate = bookingGateOf(ref);
     if (gate != null) {
       final refusal = gate.refusalFor(
-        start: window.start,
-        end: window.end,
+        start: booked.start,
+        end: booked.end,
         walkUp: walkUp,
         seat: seat,
       );
@@ -470,8 +477,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // action is allowed; it shows the refusal of the chosen one.
       final walkUpAllowed = offerWalkUp &&
           gate.refusalFor(
-                start: window.start,
-                end: window.end,
+                start: booked.start,
+                end: booked.end,
                 walkUp: true,
                 seat: seat,
               ) ==
@@ -484,7 +491,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             l10n,
             refusal,
             policies: gate.policies,
-            stepMinutes: granularity.stepMinutes,
+            stepMinutes: effective.stepMinutes,
           ),
           replace: true,
         );
@@ -503,7 +510,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             plan: seatPlan,
             seat: seat,
             reservations: reservations,
-            at: window.start,
+            at: booked.start,
           );
     // #687 — a WALK-UP ends where the current stint ends, not where the
     // browsed window does. Ported with the Plan tab's job: under
@@ -515,21 +522,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     // Without this, walking up in a half-day workspace booked the
     // member's default period from NOW — a morning that started at 11:00
     // and ran to midnight.
-    final walkUpEnd = switch (granularity) {
-            BookingGranularity.halfDay => (ref
-                            .read(defaultPeriodProvider)
-                            .value ==
-                        DefaultBookingPeriod.fullDay &&
-                    HalfDayWindows.fullDay(window.start).end
-                        .isAfter(window.start))
-                ? HalfDayWindows.fullDay(window.start).end
-                : HalfDayWindows.windowForNow(window.start).end,
-            BookingGranularity.fullDay ||
-            BookingGranularity.hours =>
-              walkUpWindow(granularity, window.start).end,
-            _ => defaultEndFor(window.start),
-          };
-    var end = walkUp ? walkUpEnd : window.end;
+    final walkUpEnd = rules.walkUpEnd(booked,
+        period: ref.read(defaultPeriodProvider).value,
+        ownSlot: ownSlot);
+    var end = walkUp ? walkUpEnd : booked.end;
     var capped = false;
     if (next != null && next.startsAt.isBefore(end)) {
       end = next.startsAt;
@@ -539,7 +535,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     final walkUpCapped = nextStart != null && nextStart.isBefore(walkUpEnd);
     final WalkUpOption? walkUpOption = offerWalkUp
         ? (
-            start: window.start,
+            start: booked.start,
             end: walkUpCapped ? nextStart : walkUpEnd,
             cap: nextStart,
             capped: walkUpCapped,
@@ -556,11 +552,11 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         resourceContext: [workspace.name,
           ?ref.read(levelsProvider).value?.where((l) => l.id == seatPlan?.levelId).firstOrNull?.name,
           ?seatPlan?.desks.where((d) => d.id == seat.deskId).firstOrNull?.name],
-        start: window.start,
+        start: booked.start,
         initialEnd: end,
         cap: next?.startsAt,
         capped: capped,
-        granularity: granularity,
+        granularity: effective,
         walkUp: walkUp,
         walkUpOption: walkUpOption,
         liveWindow: liveWindow,
@@ -605,7 +601,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
                   l10n,
                   refusal,
                   policies: gate.policies,
-                  stepMinutes: granularity.stepMinutes,
+                  stepMinutes: effective.stepMinutes,
                 ),
         // #1865 — which field was committed, for the task recorder.
         onFieldCommitted: (field) => recordTaskStep(

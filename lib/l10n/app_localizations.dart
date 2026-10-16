@@ -27368,11 +27368,23 @@ abstract class AppLocalizations {
   /// **'Day'**
   String get reserveDayView;
 
+  /// #2631 resource_reserve: reserveEvMarker
+  ///
+  /// In en, this message translates to:
+  /// **'Electric vehicle charging'**
+  String get reserveEvMarker;
+
   /// Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)
   ///
   /// In en, this message translates to:
   /// **'Full day'**
   String get reserveFullDayChip;
+
+  /// #2631 resource_reserve: reserveMeetingRoom
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room'**
+  String get reserveMeetingRoom;
 
   /// Reserve hub view segment: month availability calendar (#7)
   ///
@@ -27380,11 +27392,53 @@ abstract class AppLocalizations {
   /// **'Month'**
   String get reserveMonthView;
 
+  /// #2631 resource_reserve: reserveParkingAccessible
+  ///
+  /// In en, this message translates to:
+  /// **'Parking slot · accessible'**
+  String get reserveParkingAccessible;
+
+  /// #2631 resource_reserve: reserveParkingEv
+  ///
+  /// In en, this message translates to:
+  /// **'Parking slot · electric (charger included)'**
+  String get reserveParkingEv;
+
+  /// #2631 resource_reserve: reserveParkingStandard
+  ///
+  /// In en, this message translates to:
+  /// **'Parking slot'**
+  String get reserveParkingStandard;
+
   /// Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)
   ///
   /// In en, this message translates to:
   /// **'Choose a date'**
   String get reservePickDateTooltip;
+
+  /// #2631 resource_reserve: reserveRoomFor
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room · {count} people'**
+  String reserveRoomFor(int count);
+
+  /// #2631 resource_reserve: reserveSlotDay
+  ///
+  /// In en, this message translates to:
+  /// **'Booked by the day'**
+  String get reserveSlotDay;
+
+  /// #2631 resource_reserve: reserveSlotHour
+  ///
+  /// In en, this message translates to:
+  /// **'Booked by the hour'**
+  String get reserveSlotHour;
+
+  /// #2631 resource_reserve: reserveSlotMinutes
+  ///
+  /// In en, this message translates to:
+  /// **'Booked in {minutes}-minute slots'**
+  String reserveSlotMinutes(int minutes);
 
   /// Reserve hub banner while availability comes from the offline cache; time is when it was saved (#1305)
   ///

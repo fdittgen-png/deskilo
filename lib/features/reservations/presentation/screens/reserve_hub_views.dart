@@ -330,6 +330,14 @@ class ReserveDayView extends ConsumerWidget {
         active,
         host.bookingWindow,
       ),
+      // #2631 — a room is booked at the hour that was tapped.
+      onFreeSeatTapAt: (seat, at) => host.bookingSheet(
+        seat,
+        active,
+        seat.slotMinutes == null
+            ? host.bookingWindow
+            : (start: at, end: at.add(const Duration(minutes: 1))),
+      ),
     );
   }
 }

@@ -22,6 +22,7 @@ import '../../../../core/time/workspace_time.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/default_booking_period.dart';
+import '../../domain/walk_up_window.dart';
 import 'reserve_hub_metrics.dart';
 
 
@@ -101,6 +102,74 @@ class ReserveWindowRules {
       snapped.minute,
     );
     return (start: from, end: defaultEndFor(from));
+  }
+
+  /// #2631 — the window a resource with its own slot ([slotMinutes],
+  /// `seats.slot_minutes`) is booked in, given the window [asked] for under
+  /// the workspace's granularity. The workspace's own value (null or a slot
+  /// that resolves to it) changes nothing.
+  ///
+  /// A full-day slot is the whole day. A minute grid snaps the start onto its
+  /// grid and lasts at least one slot; where the workspace books by half-day
+  /// the asked window is a midnight half, so the booking starts at the
+  /// opening of [day] (or at the next slot when it is today) instead.
+  HalfDayWindow resourceWindow(
+    int? slotMinutes, {
+    required HalfDayWindow asked,
+    required DateTime now,
+    required HalfDayWindow day,
+  }) {
+    final own = BookingGranularity.forSlot(slotMinutes, granularity);
+    if (own == granularity) return asked;
+    if (own == BookingGranularity.fullDay) {
+      return HalfDayWindows.fullDay(asked.start);
+    }
+    final step = Duration(minutes: own.stepMinutes ?? 60);
+    final grid = ReserveWindowRules(own);
+    if (granularity.isDayBased && _isCanonical(asked)) {
+      final today = WorkspaceTime.dateOf(now) == WorkspaceTime.dateOf(day.start);
+      var from = grid.snapToSlot(today && now.isAfter(day.start) ? now : day.start);
+      if (from.isBefore(day.start) || (today && from.isBefore(now))) {
+        from = from.add(step);
+      }
+      return (start: from, end: from.add(step));
+    }
+    final from = grid.snapToSlot(asked.start);
+    final slots = (asked.end.difference(from).inMinutes / step.inMinutes).ceil();
+    return (start: from, end: from.add(step * (slots < 1 ? 1 : slots)));
+  }
+
+  /// The morning, the afternoon or the full day of the asked window's day.
+  static bool _isCanonical(HalfDayWindow w) => [
+        HalfDayWindows.morning,
+        HalfDayWindows.afternoon,
+        HalfDayWindows.fullDay,
+      ].any((build) {
+        final c = build(w.start);
+        return c.start == w.start && c.end == w.end;
+      });
+
+  /// A walk-up's end (#687): the current stint under half-day granularity
+  /// (the whole day for a member whose default period is the day, #586), the
+  /// working day under the full-day and hourly grids, the default stay on a
+  /// minute grid — and the slot itself for a resource with its own.
+  DateTime walkUpEnd(
+    HalfDayWindow window, {
+    required DefaultBookingPeriod? period,
+    required bool ownSlot,
+  }) {
+    if (ownSlot) return window.end;
+    final fullDay = HalfDayWindows.fullDay(window.start).end;
+    return switch (granularity) {
+      BookingGranularity.halfDay =>
+        period == DefaultBookingPeriod.fullDay && fullDay.isAfter(window.start)
+            ? fullDay
+            : HalfDayWindows.windowForNow(window.start).end,
+      BookingGranularity.fullDay ||
+      BookingGranularity.hours =>
+        walkUpWindow(granularity, window.start).end,
+      _ => defaultEndFor(window.start),
+    };
   }
 
   /// A hand-picked [window] on [fromDay], re-mapped onto [toDay]: the

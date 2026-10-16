@@ -10594,9 +10594,55 @@
   "reserveBookingFailed": "No se pudo reservar — puede que el asiento se acabe de ocupar.",
   "reserveClosedShort": "Cerrado",
   "reserveDayView": "Día",
+  "reserveEvMarker": "Carga de vehículos eléctricos",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  },
   "reserveFullDayChip": "Día completo",
+  "reserveMeetingRoom": "Sala de reuniones",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
   "reserveMonthView": "Mes",
+  "reserveParkingAccessible": "Plaza de aparcamiento · accesible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveParkingEv": "Plaza de aparcamiento · eléctrica (con punto de carga)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingStandard": "Plaza de aparcamiento",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
   "reservePickDateTooltip": "Elegir una fecha",
+  "reserveRoomFor": "Sala de reuniones · {count} personas",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Reserva por días",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveSlotHour": "Reserva por horas",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Reserva en franjas de {minutes} minutos",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "reserveStaleAvailability": "Sin conexión — disponibilidad de las {time}. Un puesto que aparece libre puede haberse ocupado desde entonces.",
   "reserveStaleRetry": "Reintentar",
   "reserveViewMenu": "Vista",

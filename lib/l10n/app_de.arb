@@ -10594,9 +10594,55 @@
   "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt.",
   "reserveClosedShort": "Geschl.",
   "reserveDayView": "Tag",
+  "reserveEvMarker": "Laden von Elektrofahrzeugen",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  },
   "reserveFullDayChip": "Ganzer Tag",
+  "reserveMeetingRoom": "Besprechungsraum",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
   "reserveMonthView": "Monat",
+  "reserveParkingAccessible": "Stellplatz · barrierefrei",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveParkingEv": "Stellplatz · elektrisch (mit Ladestation)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingStandard": "Stellplatz",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
   "reservePickDateTooltip": "Datum wählen",
+  "reserveRoomFor": "Besprechungsraum · {count} Personen",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Tageweise buchbar",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveSlotHour": "Stundenweise buchbar",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Buchbar in {minutes}-Minuten-Slots",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "reserveStaleAvailability": "Offline — Verfügbarkeit von {time}. Ein frei angezeigter Platz kann inzwischen belegt sein.",
   "reserveStaleRetry": "Erneut versuchen",
   "reserveViewMenu": "Ansicht",
