@@ -16,12 +16,16 @@
 // and a command step that was waiting is asked again, never assumed
 // (guide_runner.dart). Nothing here enters a value or starts a command.
 
+import 'package:deskilo_task_recording/deskilo_task_recording.dart'
+    show ReplayCoordinator, ReplayRefusal, ReplayRequest, ReplayTicket;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/help/help_arbiter.dart';
 import '../application/recorder_controller.dart' show RecorderScope;
+import '../domain/action_registry.dart';
 import '../providers/recorder_providers.dart';
 import 'guide_destination.dart';
+import 'guide_replay.dart';
 import 'guide_runner.dart';
 import 'task_guide.dart';
 
@@ -48,10 +52,20 @@ enum GuidePauseReason {
 }
 
 class GuideSessionState {
-  const GuideSessionState({this.run, this.pauseReason, this.revision = 0});
+  const GuideSessionState({
+    this.run,
+    this.pauseReason,
+    this.revision = 0,
+    this.refusal,
+  });
 
   final GuideRun? run;
   final GuidePauseReason? pauseReason;
+
+  /// Why the last command attempt was not counted: the host's current
+  /// authority said no (role, workspace, feature). The command itself still
+  /// answers for itself; the step simply stays where it is.
+  final ReplayRefusal? refusal;
 
   /// Bumps on every change: the run itself is mutable.
   final int revision;
@@ -67,9 +81,15 @@ class GuideSessionState {
 @Riverpod(keepAlive: true)
 class GuideSession extends _$GuideSession implements GuideEventSink {
   RecorderScope? _startScope;
+  late ReplayCoordinator _replay;
+  final Map<Object, ReplayTicket> _tickets = {};
 
   @override
   GuideSessionState build() {
+    _replay = ReplayCoordinator(
+      registry: recorderRegistry,
+      authorizer: DeskiloReplayAuthorizer(() => ref.read(guideReplayFactsProvider)),
+    );
     ref
       ..listen(recorderScopeProvider, (_, next) {
         if (next != _startScope) _pause(GuidePauseReason.scopeChanged);
@@ -102,13 +122,44 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
   @override
   Object? action(String actionId, {String? target}) {
     Object? token;
-    _change((run) => token = run.onAction(actionId, target: target));
+    ReplayRefusal? refusal;
+    _change((run) {
+      ReplayTicket? ticket;
+      if (run.wouldAttemptCommand(actionId, target: target)) {
+        // A guide step is not a permission: ask again, now, in the scope
+        // the person is in at this moment.
+        final now = _replay.authorizer.currentScope();
+        final started = now == null
+            ? null
+            : _replay.begin(
+                ReplayRequest(action: actionId, target: target),
+                startedIn: now,
+              );
+        ticket = started?.ticket;
+        if (ticket == null) {
+          refusal = started?.reason ?? ReplayRefusal.noScope;
+          return;
+        }
+      }
+      token = run.onAction(actionId, target: target);
+      if (token != null && ticket != null) _tickets[token!] = ticket;
+    }, refusal: () => refusal);
     return token;
   }
 
   @override
   void outcome(String outcomeId, {required Object? token}) =>
-      _change((run) => run.onOutcome(outcomeId, token: token));
+      _change((run) {
+        final ticket = token == null ? null : _tickets.remove(token);
+        if (ticket != null && !_replay.stillCurrent(ticket)) {
+          // Asked in one scope, answered in another: the answer belongs to
+          // the first and completes nothing in the second. The step asks
+          // again, never assumed.
+          run.abandonAttempt();
+          return;
+        }
+        run.onOutcome(outcomeId, token: token);
+      });
 
   // ── what the person chose ─────────────────────────────────────────────
 
@@ -155,19 +206,27 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
     _set(run, pauseReason: reason);
   }
 
-  void _change(void Function(GuideRun run) apply) {
+  void _change(
+    void Function(GuideRun run) apply, {
+    ReplayRefusal? Function()? refusal,
+  }) {
     final run = state.run;
     if (run == null) return;
     apply(run);
     if (run.state == GuideRunState.completed) _release();
-    _set(run, pauseReason: state.pauseReason);
+    _set(run, pauseReason: state.pauseReason, refusal: refusal?.call());
   }
 
-  void _set(GuideRun run, {required GuidePauseReason? pauseReason}) {
+  void _set(
+    GuideRun run, {
+    required GuidePauseReason? pauseReason,
+    ReplayRefusal? refusal,
+  }) {
     state = GuideSessionState(
       run: run,
       pauseReason: run.state == GuideRunState.paused ? pauseReason : null,
       revision: state.revision + 1,
+      refusal: refusal,
     );
     _tellArbiter();
   }
@@ -177,6 +236,7 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
       ref.read(helpArbiterProvider.notifier).guide(active: state.run != null);
 
   void _release() {
+    _tickets.clear();
     if (identical(GuideEvents.sink, this)) GuideEvents.sink = null;
   }
 }
