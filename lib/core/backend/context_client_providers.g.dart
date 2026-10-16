@@ -116,7 +116,7 @@ final class WorkspaceClientProvider
   }) : super(
          retry: null,
          name: r'workspaceClientProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -161,7 +161,7 @@ final class WorkspaceClientProvider
   }
 }
 
-String _$workspaceClientHash() => r'62e56615a8bd2abd30173c0567fdce0fcc91fb39';
+String _$workspaceClientHash() => r'cf6fb0ea6ec8f8515bb4a06eb195e71ee7b267db';
 
 /// The client of the verified workspace installation [installationId].
 /// Throws [UnverifiedInstallation] for an id no context has verified.
@@ -174,7 +174,7 @@ final class WorkspaceClientFamily extends $Family
         name: r'workspaceClientProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   /// The client of the verified workspace installation [installationId].

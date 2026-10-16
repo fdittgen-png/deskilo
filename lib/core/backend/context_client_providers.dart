@@ -24,7 +24,7 @@ SupabaseClient personalClient(Ref ref) =>
 
 /// The client of the verified workspace installation [installationId].
 /// Throws [UnverifiedInstallation] for an id no context has verified.
-@riverpod
+@Riverpod(keepAlive: true)
 SupabaseClient workspaceClient(Ref ref, String installationId) =>
     ref.watch(contextClientsProvider).workspace(installationId);
 
