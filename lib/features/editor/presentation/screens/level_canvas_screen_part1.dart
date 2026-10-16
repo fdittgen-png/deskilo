@@ -189,14 +189,28 @@ extension _LevelCanvasScreenStatePart1 on _LevelCanvasScreenState {
             '${plan.offices.length + 1}',
       );
       if (name == null || name.isEmpty) return;
-      await repo.createOffice(
-        workspaceId: workspace.id,
-        levelId: widget.levelId,
-        name: name,
-        color: plan.offices.length,
-        bookableAsWhole: false,
-        rect: rect,
-      );
+      if (!mounted) return;
+      final areaKind = await chooseAreaKind(context, resourceFlagsOf(ref));
+      if (areaKind == null) return;
+      if (areaKind == AreaKind.parking) {
+        await placeParkingArea(
+          ref,
+          workspaceId: workspace.id,
+          levelId: widget.levelId,
+          name: name,
+          color: plan.offices.length,
+          rect: rect,
+        );
+      } else {
+        await repo.createOffice(
+          workspaceId: workspace.id,
+          levelId: widget.levelId,
+          name: name,
+          color: plan.offices.length,
+          bookableAsWhole: false,
+          rect: rect,
+        );
+      }
     } else if (_tool == EditorTool.desk) {
       final office = plan.officeAtCell(rect.x, rect.y)!;
       await repo.createDesk(
@@ -246,15 +260,31 @@ extension _LevelCanvasScreenStatePart1 on _LevelCanvasScreenState {
       showPlacementProblem(context, problem);
       return;
     }
-    await ref.read(floorPlanRepositoryProvider).createSeat(
-          workspaceId: workspace.id,
-          deskId: desk.id,
-          name: '${l10n.editorSeatNameDefault} '
-              '${plan.seatsOf(desk.id).length + 1}',
-          x: anchor.x,
-          y: anchor.y,
-          orientation: orientation,
-        );
+    final placed = await chooseNewResource(context, resourceFlagsOf(ref),
+        plan: plan, desk: desk);
+    if (placed == null) return;
+    final repo = ref.read(floorPlanRepositoryProvider);
+    final name = '${placed.namePrefix} ${plan.seatsOf(desk.id).length + 1}';
+    final resource = placed.resource;
+    if (resource == null) {
+      await repo.createSeat(
+        workspaceId: workspace.id,
+        deskId: desk.id,
+        name: name,
+        x: anchor.x,
+        y: anchor.y,
+        orientation: orientation,
+      );
+    } else {
+      await placeResource(
+        ref,
+        workspaceId: workspace.id,
+        deskId: desk.id,
+        name: name,
+        anchor: anchor,
+        resource: resource,
+      );
+    }
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 

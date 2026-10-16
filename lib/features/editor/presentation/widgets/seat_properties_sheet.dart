@@ -15,15 +15,22 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/seat.dart';
+import '../../../plan/presentation/widgets/resource_fields.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import 'placement_problem.dart';
+export '../../../plan/presentation/widgets/resource_placement.dart'
+    show
+        chooseAreaKind,
+        chooseNewResource,
+        placeParkingArea,
+        placeResource,
+        resourceFlagsOf;
 
 /// One seat's properties (#1216, extracted from the level canvas).
 ///
@@ -31,14 +38,6 @@ import 'placement_problem.dart';
 /// chair, the workspace accessory catalogue, the chair's NFC tag and
 /// the maintenance block — and it has nothing to do with drawing on a
 /// grid, which is what the screen it used to live in is about.
-/// Chip label: accessory name, plus its per-half-day supplement (in the
-/// workspace currency) when one is set.
-String _accessoryLabel(Accessory accessory, MoneyFormat currency) {
-  if (accessory.supplementCents <= 0) return accessory.name;
-  final supplement = currency.formatMinor(accessory.supplementCents);
-  return '${accessory.name} (+$supplement)';
-}
-
 Future<void> showSeatPropertiesSheet(
   BuildContext context,
   WidgetRef ref, {
@@ -52,6 +51,8 @@ Future<void> showSeatPropertiesSheet(
   // catalog (active entries, catalog order), not a hard-coded list.
   final catalog = await ref.read(accessoriesProvider().future);
   final assignments = await ref.read(seatAccessoriesProvider.future);
+  // #2631 — the charger of an EV parking slot.
+  final resource = await loadResourceDraft(ref, seat);
   if (!context.mounted) return;
   final initialAccessories = assignments[seat.id] ?? const <String>{};
   final selectedAccessories = {...initialAccessories};
@@ -71,6 +72,9 @@ Future<void> showSeatPropertiesSheet(
       .contains(WorkspaceFeature.nfcSeatTags);
   final nfcReady = seatTagsOn && await nfcReader.isAvailable();
   if (!context.mounted) return;
+  // #2631 — a plain seat has its own slot only where rooms or parking exist.
+  final slotsOn = ref.read(enabledFeaturesSyncProvider).any((f) =>
+      f == WorkspaceFeature.meetingRooms || f == WorkspaceFeature.parking);
   var orientation = seat.orientation;
   var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
 
@@ -91,7 +95,11 @@ Future<void> showSeatPropertiesSheet(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n.editorSeatProperties,
+                switch (seat.resourceKind) {
+                  ResourceKind.room => l10n.editorRoomProperties,
+                  ResourceKind.parking => l10n.editorParkingSlotProperties,
+                  ResourceKind.seat => l10n.editorSeatProperties,
+                },
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
@@ -145,6 +153,14 @@ Future<void> showSeatPropertiesSheet(
                 ),
               ),
               const SizedBox(height: 12),
+              ResourceFields(
+                seat: seat,
+                draft: resource,
+                showSlot: slotsOn,
+                catalog: catalog,
+                accessoryLabel: (a) => accessoryChoiceLabel(a,
+                    a.supplementCents > 0 ? currency.formatMinor(a.supplementCents) : null),
+              ),
               Text(l10n.editorAccessoriesLabel),
               const SizedBox(height: 4),
               // #1216 — a link, not an instruction. Telling somebody
@@ -173,7 +189,11 @@ Future<void> showSeatPropertiesSheet(
                     for (final accessory in catalog)
                       FilterChip(
                         key: ValueKey('seat-properties-sheet-filter-chip-${accessory.id}'),
-                        label: Text(_accessoryLabel(accessory, currency)),
+                        label: Text(accessoryChoiceLabel(
+                            accessory,
+                            accessory.supplementCents > 0
+                                ? currency.formatMinor(accessory.supplementCents)
+                                : null)),
                         selected:
                             selectedAccessories.contains(accessory.id),
                         onSelected: (selected) => setSheetState(() {
@@ -240,20 +260,74 @@ Future<void> showSeatPropertiesSheet(
     ),
   );
   if (saved != true) return;
+  if (!context.mounted) return;
+  await _persistSeat(
+    ref,
+    context,
+    plan: plan,
+    seat: seat,
+    form: (
+      name: name.text,
+      chair: chair.text,
+      nfc: nfcUid.text,
+      orientation: orientation,
+      blocked: blocked,
+      resource: resource,
+      accessories: selectedAccessories,
+      initialAccessories: initialAccessories,
+    ),
+  );
+}
+
+typedef _SeatForm = ({
+  String name,
+  String chair,
+  String nfc,
+  SeatOrientation orientation,
+  bool blocked,
+  ResourceDraft resource,
+  Set<String> accessories,
+  Set<String> initialAccessories,
+});
+
+/// Writes what the sheet collected (extracted from [showSeatPropertiesSheet],
+/// #2631, which carried both the form and its persistence).
+Future<void> _persistSeat(
+  WidgetRef ref,
+  BuildContext context, {
+  required FloorPlan plan,
+  required Seat seat,
+  required _SeatForm form,
+}) async {
+  final l10n = context.l10n;
+  final resource = form.resource;
+  final levelId = plan.levelId;
+  final selectedAccessories = form.accessories;
+  final initialAccessories = form.initialAccessories;
+  if (resource.wantsCharger && resource.powerKw == null) {
+    if (context.mounted) AppSnack.error(context, l10n.editorChargerInvalid);
+    return;
+  }
 
   // #168: `seat.amenities` is intentionally NOT written anymore — the
   // seat_accessories joins are the write path for seat equipment.
   // #585 — mirror the server normalization: lowercase hex, no
   // separators; empty clears the tag.
-  final tag = nfcUid.text.toLowerCase().replaceAll(
+  final tag = form.nfc.toLowerCase().replaceAll(
         RegExp('[^0-9a-f]'), '');
   final updated = seat.copyWith(
-    name: name.text.trim().isEmpty ? seat.name : name.text.trim(),
-    chair: chair.text.trim(),
-    orientation: orientation,
-    blockedFrom: blocked ? (seat.blockedFrom ?? ref.read(clockProvider).now()) : null,
-    blockedTo: blocked ? seat.blockedTo : null,
+    name: form.name.trim().isEmpty ? seat.name : form.name.trim(),
+    chair: form.chair.trim(),
+    orientation: form.orientation,
+    blockedFrom: form.blocked ? (seat.blockedFrom ?? ref.read(clockProvider).now()) : null,
+    blockedTo: form.blocked ? seat.blockedTo : null,
     nfcUid: tag.isEmpty ? null : tag,
+    // #2631 — the resource's own slot, a room's capacity, a slot's kind.
+    slotMinutes: resource.slotMinutes,
+    capacity: seat.resourceKind == ResourceKind.room
+        ? resource.capacityValue
+        : seat.capacity,
+    parkingKind: resource.parkingKind,
   );
   final problem = validateSeatInPlan(plan, updated);
   if (problem != null) {
@@ -261,7 +335,12 @@ Future<void> showSeatPropertiesSheet(
     return;
   }
   try {
-    await ref.read(floorPlanRepositoryProvider).updateSeat(updated);
+    await saveResourceDraft(
+      ref,
+      seat: seat,
+      draft: resource,
+      updateSeat: () => ref.read(floorPlanRepositoryProvider).updateSeat(updated),
+    );
   } on PostgrestException catch (e, st) {
     // The partial unique index (0114): one tag, one chair.
     if (e.message.contains('seats_nfc_uid_unique')) {

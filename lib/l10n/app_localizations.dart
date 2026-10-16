@@ -7423,6 +7423,24 @@ abstract class AppLocalizations {
   /// **'Amenities'**
   String get editorAmenitiesLabel;
 
+  /// #2631 resource_editor: editorAreaKindTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What kind of area?'**
+  String get editorAreaKindTitle;
+
+  /// #2631 resource_editor: editorAreaParking
+  ///
+  /// In en, this message translates to:
+  /// **'Parking area'**
+  String get editorAreaParking;
+
+  /// #2631 resource_editor: editorAreaWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace area'**
+  String get editorAreaWorkspace;
+
   /// Editor app-bar action opening the level background-image menu (0036)
   ///
   /// In en, this message translates to:
@@ -7476,6 +7494,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chair type'**
   String get editorChairLabel;
+
+  /// #2631 resource_editor: editorChargerConnector
+  ///
+  /// In en, this message translates to:
+  /// **'Connector'**
+  String get editorChargerConnector;
+
+  /// #2631 resource_editor: editorChargerEnabled
+  ///
+  /// In en, this message translates to:
+  /// **'A charger belongs to this slot'**
+  String get editorChargerEnabled;
+
+  /// #2631 resource_editor: editorChargerFee
+  ///
+  /// In en, this message translates to:
+  /// **'Usage fee'**
+  String get editorChargerFee;
+
+  /// #2631 resource_editor: editorChargerFeeNone
+  ///
+  /// In en, this message translates to:
+  /// **'No fee'**
+  String get editorChargerFeeNone;
+
+  /// #2631 resource_editor: editorChargerInService
+  ///
+  /// In en, this message translates to:
+  /// **'In service'**
+  String get editorChargerInService;
+
+  /// #2631 resource_editor: editorChargerInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the power as a number above 0.'**
+  String get editorChargerInvalid;
+
+  /// #2631 resource_editor: editorChargerPower
+  ///
+  /// In en, this message translates to:
+  /// **'Power (kW)'**
+  String get editorChargerPower;
+
+  /// #2631 resource_editor: editorChargerTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Charging station'**
+  String get editorChargerTitle;
+
+  /// #2631 resource_editor: editorConnectorCcs
+  ///
+  /// In en, this message translates to:
+  /// **'CCS'**
+  String get editorConnectorCcs;
+
+  /// #2631 resource_editor: editorConnectorChademo
+  ///
+  /// In en, this message translates to:
+  /// **'CHAdeMO'**
+  String get editorConnectorChademo;
+
+  /// #2631 resource_editor: editorConnectorSchuko
+  ///
+  /// In en, this message translates to:
+  /// **'Household socket'**
+  String get editorConnectorSchuko;
+
+  /// #2631 resource_editor: editorConnectorTesla
+  ///
+  /// In en, this message translates to:
+  /// **'Tesla'**
+  String get editorConnectorTesla;
+
+  /// #2631 resource_editor: editorConnectorType2
+  ///
+  /// In en, this message translates to:
+  /// **'Type 2'**
+  String get editorConnectorType2;
 
   /// Confirmation body for the erase tool
   ///
@@ -7669,6 +7765,48 @@ abstract class AppLocalizations {
   /// **'Sitting direction'**
   String get editorOrientationLabel;
 
+  /// #2631 resource_editor: editorParkingAccessible
+  ///
+  /// In en, this message translates to:
+  /// **'Accessible'**
+  String get editorParkingAccessible;
+
+  /// #2631 resource_editor: editorParkingEv
+  ///
+  /// In en, this message translates to:
+  /// **'Electric (EV)'**
+  String get editorParkingEv;
+
+  /// #2631 resource_editor: editorParkingKindLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Slot type'**
+  String get editorParkingKindLabel;
+
+  /// #2631 resource_editor: editorParkingNameDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Parking'**
+  String get editorParkingNameDefault;
+
+  /// #2631 resource_editor: editorParkingSlotNameDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Slot'**
+  String get editorParkingSlotNameDefault;
+
+  /// #2631 resource_editor: editorParkingSlotProperties
+  ///
+  /// In en, this message translates to:
+  /// **'Parking slot'**
+  String get editorParkingSlotProperties;
+
+  /// #2631 resource_editor: editorParkingStandard
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get editorParkingStandard;
+
   /// Snackbar when a desk/seat is not fully inside its parent
   ///
   /// In en, this message translates to:
@@ -7692,6 +7830,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rename'**
   String get editorRenameLevel;
+
+  /// #2631 resource_editor: editorResourceKindTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What do you place?'**
+  String get editorResourceKindTitle;
+
+  /// #2631 resource_editor: editorResourceRoom
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room'**
+  String get editorResourceRoom;
+
+  /// #2631 resource_editor: editorResourceSeat
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get editorResourceSeat;
+
+  /// #2631 resource_editor: editorRoomCapacityLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity (people)'**
+  String get editorRoomCapacityLabel;
+
+  /// #2631 resource_editor: editorRoomNameDefault
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get editorRoomNameDefault;
+
+  /// #2631 resource_editor: editorRoomProperties
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room'**
+  String get editorRoomProperties;
 
   /// Default seat name prefix; a number is appended
   ///
@@ -7746,6 +7920,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seat'**
   String get editorSeatProperties;
+
+  /// #2631 resource_editor: editorSlot15
+  ///
+  /// In en, this message translates to:
+  /// **'15 minutes'**
+  String get editorSlot15;
+
+  /// #2631 resource_editor: editorSlot30
+  ///
+  /// In en, this message translates to:
+  /// **'30 minutes'**
+  String get editorSlot30;
+
+  /// #2631 resource_editor: editorSlot60
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get editorSlot60;
+
+  /// #2631 resource_editor: editorSlotDay
+  ///
+  /// In en, this message translates to:
+  /// **'Full day'**
+  String get editorSlotDay;
+
+  /// #2631 resource_editor: editorSlotLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Booking slot'**
+  String get editorSlotLabel;
+
+  /// #2631 resource_editor: editorSlotWorkspace
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace default'**
+  String get editorSlotWorkspace;
 
   /// App-bar title of the owner-only workspace editor
   ///
