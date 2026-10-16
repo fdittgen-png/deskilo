@@ -1,0 +1,22 @@
+name: deskilo_document_pdf
+description: Renders a deskilo_document_model layout to A4 PDF pages with host-supplied fonts, images and markup. No application types.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_document_model:
+    path: ../deskilo_document_model
+  pdf: ^3.12.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0
+
+# Standalone resolution picks image 4.11, which needs a newer archive than
+# the app pins (4.0.9). The app's lock holds 4.9.2; mirror it here. Only
+# honoured when this package is the root, so the app is unaffected.
+dependency_overrides:
+  image: 4.9.2

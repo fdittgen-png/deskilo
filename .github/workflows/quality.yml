@@ -121,6 +121,17 @@ jobs:
         run: flutter test
         working-directory: packages/deskilo_push
 
+      # #2592 — the document model and its PDF renderer are pure-Dart
+      # packages with a neutral delivery-note consumer; they resolve and
+      # test without the app.
+      - name: Tests of the document model package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_document_model
+
+      - name: Tests of the document PDF package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_document_pdf
+
       # #2593 — the semantic recorder core is a pure-Dart package with a
       # neutral example host; it resolves and tests without the app.
       - name: Tests of the task recording package

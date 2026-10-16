@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `9ecbc255466ae00d25186322257d7958fae15b6e` on 2026-10-16.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `884b9feb92257b8ed5e388eff2de0d6e5b97d774` on 2026-10-15.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -11,13 +11,13 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | measure | count |
 |---|---|
 | files | 1563 |
-| functions | 8791 |
-| cyclomatic>=9 | 943 |
-| cyclomatic>=25 | 131 |
-| cognitive>=15 | 399 |
-| cognitive>=30 | 119 |
-| length>=150 | 96 |
-| parameters>=5 | 401 |
+| functions | 8745 |
+| cyclomatic>=9 | 932 |
+| cyclomatic>=25 | 129 |
+| cognitive>=15 | 393 |
+| cognitive>=30 | 118 |
+| length>=150 | 95 |
+| parameters>=5 | 399 |
 | parameters>=7 | 143 |
 | partOfFiles | 75 |
 
@@ -48,6 +48,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 65 | 33 | 154 | 1 | `lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build` |
 | 65 | 39 | 207 | 1 | `lib/features/workspace/presentation/widgets/template_gallery.dart#_TemplateGalleryState.build` |
 | 64 | 45 | 229 | 10 | `lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent` |
-| 63 | 25 | 80 | 2 | `lib/features/money/domain/report_layout/layout_xml.dart#_writeElement` |
 | 63 | 37 | 233 | 1 | `lib/features/workspace/presentation/widgets/bi_toolbar.dart#BiToolbar.build` |
+| 61 | 43 | 185 | 2 | `lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView.build` |
 

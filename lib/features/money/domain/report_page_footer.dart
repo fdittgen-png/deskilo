@@ -1,36 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:pdf/widgets.dart' as pw;
-
-import 'report_style.dart';
-
-/// Space for the continuation page number is identical on every sheet.
-/// MultiPage measures this entire band before flowing the body, then
-/// anchors its bottom to the page margin. Extra footer lines grow upward.
-const double _reportPageNumberBandHeight = 18;
-
-pw.Widget reportPageFooter(
-  pw.Context context, {
-  required List<pw.Widget> content,
-  required String pageLabel,
-}) => pw.Column(
-  mainAxisSize: pw.MainAxisSize.min,
-  crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-  children: [
-    ...content,
-    pw.SizedBox(
-      height: _reportPageNumberBandHeight,
-      child: context.pageNumber > 1
-          ? pw.Align(
-              alignment: pw.Alignment.bottomRight,
-              child: pw.Text(
-                '$pageLabel ${context.pageNumber}/${context.pagesCount}',
-                style: const pw.TextStyle(
-                  fontSize: reportSmallSize,
-                  color: reportMuted,
-                ),
-              ),
-            )
-          : null,
-    ),
-  ],
-);
+//
+// #2592 - moved to packages/deskilo_document_pdf; re-exported so import paths hold.
+export 'package:deskilo_document_pdf/report_page_footer.dart';

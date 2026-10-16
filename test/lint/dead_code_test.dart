@@ -69,8 +69,6 @@ const Map<String, String> _allowed = {
   // Contracts the tests are the reader of: a bound, a measured table, a
   // registry's server copy, or a guard run over a registry. They stay
   // beside the data they describe.
-  'lib/features/money/domain/address_window.dart::addressWindowTopLimit':
-      '#869 — the envelope bound the conformance tests assert',
   'lib/features/workspace/domain/holiday_import.dart::holidaySourceCoverage':
       '#2051 — measured coverage, pinned to the country catalogue',
   'lib/features/workspace/domain/kpi_contract.dart::kpiRegistryJson':

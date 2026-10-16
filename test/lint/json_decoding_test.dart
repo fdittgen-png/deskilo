@@ -25,9 +25,10 @@ const _rawReadBudget = 207;
 const _dynamicBudget = 685;
 
 void main() {
-  // #2593 - the recording codec moved into a package; its reads still count.
+  // #2592/#2593 — layout reader and recording codec moved into packages; their reads still count.
   final files = handWrittenDartFilesIn(const [
     'lib',
+    'packages/deskilo_document_model/lib',
     'packages/deskilo_task_recording/lib',
   ]).toList();
 

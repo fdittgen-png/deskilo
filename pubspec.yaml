@@ -55,6 +55,11 @@ dependencies:
   # services. The app never imports Firebase directly.
   deskilo_push:
     path: packages/deskilo_push
+  # #2592 - the document layout model and its PDF renderer (internal).
+  deskilo_document_model:
+    path: packages/deskilo_document_model
+  deskilo_document_pdf:
+    path: packages/deskilo_document_pdf
   # #2593 - the semantic task-recording core (models, codecs, writer
   # contracts); the host supplies the action catalogue.
   deskilo_task_recording:
