@@ -62,6 +62,12 @@ const _reviewed = {
   // mcp_seat_bookable to mcp_place_bookable (the same engine probe for any
   // kind). pgTAP 170 drives both; 129 pins the engine call.
   'mcp_read_v1@0411',
+  // #2631/0442 restates mcp_read_v1 whole from the LIVE dev body
+  // (pg_get_functiondef after 0411): every branch verbatim; the changes are
+  // the two new availability kinds (room, parking) and the seat branch's
+  // kind column read from seats.resource_kind behind resource_kind_enabled.
+  // pgTAP 194 drives room availability; 144/170 drive the seat kinds.
+  'mcp_read_v1@0442',
   // #2137/0361 restates create_invitation from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored patch (environments,
   // handover, prod access) is carried; the one change is that a member

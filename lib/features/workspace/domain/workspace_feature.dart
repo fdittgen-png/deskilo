@@ -399,7 +399,10 @@ enum WorkspaceFeature {
   /// prices, the tax of the site's postal code stated apart, taxability per
   /// kind of line, exemption certificates. Platform, default ON, under
   /// invoicing; OFF refuses such a seller as before.
-  salesTax;
+  salesTax,
+
+  /// #2631 — a meeting room on the plan, booked in its own slot (default OFF).
+  meetingRooms;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -9,6 +9,12 @@ part 'seat.freezed.dart';
 /// Where the sitter faces. Persisted by name — never rename values.
 enum SeatOrientation { n, e, s, w }
 
+/// What a bookable resource of the plan is (#2631). A room and a parking
+/// slot are rows of the same table as a seat, so booking, conflicts and
+/// billing are the ones that exist; the kind is fixed at creation and
+/// persisted by name — never rename values.
+enum ResourceKind { seat, room, parking }
+
 /// The normative seat footprint (product brief): 6 cells along the sitting
 /// edge × 4 cells deep. Pinned by test.
 abstract final class SeatFootprint {
@@ -40,6 +46,10 @@ sealed class Seat with _$Seat implements SystemStamped {
     /// #2631 — this resource's own booking slot in minutes (5, 15, 30, 60
     /// or 1440 for the full day); null = the workspace's granularity.
     int? slotMinutes,
+    /// #2631 — seat (default), meeting room or parking slot.
+    @Default(ResourceKind.seat) ResourceKind resourceKind,
+    /// #2631 — people a meeting room holds; null for everything else.
+    int? capacity,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Seat;

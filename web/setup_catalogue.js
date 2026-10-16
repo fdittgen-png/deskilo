@@ -79,6 +79,7 @@ window.SETUP_PROCESSES=[
      "seriesBooking",
      "bookForOthers",
      "levelBooking",
+     "meetingRooms",
      "adminLevelAssign",
      "bookingPolicies",
      "bookingGate",

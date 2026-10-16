@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "featureMeetingRoomsTitle": "Salas de reuniones",
+  "@featureMeetingRoomsTitle": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsTitle"
+  },
+  "featureMeetingRoomsDesc": "Una sala del plano con su propia capacidad, reservada en su propio tramo (una hora por defecto) junto al tramo de los puestos. Desactivado: sin salas.",
+  "@featureMeetingRoomsDesc": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsDesc"
+  }
+}

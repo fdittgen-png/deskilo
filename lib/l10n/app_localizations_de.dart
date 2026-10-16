@@ -5579,6 +5579,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureMcpAccessTitle => 'MCP-Schnittstelle';
 
   @override
+  String get featureMeetingRoomsDesc =>
+      'Ein Raum im Plan mit eigener Kapazität, gebucht in einem eigenen Zeitfenster (standardmäßig eine Stunde) neben dem Zeitfenster der Plätze. Aus: keine Räume.';
+
+  @override
+  String get featureMeetingRoomsTitle => 'Besprechungsräume';
+
+  @override
   String get featureMemberAccountMenuDesc =>
       'Ein Mitglied, das nichts verwaltet, findet Mein Konto statt Einstellungen — denselben Bildschirm, der ihm ohnehin nur sein Konto, seine Mitgliedschaft und seine Einstellungen zeigt, unter dem Namen, der das sagt. Wer durch seine Rolle etwas verwalten darf, behält Einstellungen und alles, was sich darin öffnet. Dies benennt einen Eintrag um; es gewährt und entzieht nichts.';
 

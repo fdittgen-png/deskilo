@@ -1072,6 +1072,12 @@
       "capabilities": []
     },
     {
+      "key": "meetingRooms",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "memberAccountMenu",
       "maturity": "beta",
       "lifecycle": "active",

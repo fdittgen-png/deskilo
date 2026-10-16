@@ -5574,6 +5574,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMcpAccessTitle => 'Interfaccia MCP';
 
   @override
+  String get featureMeetingRoomsDesc =>
+      'Una sala della pianta con la propria capienza, prenotata in una fascia propria (un\'ora per impostazione predefinita) accanto alla fascia dei posti. Disattivato: nessuna sala.';
+
+  @override
+  String get featureMeetingRoomsTitle => 'Sale riunioni';
+
+  @override
   String get featureMemberAccountMenuDesc =>
       'Un membro che non amministra nulla incontra Il mio account invece di Impostazioni — la stessa schermata, che già gli mostra solo il suo account, la sua adesione e le sue preferenze, con il nome che lo dice. Chi ha un ruolo che concede amministrazione conserva Impostazioni e tutto ciò che apre. Questo rinomina una voce; non concede e non toglie nulla.';
 

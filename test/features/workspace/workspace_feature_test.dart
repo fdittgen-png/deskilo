@@ -29,6 +29,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // after; a space that starts with it on would show its own members
   // names none of them recognise.
   WorkspaceFeature.recordingPrivacy,
+  // #2631 — a meeting room is added to the plan on purpose.
+  WorkspaceFeature.meetingRooms,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -175,6 +177,7 @@ void main() {
       'capacityKpi': true,
       'accountingBook': true,
       'taskRecorder': true,
+      'meetingRooms': true,
       'guestParticipation': true,
     });
 

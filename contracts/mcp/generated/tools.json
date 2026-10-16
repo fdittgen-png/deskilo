@@ -149,7 +149,7 @@
     {
       "name": "deskilo_get_availability",
       "title": "Find free places",
-      "description": "Which places can be booked for a time window in a workspace: seats, and desks, offices and levels that are booked as a whole, each with its kind and a label naming its level, office, desk and seat (e.g. \"Level 2 · Open space · Desk 4 · Seat B\") and its level_id/office_id, so a follow-up can filter by level_id, office_id or kind. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks, whole-place permission and existing bookings), so a free place's own id (seat_id for a seat, desk_id for a desk, office_id for an office, level_id for a level) can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
+      "description": "Which places can be booked for a time window in a workspace: seats, meeting rooms and parking slots (each booked in its own slot, e.g. an hour for a room), and desks, offices and levels that are booked as a whole, each with its kind and a label naming its level, office, desk and seat (e.g. \"Level 2 · Open space · Desk 4 · Seat B\") and its level_id/office_id, so a follow-up can filter by level_id, office_id or kind. \"free\" is the booking engine's own verdict for this person (opening hours, booking granularity, limits, blocks, whole-place permission and existing bookings), so a free place's own id (seat_id for a seat, desk_id for a desk, office_id for an office, level_id for a level) can be passed to deskilo_create_reservation. Paged: pass next_cursor to see more.",
       "inputSchema": {
         "type": "object",
         "additionalProperties": false,
@@ -196,9 +196,11 @@
               "seat",
               "desk",
               "office",
-              "level"
+              "level",
+              "room",
+              "parking"
             ],
-            "description": "Optional: only places of this kind (seat, or a desk, office or level booked as a whole).",
+            "description": "Optional: only places of this kind (seat, a meeting room, a parking slot, or a desk, office or level booked as a whole). Rooms and parking slots are listed only while the workspace has them switched on.",
             "examples": [
               "desk"
             ]
