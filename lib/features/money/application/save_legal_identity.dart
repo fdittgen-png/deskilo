@@ -24,7 +24,7 @@
 import '../../workspace/domain/workspace_repository.dart';
 import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
-import '../domain/money_repository.dart';
+import '../domain/report_template_repository.dart';
 
 /// Everything one Save of the legal identity carries.
 ///
@@ -50,9 +50,9 @@ typedef LegalIdentityRequest = ({
 
 /// The legal identity of the workspace, as one decision.
 class LegalIdentity {
-  const LegalIdentity(this._money, this._workspace);
+  const LegalIdentity(this._templates, this._workspace);
 
-  final MoneyRepository _money;
+  final ReportTemplateRepository _templates;
   final WorkspaceRepository _workspace;
 
   /// Writes the template, then the identity and its mentions.
@@ -68,7 +68,7 @@ class LegalIdentity {
     LegalIdentityRequest request, {
     required InvoicePdfTemplate currentTemplate,
   }) async {
-    await _money.setInvoicePdfTemplate(
+    await _templates.setInvoicePdfTemplate(
       request.workspaceId,
       currentTemplate.copyWith(addressWindow: request.addressWindow),
     );

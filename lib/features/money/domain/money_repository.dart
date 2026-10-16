@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:typed_data';
-
 import '../../../core/vat/supply_class.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
@@ -8,7 +6,6 @@ import 'einvoice_gateway.dart';
 import 'expense_repartition.dart';
 import 'expense_schedule.dart';
 import 'fee_band.dart';
-import 'invoice_pdf_template.dart';
 import 'invoice_queries.dart';
 import 'member_account_queries.dart';
 import 'number_sequence.dart';
@@ -17,6 +14,7 @@ import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
 import 'price_negotiation.dart';
+import 'report_template_repository.dart';
 import 'service_item.dart';
 import 'subscription_levels.dart';
 import 'vat_declaration.dart';
@@ -26,7 +24,7 @@ import 'workspace_status.dart';
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
 /// before a ledger credit exists.
-abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries {
+abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, ReportTemplateRepository {
   /// The workspace's VAT declarations (0107), newest period first.
   Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
 
@@ -47,33 +45,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries {
     required String channel,
     required String receipt,
   });
-
-  /// The workspace's invoice-PDF template (#454, 0088); empty when the
-  /// column holds no keys.
-  Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId);
-
-  /// Owner-only (workspaces_update RLS): replace the invoice-PDF
-  /// template wholesale.
-  Future<void> setInvoicePdfTemplate(
-    String workspaceId,
-    InvoicePdfTemplate template,
-  );
-
-  /// The workspace's report-image library (#488): file names stored
-  /// under `<workspace>/report/` in the floor-plans bucket — the logo,
-  /// stamps, signature scans the templates reference with `![name]`.
-  Future<List<String>> listReportImages(String workspaceId);
-
-  /// Owner-only (bucket RLS): add or replace a library image.
-  Future<void> uploadReportImage(
-    String workspaceId, {
-    required String name,
-    required List<int> bytes,
-    required String contentType,
-  });
-
-  /// Image bytes; null ONLY if absent, else a failed read throws (#2586).
-  Future<Uint8List?> fetchReportImage(String workspaceId, String name);
 
   /// Settles a NEGATIVE invoice — a credit note the WORKSPACE pays
   /// (#508, 0102): books the payout charge and closes the avoir with

@@ -101,7 +101,7 @@ Expenses expenses(Ref ref) => Expenses(ref.watch(moneyRepositoryProvider));
 
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
-      ref.watch(moneyRepositoryProvider),
+      ref.watch(reportTemplateRepositoryProvider),
       ref.watch(workspaceRepositoryProvider),
     );
 
@@ -303,7 +303,7 @@ Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return InvoicePdfTemplate.empty;
   return ref
-      .watch(moneyRepositoryProvider)
+      .watch(reportTemplateRepositoryProvider)
       .fetchInvoicePdfTemplate(workspace.id);
 }
 
@@ -313,7 +313,7 @@ Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
 Future<List<String>> reportImages(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.read(moneyRepositoryProvider).listReportImages(workspace.id);
+  return ref.read(reportTemplateRepositoryProvider).listReportImages(workspace.id);
 }
 
 /// One library image's bytes, cached per name (#488).
@@ -321,7 +321,7 @@ Future<List<String>> reportImages(Ref ref) async {
 Future<Uint8List?> reportImageBytes(Ref ref, String name) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return null;
-  return ref.read(moneyRepositoryProvider).fetchReportImage(
+  return ref.read(reportTemplateRepositoryProvider).fetchReportImage(
         workspace.id,
         name,
       );
