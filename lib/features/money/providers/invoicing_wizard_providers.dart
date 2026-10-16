@@ -19,7 +19,7 @@ Future<Map<String, ({List<InvoiceLine> lines, int totalCents})>>
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
   final members = await ref.watch(workspaceMembersProvider.future);
-  final repo = ref.read(moneyRepositoryProvider);
+  final repo = ref.read(invoiceQueriesProvider);
   final out = <String, ({List<InvoiceLine> lines, int totalCents})>{};
   await Future.wait([
     for (final m in members)

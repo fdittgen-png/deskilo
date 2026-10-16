@@ -38,7 +38,7 @@ Future<List<UsageRecord>> usageRecords(Ref ref, String period) async {
   return traced(
     'money',
     'usage records',
-    () => ref.read(moneyRepositoryProvider).fetchUsageRecords(
+    () => ref.read(memberAccountQueriesProvider).fetchUsageRecords(
           workspaceId: workspace.id,
           period: period,
           memberId: memberId,

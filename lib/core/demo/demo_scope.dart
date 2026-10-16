@@ -180,6 +180,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
+      invoiceQueriesProvider.overrideWithValue(fixture.money), // #2591
+      memberAccountQueriesProvider.overrideWithValue(fixture.money), // #2591
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       eInvoiceInboxRepositoryProvider

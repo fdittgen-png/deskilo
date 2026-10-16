@@ -8,7 +8,6 @@ import '../../../core/data/json_reader.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/time/date_text.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../../../core/vat/supply_class.dart';
 import '../domain/billing_rules.dart';
@@ -19,8 +18,10 @@ import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
+import '../domain/member_account_queries.dart';
 import '../domain/money_repository.dart';
 import '../domain/number_sequence.dart';
 import '../domain/package.dart';
@@ -37,9 +38,9 @@ import '../domain/vat_declaration.dart';
 import '../domain/vat_rate.dart';
 import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
-import 'invoice_preview_decoder.dart';
-import 'invoice_reminder_fold.dart';
 import 'report_image_read.dart';
+import 'supabase_invoice_queries.dart';
+import 'supabase_member_account_queries.dart';
 
 part 'supabase_money_repository_part1.dart';
 part 'supabase_money_repository_part2.dart';
@@ -48,43 +49,36 @@ part 'supabase_money_repository_part4.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
 
+  /// The invoice and account reads are their own objects (#2591 C1); this
+  /// class keeps delegating to them until the remaining groups move.
+  SupabaseMoneyRepository(
+    this._client, {
+    InvoiceQueries? invoices,
+    MemberAccountQueries? accounts,
+  })  : _invoices = invoices ?? SupabaseInvoiceQueries(_client),
+        _accounts = accounts ?? SupabaseMemberAccountQueries(_client);
+
+  final SupabaseClient _client;
+  final InvoiceQueries _invoices;
+  final MemberAccountQueries _accounts;
+
   @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
     required String workspaceId,
     required String memberId,
     required String period,
-  }) async {
-    final raw = await _client.rpc<dynamic>('preview_invoice', params: {
-      'p_workspace_id': workspaceId,
-      'p_member_id': memberId,
-      'p_period': period,
-    });
-    return decodeInvoicePreview(raw);
-  }
+  }) =>
+      _invoices.previewInvoice(
+          workspaceId: workspaceId, memberId: memberId, period: period);
 
   @override
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
     String workspaceId,
-  ) async {
-    // #2587 — paged to the end in a total order: one request is cut at the
-    // server's cap, which made the reminder count and the latest date wrong.
-    final rows = await fetchAllPages(
-      table: 'invoice_reminders',
-      build: () => _client
-          .from('invoice_reminders')
-          .select('id, invoice_id, sent_at')
-          .eq('workspace_id', workspaceId)
-          .order('id', ascending: true),
-    );
-    return foldInvoiceReminders(rows);
-  }
-
-  SupabaseMoneyRepository(this._client);
-
-  final SupabaseClient _client;
+  ) =>
+      _invoices.fetchInvoiceReminders(workspaceId);
 
   // #2386 — the operations; each body is in a part file.
-  @override Future<List<Invoice>> fetchInvoices(String workspaceId) => _fetchInvoicesImpl(workspaceId);
+  @override Future<List<Invoice>> fetchInvoices(String workspaceId) => _invoices.fetchInvoices(workspaceId);
   @override Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId) => _fetchVatDeclarationsImpl(workspaceId);
   @override Future<String> saveVatDeclaration({required String workspaceId, required DateTime periodStart, required DateTime periodEnd}) => _saveVatDeclarationImpl(workspaceId: workspaceId, periodStart: periodStart, periodEnd: periodEnd);
   @override Future<void> markVatDeclarationSubmitted({required String declarationId, required String channel, required String receipt}) => _markVatDeclarationSubmittedImpl(declarationId: declarationId, channel: channel, receipt: receipt);
@@ -94,8 +88,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _uploadReportImageImpl(workspaceId, name: name, bytes: bytes, contentType: contentType);
   @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _fetchReportImageImpl(workspaceId, name);
   @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => _settleCreditInvoiceImpl(invoiceId, note: note);
-  @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => _fetchConsumedPaymentIdsImpl(workspaceId);
-  @override Future<MemberAccount> fetchMemberAccount(String memberId) => _fetchMemberAccountImpl(memberId);
+  @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => _invoices.fetchConsumedPaymentIds(workspaceId);
+  @override Future<MemberAccount> fetchMemberAccount(String memberId) => _accounts.fetchMemberAccount(memberId);
   @override Future<DunningRules> fetchDunningRules(String workspaceId) => _fetchDunningRulesImpl(workspaceId);
   @override Future<String> settleInvoices({required String workspaceId, required String memberId, required List<String> invoiceIds, String note = ''}) => _settleInvoicesImpl(workspaceId: workspaceId, memberId: memberId, invoiceIds: invoiceIds, note: note);
   @override Future<BillingRules> fetchBillingRules(String workspaceId) => _fetchBillingRulesImpl(workspaceId);
@@ -113,24 +107,24 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> setNumberSequence(String workspaceId, NumberSequence sequence, {int? raiseNextValueTo}) => _setNumberSequenceImpl(workspaceId, sequence, raiseNextValueTo: raiseNextValueTo);
   @override Future<String> previewDocumentNumber(String workspaceId, String journal) => _previewDocumentNumberImpl(workspaceId, journal);
   @override Future<String> distributeExpense({required String workspaceId, required String title, required int amountCents, required RepartitionMethod method, required String period, required List<RepartitionShare> shares, String? sourceEventId}) => _distributeExpenseImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, method: method, period: period, shares: shares, sourceEventId: sourceEventId);
-  @override Future<List<UsageRecord>> fetchUsageRecords({required String workspaceId, required String period, String? memberId}) => _fetchUsageRecordsImpl(workspaceId: workspaceId, period: period, memberId: memberId);
+  @override Future<List<UsageRecord>> fetchUsageRecords({required String workspaceId, required String period, String? memberId}) => _accounts.fetchUsageRecords(workspaceId: workspaceId, period: period, memberId: memberId);
   @override Future<String> requestUsageCorrection(String recordId, {String reason = ''}) => _requestUsageCorrectionImpl(recordId, reason: reason);
   @override Future<String> requestUsageRecordDelete(String recordId, {String reason = ''}) => _requestUsageRecordDeleteImpl(recordId, reason: reason);
   @override Future<List<ExpenseRepartition>> fetchExpenseRepartitions(String workspaceId) => _fetchExpenseRepartitionsImpl(workspaceId);
   @override Future<String> createInvoice({required String workspaceId, required String memberId, required String period, String? replacesId, bool detailed = false, InvoiceKind kind = InvoiceKind.full, String buyerReference = '', String purchaseOrder = '', String correctionReason = ''}) => _createInvoiceImpl(workspaceId: workspaceId, memberId: memberId, period: period, replacesId: replacesId, detailed: detailed, kind: kind, buyerReference: buyerReference, purchaseOrder: purchaseOrder, correctionReason: correctionReason);
-  @override Future<List<String>> invoiceIssueReadiness({required String workspaceId, required String memberId, required String period, InvoiceKind kind = InvoiceKind.full, String? replacesId, String correctionReason = ''}) => _invoiceIssueReadinessImpl(workspaceId: workspaceId, memberId: memberId, period: period, kind: kind, replacesId: replacesId, correctionReason: correctionReason);
+  @override Future<List<String>> invoiceIssueReadiness({required String workspaceId, required String memberId, required String period, InvoiceKind kind = InvoiceKind.full, String? replacesId, String correctionReason = ''}) => _invoices.invoiceIssueReadiness(workspaceId: workspaceId, memberId: memberId, period: period, kind: kind, replacesId: replacesId, correctionReason: correctionReason);
   @override Future<void> voidInvoice(String invoiceId) => _voidInvoiceImpl(invoiceId);
   @override Future<void> remindInvoice(String invoiceId) => _remindInvoiceImpl(invoiceId);
   @override Future<Map<String, String>> fetchDunningHolds(String workspaceId) => _fetchDunningHoldsImpl(workspaceId);
   @override Future<void> placeDunningHold(String invoiceId, {required String reason, String note = ''}) => _placeDunningHoldImpl(invoiceId, reason: reason, note: note);
   @override Future<void> releaseDunningHold(String invoiceId) => _releaseDunningHoldImpl(invoiceId);
   @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = ''}) => _matchInvoiceImpl(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note);
-  @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => _fetchInvoiceMatchesImpl(workspaceId);
-  @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => _fetchInvoiceInstalmentsImpl(workspaceId);
-  @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _fetchReminderEvidenceImpl(invoiceId);
-  @override Future<Statement> fetchStatement(String memberId, String period) => _fetchStatementImpl(memberId, period);
-  @override Future<List<LedgerEntry>> fetchLedger(String memberId) => _fetchLedgerImpl(memberId);
-  @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => _fetchWorkspaceLedgerImpl(workspaceId);
+  @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => _invoices.fetchInvoiceMatches(workspaceId);
+  @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => _invoices.fetchInvoiceInstalments(workspaceId);
+  @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _invoices.fetchReminderEvidence(invoiceId);
+  @override Future<Statement> fetchStatement(String memberId, String period) => _accounts.fetchStatement(memberId, period);
+  @override Future<List<LedgerEntry>> fetchLedger(String memberId) => _accounts.fetchLedger(memberId);
+  @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => _accounts.fetchWorkspaceLedger(workspaceId);
   @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => _fetchPaymentIntentsImpl(workspaceId);
   @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => _recordPaymentImpl(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);
   @override Future<void> recordServiceCharge({required String workspaceId, required String subjectMemberId, required String serviceId, required int quantity, String? period}) => _recordServiceChargeImpl(workspaceId: workspaceId, subjectMemberId: subjectMemberId, serviceId: serviceId, quantity: quantity, period: period);

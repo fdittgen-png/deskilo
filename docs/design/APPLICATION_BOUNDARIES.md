@@ -158,7 +158,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/kiosk/presentation/screens/kiosk_screen.dart`
 - `lib/features/members/presentation/screens/member_page.dart`
 - `lib/features/money/domain/invoice_pdf_part2.dart`
-- `lib/features/money/domain/money_repository.dart`
 - `lib/features/money/presentation/invoice_documents.dart`
 - `lib/features/money/presentation/report_defaults.dart`
 - `lib/features/money/presentation/screens/billing_screen.dart`
