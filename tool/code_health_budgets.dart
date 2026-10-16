@@ -23,6 +23,17 @@
 //   pairBudget           imports behind a feature -> feature pair that has a
 //                        budget (a pair without one is only named by
 //                        _knownPairs in test/lint/layering_test.dart)
+//   genericError         `workspaceGenericError` uses per library (#1305)
+//   fontSize             raw `fontSize:` per presentation library (#1304)
+//   colorLiteral         raw `Color(0x` per presentation library (#1304)
+//   fontWeight           raw `fontWeight: FontWeight` per presentation
+//                        library (#1304)
+//   rawSpinner           raw `CircularProgressIndicator(` per presentation
+//                        file (#1305)
+//   helpCards            `HelpHint(` / `GettingStartedCard(` mounts per
+//                        library (#1853)
+//
+// The last six have a default of none: any use without an entry fails.
 //
 // The reason an entry is exempt lives in
 // docs/design/CODE_HEALTH_BUDGET_REASONS.txt, `<category> <key> // <reason>`;
@@ -53,6 +64,12 @@ const List<String> budgetCategories = [
   'setState',
   'repositoryInWidgets',
   'pairBudget',
+  'genericError',
+  'fontSize',
+  'colorLiteral',
+  'fontWeight',
+  'rawSpinner',
+  'helpCards',
 ];
 
 /// What a category allows without an entry, and how much headroom an entry
@@ -62,6 +79,12 @@ const Map<String, ({int floor, int headroom})> _rules = {
   'setState': (floor: defaultSetState, headroom: 0),
   'repositoryInWidgets': (floor: 0, headroom: 0),
   'pairBudget': (floor: 0, headroom: 0),
+  'genericError': (floor: 0, headroom: 0),
+  'fontSize': (floor: 0, headroom: 0),
+  'colorLiteral': (floor: 0, headroom: 0),
+  'fontWeight': (floor: 0, headroom: 0),
+  'rawSpinner': (floor: 0, headroom: 0),
+  'helpCards': (floor: 0, headroom: 0),
 };
 
 /// The budgets as held in the JSON.
@@ -107,7 +130,7 @@ class Budgets {
     final b = StringBuffer('"budgets": {\n')
       ..write('    "partOfFiles": ${partOfFiles ?? 0}');
     for (final c in budgetCategories) {
-      final keys = maps[c]!.keys.toList()..sort();
+      final keys = (maps[c] ?? const <String, int>{}).keys.toList()..sort();
       // A blank line between entries: git conflicts on ADJACENT lines too.
       b
         ..write(',\n    ${jsonEncode(c)}: {\n')
@@ -129,6 +152,12 @@ class BudgetActuals {
     required this.setState,
     required this.repositoryInWidgets,
     required this.pairBudget,
+    this.genericError = const {},
+    this.fontSize = const {},
+    this.colorLiteral = const {},
+    this.fontWeight = const {},
+    this.rawSpinner = const {},
+    this.helpCards = const {},
   });
 
   final int partOfFiles;
@@ -140,6 +169,12 @@ class BudgetActuals {
   final Map<String, int> setState;
   final Map<String, int> repositoryInWidgets;
   final Map<String, int> pairBudget;
+  final Map<String, int> genericError;
+  final Map<String, int> fontSize;
+  final Map<String, int> colorLiteral;
+  final Map<String, int> fontWeight;
+  final Map<String, int> rawSpinner;
+  final Map<String, int> helpCards;
 
   /// The measured value per key of [category].
   Map<String, int> of(String category) => switch (category) {
@@ -147,6 +182,12 @@ class BudgetActuals {
         'setState' => setState,
         'repositoryInWidgets' => repositoryInWidgets,
         'pairBudget' => pairBudget,
+        'genericError' => genericError,
+        'fontSize' => fontSize,
+        'colorLiteral' => colorLiteral,
+        'fontWeight' => fontWeight,
+        'rawSpinner' => rawSpinner,
+        'helpCards' => helpCards,
         _ => throw ArgumentError(category),
       };
 }
@@ -177,6 +218,55 @@ int setStateCallsOf(String source) {
   return n;
 }
 
+/// True for a `part of` file; its text belongs to its library (#2386).
+bool _isPartFile(File file) {
+  final raf = file.openSync();
+  try {
+    final head = raf.readSync(4096);
+    return RegExp(r'^part of ', multiLine: true)
+        .hasMatch(String.fromCharCodes(head));
+  } finally {
+    raf.closeSync();
+  }
+}
+
+/// [file]'s text with the text of every part it names appended (#2386).
+String _readLibrary(File file) {
+  final text = file.readAsStringSync();
+  final parts = RegExp(r"^part '([^']+)';", multiLine: true).allMatches(text);
+  return [
+    text,
+    for (final m in parts)
+      File('${file.parent.path}/${m.group(1)}').readAsStringSync(),
+  ].join('\n');
+}
+
+/// Help-card mounts in [source]: constructor calls outside comments and
+/// outside the classes' own declarations (#1853).
+({int all, int gettingStarted}) countHelpMounts(String source) {
+  final mount = RegExp(r'\b(HelpHint|GettingStartedCard)\(');
+  final definition = RegExp(
+    r'class (HelpHint|GettingStartedCard)\b'
+    r'|const (HelpHint|GettingStartedCard)\((\{\s*$|\{?\s*(this|super|required)\b)',
+  );
+  var all = 0, gettingStarted = 0;
+  for (final raw in source.split('\n')) {
+    final line = raw.trimLeft();
+    if (line.startsWith('//') || definition.hasMatch(line)) continue;
+    for (final m in mount.allMatches(line)) {
+      all++;
+      if (m.group(1) == 'GettingStartedCard') gettingStarted++;
+    }
+  }
+  return (all: all, gettingStarted: gettingStarted);
+}
+
+bool _isPresentation(String path) =>
+    path != 'lib/app/theme.dart' &&
+    (path.contains('/presentation/') || path.startsWith('lib/app/'));
+
+final RegExp _rawSpinnerCall = RegExp(r'\bCircularProgressIndicator\(');
+
 /// Measures the tree under lib/ (run from the repository root).
 BudgetActuals measureBudgetActuals() {
   final files = layering.handWrittenDartFiles('lib').toList()
@@ -197,6 +287,42 @@ BudgetActuals measureBudgetActuals() {
       setState[library] = (setState[library] ?? 0) + calls;
     }
   }
+  final generic = <String, int>{};
+  final fontSize = <String, int>{};
+  final colorLiteral = <String, int>{};
+  final fontWeight = <String, int>{};
+  final rawSpinner = <String, int>{};
+  for (final file in files) {
+    final path = file.path.replaceAll(r'\', '/');
+    final isPart = _isPartFile(file);
+    if (path.contains('/presentation/') || path.startsWith('lib/app/')) {
+      final n = _rawSpinnerCall.allMatches(file.readAsStringSync()).length;
+      if (n > 0) rawSpinner[path] = n;
+    }
+    if (isPart) continue; // a part is counted with its library
+    final lib = _readLibrary(file);
+    void count(Map<String, int> into, String needle) {
+      final n = needle.allMatches(lib).length;
+      if (n > 0) into[path] = n;
+    }
+
+    count(generic, 'workspaceGenericError');
+    if (_isPresentation(path)) {
+      count(fontSize, 'fontSize:');
+      count(colorLiteral, 'Color(0x');
+      count(fontWeight, 'fontWeight: FontWeight');
+    }
+  }
+  final helpCards = <String, int>{};
+  for (final f in Directory('lib')
+      .listSync(recursive: true)
+      .whereType<File>()
+      .where((f) => f.path.endsWith('.dart'))
+      .where((f) => !f.path.endsWith('core/help/help_hint.dart'))) {
+    if (_isPartFile(f)) continue;
+    final n = countHelpMounts(_readLibrary(f)).all;
+    if (n > 0) helpCards[f.path.replaceAll(r'\', '/')] = n;
+  }
   final features = files.where((f) => f.path.startsWith('lib/features/'));
   final reads = layering.repositoryReadsByFeature(features);
   return BudgetActuals(
@@ -207,6 +333,12 @@ BudgetActuals measureBudgetActuals() {
       for (final e in reads.entries) e.key: e.value.length,
     },
     pairBudget: layering.crossFeatureImports(features),
+    genericError: generic,
+    fontSize: fontSize,
+    colorLiteral: colorLiteral,
+    fontWeight: fontWeight,
+    rawSpinner: rawSpinner,
+    helpCards: helpCards,
   );
 }
 
@@ -230,7 +362,7 @@ List<String> budgetFailures(Budgets held, BudgetActuals actual,
     if (only != null && only != c) continue;
     final rule = _rules[c]!;
     final measured = actual.of(c);
-    final budget = held.maps[c]!;
+    final budget = held.maps[c] ?? const <String, int>{};
     for (final e in measured.entries) {
       if (e.value <= rule.floor) continue;
       final b = budget[e.key];
@@ -275,7 +407,7 @@ List<String> budgetFailures(Budgets held, BudgetActuals actual,
     final next = <String, int>{};
     for (final e in actual.of(c).entries) {
       if (e.value <= rule.floor) continue;
-      final b = held.maps[c]![e.key];
+      final b = held.maps[c]?[e.key];
       if (b == null && c == 'pairBudget') continue; // _knownPairs names it
       final headed = e.value + rule.headroom;
       if (b == null) {

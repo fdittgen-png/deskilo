@@ -31,107 +31,18 @@
 // and is now simply forbidden (`no_inline_border_radius_test`).
 import 'package:flutter_test/flutter_test.dart';
 
-import 'lint_sources.dart';
+import '../../tool/code_health_budgets.dart';
 
-/// Presentation files still writing a raw font size → how many.
-const Map<String, int> _fontSizeBaseline = {
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 1,
-  'lib/features/money/presentation/widgets/report_field_picker.dart': 1,
-  // 2026-10-07 moved from invoice_template_sheet.dart with the markup bands.
-  'lib/features/money/presentation/widgets/report_template_toolbar.dart': 1,
-  'lib/features/money/presentation/widgets/report_layout_preview.dart': 2,
-  'lib/features/money/presentation/widgets/report_page_designer.dart': 1,
-  'lib/features/money/presentation/widgets/report_page_style.dart': 5,
-  'lib/features/money/presentation/widgets/report_preview.dart': 1,
-  'lib/features/money/presentation/widgets/report_visual_editor.dart': 9,
-  'lib/features/plan/presentation/widgets/plan_paint_helpers.dart': 3,
-  'lib/features/plan/presentation/widgets/seat_avatar_paint.dart': 2,
-  'lib/features/profile/presentation/widgets/member_avatar.dart': 1,
-  'lib/features/reservations/presentation/widgets/month_grid.dart': 1,
-};
-
-/// Presentation files still writing a raw colour literal → how many.
-const Map<String, int> _colorBaseline = {
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 8,
-  'lib/features/money/presentation/widgets/report_page_designer.dart': 1,
-  'lib/features/money/presentation/widgets/report_page_style.dart': 5,
-  'lib/features/money/presentation/widgets/report_preview.dart': 1,
-  'lib/features/plan/presentation/widgets/plan_paint_helpers.dart': 1,
-  'lib/features/workspace/presentation/widgets/note_check.dart': 1,
-};
-
-/// #1304 S2 — presentation files still choosing a raw `FontWeight` → how
-/// many. Measured 2026-09-17 after the shell, Reserve, Settings and
-/// onboarding moved to `AppTypography` roles and `emphasised` / `strong`
-/// (46 → 40). The money screens hold most of what is left.
-const Map<String, int> _fontWeightBaseline = {
-  'lib/features/calendar/presentation/screens/calendar_screen.dart': 1,
-  'lib/features/calendar/presentation/widgets/day_timeline.dart': 1,
-  'lib/features/events/presentation/screens/events_screen.dart': 1,
-  'lib/features/members/presentation/screens/directory_screen.dart': 1,
-  'lib/features/members/presentation/widgets/managed_access_editor.dart': 1,
-  'lib/features/money/presentation/screens/invoice_register_screen.dart': 2,
-  'lib/features/money/presentation/widgets/account_card.dart': 1,
-  'lib/features/money/presentation/widgets/bill_view.dart': 3,
-  'lib/features/money/presentation/widgets/invoice_archive_tab.dart': 1,
-  'lib/features/money/presentation/widgets/invoice_detail_sheet.dart': 2,
-  'lib/features/money/presentation/widgets/invoice_form_sheet.dart': 2,
-  'lib/features/money/presentation/widgets/invoice_overview.dart': 1,
-  'lib/features/money/presentation/widgets/invoice_stage_strip.dart': 2,
-  'lib/features/money/presentation/widgets/invoicing_dashboard.dart': 3,
-  'lib/features/money/presentation/widgets/money_faces_view.dart': 1,
-  'lib/features/money/presentation/widgets/my_invoices_list.dart': 1,
-  'lib/features/money/presentation/widgets/open_invoice_card.dart': 1,
-  'lib/features/money/presentation/widgets/report_layout_preview.dart': 1,
-  'lib/features/money/presentation/widgets/report_page_style.dart': 2,
-  'lib/features/money/presentation/widgets/report_preview.dart': 1,
-  'lib/features/money/presentation/widgets/report_visual_editor.dart': 1,
-  'lib/features/money/presentation/widgets/settlement_sheet.dart': 2,
-  'lib/features/plan/presentation/widgets/plan_paint_helpers.dart': 1,
-  'lib/features/plan/presentation/widgets/seat_avatar_paint.dart': 2,
-  'lib/features/profile/presentation/widgets/member_avatar.dart': 1,
-  'lib/features/workspace/presentation/screens/members_screen.dart': 1,
-  'lib/features/workspace/presentation/screens/roles_screen.dart': 1,
-  'lib/features/workspace/presentation/widgets/member_note_body.dart': 1,
-};
-
-bool _inScope(String path) =>
-    path != 'lib/app/theme.dart' &&
-    (path.contains('/presentation/') || path.startsWith('lib/app/'));
-
-/// Compares the live count of [needle] per file against [baseline].
-List<String> ratchet(Map<String, int> live, Map<String, int> baseline) {
-  final problems = <String>[];
-  for (final e in live.entries) {
-    final allowed = baseline[e.key] ?? 0;
-    if (e.value > allowed) {
-      problems.add('${e.key}: ${e.value}, baseline $allowed — grew');
-    } else if (e.value < allowed) {
-      problems.add('${e.key}: ${e.value}, baseline $allowed — lower the '
-          'baseline in the same commit');
-    }
-  }
-  for (final path in baseline.keys) {
-    if (!live.containsKey(path)) {
-      problems.add('$path: none left — delete it from the baseline');
-    }
-  }
-  return problems;
-}
-
-Map<String, int> _count(String needle) {
-  final out = <String, int>{};
-  for (final file in handWrittenDartFiles('lib')) {
-    if (!_inScope(file.path) || isPartFile(file)) continue;
-    final n = needle.allMatches(readLibrary(file)).length; // #2386
-    if (n > 0) out[file.path] = n;
-  }
-  return out;
-}
+/// The budgets are `budgets.fontSize`, `.colorLiteral` and `.fontWeight` in
+/// docs/design/CODE_HEALTH_BASELINE.json (#2598), written by
+/// `dart run tool/code_health.dart --baseline`; they only fall. Scope:
+/// presentation code and `lib/app`, not `lib/app/theme.dart`.
+List<String> _failures(String category) =>
+    budgetFailures(Budgets.load(), measureBudgetActuals(), only: category);
 
 void main() {
   test('no screen grows a raw font size (#1304)', () {
-    final problems = ratchet(_count('fontSize:'), _fontSizeBaseline);
+    final problems = _failures('fontSize');
     expect(problems, isEmpty,
         reason: '${problems.join('\n')}\n\n'
             'Use a TextTheme role — Theme.of(context).textTheme.titleMedium '
@@ -140,7 +51,7 @@ void main() {
   });
 
   test('no screen grows a raw colour literal (#1304)', () {
-    final problems = ratchet(_count('Color(0x'), _colorBaseline);
+    final problems = _failures('colorLiteral');
     expect(problems, isEmpty,
         reason: '${problems.join('\n')}\n\n'
             'Use the ColorScheme or a semantic token (AppStatusColors, '
@@ -149,23 +60,11 @@ void main() {
   });
 
   test('no screen grows a raw font weight (#1304)', () {
-    final problems =
-        ratchet(_count('fontWeight: FontWeight'), _fontWeightBaseline);
+    final problems = _failures('fontWeight');
     expect(problems, isEmpty,
         reason: '${problems.join('\n')}\n\n'
             'Use a role from AppTypography (sectionTitle, primaryValue…) or '
             'the named weights `.emphasised` / `.strong` '
             '(lib/core/theme/app_typography.dart, docs/ux/TYPOGRAPHY.md).');
-  });
-
-  group('the ratchet can fail', () {
-    test('growth, shrinkage and a file gone are all reported', () {
-      expect(ratchet({'a.dart': 2}, {'a.dart': 1}).single, contains('grew'));
-      expect(ratchet({'a.dart': 1}, {'a.dart': 2}).single,
-          contains('lower the baseline'));
-      expect(ratchet({}, {'a.dart': 1}).single, contains('delete it'));
-      expect(ratchet({'new.dart': 1}, {}).single, contains('grew'));
-      expect(ratchet({'a.dart': 1}, {'a.dart': 1}), isEmpty);
-    });
   });
 }
