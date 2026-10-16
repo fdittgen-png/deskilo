@@ -1,8 +1,8 @@
 {
-  "recordedSha": "5b74144a76c2d32abff44b1d077e335105ea1d82",
+  "recordedSha": "6a322c2d938aa67a0f4564092d1e1f69bcd18124",
   "recordedDate": "2026-10-15",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1585,"functions":8753,"cyclomatic>=9":933,"cyclomatic>=25":129,"cognitive>=15":393,"cognitive>=30":118,"length>=150":95,"parameters>=5":402,"parameters>=7":143,"partOfFiles":75},
+  "totals": {"files":1585,"functions":8748,"cyclomatic>=9":933,"cyclomatic>=25":129,"cognitive>=15":393,"cognitive>=30":118,"length>=150":95,"parameters>=5":402,"parameters>=7":143,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1216,7 +1216,7 @@
     {"p":"lib/features/money/presentation/report_defaults.dart","loc":508,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":4,"cyc":18,"len":132,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/report_defaults_batch.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":25,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/report_design_actions.dart","loc":124,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":5,"cyc":7,"len":37,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
-    {"p":"lib/features/money/presentation/report_edit_history.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":5,"cyc":7,"len":19,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/report_edit_history.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":2,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/report_facts_of.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":10,"len":29,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/report_image_resolve.dart","loc":33,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":11,"cyc":8,"len":36,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/report_kind_labels.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":18,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1342,8 +1342,8 @@
     {"p":"lib/features/money/presentation/widgets/report_preview.dart","loc":319,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":27,"cyc":19,"len":84,"params":5,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_template_toolbar.dart","loc":262,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":14,"cyc":11,"len":84,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_texts_panel.dart","loc":181,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":6,"cyc":6,"len":71,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/report_visual_editor.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":1,"cyc":2,"len":10,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/report_visual_editor_part1.dart","loc":338,"part":true,"setState":4,"repositoryReads":0,"fn":19,"cog":19,"cyc":16,"len":104,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/report_visual_editor.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":1,"cyc":2,"len":10,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/report_visual_editor_part1.dart","loc":333,"part":true,"setState":4,"repositoryReads":0,"fn":21,"cog":19,"cyc":16,"len":104,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_visual_editor_part2.dart","loc":326,"part":true,"setState":0,"repositoryReads":0,"fn":6,"cog":23,"cyc":13,"len":121,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_visual_editor_part3.dart","loc":137,"part":true,"setState":0,"repositoryReads":0,"fn":7,"cog":12,"cyc":13,"len":42,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/settlement_sheet.dart","loc":207,"part":false,"setState":7,"repositoryReads":0,"fn":6,"cog":34,"cyc":23,"len":116,"params":3,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},

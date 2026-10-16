@@ -60,6 +60,9 @@ dependencies:
     path: packages/deskilo_document_model
   deskilo_document_pdf:
     path: packages/deskilo_document_pdf
+  # #2592 C2 - the editing primitives of the report editor (internal).
+  deskilo_document_editor:
+    path: packages/deskilo_document_editor
   # #2593 - the semantic task-recording core (models, codecs, writer
   # contracts); the host supplies the action catalogue.
   deskilo_task_recording:

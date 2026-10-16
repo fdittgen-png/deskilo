@@ -12,11 +12,19 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
   /// #822 — inserts [line] after the selection, or at the end.
   void _insertLineImpl(ReportVisualLine line) {
     _mutate(() {
-      final at = _editing == null ? _lines.length : _editing! + 1;
-      _lines.insert(at, line);
-      _editing = at;
+      _adopt(_edit.insertAfterSelection(line));
       _editController.text = line.content;
     });
+  }
+
+  /// The elements and the selection as the package's value.
+  ElementEdit<ReportVisualLine> get _edit =>
+      ElementEdit(_lines, selected: _editing);
+
+  /// Takes the package's result as this editor's lines and selection.
+  void _adopt(ElementEdit<ReportVisualLine> next) {
+    _lines = List.of(next.items);
+    _editing = next.selected;
   }
 
   void _sync() {
@@ -55,62 +63,53 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
   }
 
   void _move(int index, int delta) {
-    final to = index + delta;
-    if (to < 0 || to >= _lines.length) return;
+    final next = _edit.moveBy(index, delta);
+    if (identical(next, _edit)) return;
     _mutate(() {
-      final line = _lines.removeAt(index);
-      _lines.insert(to, line);
-      _editing = to;
-      _editController.text = line.content;
+      _adopt(next);
+      _editController.text = _lines[next.selected!].content;
     });
   }
 
   /// #822 — a drag: the element at [from] lands BEFORE the element at
   /// [before] (the drop target).
   void _moveBefore(int from, int before) {
-    if (from == before) return;
+    final next = _edit.moveBefore(from, before);
+    if (identical(next, _edit)) return;
     _mutate(() {
-      final line = _lines.removeAt(from);
-      final to = before > from ? before - 1 : before;
-      _lines.insert(to, line);
-      _editing = to;
-      _editController.text = line.content;
+      _adopt(next);
+      _editController.text = _lines[next.selected!].content;
     });
   }
 
   void _insertBelow(int index, ReportLineKind kind) {
     _mutate(() {
-      _lines.insert(index + 1, ReportVisualLine(kind, ''));
-      _editing = index + 1;
+      _adopt(_edit.insertBelow(index, ReportVisualLine(kind, '')));
       _editController.text = '';
     });
   }
 
   void _delete(int index) {
-    _mutate(() {
-      _lines.removeAt(index);
-      _editing = null;
-    });
+    _mutate(() => _adopt(_edit.remove(index)));
   }
 
   void _sendTo(int index, String band) {
     final line = _lines[index];
-    _mutate(() {
-      _lines.removeAt(index);
-      _editing = null;
-    });
+    _mutate(() => _adopt(_edit.remove(index)));
     widget.onMoveToBand?.call(line, band);
   }
 
   /// Inserts [token] at the cursor of the active editor.
   void _insertToken(String token) {
     final selection = _editController.selection;
-    final text = _editController.text;
-    final at = selection.isValid ? selection.start : text.length;
-    _editController.text =
-        text.substring(0, at) + token + text.substring(at);
+    final inserted = insertTokenAt(
+      _editController.text,
+      token,
+      caret: selection.isValid ? selection.start : null,
+    );
+    _editController.text = inserted.text;
     _editController.selection =
-        TextSelection.collapsed(offset: at + token.length);
+        TextSelection.collapsed(offset: inserted.caret);
     _commitEditing();
     _update(() {});
   }

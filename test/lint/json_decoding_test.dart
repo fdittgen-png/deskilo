@@ -29,6 +29,7 @@ void main() {
   final files = handWrittenDartFilesIn(const [
     'lib',
     'packages/deskilo_document_model/lib',
+    'packages/deskilo_document_editor/lib',
     'packages/deskilo_task_recording/lib',
   ]).toList();
 

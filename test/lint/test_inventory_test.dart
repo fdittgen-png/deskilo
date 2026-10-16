@@ -133,6 +133,7 @@ void main() {
         'working-directory: packages/deskilo_push\n'
         'working-directory: packages/deskilo_document_model\n'
         'working-directory: packages/deskilo_document_pdf\n'
+        'working-directory: packages/deskilo_document_editor\n'
         'working-directory: packages/deskilo_task_recording\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
     // perf-bench.yml is missing: its family is a dead entry.
@@ -154,6 +155,8 @@ void main() {
         "$header// M.\nvoid main() {}\n");
     write('packages/deskilo_document_pdf/test/d_test.dart',
         "$header// D.\nvoid main() {}\n");
+    write('packages/deskilo_document_editor/test/e_test.dart',
+        "$header// E.\nvoid main() {}\n");
     write('packages/deskilo_task_recording/test/t_test.dart',
         "$header// T.\nvoid main() {}\n");
     write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
