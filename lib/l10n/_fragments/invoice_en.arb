@@ -1,5 +1,21 @@
 {
   "@@locale": "en",
+  "invoiceIssueUnknownTitle": "Outcome unknown",
+  "@invoiceIssueUnknownTitle": {
+    "description": "Dialog title when the answer to issuing an invoice was lost"
+  },
+  "invoiceIssueUnknownBody": "The invoice was sent but the answer did not arrive, so it may already exist. Nothing is sent again. Check again to look for it.",
+  "@invoiceIssueUnknownBody": {
+    "description": "Dialog body: the commit is unknown; only a look is offered"
+  },
+  "invoiceIssueCheckAgain": "Check again",
+  "@invoiceIssueCheckAgain": {
+    "description": "Looks for the invoice in the archive; never sends it again"
+  },
+  "invoiceIssueNotFoundYet": "Not found yet. Nothing was sent again.",
+  "@invoiceIssueNotFoundYet": {
+    "description": "Result of a look that found no invoice"
+  },
   "invoicesTitle": "Invoices",
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"

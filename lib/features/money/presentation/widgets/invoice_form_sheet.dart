@@ -11,19 +11,20 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/issue_invoice.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../report_strings_l10n.dart';
 import 'invoice_correction_reason_field.dart';
+import 'invoice_issue_runner.dart';
 import 'invoice_missing_sales_tax.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
@@ -96,37 +97,26 @@ Future<void> showInvoiceIssueSheet(
   );
   if (result == null || !context.mounted) return;
 
-  try {
-    await ref.read(invoiceCommandsProvider).createInvoice(
-          workspaceId: workspace.id,
-          memberId: result.memberId,
-          period: result.period,
-          replacesId: replaces?.id,
-          detailed: result.detailed,
-          buyerReference: result.buyerReference,
-          purchaseOrder: result.purchaseOrder,
-          correctionReason: result.correctionReason,
-        );
-  } on Object catch (e, st) {
-    TraceLogger.instance
-        .error('money', 'invoice issue failed', error: e, stackTrace: st);
-    if (!context.mounted) return;
-    // 0067 — one active invoice per member+month (pinned substring).
-    AppSnack.error(
-      context,
-      e.toString().contains('already invoiced')
-          ? (l10n.invoiceAlreadyInvoiced)
-          : e.toString().contains('invoice_feature_disabled')
-              ? (l10n.invoiceFeatureDisabled)
-          : e.toString().contains('invoice_essentials_missing')
-              ? (l10n.invoiceEssentialsRefused)
-              : (l10n.workspaceGenericError),
-    );
-    return;
-  }
+  // The context is captured here: a workspace picked later never receives
+  // this command, nor the look for its answer.
+  await runInvoiceIssue(
+    context,
+    InvoiceIssuance(
+      ref.read(invoiceCommandsProvider),
+      ref.read(invoiceQueriesProvider),
+    ),
+    InvoiceIssueAttempt(
+      workspaceId: workspace.id,
+      memberId: result.memberId,
+      period: result.period,
+      replacesId: replaces?.id,
+      detailed: result.detailed,
+      buyerReference: result.buyerReference,
+      purchaseOrder: result.purchaseOrder,
+      correctionReason: result.correctionReason,
+    ),
+  );
   ref.invalidate(invoicesProvider);
-  if (!context.mounted) return;
-  AppSnack.success(context, l10n.invoiceIssued);
 }
 
 /// The issue form (0062): member + month, and a read-only PREVIEW of the

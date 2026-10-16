@@ -5745,7 +5745,11 @@
       }
     }
   },
+  "invoiceIssueCheckAgain": "Controlla di nuovo",
+  "invoiceIssueNotFoundYet": "Non ancora trovata. Non è stato reinviato nulla.",
   "invoiceIssueOne": "Fattura",
+  "invoiceIssueUnknownBody": "La fattura è stata inviata ma la risposta non è arrivata, quindi potrebbe già esistere. Non viene reinviato nulla. Controlla di nuovo per cercarla.",
+  "invoiceIssueUnknownTitle": "Esito sconosciuto",
   "invoiceIssued": "Fattura emessa.",
   "invoiceIssuedCount": "{count} fatture emesse.",
   "@invoiceIssuedCount": {

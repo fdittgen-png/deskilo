@@ -3,8 +3,11 @@
 -- says (Z zero-rated, E exempt), not O; a credit note takes the series the
 -- owner saved for it; a rate in force while an invoice was issued changes
 -- only as a new version. Real create_invoice runs, rolled back.
+-- #2585: the preview_invoice answer the app decodes, against amounts written
+-- here from the seed (35.00 fee + 10.00 supply; 35.00 fee - 50.00 advance),
+-- the empty month, and a stranger from another workspace refused.
 begin;
-select plan(20);
+select plan(29);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -43,6 +46,47 @@ end;
 $seed$;
 
 select pg_temp.seed();
+
+-- ── the preview the app decodes (#2585) ───────────────────────────────
+insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
+ values ('00000000-0000-4000-8000-000000258503','00000000-0000-0000-0000-000000000000','authenticated','authenticated','stranger@content2585.test','',now(),now(),now());
+insert into public.workspaces(name,country_code,currency_code,timezone,created_by,feature_flags)
+ values ('Stranger 2585','FR','EUR','Europe/Paris','00000000-0000-4000-8000-000000258503','{"invoicing":true}');
+insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at)
+ select id,'00000000-0000-4000-8000-000000258503',true,true,'2026-01-01' from public.workspaces where name = 'Stranger 2585';
+
+set local role authenticated;
+select set_config('request.jwt.claims', json_build_object('sub','00000000-0000-4000-8000-000000235602','role','authenticated')::text, false);
+select set_config('deskilo.s.p_sep', public.preview_invoice(current_setting('deskilo.s.ws')::uuid, current_setting('deskilo.s.m')::uuid, '2026-09')::text, false);
+select set_config('deskilo.s.p_aug', public.preview_invoice(current_setting('deskilo.s.ws')::uuid, current_setting('deskilo.s.m')::uuid, '2026-08')::text, false);
+select set_config('deskilo.s.p_dec', public.preview_invoice(current_setting('deskilo.s.ws')::uuid, current_setting('deskilo.s.m')::uuid, '2025-12')::text, false);
+reset role;
+
+select is((current_setting('deskilo.s.p_sep')::jsonb)->>'total_cents', '4500',
+          'the member previews their own month: 3500 fee + 1000 zero-rated supply');
+select is((select array_agg((l->>'amount_cents')::int order by o)
+             from jsonb_array_elements((current_setting('deskilo.s.p_sep')::jsonb)->'lines') with ordinality t(l, o)),
+          array[3500, 1000], 'the lines carry the seeded amounts, in order');
+select is((current_setting('deskilo.s.p_aug')::jsonb)->>'total_cents', '-1500',
+          'a month with more received than supplied previews negative: 3500 - 5000');
+select is((select (l->>'amount_cents')::int from jsonb_array_elements((current_setting('deskilo.s.p_aug')::jsonb)->'lines') l
+            where l->>'kind' = 'payment'), -5000, 'the advance is a negative payment line');
+select is(jsonb_array_length((current_setting('deskilo.s.p_dec')::jsonb)->'lines'), 0,
+          'a month before the member joined: an explicit empty list, not a missing one');
+select is((current_setting('deskilo.s.p_dec')::jsonb)->>'total_cents', '0', 'and an explicit zero total');
+select ok(not exists (select 1 from jsonb_array_elements((current_setting('deskilo.s.p_sep')::jsonb)->'lines') l
+                       where jsonb_typeof(l->'quantity') <> 'number' or (l->>'quantity') <> '1'),
+          'quantities are whole JSON numbers (the server emits integers)');
+
+set local role authenticated;
+select set_config('request.jwt.claims', json_build_object('sub','00000000-0000-4000-8000-000000258503','role','authenticated')::text, false);
+select throws_ok($$select public.preview_invoice(current_setting('deskilo.s.ws')::uuid, current_setting('deskilo.s.m')::uuid, '2026-09')$$,
+          'P0001', 'not allowed to preview this member''s charges',
+          'an owner of another workspace is refused, not answered with zero');
+select set_config('request.jwt.claims', json_build_object('sub','00000000-0000-4000-8000-000000235601','role','authenticated')::text, false);
+select is(public.preview_invoice(current_setting('deskilo.s.ws')::uuid, current_setting('deskilo.s.m')::uuid, '2026-09')->>'total_cents',
+          '4500', 'the workspace owner reads the same amount');
+reset role;
 
 -- ── the zero category ─────────────────────────────────────────────────
 select is(public.vat_zero_category(current_setting('deskilo.s.ws')::uuid, 'not_subject', '2026-09-30'),

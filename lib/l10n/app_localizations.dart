@@ -14562,11 +14562,35 @@ abstract class AppLocalizations {
   /// **'Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.'**
   String invoiceIssueAllConfirm(int count, String month, String total);
 
+  /// Looks for the invoice in the archive; never sends it again
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get invoiceIssueCheckAgain;
+
+  /// Result of a look that found no invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Not found yet. Nothing was sent again.'**
+  String get invoiceIssueNotFoundYet;
+
   /// Per-member issue button on the to-invoice list
   ///
   /// In en, this message translates to:
   /// **'Issue'**
   String get invoiceIssueOne;
+
+  /// Dialog body: the commit is unknown; only a look is offered
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was sent but the answer did not arrive, so it may already exist. Nothing is sent again. Check again to look for it.'**
+  String get invoiceIssueUnknownBody;
+
+  /// Dialog title when the answer to issuing an invoice was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome unknown'**
+  String get invoiceIssueUnknownTitle;
 
   /// Snackbar after an invoice was issued
   ///

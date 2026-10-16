@@ -8525,7 +8525,21 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get invoiceIssueCheckAgain => 'Controlla di nuovo';
+
+  @override
+  String get invoiceIssueNotFoundYet =>
+      'Non ancora trovata. Non è stato reinviato nulla.';
+
+  @override
   String get invoiceIssueOne => 'Fattura';
+
+  @override
+  String get invoiceIssueUnknownBody =>
+      'La fattura è stata inviata ma la risposta non è arrivata, quindi potrebbe già esistere. Non viene reinviato nulla. Controlla di nuovo per cercarla.';
+
+  @override
+  String get invoiceIssueUnknownTitle => 'Esito sconosciuto';
 
   @override
   String get invoiceIssued => 'Fattura emessa.';
