@@ -10,16 +10,31 @@ import '../../../l10n/app_localizations.dart';
 
 String settingLabel(AppLocalizations l10n, String key) => switch (key) {
       'dunning.first_after_days' => l10n.settingLabelDunningFirstAfterDays,
+      'security.badge_lockout_failures' => l10n.settingLabelSecurityBadgeLockoutFailures,
+      'security.badge_lockout_minutes' => l10n.settingLabelSecurityBadgeLockoutMinutes,
+      'security.invitation_expiry_days' => l10n.settingLabelSecurityInvitationExpiryDays,
+      'mcp.confirmation_expiry_minutes' => l10n.settingLabelMcpConfirmationExpiryMinutes,
+      'mcp.probe_freshness_minutes' => l10n.settingLabelMcpProbeFreshnessMinutes,
+      'messaging.group_creation_per_hour' => l10n.settingLabelMessagingGroupCreationPerHour,
+      'messaging.message_requests_per_day' => l10n.settingLabelMessagingMessageRequestsPerDay,
       _ => key,
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
       'dunning.first_after_days' => l10n.settingHintDunningFirstAfterDays,
+      'security.badge_lockout_failures' => l10n.settingHintSecurityBadgeLockoutFailures,
+      'security.badge_lockout_minutes' => l10n.settingHintSecurityBadgeLockoutMinutes,
+      'security.invitation_expiry_days' => l10n.settingHintSecurityInvitationExpiryDays,
+      'mcp.confirmation_expiry_minutes' => l10n.settingHintMcpConfirmationExpiryMinutes,
+      'mcp.probe_freshness_minutes' => l10n.settingHintMcpProbeFreshnessMinutes,
+      'messaging.group_creation_per_hour' => l10n.settingHintMessagingGroupCreationPerHour,
+      'messaging.message_requests_per_day' => l10n.settingHintMessagingMessageRequestsPerDay,
       _ => null,
     };
 
 String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) {
       'dunning' => l10n.settingGroupDunning,
+      'security' => l10n.settingGroupSecurity,
       _ => group,
     };
 
@@ -28,6 +43,9 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'minutes' => l10n.settingUnitMinutes,
       'hours' => l10n.settingUnitHours,
       'days' => l10n.settingUnitDays,
+      'attempts' => l10n.settingUnitAttempts,
+      'per hour' => l10n.settingUnitPerHour,
+      'per day' => l10n.settingUnitPerDay,
       _ => unit,
     };
 

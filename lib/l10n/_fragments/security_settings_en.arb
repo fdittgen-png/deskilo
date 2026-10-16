@@ -1,0 +1,75 @@
+{
+  "@@locale": "en",
+  "settingGroupSecurity": "Security and access limits",
+  "@settingGroupSecurity": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
+  "@settingLabelSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
+  "@settingHintSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelSecurityBadgeLockoutMinutes": "Badge lockout time",
+  "@settingLabelSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityBadgeLockoutMinutes": "Minutes over which wrong PIN attempts are counted and for which a locked badge stays locked. Can only be lengthened.",
+  "@settingHintSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
+  "@settingLabelSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityInvitationExpiryDays": "Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.",
+  "@settingHintSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMcpConfirmationExpiryMinutes": "Assistant action confirmation time",
+  "@settingLabelMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMcpConfirmationExpiryMinutes": "Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.",
+  "@settingHintMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMcpProbeFreshnessMinutes": "Assistant endpoint check freshness",
+  "@settingLabelMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMcpProbeFreshnessMinutes": "Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.",
+  "@settingHintMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMessagingGroupCreationPerHour": "Groups created per hour",
+  "@settingLabelMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingHintMessagingGroupCreationPerHour": "How many groups one person may create per hour. Can only be lowered.",
+  "@settingHintMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelMessagingMessageRequestsPerDay": "Message requests per day",
+  "@settingLabelMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMessagingMessageRequestsPerDay": "How many message requests one person may send per day to people who have not allowed them. Can only be lowered.",
+  "@settingHintMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingUnitAttempts": "attempts",
+  "@settingUnitAttempts": {
+    "description": "#2485 settings: Unit."
+  },
+  "settingUnitPerHour": "per hour",
+  "@settingUnitPerHour": {
+    "description": "#2485 settings: Unit."
+  },
+  "settingUnitPerDay": "per day",
+  "@settingUnitPerDay": {
+    "description": "#2485 settings: Unit."
+  }
+}

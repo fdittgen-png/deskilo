@@ -28406,6 +28406,12 @@ abstract class AppLocalizations {
   /// **'Reminders and payment terms'**
   String get settingGroupDunning;
 
+  /// #2485 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Security and access limits'**
+  String get settingGroupSecurity;
+
   /// #2484 settings: Read-only guardrail.
   ///
   /// In en, this message translates to:
@@ -28424,6 +28430,48 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.'**
+  String get settingHintMcpConfirmationExpiryMinutes;
+
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.'**
+  String get settingHintMcpProbeFreshnessMinutes;
+
+  /// #2485 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'How many groups one person may create per hour. Can only be lowered.'**
+  String get settingHintMessagingGroupCreationPerHour;
+
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.'**
+  String get settingHintMessagingMessageRequestsPerDay;
+
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.'**
+  String get settingHintSecurityBadgeLockoutFailures;
+
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes over which wrong PIN attempts are counted and for which a locked badge stays locked. Can only be lengthened.'**
+  String get settingHintSecurityBadgeLockoutMinutes;
+
+  /// #2485 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.'**
+  String get settingHintSecurityInvitationExpiryDays;
+
   /// #2484 settings: History button.
   ///
   /// In en, this message translates to:
@@ -28441,6 +28489,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant action confirmation time'**
+  String get settingLabelMcpConfirmationExpiryMinutes;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant endpoint check freshness'**
+  String get settingLabelMcpProbeFreshnessMinutes;
+
+  /// #2485 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Groups created per hour'**
+  String get settingLabelMessagingGroupCreationPerHour;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Message requests per day'**
+  String get settingLabelMessagingMessageRequestsPerDay;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge PIN attempts before a lock'**
+  String get settingLabelSecurityBadgeLockoutFailures;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge lockout time'**
+  String get settingLabelSecurityBadgeLockoutMinutes;
+
+  /// #2485 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation validity'**
+  String get settingLabelSecurityInvitationExpiryDays;
 
   /// #2484 settings: Upper bound.
   ///
@@ -28532,6 +28622,12 @@ abstract class AppLocalizations {
   /// **'Setting saved'**
   String get settingSaved;
 
+  /// #2485 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'attempts'**
+  String get settingUnitAttempts;
+
   /// #2484 settings: Unit.
   ///
   /// In en, this message translates to:
@@ -28549,6 +28645,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'minutes'**
   String get settingUnitMinutes;
+
+  /// #2485 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'per day'**
+  String get settingUnitPerDay;
+
+  /// #2485 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'per hour'**
+  String get settingUnitPerHour;
 
   /// #2484 settings: Unit.
   ///

@@ -11110,6 +11110,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupSecurity": "Límites de seguridad y acceso",
+  "@settingGroupSecurity": {
+    "description": "#2485 settings: Settings group title."
+  },
   "settingGuardrail": "Salvaguarda fija",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -11122,6 +11126,34 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintMcpConfirmationExpiryMinutes": "Minutos de que dispone la persona para confirmar una acción pedida por un asistente. Las solicitudes ya hechas conservan su plazo. Solo se puede acortar.",
+  "@settingHintMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMcpProbeFreshnessMinutes": "Minutos durante los que cuenta una comprobación correcta del punto de acceso del asistente antes de activar la interfaz. Solo se puede acortar.",
+  "@settingHintMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMessagingGroupCreationPerHour": "Cuántos grupos puede crear una persona por hora. Solo se puede reducir.",
+  "@settingHintMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingHintMessagingMessageRequestsPerDay": "Cuántas solicitudes de mensaje puede enviar una persona por día a quienes no las han permitido. Solo se puede reducir.",
+  "@settingHintMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingHintSecurityBadgeLockoutFailures": "Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.",
+  "@settingHintSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingHintSecurityBadgeLockoutMinutes": "Minutos durante los que se cuentan los intentos erróneos y durante los que una credencial bloqueada sigue bloqueada. Solo se puede alargar.",
+  "@settingHintSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
+  "@settingHintSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting hint."
+  },
   "settingHistory": "Historial",
   "@settingHistory": {
     "description": "#2484 settings: History button."
@@ -11133,6 +11165,34 @@
   "settingLabelDunningFirstAfterDays": "Días antes de un primer recordatorio",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelMcpConfirmationExpiryMinutes": "Tiempo de confirmación de una acción del asistente",
+  "@settingLabelMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMcpProbeFreshnessMinutes": "Vigencia de la comprobación del punto de acceso del asistente",
+  "@settingLabelMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMessagingGroupCreationPerHour": "Grupos creados por hora",
+  "@settingLabelMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelMessagingMessageRequestsPerDay": "Solicitudes de mensaje por día",
+  "@settingLabelMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingLabelSecurityBadgeLockoutFailures": "Intentos de PIN de la credencial antes del bloqueo",
+  "@settingLabelSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingLabelSecurityBadgeLockoutMinutes": "Tiempo de bloqueo de la credencial",
+  "@settingLabelSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingLabelSecurityInvitationExpiryDays": "Validez de una invitación",
+  "@settingLabelSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting label."
   },
   "settingMaxOnly": "Como máximo {max} {unit}",
   "@settingMaxOnly": {
@@ -11221,6 +11281,10 @@
   "@settingSaved": {
     "description": "#2484 settings: Snackbar."
   },
+  "settingUnitAttempts": "intentos",
+  "@settingUnitAttempts": {
+    "description": "#2485 settings: Unit."
+  },
   "settingUnitDays": "días",
   "@settingUnitDays": {
     "description": "#2484 settings: Unit."
@@ -11232,6 +11296,14 @@
   "settingUnitMinutes": "minutos",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitPerDay": "por día",
+  "@settingUnitPerDay": {
+    "description": "#2485 settings: Unit."
+  },
+  "settingUnitPerHour": "por hora",
+  "@settingUnitPerHour": {
+    "description": "#2485 settings: Unit."
   },
   "settingUnitSeconds": "segundos",
   "@settingUnitSeconds": {
