@@ -31,6 +31,12 @@ Budgets _held({
       'setState': setState,
       'repositoryInWidgets': {},
       'pairBudget': {},
+      'genericError': {},
+      'fontSize': {},
+      'colorLiteral': {},
+      'fontWeight': {},
+      'rawSpinner': {},
+      'helpCards': {},
     });
 
 void main() {
@@ -79,5 +85,29 @@ void main() {
     final text = _held(fileLength: {'lib/b.dart': 2, 'lib/a.dart': 1}).render();
     expect(text.indexOf('lib/a.dart'), lessThan(text.indexOf('lib/b.dart')));
     expect(text, contains('"lib/a.dart": 1,\n\n      "lib/b.dart": 2'));
+  });
+
+  test('a scanned literal has no default: any use without an entry fails, '
+      'a fall names the command, a raise is refused', () {
+    BudgetActuals tree(int n) => BudgetActuals(
+          partOfFiles: 3,
+          lines: const {},
+          setState: const {},
+          repositoryInWidgets: const {},
+          pairBudget: const {},
+          rawSpinner: {'lib/a/presentation/x.dart': n},
+        );
+    Budgets held(Map<String, int> spinner) => Budgets(partOfFiles: 3, maps: {
+          for (final c in budgetCategories) c: c == 'rawSpinner' ? spinner : {},
+        });
+    final fresh = budgetFailures(held({}), tree(1), only: 'rawSpinner');
+    expect(fresh.single, contains('no budget'));
+    final fell = budgetFailures(
+        held({'lib/a/presentation/x.dart': 2}), tree(1), only: 'rawSpinner');
+    expect(fell.single, contains(budgetCommand));
+    expect(nextBudgets(held({'lib/a/presentation/x.dart': 1}), tree(2)).refusals,
+        hasLength(1));
+    expect(nextBudgets(held({'lib/a/presentation/x.dart': 2}), tree(0))
+        .budgets.maps['rawSpinner'], isEmpty);
   });
 }
