@@ -1,0 +1,49 @@
+{
+  "@@locale": "fr",
+  "reserveRoomFor": "Salle de réunion · {count} personnes",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveMeetingRoom": "Salle de réunion",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
+  "reserveSlotHour": "Réservée à l'heure",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Réservée par créneaux de {minutes} minutes",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Réservée à la journée",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveParkingStandard": "Place de parking",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
+  "reserveParkingEv": "Place de parking · électrique (borne incluse)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingAccessible": "Place de parking · accessible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveEvMarker": "Recharge de véhicule électrique",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  }
+}

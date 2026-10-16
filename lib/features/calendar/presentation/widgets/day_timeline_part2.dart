@@ -46,6 +46,13 @@ extension _DayTimelineStatePart2 on _DayTimelineState {
     );
   }
 
+  /// The instant [dx] pixels along the track (the inverse of `_offsetOf`).
+  DateTime _instantAt(double dx) {
+    final minutes = (dx / TimelineAxis.hourWidth * 60).floor();
+    return WorkspaceTime.at(_dayStart.year, _dayStart.month, _dayStart.day,
+        minutes ~/ 60, minutes % 60);
+  }
+
   Widget _track(
     BuildContext context,
     Seat seat,
@@ -76,11 +83,18 @@ extension _DayTimelineStatePart2 on _DayTimelineState {
         children: [
           // Free-area tap books this seat (hub); the blocks above keep
           // their own handlers and win hit-testing.
-          if (widget.onFreeSeatTap != null && !blocked)
+          if ((widget.onFreeSeatTap != null || widget.onFreeSeatTapAt != null) &&
+              !blocked)
             Positioned.fill(
               child: InkWell(
                 key: ValueKey('timeline-free-${seat.id}'),
-                onTap: () => widget.onFreeSeatTap!(seat),
+                onTap: widget.onFreeSeatTapAt == null
+                    ? () => widget.onFreeSeatTap!(seat)
+                    : null,
+                onTapUp: widget.onFreeSeatTapAt == null
+                    ? null
+                    : (d) => widget.onFreeSeatTapAt!(
+                        seat, _instantAt(d.localPosition.dx)),
               ),
             ),
           for (final r in blocks) _block(context, r, names, brightness),

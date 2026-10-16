@@ -1,0 +1,49 @@
+{
+  "@@locale": "es",
+  "reserveRoomFor": "Sala de reuniones · {count} personas",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveMeetingRoom": "Sala de reuniones",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
+  "reserveSlotHour": "Reserva por horas",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Reserva en franjas de {minutes} minutos",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Reserva por días",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveParkingStandard": "Plaza de aparcamiento",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
+  "reserveParkingEv": "Plaza de aparcamiento · eléctrica (con punto de carga)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingAccessible": "Plaza de aparcamiento · accesible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveEvMarker": "Carga de vehículos eléctricos",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  }
+}

@@ -18118,17 +18118,63 @@
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"
   },
+  "reserveEvMarker": "Electric vehicle charging",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  },
   "reserveFullDayChip": "Full day",
   "@reserveFullDayChip": {
     "description": "Reserve hub window chip selecting the canonical 00:00–24:00 window under half-day granularity (#208)"
+  },
+  "reserveMeetingRoom": "Meeting room",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
   },
   "reserveMonthView": "Month",
   "@reserveMonthView": {
     "description": "Reserve hub view segment: month availability calendar (#7)"
   },
+  "reserveParkingAccessible": "Parking slot · accessible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveParkingEv": "Parking slot · electric (charger included)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingStandard": "Parking slot",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
   "reservePickDateTooltip": "Choose a date",
   "@reservePickDateTooltip": {
     "description": "Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)"
+  },
+  "reserveRoomFor": "Meeting room · {count} people",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Booked by the day",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveSlotHour": "Booked by the hour",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Booked in {minutes}-minute slots",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
   },
   "reserveStaleAvailability": "Offline — availability as of {time}. A seat shown free may have been taken since.",
   "@reserveStaleAvailability": {

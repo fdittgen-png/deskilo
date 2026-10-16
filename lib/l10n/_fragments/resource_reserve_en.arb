@@ -1,0 +1,49 @@
+{
+  "@@locale": "en",
+  "reserveRoomFor": "Meeting room · {count} people",
+  "@reserveRoomFor": {
+    "description": "#2631 resource_reserve: reserveRoomFor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveMeetingRoom": "Meeting room",
+  "@reserveMeetingRoom": {
+    "description": "#2631 resource_reserve: reserveMeetingRoom"
+  },
+  "reserveSlotHour": "Booked by the hour",
+  "@reserveSlotHour": {
+    "description": "#2631 resource_reserve: reserveSlotHour"
+  },
+  "reserveSlotMinutes": "Booked in {minutes}-minute slots",
+  "@reserveSlotMinutes": {
+    "description": "#2631 resource_reserve: reserveSlotMinutes",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reserveSlotDay": "Booked by the day",
+  "@reserveSlotDay": {
+    "description": "#2631 resource_reserve: reserveSlotDay"
+  },
+  "reserveParkingStandard": "Parking slot",
+  "@reserveParkingStandard": {
+    "description": "#2631 resource_reserve: reserveParkingStandard"
+  },
+  "reserveParkingEv": "Parking slot · electric (charger included)",
+  "@reserveParkingEv": {
+    "description": "#2631 resource_reserve: reserveParkingEv"
+  },
+  "reserveParkingAccessible": "Parking slot · accessible",
+  "@reserveParkingAccessible": {
+    "description": "#2631 resource_reserve: reserveParkingAccessible"
+  },
+  "reserveEvMarker": "Electric vehicle charging",
+  "@reserveEvMarker": {
+    "description": "#2631 resource_reserve: reserveEvMarker"
+  }
+}

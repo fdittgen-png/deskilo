@@ -8,7 +8,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../plan/domain/floor_plan.dart';
-import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/place_feedback.dart';
@@ -18,6 +17,7 @@ import '../../domain/space_code.dart';
 import '../../domain/whole_space_blocking.dart';
 import 'list_space_tap.dart';
 import 'place_feedback_bar.dart';
+import 'resource_row_info.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
 ///
@@ -353,12 +353,9 @@ class SeatListView extends ConsumerWidget {
             clipBehavior: Clip.none,
             children: [
               Icon(
-                switch (state) {
-                  SeatState.free => Icons.event_seat_outlined,
-                  SeatState.blocked => Icons.block,
-                  _ => Icons.event_seat,
-                },
+                seatRowIcon(seat, state),
                 color: accent,
+                semanticLabel: seatRowSemantics(l10n, seat),
               ),
               if (phaseColor != null)
                 Positioned(
@@ -380,12 +377,10 @@ class SeatListView extends ConsumerWidget {
           contentPadding:
               EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
           title: Text(seat.name.isEmpty ? place : seat.name),
-          subtitle: Text([place, stateText]
-                .where((s) => seat.name.isNotEmpty || s != place)
-                .where((s) => s.isNotEmpty)
-                .join('\n'),
-          ),
-          isThreeLine: seat.name.isNotEmpty && place.isNotEmpty,
+          subtitle:
+              Text(seatRowSubtitle(l10n, seat, place: place, stateText: stateText)),
+          isThreeLine: seat.name.isNotEmpty &&
+              (place.isNotEmpty || resourceLine(l10n, seat) != null),
           trailing: TextButton(
             key: ValueKey('list-seat-action-${seat.id}'),
             onPressed: () => onSeatTap(seat),
