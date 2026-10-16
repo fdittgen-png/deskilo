@@ -26,6 +26,7 @@ import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
 import 'data/money_repository.dart';
 import 'data/notification_service.dart';
+import 'data/plan_resource_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/public_directory_repository.dart';
 import 'data/realtime_sync.dart';
@@ -80,6 +81,7 @@ class DemoFixture {
     required this.money,
     required this.credits,
     required this.accessories,
+    required this.chargingStations,
     required this.profiles,
     required this.deployments,
     required this.directory,
@@ -125,6 +127,7 @@ class DemoFixture {
     seedDemoFields(fields);
     seedDemoRoles(roles);
     final accessories = FakeAccessoryRepository();
+    final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
@@ -188,6 +191,7 @@ class DemoFixture {
       money: money,
       credits: credits,
       accessories: accessories,
+      chargingStations: chargingStations,
       profiles: demoProfiles(),
       deployments: deployments,
       directory: directory,
@@ -222,6 +226,9 @@ class DemoFixture {
   final FakeMoneyRepository money;
   final FakeCreditRepository credits;
   final FakeAccessoryRepository accessories;
+
+  /// #2631 — the chargers of the demo's EV parking slots.
+  final FakeChargingStationRepository chargingStations;
   final FakeProfileRepository profiles;
   final FakeDeploymentRepository deployments;
 

@@ -5,7 +5,9 @@
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/editor/presentation/screens/level_canvas_screen.dart';
+import 'package:deskilo/features/plan/domain/charging_station_repository.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
+import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -24,6 +26,8 @@ Future<FakeFloorPlanRepository> pumpCanvas(
   WidgetTester tester, {
   Future<void> Function(FakeFloorPlanRepository plans, String levelId)? seed,
   FakeAccessoryRepository? accessories,
+  WorkspaceRepository? workspace,
+  ChargingStationRepository? chargingStations,
   void Function(List<Override> overrides, FakeFloorPlanRepository plans)?
   override,
 }) async {
@@ -33,6 +37,8 @@ Future<FakeFloorPlanRepository> pumpCanvas(
   final overrides = standardTestOverrides(
     floorPlan: plans,
     accessories: accessories,
+    workspace: workspace,
+    chargingStations: chargingStations,
   );
   override?.call(overrides, plans);
   await tester.pumpWidget(

@@ -19,6 +19,10 @@ enum ResourceKind { seat, room, parking }
 /// (the slot has a charging station) or accessible.
 enum ParkingKind { standard, ev, accessible }
 
+/// #2631 — what a NEW seat-table row is: the kind is fixed at creation, a
+/// room carries its capacity, a parking slot its kind.
+typedef NewResource = ({ResourceKind kind, ParkingKind? parking, int? capacity});
+
 /// The normative seat footprint (product brief): 6 cells along the sitting
 /// edge × 4 cells deep. Pinned by test.
 abstract final class SeatFootprint {

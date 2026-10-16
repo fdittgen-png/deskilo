@@ -3072,6 +3072,18 @@
   "editorAccessoriesLabel": "Accessori",
   "editorAddLevel": "Aggiungi piano",
   "editorAmenitiesLabel": "Dotazioni",
+  "editorAreaKindTitle": "Che tipo di area?",
+  "@editorAreaKindTitle": {
+    "description": "#2631 resource_editor: editorAreaKindTitle"
+  },
+  "editorAreaParking": "Area di parcheggio",
+  "@editorAreaParking": {
+    "description": "#2631 resource_editor: editorAreaParking"
+  },
+  "editorAreaWorkspace": "Area di lavoro",
+  "@editorAreaWorkspace": {
+    "description": "#2631 resource_editor: editorAreaWorkspace"
+  },
   "editorBackgroundImage": "Immagine di sfondo",
   "editorBackgroundRemove": "Rimuovi immagine di sfondo",
   "editorBackgroundReplace": "Sostituisci immagine di sfondo",
@@ -3081,6 +3093,58 @@
   "editorBookableAsWholeHint": "Qualcuno può prenotarla per intero, con tutto quello che contiene.",
   "editorCanvasSemantics": "Area di disegno della pianta",
   "editorChairLabel": "Tipo di sedia",
+  "editorChargerConnector": "Connettore",
+  "@editorChargerConnector": {
+    "description": "#2631 resource_editor: editorChargerConnector"
+  },
+  "editorChargerEnabled": "Questo posto ha una colonnina",
+  "@editorChargerEnabled": {
+    "description": "#2631 resource_editor: editorChargerEnabled"
+  },
+  "editorChargerFee": "Costo d'uso",
+  "@editorChargerFee": {
+    "description": "#2631 resource_editor: editorChargerFee"
+  },
+  "editorChargerFeeNone": "Nessun costo",
+  "@editorChargerFeeNone": {
+    "description": "#2631 resource_editor: editorChargerFeeNone"
+  },
+  "editorChargerInService": "In servizio",
+  "@editorChargerInService": {
+    "description": "#2631 resource_editor: editorChargerInService"
+  },
+  "editorChargerInvalid": "Inserisca la potenza come numero maggiore di 0.",
+  "@editorChargerInvalid": {
+    "description": "#2631 resource_editor: editorChargerInvalid"
+  },
+  "editorChargerPower": "Potenza (kW)",
+  "@editorChargerPower": {
+    "description": "#2631 resource_editor: editorChargerPower"
+  },
+  "editorChargerTitle": "Colonnina di ricarica",
+  "@editorChargerTitle": {
+    "description": "#2631 resource_editor: editorChargerTitle"
+  },
+  "editorConnectorCcs": "CCS",
+  "@editorConnectorCcs": {
+    "description": "#2631 resource_editor: editorConnectorCcs"
+  },
+  "editorConnectorChademo": "CHAdeMO",
+  "@editorConnectorChademo": {
+    "description": "#2631 resource_editor: editorConnectorChademo"
+  },
+  "editorConnectorSchuko": "Presa domestica",
+  "@editorConnectorSchuko": {
+    "description": "#2631 resource_editor: editorConnectorSchuko"
+  },
+  "editorConnectorTesla": "Tesla",
+  "@editorConnectorTesla": {
+    "description": "#2631 resource_editor: editorConnectorTesla"
+  },
+  "editorConnectorType2": "Tipo 2",
+  "@editorConnectorType2": {
+    "description": "#2631 resource_editor: editorConnectorType2"
+  },
   "editorDeleteElementConfirm": "Eliminare questo elemento? Anche tutto ciò che vi è posizionato sopra verrà rimosso.",
   "editorDeleteElementConfirmAudit": "Eliminare questo elemento? Anche tutto ciò che vi è collocato viene rimosso. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
   "@editorDeleteElementConfirmAudit": {
@@ -3119,10 +3183,62 @@
   "editorOpenTooltip": "Modifica spazio",
   "editorOrientationHint": "Da che parte guarda la sedia sulla pianta.",
   "editorOrientationLabel": "Direzione di seduta",
+  "editorParkingAccessible": "Accessibile",
+  "@editorParkingAccessible": {
+    "description": "#2631 resource_editor: editorParkingAccessible"
+  },
+  "editorParkingEv": "Elettrico (EV)",
+  "@editorParkingEv": {
+    "description": "#2631 resource_editor: editorParkingEv"
+  },
+  "editorParkingKindLabel": "Tipo di posto",
+  "@editorParkingKindLabel": {
+    "description": "#2631 resource_editor: editorParkingKindLabel"
+  },
+  "editorParkingNameDefault": "Parcheggio",
+  "@editorParkingNameDefault": {
+    "description": "#2631 resource_editor: editorParkingNameDefault"
+  },
+  "editorParkingSlotNameDefault": "Posto",
+  "@editorParkingSlotNameDefault": {
+    "description": "#2631 resource_editor: editorParkingSlotNameDefault"
+  },
+  "editorParkingSlotProperties": "Posto auto",
+  "@editorParkingSlotProperties": {
+    "description": "#2631 resource_editor: editorParkingSlotProperties"
+  },
+  "editorParkingStandard": "Standard",
+  "@editorParkingStandard": {
+    "description": "#2631 resource_editor: editorParkingStandard"
+  },
   "editorPlacementOutside": "Deve trovarsi completamente all'interno di un ufficio.",
   "editorPlacementOverlap": "Si sovrappone a un elemento esistente.",
   "editorProperties": "Proprietà",
   "editorRenameLevel": "Rinomina",
+  "editorResourceKindTitle": "Cosa posiziona?",
+  "@editorResourceKindTitle": {
+    "description": "#2631 resource_editor: editorResourceKindTitle"
+  },
+  "editorResourceRoom": "Sala riunioni",
+  "@editorResourceRoom": {
+    "description": "#2631 resource_editor: editorResourceRoom"
+  },
+  "editorResourceSeat": "Postazione",
+  "@editorResourceSeat": {
+    "description": "#2631 resource_editor: editorResourceSeat"
+  },
+  "editorRoomCapacityLabel": "Capacità (persone)",
+  "@editorRoomCapacityLabel": {
+    "description": "#2631 resource_editor: editorRoomCapacityLabel"
+  },
+  "editorRoomNameDefault": "Sala",
+  "@editorRoomNameDefault": {
+    "description": "#2631 resource_editor: editorRoomNameDefault"
+  },
+  "editorRoomProperties": "Sala riunioni",
+  "@editorRoomProperties": {
+    "description": "#2631 resource_editor: editorRoomProperties"
+  },
   "editorSeatNameDefault": "Posto",
   "editorSeatNameLabel": "Nome del posto",
   "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia.",
@@ -3132,6 +3248,30 @@
   "editorSeatNfcReadFailed": "Impossibile avviare il lettore di tag.",
   "editorSeatNoDesk": "I posti possono essere collocati solo su una scrivania.",
   "editorSeatProperties": "Posto",
+  "editorSlot15": "15 minuti",
+  "@editorSlot15": {
+    "description": "#2631 resource_editor: editorSlot15"
+  },
+  "editorSlot30": "30 minuti",
+  "@editorSlot30": {
+    "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot60": "1 ora",
+  "@editorSlot60": {
+    "description": "#2631 resource_editor: editorSlot60"
+  },
+  "editorSlotDay": "Giornata intera",
+  "@editorSlotDay": {
+    "description": "#2631 resource_editor: editorSlotDay"
+  },
+  "editorSlotLabel": "Fascia di prenotazione",
+  "@editorSlotLabel": {
+    "description": "#2631 resource_editor: editorSlotLabel"
+  },
+  "editorSlotWorkspace": "Valore dello spazio",
+  "@editorSlotWorkspace": {
+    "description": "#2631 resource_editor: editorSlotWorkspace"
+  },
   "editorTitle": "Editor dello spazio",
   "editorToolDesk": "Scrivania",
   "editorToolErase": "Cancella",

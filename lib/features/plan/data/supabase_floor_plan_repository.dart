@@ -609,6 +609,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'blocked_from': seat.blockedFrom?.toUtc().toIso8601String(),
       'blocked_to': seat.blockedTo?.toUtc().toIso8601String(),
       'nfc_uid': seat.nfcUid, 'slot_minutes': seat.slotMinutes, 'capacity': seat.capacity,
+      'parking_kind': seat.parkingKind?.name,
     }).eq('id', seat.id);
     await _bust();
   }

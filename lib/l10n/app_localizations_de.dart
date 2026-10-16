@@ -4295,6 +4295,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editorAmenitiesLabel => 'Ausstattung';
 
   @override
+  String get editorAreaKindTitle => 'Welche Art von Bereich?';
+
+  @override
+  String get editorAreaParking => 'Parkbereich';
+
+  @override
+  String get editorAreaWorkspace => 'Arbeitsbereich';
+
+  @override
   String get editorBackgroundImage => 'Hintergrundbild';
 
   @override
@@ -4321,6 +4330,46 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorChairLabel => 'Stuhltyp';
+
+  @override
+  String get editorChargerConnector => 'Anschluss';
+
+  @override
+  String get editorChargerEnabled => 'Dieser Stellplatz hat eine Ladestation';
+
+  @override
+  String get editorChargerFee => 'Nutzungsentgelt';
+
+  @override
+  String get editorChargerFeeNone => 'Kein Entgelt';
+
+  @override
+  String get editorChargerInService => 'In Betrieb';
+
+  @override
+  String get editorChargerInvalid =>
+      'Geben Sie die Leistung als Zahl größer 0 ein.';
+
+  @override
+  String get editorChargerPower => 'Leistung (kW)';
+
+  @override
+  String get editorChargerTitle => 'Ladestation';
+
+  @override
+  String get editorConnectorCcs => 'CCS';
+
+  @override
+  String get editorConnectorChademo => 'CHAdeMO';
+
+  @override
+  String get editorConnectorSchuko => 'Haushaltssteckdose';
+
+  @override
+  String get editorConnectorTesla => 'Tesla';
+
+  @override
+  String get editorConnectorType2 => 'Typ 2';
 
   @override
   String get editorDeleteElementConfirm =>
@@ -4430,6 +4479,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editorOrientationLabel => 'Sitzrichtung';
 
   @override
+  String get editorParkingAccessible => 'Barrierefrei';
+
+  @override
+  String get editorParkingEv => 'Elektro (EV)';
+
+  @override
+  String get editorParkingKindLabel => 'Stellplatzart';
+
+  @override
+  String get editorParkingNameDefault => 'Parkplatz';
+
+  @override
+  String get editorParkingSlotNameDefault => 'Stellplatz';
+
+  @override
+  String get editorParkingSlotProperties => 'Stellplatz';
+
+  @override
+  String get editorParkingStandard => 'Standard';
+
+  @override
   String get editorPlacementOutside =>
       'Muss vollständig innerhalb eines Büros liegen.';
 
@@ -4441,6 +4511,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorRenameLevel => 'Umbenennen';
+
+  @override
+  String get editorResourceKindTitle => 'Was platzieren Sie?';
+
+  @override
+  String get editorResourceRoom => 'Besprechungsraum';
+
+  @override
+  String get editorResourceSeat => 'Sitzplatz';
+
+  @override
+  String get editorRoomCapacityLabel => 'Kapazität (Personen)';
+
+  @override
+  String get editorRoomNameDefault => 'Raum';
+
+  @override
+  String get editorRoomProperties => 'Besprechungsraum';
 
   @override
   String get editorSeatNameDefault => 'Platz';
@@ -4472,6 +4560,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorSeatProperties => 'Platz';
+
+  @override
+  String get editorSlot15 => '15 Minuten';
+
+  @override
+  String get editorSlot30 => '30 Minuten';
+
+  @override
+  String get editorSlot60 => '1 Stunde';
+
+  @override
+  String get editorSlotDay => 'Ganzer Tag';
+
+  @override
+  String get editorSlotLabel => 'Buchungsslot';
+
+  @override
+  String get editorSlotWorkspace => 'Standard des Arbeitsbereichs';
 
   @override
   String get editorTitle => 'Workspace-Editor';

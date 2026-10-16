@@ -300,6 +300,8 @@ void main() {
 /// this test compares it against what [demoOverrides] actually
 /// overrides, and against the repository providers the app declares.
 const Set<String> demoOverriddenProviders = {
+  'chargingStationRepositoryProvider', // #2631
+  'planResourceRepositoryProvider', // #2631
   'bookProfileRepositoryProvider', // #1869
   'salesTaxRepositoryProvider', // #2362
   'settingsRepositoryProvider', // #2484
