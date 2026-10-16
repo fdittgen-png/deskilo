@@ -1,0 +1,143 @@
+{
+  "@@locale": "de",
+  "editorAreaKindTitle": "Welche Art von Bereich?",
+  "@editorAreaKindTitle": {
+    "description": "#2631 resource_editor: editorAreaKindTitle"
+  },
+  "editorAreaWorkspace": "Arbeitsbereich",
+  "@editorAreaWorkspace": {
+    "description": "#2631 resource_editor: editorAreaWorkspace"
+  },
+  "editorAreaParking": "Parkbereich",
+  "@editorAreaParking": {
+    "description": "#2631 resource_editor: editorAreaParking"
+  },
+  "editorParkingNameDefault": "Parkplatz",
+  "@editorParkingNameDefault": {
+    "description": "#2631 resource_editor: editorParkingNameDefault"
+  },
+  "editorResourceKindTitle": "Was platzieren Sie?",
+  "@editorResourceKindTitle": {
+    "description": "#2631 resource_editor: editorResourceKindTitle"
+  },
+  "editorResourceSeat": "Sitzplatz",
+  "@editorResourceSeat": {
+    "description": "#2631 resource_editor: editorResourceSeat"
+  },
+  "editorResourceRoom": "Besprechungsraum",
+  "@editorResourceRoom": {
+    "description": "#2631 resource_editor: editorResourceRoom"
+  },
+  "editorRoomNameDefault": "Raum",
+  "@editorRoomNameDefault": {
+    "description": "#2631 resource_editor: editorRoomNameDefault"
+  },
+  "editorParkingSlotNameDefault": "Stellplatz",
+  "@editorParkingSlotNameDefault": {
+    "description": "#2631 resource_editor: editorParkingSlotNameDefault"
+  },
+  "editorRoomProperties": "Besprechungsraum",
+  "@editorRoomProperties": {
+    "description": "#2631 resource_editor: editorRoomProperties"
+  },
+  "editorParkingSlotProperties": "Stellplatz",
+  "@editorParkingSlotProperties": {
+    "description": "#2631 resource_editor: editorParkingSlotProperties"
+  },
+  "editorRoomCapacityLabel": "Kapazität (Personen)",
+  "@editorRoomCapacityLabel": {
+    "description": "#2631 resource_editor: editorRoomCapacityLabel"
+  },
+  "editorSlotLabel": "Buchungsslot",
+  "@editorSlotLabel": {
+    "description": "#2631 resource_editor: editorSlotLabel"
+  },
+  "editorSlotWorkspace": "Standard des Arbeitsbereichs",
+  "@editorSlotWorkspace": {
+    "description": "#2631 resource_editor: editorSlotWorkspace"
+  },
+  "editorSlot15": "15 Minuten",
+  "@editorSlot15": {
+    "description": "#2631 resource_editor: editorSlot15"
+  },
+  "editorSlot30": "30 Minuten",
+  "@editorSlot30": {
+    "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot60": "1 Stunde",
+  "@editorSlot60": {
+    "description": "#2631 resource_editor: editorSlot60"
+  },
+  "editorSlotDay": "Ganzer Tag",
+  "@editorSlotDay": {
+    "description": "#2631 resource_editor: editorSlotDay"
+  },
+  "editorParkingKindLabel": "Stellplatzart",
+  "@editorParkingKindLabel": {
+    "description": "#2631 resource_editor: editorParkingKindLabel"
+  },
+  "editorParkingStandard": "Standard",
+  "@editorParkingStandard": {
+    "description": "#2631 resource_editor: editorParkingStandard"
+  },
+  "editorParkingEv": "Elektro (EV)",
+  "@editorParkingEv": {
+    "description": "#2631 resource_editor: editorParkingEv"
+  },
+  "editorParkingAccessible": "Barrierefrei",
+  "@editorParkingAccessible": {
+    "description": "#2631 resource_editor: editorParkingAccessible"
+  },
+  "editorChargerTitle": "Ladestation",
+  "@editorChargerTitle": {
+    "description": "#2631 resource_editor: editorChargerTitle"
+  },
+  "editorChargerEnabled": "Dieser Stellplatz hat eine Ladestation",
+  "@editorChargerEnabled": {
+    "description": "#2631 resource_editor: editorChargerEnabled"
+  },
+  "editorChargerConnector": "Anschluss",
+  "@editorChargerConnector": {
+    "description": "#2631 resource_editor: editorChargerConnector"
+  },
+  "editorConnectorType2": "Typ 2",
+  "@editorConnectorType2": {
+    "description": "#2631 resource_editor: editorConnectorType2"
+  },
+  "editorConnectorCcs": "CCS",
+  "@editorConnectorCcs": {
+    "description": "#2631 resource_editor: editorConnectorCcs"
+  },
+  "editorConnectorChademo": "CHAdeMO",
+  "@editorConnectorChademo": {
+    "description": "#2631 resource_editor: editorConnectorChademo"
+  },
+  "editorConnectorTesla": "Tesla",
+  "@editorConnectorTesla": {
+    "description": "#2631 resource_editor: editorConnectorTesla"
+  },
+  "editorConnectorSchuko": "Haushaltssteckdose",
+  "@editorConnectorSchuko": {
+    "description": "#2631 resource_editor: editorConnectorSchuko"
+  },
+  "editorChargerPower": "Leistung (kW)",
+  "@editorChargerPower": {
+    "description": "#2631 resource_editor: editorChargerPower"
+  },
+  "editorChargerFee": "Nutzungsentgelt",
+  "@editorChargerFee": {
+    "description": "#2631 resource_editor: editorChargerFee"
+  },
+  "editorChargerFeeNone": "Kein Entgelt",
+  "@editorChargerFeeNone": {
+    "description": "#2631 resource_editor: editorChargerFeeNone"
+  },
+  "editorChargerInService": "In Betrieb",
+  "@editorChargerInService": {
+    "description": "#2631 resource_editor: editorChargerInService"
+  },
+  "editorChargerInvalid": "Geben Sie die Leistung als Zahl größer 0 ein.",
+  "@editorChargerInvalid": {
+    "description": "#2631 resource_editor: editorChargerInvalid"
+  }
+}

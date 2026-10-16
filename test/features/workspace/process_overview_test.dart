@@ -18,8 +18,8 @@ import '../../helpers/screens/features.dart' show pumpFeatures;
 /// One stored map that puts four processes in four different states:
 ///
 /// * Integrations & automation — every feature on: Active. Three are
-///   on by default; `mcpAccess` (#1607) ships OFF, so the fixture switches
-///   it on — the state under test is "nothing left to switch on", not
+///   on by default; `mcpAccess` (#1607) and `webMcp` (#2504) ship OFF, so
+///   the fixture switches them on — the state under test is "nothing left to switch on", not
 ///   what the process ships with.
 /// * Space management — some default-off features: Partial.
 /// * Calendar & coordination — all sixteen switched off: Available.
@@ -27,6 +27,7 @@ import '../../helpers/screens/features.dart' show pumpFeatures;
 ///   their own switches stay on: Needs attention.
 const _fixture = <String, dynamic>{
   'mcpAccess': true,
+  'webMcp': true,
   'kioskMode': false,
   'calendarTab': false,
   'calendarHub': false,

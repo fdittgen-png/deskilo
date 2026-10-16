@@ -3072,6 +3072,18 @@
   "editorAccessoriesLabel": "Accesorios",
   "editorAddLevel": "Añadir planta",
   "editorAmenitiesLabel": "Equipamiento",
+  "editorAreaKindTitle": "¿Qué tipo de zona?",
+  "@editorAreaKindTitle": {
+    "description": "#2631 resource_editor: editorAreaKindTitle"
+  },
+  "editorAreaParking": "Zona de aparcamiento",
+  "@editorAreaParking": {
+    "description": "#2631 resource_editor: editorAreaParking"
+  },
+  "editorAreaWorkspace": "Zona de trabajo",
+  "@editorAreaWorkspace": {
+    "description": "#2631 resource_editor: editorAreaWorkspace"
+  },
   "editorBackgroundImage": "Imagen de fondo",
   "editorBackgroundRemove": "Quitar imagen de fondo",
   "editorBackgroundReplace": "Reemplazar imagen de fondo",
@@ -3081,6 +3093,58 @@
   "editorBookableAsWholeHint": "Alguien puede reservarla entera, con todo lo que hay dentro.",
   "editorCanvasSemantics": "Área de dibujo del plano",
   "editorChairLabel": "Tipo de silla",
+  "editorChargerConnector": "Conector",
+  "@editorChargerConnector": {
+    "description": "#2631 resource_editor: editorChargerConnector"
+  },
+  "editorChargerEnabled": "Esta plaza tiene punto de carga",
+  "@editorChargerEnabled": {
+    "description": "#2631 resource_editor: editorChargerEnabled"
+  },
+  "editorChargerFee": "Tarifa de uso",
+  "@editorChargerFee": {
+    "description": "#2631 resource_editor: editorChargerFee"
+  },
+  "editorChargerFeeNone": "Sin tarifa",
+  "@editorChargerFeeNone": {
+    "description": "#2631 resource_editor: editorChargerFeeNone"
+  },
+  "editorChargerInService": "En servicio",
+  "@editorChargerInService": {
+    "description": "#2631 resource_editor: editorChargerInService"
+  },
+  "editorChargerInvalid": "Introduzca la potencia como un número mayor que 0.",
+  "@editorChargerInvalid": {
+    "description": "#2631 resource_editor: editorChargerInvalid"
+  },
+  "editorChargerPower": "Potencia (kW)",
+  "@editorChargerPower": {
+    "description": "#2631 resource_editor: editorChargerPower"
+  },
+  "editorChargerTitle": "Punto de carga",
+  "@editorChargerTitle": {
+    "description": "#2631 resource_editor: editorChargerTitle"
+  },
+  "editorConnectorCcs": "CCS",
+  "@editorConnectorCcs": {
+    "description": "#2631 resource_editor: editorConnectorCcs"
+  },
+  "editorConnectorChademo": "CHAdeMO",
+  "@editorConnectorChademo": {
+    "description": "#2631 resource_editor: editorConnectorChademo"
+  },
+  "editorConnectorSchuko": "Enchufe doméstico",
+  "@editorConnectorSchuko": {
+    "description": "#2631 resource_editor: editorConnectorSchuko"
+  },
+  "editorConnectorTesla": "Tesla",
+  "@editorConnectorTesla": {
+    "description": "#2631 resource_editor: editorConnectorTesla"
+  },
+  "editorConnectorType2": "Tipo 2",
+  "@editorConnectorType2": {
+    "description": "#2631 resource_editor: editorConnectorType2"
+  },
   "editorDeleteElementConfirm": "¿Eliminar este elemento? Todo lo colocado sobre él también se eliminará.",
   "editorDeleteElementConfirmAudit": "¿Eliminar este elemento? Todo lo colocado sobre él también se elimina. Las reservas que hacen referencia a él conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
   "@editorDeleteElementConfirmAudit": {
@@ -3119,10 +3183,62 @@
   "editorOpenTooltip": "Editar espacio",
   "editorOrientationHint": "Hacia dónde mira la silla en el plano.",
   "editorOrientationLabel": "Dirección de asiento",
+  "editorParkingAccessible": "Accesible",
+  "@editorParkingAccessible": {
+    "description": "#2631 resource_editor: editorParkingAccessible"
+  },
+  "editorParkingEv": "Eléctrica (VE)",
+  "@editorParkingEv": {
+    "description": "#2631 resource_editor: editorParkingEv"
+  },
+  "editorParkingKindLabel": "Tipo de plaza",
+  "@editorParkingKindLabel": {
+    "description": "#2631 resource_editor: editorParkingKindLabel"
+  },
+  "editorParkingNameDefault": "Aparcamiento",
+  "@editorParkingNameDefault": {
+    "description": "#2631 resource_editor: editorParkingNameDefault"
+  },
+  "editorParkingSlotNameDefault": "Plaza",
+  "@editorParkingSlotNameDefault": {
+    "description": "#2631 resource_editor: editorParkingSlotNameDefault"
+  },
+  "editorParkingSlotProperties": "Plaza de aparcamiento",
+  "@editorParkingSlotProperties": {
+    "description": "#2631 resource_editor: editorParkingSlotProperties"
+  },
+  "editorParkingStandard": "Estándar",
+  "@editorParkingStandard": {
+    "description": "#2631 resource_editor: editorParkingStandard"
+  },
   "editorPlacementOutside": "Debe estar completamente dentro de una oficina.",
   "editorPlacementOverlap": "Se superpone con un elemento existente.",
   "editorProperties": "Propiedades",
   "editorRenameLevel": "Renombrar",
+  "editorResourceKindTitle": "¿Qué coloca?",
+  "@editorResourceKindTitle": {
+    "description": "#2631 resource_editor: editorResourceKindTitle"
+  },
+  "editorResourceRoom": "Sala de reuniones",
+  "@editorResourceRoom": {
+    "description": "#2631 resource_editor: editorResourceRoom"
+  },
+  "editorResourceSeat": "Puesto",
+  "@editorResourceSeat": {
+    "description": "#2631 resource_editor: editorResourceSeat"
+  },
+  "editorRoomCapacityLabel": "Capacidad (personas)",
+  "@editorRoomCapacityLabel": {
+    "description": "#2631 resource_editor: editorRoomCapacityLabel"
+  },
+  "editorRoomNameDefault": "Sala",
+  "@editorRoomNameDefault": {
+    "description": "#2631 resource_editor: editorRoomNameDefault"
+  },
+  "editorRoomProperties": "Sala de reuniones",
+  "@editorRoomProperties": {
+    "description": "#2631 resource_editor: editorRoomProperties"
+  },
   "editorSeatNameDefault": "Asiento",
   "editorSeatNameLabel": "Nombre del asiento",
   "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla.",
@@ -3132,6 +3248,30 @@
   "editorSeatNfcReadFailed": "No se pudo iniciar el lector de etiquetas.",
   "editorSeatNoDesk": "Los asientos solo pueden colocarse sobre una mesa.",
   "editorSeatProperties": "Asiento",
+  "editorSlot15": "15 minutos",
+  "@editorSlot15": {
+    "description": "#2631 resource_editor: editorSlot15"
+  },
+  "editorSlot30": "30 minutos",
+  "@editorSlot30": {
+    "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot60": "1 hora",
+  "@editorSlot60": {
+    "description": "#2631 resource_editor: editorSlot60"
+  },
+  "editorSlotDay": "Día completo",
+  "@editorSlotDay": {
+    "description": "#2631 resource_editor: editorSlotDay"
+  },
+  "editorSlotLabel": "Franja de reserva",
+  "@editorSlotLabel": {
+    "description": "#2631 resource_editor: editorSlotLabel"
+  },
+  "editorSlotWorkspace": "Valor del espacio",
+  "@editorSlotWorkspace": {
+    "description": "#2631 resource_editor: editorSlotWorkspace"
+  },
   "editorTitle": "Editor del espacio",
   "editorToolDesk": "Mesa",
   "editorToolErase": "Borrar",
@@ -4286,6 +4426,14 @@
   },
   "featureViesVerificationDesc": "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.",
   "featureViesVerificationTitle": "Comprobación del número de IVA (VIES)",
+  "featureWebMcpDesc": "Permite que un agente de IA del navegador use las funciones propias de la aplicación, cada una con la confirmación de la persona y los permisos que ya tiene. Requiere la interfaz MCP. Desactivado: no se ofrece ninguna herramienta.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Herramientas para agentes del navegador",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "Integración con WhatsApp",
   "featureWhatsappIntegrationDesc": "Los miembros comparten su número de WhatsApp en su perfil; un toque en un miembro abre el chat; el enlace del grupo en el directorio. Sin integración de WhatsApp en el servidor.",
   "featureWorkingHours": "Horario laboral",

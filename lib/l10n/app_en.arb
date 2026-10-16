@@ -4954,6 +4954,18 @@
   "@editorAmenitiesLabel": {
     "description": "Label above the amenity filter chips"
   },
+  "editorAreaKindTitle": "What kind of area?",
+  "@editorAreaKindTitle": {
+    "description": "#2631 resource_editor: editorAreaKindTitle"
+  },
+  "editorAreaParking": "Parking area",
+  "@editorAreaParking": {
+    "description": "#2631 resource_editor: editorAreaParking"
+  },
+  "editorAreaWorkspace": "Workspace area",
+  "@editorAreaWorkspace": {
+    "description": "#2631 resource_editor: editorAreaWorkspace"
+  },
   "editorBackgroundImage": "Background image",
   "@editorBackgroundImage": {
     "description": "Editor app-bar action opening the level background-image menu (0036)"
@@ -4989,6 +5001,58 @@
   "editorChairLabel": "Chair type",
   "@editorChairLabel": {
     "description": "Label of the free-text chair-type input"
+  },
+  "editorChargerConnector": "Connector",
+  "@editorChargerConnector": {
+    "description": "#2631 resource_editor: editorChargerConnector"
+  },
+  "editorChargerEnabled": "A charger belongs to this slot",
+  "@editorChargerEnabled": {
+    "description": "#2631 resource_editor: editorChargerEnabled"
+  },
+  "editorChargerFee": "Usage fee",
+  "@editorChargerFee": {
+    "description": "#2631 resource_editor: editorChargerFee"
+  },
+  "editorChargerFeeNone": "No fee",
+  "@editorChargerFeeNone": {
+    "description": "#2631 resource_editor: editorChargerFeeNone"
+  },
+  "editorChargerInService": "In service",
+  "@editorChargerInService": {
+    "description": "#2631 resource_editor: editorChargerInService"
+  },
+  "editorChargerInvalid": "Enter the power as a number above 0.",
+  "@editorChargerInvalid": {
+    "description": "#2631 resource_editor: editorChargerInvalid"
+  },
+  "editorChargerPower": "Power (kW)",
+  "@editorChargerPower": {
+    "description": "#2631 resource_editor: editorChargerPower"
+  },
+  "editorChargerTitle": "Charging station",
+  "@editorChargerTitle": {
+    "description": "#2631 resource_editor: editorChargerTitle"
+  },
+  "editorConnectorCcs": "CCS",
+  "@editorConnectorCcs": {
+    "description": "#2631 resource_editor: editorConnectorCcs"
+  },
+  "editorConnectorChademo": "CHAdeMO",
+  "@editorConnectorChademo": {
+    "description": "#2631 resource_editor: editorConnectorChademo"
+  },
+  "editorConnectorSchuko": "Household socket",
+  "@editorConnectorSchuko": {
+    "description": "#2631 resource_editor: editorConnectorSchuko"
+  },
+  "editorConnectorTesla": "Tesla",
+  "@editorConnectorTesla": {
+    "description": "#2631 resource_editor: editorConnectorTesla"
+  },
+  "editorConnectorType2": "Type 2",
+  "@editorConnectorType2": {
+    "description": "#2631 resource_editor: editorConnectorType2"
   },
   "editorDeleteElementConfirm": "Delete this element? Anything placed on it is removed too.",
   "@editorDeleteElementConfirm": {
@@ -5118,6 +5182,34 @@
   "@editorOrientationLabel": {
     "description": "Label above the seat orientation arrows (n/e/s/w)"
   },
+  "editorParkingAccessible": "Accessible",
+  "@editorParkingAccessible": {
+    "description": "#2631 resource_editor: editorParkingAccessible"
+  },
+  "editorParkingEv": "Electric (EV)",
+  "@editorParkingEv": {
+    "description": "#2631 resource_editor: editorParkingEv"
+  },
+  "editorParkingKindLabel": "Slot type",
+  "@editorParkingKindLabel": {
+    "description": "#2631 resource_editor: editorParkingKindLabel"
+  },
+  "editorParkingNameDefault": "Parking",
+  "@editorParkingNameDefault": {
+    "description": "#2631 resource_editor: editorParkingNameDefault"
+  },
+  "editorParkingSlotNameDefault": "Slot",
+  "@editorParkingSlotNameDefault": {
+    "description": "#2631 resource_editor: editorParkingSlotNameDefault"
+  },
+  "editorParkingSlotProperties": "Parking slot",
+  "@editorParkingSlotProperties": {
+    "description": "#2631 resource_editor: editorParkingSlotProperties"
+  },
+  "editorParkingStandard": "Standard",
+  "@editorParkingStandard": {
+    "description": "#2631 resource_editor: editorParkingStandard"
+  },
   "editorPlacementOutside": "Must be fully inside an office.",
   "@editorPlacementOutside": {
     "description": "Snackbar when a desk/seat is not fully inside its parent"
@@ -5133,6 +5225,30 @@
   "editorRenameLevel": "Rename",
   "@editorRenameLevel": {
     "description": "Menu action renaming a level"
+  },
+  "editorResourceKindTitle": "What do you place?",
+  "@editorResourceKindTitle": {
+    "description": "#2631 resource_editor: editorResourceKindTitle"
+  },
+  "editorResourceRoom": "Meeting room",
+  "@editorResourceRoom": {
+    "description": "#2631 resource_editor: editorResourceRoom"
+  },
+  "editorResourceSeat": "Seat",
+  "@editorResourceSeat": {
+    "description": "#2631 resource_editor: editorResourceSeat"
+  },
+  "editorRoomCapacityLabel": "Capacity (people)",
+  "@editorRoomCapacityLabel": {
+    "description": "#2631 resource_editor: editorRoomCapacityLabel"
+  },
+  "editorRoomNameDefault": "Room",
+  "@editorRoomNameDefault": {
+    "description": "#2631 resource_editor: editorRoomNameDefault"
+  },
+  "editorRoomProperties": "Meeting room",
+  "@editorRoomProperties": {
+    "description": "#2631 resource_editor: editorRoomProperties"
   },
   "editorSeatNameDefault": "Seat",
   "@editorSeatNameDefault": {
@@ -5154,6 +5270,30 @@
   "editorSeatProperties": "Seat",
   "@editorSeatProperties": {
     "description": "Title of the seat property sheet"
+  },
+  "editorSlot15": "15 minutes",
+  "@editorSlot15": {
+    "description": "#2631 resource_editor: editorSlot15"
+  },
+  "editorSlot30": "30 minutes",
+  "@editorSlot30": {
+    "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot60": "1 hour",
+  "@editorSlot60": {
+    "description": "#2631 resource_editor: editorSlot60"
+  },
+  "editorSlotDay": "Full day",
+  "@editorSlotDay": {
+    "description": "#2631 resource_editor: editorSlotDay"
+  },
+  "editorSlotLabel": "Booking slot",
+  "@editorSlotLabel": {
+    "description": "#2631 resource_editor: editorSlotLabel"
+  },
+  "editorSlotWorkspace": "Workspace default",
+  "@editorSlotWorkspace": {
+    "description": "#2631 resource_editor: editorSlotWorkspace"
   },
   "editorTitle": "Workspace editor",
   "@editorTitle": {
@@ -7111,6 +7251,14 @@
   "featureViesVerificationTitle": "VAT number check (VIES)",
   "@featureViesVerificationTitle": {
     "description": "#2354 VIES evidence: featureViesVerificationTitle"
+  },
+  "featureWebMcpDesc": "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Browser agent tools",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
   },
   "featureWhatsappIntegration": "WhatsApp integration",
   "@featureWhatsappIntegration": {

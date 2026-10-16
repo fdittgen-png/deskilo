@@ -3072,6 +3072,18 @@
   "editorAccessoriesLabel": "Zubehör",
   "editorAddLevel": "Etage hinzufügen",
   "editorAmenitiesLabel": "Ausstattung",
+  "editorAreaKindTitle": "Welche Art von Bereich?",
+  "@editorAreaKindTitle": {
+    "description": "#2631 resource_editor: editorAreaKindTitle"
+  },
+  "editorAreaParking": "Parkbereich",
+  "@editorAreaParking": {
+    "description": "#2631 resource_editor: editorAreaParking"
+  },
+  "editorAreaWorkspace": "Arbeitsbereich",
+  "@editorAreaWorkspace": {
+    "description": "#2631 resource_editor: editorAreaWorkspace"
+  },
   "editorBackgroundImage": "Hintergrundbild",
   "editorBackgroundRemove": "Hintergrundbild entfernen",
   "editorBackgroundReplace": "Hintergrundbild ersetzen",
@@ -3081,6 +3093,58 @@
   "editorBookableAsWholeHint": "Jemand kann ihn ganz reservieren, mit allem darin.",
   "editorCanvasSemantics": "Zeichenfläche des Grundrisses",
   "editorChairLabel": "Stuhltyp",
+  "editorChargerConnector": "Anschluss",
+  "@editorChargerConnector": {
+    "description": "#2631 resource_editor: editorChargerConnector"
+  },
+  "editorChargerEnabled": "Dieser Stellplatz hat eine Ladestation",
+  "@editorChargerEnabled": {
+    "description": "#2631 resource_editor: editorChargerEnabled"
+  },
+  "editorChargerFee": "Nutzungsentgelt",
+  "@editorChargerFee": {
+    "description": "#2631 resource_editor: editorChargerFee"
+  },
+  "editorChargerFeeNone": "Kein Entgelt",
+  "@editorChargerFeeNone": {
+    "description": "#2631 resource_editor: editorChargerFeeNone"
+  },
+  "editorChargerInService": "In Betrieb",
+  "@editorChargerInService": {
+    "description": "#2631 resource_editor: editorChargerInService"
+  },
+  "editorChargerInvalid": "Geben Sie die Leistung als Zahl größer 0 ein.",
+  "@editorChargerInvalid": {
+    "description": "#2631 resource_editor: editorChargerInvalid"
+  },
+  "editorChargerPower": "Leistung (kW)",
+  "@editorChargerPower": {
+    "description": "#2631 resource_editor: editorChargerPower"
+  },
+  "editorChargerTitle": "Ladestation",
+  "@editorChargerTitle": {
+    "description": "#2631 resource_editor: editorChargerTitle"
+  },
+  "editorConnectorCcs": "CCS",
+  "@editorConnectorCcs": {
+    "description": "#2631 resource_editor: editorConnectorCcs"
+  },
+  "editorConnectorChademo": "CHAdeMO",
+  "@editorConnectorChademo": {
+    "description": "#2631 resource_editor: editorConnectorChademo"
+  },
+  "editorConnectorSchuko": "Haushaltssteckdose",
+  "@editorConnectorSchuko": {
+    "description": "#2631 resource_editor: editorConnectorSchuko"
+  },
+  "editorConnectorTesla": "Tesla",
+  "@editorConnectorTesla": {
+    "description": "#2631 resource_editor: editorConnectorTesla"
+  },
+  "editorConnectorType2": "Typ 2",
+  "@editorConnectorType2": {
+    "description": "#2631 resource_editor: editorConnectorType2"
+  },
   "editorDeleteElementConfirm": "Dieses Element löschen? Alles darauf wird ebenfalls entfernt.",
   "editorDeleteElementConfirmAudit": "Dieses Element löschen? Alles darauf Platzierte wird ebenfalls entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
   "@editorDeleteElementConfirmAudit": {
@@ -3119,10 +3183,62 @@
   "editorOpenTooltip": "Workspace bearbeiten",
   "editorOrientationHint": "Wohin der Stuhl auf dem Plan schaut.",
   "editorOrientationLabel": "Sitzrichtung",
+  "editorParkingAccessible": "Barrierefrei",
+  "@editorParkingAccessible": {
+    "description": "#2631 resource_editor: editorParkingAccessible"
+  },
+  "editorParkingEv": "Elektro (EV)",
+  "@editorParkingEv": {
+    "description": "#2631 resource_editor: editorParkingEv"
+  },
+  "editorParkingKindLabel": "Stellplatzart",
+  "@editorParkingKindLabel": {
+    "description": "#2631 resource_editor: editorParkingKindLabel"
+  },
+  "editorParkingNameDefault": "Parkplatz",
+  "@editorParkingNameDefault": {
+    "description": "#2631 resource_editor: editorParkingNameDefault"
+  },
+  "editorParkingSlotNameDefault": "Stellplatz",
+  "@editorParkingSlotNameDefault": {
+    "description": "#2631 resource_editor: editorParkingSlotNameDefault"
+  },
+  "editorParkingSlotProperties": "Stellplatz",
+  "@editorParkingSlotProperties": {
+    "description": "#2631 resource_editor: editorParkingSlotProperties"
+  },
+  "editorParkingStandard": "Standard",
+  "@editorParkingStandard": {
+    "description": "#2631 resource_editor: editorParkingStandard"
+  },
   "editorPlacementOutside": "Muss vollständig innerhalb eines Büros liegen.",
   "editorPlacementOverlap": "Überschneidet ein vorhandenes Element.",
   "editorProperties": "Eigenschaften",
   "editorRenameLevel": "Umbenennen",
+  "editorResourceKindTitle": "Was platzieren Sie?",
+  "@editorResourceKindTitle": {
+    "description": "#2631 resource_editor: editorResourceKindTitle"
+  },
+  "editorResourceRoom": "Besprechungsraum",
+  "@editorResourceRoom": {
+    "description": "#2631 resource_editor: editorResourceRoom"
+  },
+  "editorResourceSeat": "Sitzplatz",
+  "@editorResourceSeat": {
+    "description": "#2631 resource_editor: editorResourceSeat"
+  },
+  "editorRoomCapacityLabel": "Kapazität (Personen)",
+  "@editorRoomCapacityLabel": {
+    "description": "#2631 resource_editor: editorRoomCapacityLabel"
+  },
+  "editorRoomNameDefault": "Raum",
+  "@editorRoomNameDefault": {
+    "description": "#2631 resource_editor: editorRoomNameDefault"
+  },
+  "editorRoomProperties": "Besprechungsraum",
+  "@editorRoomProperties": {
+    "description": "#2631 resource_editor: editorRoomProperties"
+  },
   "editorSeatNameDefault": "Platz",
   "editorSeatNameLabel": "Name des Platzes",
   "editorSeatNfcDuplicate": "Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.",
@@ -3132,6 +3248,30 @@
   "editorSeatNfcReadFailed": "Der Tag-Leser konnte nicht gestartet werden.",
   "editorSeatNoDesk": "Plätze können nur auf einem Tisch platziert werden.",
   "editorSeatProperties": "Platz",
+  "editorSlot15": "15 Minuten",
+  "@editorSlot15": {
+    "description": "#2631 resource_editor: editorSlot15"
+  },
+  "editorSlot30": "30 Minuten",
+  "@editorSlot30": {
+    "description": "#2631 resource_editor: editorSlot30"
+  },
+  "editorSlot60": "1 Stunde",
+  "@editorSlot60": {
+    "description": "#2631 resource_editor: editorSlot60"
+  },
+  "editorSlotDay": "Ganzer Tag",
+  "@editorSlotDay": {
+    "description": "#2631 resource_editor: editorSlotDay"
+  },
+  "editorSlotLabel": "Buchungsslot",
+  "@editorSlotLabel": {
+    "description": "#2631 resource_editor: editorSlotLabel"
+  },
+  "editorSlotWorkspace": "Standard des Arbeitsbereichs",
+  "@editorSlotWorkspace": {
+    "description": "#2631 resource_editor: editorSlotWorkspace"
+  },
   "editorTitle": "Workspace-Editor",
   "editorToolDesk": "Tisch",
   "editorToolErase": "Löschen",
@@ -4286,6 +4426,14 @@
   },
   "featureViesVerificationDesc": "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt.",
   "featureViesVerificationTitle": "USt-IdNr.-Prüfung (VIES)",
+  "featureWebMcpDesc": "Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Werkzeuge für Browser-Agenten",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "WhatsApp-Integration",
   "featureWhatsappIntegrationDesc": "Mitglieder teilen ihre WhatsApp-Nummer im Profil; ein Tipp auf ein Mitglied öffnet den Chat; der Gruppenlink im Verzeichnis. Keine serverseitige WhatsApp-Integration.",
   "featureWorkingHours": "Arbeitszeiten",

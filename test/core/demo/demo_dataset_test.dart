@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_dataset.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,7 +82,10 @@ void main() {
   // taken.
   test('every seat on the demo plan is its own seat', () {
     final fixture = DemoFixture.build();
-    final seats = fixture.floorPlan.seats;
+    // #2631 — the rooms and parking slots of the demo are other resources.
+    final seats = fixture.floorPlan.seats
+        .where((s) => s.resourceKind == ResourceKind.seat)
+        .toList();
 
     // #2313 — four on the ground floor, two in the first floor's studio.
     expect(seats, hasLength(6));
@@ -104,7 +108,8 @@ void main() {
         .toSet();
 
     expect(taken, hasLength(1));
-    final free = fixture.floorPlan.seats.where((s) => !taken.contains(s.id));
+    final free = fixture.floorPlan.seats.where(
+        (s) => s.resourceKind == ResourceKind.seat && !taken.contains(s.id));
     expect(free, hasLength(5), reason: 'somewhere left to sit');
   });
 

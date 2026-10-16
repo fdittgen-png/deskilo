@@ -396,6 +396,8 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
       feature: WorkspaceFeature.calendarHub,
       surface: FeatureSurface.calendar,
       tier: FeatureTier.core,
+      // #2522 — every consumer reads the hub inside the calendar tab.
+      requires: WorkspaceFeature.calendarTab,
     ),
   // #818 — the views over the hub's feed.
   WorkspaceFeature.calendarViews: FeatureManifestEntry(

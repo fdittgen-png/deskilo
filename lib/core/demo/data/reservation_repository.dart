@@ -122,18 +122,18 @@ class FakeReservationRepository implements ReservationRepository {
   /// the server's fallback and the historical one-place-at-a-time
   /// (#412); tests raise it to exercise the configured allowance.
   int simultaneousAllowance = BookingPolicies.defaultSimultaneous;
+  final resourceSeatIds = <String>{}; // #2631: rooms/parking are no places (seat_is_resource)
 
   /// One place at a time (#412, `enforce_one_place` v2): a member whose
   /// ACTIVE reservations already cover the window [simultaneousAllowance]
   /// times over cannot take another — pinned substring, like the server.
-  void _assertMemberFree(String memberId, DateTime start, DateTime end) {
-    final busy = reservations
-        .where((r) =>
-            r.memberId == memberId &&
+  void _assertMemberFree(String memberId, DateTime start, DateTime end, {String? seatId}) {
+    if (resourceSeatIds.contains(seatId)) return;
+    final busy = reservations.where((r) =>
+            !resourceSeatIds.contains(r.seatId) && r.memberId == memberId &&
             r.isActive &&
             start.isBefore(r.endsAt) &&
-            r.startsAt.isBefore(end))
-        .length;
+            r.startsAt.isBefore(end)).length;
     if (busy >= simultaneousAllowance) {
       throw const PostgrestException(
           message: 'you already have a reservation in that period');
@@ -382,7 +382,7 @@ class FakeReservationRepository implements ReservationRepository {
     if (_overlapsActive(seatId, officeId, startsAt, endsAt)) {
       throw StateError('conflict');
     }
-    _assertMemberFree(myMemberId, startsAt, endsAt);
+    _assertMemberFree(myMemberId, startsAt, endsAt, seatId: seatId);
   }
 
   Reservation _byId(String id) =>
@@ -414,7 +414,7 @@ class FakeReservationRepository implements ReservationRepository {
     if (_overlapsActive(seatId, null, startsAt, endsAt)) {
       throw StateError('conflict');
     }
-    _assertMemberFree(subjectMemberId, startsAt, endsAt);
+    _assertMemberFree(subjectMemberId, startsAt, endsAt, seatId: seatId);
     bookedForOthers.add(
       (
         subjectMemberId: subjectMemberId,

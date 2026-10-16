@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "featureWebMcpTitle": "Outils pour agent de navigateur",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
+  "featureWebMcpDesc": "Permet à un agent IA du navigateur d'utiliser les fonctions propres de l'application, chacune avec la confirmation de la personne et les droits qu'elle a déjà. Nécessite l'interface MCP. Désactivé : aucun outil n'est proposé.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  }
+}

@@ -4267,6 +4267,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorAmenitiesLabel => 'Amenities';
 
   @override
+  String get editorAreaKindTitle => 'What kind of area?';
+
+  @override
+  String get editorAreaParking => 'Parking area';
+
+  @override
+  String get editorAreaWorkspace => 'Workspace area';
+
+  @override
   String get editorBackgroundImage => 'Background image';
 
   @override
@@ -4293,6 +4302,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorChairLabel => 'Chair type';
+
+  @override
+  String get editorChargerConnector => 'Connector';
+
+  @override
+  String get editorChargerEnabled => 'A charger belongs to this slot';
+
+  @override
+  String get editorChargerFee => 'Usage fee';
+
+  @override
+  String get editorChargerFeeNone => 'No fee';
+
+  @override
+  String get editorChargerInService => 'In service';
+
+  @override
+  String get editorChargerInvalid => 'Enter the power as a number above 0.';
+
+  @override
+  String get editorChargerPower => 'Power (kW)';
+
+  @override
+  String get editorChargerTitle => 'Charging station';
+
+  @override
+  String get editorConnectorCcs => 'CCS';
+
+  @override
+  String get editorConnectorChademo => 'CHAdeMO';
+
+  @override
+  String get editorConnectorSchuko => 'Household socket';
+
+  @override
+  String get editorConnectorTesla => 'Tesla';
+
+  @override
+  String get editorConnectorType2 => 'Type 2';
 
   @override
   String get editorDeleteElementConfirm =>
@@ -4399,6 +4447,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorOrientationLabel => 'Sitting direction';
 
   @override
+  String get editorParkingAccessible => 'Accessible';
+
+  @override
+  String get editorParkingEv => 'Electric (EV)';
+
+  @override
+  String get editorParkingKindLabel => 'Slot type';
+
+  @override
+  String get editorParkingNameDefault => 'Parking';
+
+  @override
+  String get editorParkingSlotNameDefault => 'Slot';
+
+  @override
+  String get editorParkingSlotProperties => 'Parking slot';
+
+  @override
+  String get editorParkingStandard => 'Standard';
+
+  @override
   String get editorPlacementOutside => 'Must be fully inside an office.';
 
   @override
@@ -4409,6 +4478,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorRenameLevel => 'Rename';
+
+  @override
+  String get editorResourceKindTitle => 'What do you place?';
+
+  @override
+  String get editorResourceRoom => 'Meeting room';
+
+  @override
+  String get editorResourceSeat => 'Seat';
+
+  @override
+  String get editorRoomCapacityLabel => 'Capacity (people)';
+
+  @override
+  String get editorRoomNameDefault => 'Room';
+
+  @override
+  String get editorRoomProperties => 'Meeting room';
 
   @override
   String get editorSeatNameDefault => 'Seat';
@@ -4437,6 +4524,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorSeatProperties => 'Seat';
+
+  @override
+  String get editorSlot15 => '15 minutes';
+
+  @override
+  String get editorSlot30 => '30 minutes';
+
+  @override
+  String get editorSlot60 => '1 hour';
+
+  @override
+  String get editorSlotDay => 'Full day';
+
+  @override
+  String get editorSlotLabel => 'Booking slot';
+
+  @override
+  String get editorSlotWorkspace => 'Workspace default';
 
   @override
   String get editorTitle => 'Workspace editor';
@@ -6138,6 +6243,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureViesVerificationTitle => 'VAT number check (VIES)';
+
+  @override
+  String get featureWebMcpDesc =>
+      'Lets an AI agent in the web browser use this app\'s own functions, each with the person\'s confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.';
+
+  @override
+  String get featureWebMcpTitle => 'Browser agent tools';
 
   @override
   String get featureWhatsappIntegration => 'WhatsApp integration';

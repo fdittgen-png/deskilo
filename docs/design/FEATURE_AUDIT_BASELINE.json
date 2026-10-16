@@ -1,15 +1,12 @@
 {
   "format": 1,
   "deadFlags": {
-    "siteDocuments": "Reserved flag, classified internal in workspace_process.dart (#1325): no implementation consumes it yet; not selectable until a gated workflow exists."
+    "siteDocuments": "Reserved flag, classified internal in workspace_process.dart (#1325): no implementation consumes it yet; not selectable until a gated workflow exists.",
+    "webMcp": "Reserved until the registry is fed from the session (#2504): the flag is registered and shown, and the tools register only once the provider that reads it lands; see the issue comment."
   },
   "doubleGates": {
     "calendarHub>eventsTab@lib/app/shell/shell_destinations.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
     "calendarHub>eventsTab@lib/app/shell/shell_routes.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
-    "calendarTab>calendarHub@lib/app/routes/events_routes.dart": "CANDIDATE, not confirmed: calendarHub has no requires, yet every screen reads it inside the calendar tab. A requires: calendarTab is a flag-ritual change (registry migration, setup.html REQUIRES map, process catalogue) in its own PR through the migration lane.",
-    "calendarTab>calendarHub@lib/app/shell/shell_destinations.dart": "CANDIDATE, not confirmed: calendarHub has no requires, yet every screen reads it inside the calendar tab. A requires: calendarTab is a flag-ritual change (registry migration, setup.html REQUIRES map, process catalogue) in its own PR through the migration lane.",
-    "calendarTab>calendarHub@lib/app/shell/shell_routes.dart": "CANDIDATE, not confirmed: calendarHub has no requires, yet every screen reads it inside the calendar tab. A requires: calendarTab is a flag-ritual change (registry migration, setup.html REQUIRES map, process catalogue) in its own PR through the migration lane.",
-    "calendarTab>calendarValidations@lib/app/shell/shell_destinations.dart": "CANDIDATE, not confirmed: calendarHub has no requires, yet every screen reads it inside the calendar tab. A requires: calendarTab is a flag-ritual change (registry migration, setup.html REQUIRES map, process catalogue) in its own PR through the migration lane.",
     "calendarTab>eventsTab@lib/app/shell/shell_destinations.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
     "calendarTab>eventsTab@lib/app/shell/shell_routes.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
     "customRoles>roleAssignment@lib/features/workspace/presentation/widgets/workspace_own_screens.dart": "Deliberate: customRoles is additive and requires nothing (feature_manifest_part3); the Roles screen and the invite sheet offer the role links only where both it and roleAssignment are on, and Settings reaches customRoles alone.",

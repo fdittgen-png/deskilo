@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "featureWebMcpTitle": "Strumenti per agenti del browser",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
+  "featureWebMcpDesc": "Permette a un agente IA nel browser di usare le funzioni proprie dell'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l'interfaccia MCP. Disattivato: nessuno strumento viene offerto.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  }
+}

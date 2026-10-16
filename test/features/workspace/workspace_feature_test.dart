@@ -33,6 +33,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.meetingRooms,
   // #2631 — a parking is added to the plan on purpose.
   WorkspaceFeature.parking,
+  // #2504 — an agent's tools are offered on purpose.
+  WorkspaceFeature.webMcp,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -181,6 +183,7 @@ void main() {
       'taskRecorder': true,
       'meetingRooms': true,
       'parking': true,
+      'webMcp': true,
       'guestParticipation': true,
     });
 

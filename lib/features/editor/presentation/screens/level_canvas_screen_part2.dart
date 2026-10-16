@@ -119,15 +119,32 @@ extension _LevelCanvasScreenStatePart2 on _LevelCanvasScreenState {
       );
       return;
     }
-    await ref.read(floorPlanRepositoryProvider).createSeat(
-          workspaceId: workspace.id,
-          deskId: desk.id,
-          name: '${l10n.editorSeatNameDefault} '
-              '${siblings.length + 1}',
-          x: free.x,
-          y: free.y,
-          orientation: seat.orientation,
-        );
+    final repo = ref.read(floorPlanRepositoryProvider);
+    final name = '${l10n.editorSeatNameDefault} ${siblings.length + 1}';
+    if (seat.resourceKind == ResourceKind.seat) {
+      await repo.createSeat(
+        workspaceId: workspace.id,
+        deskId: desk.id,
+        name: name,
+        x: free.x,
+        y: free.y,
+        orientation: seat.orientation,
+      );
+    } else {
+      // #2631 — a copy keeps what the original is.
+      await placeResource(
+        ref,
+        workspaceId: workspace.id,
+        deskId: desk.id,
+        name: name,
+        anchor: free,
+        resource: (
+          kind: seat.resourceKind,
+          parking: seat.parkingKind,
+          capacity: seat.capacity,
+        ),
+      );
+    }
     ref.invalidate(floorPlanProvider(widget.levelId));
   }
 

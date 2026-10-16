@@ -120,7 +120,10 @@ void main() {
         ...report.findings,
         'deadFlags': const <String>[],
       }, baseline);
-      expect(drift.single, contains('GONE siteDocuments'));
+      // Every dead flag in the baseline is gone from this tree: one line each.
+      expect(drift, hasLength(2));
+      expect(drift.join('\n'), contains('GONE siteDocuments'));
+      expect(drift.join('\n'), contains('GONE webMcp'));
     });
   });
 }

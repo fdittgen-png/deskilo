@@ -4287,6 +4287,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editorAmenitiesLabel => 'Dotazioni';
 
   @override
+  String get editorAreaKindTitle => 'Che tipo di area?';
+
+  @override
+  String get editorAreaParking => 'Area di parcheggio';
+
+  @override
+  String get editorAreaWorkspace => 'Area di lavoro';
+
+  @override
   String get editorBackgroundImage => 'Immagine di sfondo';
 
   @override
@@ -4313,6 +4322,46 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorChairLabel => 'Tipo di sedia';
+
+  @override
+  String get editorChargerConnector => 'Connettore';
+
+  @override
+  String get editorChargerEnabled => 'Questo posto ha una colonnina';
+
+  @override
+  String get editorChargerFee => 'Costo d\'uso';
+
+  @override
+  String get editorChargerFeeNone => 'Nessun costo';
+
+  @override
+  String get editorChargerInService => 'In servizio';
+
+  @override
+  String get editorChargerInvalid =>
+      'Inserisca la potenza come numero maggiore di 0.';
+
+  @override
+  String get editorChargerPower => 'Potenza (kW)';
+
+  @override
+  String get editorChargerTitle => 'Colonnina di ricarica';
+
+  @override
+  String get editorConnectorCcs => 'CCS';
+
+  @override
+  String get editorConnectorChademo => 'CHAdeMO';
+
+  @override
+  String get editorConnectorSchuko => 'Presa domestica';
+
+  @override
+  String get editorConnectorTesla => 'Tesla';
+
+  @override
+  String get editorConnectorType2 => 'Tipo 2';
 
   @override
   String get editorDeleteElementConfirm =>
@@ -4421,6 +4470,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editorOrientationLabel => 'Direzione di seduta';
 
   @override
+  String get editorParkingAccessible => 'Accessibile';
+
+  @override
+  String get editorParkingEv => 'Elettrico (EV)';
+
+  @override
+  String get editorParkingKindLabel => 'Tipo di posto';
+
+  @override
+  String get editorParkingNameDefault => 'Parcheggio';
+
+  @override
+  String get editorParkingSlotNameDefault => 'Posto';
+
+  @override
+  String get editorParkingSlotProperties => 'Posto auto';
+
+  @override
+  String get editorParkingStandard => 'Standard';
+
+  @override
   String get editorPlacementOutside =>
       'Deve trovarsi completamente all\'interno di un ufficio.';
 
@@ -4432,6 +4502,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorRenameLevel => 'Rinomina';
+
+  @override
+  String get editorResourceKindTitle => 'Cosa posiziona?';
+
+  @override
+  String get editorResourceRoom => 'Sala riunioni';
+
+  @override
+  String get editorResourceSeat => 'Postazione';
+
+  @override
+  String get editorRoomCapacityLabel => 'Capacità (persone)';
+
+  @override
+  String get editorRoomNameDefault => 'Sala';
+
+  @override
+  String get editorRoomProperties => 'Sala riunioni';
 
   @override
   String get editorSeatNameDefault => 'Posto';
@@ -4463,6 +4551,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorSeatProperties => 'Posto';
+
+  @override
+  String get editorSlot15 => '15 minuti';
+
+  @override
+  String get editorSlot30 => '30 minuti';
+
+  @override
+  String get editorSlot60 => '1 ora';
+
+  @override
+  String get editorSlotDay => 'Giornata intera';
+
+  @override
+  String get editorSlotLabel => 'Fascia di prenotazione';
+
+  @override
+  String get editorSlotWorkspace => 'Valore dello spazio';
 
   @override
   String get editorTitle => 'Editor dello spazio';
@@ -6185,6 +6291,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureViesVerificationTitle =>
       'Verifica della partita IVA (VIES)';
+
+  @override
+  String get featureWebMcpDesc =>
+      'Permette a un agente IA nel browser di usare le funzioni proprie dell\'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l\'interfaccia MCP. Disattivato: nessuno strumento viene offerto.';
+
+  @override
+  String get featureWebMcpTitle => 'Strumenti per agenti del browser';
 
   @override
   String get featureWhatsappIntegration => 'Integrazione WhatsApp';
