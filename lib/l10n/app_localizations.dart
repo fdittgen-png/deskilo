@@ -9912,6 +9912,18 @@ abstract class AppLocalizations {
   /// **'Switch on an experimental feature?'**
   String get featureOptInTitle;
 
+  /// #2631 parking: featureParkingDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking.'**
+  String get featureParkingDesc;
+
+  /// #2631 parking: featureParkingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Parking'**
+  String get featureParkingTitle;
+
   /// No description provided for @featurePaymentRemindersDesc.
   ///
   /// In en, this message translates to:

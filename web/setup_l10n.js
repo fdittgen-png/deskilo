@@ -1205,6 +1205,10 @@ window.SETUP_L10N={
    "meetingRooms": [
     "Meeting rooms",
     "A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats' slot. Off: no rooms."
+   ],
+   "parking": [
+    "Parking",
+    "A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking."
    ]
   },
   "process": {
@@ -2629,6 +2633,10 @@ window.SETUP_L10N={
    "meetingRooms": [
     "Salles de réunion",
     "Une salle du plan avec sa propre capacité, réservée dans son propre créneau (une heure par défaut) à côté du créneau des places. Désactivé : pas de salles."
+   ],
+   "parking": [
+    "Parking",
+    "Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking."
    ]
   },
   "process": {
@@ -4053,6 +4061,10 @@ window.SETUP_L10N={
    "meetingRooms": [
     "Besprechungsräume",
     "Ein Raum im Plan mit eigener Kapazität, gebucht in einem eigenen Zeitfenster (standardmäßig eine Stunde) neben dem Zeitfenster der Plätze. Aus: keine Räume."
+   ],
+   "parking": [
+    "Parkplatz",
+    "Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz."
    ]
   },
   "process": {
@@ -5477,6 +5489,10 @@ window.SETUP_L10N={
    "meetingRooms": [
     "Salas de reuniones",
     "Una sala del plano con su propia capacidad, reservada en su propio tramo (una hora por defecto) junto al tramo de los puestos. Desactivado: sin salas."
+   ],
+   "parking": [
+    "Aparcamiento",
+    "Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento."
    ]
   },
   "process": {
@@ -6901,6 +6917,10 @@ window.SETUP_L10N={
    "meetingRooms": [
     "Sale riunioni",
     "Una sala della pianta con la propria capienza, prenotata in una fascia propria (un'ora per impostazione predefinita) accanto alla fascia dei posti. Disattivato: nessuna sala."
+   ],
+   "parking": [
+    "Parcheggio",
+    "Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio."
    ]
   },
   "process": {

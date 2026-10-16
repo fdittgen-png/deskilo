@@ -4025,6 +4025,14 @@
   "featureOptInConfirm": "Einschalten",
   "featureOptInStage": "{feature}: {stage}",
   "featureOptInTitle": "Experimentelle Funktion einschalten?",
+  "featureParkingDesc": "Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  },
+  "featureParkingTitle": "Parkplatz",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
   "featurePaymentRemindersDesc": "Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.",
   "featurePaymentRemindersTitle": "Automatische Zahlungserinnerungen",
   "featurePdfExport": "PDF-Export",

@@ -5773,6 +5773,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureOptInTitle => 'Experimentelle Funktion einschalten?';
 
   @override
+  String get featureParkingDesc =>
+      'Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz.';
+
+  @override
+  String get featureParkingTitle => 'Parkplatz';
+
+  @override
   String get featurePaymentRemindersDesc =>
       'Offene Rechnungen nach Ablauf der eingestellten Frist erhalten ihre Mahnstufen automatisch — ein Hinweis im Feed des Mitglieds und eine Push-Nachricht, einmal täglich. Aus: Mahnen bleibt ein manueller Schritt.';
 

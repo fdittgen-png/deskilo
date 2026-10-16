@@ -1215,6 +1215,12 @@
       ]
     },
     {
+      "key": "parking",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "paymentReminders",
       "maturity": "beta",
       "lifecycle": "active",

@@ -31,6 +31,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.recordingPrivacy,
   // #2631 — a meeting room is added to the plan on purpose.
   WorkspaceFeature.meetingRooms,
+  // #2631 — a parking is added to the plan on purpose.
+  WorkspaceFeature.parking,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -178,6 +180,7 @@ void main() {
       'accountingBook': true,
       'taskRecorder': true,
       'meetingRooms': true,
+      'parking': true,
       'guestParticipation': true,
     });
 

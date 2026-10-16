@@ -5769,6 +5769,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureOptInTitle => '¿Activar una función experimental?';
 
   @override
+  String get featureParkingDesc =>
+      'Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento.';
+
+  @override
+  String get featureParkingTitle => 'Aparcamiento';
+
+  @override
   String get featurePaymentRemindersDesc =>
       'Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.';
 

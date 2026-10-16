@@ -4025,6 +4025,14 @@
   "featureOptInConfirm": "Activer",
   "featureOptInStage": "{feature} : {stage}",
   "featureOptInTitle": "Activer une fonctionnalité expérimentale ?",
+  "featureParkingDesc": "Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  },
+  "featureParkingTitle": "Parking",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
   "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
   "featurePdfExport": "Export PDF",

@@ -5778,6 +5778,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureOptInTitle => 'Activer une fonctionnalité expérimentale ?';
 
   @override
+  String get featureParkingDesc =>
+      'Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking.';
+
+  @override
+  String get featureParkingTitle => 'Parking';
+
+  @override
   String get featurePaymentRemindersDesc =>
       'Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.';
 

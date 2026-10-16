@@ -5726,6 +5726,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureOptInTitle => 'Switch on an experimental feature?';
 
   @override
+  String get featureParkingDesc =>
+      'A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking.';
+
+  @override
+  String get featureParkingTitle => 'Parking';
+
+  @override
   String get featurePaymentRemindersDesc =>
       'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.';
 

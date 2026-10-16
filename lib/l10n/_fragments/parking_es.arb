@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "featureParkingTitle": "Aparcamiento",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
+  "featureParkingDesc": "Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  }
+}

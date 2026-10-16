@@ -5766,6 +5766,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureOptInTitle => 'Attivare una funzione sperimentale?';
 
   @override
+  String get featureParkingDesc =>
+      'Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio.';
+
+  @override
+  String get featureParkingTitle => 'Parcheggio';
+
+  @override
   String get featurePaymentRemindersDesc =>
       'Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.';
 

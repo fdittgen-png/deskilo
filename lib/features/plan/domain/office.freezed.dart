@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Office {
 
- String get id; String get workspaceId; String get levelId; String get name; int get color; bool get bookableAsWhole; int get priceCents; GridRect get rect;/// #992 — the server's stamp on this row.
+ String get id; String get workspaceId; String get levelId; String get name; int get color; bool get bookableAsWhole; int get priceCents; GridRect get rect;/// #2631 — a parking area holds parking slots, never seats.
+ AreaKind get areaKind;/// #992 — the server's stamp on this row.
  SystemColumns get system;
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
@@ -28,20 +29,20 @@ $OfficeCopyWith<Office> get copyWith => _$OfficeCopyWithImpl<Office>(this as Off
 @override
 bool operator ==(Object other) {
   final _this = this as Office;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.color, _this.color) || other.color == _this.color)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.system, _this.system) || other.system == _this.system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Office&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.color, _this.color) || other.color == _this.color)&&(identical(other.bookableAsWhole, _this.bookableAsWhole) || other.bookableAsWhole == _this.bookableAsWhole)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.areaKind, _this.areaKind) || other.areaKind == _this.areaKind)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
 int get hashCode {
   final _this = this as Office;
-  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.levelId,_this.name,_this.color,_this.bookableAsWhole,_this.priceCents,_this.rect,_this.system);
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.levelId,_this.name,_this.color,_this.bookableAsWhole,_this.priceCents,_this.rect,_this.areaKind,_this.system);
 }
 
 @override
 String toString() {
   final _this = this as Office;
-  return 'Office(id: ${_this.id}, workspaceId: ${_this.workspaceId}, levelId: ${_this.levelId}, name: ${_this.name}, color: ${_this.color}, bookableAsWhole: ${_this.bookableAsWhole}, priceCents: ${_this.priceCents}, rect: ${_this.rect}, system: ${_this.system})';
+  return 'Office(id: ${_this.id}, workspaceId: ${_this.workspaceId}, levelId: ${_this.levelId}, name: ${_this.name}, color: ${_this.color}, bookableAsWhole: ${_this.bookableAsWhole}, priceCents: ${_this.priceCents}, rect: ${_this.rect}, areaKind: ${_this.areaKind}, system: ${_this.system})';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $OfficeCopyWith<$Res>  {
   factory $OfficeCopyWith(Office value, $Res Function(Office) _then) = _$OfficeCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect, SystemColumns system
+ String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect, AreaKind areaKind, SystemColumns system
 });
 
 
@@ -69,7 +70,7 @@ class _$OfficeCopyWithImpl<$Res>
 
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? system = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? areaKind = null,Object? system = null,}) {
   return _then(Office(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -79,7 +80,8 @@ as String,color: null == color ? _self.color : color // ignore: cast_nullable_to
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
-as GridRect,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as GridRect,areaKind: null == areaKind ? _self.areaKind : areaKind // ignore: cast_nullable_to_non_nullable
+as AreaKind,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }
@@ -171,10 +173,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  AreaKind areaKind,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Office() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.areaKind,_that.system);case _:
   return orElse();
 
 }
@@ -192,10 +194,10 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  SystemColumns system)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  AreaKind areaKind,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _Office():
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.system);}
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.areaKind,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -209,10 +211,10 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  SystemColumns system)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String levelId,  String name,  int color,  bool bookableAsWhole,  int priceCents,  GridRect rect,  AreaKind areaKind,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _Office() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,_that.bookableAsWhole,_that.priceCents,_that.rect,_that.areaKind,_that.system);case _:
   return null;
 
 }
@@ -224,7 +226,7 @@ return $default(_that.id,_that.workspaceId,_that.levelId,_that.name,_that.color,
 
 
 class _Office implements Office {
-  const _Office({required this.id, required this.workspaceId, required this.levelId, required this.name, required this.color, required this.bookableAsWhole, this.priceCents = 0, required this.rect, this.system = SystemColumns.none});
+  const _Office({required this.id, required this.workspaceId, required this.levelId, required this.name, required this.color, required this.bookableAsWhole, this.priceCents = 0, required this.rect, this.areaKind = AreaKind.workspace, this.system = SystemColumns.none});
   
 
 @override final  String id;
@@ -235,6 +237,8 @@ class _Office implements Office {
 @override final  bool bookableAsWhole;
 @override@JsonKey() final  int priceCents;
 @override final  GridRect rect;
+/// #2631 — a parking area holds parking slots, never seats.
+@override@JsonKey() final  AreaKind areaKind;
 /// #992 — the server's stamp on this row.
 @override@JsonKey() final  SystemColumns system;
 
@@ -248,18 +252,18 @@ _$OfficeCopyWith<_Office> get copyWith => __$OfficeCopyWithImpl<_Office>(this, _
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Office&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.name, name) || other.name == name)&&(identical(other.color, color) || other.color == color)&&(identical(other.bookableAsWhole, bookableAsWhole) || other.bookableAsWhole == bookableAsWhole)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.areaKind, areaKind) || other.areaKind == areaKind)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect,system);
+    return Object.hash(runtimeType,id,workspaceId,levelId,name,color,bookableAsWhole,priceCents,rect,areaKind,system);
 }
 
 @override
 String toString() {
-    return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, system: $system)';
+    return 'Office(id: $id, workspaceId: $workspaceId, levelId: $levelId, name: $name, color: $color, bookableAsWhole: $bookableAsWhole, priceCents: $priceCents, rect: $rect, areaKind: $areaKind, system: $system)';
 }
 
 
@@ -270,7 +274,7 @@ abstract mixin class _$OfficeCopyWith<$Res> implements $OfficeCopyWith<$Res> {
   factory _$OfficeCopyWith(_Office value, $Res Function(_Office) _then) = __$OfficeCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect, SystemColumns system
+ String id, String workspaceId, String levelId, String name, int color, bool bookableAsWhole, int priceCents, GridRect rect, AreaKind areaKind, SystemColumns system
 });
 
 
@@ -287,7 +291,7 @@ class __$OfficeCopyWithImpl<$Res>
 
 /// Create a copy of Office
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? system = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? levelId = null,Object? name = null,Object? color = null,Object? bookableAsWhole = null,Object? priceCents = null,Object? rect = null,Object? areaKind = null,Object? system = null,}) {
   return _then(_Office(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -297,7 +301,8 @@ as String,color: null == color ? _self.color : color // ignore: cast_nullable_to
 as int,bookableAsWhole: null == bookableAsWhole ? _self.bookableAsWhole : bookableAsWhole // ignore: cast_nullable_to_non_nullable
 as bool,priceCents: null == priceCents ? _self.priceCents : priceCents // ignore: cast_nullable_to_non_nullable
 as int,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
-as GridRect,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as GridRect,areaKind: null == areaKind ? _self.areaKind : areaKind // ignore: cast_nullable_to_non_nullable
+as AreaKind,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }

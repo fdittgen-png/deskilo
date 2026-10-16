@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureParkingTitle": "Parkplatz",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
+  "featureParkingDesc": "Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  }
+}

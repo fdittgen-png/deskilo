@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "featureParkingTitle": "Parking",
+  "@featureParkingTitle": {
+    "description": "#2631 parking: featureParkingTitle"
+  },
+  "featureParkingDesc": "Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking.",
+  "@featureParkingDesc": {
+    "description": "#2631 parking: featureParkingDesc"
+  }
+}

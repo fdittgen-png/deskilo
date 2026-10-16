@@ -275,5 +275,6 @@ String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureConfigurableSettingsTitle,
       WorkspaceFeature.salesTax => l10n.featureSalesTaxTitle,
       WorkspaceFeature.meetingRooms => l10n.featureMeetingRoomsTitle,
+      WorkspaceFeature.parking => l10n.featureParkingTitle,
       _ => feature.name,
     };
