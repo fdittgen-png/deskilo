@@ -243,4 +243,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.invoicing,
   ),
+  // #2631 — a meeting room is a bookable resource of the plan with its own slot.
+  WorkspaceFeature.meetingRooms: FeatureManifestEntry(
+    feature: WorkspaceFeature.meetingRooms,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

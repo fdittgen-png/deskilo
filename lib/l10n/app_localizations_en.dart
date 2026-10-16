@@ -5535,6 +5535,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMcpAccessTitle => 'MCP interface';
 
   @override
+  String get featureMeetingRoomsDesc =>
+      'A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats\' slot. Off: no rooms.';
+
+  @override
+  String get featureMeetingRoomsTitle => 'Meeting rooms';
+
+  @override
   String get featureMemberAccountMenuDesc =>
       'A member who administers nothing meets My account instead of Settings — the same screen, which already shows them only their own account, membership and preferences, under the name that says so. Anyone whose role grants administration keeps Settings and everything it opens. This renames an entry; it grants and withdraws nothing.';
 

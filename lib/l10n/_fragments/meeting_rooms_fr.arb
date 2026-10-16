@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "featureMeetingRoomsTitle": "Salles de réunion",
+  "@featureMeetingRoomsTitle": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsTitle"
+  },
+  "featureMeetingRoomsDesc": "Une salle du plan avec sa propre capacité, réservée dans son propre créneau (une heure par défaut) à côté du créneau des places. Désactivé : pas de salles.",
+  "@featureMeetingRoomsDesc": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsDesc"
+  }
+}

@@ -5585,6 +5585,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMcpAccessTitle => 'Interface MCP';
 
   @override
+  String get featureMeetingRoomsDesc =>
+      'Une salle du plan avec sa propre capacité, réservée dans son propre créneau (une heure par défaut) à côté du créneau des places. Désactivé : pas de salles.';
+
+  @override
+  String get featureMeetingRoomsTitle => 'Salles de réunion';
+
+  @override
   String get featureMemberAccountMenuDesc =>
       'Un membre qui n\'administre rien rencontre Mon compte au lieu de Réglages — le même écran, qui ne lui montre déjà que son compte, son adhésion et ses préférences, sous le nom qui le dit. Toute personne dont le rôle accorde une administration garde Réglages et tout ce qu\'il ouvre. Ceci renomme une entrée ; cela n\'accorde et ne retire rien.';
 

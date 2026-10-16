@@ -1201,6 +1201,10 @@ window.SETUP_L10N={
    "salesTax": [
     "Sales tax (United States)",
     "A seller in the United States issues with net prices and the sales tax of the site's postal code stated apart, per jurisdiction; a customer's exemption certificate takes a line out of the tax. Off: such a seller cannot issue."
+   ],
+   "meetingRooms": [
+    "Meeting rooms",
+    "A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats' slot. Off: no rooms."
    ]
   },
   "process": {
@@ -2621,6 +2625,10 @@ window.SETUP_L10N={
    "salesTax": [
     "Taxe de vente (États-Unis)",
     "Un vendeur aux États-Unis facture des prix hors taxe et la taxe de vente du code postal du site, indiquée à part par juridiction ; le certificat d'exonération d'un client retire une ligne de la taxe. Désactivé : un tel vendeur ne peut pas facturer."
+   ],
+   "meetingRooms": [
+    "Salles de réunion",
+    "Une salle du plan avec sa propre capacité, réservée dans son propre créneau (une heure par défaut) à côté du créneau des places. Désactivé : pas de salles."
    ]
   },
   "process": {
@@ -4041,6 +4049,10 @@ window.SETUP_L10N={
    "salesTax": [
     "Sales Tax (USA)",
     "Ein Verkäufer in den USA stellt Nettopreise aus und weist die Sales Tax der Postleitzahl des Standorts getrennt je Jurisdiktion aus; die Befreiungsbescheinigung eines Kunden nimmt eine Zeile aus der Steuer. Aus: ein solcher Verkäufer kann keine Rechnung stellen."
+   ],
+   "meetingRooms": [
+    "Besprechungsräume",
+    "Ein Raum im Plan mit eigener Kapazität, gebucht in einem eigenen Zeitfenster (standardmäßig eine Stunde) neben dem Zeitfenster der Plätze. Aus: keine Räume."
    ]
   },
   "process": {
@@ -5461,6 +5473,10 @@ window.SETUP_L10N={
    "salesTax": [
     "Impuesto sobre las ventas (EE. UU.)",
     "Un vendedor en Estados Unidos factura con precios netos y el impuesto sobre las ventas del código postal de la sede, indicado aparte por jurisdicción; el certificado de exención de un cliente saca una línea del impuesto. Desactivado: ese vendedor no puede facturar."
+   ],
+   "meetingRooms": [
+    "Salas de reuniones",
+    "Una sala del plano con su propia capacidad, reservada en su propio tramo (una hora por defecto) junto al tramo de los puestos. Desactivado: sin salas."
    ]
   },
   "process": {
@@ -6881,6 +6897,10 @@ window.SETUP_L10N={
    "salesTax": [
     "Imposta sulle vendite (Stati Uniti)",
     "Un venditore negli Stati Uniti fattura prezzi al netto e indica a parte la sales tax del codice postale della sede, per giurisdizione; il certificato di esenzione di un cliente toglie una riga dall'imposta. Disattivato: un tale venditore non può fatturare."
+   ],
+   "meetingRooms": [
+    "Sale riunioni",
+    "Una sala della pianta con la propria capienza, prenotata in una fascia propria (un'ora per impostazione predefinita) accanto alla fascia dei posti. Disattivato: nessuna sala."
    ]
   },
   "process": {

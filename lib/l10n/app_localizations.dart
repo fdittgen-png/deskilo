@@ -9600,6 +9600,18 @@ abstract class AppLocalizations {
   /// **'MCP interface'**
   String get featureMcpAccessTitle;
 
+  /// #2631 meeting rooms: featureMeetingRoomsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats\' slot. Off: no rooms.'**
+  String get featureMeetingRoomsDesc;
+
+  /// #2631 meeting rooms: featureMeetingRoomsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting rooms'**
+  String get featureMeetingRoomsTitle;
+
   /// #1598 member account menu: featureMemberAccountMenuDesc
   ///
   /// In en, this message translates to:

@@ -1330,9 +1330,11 @@
               "seat",
               "desk",
               "office",
-              "level"
+              "level",
+              "room",
+              "parking"
             ],
-            "description": "Optional: only places of this kind (seat, or a desk, office or level booked as a whole).",
+            "description": "Optional: only places of this kind (seat, a meeting room, a parking slot, or a desk, office or level booked as a whole). Rooms and parking slots are listed only while the workspace has them switched on.",
             "examples": [
               "desk"
             ]

@@ -608,7 +608,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'amenities': seat.amenities,
       'blocked_from': seat.blockedFrom?.toUtc().toIso8601String(),
       'blocked_to': seat.blockedTo?.toUtc().toIso8601String(),
-      'nfc_uid': seat.nfcUid, 'slot_minutes': seat.slotMinutes,
+      'nfc_uid': seat.nfcUid, 'slot_minutes': seat.slotMinutes, 'capacity': seat.capacity,
     }).eq('id', seat.id);
     await _bust();
   }
@@ -695,8 +695,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         workspaceId: row['workspace_id'] as String,
         deskId: row['desk_id'] as String,
         name: row['name'] as String,
-        x: row['x'] as int,
-        y: row['y'] as int,
+        x: row['x'] as int, y: row['y'] as int,
         // #1148 — an unknown orientation draws north rather than emptying
         // the plan.
         orientation: enumOr(SeatOrientation.values,
@@ -710,5 +709,6 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
             ? null
             : DateTime.parse(row['blocked_to'] as String),
         nfcUid: row['nfc_uid'] as String?, slotMinutes: row['slot_minutes'] as int?,
+        capacity: row['capacity'] as int?, resourceKind: enumOr(ResourceKind.values, row['resource_kind'] as String?, ResourceKind.seat, area: 'plan'),
       );
 }

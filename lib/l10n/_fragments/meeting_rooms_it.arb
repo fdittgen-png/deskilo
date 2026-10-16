@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "featureMeetingRoomsTitle": "Sale riunioni",
+  "@featureMeetingRoomsTitle": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsTitle"
+  },
+  "featureMeetingRoomsDesc": "Una sala della pianta con la propria capienza, prenotata in una fascia propria (un'ora per impostazione predefinita) accanto alla fascia dei posti. Disattivato: nessuna sala.",
+  "@featureMeetingRoomsDesc": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsDesc"
+  }
+}

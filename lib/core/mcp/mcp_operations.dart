@@ -108,7 +108,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'ends_at': McpField(McpFieldType.datetime, required: true),
       'level_id': McpField(McpFieldType.uuid),
       'office_id': McpField(McpFieldType.uuid),
-      'kind': McpField(McpFieldType.enum_, values: ['seat', 'desk', 'office', 'level']),
+      'kind': McpField(McpFieldType.enum_, values: ['seat', 'desk', 'office', 'level', 'room', 'parking']),
       'cursor': McpField(McpFieldType.text, maxLength: 400),
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
     },

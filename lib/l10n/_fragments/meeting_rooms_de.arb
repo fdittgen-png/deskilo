@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "featureMeetingRoomsTitle": "Besprechungsräume",
+  "@featureMeetingRoomsTitle": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsTitle"
+  },
+  "featureMeetingRoomsDesc": "Ein Raum im Plan mit eigener Kapazität, gebucht in einem eigenen Zeitfenster (standardmäßig eine Stunde) neben dem Zeitfenster der Plätze. Aus: keine Räume.",
+  "@featureMeetingRoomsDesc": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsDesc"
+  }
+}

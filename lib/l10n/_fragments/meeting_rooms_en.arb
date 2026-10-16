@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureMeetingRoomsTitle": "Meeting rooms",
+  "@featureMeetingRoomsTitle": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsTitle"
+  },
+  "featureMeetingRoomsDesc": "A room on the plan with its own capacity, booked in its own slot (an hour by default) beside the seats' slot. Off: no rooms.",
+  "@featureMeetingRoomsDesc": {
+    "description": "#2631 meeting rooms: featureMeetingRoomsDesc"
+  }
+}

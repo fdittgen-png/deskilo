@@ -123,6 +123,7 @@
         "managedProfileAccess": false,
         "managedProfiles": false,
         "mcpAccess": false,
+        "meetingRooms": false,
         "memberAccountMenu": false,
         "memberDataExport": true,
         "memberEnvironments": false,

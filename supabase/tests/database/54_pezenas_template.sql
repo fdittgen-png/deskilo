@@ -193,6 +193,7 @@ begin
       "managedProfileAccess": false,
       "managedProfiles": false,
       "mcpAccess": false,
+      "meetingRooms": false,
       "memberAccountMenu": true,
       "memberDataExport": true,
       "memberEnvironments": false,
