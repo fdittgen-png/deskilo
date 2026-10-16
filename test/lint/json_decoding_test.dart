@@ -25,7 +25,11 @@ const _rawReadBudget = 207;
 const _dynamicBudget = 685;
 
 void main() {
-  final files = handWrittenDartFiles('lib').toList();
+  // #2592 — the layout reader moved into a package; its reads still count.
+  final files = handWrittenDartFilesIn(const [
+    'lib',
+    'packages/deskilo_document_model/lib',
+  ]).toList();
 
   test('no cast_nullable_to_non_nullable ignore in hand-written lib/', () {
     final hits = scanLines(

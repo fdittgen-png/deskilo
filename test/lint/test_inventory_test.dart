@@ -130,7 +130,9 @@ void main() {
     const header = '// SPDX-License-Identifier: AGPL-3.0-or-later\n//\n';
     write('.github/workflows/quality.yml',
         'run: flutter test --coverage\nrun: supabase test db\n'
-        'working-directory: packages/deskilo_push\n');
+        'working-directory: packages/deskilo_push\n'
+        'working-directory: packages/deskilo_document_model\n'
+        'working-directory: packages/deskilo_document_pdf\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
     // perf-bench.yml is missing: its family is a dead entry.
     write('scripts/run_fixture.sh', 'export DESKILO_OWNED_FIXTURE=1\n');
@@ -147,6 +149,10 @@ void main() {
         "void main() { test('y', () {}, skip: f == null); }\n");
     write('supabase/tests/database/1_x.sql', '-- X.\nselect plan(3);\n');
     write('packages/deskilo_push/test/p_test.dart', "$header// P.\nvoid main() {}\n");
+    write('packages/deskilo_document_model/test/m_test.dart',
+        "$header// M.\nvoid main() {}\n");
+    write('packages/deskilo_document_pdf/test/d_test.dart',
+        "$header// D.\nvoid main() {}\n");
     write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
     write('tool/bench/b_test.dart', "$header// Bench.\nvoid main() {}\n");
     write('integration_test/i_test.dart', "$header// I.\nvoid main() {}\n");
