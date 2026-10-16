@@ -8538,7 +8538,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoiceIssueCheckAgain => 'Erneut prüfen';
+
+  @override
+  String get invoiceIssueNotFoundYet =>
+      'Noch nicht gefunden. Es wurde nichts erneut gesendet.';
+
+  @override
   String get invoiceIssueOne => 'Berechnen';
+
+  @override
+  String get invoiceIssueUnknownBody =>
+      'Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.';
+
+  @override
+  String get invoiceIssueUnknownTitle => 'Ergebnis unbekannt';
 
   @override
   String get invoiceIssued => 'Rechnung ausgestellt.';

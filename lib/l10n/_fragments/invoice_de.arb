@@ -1,5 +1,9 @@
 {
   "@@locale": "de",
+  "invoiceIssueUnknownTitle": "Ergebnis unbekannt",
+  "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
+  "invoiceIssueCheckAgain": "Erneut prüfen",
+  "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoicesTitle": "Rechnungen",
   "invoicesEmpty": "Noch keine Rechnungen.",
   "invoiceCreate": "Neue Rechnung",

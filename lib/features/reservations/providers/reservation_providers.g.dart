@@ -55,7 +55,7 @@ final class ReservationRepositoryProvider
 }
 
 String _$reservationRepositoryHash() =>
-    r'55f521658d95cec06053ca711f6d9e0e5a1c8712';
+    r'beacf22f1d45476878bc6a264cd77943111721a7';
 
 /// #1855 — where a booking intent is valid: this account on this server.
 /// Read at use, never captured: a later login or server switch reads its

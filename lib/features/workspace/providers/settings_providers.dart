@@ -2,10 +2,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/settings_bundle_asset.dart';
 import '../../../core/settings/active_settings.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/settings/settings_capture.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/settings_commands.dart';
 import '../data/supabase_settings_repository.dart';
@@ -47,11 +49,32 @@ Future<SettingsSet> settingsSet(Ref ref, String? workspaceId) async {
 /// invalidate it after a write.
 @Riverpod(keepAlive: true)
 Future<SettingsSet> currentSettings(Ref ref) async {
+  final capture = await ref.watch(currentSettingsCaptureProvider.future);
+  return capture?.settings ?? SettingsSet.defaults(const []);
+}
+
+/// #2589 C1 -- the active workspace's settings as an operation takes them:
+/// the identity (installation, workspace, signed-in user) is fixed BEFORE the
+/// read awaits, and the result is an immutable [SettingsCapture]. Signed out
+/// there is nothing to capture, so the answer is null -- never another
+/// person's or workspace's values.
+@Riverpod(keepAlive: true)
+Future<SettingsCapture?> currentSettingsCapture(Ref ref) async {
   final source = ref.watch(settingsSourceProvider);
-  final signedIn = ref.watch(authStateProvider).value != null;
-  final workspace = ref.watch(currentWorkspaceProvider.future);
-  if (!signedIn) return SettingsSet.defaults(const []);
-  return source.load((await workspace)?.id);
+  final installation = ref.watch(bootedBackendUrlProvider);
+  final principalAnswer = ref.watch(authStateProvider.future);
+  final workspaceAnswer = ref.watch(currentWorkspaceProvider.future);
+  final principal = await principalAnswer;
+  final workspace = (await workspaceAnswer)?.id;
+  if (principal == null) return null;
+  return captureSettings(
+    source,
+    SettingsIdentity(
+      installation: installation,
+      workspaceId: workspace,
+      principal: principal,
+    ),
+  );
 }
 
 /// #2486 -- the active workspace's settings for core/settings readers (the

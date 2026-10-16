@@ -297,4 +297,61 @@ final class CurrentSettingsProvider
   }
 }
 
-String _$currentSettingsHash() => r'addd641fc29f5cec00b9220d6dd7c1cdd7d0b548';
+String _$currentSettingsHash() => r'2b83681b1b3f83a2fe7b1dc818cf8504dd058e2d';
+
+/// #2589 C1 -- the active workspace's settings as an operation takes them:
+/// the identity (installation, workspace, signed-in user) is fixed BEFORE the
+/// read awaits, and the result is an immutable [SettingsCapture]. Signed out
+/// there is nothing to capture, so the answer is null -- never another
+/// person's or workspace's values.
+
+@ProviderFor(currentSettingsCapture)
+final currentSettingsCaptureProvider = CurrentSettingsCaptureProvider._();
+
+/// #2589 C1 -- the active workspace's settings as an operation takes them:
+/// the identity (installation, workspace, signed-in user) is fixed BEFORE the
+/// read awaits, and the result is an immutable [SettingsCapture]. Signed out
+/// there is nothing to capture, so the answer is null -- never another
+/// person's or workspace's values.
+
+final class CurrentSettingsCaptureProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SettingsCapture?>,
+          SettingsCapture?,
+          FutureOr<SettingsCapture?>
+        >
+    with $FutureModifier<SettingsCapture?>, $FutureProvider<SettingsCapture?> {
+  /// #2589 C1 -- the active workspace's settings as an operation takes them:
+  /// the identity (installation, workspace, signed-in user) is fixed BEFORE the
+  /// read awaits, and the result is an immutable [SettingsCapture]. Signed out
+  /// there is nothing to capture, so the answer is null -- never another
+  /// person's or workspace's values.
+  CurrentSettingsCaptureProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentSettingsCaptureProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentSettingsCaptureHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<SettingsCapture?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<SettingsCapture?> create(Ref ref) {
+    return currentSettingsCapture(ref);
+  }
+}
+
+String _$currentSettingsCaptureHash() =>
+    r'90022add542c010037890661a775f57c0e20d224';

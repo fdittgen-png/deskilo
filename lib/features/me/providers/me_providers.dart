@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/me_actions.dart';
@@ -14,9 +14,11 @@ import '../domain/visibility.dart';
 part 'me_providers.g.dart';
 
 /// #1823 — the account layer's calls, this server's and the linked ones'.
+/// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
+/// never to the process-wide client or to a workspace host.
 @riverpod
 MeRepository meRepository(Ref ref) => SupabaseMeRepository(
-      Supabase.instance.client,
+      ref.watch(personalClientProvider),
       ref.watch(authStateProvider).value == null
           ? null
           : ref.watch(connectedInstallationsProvider),

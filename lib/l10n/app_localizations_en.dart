@@ -8463,7 +8463,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoiceIssueCheckAgain => 'Check again';
+
+  @override
+  String get invoiceIssueNotFoundYet =>
+      'Not found yet. Nothing was sent again.';
+
+  @override
   String get invoiceIssueOne => 'Issue';
+
+  @override
+  String get invoiceIssueUnknownBody =>
+      'The invoice was sent but the answer did not arrive, so it may already exist. Nothing is sent again. Check again to look for it.';
+
+  @override
+  String get invoiceIssueUnknownTitle => 'Outcome unknown';
 
   @override
   String get invoiceIssued => 'Invoice issued.';

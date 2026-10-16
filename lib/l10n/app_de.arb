@@ -5745,7 +5745,11 @@
       }
     }
   },
+  "invoiceIssueCheckAgain": "Erneut prüfen",
+  "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoiceIssueOne": "Berechnen",
+  "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
+  "invoiceIssueUnknownTitle": "Ergebnis unbekannt",
   "invoiceIssued": "Rechnung ausgestellt.",
   "invoiceIssuedCount": "{count} Rechnungen ausgestellt.",
   "@invoiceIssuedCount": {
