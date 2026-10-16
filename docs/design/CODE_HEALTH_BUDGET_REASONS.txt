@@ -55,7 +55,6 @@ fileLength lib/features/task_recorder/presentation/ui_capture.dart // #2386 with
 fileLength lib/features/workspace/domain/feature_lifecycle.dart // master's two newest features join the owner-beta map
 fileLength lib/features/workspace/domain/template_capabilities.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/workspace/domain/workspace_feature.dart // #2566 the unchosen-flag predicate and the platform-on-by-default map (the resolver lives here).
-fileLength lib/features/workspace/domain/workspace_repository.dart // #2358 the customer's e-invoicing address setter.
 fileLength lib/features/workspace/presentation/member_admin_actions.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/workspace/presentation/screens/members_screen.dart // #2313 every control keyed for the task recorder
 fileLength lib/features/workspace/presentation/screens/onboarding_screen.dart // #2313 every control keyed for the task recorder
