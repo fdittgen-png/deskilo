@@ -87,7 +87,7 @@ VatDeclarations vatDeclarationCommand(Ref ref) => VatDeclarations(ref.watch(taxR
 /// answering an occurrence at a different amount means.
 @riverpod
 ExpenseSchedules expenseScheduleCommand(Ref ref) =>
-    ExpenseSchedules(ref.watch(moneyRepositoryProvider));
+    ExpenseSchedules(ref.watch(expenseRepositoryProvider));
 
 /// #1449 — a consumed service: whether the shelf holds that many, and
 /// which month's bill it lands on.
@@ -97,7 +97,7 @@ Consumptions consumptions(Ref ref) =>
 
 /// #1449 — an expense, and whether it may be filed as typed.
 @riverpod
-Expenses expenses(Ref ref) => Expenses(ref.watch(moneyRepositoryProvider));
+Expenses expenses(Ref ref) => Expenses(ref.watch(expenseRepositoryProvider));
 
 @riverpod
 LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
@@ -203,7 +203,7 @@ Future<List<FeeBand>> feeBands(Ref ref) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return repository.fetchFeeBands(workspace.id);
@@ -215,7 +215,7 @@ Future<SubscriptionLevels> subscriptionLevels(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const SubscriptionLevels();
   return ref
-      .watch(moneyRepositoryProvider)
+      .watch(commercialTermsProvider)
       .fetchSubscriptionLevels(workspace.id);
 }
 
@@ -228,7 +228,7 @@ Future<List<ServiceItem>> services(Ref ref) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return repository.fetchServices(workspace.id);
@@ -240,7 +240,7 @@ Future<List<ServiceItem>> allServices(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref
-      .watch(moneyRepositoryProvider)
+      .watch(commercialTermsProvider)
       .fetchServices(workspace.id, includeInactive: true);
 }
 
@@ -252,7 +252,7 @@ Future<List<Package>> packages(Ref ref) async {
   // `ref.watch` on the far side of an await throws outright if the
   // provider was disposed while the future was in flight, and it is
   // a dependency registration in any case.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return repository.fetchPackages(workspace.id);
@@ -264,7 +264,7 @@ Future<List<Package>> allPackages(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref
-      .watch(moneyRepositoryProvider)
+      .watch(commercialTermsProvider)
       .fetchPackages(workspace.id, includeInactive: true);
 }
 
@@ -557,7 +557,7 @@ Future<PriceNegotiation> priceNegotiation(Ref ref, String memberId) =>
     traced(
       'money',
       'price negotiation',
-      () => ref.read(moneyRepositoryProvider).fetchPriceNegotiation(memberId),
+      () => ref.read(commercialTermsProvider).fetchPriceNegotiation(memberId),
     );
 
 /// #870 — is the seller a non-profit association?

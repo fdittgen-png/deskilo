@@ -116,7 +116,7 @@ Future<void> exportAccountingFile(
   final accountQueries = ref.read(memberAccountQueriesProvider);
   // #2365 — the books of the export year only.
   final (invoices: exported, :ledger, :repartitions) =
-      await exportYearBooks(accountQueries, repo, workspace.id, year, view.invoices);
+      await exportYearBooks(accountQueries, ref.read(expenseRepositoryProvider), workspace.id, year, view.invoices);
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.

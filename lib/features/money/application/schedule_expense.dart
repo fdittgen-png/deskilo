@@ -16,8 +16,8 @@
 // reached the repository only because the widget remembered to return.
 // Here the COMMAND refuses, so the write cannot happen without the
 // reason whatever a future caller forgets.
+import '../domain/expense_repository.dart';
 import '../domain/expense_schedule.dart';
-import '../domain/money_repository.dart';
 
 /// What answering an occurrence at a given amount means.
 enum OccurrenceAnswer {
@@ -81,7 +81,7 @@ bool isSchedulable({required String title, required int? amountCents}) =>
 class ExpenseSchedules {
   const ExpenseSchedules(this._money);
 
-  final MoneyRepository _money;
+  final ExpenseRepository _money;
 
   /// Schedules a recurring expense; false when it was refused and
   /// NOTHING was written.
