@@ -1,0 +1,106 @@
+# Why a per-file budget is above its default (#2598).
+#
+# The NUMBER is generated into docs/design/CODE_HEALTH_BASELINE.json by
+# `dart run tool/code_health.dart --baseline` and only falls; this file
+# holds the reason, one line per exempt entry:
+#   <category> <key> // #<issue> <reason>
+# History of a number is in git, not here.
+fileLength lib/core/backend/backend_settings.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/backend/secondary_federation.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/demo/data/messenger_repository.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/demo/data/reservation_repository.dart // #1855 the fake mirrors the server's request claim (same id → the original booking, a changed payload refused by name, a lost answer after a commit) and the own-result lookup
+fileLength lib/core/demo/data/workspace_repository.dart // #1373 the in-memory twin of a repository interface (ADR 0028); its size is the interface surface
+fileLength lib/core/help/help_anchors.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/instance/instance_doctor.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/instance/mcp_readiness_checks.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/core/mcp/mcp_operations.dart // #2394: +2, it re-exports the generated enum and envelope. #2386: the budget fell 600→500. #2391: get_member_statement and each operation's group are generated here.
+fileLength lib/core/ui/canvas_controls.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/auth/data/supabase_auth_repository.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/auth/presentation/screens/auth_screen.dart // #2459: +5 for the welcome link (import + the Wrap beside Discover); was 590 (2026-10-11 #2386: the budget fell 600→500; this file was within the old one).
+fileLength lib/features/calendar/presentation/screens/calendar_hub_screen.dart // calendar holds the alerts +43: the Alerts view, its request listener, the switcher's fourth segment and the alert row opening it in place
+fileLength lib/features/calendar/presentation/screens/calendar_screen.dart // #2313 every control keyed for the task recorder
+fileLength lib/features/directory/data/supabase_messenger_repository.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/directory/domain/messenger.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/directory/presentation/messenger/context_thread_screen.dart // #2313 every control keyed for the task recorder
+fileLength lib/features/events/presentation/screens/events_screen.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/kiosk/presentation/screens/kiosk_screen.dart // #1289 the kiosk plan paints the workspace's own room colours
+fileLength lib/features/members/presentation/screens/member_page.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/money/domain/fec.dart // 590→555
+fileLength lib/features/money/domain/invoice.dart // #2440: the Spanish correction reason (R1-R5) frozen in the parties.
+fileLength lib/features/money/domain/invoice_pdf_part2.dart // 801→772
+fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/money/domain/money_repository.dart // #2440: createInvoice and invoiceIssueReadiness take the correction reason.
+fileLength lib/features/money/presentation/accounting_export.dart // #2360: the Swiss booking journal is one more export case.
+fileLength lib/features/money/presentation/invoice_documents.dart // 628→607
+fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
+fileLength lib/features/money/presentation/screens/billing_screen.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/money/presentation/screens/legal_identity_screen.dart // #2388 the import of context.l10n.
+fileLength lib/features/money/presentation/screens/my_finances_screen.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/money/presentation/screens/vat_declarations_screen.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/money/presentation/screens/vat_screen.dart // #2360: a decided change of rate comes prefilled in Change by law.
+fileLength lib/features/money/presentation/widgets/expense_schedule_sheet.dart // #2357 the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet).
+fileLength lib/features/money/presentation/widgets/invoice_detail_sheet.dart // #1922 the reminder history line and its import; the list lives in reminder_evidence_list.dart.
+fileLength lib/features/money/presentation/widgets/invoice_form_sheet.dart // #2361: the Canadian BN and QST number refusals have their messages.
+fileLength lib/features/money/providers/money_providers.dart // #2484 the dunning rules provider reads the workspace's settings snapshot for the first reminder's delay (a setting now).
+fileLength lib/features/plan/data/supabase_floor_plan_repository.dart // #2011 +3: fetchTargetNames pages its three tables through one local helper
+fileLength lib/features/reservations/presentation/reserve_seat_actions.dart // #2328 my seat sheet offers cancel or request deletion by the same rule as the booking's detail sheet, and files the request
+fileLength lib/features/reservations/presentation/widgets/booking_sheet.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
+fileLength lib/features/task_recorder/application/recorder_controller.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/task_recorder/domain/action_registry.dart // #1884 the management-form actions and outcomes (permission, role, validation rule) join the registry.
+fileLength lib/features/task_recorder/domain/task_recording_decoder.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/task_recorder/export/docx/docx_writer.dart // #2384 @visibleForTesting on the declarations only tests read, and its import
+fileLength lib/features/task_recorder/package/task_package.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/task_recorder/presentation/screens/task_wizard_screen.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/task_recorder/presentation/ui_capture.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/domain/feature_lifecycle.dart // master's two newest features join the owner-beta map
+fileLength lib/features/workspace/domain/template_capabilities.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/domain/workspace_feature.dart // #2566 the unchosen-flag predicate and the platform-on-by-default map (the resolver lives here).
+fileLength lib/features/workspace/domain/workspace_repository.dart // #2358 the customer's e-invoicing address setter.
+fileLength lib/features/workspace/presentation/member_admin_actions.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/screens/members_screen.dart // #2313 every control keyed for the task recorder
+fileLength lib/features/workspace/presentation/screens/onboarding_screen.dart // #2313 every control keyed for the task recorder
+fileLength lib/features/workspace/presentation/widgets/badge_manager_dialog.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/widgets/bi_charts.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/widgets/bi_views_bar.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/widgets/conversation_thread.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
+fileLength lib/features/workspace/presentation/widgets/member_note_composer.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/widgets/ref_picker_sheet.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/presentation/widgets/template_gallery.dart // #2386 within the former 600-line budget; split when next changed
+fileLength lib/features/workspace/providers/workspace_providers.dart // #2216 messageMentionsOn, the one switch both message screens read
+setState lib/features/profile/presentation/screens/settings_screen.dart // A library whose parts were each within 5 before #2386 counted them together.
+repositoryInWidgets members // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
+repositoryInWidgets money // #2494 the money screen's operations are classes now
+repositoryInWidgets profile // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
+repositoryInWidgets reservations // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
+repositoryInWidgets workspace // #2210 the legacy conversation list left lib/
+pairBudget calendar -> events // #1306 S2 — the calendar carries the pending decisions when the events bell is off: one import of the events feature's widget.
+pairBudget calendar -> plan // #2276: feed rows reuse authorized location providers.
+pairBudget calendar -> reservations // #2276: feed rows reuse the month reservation cache.
+pairBudget calendar -> task_recorder // #1881 B — the calendar's seams (hub and classic), the decision seam, and the recorder's calendar-kind label.
+pairBudget events -> plan // #1306 — +1 each on plan, reservations and workspace: the pending-decisions section left events_screen.dart so the calendar can carry it when the bell is off, and names, targets and
+pairBudget events -> task_recorder // #1884 B +2: the validation rules
+pairBudget events -> workspace // #2295: remove the obsolete inbox-tab visibility dependency.
+pairBudget kiosk -> reservations // #1234 — `SpaceAction`/`SpaceActChoice` moved from `presentation/widgets/space_act_form.dart` to `domain/space_act.dart` so the application layer could name them without importing a
+pairBudget me -> money // ADR 0035: the home's finance summary reads the overview and opens the finances route
+pairBudget me -> task_recorder // task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
+pairBudget members -> money // #1279 the member page hosts the carnet tile 8→9
+pairBudget members -> workspace // #2358 the member page states the customer's e-invoicing address through workspace/presentation/member_einvoice_address_tile.dart.
+pairBudget money -> events // #2494 the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; no new dependency.
+pairBudget money -> profile // #1791: payment choice reads and edits existing personal defaults; checkout consumes that same preference.
+pairBudget money -> workspace // #2494 the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; coupling unchanged.
+pairBudget plan -> reservations // #2494 the floor-plan painter's furniture layers became their own file (one library became two), both naming SeatState; coupling unchanged.
+pairBudget plan -> workspace // the plan focus starts over when the active workspace changes
+pairBudget profile -> auth // #2495 the presence heartbeat's wiring moved from core/presence into profile (a downward import, unavoidable: it reads the session); core-to-feature imports fell by 2.
+pairBudget profile -> workspace // #2495 country_names moved to core/i18n (two imports gone).
+pairBudget reservations -> plan // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n
+pairBudget reservations -> task_recorder // #1865 — the task recorder's seam and adapter (see the pairs above).
+pairBudget reservations -> workspace // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n
+pairBudget task_recorder -> events // #1884 B — the event type and its label, for a rule.
+pairBudget task_recorder -> workspace // #1884 B +2: a permission and its label
+pairBudget workspace -> auth // #2484 the settings snapshot is re-read for a different signed-in person.
+pairBudget workspace -> events // #1657 widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
+pairBudget workspace -> money // the reference picker derives an invoice's standing (open / paid / cancelled) from the one lifecycle the archive and the open cards use; #2003 badge/QR covers and BI exports reuse r
+pairBudget workspace -> plan // #1923 the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
+pairBudget workspace -> profile // #1652 the invitation review names who is joining (my profile's e-mail).
+pairBudget workspace -> reservations // #2383 the legacy new-conversation sheet left lib/
+pairBudget workspace -> task_recorder // #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
