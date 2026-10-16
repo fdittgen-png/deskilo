@@ -52,6 +52,7 @@ Future<void> exportWorkspaceExcel(
           .read(profileRepositoryProvider)
           .fetchProfiles(workspace.id, accountIdsOf(members));
       final money = ref.read(moneyRepositoryProvider);
+      final invoiceQueries = ref.read(invoiceQueriesProvider);
       final events = await ref
           .read(eventRepositoryProvider)
           .fetchEvents(workspace.id, limit: 0);
@@ -71,7 +72,9 @@ Future<void> exportWorkspaceExcel(
         reservations: await ref
             .read(reservationRepositoryProvider)
             .fetchAllForExport(workspace.id),
-        ledger: await money.fetchWorkspaceLedger(workspace.id),
+        ledger: await ref
+            .read(memberAccountQueriesProvider)
+            .fetchWorkspaceLedger(workspace.id),
         pendingEvents: [
           for (final e in events)
             if (e.status == EventStatus.pending) e,
@@ -79,7 +82,7 @@ Future<void> exportWorkspaceExcel(
         paymentIntents: await money.fetchPaymentIntents(workspace.id),
         services:
             await money.fetchServices(workspace.id, includeInactive: true),
-        invoices: await money.fetchInvoices(workspace.id),
+        invoices: await invoiceQueries.fetchInvoices(workspace.id),
         transmissionsByInvoice: {
           for (final entry in transmissions.entries)
             entry.key: entry.value.sentAt,

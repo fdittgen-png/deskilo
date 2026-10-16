@@ -104,7 +104,7 @@ Future<Invoice?> proformaForMonth(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return null;
   final preview = await ref
-      .read(moneyRepositoryProvider)
+      .read(invoiceQueriesProvider)
       .previewInvoice(
         workspaceId: workspace.id,
         memberId: memberId,
