@@ -73,8 +73,6 @@ const Map<String, String> _allowed = {
       '#2051 — measured coverage, pinned to the country catalogue',
   'lib/features/workspace/domain/kpi_contract.dart::kpiRegistryJson':
       '#1921 — the source kpi_registry_sql_test holds the server to',
-  'lib/features/workspace/domain/workspace_process.dart::validateProcessRegistry':
-      '#1325 — registry guard, run by process_registry_test',
   'lib/features/workspace/domain/feature_lifecycle.dart::validateFeatureAssessments':
       '#1850 — registry guard over featureAssessments',
   'lib/features/workspace/domain/feature_lifecycle.dart::featureMaturityFromName':

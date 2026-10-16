@@ -87,6 +87,9 @@ Every `WorkspaceFeature` also belongs to exactly one primary subprocess in
 Regenerate `docs/design/process-catalogue.md` with
 `dart run tool/build_process_catalogue.dart` after changing either registry.
 
+`dart run tool/feature_audit.dart` proves the structure from the code (#2522): dead flags, server gates on
+unregistered keys, nested double gates; `test/lint/feature_audit_test.dart` pins them in `docs/design/FEATURE_AUDIT_BASELINE.json` (a finding may only leave; `--baseline` rewrites it, new entries need a reviewed reason).
+
 ## Before a push: the fast gates; the full suite runs in CI (#1447, #2121)
 
 Before every push run, and see green:
