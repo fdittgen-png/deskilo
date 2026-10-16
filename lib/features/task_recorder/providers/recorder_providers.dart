@@ -14,6 +14,7 @@
 
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/backend_settings.dart';
@@ -28,6 +29,7 @@ import '../domain/recording_sink.dart';
 import '../domain/stored_guide.dart';
 import '../domain/task_recording.dart';
 import '../export/output_registry.dart';
+import '../guide/guide_replay.dart';
 import '../package/task_output.dart';
 
 part 'recorder_providers.g.dart';
@@ -172,3 +174,17 @@ class RecorderOpened extends _$RecorderOpened {
 @riverpod
 List<TaskOutputGenerator> taskOutputGenerators(Ref ref) =>
     taskOutputGeneratorList();
+
+/// The facts as the app has them now; null when signed out.
+final guideReplayFactsProvider = Provider<GuideReplayFacts?>((ref) {
+  final scope = ref.watch(recorderScopeProvider);
+  if (scope == null) return null;
+  final member = ref.watch(myMemberProvider).value;
+  return GuideReplayFacts(
+    accountDigest: scope.digest,
+    workspaceId: ref.watch(currentWorkspaceProvider).value?.id,
+    featureOn: ref.watch(taskRecorderAvailableProvider),
+    activeMember: member != null && member.status.name == 'active',
+    actsForReservations: ref.watch(actsForReservationsProvider),
+  );
+});
