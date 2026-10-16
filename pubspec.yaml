@@ -55,6 +55,10 @@ dependencies:
   # services. The app never imports Firebase directly.
   deskilo_push:
     path: packages/deskilo_push
+  # #2593 - the semantic task-recording core (models, codecs, writer
+  # contracts); the host supplies the action catalogue.
+  deskilo_task_recording:
+    path: packages/deskilo_task_recording
   # App-icon badge counter (#426): pending confirmations on the launcher
   # icon (Android launchers, iOS, macOS).
   app_badge_plus: ^1.2.4

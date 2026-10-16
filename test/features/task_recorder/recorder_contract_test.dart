@@ -6,6 +6,7 @@
 // onto a finite vocabulary at capture time, so a private value has no
 // field it could travel in.
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
+import 'package:deskilo/features/task_recorder/domain/recording_reference.dart';
 import 'package:deskilo/features/task_recorder/domain/safe_payload.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -53,6 +54,8 @@ void main() {
       ],
       outcomes: [OutcomeSpec('a.never', state: ObservationState.attempted)],
       prerequisites: [],
+      safeFields: safeFields,
+      acceptsPage: isGuideDestination,
     );
     final problems = broken.problems(safeFields.keys.toSet()).join('\n');
     expect(problems, contains('duplicate action a.go'));
@@ -75,7 +78,8 @@ void main() {
     test('undeclared keys are dropped, private values become the placeholder',
         () {
       final p = SafePayload.minimize(
-          {'for_whom', 'repeat'}, canaryPayload({'repeat': 'once'}));
+          {'for_whom', 'repeat'},
+          canaryPayload({'repeat': 'once'}), fields: safeFields);
       expect(p.values, {'for_whom': withheldValue, 'repeat': 'once'});
       final text = p.toJson().toString();
       for (final c in privateCanaries) {
@@ -84,7 +88,8 @@ void main() {
     });
 
     test('a non-string value is withheld, never stringified', () {
-      final p = SafePayload.minimize({'period'}, {'period': 42});
+      final p = SafePayload.minimize({'period'}, {'period': 42},
+          fields: safeFields);
       expect(p.values, {'period': withheldValue});
     });
 
@@ -105,15 +110,14 @@ void main() {
 
     test('parse is strict: one stray key or value refuses the whole payload',
         () {
-      expect(SafePayload.parse({'period'}, {'period': 'morning'})!.values,
-          {'period': 'morning'});
-      expect(SafePayload.parse({'period'}, {'period': withheldValue}),
-          isNotNull);
-      expect(SafePayload.parse({'period'}, {'period': 'at 9 with Zelda'}),
-          isNull);
-      expect(SafePayload.parse({'period'}, {'note': 'morning'}), isNull);
-      expect(SafePayload.parse({'period'}, ['morning']), isNull);
-      expect(SafePayload.parse({'period'}, null), SafePayload.empty);
+      SafePayload? parse(Object? json) =>
+          SafePayload.parse({'period'}, json, fields: safeFields);
+      expect(parse({'period': 'morning'})!.values, {'period': 'morning'});
+      expect(parse({'period': withheldValue}), isNotNull);
+      expect(parse({'period': 'at 9 with Zelda'}), isNull);
+      expect(parse({'note': 'morning'}), isNull);
+      expect(parse(['morning']), isNull);
+      expect(parse(null), SafePayload.empty);
     });
   });
 }
