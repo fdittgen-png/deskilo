@@ -1,0 +1,20 @@
+// Synthetic source for tool/feature_audit.dart: not compiled.
+Widget build(Set<WorkspaceFeature> features) {
+  // Nested double gate: beta inside alpha, neither requires the other.
+  if (features.contains(WorkspaceFeature.alpha)) {
+    if (features.contains(WorkspaceFeature.beta)) {
+      return a;
+    }
+  }
+  // A conjunction is the same thing in one expression.
+  final both = features.contains(WorkspaceFeature.gamma) &&
+      features.contains(WorkspaceFeature.delta);
+  // A negated guard does not nest: the absence of epsilon guards this.
+  if (!features.contains(WorkspaceFeature.epsilon)) {
+    if (features.contains(WorkspaceFeature.zeta)) return b;
+  }
+  // Related by `requires` (child inside parent): not a candidate.
+  if (features.contains(WorkspaceFeature.parent)) {
+    return HelpTip(feature: WorkspaceFeature.child);
+  }
+}
