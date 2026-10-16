@@ -31,6 +31,9 @@ public.bi_views.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny
 public.book_mappings.mcp_delegated_deny
 public.book_profiles.mcp_delegated_deny
+public.charging_stations.charging_stations_select
+public.charging_stations.charging_stations_write
+public.charging_stations.mcp_delegated_deny
 public.closure_days.closure_days_read
 public.closure_days.closure_days_write
 public.closure_days.closure_days_write_permitted

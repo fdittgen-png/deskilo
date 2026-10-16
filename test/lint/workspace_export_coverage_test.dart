@@ -215,6 +215,9 @@ const Map<String, String> _notExported = {
   // --- configuration: the configuration export owns these -----------
   'accessories': 'workspace configuration — export_workspace_configuration',
   'seat_accessories': 'configuration: which seat carries which accessory',
+  'charging_stations':
+      'configuration: the chargers of the EV parking slots (#2631); the plan '
+          'transfer carries them with the editor slice, not yet',
   'closure_days': 'configuration: the calendar of closed days',
   'fee_bands': 'configuration: the pricing bands',
   'packages': 'configuration: the subscription catalogue',
