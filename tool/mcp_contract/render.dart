@@ -25,6 +25,8 @@ const generatedPaths = (
   labels: 'lib/features/mcp/presentation/mcp_operation_text.g.dart',
   // #2394 — the operation enum and the envelope model, beside the specs.
   dartTypes: 'lib/core/mcp/mcp_contract.g.dart',
+  // #2504 — the same tools, as constants the web app registers with WebMCP.
+  webmcp: 'lib/core/webmcp/webmcp_tools.g.dart',
 );
 
 /// #2394 — the languages every operation label is written in.
@@ -469,6 +471,45 @@ Map<String, Object?> mcpTool(Map<String, dynamic> contract, Map<String, dynamic>
   'annotations': mcpToolAnnotations(op),
 };
 
+/// A Dart string literal for [value]: JSON escaping, plus `$` for Dart.
+String _dartLiteral(String value) => jsonEncode(value).replaceAll(r'$', r'\$');
+
+/// #2504 — the handled operations as `WebMcpToolSpec` constants.
+String renderWebMcpTools(Map<String, dynamic> contract) {
+  final out = StringBuffer()
+    ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
+    ..writeln('//')
+    ..writeln('// $_header')
+    ..writeln('// ignore_for_file: lines_longer_than_80_chars')
+    ..writeln()
+    ..writeln("import 'webmcp_tool_spec.dart';")
+    ..writeln()
+    ..writeln('/// Every operation with a handler, as a WebMCP tool.')
+    ..writeln('const List<WebMcpToolSpec> webMcpTools = [');
+  for (final o in contract['operations'] as List) {
+    final op = Map<String, dynamic>.from(o as Map);
+    if (op['handler'] != true) continue;
+    final tool = mcpTool(contract, op);
+    final features = [for (final f in op['features'] as List) _dartLiteral('$f')];
+    out
+      ..writeln('  WebMcpToolSpec(')
+      ..writeln('    id: ${_dartLiteral(op['id'] as String)},')
+      ..writeln('    name: ${_dartLiteral(tool['name'] as String)},')
+      ..writeln('    title: ${_dartLiteral(op['title'] as String)},')
+      ..writeln('    description: ${_dartLiteral(op['description'] as String)},')
+      ..writeln('    inputSchema: ${_dartLiteral(jsonEncode(tool['inputSchema']))},')
+      ..writeln('    mutation: ${_dartLiteral(op['mutation'] as String)},')
+      ..writeln('    confirmation: ${_dartLiteral(op['confirmation'] as String)},')
+      ..writeln('    scope: ${_dartLiteral(op['scope'] as String)},')
+      ..writeln('    features: [${features.join(', ')}],')
+      ..writeln('    readOnly: ${op['mutation'] == 'read'},')
+      ..writeln('    destructive: ${op['destructive'] == true},')
+      ..writeln('  ),');
+  }
+  out.writeln('];');
+  return out.toString();
+}
+
 /// Every generated file, by path.
 Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   final ops = [
@@ -831,6 +872,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     generatedPaths.webOpenapi: prettyJson(openapi),
     generatedPaths.labels: labels.toString(),
     generatedPaths.dartTypes: types.toString(),
+    generatedPaths.webmcp: renderWebMcpTools(contract),
     ...arb,
   };
 }
