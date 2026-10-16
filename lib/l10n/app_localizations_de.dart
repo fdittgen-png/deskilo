@@ -16458,6 +16458,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupDunning => 'Mahnungen und Zahlungsfristen';
 
   @override
+  String get settingGroupSecurity => 'Sicherheits- und Zugriffsgrenzen';
+
+  @override
   String get settingGuardrail => 'Feste Schutzgrenze';
 
   @override
@@ -16469,6 +16472,34 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintMcpConfirmationExpiryMinutes =>
+      'Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.';
+
+  @override
+  String get settingHintMcpProbeFreshnessMinutes =>
+      'Minuten, die eine erfolgreiche Prüfung des Assistenten-Endpunkts gilt, bevor die Schnittstelle eingeschaltet wird. Kann nur verkürzt werden.';
+
+  @override
+  String get settingHintMessagingGroupCreationPerHour =>
+      'Wie viele Gruppen eine Person pro Stunde erstellen darf. Kann nur verringert werden.';
+
+  @override
+  String get settingHintMessagingMessageRequestsPerDay =>
+      'Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.';
+
+  @override
+  String get settingHintSecurityBadgeLockoutFailures =>
+      'Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.';
+
+  @override
+  String get settingHintSecurityBadgeLockoutMinutes =>
+      'Minuten, über die falsche PIN-Eingaben gezählt werden und für die ein gesperrter Badge gesperrt bleibt. Kann nur verlängert werden.';
+
+  @override
+  String get settingHintSecurityInvitationExpiryDays =>
+      'Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.';
+
+  @override
   String get settingHistory => 'Verlauf';
 
   @override
@@ -16477,6 +16508,32 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelMcpConfirmationExpiryMinutes =>
+      'Bestätigungszeit für Assistenten-Aktionen';
+
+  @override
+  String get settingLabelMcpProbeFreshnessMinutes =>
+      'Aktualität der Prüfung des Assistenten-Endpunkts';
+
+  @override
+  String get settingLabelMessagingGroupCreationPerHour => 'Gruppen pro Stunde';
+
+  @override
+  String get settingLabelMessagingMessageRequestsPerDay =>
+      'Nachrichtenanfragen pro Tag';
+
+  @override
+  String get settingLabelSecurityBadgeLockoutFailures =>
+      'PIN-Versuche am Badge vor der Sperre';
+
+  @override
+  String get settingLabelSecurityBadgeLockoutMinutes => 'Sperrzeit des Badges';
+
+  @override
+  String get settingLabelSecurityInvitationExpiryDays =>
+      'Gültigkeit einer Einladung';
 
   @override
   String settingMaxOnly(String max, String unit) {
@@ -16530,6 +16587,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingSaved => 'Einstellung gespeichert';
 
   @override
+  String get settingUnitAttempts => 'Versuche';
+
+  @override
   String get settingUnitDays => 'Tage';
 
   @override
@@ -16537,6 +16597,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitMinutes => 'Minuten';
+
+  @override
+  String get settingUnitPerDay => 'pro Tag';
+
+  @override
+  String get settingUnitPerHour => 'pro Stunde';
 
   @override
   String get settingUnitSeconds => 'Sekunden';

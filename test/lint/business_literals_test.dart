@@ -81,11 +81,10 @@ const _tracked = <_Tracked>[
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
   (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev.dart',
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
-  // Column defaults: the creating migration; the writer function is what moves.
-  (what: 'invitation expiry column default (14 days)', file: 'supabase/migrations/0051_personal_invitations.sql',
-   pattern: r"interval '14 days'", ceiling: 1, movesIn: 'S2 (create_invitation sets expires_at)'),
-  (what: 'MCP action confirmation expiry column default (5 minutes)', file: 'supabase/migrations/0272_mcp_action_confirmations.sql',
-   pattern: r"interval '5 minutes'", ceiling: 1, movesIn: 'S2 (the confirmation insert sets expires_at)'),
+  // The column defaults of 0051 (invitation, 14 days) and 0272 (confirmation, 5
+  // minutes) left the ratchet with 0451 (S2): create_invitation now states
+  // expires_at from the setting, and the confirmation default calls
+  // mcp_confirmation_expires_at().
 ];
 
 typedef _TrackedSql = ({
@@ -100,18 +99,6 @@ typedef _TrackedSql = ({
 /// `create or replace function public.<name>(` in supabase/migrations). Every
 /// S2 and S4 value is SQL-only and lives here.
 const _trackedSql = <_TrackedSql>[
-  (what: 'badge lockout window (15 minutes)', function: 'badge_auth_verify',
-   pattern: r"interval '\d+ minutes'", ceiling: 1, movesIn: 'S2'),
-  (what: 'badge lockout failures (5)', function: 'badge_auth_verify',
-   pattern: r'v_recent >= \d+', ceiling: 1, movesIn: 'S2'),
-  (what: 'MCP probe freshness (15 minutes)', function: 'instance_mcp_overview',
-   pattern: r"interval '\d+ minutes'", ceiling: 1, movesIn: 'S2'),
-  (what: 'MCP probe freshness (15 minutes) and its text', function: 'instance_set_mcp_runtime',
-   pattern: r'\d+ minutes', ceiling: 2, movesIn: 'S2'),
-  (what: 'group creation per hour (10)', function: 'create_account_group',
-   pattern: r"interval '1 hour'\) >= \d+", ceiling: 1, movesIn: 'S2'),
-  (what: 'message requests per day (10)', function: 'send_account_message',
-   pattern: r"interval '1 day'\) >= \d+", ceiling: 1, movesIn: 'S2'),
   (what: 'message edit window (15 minutes, one per message kind)', function: 'edit_message',
    pattern: r"interval '\d+ minutes'", ceiling: 4, movesIn: 'S4'),
   (what: 'MCP notice read-state purge (90 days)', function: 'mark_instance_notice_read',

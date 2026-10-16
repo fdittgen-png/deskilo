@@ -8,4 +8,18 @@
 abstract final class SettingDefaults {
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
+  /// `mcp.confirmation_expiry_minutes`
+  static const int mcpConfirmationExpiryMinutes = 5;
+  /// `mcp.probe_freshness_minutes`
+  static const int mcpProbeFreshnessMinutes = 15;
+  /// `messaging.group_creation_per_hour`
+  static const int messagingGroupCreationPerHour = 10;
+  /// `messaging.message_requests_per_day`
+  static const int messagingMessageRequestsPerDay = 10;
+  /// `security.badge_lockout_failures`
+  static const int securityBadgeLockoutFailures = 5;
+  /// `security.badge_lockout_minutes`
+  static const int securityBadgeLockoutMinutes = 15;
+  /// `security.invitation_expiry_days`
+  static const int securityInvitationExpiryDays = 14;
 }

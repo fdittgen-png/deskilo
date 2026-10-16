@@ -1,0 +1,75 @@
+{
+  "@@locale": "it",
+  "settingGroupSecurity": "Limiti di sicurezza e di accesso",
+  "@settingGroupSecurity": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelSecurityBadgeLockoutFailures": "Tentativi di PIN del badge prima del blocco",
+  "@settingLabelSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityBadgeLockoutFailures": "Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.",
+  "@settingHintSecurityBadgeLockoutFailures": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelSecurityBadgeLockoutMinutes": "Durata del blocco del badge",
+  "@settingLabelSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityBadgeLockoutMinutes": "Minuti in cui si contano i tentativi errati e per cui un badge bloccato resta bloccato. Può solo essere allungata.",
+  "@settingHintSecurityBadgeLockoutMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelSecurityInvitationExpiryDays": "Validità di un invito",
+  "@settingLabelSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintSecurityInvitationExpiryDays": "Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.",
+  "@settingHintSecurityInvitationExpiryDays": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMcpConfirmationExpiryMinutes": "Tempo di conferma di un'azione dell'assistente",
+  "@settingLabelMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMcpConfirmationExpiryMinutes": "Minuti a disposizione della persona per confermare un'azione richiesta da un assistente. Le richieste già fatte mantengono il loro tempo. Può solo essere accorciato.",
+  "@settingHintMcpConfirmationExpiryMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMcpProbeFreshnessMinutes": "Validità del controllo dell'endpoint dell'assistente",
+  "@settingLabelMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMcpProbeFreshnessMinutes": "Minuti per cui un controllo riuscito dell'endpoint dell'assistente vale prima di attivare l'interfaccia. Può solo essere accorciata.",
+  "@settingHintMcpProbeFreshnessMinutes": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingLabelMessagingGroupCreationPerHour": "Gruppi creati all'ora",
+  "@settingLabelMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingHintMessagingGroupCreationPerHour": "Quanti gruppi una persona può creare all'ora. Può solo essere ridotto.",
+  "@settingHintMessagingGroupCreationPerHour": {
+    "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelMessagingMessageRequestsPerDay": "Richieste di messaggio al giorno",
+  "@settingLabelMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting label."
+  },
+  "settingHintMessagingMessageRequestsPerDay": "Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.",
+  "@settingHintMessagingMessageRequestsPerDay": {
+    "description": "#2485 settings: Setting hint."
+  },
+  "settingUnitAttempts": "tentativi",
+  "@settingUnitAttempts": {
+    "description": "#2485 settings: Unit."
+  },
+  "settingUnitPerHour": "all'ora",
+  "@settingUnitPerHour": {
+    "description": "#2485 settings: Unit."
+  },
+  "settingUnitPerDay": "al giorno",
+  "@settingUnitPerDay": {
+    "description": "#2485 settings: Unit."
+  }
+}
