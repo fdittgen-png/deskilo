@@ -169,7 +169,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/reservations/presentation/widgets/booking_sheet.dart`
 - `lib/features/task_recorder/domain/action_registry.dart`
 - `lib/features/workspace/domain/workspace_feature.dart`
-- `lib/features/workspace/domain/workspace_repository.dart`
 - `lib/features/workspace/presentation/member_admin_actions.dart`
 - `lib/features/workspace/presentation/screens/onboarding_screen.dart`
 - `lib/features/workspace/presentation/widgets/conversation_thread.dart`
