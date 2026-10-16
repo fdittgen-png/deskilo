@@ -302,7 +302,7 @@ class _Decoder {
     final page = raw['page'];
     if ((_schema >= 3 && page == null) ||
         (page != null &&
-            (_schema < 3 || page is! String || !isGuideDestination(page)))) {
+            (_schema < 3 || page is! String || !registry.acceptsPage(page)))) {
       _fatal(RecordingIssueCode.badValue, '$path.page');
     }
     final kind = StepKind.fromWire(raw['kind']);
@@ -465,7 +465,11 @@ class _Decoder {
         return null;
       }
     }
-    final payload = SafePayload.parse(spec.payloadFields, raw['payload']);
+    final payload = SafePayload.parse(
+      spec.payloadFields,
+      raw['payload'],
+      fields: registry.safeFields,
+    );
     if (payload == null) {
       _fatal(RecordingIssueCode.unsafePayload, '$path.payload');
       return null;
@@ -553,7 +557,11 @@ class _Decoder {
       _fatal(RecordingIssueCode.inconsistent, '$path.state');
       return null;
     }
-    final payload = SafePayload.parse(spec.payloadFields, raw['payload']);
+    final payload = SafePayload.parse(
+      spec.payloadFields,
+      raw['payload'],
+      fields: registry.safeFields,
+    );
     if (payload == null) {
       _fatal(RecordingIssueCode.unsafePayload, '$path.payload');
       return null;

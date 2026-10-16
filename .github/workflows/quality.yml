@@ -121,6 +121,12 @@ jobs:
         run: flutter test
         working-directory: packages/deskilo_push
 
+      # #2593 — the semantic recorder core is a pure-Dart package with a
+      # neutral example host; it resolves and tests without the app.
+      - name: Tests of the task recording package
+        run: dart pub get && dart analyze --fatal-infos && dart test
+        working-directory: packages/deskilo_task_recording
+
       - name: Analyze (lib + test)
         # Direct Dart analysis waits for analyzer plugins to finish.
         run: dart analyze --fatal-infos

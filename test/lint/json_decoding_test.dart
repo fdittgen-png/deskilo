@@ -25,7 +25,11 @@ const _rawReadBudget = 207;
 const _dynamicBudget = 685;
 
 void main() {
-  final files = handWrittenDartFiles('lib').toList();
+  // #2593 - the recording codec moved into a package; its reads still count.
+  final files = handWrittenDartFilesIn(const [
+    'lib',
+    'packages/deskilo_task_recording/lib',
+  ]).toList();
 
   test('no cast_nullable_to_non_nullable ignore in hand-written lib/', () {
     final hits = scanLines(

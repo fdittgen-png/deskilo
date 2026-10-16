@@ -122,7 +122,11 @@ void main() {
       action: RecorderActions.uiTap,
       actionVersion: 1,
       target: target,
-      payload: SafePayload.minimize({'label'}, {'label': ?label}),
+      payload: SafePayload.minimize(
+        {'label'},
+        {'label': ?label},
+        fields: safeFields,
+      ),
     );
 
     test('a keyed tap keeps its key and label; an unkeyed one does not', () {

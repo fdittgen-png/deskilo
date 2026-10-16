@@ -144,6 +144,15 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'package',
   ),
   RunnerFamily(
+    name: 'task recording package',
+    root: 'packages/deskilo_task_recording/test',
+    suffix: '_test.dart',
+    owner: 'quality.yml: dart test in packages/deskilo_task_recording',
+    workflow: 'quality.yml',
+    command: 'working-directory: packages/deskilo_task_recording',
+    layer: 'package',
+  ),
+  RunnerFamily(
     name: 'Edge functions',
     root: 'supabase/functions',
     suffix: '_test.ts',
