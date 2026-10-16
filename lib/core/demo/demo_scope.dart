@@ -183,6 +183,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       invoiceQueriesProvider.overrideWithValue(fixture.money), // #2591
       memberAccountQueriesProvider.overrideWithValue(fixture.money), // #2591
       reportTemplateRepositoryProvider.overrideWithValue(fixture.money), // #2591
+      invoiceCommandsProvider.overrideWithValue(fixture.money), // #2591
+      taxReportingRepositoryProvider.overrideWithValue(fixture.money), // #2591
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       eInvoiceInboxRepositoryProvider

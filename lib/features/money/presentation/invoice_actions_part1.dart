@@ -386,7 +386,7 @@ Future<void> voidInvoiceWithConfirm(
     message: 'invoice void failed',
     errorText:
         l10n.workspaceGenericError,
-    action: () => ref.read(moneyRepositoryProvider).voidInvoice(invoice.id),
+    action: () => ref.read(invoiceCommandsProvider).voidInvoice(invoice.id),
   )) {
     return;
   }

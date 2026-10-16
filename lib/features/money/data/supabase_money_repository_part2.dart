@@ -5,58 +5,6 @@ part of 'supabase_money_repository.dart';
 // file holds the whole class.
 extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
 
-  Future<String> _createInvoiceImpl({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    String? replacesId,
-    bool detailed = false,
-    InvoiceKind kind = InvoiceKind.full,
-    String buyerReference = '',
-    String purchaseOrder = '',
-    String correctionReason = '',
-  }) async {
-    // #982 — a replacement is a correction of a document of record and
-    // issues directly; a new invoice goes through the policy, which
-    // holds it (pending) or applies it at once.
-    if (replacesId != null) {
-      final id = await _client.rpc<dynamic>('create_invoice', params: {
-        'p_workspace_id': workspaceId,
-        'p_member_id': memberId,
-        'p_period': period,
-        'p_replaces': replacesId,
-        'p_detailed': detailed,
-        'p_buyer_reference': buyerReference,
-        'p_purchase_order': purchaseOrder,
-        'p_kind': kind.name,
-        'p_correction_reason': correctionReason,
-      });
-      return id as String;
-    }
-    final answer = await _client.rpc<dynamic>('request_invoice_issue', params: {
-      'p_workspace_id': workspaceId,
-      'p_member_id': memberId,
-      'p_period': period,
-      'p_kind': kind.name,
-      'p_detailed': detailed,
-      'p_allow_zero': false,
-      'p_buyer_reference': buyerReference.isEmpty ? null : buyerReference,
-      'p_purchase_order': purchaseOrder.isEmpty ? null : purchaseOrder,
-    });
-    return applyOrPending(answer);
-  }
-
-  Future<void> _voidInvoiceImpl(String invoiceId) async {
-    await _client
-        .rpc<dynamic>('request_invoice_void', params: {'p_invoice_id': invoiceId})
-        .then(applyOrPendingVoid);
-  }
-
-  Future<void> _remindInvoiceImpl(String invoiceId) async {
-    await _client.rpc<void>('record_invoice_reminder',
-        params: {'p_invoice_id': invoiceId});
-  }
-
   Future<Map<String, String>> _fetchDunningHoldsImpl(String workspaceId) async {
     final rows = await _client
         .from('invoice_dunning_holds')
@@ -82,20 +30,6 @@ extension _SupabaseMoneyRepositoryPart2 on SupabaseMoneyRepository {
 
   Future<void> _releaseDunningHoldImpl(String invoiceId) => _client.rpc<void>(
       'release_dunning_hold', params: {'p_invoice_id': invoiceId});
-
-  Future<void> _matchInvoiceImpl({
-    required String invoiceId,
-    required String paymentLedgerId,
-    required String resolution,
-    String note = '',
-  }) async {
-    await _client.rpc<void>('match_invoice', params: {
-      'p_invoice_id': invoiceId,
-      'p_payment_ledger_id': paymentLedgerId,
-      'p_resolution': resolution,
-      'p_note': note,
-    });
-  }
 
   Future<List<PaymentIntent>> _fetchPaymentIntentsImpl(String workspaceId) async {
     // #1310 S2 — paged.

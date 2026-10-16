@@ -29,7 +29,6 @@ fileLength lib/features/money/domain/fec.dart // 590→555
 fileLength lib/features/money/domain/invoice.dart // #2440: the Spanish correction reason (R1-R5) frozen in the parties.
 fileLength lib/features/money/domain/invoice_pdf_part2.dart // 801→772
 fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within the former 600-line budget; split when next changed
-fileLength lib/features/money/domain/money_repository.dart // #2440: createInvoice and invoiceIssueReadiness take the correction reason.
 fileLength lib/features/money/presentation/accounting_export.dart // #2360: the Swiss booking journal is one more export case.
 fileLength lib/features/money/presentation/invoice_documents.dart // 628→607
 fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.

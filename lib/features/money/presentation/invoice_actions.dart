@@ -128,7 +128,7 @@ Future<void> settleCreditInvoiceDialog(
     errorText:
         l10n.workspaceGenericError,
     action: () => ref
-        .read(moneyRepositoryProvider)
+        .read(invoiceCommandsProvider)
         .settleCreditInvoice(invoice.id, note: note),
   )) {
     return;

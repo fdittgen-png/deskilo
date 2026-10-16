@@ -165,3 +165,106 @@ final class ReportTemplateRepositoryProvider
 
 String _$reportTemplateRepositoryHash() =>
     r'3613b080cd2f35e9ef5fcd903edf2b9269d8d31c';
+
+/// #2591 C3 — what a person does to an invoice: issue, void, remind,
+/// regroup, settle a credit note, match a payment.
+
+@ProviderFor(invoiceCommands)
+final invoiceCommandsProvider = InvoiceCommandsProvider._();
+
+/// #2591 C3 — what a person does to an invoice: issue, void, remind,
+/// regroup, settle a credit note, match a payment.
+
+final class InvoiceCommandsProvider
+    extends
+        $FunctionalProvider<InvoiceCommands, InvoiceCommands, InvoiceCommands>
+    with $Provider<InvoiceCommands> {
+  /// #2591 C3 — what a person does to an invoice: issue, void, remind,
+  /// regroup, settle a credit note, match a payment.
+  InvoiceCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceCommandsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<InvoiceCommands> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  InvoiceCommands create(Ref ref) {
+    return invoiceCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InvoiceCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InvoiceCommands>(value),
+    );
+  }
+}
+
+String _$invoiceCommandsHash() => r'b42975e1913b0409afa1e86e296ac224fc90a203';
+
+/// #2591 C3 — the workspace's VAT rates and returns.
+
+@ProviderFor(taxReportingRepository)
+final taxReportingRepositoryProvider = TaxReportingRepositoryProvider._();
+
+/// #2591 C3 — the workspace's VAT rates and returns.
+
+final class TaxReportingRepositoryProvider
+    extends
+        $FunctionalProvider<
+          TaxReportingRepository,
+          TaxReportingRepository,
+          TaxReportingRepository
+        >
+    with $Provider<TaxReportingRepository> {
+  /// #2591 C3 — the workspace's VAT rates and returns.
+  TaxReportingRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'taxReportingRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$taxReportingRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<TaxReportingRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  TaxReportingRepository create(Ref ref) {
+    return taxReportingRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TaxReportingRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TaxReportingRepository>(value),
+    );
+  }
+}
+
+String _$taxReportingRepositoryHash() =>
+    r'b39e8b86c69f843992b9d2360329491556e9c571';
