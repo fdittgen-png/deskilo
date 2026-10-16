@@ -608,7 +608,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       'amenities': seat.amenities,
       'blocked_from': seat.blockedFrom?.toUtc().toIso8601String(),
       'blocked_to': seat.blockedTo?.toUtc().toIso8601String(),
-      'nfc_uid': seat.nfcUid,
+      'nfc_uid': seat.nfcUid, 'slot_minutes': seat.slotMinutes,
     }).eq('id', seat.id);
     await _bust();
   }
@@ -709,6 +709,6 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         blockedTo: row['blocked_to'] == null
             ? null
             : DateTime.parse(row['blocked_to'] as String),
-        nfcUid: row['nfc_uid'] as String?,
+        nfcUid: row['nfc_uid'] as String?, slotMinutes: row['slot_minutes'] as int?,
       );
 }

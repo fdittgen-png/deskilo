@@ -62,6 +62,22 @@ enum BookingGranularity {
   /// NEXT TO free from→to times (#446).
   bool get offersDayWindows => isDayBased || this == hours;
 
+  /// The granularity a resource with its own slot (#2631, `seats.slot_minutes`)
+  /// is booked under: null keeps the [workspace] value (every existing
+  /// resource); 5/15/30/60 is that minute grid; 1440 the full working day.
+  /// Mirrors the server's `enforce_booking_rules(…, p_seat_id)`; any other
+  /// value falls back to the workspace's, like an unknown wire value.
+  static BookingGranularity forSlot(
+          int? slotMinutes, BookingGranularity workspace) =>
+      switch (slotMinutes) {
+        5 => minutes5,
+        15 => minutes15,
+        30 => minutes30,
+        60 => minutes60,
+        1440 => fullDay,
+        _ => workspace,
+      };
+
   /// The granularity for [wireName]; null / unknown values fall back to
   /// [flexible] (forward compatibility: rules written by a newer app
   /// version must not crash an older client).

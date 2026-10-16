@@ -37,6 +37,9 @@ sealed class Seat with _$Seat implements SystemStamped {
     /// #585 — the chair's physical NFC/RFID tag uid (normalized
     /// lowercase hex); tapping it resolves to this seat like its QR.
     String? nfcUid,
+    /// #2631 — this resource's own booking slot in minutes (5, 15, 30, 60
+    /// or 1440 for the full day); null = the workspace's granularity.
+    int? slotMinutes,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Seat;
