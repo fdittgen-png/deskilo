@@ -55,7 +55,7 @@ final class VatDeclarationsProvider
   }
 }
 
-String _$vatDeclarationsHash() => r'00dd7b8463c8147ef26e527bb5e36f40f2bef799';
+String _$vatDeclarationsHash() => r'9c96214bccdb4485f894095c9208911f70ddd7b9';
 
 /// #2357 — saving the filing file of a return, for the space as it is.
 

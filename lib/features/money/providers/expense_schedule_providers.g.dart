@@ -73,7 +73,7 @@ final class ExpenseSchedulesProvider
   }
 }
 
-String _$expenseSchedulesHash() => r'eb4d09258956b5b72c588065b0c7feeb28eb2a42';
+String _$expenseSchedulesHash() => r'd3fc89d46f4e5630957d86014d261bcfb3b253ef';
 
 /// #767 — my recurring expense schedules (or the workspace's, for the
 /// finance/expense permissions — RLS decides what comes back).
@@ -165,7 +165,7 @@ final class ExpenseOccurrencesProvider
 }
 
 String _$expenseOccurrencesHash() =>
-    r'2fb6cb8cc6bf45ee30c749465b0401558b8b3a18';
+    r'5f22602671a5067812208eb33a256f511178b9c0';
 
 /// The member's materialised occurrences — the awaiting and rejected
 /// ones are what the Payments face presents for confirmation.
@@ -255,7 +255,7 @@ final class ExpenseScheduleSweepProvider
 }
 
 String _$expenseScheduleSweepHash() =>
-    r'4c20e32546136a95281b1fb303a34b42cb146162';
+    r'00c5f567a65a5ac8ff67e0d5d0c498ef6c14e77e';
 
 /// #767 — the client-side clock for scheduled expenses: the first member
 /// who opens Finances in a session materialises what is due (the

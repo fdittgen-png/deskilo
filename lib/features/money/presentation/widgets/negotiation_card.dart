@@ -422,7 +422,7 @@ Future<void> showPriceNegotiationSheet(
     domain: 'money',
     message: 'propose price negotiation failed',
     errorText: l10n.workspaceGenericError,
-    action: () => ref.read(moneyRepositoryProvider).proposePriceNegotiation(
+    action: () => ref.read(commercialTermsProvider).proposePriceNegotiation(
           memberId: memberId,
           feeCents: feeCents,
           overageFeeCents: overageCents,

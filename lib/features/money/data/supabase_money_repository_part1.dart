@@ -5,52 +5,6 @@ part of 'supabase_money_repository.dart';
 // file holds the whole class.
 extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
 
-  Future<List<VatDeclaration>> _fetchVatDeclarationsImpl(
-      String workspaceId) async {
-    final rows = await _client
-        .from('vat_declarations')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('period_start', ascending: false);
-    return rows.map(VatDeclaration.fromRow).toList();
-  }
-
-  Future<String> _saveVatDeclarationImpl({
-    required String workspaceId,
-    required DateTime periodStart,
-    required DateTime periodEnd,
-  }) async {
-    // #2357 — the period alone: the server computes the figures.
-    final id = await _client.rpc<dynamic>('save_vat_declaration', params: {
-      'p_workspace_id': workspaceId,
-      'p_period_start': periodStart.toIso8601String().substring(0, 10),
-      'p_period_end': periodEnd.toIso8601String().substring(0, 10),
-    });
-    return id as String;
-  }
-
-  Future<void> _markVatDeclarationSubmittedImpl({
-    required String declarationId,
-    required String channel,
-    required String receipt,
-  }) async {
-    await _client.rpc<void>('mark_vat_declaration_submitted', params: {
-      'p_declaration_id': declarationId,
-      'p_channel': channel,
-      'p_receipt': receipt,
-    });
-  }
-
-  Future<void> _settleCreditInvoiceImpl(String invoiceId,
-      {String note = ''}) async {
-    // #982 — through the refund policy.
-    final answer = await _client.rpc<dynamic>('request_refund', params: {
-      'p_invoice_id': invoiceId,
-      'p_note': note,
-    });
-    applyOrPendingVoid(answer);
-  }
-
   Future<DunningRules> _fetchDunningRulesImpl(String workspaceId) async {
     final row = await _client
         .from('workspaces')
@@ -60,21 +14,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
     return DunningRules.fromJson(
       row['dunning_rules'] as Map<String, dynamic>? ?? const {},
     );
-  }
-
-  Future<String> _settleInvoicesImpl({
-    required String workspaceId,
-    required String memberId,
-    required List<String> invoiceIds,
-    String note = '',
-  }) async {
-    final id = await _client.rpc<dynamic>('settle_invoices', params: {
-      'p_workspace_id': workspaceId,
-      'p_member_id': memberId,
-      'p_invoice_ids': invoiceIds,
-      'p_note': note,
-    });
-    return id as String;
   }
 
   Future<BillingRules> _fetchBillingRulesImpl(String workspaceId) async {
@@ -132,31 +71,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
     });
     return (result as num?)?.toInt() ?? 0;
   }
-
-  Future<PriceNegotiation> _fetchPriceNegotiationImpl(String memberId) async =>
-      PriceNegotiation.fromJson(await _client.rpc<dynamic>(
-          'member_price_negotiation',
-          params: {'p_member_id': memberId}) as Map<String, dynamic>);
-
-  Future<void> _proposePriceNegotiationImpl({
-    required String memberId,
-    int? feeCents,
-    int? overageFeeCents,
-    double? discountPercent,
-    String note = '',
-    DateTime? validFrom,
-    int? subscriptionPct,
-    Map<String, Map<String, int>> items = const {},
-  }) =>
-      _client.rpc<void>('propose_price_negotiation', params: {
-        'p_member_id': memberId,
-        'p_fee_cents': feeCents,
-        'p_overage_fee_cents': overageFeeCents,
-        'p_discount_percent': discountPercent,
-        'p_note': note,
-        'p_valid_from': validFrom?.toIso8601String().substring(0, 10),
-        'p_subscription_pct': subscriptionPct, 'p_items': items,
-      });
 
   Future<int> _sweepPaymentRemindersImpl(String workspaceId) async {
     final n = await _client.rpc<Object?>(
@@ -232,27 +146,6 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
     return r as String;
   }
 
-  Future<String> _distributeExpenseImpl({
-    required String workspaceId,
-    required String title,
-    required int amountCents,
-    required RepartitionMethod method,
-    required String period,
-    required List<RepartitionShare> shares,
-    String? sourceEventId,
-  }) async {
-    final id = await _client.rpc<dynamic>('distribute_expense', params: {
-      'p_workspace_id': workspaceId,
-      'p_title': title,
-      'p_amount_cents': amountCents,
-      'p_method': method.name,
-      'p_period': period,
-      'p_shares': [for (final s in shares) s.toJson()],
-      'p_source_event_id': sourceEventId,
-    });
-    return id as String;
-  }
-
   Future<String> _requestUsageCorrectionImpl(
     String recordId, {
     String reason = '',
@@ -276,16 +169,4 @@ extension _SupabaseMoneyRepositoryPart1 on SupabaseMoneyRepository {
     return id as String;
   }
 
-  Future<List<ExpenseRepartition>> _fetchExpenseRepartitionsImpl(
-      String workspaceId) async {
-    final rows = await _client
-        .from('expense_repartitions')
-        .select()
-        .eq('workspace_id', workspaceId)
-        .order('created_at', ascending: false);
-    return [
-      for (final row in rows)
-        ExpenseRepartition.fromJson(Map<String, dynamic>.from(row as Map)),
-    ];
-  }
 }

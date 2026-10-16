@@ -97,7 +97,7 @@ Future<void> showInvoiceIssueSheet(
   if (result == null || !context.mounted) return;
 
   try {
-    await ref.read(moneyRepositoryProvider).createInvoice(
+    await ref.read(invoiceCommandsProvider).createInvoice(
           workspaceId: workspace.id,
           memberId: result.memberId,
           period: result.period,

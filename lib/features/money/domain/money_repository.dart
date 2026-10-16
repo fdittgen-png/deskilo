@@ -1,68 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/vat/supply_class.dart';
 import 'billing_rules.dart';
+import 'commercial_terms_repository.dart';
 import 'dunning.dart';
 import 'einvoice_gateway.dart';
-import 'expense_repartition.dart';
-import 'expense_schedule.dart';
-import 'fee_band.dart';
+import 'expense_repository.dart';
+import 'invoice_commands.dart';
 import 'invoice_queries.dart';
 import 'member_account_queries.dart';
 import 'number_sequence.dart';
-import 'package.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
-import 'price_negotiation.dart';
 import 'report_template_repository.dart';
-import 'service_item.dart';
-import 'subscription_levels.dart';
-import 'vat_declaration.dart';
-import 'vat_rate.dart';
+import 'tax_reporting_repository.dart';
 import 'workspace_status.dart';
 
+/// Compatibility facade (#2591 C4): it implements every narrow money port
+/// (invoice and account reads, report templates, invoice commands, tax
+/// reporting, commercial terms, expenses) and still declares what has not
+/// moved yet. It gets NO new methods — new product code depends on the
+/// narrow port it needs, not on this.
+///
 /// Money boundary (spec §7). Payments are only *recorded* — the pending
 /// event created by [recordPayment] must be confirmed by the other side
 /// before a ledger credit exists.
-abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, ReportTemplateRepository {
-  /// The workspace's VAT declarations (0107), newest period first.
-  Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
-
-  /// #2357 — prepares (or prepares again) the return of a period. The
-  /// SERVER computes its figures (`compute_vat_return`, 0402); the client
-  /// sends the period alone and then reads the stored row.
-  Future<String> saveVatDeclaration({
-    required String workspaceId,
-    required DateTime periodStart,
-    required DateTime periodEnd,
-  });
-
-  /// Records that the owner filed the prepared return with the tax
-  /// authority ([channel] `manual` or `export`), with the [receipt]
-  /// reference the authority gave — the only way a return is filed.
-  Future<void> markVatDeclarationSubmitted({
-    required String declarationId,
-    required String channel,
-    required String receipt,
-  });
-
-  /// Settles a NEGATIVE invoice — a credit note the WORKSPACE pays
-  /// (#508, 0102): books the payout charge and closes the avoir with
-  /// resolution 'refunded' (through the invoice_payment policy).
-  Future<void> settleCreditInvoice(String invoiceId, {String note = ''});
-
+abstract class MoneyRepository implements
+        InvoiceQueries,
+        MemberAccountQueries,
+        ReportTemplateRepository,
+        InvoiceCommands,
+        TaxReportingRepository,
+        CommercialTermsRepository,
+        ExpenseRepository {
   /// The workspace's dunning policy (#472, 0093); defaults when unset.
   Future<DunningRules> fetchDunningRules(String workspaceId);
-
-  /// #804 — regroups [invoiceIds] into ONE invoice the member pays.
-  /// The sources stay in the archive and stop being separately owed.
-  /// Answers the settlement's id.
-  Future<String> settleInvoices({
-    required String workspaceId,
-    required String memberId,
-    required List<String> invoiceIds,
-    String note = '',
-  });
 
   /// #802 — when the two automatic invoice runs happen.
   Future<BillingRules> fetchBillingRules(String workspaceId);
@@ -84,23 +55,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
   /// Runs both invoice runs for this workspace NOW instead of waiting for
   /// the nightly clock, and answers how many documents it raised.
   Future<int> sweepBillingInvoices(String workspaceId);
-
-  /// #739 — a member's deal: default, active, pending. Owner, finance
-  /// admins and the member; a read by anyone else than the member is
-  /// logged server-side.
-  Future<PriceNegotiation> fetchPriceNegotiation(String memberId);
-
-  /// #739 — propose a deal for [memberId]; lands pending for validation.
-  Future<void> proposePriceNegotiation({
-    required String memberId,
-    int? feeCents,
-    int? overageFeeCents,
-    double? discountPercent,
-    String note = '',
-    DateTime? validFrom,
-    int? subscriptionPct,
-    Map<String, Map<String, int>> items = const {},
-  });
 
   /// #726 — apply the dunning rules now (idempotent: the rules decide).
   /// Returns how many reminders were recorded. Admins only.
@@ -130,32 +84,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
   /// it (RPC `preview_document_number`).
   Future<String> previewDocumentNumber(String workspaceId, String journal);
 
-  /// Issues an IMMUTABLE invoice (RPC `create_invoice`) — owner always,
-  /// admins per the adminInvoicing delegation. Returns its id. Since
-  /// 0062 the positions are DERIVED server-side from [period]'s tracked
-  /// data — nothing is entered at issue time. With [replacesId] (0061)
-  /// the new invoice references the erroneous one it replaces; the
-  /// server voids that one in the same transaction.
-  /// [detailed] (0064) snapshots the annex — the period's full ledger
-  /// and attendance — into the immutable document.
-  /// #828 — distributes [amountCents] (negative = a reversal) over the
-  /// members in [shares], as adjustment ledger rows on [period] that the
-  /// period's usage invoice picks up — through the validation framework
-  /// (RPC `distribute_expense`, 0147). Returns the repartition id.
-  Future<String> distributeExpense({
-    required String workspaceId,
-    required String title,
-    required int amountCents,
-    required RepartitionMethod method,
-    required String period,
-    required List<RepartitionShare> shares,
-    String? sourceEventId,
-  });
-
-  /// The workspace's distributions, newest first (0147).
-  Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
-      String workspaceId);
-
   /// #833 — "I left before the booking ended; bill the time I was
   /// actually here." Only the member concerned may ask, and never
   /// decides it themselves. Returns the event id.
@@ -164,35 +92,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
   /// #833 — an admin removing a record; the member concerned validates
   /// it when a rule says so. Returns the event id.
   Future<String> requestUsageRecordDelete(String recordId, {String reason});
-
-  /// #827 — [kind] narrows the document to the subscription (ahead of
-  /// the month) or the usage (after it); [InvoiceKind.full] is the
-  /// historical whole-month invoice.
-  Future<String> createInvoice({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    String? replacesId,
-    bool detailed = false,
-    InvoiceKind kind = InvoiceKind.full,
-
-    /// #922 — BT-10 and BT-13, for a public-sector buyer (Chorus Pro).
-    /// Frozen on the document; empty for everyone else.
-    String buyerReference = '',
-    String purchaseOrder = '',
-
-    /// #2440 — RD 1619/2012 art. 15: why a Spanish seller corrects a
-    /// document (R1-R5). Ignored for every other seller.
-    String correctionReason = '',
-  });
-
-  /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
-  /// one-way change the server permits on an issued invoice.
-  Future<void> voidInvoice(String invoiceId);
-
-  /// Records a payment reminder (RPC `record_invoice_reminder`, 0066)
-  /// — collection metadata beside the immutable document.
-  Future<void> remindInvoice(String invoiceId);
 
   /// #1913 (0331) — invoiceId → the reason of its ACTIVE dunning hold
   /// (`dispute`, `identity_error`, `insolvency`, `other`). A held invoice
@@ -209,18 +108,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
 
   /// #1913 — releases the active hold (RPC `release_dunning_hold`).
   Future<void> releaseDunningHold(String invoiceId);
-
-  /// Matches an open invoice to a REGISTERED payment (RPC
-  /// `match_invoice`, 0068): the amount comes from the selected ledger
-  /// payment — never typed. [resolution] ∈ exact | over_forced |
-  /// over_credit_note | under_accepted; the forced paths REQUIRE
-  /// [note].
-  Future<void> matchInvoice({
-    required String invoiceId,
-    required String paymentLedgerId,
-    required String resolution,
-    String note = '',
-  });
 
   /// All online-payment attempts of the workspace (0045) — the export's
   /// online-payments rows. Admin-readable by the 0045 policy.
@@ -244,62 +131,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
     String? period,
   });
 
-  /// Fee bands of the workspace ordered by [FeeBand.fromPct]
-  /// (member-readable, ADR 0008 / #128).
-  Future<List<FeeBand>> fetchFeeBands(String workspaceId);
-
-  /// Owner-only (RPC `replace_fee_bands`): atomically replaces the whole
-  /// band set. Bands must tile (0, 100] contiguously — validated
-  /// server-side too.
-  Future<void> replaceFeeBands(String workspaceId, List<FeeBand> bands);
-
-  /// The owner-curated subscription levels of the workspace (#128).
-  Future<SubscriptionLevels> fetchSubscriptionLevels(String workspaceId);
-
-  /// Owner-only (RLS on workspaces): persists the offered levels.
-  Future<void> setSubscriptionLevels(
-    String workspaceId,
-    SubscriptionLevels levels,
-  );
-
-  /// Consumable services of the workspace, name-ordered (member-readable).
-  /// Owners pass [includeInactive] for the catalog editor (#123).
-  Future<List<ServiceItem>> fetchServices(
-    String workspaceId, {
-    bool includeInactive = false,
-  });
-
-  /// Owner-only (RLS services_write): creates a service.
-  Future<ServiceItem> createService(
-    String workspaceId, {
-    required String name,
-    required int priceCents,
-    String? vatRateId,
-    SupplyClass supplyClass = SupplyClass.property,
-  });
-
-  /// Owner-only: partial update of name, price, VAT rate and active flag.
-  /// Deactivate = `updateService(active: false)` — services are never
-  /// deleted (bill lines reference them).
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-  });
-
-  /// The VAT rates the workspace charges (0072), member-readable: they
-  /// appear on the bill and on every invoice.
-  Future<List<VatRate>> fetchVatRates(String workspaceId);
-
-  /// Owner-only (RPC `set_vat_rates`): replaces the whole rate set
-  /// atomically. Exactly one rate must be the default. A rate a service
-  /// still points at is deactivated rather than deleted, so no catalogue
-  /// entry is ever silently re-taxed.
-  Future<void> setVatRates(String workspaceId, List<VatRate> rates);
-
   /// Records consumed services onto the monthly bill (#129, ADR 0008).
   /// Creates a PENDING service_charge event with a name+price snapshot —
   /// the ledger charge posts only on confirmation. Members self-report
@@ -311,92 +142,6 @@ abstract class MoneyRepository implements InvoiceQueries, MemberAccountQueries, 
     required String serviceId,
     required int quantity,
     String? period,
-  });
-
-  /// Submits a community expense (spec §9); another admin must approve
-  /// before the credit exists. Returns the pending event id.
-  Future<String> submitExpense({
-    required String workspaceId,
-    required int amountCents,
-    required String category,
-    String description,
-    /// #731 — when the expense is a SUPPLY for the space: name (or
-    /// service_id of an existing item), quantity, unit_price_cents.
-    Map<String, Object?>? supply,
-    /// #2357 — input VAT: {percent, deductible_pct}; null without VAT.
-    Map<String, Object?>? vat,
-  });
-
-  /// #767 — my recurring expense schedules (admins with the expense or
-  /// finance permission see the workspace's, per RLS).
-  Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId);
-
-  /// Schedules a recurring expense; the schedule itself awaits the
-  /// `expense_schedule` validation rules. Returns the schedule id.
-  Future<String> createExpenseSchedule({
-    required String workspaceId,
-    required String title,
-    required int amountCents,
-    required DateTime startsOn,
-    required ScheduleUnit unit,
-    int every,
-    int? repeatCount,
-    DateTime? endsOn,
-    String description,
-  });
-
-  /// Ends a schedule (the member's own, or with approveExpenses).
-  Future<void> cancelExpenseSchedule(String scheduleId);
-
-  /// #2357 — the VAT every occurrence of a schedule carries ({percent,
-  /// deductible_pct, asset}); null clears it.
-  Future<void> setExpenseScheduleVat(
-    String scheduleId,
-    Map<String, Object?>? vat,
-  );
-
-  /// Materialises every due occurrence (any active member; the morning
-  /// cron is the other clock). Returns how many it created.
-  Future<int> sweepExpenseSchedules(String workspaceId);
-
-  /// My occurrences (awaiting, pending, added, rejected — client sorts).
-  Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId);
-
-  /// Answers a presented occurrence: at the validated amount it lands
-  /// settled; at a different amount [reason] is mandatory and the
-  /// expense validation decides. A rejected one is resent the same way.
-  Future<void> confirmExpenseOccurrence({
-    required String occurrenceId,
-    required int amountCents,
-    String reason,
-    String? note,
-  });
-
-  /// Owner-defined day packages (migration 0042). Members read the active
-  /// ones (the buy sheet); owners pass [includeInactive] for the editor.
-  Future<List<Package>> fetchPackages(
-    String workspaceId, {
-    bool includeInactive = false,
-  });
-
-  /// Owner-only (RLS packages_write): creates a package.
-  Future<Package> createPackage(
-    String workspaceId, {
-    required String name,
-    required int days,
-    required int priceCents,
-    String? vatRateId,
-  });
-
-  /// Owner-only: partial update. Deactivate = `updatePackage(active: false)`
-  /// — packages are never deleted (bill lines reference the purchase).
-  Future<Package> updatePackage(
-    String packageId, {
-    String? name,
-    int? days,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
   });
 
   /// Buys a package (RPC `buy_package`): raises the caller's cap for the

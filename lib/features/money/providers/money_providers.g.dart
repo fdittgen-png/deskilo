@@ -168,7 +168,7 @@ final class SettlementsProvider
   }
 }
 
-String _$settlementsHash() => r'9bd960abf6900c501cdcb5fdae7d12db64006f07';
+String _$settlementsHash() => r'3c97275740291bf2d9c2634a764f5c792c302e09';
 
 @ProviderFor(repartitions)
 final repartitionsProvider = RepartitionsProvider._();
@@ -260,7 +260,7 @@ final class VatDeclarationCommandProvider
 }
 
 String _$vatDeclarationCommandHash() =>
-    r'f8de6565355d6593ac043675d692a3736a0befb2';
+    r'e6c5805a6a67a31b325f55a2a46fd0b854877a0f';
 
 /// #1449 — a recurring expense: what may still be ended, and what
 /// answering an occurrence at a different amount means.
@@ -315,7 +315,7 @@ final class ExpenseScheduleCommandProvider
 }
 
 String _$expenseScheduleCommandHash() =>
-    r'4fa149d5b6e81a089d8ef6c7633fd04d8fdd0733';
+    r'64108338baa771d7f2fb9125c98c9b4422a3c0a6';
 
 /// #1449 — a consumed service: whether the shelf holds that many, and
 /// which month's bill it lands on.
@@ -410,7 +410,7 @@ final class ExpensesProvider
   }
 }
 
-String _$expensesHash() => r'f9b3d362ef8698f68ebadff79ac2da2d006703b8';
+String _$expensesHash() => r'3dea99751ee7c704643b1ad320e7179417e051be';
 
 @ProviderFor(legalIdentity)
 final legalIdentityProvider = LegalIdentityProvider._();
@@ -1068,7 +1068,7 @@ final class FeeBandsProvider
   }
 }
 
-String _$feeBandsHash() => r'7abdf46bced372da44127bc9300d54a0b4fe117e';
+String _$feeBandsHash() => r'6b0fb5c0d9b3cbd1fbbfc18fe726775f1426a6d1';
 
 /// Offered subscription levels of the current workspace (#128).
 
@@ -1115,7 +1115,7 @@ final class SubscriptionLevelsProvider
 }
 
 String _$subscriptionLevelsHash() =>
-    r'ed43338c2ac179bb8e793c3a9b7f6cc1d3da0bf3';
+    r'85bda4a8f3f16fa9c131b5a4ae5db9aa7b5b73c6';
 
 /// Current period key in workspace terms ('yyyy-MM').
 /// Active consumable services of the current workspace (#123).
@@ -1164,7 +1164,7 @@ final class ServicesProvider
   }
 }
 
-String _$servicesHash() => r'8b346c6d37a1e82f5213803792d8bf24c60c09e7';
+String _$servicesHash() => r'a91b14d5cac9a3715400ef7a0792e50f6285ee3d';
 
 /// Every service incl. deactivated ones — the owner's catalog editor (#123).
 
@@ -1210,7 +1210,7 @@ final class AllServicesProvider
   }
 }
 
-String _$allServicesHash() => r'7d69290d13259c4f3e0695c2de5a978939c5017c';
+String _$allServicesHash() => r'71cfc13cd7e2b3cb33bea100ac4a97760f2aa102';
 
 /// Active day packages of the current workspace — the member buy sheet
 /// (migration 0042).
@@ -1257,7 +1257,7 @@ final class PackagesProvider
   }
 }
 
-String _$packagesHash() => r'ff2732ea6c6ed7900e33d05b02013cb763a93b1a';
+String _$packagesHash() => r'04ce4145191d331e9535c83998d0a1588e617e96';
 
 /// Every package incl. deactivated ones — the owner's package editor.
 
@@ -1301,7 +1301,7 @@ final class AllPackagesProvider
   }
 }
 
-String _$allPackagesHash() => r'9d0f934aac44c544d100dcca18203008e973c47e';
+String _$allPackagesHash() => r'3b82824476c48588717333037ea7aeacff8e1fca';
 
 /// The workspace's VAT rates (0072). Member-readable: the rate is on the
 /// bill and on every invoice, so it is not owner-only data.
@@ -1357,7 +1357,7 @@ final class VatRatesProvider
   }
 }
 
-String _$vatRatesHash() => r'93e83a384d2a000a9e21cfcdff18b285ebe61fbf';
+String _$vatRatesHash() => r'332b811e91f49e8ec19a4c48800ed6b9eaceb37e';
 
 /// The invoice archive (0060): RLS scopes rows — members their own,
 /// admins the whole workspace.
@@ -2169,7 +2169,7 @@ final class PriceNegotiationProvider
   }
 }
 
-String _$priceNegotiationHash() => r'b153021cfee6a8b44f5954ca6355ba4d719fe882';
+String _$priceNegotiationHash() => r'0eb11626e8ddac701d1cd099bdb71ce849c1422c';
 
 /// #739 — a member's deal (default, active, pending). The server logs
 /// a read by anyone but the member; the provider is per member so the

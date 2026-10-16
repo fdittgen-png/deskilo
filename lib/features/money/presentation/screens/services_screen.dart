@@ -59,7 +59,7 @@ class ServicesScreen extends ConsumerWidget {
       message: 'service save failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        final repo = ref.read(moneyRepositoryProvider);
+        final repo = ref.read(commercialTermsProvider);
         if (service == null) {
           await repo.createService(
             workspace.id,

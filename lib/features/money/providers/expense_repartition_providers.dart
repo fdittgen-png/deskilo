@@ -16,6 +16,6 @@ Future<List<ExpenseRepartition>> expenseRepartitions(Ref ref) async {
   return traced(
     'money',
     'expense repartitions',
-    () => ref.read(moneyRepositoryProvider).fetchExpenseRepartitions(workspace.id),
+    () => ref.read(expenseRepositoryProvider).fetchExpenseRepartitions(workspace.id),
   );
 }

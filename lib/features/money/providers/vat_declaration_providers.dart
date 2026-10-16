@@ -19,7 +19,7 @@ Future<List<VatDeclaration>> vatDeclarations(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   return ref
-      .watch(moneyRepositoryProvider)
+      .watch(taxReportingRepositoryProvider)
       .fetchVatDeclarations(workspace.id);
 }
 

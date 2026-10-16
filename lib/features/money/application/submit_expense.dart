@@ -10,7 +10,7 @@
 // and keeps the form open with the reason, and the command refuses the
 // same way whatever a future caller forgets.
 import '../../../core/format/cents.dart';
-import '../domain/money_repository.dart';
+import '../domain/expense_repository.dart';
 
 enum ExpenseOutcome {
   /// No positive amount.
@@ -124,7 +124,7 @@ ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
 
 class Expenses {
   const Expenses(this._money);
-  final MoneyRepository _money;
+  final ExpenseRepository _money;
 
   /// Files [draft] for [workspaceId]. Nothing is written unless the rules
   /// allow it; a server refusal propagates, so no success is shown.

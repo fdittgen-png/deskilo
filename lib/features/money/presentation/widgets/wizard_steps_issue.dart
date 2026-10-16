@@ -118,7 +118,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
         domain: 'money',
         message: 'wizard issue failed',
         errorText: l10n.wizardIssueFailed(item.memberName),
-        action: () => ref.read(moneyRepositoryProvider).createInvoice(
+        action: () => ref.read(invoiceCommandsProvider).createInvoice(
               workspaceId: widget.wiz.workspaceId,
               memberId: item.memberId,
               period: widget.wiz.period,
@@ -287,7 +287,7 @@ class _WizardRemindStepState extends ConsumerState<WizardRemindStep> {
         message: 'wizard remind failed',
         errorText: l10n.workspaceGenericError,
         action: () =>
-            ref.read(moneyRepositoryProvider).remindInvoice(item.invoice.id),
+            ref.read(invoiceCommandsProvider).remindInvoice(item.invoice.id),
       );
       if (ok) done++;
       if (!mounted) return;
