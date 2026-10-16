@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "featureWebMcpTitle": "Browser agent tools",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
+  "featureWebMcpDesc": "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  }
+}

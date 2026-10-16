@@ -266,6 +266,7 @@ begin
       "vatRateHistory": false,
       "vatReport": false,
       "viesVerification": false,
+      "webMcp": false,
       "whatsappIntegration": false,
       "workingHours": true,
       "workspaceBranding": false,

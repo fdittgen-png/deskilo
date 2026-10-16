@@ -6190,6 +6190,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureViesVerificationTitle => 'USt-IdNr.-Prüfung (VIES)';
 
   @override
+  String get featureWebMcpDesc =>
+      'Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten.';
+
+  @override
+  String get featureWebMcpTitle => 'Werkzeuge für Browser-Agenten';
+
+  @override
   String get featureWhatsappIntegration => 'WhatsApp-Integration';
 
   @override

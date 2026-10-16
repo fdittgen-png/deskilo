@@ -4286,6 +4286,14 @@
   },
   "featureViesVerificationDesc": "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app.",
   "featureViesVerificationTitle": "Verifica della partita IVA (VIES)",
+  "featureWebMcpDesc": "Permette a un agente IA nel browser di usare le funzioni proprie dell'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l'interfaccia MCP. Disattivato: nessuno strumento viene offerto.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Strumenti per agenti del browser",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "Integrazione WhatsApp",
   "featureWhatsappIntegrationDesc": "I membri condividono il loro numero WhatsApp nel profilo; un tocco su un membro apre la chat; il link del gruppo nella rubrica. Nessuna integrazione WhatsApp lato server.",
   "featureWorkingHours": "Orario di lavoro",

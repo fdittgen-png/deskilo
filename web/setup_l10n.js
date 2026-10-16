@@ -1209,6 +1209,10 @@ window.SETUP_L10N={
    "parking": [
     "Parking",
     "A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking."
+   ],
+   "webMcp": [
+    "Browser agent tools",
+    "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered."
    ]
   },
   "process": {
@@ -2637,6 +2641,10 @@ window.SETUP_L10N={
    "parking": [
     "Parking",
     "Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking."
+   ],
+   "webMcp": [
+    "Outils pour agent de navigateur",
+    "Permet à un agent IA du navigateur d'utiliser les fonctions propres de l'application, chacune avec la confirmation de la personne et les droits qu'elle a déjà. Nécessite l'interface MCP. Désactivé : aucun outil n'est proposé."
    ]
   },
   "process": {
@@ -4065,6 +4073,10 @@ window.SETUP_L10N={
    "parking": [
     "Parkplatz",
     "Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz."
+   ],
+   "webMcp": [
+    "Werkzeuge für Browser-Agenten",
+    "Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten."
    ]
   },
   "process": {
@@ -5493,6 +5505,10 @@ window.SETUP_L10N={
    "parking": [
     "Aparcamiento",
     "Un aparcamiento en una planta con plazas estándar, eléctricas y accesibles, reservadas por día. Desactivado: sin aparcamiento."
+   ],
+   "webMcp": [
+    "Herramientas para agentes del navegador",
+    "Permite que un agente de IA del navegador use las funciones propias de la aplicación, cada una con la confirmación de la persona y los permisos que ya tiene. Requiere la interfaz MCP. Desactivado: no se ofrece ninguna herramienta."
    ]
   },
   "process": {
@@ -6921,6 +6937,10 @@ window.SETUP_L10N={
    "parking": [
     "Parcheggio",
     "Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio."
+   ],
+   "webMcp": [
+    "Strumenti per agenti del browser",
+    "Permette a un agente IA nel browser di usare le funzioni proprie dell'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l'interfaccia MCP. Disattivato: nessuno strumento viene offerto."
    ]
   },
   "process": {

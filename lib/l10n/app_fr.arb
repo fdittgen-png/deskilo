@@ -4286,6 +4286,14 @@
   },
   "featureViesVerificationDesc": "Le numéro de TVA d'un client professionnel est vérifié auprès du service VIES de l'UE, et le numéro de consultation est conservé sur le membre et sur chaque facture. Une prestation générale autoliquidée par une entreprise d'un autre pays de l'UE n'est émise qu'après une vérification valide ; quand VIES ne répond pas, l'émission attend. Désactivé : ces factures sont émises hors de l'app.",
   "featureViesVerificationTitle": "Vérification du numéro de TVA (VIES)",
+  "featureWebMcpDesc": "Permet à un agent IA du navigateur d'utiliser les fonctions propres de l'application, chacune avec la confirmation de la personne et les droits qu'elle a déjà. Nécessite l'interface MCP. Désactivé : aucun outil n'est proposé.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Outils pour agent de navigateur",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "Intégration WhatsApp",
   "featureWhatsappIntegrationDesc": "Les membres partagent leur numéro WhatsApp sur leur profil ; un geste sur un membre ouvre la discussion ; le lien du groupe dans l'annuaire. Aucune intégration WhatsApp côté serveur.",
   "featureWorkingHours": "Horaires de travail",

@@ -4286,6 +4286,14 @@
   },
   "featureViesVerificationDesc": "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt.",
   "featureViesVerificationTitle": "USt-IdNr.-Prüfung (VIES)",
+  "featureWebMcpDesc": "Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Werkzeuge für Browser-Agenten",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "WhatsApp-Integration",
   "featureWhatsappIntegrationDesc": "Mitglieder teilen ihre WhatsApp-Nummer im Profil; ein Tipp auf ein Mitglied öffnet den Chat; der Gruppenlink im Verzeichnis. Keine serverseitige WhatsApp-Integration.",
   "featureWorkingHours": "Arbeitszeiten",

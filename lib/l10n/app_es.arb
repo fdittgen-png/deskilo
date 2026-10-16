@@ -4286,6 +4286,14 @@
   },
   "featureViesVerificationDesc": "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.",
   "featureViesVerificationTitle": "Comprobación del número de IVA (VIES)",
+  "featureWebMcpDesc": "Permite que un agente de IA del navegador use las funciones propias de la aplicación, cada una con la confirmación de la persona y los permisos que ya tiene. Requiere la interfaz MCP. Desactivado: no se ofrece ninguna herramienta.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Herramientas para agentes del navegador",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "Integración con WhatsApp",
   "featureWhatsappIntegrationDesc": "Los miembros comparten su número de WhatsApp en su perfil; un toque en un miembro abre el chat; el enlace del grupo en el directorio. Sin integración de WhatsApp en el servidor.",
   "featureWorkingHours": "Horario laboral",

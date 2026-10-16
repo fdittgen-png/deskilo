@@ -1528,6 +1528,12 @@
       "capabilities": []
     },
     {
+      "key": "webMcp",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "whatsappIntegration",
       "maturity": "beta",
       "lifecycle": "active",

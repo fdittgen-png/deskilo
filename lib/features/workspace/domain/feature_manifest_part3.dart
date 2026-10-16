@@ -257,4 +257,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // #2504 — WebMCP tools of the web app; the MCP interface must be open.
+  WorkspaceFeature.webMcp: FeatureManifestEntry(
+    feature: WorkspaceFeature.webMcp,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.mcpAccess,
+    defaultOn: false,
+  ),
 };
