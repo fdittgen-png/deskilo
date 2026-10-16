@@ -6140,6 +6140,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureViesVerificationTitle => 'VAT number check (VIES)';
 
   @override
+  String get featureWebMcpDesc =>
+      'Lets an AI agent in the web browser use this app\'s own functions, each with the person\'s confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.';
+
+  @override
+  String get featureWebMcpTitle => 'Browser agent tools';
+
+  @override
   String get featureWhatsappIntegration => 'WhatsApp integration';
 
   @override

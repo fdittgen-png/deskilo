@@ -6200,6 +6200,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vérification du numéro de TVA (VIES)';
 
   @override
+  String get featureWebMcpDesc =>
+      'Permet à un agent IA du navigateur d\'utiliser les fonctions propres de l\'application, chacune avec la confirmation de la personne et les droits qu\'elle a déjà. Nécessite l\'interface MCP. Désactivé : aucun outil n\'est proposé.';
+
+  @override
+  String get featureWebMcpTitle => 'Outils pour agent de navigateur';
+
+  @override
   String get featureWhatsappIntegration => 'Intégration WhatsApp';
 
   @override

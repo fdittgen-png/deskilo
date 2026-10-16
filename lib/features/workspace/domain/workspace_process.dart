@@ -242,6 +242,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1607 — an integration like the two above it: a channel a
       // workspace opens to the outside, not a right anybody holds.
       WorkspaceFeature.mcpAccess,
+      WorkspaceFeature.webMcp,
     ]),
   ]),
 ];

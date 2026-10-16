@@ -7112,6 +7112,14 @@
   "@featureViesVerificationTitle": {
     "description": "#2354 VIES evidence: featureViesVerificationTitle"
   },
+  "featureWebMcpDesc": "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.",
+  "@featureWebMcpDesc": {
+    "description": "#2504 WebMCP: featureWebMcpDesc"
+  },
+  "featureWebMcpTitle": "Browser agent tools",
+  "@featureWebMcpTitle": {
+    "description": "#2504 WebMCP: featureWebMcpTitle"
+  },
   "featureWhatsappIntegration": "WhatsApp integration",
   "@featureWhatsappIntegration": {
     "description": "Feature toggle: WhatsApp affordances riding the directory"

@@ -285,7 +285,8 @@ window.SETUP_PROCESSES=[
      "pushNotifications",
      "whatsappIntegration",
      "einvoiceCustomerDelivery",
-     "mcpAccess"
+     "mcpAccess",
+     "webMcp"
     ]
    }
   ]

@@ -254,13 +254,10 @@ enum WorkspaceFeature {
   memberAccountMenu,
 
   /// #1607 — the MCP interface is AVAILABLE to this workspace: an AI
-  /// assistant may be connected to DesKilo through it. Availability,
-  /// never authorization — switching it on enrols nobody, approves no
-  /// request, grants no role and registers no client. Each person
-  /// still needs an owner-configured grant approved by the instance
-  /// administrator, and every call keeps answering to the permissions
-  /// the app already applies. Platform, default OFF: no workspace is
-  /// reachable by a machine it never asked to be reachable by.
+  /// assistant may be connected through it. Availability, never
+  /// authorization — it enrols nobody and grants no role; each person
+  /// still needs an owner-configured grant the instance administrator
+  /// approves; every call answers to the app's permissions. Platform, OFF.
   mcpAccess,
 
   /// #1643 — a member saves ONE of their own bookings as an RFC 5545
@@ -402,7 +399,10 @@ enum WorkspaceFeature {
   /// #2631 — a meeting room on the plan, booked in its own slot; a parking
   /// of standard, EV and accessible slots, booked per day (both default OFF).
   meetingRooms,
-  parking;
+  parking,
+
+  /// #2504 — WebMCP tools of the web app (platform, OFF, under mcpAccess).
+  webMcp;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

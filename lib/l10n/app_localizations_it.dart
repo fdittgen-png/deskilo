@@ -6187,6 +6187,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Verifica della partita IVA (VIES)';
 
   @override
+  String get featureWebMcpDesc =>
+      'Permette a un agente IA nel browser di usare le funzioni proprie dell\'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l\'interfaccia MCP. Disattivato: nessuno strumento viene offerto.';
+
+  @override
+  String get featureWebMcpTitle => 'Strumenti per agenti del browser';
+
+  @override
   String get featureWhatsappIntegration => 'Integrazione WhatsApp';
 
   @override

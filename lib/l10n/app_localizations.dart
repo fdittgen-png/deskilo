@@ -10614,6 +10614,18 @@ abstract class AppLocalizations {
   /// **'VAT number check (VIES)'**
   String get featureViesVerificationTitle;
 
+  /// #2504 WebMCP: featureWebMcpDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Lets an AI agent in the web browser use this app\'s own functions, each with the person\'s confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered.'**
+  String get featureWebMcpDesc;
+
+  /// #2504 WebMCP: featureWebMcpTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Browser agent tools'**
+  String get featureWebMcpTitle;
+
   /// Feature toggle: WhatsApp affordances riding the directory
   ///
   /// In en, this message translates to:
