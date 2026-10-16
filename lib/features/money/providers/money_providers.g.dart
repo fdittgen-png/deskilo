@@ -168,7 +168,7 @@ final class SettlementsProvider
   }
 }
 
-String _$settlementsHash() => r'fa30fa6168d42ff910d1a264ec0d142e7eb2fe14';
+String _$settlementsHash() => r'9bd960abf6900c501cdcb5fdae7d12db64006f07';
 
 @ProviderFor(repartitions)
 final repartitionsProvider = RepartitionsProvider._();
@@ -260,7 +260,7 @@ final class VatDeclarationCommandProvider
 }
 
 String _$vatDeclarationCommandHash() =>
-    r'bba1e0dd08206b7dac42778bd96e02ebb01e7e59';
+    r'f8de6565355d6593ac043675d692a3736a0befb2';
 
 /// #1449 — a recurring expense: what may still be ended, and what
 /// answering an occurrence at a different amount means.
@@ -1404,7 +1404,7 @@ final class InvoicesProvider
   }
 }
 
-String _$invoicesHash() => r'55937ee99ead10e24e05c625b3ac02f97a963065';
+String _$invoicesHash() => r'08e1e86a0ebf46a0027fe9cc20c5dd29f2fc3126';
 
 /// Invoice-PDF template of the active workspace (#454); empty while no
 /// workspace is selected. The renderer additionally gates on the
