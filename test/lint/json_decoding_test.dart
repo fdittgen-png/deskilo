@@ -25,10 +25,11 @@ const _rawReadBudget = 207;
 const _dynamicBudget = 685;
 
 void main() {
-  // #2592 — the layout reader moved into a package; its reads still count.
+  // #2592/#2593 — layout reader and recording codec moved into packages; their reads still count.
   final files = handWrittenDartFilesIn(const [
     'lib',
     'packages/deskilo_document_model/lib',
+    'packages/deskilo_task_recording/lib',
   ]).toList();
 
   test('no cast_nullable_to_non_nullable ignore in hand-written lib/', () {

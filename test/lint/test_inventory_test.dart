@@ -132,7 +132,8 @@ void main() {
         'run: flutter test --coverage\nrun: supabase test db\n'
         'working-directory: packages/deskilo_push\n'
         'working-directory: packages/deskilo_document_model\n'
-        'working-directory: packages/deskilo_document_pdf\n');
+        'working-directory: packages/deskilo_document_pdf\n'
+        'working-directory: packages/deskilo_task_recording\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
     // perf-bench.yml is missing: its family is a dead entry.
     write('scripts/run_fixture.sh', 'export DESKILO_OWNED_FIXTURE=1\n');
@@ -153,6 +154,8 @@ void main() {
         "$header// M.\nvoid main() {}\n");
     write('packages/deskilo_document_pdf/test/d_test.dart',
         "$header// D.\nvoid main() {}\n");
+    write('packages/deskilo_task_recording/test/t_test.dart',
+        "$header// T.\nvoid main() {}\n");
     write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
     write('tool/bench/b_test.dart', "$header// Bench.\nvoid main() {}\n");
     write('integration_test/i_test.dart', "$header// I.\nvoid main() {}\n");

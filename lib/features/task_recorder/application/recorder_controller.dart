@@ -299,7 +299,7 @@ class RecorderController {
     final safeTarget = target != null && spec.targets.contains(target)
         ? target
         : null;
-    final safe = SafePayload.minimize(spec.payloadFields, payload);
+    final safe = minimizeForRecorder(spec.payloadFields, payload);
     // Values are kept only by a recording that was started to capture them.
     final kept = _captureValues ? values : StepValues.none;
     final last = _steps.lastOrNull;
@@ -372,7 +372,7 @@ class RecorderController {
               ? target
               : null,
           page: page,
-          payload: SafePayload.minimize(spec.payloadFields, payload),
+          payload: minimizeForRecorder(spec.payloadFields, payload),
           values: _captureValues ? values : StepValues.none,
           op: op,
           state: ObservationState.attempted,
@@ -411,7 +411,7 @@ class RecorderController {
         op: token.op,
         state: spec.state,
         outcome: spec.id,
-        payload: SafePayload.minimize(spec.payloadFields, payload),
+        payload: minimizeForRecorder(spec.payloadFields, payload),
       ),
     );
   });

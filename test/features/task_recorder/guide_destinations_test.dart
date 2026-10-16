@@ -31,7 +31,11 @@ void main() {
             action: RecorderActions.uiOpenScreen,
             actionVersion: 1,
             target: '/me',
-            payload: SafePayload.minimize({'me_tab'}, {'me_tab': 'me'}),
+            payload: SafePayload.minimize(
+              {'me_tab'},
+              {'me_tab': 'me'},
+              fields: safeFields,
+            ),
           ),
           const RecordedStep(
             seq: 2,
