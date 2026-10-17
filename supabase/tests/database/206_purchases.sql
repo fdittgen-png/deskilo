@@ -14,7 +14,7 @@
 --   I who reads what (own, the finances, a foreign workspace), no client write
 --   J the catalogues
 begin;
-select plan(102);
+select plan(104);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin

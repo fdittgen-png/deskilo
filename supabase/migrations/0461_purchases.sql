@@ -165,7 +165,7 @@ create policy purchase_documents_select on public.purchase_documents
   using (
     workspace_id in (select public.workspaces_permitting(array['viewFinances', 'managePurchases']))
     or submitter_member_id in (
-      select m.id from public.members m where m.user_id = auth.uid() and m.status = 'active')
+      select m.id from public.members m where m.user_id = (select auth.uid()) and m.status = 'active')
   );
 create policy mcp_delegated_deny on public.purchase_documents as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
