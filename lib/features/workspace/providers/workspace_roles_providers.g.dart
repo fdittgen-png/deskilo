@@ -59,7 +59,7 @@ final class WorkspaceRolesRepositoryProvider
 }
 
 String _$workspaceRolesRepositoryHash() =>
-    r'f48d591ea1dfe82f1685dd6caca34dcbff18a851';
+    r'756b11cffbf9be6756ec4752ce861004607b06d8';
 
 /// The active workspace's own roles, or none while the feature is off.
 ///

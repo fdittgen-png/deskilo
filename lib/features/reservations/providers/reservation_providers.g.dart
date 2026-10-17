@@ -55,7 +55,7 @@ final class ReservationRepositoryProvider
 }
 
 String _$reservationRepositoryHash() =>
-    r'beacf22f1d45476878bc6a264cd77943111721a7';
+    r'b4935c03584a724a413560dee0ea0f9880e3a6d1';
 
 /// #1855 — where a booking intent is valid: this account on this server.
 /// Read at use, never captured: a later login or server switch reads its
@@ -114,7 +114,7 @@ final class BookingIntentScopeProvider
 }
 
 String _$bookingIntentScopeHash() =>
-    r'927cffa1902d3d6ce89c97410b8f12cedeae2d73';
+    r'8f8802b057c5fea216d186377b8313afc9de2b2a';
 
 /// #1855 — the interrupted-booking command: durable intent, own-result
 /// lookup, resume with the original request.

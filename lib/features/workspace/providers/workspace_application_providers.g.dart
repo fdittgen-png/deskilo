@@ -58,7 +58,7 @@ final class WorkspaceApplicationRepositoryProvider
 }
 
 String _$workspaceApplicationRepositoryHash() =>
-    r'b7255825478e5af1e6f3fb9479968019ae53a83f';
+    r'cd89b1a5c4bb7dabf2b46bb4ae2ba1fb47086607';
 
 @ProviderFor(applicationReplies)
 final applicationRepliesProvider = ApplicationRepliesProvider._();

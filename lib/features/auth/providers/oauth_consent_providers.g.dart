@@ -55,7 +55,7 @@ final class OauthConsentRepositoryProvider
 }
 
 String _$oauthConsentRepositoryHash() =>
-    r'9da663755c63147eeedc4a4d8c44ba9076fcfabe';
+    r'23f59cadda52e6d12e6103f6ebe8fe444ca67c2d';
 
 @ProviderFor(oauthConsent)
 final oauthConsentProvider = OauthConsentFamily._();

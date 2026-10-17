@@ -55,7 +55,7 @@ final class PlaceFeedbackRepositoryProvider
 }
 
 String _$placeFeedbackRepositoryHash() =>
-    r'10ad06634f0d70b2b5ab9fd90811ee0133394a5a';
+    r'8c187e288885be5bf52ca252037e165a9c0ca35a';
 
 /// Whether the active workspace shows favourites and ratings to this
 /// person: the feature is on and they may use reservations.
@@ -161,7 +161,7 @@ final class DirectorySourceIsLocalProvider
 }
 
 String _$directorySourceIsLocalHash() =>
-    r'adb2a33ee29f7dc07c54199c6deb01633652de58';
+    r'3458f7aac1940833c5e5b27b06f178c8ff1fd4f5';
 
 @ProviderFor(placeFeedbackBatcher)
 final placeFeedbackBatcherProvider = PlaceFeedbackBatcherProvider._();

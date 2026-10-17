@@ -7,6 +7,7 @@
 // operation already under way; the personal context does not depend on the
 // selected workspace at all.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/backend/context_clients.dart';
@@ -76,4 +77,21 @@ Future<WorkspaceContext?> workspaceContext(Ref ref) async {
     settings: settings,
     timezone: workspace.timezone,
   );
+}
+
+/// #2564 O1 -- the client the selected workspace's operations run on: the
+/// verified host client of the captured [WorkspaceContext]'s installation.
+/// Dependents rebuild only when that installation changes. Until a context exists (signed out, no workspace
+/// selected, still resolving) it is the root client -- the combined
+/// deployment's one installation, where the two are the same object; a split
+/// deployment's resolver (#2562) never yields the root client for a W target.
+@Riverpod(keepAlive: true)
+SupabaseClient selectedWorkspaceClient(Ref ref) {
+  // Whole-context watch: an unchanged client compares equal, so dependents
+  // rebuild only when the installation does.
+  final installation = ref.watch(workspaceContextProvider).value?.target.installationId;
+  if (installation == null) {
+    return ref.watch(contextClientsProvider).legacyActive;
+  }
+  return ref.watch(workspaceClientProvider(installation));
 }

@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -15,7 +14,7 @@ part 'place_feedback_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 PlaceFeedbackRepository placeFeedbackRepository(Ref ref) =>
-    SupabasePlaceFeedbackRepository(Supabase.instance.client);
+    SupabasePlaceFeedbackRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// Whether the active workspace shows favourites and ratings to this
 /// person: the feature is on and they may use reservations.
@@ -30,7 +29,7 @@ bool placeFeedbackAvailable(Ref ref) =>
 bool Function(String source) directorySourceIsLocal(Ref ref) {
   String? origin;
   try {
-    origin = Uri.parse(Supabase.instance.client.rest.url).host;
+    origin = Uri.parse(ref.read(selectedWorkspaceClientProvider).rest.url).host;
   } on Object catch (e, st) {
     // Not initialised: nothing is local (tests override it).
     TraceLogger.instance.warn('directory', 'no backend to compare a workspace source with',
