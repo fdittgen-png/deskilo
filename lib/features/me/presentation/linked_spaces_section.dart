@@ -3,21 +3,24 @@
 // #1823 — my spaces on the other servers this account is linked to, in
 // the same list, the server named only as a quiet subtitle.
 //
-// Reading them uses each server's own linked session. OPENING one still
-// means pointing this app at that server: every screen of a space reads
-// through the one client the app started with, so the honest path is
-// the existing Server switch, prefilled — it says what it will do and
-// asks for that server's sign-in. Nothing here pretends otherwise.
+// Reading them uses each server's own linked session. #2562 -- OPENING one
+// uses it too: the member's workspaces there are read through that
+// installation's pinned client, then the selection names the workspace and
+// its source, so the space runs on its own installation and the root
+// client is never its fallback. A refusal says why, keeps the person where
+// they are and changes nothing.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../core/backend/backend_settings.dart';
-import '../../../core/backend/backend_uri.dart';
+import '../../../app/shell/space_entry.dart';
+import '../../../core/backend/connection_outcome.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../directory/presentation/connection_outcome_text.dart';
+import '../../workspace/providers/connected_space_providers.dart';
 import '../domain/my_spaces.dart';
 import '../providers/me_providers.dart';
 import 'me_workspace_row.dart';
@@ -27,6 +30,7 @@ class LinkedSpacesSection extends ConsumerWidget {
 
   Future<void> _open(
     BuildContext context,
+    WidgetRef ref,
     LinkedServerSpaces server,
     LinkedSpace space,
   ) async {
@@ -63,13 +67,21 @@ class LinkedSpacesSection extends ConsumerWidget {
       ),
     );
     if (go != true || !context.mounted) return;
-    await context.push(
-      '/server',
-      extra: BackendDescriptor(
-        BackendEndpoint(server.source, server.key),
-        label: server.host,
-      ),
-    );
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final entered = await ref
+          .read(connectedSpaceEntryProvider.notifier)
+          .enter(server.source, space.id);
+      // Null: a newer entry superseded this one; it selects, this does not.
+      if (entered == null || !context.mounted) return;
+      await enterSpace(context, ref, entered, connected: true);
+    } on ConnectionFailure catch (failure, st) {
+      TraceLogger.instance.warn('me', 'linked space not opened',
+          error: failure, stackTrace: st);
+      messenger.showSnackBar(
+        SnackBar(content: Text(connectionFailureText(l10n, failure))),
+      );
+    }
   }
 
   @override
@@ -109,7 +121,7 @@ class LinkedSpacesSection extends ConsumerWidget {
                       padding: const EdgeInsets.only(right: AppSpacing.sm),
                       child: OutlinedButton(
                         key: ValueKey('linked-space-${server.host}-${space.id}'),
-                        onPressed: () => _open(context, server, space),
+                        onPressed: () => _open(context, ref, server, space),
                         child: Text(space.environment.isEmpty
                             ? (l10n.meSpaceOpen)
                             : space.environment == 'prod'

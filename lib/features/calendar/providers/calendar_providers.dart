@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/trace/traced.dart';
@@ -12,7 +11,7 @@ part 'calendar_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 CalendarRepository calendarRepository(Ref ref) =>
-    SupabaseCalendarRepository(Supabase.instance.client);
+    SupabaseCalendarRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// One range of the hub (#718), cached per [query] — a re-tap of the
 /// same day costs nothing, a different day is a different key. Realtime

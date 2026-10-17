@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/realtime/invalidation_map.dart';
 import '../../../core/realtime/realtime_wiring.dart';
@@ -25,7 +24,7 @@ class EventTrail {
 
 @Riverpod(keepAlive: true)
 EventRepository eventRepository(Ref ref) =>
-    SupabaseEventRepository(Supabase.instance.client);
+    SupabaseEventRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// The active workspace's event feed, newest first (server-scoped by role).
 @riverpod

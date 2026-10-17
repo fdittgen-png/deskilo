@@ -24,7 +24,18 @@
 # scripts that need the API keys read them from `supabase status` where
 # they run rather than through a workflow expression.
 name: local stack
-description: Start the one local Supabase stack of this job — the migration replay from empty — and publish its database address
+description: Start a local Supabase stack of this job — the migration replay from empty — and publish its database address
+
+# #2561 C2 — `workdir` is for the topology fixture only. The job's ordinary
+# stack takes no workdir and starts once; the physical topology (P and W-B,
+# beside the job's stack as W-A) starts one stack per project directory
+# that scripts/topology_stacks.sh prepared, each with its own project id,
+# ports, volumes and JWT secret. Ordinary disciplines never attach to those.
+inputs:
+  workdir:
+    description: A prepared Supabase project directory for a topology stack; empty for the job's own stack
+    required: false
+    default: ''
 
 outputs:
   db-url:
@@ -35,11 +46,15 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: supabase start
+      env:
+        WORKDIR: ${{ inputs.workdir }}
+      run: supabase start ${WORKDIR:+--workdir "$WORKDIR"}
     - id: address
       shell: bash
+      env:
+        WORKDIR: ${{ inputs.workdir }}
       run: |
-        url=$(supabase status -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')
+        url=$(supabase status ${WORKDIR:+--workdir "$WORKDIR"} -o env | sed -n 's/^DB_URL="\(.*\)"$/\1/p')
         [ -n "$url" ] || { echo "::error::local stack: supabase status reports no DB_URL"; exit 1; }
         # pgTAP for every consumer that wants it; idempotent.
         psql "$url" -v ON_ERROR_STOP=1 \

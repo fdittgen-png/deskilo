@@ -19089,7 +19089,7 @@ abstract class AppLocalizations {
   /// Explains that a space on another server opens by switching this app to that server.
   ///
   /// In en, this message translates to:
-  /// **'This space lives on {host}. The app works with one server at a time: opening it switches to that server and asks you to sign in there.'**
+  /// **'This space lives on {host}. It opens here, on that server\'s own connection; nothing is switched and your own server is not used for it.'**
   String meLinkedOpenBody(String host);
 
   /// Subtitle of a pending space on another server.

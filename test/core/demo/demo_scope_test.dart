@@ -321,6 +321,7 @@ const Set<String> demoOverriddenProviders = {
   'templateSearchRepositoryProvider',
   'secondFactorRepositoryProvider',
   'workspaceRepositoryProvider',
+  'workspaceListRepositoryProvider', // #2564
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',
   'placeFeedbackRepositoryProvider', // #2185
@@ -339,6 +340,7 @@ const Set<String> demoOverriddenProviders = {
   'creditRepositoryProvider',
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
+  'memberProfileRepositoryProvider', // #2564
   'personalPreferencesRepositoryProvider',
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',

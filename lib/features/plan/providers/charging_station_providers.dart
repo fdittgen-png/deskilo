@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../application/resource_commands.dart';
 import '../data/supabase_charging_station_repository.dart';
@@ -14,12 +13,12 @@ part 'charging_station_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 ChargingStationRepository chargingStationRepository(Ref ref) =>
-    SupabaseChargingStationRepository(Supabase.instance.client);
+    SupabaseChargingStationRepository(ref.watch(planClientProvider));
 
 @Riverpod(keepAlive: true)
 PlanResourceRepository planResourceRepository(Ref ref) =>
     SupabasePlanResourceRepository(
-      Supabase.instance.client,
+      ref.watch(planClientProvider),
       ref.watch(floorPlanRepositoryProvider),
     );
 

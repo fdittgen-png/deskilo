@@ -164,4 +164,4 @@ final class SelectedWorkspaceClientProvider
 }
 
 String _$selectedWorkspaceClientHash() =>
-    r'231a71540e76dd61e84aee347cf02702ff642792';
+    r'e45e0c85d814573b32e57d8730e5c9c83371a865';

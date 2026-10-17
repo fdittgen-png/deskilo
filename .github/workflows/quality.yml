@@ -565,7 +565,7 @@ jobs:
   database:
     name: quality · database
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     needs: [classify]
     # Always evaluated: a classify job that died must not skip this one,
     # because a skipped required context counts as passing.
@@ -843,6 +843,57 @@ jobs:
         continue-on-error: true
         run: bash scripts/populated_upgrade_check.sh
 
+      # #2561 C2 — the physical topology, in this job and not beside it:
+      # the job's replayed stack is W-A; P and W-B are two more stacks of
+      # their own (own Postgres, Auth and Storage containers, project id,
+      # ports, volumes, JWT secret), started once each through the same
+      # composite action with a prepared project directory. The consumer
+      # is the production P profile and W reservation code over real
+      # signed requests with database readback (test/topology). Schemas on
+      # one stack or endpoint labels would not be this. The ordinary
+      # disciplines above never attach to the extra stacks.
+      - name: Topology stacks, prepared
+        id: topology_prepare
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        run: bash scripts/topology_stacks.sh prepare
+
+      - name: Topology stack P
+        id: topology_p
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        uses: ./.github/actions/local-stack
+        with:
+          workdir: ${{ runner.temp }}/deskilo-topology/p
+
+      - name: Topology stack W-B
+        id: topology_wb
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        uses: ./.github/actions/local-stack
+        with:
+          workdir: ${{ runner.temp }}/deskilo-topology/wb
+
+      - name: Physical topology
+        id: topology
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DESKILO_TOPOLOGY_FILE: ${{ runner.temp }}/deskilo-topology/topology.json
+        run: |
+          set -o pipefail
+          [ "${{ steps.topology_prepare.outcome }}" = success ] \
+            && [ "${{ steps.topology_p.outcome }}" = success ] \
+            && [ "${{ steps.topology_wb.outcome }}" = success ] \
+            || { echo "::error::the topology stacks did not all start"; exit 1; }
+          bash scripts/topology_stacks.sh seed
+          flutter test --no-pub test/topology/three_stacks_test.dart test/topology/invoice_preview_http_test.dart --reporter expanded | tee report-topology.log
+          grep -q 'All tests passed!' report-topology.log
+
+      - name: Topology stacks, stopped
+        if: always() && env.DB_REQUIRED == 'true'
+        run: bash scripts/topology_stacks.sh down
+
       # #1632 — the MCP coverage map (contracts/mcp/coverage.json) against
       # what actually ran: every pgTAP file it requires passed in THIS run,
       # at THIS commit, and every implemented tool is mapped. A missing,
@@ -902,6 +953,8 @@ jobs:
               "${{ steps.containment.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
+            printf 'Physical topology|%s|three separate stacks (P, W-A, W-B; own Postgres, Auth, Storage, keys and ports): the production P profile read and write and the W reservation read over signed requests with database readback, a wrong target refused, a stranger denied beside the member admitted, zero operational rows at P; the real preview_invoice answer (4500, -1500, 0, a stranger refused) decoded by the app adapter over signed HTTP\n' \
+              "${{ steps.topology.outcome }}"
             printf 'MCP coverage evidence|%s|every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit\n' \
               "${{ steps.mcp_coverage.outcome }}"
             printf 'Archive preservation|%s|a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught\n' \
@@ -948,6 +1001,10 @@ jobs:
             "A delegated token reaches only the MCP facade=${{ steps.containment.outcome }}" \
             "Install, resume and upgrade a real schema=${{ steps.lifecycle.outcome }}" \
             "A populated instance upgrades and keeps its archives=${{ steps.archive.outcome }}" \
+            "Topology stacks, prepared=${{ steps.topology_prepare.outcome }}" \
+            "Topology stack P=${{ steps.topology_p.outcome }}" \
+            "Topology stack W-B=${{ steps.topology_wb.outcome }}" \
+            "Physical topology=${{ steps.topology.outcome }}" \
             "Every MCP tool has executed evidence=${{ steps.mcp_coverage.outcome }}"
 
   # #1446 C2 — the always-evaluated final gate. It is red unless every

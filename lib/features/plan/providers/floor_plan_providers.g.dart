@@ -8,6 +8,57 @@ part of 'floor_plan_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// #2564 O1 -- the client the plan feature's repositories run on: the
+/// verified host of the selected workspace (never the root for a connected
+/// one).
+
+@ProviderFor(planClient)
+final planClientProvider = PlanClientProvider._();
+
+/// #2564 O1 -- the client the plan feature's repositories run on: the
+/// verified host of the selected workspace (never the root for a connected
+/// one).
+
+final class PlanClientProvider
+    extends $FunctionalProvider<SupabaseClient, SupabaseClient, SupabaseClient>
+    with $Provider<SupabaseClient> {
+  /// #2564 O1 -- the client the plan feature's repositories run on: the
+  /// verified host of the selected workspace (never the root for a connected
+  /// one).
+  PlanClientProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'planClientProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$planClientHash();
+
+  @$internal
+  @override
+  $ProviderElement<SupabaseClient> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  SupabaseClient create(Ref ref) {
+    return planClient(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SupabaseClient value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SupabaseClient>(value),
+    );
+  }
+}
+
+String _$planClientHash() => r'4cb43694f8830239c2ce2cd7aec8deed2fe4bf23';
 
 @ProviderFor(floorPlanRepository)
 final floorPlanRepositoryProvider = FloorPlanRepositoryProvider._();
@@ -55,7 +106,7 @@ final class FloorPlanRepositoryProvider
 }
 
 String _$floorPlanRepositoryHash() =>
-    r'197beafbe39361e5548525326577ed6af8e3909d';
+    r'6a6a8f6b255c3cc408d5035eb6fa22848d02e520';
 
 /// Levels of the active workspace, sorted by sort_order.
 

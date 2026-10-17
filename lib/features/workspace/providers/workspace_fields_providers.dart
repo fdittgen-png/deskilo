@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/supabase_workspace_fields.dart';
 import '../domain/workspace_feature.dart';
@@ -13,7 +12,7 @@ part 'workspace_fields_providers.g.dart';
 /// #1288 — the questions a workspace asks, and the answers to them.
 @Riverpod(keepAlive: true)
 WorkspaceFieldsRepository workspaceFieldsRepository(Ref ref) =>
-    SupabaseWorkspaceFields(Supabase.instance.client);
+    SupabaseWorkspaceFields(ref.watch(selectedWorkspaceClientProvider));
 
 /// The active workspace's questions, or none while the feature is off.
 ///

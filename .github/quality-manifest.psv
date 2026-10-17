@@ -38,3 +38,4 @@ MCP token containment|database|step|conditional||a delegated token reaches only 
 Instance lifecycle|database|step|conditional||empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation
 Archive preservation|database|step|conditional||a populated 0226 instance upgraded to the tip: signed fields, hashes and postings byte-equal, legacy stays unverifiable, a destructive control is caught
 MCP coverage evidence|database|step|conditional||every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit
+Physical topology|database|step|conditional||three separate stacks (P, W-A, W-B; own Postgres, Auth, Storage, keys and ports): the production P profile read and write and the W reservation read over signed requests with database readback, a wrong target refused, a stranger denied beside the member admitted, zero operational rows at P

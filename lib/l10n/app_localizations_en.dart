@@ -11129,7 +11129,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'This space lives on $host. The app works with one server at a time: opening it switches to that server and asks you to sign in there.';
+    return 'This space lives on $host. It opens here, on that server\'s own connection; nothing is switched and your own server is not used for it.';
   }
 
   @override

@@ -7277,7 +7277,7 @@
   },
   "meLeaveTitle": "{name} verlassen?",
   "meLinkedOpen": "Auf {host} öffnen",
-  "meLinkedOpenBody": "Dieser Space liegt auf {host}. Die App arbeitet mit einem Server zur Zeit: Öffnen wechselt zu diesem Server und fragt dort nach Ihrer Anmeldung.",
+  "meLinkedOpenBody": "Dieser Space liegt auf {host}. Er öffnet sich hier über die eigene Verbindung zu diesem Server; nichts wird umgeschaltet und Ihr eigener Server wird dafür nicht verwendet.",
   "meLinkedPendingOn": "Wartet auf Freigabe · {host}",
   "meLinkedUnavailable": "{host} hat nicht geantwortet: Diese Liste ist womöglich unvollständig.",
   "meManageSpaces": "Meine Spaces verwalten",

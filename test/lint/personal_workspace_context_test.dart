@@ -51,11 +51,27 @@ const _clean = <String>[
   'lib/features/money/providers/einvoice_inbox_providers.dart',
   'lib/features/money/providers/sales_tax_providers.dart',
   'lib/features/money/providers/vies_providers.dart',
+  // #2564 O1: the workspace repository's list half is the root session's,
+  // its operations half and the plan/calendar readers the selected
+  // workspace's.
+  'lib/features/workspace/providers/workspace_providers.dart',
+  'lib/features/calendar/providers/calendar_providers.dart',
+  'lib/features/plan/providers/floor_plan_providers.dart',
+  'lib/features/plan/providers/charging_station_providers.dart',
+  'lib/features/plan/providers/accessory_providers.dart',
+  // #2564 O1/O4 leftovers: my own row is the root session's, the members'
+  // rows and the workspace-scoped feeds the selected workspace's.
+  'lib/features/profile/providers/profile_providers.dart',
+  'lib/features/events/providers/event_providers.dart',
+  'lib/features/workspace/providers/kpi_providers.dart',
+  'lib/features/workspace/providers/workspace_files_providers.dart',
+  'lib/features/workspace/providers/workspace_fields_providers.dart',
+  'lib/features/workspace/providers/workspace_import_providers.dart',
 ];
 
 /// Hand-written lib files outside the allowlist that still name the
 /// singleton. RATCHET: this number only falls.
-const _budget = 26;
+const _budget = 15;
 
 bool _names(String line) => line.contains(_singleton);
 

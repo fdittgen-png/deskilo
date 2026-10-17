@@ -8,9 +8,20 @@ part of 'workspace_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// #2564 O1 -- the OPERATIONS half: everything done to the selected
+/// workspace (members, sites, rules, identity, documents, templates,
+/// conversations, badges) runs on the verified host client of the captured
+/// context. It is never the source of [currentWorkspace]: that reads
+/// [workspaceListRepository], so the context does not depend on itself.
 
 @ProviderFor(workspaceRepository)
 final workspaceRepositoryProvider = WorkspaceRepositoryProvider._();
+
+/// #2564 O1 -- the OPERATIONS half: everything done to the selected
+/// workspace (members, sites, rules, identity, documents, templates,
+/// conversations, badges) runs on the verified host client of the captured
+/// context. It is never the source of [currentWorkspace]: that reads
+/// [workspaceListRepository], so the context does not depend on itself.
 
 final class WorkspaceRepositoryProvider
     extends
@@ -20,6 +31,11 @@ final class WorkspaceRepositoryProvider
           WorkspaceRepository
         >
     with $Provider<WorkspaceRepository> {
+  /// #2564 O1 -- the OPERATIONS half: everything done to the selected
+  /// workspace (members, sites, rules, identity, documents, templates,
+  /// conversations, badges) runs on the verified host client of the captured
+  /// context. It is never the source of [currentWorkspace]: that reads
+  /// [workspaceListRepository], so the context does not depend on itself.
   WorkspaceRepositoryProvider._()
     : super(
         from: null,
@@ -55,7 +71,128 @@ final class WorkspaceRepositoryProvider
 }
 
 String _$workspaceRepositoryHash() =>
-    r'e68d1435a2549d439fd19d30e8249162f7849608';
+    r'bf6a69ad9a473c655c4ce9a7ea36d5cc2832dd23';
+
+/// #2564 O1 -- the LIST half: which workspaces and memberships the person
+/// has, the default workspace, creating or joining one and the platform
+/// views. These belong to the installation the app is signed in to (the
+/// root session), before any workspace is selected, and feed
+/// [currentWorkspace].
+
+@ProviderFor(workspaceListRepository)
+final workspaceListRepositoryProvider = WorkspaceListRepositoryProvider._();
+
+/// #2564 O1 -- the LIST half: which workspaces and memberships the person
+/// has, the default workspace, creating or joining one and the platform
+/// views. These belong to the installation the app is signed in to (the
+/// root session), before any workspace is selected, and feed
+/// [currentWorkspace].
+
+final class WorkspaceListRepositoryProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceRepository,
+          WorkspaceRepository,
+          WorkspaceRepository
+        >
+    with $Provider<WorkspaceRepository> {
+  /// #2564 O1 -- the LIST half: which workspaces and memberships the person
+  /// has, the default workspace, creating or joining one and the platform
+  /// views. These belong to the installation the app is signed in to (the
+  /// root session), before any workspace is selected, and feed
+  /// [currentWorkspace].
+  WorkspaceListRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceListRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceListRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WorkspaceRepository create(Ref ref) {
+    return workspaceListRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceRepository>(value),
+    );
+  }
+}
+
+String _$workspaceListRepositoryHash() =>
+    r'729e1db58c961bdd68df3883d8f465980f04dee9';
+
+/// #2562 -- how the workspaces of a connected installation are read, given
+/// that installation's own pinned client.
+
+@ProviderFor(connectedWorkspaceReader)
+final connectedWorkspaceReaderProvider = ConnectedWorkspaceReaderProvider._();
+
+/// #2562 -- how the workspaces of a connected installation are read, given
+/// that installation's own pinned client.
+
+final class ConnectedWorkspaceReaderProvider
+    extends
+        $FunctionalProvider<
+          ConnectedWorkspaceReader,
+          ConnectedWorkspaceReader,
+          ConnectedWorkspaceReader
+        >
+    with $Provider<ConnectedWorkspaceReader> {
+  /// #2562 -- how the workspaces of a connected installation are read, given
+  /// that installation's own pinned client.
+  ConnectedWorkspaceReaderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'connectedWorkspaceReaderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$connectedWorkspaceReaderHash();
+
+  @$internal
+  @override
+  $ProviderElement<ConnectedWorkspaceReader> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ConnectedWorkspaceReader create(Ref ref) {
+    return connectedWorkspaceReader(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ConnectedWorkspaceReader value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ConnectedWorkspaceReader>(value),
+    );
+  }
+}
+
+String _$connectedWorkspaceReaderHash() =>
+    r'056fdc94ae91a6efaea2b7aa89dc33e76ee1fbd6';
 
 @ProviderFor(myWorkspaces)
 final myWorkspacesProvider = MyWorkspacesProvider._();
@@ -94,7 +231,7 @@ final class MyWorkspacesProvider
   }
 }
 
-String _$myWorkspacesHash() => r'198c8d5a8c8478df79f3177df2af39d009d2c760';
+String _$myWorkspacesHash() => r'cd164b64e50899d01ca7831ca8f0da744f40636c';
 
 /// #1654 — the signed-in account, for scoping a per-account device
 /// preference (the Get started dismissal); null while signed out. Read
@@ -151,68 +288,6 @@ final class CurrentAccountIdProvider
 
 String _$currentAccountIdHash() => r'0e58676f400e0be2643ef2cd4e24f43767217634';
 
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-
-@ProviderFor(ActiveWorkspaceId)
-final activeWorkspaceIdProvider = ActiveWorkspaceIdProvider._();
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-final class ActiveWorkspaceIdProvider
-    extends $AsyncNotifierProvider<ActiveWorkspaceId, String?> {
-  /// The persisted active-profile choice (#89). At START-UP the user's
-  /// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-  /// lands on it); in-session switches last until the next start. The
-  /// device's memory is per account (#1823). Null: no space chosen yet.
-  ActiveWorkspaceIdProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'activeWorkspaceIdProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$activeWorkspaceIdHash();
-
-  @$internal
-  @override
-  ActiveWorkspaceId create() => ActiveWorkspaceId();
-}
-
-String _$activeWorkspaceIdHash() => r'6408d4d527aa4efc4f14410ef274c5cfb793b2e3';
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-
-abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
-  FutureOr<String?> build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<String?>, String?>,
-              AsyncValue<String?>,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
-}
-
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
 /// current default clears it.
@@ -263,7 +338,7 @@ final class DefaultWorkspaceIdProvider
 }
 
 String _$defaultWorkspaceIdHash() =>
-    r'51838dc9397a98cb84c315a4d3a8f682d247644a';
+    r'a758ea172e4c2257a47114a62102d26868bb6062';
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
@@ -333,7 +408,7 @@ final class CurrentWorkspaceProvider
   }
 }
 
-String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
+String _$currentWorkspaceHash() => r'0ed433dfe8421732e07f404ca32b4f7a2f76d5d8';
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
@@ -382,7 +457,7 @@ final class WorkspaceStartProvider
   }
 }
 
-String _$workspaceStartHash() => r'f2e03f5b0054327d8a2e39eff27edaf972c37fe1';
+String _$workspaceStartHash() => r'e5be686d2633ccf29612121a4f59fe4e184bc7ba';
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
@@ -476,7 +551,7 @@ final class MyMembershipsProvider
   }
 }
 
-String _$myMembershipsHash() => r'addc53f1469bfa1a4b4c485af129c830dd2b49c2';
+String _$myMembershipsHash() => r'3da2cb6b555413e150a4ba45fe3972cd7c17d59b';
 
 /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
 /// The document library (#500) — RLS trims rows to the caller's role.
@@ -2033,7 +2108,7 @@ final class IsPlatformOwnerProvider
   }
 }
 
-String _$isPlatformOwnerHash() => r'4df8df63bc163ded458557e8d9f0c02773f64cbb';
+String _$isPlatformOwnerHash() => r'e415c736ab5d194613f7bb7546b038013807359e';
 
 /// #937 — every workspace in the database; empty for anyone who is not
 /// the platform owner (the RPC would refuse, so it is not even asked).
@@ -2082,7 +2157,7 @@ final class AllWorkspacesProvider
   }
 }
 
-String _$allWorkspacesHash() => r'6bdb2278e547e87792ad963c71990a99b6e83a1b';
+String _$allWorkspacesHash() => r'80c6b49cec0683a45ab62de61a879c639b7a4047';
 
 /// #945 — the workspace's sites, default first.
 
