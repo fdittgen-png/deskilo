@@ -1,0 +1,55 @@
+{
+  "@@locale": "it",
+  "settingGroupReadiness": "Messa in servizio",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingGroupKpi": "Indicatori",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingUnitMonths": "mesi",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
+  },
+  "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpReadRangeDays": "Periodo di lettura dell’assistente",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMcpReadRangeDays": "Fissato dalla piattaforma: la finestra più lunga che una lettura dell’assistente può richiedere. Delimita la richiesta; non è un permesso di leggere di più.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelCalendarRangeDays": "Periodo del calendario",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintCalendarRangeDays": "Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiCapacityRangeDays": "Periodo dell’indicatore di capacità",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiCapacityRangeDays": "Fissato dalla piattaforma: il periodo più lungo che un indicatore di capacità può coprire. Delimita la richiesta.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Periodo dell’indicatore finanziario",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fissato dalla piattaforma: i mesi oltre il primo che un indicatore finanziario può coprire (23 significa 24 mesi in tutto). Delimita la richiesta.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

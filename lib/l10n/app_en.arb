@@ -16848,7 +16848,7 @@
   "@readinessReasonRecentExport": {
     "description": "#1636 workspace_readiness recovery evidence"
   },
-  "readinessReasonStaleExport": "The last recorded export is more than 90 days old",
+  "readinessReasonStaleExport": "The last recorded export is older than the recent-export window",
   "@readinessReasonStaleExport": {
     "description": "#1636 workspace_readiness recovery evidence"
   },
@@ -18924,6 +18924,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupKpi": "Key figures",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
   "settingGroupMessaging": "Messaging",
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
@@ -18931,6 +18935,10 @@
   "settingGroupPresence": "Presence",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupReadiness": "Readiness",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
   },
   "settingGroupSecurity": "Security and access limits",
   "@settingGroupSecurity": {
@@ -18972,6 +18980,10 @@
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintCalendarRangeDays": "Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintDirectoryUpcomingWindowDays": "How many days ahead the member directory shows the next booking of a member.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -18980,6 +18992,14 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintKpiCapacityRangeDays": "Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -18987,6 +19007,10 @@
   "settingHintMcpProbeFreshnessMinutes": "Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMcpReadRangeDays": "Fixed by the platform: the longest window one assistant read may ask for. It bounds the query; it is not a permission to scan more.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintMessagingEditWindowMinutes": "Minutes after sending in which the author may still correct a message. A workspace message reads its workspace, a personal or group message the platform value.",
   "@settingHintMessagingEditWindowMinutes": {
@@ -19011,6 +19035,10 @@
   "settingHintPresenceOnlineWindowMinutes": "Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
+  },
+  "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
   "@settingHintSecurityBadgeLockoutFailures": {
@@ -19060,6 +19088,10 @@
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelCalendarRangeDays": "Calendar range",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelDirectoryUpcomingWindowDays": "Directory look-ahead",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -19068,6 +19100,14 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelKpiCapacityRangeDays": "Capacity figure range",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Finance figure range",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMcpConfirmationExpiryMinutes": "Assistant action confirmation time",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
@@ -19075,6 +19115,10 @@
   "settingLabelMcpProbeFreshnessMinutes": "Assistant endpoint check freshness",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMcpReadRangeDays": "Assistant read range",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelMessagingEditWindowMinutes": "Message edit window",
   "@settingLabelMessagingEditWindowMinutes": {
@@ -19099,6 +19143,10 @@
   "settingLabelPresenceOnlineWindowMinutes": "Online window",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
+  },
+  "settingLabelReadinessRecentExportDays": "Recent export window",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -19218,6 +19266,10 @@
   "settingUnitMinutes": "minutes",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitMonths": "months",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
   },
   "settingUnitPerDay": "per day",
   "@settingUnitPerDay": {

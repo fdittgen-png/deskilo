@@ -267,7 +267,7 @@ void main() {
     expect(readinessReasonLabel(englishL10n, 'recent_export'),
         'A recent export is on record');
     expect(readinessReasonLabel(englishL10n, 'stale_export'),
-        'The last recorded export is more than 90 days old');
+        'The last recorded export is older than the recent-export window');
   });
 
   test('the backend section follows the app\'s own schema check', () {

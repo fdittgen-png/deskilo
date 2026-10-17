@@ -85,18 +85,8 @@ const _trackedSql = <_TrackedSql>[
    pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
   (what: 'MCP notice read-state purge (90 days)', function: 'instance_notify_operators',
    pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
-  (what: 'readiness "recent export" window (90 days)', function: 'workspace_readiness',
-   pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
   (what: 'VIES evidence freshness (90 days)', function: 'member_vies_verified',
    pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
-  (what: 'MCP read range (31 days, guardrail)', function: 'mcp_read_v1',
-   pattern: r"interval '31 days'", ceiling: 1, movesIn: 'S4'),
-  (what: 'calendar range (400 days, guardrail) and its text', function: 'calendar_items',
-   pattern: r'400 days', ceiling: 2, movesIn: 'S4'),
-  (what: 'capacity KPI range (400 days, guardrail) and its text', function: 'kpi_seat_capacity',
-   pattern: r'400 days', ceiling: 2, movesIn: 'S4'),
-  (what: 'finance KPI range (23 months, guardrail)', function: 'kpi_finance_summary',
-   pattern: r"interval '23 months'", ceiling: 1, movesIn: 'S4'),
 ];
 
 /// Entries reviewed as NOT business values, keyed by `file::what`, with the

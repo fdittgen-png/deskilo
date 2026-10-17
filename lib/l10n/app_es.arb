@@ -9377,7 +9377,7 @@
   "readinessReasonNoPolicies": "Ninguna solicitud espera a un validador",
   "readinessReasonNotExposed": "Este espacio aún no expone nada a los asistentes",
   "readinessReasonRecentExport": "Hay una exportación reciente registrada",
-  "readinessReasonStaleExport": "La última exportación registrada tiene más de 90 días",
+  "readinessReasonStaleExport": "La última exportación registrada es anterior a la ventana de exportación reciente",
   "readinessReasonTooFewValidators": "Una regla pide más validadores de los que tiene este espacio",
   "readinessSetAside": "Dejado para más tarde",
   "readinessSetAsideAction": "Más tarde",
@@ -11139,6 +11139,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupKpi": "Indicadores",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
   "settingGroupMessaging": "Mensajería",
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
@@ -11146,6 +11150,10 @@
   "settingGroupPresence": "Presencia",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupReadiness": "Puesta en marcha",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
   },
   "settingGroupSecurity": "Límites de seguridad y acceso",
   "@settingGroupSecurity": {
@@ -11187,6 +11195,10 @@
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintCalendarRangeDays": "Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintDirectoryUpcomingWindowDays": "Cuántos días antes muestra el directorio la próxima reserva de un miembro.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -11195,6 +11207,14 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintKpiCapacityRangeDays": "Fijado por la plataforma: el periodo más largo que puede abarcar un indicador de capacidad. Acota la consulta.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fijado por la plataforma: los meses posteriores al primero que puede abarcar un indicador financiero (23 significa 24 meses en total). Acota la consulta.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minutos de que dispone la persona para confirmar una acción pedida por un asistente. Las solicitudes ya hechas conservan su plazo. Solo se puede acortar.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -11202,6 +11222,10 @@
   "settingHintMcpProbeFreshnessMinutes": "Minutos durante los que cuenta una comprobación correcta del punto de acceso del asistente antes de activar la interfaz. Solo se puede acortar.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMcpReadRangeDays": "Fijado por la plataforma: la ventana más larga que puede pedir una lectura del asistente. Acota la consulta; no es un permiso para leer más.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintMessagingEditWindowMinutes": "Minutos tras el envío durante los que el autor aún puede corregir un mensaje. Un mensaje de un espacio lee el valor de su espacio, uno personal o de grupo el valor de la plataforma.",
   "@settingHintMessagingEditWindowMinutes": {
@@ -11226,6 +11250,10 @@
   "settingHintPresenceOnlineWindowMinutes": "Minutos tras su última señal de vida durante los que una persona sigue contando como en línea. Manténgalo por encima del latido de 2 minutos.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
+  },
+  "settingHintReadinessRecentExportDays": "Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintSecurityBadgeLockoutFailures": "Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.",
   "@settingHintSecurityBadgeLockoutFailures": {
@@ -11275,6 +11303,10 @@
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelCalendarRangeDays": "Periodo del calendario",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelDirectoryUpcomingWindowDays": "Vista previa del directorio",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -11283,6 +11315,14 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelKpiCapacityRangeDays": "Periodo del indicador de capacidad",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Periodo del indicador financiero",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMcpConfirmationExpiryMinutes": "Tiempo de confirmación de una acción del asistente",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
@@ -11290,6 +11330,10 @@
   "settingLabelMcpProbeFreshnessMinutes": "Vigencia de la comprobación del punto de acceso del asistente",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMcpReadRangeDays": "Periodo de lectura del asistente",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelMessagingEditWindowMinutes": "Plazo para editar un mensaje",
   "@settingLabelMessagingEditWindowMinutes": {
@@ -11314,6 +11358,10 @@
   "settingLabelPresenceOnlineWindowMinutes": "Ventana en línea",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
+  },
+  "settingLabelReadinessRecentExportDays": "Ventana de exportación reciente",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Intentos de PIN de la credencial antes del bloqueo",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -11433,6 +11481,10 @@
   "settingUnitMinutes": "minutos",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitMonths": "meses",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
   },
   "settingUnitPerDay": "por día",
   "@settingUnitPerDay": {

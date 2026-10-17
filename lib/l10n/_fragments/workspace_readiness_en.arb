@@ -163,7 +163,7 @@
   "@readinessReasonRecentExport": {
     "description": "#1636 workspace_readiness recovery evidence"
   },
-  "readinessReasonStaleExport": "The last recorded export is more than 90 days old",
+  "readinessReasonStaleExport": "The last recorded export is older than the recent-export window",
   "@readinessReasonStaleExport": {
     "description": "#1636 workspace_readiness recovery evidence"
   },

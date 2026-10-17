@@ -14631,7 +14631,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get readinessReasonStaleExport =>
-      'Le dernier export enregistré date de plus de 90 jours';
+      'Le dernier export enregistré est plus ancien que la fenêtre d’export récent';
 
   @override
   String get readinessReasonTooFewValidators =>
@@ -16646,10 +16646,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupDunning => 'Relances et conditions de paiement';
 
   @override
+  String get settingGroupKpi => 'Indicateurs';
+
+  @override
   String get settingGroupMessaging => 'Messagerie';
 
   @override
   String get settingGroupPresence => 'Présence';
+
+  @override
+  String get settingGroupReadiness => 'Mise en service';
 
   @override
   String get settingGroupSecurity => 'Limites de sécurité et d\'accès';
@@ -16690,6 +16696,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Durée du séjour réservé sur place avec un badge ou un code d\'espace sur une grille de minutes.';
 
   @override
+  String get settingHintCalendarRangeDays =>
+      'Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.';
+
+  @override
   String get settingHintDirectoryUpcomingWindowDays =>
       'Combien de jours à l\'avance l\'annuaire affiche la prochaine réservation d\'un membre.';
 
@@ -16698,12 +16708,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
 
   @override
+  String get settingHintKpiCapacityRangeDays =>
+      'Fixée par la plateforme : la période la plus longue qu’un indicateur de capacité peut couvrir. Elle borne la requête.';
+
+  @override
+  String get settingHintKpiFinanceRangeMonths =>
+      'Fixée par la plateforme : les mois au-delà du premier qu’un indicateur financier peut couvrir (23 signifie 24 mois en tout). Elle borne la requête.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minutes dont dispose la personne pour confirmer une action demandée par un assistant. Les demandes déjà faites gardent leur délai. Peut seulement être raccourci.';
 
   @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minutes pendant lesquelles un contrôle réussi du point d\'accès de l\'assistant compte avant d\'activer l\'interface. Peut seulement être raccourcie.';
+
+  @override
+  String get settingHintMcpReadRangeDays =>
+      'Fixée par la plateforme : la fenêtre la plus longue qu’une lecture de l’assistant peut demander. Elle borne la requête ; ce n’est pas une autorisation d’en lire davantage.';
 
   @override
   String get settingHintMessagingEditWindowMinutes =>
@@ -16728,6 +16750,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
       'Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.';
+
+  @override
+  String get settingHintReadinessRecentExportDays =>
+      'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>
@@ -16776,11 +16802,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelBookingWalkUpWindowMinutes => 'Séjour sur place';
 
   @override
+  String get settingLabelCalendarRangeDays => 'Période du calendrier';
+
+  @override
   String get settingLabelDirectoryUpcomingWindowDays => 'Aperçu de l\'annuaire';
 
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelKpiCapacityRangeDays =>
+      'Période de l’indicateur de capacité';
+
+  @override
+  String get settingLabelKpiFinanceRangeMonths =>
+      'Période de l’indicateur financier';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>
@@ -16789,6 +16826,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Fraîcheur du contrôle du point d\'accès de l\'assistant';
+
+  @override
+  String get settingLabelMcpReadRangeDays =>
+      'Période de lecture de l’assistant';
 
   @override
   String get settingLabelMessagingEditWindowMinutes =>
@@ -16812,6 +16853,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Fenêtre en ligne';
+
+  @override
+  String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
@@ -16890,6 +16934,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitMinutes => 'minutes';
+
+  @override
+  String get settingUnitMonths => 'mois';
 
   @override
   String get settingUnitPerDay => 'par jour';
