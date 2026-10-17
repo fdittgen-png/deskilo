@@ -115,14 +115,21 @@ void main() {
       // else, so an incoming message left the list, the unread badge and
       // any open thread sitting on caches nothing refreshed. A messenger
       // where messages arrive when you pull down is not a messenger.
-      final map =
-          File('lib/app/realtime_invalidations.dart').readAsStringSync();
-      final mapping = map.substring(map.indexOf("'member_notes' =>"));
+      // The declarations moved into the feature that caches them (#2495).
+      final map = File(
+        'lib/features/workspace/providers/realtime_invalidations.dart',
+      ).readAsStringSync();
+      final at = map.indexOf("const ['member_notes'],\n    [conversationsProvider");
+      expect(at, isNonNegative, reason: 'member_notes feeds the messenger');
+      final mapping = map.substring(at);
       expect(mapping, contains('conversationsProvider'));
       expect(mapping, contains('conversationMessagesProvider'));
       // And the conversation tables themselves, which 0125 created after
       // the last publication change and nobody went back for.
-      expect(map, contains("'conversations' || 'conversation_participants'"));
+      expect(
+        map,
+        contains("const ['conversations', 'conversation_participants']"),
+      );
       expect(
         File('lib/core/realtime/realtime_sync.dart').readAsStringSync(),
         contains("'conversation_participants'"),
