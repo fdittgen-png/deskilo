@@ -45,7 +45,7 @@ final class ActiveWorkspaceIdProvider
   ActiveWorkspaceId create() => ActiveWorkspaceId();
 }
 
-String _$activeWorkspaceIdHash() => r'8a4872341f0d03dedaaad904a3ce712eb886cf56';
+String _$activeWorkspaceIdHash() => r'8ffee45466d6fbbf8838413846e825bb821db230';
 
 /// The persisted active-profile choice (#89). At START-UP the user's
 /// DEFAULT profile wins (#322; server-first since #458, so a fresh install

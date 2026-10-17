@@ -129,5 +129,14 @@ SupabaseClient selectedWorkspaceClient(Ref ref) {
   }
   // Read from the registry, not a cached family: the client of an
   // installation changes when its connection is replaced.
-  return clients.workspace(installation);
+  try {
+    return clients.workspace(installation);
+  } on UnverifiedInstallation {
+    // #2564 -- the lease ended and the registration was withdrawn, but the
+    // context has not re-resolved yet: a connected workspace answers with
+    // the typed refusal in that window too, never a raw registry error.
+    final split = ref.watch(selectedWorkspaceHostProvider);
+    if (split == null) rethrow;
+    throw ConnectionFailure(split.source, ConnectionFailureReason.unavailable);
+  }
 }

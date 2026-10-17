@@ -434,4 +434,43 @@ void main() {
     expect(recovered.error, isNot(isA<http.ClientException>()));
     await finish(tester);
   });
+
+  // #2564 O1 -- the workspace repository is split: its operations half runs
+  // on the selected host, its list half on the root session.
+  testWidgets('workspace operations reach the selected host; the list half stays on P', timeout: _limit, (tester) async {
+    final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+    addTearDown(sub.close);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+
+    Future<void> operate() => outcome(
+        tester, rig.container.read(workspaceRepositoryProvider).fetchSites('ws-1'), 'sites');
+    await operate();
+    expect(rig.a.paths.where((p) => p.contains('/sites')), isNotEmpty);
+    expect(rig.b.paths, isEmpty);
+    expect(rig.p.paths.where((p) => p.contains('/sites')), isEmpty);
+
+    await outcome(tester, rig.container.read(workspaceListRepositoryProvider).fetchMyWorkspaces(), 'workspaces');
+    expect(rig.p.paths, isNotEmpty, reason: 'the list half is the root session\'s');
+    final seenByA = rig.a.paths.length;
+    expect(rig.b.paths, isEmpty);
+
+    // Equal local id on W-B: operations follow, W-A sees nothing new.
+    rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+    await operate();
+    expect(rig.b.paths.where((p) => p.contains('/sites')), isNotEmpty);
+    expect(rig.a.paths.length, seenByA);
+
+    // Refusal with W-B down never falls back to W-A or P; recovery reaches W-B.
+    rig.b.down = true;
+    final refused = await outcome(
+        tester, rig.container.read(workspaceRepositoryProvider).fetchSites('ws-1'), 'down');
+    expect(refused.error, isNotNull);
+    expect(rig.a.paths.length, seenByA);
+    rig.b.down = false;
+    final seenByB = rig.b.paths.length;
+    await operate();
+    expect(rig.b.paths.length, greaterThan(seenByB));
+    await finish(tester);
+  });
 }

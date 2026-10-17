@@ -55,7 +55,7 @@ final class CalendarRepositoryProvider
 }
 
 String _$calendarRepositoryHash() =>
-    r'71151aedcc6f5602a7400097f69feed0f4f7b2d0';
+    r'46e55f29890919f5d3bd8bd5a04b11ef55c8d351';
 
 /// One range of the hub (#718), cached per [query] — a re-tap of the
 /// same day costs nothing, a different day is a different key. Realtime
