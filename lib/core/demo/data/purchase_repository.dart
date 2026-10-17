@@ -41,6 +41,10 @@ class FakePurchaseRepository implements PurchaseRepository {
       'p-demo-claim-4': 5.5,
     });
 
+  /// Told when an offset settles an invoice, so the demo's invoice stands
+  /// paid as the server's would (the demo wires it to its money).
+  void Function(String invoiceId, int cents)? onOffset;
+
   /// The VAT rate of each claim's receipt (the demo states what the server
   /// would have read from the lines).
   final Map<String, double> claimRates = {};
@@ -259,6 +263,41 @@ class FakePurchaseRepository implements PurchaseRepository {
   /// A bill sent for approval and waiting for a second person.
   void addPendingBill(PurchaseDetail bill) =>
       _documents.add(_inState(bill, PurchaseState.pending));
+
+  @override
+  Future<PurchaseObligation> offsetClaim(
+    String workspaceId,
+    ClaimOffset offset,
+  ) async {
+    final replay = _paid[offset.requestId];
+    if (replay != null) return replay;
+    final i = _row(offset.obligationId);
+    if (i < 0) throw StateError('unknown obligation');
+    final o = payables[i].obligation;
+    final cents = offset.amountCents;
+    if (o.revision != offset.revision) throw StateError('stale revision');
+    if (!o.payable || cents <= 0 || cents > o.remainingCents) {
+      throw StateError('the amount exceeds what remains of the claim');
+    }
+    final next = _restate(
+      o,
+      paid: o.paidCents + cents,
+      allocations: [
+        ...o.allocations,
+        SettlementAllocation(
+          id: 'demo-offset-${o.allocations.length + 1}',
+          isReversal: false,
+          isOffset: true,
+          amountCents: cents,
+          method: 'offset',
+          reference: offset.invoiceId,
+        ),
+      ],
+    );
+    _store(i, next);
+    onOffset?.call(offset.invoiceId, cents);
+    return _paid[offset.requestId] = next;
+  }
 
   int _doc(String id) => _documents.indexWhere((d) => d.summary.id == id);
 

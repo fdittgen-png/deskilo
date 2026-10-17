@@ -56,6 +56,7 @@ class SettlementAllocation {
   const SettlementAllocation({
     required this.id,
     required this.isReversal,
+    this.isOffset = false,
     required this.amountCents,
     required this.method,
     required this.reference,
@@ -68,6 +69,7 @@ class SettlementAllocation {
     return SettlementAllocation(
       id: r.string('id'),
       isReversal: r.string('kind') == 'reversal',
+      isOffset: r.string('kind') == 'offset',
       amountCents: r.integer('amount_cents'),
       method: r.stringOr('method'),
       reference: r.stringOr('reference'),
@@ -79,6 +81,9 @@ class SettlementAllocation {
   final String id;
   final bool isReversal;
 
+  /// Settled an invoice of the claimant instead of paying cash.
+  final bool isOffset;
+
   /// Positive for a payment, negative for its reversal.
   final int amountCents;
   final String method;
@@ -89,7 +94,7 @@ class SettlementAllocation {
   final bool reversed;
 
   /// A payment that can still be reversed.
-  bool get reversible => !isReversal && !reversed;
+  bool get reversible => !isReversal && !isOffset && !reversed;
 }
 
 /// What the space owes a creditor for one approved purchase. It indexes the
@@ -249,4 +254,24 @@ class PayableRow {
 
   final PurchaseObligation obligation;
   final PurchaseSummary purchase;
+}
+
+/// An offset to record: [amountCents] of a claim against one invoice of the
+/// claimant. The same [requestId] with the same entries answers the original.
+class ClaimOffset {
+  const ClaimOffset({
+    required this.obligationId,
+    required this.invoiceId,
+    required this.amountCents,
+    required this.revision,
+    required this.requestId,
+    this.note = '',
+  });
+
+  final String obligationId;
+  final String invoiceId;
+  final int amountCents;
+  final int revision;
+  final String requestId;
+  final String note;
 }

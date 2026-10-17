@@ -24542,6 +24542,54 @@ abstract class AppLocalizations {
   /// **'No supplier chosen'**
   String get purchasesNoSupplier;
 
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'Offset against an invoice'**
+  String get purchasesOffsetAction;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'The claim settles an open invoice of the same member instead of being paid out. The invoice keeps its sales and VAT; only its payment is explained.'**
+  String get purchasesOffsetHint;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get purchasesOffsetInvoice;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'Offset · {amount} · {invoice}'**
+  String purchasesOffsetLine(String amount, String invoice);
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'This member has no open invoice to settle.'**
+  String get purchasesOffsetNone;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'The offset was not recorded. The claim, the invoice and the permissions are checked again; a retry sends the same request.'**
+  String get purchasesOffsetRefused;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'Offset recorded'**
+  String get purchasesOffsetSaved;
+
+  /// #2574 claim offset
+  ///
+  /// In en, this message translates to:
+  /// **'Offset against an invoice'**
+  String get purchasesOffsetTitle;
+
   /// #2574 purchase payables
   ///
   /// In en, this message translates to:

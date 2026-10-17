@@ -9269,6 +9269,46 @@
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesOffsetAction": "Mit einer Rechnung verrechnen",
+  "@purchasesOffsetAction": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetHint": "Der Anspruch begleicht eine offene Rechnung desselben Mitglieds, statt ausgezahlt zu werden. Die Rechnung behält Umsatz und USt; nur ihre Zahlung wird erklärt.",
+  "@purchasesOffsetHint": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetInvoice": "Rechnung",
+  "@purchasesOffsetInvoice": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetLine": "Verrechnung · {amount} · {invoice}",
+  "@purchasesOffsetLine": {
+    "description": "#2574 claim offset",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "invoice": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesOffsetNone": "Dieses Mitglied hat keine offene Rechnung zu begleichen.",
+  "@purchasesOffsetNone": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetRefused": "Die Verrechnung wurde nicht erfasst. Anspruch, Rechnung und Rechte werden erneut geprüft; ein Wiederholen sendet dieselbe Anfrage.",
+  "@purchasesOffsetRefused": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetSaved": "Verrechnung erfasst",
+  "@purchasesOffsetSaved": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetTitle": "Mit einer Rechnung verrechnen",
+  "@purchasesOffsetTitle": {
+    "description": "#2574 claim offset"
+  },
   "purchasesOwedEmpty": "Hier ist nichts offen.",
   "@purchasesOwedEmpty": {
     "description": "#2574 purchase payables"

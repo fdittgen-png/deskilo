@@ -14284,6 +14284,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesNoSupplier => 'No supplier chosen';
 
   @override
+  String get purchasesOffsetAction => 'Offset against an invoice';
+
+  @override
+  String get purchasesOffsetHint =>
+      'The claim settles an open invoice of the same member instead of being paid out. The invoice keeps its sales and VAT; only its payment is explained.';
+
+  @override
+  String get purchasesOffsetInvoice => 'Invoice';
+
+  @override
+  String purchasesOffsetLine(String amount, String invoice) {
+    return 'Offset · $amount · $invoice';
+  }
+
+  @override
+  String get purchasesOffsetNone =>
+      'This member has no open invoice to settle.';
+
+  @override
+  String get purchasesOffsetRefused =>
+      'The offset was not recorded. The claim, the invoice and the permissions are checked again; a retry sends the same request.';
+
+  @override
+  String get purchasesOffsetSaved => 'Offset recorded';
+
+  @override
+  String get purchasesOffsetTitle => 'Offset against an invoice';
+
+  @override
   String get purchasesOwedEmpty => 'Nothing is owed here.';
 
   @override

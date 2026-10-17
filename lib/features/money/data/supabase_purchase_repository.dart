@@ -93,9 +93,32 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       },
     );
     return PurchaseObligation.fromJson(
-      JsonReader.of(json, context: 'record_member_reimbursement_v1').raw(
-        'obligation',
-      ),
+      JsonReader.of(
+        json,
+        context: 'record_member_reimbursement_v1',
+      ).raw('obligation'),
+    );
+  }
+
+  @override
+  Future<PurchaseObligation> offsetClaim(
+    String workspaceId,
+    ClaimOffset offset,
+  ) async {
+    final json = await _client.rpc<Object?>(
+      'offset_member_claim_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_obligation_id': offset.obligationId,
+        'p_invoice_id': offset.invoiceId,
+        'p_amount_cents': offset.amountCents,
+        'p_revision': offset.revision,
+        'p_request_id': offset.requestId,
+        'p_note': offset.note,
+      },
+    );
+    return PurchaseObligation.fromJson(
+      JsonReader.of(json, context: 'offset_member_claim_v1').raw('obligation'),
     );
   }
 
@@ -164,9 +187,10 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       },
     );
     return PurchaseObligation.fromJson(
-      JsonReader.of(json, context: 'reverse_purchase_allocation_v1').raw(
-        'obligation',
-      ),
+      JsonReader.of(
+        json,
+        context: 'reverse_purchase_allocation_v1',
+      ).raw('obligation'),
     );
   }
 

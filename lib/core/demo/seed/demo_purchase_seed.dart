@@ -6,11 +6,13 @@
 // the claims they leave and a payment already made. Dates follow the seeded
 // instant; a bill is due before the end of the year.
 import '../../../features/money/domain/einvoice_inbox.dart';
+import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/supplier.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../time/date_text.dart';
 import '../data/einvoice_inbox_repository.dart';
+import '../data/money_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
 
@@ -27,11 +29,15 @@ class DemoPurchasing {
   final FakePurchaseRepository purchases;
 }
 
-DemoPurchasing seedDemoPurchasing(DateTime now) {
+DemoPurchasing seedDemoPurchasing(DateTime now, {FakeMoneyRepository? money}) {
   final suppliers = FakeSupplierRepository()..suppliers.addAll(_suppliers);
   final inbox = FakeEInvoiceInboxRepository();
   final purchases = FakePurchaseRepository.demo();
   final today = DateTime(now.year, now.month, now.day);
+  if (money != null) {
+    purchases.onOffset = (invoiceId, cents) =>
+        _settle(money, invoiceId, cents, now);
+  }
   _seedInbox(inbox, today);
   _seedBills(purchases, today);
   return DemoPurchasing(
@@ -327,4 +333,26 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         [_bought(1, 'Catering, open evening', 22000, 10)],
       ),
     );
+}
+
+/// An offset settles an invoice: a standing partial until the last cent.
+void _settle(
+  FakeMoneyRepository money,
+  String invoiceId,
+  int cents,
+  DateTime now,
+) {
+  final invoice = money.invoices.where((i) => i.id == invoiceId).firstOrNull;
+  if (invoice == null) return;
+  final paid = (money.invoiceMatchesStore[invoiceId]?.paidCents ?? 0) + cents;
+  money.invoiceMatchesStore[invoiceId] = InvoiceMatch(
+    invoiceId: invoiceId,
+    paidCents: paid,
+    resolution: paid >= invoice.totalCents ? 'exact' : 'under_accepted',
+    note: paid >= invoice.totalCents
+        ? ''
+        : 'part offset against an expense claim',
+    matchedAt: now,
+    byName: 'Offset',
+  );
 }

@@ -1,0 +1,43 @@
+{
+  "@@locale": "es",
+  "purchasesOffsetAction": "Compensar con una factura",
+  "@purchasesOffsetAction": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetTitle": "Compensar con una factura",
+  "@purchasesOffsetTitle": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetHint": "La reclamación salda una factura abierta del mismo miembro en lugar de pagarse. La factura conserva sus ventas e IVA; solo se explica su pago.",
+  "@purchasesOffsetHint": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetInvoice": "Factura",
+  "@purchasesOffsetInvoice": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetNone": "Este miembro no tiene facturas abiertas que saldar.",
+  "@purchasesOffsetNone": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetRefused": "La compensación no se registró. Se comprueban de nuevo la reclamación, la factura y los permisos; un reintento envía la misma solicitud.",
+  "@purchasesOffsetRefused": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetSaved": "Compensación registrada",
+  "@purchasesOffsetSaved": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetLine": "Compensación · {amount} · {invoice}",
+  "@purchasesOffsetLine": {
+    "description": "#2574 claim offset",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "invoice": {
+        "type": "String"
+      }
+    }
+  }
+}
