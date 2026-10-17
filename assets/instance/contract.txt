@@ -862,6 +862,22 @@ constraint purchase_lines.purchase_lines_unit_check CHECK ((char_length(unit) <=
 constraint purchase_lines.purchase_lines_workspace_id_purchase_id_fkey FOREIGN KEY (workspace_id, purchase_id) REFERENCES purchase_documents(workspace_id, id) ON DELETE CASCADE
 constraint purchase_lines.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint purchase_lines.system_company_present CHECK ((company_id IS NOT NULL))
+constraint purchase_obligations.purchase_obligations_amount_cents_check CHECK ((amount_cents > 0))
+constraint purchase_obligations.purchase_obligations_check CHECK (((creditor_kind = 'member'::text) = (creditor_member_id IS NOT NULL)))
+constraint purchase_obligations.purchase_obligations_check1 CHECK (((creditor_kind = 'supplier'::text) = (creditor_supplier_id IS NOT NULL)))
+constraint purchase_obligations.purchase_obligations_check2 CHECK (((legacy_member_credit_id IS NULL) OR (creditor_kind = 'member'::text)))
+constraint purchase_obligations.purchase_obligations_creditor_kind_check CHECK ((creditor_kind = ANY (ARRAY['member'::text, 'supplier'::text])))
+constraint purchase_obligations.purchase_obligations_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint purchase_obligations.purchase_obligations_hold_reason_check CHECK ((char_length(hold_reason) <= 300))
+constraint purchase_obligations.purchase_obligations_legacy_member_credit_id_fkey FOREIGN KEY (legacy_member_credit_id) REFERENCES ledger_entries(id)
+constraint purchase_obligations.purchase_obligations_pkey PRIMARY KEY (id)
+constraint purchase_obligations.purchase_obligations_revision_check CHECK ((revision >= 1))
+constraint purchase_obligations.purchase_obligations_state_check CHECK ((state = ANY (ARRAY['open'::text, 'held'::text, 'cancelled'::text])))
+constraint purchase_obligations.purchase_obligations_workspace_id_creditor_member_id_fkey FOREIGN KEY (workspace_id, creditor_member_id) REFERENCES members(workspace_id, id)
+constraint purchase_obligations.purchase_obligations_workspace_id_creditor_supplier_id_fkey FOREIGN KEY (workspace_id, creditor_supplier_id) REFERENCES suppliers(workspace_id, id)
+constraint purchase_obligations.purchase_obligations_workspace_id_purchase_id_fkey FOREIGN KEY (workspace_id, purchase_id) REFERENCES purchase_documents(workspace_id, id) ON DELETE CASCADE
+constraint purchase_obligations.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint purchase_obligations.system_company_present CHECK ((company_id IS NOT NULL))
 constraint purchase_requests.purchase_requests_pkey PRIMARY KEY (id)
 constraint purchase_requests.purchase_requests_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint purchase_requests.purchase_requests_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
@@ -1915,15 +1931,21 @@ routine public.public_network_require(p_operation text) -> void | function | inv
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
 routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:924f6f1fc7b1
 routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_manifest jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc12cf39df7d
-routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:5556f6186089
+routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:866a954639c4
 routine public.purchase_bridge_expense(p_event events) -> uuid | function | definer | volatile | exec:service_role | body:0f3850d27cee
-routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:240fa4d7b1a7
+routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b73cb2bb60
 routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:c4ecf8fcfe1b
 routine public.purchase_expense_event_bridge() -> trigger | function | definer | volatile | exec:service_role | body:09e3276249cb
 routine public.purchase_expense_event_stamp() -> trigger | function | invoker | volatile | exec:service_role | body:7f3e306d9c6e
 routine public.purchase_expense_event_state() -> trigger | function | definer | volatile | exec:service_role | body:f22428af16bf
 routine public.purchase_inbox_match_link() -> trigger | function | definer | volatile | exec:service_role | body:4c5506576f93
 routine public.purchase_lines_guard() -> trigger | function | definer | volatile | exec:service_role | body:40642366cd83
+routine public.purchase_obligation_credit_link() -> trigger | function | definer | volatile | exec:service_role | body:72014b7ada91
+routine public.purchase_obligation_invoice(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:dec400b1efb8
+routine public.purchase_obligation_json(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:f3b9e058c9b4
+routine public.purchase_obligation_sync(p_purchase_id uuid) -> void | function | definer | volatile | exec:service_role | body:75dc2eeabe2e
+routine public.purchase_obligations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:964677fdeeaa
+routine public.purchase_payables_page_v1(p_workspace_id uuid, p_creditor_kind text, p_limit integer, p_after_created timestamp with time zone, p_after_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2856f7dc52f
 routine public.purchase_request_begin(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text) -> jsonb | function | definer | volatile | exec:service_role | body:e7187ea83fc1
 routine public.purchase_request_end(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text, p_result jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d966beee0b55
 routine public.purchase_state_of_event(p_status text) -> text | function | invoker | immutable | exec:service_role | body:d221debfbdf6
@@ -2344,6 +2366,7 @@ trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
 trigger ledger_entries.ledger_entries_supply_class CREATE TRIGGER ledger_entries_supply_class BEFORE INSERT ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entry_supply_class()
+trigger ledger_entries.purchase_obligation_credit_link CREATE TRIGGER purchase_obligation_credit_link AFTER INSERT ON public.ledger_entries FOR EACH ROW WHEN (((new.kind = 'credit'::text) AND (new.category = 'expense'::text) AND (new.event_id IS NOT NULL))) EXECUTE FUNCTION purchase_obligation_credit_link()
 trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger levels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.levels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger licence_plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.licence_plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -2423,6 +2446,8 @@ trigger purchase_documents.purchase_documents_guard CREATE TRIGGER purchase_docu
 trigger purchase_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_lines.purchase_lines_guard CREATE TRIGGER purchase_lines_guard BEFORE INSERT OR DELETE OR UPDATE ON public.purchase_lines FOR EACH ROW EXECUTE FUNCTION purchase_lines_guard()
 trigger purchase_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger purchase_obligations.purchase_obligations_guard CREATE TRIGGER purchase_obligations_guard BEFORE UPDATE ON public.purchase_obligations FOR EACH ROW EXECUTE FUNCTION purchase_obligations_guard()
+trigger purchase_obligations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_obligations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_sources.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_sources FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger push_config.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.push_config FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

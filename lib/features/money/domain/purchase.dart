@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
+import 'purchase_obligation.dart';
+
+export 'purchase_obligation.dart';
 
 /// The permission that captures supplier bills; pinned to
 /// `WorkspacePermission.managePurchases.wireName` by test, so the money
@@ -164,6 +167,7 @@ class PurchaseDetail {
     required this.revision,
     required this.lines,
     required this.sources,
+    this.obligations = const [],
     this.supplierName,
     this.supplierNumber,
     this.dueOn,
@@ -177,6 +181,9 @@ class PurchaseDetail {
       revision: r.integer('revision'),
       lines: [for (final l in r.list('lines')) PurchaseLine.fromJson(l)],
       sources: [for (final s in r.list('sources')) PurchaseSource.fromJson(s)],
+      obligations: [
+        for (final o in r.list('obligations')) PurchaseObligation.fromJson(o),
+      ],
       supplierName: supplier?.stringOrNull('name'),
       supplierNumber: supplier?.stringOrNull('supplier_number'),
       dueOn: DateTime.tryParse(r.stringOr('due_on')),
@@ -187,6 +194,9 @@ class PurchaseDetail {
   final int revision;
   final List<PurchaseLine> lines;
   final List<PurchaseSource> sources;
+
+  /// What the space owes for this document; a member sees only their own.
+  final List<PurchaseObligation> obligations;
   final String? supplierName;
   final String? supplierNumber;
   final DateTime? dueOn;
@@ -256,6 +266,13 @@ abstract interface class PurchaseRepository {
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId);
 
   Future<PurchaseDetail> fetchDetail(String workspaceId, String purchaseId);
+
+  /// What the space owes for approved purchases, newest first: a member sees
+  /// their own claims, a manager all. [kind] narrows to members or suppliers.
+  Future<List<PayableRow>> fetchPayables(
+    String workspaceId, {
+    CreditorKind? kind,
+  });
 
   /// Creates or updates a draft. The same [requestId] with the same draft
   /// returns the committed result, so a retry never doubles it. Returns the

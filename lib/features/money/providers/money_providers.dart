@@ -107,10 +107,8 @@ LegalIdentity legalIdentity(Ref ref) => LegalIdentity(
 
 @riverpod
 Future<Statement?> myStatement(Ref ref, String period) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(memberAccountQueriesProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return null;
@@ -120,10 +118,8 @@ Future<Statement?> myStatement(Ref ref, String period) async {
 /// The signed-in member's full ledger, newest first.
 @riverpod
 Future<List<LedgerEntry>> myLedger(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(memberAccountQueriesProvider);
   final member = await ref.watch(myMemberProvider.future);
   if (member == null) return const [];
@@ -199,10 +195,8 @@ Future<List<Invoice>> memberInvoices(Ref ref, String memberId) async {
 /// Fee bands of the current workspace, ordered by from_pct (#128).
 @Riverpod(keepAlive: true)
 Future<List<FeeBand>> feeBands(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
@@ -224,10 +218,8 @@ Future<SubscriptionLevels> subscriptionLevels(Ref ref) async {
 /// Active consumable services of the current workspace (#123).
 @Riverpod(keepAlive: true)
 Future<List<ServiceItem>> services(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
@@ -248,10 +240,8 @@ Future<List<ServiceItem>> allServices(Ref ref) async {
 /// (migration 0042).
 @riverpod
 Future<List<Package>> packages(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(commercialTermsProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
@@ -275,10 +265,8 @@ Future<List<Package>> allPackages(Ref ref) async {
 /// regime says it is, and nothing about the bill changes.
 @Riverpod(keepAlive: true)
 Future<List<VatRate>> vatRates(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(taxReportingRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
@@ -352,10 +340,8 @@ Future<DunningRules> dunningRules(Ref ref) async {
 /// nothing is stored, which is what every workspace starts with.
 @Riverpod(keepAlive: true)
 Future<BillingRules> billingRules(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap: a bare
-  // `ref.watch` on the far side of an await throws outright if the
-  // provider was disposed while the future was in flight, and it is
-  // a dependency registration in any case.
+  // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
+  // after an await throws if the provider was disposed while in flight.
   final repository = ref.watch(moneyRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return BillingRules.defaults;
@@ -560,13 +546,9 @@ Future<PriceNegotiation> priceNegotiation(Ref ref, String memberId) =>
       () => ref.read(commercialTermsProvider).fetchPriceNegotiation(memberId),
     );
 
-/// #870 — is the seller a non-profit association?
-///
-/// It decides what the recurring position is CALLED on every surface:
-/// an association collects a participation, a commercial space sells a
-/// subscription. Kept in one place because the wording has tax
-/// consequences and must never differ between the bill, the invoice
-/// and the accounting export.
+/// #870 — is the seller a non-profit association? It decides what the
+/// recurring position is CALLED on every surface (a participation, not a
+/// subscription); one place, because the wording has tax consequences.
 @Riverpod(keepAlive: true)
 bool sellerIsAssociation(Ref ref) => InvoiceLegal.fromJson(
       ref.watch(currentWorkspaceProvider).value?.invoiceLegal ?? const {},
@@ -599,3 +581,8 @@ Future<RepartitionRule> repartitionRule(Ref ref) async {
   if (workspace == null) return const RepartitionRule();
   return ref.read(moneyRepositoryProvider).fetchRepartitionRule(workspace.id);
 }
+
+/// member id -> name, for the lists that name a member (the To-pay claims).
+@riverpod
+Map<String, String> memberLabels(Ref ref) =>
+    ref.watch(memberNamesProvider).value ?? const {};

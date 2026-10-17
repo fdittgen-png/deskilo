@@ -1,0 +1,70 @@
+{
+  "@@locale": "it",
+  "purchasesTabDocuments": "Documenti",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "Da pagare",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesToPayIntro": "Ciò che lo spazio deve ancora per gli acquisti approvati. Il credito di un socio è l'accredito che la sua ricevuta approvata ha già registrato; viene applicato quando una fattura lo include. La registrazione di pagamenti e compensazioni arriverà in seguito.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Dovuto ai soci",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Dovuto ai fornitori",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedEmpty": "Qui non è dovuto nulla.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimYou": "Lei",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOwedTo": "Dovuto a {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOpen": "Aperto · restano {amount}",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimApplied": "Applicato alla fattura {number}",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimHeld": "In sospeso",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimCancelled": "Annullato",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Rimborso",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  }
+}

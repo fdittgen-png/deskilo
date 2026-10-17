@@ -2197,35 +2197,23 @@ final class PriceNegotiationFamily extends $Family
   String toString() => r'priceNegotiationProvider';
 }
 
-/// #870 — is the seller a non-profit association?
-///
-/// It decides what the recurring position is CALLED on every surface:
-/// an association collects a participation, a commercial space sells a
-/// subscription. Kept in one place because the wording has tax
-/// consequences and must never differ between the bill, the invoice
-/// and the accounting export.
+/// #870 — is the seller a non-profit association? It decides what the
+/// recurring position is CALLED on every surface (a participation, not a
+/// subscription); one place, because the wording has tax consequences.
 
 @ProviderFor(sellerIsAssociation)
 final sellerIsAssociationProvider = SellerIsAssociationProvider._();
 
-/// #870 — is the seller a non-profit association?
-///
-/// It decides what the recurring position is CALLED on every surface:
-/// an association collects a participation, a commercial space sells a
-/// subscription. Kept in one place because the wording has tax
-/// consequences and must never differ between the bill, the invoice
-/// and the accounting export.
+/// #870 — is the seller a non-profit association? It decides what the
+/// recurring position is CALLED on every surface (a participation, not a
+/// subscription); one place, because the wording has tax consequences.
 
 final class SellerIsAssociationProvider
     extends $FunctionalProvider<bool, bool, bool>
     with $Provider<bool> {
-  /// #870 — is the seller a non-profit association?
-  ///
-  /// It decides what the recurring position is CALLED on every surface:
-  /// an association collects a participation, a commercial space sells a
-  /// subscription. Kept in one place because the wording has tax
-  /// consequences and must never differ between the bill, the invoice
-  /// and the accounting export.
+  /// #870 — is the seller a non-profit association? It decides what the
+  /// recurring position is CALLED on every surface (a participation, not a
+  /// subscription); one place, because the wording has tax consequences.
   SellerIsAssociationProvider._()
     : super(
         from: null,
@@ -2436,3 +2424,55 @@ final class RepartitionRuleProvider
 }
 
 String _$repartitionRuleHash() => r'15e240c4526551c2b737b6746cd0ca04457e5709';
+
+/// member id -> name, for the lists that name a member (the To-pay claims).
+
+@ProviderFor(memberLabels)
+final memberLabelsProvider = MemberLabelsProvider._();
+
+/// member id -> name, for the lists that name a member (the To-pay claims).
+
+final class MemberLabelsProvider
+    extends
+        $FunctionalProvider<
+          Map<String, String>,
+          Map<String, String>,
+          Map<String, String>
+        >
+    with $Provider<Map<String, String>> {
+  /// member id -> name, for the lists that name a member (the To-pay claims).
+  MemberLabelsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberLabelsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberLabelsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Map<String, String> create(Ref ref) {
+    return memberLabels(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<String, String> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<String, String>>(value),
+    );
+  }
+}
+
+String _$memberLabelsHash() => r'76c59132996a9bc5143d82741228e6e02cbc7eed';

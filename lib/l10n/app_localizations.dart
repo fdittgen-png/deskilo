@@ -24356,6 +24356,48 @@ abstract class AppLocalizations {
   /// **'Add supplier bill'**
   String get purchasesAddBill;
 
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Applied to invoice {number}'**
+  String purchasesClaimApplied(String number);
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get purchasesClaimCancelled;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get purchasesClaimHeld;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Open · {amount} remaining'**
+  String purchasesClaimOpen(String amount);
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to {name}'**
+  String purchasesClaimOwedTo(String name);
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get purchasesClaimYou;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Reimbursement'**
+  String get purchasesClaimsTitle;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24452,6 +24494,24 @@ abstract class AppLocalizations {
   /// **'No supplier chosen'**
   String get purchasesNoSupplier;
 
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is owed here.'**
+  String get purchasesOwedEmpty;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to members'**
+  String get purchasesOwedMembers;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to suppliers'**
+  String get purchasesOwedSuppliers;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24530,6 +24590,18 @@ abstract class AppLocalizations {
   /// **'Supplier'**
   String get purchasesSupplier;
 
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get purchasesTabDocuments;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get purchasesTabToPay;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24553,6 +24625,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchases'**
   String get purchasesTitle;
+
+  /// #2574 purchase payables
+  ///
+  /// In en, this message translates to:
+  /// **'What the space still owes for approved purchases. A member\'s claim is the credit their approved receipt already booked; it is applied once an invoice carries it. Recording payments and offsets comes in a later step.'**
+  String get purchasesToPayIntro;
 
   /// #2573 purchases
   ///

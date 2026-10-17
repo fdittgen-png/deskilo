@@ -16446,6 +16446,49 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesClaimApplied": "Applied to invoice {number}",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimCancelled": "Cancelled",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimHeld": "On hold",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOpen": "Open · {amount} remaining",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOwedTo": "Owed to {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimYou": "You",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Reimbursement",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesDescription": "Description",
   "@purchasesDescription": {
     "description": "#2573 purchases"
@@ -16515,6 +16558,18 @@
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesOwedEmpty": "Nothing is owed here.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Owed to members",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Owed to suppliers",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesPickDate": "Choose a date",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
@@ -16572,6 +16627,14 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesTabDocuments": "Documents",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "To pay",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesTaxField": "Tax included (empty if the bill does not state it)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -16587,6 +16650,10 @@
   "purchasesTitle": "Purchases",
   "@purchasesTitle": {
     "description": "#2573 purchases"
+  },
+  "purchasesToPayIntro": "What the space still owes for approved purchases. A member's claim is the credit their approved receipt already booked; it is applied once an invoice carries it. Recording payments and offsets comes in a later step.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
   },
   "purchasesTotal": "Total",
   "@purchasesTotal": {

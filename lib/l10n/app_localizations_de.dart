@@ -14316,6 +14316,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesAddBill => 'Lieferantenrechnung hinzufügen';
 
   @override
+  String purchasesClaimApplied(String number) {
+    return 'Auf Rechnung $number angewendet';
+  }
+
+  @override
+  String get purchasesClaimCancelled => 'Storniert';
+
+  @override
+  String get purchasesClaimHeld => 'Gesperrt';
+
+  @override
+  String purchasesClaimOpen(String amount) {
+    return 'Offen · $amount verbleibend';
+  }
+
+  @override
+  String purchasesClaimOwedTo(String name) {
+    return 'Geschuldet an $name';
+  }
+
+  @override
+  String get purchasesClaimYou => 'Sie';
+
+  @override
+  String get purchasesClaimsTitle => 'Erstattung';
+
+  @override
   String get purchasesDescription => 'Beschreibung';
 
   @override
@@ -14370,6 +14397,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesNoSupplier => 'Kein Lieferant gewählt';
 
   @override
+  String get purchasesOwedEmpty => 'Hier ist nichts offen.';
+
+  @override
+  String get purchasesOwedMembers => 'Den Mitgliedern geschuldet';
+
+  @override
+  String get purchasesOwedSuppliers => 'Lieferanten geschuldet';
+
+  @override
   String get purchasesPickDate => 'Datum wählen';
 
   @override
@@ -14412,6 +14448,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesSupplier => 'Lieferant';
 
   @override
+  String get purchasesTabDocuments => 'Belege';
+
+  @override
+  String get purchasesTabToPay => 'Zu zahlen';
+
+  @override
   String get purchasesTaxField =>
       'Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)';
 
@@ -14424,6 +14466,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesTitle => 'Einkäufe';
+
+  @override
+  String get purchasesToPayIntro =>
+      'Was der Space für genehmigte Einkäufe noch schuldet. Der Anspruch eines Mitglieds ist die Gutschrift, die sein genehmigter Beleg bereits gebucht hat; sie gilt als angewendet, sobald eine Rechnung sie enthält. Zahlungen und Verrechnungen folgen in einem späteren Schritt.';
 
   @override
   String get purchasesTotal => 'Gesamt';

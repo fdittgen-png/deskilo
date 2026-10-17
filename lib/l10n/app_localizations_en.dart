@@ -14177,6 +14177,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesAddBill => 'Add supplier bill';
 
   @override
+  String purchasesClaimApplied(String number) {
+    return 'Applied to invoice $number';
+  }
+
+  @override
+  String get purchasesClaimCancelled => 'Cancelled';
+
+  @override
+  String get purchasesClaimHeld => 'On hold';
+
+  @override
+  String purchasesClaimOpen(String amount) {
+    return 'Open · $amount remaining';
+  }
+
+  @override
+  String purchasesClaimOwedTo(String name) {
+    return 'Owed to $name';
+  }
+
+  @override
+  String get purchasesClaimYou => 'You';
+
+  @override
+  String get purchasesClaimsTitle => 'Reimbursement';
+
+  @override
   String get purchasesDescription => 'Description';
 
   @override
@@ -14231,6 +14258,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesNoSupplier => 'No supplier chosen';
 
   @override
+  String get purchasesOwedEmpty => 'Nothing is owed here.';
+
+  @override
+  String get purchasesOwedMembers => 'Owed to members';
+
+  @override
+  String get purchasesOwedSuppliers => 'Owed to suppliers';
+
+  @override
   String get purchasesPickDate => 'Choose a date';
 
   @override
@@ -14273,6 +14309,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesSupplier => 'Supplier';
 
   @override
+  String get purchasesTabDocuments => 'Documents';
+
+  @override
+  String get purchasesTabToPay => 'To pay';
+
+  @override
   String get purchasesTaxField =>
       'Tax included (empty if the bill does not state it)';
 
@@ -14284,6 +14326,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesTitle => 'Purchases';
+
+  @override
+  String get purchasesToPayIntro =>
+      'What the space still owes for approved purchases. A member\'s claim is the credit their approved receipt already booked; it is applied once an invoice carries it. Recording payments and offsets comes in a later step.';
 
   @override
   String get purchasesTotal => 'Total';

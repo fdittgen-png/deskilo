@@ -8,6 +8,10 @@ class FakePurchaseRepository implements PurchaseRepository {
   final List<PurchaseDetail> _documents = [];
   final Map<String, String> _requests = {};
 
+  /// The claims the demo shows; the server derives them from approved
+  /// receipts, the demo only keeps what a test or a scenario hands it.
+  final List<PayableRow> payables = [];
+
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => [
     for (final d in _documents.reversed) d.summary,
@@ -21,6 +25,15 @@ class FakePurchaseRepository implements PurchaseRepository {
     (d) => d.summary.id == purchaseId,
     orElse: () => throw StateError('unknown purchase'),
   );
+
+  @override
+  Future<List<PayableRow>> fetchPayables(
+    String workspaceId, {
+    CreditorKind? kind,
+  }) async => [
+    for (final p in payables)
+      if (kind == null || p.obligation.creditorKind == kind) p,
+  ];
 
   @override
   Future<String> saveDraft(

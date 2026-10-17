@@ -9125,6 +9125,49 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesClaimApplied": "Applicato alla fattura {number}",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimCancelled": "Annullato",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimHeld": "In sospeso",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOpen": "Aperto · restano {amount}",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOwedTo": "Dovuto a {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimYou": "Lei",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Rimborso",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesDescription": "Descrizione",
   "@purchasesDescription": {
     "description": "#2573 purchases"
@@ -9194,6 +9237,18 @@
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesOwedEmpty": "Qui non è dovuto nulla.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Dovuto ai soci",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Dovuto ai fornitori",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesPickDate": "Scegli una data",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
@@ -9251,6 +9306,14 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesTabDocuments": "Documenti",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "Da pagare",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesTaxField": "Imposta inclusa (vuoto se la fattura non la indica)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -9266,6 +9329,10 @@
   "purchasesTitle": "Acquisti",
   "@purchasesTitle": {
     "description": "#2573 purchases"
+  },
+  "purchasesToPayIntro": "Ciò che lo spazio deve ancora per gli acquisti approvati. Il credito di un socio è l'accredito che la sua ricevuta approvata ha già registrato; viene applicato quando una fattura lo include. La registrazione di pagamenti e compensazioni arriverà in seguito.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
   },
   "purchasesTotal": "Totale",
   "@purchasesTotal": {

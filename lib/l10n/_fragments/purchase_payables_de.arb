@@ -1,0 +1,70 @@
+{
+  "@@locale": "de",
+  "purchasesTabDocuments": "Belege",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "Zu zahlen",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesToPayIntro": "Was der Space für genehmigte Einkäufe noch schuldet. Der Anspruch eines Mitglieds ist die Gutschrift, die sein genehmigter Beleg bereits gebucht hat; sie gilt als angewendet, sobald eine Rechnung sie enthält. Zahlungen und Verrechnungen folgen in einem späteren Schritt.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Den Mitgliedern geschuldet",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Lieferanten geschuldet",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedEmpty": "Hier ist nichts offen.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimYou": "Sie",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOwedTo": "Geschuldet an {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOpen": "Offen · {amount} verbleibend",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimApplied": "Auf Rechnung {number} angewendet",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimHeld": "Gesperrt",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimCancelled": "Storniert",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Erstattung",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  }
+}
