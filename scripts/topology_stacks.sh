@@ -73,6 +73,7 @@ enabled = true
 site_url = "http://127.0.0.1:3000"
 enable_signup = true
 jwt_secret = "$(openssl rand -hex 32)"
+signing_keys_path = "./signing_keys.json"
 
 [auth.email]
 enable_signup = true
@@ -102,6 +103,13 @@ enabled = false
 [edge_runtime]
 enabled = false
 TOML
+    # The CLI signs user tokens with a signing key it ships as a default,
+    # so a secret alone leaves every local stack accepting the others'
+    # tokens (run 39015390424). Each stack gets a key of its own.
+    supabase gen signing-key --algorithm ES256 --workdir "$DIR/$name" </dev/null >/dev/null 2>&1 \
+      || supabase gen signing-key --algorithm ES256 --append --workdir "$DIR/$name" </dev/null >/dev/null 2>&1 \
+      || fail "$name: no signing key could be generated"
+    [ -s "$DIR/$name/supabase/signing_keys.json" ] || fail "$name: the signing key file is missing"
   done
   say "prepared P and W-B under $DIR"
 }
