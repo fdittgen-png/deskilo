@@ -29,8 +29,11 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
   `AGENT_HANDOFF.md`, open PRs and the issue's last comments; write your own claim
   (`.agent-work/<issue>.json`).
 - **Own worktree**: `git worktree add /private/tmp/deskilo-<issue> -b <branch> origin/master`,
-  then `flutter pub get` in it — without `.dart_tool` a worktree resolves
-  `package:deskilo` to the MAIN checkout and generators write stale output.
+  then `python3 scripts/worktree_prepare.py --resolve` in it. This resolves
+  the root and independent sibling packages, checks the pinned toolchain and
+  refuses a package mapping to another checkout. It never creates a shared
+  STORE/FOSS workspace. For database-dependent work add `--require-database`
+  or explicitly `--database-ci`; tool readiness is not executed test evidence.
   Never switch branches in a shared checkout, and never while a suite runs in it.
 - **One registry-touching branch at a time** (AGENT_RULES "One feature branch at a
   time"). Stacking is the exception — see reference.md.
@@ -57,8 +60,9 @@ Edit ALL of these in the same commit:
    (the server's copy of the manifest, #1333). A server gate calls
    `public.feature_effective(ws, 'key')`, never reads the flag by hand.
 8. Routes: `lib/app/router.dart` GoRoute with a `featureEnabled(...)` redirect + a RouteRule.
-9. Budgets: `test/lint/file_length_test.dart` — `workspace_feature.dart` grows ~10
-   lines per flag; bump WITH a dated reason comment (better: extract, then lower it).
+9. Budgets: use `dart run tool/code_health.dart --baseline` and its current
+   reviewed rules. Do not hand-edit a budget or disconnect a configured consumer
+   just to satisfy a numeric limit; use a cohesive value/contract instead.
 
 **No count pin to bump** (#2058): `feature_registry_test` checks manifest/name/
 tier/dependency completeness and that every key any migration ever registered is
@@ -89,17 +93,20 @@ needs the deployment entity registry (reference.md "Flags").
   `.g.dart`: `dart run build_runner build --delete-conflicting-outputs`, commit the
   output. If a full run hangs in a worktree, use `--build-filter 'lib/<path>/<file>.g.dart'`
   (macOS has no `timeout`); a stale `build.dart.aot` holds the lock (reference.md "Tooling").
-  A filtered run with `--delete-conflicting-outputs` DELETES every other `.g.dart`;
-  restore them with `git ls-files -d -z | xargs -0 git checkout --` before committing.
+  Before a filtered run, record existing generated-file edits/deletions. Review
+  its result and restore only unrelated generated output that THIS run deleted
+  and which was clean beforehand; never blanket-restore pre-existing work.
+  A failed or hanging generator is a blocker to diagnose, not a full-run loop.
 - **Never `dart format` an existing file** — the repo is not format-clean and one
   file yields hundreds of churn lines. Format only files you created; hand-place
   edits elsewhere at the surrounding indentation. Never format whole directories.
 
 ## 3. Verify
-```
-dart analyze --fatal-infos            # exactly what CI runs; flutter analyze misses the riverpod_lint plugin (missing_provider_scope)
-flutter test test/lint <your tests>
-dart run tool/preflight.dart --list   # which generators this change implicates — run THOSE yourself
+```bash
+python3 scripts/worktree_prepare.py # check-only; do not hide unresolved packages
+dart run tool/preflight.dart --list   # run ONLY the selected generators, then review their diff
+dart analyze --fatal-infos            # after generation; retain the original exit
+flutter test test/lint <your tests>   # affected suites only; full suite stays in CI
 ```
 Never run `tool/preflight.dart` in full on this machine: its build_runner step can hang.
 
@@ -134,9 +141,10 @@ grep the whole repo (skills, commands, workflow comments) for its old wording.
 - Push only on a green verdict (analyze clean AND "All tests passed!" for lint +
   the affected folders), then `deskilo-ci-release`.
 - **Master moved under your PR: merge it in ONCE — never rebase, never chase.**
-  Conflicts in generated files (bundle, APPLIED, l10n output, the dependency map): `git diff --name-only --diff-filter=U -z | xargs -0 git checkout origin/master --`,
-  then regenerate. In hand-written files keep BOTH sides in order (plain
-  concatenation, never a line-dedupe — it drops shared closers like `),`).
+  Reconcile producer/consumer semantics before resolving conflicts. Regenerate
+  affected outputs from the resolved source using their trusted generators;
+  preserve unrelated staged/working edits. Hand-written conflicts require a
+  semantic merge and affected tests, never blind concatenation or line-deduping.
   Never `for f in $files` in zsh: it passes all paths as one
   argument and conflict markers get committed. `git grep -l '^<<<<<<<'` before
   every push. If it conflicts again, stop and report.
