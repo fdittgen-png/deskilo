@@ -28,6 +28,11 @@ import '../features/workspace/providers/workspace_providers.dart';
 /// scope's overrides (main.dart, the demo container, the test helper).
 final List<Override> realtimeWiringFromApp = [
   invalidationLookupProvider.overrideWithValue(invalidationFor),
+  // #2564 O5 — the workspace target's feed runs on the selected workspace's
+  // client; the account target's on the personal home's (core's default).
+  realtimeWorkspaceClientProvider.overrideWith(
+    (ref) => ref.watch(selectedWorkspaceClientProvider),
+  ),
   realtimeWorkspaceIdProvider.overrideWith(
     (ref) async => (await ref.watch(currentWorkspaceProvider.future))?.id,
   ),
@@ -52,5 +57,9 @@ final InvalidationRegistry realtimeInvalidationRegistry = InvalidationRegistry([
 /// today applies every scope; a target-narrowed lookup is
 /// [InvalidationRegistry.lookup] with `scopes`.
 @visibleForTesting
-TableInvalidation invalidationFor(String table) =>
-    realtimeInvalidationRegistry.lookup(table);
+TableInvalidation invalidationFor(
+  String table, {
+  Set<InvalidationScope>? scopes,
+}) => scopes == null
+    ? realtimeInvalidationRegistry.lookup(table)
+    : realtimeInvalidationRegistry.lookup(table, scopes: scopes);

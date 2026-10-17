@@ -18,6 +18,9 @@ import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
+import 'package:deskilo/core/realtime/realtime_providers.dart';
+import 'package:deskilo/core/realtime/realtime_sync.dart';
+import 'package:deskilo/core/realtime/realtime_wiring.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
@@ -165,6 +168,9 @@ class _Rig {
     settingsSourceProvider.overrideWithValue(settings),
     currentWorkspaceProvider.overrideWith((ref) async => current),
     cacheStoreProvider.overrideWithValue(cache),
+    realtimeWorkspaceClientProvider.overrideWith(
+      (ref) => ref.watch(selectedWorkspaceClientProvider),
+    ),
   ]);
 
   /// Select [workspace] hosted on [host].
@@ -311,6 +317,28 @@ void main() {
     );
     expect(refused.error, isNotNull);
     expect(refused.value, isNull);
+    await finish(tester);
+  });
+
+  testWidgets('the change feeds follow their targets: W channel on the selected host, account feed on P', timeout: _limit, (tester) async {
+    final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+    addTearDown(sub.close);
+    await settle(tester, rig.container.read(workspaceContextProvider.future), 'context A');
+    SupabaseClient workspaceFeed() =>
+        (rig.container.read(realtimeSyncProvider) as SupabaseRealtimeSync).client;
+    SupabaseClient accountFeed() =>
+        (rig.container.read(accountRealtimeSyncProvider) as SupabaseRealtimeSync).client;
+    final fsub = rig.container.listen(realtimeSyncProvider, (_, _) {});
+    addTearDown(fsub.close);
+    expect(workspaceFeed(), same(rig.a.client));
+    expect(accountFeed(), same(rig.p.client));
+
+    // Selecting W-B (equal local id) moves the workspace feed only.
+    rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+    await settle(tester, rig.container.read(workspaceContextProvider.future), 'context B');
+    expect(workspaceFeed(), same(rig.b.client));
+    expect(accountFeed(), same(rig.p.client),
+        reason: 'the account feed never follows the workspace selection');
     await finish(tester);
   });
 

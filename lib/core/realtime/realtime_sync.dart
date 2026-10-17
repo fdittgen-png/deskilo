@@ -20,6 +20,11 @@ abstract class RealtimeSync {
   /// events may have been missed (the channel re-joined after an error).
   /// Cancelling the subscription tears the channel down.
   Stream<String> watch(String workspaceId);
+
+  /// #2564 O5 — the account target's feed, on the personal home's client:
+  /// the facts that span workspaces (memberships, the workspace list, the
+  /// profile, the messenger). No workspace id: nothing here belongs to one.
+  Stream<String> watchAccount();
 }
 
 /// The tables the app renders — one `postgres_changes` binding each.
@@ -85,6 +90,14 @@ List<RealtimeBinding> realtimeBindings(String workspaceId) => [
       (table: table, event: PostgresChangeEvent.all, workspaceFilter: workspaceId),
       (table: table, event: PostgresChangeEvent.delete, workspaceFilter: null),
     ] else
+      (table: table, event: PostgresChangeEvent.all, workspaceFilter: null),
+];
+
+/// #2564 O5 — the account target's bindings: the tables that are not one
+/// workspace's rows, unfiltered (RLS still applies).
+List<RealtimeBinding> _accountBindings() => [
+  for (final table in realtimeTables)
+    if (!workspaceScopedTables.contains(table))
       (table: table, event: PostgresChangeEvent.all, workspaceFilter: null),
 ];
 
@@ -186,16 +199,28 @@ class SupabaseRealtimeSync implements RealtimeSync {
     if (kDebugMode) debugPrint('[realtime] $message');
   }
 
+  /// The client this feed runs on (tests pin which target it serves).
+  @visibleForTesting
+  SupabaseClient get client => _client;
+
   @override
-  Stream<String> watch(String workspaceId) {
+  Stream<String> watch(String workspaceId) => _feed(
+    'db-changes-$workspaceId',
+    realtimeBindings(workspaceId),
+  );
+
+  @override
+  Stream<String> watchAccount() => _feed('db-changes-account', _accountBindings());
+
+  Stream<String> _feed(String channelName, List<RealtimeBinding> bindings) {
     final controller = StreamController<String>.broadcast();
     // #2019 C — one per watched workspace: presence-only profile updates.
     final profiles = ProfileChangeClassifier();
     late final ChannelSupervisor<RealtimeChannel> supervisor;
     supervisor = ChannelSupervisor<RealtimeChannel>(
       create: () {
-        final ch = _client.channel('db-changes-$workspaceId');
-        for (final b in realtimeBindings(workspaceId)) {
+        final ch = _client.channel(channelName);
+        for (final b in bindings) {
           final ws = b.workspaceFilter;
           ch.onPostgresChanges(
             event: b.event,
@@ -222,7 +247,7 @@ class SupabaseRealtimeSync implements RealtimeSync {
         (status, [error]) => supervisor.onStatus(ch, status, error),
       ),
       remove: (ch) => unawaited(_client.removeChannel(ch)),
-      trace: (message) => _trace('channel $workspaceId → $message'),
+      trace: (message) => _trace('channel $channelName → $message'),
       onResync: () {
         if (!controller.isClosed) controller.add(kResyncSignal);
       },

@@ -47,6 +47,9 @@ class _CountingSync implements RealtimeSync {
     );
     return controller.stream;
   }
+
+  @override
+  Stream<String> watchAccount() => const Stream.empty();
 }
 
 void main() {
@@ -67,7 +70,7 @@ void main() {
     addTearDown(container.dispose);
 
     // Build 1 starts and suspends on the await.
-    final first = container.read(realtimeInvalidatorProvider.future);
+    final first = container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).future);
     await Future<void>.delayed(Duration.zero);
 
     // Build 2 starts before build 1 has resolved.
@@ -75,8 +78,8 @@ void main() {
     gate = Completer<Workspace?>();
     container
       ..invalidate(currentWorkspaceProvider)
-      ..invalidate(realtimeInvalidatorProvider);
-    final second = container.read(realtimeInvalidatorProvider.future);
+      ..invalidate(realtimeInvalidatorProvider(RealtimeTarget.workspace));
+    final second = container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).future);
     await Future<void>.delayed(Duration.zero);
 
     // Both resolve — the first one last, so its assignment lands last.

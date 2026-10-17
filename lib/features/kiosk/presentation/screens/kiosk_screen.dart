@@ -320,7 +320,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     // #430: no shell on kiosk devices — arm realtime here.
-    ref.watch(realtimeInvalidatorProvider);
+    ref.watch(realtimeInvalidatorProvider(RealtimeTarget.workspace));
     // #446: same out-of-shell rule for the ambient working day — the
     // walk-up windows this screen books derive from it.
     WorkHours.install(ref.watch(workHoursProvider).value);
