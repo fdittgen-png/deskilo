@@ -887,7 +887,7 @@ jobs:
             && [ "${{ steps.topology_wb.outcome }}" = success ] \
             || { echo "::error::the topology stacks did not all start"; exit 1; }
           bash scripts/topology_stacks.sh seed
-          flutter test --no-pub test/topology/three_stacks_test.dart --reporter expanded | tee report-topology.log
+          flutter test --no-pub test/topology/three_stacks_test.dart test/topology/invoice_preview_http_test.dart --reporter expanded | tee report-topology.log
           grep -q 'All tests passed!' report-topology.log
 
       - name: Topology stacks, stopped
@@ -953,7 +953,7 @@ jobs:
               "${{ steps.containment.outcome }}"
             printf 'Instance lifecycle|%s|empty install, interrupted resume, upgrade from N, foreign table blocks, marker per migration, doctor probe isolation\n' \
               "${{ steps.lifecycle.outcome }}"
-            printf 'Physical topology|%s|three separate stacks (P, W-A, W-B; own Postgres, Auth, Storage, keys and ports): the production P profile read and write and the W reservation read over signed requests with database readback, a wrong target refused, a stranger denied beside the member admitted, zero operational rows at P\n' \
+            printf 'Physical topology|%s|three separate stacks (P, W-A, W-B; own Postgres, Auth, Storage, keys and ports): the production P profile read and write and the W reservation read over signed requests with database readback, a wrong target refused, a stranger denied beside the member admitted, zero operational rows at P; the real preview_invoice answer (4500, -1500, 0, a stranger refused) decoded by the app adapter over signed HTTP\n' \
               "${{ steps.topology.outcome }}"
             printf 'MCP coverage evidence|%s|every pgTAP file the MCP coverage map requires ran and passed in this run, at this commit\n' \
               "${{ steps.mcp_coverage.outcome }}"
