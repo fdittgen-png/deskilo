@@ -1660,8 +1660,6 @@ routine public.invoice_issuing_enabled(p_workspace_id uuid, p_kind text) -> bool
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
 routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ec3dc4acff5e
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:20005fb63ed0
-routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a56f1746a36e
-routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ab86eeb0aaa
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ab86eeb0aaa
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
