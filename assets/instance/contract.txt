@@ -854,6 +854,7 @@ constraint purchase_documents.purchase_documents_payer_kind_check CHECK ((payer_
 constraint purchase_documents.purchase_documents_pkey PRIMARY KEY (id)
 constraint purchase_documents.purchase_documents_revision_check CHECK ((revision >= 1))
 constraint purchase_documents.purchase_documents_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'pending'::text, 'approved'::text, 'rejected'::text, 'cancelled'::text])))
+constraint purchase_documents.purchase_documents_submitter_fkey FOREIGN KEY (workspace_id, submitted_by_member_id) REFERENCES members(workspace_id, id)
 constraint purchase_documents.purchase_documents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint purchase_documents.purchase_documents_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint purchase_documents.purchase_documents_workspace_id_original_document_id_fkey FOREIGN KEY (workspace_id, original_document_id) REFERENCES purchase_documents(workspace_id, id)
@@ -1539,7 +1540,7 @@ routine public.database_authority_audit_append_only() -> trigger | function | in
 routine public.decide_guest_visit(p_id uuid, p_accept boolean, p_host_note text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c57a6a11a14a
 routine public.decide_mcp_eligibility(p_subject uuid, p_decision_id uuid, p_approve boolean, p_expected_revision integer, p_valid_days integer, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:182c92ef19ef
 routine public.decide_member_join(p_member_id uuid, p_approve boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:b960ba2e966e
-routine public.decide_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_approve boolean, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f6dc88dcde40
+routine public.decide_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_approve boolean, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f4d0e1f23290
 routine public.decide_workspace_application(p_member_id uuid, p_approve boolean, p_comment text, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:b39bd8e3de9e
 routine public.default_site(p_workspace_id uuid) -> sites | function | definer | stable | exec:service_role | body:d4264f2b6a91
 routine public.default_tariff_of(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b0647444285a
@@ -2193,7 +2194,7 @@ routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
 routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8896fc904a9c
-routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da0be798fec2
+routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8c3a141fde5f
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
 routine public.supplier_backfill(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fea258b2c4f8
 routine public.supplier_guard(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:7a97e17aca1a

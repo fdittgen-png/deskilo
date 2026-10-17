@@ -7,7 +7,7 @@
 --   supplier   D a reversal   E who reads what
 -- NOT RUN here: two sessions racing the last of a payable.
 begin;
-select plan(47);
+select plan(50);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -178,6 +178,19 @@ select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.p1'), 1, false, 'late
 select ok(pg_temp.owner_err(format('update public.purchase_documents set category = ''x'' where id = %L', current_setting('t.p1'))) like '%frozen%', 'B: a decided bill is frozen');
 select ok(pg_temp.owner_err(format('update public.purchase_documents set state = ''approved'' where id = %L', current_setting('t.nosup')::jsonb ->> 'purchase_id')) like '%purchase_documents_approval_check%',
   'B: nothing is approved without an event or a person');
+-- a bill sent by someone else than its drafter is not decided by that sender either
+select set_config('t.d3', pg_temp.call(pg_temp.u(1), format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)',
+  current_setting('t.a'), pg_temp.rq(50), pg_temp.bill('NC-3', 3000)))::text, true);
+select pg_temp.call(pg_temp.u(1), format('select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), current_setting('t.d3')::jsonb ->> 'purchase_id', pg_temp.rq(51)));
+select is((select (submitted_by_member_id = pg_temp.mem(1, 't.a'))::text from public.purchase_documents where id = (current_setting('t.d3')::jsonb ->> 'purchase_id')::uuid), 'true',
+  'B: the sender of a bill is recorded');
+-- (the guard rightly freezes it; the fixture bypasses the guard to play the other sender)
+set local session_replication_role = replica;
+update public.purchase_documents set submitted_by_member_id = pg_temp.mem(4, 't.a') where id = (current_setting('t.d3')::jsonb ->> 'purchase_id')::uuid;
+set local session_replication_role = origin;
+select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.d3')::jsonb ->> 'purchase_id', 1, true, '', 52)::text) like '%another person must decide%',
+  'B: whoever sent the bill cannot decide it, though they did not draft it');
+select is((select state from public.purchase_documents where id = (current_setting('t.d3')::jsonb ->> 'purchase_id')::uuid), 'pending', 'B: and it is still pending');
 -- a second bill, rejected
 select set_config('t.d2', pg_temp.call(pg_temp.u(1), format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)',
   current_setting('t.a'), pg_temp.rq(18), pg_temp.bill('NC-2', 6000)))::text, true);

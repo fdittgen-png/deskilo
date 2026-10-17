@@ -26,10 +26,13 @@
 alter table public.purchase_documents
   add column decided_by_member_id uuid,
   add column decided_at timestamptz,
+  add column submitted_by_member_id uuid,
   add column decision_reason text not null default '' check (char_length(decision_reason) <= 300);
 alter table public.purchase_documents
   add constraint purchase_documents_decider_fkey
-  foreign key (workspace_id, decided_by_member_id) references public.members (workspace_id, id);
+  foreign key (workspace_id, decided_by_member_id) references public.members (workspace_id, id),
+  add constraint purchase_documents_submitter_fkey
+  foreign key (workspace_id, submitted_by_member_id) references public.members (workspace_id, id);
 
 -- An approved document is approved by an expense event (a member receipt) or
 -- by a person (a supplier bill).
@@ -126,7 +129,10 @@ begin
       from public.purchase_lines where purchase_id = v_doc.id;
     if v_lines = 0 or v_gross <= 0 then raise exception 'a bill needs an amount'; end if;
     if v_gross > 2147483647 then raise exception 'the amount of a bill is too large'; end if;
-    update public.purchase_documents set state = 'pending' where id = v_doc.id;
+    -- Whoever sends it to approval cannot decide it either: the drafter and
+    -- the sender may be two people, and neither is the second person.
+    update public.purchase_documents
+       set state = 'pending', submitted_by_member_id = v_me where id = v_doc.id;
     v_result := jsonb_build_object('purchase_id', v_doc.id, 'revision', v_doc.revision,
                                    'state', 'pending');
     return public.purchase_request_end(p_workspace_id, p_request_id, 'submit', v_digest, v_result);
@@ -218,7 +224,7 @@ begin
   if d.kind <> 'bill' then raise exception 'only a supplier bill is decided here'; end if;
   if d.state <> 'pending' then raise exception 'only a purchase awaiting approval is decided'; end if;
   if d.revision <> coalesce(p_revision, 0) then raise exception 'stale revision'; end if;
-  if d.submitter_member_id = v_me then
+  if d.submitter_member_id = v_me or d.submitted_by_member_id = v_me then
     raise exception 'another person must decide a purchase you submitted';
   end if;
   if p_approve is null then raise exception 'approve or reject'; end if;
