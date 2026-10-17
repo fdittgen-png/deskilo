@@ -38,6 +38,53 @@ class PooledClient {
   }
 }
 
+/// #2562 -- a lease on the pooled client of ONE connected target, held for
+/// as long as a consumer (a realtime channel, a workspace context) lives.
+/// The pool owns the client; the lease only guarantees what the holder may
+/// rely on: [client] is that target's own and never anything else, and when
+/// the pool ends the connection (disconnect, replaced connection, closed
+/// pool, signed-out target) [ended] completes with the typed reason and
+/// [client] refuses from then on, so a holder can neither keep serving a
+/// dead target nor be answered by another one.
+class PinnedClient {
+  PinnedClient._(this._pooled, this.source, this._onRelease);
+
+  final PooledClient _pooled;
+  final String source;
+  final void Function(PinnedClient pin) _onRelease;
+  final _ended = Completer<ConnectionFailure>();
+  ConnectionFailure? _failure;
+  bool _released = false;
+
+  /// The target's own client; throws the typed end once the lease ended.
+  SupabaseClient get client {
+    final failure = _failure;
+    if (failure != null) throw failure;
+    return _pooled.client;
+  }
+
+  String get account => _pooled.account;
+  String get installationId => _pooled.installationId;
+  bool get isLive => _failure == null && !_released;
+
+  /// Completes (never with an error) when the pool ended this connection.
+  Future<ConnectionFailure> get ended => _ended.future;
+
+  /// Gives the lease back; idempotent. The pool keeps the client for the
+  /// next holder and closes it with the connection.
+  void release() {
+    if (_released) return;
+    _released = true;
+    _onRelease(this);
+  }
+
+  void _end(ConnectionFailure failure) {
+    if (_failure != null) return;
+    _failure = failure;
+    if (!_ended.isCompleted) _ended.complete(failure);
+  }
+}
+
 typedef PoolRecord = Map<String, dynamic>;
 typedef PoolRecordOf = Future<PoolRecord> Function(String source);
 typedef PoolVerify = Future<void> Function(
@@ -67,6 +114,31 @@ class PooledClients {
   final PoolVerify verify;
   final PoolVerify save;
   final _open = <String, PooledClient>{};
+  final _pins = <String, Set<PinnedClient>>{};
+
+  /// #2562 -- the pooled client of [source] as a lease that lives as long
+  /// as its holder (a channel's lifetime), see [PinnedClient].
+  Future<PinnedClient> pin(String source) async {
+    final pooled = await open(source);
+    final pin = PinnedClient._(pooled, source, _unpin);
+    (_pins[source] ??= {}).add(pin);
+    return pin;
+  }
+
+  void _unpin(PinnedClient pin) {
+    final set = _pins[pin.source];
+    if (set == null) return;
+    set.remove(pin);
+    if (set.isEmpty) _pins.remove(pin.source);
+  }
+
+  void _endPins(String source, ConnectionFailureReason reason) {
+    final set = _pins.remove(source);
+    if (set == null) return;
+    for (final pin in set) {
+      pin._end(ConnectionFailure(source, reason));
+    }
+  }
 
   Future<PooledClient> open(String source) async {
     check(source);
@@ -78,7 +150,12 @@ class PooledClients {
       final session = live.client.auth.currentSession;
       if (session != null && !session.isExpired) return live;
     }
-    await discard(source);
+    await discard(
+      source,
+      live != null && live.epoch == epochOf(source)
+          ? ConnectionFailureReason.expired
+          : ConnectionFailureReason.cancelled,
+    );
     final epoch = epochOf(source);
     final saved = await record(source);
     final client = newClient(BackendEndpoint(source, saved['key'] as String));
@@ -100,6 +177,14 @@ class PooledClients {
             epoch: epoch,
           )
           .._listener = client.auth.onAuthStateChange.listen((change) {
+            if (change.event == AuthChangeEvent.signedOut) {
+              // The target ended its own session: leases end as expired.
+              final self = _open[source];
+              if (self != null && identical(self.client, client)) {
+                unawaited(discard(source, ConnectionFailureReason.expired));
+              }
+              return;
+            }
             if (change.event != AuthChangeEvent.tokenRefreshed) return;
             // trace-exempt: the pool remembers and traces a failed save.
             unawaited(save(source, saved, epoch, client));
@@ -109,14 +194,21 @@ class PooledClients {
     return pooled;
   }
 
-  Future<void> discard(String source) async {
+  Future<void> discard(
+    String source, [
+    ConnectionFailureReason reason = ConnectionFailureReason.cancelled,
+  ]) async {
     final old = _open.remove(source);
+    _endPins(source, reason);
     if (old != null) await old.dispose();
   }
 
   Future<void> closeAll() async {
     final all = _open.values.toList();
     _open.clear();
+    for (final source in _pins.keys.toList()) {
+      _endPins(source, ConnectionFailureReason.cancelled);
+    }
     for (final pooled in all) {
       await pooled.dispose();
     }
