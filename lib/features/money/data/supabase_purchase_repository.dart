@@ -52,7 +52,9 @@ class SupabasePurchaseRepository implements PurchaseRepository {
         'p_payload': draft.toPayload(),
       },
     );
-    return JsonReader.of(json, context: 'save_purchase_draft_v1')
-        .string('purchase_id');
+    return JsonReader.of(
+      json,
+      context: 'save_purchase_draft_v1',
+    ).string('purchase_id');
   }
 }

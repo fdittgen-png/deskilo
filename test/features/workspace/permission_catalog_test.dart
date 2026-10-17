@@ -3,6 +3,8 @@
 // #982 — the nine permissions: in the catalog, with defaults that keep
 // what admins could always do and withhold what only owners could.
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/presentation/screens/roles_screen_labels.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -16,6 +18,13 @@ void main() {
     expect(WorkspacePermission.values, hasLength(32));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
+    }
+  });
+
+  test('every permission has a human label, never its wire name', () {
+    final l10n = AppLocalizationsEn();
+    for (final p in WorkspacePermission.values) {
+      expect(permissionLabel(l10n, p), isNot(p.name), reason: '$p');
     }
   });
 

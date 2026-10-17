@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
+import '../../../core/time/date_text.dart';
+
+/// The permission that captures supplier bills; pinned to
+/// `WorkspacePermission.managePurchases.wireName` by test, so the money
+/// screen asks for it without importing the workspace permission catalogue.
+const purchaseManagePermission = 'managePurchases';
 
 /// What a purchase document is: a supplier bill, a credit note, or the
 /// receipt of something a member paid (the expense flow's own document).
@@ -116,7 +122,10 @@ class PurchaseSummary {
     var gross = 0;
     for (final key in const ['purchase_lines', 'lines']) {
       for (final l in r.listOrAbsent(key)) {
-        gross += JsonReader.of(l, context: 'purchase line').integer('gross_cents');
+        gross += JsonReader.of(
+          l,
+          context: 'purchase line',
+        ).integer('gross_cents');
       }
     }
     return PurchaseSummary(
@@ -126,7 +135,7 @@ class PurchaseSummary {
       state: PurchaseState.of(r.stringOrNull('state')),
       category: r.stringOr('category'),
       reference: r.stringOr('original_reference'),
-      currency: r.stringOr('currency', 'EUR'),
+      currency: r.stringOr('currency'),
       receivedOn: DateTime.tryParse(r.stringOr('received_on')),
       legacy: r.stringOr('legacy_qualification', 'none') != 'none',
     );
@@ -217,11 +226,7 @@ class PurchaseBillDraft {
   /// The tax the bill states; null when it does not (partial, not zero).
   final int? taxCents;
 
-  static String? _day(DateTime? d) => d == null
-      ? null
-      : '${d.year.toString().padLeft(4, '0')}-'
-            '${d.month.toString().padLeft(2, '0')}-'
-            '${d.day.toString().padLeft(2, '0')}';
+  static String? _day(DateTime? d) => d == null ? null : isoDay(d);
 
   /// The `save_purchase_draft_v1` payload. The server derives the actor, the
   /// state and the totals; none of them is sent.

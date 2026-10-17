@@ -382,18 +382,16 @@ enum WorkspaceFeature {
   /// and a notice on Invoicing while one is due. Platform, default ON.
   recapitulativeStatement,
 
-  /// #2357 — input VAT: an expense states its VAT rate and deductible
-  /// share, and the VAT return subtracts it. Platform, default ON, under
-  /// vatDeclarations; OFF hides the fields (output VAT only).
+  /// #2357 — input VAT: an expense states its rate and deductible share,
+  /// the VAT return subtracts it. Platform, ON, under vatDeclarations.
   inputVat,
 
   /// #2484 — the settings editor (platform tier, default ON; OFF hides it).
   configurableSettings,
 
-  /// #2362 — a seller in the United States issues in sales-tax mode: net
-  /// prices, the tax of the site's postal code stated apart, taxability per
-  /// kind of line, exemption certificates. Platform, default ON, under
-  /// invoicing; OFF: such a seller cannot issue.
+  /// #2362 — a US seller issues in sales-tax mode: net prices, the tax of the
+  /// site's postal code stated apart, taxability per kind of line, exemption
+  /// certificates. Platform, default ON, under invoicing.
   salesTax,
 
   /// #2631 — a meeting room on the plan, booked in its own slot; a parking
@@ -401,11 +399,9 @@ enum WorkspaceFeature {
   meetingRooms,
   parking,
 
-  /// #2504 — WebMCP tools of the web app (platform, OFF, under mcpAccess).
+  /// #2504 — WebMCP tools (platform, OFF, under mcpAccess); #2573 — one
+  /// purchase document (platform, OFF, under moneyTab).
   webMcp,
-
-  /// #2573 — one purchase document for supplier bills and member
-  /// expenses (platform, OFF, under moneyTab).
   purchases;
 
   /// The key of this feature inside `workspaces.feature_flags`.

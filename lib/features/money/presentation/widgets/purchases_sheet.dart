@@ -8,8 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
 import '../../providers/purchase_providers.dart';
 import 'purchase_dialogs.dart';
@@ -17,19 +16,31 @@ import 'purchase_labels.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
 /// offer it; the server shows a member their own documents and a manager all.
-Future<void> showPurchasesSheet(BuildContext context, String workspaceId) =>
-    showAppSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => PurchasesView(workspaceId: workspaceId),
-    );
+Future<void> showPurchasesSheet(
+  BuildContext context,
+  String workspaceId, {
+  required bool canCapture,
+}) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) =>
+      PurchasesView(workspaceId: workspaceId, canCapture: canCapture),
+);
 
 /// The list of documents, with the supplier-bill door for who may capture.
 @visibleForTesting
 class PurchasesView extends ConsumerWidget {
-  const PurchasesView({required this.workspaceId, super.key});
+  const PurchasesView({
+    required this.workspaceId,
+    required this.canCapture,
+    super.key,
+  });
 
   final String workspaceId;
+
+  /// Whether the signed-in person holds managePurchases; the server decides
+  /// again on every write.
+  final bool canCapture;
 
   Future<void> _add(BuildContext context, WidgetRef ref) async {
     final saved = await showPurchaseBillDialog(context, workspaceId);
@@ -42,9 +53,6 @@ class PurchasesView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final canCapture = ref
-        .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.managePurchases);
     final purchases =
         ref.watch(purchasesProvider(workspaceId)).value ??
         const <PurchaseSummary>[];
@@ -85,7 +93,7 @@ class PurchasesView extends ConsumerWidget {
               ].join(' · '),
             ),
             trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
-            onTap: () => showPurchaseDetailSheet(context, workspaceId, p.id),
+            onTap: () => _showDetailSheet(context, workspaceId, p.id),
           ),
       ],
     );
@@ -93,7 +101,7 @@ class PurchasesView extends ConsumerWidget {
 }
 
 /// Opens one document with its lines and evidence.
-Future<void> showPurchaseDetailSheet(
+Future<void> _showDetailSheet(
   BuildContext context,
   String workspaceId,
   String purchaseId,
@@ -101,16 +109,14 @@ Future<void> showPurchaseDetailSheet(
   context: context,
   isScrollControlled: true,
   builder: (_) =>
-      PurchaseDetailView(workspaceId: workspaceId, purchaseId: purchaseId),
+      _PurchaseDetailView(workspaceId: workspaceId, purchaseId: purchaseId),
 );
 
 /// One purchase document as the server read it.
-@visibleForTesting
-class PurchaseDetailView extends ConsumerWidget {
-  const PurchaseDetailView({
+class _PurchaseDetailView extends ConsumerWidget {
+  const _PurchaseDetailView({
     required this.workspaceId,
     required this.purchaseId,
-    super.key,
   });
 
   final String workspaceId;
@@ -131,7 +137,7 @@ class PurchaseDetailView extends ConsumerWidget {
     if (detail == null) {
       return SheetShell(
         title: l10n.purchasesTitle,
-        children: const [Center(child: CircularProgressIndicator())],
+        children: const [LoadingView()],
       );
     }
     final s = detail.summary;
@@ -148,7 +154,8 @@ class PurchaseDetailView extends ConsumerWidget {
           key: const ValueKey('purchase-state'),
           style: theme.textTheme.titleSmall,
         ),
-        if (s.state == PurchaseState.draft && s.kind != PurchaseKind.memberReceipt)
+        if (s.state == PurchaseState.draft &&
+            s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),
         if (s.legacy) Text(l10n.purchasesLegacyTag),
         const SizedBox(height: AppSpacing.sm),

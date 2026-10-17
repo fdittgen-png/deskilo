@@ -6,6 +6,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/purchase.dart';
@@ -111,7 +112,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
     context: context,
-    initialDate: current ?? DateTime.now(),
+    initialDate: current ?? ref.read(clockProvider).now(),
     firstDate: DateTime(2000),
     lastDate: DateTime(2100),
     helpText: context.l10n.purchasesPickDate,
@@ -166,13 +167,17 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               key: const ValueKey('purchase-gross'),
               controller: _gross,
               label: l10n.purchasesGross,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
             ),
             AppTextField(
               key: const ValueKey('purchase-tax'),
               controller: _tax,
               label: l10n.purchasesTaxField,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
@@ -220,6 +225,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('purchase-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),

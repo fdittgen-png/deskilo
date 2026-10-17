@@ -39,7 +39,7 @@ class FakePurchaseRepository implements PurchaseRepository {
         state: PurchaseState.draft,
         category: '',
         reference: draft.reference,
-        currency: 'EUR',
+        currency: '',
         receivedOn: draft.originalDate,
       ),
       revision: draft.expectedRevision + 1,

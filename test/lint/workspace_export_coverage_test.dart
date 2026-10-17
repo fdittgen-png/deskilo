@@ -279,6 +279,18 @@ const Map<String, String> _notExported = {
       '#2358 — supplier invoices received as XML; the document is the '
           'supplier\'s, kept as received, and the expense it matched is '
           'exported itself',
+  'purchase_documents':
+      '#2573 — a purchase is filed by the expense or the supplier bill it '
+          'documents; the expense is exported itself and a fresh space does not '
+          'import documents whose evidence it does not hold',
+  'purchase_lines':
+      '#2573 — the lines of a purchase document, exported with it or not at all',
+  'purchase_sources':
+      '#2573 — the links from a purchase to the expenses and invoices that '
+          'evidence it; they name rows of this server',
+  'purchase_requests':
+      '#2573 — replay ledger of the purchase writes (request ids and their '
+          'committed answers); technical, never a workbook row',
   'suppliers':
       '#2567 — the payees of the purchase side, master data the purchase '
           'documents point at; the documents carry their own raw snapshot, '

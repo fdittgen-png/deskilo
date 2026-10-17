@@ -10,6 +10,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/purchase.dart' show purchaseManagePermission;
 import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
@@ -153,7 +154,13 @@ class MoneyActionSet {
       if (data.purchasesOn && data.workspace != null)
         OutlinedButton.icon(
           key: const ValueKey('purchases-button'),
-          onPressed: () => showPurchasesSheet(context, data.workspace!.id),
+          onPressed: () => showPurchasesSheet(
+            context,
+            data.workspace!.id,
+            canCapture: ref
+                .read(myPermissionsProvider)
+                .any((p) => p.wireName == purchaseManagePermission),
+          ),
           icon: const Icon(Icons.shopping_cart_outlined),
           label: fitted(l10n.purchasesTitle),
         ),

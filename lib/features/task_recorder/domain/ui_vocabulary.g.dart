@@ -1742,6 +1742,7 @@ const Set<String> uiKeys = {
   'public-profile-link',
   'public-workspace-withdrawn',
   'purchase-add-bill',
+  'purchase-cancel',
   'purchase-description',
   'purchase-due-date',
   'purchase-gross',
