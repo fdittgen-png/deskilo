@@ -31,8 +31,10 @@ Future<RightsRequest> submitRightsRequest(
   required String details,
   required String clientRequestId,
 }) async {
+  // #2564 — the request is addressed to a space's controller: it goes to the
+  // host that holds the space, not to the root session.
   final request = await ref
-      .read(profileRepositoryProvider)
+      .read(memberProfileRepositoryProvider)
       .submitRightsRequest(
         workspaceId: workspaceId,
         kind: kind,
@@ -44,7 +46,7 @@ Future<RightsRequest> submitRightsRequest(
 }
 
 Future<ErasurePreview> _previewErasure(WidgetRef ref, String workspaceId) =>
-    ref.read(profileRepositoryProvider).previewMyErasure(workspaceId);
+    ref.read(memberProfileRepositoryProvider).previewMyErasure(workspaceId);
 
 /// The preview, or null when the server cannot give one (an older
 /// server, a membership already left): erasure then asks as it always did.

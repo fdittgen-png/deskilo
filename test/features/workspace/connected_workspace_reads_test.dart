@@ -190,6 +190,14 @@ void main() {
       () => container
           .read(memberProfileRepositoryProvider)
           .fetchProfiles('ws-1', ['u-1']),
+      // #2564: the notices, rights and erasure preview of a space are its
+      // host's.
+      () => container
+          .read(memberProfileRepositoryProvider)
+          .fetchPrivacyNotices('ws-1'),
+      () => container
+          .read(memberProfileRepositoryProvider)
+          .previewMyErasure('ws-1'),
       () => container.read(eventRepositoryProvider).fetchEvents('ws-1'),
       () => container.read(workspaceFieldsRepositoryProvider).fetchFields('ws-1'),
     ];
@@ -254,6 +262,31 @@ void main() {
       // the empty fake host answers; the shape is not the point
     }
     expect(root.data, isNotEmpty);
+    expect(one.data, isEmpty);
+    expect(two.data, isEmpty);
+  });
+
+  test('the privacy notice of the entered space is read on its host; my rights '
+      'requests across spaces stay on the root', () async {
+    await enter(one);
+    await container.read(workspaceContextProvider.future);
+    forget();
+    try {
+      await container.read(privacyNoticesProvider.future);
+    } on Object {
+      // the empty fake host answers; the shape is not the point
+    }
+    expect(one.paths, contains('/rest/v1/rpc/current_privacy_notice'));
+    expect(root.paths, isNot(contains('/rest/v1/rpc/current_privacy_notice')));
+    expect(two.data, isEmpty);
+
+    forget();
+    try {
+      await container.read(profileRepositoryProvider).fetchMyRightsRequests();
+    } on Object {
+      // the empty fake host answers; the shape is not the point
+    }
+    expect(root.paths, contains('/rest/v1/rpc/my_rights_requests'));
     expect(one.data, isEmpty);
     expect(two.data, isEmpty);
   });

@@ -54,7 +54,12 @@ Future<PrivacyNotices> privacyNotices(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return PrivacyNotices.none;
   final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-  return ref.read(profileRepositoryProvider).fetchPrivacyNotices(workspaceId);
+  // #2564 — the space's notice is the host's that holds the space; without a
+  // space only the installation notice of the root session is asked.
+  final repository = workspaceId == null
+      ? ref.read(profileRepositoryProvider)
+      : ref.read(memberProfileRepositoryProvider);
+  return repository.fetchPrivacyNotices(workspaceId);
 }
 
 /// #1915 — my rights requests, newest first.
