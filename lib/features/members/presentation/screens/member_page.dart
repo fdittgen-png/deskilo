@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/motion/motion.dart';
+import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -141,16 +142,9 @@ class _MemberPageBody extends ConsumerWidget {
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final policies =
         ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
-    final presence = resolveDirectoryPresence(
-      lastSeenAt: profile?.lastSeenAt,
-      now: now,
-      isSelf: isSelf,
-    );
-    final info = resolveReservationInfo(
-      memberId: member.id,
-      reservations: reservations,
-      now: now,
-    );
+    final windows = ref.watch(directoryWindowsProvider);
+    final presence = resolveDirectoryPresence(lastSeenAt: profile?.lastSeenAt, now: now, isSelf: isSelf, onlineWindow: windows.onlineWindow);
+    final info = resolveReservationInfo(memberId: member.id, reservations: reservations, now: now, upcomingWindow: windows.upcomingWindow);
     final upcoming = [
       for (final r in reservations)
         if (r.memberId == member.id && r.endsAt.isAfter(now)) r,

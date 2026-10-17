@@ -6,6 +6,22 @@
 // the registry's, read through `SettingsSet`.
 
 abstract final class SettingDefaults {
+  /// `billing.max_advance_days`
+  static const int billingMaxAdvanceDays = 28;
+  /// `booking.check_in_leeway_minutes`
+  static const int bookingCheckInLeewayMinutes = 15;
+  /// `booking.check_in_reminder_lead_minutes`
+  static const int bookingCheckInReminderLeadMinutes = 15;
+  /// `booking.check_in_reminder_lookahead_days`
+  static const int bookingCheckInReminderLookaheadDays = 7;
+  /// `booking.intent_ledger_cap`
+  static const int bookingIntentLedgerCap = 20;
+  /// `booking.walk_up_floor_minutes`
+  static const int bookingWalkUpFloorMinutes = 15;
+  /// `booking.walk_up_window_minutes`
+  static const int bookingWalkUpWindowMinutes = 240;
+  /// `directory.upcoming_window_days`
+  static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
   /// `mcp.confirmation_expiry_minutes`
@@ -16,6 +32,8 @@ abstract final class SettingDefaults {
   static const int messagingGroupCreationPerHour = 10;
   /// `messaging.message_requests_per_day`
   static const int messagingMessageRequestsPerDay = 10;
+  /// `presence.online_window_minutes`
+  static const int presenceOnlineWindowMinutes = 5;
   /// `security.badge_lockout_failures`
   static const int securityBadgeLockoutFailures = 5;
   /// `security.badge_lockout_minutes`

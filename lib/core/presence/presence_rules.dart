@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../settings/setting_defaults.g.dart';
 
 /// Presence tuning (#223), pinned by test (no magic numbers rule).
 ///
@@ -9,7 +10,10 @@
 /// beat (flaky network, doze) does not flicker a member offline.
 abstract final class PresenceRules {
   static const Duration heartbeatInterval = Duration(minutes: 2);
-  static const Duration onlineWindow = Duration(minutes: 5);
+  /// The registry's default of `presence.online_window_minutes` (#2486); a
+  /// workspace's own value is passed to [resolvePresence].
+  static const Duration onlineWindow =
+      Duration(minutes: SettingDefaults.presenceOnlineWindowMinutes);
 }
 
 /// Derived presence of a member — there is no server-side state beyond
@@ -25,9 +29,10 @@ enum PresenceStatus { online, offline }
 PresenceStatus resolvePresence({
   required DateTime? lastSeenAt,
   required DateTime now,
+  Duration onlineWindow = PresenceRules.onlineWindow,
 }) {
   if (lastSeenAt == null) return PresenceStatus.offline;
-  return now.difference(lastSeenAt) < PresenceRules.onlineWindow
+  return now.difference(lastSeenAt) < onlineWindow
       ? PresenceStatus.online
       : PresenceStatus.offline;
 }

@@ -16613,7 +16613,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get settingGroupBilling => 'Abrechnungsläufe';
+
+  @override
+  String get settingGroupBooking => 'Buchung und Check-in';
+
+  @override
+  String get settingGroupDirectory => 'Mitgliederverzeichnis';
+
+  @override
   String get settingGroupDunning => 'Mahnungen und Zahlungsfristen';
+
+  @override
+  String get settingGroupPresence => 'Anwesenheit';
 
   @override
   String get settingGroupSecurity => 'Sicherheits- und Zugriffsgrenzen';
@@ -16624,6 +16636,38 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Von der Software festgelegt; sie wird angezeigt, damit Sie wissen, dass es sie gibt.';
+
+  @override
+  String get settingHintBillingMaxAdvanceDays =>
+      'Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.';
+
+  @override
+  String get settingHintBookingCheckInLeewayMinutes =>
+      'Minuten vor dem Beginn, ab denen eine Buchung eingecheckt werden kann. Ein breiteres Minutenraster weitet dies auf einen Rasterschritt.';
+
+  @override
+  String get settingHintBookingCheckInReminderLeadMinutes =>
+      'Minuten vor dem Beginn einer Buchung, zu denen ihre Check-in-Erinnerung erscheint.';
+
+  @override
+  String get settingHintBookingCheckInReminderLookaheadDays =>
+      'Fest: Wie viele Tage im Voraus ein Gerät Check-in-Erinnerungen plant.';
+
+  @override
+  String get settingHintBookingIntentLedgerCap =>
+      'Fest: Wie viele offene Buchungsfragen ein Gerät speichert.';
+
+  @override
+  String get settingHintBookingWalkUpFloorMinutes =>
+      'Kürzester spontan gebuchter Aufenthalt, wenn der übliche über das Tagesende hinausginge.';
+
+  @override
+  String get settingHintBookingWalkUpWindowMinutes =>
+      'Dauer des Aufenthalts, der spontan mit Ausweis oder Raumcode auf einem Minutenraster gebucht wird.';
+
+  @override
+  String get settingHintDirectoryUpcomingWindowDays =>
+      'Wie viele Tage im Voraus das Mitgliederverzeichnis die nächste Buchung eines Mitglieds zeigt.';
 
   @override
   String get settingHintDunningFirstAfterDays =>
@@ -16646,6 +16690,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.';
 
   @override
+  String get settingHintPresenceOnlineWindowMinutes =>
+      'Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.';
 
@@ -16665,6 +16713,36 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine gespeicherte Version: Der Standardwert gilt.';
 
   @override
+  String get settingLabelBillingMaxAdvanceDays => 'Vorlauf der Abo-Rechnung';
+
+  @override
+  String get settingLabelBookingCheckInLeewayMinutes =>
+      'Check-in öffnet vor dem Beginn';
+
+  @override
+  String get settingLabelBookingCheckInReminderLeadMinutes =>
+      'Vorlauf der Check-in-Erinnerung';
+
+  @override
+  String get settingLabelBookingCheckInReminderLookaheadDays =>
+      'Horizont der Check-in-Erinnerung';
+
+  @override
+  String get settingLabelBookingIntentLedgerCap =>
+      'Gespeicherte offene Buchungsfragen';
+
+  @override
+  String get settingLabelBookingWalkUpFloorMinutes =>
+      'Kürzester spontaner Aufenthalt';
+
+  @override
+  String get settingLabelBookingWalkUpWindowMinutes => 'Spontaner Aufenthalt';
+
+  @override
+  String get settingLabelDirectoryUpcomingWindowDays =>
+      'Vorschau im Verzeichnis';
+
+  @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
 
   @override
@@ -16681,6 +16759,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
       'Nachrichtenanfragen pro Tag';
+
+  @override
+  String get settingLabelPresenceOnlineWindowMinutes => 'Online-Fenster';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
@@ -16749,6 +16830,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitDays => 'Tage';
+
+  @override
+  String get settingUnitEntries => 'Einträge';
 
   @override
   String get settingUnitHours => 'Stunden';

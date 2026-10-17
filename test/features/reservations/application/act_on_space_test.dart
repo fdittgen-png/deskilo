@@ -63,6 +63,7 @@ SpaceActRequest _request(
       myMemberId: _me,
       now: kTestNow,
       granularity: BookingGranularity.flexible,
+      checkInLeeway: Reservation.checkInLeeway,
     );
 
 void main() {

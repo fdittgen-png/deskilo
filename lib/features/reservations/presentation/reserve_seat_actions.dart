@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/settings/booking_windows.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/work_hours.dart';
 import '../../../core/trace/act_trace.dart';
@@ -334,13 +335,15 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
     final l10n = context.l10n;
     final now = ref.read(clockProvider).now();
-    final windowOpen = mine.checkInWindowOpen(now, granularity: granularity);
+    final leeway = ref.read(bookingWindowsProvider).checkInLeeway;
+    final windowOpen = mine.checkInWindowOpen(now, granularity: granularity, leeway: leeway);
     traceMySeatSheet(
       seat: seat,
       mine: mine,
       windowOpen: windowOpen,
       now: now,
       granularity: granularity,
+      leeway: leeway,
     );
     final removal = ownBookingRemovalOf(ref, mine); // #2328
     final action = await showMySeatSheet(

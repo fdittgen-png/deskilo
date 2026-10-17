@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/calendar_days.dart';
 
 /// What an invoice CHARGES FOR (#802, migration 0142).
@@ -78,7 +79,7 @@ class BillingRules {
   /// 28 because a longer lead would cross into the month before last and
   /// stop meaning "just before the month starts".
   static const int minAdvanceDays = 0;
-  static const int maxAdvanceDays = 28;
+  static const int maxAdvanceDays = SettingDefaults.billingMaxAdvanceDays;
 
   static const String keySubscriptionAuto = 'subscription_auto';
   static const String keySubscriptionAdvanceDays = 'subscription_advance_days';

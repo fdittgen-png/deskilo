@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/data/system_columns.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../workspace/domain/booking_granularity.dart';
 
@@ -65,8 +66,18 @@ sealed class Reservation with _$Reservation implements SystemStamped {
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Reservation;
 
-  /// How early check-in opens before the start (spec §4.3, #408).
-  static const checkInLeeway = Duration(minutes: 15);
+  /// How early check-in opens before the start (spec §4.3, #408): the
+  /// registry's default of `booking.check_in_leeway_minutes` (#2486); a
+  /// workspace's own value is passed as `leeway` to the methods below.
+  static const checkInLeeway = Duration(minutes: SettingDefaults.bookingCheckInLeewayMinutes);
+
+  /// The allowance on [granularity]'s grid: the setting, widened to one
+  /// grid step when that is longer (`greatest(setting, step)`, the server's
+  /// rule in `check_in_reservation`).
+  static Duration _allowance(Duration leeway, BookingGranularity? granularity) {
+    final step = granularity != null && granularity.isMinuteGrid ? granularity.stepMinutes : null;
+    return step != null && step > leeway.inMinutes ? Duration(minutes: step) : leeway;
+  }
 
   /// The display name of the booked space: the live plan name while the
   /// target exists, else the #587 substitution snapshot written when the
@@ -87,16 +98,15 @@ sealed class Reservation with _$Reservation implements SystemStamped {
   /// slot's workspace-local day counts (an early same-day check-in the
   /// old flat leeway silently hid from the UI). Mirrors
   /// `check_in_reservation` (0113); the server stays the authority.
-  bool checkInWindowOpen(DateTime now, {BookingGranularity? granularity}) {
+  bool checkInWindowOpen(
+    DateTime now, {
+    BookingGranularity? granularity,
+    Duration leeway = checkInLeeway,
+  }) {
     if (status != ReservationStatus.reserved || !now.isBefore(endsAt)) {
       return false;
     }
-    var leeway = checkInLeeway;
-    final step = granularity?.stepMinutes;
-    if (step != null && step > checkInLeeway.inMinutes) {
-      leeway = Duration(minutes: step);
-    }
-    if (!now.isBefore(startsAt.subtract(leeway))) return true;
+    if (!now.isBefore(startsAt.subtract(_allowance(leeway, granularity)))) return true;
     return granularity != null &&
         (granularity.isDayBased || granularity == BookingGranularity.hours) &&
         WorkspaceTime.dateOf(startsAt) == WorkspaceTime.dateOf(now);
@@ -107,19 +117,14 @@ sealed class Reservation with _$Reservation implements SystemStamped {
   /// announce `start − 15 min` while the gate had already widened the
   /// leeway to the grid step (or opened for the whole day), so it named
   /// a time the gate did not use — worse than saying nothing.
-  DateTime checkInOpensAt({BookingGranularity? granularity}) {
+  DateTime checkInOpensAt({BookingGranularity? granularity, Duration leeway = checkInLeeway}) {
     if (granularity != null &&
         (granularity.isDayBased || granularity == BookingGranularity.hours)) {
       // The slot IS the working day: the window opens with that day.
       final day = WorkspaceTime.dateOf(startsAt);
       return WorkspaceTime.at(day.year, day.month, day.day);
     }
-    var leeway = checkInLeeway;
-    final step = granularity?.stepMinutes;
-    if (step != null && step > checkInLeeway.inMinutes) {
-      leeway = Duration(minutes: step);
-    }
-    return startsAt.subtract(leeway);
+    return startsAt.subtract(_allowance(leeway, granularity));
   }
 
   /// Active and covering the instant [at] (start inclusive, end exclusive).

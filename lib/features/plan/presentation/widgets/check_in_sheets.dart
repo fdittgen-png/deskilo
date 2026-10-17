@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -34,17 +36,17 @@ Future<String?> showMySeatSheet(
   BookingGranularity? granularity,
 }) {
   final l10n = context.l10n;
+  final leeway = ProviderScope.containerOf(context).read(bookingWindowsProvider).checkInLeeway;
   // #490 — the window opens on the WORKSPACE clock. #636: the instant
   // comes from the reservation's OWN rule, so the tile never announces
   // a time the gate does not use (it hard-coded 15 minutes while the
   // gate had widened to the grid step, or opened for the whole day).
-  final opensWall =
-      WorkspaceTime.wall(mine.checkInOpensAt(granularity: granularity));
+  final opensWall = WorkspaceTime.wall(mine.checkInOpensAt(granularity: granularity, leeway: leeway));
   final nowWall = WorkspaceTime.wall(now);
   final opensOnAnotherDay = opensWall.year != nowWall.year ||
       opensWall.month != nowWall.month ||
       opensWall.day != nowWall.day;
-  final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity));
+  final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity, leeway: leeway));
   final opensOn = DateFormat.MMMd().format(opensWall);
   return showAppSheet<String>(
     context: context,
@@ -74,7 +76,7 @@ Future<String?> showMySeatSheet(
               title: Text(l10n.planCheckOutButton),
               onTap: () => Navigator.of(context).pop('checkout'),
             )
-          else if (mine.checkInWindowOpen(now, granularity: granularity))
+          else if (mine.checkInWindowOpen(now, granularity: granularity, leeway: leeway))
             ListTile(
               key: ValueKey('check-in-sheets-plan-check-in-button-${granularity?.name}'),
               leading: const Icon(Icons.login),

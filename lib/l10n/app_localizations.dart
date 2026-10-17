@@ -28424,11 +28424,35 @@ abstract class AppLocalizations {
   /// **'Security floor: never below {floor} {unit}.'**
   String settingFloorNote(String floor, String unit);
 
+  /// #2486 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing runs'**
+  String get settingGroupBilling;
+
+  /// #2486 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking and check-in'**
+  String get settingGroupBooking;
+
+  /// #2486 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Member directory'**
+  String get settingGroupDirectory;
+
   /// #2484 settings: Settings group title.
   ///
   /// In en, this message translates to:
   /// **'Reminders and payment terms'**
   String get settingGroupDunning;
+
+  /// #2486 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Presence'**
+  String get settingGroupPresence;
 
   /// #2485 settings: Settings group title.
   ///
@@ -28447,6 +28471,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fixed by the software; it is shown so you know it exists.'**
   String get settingGuardrailFallback;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed: the longest lead, in days, of a subscription invoice before the month starts.'**
+  String get settingHintBillingMaxAdvanceDays;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes before its start a booking can be checked in. A minute grid wider than this widens it to one grid step.'**
+  String get settingHintBookingCheckInLeewayMinutes;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes before a booking starts at which its check-in reminder is shown.'**
+  String get settingHintBookingCheckInReminderLeadMinutes;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed: how many days ahead a device schedules check-in reminders.'**
+  String get settingHintBookingCheckInReminderLookaheadDays;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed: how many unanswered booking questions one device keeps.'**
+  String get settingHintBookingIntentLedgerCap;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortest stay booked on the spot, used when the usual stay would run past the end of the day.'**
+  String get settingHintBookingWalkUpFloorMinutes;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Length of the stay booked on the spot with a badge or a space code on a minute grid.'**
+  String get settingHintBookingWalkUpWindowMinutes;
+
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days ahead the member directory shows the next booking of a member.'**
+  String get settingHintDirectoryUpcomingWindowDays;
 
   /// #2484 settings: Setting hint.
   ///
@@ -28478,6 +28550,12 @@ abstract class AppLocalizations {
   /// **'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.'**
   String get settingHintMessagingMessageRequestsPerDay;
 
+  /// #2486 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.'**
+  String get settingHintPresenceOnlineWindowMinutes;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -28508,6 +28586,54 @@ abstract class AppLocalizations {
   /// **'No stored version: the default applies.'**
   String get settingHistoryEmpty;
 
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription invoice lead'**
+  String get settingLabelBillingMaxAdvanceDays;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in opens before the start'**
+  String get settingLabelBookingCheckInLeewayMinutes;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in reminder lead time'**
+  String get settingLabelBookingCheckInReminderLeadMinutes;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in reminder horizon'**
+  String get settingLabelBookingCheckInReminderLookaheadDays;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Unanswered booking questions kept'**
+  String get settingLabelBookingIntentLedgerCap;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortest on-the-spot stay'**
+  String get settingLabelBookingWalkUpFloorMinutes;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'On-the-spot stay'**
+  String get settingLabelBookingWalkUpWindowMinutes;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Directory look-ahead'**
+  String get settingLabelDirectoryUpcomingWindowDays;
+
   /// #2484 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -28537,6 +28663,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message requests per day'**
   String get settingLabelMessagingMessageRequestsPerDay;
+
+  /// #2486 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Online window'**
+  String get settingLabelPresenceOnlineWindowMinutes;
 
   /// #2485 settings: Setting label.
   ///
@@ -28657,6 +28789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'days'**
   String get settingUnitDays;
+
+  /// #2486 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'entries'**
+  String get settingUnitEntries;
 
   /// #2484 settings: Unit.
   ///

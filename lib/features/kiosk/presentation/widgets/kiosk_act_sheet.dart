@@ -2,11 +2,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
+import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -70,7 +72,7 @@ Future<KioskActRequest?> showKioskActSheet(
       ),
     );
 
-class _KioskActSheet extends StatefulWidget {
+class _KioskActSheet extends ConsumerStatefulWidget {
   const _KioskActSheet({
     required this.targetName,
     required this.granularity,
@@ -99,10 +101,10 @@ class _KioskActSheet extends StatefulWidget {
   final bool explainNoCamera;
 
   @override
-  State<_KioskActSheet> createState() => _KioskActSheetState();
+  ConsumerState<_KioskActSheet> createState() => _KioskActSheetState();
 }
 
-class _KioskActSheetState extends State<_KioskActSheet> {
+class _KioskActSheetState extends ConsumerState<_KioskActSheet> {
   /// The shared form holds the action + window state; the badge reads
   /// it at completion time.
   final _form = GlobalKey<SpaceActFormState>();
@@ -154,6 +156,7 @@ class _KioskActSheetState extends State<_KioskActSheet> {
             key: _form,
             keyPrefix: 'kiosk',
             granularity: widget.granularity,
+            windows: ref.read(bookingWindowsProvider),
             now: widget.now,
             refusalOf: widget.refusalOf,
             refusalTextOf: widget.refusalTextOf,

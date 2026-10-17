@@ -1,0 +1,95 @@
+{
+  "@@locale": "de",
+  "settingGroupBooking": "Buchung und Check-in",
+  "@settingGroupBooking": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupBilling": "Abrechnungsläufe",
+  "@settingGroupBilling": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupDirectory": "Mitgliederverzeichnis",
+  "@settingGroupDirectory": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupPresence": "Anwesenheit",
+  "@settingGroupPresence": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingLabelBookingCheckInLeewayMinutes": "Check-in öffnet vor dem Beginn",
+  "@settingLabelBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInLeewayMinutes": "Minuten vor dem Beginn, ab denen eine Buchung eingecheckt werden kann. Ein breiteres Minutenraster weitet dies auf einen Rasterschritt.",
+  "@settingHintBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLeadMinutes": "Vorlauf der Check-in-Erinnerung",
+  "@settingLabelBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLeadMinutes": "Minuten vor dem Beginn einer Buchung, zu denen ihre Check-in-Erinnerung erscheint.",
+  "@settingHintBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingCheckInReminderLookaheadDays": "Horizont der Check-in-Erinnerung",
+  "@settingLabelBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingCheckInReminderLookaheadDays": "Fest: Wie viele Tage im Voraus ein Gerät Check-in-Erinnerungen plant.",
+  "@settingHintBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpWindowMinutes": "Spontaner Aufenthalt",
+  "@settingLabelBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpWindowMinutes": "Dauer des Aufenthalts, der spontan mit Ausweis oder Raumcode auf einem Minutenraster gebucht wird.",
+  "@settingHintBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingWalkUpFloorMinutes": "Kürzester spontaner Aufenthalt",
+  "@settingLabelBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingWalkUpFloorMinutes": "Kürzester spontan gebuchter Aufenthalt, wenn der übliche über das Tagesende hinausginge.",
+  "@settingHintBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBookingIntentLedgerCap": "Gespeicherte offene Buchungsfragen",
+  "@settingLabelBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBookingIntentLedgerCap": "Fest: Wie viele offene Buchungsfragen ein Gerät speichert.",
+  "@settingHintBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelBillingMaxAdvanceDays": "Vorlauf der Abo-Rechnung",
+  "@settingLabelBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintBillingMaxAdvanceDays": "Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.",
+  "@settingHintBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelDirectoryUpcomingWindowDays": "Vorschau im Verzeichnis",
+  "@settingLabelDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintDirectoryUpcomingWindowDays": "Wie viele Tage im Voraus das Mitgliederverzeichnis die nächste Buchung eines Mitglieds zeigt.",
+  "@settingHintDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingLabelPresenceOnlineWindowMinutes": "Online-Fenster",
+  "@settingLabelPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingHintPresenceOnlineWindowMinutes": "Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.",
+  "@settingHintPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingUnitEntries": "Einträge",
+  "@settingUnitEntries": {
+    "description": "#2486 settings: Unit."
+  }
+}

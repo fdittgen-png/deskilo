@@ -104,13 +104,14 @@ void traceMySeatSheet({
   required bool windowOpen,
   required DateTime now,
   required BookingGranularity granularity,
+  Duration leeway = Reservation.checkInLeeway,
 }) =>
     ActTrace.booking.step('my-seat-sheet', {
       'seat': seat.id,
       'reservation': mine.id,
       'status': mine.status.name,
       'windowOpen': windowOpen,
-      'opensAt': mine.checkInOpensAt(granularity: granularity),
+      'opensAt': mine.checkInOpensAt(granularity: granularity, leeway: leeway),
       'starts': mine.startsAt,
       'ends': mine.endsAt,
       'now': now,

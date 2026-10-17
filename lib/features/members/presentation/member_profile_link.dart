@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/navigation/page_spec.dart';
+import '../../../core/settings/directory_windows.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -59,11 +60,13 @@ Future<void> openMemberProfile(
       lastSeenAt: profiles[member.userId]?.lastSeenAt,
       now: now,
       isSelf: ref.read(myMemberProvider).value?.id == memberId,
+      onlineWindow: ref.read(directoryWindowsProvider).onlineWindow,
     ),
     reservationInfo: resolveReservationInfo(
       memberId: memberId,
       reservations: reservations,
       now: now,
+      upcomingWindow: ref.read(directoryWindowsProvider).upcomingWindow,
     ),
     // The member's own bookings, upcoming first — the same slice the
     // directory row shows, computed here because the screen's private

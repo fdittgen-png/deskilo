@@ -21,9 +21,6 @@ abstract final class ReserveHubMetrics {
   /// Furthest day (from today) reachable via the strip's calendar icon.
   static const int datePickerRangeDays = 365;
 
-  /// Snapping of the from→to window chips (#184 pattern): 15-minute steps.
-  static const int snapMinutes = 15;
-
   /// Default window length before capping (mirrors the plan's stay).
   static const Duration defaultStay = Duration(hours: 4);
 

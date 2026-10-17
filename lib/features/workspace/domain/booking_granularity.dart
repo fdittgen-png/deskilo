@@ -30,12 +30,25 @@ enum BookingGranularity {
   /// Stable jsonb value inside `booking_rules` (snake_case).
   final String wireName;
 
+  /// The UI snap of the modes that have no grid of their own (flexible,
+  /// hours) and the fallback of the day-based ones: the one place this
+  /// number lives (#2486). The step itself is `booking_rules.granularity`.
+  static const int defaultStepMinutes = 15;
+
+  /// The step the window chips snap to: the grid's own, else the UI default.
+  int get snapStepMinutes => stepMinutes ?? defaultStepMinutes;
+
+  /// A real minute grid the server enforces (`minutes_5` .. `minutes_60`):
+  /// only these widen the check-in leeway to one grid step.
+  bool get isMinuteGrid =>
+      this == minutes5 || this == minutes15 || this == minutes30 || this == minutes60;
+
   /// The time-picker snap step for minute granularities. Legacy
   /// [flexible] keeps the historical 15-minute UI snap (#184) — the
   /// server enforces nothing for it. Null for the day-based modes.
   int? get stepMinutes => switch (this) {
         minutes5 => 5,
-        flexible || minutes15 || hours => 15,
+        flexible || minutes15 || hours => defaultStepMinutes,
         minutes30 => 30,
         minutes60 => 60,
         halfDay || fullDay => null,
@@ -48,7 +61,7 @@ enum BookingGranularity {
   /// Day-based modes have no grid; they keep the legacy 15-minute UI snap
   /// so a caller that reaches here with one still lands on a sane time.
   int snapMinutesOfDay(int minutesOfDay) {
-    final step = stepMinutes ?? 15;
+    final step = stepMinutes ?? defaultStepMinutes;
     return (minutesOfDay ~/ step) * step;
   }
 

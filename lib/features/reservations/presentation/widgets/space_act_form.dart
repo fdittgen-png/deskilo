@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -34,6 +35,7 @@ class SpaceActForm extends StatefulWidget {
     this.refusalOf,
     this.refusalTextOf,
     this.initialAction,
+    this.windows = BookingWindows.defaults,
   });
 
   final BookingGranularity granularity;
@@ -56,6 +58,9 @@ class SpaceActForm extends StatefulWidget {
   /// so the only move left is to leave. Null keeps the walk-up default,
   /// which is right for every other case.
   final SpaceAction? initialAction;
+
+  /// #2486 -- the workspace's walk-up window and floor.
+  final BookingWindows windows;
 
   @override
   State<SpaceActForm> createState() => SpaceActFormState();
@@ -113,7 +118,7 @@ class SpaceActFormState extends State<SpaceActForm> {
       _start = current.start;
       _end = current.end;
     } else {
-      final window = walkUpWindow(widget.granularity, widget.now);
+      final window = walkUpWindow(widget.granularity, widget.now, windows: widget.windows);
       _start = window.start.isBefore(widget.now) ? widget.now : window.start;
       _end = window.end;
     }
@@ -161,7 +166,7 @@ class SpaceActFormState extends State<SpaceActForm> {
     if (options.isNotEmpty) return options;
     // After the working day: the walk-up overtime rule — now → the end
     // the shared window computes.
-    final overtime = walkUpWindow(widget.granularity, now);
+    final overtime = walkUpWindow(widget.granularity, now, windows: widget.windows);
     return [
       (
         key: 'rest',

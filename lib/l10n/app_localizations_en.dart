@@ -16446,7 +16446,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get settingGroupBilling => 'Billing runs';
+
+  @override
+  String get settingGroupBooking => 'Booking and check-in';
+
+  @override
+  String get settingGroupDirectory => 'Member directory';
+
+  @override
   String get settingGroupDunning => 'Reminders and payment terms';
+
+  @override
+  String get settingGroupPresence => 'Presence';
 
   @override
   String get settingGroupSecurity => 'Security and access limits';
@@ -16457,6 +16469,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fixed by the software; it is shown so you know it exists.';
+
+  @override
+  String get settingHintBillingMaxAdvanceDays =>
+      'Fixed: the longest lead, in days, of a subscription invoice before the month starts.';
+
+  @override
+  String get settingHintBookingCheckInLeewayMinutes =>
+      'Minutes before its start a booking can be checked in. A minute grid wider than this widens it to one grid step.';
+
+  @override
+  String get settingHintBookingCheckInReminderLeadMinutes =>
+      'Minutes before a booking starts at which its check-in reminder is shown.';
+
+  @override
+  String get settingHintBookingCheckInReminderLookaheadDays =>
+      'Fixed: how many days ahead a device schedules check-in reminders.';
+
+  @override
+  String get settingHintBookingIntentLedgerCap =>
+      'Fixed: how many unanswered booking questions one device keeps.';
+
+  @override
+  String get settingHintBookingWalkUpFloorMinutes =>
+      'Shortest stay booked on the spot, used when the usual stay would run past the end of the day.';
+
+  @override
+  String get settingHintBookingWalkUpWindowMinutes =>
+      'Length of the stay booked on the spot with a badge or a space code on a minute grid.';
+
+  @override
+  String get settingHintDirectoryUpcomingWindowDays =>
+      'How many days ahead the member directory shows the next booking of a member.';
 
   @override
   String get settingHintDunningFirstAfterDays =>
@@ -16479,6 +16523,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.';
 
   @override
+  String get settingHintPresenceOnlineWindowMinutes =>
+      'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.';
 
@@ -16495,6 +16543,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHistoryEmpty => 'No stored version: the default applies.';
+
+  @override
+  String get settingLabelBillingMaxAdvanceDays => 'Subscription invoice lead';
+
+  @override
+  String get settingLabelBookingCheckInLeewayMinutes =>
+      'Check-in opens before the start';
+
+  @override
+  String get settingLabelBookingCheckInReminderLeadMinutes =>
+      'Check-in reminder lead time';
+
+  @override
+  String get settingLabelBookingCheckInReminderLookaheadDays =>
+      'Check-in reminder horizon';
+
+  @override
+  String get settingLabelBookingIntentLedgerCap =>
+      'Unanswered booking questions kept';
+
+  @override
+  String get settingLabelBookingWalkUpFloorMinutes =>
+      'Shortest on-the-spot stay';
+
+  @override
+  String get settingLabelBookingWalkUpWindowMinutes => 'On-the-spot stay';
+
+  @override
+  String get settingLabelDirectoryUpcomingWindowDays => 'Directory look-ahead';
 
   @override
   String get settingLabelDunningFirstAfterDays =>
@@ -16515,6 +16592,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
       'Message requests per day';
+
+  @override
+  String get settingLabelPresenceOnlineWindowMinutes => 'Online window';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
@@ -16582,6 +16662,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitDays => 'days';
+
+  @override
+  String get settingUnitEntries => 'entries';
 
   @override
   String get settingUnitHours => 'hours';

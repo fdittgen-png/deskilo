@@ -32,27 +32,11 @@ typedef _Tracked = ({
 
 /// The business values the epic measured (the sample, not a census).
 const _tracked = <_Tracked>[
-  (what: 'check-in opens 15 minutes before the start', file: 'lib/features/reservations/domain/reservation.dart',
-   pattern: r'checkInLeeway = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'S3'),
-  (what: 'check-in reminder lookahead and lead time', file: 'lib/features/reservations/domain/check_in_reminders.dart',
-   pattern: r'const Duration\((?:days|minutes): \d+\)', ceiling: 2, movesIn: 'S3'),
-  (what: 'walk-up booking window and floor', file: 'lib/features/reservations/domain/walk_up_window.dart',
-   pattern: r'const Duration\((?:hours|minutes): \d+\)', ceiling: 2, movesIn: 'S3'),
-  (what: 'booking intent ledger cap', file: 'lib/features/reservations/domain/booking_intent.dart',
-   pattern: r'static const int cap = \d+', ceiling: 1, movesIn: 'S3'),
-  (what: 'maximum advance days of a subscription run', file: 'lib/features/money/domain/billing_rules.dart',
-   pattern: r'maxAdvanceDays = \d+', ceiling: 1, movesIn: 'S3'),
-  (what: 'presence: how long a heartbeat keeps someone online', file: 'lib/core/presence/presence_rules.dart',
-   pattern: r'onlineWindow = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'S3'),
   (what: 'the country a device with no locale falls back to', file: 'lib/core/locale/device_locale.dart',
    pattern: r"\?\? 'FR'", ceiling: 1, movesIn: 'S5'),
   // #2572 -- the rest of S2..S5, Dart side.
-  (what: 'the directory "upcoming" window (14 days)', file: 'lib/features/members/domain/directory_status.dart',
-   pattern: r'upcomingWindow = Duration\(days: \d+\)', ceiling: 1, movesIn: 'S3'),
-  (what: 'slot snap in minutes (UI fallback of the booking grid)', file: 'lib/features/reservations/presentation/screens/reserve_hub_metrics.dart',
-   pattern: r'snapMinutes = \d+', ceiling: 1, movesIn: 'S3'),
-  (what: 'slot step fallback of a day-based granularity', file: 'lib/features/workspace/domain/booking_granularity.dart',
-   pattern: r'stepMinutes \?\? \d+', ceiling: 1, movesIn: 'S3'),
+  (what: 'the one UI snap of the booking grid (15 minutes)', file: 'lib/features/workspace/domain/booking_granularity.dart',
+   pattern: r'defaultStepMinutes = \d+', ceiling: 1, movesIn: 'never (allowed)'),
   (what: 'message edit window (15 minutes)', file: 'lib/features/directory/domain/message_marks.dart',
    pattern: r'kMessageEditWindow = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'S4'),
   (what: 'currency fallback of the format controller', file: 'lib/core/i18n/format_controller.dart',
@@ -113,22 +97,18 @@ const _trackedSql = <_TrackedSql>[
    pattern: r"interval '31 days'", ceiling: 1, movesIn: 'S4'),
   (what: 'calendar range (400 days, guardrail) and its text', function: 'calendar_items',
    pattern: r'400 days', ceiling: 2, movesIn: 'S4'),
-  (what: 'check-in reminder lead (15 minutes)', function: 'calendar_items',
-   pattern: r"interval '15 minutes'", ceiling: 3, movesIn: 'S3'),
   (what: 'capacity KPI range (400 days, guardrail) and its text', function: 'kpi_seat_capacity',
    pattern: r'400 days', ceiling: 2, movesIn: 'S4'),
   (what: 'finance KPI range (23 months, guardrail)', function: 'kpi_finance_summary',
    pattern: r"interval '23 months'", ceiling: 1, movesIn: 'S4'),
-  (what: 'check-in leeway (15 minutes)', function: 'check_in_reservation',
-   pattern: r"interval '15 minutes'", ceiling: 1, movesIn: 'S3'),
-  (what: 'check-in leeway (15 minutes)', function: 'kiosk_act',
-   pattern: r"interval '15 minutes'", ceiling: 2, movesIn: 'S3'),
 ];
 
 /// Entries reviewed as NOT business values, keyed by `file::what`, with the
 /// reason. An entry here with no matching tracked row fails; the row stays
 /// counted, so a new literal beside it is still a failing test.
 const _allowed = <String, String>{
+  'lib/features/workspace/domain/booking_granularity.dart::the one UI snap of the booking grid (15 minutes)':
+      'the UI fallback of day-based granularity and of the grid-less modes; the step itself is booking_rules.granularity (#2486 S3)',
   'lib/core/presence/presence_rules.dart::presence heartbeat interval (protocol constant)':
       'the beat is the client protocol; the online window beside it is the setting (S3)',
   'lib/core/locale/device_locale.dart::language to country heuristic':

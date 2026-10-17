@@ -235,9 +235,13 @@ Future<int> _run(List<String> argv) async {
     throw _Failed('no migration from index $from creates a lasting table');
   }
 
-  final (early, earlyTable) = await tableCreatingMigration(
-    bundle.schema.length ~/ 2,
+  // Half the bundle drifted onto 0226 once the bundle reached 452 files, and
+  // a break at or after the marker migration records a marker the scenario
+  // asserts is absent — so the search starts at half of the way TO 0226.
+  final markerAt = bundle.schema.indexWhere(
+    (m) => int.parse(_versionOf(m)) >= 226,
   );
+  final (early, earlyTable) = await tableCreatingMigration(markerAt ~/ 2);
   final late = bundle.schema.indexWhere((m) => int.parse(_versionOf(m)) >= 230);
   final ran = <String>[];
 

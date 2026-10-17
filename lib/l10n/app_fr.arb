@@ -11110,9 +11110,25 @@
       }
     }
   },
+  "settingGroupBilling": "Cycles de facturation",
+  "@settingGroupBilling": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupBooking": "Réservation et enregistrement",
+  "@settingGroupBooking": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupDirectory": "Annuaire des membres",
+  "@settingGroupDirectory": {
+    "description": "#2486 settings: Settings group title."
+  },
   "settingGroupDunning": "Relances et conditions de paiement",
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
+  },
+  "settingGroupPresence": "Présence",
+  "@settingGroupPresence": {
+    "description": "#2486 settings: Settings group title."
   },
   "settingGroupSecurity": "Limites de sécurité et d'accès",
   "@settingGroupSecurity": {
@@ -11125,6 +11141,38 @@
   "settingGuardrailFallback": "Fixé par le logiciel ; affiché pour que vous sachiez qu'il existe.",
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintBillingMaxAdvanceDays": "Fixe : l'avance maximale, en jours, d'une facture d'abonnement avant le début du mois.",
+  "@settingHintBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInLeewayMinutes": "Minutes avant son début à partir desquelles une réservation peut être enregistrée. Une grille de minutes plus large l'étend à un pas de grille.",
+  "@settingHintBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInReminderLeadMinutes": "Minutes avant le début d'une réservation où son rappel d'enregistrement s'affiche.",
+  "@settingHintBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInReminderLookaheadDays": "Fixe : combien de jours à l'avance un appareil programme les rappels d'enregistrement.",
+  "@settingHintBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingIntentLedgerCap": "Fixe : combien de questions de réservation sans réponse un appareil garde.",
+  "@settingHintBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingWalkUpFloorMinutes": "Séjour réservé sur place le plus court, utilisé quand le séjour habituel dépasserait la fin de la journée.",
+  "@settingHintBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingWalkUpWindowMinutes": "Durée du séjour réservé sur place avec un badge ou un code d'espace sur une grille de minutes.",
+  "@settingHintBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintDirectoryUpcomingWindowDays": "Combien de jours à l'avance l'annuaire affiche la prochaine réservation d'un membre.",
+  "@settingHintDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting hint."
   },
   "settingHintDunningFirstAfterDays": "Jours après l'émission avant qu'une première relance soit proposée, et avant l'échéance d'une facture sans conditions de paiement.",
   "@settingHintDunningFirstAfterDays": {
@@ -11146,6 +11194,10 @@
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintPresenceOnlineWindowMinutes": "Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.",
+  "@settingHintPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
   "settingHintSecurityBadgeLockoutFailures": "Nombre d'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -11166,6 +11218,38 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelBillingMaxAdvanceDays": "Avance de la facture d'abonnement",
+  "@settingLabelBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInLeewayMinutes": "Ouverture de l'enregistrement avant le début",
+  "@settingLabelBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInReminderLeadMinutes": "Délai du rappel d'enregistrement",
+  "@settingLabelBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInReminderLookaheadDays": "Horizon du rappel d'enregistrement",
+  "@settingLabelBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingIntentLedgerCap": "Questions de réservation gardées",
+  "@settingLabelBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingWalkUpFloorMinutes": "Séjour sur place le plus court",
+  "@settingLabelBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingWalkUpWindowMinutes": "Séjour sur place",
+  "@settingLabelBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelDirectoryUpcomingWindowDays": "Aperçu de l'annuaire",
+  "@settingLabelDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting label."
+  },
   "settingLabelDunningFirstAfterDays": "Jours avant une première relance",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
@@ -11185,6 +11269,10 @@
   "settingLabelMessagingMessageRequestsPerDay": "Demandes de message par jour",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelPresenceOnlineWindowMinutes": "Fenêtre en ligne",
+  "@settingLabelPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting label."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Essais de code PIN du badge avant verrouillage",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -11292,6 +11380,10 @@
   "settingUnitDays": "jours",
   "@settingUnitDays": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitEntries": "entrées",
+  "@settingUnitEntries": {
+    "description": "#2486 settings: Unit."
   },
   "settingUnitHours": "heures",
   "@settingUnitHours": {

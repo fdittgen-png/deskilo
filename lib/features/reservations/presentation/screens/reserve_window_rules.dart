@@ -35,7 +35,7 @@ class ReserveWindowRules {
 
   /// One configured slot — the minimal booking extension.
   Duration get slotStep => Duration(
-        minutes: granularity.stepMinutes ?? ReserveHubMetrics.snapMinutes,
+        minutes: granularity.snapStepMinutes,
       );
 
   /// The day's last selectable slot: 23:45 of [day], on the WORKSPACE clock
@@ -52,7 +52,7 @@ class ReserveWindowRules {
   /// (#184 pattern; 0032 makes the step owner-configurable).
   DateTime snapToSlot(DateTime t) {
     final local = WorkspaceTime.wall(t);
-    final snap = granularity.stepMinutes ?? ReserveHubMetrics.snapMinutes;
+    final snap = granularity.snapStepMinutes;
     final m = (local.hour * 60 + local.minute) ~/ snap * snap;
     return WorkspaceTime.at(
         local.year, local.month, local.day, m ~/ 60, m % 60);

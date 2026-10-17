@@ -16592,7 +16592,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get settingGroupBilling => 'Cicli di fatturazione';
+
+  @override
+  String get settingGroupBooking => 'Prenotazione e check-in';
+
+  @override
+  String get settingGroupDirectory => 'Elenco dei membri';
+
+  @override
   String get settingGroupDunning => 'Solleciti e termini di pagamento';
+
+  @override
+  String get settingGroupPresence => 'Presenza';
 
   @override
   String get settingGroupSecurity => 'Limiti di sicurezza e di accesso';
@@ -16603,6 +16615,38 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingGuardrailFallback =>
       'Fissato dal software; è mostrato perché Lei sappia che esiste.';
+
+  @override
+  String get settingHintBillingMaxAdvanceDays =>
+      'Fisso: l\'anticipo massimo, in giorni, di una fattura d\'abbonamento prima dell\'inizio del mese.';
+
+  @override
+  String get settingHintBookingCheckInLeewayMinutes =>
+      'Minuti prima dell\'inizio da cui una prenotazione può fare il check-in. Una griglia di minuti più ampia lo estende a un passo di griglia.';
+
+  @override
+  String get settingHintBookingCheckInReminderLeadMinutes =>
+      'Minuti prima dell\'inizio di una prenotazione in cui viene mostrato il suo promemoria di check-in.';
+
+  @override
+  String get settingHintBookingCheckInReminderLookaheadDays =>
+      'Fisso: quanti giorni prima un dispositivo programma i promemoria di check-in.';
+
+  @override
+  String get settingHintBookingIntentLedgerCap =>
+      'Fisso: quante domande di prenotazione senza risposta conserva un dispositivo.';
+
+  @override
+  String get settingHintBookingWalkUpFloorMinutes =>
+      'Permanenza prenotata sul momento più breve, usata quando quella abituale supererebbe la fine della giornata.';
+
+  @override
+  String get settingHintBookingWalkUpWindowMinutes =>
+      'Durata della permanenza prenotata sul momento con un badge o un codice dello spazio su una griglia di minuti.';
+
+  @override
+  String get settingHintDirectoryUpcomingWindowDays =>
+      'Quanti giorni prima l\'elenco mostra la prossima prenotazione di un membro.';
 
   @override
   String get settingHintDunningFirstAfterDays =>
@@ -16625,6 +16669,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.';
 
   @override
+  String get settingHintPresenceOnlineWindowMinutes =>
+      'Minuti dopo l\'ultimo segno di vita in cui una persona conta ancora come online. Tenerlo sopra il battito di 2 minuti.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.';
 
@@ -16642,6 +16690,37 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Nessuna versione salvata: vale il predefinito.';
+
+  @override
+  String get settingLabelBillingMaxAdvanceDays =>
+      'Anticipo della fattura d\'abbonamento';
+
+  @override
+  String get settingLabelBookingCheckInLeewayMinutes =>
+      'Apertura del check-in prima dell\'inizio';
+
+  @override
+  String get settingLabelBookingCheckInReminderLeadMinutes =>
+      'Anticipo del promemoria di check-in';
+
+  @override
+  String get settingLabelBookingCheckInReminderLookaheadDays =>
+      'Orizzonte del promemoria di check-in';
+
+  @override
+  String get settingLabelBookingIntentLedgerCap =>
+      'Domande di prenotazione conservate';
+
+  @override
+  String get settingLabelBookingWalkUpFloorMinutes =>
+      'Permanenza sul momento più breve';
+
+  @override
+  String get settingLabelBookingWalkUpWindowMinutes => 'Permanenza sul momento';
+
+  @override
+  String get settingLabelDirectoryUpcomingWindowDays =>
+      'Anteprima dell\'elenco';
 
   @override
   String get settingLabelDunningFirstAfterDays =>
@@ -16662,6 +16741,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
       'Richieste di messaggio al giorno';
+
+  @override
+  String get settingLabelPresenceOnlineWindowMinutes => 'Finestra online';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
@@ -16731,6 +16813,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitDays => 'giorni';
+
+  @override
+  String get settingUnitEntries => 'voci';
 
   @override
   String get settingUnitHours => 'ore';

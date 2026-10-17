@@ -26,10 +26,7 @@ Future<void> _openOthersBooking(
   // (#408 — live only, window open, bookForOthers gate) and
   // overrule, which removes the reservation with a notification
   // (#412 — any admin, any time). The server re-checks both.
-  final windowOpen = other.checkInWindowOpen(
-    ref.read(clockProvider).now(),
-    granularity: granularity,
-  );
+  final windowOpen = other.checkInWindowOpen(ref.read(clockProvider).now(), granularity: granularity, leeway: ref.read(bookingWindowsProvider).checkInLeeway);
   final offerCheckIn = isLive && canCheckInForOthers && windowOpen;
   if (!offerCheckIn) {
     traceCheckInNotOffered(

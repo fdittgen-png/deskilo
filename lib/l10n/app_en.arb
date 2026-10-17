@@ -18895,9 +18895,25 @@
       }
     }
   },
+  "settingGroupBilling": "Billing runs",
+  "@settingGroupBilling": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupBooking": "Booking and check-in",
+  "@settingGroupBooking": {
+    "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupDirectory": "Member directory",
+  "@settingGroupDirectory": {
+    "description": "#2486 settings: Settings group title."
+  },
   "settingGroupDunning": "Reminders and payment terms",
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
+  },
+  "settingGroupPresence": "Presence",
+  "@settingGroupPresence": {
+    "description": "#2486 settings: Settings group title."
   },
   "settingGroupSecurity": "Security and access limits",
   "@settingGroupSecurity": {
@@ -18910,6 +18926,38 @@
   "settingGuardrailFallback": "Fixed by the software; it is shown so you know it exists.",
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
+  },
+  "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
+  "@settingHintBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInLeewayMinutes": "Minutes before its start a booking can be checked in. A minute grid wider than this widens it to one grid step.",
+  "@settingHintBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInReminderLeadMinutes": "Minutes before a booking starts at which its check-in reminder is shown.",
+  "@settingHintBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingCheckInReminderLookaheadDays": "Fixed: how many days ahead a device schedules check-in reminders.",
+  "@settingHintBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingIntentLedgerCap": "Fixed: how many unanswered booking questions one device keeps.",
+  "@settingHintBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingWalkUpFloorMinutes": "Shortest stay booked on the spot, used when the usual stay would run past the end of the day.",
+  "@settingHintBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBookingWalkUpWindowMinutes": "Length of the stay booked on the spot with a badge or a space code on a minute grid.",
+  "@settingHintBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
+  "settingHintDirectoryUpcomingWindowDays": "How many days ahead the member directory shows the next booking of a member.",
+  "@settingHintDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting hint."
   },
   "settingHintDunningFirstAfterDays": "Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.",
   "@settingHintDunningFirstAfterDays": {
@@ -18931,6 +18979,10 @@
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintPresenceOnlineWindowMinutes": "Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.",
+  "@settingHintPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting hint."
+  },
   "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -18951,6 +19003,38 @@
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
   },
+  "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
+  "@settingLabelBillingMaxAdvanceDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInLeewayMinutes": "Check-in opens before the start",
+  "@settingLabelBookingCheckInLeewayMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInReminderLeadMinutes": "Check-in reminder lead time",
+  "@settingLabelBookingCheckInReminderLeadMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingCheckInReminderLookaheadDays": "Check-in reminder horizon",
+  "@settingLabelBookingCheckInReminderLookaheadDays": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingIntentLedgerCap": "Unanswered booking questions kept",
+  "@settingLabelBookingIntentLedgerCap": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingWalkUpFloorMinutes": "Shortest on-the-spot stay",
+  "@settingLabelBookingWalkUpFloorMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBookingWalkUpWindowMinutes": "On-the-spot stay",
+  "@settingLabelBookingWalkUpWindowMinutes": {
+    "description": "#2486 settings: Setting label."
+  },
+  "settingLabelDirectoryUpcomingWindowDays": "Directory look-ahead",
+  "@settingLabelDirectoryUpcomingWindowDays": {
+    "description": "#2486 settings: Setting label."
+  },
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
@@ -18970,6 +19054,10 @@
   "settingLabelMessagingMessageRequestsPerDay": "Message requests per day",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelPresenceOnlineWindowMinutes": "Online window",
+  "@settingLabelPresenceOnlineWindowMinutes": {
+    "description": "#2486 settings: Setting label."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -19077,6 +19165,10 @@
   "settingUnitDays": "days",
   "@settingUnitDays": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitEntries": "entries",
+  "@settingUnitEntries": {
+    "description": "#2486 settings: Unit."
   },
   "settingUnitHours": "hours",
   "@settingUnitHours": {

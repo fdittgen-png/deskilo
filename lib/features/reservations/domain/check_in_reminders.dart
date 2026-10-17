@@ -3,6 +3,7 @@
 // Pure reminder derivation (spec §4.3): my reserved (not yet checked-in)
 // bookings starting within the lookahead get a reminder [before] their start.
 import '../../../core/notifications/notification_service.dart';
+import '../../../core/settings/setting_defaults.g.dart';
 import 'reservation.dart';
 
 export '../../../core/notifications/notification_service.dart'
@@ -15,8 +16,8 @@ List<ReminderRequest> upcomingCheckInReminders({
   required String Function(String targetName, DateTime startsAt) titleOf,
   required String Function(String targetName, DateTime startsAt) bodyOf,
   required Map<String, String> targetNames,
-  Duration lookahead = const Duration(days: 7),
-  Duration before = const Duration(minutes: 15),
+  Duration lookahead = const Duration(days: SettingDefaults.bookingCheckInReminderLookaheadDays),
+  Duration before = const Duration(minutes: SettingDefaults.bookingCheckInReminderLeadMinutes),
 }) {
   final horizon = now.add(lookahead);
   final result = <ReminderRequest>[];
