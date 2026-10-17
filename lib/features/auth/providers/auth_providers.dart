@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/auth_callback_guard.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/session/session_source.dart';
 import '../data/supabase_auth_repository.dart';
 import '../data/supabase_identity_binding_repository.dart';
@@ -17,7 +17,7 @@ part 'auth_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) =>
-    SupabaseAuthRepository(Supabase.instance.client, callbackGuard: bootAuthCallbackGuard);
+    SupabaseAuthRepository(ref.watch(personalClientProvider), callbackGuard: bootAuthCallbackGuard);
 
 @Riverpod(keepAlive: true)
 Stream<String?> authState(Ref ref) =>
@@ -36,12 +36,12 @@ Stream<AuthResult> authFeedback(Ref ref) =>
 /// #1647 — the signed-in account's canonical-identity binding.
 @Riverpod(keepAlive: true)
 IdentityBindingRepository identityBindingRepository(Ref ref) =>
-    SupabaseIdentityBindingRepository(Supabase.instance.client);
+    SupabaseIdentityBindingRepository(ref.watch(personalClientProvider));
 
 /// #1627 — the second factor a database decision needs.
 @Riverpod(keepAlive: true)
 SecondFactorRepository secondFactorRepository(Ref ref) =>
-    SupabaseSecondFactorRepository(Supabase.instance.client);
+    SupabaseSecondFactorRepository(ref.watch(personalClientProvider));
 
 /// #1608/#1611 — what this database lets the signed-in account do:
 /// administrator, MCP eligibility. Re-read after every change.

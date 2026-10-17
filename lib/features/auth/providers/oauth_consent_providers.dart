@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/backend/context_client_providers.dart';
 
 import '../application/decide_oauth_consent.dart';
 import '../data/supabase_oauth_consent_repository.dart';
@@ -12,7 +13,7 @@ part 'oauth_consent_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 OAuthConsentRepository oauthConsentRepository(Ref ref) =>
-    SupabaseOAuthConsentRepository(Supabase.instance.client);
+    SupabaseOAuthConsentRepository(ref.watch(personalClientProvider));
 
 @riverpod
 Future<OAuthConsentRequest> oauthConsent(Ref ref, String authorizationId) async {

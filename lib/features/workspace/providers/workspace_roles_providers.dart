@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/supabase_workspace_roles.dart';
 import '../domain/role_assignment.dart';
@@ -15,7 +14,7 @@ part 'workspace_roles_providers.g.dart';
 /// #1528 — the roles a workspace defined itself.
 @Riverpod(keepAlive: true)
 WorkspaceRolesRepository workspaceRolesRepository(Ref ref) =>
-    SupabaseWorkspaceRoles(Supabase.instance.client);
+    SupabaseWorkspaceRoles(ref.watch(selectedWorkspaceClientProvider));
 
 /// The active workspace's own roles, or none while the feature is off.
 ///

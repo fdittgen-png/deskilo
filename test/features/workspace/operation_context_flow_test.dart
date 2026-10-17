@@ -22,7 +22,9 @@ import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/features/profile/providers/personal_preferences_providers.dart';
 import 'package:deskilo/features/reservations/data/context_reservation_repository.dart';
+import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
@@ -321,6 +323,44 @@ void main() {
     );
     expect(refused.error, isA<StaleWorkspaceContext>());
     expect(rig.a.paths.where((p) => p.contains('/reservations')), isEmpty);
+    await finish(tester);
+  });
+
+  // #2564 O1/O2 -- the migrated factories take their client from the role
+  // seam: root-session consumers the personal client, workspace operations
+  // the verified host of the captured context.
+  testWidgets('selectedWorkspaceClient follows the context host; P consumers keep P', timeout: _limit, (tester) async {
+    final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+    addTearDown(sub.close);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+    expect(rig.container.read(selectedWorkspaceClientProvider), same(rig.a.client));
+
+    rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+    expect(rig.container.read(selectedWorkspaceClientProvider), same(rig.b.client));
+    expect(rig.container.read(selectedWorkspaceClientProvider), isNot(same(rig.p.client)));
+
+    // The reservation scope (booking recovery's account + origin) is the
+    // selected host's, not a global one.
+    final scope = rig.container.read(bookingIntentScopeProvider);
+    expect(scope.origin, rig.b.client.rest.url);
+
+    // Workspace operations written through the migrated factory reach W-B.
+    await outcome(tester, rig.container.read(placeFeedbackRepositoryProvider).favorites('ws-1'), 'favourites');
+    expect(rig.b.paths, isNotEmpty);
+    expect(rig.a.paths, isEmpty);
+    expect(rig.p.paths, isEmpty);
+    await finish(tester);
+  });
+
+  testWidgets('personal preferences reach P only', timeout: _limit, (tester) async {
+    final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+    addTearDown(sub.close);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+    await outcome(tester, rig.container.read(personalPreferencesRepositoryProvider).read(), 'prefs');
+    expect(rig.p.paths, isNotEmpty);
+    expect(rig.a.paths, isEmpty);
+    expect(rig.b.paths, isEmpty);
     await finish(tester);
   });
 }

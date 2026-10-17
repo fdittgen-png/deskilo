@@ -58,7 +58,7 @@ final class PersonalPreferencesRepositoryProvider
 }
 
 String _$personalPreferencesRepositoryHash() =>
-    r'ddc4049ac7e1b34aa0800e087d2c528236a1549a';
+    r'f0edc1895229c560b88a03ffd0cade50a305c5df';
 
 /// Editing defaults remains the initial behavior. An explicit, optional switch
 /// scopes edits to this workspace; account/workspace changes reset that choice.

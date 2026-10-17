@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/backend/context_client_providers.dart';
 import '../data/supabase_personal_preferences_repository.dart';
 import '../domain/personal_preferences.dart';
 import 'profile_providers.dart';
@@ -9,7 +10,7 @@ part 'personal_preferences_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 PersonalPreferencesRepository personalPreferencesRepository(Ref ref) =>
-    SupabasePersonalPreferencesRepository(Supabase.instance.client);
+    SupabasePersonalPreferencesRepository(ref.watch(personalClientProvider));
 
 /// Editing defaults remains the initial behavior. An explicit, optional switch
 /// scopes edits to this workspace; account/workspace changes reset that choice.

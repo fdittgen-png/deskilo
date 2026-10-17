@@ -103,3 +103,65 @@ final class WorkspaceContextProvider
 }
 
 String _$workspaceContextHash() => r'ad885bd3716d4d96960045defdc542ed5226f76e';
+
+/// #2564 O1 -- the client the selected workspace's operations run on: the
+/// verified host client of the captured [WorkspaceContext]'s installation.
+/// Dependents rebuild only when that installation changes. Until a context exists (signed out, no workspace
+/// selected, still resolving) it is the root client -- the combined
+/// deployment's one installation, where the two are the same object; a split
+/// deployment's resolver (#2562) never yields the root client for a W target.
+
+@ProviderFor(selectedWorkspaceClient)
+final selectedWorkspaceClientProvider = SelectedWorkspaceClientProvider._();
+
+/// #2564 O1 -- the client the selected workspace's operations run on: the
+/// verified host client of the captured [WorkspaceContext]'s installation.
+/// Dependents rebuild only when that installation changes. Until a context exists (signed out, no workspace
+/// selected, still resolving) it is the root client -- the combined
+/// deployment's one installation, where the two are the same object; a split
+/// deployment's resolver (#2562) never yields the root client for a W target.
+
+final class SelectedWorkspaceClientProvider
+    extends $FunctionalProvider<SupabaseClient, SupabaseClient, SupabaseClient>
+    with $Provider<SupabaseClient> {
+  /// #2564 O1 -- the client the selected workspace's operations run on: the
+  /// verified host client of the captured [WorkspaceContext]'s installation.
+  /// Dependents rebuild only when that installation changes. Until a context exists (signed out, no workspace
+  /// selected, still resolving) it is the root client -- the combined
+  /// deployment's one installation, where the two are the same object; a split
+  /// deployment's resolver (#2562) never yields the root client for a W target.
+  SelectedWorkspaceClientProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedWorkspaceClientProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedWorkspaceClientHash();
+
+  @$internal
+  @override
+  $ProviderElement<SupabaseClient> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  SupabaseClient create(Ref ref) {
+    return selectedWorkspaceClient(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SupabaseClient value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SupabaseClient>(value),
+    );
+  }
+}
+
+String _$selectedWorkspaceClientHash() =>
+    r'15bbe315c2cb0542bf76d97d443e1a81cf8b3c81';

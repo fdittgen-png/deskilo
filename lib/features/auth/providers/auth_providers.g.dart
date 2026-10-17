@@ -48,7 +48,7 @@ final class AuthRepositoryProvider
   }
 }
 
-String _$authRepositoryHash() => r'3561feb326352c9fdd48de0ad63607d0fd77906d';
+String _$authRepositoryHash() => r'18d6df13b8fb75aa4d06060b8cd0aa00d03f3eb0';
 
 @ProviderFor(authState)
 final authStateProvider = AuthStateProvider._();
@@ -172,7 +172,7 @@ final class IdentityBindingRepositoryProvider
 }
 
 String _$identityBindingRepositoryHash() =>
-    r'7fd608f3e3d3c5352298e4a381e3ed97edff2114';
+    r'db16279b9db594eb701e23ab314ac25974fc1098';
 
 /// #1627 — the second factor a database decision needs.
 
@@ -225,7 +225,7 @@ final class SecondFactorRepositoryProvider
 }
 
 String _$secondFactorRepositoryHash() =>
-    r'e6e130d106eefe2263df62632974973b8d2d6ed9';
+    r'40454bfe11573a623e60afeab7cc76833633b686';
 
 /// #1608/#1611 — what this database lets the signed-in account do:
 /// administrator, MCP eligibility. Re-read after every change.

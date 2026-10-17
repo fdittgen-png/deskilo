@@ -2,7 +2,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/context_client_providers.dart';
@@ -28,7 +27,7 @@ part 'reservation_providers.g.dart';
 @Riverpod(keepAlive: true)
 ReservationRepository reservationRepository(Ref ref) =>
     ContextReservationRepository(
-      ref.watch(contextClientsProvider).legacyActive,
+      ref.watch(selectedWorkspaceClientProvider),
       ref.watch(cacheStoreProvider),
       // #2561 C1 — the window read runs on the workspace context and its
       // verified host's client; the other methods migrate with #2564.
@@ -41,7 +40,8 @@ ReservationRepository reservationRepository(Ref ref) =>
 /// own ledger. Tests and Demo override it with a fixed scope.
 @riverpod
 BookingIntentScope bookingIntentScope(Ref ref) {
-  final client = Supabase.instance.client;
+  // #2564 O2 -- this account on the selected workspace's own host.
+  final client = ref.watch(selectedWorkspaceClientProvider);
   return BookingIntentScope(
     account: client.auth.currentUser?.id ?? '',
     origin: client.rest.url,
