@@ -4195,6 +4195,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eInvoiceInboxStatusRejected => 'Respinta';
 
   @override
+  String eInvoiceInboxSupplierNumber(String number) {
+    return 'Fornitore $number';
+  }
+
+  @override
   String get eInvoiceInboxTitle => 'Fatture dei fornitori';
 
   @override
@@ -17449,6 +17454,142 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Gestire gruppi, aliquote e dichiarazioni IVA.';
+
+  @override
+  String get suppliersAdd => 'Aggiungi fornitore';
+
+  @override
+  String get suppliersArchive => 'Archivia';
+
+  @override
+  String get suppliersArchivedTag => 'archiviato';
+
+  @override
+  String get suppliersBank => 'Coordinate bancarie';
+
+  @override
+  String get suppliersBankBic => 'BIC';
+
+  @override
+  String get suppliersBankCleared => 'cancellato';
+
+  @override
+  String get suppliersBankHistory => 'Revisioni';
+
+  @override
+  String get suppliersBankHolder => 'Intestatario';
+
+  @override
+  String get suppliersBankIban => 'IBAN';
+
+  @override
+  String get suppliersBankInvalid => 'non valido';
+
+  @override
+  String get suppliersBankNone => 'Nessuna coordinata bancaria registrata.';
+
+  @override
+  String suppliersBankRevision(String revision, String outcome) {
+    return 'Revisione $revision: $outcome';
+  }
+
+  @override
+  String suppliersBankSaved(String revision) {
+    return 'Coordinate bancarie salvate (revisione $revision).';
+  }
+
+  @override
+  String get suppliersBankValid => 'valido';
+
+  @override
+  String get suppliersEdit => 'Modifica fornitore';
+
+  @override
+  String get suppliersEmpty => 'Nessun fornitore per ora.';
+
+  @override
+  String get suppliersFieldCity => 'Città';
+
+  @override
+  String get suppliersFieldContact => 'Contatto';
+
+  @override
+  String get suppliersFieldCountry => 'Paese (2 lettere)';
+
+  @override
+  String get suppliersFieldGroup => 'È un identificativo di gruppo IVA';
+
+  @override
+  String get suppliersFieldName => 'Nome';
+
+  @override
+  String get suppliersFieldNumber => 'Numero fornitore';
+
+  @override
+  String get suppliersFieldNumberHelp =>
+      'Lasciare vuoto per il prossimo numero libero.';
+
+  @override
+  String get suppliersFieldPostalCode => 'CAP';
+
+  @override
+  String get suppliersFieldStreet => 'Via';
+
+  @override
+  String get suppliersFieldTaxId =>
+      'Identificativo fiscale (partita IVA con prefisso paese)';
+
+  @override
+  String get suppliersIntro =>
+      'I beneficiari dei Suoi acquisti. Un fornitore si riconosce da un identificativo fiscale verificato, mai dal solo nome.';
+
+  @override
+  String get suppliersRefused =>
+      'Impossibile salvare il fornitore. Un numero o un identificativo fiscale potrebbe essere già in uso, oppure non gestisce i fornitori.';
+
+  @override
+  String get suppliersRestore => 'Ripristina';
+
+  @override
+  String get suppliersReviewDone => 'Risolto.';
+
+  @override
+  String suppliersReviewGroup(String name, String identifier) {
+    return '$name: «$identifier» è un identificativo di gruppo IVA condiviso da più soggetti giuridici.';
+  }
+
+  @override
+  String suppliersReviewLinkTo(String supplier) {
+    return 'Collega a $supplier';
+  }
+
+  @override
+  String suppliersReviewMissing(String name) {
+    return '$name: la fattura non riporta alcun identificativo fiscale.';
+  }
+
+  @override
+  String get suppliersReviewNew => 'Crea un nuovo fornitore';
+
+  @override
+  String get suppliersReviewTitle => 'Da esaminare';
+
+  @override
+  String suppliersReviewUnverified(String name, String identifier) {
+    return '$name: impossibile verificare l’identificativo fiscale «$identifier».';
+  }
+
+  @override
+  String get suppliersSaved => 'Fornitore salvato.';
+
+  @override
+  String get suppliersTaxUnverified => 'Identificativo fiscale non verificato';
+
+  @override
+  String get suppliersTaxVerified => 'Identificativo fiscale verificato';
+
+  @override
+  String get suppliersTitle => 'Fornitori';
 
   @override
   String get supplyClassGeneral => 'Servizio generico (non connesso ai locali)';

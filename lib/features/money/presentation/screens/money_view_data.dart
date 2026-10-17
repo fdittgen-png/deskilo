@@ -111,6 +111,11 @@ class MoneyViewData {
       _on(WorkspaceFeature.expenseRepartitionWizard) &&
       (member?.isAdmin ?? false);
 
+  /// #2567 — the suppliers are master data of the expense flows, for those
+  /// who manage the money (the server decides who may write).
+  bool get suppliersOn =>
+      _on(WorkspaceFeature.supplyExpenses) && (member?.isAdmin ?? false);
+
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;
 

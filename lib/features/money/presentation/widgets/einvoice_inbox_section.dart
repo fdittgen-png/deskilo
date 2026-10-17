@@ -204,7 +204,8 @@ class EInvoiceInboxSection extends ConsumerWidget {
                   subtitle: Text(
                     '${d.issueDate} · '
                     '${minorToText(d.grossCents, d.currency)} ${d.currency}'
-                    ' · ${_status(context, d)}',
+                    ' · ${_status(context, d)}'
+                    '${d.supplierNumber.isEmpty ? '' : ' · ${l10n.eInvoiceInboxSupplierNumber(d.supplierNumber)}'}',
                   ),
                   trailing: d.status != InboxStatus.received
                       ? null

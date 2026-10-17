@@ -279,6 +279,16 @@ const Map<String, String> _notExported = {
       '#2358 — supplier invoices received as XML; the document is the '
           'supplier\'s, kept as received, and the expense it matched is '
           'exported itself',
+  'suppliers':
+      '#2567 — the payees of the purchase side, master data the purchase '
+          'documents point at; the documents carry their own raw snapshot, '
+          'and a fresh space cannot import supplier numbers it did not issue',
+  'supplier_bank_revisions':
+      '#2567 — sensitive payee bank details and their change history; '
+          'never part of a workbook that is shared on',
+  'supplier_review_candidates':
+      '#2567 — a transient to-do (which invoice waits for a supplier '
+          'decision), derived from the source documents',
   'vat_return_entries':
       '#2357 — what a filed VAT return declared, per document; it belongs '
           'to the filing on this server and is recomputed from nothing a '

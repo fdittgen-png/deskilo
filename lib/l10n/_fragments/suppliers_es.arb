@@ -1,0 +1,211 @@
+{
+  "@@locale": "es",
+  "suppliersTitle": "Proveedores",
+  "@suppliersTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersIntro": "Los beneficiarios de sus compras. Un proveedor se reconoce por un identificador fiscal verificado, nunca solo por su nombre.",
+  "@suppliersIntro": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersAdd": "Añadir proveedor",
+  "@suppliersAdd": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEdit": "Editar proveedor",
+  "@suppliersEdit": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEmpty": "Aún no hay proveedores.",
+  "@suppliersEmpty": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchive": "Archivar",
+  "@suppliersArchive": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRestore": "Restaurar",
+  "@suppliersRestore": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchivedTag": "archivado",
+  "@suppliersArchivedTag": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldName": "Nombre",
+  "@suppliersFieldName": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumber": "Número de proveedor",
+  "@suppliersFieldNumber": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumberHelp": "Déjelo vacío para el siguiente número libre.",
+  "@suppliersFieldNumberHelp": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldTaxId": "Identificador fiscal (NIF-IVA con prefijo de país)",
+  "@suppliersFieldTaxId": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldGroup": "Es un identificador de grupo de IVA",
+  "@suppliersFieldGroup": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldStreet": "Calle",
+  "@suppliersFieldStreet": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldPostalCode": "Código postal",
+  "@suppliersFieldPostalCode": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCity": "Ciudad",
+  "@suppliersFieldCity": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCountry": "País (2 letras)",
+  "@suppliersFieldCountry": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldContact": "Contacto",
+  "@suppliersFieldContact": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxVerified": "Identificador fiscal verificado",
+  "@suppliersTaxVerified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxUnverified": "Identificador fiscal no verificado",
+  "@suppliersTaxUnverified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersSaved": "Proveedor guardado.",
+  "@suppliersSaved": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRefused": "No se pudo guardar el proveedor. Quizá el número o el identificador fiscal ya se usa, o no gestiona proveedores.",
+  "@suppliersRefused": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewTitle": "Por revisar",
+  "@suppliersReviewTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewMissing": "{name}: la factura no lleva identificador fiscal.",
+  "@suppliersReviewMissing": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewUnverified": "{name}: no se pudo verificar el identificador fiscal «{identifier}».",
+  "@suppliersReviewUnverified": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewGroup": "{name}: «{identifier}» es un identificador de grupo de IVA compartido por varias entidades.",
+  "@suppliersReviewGroup": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewNew": "Crear un proveedor nuevo",
+  "@suppliersReviewNew": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewLinkTo": "Vincular a {supplier}",
+  "@suppliersReviewLinkTo": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewDone": "Resuelto.",
+  "@suppliersReviewDone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBank": "Datos bancarios",
+  "@suppliersBank": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHolder": "Titular de la cuenta",
+  "@suppliersBankHolder": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankIban": "IBAN",
+  "@suppliersBankIban": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankBic": "BIC",
+  "@suppliersBankBic": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankNone": "Sin datos bancarios registrados.",
+  "@suppliersBankNone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHistory": "Revisiones",
+  "@suppliersBankHistory": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankValid": "válido",
+  "@suppliersBankValid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankInvalid": "no válido",
+  "@suppliersBankInvalid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankCleared": "borrado",
+  "@suppliersBankCleared": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankRevision": "Revisión {revision}: {outcome}",
+  "@suppliersBankRevision": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankSaved": "Datos bancarios guardados (revisión {revision}).",
+  "@suppliersBankSaved": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxSupplierNumber": "Proveedor {number}",
+  "@eInvoiceInboxSupplierNumber": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  }
+}

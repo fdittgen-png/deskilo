@@ -1,0 +1,211 @@
+{
+  "@@locale": "fr",
+  "suppliersTitle": "Fournisseurs",
+  "@suppliersTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersIntro": "Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.",
+  "@suppliersIntro": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersAdd": "Ajouter un fournisseur",
+  "@suppliersAdd": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEdit": "Modifier le fournisseur",
+  "@suppliersEdit": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEmpty": "Aucun fournisseur pour le moment.",
+  "@suppliersEmpty": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchive": "Archiver",
+  "@suppliersArchive": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRestore": "Restaurer",
+  "@suppliersRestore": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchivedTag": "archivé",
+  "@suppliersArchivedTag": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldName": "Nom",
+  "@suppliersFieldName": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumber": "Numéro de fournisseur",
+  "@suppliersFieldNumber": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumberHelp": "Laissez vide pour le prochain numéro libre.",
+  "@suppliersFieldNumberHelp": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldTaxId": "Identifiant fiscal (n° de TVA avec préfixe pays)",
+  "@suppliersFieldTaxId": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldGroup": "C’est un identifiant de groupe TVA",
+  "@suppliersFieldGroup": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldStreet": "Rue",
+  "@suppliersFieldStreet": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldPostalCode": "Code postal",
+  "@suppliersFieldPostalCode": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCity": "Ville",
+  "@suppliersFieldCity": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCountry": "Pays (2 lettres)",
+  "@suppliersFieldCountry": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldContact": "Contact",
+  "@suppliersFieldContact": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxVerified": "Identifiant fiscal vérifié",
+  "@suppliersTaxVerified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxUnverified": "Identifiant fiscal non vérifié",
+  "@suppliersTaxUnverified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersSaved": "Fournisseur enregistré.",
+  "@suppliersSaved": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRefused": "Le fournisseur n’a pas pu être enregistré. Un numéro ou un identifiant fiscal est peut-être déjà utilisé, ou vous ne gérez pas les fournisseurs.",
+  "@suppliersRefused": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewTitle": "À examiner",
+  "@suppliersReviewTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewMissing": "{name} : la facture ne porte aucun identifiant fiscal.",
+  "@suppliersReviewMissing": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewUnverified": "{name} : l’identifiant fiscal « {identifier} » n’a pas pu être vérifié.",
+  "@suppliersReviewUnverified": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewGroup": "{name} : « {identifier} » est un identifiant de groupe TVA partagé par plusieurs entités juridiques.",
+  "@suppliersReviewGroup": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewNew": "Créer un nouveau fournisseur",
+  "@suppliersReviewNew": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewLinkTo": "Rattacher à {supplier}",
+  "@suppliersReviewLinkTo": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewDone": "Résolu.",
+  "@suppliersReviewDone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBank": "Coordonnées bancaires",
+  "@suppliersBank": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHolder": "Titulaire du compte",
+  "@suppliersBankHolder": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankIban": "IBAN",
+  "@suppliersBankIban": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankBic": "BIC",
+  "@suppliersBankBic": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankNone": "Aucune coordonnée bancaire enregistrée.",
+  "@suppliersBankNone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHistory": "Révisions",
+  "@suppliersBankHistory": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankValid": "valide",
+  "@suppliersBankValid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankInvalid": "invalide",
+  "@suppliersBankInvalid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankCleared": "effacé",
+  "@suppliersBankCleared": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankRevision": "Révision {revision} : {outcome}",
+  "@suppliersBankRevision": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankSaved": "Coordonnées bancaires enregistrées (révision {revision}).",
+  "@suppliersBankSaved": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceInboxSupplierNumber": "Fournisseur {number}",
+  "@eInvoiceInboxSupplierNumber": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  }
+}
