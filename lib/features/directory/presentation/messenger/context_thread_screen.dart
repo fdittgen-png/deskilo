@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -64,7 +65,6 @@ class ContextThreadScreen extends ConsumerStatefulWidget {
 }
 
 class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
-  static const _poll = Duration(seconds: 15);
   final _body = TextEditingController();
   late String _contextId = widget.contextId;
   final List<ContextMessage> _earlier = [];
@@ -86,7 +86,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     super.initState();
     _activeNotifier;
     unawaited(Future.microtask(_markRead));
-    _refresh = Timer.periodic(_poll, (_) {
+    _refresh = Timer.periodic(ref.read(messagingWindowsProvider).threadPoll, (_) {
       if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
         ref
           ..invalidate(_provider)

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -50,12 +51,19 @@ class MessageRef {
   final bool starred;
   final String? myReaction;
 
-  /// The author may correct a message for [kMessageEditWindow].
-  bool editableAt(DateTime now) =>
+  /// The author may correct a message for [window] (`messaging.edit_window_minutes`).
+  bool editableAt(DateTime now, Duration window) =>
       mine &&
       !isNotice &&
       sentAt != null &&
-      now.toUtc().difference(sentAt!.toUtc()) < kMessageEditWindow;
+      now.toUtc().difference(sentAt!.toUtc()) < window;
+}
+
+/// The window for [kind]: a workspace note reads the workspace's value, every
+/// other kind the platform's (as `edit_message` does).
+Duration _editWindow(WidgetRef ref, MessageKind kind) {
+  final w = ref.read(messagingWindowsProvider);
+  return kind == MessageKind.memberNote ? w.editWindow : w.accountEditWindow;
 }
 
 enum _Action { forward, lock, history, delete, star, edit, copy, info }
@@ -135,7 +143,7 @@ Future<void> showMessageActions(
               title: Text(l10n.messengerCopy),
               onTap: () => Navigator.of(sheet).pop(_Action.copy),
             ),
-          if (message.editableAt(ref.read(clockProvider).now()))
+          if (message.editableAt(ref.read(clockProvider).now(), _editWindow(ref, message.kind)))
             ListTile(
               key: const ValueKey('message-action-edit'),
               leading: const Icon(Icons.edit_outlined),

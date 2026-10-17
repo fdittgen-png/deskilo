@@ -11130,6 +11130,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupMessaging": "Mensajería",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
   "settingGroupPresence": "Presencia",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -11190,13 +11194,25 @@
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMessagingEditWindowMinutes": "Minutos tras el envío durante los que el autor aún puede corregir un mensaje. Un mensaje de un espacio lee el valor de su espacio, uno personal o de grupo el valor de la plataforma.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMessagingGroupCreationPerHour": "Cuántos grupos puede crear una persona por hora. Solo se puede reducir.",
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPollSeconds": "Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMessagingMessageRequestsPerDay": "Cuántas solicitudes de mensaje puede enviar una persona por día a quienes no las han permitido. Solo se puede reducir.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMessagingThreadPollSeconds": "Segundos entre dos actualizaciones de una conversación abierta. Valores más bajos cargan más el servidor.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintPresenceOnlineWindowMinutes": "Minutos tras su última señal de vida durante los que una persona sigue contando como en línea. Manténgalo por encima del latido de 2 minutos.",
   "@settingHintPresenceOnlineWindowMinutes": {
@@ -11266,13 +11282,25 @@
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMessagingEditWindowMinutes": "Plazo para editar un mensaje",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMessagingGroupCreationPerHour": "Grupos creados por hora",
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPollSeconds": "Actualización de la bandeja de entrada",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMessagingMessageRequestsPerDay": "Solicitudes de mensaje por día",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Actualización de la conversación",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelPresenceOnlineWindowMinutes": "Ventana en línea",
   "@settingLabelPresenceOnlineWindowMinutes": {

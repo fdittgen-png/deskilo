@@ -1,0 +1,31 @@
+{
+  "@@locale": "es",
+  "settingGroupMessaging": "Mensajería",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingLabelMessagingEditWindowMinutes": "Plazo para editar un mensaje",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingEditWindowMinutes": "Minutos tras el envío durante los que el autor aún puede corregir un mensaje. Un mensaje de un espacio lee el valor de su espacio, uno personal o de grupo el valor de la plataforma.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Actualización de la conversación",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingThreadPollSeconds": "Segundos entre dos actualizaciones de una conversación abierta. Valores más bajos cargan más el servidor.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingInboxPollSeconds": "Actualización de la bandeja de entrada",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingInboxPollSeconds": "Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

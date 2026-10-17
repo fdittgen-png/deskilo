@@ -28,10 +28,16 @@ abstract final class SettingDefaults {
   static const int mcpConfirmationExpiryMinutes = 5;
   /// `mcp.probe_freshness_minutes`
   static const int mcpProbeFreshnessMinutes = 15;
+  /// `messaging.edit_window_minutes`
+  static const int messagingEditWindowMinutes = 15;
   /// `messaging.group_creation_per_hour`
   static const int messagingGroupCreationPerHour = 10;
+  /// `messaging.inbox_poll_seconds`
+  static const int messagingInboxPollSeconds = 30;
   /// `messaging.message_requests_per_day`
   static const int messagingMessageRequestsPerDay = 10;
+  /// `messaging.thread_poll_seconds`
+  static const int messagingThreadPollSeconds = 15;
   /// `presence.online_window_minutes`
   static const int presenceOnlineWindowMinutes = 5;
   /// `security.badge_lockout_failures`

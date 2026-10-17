@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "settingGroupMessaging": "Messaging",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingLabelMessagingEditWindowMinutes": "Message edit window",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingEditWindowMinutes": "Minutes after sending in which the author may still correct a message. A workspace message reads its workspace, a personal or group message the platform value.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Conversation refresh",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingThreadPollSeconds": "Seconds between two refreshes of an open conversation. Lower values load the server more.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingInboxPollSeconds": "Inbox refresh",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingInboxPollSeconds": "Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

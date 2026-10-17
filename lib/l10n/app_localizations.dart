@@ -28454,6 +28454,12 @@ abstract class AppLocalizations {
   /// **'Reminders and payment terms'**
   String get settingGroupDunning;
 
+  /// #2487 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get settingGroupMessaging;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -28544,17 +28550,35 @@ abstract class AppLocalizations {
   /// **'Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.'**
   String get settingHintMcpProbeFreshnessMinutes;
 
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes after sending in which the author may still correct a message. A workspace message reads its workspace, a personal or group message the platform value.'**
+  String get settingHintMessagingEditWindowMinutes;
+
   /// #2485 settings: Settings group title.
   ///
   /// In en, this message translates to:
   /// **'How many groups one person may create per hour. Can only be lowered.'**
   String get settingHintMessagingGroupCreationPerHour;
 
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.'**
+  String get settingHintMessagingInboxPollSeconds;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
   /// **'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.'**
   String get settingHintMessagingMessageRequestsPerDay;
+
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds between two refreshes of an open conversation. Lower values load the server more.'**
+  String get settingHintMessagingThreadPollSeconds;
 
   /// #2486 settings: Setting hint.
   ///
@@ -28658,17 +28682,35 @@ abstract class AppLocalizations {
   /// **'Assistant endpoint check freshness'**
   String get settingLabelMcpProbeFreshnessMinutes;
 
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Message edit window'**
+  String get settingLabelMessagingEditWindowMinutes;
+
   /// #2485 settings: Settings group title.
   ///
   /// In en, this message translates to:
   /// **'Groups created per hour'**
   String get settingLabelMessagingGroupCreationPerHour;
 
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox refresh'**
+  String get settingLabelMessagingInboxPollSeconds;
+
   /// #2485 settings: Setting label.
   ///
   /// In en, this message translates to:
   /// **'Message requests per day'**
   String get settingLabelMessagingMessageRequestsPerDay;
+
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversation refresh'**
+  String get settingLabelMessagingThreadPollSeconds;
 
   /// #2486 settings: Setting label.
   ///

@@ -16462,6 +16462,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupDunning => 'Reminders and payment terms';
 
   @override
+  String get settingGroupMessaging => 'Messaging';
+
+  @override
   String get settingGroupPresence => 'Presence';
 
   @override
@@ -16519,12 +16522,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.';
 
   @override
+  String get settingHintMessagingEditWindowMinutes =>
+      'Minutes after sending in which the author may still correct a message. A workspace message reads its workspace, a personal or group message the platform value.';
+
+  @override
   String get settingHintMessagingGroupCreationPerHour =>
       'How many groups one person may create per hour. Can only be lowered.';
 
   @override
+  String get settingHintMessagingInboxPollSeconds =>
+      'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.';
+
+  @override
+  String get settingHintMessagingThreadPollSeconds =>
+      'Seconds between two refreshes of an open conversation. Lower values load the server more.';
 
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
@@ -16590,12 +16605,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'Assistant endpoint check freshness';
 
   @override
+  String get settingLabelMessagingEditWindowMinutes => 'Message edit window';
+
+  @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Groups created per hour';
 
   @override
+  String get settingLabelMessagingInboxPollSeconds => 'Inbox refresh';
+
+  @override
   String get settingLabelMessagingMessageRequestsPerDay =>
       'Message requests per day';
+
+  @override
+  String get settingLabelMessagingThreadPollSeconds => 'Conversation refresh';
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Online window';

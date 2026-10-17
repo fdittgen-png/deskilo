@@ -1,0 +1,31 @@
+{
+  "@@locale": "it",
+  "settingGroupMessaging": "Messaggistica",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingLabelMessagingEditWindowMinutes": "Tempo per modificare un messaggio",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingEditWindowMinutes": "Minuti dopo l'invio in cui l'autore può ancora correggere un messaggio. Un messaggio di uno spazio legge il valore del proprio spazio, uno personale o di gruppo il valore della piattaforma.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Aggiornamento della conversazione",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingThreadPollSeconds": "Secondi tra due aggiornamenti di una conversazione aperta. Valori più bassi caricano di più il server.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingInboxPollSeconds": "Aggiornamento della posta in arrivo",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingInboxPollSeconds": "Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  }
+}
