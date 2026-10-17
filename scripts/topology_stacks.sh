@@ -18,7 +18,9 @@
 # consumer reads, and stops what it prepared.
 #
 #   prepare   project directories for P and W-B (distinct ids, ports, secrets)
-#   seed      users, the equal-id workspace at W-A and W-B, one reservation each
+#   seed      users, the equal-id workspace at W-A and W-B, one reservation each,
+#             and at W-A the invoice-preview fixture (#2585: a member, a
+#             stranger of another workspace, seeded money)
 #   down      stop P and W-B, remove the W-A fixture rows
 #
 # Every operation names its target explicitly and refuses anything that is
@@ -173,6 +175,35 @@ select to_char(starts_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') from 
 SQL
 }
 
+# The invoice-preview fixture (#2585), W-A only: a workspace of its own, one
+# member with money written here as plain numbers (35.00 fee + 10.00 supply
+# in 2026-09; 35.00 fee - 50.00 advance in 2026-08; nothing before they
+# joined), independent of the Dart decoder and of the SQL that computes it.
+PWS=00000000-0000-4000-8000-000000258501
+PMEMBER=00000000-0000-4000-8000-000000258502
+seed_preview() { # db owner id, member id
+  psql "$1" -qX -v ON_ERROR_STOP=1 >/dev/null <<SQL || return 1
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by,
+                               street, city, postal_code, vat_regime, vat_id, feature_flags)
+values ('$PWS', 'Preview 2585', 'FR', 'EUR', 'Europe/Paris', '$2', '1 rue du Pilote', 'Pezenas',
+        '34120', 'vat_registered', 'FR12345678901', '{"invoicing":true,"numberSequences":true}');
+insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
+values ('$PWS', '$2', true, true, '2026-01-01');
+insert into public.members (id, workspace_id, user_id, subscription_pct, joined_at, customer_capacity)
+values ('$PMEMBER', '$PWS', '$3', 1, '2026-01-01', 'consumer');
+insert into public.vat_rates (workspace_id, label, percent, is_default) values ('$PWS', 'Synthetic standard', 20, true);
+delete from public.fee_bands where workspace_id = '$PWS';
+insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage_fee_cents)
+values ('$PWS', 0, 100, 3500, 1000);
+update public.profiles set first_name = 'Synthetic', last_name = 'Client', country_code = 'FR',
+       street = '2 rue du Test', city = 'Pezenas', postal_code = '34120' where id = '$3';
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, vat_percent)
+values ('$PWS', '$PMEMBER', 'charge', 'adjustment', 1000, 'Zero-rated supply', '2026-09', 0);
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
+values ('$PWS', '$PMEMBER', 'credit', 'payment', 5000, 'Advance', '2026-08');
+SQL
+}
+
 seed() {
   [ -d "$DIR/p" ] && [ -d "$DIR/wb" ] || fail "prepare has not run: $DIR"
   local run=$$
@@ -194,6 +225,10 @@ seed() {
   a_stranger=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-stranger-$run@deskilo.test") || fail "W-A: stranger"
   b_user=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "topology-b-$run@deskilo.test") || fail "W-B: user"
 
+  pv_owner=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-owner-$run@deskilo.test") || fail "W-A: preview owner"
+  pv_member=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-member-$run@deskilo.test") || fail "W-A: preview member"
+  seed_preview "${DB[wa]}" "$pv_owner" "$pv_member" || fail "W-A: preview fixture"
+
   start=$(seed_workspace "${DB[wa]}" a "$a_user" Europe/Paris EUR) || fail "W-A: fixture"
   start_b=$(seed_workspace "${DB[wb]}" b "$b_user" America/New_York USD) || fail "W-B: fixture"
   [ "$start" = "$start_b" ] || fail "the two windows differ: $start $start_b"
@@ -212,7 +247,9 @@ seed() {
   "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}",
          "user": {"id": "$a_user", "email": "topology-a-$run@deskilo.test"},
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
-         "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris"},
+         "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
+         "preview": {"workspaceId": "$PWS", "memberId": "$PMEMBER",
+                     "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"}}},
   "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
          "reservationId": "0000000e-0b0a-4000-8000-0000000e0b0a", "timezone": "America/New_York"}
@@ -227,7 +264,7 @@ cleanup() {
   out=$(supabase status -o env 2>/dev/null) || out=
   db=$(val DB_URL <<<"$out")
   if [ -n "$db" ]; then
-    psql "$db" -qX -c "delete from public.workspaces where id = '$WS'" >/dev/null 2>&1 || true
+    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS')" >/dev/null 2>&1 || true
   fi
   for name in p wb; do
     [ -d "$DIR/$name" ] && supabase stop --workdir "$DIR/$name" --no-backup >/dev/null 2>&1 || true
