@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0457 (#2567, C1a of #2464) -- ONE `suppliers` entity: the payee that the
+-- 0458 (#2567, C1a of #2464) -- ONE `suppliers` entity: the payee that the
 -- lease, the supplier-invoice inbox, the scheduled expenses and a rented
 -- room all point at. Master data of the expense flows, so it sits behind
 -- `supplyExpenses` (no new flag).
@@ -518,4 +518,4 @@ end;
 $fn$;
 revoke execute on function public.resolve_supplier_review(uuid, uuid) from public, anon;
 
-select public.set_deskilo_schema_version(457);
+select public.set_deskilo_schema_version(458);

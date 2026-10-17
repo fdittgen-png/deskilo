@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2567 / 0457 (C1a of #2464): ONE suppliers entity. Real roles throughout
+-- #2567 / 0458 (C1a of #2464): ONE suppliers entity. Real roles throughout
 -- (authenticated through the definer RPCs and the RLS policies); every
 -- refusal is followed by a readback proving nothing changed.
 --   A positive control: a verified tax identifier creates one supplier and links
