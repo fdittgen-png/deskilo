@@ -154,6 +154,8 @@ public.offices.offices_select
 public.offices.offices_write
 public.offices.offices_write_sites
 public.opening_hours_history.mcp_delegated_deny
+public.outgoing_payments.mcp_delegated_deny
+public.outgoing_payments.outgoing_payments_select
 public.packages.mcp_delegated_deny
 public.packages.packages_select
 public.packages.packages_write
@@ -194,6 +196,8 @@ public.purchase_lines.purchase_lines_select
 public.purchase_obligations.mcp_delegated_deny
 public.purchase_obligations.purchase_obligations_select
 public.purchase_requests.mcp_delegated_deny
+public.purchase_settlement_allocations.mcp_delegated_deny
+public.purchase_settlement_allocations.purchase_settlement_allocations_select
 public.purchase_sources.mcp_delegated_deny
 public.purchase_sources.purchase_sources_select
 public.push_config.mcp_delegated_deny

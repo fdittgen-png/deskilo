@@ -1,0 +1,124 @@
+{
+  "@@locale": "en",
+  "permRecordOutgoingPayments": "Record payments to members",
+  "@permRecordOutgoingPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAction": "Record payment",
+  "@purchasesPayAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayTitle": "Record a payment",
+  "@purchasesPayTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayHint": "Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.",
+  "@purchasesPayHint": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAmount": "Amount paid",
+  "@purchasesPayAmount": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayDate": "Paid on",
+  "@purchasesPayDate": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayMethod": "Method",
+  "@purchasesPayMethod": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodBank": "Bank transfer",
+  "@purchasesMethodBank": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCash": "Cash",
+  "@purchasesMethodCash": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCard": "Card",
+  "@purchasesMethodCard": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodOther": "Other",
+  "@purchasesMethodOther": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayReference": "Reference (optional)",
+  "@purchasesPayReference": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayInvalid": "Enter an amount above zero, at most {remaining}.",
+  "@purchasesPayInvalid": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPayRefused": "The payment was not recorded. Check the claim and try again; a retry sends the same request.",
+  "@purchasesPayRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaySaved": "Payment recorded",
+  "@purchasesPaySaved": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayments": "Payments",
+  "@purchasesPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaymentLine": "{amount} · {date} · {method}",
+  "@purchasesPaymentLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPaymentReversed": "Reversed",
+  "@purchasesPaymentReversed": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReversalLine": "Reversal · {amount}",
+  "@purchasesReversalLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesReverseAction": "Reverse",
+  "@purchasesReverseAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseTitle": "Reverse this payment",
+  "@purchasesReverseTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReason": "Why is it reversed?",
+  "@purchasesReverseReason": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReasonNeeded": "State the reason.",
+  "@purchasesReverseReasonNeeded": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseRefused": "The payment was not reversed. It may already be applied to an invoice.",
+  "@purchasesReverseRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseSaved": "Payment reversed",
+  "@purchasesReverseSaved": {
+    "description": "#2574 purchase payments"
+  }
+}

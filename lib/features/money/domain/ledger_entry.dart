@@ -18,6 +18,10 @@ enum LedgerCategory {
   /// A credit note paid back by bank transfer (0436, #2570): money returned,
   /// never a charge for the next invoice.
   refund,
+
+  /// Cash paid to a member against an approved claim (0467, #2574): a
+  /// charge that is never an invoice line, or its reversal as a credit.
+  reimbursement,
 }
 
 /// One line on a member's ledger (spec §7.3).

@@ -288,6 +288,13 @@ const Map<String, String> _notExported = {
   'purchase_obligations':
       '#2574 — the settlement index over an approved purchase (who is owed what); '
           'the credit it indexes is a ledger entry and is exported itself',
+  'outgoing_payments':
+      '#2574 — a payment a person reported as made; its effect on the member '
+          'account is a ledger row, exported itself, and a bank record is not '
+          'this server\'s to carry',
+  'purchase_settlement_allocations':
+      '#2574 — the append-only link from a claim to a payment; it names rows '
+          'of this server',
   'purchase_sources':
       '#2573 — the links from a purchase to the expenses and invoices that '
           'evidence it; they name rows of this server',

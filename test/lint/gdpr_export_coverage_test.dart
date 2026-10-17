@@ -53,6 +53,12 @@ String _latestExportBody() {
 /// Tables with a member or user column that `export_my_data` does not
 /// return, and why each is right to leave out.
 const Map<String, String> _notExported = {
+  'outgoing_payments':
+      '#2574 — a payment a person reported as made to a member; its effect '
+          'on the member\'s account is a ledger row, exported with the ledger',
+  'purchase_settlement_allocations':
+      '#2574 — the append-only link from a claim to a payment; it names rows '
+          'exported elsewhere (the payment, the ledger entry)',
   'financial_command_receipts':
       '#2585 — technical recovery state of a financial command attempt (a '
           'request id, a digest and the invoice or event it made); the '

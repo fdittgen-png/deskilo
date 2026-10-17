@@ -13,9 +13,10 @@ void main() {
   // 25→31 (2026-10-04): the everyday features are permissions — useMessages,
   // makeReservations, viewCalendar, viewDirectory, viewMyMoney, viewDocuments.
   // 31→32 (2026-10-16): #2573 managePurchases — capture the supplier bills.
-  test('the catalog carries 32 permissions, wire names equal to Dart names',
+  // 32→33 (2026-10-17): #2574 recordOutgoingPayments — record cash paid out.
+  test('the catalog carries 33 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(32));
+    expect(WorkspacePermission.values, hasLength(33));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }
@@ -48,6 +49,8 @@ void main() {
       WorkspacePermission.deployToProd,
       // #2573 — supplier bills are captured by who is given the right.
       WorkspacePermission.managePurchases,
+      // #2574 — cash paid out is recorded by who is given the right.
+      WorkspacePermission.recordOutgoingPayments,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }

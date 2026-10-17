@@ -1,0 +1,124 @@
+{
+  "@@locale": "it",
+  "permRecordOutgoingPayments": "Registrare i pagamenti ai soci",
+  "@permRecordOutgoingPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAction": "Registra pagamento",
+  "@purchasesPayAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayTitle": "Registra un pagamento",
+  "@purchasesPayTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayHint": "Registri solo il denaro effettivamente pagato. Il pagamento è dichiarato da Lei; la banca non lo conferma.",
+  "@purchasesPayHint": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAmount": "Importo pagato",
+  "@purchasesPayAmount": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayDate": "Pagato il",
+  "@purchasesPayDate": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayMethod": "Metodo",
+  "@purchasesPayMethod": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodBank": "Bonifico",
+  "@purchasesMethodBank": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCash": "Contanti",
+  "@purchasesMethodCash": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCard": "Carta",
+  "@purchasesMethodCard": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodOther": "Altro",
+  "@purchasesMethodOther": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayReference": "Riferimento (facoltativo)",
+  "@purchasesPayReference": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayInvalid": "Inserisca un importo superiore a zero, al massimo {remaining}.",
+  "@purchasesPayInvalid": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPayRefused": "Il pagamento non è stato registrato. Verifichi il credito e riprovi; un nuovo tentativo invia la stessa richiesta.",
+  "@purchasesPayRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaySaved": "Pagamento registrato",
+  "@purchasesPaySaved": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayments": "Pagamenti",
+  "@purchasesPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaymentLine": "{amount} · {date} · {method}",
+  "@purchasesPaymentLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPaymentReversed": "Stornato",
+  "@purchasesPaymentReversed": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReversalLine": "Storno · {amount}",
+  "@purchasesReversalLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesReverseAction": "Storna",
+  "@purchasesReverseAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseTitle": "Storna questo pagamento",
+  "@purchasesReverseTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReason": "Perché viene stornato?",
+  "@purchasesReverseReason": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReasonNeeded": "Indichi il motivo.",
+  "@purchasesReverseReasonNeeded": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseRefused": "Il pagamento non è stato stornato. Potrebbe essere già applicato a una fattura.",
+  "@purchasesReverseRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseSaved": "Pagamento stornato",
+  "@purchasesReverseSaved": {
+    "description": "#2574 purchase payments"
+  }
+}

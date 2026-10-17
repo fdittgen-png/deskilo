@@ -5,6 +5,64 @@ import '../../../features/money/domain/purchase.dart';
 /// member's expense as a receipt through the same bridge; the demo only keeps
 /// what the dialog saved, replaying a request id as the server does.
 class FakePurchaseRepository implements PurchaseRepository {
+  FakePurchaseRepository();
+
+  /// The demo space: two approved claims of the demo members, one untouched
+  /// and one part-paid, so the To-pay tab, a payment and a reversal can all
+  /// be tried exactly as in production.
+  factory FakePurchaseRepository.demo() => FakePurchaseRepository()
+    ..payables.addAll([
+      _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning'),
+      _demoClaim(
+        'demo-claim-2',
+        'member-3',
+        8000,
+        'coffee',
+        paid: 3000,
+        allocations: [
+          SettlementAllocation(
+            id: 'demo-allocation-0',
+            isReversal: false,
+            amountCents: 3000,
+            method: 'bank_transfer',
+            reference: 'Demo transfer',
+            paidOn: DateTime(2026, 10, 10),
+          ),
+        ],
+      ),
+    ]);
+
+  static PayableRow _demoClaim(
+    String id,
+    String member,
+    int amount,
+    String category, {
+    int paid = 0,
+    List<SettlementAllocation> allocations = const [],
+  }) => PayableRow(
+    obligation: PurchaseObligation(
+      id: id,
+      purchaseId: 'p-$id',
+      creditorKind: CreditorKind.member,
+      creditorId: member,
+      amountCents: amount,
+      currency: 'EUR',
+      paidCents: paid,
+      appliedCents: 0,
+      remainingCents: amount - paid,
+      allocations: allocations,
+    ),
+    purchase: PurchaseSummary(
+      id: 'p-$id',
+      kind: PurchaseKind.memberReceipt,
+      state: PurchaseState.approved,
+      category: category,
+      reference: '',
+      currency: 'EUR',
+      grossCents: amount,
+    ),
+  );
+
   final List<PurchaseDetail> _documents = [];
   final Map<String, String> _requests = {};
 
@@ -14,6 +72,7 @@ class FakePurchaseRepository implements PurchaseRepository {
 
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => [
+    for (final p in payables) p.purchase,
     for (final d in _documents.reversed) d.summary,
   ];
 
@@ -21,10 +80,29 @@ class FakePurchaseRepository implements PurchaseRepository {
   Future<PurchaseDetail> fetchDetail(
     String workspaceId,
     String purchaseId,
-  ) async => _documents.firstWhere(
-    (d) => d.summary.id == purchaseId,
-    orElse: () => throw StateError('unknown purchase'),
-  );
+  ) async {
+    for (final d in _documents) {
+      if (d.summary.id == purchaseId) return d;
+    }
+    // A claim's receipt, as the server reads it: one line, its claim.
+    final row = payables.firstWhere(
+      (r) => r.purchase.id == purchaseId,
+      orElse: () => throw StateError('unknown purchase'),
+    );
+    return PurchaseDetail(
+      summary: row.purchase,
+      revision: 1,
+      lines: [
+        PurchaseLine(
+          lineNo: 1,
+          description: row.purchase.category,
+          grossCents: row.purchase.grossCents,
+        ),
+      ],
+      sources: const [],
+      obligations: [row.obligation],
+    );
+  }
 
   @override
   Future<List<PayableRow>> fetchPayables(
@@ -34,6 +112,121 @@ class FakePurchaseRepository implements PurchaseRepository {
     for (final p in payables)
       if (kind == null || p.obligation.creditorKind == kind) p,
   ];
+
+  final Map<String, PurchaseObligation> _paid = {};
+
+  int _row(String obligationId) =>
+      payables.indexWhere((r) => r.obligation.id == obligationId);
+
+  PurchaseObligation _restate(
+    PurchaseObligation o, {
+    required int paid,
+    required List<SettlementAllocation> allocations,
+  }) => PurchaseObligation(
+    id: o.id,
+    purchaseId: o.purchaseId,
+    creditorKind: o.creditorKind,
+    creditorId: o.creditorId,
+    amountCents: o.amountCents,
+    currency: o.currency,
+    state: o.state,
+    dueOn: o.dueOn,
+    paidCents: paid,
+    appliedCents: o.appliedCents,
+    remainingCents: o.amountCents - paid - o.appliedCents,
+    revision: o.revision + 1,
+    mine: o.mine,
+    allocations: allocations,
+    appliedInvoice: o.appliedInvoice,
+  );
+
+  void _store(int i, PurchaseObligation o) => payables[i] = PayableRow(
+    obligation: o,
+    purchase: payables[i].purchase,
+  );
+
+  @override
+  Future<PurchaseObligation> recordReimbursement(
+    String workspaceId,
+    ReimbursementCommand command,
+  ) async {
+    final replay = _paid[command.requestId];
+    if (replay != null) return replay;
+    final i = _row(command.obligationId);
+    if (i < 0) throw StateError('unknown obligation');
+    final o = payables[i].obligation;
+    if (o.revision != command.revision) throw StateError('stale revision');
+    if (!o.payable || command.amountCents <= 0 || command.amountCents > o.remainingCents) {
+      throw StateError('the amount exceeds what remains of the claim');
+    }
+    final next = _restate(
+      o,
+      paid: o.paidCents + command.amountCents,
+      allocations: [
+        ...o.allocations,
+        SettlementAllocation(
+          id: 'demo-allocation-${o.allocations.length + 1}',
+          isReversal: false,
+          amountCents: command.amountCents,
+          method: command.method.wire,
+          reference: command.reference,
+          paidOn: command.paidOn,
+        ),
+      ],
+    );
+    _store(i, next);
+    return _paid[command.requestId] = next;
+  }
+
+  @override
+  Future<PurchaseObligation> reverseAllocation(
+    String workspaceId, {
+    required String allocationId,
+    required int revision,
+    required String reason,
+    required String requestId,
+  }) async {
+    final replay = _paid[requestId];
+    if (replay != null) return replay;
+    final i = payables.indexWhere(
+      (r) => r.obligation.allocations.any((a) => a.id == allocationId),
+    );
+    if (i < 0) throw StateError('unknown allocation');
+    final o = payables[i].obligation;
+    final a = o.allocations.firstWhere((a) => a.id == allocationId);
+    if (o.revision != revision) throw StateError('stale revision');
+    if (!a.reversible || o.appliedInvoice != null) {
+      throw StateError('this payment cannot be reversed');
+    }
+    final next = _restate(
+      o,
+      paid: o.paidCents - a.amountCents,
+      allocations: [
+        for (final x in o.allocations)
+          if (x.id == a.id)
+            SettlementAllocation(
+              id: x.id,
+              isReversal: false,
+              amountCents: x.amountCents,
+              method: x.method,
+              reference: x.reference,
+              paidOn: x.paidOn,
+              reversed: true,
+            )
+          else
+            x,
+        SettlementAllocation(
+          id: 'demo-reversal-${o.allocations.length + 1}',
+          isReversal: true,
+          amountCents: -a.amountCents,
+          method: a.method,
+          reference: reason,
+        ),
+      ],
+    );
+    _store(i, next);
+    return _paid[requestId] = next;
+  }
 
   @override
   Future<String> saveDraft(

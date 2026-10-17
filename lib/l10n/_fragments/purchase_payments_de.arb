@@ -1,0 +1,124 @@
+{
+  "@@locale": "de",
+  "permRecordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
+  "@permRecordOutgoingPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAction": "Zahlung erfassen",
+  "@purchasesPayAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayTitle": "Zahlung erfassen",
+  "@purchasesPayTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayHint": "Erfassen Sie nur Geld, das tatsächlich gezahlt wurde. Die Zahlung wird von Ihnen gemeldet; die Bank bestätigt sie nicht.",
+  "@purchasesPayHint": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAmount": "Gezahlter Betrag",
+  "@purchasesPayAmount": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayDate": "Bezahlt am",
+  "@purchasesPayDate": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayMethod": "Zahlungsart",
+  "@purchasesPayMethod": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodBank": "Überweisung",
+  "@purchasesMethodBank": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCash": "Bar",
+  "@purchasesMethodCash": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCard": "Karte",
+  "@purchasesMethodCard": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodOther": "Andere",
+  "@purchasesMethodOther": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayReference": "Referenz (optional)",
+  "@purchasesPayReference": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayInvalid": "Geben Sie einen Betrag über null ein, höchstens {remaining}.",
+  "@purchasesPayInvalid": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPayRefused": "Die Zahlung wurde nicht erfasst. Prüfen Sie den Anspruch und versuchen Sie es erneut; ein Wiederholen sendet dieselbe Anfrage.",
+  "@purchasesPayRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaySaved": "Zahlung erfasst",
+  "@purchasesPaySaved": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayments": "Zahlungen",
+  "@purchasesPayments": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaymentLine": "{amount} · {date} · {method}",
+  "@purchasesPaymentLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPaymentReversed": "Storniert",
+  "@purchasesPaymentReversed": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReversalLine": "Stornierung · {amount}",
+  "@purchasesReversalLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesReverseAction": "Stornieren",
+  "@purchasesReverseAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseTitle": "Diese Zahlung stornieren",
+  "@purchasesReverseTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReason": "Warum wird sie storniert?",
+  "@purchasesReverseReason": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReasonNeeded": "Nennen Sie den Grund.",
+  "@purchasesReverseReasonNeeded": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseRefused": "Die Zahlung wurde nicht storniert. Sie ist möglicherweise bereits auf eine Rechnung angewendet.",
+  "@purchasesReverseRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseSaved": "Zahlung storniert",
+  "@purchasesReverseSaved": {
+    "description": "#2574 purchase payments"
+  }
+}

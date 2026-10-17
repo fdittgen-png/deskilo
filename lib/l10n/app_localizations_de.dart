@@ -13066,6 +13066,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Änderung der Zahlungsbedingungen beantragen';
 
   @override
+  String get permRecordOutgoingPayments => 'Zahlungen an Mitglieder erfassen';
+
+  @override
   String get permUseMessages => 'Den Messenger nutzen';
 
   @override
@@ -14394,6 +14397,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesLines => 'Positionen';
 
   @override
+  String get purchasesMethodBank => 'Überweisung';
+
+  @override
+  String get purchasesMethodCard => 'Karte';
+
+  @override
+  String get purchasesMethodCash => 'Bar';
+
+  @override
+  String get purchasesMethodOther => 'Andere';
+
+  @override
   String get purchasesNoSupplier => 'Kein Lieferant gewählt';
 
   @override
@@ -14406,6 +14421,51 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesOwedSuppliers => 'Lieferanten geschuldet';
 
   @override
+  String get purchasesPayAction => 'Zahlung erfassen';
+
+  @override
+  String get purchasesPayAmount => 'Gezahlter Betrag';
+
+  @override
+  String get purchasesPayDate => 'Bezahlt am';
+
+  @override
+  String get purchasesPayHint =>
+      'Erfassen Sie nur Geld, das tatsächlich gezahlt wurde. Die Zahlung wird von Ihnen gemeldet; die Bank bestätigt sie nicht.';
+
+  @override
+  String purchasesPayInvalid(String remaining) {
+    return 'Geben Sie einen Betrag über null ein, höchstens $remaining.';
+  }
+
+  @override
+  String get purchasesPayMethod => 'Zahlungsart';
+
+  @override
+  String get purchasesPayReference => 'Referenz (optional)';
+
+  @override
+  String get purchasesPayRefused =>
+      'Die Zahlung wurde nicht erfasst. Prüfen Sie den Anspruch und versuchen Sie es erneut; ein Wiederholen sendet dieselbe Anfrage.';
+
+  @override
+  String get purchasesPaySaved => 'Zahlung erfasst';
+
+  @override
+  String get purchasesPayTitle => 'Zahlung erfassen';
+
+  @override
+  String purchasesPaymentLine(String amount, String date, String method) {
+    return '$amount · $date · $method';
+  }
+
+  @override
+  String get purchasesPaymentReversed => 'Storniert';
+
+  @override
+  String get purchasesPayments => 'Zahlungen';
+
+  @override
   String get purchasesPickDate => 'Datum wählen';
 
   @override
@@ -14414,6 +14474,30 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get purchasesRefused =>
       'Der Einkauf konnte nicht gespeichert werden. Ihre Eingaben bleiben erhalten; versuchen Sie es erneut.';
+
+  @override
+  String purchasesReversalLine(String amount) {
+    return 'Stornierung · $amount';
+  }
+
+  @override
+  String get purchasesReverseAction => 'Stornieren';
+
+  @override
+  String get purchasesReverseReason => 'Warum wird sie storniert?';
+
+  @override
+  String get purchasesReverseReasonNeeded => 'Nennen Sie den Grund.';
+
+  @override
+  String get purchasesReverseRefused =>
+      'Die Zahlung wurde nicht storniert. Sie ist möglicherweise bereits auf eine Rechnung angewendet.';
+
+  @override
+  String get purchasesReverseSaved => 'Zahlung storniert';
+
+  @override
+  String get purchasesReverseTitle => 'Diese Zahlung stornieren';
 
   @override
   String get purchasesSave => 'Entwurf speichern';
