@@ -450,7 +450,7 @@ void main() {
         ),
       ];
       await pumpInbox(tester, home: home, remote: remote, extraOverrides: [
-        if (c.$2 != null) activeSettingsProvider.overrideWithValue(c.$2!),
+        if (c.$2 != null) activeSettingsProvider.overrideWithValue(c.$2),
       ]);
       await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
       await tester.pumpAndSettle();
