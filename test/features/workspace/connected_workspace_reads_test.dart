@@ -17,9 +17,12 @@ import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
+import 'package:deskilo/features/money/domain/account_activity.dart';
+import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/connected_space_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
@@ -287,6 +290,28 @@ void main() {
       // the empty fake host answers; the shape is not the point
     }
     expect(root.paths, contains('/rest/v1/rpc/my_rights_requests'));
+    expect(one.data, isEmpty);
+    expect(two.data, isEmpty);
+  });
+
+  test('what is the person\'s own stays on the root: account activity and visits',
+      () async {
+    await enter(one);
+    await container.read(workspaceContextProvider.future);
+    forget();
+    for (final read in <Future<Object?> Function()>[
+      () => container
+          .read(accountActivityRepositoryProvider)
+          .list(AccountActivityKind.payments),
+      () => container.read(guestParticipationRepositoryProvider).myVisits(),
+    ]) {
+      try {
+        await read();
+      } on Object {
+        // the empty fake host answers; the shape is not the point
+      }
+    }
+    expect(root.data, isNotEmpty);
     expect(one.data, isEmpty);
     expect(two.data, isEmpty);
   });

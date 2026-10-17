@@ -55,7 +55,7 @@ final class AccountActivityRepositoryProvider
 }
 
 String _$accountActivityRepositoryHash() =>
-    r'2140dd4f05a119a61312956cc851afd711fa73b6';
+    r'b31cc15fa8bb9d76bcac09221b1c00b027d8ab03';
 
 @ProviderFor(accountActivity)
 final accountActivityProvider = AccountActivityFamily._();

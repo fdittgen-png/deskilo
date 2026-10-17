@@ -67,11 +67,15 @@ const _clean = <String>[
   'lib/features/workspace/providers/workspace_files_providers.dart',
   'lib/features/workspace/providers/workspace_fields_providers.dart',
   'lib/features/workspace/providers/workspace_import_providers.dart',
+  // #2564 O1: what is the person's own, wherever they are (their account
+  // activity and their visits), is the root session's.
+  'lib/features/money/providers/account_activity_providers.dart',
+  'lib/features/visits/providers/visits_providers.dart',
 ];
 
 /// Hand-written lib files outside the allowlist that still name the
 /// singleton. RATCHET: this number only falls.
-const _budget = 15;
+const _budget = 13;
 
 bool _names(String line) => line.contains(_singleton);
 
