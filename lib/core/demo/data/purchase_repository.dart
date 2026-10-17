@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/purchase.dart';
+import '../../../features/money/domain/vat_rate.dart';
 
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
@@ -12,7 +13,9 @@ class FakePurchaseRepository implements PurchaseRepository {
   /// be tried exactly as in production.
   factory FakePurchaseRepository.demo() => FakePurchaseRepository()
     ..payables.addAll([
-      _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning'),
+      _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning supplies'),
+      _demoClaim('demo-claim-3', 'member-1', 5400, 'event catering'),
+      _demoClaim('demo-claim-4', 'member-2', 2850, 'reference books'),
       _demoClaim(
         'demo-claim-2',
         'member-3',
@@ -30,7 +33,17 @@ class FakePurchaseRepository implements PurchaseRepository {
           ),
         ],
       ),
-    ]);
+    ])
+    ..claimRates.addAll({
+      'p-demo-claim-1': 20,
+      'p-demo-claim-2': 5.5,
+      'p-demo-claim-3': 10,
+      'p-demo-claim-4': 5.5,
+    });
+
+  /// The VAT rate of each claim's receipt (the demo states what the server
+  /// would have read from the lines).
+  final Map<String, double> claimRates = {};
 
   static PayableRow _demoClaim(
     String id,
@@ -64,6 +77,10 @@ class FakePurchaseRepository implements PurchaseRepository {
   );
 
   final List<PurchaseDetail> _documents = [];
+
+  /// A document the demo space already holds (a bill captured, a receipt
+  /// awaiting approval or refused).
+  void add(PurchaseDetail document) => _documents.add(document);
   final Map<String, String> _requests = {};
 
   /// The claims the demo shows; the server derives them from approved
@@ -92,15 +109,30 @@ class FakePurchaseRepository implements PurchaseRepository {
     return PurchaseDetail(
       summary: row.purchase,
       revision: 1,
-      lines: [
-        PurchaseLine(
-          lineNo: 1,
-          description: row.purchase.category,
-          grossCents: row.purchase.grossCents,
-        ),
-      ],
+      lines: [_receiptLine(row, claimRates[purchaseId])],
       sources: const [],
       obligations: [row.obligation],
+    );
+  }
+
+  static PurchaseLine _receiptLine(PayableRow row, double? rate) {
+    final gross = row.purchase.grossCents;
+    if (rate == null) {
+      return PurchaseLine(
+        lineNo: 1,
+        description: row.purchase.category,
+        grossCents: gross,
+      );
+    }
+    final split = vatSplit(gross, rate);
+    return PurchaseLine(
+      lineNo: 1,
+      description: row.purchase.category,
+      grossCents: gross,
+      netCents: split.netCents,
+      taxCents: split.vatCents,
+      taxRatePercent: rate,
+      recoverableTaxCents: split.vatCents,
     );
   }
 

@@ -41,4 +41,6 @@ final Map<String, dynamic> demoFeatureFlags = {
   'taskRecorder': true,
   'meetingRooms': true,
   'parking': true,
+  'multiSite': true,
+  'siteDocuments': true,
 };

@@ -3,17 +3,14 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
-import 'package:deskilo/core/demo/data/einvoice_inbox_repository.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
-import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
-import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
 //
@@ -131,6 +128,7 @@ import 'data/plan_resource_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
+import 'seed/demo_purchase_seed.dart';
 
 /// #2631 — rooms, parking areas and chargers live in memory.
 List<Override> _resourceOverrides(DemoFixture fixture) => [
@@ -139,6 +137,17 @@ List<Override> _resourceOverrides(DemoFixture fixture) => [
       chargingStationRepositoryProvider
           .overrideWithValue(fixture.chargingStations),
     ];
+
+/// The purchase side -- suppliers, received supplier invoices, bills and
+/// receipts -- seeded for the session's day.
+List<Override> _purchasingOverrides(DateTime seededAt) {
+  final purchasing = seedDemoPurchasing(seededAt);
+  return [
+    eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
+    supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
+    purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
+  ];
+}
 
 /// The overrides that turn a scope into the Demo environment.
 ///
@@ -205,8 +214,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       expenseRepositoryProvider.overrideWithValue(fixture.money), accountingSourceQueriesProvider.overrideWithValue(fixture.money), // #2591, #2365
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      eInvoiceInboxRepositoryProvider
-          .overrideWithValue(FakeEInvoiceInboxRepository()), supplierRepositoryProvider.overrideWithValue(FakeSupplierRepository()), purchaseRepositoryProvider.overrideWithValue(FakePurchaseRepository.demo()), // #2358, #2567, #2573
+      ..._purchasingOverrides(fixture.seededAt), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),
