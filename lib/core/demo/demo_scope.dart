@@ -208,7 +208,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
-      profileRepositoryProvider.overrideWithValue(fixture.profiles),
+      profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
       // #1834 — Demo never opens another server's sign-in.

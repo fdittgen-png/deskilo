@@ -35,7 +35,7 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   // #1833 — asked as members of the space these ids came from: what the
   // caller may read of a person depends on their rights in THAT space.
   final profiles = await ref
-      .watch(profileRepositoryProvider)
+      .watch(memberProfileRepositoryProvider)
       .fetchProfiles(members.first.workspaceId, ids);
   // Filming mode replaces the people and keeps the page.
   return {

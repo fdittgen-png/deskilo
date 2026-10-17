@@ -48,7 +48,7 @@ final class KpiRepositoryProvider
   }
 }
 
-String _$kpiRepositoryHash() => r'1a139b032081f9b708982b6680164302b1cb1e4e';
+String _$kpiRepositoryHash() => r'66194a70b45dfb89eb364e6f9b12da3c3d32e149';
 
 /// #1924 — the finance KPIs.
 
@@ -101,7 +101,7 @@ final class FinanceKpiRepositoryProvider
 }
 
 String _$financeKpiRepositoryHash() =>
-    r'b9cc57494516cc4621443481ae610199d4823002';
+    r'839f4050e067f67aa83db49ffc6cacc0f5996938';
 
 /// One read per workspace and months, shared by every finance card.
 

@@ -16,11 +16,14 @@ import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/connected_space_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_fields_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderException;
@@ -183,6 +186,12 @@ void main() {
       () => container.read(floorPlanRepositoryProvider).fetchLevels('ws-1'),
       () => container.read(accessoryRepositoryProvider).fetchAccessories('ws-1'),
       () => container.read(calendarRepositoryProvider).whoCanAccessMe('ws-1'),
+      // #2564: the members' rows and the workspace feeds follow the host.
+      () => container
+          .read(memberProfileRepositoryProvider)
+          .fetchProfiles('ws-1', ['u-1']),
+      () => container.read(eventRepositoryProvider).fetchEvents('ws-1'),
+      () => container.read(workspaceFieldsRepositoryProvider).fetchFields('ws-1'),
     ];
     for (final read in reads) {
       try {
@@ -226,6 +235,21 @@ void main() {
     forget();
     try {
       await container.read(workspaceListRepositoryProvider).fetchMyWorkspaces();
+    } on Object {
+      // the empty fake host answers; the shape is not the point
+    }
+    expect(root.data, isNotEmpty);
+    expect(one.data, isEmpty);
+    expect(two.data, isEmpty);
+  });
+
+  test('my own profile row stays on the root session, whatever is selected',
+      () async {
+    await enter(one);
+    await container.read(workspaceContextProvider.future);
+    forget();
+    try {
+      await container.read(profileRepositoryProvider).fetchMyProfile();
     } on Object {
       // the empty fake host answers; the shape is not the point
     }

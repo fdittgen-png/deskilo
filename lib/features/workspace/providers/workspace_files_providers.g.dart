@@ -59,4 +59,4 @@ final class WorkspaceFilesRepositoryProvider
 }
 
 String _$workspaceFilesRepositoryHash() =>
-    r'141b8342e0434b471459eec41013f158aff34b4f';
+    r'd2fd29dad1f033c480aaa43cbee52cc3cd42d72b';
