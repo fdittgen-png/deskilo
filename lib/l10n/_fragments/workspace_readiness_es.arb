@@ -51,7 +51,7 @@
   "readinessReasonNoPolicies": "Ninguna solicitud espera a un validador",
   "readinessReasonNoEvidence": "Aún no se ha registrado ninguna exportación ni restauración",
   "readinessReasonRecentExport": "Hay una exportación reciente registrada",
-  "readinessReasonStaleExport": "La última exportación registrada tiene más de 90 días",
+  "readinessReasonStaleExport": "La última exportación registrada es anterior a la ventana de exportación reciente",
   "readinessActorOwner": "Usted",
   "readinessActorOperator": "El operador del servidor",
   "readinessActor": "Quién: {who}",

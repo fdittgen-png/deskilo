@@ -9,6 +9,11 @@ import '../../../core/settings/settings.dart';
 import '../../../l10n/app_localizations.dart';
 
 String settingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'readiness.recent_export_days' => l10n.settingLabelReadinessRecentExportDays,
+      'mcp.read_range_days' => l10n.settingLabelMcpReadRangeDays,
+      'calendar.range_days' => l10n.settingLabelCalendarRangeDays,
+      'kpi.capacity_range_days' => l10n.settingLabelKpiCapacityRangeDays,
+      'kpi.finance_range_months' => l10n.settingLabelKpiFinanceRangeMonths,
       'messaging.edit_window_minutes' => l10n.settingLabelMessagingEditWindowMinutes,
       'messaging.thread_poll_seconds' => l10n.settingLabelMessagingThreadPollSeconds,
       'messaging.inbox_poll_seconds' => l10n.settingLabelMessagingInboxPollSeconds,
@@ -33,6 +38,11 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
+      'readiness.recent_export_days' => l10n.settingHintReadinessRecentExportDays,
+      'mcp.read_range_days' => l10n.settingHintMcpReadRangeDays,
+      'calendar.range_days' => l10n.settingHintCalendarRangeDays,
+      'kpi.capacity_range_days' => l10n.settingHintKpiCapacityRangeDays,
+      'kpi.finance_range_months' => l10n.settingHintKpiFinanceRangeMonths,
       'messaging.edit_window_minutes' => l10n.settingHintMessagingEditWindowMinutes,
       'messaging.thread_poll_seconds' => l10n.settingHintMessagingThreadPollSeconds,
       'messaging.inbox_poll_seconds' => l10n.settingHintMessagingInboxPollSeconds,
@@ -64,6 +74,8 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'directory' => l10n.settingGroupDirectory,
       'presence' => l10n.settingGroupPresence,
       'messaging' => l10n.settingGroupMessaging,
+      'readiness' => l10n.settingGroupReadiness,
+      'kpi' => l10n.settingGroupKpi,
       _ => group,
     };
 
@@ -72,6 +84,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'minutes' => l10n.settingUnitMinutes,
       'hours' => l10n.settingUnitHours,
       'days' => l10n.settingUnitDays,
+      'months' => l10n.settingUnitMonths,
       'attempts' => l10n.settingUnitAttempts,
       'per hour' => l10n.settingUnitPerHour,
       'per day' => l10n.settingUnitPerDay,

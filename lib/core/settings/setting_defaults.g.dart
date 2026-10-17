@@ -20,14 +20,22 @@ abstract final class SettingDefaults {
   static const int bookingWalkUpFloorMinutes = 15;
   /// `booking.walk_up_window_minutes`
   static const int bookingWalkUpWindowMinutes = 240;
+  /// `calendar.range_days`
+  static const int calendarRangeDays = 400;
   /// `directory.upcoming_window_days`
   static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
+  /// `kpi.capacity_range_days`
+  static const int kpiCapacityRangeDays = 400;
+  /// `kpi.finance_range_months`
+  static const int kpiFinanceRangeMonths = 23;
   /// `mcp.confirmation_expiry_minutes`
   static const int mcpConfirmationExpiryMinutes = 5;
   /// `mcp.probe_freshness_minutes`
   static const int mcpProbeFreshnessMinutes = 15;
+  /// `mcp.read_range_days`
+  static const int mcpReadRangeDays = 31;
   /// `messaging.edit_window_minutes`
   static const int messagingEditWindowMinutes = 15;
   /// `messaging.group_creation_per_hour`
@@ -40,6 +48,8 @@ abstract final class SettingDefaults {
   static const int messagingThreadPollSeconds = 15;
   /// `presence.online_window_minutes`
   static const int presenceOnlineWindowMinutes = 5;
+  /// `readiness.recent_export_days`
+  static const int readinessRecentExportDays = 90;
   /// `security.badge_lockout_failures`
   static const int securityBadgeLockoutFailures = 5;
   /// `security.badge_lockout_minutes`
