@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "purchasesOffsetAction": "Offset against an invoice",
+  "@purchasesOffsetAction": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetTitle": "Offset against an invoice",
+  "@purchasesOffsetTitle": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetHint": "The claim settles an open invoice of the same member instead of being paid out. The invoice keeps its sales and VAT; only its payment is explained.",
+  "@purchasesOffsetHint": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetInvoice": "Invoice",
+  "@purchasesOffsetInvoice": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetNone": "This member has no open invoice to settle.",
+  "@purchasesOffsetNone": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetRefused": "The offset was not recorded. The claim, the invoice and the permissions are checked again; a retry sends the same request.",
+  "@purchasesOffsetRefused": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetSaved": "Offset recorded",
+  "@purchasesOffsetSaved": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetLine": "Offset · {amount} · {invoice}",
+  "@purchasesOffsetLine": {
+    "description": "#2574 claim offset",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "invoice": {
+        "type": "String"
+      }
+    }
+  }
+}

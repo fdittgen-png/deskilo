@@ -13,6 +13,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/purchase.dart' show
         purchaseDecidePermission,
         purchaseManagePermission,
+        purchaseOffsetPermission,
         purchasePayPermission;
 import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
@@ -169,6 +170,9 @@ class MoneyActionSet {
             canDecide: ref
                 .read(myPermissionsProvider)
                 .any((p) => p.wireName == purchaseDecidePermission),
+            canOffset: ref
+                .read(myPermissionsProvider)
+                .any((p) => p.wireName == purchaseOffsetPermission),
           ),
           icon: const Icon(Icons.shopping_cart_outlined),
           label: fitted(l10n.purchasesTitle),

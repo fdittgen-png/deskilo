@@ -12,6 +12,7 @@ import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
 import 'purchase_labels.dart';
+import 'purchase_offset_dialog.dart';
 import 'purchase_payment_dialogs.dart';
 
 /// "Open · 50.00 remaining", "Applied to invoice N", "On hold": where a claim
@@ -35,6 +36,7 @@ class PurchasePayablesView extends ConsumerWidget {
     required this.workspaceId,
     required this.onOpen,
     this.canPay = false,
+    this.canOffset = false,
     super.key,
   });
 
@@ -44,6 +46,21 @@ class PurchasePayablesView extends ConsumerWidget {
   /// The signed-in person holds recordOutgoingPayments; the server decides
   /// again on every write.
   final bool canPay;
+
+  /// The signed-in person may also settle an invoice (issueInvoices).
+  final bool canOffset;
+
+  Future<void> _offset(
+    BuildContext context,
+    WidgetRef ref,
+    PurchaseObligation claim,
+  ) async {
+    final saved = await showOffsetDialog(context, workspaceId, claim);
+    ref.invalidate(payablesProvider(workspaceId));
+    if (saved != true || !context.mounted) return;
+    ref.invalidate(invoiceMatchesProvider);
+    AppSnack.success(context, context.l10n.purchasesOffsetSaved);
+  }
 
   Future<void> _pay(
     BuildContext context,
@@ -115,6 +132,17 @@ class PurchasePayablesView extends ConsumerWidget {
                       tooltip: l10n.purchasesPayAction,
                       icon: const Icon(Icons.payments_outlined),
                       onPressed: () => _pay(context, ref, r.obligation),
+                    ),
+                  if (canPay &&
+                      canOffset &&
+                      r.obligation.payable &&
+                      !r.obligation.mine &&
+                      r.obligation.creditorKind == CreditorKind.member)
+                    IconButton(
+                      key: ValueKey('payable-offset-${r.obligation.id}'),
+                      tooltip: l10n.purchasesOffsetAction,
+                      icon: const Icon(Icons.swap_horiz),
+                      onPressed: () => _offset(context, ref, r.obligation),
                     ),
                 ],
               ),

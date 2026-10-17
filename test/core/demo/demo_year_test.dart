@@ -198,4 +198,33 @@ void main() {
     );
     expect(water.lines.single.taxStated, isFalse);
   });
+
+  test(
+    'offsetting a claim settles the claimant\'s invoice in the demo too',
+    () async {
+      final fixture = DemoFixture.build(now: DateTime(2026, 10, 17, 10));
+      final p = seedDemoPurchasing(
+        DateTime(2026, 10, 17, 10),
+        money: fixture.money,
+      );
+      expect(fixture.money.invoiceMatchesStore['demo-usage-bruno'], isNull);
+      final claim = (await p.purchases.fetchPayables('ws-1'))
+          .map((r) => r.obligation)
+          .firstWhere((o) => o.id == 'demo-claim-1');
+      final after = await p.purchases.offsetClaim(
+        'ws-1',
+        ClaimOffset(
+          obligationId: claim.id,
+          invoiceId: 'demo-usage-bruno',
+          amountCents: 2400,
+          revision: claim.revision,
+          requestId: 'r1',
+        ),
+      );
+      expect(after.remainingCents, claim.remainingCents - 2400);
+      final match = fixture.money.invoiceMatchesStore['demo-usage-bruno'];
+      expect(match?.paidCents, 2400);
+      expect(match?.resolution, 'exact');
+    },
+  );
 }

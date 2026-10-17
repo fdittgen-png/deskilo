@@ -25,6 +25,7 @@ Future<void> showPurchasesSheet(
   required bool canCapture,
   bool canPay = false,
   bool canDecide = false,
+  bool canOffset = false,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -33,6 +34,7 @@ Future<void> showPurchasesSheet(
     canCapture: canCapture,
     canPay: canPay,
     canDecide: canDecide,
+    canOffset: canOffset,
   ),
 );
 
@@ -44,6 +46,7 @@ class PurchasesView extends ConsumerStatefulWidget {
     required this.canCapture,
     this.canPay = false,
     this.canDecide = false,
+    this.canOffset = false,
     super.key,
   });
 
@@ -54,6 +57,9 @@ class PurchasesView extends ConsumerStatefulWidget {
 
   /// Whether the signed-in person holds approveExpenses.
   final bool canDecide;
+
+  /// Whether the signed-in person may also settle invoices (issueInvoices).
+  final bool canOffset;
 
   /// Whether the signed-in person holds managePurchases; the server decides
   /// again on every write.
@@ -103,6 +109,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
           PurchasePayablesView(
             workspaceId: workspaceId,
             canPay: widget.canPay,
+            canOffset: widget.canOffset,
             onOpen: (id) =>
                 _showDetailSheet(context, workspaceId, id, widget),
           )

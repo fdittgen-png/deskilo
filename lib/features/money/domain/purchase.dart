@@ -14,6 +14,7 @@ const purchaseManagePermission = 'managePurchases';
 /// deciding a purchase (`approveExpenses`).
 const purchasePayPermission = 'recordOutgoingPayments';
 const purchaseDecidePermission = 'approveExpenses';
+const purchaseOffsetPermission = 'issueInvoices';
 
 /// What a purchase document is: a supplier bill, a credit note, or the
 /// receipt of something a member paid (the expense flow's own document).
@@ -305,6 +306,10 @@ abstract interface class PurchaseRepository {
     required String reason,
     required String requestId,
   });
+
+  /// Settles (all or part of) one open invoice of the claimant from their
+  /// claim. Returns the claim as it now stands.
+  Future<PurchaseObligation> offsetClaim(String workspaceId, ClaimOffset offset);
 
   /// Reverses a recorded payment: the credit is whole again. Returns the
   /// claim as it now stands.

@@ -14388,6 +14388,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesNoSupplier => 'Ningún proveedor elegido';
 
   @override
+  String get purchasesOffsetAction => 'Compensar con una factura';
+
+  @override
+  String get purchasesOffsetHint =>
+      'La reclamación salda una factura abierta del mismo miembro en lugar de pagarse. La factura conserva sus ventas e IVA; solo se explica su pago.';
+
+  @override
+  String get purchasesOffsetInvoice => 'Factura';
+
+  @override
+  String purchasesOffsetLine(String amount, String invoice) {
+    return 'Compensación · $amount · $invoice';
+  }
+
+  @override
+  String get purchasesOffsetNone =>
+      'Este miembro no tiene facturas abiertas que saldar.';
+
+  @override
+  String get purchasesOffsetRefused =>
+      'La compensación no se registró. Se comprueban de nuevo la reclamación, la factura y los permisos; un reintento envía la misma solicitud.';
+
+  @override
+  String get purchasesOffsetSaved => 'Compensación registrada';
+
+  @override
+  String get purchasesOffsetTitle => 'Compensar con una factura';
+
+  @override
   String get purchasesOwedEmpty => 'Aquí no se debe nada.';
 
   @override

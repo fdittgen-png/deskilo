@@ -14423,6 +14423,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesNoSupplier => 'Kein Lieferant gewählt';
 
   @override
+  String get purchasesOffsetAction => 'Mit einer Rechnung verrechnen';
+
+  @override
+  String get purchasesOffsetHint =>
+      'Der Anspruch begleicht eine offene Rechnung desselben Mitglieds, statt ausgezahlt zu werden. Die Rechnung behält Umsatz und USt; nur ihre Zahlung wird erklärt.';
+
+  @override
+  String get purchasesOffsetInvoice => 'Rechnung';
+
+  @override
+  String purchasesOffsetLine(String amount, String invoice) {
+    return 'Verrechnung · $amount · $invoice';
+  }
+
+  @override
+  String get purchasesOffsetNone =>
+      'Dieses Mitglied hat keine offene Rechnung zu begleichen.';
+
+  @override
+  String get purchasesOffsetRefused =>
+      'Die Verrechnung wurde nicht erfasst. Anspruch, Rechnung und Rechte werden erneut geprüft; ein Wiederholen sendet dieselbe Anfrage.';
+
+  @override
+  String get purchasesOffsetSaved => 'Verrechnung erfasst';
+
+  @override
+  String get purchasesOffsetTitle => 'Mit einer Rechnung verrechnen';
+
+  @override
   String get purchasesOwedEmpty => 'Hier ist nichts offen.';
 
   @override

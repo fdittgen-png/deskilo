@@ -1,0 +1,43 @@
+{
+  "@@locale": "fr",
+  "purchasesOffsetAction": "Compenser avec une facture",
+  "@purchasesOffsetAction": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetTitle": "Compenser avec une facture",
+  "@purchasesOffsetTitle": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetHint": "La créance règle une facture ouverte du même membre au lieu d'être versée. La facture garde ses ventes et sa TVA ; seul son règlement est expliqué.",
+  "@purchasesOffsetHint": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetInvoice": "Facture",
+  "@purchasesOffsetInvoice": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetNone": "Ce membre n'a aucune facture ouverte à régler.",
+  "@purchasesOffsetNone": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetRefused": "La compensation n'a pas été enregistrée. La créance, la facture et les droits sont revérifiés ; une nouvelle tentative envoie la même demande.",
+  "@purchasesOffsetRefused": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetSaved": "Compensation enregistrée",
+  "@purchasesOffsetSaved": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetLine": "Compensation · {amount} · {invoice}",
+  "@purchasesOffsetLine": {
+    "description": "#2574 claim offset",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "invoice": {
+        "type": "String"
+      }
+    }
+  }
+}

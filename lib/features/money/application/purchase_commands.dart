@@ -94,4 +94,34 @@ class PurchaseCommands {
       requestId: requestId,
     );
   }
+
+  /// Offsets [amountCents] of [claim] against an open invoice of the same
+  /// member that still owes at least that much; null, nothing sent, when the
+  /// amount cannot be.
+  Future<PurchaseObligation?> offset(
+    String workspaceId,
+    PurchaseObligation claim, {
+    required String invoiceId,
+    required int invoiceDueCents,
+    required int amountCents,
+    required String requestId,
+  }) async {
+    if (!claim.payable ||
+        claim.creditorKind != CreditorKind.member ||
+        amountCents <= 0 ||
+        amountCents > claim.remainingCents ||
+        amountCents > invoiceDueCents) {
+      return null;
+    }
+    return _repository.offsetClaim(
+      workspaceId,
+      ClaimOffset(
+        obligationId: claim.id,
+        invoiceId: invoiceId,
+        amountCents: amountCents,
+        revision: claim.revision,
+        requestId: requestId,
+      ),
+    );
+  }
 }

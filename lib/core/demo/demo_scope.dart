@@ -140,8 +140,8 @@ List<Override> _resourceOverrides(DemoFixture fixture) => [
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
-List<Override> _purchasingOverrides(DateTime seededAt) {
-  final purchasing = seedDemoPurchasing(seededAt);
+List<Override> _purchasingOverrides(DemoFixture fixture) {
+  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money);
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
@@ -214,7 +214,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       expenseRepositoryProvider.overrideWithValue(fixture.money), accountingSourceQueriesProvider.overrideWithValue(fixture.money), // #2591, #2365
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      ..._purchasingOverrides(fixture.seededAt), // #2358, #2567, #2573
+      ..._purchasingOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),

@@ -1,0 +1,43 @@
+{
+  "@@locale": "it",
+  "purchasesOffsetAction": "Compensa con una fattura",
+  "@purchasesOffsetAction": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetTitle": "Compensa con una fattura",
+  "@purchasesOffsetTitle": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetHint": "Il credito salda una fattura aperta dello stesso socio invece di essere pagato. La fattura mantiene vendite e IVA; si spiega solo il pagamento.",
+  "@purchasesOffsetHint": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetInvoice": "Fattura",
+  "@purchasesOffsetInvoice": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetNone": "Questo socio non ha fatture aperte da saldare.",
+  "@purchasesOffsetNone": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetRefused": "La compensazione non è stata registrata. Credito, fattura e permessi vengono ricontrollati; un nuovo tentativo invia la stessa richiesta.",
+  "@purchasesOffsetRefused": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetSaved": "Compensazione registrata",
+  "@purchasesOffsetSaved": {
+    "description": "#2574 claim offset"
+  },
+  "purchasesOffsetLine": "Compensazione · {amount} · {invoice}",
+  "@purchasesOffsetLine": {
+    "description": "#2574 claim offset",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "invoice": {
+        "type": "String"
+      }
+    }
+  }
+}
