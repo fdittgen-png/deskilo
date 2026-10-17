@@ -14319,6 +14319,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesAddBill => 'Lieferantenrechnung hinzufügen';
 
   @override
+  String get purchasesApproveAction => 'Genehmigen';
+
+  @override
+  String get purchasesApprovedDone =>
+      'Genehmigt: Sie wird dem Lieferanten nun geschuldet';
+
+  @override
   String purchasesClaimApplied(String number) {
     return 'Auf Rechnung $number angewendet';
   }
@@ -14346,11 +14353,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesClaimsTitle => 'Erstattung';
 
   @override
+  String get purchasesDecisionRefused =>
+      'Es wurde nicht erfasst. Eine andere Person als die einreichende muss entscheiden, und die Rechnung muss noch auf Genehmigung warten.';
+
+  @override
   String get purchasesDescription => 'Beschreibung';
 
   @override
   String get purchasesDraftNote =>
-      'Ein Entwurf: Er wird eingereicht, sobald seine Verbindlichkeit besteht.';
+      'Ein Entwurf: Reichen Sie ihn zur Genehmigung ein, wenn er vollständig ist.';
 
   @override
   String get purchasesDueDate => 'Fälligkeit';
@@ -14371,7 +14382,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesIntro =>
-      'Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst und bleibt ein Entwurf, bis ihre Verbindlichkeit besteht.';
+      'Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst, zur Genehmigung eingereicht, von einer anderen Person entschieden und dann dem Lieferanten bis zur Zahlung geschuldet.';
 
   @override
   String get purchasesInvalid =>
@@ -14476,6 +14487,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Einkauf konnte nicht gespeichert werden. Ihre Eingaben bleiben erhalten; versuchen Sie es erneut.';
 
   @override
+  String get purchasesRejectAction => 'Ablehnen';
+
+  @override
+  String get purchasesRejectReason => 'Warum wird er abgelehnt?';
+
+  @override
+  String get purchasesRejectTitle => 'Diesen Einkauf ablehnen';
+
+  @override
+  String get purchasesRejectedDone => 'Abgelehnt';
+
+  @override
   String purchasesReversalLine(String amount) {
     return 'Stornierung · $amount';
   }
@@ -14527,6 +14550,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesStateRejected => 'Abgelehnt';
+
+  @override
+  String get purchasesSubmitAction => 'Zur Genehmigung einreichen';
+
+  @override
+  String get purchasesSubmitRefused =>
+      'Sie wurde nicht eingereicht. Eine Rechnung braucht ihren Lieferanten und einen Betrag und muss noch zu zahlen sein.';
+
+  @override
+  String get purchasesSubmitted => 'Zur Genehmigung eingereicht';
 
   @override
   String get purchasesSupplier => 'Lieferant';

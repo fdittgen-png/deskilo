@@ -16,7 +16,7 @@
   "@purchasesTitle": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui e resta una bozza finché non esiste il relativo debito.",
+  "purchasesIntro": "Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui, si invia all'approvazione, la decide un'altra persona e poi è dovuta al fornitore fino al pagamento.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -154,7 +154,7 @@
   "@purchasesInvalid": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Una bozza: viene inviata quando esiste il relativo debito.",
+  "purchasesDraftNote": "Una bozza: la invii all'approvazione quando è completa.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },

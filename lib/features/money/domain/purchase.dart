@@ -10,8 +10,10 @@ export 'purchase_obligation.dart';
 /// screen asks for it without importing the workspace permission catalogue.
 const purchaseManagePermission = 'managePurchases';
 
-/// Likewise for recording cash paid out (`recordOutgoingPayments`).
+/// Likewise for recording cash paid out (`recordOutgoingPayments`) and for
+/// deciding a purchase (`approveExpenses`).
 const purchasePayPermission = 'recordOutgoingPayments';
+const purchaseDecidePermission = 'approveExpenses';
 
 /// What a purchase document is: a supplier bill, a credit note, or the
 /// receipt of something a member paid (the expense flow's own document).
@@ -284,6 +286,25 @@ abstract interface class PurchaseRepository {
     String workspaceId,
     ReimbursementCommand command,
   );
+
+  /// Sends a captured supplier bill to approval. Returns the new state.
+  Future<PurchaseState> submitBill(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  );
+
+  /// Approves or rejects a bill awaiting approval (another person than its
+  /// submitter). A rejection carries its reason. Returns the new state.
+  Future<PurchaseState> decideBill(
+    String workspaceId,
+    String purchaseId,
+    int revision, {
+    required bool approve,
+    required String reason,
+    required String requestId,
+  });
 
   /// Reverses a recorded payment: the credit is whole again. Returns the
   /// claim as it now stands.

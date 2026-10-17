@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "purchasesSubmitAction": "Send for approval",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApproveAction": "Approve",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectAction": "Reject",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Reject this purchase",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Why is it rejected?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesDecisionRefused": "It was not recorded. Another person than the one who submitted it must decide, and the bill must still be awaiting approval.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Sent for approval",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Approved: it is now owed to the supplier",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Rejected",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "It was not sent. A bill needs its supplier and an amount, and must still be to pay.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  }
+}

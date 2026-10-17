@@ -10,7 +10,10 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/purchase.dart' show purchaseManagePermission, purchasePayPermission;
+import '../../domain/purchase.dart' show
+        purchaseDecidePermission,
+        purchaseManagePermission,
+        purchasePayPermission;
 import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
@@ -163,6 +166,9 @@ class MoneyActionSet {
             canPay: ref
                 .read(myPermissionsProvider)
                 .any((p) => p.wireName == purchasePayPermission),
+            canDecide: ref
+                .read(myPermissionsProvider)
+                .any((p) => p.wireName == purchaseDecidePermission),
           ),
           icon: const Icon(Icons.shopping_cart_outlined),
           label: fitted(l10n.purchasesTitle),

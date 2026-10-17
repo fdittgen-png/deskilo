@@ -14285,6 +14285,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesAddBill => 'Añadir factura de proveedor';
 
   @override
+  String get purchasesApproveAction => 'Aprobar';
+
+  @override
+  String get purchasesApprovedDone => 'Aprobada: ahora se debe al proveedor';
+
+  @override
   String purchasesClaimApplied(String number) {
     return 'Aplicado a la factura $number';
   }
@@ -14312,11 +14318,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesClaimsTitle => 'Reembolso';
 
   @override
+  String get purchasesDecisionRefused =>
+      'No se registró. Debe decidir otra persona distinta de quien la envió, y la factura debe seguir pendiente.';
+
+  @override
   String get purchasesDescription => 'Descripción';
 
   @override
   String get purchasesDraftNote =>
-      'Un borrador: se presenta cuando exista su deuda.';
+      'Un borrador: envíelo a aprobación cuando esté completo.';
 
   @override
   String get purchasesDueDate => 'Vencimiento';
@@ -14337,7 +14347,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesIntro =>
-      'Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí y sigue siendo un borrador hasta que exista su deuda.';
+      'Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí, se envía a aprobación, la decide otra persona y después se debe al proveedor hasta que se paga.';
 
   @override
   String get purchasesInvalid =>
@@ -14442,6 +14452,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar la compra. Sus datos se conservan; inténtelo de nuevo.';
 
   @override
+  String get purchasesRejectAction => 'Rechazar';
+
+  @override
+  String get purchasesRejectReason => '¿Por qué se rechaza?';
+
+  @override
+  String get purchasesRejectTitle => 'Rechazar esta compra';
+
+  @override
+  String get purchasesRejectedDone => 'Rechazada';
+
+  @override
   String purchasesReversalLine(String amount) {
     return 'Reversión · $amount';
   }
@@ -14493,6 +14515,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesStateRejected => 'Rechazado';
+
+  @override
+  String get purchasesSubmitAction => 'Enviar a aprobación';
+
+  @override
+  String get purchasesSubmitRefused =>
+      'No se envió. Una factura necesita su proveedor y un importe, y debe estar aún por pagar.';
+
+  @override
+  String get purchasesSubmitted => 'Enviada a aprobación';
 
   @override
   String get purchasesSupplier => 'Proveedor';

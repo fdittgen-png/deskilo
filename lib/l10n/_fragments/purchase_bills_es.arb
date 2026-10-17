@@ -1,0 +1,43 @@
+{
+  "@@locale": "es",
+  "purchasesSubmitAction": "Enviar a aprobación",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApproveAction": "Aprobar",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectAction": "Rechazar",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Rechazar esta compra",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "¿Por qué se rechaza?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesDecisionRefused": "No se registró. Debe decidir otra persona distinta de quien la envió, y la factura debe seguir pendiente.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Enviada a aprobación",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Aprobada: ahora se debe al proveedor",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Rechazada",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "No se envió. Una factura necesita su proveedor y un importe, y debe estar aún por pagar.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  }
+}

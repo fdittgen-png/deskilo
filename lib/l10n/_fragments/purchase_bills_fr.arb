@@ -1,0 +1,43 @@
+{
+  "@@locale": "fr",
+  "purchasesSubmitAction": "Envoyer pour approbation",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApproveAction": "Approuver",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectAction": "Refuser",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Refuser cet achat",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Pourquoi est-il refusé ?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesDecisionRefused": "Ce n'est pas enregistré. Une autre personne que celle qui l'a soumise doit décider, et la facture doit être encore en attente.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Envoyée pour approbation",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Approuvée : elle est désormais due au fournisseur",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Refusée",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "Elle n'a pas été envoyée. Une facture a besoin de son fournisseur et d'un montant, et doit être encore à payer.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  }
+}

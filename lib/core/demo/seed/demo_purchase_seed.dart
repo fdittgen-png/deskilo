@@ -84,6 +84,13 @@ const _suppliers = [
     countryCode: 'FR',
   ),
   Supplier(
+    id: 'demo-supplier-bank',
+    number: '6',
+    name: 'Crédit Méridional',
+    city: 'Béziers',
+    countryCode: 'FR',
+  ),
+  Supplier(
     id: 'demo-supplier-energy',
     number: '5',
     name: 'Énergie du Languedoc',
@@ -223,41 +230,14 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
     )
     ..add(
       _document(
-        'demo-bill-cleaning',
-        bill,
-        draft,
-        _meta('NC-8810', ago(9), supplier: cleaning, dueOn: inDays(20)),
-        [_bought(1, 'Cleaning, month', 14400, 20)],
-      ),
-    )
-    ..add(
-      _document(
         'demo-bill-energy',
         bill,
         draft,
-        _meta('EDL-0457', ago(4), supplier: _suppliers[4], dueOn: inDays(12)),
+        _meta('EDL-0457', ago(4), supplier: _suppliers[5], dueOn: inDays(12)),
         [
           _bought(1, 'Electricity, subscription', 1500, 5.5),
           _bought(2, 'Electricity, 1,740 kWh', 30360, 20),
         ],
-      ),
-    )
-    ..add(
-      _document(
-        'demo-bill-catering',
-        bill,
-        draft,
-        _meta('TR-3321', ago(2), dueOn: inDays(30)),
-        [_bought(1, 'Catering, open evening', 22000, 10)],
-      ),
-    )
-    ..add(
-      _document(
-        'demo-bill-bank',
-        bill,
-        draft,
-        _meta('BQ-Q3', ago(15), dueOn: inDays(5)),
-        [_bought(1, 'Bank charges', 1500, 0)],
       ),
     )
     ..add(
@@ -294,6 +274,57 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         PurchaseState.rejected,
         _meta('', ago(6)),
         [_bought(1, 'Tools', 9000, 20)],
+      ),
+    )
+    // Approved by a second person and now owed to the supplier: the cleaning
+    // bill part-paid, the bank charges paid in full; the catering bill waits.
+    ..addApprovedBill(
+      _document(
+        'demo-bill-cleaning',
+        bill,
+        draft,
+        _meta('NC-8810', ago(9), supplier: cleaning, dueOn: inDays(20)),
+        [_bought(1, 'Cleaning, month', 14400, 20)],
+      ),
+      'demo-supplier-cleaning',
+      payments: [
+        SettlementAllocation(
+          id: 'demo-sup-alloc-1',
+          isReversal: false,
+          amountCents: 10000,
+          method: 'bank_transfer',
+          reference: 'Wire NC-8810 (part)',
+          paidOn: ago(3),
+        ),
+      ],
+    )
+    ..addApprovedBill(
+      _document(
+        'demo-bill-bank',
+        bill,
+        draft,
+        _meta('BQ-Q3', ago(15), supplier: _suppliers[4], dueOn: inDays(5)),
+        [_bought(1, 'Bank charges', 1500, 0)],
+      ),
+      'demo-supplier-bank',
+      payments: [
+        SettlementAllocation(
+          id: 'demo-sup-alloc-2',
+          isReversal: false,
+          amountCents: 1500,
+          method: 'card',
+          reference: 'Direct debit',
+          paidOn: ago(12),
+        ),
+      ],
+    )
+    ..addPendingBill(
+      _document(
+        'demo-bill-catering',
+        bill,
+        draft,
+        _meta('TR-3321', ago(2), dueOn: inDays(30)),
+        [_bought(1, 'Catering, open evening', 22000, 10)],
       ),
     );
 }

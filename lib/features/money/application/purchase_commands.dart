@@ -57,4 +57,41 @@ class PurchaseCommands {
       requestId: requestId,
     );
   }
+
+  /// Sends a captured bill to approval; null, nothing sent, when it is not a
+  /// draft bill.
+  Future<PurchaseState?> submit(
+    String workspaceId,
+    PurchaseDetail bill,
+    String requestId,
+  ) async {
+    final s = bill.summary;
+    if (s.kind != PurchaseKind.bill || s.state != PurchaseState.draft) {
+      return null;
+    }
+    return _repository.submitBill(workspaceId, s.id, bill.revision, requestId);
+  }
+
+  /// Approves or rejects a bill awaiting approval; a rejection needs its
+  /// reason.
+  Future<PurchaseState?> decide(
+    String workspaceId,
+    PurchaseDetail bill, {
+    required bool approve,
+    required String reason,
+    required String requestId,
+  }) async {
+    if (bill.summary.state != PurchaseState.pending ||
+        (!approve && reason.trim().isEmpty)) {
+      return null;
+    }
+    return _repository.decideBill(
+      workspaceId,
+      bill.summary.id,
+      bill.revision,
+      approve: approve,
+      reason: reason.trim(),
+      requestId: requestId,
+    );
+  }
 }

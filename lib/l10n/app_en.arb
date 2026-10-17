@@ -16450,6 +16450,14 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApproveAction": "Approve",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Approved: it is now owed to the supplier",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesClaimApplied": "Applied to invoice {number}",
   "@purchasesClaimApplied": {
     "description": "#2574 purchase payables",
@@ -16493,11 +16501,15 @@
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
   },
+  "purchasesDecisionRefused": "It was not recorded. Another person than the one who submitted it must decide, and the bill must still be awaiting approval.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesDescription": "Description",
   "@purchasesDescription": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "A draft: it is submitted once its payable exists.",
+  "purchasesDraftNote": "A draft: send it for approval when it is complete.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },
@@ -16526,7 +16538,7 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.",
+  "purchasesIntro": "Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here, sent for approval, decided by another person, and then owed to the supplier until it is paid.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -16670,6 +16682,22 @@
   "@purchasesRefused": {
     "description": "#2573 purchases"
   },
+  "purchasesRejectAction": "Reject",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Why is it rejected?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Reject this purchase",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Rejected",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesReversalLine": "Reversal · {amount}",
   "@purchasesReversalLine": {
     "description": "#2574 purchase payments",
@@ -16743,6 +16771,18 @@
   "purchasesStateRejected": "Rejected",
   "@purchasesStateRejected": {
     "description": "#2573 purchases"
+  },
+  "purchasesSubmitAction": "Send for approval",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "It was not sent. A bill needs its supplier and an amount, and must still be to pay.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Sent for approval",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
   },
   "purchasesSupplier": "Supplier",
   "@purchasesSupplier": {

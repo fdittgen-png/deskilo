@@ -16,7 +16,7 @@
   "@purchasesTitle": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Les factures fournisseur et les reçus payés par les membres pour l'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici et reste un brouillon tant que sa dette n'existe pas.",
+  "purchasesIntro": "Les factures fournisseur et les reçus payés par les membres pour l'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici, envoyée pour approbation, décidée par une autre personne, puis due au fournisseur jusqu'à son paiement.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -154,7 +154,7 @@
   "@purchasesInvalid": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Un brouillon : il est soumis dès que sa dette existe.",
+  "purchasesDraftNote": "Un brouillon : envoyez-le pour approbation une fois complet.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },

@@ -14180,6 +14180,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesAddBill => 'Add supplier bill';
 
   @override
+  String get purchasesApproveAction => 'Approve';
+
+  @override
+  String get purchasesApprovedDone =>
+      'Approved: it is now owed to the supplier';
+
+  @override
   String purchasesClaimApplied(String number) {
     return 'Applied to invoice $number';
   }
@@ -14207,11 +14214,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesClaimsTitle => 'Reimbursement';
 
   @override
+  String get purchasesDecisionRefused =>
+      'It was not recorded. Another person than the one who submitted it must decide, and the bill must still be awaiting approval.';
+
+  @override
   String get purchasesDescription => 'Description';
 
   @override
   String get purchasesDraftNote =>
-      'A draft: it is submitted once its payable exists.';
+      'A draft: send it for approval when it is complete.';
 
   @override
   String get purchasesDueDate => 'Due date';
@@ -14232,7 +14243,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesIntro =>
-      'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.';
+      'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here, sent for approval, decided by another person, and then owed to the supplier until it is paid.';
 
   @override
   String get purchasesInvalid =>
@@ -14337,6 +14348,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The purchase could not be saved. Your entries are kept; try again.';
 
   @override
+  String get purchasesRejectAction => 'Reject';
+
+  @override
+  String get purchasesRejectReason => 'Why is it rejected?';
+
+  @override
+  String get purchasesRejectTitle => 'Reject this purchase';
+
+  @override
+  String get purchasesRejectedDone => 'Rejected';
+
+  @override
   String purchasesReversalLine(String amount) {
     return 'Reversal · $amount';
   }
@@ -14388,6 +14411,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesStateRejected => 'Rejected';
+
+  @override
+  String get purchasesSubmitAction => 'Send for approval';
+
+  @override
+  String get purchasesSubmitRefused =>
+      'It was not sent. A bill needs its supplier and an amount, and must still be to pay.';
+
+  @override
+  String get purchasesSubmitted => 'Sent for approval';
 
   @override
   String get purchasesSupplier => 'Supplier';

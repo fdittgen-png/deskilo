@@ -83,6 +83,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
       paidOn: _paidOn ?? _today,
       method: _method,
       reference: _reference.text.trim(),
+      creditorKind: widget.claim.creditorKind,
     );
   }
 
@@ -106,6 +107,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
       paidOn: command.paidOn,
       method: command.method,
       reference: command.reference,
+      creditorKind: command.creditorKind,
     );
     _attempted = sent;
     final navigator = Navigator.of(context);
