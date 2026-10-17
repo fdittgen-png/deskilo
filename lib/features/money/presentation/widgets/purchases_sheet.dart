@@ -13,6 +13,7 @@ import '../../domain/purchase.dart';
 import '../../providers/purchase_providers.dart';
 import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
+import 'purchase_payables.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
 /// offer it; the server shows a member their own documents and a manager all.
@@ -29,7 +30,7 @@ Future<void> showPurchasesSheet(
 
 /// The list of documents, with the supplier-bill door for who may capture.
 @visibleForTesting
-class PurchasesView extends ConsumerWidget {
+class PurchasesView extends ConsumerStatefulWidget {
   const PurchasesView({
     required this.workspaceId,
     required this.canCapture,
@@ -42,7 +43,16 @@ class PurchasesView extends ConsumerWidget {
   /// again on every write.
   final bool canCapture;
 
-  Future<void> _add(BuildContext context, WidgetRef ref) async {
+  @override
+  ConsumerState<PurchasesView> createState() => _PurchasesViewState();
+}
+
+class _PurchasesViewState extends ConsumerState<PurchasesView> {
+  var _toPay = false;
+
+  String get workspaceId => widget.workspaceId;
+
+  Future<void> _add(BuildContext context) async {
     final saved = await showPurchaseBillDialog(context, workspaceId);
     if (saved != true || !context.mounted) return;
     ref.invalidate(purchasesProvider(workspaceId));
@@ -50,7 +60,7 @@ class PurchasesView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final purchases =
@@ -60,23 +70,51 @@ class PurchasesView extends ConsumerWidget {
       title: l10n.purchasesTitle,
       children: [
         const SizedBox(height: AppSpacing.sm),
-        Text(
-          l10n.purchasesIntro,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+        SegmentedButton<bool>(
+          key: const ValueKey('purchases-tabs'),
+          segments: [
+            ButtonSegment(
+              value: false,
+              label: Text(l10n.purchasesTabDocuments),
+            ),
+            ButtonSegment(value: true, label: Text(l10n.purchasesTabToPay)),
+          ],
+          selected: {_toPay},
+          onSelectionChanged: (s) => setState(() => _toPay = s.first),
         ),
-        if (canCapture) ...[
-          const SizedBox(height: AppSpacing.sm),
-          FilledButton.icon(
-            key: const ValueKey('purchase-add-bill'),
-            onPressed: () => _add(context, ref),
-            icon: const Icon(Icons.add),
-            label: Text(l10n.purchasesAddBill),
+        const SizedBox(height: AppSpacing.sm),
+        if (_toPay)
+          PurchasePayablesView(
+            workspaceId: workspaceId,
+            onOpen: (id) => _showDetailSheet(context, workspaceId, id),
+          )
+        else ...[
+          Text(
+            l10n.purchasesIntro,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
+          if (widget.canCapture) ...[
+            const SizedBox(height: AppSpacing.sm),
+            FilledButton.icon(
+              key: const ValueKey('purchase-add-bill'),
+              onPressed: () => _add(context),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.purchasesAddBill),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.lg),
+          if (purchases.isEmpty) Text(l10n.purchasesEmpty),
+          ..._documents(context, purchases),
         ],
-        const SizedBox(height: AppSpacing.lg),
-        if (purchases.isEmpty) Text(l10n.purchasesEmpty),
+      ],
+    );
+  }
+
+  List<Widget> _documents(BuildContext context, List<PurchaseSummary> purchases) {
+    final l10n = context.l10n;
+    return [
         for (final p in purchases)
           ListTile(
             key: ValueKey('purchase-${p.id}'),
@@ -95,8 +133,7 @@ class PurchasesView extends ConsumerWidget {
             trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
             onTap: () => _showDetailSheet(context, workspaceId, p.id),
           ),
-      ],
-    );
+    ];
   }
 }
 
@@ -188,6 +225,17 @@ class _PurchaseDetailView extends ConsumerWidget {
         ),
         if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
           Text(l10n.purchasesTaxPartial),
+        if (detail.obligations.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.lg),
+          Text(l10n.purchasesClaimsTitle, style: theme.textTheme.titleSmall),
+          for (final o in detail.obligations)
+            ListTile(
+              key: ValueKey('purchase-claim-${o.id}'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(claimStatusLabel(l10n, o)),
+              trailing: Text(money.formatMinor(o.amountCents)),
+            ),
+        ],
         if (detail.sources.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.lg),
           Text(l10n.purchasesEvidence, style: theme.textTheme.titleSmall),

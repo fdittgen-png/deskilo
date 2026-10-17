@@ -9125,6 +9125,49 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesClaimApplied": "Appliqué à la facture {number}",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimCancelled": "Annulé",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimHeld": "En attente",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOpen": "Ouvert · {amount} restant",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOwedTo": "Dû à {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimYou": "Vous",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Remboursement",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesDescription": "Description",
   "@purchasesDescription": {
     "description": "#2573 purchases"
@@ -9194,6 +9237,18 @@
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesOwedEmpty": "Rien n'est dû ici.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Dû aux membres",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Dû aux fournisseurs",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesPickDate": "Choisir une date",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
@@ -9251,6 +9306,14 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesTabDocuments": "Documents",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "À payer",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesTaxField": "Dont taxe (vide si la facture ne l'indique pas)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -9266,6 +9329,10 @@
   "purchasesTitle": "Achats",
   "@purchasesTitle": {
     "description": "#2573 purchases"
+  },
+  "purchasesToPayIntro": "Ce que l'espace doit encore pour les achats approuvés. La créance d'un membre est le crédit que son justificatif approuvé a déjà inscrit ; elle est appliquée dès qu'une facture le reprend. L'enregistrement des paiements et des compensations viendra plus tard.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
   },
   "purchasesTotal": "Total",
   "@purchasesTotal": {

@@ -14321,6 +14321,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesAddBill => 'Ajouter une facture fournisseur';
 
   @override
+  String purchasesClaimApplied(String number) {
+    return 'Appliqué à la facture $number';
+  }
+
+  @override
+  String get purchasesClaimCancelled => 'Annulé';
+
+  @override
+  String get purchasesClaimHeld => 'En attente';
+
+  @override
+  String purchasesClaimOpen(String amount) {
+    return 'Ouvert · $amount restant';
+  }
+
+  @override
+  String purchasesClaimOwedTo(String name) {
+    return 'Dû à $name';
+  }
+
+  @override
+  String get purchasesClaimYou => 'Vous';
+
+  @override
+  String get purchasesClaimsTitle => 'Remboursement';
+
+  @override
   String get purchasesDescription => 'Description';
 
   @override
@@ -14375,6 +14402,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesNoSupplier => 'Aucun fournisseur choisi';
 
   @override
+  String get purchasesOwedEmpty => 'Rien n\'est dû ici.';
+
+  @override
+  String get purchasesOwedMembers => 'Dû aux membres';
+
+  @override
+  String get purchasesOwedSuppliers => 'Dû aux fournisseurs';
+
+  @override
   String get purchasesPickDate => 'Choisir une date';
 
   @override
@@ -14417,6 +14453,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesSupplier => 'Fournisseur';
 
   @override
+  String get purchasesTabDocuments => 'Documents';
+
+  @override
+  String get purchasesTabToPay => 'À payer';
+
+  @override
   String get purchasesTaxField =>
       'Dont taxe (vide si la facture ne l\'indique pas)';
 
@@ -14429,6 +14471,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesTitle => 'Achats';
+
+  @override
+  String get purchasesToPayIntro =>
+      'Ce que l\'espace doit encore pour les achats approuvés. La créance d\'un membre est le crédit que son justificatif approuvé a déjà inscrit ; elle est appliquée dès qu\'une facture le reprend. L\'enregistrement des paiements et des compensations viendra plus tard.';
 
   @override
   String get purchasesTotal => 'Total';

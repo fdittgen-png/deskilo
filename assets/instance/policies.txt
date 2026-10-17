@@ -191,6 +191,8 @@ public.purchase_documents.mcp_delegated_deny
 public.purchase_documents.purchase_documents_select
 public.purchase_lines.mcp_delegated_deny
 public.purchase_lines.purchase_lines_select
+public.purchase_obligations.mcp_delegated_deny
+public.purchase_obligations.purchase_obligations_select
 public.purchase_requests.mcp_delegated_deny
 public.purchase_sources.mcp_delegated_deny
 public.purchase_sources.purchase_sources_select

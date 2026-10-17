@@ -29,3 +29,11 @@ final purchaseDetailProvider = FutureProvider.autoDispose
           .watch(purchaseRepositoryProvider)
           .fetchDetail(key.workspaceId, key.purchaseId),
     );
+
+/// What the space owes for approved purchases: a member's own claims, a
+/// manager's all of them.
+final payablesProvider = FutureProvider.autoDispose
+    .family<List<PayableRow>, String>(
+      (ref, workspaceId) =>
+          ref.watch(purchaseRepositoryProvider).fetchPayables(workspaceId),
+    );

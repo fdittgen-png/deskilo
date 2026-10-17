@@ -12,6 +12,9 @@ class SupabasePurchaseRepository implements PurchaseRepository {
 
   final SupabaseClient _client;
 
+  static const _payablePageSize = 100;
+  static const _maxPayablePages = 20;
+
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async {
     final rows = await _client
@@ -35,6 +38,37 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       params: {'p_workspace_id': workspaceId, 'p_purchase_id': purchaseId},
     );
     return PurchaseDetail.fromJson(json);
+  }
+
+  /// Every page, newest first. A workspace's claims are few; the cap stops a
+  /// server that never ends its cursor.
+  @override
+  Future<List<PayableRow>> fetchPayables(
+    String workspaceId, {
+    CreditorKind? kind,
+  }) async {
+    final rows = <PayableRow>[];
+    String? afterCreated;
+    String? afterId;
+    for (var page = 0; page < _maxPayablePages; page++) {
+      final json = await _client.rpc<Object?>(
+        'purchase_payables_page_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_creditor_kind': ?kind?.wire,
+          'p_limit': _payablePageSize,
+          'p_after_created': ?afterCreated,
+          'p_after_id': ?afterId,
+        },
+      );
+      final r = JsonReader.of(json, context: 'purchase_payables_page_v1');
+      rows.addAll([for (final o in r.list('rows')) PayableRow.fromJson(o)]);
+      final next = r.objectOrNull('next');
+      if (next == null) return rows;
+      afterCreated = next.string('created');
+      afterId = next.string('id');
+    }
+    return rows;
   }
 
   @override

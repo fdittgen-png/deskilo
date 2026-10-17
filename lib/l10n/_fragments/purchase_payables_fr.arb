@@ -1,0 +1,70 @@
+{
+  "@@locale": "fr",
+  "purchasesTabDocuments": "Documents",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "À payer",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesToPayIntro": "Ce que l'espace doit encore pour les achats approuvés. La créance d'un membre est le crédit que son justificatif approuvé a déjà inscrit ; elle est appliquée dès qu'une facture le reprend. L'enregistrement des paiements et des compensations viendra plus tard.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Dû aux membres",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Dû aux fournisseurs",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedEmpty": "Rien n'est dû ici.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimYou": "Vous",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOwedTo": "Dû à {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOpen": "Ouvert · {amount} restant",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimApplied": "Appliqué à la facture {number}",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimHeld": "En attente",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimCancelled": "Annulé",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Remboursement",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  }
+}

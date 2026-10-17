@@ -9125,6 +9125,49 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesClaimApplied": "Auf Rechnung {number} angewendet",
+  "@purchasesClaimApplied": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimCancelled": "Storniert",
+  "@purchasesClaimCancelled": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimHeld": "Gesperrt",
+  "@purchasesClaimHeld": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimOpen": "Offen · {amount} verbleibend",
+  "@purchasesClaimOpen": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimOwedTo": "Geschuldet an {name}",
+  "@purchasesClaimOwedTo": {
+    "description": "#2574 purchase payables",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesClaimYou": "Sie",
+  "@purchasesClaimYou": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesClaimsTitle": "Erstattung",
+  "@purchasesClaimsTitle": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesDescription": "Beschreibung",
   "@purchasesDescription": {
     "description": "#2573 purchases"
@@ -9194,6 +9237,18 @@
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesOwedEmpty": "Hier ist nichts offen.",
+  "@purchasesOwedEmpty": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedMembers": "Den Mitgliedern geschuldet",
+  "@purchasesOwedMembers": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesOwedSuppliers": "Lieferanten geschuldet",
+  "@purchasesOwedSuppliers": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesPickDate": "Datum wählen",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
@@ -9251,6 +9306,14 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesTabDocuments": "Belege",
+  "@purchasesTabDocuments": {
+    "description": "#2574 purchase payables"
+  },
+  "purchasesTabToPay": "Zu zahlen",
+  "@purchasesTabToPay": {
+    "description": "#2574 purchase payables"
+  },
   "purchasesTaxField": "Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -9266,6 +9329,10 @@
   "purchasesTitle": "Einkäufe",
   "@purchasesTitle": {
     "description": "#2573 purchases"
+  },
+  "purchasesToPayIntro": "Was der Space für genehmigte Einkäufe noch schuldet. Der Anspruch eines Mitglieds ist die Gutschrift, die sein genehmigter Beleg bereits gebucht hat; sie gilt als angewendet, sobald eine Rechnung sie enthält. Zahlungen und Verrechnungen folgen in einem späteren Schritt.",
+  "@purchasesToPayIntro": {
+    "description": "#2574 purchase payables"
   },
   "purchasesTotal": "Gesamt",
   "@purchasesTotal": {

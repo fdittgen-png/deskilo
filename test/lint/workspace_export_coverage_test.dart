@@ -285,6 +285,9 @@ const Map<String, String> _notExported = {
           'import documents whose evidence it does not hold',
   'purchase_lines':
       '#2573 — the lines of a purchase document, exported with it or not at all',
+  'purchase_obligations':
+      '#2574 — the settlement index over an approved purchase (who is owed what); '
+          'the credit it indexes is a ledger entry and is exported itself',
   'purchase_sources':
       '#2573 — the links from a purchase to the expenses and invoices that '
           'evidence it; they name rows of this server',
