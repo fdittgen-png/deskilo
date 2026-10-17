@@ -106,12 +106,13 @@ class VatLineSelector {
 /// What [line] contributes to a term: the whole base or tax, or with
 /// [VatLineSelector.schemes] the part of the matching taxes. A Canadian line
 /// without the server's split is split here with the same arithmetic.
-int _amountOf(VatLineSelector selector, VatDeclarationLine line, bool ofTax) {
+int _amountOf(
+    VatLineSelector selector, VatDeclarationLine line, bool ofTax, String country) {
   final schemes = selector.schemes;
   if (schemes == null) return ofTax ? line.vatCents : line.netCents;
   final parts = line.components.isNotEmpty
       ? line.components
-      : vatComponentsOf('CA', line.percent, line.netCents, line.vatCents);
+      : vatComponentsOf(country, line.percent, line.netCents, line.vatCents);
   if (parts.isEmpty) {
     final federal = schemes.contains('GST') || schemes.contains('HST');
     return !federal ? 0 : (ofTax ? line.vatCents : line.netCents);
@@ -278,7 +279,7 @@ List<VatFormBox> fillVatForm(VatFormSpec spec, List<VatDeclarationLine> lines) {
       if (selector != null) {
         for (final l in lines) {
           if (selector.matches(l)) {
-            total += t.factor * _amountOf(selector, l, ofTax);
+            total += t.factor * _amountOf(selector, l, ofTax, spec.country.split('-').first);
           }
         }
       } else {

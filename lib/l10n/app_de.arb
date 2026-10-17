@@ -12561,6 +12561,10 @@
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
   },
+  "taxRefDomainRateComponent": "Steuern eines kombinierten Satzes",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
   "taxRefDomainSalesTax": "Sales Tax je Postleitzahl",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -12645,6 +12649,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidRateComponents": "Eine Steuer je Zeile: Regime, Behörde, Prozent; zusammen müssen sie dem kombinierten Satz entsprechen",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
   "taxRefInvalidState": "Zweibuchstabigen Bundesstaat-Code eingeben",
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
@@ -12696,6 +12704,10 @@
   "taxRefPosition": "Position",
   "@taxRefPosition": {
     "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRateComponents": "Steuern, eine je Zeile: Regime, Behörde, Prozent (z. B. GST, CA, 5). Die Prozentwerte müssen den kombinierten Satz ergeben.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
   },
   "taxRefRegime": "Regelung",
   "@taxRefRegime": {

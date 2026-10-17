@@ -26,28 +26,44 @@ typedef PlannedRateChange = ({
   double toPercent,
 });
 
-/// #2360 — Switzerland, 13th AHV pension: normal rate 8.1 -> 8.5 % and
-/// the accommodation rate 3.8 -> 4.0 % from 2028-01-01; the reduced rate
-/// 2.6 % is not touched. The popular vote is on 2026-11-29: ONE LINE
-/// activates it, set this to true when the people have said yes.
-const bool _swissReform2028Approved = false;
-
-const Map<String, List<PlannedRateChange>> _plannedChanges = {
-  'CH': [
-    (from: '2028-01-01', fromPercent: 8.1, toPercent: 8.5),
-    (from: '2028-01-01', fromPercent: 3.8, toPercent: 4.0),
-  ],
-};
-
-/// The change planned for a rate of [percent], once decided (nothing
-/// while the Swiss vote has not passed; [approved] overrides for tests).
-PlannedRateChange? vatPlannedChangeFor(String countryCode, double percent,
-    {bool approved = _swissReform2028Approved}) {
-  if (countryCode.toUpperCase() == 'CH' && !approved) return null;
-  for (final c in _plannedChanges[countryCode.toUpperCase()] ?? <PlannedRateChange>[]) {
-    if (c.fromPercent == percent) return c;
+/// #2360/#2539 — a change of rate already decided: the successor version
+/// of a `rate` row, dated in the future and CONFIRMED. While nobody has
+/// confirmed it (the Swiss 2028 rates wait for the vote of 2026-11-29) it is a
+/// proposal and nothing is returned; the platform administrator confirms or
+/// withdraws it, and this reader follows the data -- no line of code flips.
+PlannedRateChange? vatPlannedChangeFor(
+  String countryCode,
+  double percent, {
+  String? asOf,
+  DateTime? on,
+  TaxReferenceSet? reference,
+}) {
+  final day = asOf ?? _dayOf(on) ?? (throw ArgumentError('a day (asOf or on) is required'));
+  final set = reference ?? ActiveTaxReference.current;
+  final country = countryCode.trim().toUpperCase();
+  for (final now in set.ownRows(TaxDomain.rate, country, asOf: day)) {
+    if (((now.value as RateValue).percent - percent).abs() > 1e-9) continue;
+    final next = _successorOf(set, now, day);
+    if (next == null || !next.confirmed) continue;
+    return (
+      from: next.validFrom,
+      fromPercent: percent,
+      toPercent: (next.value as RateValue).percent,
+    );
   }
   return null;
+}
+
+/// The first version of [row]'s value that starts after [asOf].
+TaxReferenceRow? _successorOf(TaxReferenceSet set, TaxReferenceRow row, String asOf) {
+  TaxReferenceRow? next;
+  for (final r in set.history(row.domain, row.country, row.key)) {
+    if (r.validFrom.compareTo(asOf) > 0 &&
+        (next == null || r.validFrom.compareTo(next.validFrom) < 0)) {
+      next = r;
+    }
+  }
+  return next;
 }
 
 /// The ISO day of [on], null while no day is given (the newest versions).
@@ -102,9 +118,10 @@ String? vatCatalogueNote(
   String? asOf,
   DateTime? on,
   TaxReferenceSet? reference,
-  bool reformApproved = _swissReform2028Approved,
 }) {
-  final set = (reference ?? ActiveTaxReference.current).resolved(asOf ?? _dayOf(on));
+  final day = asOf ?? _dayOf(on);
+  final all = reference ?? ActiveTaxReference.current;
+  final set = all.resolved(day);
   final country = countryCode.trim().toUpperCase();
   String? text(String key) {
     for (final row in set.where(TaxDomain.catalogueNote, country: country)) {
@@ -117,8 +134,14 @@ String? vatCatalogueNote(
 
   final note = text('note');
   if (note == null) return null;
-  // #2360 — once the Swiss vote has passed, the note says what to do.
-  final passed = reformApproved ? text('note_vote_passed') : null;
+  // #2360/#2539 — once a decided change of rate is in the data (a confirmed
+  // successor version), the note says what to do.
+  final decided = day != null &&
+      all.ownRows(TaxDomain.rate, country, asOf: day).any((now) {
+        final next = _successorOf(all, now, day);
+        return next != null && next.confirmed;
+      });
+  final passed = decided ? text('note_vote_passed') : null;
   return passed == null ? note : '$note $passed';
 }
 

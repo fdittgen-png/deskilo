@@ -17,6 +17,7 @@ typedef SeedRow = ({
   String country,
   String key,
   String validFrom,
+  String? validTo,
   Map<String, Object?> value,
   String source,
   bool confirmed,
@@ -34,6 +35,7 @@ List<SeedRow> buildTaxReferenceSeed({String path = bundledSeedPath}) {
         country: r['country']! as String,
         key: r['key']! as String,
         validFrom: r['valid_from']! as String,
+        validTo: r['valid_to'] as String?,
         value: (r['value']! as Map).cast<String, Object?>(),
         source: r['source']! as String,
         confirmed: r['confirmed']! as bool,
@@ -51,7 +53,10 @@ List<SeedRow> buildTaxReferenceSeed({String path = bundledSeedPath}) {
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
 
-/// One row as a line of a seed block.
+/// One row as a line of a seed block. A version that a successor closes
+/// (`validTo`) is seeded OPEN, as the first migration to carry it wrote it:
+/// the migration of the successor closes it with an explicit statement
+/// before its own block, exactly as `set_tax_reference` does (#2539).
 String seedLine(SeedRow r) =>
     '(${_q(r.domain)}, ${_q(r.country)}, ${_q(r.key)}, ${_q(r.validFrom)}, '
     '${_q(jsonEncode(r.value))}::jsonb, ${_q(r.source)}, ${r.confirmed})';
@@ -98,7 +103,7 @@ String taxReferenceBundleJson(List<SeedRow> rows) {
         'country': r.country,
         'key': r.key,
         'valid_from': r.validFrom,
-        'valid_to': null,
+        'valid_to': r.validTo,
         'value': r.value,
         'source': r.source,
         'confirmed': r.confirmed,

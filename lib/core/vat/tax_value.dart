@@ -7,8 +7,10 @@
 // `switch` over either must be revisited. `tax_reference.dart` re-exports
 // this file.
 import '../data/json_reader.dart';
+import 'rate_component.dart';
 import 'sales_tax_component.dart';
 
+export 'rate_component.dart';
 export 'sales_tax_component.dart';
 
 /// The kinds of reference value the store holds. A domain's `value` shape
@@ -56,7 +58,10 @@ enum TaxDomain {
   salesTax('sales_tax'),
 
   /// Whether a kind of line is taxed in a state.
-  taxability('taxability');
+  taxability('taxability'),
+
+  /// #2539 -- the taxes inside a combined rate, keyed by the combined percent.
+  rateComponent('rate_component');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -149,6 +154,10 @@ sealed class TaxValue {
           components: r.objects('components', SalesTaxComponent.fromReader),
         ),
       TaxDomain.taxability => TaxabilityValue(status: r.string('status')),
+      TaxDomain.rateComponent => RateComponentValue(
+          percent: r.number('percent'),
+          components: r.objects('components', RateComponent.fromReader),
+        ),
     };
   }
 }
@@ -488,5 +497,24 @@ class AccountMapValue extends TaxValue {
         if (account.isNotEmpty) 'account': account,
         if (taxCode.isNotEmpty) 'tax_code': taxCode,
         if (label.isNotEmpty) 'label': label,
+      };
+}
+
+/// `rate_component`: {percent, components} -- the taxes a combined [percent]
+/// is made of (the key is the percent as text, the country the seller's); SQL
+/// (`tax_reference_valid`) refuses components that do not add up to it.
+class RateComponentValue extends TaxValue {
+  const RateComponentValue({required this.percent, required this.components});
+
+  final double percent;
+  final List<RateComponent> components;
+
+  @override
+  TaxDomain get domain => TaxDomain.rateComponent;
+
+  @override
+  Map<String, Object?> toJson() => {
+        'percent': percent,
+        'components': [for (final c in components) c.toJson()],
       };
 }

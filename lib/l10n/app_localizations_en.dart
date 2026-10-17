@@ -18840,6 +18840,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefDomainRate => 'Rates';
 
   @override
+  String get taxRefDomainRateComponent => 'Taxes inside a combined rate';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales tax by ZIP code';
 
   @override
@@ -18906,6 +18909,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefInvalidNumber => 'Enter a number from 0 to 99.999';
 
   @override
+  String get taxRefInvalidRateComponents =>
+      'One tax per line as scheme, authority, percent; together they must equal the combined rate';
+
+  @override
   String get taxRefInvalidState => 'Enter the two-letter state code';
 
   @override
@@ -18945,6 +18952,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRateComponents =>
+      'Taxes, one per line: scheme, authority, percent (e.g. GST, CA, 5). The percents must add up to the combined rate.';
 
   @override
   String get taxRefRegime => 'Regime';

@@ -19001,6 +19001,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefDomainRate => 'Tipos';
 
   @override
+  String get taxRefDomainRateComponent => 'Impuestos de una tasa combinada';
+
+  @override
   String get taxRefDomainSalesTax =>
       'Impuesto sobre las ventas por código postal';
 
@@ -19070,6 +19073,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefInvalidNumber => 'Introduzca un número de 0 a 99,999';
 
   @override
+  String get taxRefInvalidRateComponents =>
+      'Un impuesto por línea: régimen, autoridad, porcentaje; juntos deben igualar la tasa combinada';
+
+  @override
   String get taxRefInvalidState =>
       'Introduzca el código de estado de dos letras';
 
@@ -19111,6 +19118,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefPosition => 'Posición';
+
+  @override
+  String get taxRefRateComponents =>
+      'Impuestos, uno por línea: régimen, autoridad, porcentaje (p. ej. GST, CA, 5). La suma debe ser la tasa combinada.';
 
   @override
   String get taxRefRegime => 'Régimen';

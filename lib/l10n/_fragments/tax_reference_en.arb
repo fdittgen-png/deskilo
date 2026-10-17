@@ -275,5 +275,17 @@
   "taxRefActionFailed": "The change could not be saved",
   "@taxRefActionFailed": {
     "description": "#2565 tax reference: taxRefActionFailed"
+  },
+  "taxRefDomainRateComponent": "Taxes inside a combined rate",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
+  "taxRefRateComponents": "Taxes, one per line: scheme, authority, percent (e.g. GST, CA, 5). The percents must add up to the combined rate.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
+  },
+  "taxRefInvalidRateComponents": "One tax per line as scheme, authority, percent; together they must equal the combined rate",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
   }
 }

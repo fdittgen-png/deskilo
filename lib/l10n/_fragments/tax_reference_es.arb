@@ -275,5 +275,17 @@
   "taxRefActionFailed": "No se pudo guardar el cambio",
   "@taxRefActionFailed": {
     "description": "#2565 tax reference: taxRefActionFailed"
+  },
+  "taxRefDomainRateComponent": "Impuestos de una tasa combinada",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
+  "taxRefRateComponents": "Impuestos, uno por línea: régimen, autoridad, porcentaje (p. ej. GST, CA, 5). La suma debe ser la tasa combinada.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
+  },
+  "taxRefInvalidRateComponents": "Un impuesto por línea: régimen, autoridad, porcentaje; juntos deben igualar la tasa combinada",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
   }
 }

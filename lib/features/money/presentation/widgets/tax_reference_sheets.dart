@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/vat_rate.dart';
+import 'tax_reference_component_fields.dart';
 import 'tax_reference_labels.dart';
 import 'tax_reference_sales_fields.dart';
 
@@ -46,9 +47,11 @@ class _VersionForm {
           'state': from?.value is SalesTaxValue
               ? (from!.value as SalesTaxValue).state
               : '',
-          'components': from?.value is SalesTaxValue
-              ? salesTaxComponentsText(from!.value as SalesTaxValue)
-              : '',
+          'components': switch (from?.value) {
+            SalesTaxValue v => salesTaxComponentsText(v),
+            RateComponentValue v => rateComponentsText(v),
+            _ => '',
+          },
           'tax_code': switch (from?.value) {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
@@ -61,9 +64,11 @@ class _VersionForm {
             FormBoxValue(:final excludeGroups) => excludeGroups.join(', '),
             _ => '',
           },
-          'percent': from?.value is RateValue
-              ? percentText((from!.value as RateValue).percent)
-              : '',
+          'percent': switch (from?.value) {
+            RateValue(:final percent) => percentText(percent),
+            RateComponentValue(:final percent) => percentText(percent),
+            _ => '',
+          },
           'reason': from?.value is RateValue
               ? (from!.value as RateValue).exemptionReason
               : '',
@@ -196,6 +201,10 @@ class _VersionForm {
             components: parseSalesTaxComponents(fields.text('components')) ?? const [],
           ),
         TaxDomain.taxability => TaxabilityValue(status: choice['status']!),
+        TaxDomain.rateComponent => RateComponentValue(
+            percent: percent ?? 0,
+            components: parseRateComponents(fields.text('components')) ?? const [],
+          ),
         TaxDomain.formBox => FormBoxValue(
             label: fields.text('label'),
             groups: _groupList('groups'),
@@ -282,6 +291,11 @@ class _VersionForm {
         if (parseSalesTaxComponents(fields.text('components')) == null)
           'components': l10n.taxRefInvalidComponents,
       },
+      if (domain == TaxDomain.rateComponent) ...{
+        if (p == null || p <= 0 || p > 99.999) 'percent': l10n.taxRefInvalidNumber,
+        if (!rateComponentsAddUp(parseRateComponents(fields.text('components')), p))
+          'components': l10n.taxRefInvalidRateComponents,
+      },
       if (domain == TaxDomain.accountMap) ...{
         'role': ?need('role'),
         if (fields.text('account').isEmpty && fields.text('tax_code').isEmpty)
@@ -365,6 +379,13 @@ class _VersionForm {
           ],
         TaxDomain.taxability => [
             _pick('status', l10n.taxRefStatus, taxabilityStatuses),
+          ],
+        TaxDomain.rateComponent => [
+            _text('percent', l10n.taxRefPercent, type: TextInputType.number),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
+              child: rateComponentsField(fields, l10n),
+            ),
           ],
         TaxDomain.rate => [
             _text('label', l10n.taxRefLabel),

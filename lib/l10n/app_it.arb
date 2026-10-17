@@ -12561,6 +12561,10 @@
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
   },
+  "taxRefDomainRateComponent": "Imposte di un'aliquota combinata",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
   "taxRefDomainSalesTax": "Sales tax per codice postale",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -12645,6 +12649,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidRateComponents": "Un'imposta per riga: regime, autorità, percentuale; insieme devono essere pari all'aliquota combinata",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
   "taxRefInvalidState": "Inserisci il codice dello stato di due lettere",
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
@@ -12696,6 +12704,10 @@
   "taxRefPosition": "Posizione",
   "@taxRefPosition": {
     "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRateComponents": "Imposte, una per riga: regime, autorità, percentuale (es. GST, CA, 5). La somma deve essere l'aliquota combinata.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
   },
   "taxRefRegime": "Regime",
   "@taxRefRegime": {

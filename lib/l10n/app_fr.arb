@@ -12561,6 +12561,10 @@
   "@taxRefDomainRate": {
     "description": "#2477 tax reference: Domain filter: rates."
   },
+  "taxRefDomainRateComponent": "Taxes d'un taux combiné",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
   "taxRefDomainSalesTax": "Taxe de vente par code postal",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -12645,6 +12649,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidRateComponents": "Une taxe par ligne : régime, autorité, pourcentage ; leur somme doit égaler le taux combiné",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
   "taxRefInvalidState": "Saisissez le code de l'État sur deux lettres",
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
@@ -12696,6 +12704,10 @@
   "taxRefPosition": "Position",
   "@taxRefPosition": {
     "description": "#2477 tax reference: Field: order of a rate in its country; the first is the default."
+  },
+  "taxRefRateComponents": "Taxes, une par ligne : régime, autorité, pourcentage (p. ex. GST, CA, 5). Leur somme doit égaler le taux combiné.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
   },
   "taxRefRegime": "Régime",
   "@taxRefRegime": {
