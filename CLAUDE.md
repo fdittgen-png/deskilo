@@ -20,6 +20,8 @@ identity form, one-branch-at-a-time). This file only indexes the skills.
 Global skills that also apply: `git-pr-workflow`, `flutter-dart-best-practices`,
 `dart-flutter-mcp`, the platform deployment skills.
 
+Which issue to take next: [#2596](https://github.com/fdittgen-png/deskilo/issues/2596) (programme selection; #1447 keeps the pilot/release qualification). Read the selected issue, its later corrections and the current claims.
+
 Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md#ready-done-and-closure`.
 
 ## Non-negotiables in one breath

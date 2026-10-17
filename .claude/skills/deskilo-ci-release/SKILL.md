@@ -8,7 +8,7 @@ description: After a DesKilo push — the three required checks ("analyze · l10
 1. Required on master: `analyze · l10n gate · test · coverage`, `quality · database`, `quality · report`.
 2. `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Never `--admin`.
 3. One bounded watcher per PR in the background; read JSON states, never grep the plain output.
-4. `cancelled` = runner/concurrency, rerun once; infrastructure flakes get ONE rerun; anything else is real.
+4. A run superseded by a newer push stays cancelled; a current-candidate infrastructure failure gets at most ONE coherent retry (below); anything else is real.
 5. Deploy with ONE train after the last merge: `gh workflow run release-train.yml -f track=alpha`.
 
 Android build notes and older incidents: [reference.md](reference.md).
@@ -28,13 +28,21 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
   finished job's log mid-run: `gh api repos/{owner}/{repo}/actions/jobs/<job>/logs`.
 
 ## Failures that are not the code
-- **`cancelled` / `CANCELLED`** — a runner hiccup or the concurrency group (a newer
-  push superseded it): `gh run rerun <run-id>` (find it with `gh run list --commit <sha>`).
-- **Infrastructure flakes get ONE rerun**: "port … is still held by an earlier
-  pass", a Supabase CLI download rate limit. Anything else is real.
-- **`quality · report` can read a stale attempt** after `gh run rerun --failed`; do
-  not rerun it a third time — push an empty commit (`ci: re-run the quality report
-  on a clean attempt`).
+- **`cancelled` by a newer push** (the concurrency group superseded the run): leave
+  it cancelled; the newer head SHA owns the evidence. Do not rerun a superseded run.
+- **Infrastructure failure of the CURRENT candidate** ("port … is still held by an
+  earlier pass", a Supabase CLI download rate limit, a runner lost): at most ONE
+  coherent retry, then stop and record the diagnostics. Anything else is real; a
+  deterministic failure is fixed, not rerun.
+- **Quality retry is whole-workflow.** Every Quality artifact is named
+  `…-attempt-<run_attempt>` and the shard reader requires equal run attempts
+  (#2639), so an unchanged candidate is retried with `gh run rerun <run-id>`
+  (find it with `gh run list --commit <sha>`) and NO `--failed` / `--job`:
+  a rerun of one shard or of the report alone cannot supply the other attempts'
+  evidence and fails closed. Changed code or workflow is a new normal candidate
+  (push it); rerunning an old run executes its old workflow. Never a failed-shard
+  loop, an empty-commit workaround, or a rerun-until-green. Independent workflows
+  keep selective job retries where their producer/consumer contract allows.
 - **A red `quality · database` holds the PR OPEN/BLOCKED** — usually a stale
   `contract.txt` (`deskilo-supabase-migration` §4).
 - **A commit pushed by `GITHUB_TOKEN` starts no workflow run** (checks sit at
@@ -57,7 +65,8 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
   without updating branch protection in lockstep.
 
 ## Deploy
-- **The train**: `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
+A release needs the owner's explicit authorization and the required gates; the commands below are reference, never a step to take after a merge on your own initiative.
+- **The train** (when released): `gh workflow run release-train.yml -f track=alpha -f release_notes="…"`
   (or `-f track=production`). The input IS the Play track; it puts iOS (TestFlight
   external), Android (Play closed alpha), web, DMG and MSI on ONE commit. Several
   merges in a row need ONE train, dispatched after the last merge; watch each run

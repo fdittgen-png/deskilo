@@ -17,7 +17,12 @@ Migrations: `deskilo-supabase-migration`. After the push: `deskilo-ci-release`.
 Lessons by topic, with their incidents: [reference.md](reference.md).
 
 ## 0. Before code
-- A GitHub issue exists; big work → `epic-triage`. Run `git log origin/master --grep '#N'`
+- A GitHub issue exists. Programme selection (what to take next) lives only in
+  [#2596](https://github.com/fdittgen-png/deskilo/issues/2596); #1447 keeps the
+  existing-community pilot/release qualification. Read the selected issue, its later
+  corrections and the current claims, not the whole backlog. An already-decomposed
+  issue is implemented as it stands; `epic-triage` is only for work that is NOT yet
+  a scoped issue and whose size is genuinely unclear. Run `git log origin/master --grep '#N'`
   first: issue bodies go stale and checkpoints may already be merged.
 - **Other agents (Codex, other sessions) push as the same GitHub user**, so
   `gh pr list --author @me` is not "mine". Read `.agent-work/*.json`, the tail of
@@ -97,6 +102,10 @@ flutter test test/lint <your tests>
 dart run tool/preflight.dart --list   # which generators this change implicates — run THOSE yourself
 ```
 Never run `tool/preflight.dart` in full on this machine: its build_runner step can hang.
+
+**Receipt** (one line in the PR's Tests section, not a committed file):
+`candidate/tree | implicated generators + actual exits | analyze/lint/affected tests + exits | generated diff reviewed | NOT RUN/BLOCKED evidence + precise reason`.
+A source change after it invalidates its affected evidence. PASS, FAIL, NOT RUN and BLOCKED stay distinct.
 
 **The full suite runs in CI only** — never `flutter test` without a path before a
 push (the quality job runs it on every PR; local full suites on a shared machine

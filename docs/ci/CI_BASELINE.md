@@ -120,7 +120,8 @@ over 300 files — with a docs-only change as the green control.
 When the database job is stood down it still reports: every database
 row says `not_applicable` with the reason, and BOTH the job and
 `scripts/quality_report.sh` accept that only after reading the verdict
-back from the `quality-classification` artifact. Every other outcome of
+back from the `quality-classification-attempt-<n>` artifact (#2639: Quality artifacts are
+attempt-scoped). Every other outcome of
 the classifier — `required`, an empty output from a classify job that
 died, a word nobody expected — runs the database work.
 

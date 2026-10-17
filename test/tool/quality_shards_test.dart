@@ -674,6 +674,49 @@ void main() {
       expect(r.stderr, contains('[rest]'));
     });
 
+    test('a partial retry fails closed: gate and rest from attempt 1 beside '
+        'money from attempt 2 under an attempt-2 plan (#2639)', () {
+      final first = _plan();
+      final second = ShardPlan(
+        candidate: first.candidate,
+        runId: first.runId,
+        runAttempt: '2',
+        shards: first.shards,
+      );
+      for (final s in first.shards) {
+        write(s.id == 'money' ? second : first, s);
+      }
+      final r = rows(second);
+      expect(r.exitCode, 1, reason: '${r.stdout}${r.stderr}');
+      expect(
+        File('${dir.path}/tests.psv').readAsStringSync(),
+        startsWith('Tests|failure|'),
+      );
+      expect(r.stderr, contains('[gate]'));
+      expect(r.stderr, contains('[rest]'));
+      expect(r.stderr, isNot(contains('[money]')));
+      expect(r.stderr, contains('without --failed'));
+    });
+
+    test('a coherent retry: every shard from attempt 2 is accepted (#2639)', () {
+      final first = _plan();
+      final second = ShardPlan(
+        candidate: first.candidate,
+        runId: first.runId,
+        runAttempt: '2',
+        shards: first.shards,
+      );
+      for (final s in second.shards) {
+        write(second, s);
+      }
+      final r = rows(second);
+      expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
+      expect(
+        File('${dir.path}/tests.psv').readAsStringSync(),
+        startsWith('Tests|success|5 tests in 5 files'),
+      );
+    });
+
     test('an unreadable plan exits 1 with a red Tests row', () {
       File('${dir.path}/plan.json').writeAsStringSync('{');
       final r = Process.runSync('dart', [
