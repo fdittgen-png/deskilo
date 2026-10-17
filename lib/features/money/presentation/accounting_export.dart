@@ -123,7 +123,7 @@ Future<void> exportAccountingFile(
     loaded: invoices,
   );
   if (books == null) return;
-  final (invoices: exported, :ledger, :repartitions) = books;
+  final (invoices: exported, :ledger, :repartitions, :bookProfiles) = books;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
@@ -203,7 +203,7 @@ Future<void> exportAccountingFile(
           buildDatevFile(
             invoices: exported,
             matches: matches,
-            accounts: await datevAccountsFor(ref, datev.accounts, year),
+            accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
             from: DateTime(year),
             to: DateTime(year, 12, 31),
             generatedAt: now,

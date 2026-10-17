@@ -10,7 +10,9 @@
 import 'package:deskilo/core/data/read_provenance.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
+import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/presentation/datev_profile.dart';
 import 'package:deskilo/features/money/presentation/export_year_books.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,6 +32,20 @@ Map<String, Object?> _ledger(String id, String kind, String category, int cents)
       'period': '2026-03',
       'created_at': '2026-03-13T08:00:00+00:00',
       'occurred_on': '2026-03-12',
+    };
+
+Map<String, Object?> _profile(String id, String site, int month, String from, int rev) => {
+      'id': id,
+      'workspace_id': _ws,
+      'issuer_site_id': site,
+      'authority_mode': 'pre_accounting',
+      'external_system': '',
+      'functional_currency': 'EUR',
+      'fiscal_year_start_month': month,
+      'fiscal_year_start_day': 1,
+      'accounting_basis': 'accrual',
+      'effective_from': from,
+      'revision': rev,
     };
 
 /// 12000 payment + 3000 service charge + 3000 expense credit = 18000 (credit
@@ -68,7 +84,13 @@ Map<String, Object?> _answer() => {
           'applied_at': '2026-04-01T08:00:00+00:00',
         },
       ],
+      // two versions of one issuer (revisions 1 and 2): sum 3.
+      'book_profiles': [
+        _profile('p-1', 's-1', 1, '2025-01-01', 1),
+        _profile('p-2', 's-1', 4, '2026-01-01', 2),
+      ],
       'totals': {
+        'book_profiles': {'count': 2, 'revision_sum': 3},
         'invoices': {'count': 2, 'total_cents': 19000},
         'matches': {'count': 1, 'paid_cents': 12000},
         'ledger': {
@@ -123,6 +145,32 @@ void main() {
     expect(s.ledger.fold<int>(0, (a, e) => a + e.amountCents), 18000);
     expect(s.repartitions.single.amountCents, 6000);
     expect(s.matchedCents, 12000);
+    expect(s.bookProfiles.map((p) => p.id), ['p-1', 'p-2']);
+  });
+
+  test('the book profiles of the source drive the DATEV fiscal-year start', () {
+    final s = _parse(_answer());
+    // The April-2026 version is in force at 31 December 2026: the year that
+    // contains 1 January 2026 began on 1 April 2025.
+    final accounts = datevAccountsFor(s.bookProfiles, const DatevAccounts(), 2026);
+    expect(accounts.fiscalYearStart, DateTime(2025, 4));
+    expect(
+      datevAccountsFor(const [], const DatevAccounts(), 2026).fiscalYearStart,
+      isNull,
+    );
+  });
+
+  test('profiles missing, of another workspace or off their totals stop', () {
+    _refused(_answer()..remove('book_profiles'), AccountingSourceFailure.inconsistent);
+    final a = _answer();
+    ((a['book_profiles']! as List)[0]! as Map)['workspace_id'] = 'ws-2';
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    ((b['totals']! as Map)['book_profiles']! as Map)['revision_sum'] = 2;
+    _refused(b, AccountingSourceFailure.inconsistent);
+    final c = _answer();
+    (c['book_profiles']! as List).removeLast();
+    _refused(c, AccountingSourceFailure.inconsistent);
   });
 
   test('an over-budget scope is a named refusal with no rows', () {
@@ -195,6 +243,7 @@ void main() {
     expect(books.ledger.map((e) => e.id), ['l-1', 'l-2', 'l-3']);
     expect(books.ledger.fold<int>(0, (a, e) => a + e.amountCents), 18000);
     expect(books.repartitions.single.id, 'r-1');
+    expect(books.bookProfiles, hasLength(2));
   });
 
   test('the consumer stops (null) when an invoice moved since the list was loaded', () {

@@ -2,6 +2,7 @@
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/read_provenance.dart';
 import '../../../core/data/system_columns.dart';
+import 'book_profile.dart';
 import 'expense_repartition.dart';
 import 'ledger_entry.dart';
 
@@ -45,6 +46,7 @@ class AccountingSourceSnapshot {
     required this.invoices,
     required this.ledger,
     required this.repartitions,
+    required this.bookProfiles,
     required this.matchedCents,
   });
 
@@ -54,6 +56,7 @@ class AccountingSourceSnapshot {
     required this.invoices,
     required this.ledger,
     required this.repartitions,
+    this.bookProfiles = const [],
   })  : provenance = const ReadProvenance.traversal(
           reason: 'in-memory demo books',
         ),
@@ -63,6 +66,12 @@ class AccountingSourceSnapshot {
   final List<SourceInvoice> invoices;
   final List<LedgerEntry> ledger;
   final List<ExpenseRepartition> repartitions;
+
+  /// Every version of every issuer's book profile, read in the same
+  /// statement as the books above: the fiscal-year start, functional
+  /// currency and basis an export header states are the ones of THIS
+  /// snapshot, never of a later, separate read.
+  final List<BookProfile> bookProfiles;
 
   /// Sum of the matches of the in-scope invoices, as delivered.
   final int matchedCents;
@@ -111,6 +120,14 @@ class AccountingSourceSnapshot {
       (row) => ExpenseRepartition.fromJson(row.json),
     );
     final matched = r.objects('matches', (m) => m.integer('paid_cents'));
+    // An answer without the profiles is an older producer: the export
+    // stops, it does not assume "no profile".
+    if (r.raw('book_profiles') is! List) bad('no book profiles in the answer');
+    final profiles = r.objects('book_profiles', (p) {
+      final profile = BookProfile.fromJson(p.json);
+      if (profile.workspaceId != workspaceId) bad('a profile of another workspace');
+      return profile;
+    });
 
     final totals = r.objectOrAbsent('totals');
     void agree(String what, JsonReader t, int count, int value, String key) {
@@ -140,6 +157,11 @@ class AccountingSourceSnapshot {
     agree('repartition', totals.objectOrAbsent('repartitions'),
         repartitions.length, sum(repartitions.map((x) => x.amountCents)),
         'amount_cents');
+    final pt = totals.objectOrAbsent('book_profiles');
+    if (pt.integer('count') != profiles.length ||
+        pt.integer('revision_sum') != sum(profiles.map((p) => p.revision))) {
+      bad('book profile totals disagree with the rows');
+    }
 
     return AccountingSourceSnapshot._(
       provenance: ReadProvenance.snapshot(
@@ -151,6 +173,7 @@ class AccountingSourceSnapshot {
       invoices: invoices,
       ledger: ledger,
       repartitions: repartitions,
+      bookProfiles: profiles,
       matchedCents: sum(matched),
     );
   }

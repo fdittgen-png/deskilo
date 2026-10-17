@@ -17,7 +17,7 @@ import '../domain/invoice.dart';
 /// source must agree with it, otherwise the export stops (null) instead of
 /// mixing two moments, and the caller says so to the person.
 @visibleForTesting
-Future<ExportYearBooks?> exportYearBooks(
+Future<ExportSourceBooks?> exportYearBooks(
   AccountingSourceQueries source,
   String workspaceId,
   int year,
@@ -51,12 +51,13 @@ Future<ExportYearBooks?> exportYearBooks(
     invoices: cut.invoices,
     ledger: books.ledger,
     repartitions: books.repartitions,
+    bookProfiles: books.bookProfiles,
   );
 }
 
 /// [exportYearBooks] for the export screen: a refused source is said to the
 /// person here, after the await, and nothing is exported.
-Future<ExportYearBooks?> exportYearBooksOrSay(
+Future<ExportSourceBooks?> exportYearBooksOrSay(
   BuildContext context,
   AccountingSourceQueries source,
   String workspaceId,

@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../domain/book_profile.dart';
 import '../domain/datev.dart';
 import '../domain/datev_fields.dart';
-import '../providers/book_profile_providers.dart';
 
 /// #2365 — [accounts] with the fiscal year starting where the book
 /// profiles of [year] say (every issuer agreeing); without a profile the
-/// header keeps 1 January.
-Future<DatevAccounts> datevAccountsFor(
-  WidgetRef ref,
+/// header keeps 1 January. [profiles] are the ones delivered with the books
+/// of the export (the one source response), not a second, later read.
+DatevAccounts datevAccountsFor(
+  List<BookProfile> profiles,
   DatevAccounts accounts,
   int year,
-) async {
-  final profiles = await ref.read(bookProfilesProvider.future);
+) {
   final start = datevProfileFiscalStart(
     profiles,
     DateTime(year),

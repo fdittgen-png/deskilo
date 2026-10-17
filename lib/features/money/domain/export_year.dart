@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'book_profile.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
@@ -12,6 +13,15 @@ typedef ExportYearBooks = ({
   List<Invoice> invoices,
   List<LedgerEntry> ledger,
   List<ExpenseRepartition> repartitions,
+});
+
+/// [ExportYearBooks] plus the book-profile versions of the same source
+/// response (#2365): what the export screen holds after the one read.
+typedef ExportSourceBooks = ({
+  List<Invoice> invoices,
+  List<LedgerEntry> ledger,
+  List<ExpenseRepartition> repartitions,
+  List<BookProfile> bookProfiles,
 });
 
 ExportYearBooks exportYearScope(
