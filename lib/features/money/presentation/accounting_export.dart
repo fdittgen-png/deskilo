@@ -10,19 +10,16 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
-import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
-import '../domain/export_year.dart';
 import '../domain/fec.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice.dart';
@@ -117,21 +114,15 @@ Future<void> exportAccountingFile(
   final repo = ref.read(moneyRepositoryProvider);
   final invoiceQueries = ref.read(invoiceQueriesProvider);
   // #2365 — the books of the export year only.
-  final ExportYearBooks books;
-  try {
-    books = await exportYearBooks(
-      ref.read(accountingSourceQueriesProvider),
-      workspace.id,
-      year,
-      view.invoices,
-      loaded: invoices,
-    );
-  } on AccountingSourceException catch (e, st) {
-    TraceLogger.instance.warn('money', 'accounting source refused: $e\n$st');
-    if (!context.mounted) return;
-    AppSnack.error(context, l10n.accountingSourceRefused);
-    return;
-  }
+  final books = await exportYearBooksOrSay(
+    context,
+    ref.read(accountingSourceQueriesProvider),
+    workspace.id,
+    year,
+    view.invoices,
+    loaded: invoices,
+  );
+  if (books == null) return;
   final (invoices: exported, :ledger, :repartitions) = books;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
@@ -145,12 +136,7 @@ Future<void> exportAccountingFile(
   final memberNames =
       ref.read(memberNamesProvider).value ?? const <String, String>{};
   if (!context.mounted) return;
-  if (development) {
-    AppSnack.info(
-      context,
-      l10n.accountingExportDevelopment,
-    );
-  }
+  noteDevelopmentBooks(context, development: development);
 
   Future<void> save(String content, String fileName) async {
     final bytes = Uint8List.fromList(utf8.encode(content));

@@ -101,7 +101,7 @@ void _refused(Map<String, Object?> a, AccountingSourceFailure failure) {
 class _Source implements AccountingSourceQueries {
   _Source(this.answer);
   final Map<String, Object?> answer;
-  var calls = 0;
+  int calls = 0;
 
   @override
   Future<AccountingSourceSnapshot> fetchAccountingSource({
@@ -164,12 +164,12 @@ void main() {
   });
 
   test('the invoices held must be the invoices of the source, at their value', () {
-    final s = _parse(_answer());
-    s.requireInvoicesHeld([
-      (id: 'i-a', number: 'A', totalCents: 12000),
-      (id: 'i-c', number: 'C', totalCents: 7000),
-      (id: 'i-z', number: 'Z', totalCents: 1),
-    ]);
+    final s = _parse(_answer())
+      ..requireInvoicesHeld([
+        (id: 'i-a', number: 'A', totalCents: 12000),
+        (id: 'i-c', number: 'C', totalCents: 7000),
+        (id: 'i-z', number: 'Z', totalCents: 1),
+      ]);
     expect(
       () => s.requireInvoicesHeld([(id: 'i-a', number: 'A', totalCents: 12000)]),
       throwsA(isA<AccountingSourceException>()
@@ -190,21 +190,18 @@ void main() {
       SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
       SeededExportYear.invoices.first.copyWith(id: 'i-c', number: 'C', totalCents: 7000),
     ];
-    final books = await exportYearBooks(source, _ws, 2026, loaded, loaded: loaded);
+    final books = (await exportYearBooks(source, _ws, 2026, loaded, loaded: loaded))!;
     expect(source.calls, 1);
     expect(books.ledger.map((e) => e.id), ['l-1', 'l-2', 'l-3']);
     expect(books.ledger.fold<int>(0, (a, e) => a + e.amountCents), 18000);
     expect(books.repartitions.single.id, 'r-1');
   });
 
-  test('the consumer stops when an invoice moved since the list was loaded', () {
+  test('the consumer stops (null) when an invoice moved since the list was loaded', () {
     final source = _Source(_answer());
     final loaded = <Invoice>[
       SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
     ];
-    expect(
-      exportYearBooks(source, _ws, 2026, loaded, loaded: loaded),
-      throwsA(isA<AccountingSourceException>()),
-    );
+    expect(exportYearBooks(source, _ws, 2026, loaded, loaded: loaded), completion(isNull));
   });
 }

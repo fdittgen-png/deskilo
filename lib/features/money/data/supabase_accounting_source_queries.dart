@@ -18,7 +18,7 @@ class SupabaseAccountingSourceQueries implements AccountingSourceQueries {
     final principal = _client.auth.currentUser?.id ?? '';
     final from = '$year-01-01';
     final to = '$year-12-31';
-    final answer = await _client.rpc<dynamic>(
+    final answer = await _client.rpc<Object?>(
       'accounting_source_snapshot_v1',
       params: {'p_workspace_id': workspaceId, 'p_from': from, 'p_to': to},
     );
