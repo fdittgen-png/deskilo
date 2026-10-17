@@ -31,6 +31,9 @@ const _june = '00000000-0000-4000-8000-00000025a003';
 const _may = '00000000-0000-4000-8000-00000025a004';
 const _settle = '00000000-0000-4000-8000-00000025a005';
 const _void = '00000000-0000-4000-8000-00000025a006';
+const _raceSame = '00000000-0000-4000-8000-00000025a007';
+const _raceA = '00000000-0000-4000-8000-00000025a008';
+const _raceB = '00000000-0000-4000-8000-00000025a009';
 
 void main() {
   if (_file == null) {
@@ -245,4 +248,54 @@ void main() {
       );
     },
   );
+
+  test('two concurrent sends of ONE request id make ONE invoice', () async {
+    final ids = await Future.wait([
+      actions.createInvoiceOnce(cmd('2026-04', _raceSame)),
+      actions.createInvoiceOnce(cmd('2026-04', _raceSame)),
+    ]);
+    expect(ids[0], ids[1], reason: 'both answer the one original invoice');
+    final april = (await register()).where((i) => i.period == '2026-04');
+    expect(april, hasLength(1));
+    expect(april.single.totalCents, 3500);
+    final receipt = await queries.invoiceCommandOutcome(
+      workspaceId: ws,
+      requestId: _raceSame,
+    );
+    expect(receipt.invoiceId, ids.first);
+  });
+
+  test('two concurrent DIFFERENT ids for one month: exactly one wins, the loser has no receipt', () async {
+    final results = await Future.wait([
+      actions
+          .createInvoiceOnce(cmd('2026-03', _raceA))
+          .then<Object>((v) => v, onError: (Object e) => e),
+      actions
+          .createInvoiceOnce(cmd('2026-03', _raceB))
+          .then<Object>((v) => v, onError: (Object e) => e),
+    ]);
+    final wins = results.whereType<String>().toList();
+    expect(wins, hasLength(1), reason: 'one invoice for the month: $results');
+    expect(results.whereType<PostgrestException>(), hasLength(1));
+    expect(
+      (await register()).where((i) => i.period == '2026-03'),
+      hasLength(1),
+    );
+    final winner = results[0] is String ? _raceA : _raceB;
+    final loser = winner == _raceA ? _raceB : _raceA;
+    expect(
+      (await queries.invoiceCommandOutcome(
+        workspaceId: ws,
+        requestId: winner,
+      )).invoiceId,
+      wins.single,
+    );
+    expect(
+      (await queries.invoiceCommandOutcome(
+        workspaceId: ws,
+        requestId: loser,
+      )).state,
+      CommandReceiptState.notObserved,
+    );
+  });
 }
