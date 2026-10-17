@@ -4,8 +4,6 @@
 // the hour beside a seat booked for the morning, and a garage with a
 // standard, an electric (charger included) and an accessible slot, booked by
 // the day. Every date follows the session's seeded instant.
-import 'package:flutter/foundation.dart' show visibleForTesting;
-
 import '../../../features/plan/domain/charging_station.dart';
 import '../../../features/plan/domain/desk.dart';
 import '../../../features/plan/domain/grid_geometry.dart';
@@ -20,7 +18,6 @@ import '../demo_clock.dart';
 import 'demo_space_seed.dart';
 
 /// Ids the guides and the bookings below tell stories about.
-@visibleForTesting
 abstract final class DemoResources {
   static const boardroom = 'demo-room-boardroom';
   static const parkingLevel = 'demo-level-parking';

@@ -16,6 +16,7 @@ none: it is read as reassurance.
 | Demo entry, the explanation before consent, leaving — and that a whole visit leaves the device's own preferences byte-for-byte as it found them (#1564) | `test/core/demo/demo_entry_test.dart` |
 | Isolation: the overrides are complete — every repository, every outward edge, the schema probe, the push pair and every per-device preference (#1564) | `test/core/demo/demo_scope_test.dart` |
 | Isolation reaches the providers screens actually read | `test/core/demo/demo_scope_reach_test.dart` |
+| The demo year and its finance story: rooms and parking booked until 31 December, room and parking invoices at France's four VAT rates in every payment state (paid, part-paid, written off, unpaid, refunded), the rent and utilities schedules, two sites (the garage with the parking), suppliers, received supplier invoices, bills at several rates, receipts and claims with a payment (#2574) | `test/core/demo/demo_year_test.dart` |
 | The demo twin of meeting rooms and parking: a boardroom booked by the hour beside a seat booked for the day, a garage with an electric slot and its charger (#2631) | `test/core/demo/demo_resources_test.dart` |
 | The canonical dataset is coherent, and its cast is stable | `test/core/demo/demo_dataset_test.dart` |
 | The cast is a whole person on screen — a name, an e-mail, a number that could reach nobody — so a guide image can be shot here instead of in a real space (#1514) | `test/core/demo/demo_identity_test.dart` |

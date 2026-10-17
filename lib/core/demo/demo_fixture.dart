@@ -51,6 +51,7 @@ import 'seed/demo_people_seed.dart';
 import 'seed/demo_resource_seed.dart';
 import 'seed/demo_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
+import 'seed/demo_year_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
 /// subject is implicit.
@@ -142,6 +143,10 @@ class DemoFixture {
     seedDemoMoney(money, today);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
+    seedDemoYearOfResources(reservations, workspaces, today);
+    seedDemoYearOfMoney(money, today);
+    applyDemoVat(money);
+    seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);
     seedDemoHistoryDecisions(events, today);
