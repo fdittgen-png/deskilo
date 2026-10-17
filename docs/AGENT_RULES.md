@@ -101,6 +101,15 @@ flutter test test/<the folders your change touches>
 dart run tool/preflight.dart --list   # which generators this change implicates
 ```
 
+Programme selection (the next outcomes, slots and bounded exceptions) lives only in
+[#2596](https://github.com/fdittgen-png/deskilo/issues/2596); #1447 keeps the
+existing-community pilot/release qualification. Read the selected issue, its later
+corrections and the current claims; priorities are not copied into source.
+
+The PR's Tests section carries one receipt line:
+`candidate/tree | implicated generators + actual exits | analyze/lint/affected tests + exits | generated diff reviewed | NOT RUN/BLOCKED evidence + precise reason`.
+A source change after it invalidates its affected evidence.
+
 then run ONLY the generators `--list` names (never the whole preflight:
 its build_runner step can hang in a worktree). Every generated file has a
 drift gate in CI, so a generator forgotten locally costs a full round

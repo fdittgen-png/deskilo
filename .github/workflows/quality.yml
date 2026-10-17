@@ -61,7 +61,7 @@ jobs:
       - id: verdict
         uses: ./.github/actions/classify-change
         with:
-          artifact: quality-classification
+          artifact: quality-classification-attempt-${{ github.run_attempt }}
 
   # #2600 — the quality suite runs as three shards on three runners, and
   # the required context below is the AGGREGATE of them. This is the fast
@@ -188,7 +188,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: testshard-gate
+          name: testshard-gate-attempt-${{ github.run_attempt }}
           retention-days: 14
           if-no-files-found: warn
           path: |
@@ -270,7 +270,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: testshard-money
+          name: testshard-money-attempt-${{ github.run_attempt }}
           retention-days: 14
           if-no-files-found: warn
           path: |
@@ -349,7 +349,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: testshard-rest
+          name: testshard-rest-attempt-${{ github.run_attempt }}
           retention-days: 14
           if-no-files-found: warn
           path: |
@@ -404,12 +404,27 @@ jobs:
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
 
+      # #2639 — exactly this attempt's three shards, each into the
+      # directory the reader expects. A shard from an earlier attempt has
+      # another name and is never found; the plan step then refuses.
       - uses: actions/download-artifact@v4
         if: always()
         continue-on-error: true
         with:
-          pattern: testshard-*
-          path: shards
+          name: testshard-gate-attempt-${{ github.run_attempt }}
+          path: shards/testshard-gate
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: testshard-money-attempt-${{ github.run_attempt }}
+          path: shards/testshard-money
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: testshard-rest-attempt-${{ github.run_attempt }}
+          path: shards/testshard-rest
 
       # What the shards were promised, re-derived from this tree: every
       # test file exactly once, none unclassified, none shared.
@@ -472,7 +487,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: quality-timings
+          name: quality-timings-attempt-${{ github.run_attempt }}
           retention-days: 14
           if-no-files-found: ignore
           path: |
@@ -522,14 +537,14 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          name: test-inventory
+          name: test-inventory-attempt-${{ github.run_attempt }}
           path: docs/testing/TEST_INVENTORY.md
           if-no-files-found: ignore
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: quality-code
+          name: quality-code-attempt-${{ github.run_attempt }}
           path: report/*.psv
 
       # #1446 — the required context carries the WHOLE result of this job.
@@ -577,7 +592,7 @@ jobs:
         if: env.DB_REQUIRED != 'true'
         uses: actions/download-artifact@v4
         with:
-          name: quality-classification
+          name: quality-classification-attempt-${{ github.run_attempt }}
           path: report
       - name: Stand down only with the verdict on record
         id: standdown
@@ -901,7 +916,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: quality-database
+          name: quality-database-attempt-${{ github.run_attempt }}
           path: report/
 
       # #1335 — the steps above run continue-on-error so the report is
@@ -947,10 +962,30 @@ jobs:
     if: always()
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      # #2639 — this attempt's three row inputs by exact name, into the
+      # flat layout quality_report.sh reads. Never a wildcard: another
+      # attempt's rows must not sit beside the current ones. A missing
+      # input is a red gate line below, and the report still renders.
+      - name: Download the classification
+        id: dl_classification
+        uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
-          pattern: quality-*
-          merge-multiple: true
+          name: quality-classification-attempt-${{ github.run_attempt }}
+          path: report
+      - name: Download the code rows
+        id: dl_code
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: quality-code-attempt-${{ github.run_attempt }}
+          path: report
+      - name: Download the database rows
+        id: dl_database
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: quality-database-attempt-${{ github.run_attempt }}
           path: report
 
       - name: DESKILO QUALITY REPORT
@@ -960,7 +995,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: quality-report
+          name: quality-report-attempt-${{ github.run_attempt }}
           path: report/quality-report.md
 
       - name: Every job this run required succeeded
@@ -972,4 +1007,7 @@ jobs:
             "quality · test · money and workspace=${{ needs.money.result }}" \
             "quality · test · other features=${{ needs.rest.result }}" \
             "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
-            "quality · database=${{ needs.database.result }}"
+            "quality · database=${{ needs.database.result }}" \
+            "Classification input=${{ steps.dl_classification.outcome }}" \
+            "Code rows input=${{ steps.dl_code.outcome }}" \
+            "Database rows input=${{ steps.dl_database.outcome }}"

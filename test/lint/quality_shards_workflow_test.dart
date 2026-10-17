@@ -12,6 +12,7 @@ import 'package:yaml/yaml.dart';
 import '../../tool/quality_rows/selection.dart';
 
 const _required = 'analyze · l10n gate · test · coverage';
+const _attempt = '-attempt-\${{ github.run_attempt }}';
 const _shardJobs = {gateShard: 'gate', moneyShard: 'money', restShard: 'rest'};
 
 YamlMap _jobs() =>
@@ -46,10 +47,11 @@ void main() {
       ];
       expect(
         uploads.map((u) => '${(u['with'] as YamlMap)['name']}'),
-        contains('testshard-$shard'),
+        contains('testshard-$shard$_attempt'),
       );
       final upload = uploads.firstWhere(
-        (u) => '${(u['with'] as YamlMap)['name']}' == 'testshard-$shard',
+        (u) =>
+            '${(u['with'] as YamlMap)['name']}' == 'testshard-$shard$_attempt',
       );
       expect(
         upload['if'],
@@ -116,5 +118,93 @@ void main() {
     for (final id in _shardJobs.keys) {
       expect('testshard-$id', isNot(startsWith('quality-')));
     }
+  });
+
+  // #2639 - a rerun is a new attempt of the same run: nothing one attempt
+  // produced may stand in for another's evidence.
+  group('artifacts are scoped to the attempt (#2639)', () {
+    List<YamlMap> uses(String action) => [
+      for (final job in _jobs().values)
+        for (final s in (job as YamlMap)['steps'] as YamlList)
+          if ('${(s as YamlMap)['uses']}'.startsWith(action)) s,
+    ];
+
+    List<String> downloads(String job) => [
+      for (final s in (_jobs()[job] as YamlMap)['steps'] as YamlList)
+        if ('${(s as YamlMap)['uses']}'.startsWith('actions/download-artifact'))
+          '${(s['with'] as YamlMap)['name']}',
+    ];
+
+    test('every upload carries the attempt suffix and none overwrites', () {
+      final ups = uses('actions/upload-artifact');
+      expect(ups, isNotEmpty);
+      for (final u in ups) {
+        final w = u['with'] as YamlMap;
+        expect('${w['name']}', endsWith(_attempt));
+        expect(w.containsKey('overwrite'), isFalse);
+      }
+      final names = ups.map((u) => '${(u['with'] as YamlMap)['name']}');
+      expect(
+        names,
+        containsAll([
+          for (final n in const [
+            'testshard-gate',
+            'testshard-money',
+            'testshard-rest',
+            'quality-code',
+            'quality-database',
+            'quality-timings',
+            'quality-report',
+            'test-inventory',
+          ])
+            '$n$_attempt',
+        ]),
+      );
+    });
+
+    test('every download names one current-attempt artifact, never a '
+        'pattern or a merge', () {
+      final downs = uses('actions/download-artifact');
+      expect(downs, isNotEmpty);
+      for (final d in downs) {
+        final w = d['with'] as YamlMap;
+        expect(w.containsKey('pattern'), isFalse);
+        expect(w.containsKey('merge-multiple'), isFalse);
+        expect('${w['name']}', endsWith(_attempt));
+      }
+    });
+
+    test('the aggregate downloads each shard into the directory the reader '
+        'expects', () {
+      final code = _jobs()['code'] as YamlMap;
+      final got = {
+        for (final d in (code['steps'] as YamlList).cast<YamlMap>().where(
+          (s) => '${s['uses']}'.startsWith('actions/download-artifact'),
+        ))
+          '${(d['with'] as YamlMap)['name']}':
+              '${(d['with'] as YamlMap)['path']}',
+      };
+      expect(got, {
+        for (final id in _shardJobs.keys)
+          'testshard-$id$_attempt': 'shards/testshard-$id',
+      });
+    });
+
+    test('the report reads exactly classification, code and database rows '
+        'and gates on each download', () {
+      expect(downloads('report'), [
+        'quality-classification$_attempt',
+        'quality-code$_attempt',
+        'quality-database$_attempt',
+      ]);
+      final gate = _run(_jobs()['report'] as YamlMap);
+      for (final id in const ['dl_classification', 'dl_code', 'dl_database']) {
+        expect(gate, contains('steps.$id.outcome'));
+      }
+    });
+
+    test('the database job reads this attempt\'s classification', () {
+      expect(downloads('database'), ['quality-classification$_attempt']);
+    });
   });
 }

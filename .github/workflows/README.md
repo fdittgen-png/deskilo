@@ -32,6 +32,17 @@ workflow: it gates a pull request, and the schedule is only there because
 the schema can break from underneath us when a Supabase platform image
 changes.
 
+**Retrying `CI · Quality report` (#2639).** Every artifact it uploads is named
+`<name>-attempt-<run_attempt>` and every download names its current-attempt
+artifact exactly, because the shard reader requires the plan and all three
+shard envelopes to share one run attempt. The supported recovery for an
+unchanged candidate is ONE whole-workflow rerun (`gh run rerun RUN_ID`, no
+`--failed`/`--job`): it keeps the source and event and produces a complete
+attempt. A partial rerun fails closed (missing or mismatched shards), it does
+not fall back to an earlier attempt. Changed code or workflow is a new normal
+candidate; rerunning an old run runs its old workflow. A deterministic failure
+is fixed, not rerun.
+
 ## What is here today
 
 | Name | File | What it is for |

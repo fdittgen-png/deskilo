@@ -335,7 +335,10 @@ ShardResult readShard({
   if (envelope.runId != plan.runId || envelope.runAttempt != plan.runAttempt) {
     v.add(
       'the envelope is from run ${envelope.runId}/${envelope.runAttempt}, '
-      'the plan from ${plan.runId}/${plan.runAttempt}',
+      'the plan from ${plan.runId}/${plan.runAttempt}'
+      '${envelope.runId == plan.runId ? ' — shards of different attempts '
+          'never mix: rerun the whole Quality workflow '
+          '(gh run rerun RUN_ID, without --failed or --job)' : ''}',
     );
   }
   if (envelope.selectionDigest != expected.digest) {
