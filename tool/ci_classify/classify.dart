@@ -19,7 +19,12 @@
 // everything, with the defect as the reason; before, the parser dropped
 // the broken tail and classified what was left.
 
-const String classifierVersion = '3';
+// v4 -- #2561 C2: the physical topology consumer (test/topology) runs in the
+// database job, so the sources it exercises are database-relevant: the
+// context, session, identity, settings and cache cores and the providers
+// and adapters of the P profile and W reservation paths.
+
+const String classifierVersion = '4';
 
 /// Where a pull request's change came from, as the classifier sees it.
 class ChangeSet {
@@ -55,10 +60,31 @@ class Verdict {
       '$discipline|${required ? 'required' : 'not_applicable'}|$reason|v$classifierVersion';
 }
 
+/// Sources the topology consumer (test/topology/three_stacks_test.dart)
+/// runs through real stacks. A path under them selects the database job
+/// even where its directory is otherwise listed as independent.
+bool _topologyDependency(String path) {
+  const prefixes = [
+    'lib/core/session/',
+    'lib/core/identity/',
+    'lib/core/settings/',
+    'lib/core/cache/',
+    'lib/core/realtime/',
+    'lib/features/me/',
+    'lib/features/reservations/data/',
+    'lib/features/reservations/providers/',
+    'lib/features/workspace/providers/',
+    'lib/features/auth/providers/',
+    'test/topology/',
+  ];
+  return prefixes.any(path.startsWith);
+}
+
 /// Paths whose change cannot affect the database job (replay, pgTAP,
 /// policy manifest, the two-session scripts, the Edge payment check).
 /// Everything else can, until proven otherwise.
 bool _databaseIndependent(String path) {
+  if (_topologyDependency(path)) return false;
   const prefixes = [
     'docs/',
     'assets/help/',
