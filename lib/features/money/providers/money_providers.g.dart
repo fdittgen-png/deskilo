@@ -49,7 +49,7 @@ final class MoneyRepositoryProvider
   }
 }
 
-String _$moneyRepositoryHash() => r'd196b554931b44005209a89a572ef2650271f79e';
+String _$moneyRepositoryHash() => r'a7e54df7db5a022a69c810dac8a8eb462eafb349';
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 /// #1449 — the decision behind Register payment: the sheet says what was

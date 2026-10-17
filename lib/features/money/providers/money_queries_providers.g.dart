@@ -55,7 +55,7 @@ final class InvoiceQueriesProvider
   }
 }
 
-String _$invoiceQueriesHash() => r'12784231a800773f8a19420dab202df9832352bb';
+String _$invoiceQueriesHash() => r'fa30e92b6352911be8389f2ff83dfa011398d211';
 
 /// #2591 C1 — the member's account, statement, ledger and usage reads.
 
@@ -108,7 +108,7 @@ final class MemberAccountQueriesProvider
 }
 
 String _$memberAccountQueriesHash() =>
-    r'd8c5a1021012aa5cb2c4dd95e317988a22b7ab45';
+    r'8c9565c2074e2144ca57eb073d3cc95f7bf9ad79';
 
 /// #2591 C2 — the report template and image library: the preview and the
 /// editor depend on this and on nothing else of the money boundary.
@@ -164,7 +164,7 @@ final class ReportTemplateRepositoryProvider
 }
 
 String _$reportTemplateRepositoryHash() =>
-    r'3613b080cd2f35e9ef5fcd903edf2b9269d8d31c';
+    r'b2ea07b1d54fc22f030ce0126e070d55472f7d8b';
 
 /// #2591 C3 — what a person does to an invoice: issue, void, remind,
 /// regroup, settle a credit note, match a payment.
@@ -214,7 +214,7 @@ final class InvoiceCommandsProvider
   }
 }
 
-String _$invoiceCommandsHash() => r'b42975e1913b0409afa1e86e296ac224fc90a203';
+String _$invoiceCommandsHash() => r'888c8948b95c147d0261e62c60ae23e3463f746c';
 
 /// #2591 C3 — the workspace's VAT rates and returns.
 
@@ -267,7 +267,7 @@ final class TaxReportingRepositoryProvider
 }
 
 String _$taxReportingRepositoryHash() =>
-    r'b39e8b86c69f843992b9d2360329491556e9c571';
+    r'5b6cac99aedbbd0a384ec4e97e6feda2786bcf1d';
 
 /// #2591 C4 — fee bands, subscription levels, services, packages and a
 /// member's negotiated deal.
@@ -322,7 +322,7 @@ final class CommercialTermsProvider
   }
 }
 
-String _$commercialTermsHash() => r'658460a1bfe1e8e64b8493609ce6aa6a6633a800';
+String _$commercialTermsHash() => r'2ac85708d8f61541447547900d417d010f087f7d';
 
 /// #2591 C4 — the narrow legacy expense adapter (#2573 takes its source
 /// bridge).
@@ -377,7 +377,7 @@ final class ExpenseRepositoryProvider
   }
 }
 
-String _$expenseRepositoryHash() => r'47e715506ef078e689536799b290b90cf9e34a0d';
+String _$expenseRepositoryHash() => r'd55c5311dda3b80caa457fba5cb8b84f72969440';
 
 /// #2365 — the one fiscal source an accounting export reads.
 
@@ -430,4 +430,4 @@ final class AccountingSourceQueriesProvider
 }
 
 String _$accountingSourceQueriesHash() =>
-    r'49785a0d86c4e9344ce35422225a1f5fec9d102e';
+    r'edfe751038a4f51ea46405ca0b2ba451160a4203';

@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/settings/settings.dart';
 import '../../../core/time/clock.dart';
@@ -42,6 +41,7 @@ import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
 import '../domain/workspace_status.dart';
+import 'credit_providers.dart';
 import 'money_queries_providers.dart';
 
 export '../domain/bill_sections.dart' show currentPeriod;
@@ -51,7 +51,7 @@ part 'money_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 MoneyRepository moneyRepository(Ref ref) => SupabaseMoneyRepository(
-      Supabase.instance.client,
+      ref.watch(moneyClientProvider),
       invoices: ref.watch(invoiceQueriesProvider),
       accounts: ref.watch(memberAccountQueriesProvider));
 

@@ -22,6 +22,9 @@ import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
+import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/profile/providers/personal_preferences_providers.dart';
 import 'package:deskilo/features/reservations/data/context_reservation_repository.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
@@ -361,6 +364,46 @@ void main() {
     expect(rig.p.paths, isNotEmpty);
     expect(rig.a.paths, isEmpty);
     expect(rig.b.paths, isEmpty);
+    await finish(tester);
+  });
+  // #2564 O3 -- the money factories run on the selected workspace's host.
+  testWidgets('money reads and commands reach the selected W host only, then follow a switch', timeout: _limit, (tester) async {
+    final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+    addTearDown(sub.close);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+
+    Future<void> touchMoney() async {
+      await outcome(tester, rig.container.read(creditRepositoryProvider).fetchCreditProducts('ws-1'), 'credit');
+      await outcome(tester, rig.container.read(bookProfileRepositoryProvider).fetchBookProfiles('ws-1'), 'book');
+      await outcome(tester, rig.container.read(invoiceQueriesProvider).fetchInvoices('ws-1'), 'invoices');
+    }
+
+    await touchMoney();
+    expect(rig.a.paths, isNotEmpty);
+    expect(rig.b.paths, isEmpty);
+    expect(rig.p.paths, isEmpty, reason: 'the personal home never serves money rows');
+
+    // W-B with the same local workspace id: its own host, W-A sees nothing new.
+    final seenByA = rig.a.paths.length;
+    rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+    await settle(tester, rig.container.read(workspaceContextProvider.future));
+    await touchMoney();
+    expect(rig.b.paths, isNotEmpty);
+    expect(rig.a.paths.length, seenByA);
+    expect(rig.p.paths, isEmpty);
+
+    // Refusal then recovery: W-B down answers an error, never W-A's rows.
+    rig.b.down = true;
+    final seenByB = rig.b.paths.length;
+    final refused = await outcome(
+        tester, rig.container.read(creditRepositoryProvider).fetchCreditProducts('ws-1'), 'down');
+    expect(refused.error, isNotNull);
+    expect(rig.a.paths.length, seenByA);
+    rig.b.down = false;
+    final recovered = await outcome(
+        tester, rig.container.read(creditRepositoryProvider).fetchCreditProducts('ws-1'), 'up');
+    expect(rig.b.paths.length, greaterThan(seenByB), reason: 'recovery reaches W-B again');
+    expect(recovered.error, isNot(isA<http.ClientException>()));
     await finish(tester);
   });
 }

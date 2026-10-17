@@ -43,11 +43,19 @@ const _clean = <String>[
   'lib/features/workspace/providers/workspace_application_providers.dart',
   'lib/features/reservations/providers/reservation_providers.dart',
   'lib/features/reservations/providers/place_feedback_providers.dart',
+  // #2564 O3: the money sources of the selected workspace.
+  'lib/features/money/providers/money_providers.dart',
+  'lib/features/money/providers/money_queries_providers.dart',
+  'lib/features/money/providers/credit_providers.dart',
+  'lib/features/money/providers/book_profile_providers.dart',
+  'lib/features/money/providers/einvoice_inbox_providers.dart',
+  'lib/features/money/providers/sales_tax_providers.dart',
+  'lib/features/money/providers/vies_providers.dart',
 ];
 
 /// Hand-written lib files outside the allowlist that still name the
 /// singleton. RATCHET: this number only falls.
-const _budget = 33;
+const _budget = 26;
 
 bool _names(String line) => line.contains(_singleton);
 

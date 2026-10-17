@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_book_profile.dart';
@@ -8,13 +7,14 @@ import '../data/supabase_book_profile_repository.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
+import 'credit_providers.dart';
 
 part 'book_profile_providers.g.dart';
 
 /// #1869 — where book profiles are read and saved.
 @Riverpod(keepAlive: true)
 BookProfileRepository bookProfileRepository(Ref ref) =>
-    SupabaseBookProfileRepository(Supabase.instance.client);
+    SupabaseBookProfileRepository(ref.watch(moneyClientProvider));
 
 /// Saving a book profile (the decision the sheet asks for).
 @riverpod

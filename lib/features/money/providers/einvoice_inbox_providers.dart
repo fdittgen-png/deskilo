@@ -2,14 +2,14 @@
 //
 // #2358 — the supplier e-invoice inbox.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../application/einvoice_inbox.dart';
 import '../data/supabase_einvoice_inbox_repository.dart';
 import '../domain/einvoice_inbox.dart';
+import 'credit_providers.dart';
 
 final eInvoiceInboxRepositoryProvider = Provider<EInvoiceInboxRepository>(
-  (ref) => SupabaseEInvoiceInboxRepository(Supabase.instance.client),
+  (ref) => SupabaseEInvoiceInboxRepository(ref.watch(moneyClientProvider)),
 );
 
 /// Receiving, matching and rejecting.

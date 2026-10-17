@@ -2,18 +2,18 @@
 //
 // #2362 -- the sales-tax summary of a period.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../application/sales_tax_commands.dart';
 import '../data/supabase_sales_tax_repository.dart';
 import '../domain/sales_tax_repository.dart';
 import '../domain/tax_exemption_certificate.dart';
+import 'credit_providers.dart';
 
 part 'sales_tax_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 SalesTaxRepository salesTaxRepository(Ref ref) =>
-    SupabaseSalesTaxRepository(Supabase.instance.client);
+    SupabaseSalesTaxRepository(ref.watch(moneyClientProvider));
 
 @riverpod
 SalesTaxCommands salesTaxCommands(Ref ref) =>
