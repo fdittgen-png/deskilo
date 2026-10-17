@@ -11202,7 +11202,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'Este espacio está en $host. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y le pide iniciar sesión allí.';
+    return 'Este espacio está en $host. Se abre aquí, por la conexión propia de ese servidor; no se cambia nada y su propio servidor no se usa para ello.';
   }
 
   @override

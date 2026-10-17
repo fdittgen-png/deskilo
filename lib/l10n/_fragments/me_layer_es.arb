@@ -21,7 +21,7 @@
   "meLeaveBody": "Deja de ser miembro. Sus reservas, facturas y mensajes se quedan en el espacio. Para borrar también sus datos, use Privacidad.",
   "meLeaveFailed": "No se pudo salir del espacio. Inténtelo de nuevo.",
   "meLeaveDone": "Ha salido de {name}.",
-  "meLinkedOpenBody": "Este espacio está en {host}. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y le pide iniciar sesión allí.",
+  "meLinkedOpenBody": "Este espacio está en {host}. Se abre aquí, por la conexión propia de ese servidor; no se cambia nada y su propio servidor no se usa para ello.",
   "meLinkedOpen": "Abrir en {host}",
   "meLinkedUnavailable": "{host} no respondió: esta lista puede estar incompleta.",
   "meLinkedPendingOn": "Pendiente de aprobación · {host}",

@@ -7260,7 +7260,7 @@
   },
   "meLeaveTitle": "Quitter {name} ?",
   "meLinkedOpen": "Ouvrir sur {host}",
-  "meLinkedOpenBody": "Cet espace se trouve sur {host}. L'application travaille avec un serveur à la fois : l'ouvrir bascule vers ce serveur et vous demande de vous y connecter.",
+  "meLinkedOpenBody": "Cet espace se trouve sur {host}. Il s'ouvre ici, par la connexion propre à ce serveur ; rien n'est basculé et votre propre serveur n'est pas utilisé pour cela.",
   "meLinkedPendingOn": "En attente de validation · {host}",
   "meLinkedUnavailable": "{host} n'a pas répondu : cette liste peut être incomplète.",
   "meManageSpaces": "Gérer mes espaces",

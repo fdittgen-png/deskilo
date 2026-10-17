@@ -184,7 +184,11 @@ void main() {
               : TableInvalidation([]),
         ),
       ],
-    )..listen(workspaceContextProvider, (_, _) {});
+    )..listen(workspaceContextProvider, (_, _) {})
+    // A selection belongs to a signed-in person (#2562): the session is known
+    // before any space is selected.
+    ..listen(sessionStateProvider, (_, _) {});
+    await container.read(sessionStateProvider.future);
     addTearDown(() {
       container.dispose();
       pool.close();

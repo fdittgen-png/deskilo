@@ -11221,7 +11221,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'Dieser Space liegt auf $host. Die App arbeitet mit einem Server zur Zeit: Öffnen wechselt zu diesem Server und fragt dort nach Ihrer Anmeldung.';
+    return 'Dieser Space liegt auf $host. Er öffnet sich hier über die eigene Verbindung zu diesem Server; nichts wird umgeschaltet und Ihr eigener Server wird dafür nicht verwendet.';
   }
 
   @override

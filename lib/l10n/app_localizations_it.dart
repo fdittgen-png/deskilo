@@ -11213,7 +11213,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'Questo spazio si trova su $host. L\'app lavora con un server alla volta: aprirlo passa a quel server e le chiede di accedere lì.';
+    return 'Questo spazio si trova su $host. Si apre qui, tramite la connessione propria di quel server; nulla viene cambiato e il suo server non viene usato.';
   }
 
   @override

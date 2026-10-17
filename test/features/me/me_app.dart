@@ -16,6 +16,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -63,6 +64,7 @@ Future<GoRouter> pumpMeApp(
   FakeMessengerRepository? messenger,
   Size size = const Size(800, 1600),
   LinkLauncher? launcher,
+  List<Override> extraOverrides = const [],
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -79,7 +81,10 @@ Future<GoRouter> pumpMeApp(
         connectedSources: connectedSources,
         identityConnector: identityConnector,
         messenger: messenger,
-      )..addAll([if (launcher != null) linkLauncherProvider.overrideWithValue(launcher)]),
+      )..addAll([
+        if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
+        ...extraOverrides,
+      ]),
       child: const DeskiloApp(),
     ),
   );

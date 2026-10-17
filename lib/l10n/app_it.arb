@@ -7260,7 +7260,7 @@
   },
   "meLeaveTitle": "Lasciare {name}?",
   "meLinkedOpen": "Apri su {host}",
-  "meLinkedOpenBody": "Questo spazio si trova su {host}. L'app lavora con un server alla volta: aprirlo passa a quel server e le chiede di accedere lì.",
+  "meLinkedOpenBody": "Questo spazio si trova su {host}. Si apre qui, tramite la connessione propria di quel server; nulla viene cambiato e il suo server non viene usato.",
   "meLinkedPendingOn": "In attesa di approvazione · {host}",
   "meLinkedUnavailable": "{host} non ha risposto: questo elenco potrebbe essere incompleto.",
   "meManageSpaces": "Gestisci i miei spazi",

@@ -6,6 +6,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../session/session_source.dart';
 import 'connected_installation_providers.dart';
 import 'connected_pool_host_resolver.dart';
 import 'context_clients.dart';
@@ -37,8 +38,13 @@ InstallationIdReader installationIdReader(Ref ref) => readInstallationId;
 /// when it lives on the installation the app is signed in to.
 @Riverpod(keepAlive: true)
 class SelectedWorkspaceHost extends _$SelectedWorkspaceHost {
+  /// A selection belongs to the person who made it: another (or no)
+  /// account starts without one.
   @override
-  ({String workspaceId, String source})? build() => null;
+  ({String workspaceId, String source})? build() {
+    ref.watch(sessionStateProvider);
+    return null;
+  }
 
   void select(String workspaceId, String source) =>
       state = (workspaceId: workspaceId, source: source);
