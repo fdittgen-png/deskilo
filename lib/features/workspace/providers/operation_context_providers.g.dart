@@ -102,7 +102,7 @@ final class WorkspaceContextProvider
   }
 }
 
-String _$workspaceContextHash() => r'ad885bd3716d4d96960045defdc542ed5226f76e';
+String _$workspaceContextHash() => r'6eda323a1f36093b1eb7c12c9ed4e195b730ce42';
 
 /// #2564 O1 -- the client the selected workspace's operations run on: the
 /// verified host client of the captured [WorkspaceContext]'s installation.
@@ -164,4 +164,4 @@ final class SelectedWorkspaceClientProvider
 }
 
 String _$selectedWorkspaceClientHash() =>
-    r'15bbe315c2cb0542bf76d97d443e1a81cf8b3c81';
+    r'231a71540e76dd61e84aee347cf02702ff642792';

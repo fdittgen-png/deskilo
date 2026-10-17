@@ -14,6 +14,8 @@
 // host.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'connected_pool_clients.dart' show PinnedClient;
+
 /// No verified client exists for this installation id.
 class UnverifiedInstallation implements Exception {
   const UnverifiedInstallation(this.installationId);
@@ -64,6 +66,14 @@ class ContextClients {
     _workspace[installationId] = client;
   }
 
+  /// Forgets [client] for [installationId] (its connection ended). A newer
+  /// registration for the same installation is left alone.
+  void unregisterWorkspace(String installationId, SupabaseClient client) {
+    if (identical(_workspace[installationId], client)) {
+      _workspace.remove(installationId);
+    }
+  }
+
   /// The client of a verified workspace installation.
   SupabaseClient workspace(String installationId) =>
       _workspace[installationId] ??
@@ -76,6 +86,7 @@ class ResolvedWorkspaceHost {
     required this.installationId,
     required this.client,
     required this.localUserId,
+    this.lease,
   });
 
   final String installationId;
@@ -83,6 +94,11 @@ class ResolvedWorkspaceHost {
 
   /// The signed-in account's id on THAT host (it differs per host).
   final String localUserId;
+
+  /// #2562 -- the pinned lease of a connected host's pooled client: its
+  /// holder releases it when done and is told when the host's connection
+  /// ends. Null for the active installation (its client is the app's own).
+  final PinnedClient? lease;
 }
 
 /// Finds and verifies the host of a workspace.

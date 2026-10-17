@@ -34,14 +34,18 @@ class ConnectedPoolHostResolver implements WorkspaceHostResolver {
   Future<ResolvedWorkspaceHost> resolve(String workspaceId) async {
     final source = sourceOf(workspaceId);
     if (source == null) return active.resolve(workspaceId);
-    final pooled = await pool().open(source);
+    // Pinned: the holder (a workspace context, its realtime channel) keeps
+    // this target's client for its own lifetime and learns when it ends.
+    final pooled = await pool().pin(source);
     if (identical(pooled.client, root)) {
+      pooled.release();
       throw UnverifiedInstallation(pooled.installationId);
     }
     return ResolvedWorkspaceHost(
       installationId: pooled.installationId,
       client: pooled.client,
       localUserId: pooled.account,
+      lease: pooled,
     );
   }
 }

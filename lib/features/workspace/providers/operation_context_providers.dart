@@ -6,9 +6,13 @@
 // of W-A, another account) rebuilds the context rather than retargeting an
 // operation already under way; the personal context does not depend on the
 // selected workspace at all.
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/connected_installations.dart'
+    show ConnectionFailure, ConnectionFailureReason;
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/backend/context_clients.dart';
 import '../../../core/backend/operation_context.dart';
@@ -60,7 +64,25 @@ Future<WorkspaceContext?> workspaceContext(Ref ref) async {
   if (personal == null || workspace == null || settings == null) return null;
 
   final host = await resolver.resolve(workspace.id);
+  final lease = host.lease;
+  if (!ref.mounted) {
+    lease?.release();
+    return null;
+  }
   clients.registerWorkspace(host.installationId, host.client);
+  if (lease != null) {
+    // #2562 -- the host's pinned client lives as long as this context. When
+    // its connection ends (disconnect, replacement, sign-out, closed pool)
+    // the registration is withdrawn and the context re-resolves: it then
+    // refuses with the typed reason instead of serving a dead client.
+    ref.onDispose(lease.release);
+    unawaited(
+      lease.ended.then((_) {
+        clients.unregisterWorkspace(host.installationId, host.client);
+        if (ref.mounted) ref.invalidateSelf();
+      }),
+    );
+  }
   final target = WorkspaceTarget.local(
     installationId: host.installationId,
     workspaceId: workspace.id,
@@ -89,9 +111,23 @@ Future<WorkspaceContext?> workspaceContext(Ref ref) async {
 SupabaseClient selectedWorkspaceClient(Ref ref) {
   // Whole-context watch: an unchanged client compares equal, so dependents
   // rebuild only when the installation does.
-  final installation = ref.watch(workspaceContextProvider).value?.target.installationId;
+  final context = ref.watch(workspaceContextProvider);
+  final clients = ref.watch(contextClientsProvider);
+  final installation = context.value?.target.installationId;
   if (installation == null) {
-    return ref.watch(contextClientsProvider).legacyActive;
+    // #2562 -- a workspace on a connected installation (a selection names
+    // it) is never answered by the root client: while its context is still
+    // resolving, or was refused, the answer is the typed refusal.
+    final split = ref.watch(selectedWorkspaceHostProvider);
+    if (split != null) {
+      final error = context.error;
+      throw error is ConnectionFailure
+          ? error
+          : ConnectionFailure(split.source, ConnectionFailureReason.unavailable);
+    }
+    return clients.legacyActive;
   }
-  return ref.watch(workspaceClientProvider(installation));
+  // Read from the registry, not a cached family: the client of an
+  // installation changes when its connection is replaced.
+  return clients.workspace(installation);
 }

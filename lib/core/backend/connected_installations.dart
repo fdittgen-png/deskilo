@@ -13,7 +13,7 @@ import 'connected_pool_clients.dart';
 import 'connection_outcome.dart';
 import 'origin_only_client.dart';
 
-export 'connected_pool_clients.dart' show PoolRecord, PooledClient;
+export 'connected_pool_clients.dart' show PinnedClient, PoolRecord, PooledClient;
 export 'connection_outcome.dart';
 export 'origin_only_client.dart';
 
@@ -183,6 +183,8 @@ class ConnectedInstallations {
     }
     final epoch = (_epochs[source] ?? 0) + 1;
     _epochs[source] = epoch;
+    // A replaced connection ends the pinned clients of the old one.
+    unawaited(_clients.discard(source));
     final client = _client(BackendEndpoint(source, endpoint.key.trim()));
     try {
       if (code) {
@@ -229,6 +231,8 @@ class ConnectedInstallations {
     }
     final epoch = (_epochs[source] ?? 0) + 1;
     _epochs[source] = epoch;
+    // A replaced connection ends the pinned clients of the old one.
+    unawaited(_clients.discard(source));
     final client = _client(BackendEndpoint(source, endpoint.key.trim()));
     try {
       // The canonical provider's tokens never reach a target data API.
@@ -310,6 +314,12 @@ class ConnectedInstallations {
   /// #2562 -- the long-lived, self-refreshing client of the connected target
   /// [source], verified like [use]; see [PooledClients.open].
   Future<PooledClient> open(String source) => _clients.open(source);
+
+  /// #2562 -- [open], as a lease whose lifetime matches its holder: it ends
+  /// with a typed [ConnectionFailure] when this connection is disconnected,
+  /// replaced, signed out or the pool closes, and never serves another
+  /// target; see [PinnedClient].
+  Future<PinnedClient> pin(String source) => _clients.pin(source);
 
   Future<T> use<T>(String source, Future<T> Function(SupabaseClient) action) {
     final next = (_reads[source] ?? Future<void>.value()).then(
@@ -473,7 +483,12 @@ class ConnectedInstallations {
     // installation or main app session is signed out.
     _epochs[source] = (_epochs[source] ?? 0) + 1;
     _unsaved.remove(source);
-    await _clients.discard(source);
-    await _write(source, null);
+    // The record goes first: a holder told that its pinned client ended
+    // re-resolves at once, and must find the connection gone, not re-pin it.
+    try {
+      await _write(source, null);
+    } finally {
+      await _clients.discard(source);
+    }
   }
 }

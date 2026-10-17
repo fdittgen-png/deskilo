@@ -89,6 +89,16 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   Future<void> build(RealtimeTarget target) async {
     final generation = ++_generation;
     ref.onDispose(_teardown);
+    // #2562 -- the channel's lifetime is the lifetime of the client it runs
+    // on: watched before the first await, so a workspace that moves to
+    // another installation (even under the same local id), or whose
+    // connection ends, rebuilds this channel instead of leaving it on the
+    // old client. A refused client (typed failure) leaves no channel.
+    final sync = ref.watch(
+      target == RealtimeTarget.workspace
+          ? realtimeSyncProvider
+          : accountRealtimeSyncProvider,
+    );
     final workspaceId = await ref.watch(realtimeWorkspaceIdProvider.future);
     // A build superseded while it awaited installs nothing: the build
     // that superseded it owns the channel and will tear this one's
@@ -105,9 +115,8 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     });
     WidgetsBinding.instance.addObserver(_observer!);
     final feed = switch (target) {
-      RealtimeTarget.workspace =>
-        ref.read(realtimeSyncProvider).watch(workspaceId),
-      RealtimeTarget.account => ref.read(accountRealtimeSyncProvider).watchAccount(),
+      RealtimeTarget.workspace => sync.watch(workspaceId),
+      RealtimeTarget.account => sync.watchAccount(),
     };
     _scopes = target.scopes;
     _sub = feed.listen((table) {
