@@ -410,25 +410,50 @@ Future<void> issueInvoicesForAll(
   );
   if (confirmed != true || !context.mounted) return;
 
+  // #2585 C2 — each entry is sent ONCE under its own request id. An entry
+  // whose answer was lost is looked up by that id afterwards, never sent
+  // again, so it can neither double nor be reported as a plain failure.
+  final issuance = InvoiceIssuance(
+    ref.read(invoiceCommandsProvider),
+    ref.read(invoiceQueriesProvider),
+    ref.read(invoiceActionCommandsProvider),
+  );
   var issued = 0;
+  final lost = <InvoiceIssueUnknown>[];
   for (final entry in entries) {
-    try {
-      await ref
-          .read(invoiceCommandsProvider)
-          .createInvoice(
-            workspaceId: workspace.id,
-            memberId: entry.memberId,
-            period: period,
-          );
-      issued++;
-    } on Object catch (e, st) {
-      TraceLogger.instance.error(
-        'money',
-        'invoice sweep entry failed',
-        error: e,
-        stackTrace: st,
-      );
+    final outcome = await issuance.issue(
+      InvoiceIssueAttempt(
+        workspaceId: workspace.id,
+        memberId: entry.memberId,
+        period: period,
+        requestId: newRequestId(),
+        direct: true,
+      ),
+    );
+    switch (outcome) {
+      case InvoiceIssued():
+        issued++;
+      case InvoiceIssueUnknown():
+        lost.add(outcome);
+      case InvoiceIssueHeld() || InvoiceIssueRefused():
+        break;
     }
+  }
+  for (var unknown in lost) {
+    if (!context.mounted) break;
+    final resolved = await showCommandUnknownDialog<InvoiceIssueOutcome>(
+      context,
+      body: l10n.invoiceIssueUnknownBody,
+      check: () async {
+        final looked = await issuance.look(unknown);
+        if (looked is InvoiceIssueUnknown) {
+          unknown = looked;
+          return null;
+        }
+        return looked;
+      },
+    );
+    if (resolved is InvoiceIssued) issued++;
   }
   ref.invalidate(invoicesProvider);
   if (!context.mounted) return;

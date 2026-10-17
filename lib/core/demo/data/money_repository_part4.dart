@@ -277,3 +277,73 @@ extension _FakeMoneyRepositoryPart4 on FakeMoneyRepository {
     return PaymentOrderStart(approveUrl: url, orderId: 'order-1');
   }
 }
+
+/// #2585 C2 — the demo's receipts per repository: `workspaceId|requestId` →
+/// invoice id, written with the invoice like the server's same-transaction
+/// receipt. A top-level Expando, so the class itself keeps no extra field.
+final _invoiceReceipts = Expando<Map<String, String>>('invoice receipts');
+
+/// #2585 C2 — void / refund under a request id for the demo and the tests:
+/// the act runs on the fake repository once, and its receipt is read back by
+/// the same id through [FakeMoneyRepository.invoiceCommandOutcome].
+class FakeInvoiceActionCommands implements InvoiceActionCommands {
+  FakeInvoiceActionCommands(this._repo);
+
+  final FakeMoneyRepository _repo;
+
+  Future<void> _once(String invoiceId, String requestId, Future<void> Function() act) async {
+    final receipts = _invoiceReceipts[_repo] ??= {};
+    final invoice = _repo.invoices.firstWhere(
+      (i) => i.id == invoiceId,
+      orElse: () => throw StateError('unknown invoice'),
+    );
+    final key = '${invoice.workspaceId}|$requestId';
+    if (receipts.containsKey(key)) return;
+    await act();
+    receipts[key] = invoiceId;
+  }
+
+  @override
+  Future<String> createInvoiceOnce(InvoiceIssueCommand c) async {
+    final receipts = _invoiceReceipts[_repo] ??= {};
+    final key = '${c.workspaceId}|${c.requestId}';
+    final known = receipts[key];
+    if (known != null) return known;
+    final id = await _repo.createInvoice(
+      workspaceId: c.workspaceId,
+      memberId: c.memberId,
+      period: c.period,
+      kind: c.kind,
+    );
+    return receipts[key] = id;
+  }
+
+  @override
+  Future<String> settleInvoicesOnce({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    required String requestId,
+    String note = '',
+  }) async {
+    final receipts = _invoiceReceipts[_repo] ??= {};
+    final key = '$workspaceId|$requestId';
+    final known = receipts[key];
+    if (known != null) return known;
+    final id = await _repo.settleInvoices(
+      workspaceId: workspaceId,
+      memberId: memberId,
+      invoiceIds: invoiceIds,
+      note: note,
+    );
+    return receipts[key] = id;
+  }
+
+  @override
+  Future<void> voidInvoice(String invoiceId, {required String requestId, String reason = ''}) =>
+      _once(invoiceId, requestId, () => _repo.voidInvoice(invoiceId));
+
+  @override
+  Future<void> settleCreditInvoice(String invoiceId, {required String requestId, String note = ''}) =>
+      _once(invoiceId, requestId, () => _repo.settleCreditInvoice(invoiceId, note: note));
+}

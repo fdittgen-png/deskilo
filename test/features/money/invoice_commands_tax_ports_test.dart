@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_action_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
@@ -168,17 +169,56 @@ class _Reads implements InvoiceQueries {
   ) async => const {};
 }
 
-void main() {
-  test('settling needs the invoice commands and reads alone', () async {
-    final commands = _Commands();
-    final number = await Settlements(
-      commands,
-      _Reads(),
-    ).settle(workspaceId: 'w1', memberId: 'm1', invoiceIds: const ['a', 'b']);
+/// The receipted acts, recorded.
+class _Actions implements InvoiceActionCommands {
+  final calls = <String>[];
 
-    expect(commands.calls, ['settle:a,b']);
+  @override
+  Future<String> settleInvoicesOnce({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    required String requestId,
+    String note = '',
+  }) async {
+    calls.add('settle:${invoiceIds.join(',')}:$requestId');
+    return 'settlement-1';
+  }
+
+  @override
+  Future<String> createInvoiceOnce(InvoiceIssueCommand command) async =>
+      'inv-1';
+
+  @override
+  Future<void> voidInvoice(
+    String invoiceId, {
+    required String requestId,
+    String reason = '',
+  }) async {}
+
+  @override
+  Future<void> settleCreditInvoice(
+    String invoiceId, {
+    required String requestId,
+    String note = '',
+  }) async {}
+}
+
+void main() {
+  test('settling needs the action commands and reads alone', () async {
+    final actions = _Actions();
+    final outcome = await Settlements(actions, _Reads()).settle(
+      const SettleAttempt(
+        workspaceId: 'w1',
+        memberId: 'm1',
+        invoiceIds: ['a', 'b'],
+        requestId: 'req-1',
+      ),
+    );
+
+    expect(actions.calls, ['settle:a,b:req-1']);
     // The fresh list does not carry the new document: the id is quoted.
-    expect(number, 'settlement-1');
+    expect((outcome as Settled).number, 'settlement-1');
   });
 
   test(

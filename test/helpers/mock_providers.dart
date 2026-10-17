@@ -551,4 +551,17 @@ class _NoActionCommands implements InvoiceActionCommands {
   @override
   Future<void> settleCreditInvoice(String invoiceId, {required String requestId, String note = ''}) =>
       throw UnsupportedError('no refund in this fake');
+
+  @override
+  Future<String> createInvoiceOnce(InvoiceIssueCommand command) =>
+      throw UnsupportedError('no direct issue in this fake');
+
+  @override
+  Future<String> settleInvoicesOnce({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    required String requestId,
+    String note = '',
+  }) => throw UnsupportedError('no settlement in this fake');
 }

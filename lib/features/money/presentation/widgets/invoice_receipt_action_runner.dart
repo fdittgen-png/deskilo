@@ -5,6 +5,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/invoice_action.dart';
+import 'command_unknown_dialog.dart';
 
 /// #2585 C2 — sends [attempt] once and tells the person what is true: done,
 /// held for validation, refused (or declined), or UNKNOWN — in which case the
@@ -21,13 +22,18 @@ Future<bool> runInvoiceReceiptAction(
   var outcome = await actions.run(attempt);
   if (outcome is InvoiceActionUnknown) {
     if (!context.mounted) return false;
-    final resolved = await showDialog<InvoiceActionOutcome>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => _UnknownAction(
-        actions: actions,
-        unknown: outcome as InvoiceActionUnknown,
-      ),
+    var current = outcome;
+    final resolved = await showCommandUnknownDialog<InvoiceActionOutcome>(
+      context,
+      body: l10n.invoiceActionUnknownBody,
+      check: () async {
+        final looked = await actions.look(current);
+        if (looked is InvoiceActionUnknown) {
+          current = looked;
+          return null;
+        }
+        return looked;
+      },
     );
     if (resolved == null) return false;
     outcome = resolved;
@@ -53,64 +59,4 @@ Future<bool> runInvoiceReceiptAction(
       break;
   }
   return false;
-}
-
-class _UnknownAction extends StatelessWidget {
-  _UnknownAction({required this.actions, required InvoiceActionUnknown unknown})
-    : _current = ValueNotifier(unknown);
-
-  final InvoiceReceiptActions actions;
-  final ValueNotifier<InvoiceActionUnknown> _current;
-  final ValueNotifier<bool> _checking = ValueNotifier(false);
-  final ValueNotifier<bool> _notFound = ValueNotifier(false);
-
-  Future<void> _check(BuildContext context) async {
-    if (_checking.value) return;
-    _checking.value = true;
-    final outcome = await actions.look(_current.value);
-    _checking.value = false;
-    if (!context.mounted) return;
-    switch (outcome) {
-      case InvoiceActionDone() || InvoiceActionHeld() || InvoiceActionRefused():
-        Navigator.of(context).pop(outcome);
-      case InvoiceActionUnknown():
-        _current.value = outcome;
-        _notFound.value = true;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return AlertDialog(
-      title: Text(l10n.invoiceIssueUnknownTitle),
-      content: ValueListenableBuilder<bool>(
-        valueListenable: _notFound,
-        builder: (context, notFound, _) => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
-          children: [
-            Text(l10n.invoiceActionUnknownBody),
-            if (notFound) Text(l10n.invoiceIssueNotFoundYet),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('invoice-action-unknown-close'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(MaterialLocalizations.of(context).closeButtonLabel),
-        ),
-        ValueListenableBuilder<bool>(
-          valueListenable: _checking,
-          builder: (context, checking, _) => FilledButton(
-            key: const ValueKey('invoice-action-check-again'),
-            onPressed: checking ? null : () => _check(context),
-            child: Text(l10n.invoiceIssueCheckAgain),
-          ),
-        ),
-      ],
-    );
-  }
 }

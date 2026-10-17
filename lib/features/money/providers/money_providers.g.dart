@@ -168,7 +168,7 @@ final class SettlementsProvider
   }
 }
 
-String _$settlementsHash() => r'3c97275740291bf2d9c2634a764f5c792c302e09';
+String _$settlementsHash() => r'242522bf8c92d7a09aa2cdaa3e97ba61084f17b1';
 
 @ProviderFor(repartitions)
 final repartitionsProvider = RepartitionsProvider._();
