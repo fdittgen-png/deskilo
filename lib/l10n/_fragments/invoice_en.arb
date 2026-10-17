@@ -16,6 +16,10 @@
   "@invoiceIssueNotFoundYet": {
     "description": "Result of a look that found no invoice"
   },
+  "invoiceIssueDeclined": "The validation was declined or expired. No invoice was issued.",
+  "@invoiceIssueDeclined": {
+    "description": "Result of a look: the validators declined the held invoice request"
+  },
   "invoicesTitle": "Invoices",
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"

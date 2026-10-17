@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
@@ -114,6 +115,7 @@ Future<void> showInvoiceIssueSheet(
       buyerReference: result.buyerReference,
       purchaseOrder: result.purchaseOrder,
       correctionReason: result.correctionReason,
+      requestId: newRequestId(),
     ),
   );
   ref.invalidate(invoicesProvider);

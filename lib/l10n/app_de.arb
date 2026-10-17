@@ -5767,6 +5767,7 @@
     }
   },
   "invoiceIssueCheckAgain": "Erneut prüfen",
+  "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
   "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoiceIssueOne": "Berechnen",
   "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",

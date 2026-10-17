@@ -14592,6 +14592,12 @@ abstract class AppLocalizations {
   /// **'Check again'**
   String get invoiceIssueCheckAgain;
 
+  /// Result of a look: the validators declined the held invoice request
+  ///
+  /// In en, this message translates to:
+  /// **'The validation was declined or expired. No invoice was issued.'**
+  String get invoiceIssueDeclined;
+
   /// Result of a look that found no invoice
   ///
   /// In en, this message translates to:

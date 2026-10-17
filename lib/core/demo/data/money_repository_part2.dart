@@ -3,7 +3,39 @@ part of 'money_repository.dart';
 
 // #2386 — part 2 of FakeMoneyRepository, split out of money_repository.dart so no
 // file holds the whole class.
+/// #2585 C2 — the demo's receipts per repository: `workspaceId|requestId` →
+/// invoice id, written with the invoice like the server's same-transaction
+/// receipt. A top-level Expando, so the class itself keeps no extra field.
+final _invoiceReceipts = Expando<Map<String, String>>('invoice receipts');
+
 extension _FakeMoneyRepositoryPart2 on FakeMoneyRepository {
+  Future<String> _issueInvoiceWithReceiptImpl(InvoiceIssueCommand c) async {
+    final receipts = _invoiceReceipts[this] ??= {};
+    final key = '${c.workspaceId}|${c.requestId}';
+    final known = receipts[key];
+    if (known != null) return known;
+    final id = await _createInvoiceImpl(
+      workspaceId: c.workspaceId,
+      memberId: c.memberId,
+      period: c.period,
+      detailed: c.detailed,
+      kind: c.kind,
+      buyerReference: c.buyerReference,
+      purchaseOrder: c.purchaseOrder,
+      correctionReason: c.correctionReason,
+    );
+    return receipts[key] = id;
+  }
+
+  Future<CommandReceipt> _invoiceCommandOutcomeImpl(
+    String workspaceId,
+    String requestId,
+  ) async {
+    final id = _invoiceReceipts[this]?['$workspaceId|$requestId'];
+    return id == null
+        ? const CommandReceipt(CommandReceiptState.notObserved)
+        : CommandReceipt(CommandReceiptState.applied, invoiceId: id);
+  }
 
   Future<String> _createInvoiceImpl({
     required String workspaceId,

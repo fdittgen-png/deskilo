@@ -8557,6 +8557,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceIssueCheckAgain => 'Erneut prüfen';
 
   @override
+  String get invoiceIssueDeclined =>
+      'Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.';
+
+  @override
   String get invoiceIssueNotFoundYet =>
       'Noch nicht gefunden. Es wurde nichts erneut gesendet.';
 

@@ -21,6 +21,7 @@ import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
+import '../domain/command_receipt.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
@@ -38,7 +39,16 @@ final class InvoiceIssueAttempt {
     this.buyerReference = '',
     this.purchaseOrder = '',
     this.correctionReason = '',
+    this.requestId,
   });
+
+  /// #2585 C2 — the attempt's identity, drawn once when the draft becomes
+  /// an attempted command. A NEW invoice carrying one is sent under it and
+  /// looked up by it; a replacement (or an attempt without one) keeps the
+  /// archive look of before, which is a bounded safety net, not an identity.
+  final String? requestId;
+
+  bool get hasReceipt => requestId != null && replacesId == null;
 
   final String workspaceId;
   final String memberId;
@@ -75,6 +85,16 @@ final class InvoiceIssueRefused extends InvoiceIssueOutcome {
   final Object error;
 }
 
+/// The validators declined (or let expire) the held request: nothing was
+/// issued. Carried as the [InvoiceIssueRefused] error of a receipt look.
+final class InvoiceIssueDeclined implements Exception {
+  const InvoiceIssueDeclined(this.eventId);
+  final String eventId;
+
+  @override
+  String toString() => 'InvoiceIssueDeclined($eventId)';
+}
+
 /// The request left and its answer did not come back usable. The attempt
 /// is retained; whether the invoice exists is not known.
 final class InvoiceIssueUnknown extends InvoiceIssueOutcome {
@@ -93,7 +113,22 @@ class InvoiceIssuance {
   /// [InvoiceIssueUnknown], not a reason to try again.
   Future<InvoiceIssueOutcome> issue(InvoiceIssueAttempt attempt) async {
     try {
-      final id = await _commands.createInvoice(
+      final requestId = attempt.requestId;
+      final id = attempt.hasReceipt
+          ? await _commands.issueInvoiceWithReceipt(
+              InvoiceIssueCommand(
+                workspaceId: attempt.workspaceId,
+                memberId: attempt.memberId,
+                period: attempt.period,
+                requestId: requestId!,
+                detailed: attempt.detailed,
+                kind: attempt.kind,
+                buyerReference: attempt.buyerReference,
+                purchaseOrder: attempt.purchaseOrder,
+                correctionReason: attempt.correctionReason,
+              ),
+            )
+          : await _commands.createInvoice(
         workspaceId: attempt.workspaceId,
         memberId: attempt.memberId,
         period: attempt.period,
@@ -133,6 +168,7 @@ class InvoiceIssuance {
   /// fails is unknown too; it is never read as "not issued".
   Future<InvoiceIssueOutcome> look(InvoiceIssueUnknown unknown) async {
     final attempt = unknown.attempt;
+    if (attempt.hasReceipt) return _lookReceipt(unknown);
     try {
       final invoices = await _queries.fetchInvoices(attempt.workspaceId);
       for (final invoice in invoices) {
@@ -143,6 +179,29 @@ class InvoiceIssuance {
       return unknown;
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'invoice issue outcome unknown', error: e, stackTrace: st);
+      return InvoiceIssueUnknown(attempt, e);
+    }
+  }
+
+  /// Reads THAT request's receipt on the attempt's own workspace. Applied
+  /// and pending carry the original ids; a missing receipt is only "not
+  /// observed" — the attempt stays unknown, retained, never resent.
+  Future<InvoiceIssueOutcome> _lookReceipt(InvoiceIssueUnknown unknown) async {
+    final attempt = unknown.attempt;
+    try {
+      final receipt = await _queries.invoiceCommandOutcome(
+        workspaceId: attempt.workspaceId,
+        requestId: attempt.requestId!,
+      );
+      return switch (receipt.state) {
+        CommandReceiptState.applied => InvoiceIssued(attempt, receipt.invoiceId!),
+        CommandReceiptState.pending => InvoiceIssueHeld(attempt, receipt.eventId!),
+        CommandReceiptState.refused =>
+          InvoiceIssueRefused(attempt, InvoiceIssueDeclined(receipt.eventId!)),
+        CommandReceiptState.notObserved => unknown,
+      };
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'invoice receipt unreadable', error: e, stackTrace: st);
       return InvoiceIssueUnknown(attempt, e);
     }
   }

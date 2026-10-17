@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
+import '../domain/command_receipt.dart';
 import '../domain/invoice_commands.dart';
 
 /// #2591 C3 — the invoice commands, with their own client. The bodies are
@@ -56,6 +57,27 @@ class SupabaseInvoiceCommands implements InvoiceCommands {
         'p_allow_zero': false,
         'p_buyer_reference': buyerReference.isEmpty ? null : buyerReference,
         'p_purchase_order': purchaseOrder.isEmpty ? null : purchaseOrder,
+      },
+    );
+    return applyOrPending(answer);
+  }
+
+  @override
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command) async {
+    final answer = await _client.rpc<Object?>(
+      'request_invoice_issue_v1',
+      params: {
+        'p_workspace_id': command.workspaceId,
+        'p_member_id': command.memberId,
+        'p_period': command.period,
+        'p_request_id': command.requestId,
+        'p_kind': command.kind.name,
+        'p_detailed': command.detailed,
+        'p_allow_zero': false,
+        'p_buyer_reference':
+            command.buyerReference.isEmpty ? null : command.buyerReference,
+        'p_purchase_order':
+            command.purchaseOrder.isEmpty ? null : command.purchaseOrder,
       },
     );
     return applyOrPending(answer);

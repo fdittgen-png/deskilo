@@ -5,6 +5,7 @@
 // composed repository hands every call to the port it was given.
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -22,6 +23,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class _InvoiceReads implements InvoiceQueries {
   final calls = <String>[];
+
+  @override
+  Future<CommandReceipt> invoiceCommandOutcome({
+    required String workspaceId,
+    required String requestId,
+  }) async => const CommandReceipt(CommandReceiptState.notObserved);
 
   @override
   Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) async {

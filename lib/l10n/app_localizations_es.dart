@@ -8545,6 +8545,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceIssueCheckAgain => 'Comprobar de nuevo';
 
   @override
+  String get invoiceIssueDeclined =>
+      'La validación fue rechazada o caducó. No se emitió ninguna factura.';
+
+  @override
   String get invoiceIssueNotFoundYet =>
       'Aún no se encuentra. No se volvió a enviar nada.';
 

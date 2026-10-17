@@ -38,7 +38,12 @@ Future<bool> runInvoiceIssue(
       AppSnack.info(context, l10n.validationSentForApproval);
     case InvoiceIssueRefused(:final error):
       TraceLogger.instance.error('money', 'invoice issue refused', error: error);
-      AppSnack.error(context, _refusalText(l10n, error.toString()));
+      AppSnack.error(
+        context,
+        error is InvoiceIssueDeclined
+            ? l10n.invoiceIssueDeclined
+            : _refusalText(l10n, error.toString()),
+      );
     case InvoiceIssueUnknown():
       break;
   }

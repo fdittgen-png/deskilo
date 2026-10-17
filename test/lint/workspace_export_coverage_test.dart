@@ -288,6 +288,10 @@ const Map<String, String> _notExported = {
   'purchase_sources':
       '#2573 — the links from a purchase to the expenses and invoices that '
           'evidence it; they name rows of this server',
+  'financial_command_receipts':
+      '#2585 — the receipt of a native financial command attempt (request id and '
+          'the invoice or event it made); technical recovery state, never a '
+          'workbook row',
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',
