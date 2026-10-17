@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
@@ -34,7 +35,6 @@ class UnifiedInboxView extends ConsumerStatefulWidget {
 }
 
 class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
-  static const _poll = Duration(seconds: 30);
   bool _unreadOnly = false;
   bool _archived = false;
   bool _searching = false;
@@ -44,7 +44,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   @override
   void initState() {
     super.initState();
-    _refresh = Timer.periodic(_poll, (_) {
+    _refresh = Timer.periodic(ref.read(messagingWindowsProvider).inboxPoll, (_) {
       if (mounted) ref.invalidate(unifiedInboxProvider);
     });
   }

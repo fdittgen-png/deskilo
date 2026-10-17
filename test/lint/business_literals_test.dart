@@ -37,8 +37,6 @@ const _tracked = <_Tracked>[
   // #2572 -- the rest of S2..S5, Dart side.
   (what: 'the one UI snap of the booking grid (15 minutes)', file: 'lib/features/workspace/domain/booking_granularity.dart',
    pattern: r'defaultStepMinutes = \d+', ceiling: 1, movesIn: 'never (allowed)'),
-  (what: 'message edit window (15 minutes)', file: 'lib/features/directory/domain/message_marks.dart',
-   pattern: r'kMessageEditWindow = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'S4'),
   (what: 'currency fallback of the format controller', file: 'lib/core/i18n/format_controller.dart',
    pattern: r"currencyCode \?\? 'EUR'", ceiling: 1, movesIn: 'S5'),
   (what: 'locale and currency of the format controller seed', file: 'lib/core/i18n/format_controller.dart',
@@ -83,8 +81,6 @@ typedef _TrackedSql = ({
 /// `create or replace function public.<name>(` in supabase/migrations). Every
 /// S2 and S4 value is SQL-only and lives here.
 const _trackedSql = <_TrackedSql>[
-  (what: 'message edit window (15 minutes, one per message kind)', function: 'edit_message',
-   pattern: r"interval '\d+ minutes'", ceiling: 4, movesIn: 'S4'),
   (what: 'MCP notice read-state purge (90 days)', function: 'mark_instance_notice_read',
    pattern: r"interval '\d+ days'", ceiling: 1, movesIn: 'S4'),
   (what: 'MCP notice read-state purge (90 days)', function: 'instance_notify_operators',

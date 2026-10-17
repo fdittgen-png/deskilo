@@ -59,9 +59,6 @@ class MessageMarks {
   }
 }
 
-/// How long the author may correct a message.
-const Duration kMessageEditWindow = Duration(minutes: 15);
-
 /// The quick reactions offered on a message.
 const List<String> kQuickReactions = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 

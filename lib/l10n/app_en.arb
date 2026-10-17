@@ -18915,6 +18915,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupMessaging": "Messaging",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
   "settingGroupPresence": "Presence",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -18975,13 +18979,25 @@
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMessagingEditWindowMinutes": "Minutes after sending in which the author may still correct a message. A workspace message reads its workspace, a personal or group message the platform value.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMessagingGroupCreationPerHour": "How many groups one person may create per hour. Can only be lowered.",
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPollSeconds": "Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMessagingMessageRequestsPerDay": "How many message requests one person may send per day to people who have not allowed them. Can only be lowered.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMessagingThreadPollSeconds": "Seconds between two refreshes of an open conversation. Lower values load the server more.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintPresenceOnlineWindowMinutes": "Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.",
   "@settingHintPresenceOnlineWindowMinutes": {
@@ -19051,13 +19067,25 @@
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMessagingEditWindowMinutes": "Message edit window",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMessagingGroupCreationPerHour": "Groups created per hour",
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPollSeconds": "Inbox refresh",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMessagingMessageRequestsPerDay": "Message requests per day",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Conversation refresh",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelPresenceOnlineWindowMinutes": "Online window",
   "@settingLabelPresenceOnlineWindowMinutes": {

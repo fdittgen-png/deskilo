@@ -16608,6 +16608,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupDunning => 'Solleciti e termini di pagamento';
 
   @override
+  String get settingGroupMessaging => 'Messaggistica';
+
+  @override
   String get settingGroupPresence => 'Presenza';
 
   @override
@@ -16665,12 +16668,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Minuti per cui un controllo riuscito dell\'endpoint dell\'assistente vale prima di attivare l\'interfaccia. Può solo essere accorciata.';
 
   @override
+  String get settingHintMessagingEditWindowMinutes =>
+      'Minuti dopo l\'invio in cui l\'autore può ancora correggere un messaggio. Un messaggio di uno spazio legge il valore del proprio spazio, uno personale o di gruppo il valore della piattaforma.';
+
+  @override
   String get settingHintMessagingGroupCreationPerHour =>
       'Quanti gruppi una persona può creare all\'ora. Può solo essere ridotto.';
 
   @override
+  String get settingHintMessagingInboxPollSeconds =>
+      'Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.';
+
+  @override
+  String get settingHintMessagingThreadPollSeconds =>
+      'Secondi tra due aggiornamenti di una conversazione aperta. Valori più bassi caricano di più il server.';
 
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
@@ -16739,12 +16754,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Validità del controllo dell\'endpoint dell\'assistente';
 
   @override
+  String get settingLabelMessagingEditWindowMinutes =>
+      'Tempo per modificare un messaggio';
+
+  @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Gruppi creati all\'ora';
 
   @override
+  String get settingLabelMessagingInboxPollSeconds =>
+      'Aggiornamento della posta in arrivo';
+
+  @override
   String get settingLabelMessagingMessageRequestsPerDay =>
       'Richieste di messaggio al giorno';
+
+  @override
+  String get settingLabelMessagingThreadPollSeconds =>
+      'Aggiornamento della conversazione';
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Finestra online';

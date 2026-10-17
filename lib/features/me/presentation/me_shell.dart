@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/shell/shell_drawer.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/settings/messaging_windows.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../directory/providers/messenger_providers.dart';
@@ -61,7 +62,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   void initState() {
     super.initState();
     unawaited(_offerKeptInvitation());
-    _badgeRefresh = Timer.periodic(const Duration(seconds: 30), (_) {
+    _badgeRefresh = Timer.periodic(ref.read(messagingWindowsProvider).inboxPoll, (_) {
       if (mounted && !_visited.contains(MeTab.messages)) ref.invalidate(unifiedInboxProvider);
     });
   }

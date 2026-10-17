@@ -1,0 +1,31 @@
+{
+  "@@locale": "de",
+  "settingGroupMessaging": "Nachrichten",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingLabelMessagingEditWindowMinutes": "Bearbeitungsfenster für Nachrichten",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingEditWindowMinutes": "Minuten nach dem Senden, in denen der Absender eine Nachricht noch korrigieren darf. Eine Nachricht eines Arbeitsbereichs liest den Wert ihres Arbeitsbereichs, eine persönliche oder Gruppennachricht den Plattformwert.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Aktualisierung der Unterhaltung",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingThreadPollSeconds": "Sekunden zwischen zwei Aktualisierungen einer geöffneten Unterhaltung. Niedrigere Werte belasten den Server stärker.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingInboxPollSeconds": "Aktualisierung des Posteingangs",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingInboxPollSeconds": "Sekunden zwischen zwei Aktualisierungen des Posteingangs und seines Ungelesen-Zählers. Niedrigere Werte belasten den Server stärker.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

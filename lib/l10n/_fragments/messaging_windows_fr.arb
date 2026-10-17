@@ -1,0 +1,31 @@
+{
+  "@@locale": "fr",
+  "settingGroupMessaging": "Messagerie",
+  "@settingGroupMessaging": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingLabelMessagingEditWindowMinutes": "Délai de modification d'un message",
+  "@settingLabelMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingEditWindowMinutes": "Minutes après l'envoi pendant lesquelles l'auteur peut encore corriger un message. Un message d'espace lit son espace, un message personnel ou de groupe la valeur de la plateforme.",
+  "@settingHintMessagingEditWindowMinutes": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingThreadPollSeconds": "Actualisation de la conversation",
+  "@settingLabelMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingThreadPollSeconds": "Secondes entre deux actualisations d'une conversation ouverte. Des valeurs plus basses chargent davantage le serveur.",
+  "@settingHintMessagingThreadPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMessagingInboxPollSeconds": "Actualisation de la boîte de réception",
+  "@settingLabelMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMessagingInboxPollSeconds": "Secondes entre deux actualisations de la boîte de réception et de son badge de non-lus. Des valeurs plus basses chargent davantage le serveur.",
+  "@settingHintMessagingInboxPollSeconds": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

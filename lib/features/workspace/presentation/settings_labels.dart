@@ -9,6 +9,9 @@ import '../../../core/settings/settings.dart';
 import '../../../l10n/app_localizations.dart';
 
 String settingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'messaging.edit_window_minutes' => l10n.settingLabelMessagingEditWindowMinutes,
+      'messaging.thread_poll_seconds' => l10n.settingLabelMessagingThreadPollSeconds,
+      'messaging.inbox_poll_seconds' => l10n.settingLabelMessagingInboxPollSeconds,
       'booking.check_in_leeway_minutes' => l10n.settingLabelBookingCheckInLeewayMinutes,
       'booking.check_in_reminder_lead_minutes' => l10n.settingLabelBookingCheckInReminderLeadMinutes,
       'booking.check_in_reminder_lookahead_days' => l10n.settingLabelBookingCheckInReminderLookaheadDays,
@@ -30,6 +33,9 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
+      'messaging.edit_window_minutes' => l10n.settingHintMessagingEditWindowMinutes,
+      'messaging.thread_poll_seconds' => l10n.settingHintMessagingThreadPollSeconds,
+      'messaging.inbox_poll_seconds' => l10n.settingHintMessagingInboxPollSeconds,
       'booking.check_in_leeway_minutes' => l10n.settingHintBookingCheckInLeewayMinutes,
       'booking.check_in_reminder_lead_minutes' => l10n.settingHintBookingCheckInReminderLeadMinutes,
       'booking.check_in_reminder_lookahead_days' => l10n.settingHintBookingCheckInReminderLookaheadDays,
@@ -57,6 +63,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'billing' => l10n.settingGroupBilling,
       'directory' => l10n.settingGroupDirectory,
       'presence' => l10n.settingGroupPresence,
+      'messaging' => l10n.settingGroupMessaging,
       _ => group,
     };
 

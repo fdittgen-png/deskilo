@@ -8,12 +8,15 @@
 // named and the others still show; opening a conversation reads it.
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/settings/active_settings.dart';
+import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/directory/domain/message_marks.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -44,6 +47,7 @@ Future<void> pumpInbox(
   WidgetTester tester, {
   required FakeMessengerRepository home,
   required FakeMessengerRepository remote,
+  List<Override> extraOverrides = const [],
 }) async {
   final router = GoRouter(
     routes: [
@@ -61,17 +65,20 @@ Future<void> pumpInbox(
   await tester.pumpWidget(
     ProviderScope(
       retry: (_, _) => null,
-      overrides: standardTestOverrides(
-        messenger: home,
-        messengers: {other: remote},
-        connectedSources: [
-          const ConnectedInstallation(
-            endpoint: BackendEndpoint(other, 'key'),
-            account: 'u-remote',
-            installationId: 'inst-2',
-          ),
-        ],
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          messenger: home,
+          messengers: {other: remote},
+          connectedSources: [
+            const ConnectedInstallation(
+              endpoint: BackendEndpoint(other, 'key'),
+              account: 'u-remote',
+              installationId: 'inst-2',
+            ),
+          ],
+        ),
+        ...extraOverrides,
+      ],
       child: MaterialApp.router(
         routerConfig: router,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -409,6 +416,50 @@ void main() {
     }
   });
 
+
+  // #2487 -- a 20-minute-old message of mine: editable only when the window
+  // that applies to it reaches 20 minutes.
+  final editWindow = SettingDefinition(
+    key: 'messaging.edit_window_minutes',
+    type: SettingType.duration,
+    defaultValue: 15,
+    min: 1,
+    max: 1440,
+    unit: 'minutes',
+    group: 'messaging',
+    scopes: {SettingScope.platform, SettingScope.workspace},
+  );
+  SettingsSet windowOf30(SettingOrigin origin) => SettingsSet(
+      {editWindow.key: editWindow}, {editWindow.key: 30},
+      origins: {editWindow.key: origin});
+  for (final c in <(String, SettingsSet?, bool)>[
+    ('the registry default of 15 refuses it', null, false),
+    ('a platform value of 30 offers it', windowOf30(SettingOrigin.platform), true),
+    ('a workspace override does not widen a personal message',
+        windowOf30(SettingOrigin.workspace), false),
+  ]) {
+    testWidgets('the edit window is the registry value (#2487): ${c.$1}', (tester) async {
+      home.threads[FakeMessengerRepository.threadKey(MessageContextKind.account, 'c-ana')] = [
+        ContextMessage(
+          id: 'm-20',
+          kind: MessageKind.accountMessage,
+          authorName: 'Me',
+          body: 'twenty minutes ago',
+          createdAt: kTestNow.toUtc().subtract(const Duration(minutes: 20)),
+          mine: true,
+        ),
+      ];
+      await pumpInbox(tester, home: home, remote: remote, extraOverrides: [
+        if (c.$2 != null) activeSettingsProvider.overrideWithValue(c.$2),
+      ]);
+      await tester.tap(find.byKey(const ValueKey('inbox-entry-c-ana')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('context-actions-m-20')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('message-action-edit')),
+          c.$3 ? findsOneWidget : findsNothing);
+    });
+  }
 
   group('a workspace conversation keeps its flags on the server (0386)', () {
     setUp(() {
