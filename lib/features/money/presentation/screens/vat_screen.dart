@@ -9,6 +9,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -139,7 +140,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     // #2360 — a decided change of rate comes prefilled.
     final planned = vatPlannedChangeFor(
         ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
-        double.tryParse(draft.percent.text.trim().replaceAll(',', '.')) ?? -1);
+        double.tryParse(draft.percent.text.trim().replaceAll(',', '.')) ?? -1,
+        asOf: isoDay(now));
     final percent = TextEditingController(
         text: planned == null ? '' : _percentText(planned.toPercent));
     final date = TextEditingController(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/number_text.dart';
 import '../../../../core/vat/tax_reference.dart';
+import 'tax_reference_component_fields.dart';
 
 /// A one-line reading of a value, for lists.
 String taxValueSummary(TaxValue v) => switch (v) {
@@ -24,6 +25,7 @@ String taxValueSummary(TaxValue v) => switch (v) {
     '${v.role}: ${v.account.isNotEmpty ? v.account : v.taxCode}',
   SalesTaxValue() => '${v.state} ${percentText(v.percent)} %',
   TaxabilityValue() => v.status,
+  RateComponentValue() => rateComponentsText(v).replaceAll('\n', ' + '),
 };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -41,4 +43,5 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
   TaxDomain.accountMap => context.l10n.taxRefDomainAccountMap,
   TaxDomain.salesTax => context.l10n.taxRefDomainSalesTax,
   TaxDomain.taxability => context.l10n.taxRefDomainTaxability,
+  TaxDomain.rateComponent => context.l10n.taxRefDomainRateComponent,
 };

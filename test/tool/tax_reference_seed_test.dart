@@ -39,7 +39,7 @@ void main() {
             'country': r.country,
             'key': r.key,
             'valid_from': r.validFrom,
-            'valid_to': null,
+            'valid_to': r.validTo,
             'value': r.value,
             'source': r.source,
             'confirmed': r.confirmed,
@@ -48,6 +48,34 @@ void main() {
     expect(set.rows, hasLength(rows.length));
     for (final r in set.rows) {
       expect(r.source.trim(), isNotEmpty, reason: '${r.country} ${r.key}');
+    }
+  });
+
+  test('a closed version ends the day its successor begins, and none overlap', () {
+    final byValue = <String, List<SeedRow>>{};
+    for (final r in rows) {
+      byValue.putIfAbsent('${r.domain}|${r.country}|${r.key}', () => []).add(r);
+    }
+    for (final entry in byValue.entries) {
+      final versions = entry.value..sort((a, b) => a.validFrom.compareTo(b.validFrom));
+      for (var i = 0; i < versions.length; i++) {
+        final end = versions[i].validTo;
+        if (i == versions.length - 1) {
+          expect(end, isNull, reason: '${entry.key}: the newest version is open');
+        } else {
+          expect(end, versions[i + 1].validFrom,
+              reason: '${entry.key}: closed on its successor\'s first day');
+        }
+      }
+    }
+  });
+
+  test('a planned version is a proposal until somebody confirms it (#2539)', () {
+    for (final r in rows) {
+      if (r.domain == 'rate' && r.country == 'CH' && r.validFrom == '2028-01-01') {
+        expect(r.confirmed, isFalse, reason: 'the vote of 2026-11-29 has not happened');
+        expect(r.source, contains('2026-11-29'));
+      }
     }
   });
 

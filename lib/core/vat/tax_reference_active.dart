@@ -27,14 +27,28 @@ abstract final class ActiveTaxReference {
 /// The questions the VAT code asks of a snapshot. `asOf` is an ISO day: the
 /// versions in force on it. Without it the newest version of each value
 /// answers (the open-ended one) -- an issued document passes its own day, so
-/// a later change of the data never reaches it.
+/// a later change of the data never reaches it. A newest version that nobody
+/// confirmed and that closed its predecessor is a PROPOSAL (a planned change
+/// of law, #2539): without a day the predecessor keeps answering until the
+/// proposal is confirmed.
 extension TaxReferenceQueries on TaxReferenceSet {
-  TaxReferenceSet resolved(String? asOf) => asOf == null
-      ? TaxReferenceSet([
-          for (final row in rows)
-            if (row.validTo == null) row,
-        ], origin: origin)
-      : on(asOf);
+  TaxReferenceSet resolved(String? asOf) {
+    if (asOf != null) return on(asOf);
+    String identity(TaxReferenceRow r) =>
+        '${r.domain.wire}|${r.country}|${r.key}';
+    final closedOn = <String, TaxReferenceRow>{
+      for (final row in rows)
+        if (row.validTo != null) '${identity(row)}|${row.validTo}': row,
+    };
+    return TaxReferenceSet([
+      for (final row in rows)
+        if (row.validTo == null)
+          if (!row.confirmed && closedOn['${identity(row)}|${row.validFrom}'] != null)
+            closedOn['${identity(row)}|${row.validFrom}']!
+          else
+            row,
+    ], origin: origin);
+  }
 
   /// The rows of [domain] that belong to [country] itself (no `*` rows).
   List<TaxReferenceRow> ownRows(TaxDomain domain, String country,

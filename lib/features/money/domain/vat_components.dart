@@ -11,31 +11,30 @@
 // The server twin is `vat_percent_components` / `vat_components_entry`
 // (migration 0423, pgTAP 180) and freezes the result in `vat_totals`;
 // this file reads it back and computes the same split for the issue preview.
+// #2539 -- the split itself is DATA: `rate_component` rows of the tax
+// reference store (the server twin reads the same table), not a table here.
 import '../../../core/data/json_reader.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'accounting_amount.dart';
 
-/// One tax inside a rate: its scheme (`GST`, `HST`, `QST`, `PST`), who
-/// levies it (`CA`, `CA-QC`, `CA-PST`) and its own percentage.
-typedef _ComponentRate = ({String scheme, String authority, double percent});
-
 /// The components of a combined [percent] charged by a seller in [country],
-/// or an empty list when the rate is not split (every country but Canada,
-/// and a Canadian rate the catalogue does not know).
-List<_ComponentRate> _componentRates(String country, double percent) {
-  if (country.trim().toUpperCase() != 'CA') return const [];
-  const gst = (scheme: 'GST', authority: 'CA', percent: 5.0);
-  return switch (percent) {
-    5.0 => const [gst],
-    13.0 || 14.0 || 15.0 => [(scheme: 'HST', authority: 'CA', percent: percent)],
-    14.975 => const [
-      gst,
-      (scheme: 'QST', authority: 'CA-QC', percent: 9.975),
-    ],
-    // Legacy "GST+PST" rows: honest about what they charge.
-    12.0 => const [gst, (scheme: 'PST', authority: 'CA-PST', percent: 7.0)],
-    11.0 => const [gst, (scheme: 'PST', authority: 'CA-PST', percent: 6.0)],
-    _ => const [],
-  };
+/// or an empty list when the rate is not split (a country with no
+/// `rate_component` row for it, and a rate the data does not know). The rows
+/// of the tax reference store are the only copy: the server twin
+/// `vat_percent_components` reads the same table.
+List<RateComponent> _componentRates(
+  String country,
+  double percent,
+  String? asOf,
+  TaxReferenceSet? reference,
+) {
+  final set = reference ?? ActiveTaxReference.current;
+  for (final row in set.ownRows(TaxDomain.rateComponent, country, asOf: asOf)) {
+    final value = row.value as RateComponentValue;
+    if ((value.percent - percent).abs() < 1e-9) return value.components;
+  }
+  return const [];
 }
 
 /// One tax of an invoice total, as frozen at issue.
@@ -93,9 +92,11 @@ List<VatComponent> vatComponentsOf(
   String country,
   double percent,
   int netCents,
-  int vatCents,
-) {
-  final rates = _componentRates(country, percent);
+  int vatCents, {
+  String? asOf,
+  TaxReferenceSet? reference,
+}) {
+  final rates = _componentRates(country, percent, asOf, reference);
   var left = vatCents;
   return [
     for (final (index, rate) in rates.indexed)

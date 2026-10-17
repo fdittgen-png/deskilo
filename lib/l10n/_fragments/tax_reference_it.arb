@@ -275,5 +275,17 @@
   "taxRefActionFailed": "Impossibile salvare la modifica",
   "@taxRefActionFailed": {
     "description": "#2565 tax reference: taxRefActionFailed"
+  },
+  "taxRefDomainRateComponent": "Imposte di un'aliquota combinata",
+  "@taxRefDomainRateComponent": {
+    "description": "#2539 rate components: taxRefDomainRateComponent"
+  },
+  "taxRefRateComponents": "Imposte, una per riga: regime, autorità, percentuale (es. GST, CA, 5). La somma deve essere l'aliquota combinata.",
+  "@taxRefRateComponents": {
+    "description": "#2539 rate components: taxRefRateComponents"
+  },
+  "taxRefInvalidRateComponents": "Un'imposta per riga: regime, autorità, percentuale; insieme devono essere pari all'aliquota combinata",
+  "@taxRefInvalidRateComponents": {
+    "description": "#2539 rate components: taxRefInvalidRateComponents"
   }
 }
