@@ -319,6 +319,26 @@ class FakeInvoiceActionCommands implements InvoiceActionCommands {
   }
 
   @override
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand c) async {
+    final receipts = _invoiceReceipts[_repo] ??= {};
+    final key = '${c.workspaceId}|${c.requestId}';
+    final known = receipts[key];
+    if (known != null) return known;
+    final id = await _repo.createInvoice(
+      workspaceId: c.workspaceId,
+      memberId: c.memberId,
+      period: c.period,
+      replacesId: c.replacesId,
+      detailed: c.detailed,
+      kind: c.kind,
+      buyerReference: c.buyerReference,
+      purchaseOrder: c.purchaseOrder,
+      correctionReason: c.correctionReason,
+    );
+    return receipts[key] = id;
+  }
+
+  @override
   Future<String> settleInvoicesOnce({
     required String workspaceId,
     required String memberId,

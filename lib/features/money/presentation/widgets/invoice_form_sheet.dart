@@ -105,6 +105,7 @@ Future<void> showInvoiceIssueSheet(
     InvoiceIssuance(
       ref.read(invoiceCommandsProvider),
       ref.read(invoiceQueriesProvider),
+      ref.read(invoiceActionCommandsProvider),
     ),
     InvoiceIssueAttempt(
       workspaceId: workspace.id,

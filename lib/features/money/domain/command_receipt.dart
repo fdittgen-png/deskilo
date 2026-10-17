@@ -34,6 +34,7 @@ final class InvoiceIssueCommand {
     this.buyerReference = '',
     this.purchaseOrder = '',
     this.correctionReason = '',
+    this.replacesId,
   });
 
   final String workspaceId;
@@ -48,4 +49,7 @@ final class InvoiceIssueCommand {
   /// Carried with the draft; the server's new-invoice path does not take it
   /// (as before, only a replacement sends it).
   final String correctionReason;
+
+  /// The erroneous invoice this one replaces (0061); null for a new invoice.
+  final String? replacesId;
 }

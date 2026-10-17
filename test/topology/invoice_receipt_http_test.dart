@@ -34,6 +34,7 @@ const _void = '00000000-0000-4000-8000-00000025a006';
 const _raceSame = '00000000-0000-4000-8000-00000025a007';
 const _raceA = '00000000-0000-4000-8000-00000025a008';
 const _raceB = '00000000-0000-4000-8000-00000025a009';
+const _replace = '00000000-0000-4000-8000-00000025a00a';
 
 void main() {
   if (_file == null) {
@@ -297,5 +298,44 @@ void main() {
       )).state,
       CommandReceiptState.notObserved,
     );
+  });
+
+  test('a replacement under a request id: new invoice, old one voided, replay answers the original', () async {
+    final erroneous = await actions.createInvoiceOnce(
+      cmd('2026-02', _replace.replaceAll('a00a', 'a00b')),
+    );
+    final command = InvoiceIssueCommand(
+      workspaceId: ws,
+      memberId: member,
+      period: '2026-02',
+      requestId: _replace,
+      correctionReason: 'R2',
+      replacesId: erroneous,
+    );
+    final replacement = await actions.replaceInvoiceOnce(command);
+    final again = await actions.replaceInvoiceOnce(command);
+    expect(
+      again,
+      replacement,
+      reason: 'the replay answers the ORIGINAL replacement',
+    );
+    final all = await register();
+    final february = all.where((i) => i.period == '2026-02').toList();
+    expect(
+      february,
+      hasLength(2),
+      reason: 'the erroneous one and its replacement',
+    );
+    final old = february.singleWhere((i) => i.id == erroneous);
+    final fresh = february.singleWhere((i) => i.id == replacement);
+    expect(old.isVoided, isTrue);
+    expect(fresh.isVoided, isFalse);
+    expect(fresh.replacesInvoiceId, erroneous);
+    expect(fresh.totalCents, 3500);
+    final receipt = await queries.invoiceCommandOutcome(
+      workspaceId: ws,
+      requestId: _replace,
+    );
+    expect(receipt.invoiceId, replacement);
   });
 }
