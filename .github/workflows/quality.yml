@@ -887,7 +887,7 @@ jobs:
             && [ "${{ steps.topology_wb.outcome }}" = success ] \
             || { echo "::error::the topology stacks did not all start"; exit 1; }
           bash scripts/topology_stacks.sh seed
-          flutter test --no-pub test/topology/three_stacks_test.dart test/topology/invoice_preview_http_test.dart --reporter expanded | tee report-topology.log
+          flutter test --no-pub test/topology/three_stacks_test.dart test/topology/invoice_preview_http_test.dart test/topology/invoice_receipt_http_test.dart --reporter expanded | tee report-topology.log
           grep -q 'All tests passed!' report-topology.log
 
       - name: Topology stacks, stopped

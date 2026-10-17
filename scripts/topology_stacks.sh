@@ -201,6 +201,13 @@ insert into public.ledger_entries (workspace_id, member_id, kind, category, amou
 values ('$PWS', '$PMEMBER', 'charge', 'adjustment', 1000, 'Zero-rated supply', '2026-09', 0);
 insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
 values ('$PWS', '$PMEMBER', 'credit', 'payment', 5000, 'Advance', '2026-08');
+-- The receipts fixture (#2585 C2): months nothing else reads. 35.00 fee +
+-- 4.50 zero-rated supply = 3950 (2026-07), 35.00 + 3.00 = 3800 (2026-06),
+-- the fee alone = 3500 (2026-05); regrouped 06 + 05 = 7300.
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
+values ('$PWS', '$PMEMBER', 'charge', 'adjustment', 450, 'Receipt supply July', '2026-07'),
+       ('$PWS', '$PMEMBER', 'charge', 'adjustment', 300, 'Receipt supply June', '2026-06');
+update public.workspaces set feature_flags = feature_flags || '{"invoiceSettlement":true}'::jsonb where id = '$PWS';
 SQL
 }
 
@@ -249,7 +256,8 @@ seed() {
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
          "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
          "preview": {"workspaceId": "$PWS", "memberId": "$PMEMBER",
-                     "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"}}},
+                     "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
+                     "owner": {"id": "$pv_owner", "email": "preview-owner-$run@deskilo.test"}}},
   "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
          "reservationId": "0000000e-0b0a-4000-8000-0000000e0b0a", "timezone": "America/New_York"}
