@@ -19047,6 +19047,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefDomainRate => 'Steuersätze';
 
   @override
+  String get taxRefDomainRateComponent => 'Steuern eines kombinierten Satzes';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales Tax je Postleitzahl';
 
   @override
@@ -19116,6 +19119,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefInvalidNumber => 'Zahl von 0 bis 99,999 eingeben';
 
   @override
+  String get taxRefInvalidRateComponents =>
+      'Eine Steuer je Zeile: Regime, Behörde, Prozent; zusammen müssen sie dem kombinierten Satz entsprechen';
+
+  @override
   String get taxRefInvalidState => 'Zweibuchstabigen Bundesstaat-Code eingeben';
 
   @override
@@ -19158,6 +19165,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRateComponents =>
+      'Steuern, eine je Zeile: Regime, Behörde, Prozent (z. B. GST, CA, 5). Die Prozentwerte müssen den kombinierten Satz ergeben.';
 
   @override
   String get taxRefRegime => 'Regelung';

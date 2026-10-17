@@ -59,7 +59,10 @@ void main() {
     }
     final decided = TaxReferenceSet([
       for (final r in ActiveTaxReference.current.rows)
-        r.domain == TaxDomain.rate && r.validFrom == '2028-01-01' ? r.confirmedWith('vote') : r,
+        if (r.domain == TaxDomain.rate && r.validFrom == '2028-01-01')
+          r.confirmedWith('vote')
+        else
+          r,
     ]);
     expect(vatCatalogueNote('CH', asOf: '2026-12-01', reference: decided),
         contains('The vote passed'));

@@ -19023,6 +19023,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefDomainRate => 'Aliquote';
 
   @override
+  String get taxRefDomainRateComponent => 'Imposte di un\'aliquota combinata';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales tax per codice postale';
 
   @override
@@ -19091,6 +19094,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefInvalidNumber => 'Inserisci un numero da 0 a 99,999';
 
   @override
+  String get taxRefInvalidRateComponents =>
+      'Un\'imposta per riga: regime, autorità, percentuale; insieme devono essere pari all\'aliquota combinata';
+
+  @override
   String get taxRefInvalidState =>
       'Inserisci il codice dello stato di due lettere';
 
@@ -19131,6 +19138,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefPosition => 'Posizione';
+
+  @override
+  String get taxRefRateComponents =>
+      'Imposte, una per riga: regime, autorità, percentuale (es. GST, CA, 5). La somma deve essere l\'aliquota combinata.';
 
   @override
   String get taxRefRegime => 'Regime';

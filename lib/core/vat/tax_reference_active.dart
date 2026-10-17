@@ -165,6 +165,16 @@ extension TaxReferenceQueries on TaxReferenceSet {
         return aIn != bIn ? aIn - bIn : b.validFrom.compareTo(a.validFrom);
       });
     for (final r in rows) {
+      // A proposal (#2539: unconfirmed, and it closed the version before it)
+      // is not law yet and classifies nothing.
+      if (!r.confirmed &&
+          this.rows.any((p) =>
+              p.domain == r.domain &&
+              p.country == r.country &&
+              p.key == r.key &&
+              p.validTo == r.validFrom)) {
+        continue;
+      }
       final rate = r.value as RateValue;
       if (rate.category == category && (rate.percent - percent).abs() < 1e-9) {
         return rate.group;

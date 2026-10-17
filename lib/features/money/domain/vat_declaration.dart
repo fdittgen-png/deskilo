@@ -245,7 +245,7 @@ List<VatFormBox> vatQstFormBoxes(List<VatDeclarationLine> lines) {
   final hasQst = lines.any((l) => (l.components.isNotEmpty
           ? l.components
           : vatComponentsOf(
-              qstFormSpec.country, l.percent, l.netCents, l.vatCents))
+              qstFormSpec.country.split('-').first, l.percent, l.netCents, l.vatCents))
       .any((c) => c.scheme == 'QST' && c.taxCents != 0));
   return hasQst ? fillVatForm(qstFormSpec, lines) : const [];
 }

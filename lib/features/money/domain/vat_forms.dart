@@ -279,7 +279,7 @@ List<VatFormBox> fillVatForm(VatFormSpec spec, List<VatDeclarationLine> lines) {
       if (selector != null) {
         for (final l in lines) {
           if (selector.matches(l)) {
-            total += t.factor * _amountOf(selector, l, ofTax, spec.country);
+            total += t.factor * _amountOf(selector, l, ofTax, spec.country.split('-').first);
           }
         }
       } else {

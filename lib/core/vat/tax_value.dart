@@ -7,8 +7,10 @@
 // `switch` over either must be revisited. `tax_reference.dart` re-exports
 // this file.
 import '../data/json_reader.dart';
+import 'rate_component.dart';
 import 'sales_tax_component.dart';
 
+export 'rate_component.dart';
 export 'sales_tax_component.dart';
 
 /// The kinds of reference value the store holds. A domain's `value` shape
@@ -58,8 +60,7 @@ enum TaxDomain {
   /// Whether a kind of line is taxed in a state.
   taxability('taxability'),
 
-  /// #2539 -- the taxes inside a combined rate (a Canadian 14.975 % is GST 5
-  /// plus QST 9.975), keyed by the combined percent.
+  /// #2539 -- the taxes inside a combined rate, keyed by the combined percent.
   rateComponent('rate_component');
 
   const TaxDomain(this.wire);
@@ -499,33 +500,9 @@ class AccountMapValue extends TaxValue {
       };
 }
 
-/// One tax inside a combined rate: its scheme (`GST`, `HST`, `QST`, `PST`),
-/// who levies it (`CA`, `CA-QC`, `CA-PST`) and its own percentage.
-class RateComponent {
-  const RateComponent({
-    required this.scheme,
-    required this.authority,
-    required this.percent,
-  });
-
-  final String scheme;
-  final String authority;
-  final double percent;
-
-  factory RateComponent.fromReader(JsonReader r) => RateComponent(
-        scheme: r.string('scheme'),
-        authority: r.string('authority'),
-        percent: r.number('percent'),
-      );
-
-  Map<String, Object?> toJson() =>
-      {'scheme': scheme, 'authority': authority, 'percent': percent};
-}
-
 /// `rate_component`: {percent, components} -- the taxes a combined [percent]
-/// is made of (the key is the percent as text, the country the seller's).
-/// The components add up to [percent]; SQL (`tax_reference_valid`) refuses a
-/// row whose do not.
+/// is made of (the key is the percent as text, the country the seller's); SQL
+/// (`tax_reference_valid`) refuses components that do not add up to it.
 class RateComponentValue extends TaxValue {
   const RateComponentValue({required this.percent, required this.components});
 

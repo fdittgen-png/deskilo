@@ -70,11 +70,17 @@ void main() {
     expect(vatPlannedChangeFor('CH', 8.5, asOf: '2028-02-01', reference: confirmed), isNull);
   });
 
+  test('a proposal classifies no line until it is confirmed', () {
+    final now = ActiveTaxReference.current;
+    expect(now.groupOfRate('CH', 4.0, 'S', asOf: '2028-02-01'), '');
+    expect(_confirmedPlan().groupOfRate('CH', 4.0, 'S', asOf: '2028-02-01'), 'intermediate');
+  });
+
   test('a withdrawn plan leaves the old rate in force on the day', () {
     final withdrawn = TaxReferenceSet([
       for (final r in ActiveTaxReference.current.rows)
         if (r.validFrom != '2028-01-01')
-          r.country == 'CH' && r.validTo == '2028-01-01' ? r.reopenedUntil(null) : r,
+          if (r.country == 'CH' && r.validTo == '2028-01-01') r.reopenedUntil(null) else r,
     ]);
     expect(vatCatalogueFor('CH', asOf: '2028-02-01', reference: withdrawn).first.percent, 8.1);
     expect(vatPlannedChangeFor('CH', 8.1, asOf: '2026-10-16', reference: withdrawn), isNull);
@@ -84,7 +90,8 @@ void main() {
 /// The bundled data with the two 2028 versions confirmed, as after the vote.
 TaxReferenceSet _confirmedPlan() => TaxReferenceSet([
       for (final r in ActiveTaxReference.current.rows)
-        r.domain == TaxDomain.rate && r.country == 'CH' && r.validFrom == '2028-01-01'
-            ? r.confirmedWith('Federal Gazette')
-            : r,
+        if (r.domain == TaxDomain.rate && r.country == 'CH' && r.validFrom == '2028-01-01')
+          r.confirmedWith('Federal Gazette')
+        else
+          r,
     ]);

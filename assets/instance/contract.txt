@@ -2034,11 +2034,11 @@ routine public.usage_records_for(p_workspace_id uuid, p_period text, p_member_id
 routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:96b330bb6f32
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a772dde0819a
-routine public.vat_components_entry(p_country text, p_percent numeric, p_net bigint, p_vat bigint) -> jsonb | function | invoker | immutable | exec:service_role | body:1714016a34e0
+routine public.vat_components_entry(p_country text, p_percent numeric, p_net bigint, p_vat bigint) -> jsonb | function | invoker | stable | exec:service_role | body:5251dae676d1
 routine public.vat_declarations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:7e545bd2ecfe
 routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:d1e732a5ac79
 routine public.vat_input_split(p_gross bigint, p_percent numeric, p_share numeric) -> TABLE(net_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:95597107b5ee
-routine public.vat_percent_components(p_country text, p_percent numeric) -> jsonb | function | invoker | immutable | exec:service_role | body:5652b4d8f710
+routine public.vat_percent_components(p_country text, p_percent numeric) -> jsonb | function | definer | stable | exec:service_role | body:6cecb7e04f44
 routine public.vat_period_overlaps_filed(p_workspace_id uuid, p_start date, p_end date) -> boolean | function | definer | stable | exec:service_role | body:7da21367be94
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:authenticated,service_role | body:be13b7375d62
 routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid | function | definer | stable | exec:authenticated,service_role | body:c5e190aea085

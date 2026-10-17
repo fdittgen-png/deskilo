@@ -32636,6 +32636,12 @@ abstract class AppLocalizations {
   /// **'Rates'**
   String get taxRefDomainRate;
 
+  /// #2539 rate components: taxRefDomainRateComponent
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes inside a combined rate'**
+  String get taxRefDomainRateComponent;
+
   /// #2362 sales tax: taxRefDomainSalesTax
   ///
   /// In en, this message translates to:
@@ -32762,6 +32768,12 @@ abstract class AppLocalizations {
   /// **'Enter a number from 0 to 99.999'**
   String get taxRefInvalidNumber;
 
+  /// #2539 rate components: taxRefInvalidRateComponents
+  ///
+  /// In en, this message translates to:
+  /// **'One tax per line as scheme, authority, percent; together they must equal the combined rate'**
+  String get taxRefInvalidRateComponents;
+
   /// #2362 sales tax: taxRefInvalidState
   ///
   /// In en, this message translates to:
@@ -32839,6 +32851,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Position'**
   String get taxRefPosition;
+
+  /// #2539 rate components: taxRefRateComponents
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes, one per line: scheme, authority, percent (e.g. GST, CA, 5). The percents must add up to the combined rate.'**
+  String get taxRefRateComponents;
 
   /// #2477 tax reference: Field: the regime a statutory text belongs to.
   ///

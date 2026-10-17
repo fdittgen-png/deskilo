@@ -34,14 +34,16 @@ typedef PlannedRateChange = ({
 PlannedRateChange? vatPlannedChangeFor(
   String countryCode,
   double percent, {
-  required String asOf,
+  String? asOf,
+  DateTime? on,
   TaxReferenceSet? reference,
 }) {
+  final day = asOf ?? _dayOf(on) ?? (throw ArgumentError('a day (asOf or on) is required'));
   final set = reference ?? ActiveTaxReference.current;
   final country = countryCode.trim().toUpperCase();
-  for (final now in set.ownRows(TaxDomain.rate, country, asOf: asOf)) {
+  for (final now in set.ownRows(TaxDomain.rate, country, asOf: day)) {
     if (((now.value as RateValue).percent - percent).abs() > 1e-9) continue;
-    final next = _successorOf(set, now, asOf);
+    final next = _successorOf(set, now, day);
     if (next == null || !next.confirmed) continue;
     return (
       from: next.validFrom,

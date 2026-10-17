@@ -19055,6 +19055,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefDomainRate => 'Taux';
 
   @override
+  String get taxRefDomainRateComponent => 'Taxes d\'un taux combiné';
+
+  @override
   String get taxRefDomainSalesTax => 'Taxe de vente par code postal';
 
   @override
@@ -19124,6 +19127,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';
 
   @override
+  String get taxRefInvalidRateComponents =>
+      'Une taxe par ligne : régime, autorité, pourcentage ; leur somme doit égaler le taux combiné';
+
+  @override
   String get taxRefInvalidState =>
       'Saisissez le code de l\'État sur deux lettres';
 
@@ -19165,6 +19172,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefPosition => 'Position';
+
+  @override
+  String get taxRefRateComponents =>
+      'Taxes, une par ligne : régime, autorité, pourcentage (p. ex. GST, CA, 5). Leur somme doit égaler le taux combiné.';
 
   @override
   String get taxRefRegime => 'Régime';
