@@ -2,7 +2,7 @@
 
 Binding rules for humans and agents live in `docs/AGENT_RULES.md` (hard
 rules, coding, feature-flag lifetime, testing, git, setup.html, reports,
-identity form, one-branch-at-a-time). This file only indexes the skills.
+identity form, one-branch-at-a-time). This file indexes the skills and execution entry points.
 
 ## Project skills (`.claude/skills/`)
 
@@ -23,6 +23,32 @@ Global skills that also apply: `git-pr-workflow`, `flutter-dart-best-practices`,
 Which issue to take next: [#2596](https://github.com/fdittgen-png/deskilo/issues/2596) (programme selection; #1447 keeps the pilot/release qualification). Read the selected issue, its later corrections and the current claims.
 
 Ready, Done, closure (`Refs` vs `Closes`) and the glossary: `docs/AGENT_RULES.md#ready-done-and-closure`.
+
+## Execution loop
+
+Read #2596 and the selected leaf before choosing work, and again after a handoff
+or context compaction. Check actual branches and `.agent-work` claims. Keep at
+most two coding workstreams and one owner per shared producer/consumer contract.
+Do not repeat delivered checkpoints or substitute easier breadth without recording
+the exact blocker and return condition in the existing queue.
+
+After creating your worktree, run `python3 scripts/worktree_prepare.py`.
+`--resolve` explicitly initializes root and independent packages; no shared Pub
+workspace is created. For database work choose `--require-database` or
+`--database-ci` and name the actual fixture/run evidence. Tool readiness is not
+test success. Do not silently narrow analysis to hide unresolved packages.
+
+Before pushing: preflight `--list`, only implicated generators, then analyze,
+lint and affected tests on the resulting tree. Preserve original exits and review
+generated edits. Do not run the full preflight/build_runner on a shared worktree
+by default, and never reset another contributor's edits to make setup pass.
+A clean preflight is not proof of full CI acceptance.
+
+Finish code + actual consumer + success/refusal/recovery tests. If behavior is
+done and only evidence is missing, obtain the evidence without rewriting code.
+Close a leaf when its own scoped acceptance is verified; parent scope alone is
+not a closure blocker. Keep release/operator gates separate. Record the next
+outcome in #2596. Do not deploy or change permissions automatically.
 
 ## Non-negotiables in one breath
 
