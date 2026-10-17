@@ -380,20 +380,19 @@ Future<void> voidInvoiceWithConfirm(
     ),
   );
   if (confirmed != true || !context.mounted) return;
-  if (!await runGuarded(
+  if (!await runInvoiceReceiptAction(
     context,
-    domain: 'money',
-    message: 'invoice void failed',
-    errorText:
-        l10n.workspaceGenericError,
-    action: () => ref.read(invoiceCommandsProvider).voidInvoice(invoice.id),
+    ref.read(invoiceReceiptActionsProvider),
+    InvoiceActionAttempt(
+      workspaceId: invoice.workspaceId,
+      invoiceId: invoice.id,
+      kind: InvoiceActionKind.voidInvoice,
+      requestId: newRequestId(),
+    ),
+    successText: l10n.invoiceVoided,
+    failureText: l10n.workspaceGenericError,
   )) {
     return;
   }
   ref.invalidate(invoicesProvider);
-  if (!context.mounted) return;
-  AppSnack.success(
-    context,
-    l10n.invoiceVoided,
-  );
 }

@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../application/invoice_action.dart';
 import '../data/supabase_accounting_source_queries.dart';
 import '../data/supabase_commercial_terms_repository.dart';
 import '../data/supabase_expense_repository.dart';
+import '../data/supabase_invoice_action_commands.dart';
 import '../data/supabase_invoice_commands.dart';
 import '../data/supabase_invoice_queries.dart';
 import '../data/supabase_member_account_queries.dart';
@@ -12,6 +14,7 @@ import '../data/supabase_tax_reporting_repository.dart';
 import '../domain/accounting_source_queries.dart';
 import '../domain/commercial_terms_repository.dart';
 import '../domain/expense_repository.dart';
+import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/member_account_queries.dart';
@@ -43,6 +46,19 @@ ReportTemplateRepository reportTemplateRepository(Ref ref) =>
 @Riverpod(keepAlive: true)
 InvoiceCommands invoiceCommands(Ref ref) =>
     SupabaseInvoiceCommands(ref.watch(moneyClientProvider));
+
+/// #2585 C2 — void and refund under a request id, read back by it.
+@Riverpod(keepAlive: true)
+InvoiceActionCommands invoiceActionCommands(Ref ref) =>
+    SupabaseInvoiceActionCommands(ref.watch(moneyClientProvider));
+
+/// #2585 C2 — void / refund exactly once, and look for the answer by the
+/// attempt's request id.
+@Riverpod(keepAlive: true)
+InvoiceReceiptActions invoiceReceiptActions(Ref ref) => InvoiceReceiptActions(
+  ref.watch(invoiceActionCommandsProvider),
+  ref.watch(invoiceQueriesProvider),
+);
 
 /// #2591 C3 — the workspace's VAT rates and returns.
 @Riverpod(keepAlive: true)

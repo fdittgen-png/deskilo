@@ -332,6 +332,7 @@ const Set<String> demoOverriddenProviders = {
   'memberAccountQueriesProvider', // #2591
   'reportTemplateRepositoryProvider', // #2591
   'invoiceCommandsProvider', // #2591
+  'invoiceActionCommandsProvider', // #2585
   'taxReportingRepositoryProvider', // #2591
   'commercialTermsProvider', // #2591
   'expenseRepositoryProvider', // #2591

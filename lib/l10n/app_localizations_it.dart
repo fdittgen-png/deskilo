@@ -8226,6 +8226,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Niente da esportare per questo periodo.';
 
   @override
+  String get invoiceActionDeclined =>
+      'La convalida è stata rifiutata o è scaduta. Non è stato modificato nulla.';
+
+  @override
+  String get invoiceActionUnknownBody =>
+      'La richiesta è stata inviata ma la risposta non è arrivata, quindi potrebbe essere già stata applicata. Non viene rinviato nulla. Controlla di nuovo per trovarla.';
+
+  @override
   String get invoiceAllCaughtUp => 'Tutto in ordine — niente da fatturare.';
 
   @override

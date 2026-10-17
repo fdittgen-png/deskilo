@@ -7,6 +7,7 @@ import 'package:deskilo/core/demo/data/einvoice_inbox_repository.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
@@ -198,7 +199,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       invoiceQueriesProvider.overrideWithValue(fixture.money), // #2591
       memberAccountQueriesProvider.overrideWithValue(fixture.money), // #2591
       reportTemplateRepositoryProvider.overrideWithValue(fixture.money), // #2591
-      invoiceCommandsProvider.overrideWithValue(fixture.money), // #2591
+      invoiceCommandsProvider.overrideWithValue(fixture.money), invoiceActionCommandsProvider.overrideWithValue(FakeInvoiceActionCommands(fixture.money)), // #2591, #2585
       taxReportingRepositoryProvider.overrideWithValue(fixture.money), // #2591
       commercialTermsProvider.overrideWithValue(fixture.money), // #2591
       expenseRepositoryProvider.overrideWithValue(fixture.money), accountingSourceQueriesProvider.overrideWithValue(fixture.money), // #2591, #2365

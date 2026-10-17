@@ -5501,6 +5501,8 @@
   "inviteViaWhatsapp": "WhatsApp",
   "invoiceAccountingExport": "Export comptable",
   "invoiceAccountingExportEmpty": "Rien à exporter pour cette période.",
+  "invoiceActionDeclined": "La validation a été refusée ou a expiré. Rien n'a été modifié.",
+  "invoiceActionUnknownBody": "La demande a été envoyée mais la réponse n'est pas arrivée : elle a peut-être déjà été appliquée. Rien n'est renvoyé. Vérifiez à nouveau pour la retrouver.",
   "invoiceAllCaughtUp": "Tout est à jour — rien à facturer.",
   "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
   "invoiceAnnexSummary": "Annexe : {movements} mouvements, {checkIns} pointages",

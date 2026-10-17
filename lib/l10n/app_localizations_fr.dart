@@ -8245,6 +8245,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Rien à exporter pour cette période.';
 
   @override
+  String get invoiceActionDeclined =>
+      'La validation a été refusée ou a expiré. Rien n\'a été modifié.';
+
+  @override
+  String get invoiceActionUnknownBody =>
+      'La demande a été envoyée mais la réponse n\'est pas arrivée : elle a peut-être déjà été appliquée. Rien n\'est renvoyé. Vérifiez à nouveau pour la retrouver.';
+
+  @override
   String get invoiceAllCaughtUp => 'Tout est à jour — rien à facturer.';
 
   @override

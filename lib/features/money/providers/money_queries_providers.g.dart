@@ -216,6 +216,115 @@ final class InvoiceCommandsProvider
 
 String _$invoiceCommandsHash() => r'888c8948b95c147d0261e62c60ae23e3463f746c';
 
+/// #2585 C2 — void and refund under a request id, read back by it.
+
+@ProviderFor(invoiceActionCommands)
+final invoiceActionCommandsProvider = InvoiceActionCommandsProvider._();
+
+/// #2585 C2 — void and refund under a request id, read back by it.
+
+final class InvoiceActionCommandsProvider
+    extends
+        $FunctionalProvider<
+          InvoiceActionCommands,
+          InvoiceActionCommands,
+          InvoiceActionCommands
+        >
+    with $Provider<InvoiceActionCommands> {
+  /// #2585 C2 — void and refund under a request id, read back by it.
+  InvoiceActionCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceActionCommandsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceActionCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<InvoiceActionCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  InvoiceActionCommands create(Ref ref) {
+    return invoiceActionCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InvoiceActionCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InvoiceActionCommands>(value),
+    );
+  }
+}
+
+String _$invoiceActionCommandsHash() =>
+    r'8ba93b0a284d5e9201a7014eaece8a0ea3e989ff';
+
+/// #2585 C2 — void / refund exactly once, and look for the answer by the
+/// attempt's request id.
+
+@ProviderFor(invoiceReceiptActions)
+final invoiceReceiptActionsProvider = InvoiceReceiptActionsProvider._();
+
+/// #2585 C2 — void / refund exactly once, and look for the answer by the
+/// attempt's request id.
+
+final class InvoiceReceiptActionsProvider
+    extends
+        $FunctionalProvider<
+          InvoiceReceiptActions,
+          InvoiceReceiptActions,
+          InvoiceReceiptActions
+        >
+    with $Provider<InvoiceReceiptActions> {
+  /// #2585 C2 — void / refund exactly once, and look for the answer by the
+  /// attempt's request id.
+  InvoiceReceiptActionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceReceiptActionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceReceiptActionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<InvoiceReceiptActions> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  InvoiceReceiptActions create(Ref ref) {
+    return invoiceReceiptActions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InvoiceReceiptActions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InvoiceReceiptActions>(value),
+    );
+  }
+}
+
+String _$invoiceReceiptActionsHash() =>
+    r'842a3d8e79c326b8f4dbf37d5b7a189b879c42d4';
+
 /// #2591 C3 — the workspace's VAT rates and returns.
 
 @ProviderFor(taxReportingRepository)

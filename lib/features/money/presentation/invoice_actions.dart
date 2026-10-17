@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -22,6 +23,7 @@ import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/invoice_action.dart';
 import '../application/send_reminder.dart';
 import '../domain/channel_einvoice_xml.dart';
 import '../domain/dunning.dart';
@@ -53,6 +55,7 @@ import 'widgets/e_invoice_sheet.dart';
 import 'widgets/einvoice_environment_picker.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
+import 'widgets/invoice_receipt_action_runner.dart';
 import 'widgets/invoicing_dashboard.dart';
 import 'widgets/report_preview.dart';
 
@@ -121,15 +124,18 @@ Future<void> settleCreditInvoiceDialog(
   );
   final note = noteController.text;
   if (confirmed != true || !context.mounted) return;
-  if (!await runGuarded(
+  if (!await runInvoiceReceiptAction(
     context,
-    domain: 'money',
-    message: 'credit note refund failed',
-    errorText:
-        l10n.workspaceGenericError,
-    action: () => ref
-        .read(invoiceCommandsProvider)
-        .settleCreditInvoice(invoice.id, note: note),
+    ref.read(invoiceReceiptActionsProvider),
+    InvoiceActionAttempt(
+      workspaceId: invoice.workspaceId,
+      invoiceId: invoice.id,
+      kind: InvoiceActionKind.refundCreditNote,
+      requestId: newRequestId(),
+      note: note,
+    ),
+    successText: l10n.invoiceRefunded,
+    failureText: l10n.workspaceGenericError,
   )) {
     return;
   }
@@ -138,8 +144,6 @@ Future<void> settleCreditInvoiceDialog(
     ..invalidate(myAccountProvider)
     ..invalidate(invoicesProvider);
   invalidateBookingData(ref);
-  if (!context.mounted) return;
-  AppSnack.success(context, l10n.invoiceRefunded);
 }
 
 /// The current workspace when it issues in sales-tax mode (#2362): the
