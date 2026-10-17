@@ -6,6 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
+import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/images/emblem_bytes.dart';
 import '../../../core/privacy/recording_privacy.dart';
@@ -19,6 +21,7 @@ import '../application/set_wording_term.dart';
 import '../application/set_workspace_emblem.dart';
 import '../application/start_workspace.dart';
 import '../application/workspace_colours.dart';
+import '../data/connected_space_reader.dart';
 import '../data/supabase_workspace_repository.dart';
 import '../domain/booking_granularity.dart';
 import '../domain/booking_policies.dart';
@@ -37,8 +40,10 @@ import '../domain/workspace_overview.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_template.dart';
+import 'active_workspace_providers.dart';
 import 'workspace_roles_providers.dart';
 
+export 'active_workspace_providers.dart';
 export 'operation_context_providers.dart'; // #2561 C1: the contexts
 
 part 'workspace_providers.g.dart';
@@ -52,6 +57,12 @@ final enabledFeatureKeysFromWorkspace = enabledFeatureKeysProvider.overrideWith(
 @Riverpod(keepAlive: true)
 WorkspaceRepository workspaceRepository(Ref ref) =>
     SupabaseWorkspaceRepository(Supabase.instance.client);
+
+/// #2562 -- how the workspaces of a connected installation are read, given
+/// that installation's own pinned client.
+@Riverpod(keepAlive: true)
+ConnectedWorkspaceReader connectedWorkspaceReader(Ref ref) =>
+    (client) => SupabaseWorkspaceRepository(client).fetchMyWorkspaces();
 
 @Riverpod(keepAlive: true)
 Future<List<Workspace>> myWorkspaces(Ref ref) async {
@@ -68,40 +79,6 @@ Future<List<Workspace>> myWorkspaces(Ref ref) async {
 String? currentAccountId(Ref ref) => ref.watch(authStateProvider).hasValue
     ? ref.watch(authStateProvider).value
     : ref.watch(authRepositoryProvider).currentUserId;
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-@Riverpod(keepAlive: true)
-class ActiveWorkspaceId extends _$ActiveWorkspaceId {
-  @override
-  Future<String?> build() async {
-    final (account, store) = (ref.watch(currentAccountIdProvider), ref.watch(activeWorkspaceStoreProvider));
-    final defaultId = await ref.watch(defaultWorkspaceIdProvider.future);
-    if (defaultId != null || account == null) return defaultId;
-    return store.read(account);
-  }
-
-  /// An explicit join/create result selects this session without changing
-  /// the saved account default or scheduling a late cross-context write.
-  void activate(String workspaceId) => state = AsyncData(workspaceId);
-
-  Future<void> select(String workspaceId) async {
-    if (ref.read(currentAccountIdProvider) case final account?) await ref.read(activeWorkspaceStoreProvider).write(account, workspaceId);
-    state = AsyncData(workspaceId);
-    // #996 — a switch is the new default: the next start lands where
-    // the user left, on the same side of the pair. Offline, the active
-    // store already moved; the default follows at the next switch.
-    try {
-      await ref.read(defaultWorkspaceIdProvider.notifier).set(workspaceId);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-          'workspace', 'default-workspace write failed — active kept',
-          error: e, stackTrace: st);
-    }
-  }
-}
 
 /// Session state that belongs to one workspace (the floor browsed, a wizard
 /// under way) starts over when the person moves from one workspace to
@@ -169,6 +146,15 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
 /// The active workspace (profile).
 @Riverpod(keepAlive: true)
 Future<Workspace?> currentWorkspace(Ref ref) async {
+  // #2562 -- a workspace selected on a connected installation is read
+  // through that installation's own pinned client, never the root client;
+  // a refusal is the typed ConnectionFailure.
+  final split = ref.watch(selectedWorkspaceHostProvider);
+  if (split != null) {
+    final pool = ref.watch(connectedInstallationsProvider);
+    final read = ref.watch(connectedWorkspaceReaderProvider);
+    return readConnectedWorkspace(pool, read, split.source, split.workspaceId);
+  }
   final workspaces = await ref.watch(myWorkspacesProvider.future);
   if (workspaces.isEmpty) return null;
   final chosenId = await ref.watch(activeWorkspaceIdProvider.future);

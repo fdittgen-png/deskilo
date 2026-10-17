@@ -280,7 +280,7 @@ final class SelectedWorkspaceHostProvider
 }
 
 String _$selectedWorkspaceHostHash() =>
-    r'a115da9345296f6c4b163418ac1796fe3f582c09';
+    r'473af13c20f758d6aded7dbf4e560b58c485f5c3';
 
 /// The connected installation the selected workspace lives on, or none
 /// when it lives on the installation the app is signed in to.

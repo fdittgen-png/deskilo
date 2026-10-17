@@ -7269,7 +7269,7 @@
   },
   "meLeaveTitle": "¿Salir de {name}?",
   "meLinkedOpen": "Abrir en {host}",
-  "meLinkedOpenBody": "Este espacio está en {host}. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y le pide iniciar sesión allí.",
+  "meLinkedOpenBody": "Este espacio está en {host}. Se abre aquí, por la conexión propia de ese servidor; no se cambia nada y su propio servidor no se usa para ello.",
   "meLinkedPendingOn": "Pendiente de aprobación · {host}",
   "meLinkedUnavailable": "{host} no respondió: esta lista puede estar incompleta.",
   "meManageSpaces": "Gestionar mis espacios",

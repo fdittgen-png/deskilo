@@ -30,23 +30,30 @@ import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
 
-/// Enter [space]: it becomes this person's space (and their next start),
+/// Enter [space]: it becomes this person's space (and their next start,
+/// unless it is [connected] from another installation: session only),
 /// the curtain plays from [from] when motion is on, and the space opens.
 Future<void> enterSpace(
   BuildContext context,
   WidgetRef ref,
   Workspace space, {
   Rect? from,
+  bool connected = false,
 }) async {
   final router = GoRouter.of(context);
   final overlay = Overlay.of(context, rootOverlay: true);
   final animate = MotionSettings.enabledOf(context);
   final brand = spaceBrand(space);
   final colour = brand?.color ?? Theme.of(context).colorScheme.tertiary;
-  final logo = brandingOn(space)
+  // #2562 -- a [connected] space was already selected through its own
+  // installation (ConnectedSpaceEntry): no root-side emblem read, no saved
+  // default naming a workspace the root server does not know.
+  final logo = !connected && brandingOn(space)
       ? ref.read(workspaceEmblemOfProvider(space.id)).value
       : null;
-  await ref.read(activeWorkspaceIdProvider.notifier).select(space.id);
+  if (!connected) {
+    await ref.read(activeWorkspaceIdProvider.notifier).select(space.id);
+  }
   if (!animate) {
     router.go(kDefaultHome);
     return;

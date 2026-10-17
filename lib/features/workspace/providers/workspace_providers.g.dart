@@ -57,6 +57,62 @@ final class WorkspaceRepositoryProvider
 String _$workspaceRepositoryHash() =>
     r'e68d1435a2549d439fd19d30e8249162f7849608';
 
+/// #2562 -- how the workspaces of a connected installation are read, given
+/// that installation's own pinned client.
+
+@ProviderFor(connectedWorkspaceReader)
+final connectedWorkspaceReaderProvider = ConnectedWorkspaceReaderProvider._();
+
+/// #2562 -- how the workspaces of a connected installation are read, given
+/// that installation's own pinned client.
+
+final class ConnectedWorkspaceReaderProvider
+    extends
+        $FunctionalProvider<
+          ConnectedWorkspaceReader,
+          ConnectedWorkspaceReader,
+          ConnectedWorkspaceReader
+        >
+    with $Provider<ConnectedWorkspaceReader> {
+  /// #2562 -- how the workspaces of a connected installation are read, given
+  /// that installation's own pinned client.
+  ConnectedWorkspaceReaderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'connectedWorkspaceReaderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$connectedWorkspaceReaderHash();
+
+  @$internal
+  @override
+  $ProviderElement<ConnectedWorkspaceReader> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ConnectedWorkspaceReader create(Ref ref) {
+    return connectedWorkspaceReader(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ConnectedWorkspaceReader value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ConnectedWorkspaceReader>(value),
+    );
+  }
+}
+
+String _$connectedWorkspaceReaderHash() =>
+    r'056fdc94ae91a6efaea2b7aa89dc33e76ee1fbd6';
+
 @ProviderFor(myWorkspaces)
 final myWorkspacesProvider = MyWorkspacesProvider._();
 
@@ -150,68 +206,6 @@ final class CurrentAccountIdProvider
 }
 
 String _$currentAccountIdHash() => r'0e58676f400e0be2643ef2cd4e24f43767217634';
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-
-@ProviderFor(ActiveWorkspaceId)
-final activeWorkspaceIdProvider = ActiveWorkspaceIdProvider._();
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-final class ActiveWorkspaceIdProvider
-    extends $AsyncNotifierProvider<ActiveWorkspaceId, String?> {
-  /// The persisted active-profile choice (#89). At START-UP the user's
-  /// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-  /// lands on it); in-session switches last until the next start. The
-  /// device's memory is per account (#1823). Null: no space chosen yet.
-  ActiveWorkspaceIdProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'activeWorkspaceIdProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$activeWorkspaceIdHash();
-
-  @$internal
-  @override
-  ActiveWorkspaceId create() => ActiveWorkspaceId();
-}
-
-String _$activeWorkspaceIdHash() => r'6408d4d527aa4efc4f14410ef274c5cfb793b2e3';
-
-/// The persisted active-profile choice (#89). At START-UP the user's
-/// DEFAULT profile wins (#322; server-first since #458, so a fresh install
-/// lands on it); in-session switches last until the next start. The
-/// device's memory is per account (#1823). Null: no space chosen yet.
-
-abstract class _$ActiveWorkspaceId extends $AsyncNotifier<String?> {
-  FutureOr<String?> build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<String?>, String?>,
-              AsyncValue<String?>,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
-}
 
 /// The user-checked default profile (#322); null = none. Radio
 /// semantics: checking one replaces the previous; re-checking the
@@ -333,7 +327,7 @@ final class CurrentWorkspaceProvider
   }
 }
 
-String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
+String _$currentWorkspaceHash() => r'0ed433dfe8421732e07f404ca32b4f7a2f76d5d8';
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
