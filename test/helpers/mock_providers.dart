@@ -285,7 +285,7 @@ List<Override> standardTestOverrides({
     navigationDefaultProvider.overrideWithValue(NavigationStyle.classic),
     // No-op realtime by default: the real impl touches Supabase.instance,
     // which does not exist under flutter_test (#413).
-    realtimeSyncProvider.overrideWithValue(realtime ?? FakeRealtimeSync()),
+    ...realtimeSyncOverrides(realtime ?? FakeRealtimeSync()),
     appBadgeProvider.overrideWithValue(badge ?? FakeAppBadge()),
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.

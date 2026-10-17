@@ -18,5 +18,14 @@ class FakeRealtimeSync implements RealtimeSync {
     return _controller.stream;
   }
 
+  /// How often the account feed was watched.
+  int accountWatched = 0;
+
+  @override
+  Stream<String> watchAccount() {
+    accountWatched++;
+    return _controller.stream;
+  }
+
   void emit(String table) => _controller.add(table);
 }

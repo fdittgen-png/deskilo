@@ -3,11 +3,11 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
-
+import '../backend/context_client_providers.dart';
 import '../trace/trace_logger.dart';
 import '../ui/app_durations.dart';
 import 'invalidation_map.dart';
+import 'invalidation_registry.dart' show InvalidationScope;
 import 'realtime_sync.dart';
 import 'realtime_wiring.dart';
 
@@ -15,7 +15,32 @@ part 'realtime_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 RealtimeSync realtimeSync(Ref ref) =>
-    SupabaseRealtimeSync(Supabase.instance.client);
+    SupabaseRealtimeSync(ref.watch(realtimeWorkspaceClientProvider));
+
+/// #2564 O5 — the account target's feed, on the personal home's client.
+@Riverpod(keepAlive: true)
+RealtimeSync accountRealtimeSync(Ref ref) =>
+    SupabaseRealtimeSync(ref.watch(personalClientProvider));
+
+/// A test or demo scope's feed: both targets read [sync].
+List<Override> realtimeSyncOverrides(RealtimeSync sync) => [
+  realtimeSyncProvider.overrideWithValue(sync),
+  accountRealtimeSyncProvider.overrideWithValue(sync),
+];
+
+/// The two targets of #2564: each has its own channel, its own invalidator
+/// and only the registry scope that is its own.
+enum RealtimeTarget {
+  /// The selected workspace's change feed (one channel per workspace).
+  workspace({InvalidationScope.workspace}),
+
+  /// The personal home's feed: what spans workspaces.
+  account({InvalidationScope.account});
+
+  const RealtimeTarget(this.scopes);
+
+  final Set<InvalidationScope> scopes;
+}
 
 /// How long changes are coalesced before invalidating (#413): a burst
 /// (a series booking writes dozens of rows) becomes one refetch.
@@ -38,8 +63,8 @@ class ResumeResyncObserver with WidgetsBindingObserver {
   }
 }
 
-/// Subscribes to the active workspace's change feed and invalidates
-/// exactly the providers that cache each table — so every device,
+/// Subscribes to ONE target's change feed and invalidates
+/// exactly the providers of that target's scope that cache each table — so every device,
 /// INCLUDING the one that made the change, repaints without restarts or
 /// manual refreshes (#413). Watched from the shell and the kiosk, alive
 /// with the app. The table → providers map lives in
@@ -50,6 +75,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   Timer? _batchWindow;
   ResumeResyncObserver? _observer;
   final _pending = <String>{};
+  Set<InvalidationScope> _scopes = const {};
 
   /// #1093 — which build owns the channel. The notifier is keepAlive, so
   /// ONE instance is reused across rebuilds and [_sub] is a single shared
@@ -60,7 +86,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   int _generation = 0;
 
   @override
-  Future<void> build() async {
+  Future<void> build(RealtimeTarget target) async {
     final generation = ++_generation;
     ref.onDispose(_teardown);
     final workspaceId = await ref.watch(realtimeWorkspaceIdProvider.future);
@@ -78,10 +104,13 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
       _batchWindow ??= Timer(kRealtimeDebounce, _flush);
     });
     WidgetsBinding.instance.addObserver(_observer!);
-    _sub = ref
-        .read(realtimeSyncProvider)
-        .watch(workspaceId)
-        .listen((table) {
+    final feed = switch (target) {
+      RealtimeTarget.workspace =>
+        ref.read(realtimeSyncProvider).watch(workspaceId),
+      RealtimeTarget.account => ref.read(accountRealtimeSyncProvider).watchAccount(),
+    };
+    _scopes = target.scopes;
+    _sub = feed.listen((table) {
       _pending.add(table);
       _batchWindow ??= Timer(kRealtimeDebounce, _flush);
     });
@@ -111,9 +140,11 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     if (!ref.mounted) return;
     // A resync subsumes every per-table signal in the batch.
     final lookup = ref.read(invalidationLookupProvider);
+    final scopes = _scopes;
+    TableInvalidation lookupHere(String table) => lookup(table, scopes: scopes);
     final entries = tables.contains(kResyncSignal)
-        ? mappedTables.map(lookup)
-        : tables.map(lookup);
+        ? mappedTables.map(lookupHere)
+        : tables.map(lookupHere);
     unawaited(_applyAll(entries.toList(growable: false), _generation));
   }
 

@@ -256,7 +256,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // something inert. A payment, an invitation, an e-invoice and a
       // webhook all travel through a repository above; what is left is
       // the app's own outward edges, and Demo holds none of them.
-      realtimeSyncProvider.overrideWithValue(fixture.realtime),
+      ...realtimeSyncOverrides(fixture.realtime),
       notificationServiceProvider.overrideWithValue(fixture.notifications),
       appBadgeProvider.overrideWithValue(fixture.badge),
       fileSaverProvider.overrideWithValue(fixture.outward.saveFile),

@@ -16,6 +16,11 @@ import 'invalidation_map.dart';
 /// the personal and the workspace target of #2564 each apply only their own.
 enum InvalidationScope { workspace, account }
 
+/// What a table invalidates for the targets in `scopes` (null: every
+/// scope, which is what a screen's own mutation refreshes).
+typedef InvalidationLookup =
+    TableInvalidation Function(String table, {Set<InvalidationScope>? scopes});
+
 /// What one feature says about one or more tables: the providers it owns
 /// that render rows of them.
 class InvalidationContribution {

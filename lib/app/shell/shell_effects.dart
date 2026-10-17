@@ -81,7 +81,8 @@ void _watchAmbientProviders(WidgetRef ref) {
     // Push-driven freshness (#413): DB changes invalidate their cached
     // providers on every device, this one included — no restarts, no
     // manual refresh.
-    ..watch(realtimeInvalidatorProvider);
+    ..watch(realtimeInvalidatorProvider(RealtimeTarget.workspace))
+    ..watch(realtimeInvalidatorProvider(RealtimeTarget.account));
 }
 
 void _mirrorPendingEvents(WidgetRef ref, AppLocalizations l10n) {

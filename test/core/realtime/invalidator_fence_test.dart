@@ -32,6 +32,8 @@ class _Sync implements RealtimeSync {
   @override
   Stream<String> watch(String workspaceId) =>
       (channels[workspaceId] = StreamController<String>()).stream;
+  @override
+  Stream<String> watchAccount() => const Stream.empty();
 }
 
 /// A plan repository whose cache bust waits for the test.
@@ -56,17 +58,17 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
-    final sub = container.listen(realtimeInvalidatorProvider, (_, _) {});
+    final sub = container.listen(realtimeInvalidatorProvider(RealtimeTarget.workspace), (_, _) {});
     addTearDown(sub.close);
     await tester.pump();
-    final notifier = container.read(realtimeInvalidatorProvider.notifier);
+    final notifier = container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).notifier);
 
     sync.channels['ws-a']!.add('seat_accessories');
     await tester.pump(kRealtimeDebounce + const Duration(milliseconds: 10));
     // A's batch is now awaiting the bust. The member switches to B.
     current = _ws('ws-b');
     container.invalidate(currentWorkspaceProvider);
-    await container.read(realtimeInvalidatorProvider.future);
+    await container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).future);
     await tester.pump();
     expect(sync.channels.containsKey('ws-b'), isTrue,
         reason: 'B owns the channel now');
@@ -100,16 +102,16 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
-    final sub = container.listen(realtimeInvalidatorProvider, (_, _) {});
+    final sub = container.listen(realtimeInvalidatorProvider(RealtimeTarget.workspace), (_, _) {});
     addTearDown(sub.close);
     await tester.pump();
-    final notifier = container.read(realtimeInvalidatorProvider.notifier);
+    final notifier = container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).notifier);
 
     sync.channels['ws-a']!.add('reservations');
     // Switch BEFORE the debounce fires.
     current = _ws('ws-b');
     container.invalidate(currentWorkspaceProvider);
-    await container.read(realtimeInvalidatorProvider.future);
+    await container.read(realtimeInvalidatorProvider(RealtimeTarget.workspace).future);
     await tester.pump(kRealtimeDebounce * 2);
     expect(notifier.appliedBatches, 0);
   });
