@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'billing_rules.dart';
+import 'command_receipt.dart';
 
 /// #2591 C3 — what a person does to an invoice: issue or correct, void,
 /// remind, regroup, settle a credit note, match a payment. Each call is
@@ -36,6 +37,15 @@ abstract interface class InvoiceCommands {
     /// document (R1-R5). Ignored for every other seller.
     String correctionReason = '',
   });
+
+  /// #2585 C2 — [createInvoice] for a NEW invoice (no replacement) under the
+  /// attempt's own [requestId] (RPC `request_invoice_issue_v1`, 0462). The
+  /// server records a receipt in the same transaction as the effect, so the
+  /// outcome of a lost answer is read back by this id
+  /// ([InvoiceQueries.invoiceCommandOutcome]) and the same id never acts
+  /// twice. Same answers as [createInvoice]: the id, or a pending-validation
+  /// exception.
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command);
 
   /// Tags an invoice erroneous (RPC `void_invoice`, 0061) — the sole
   /// one-way change the server permits on an issued invoice.

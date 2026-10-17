@@ -4,6 +4,7 @@
   "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
   "invoiceIssueCheckAgain": "Erneut prüfen",
   "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
+  "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
   "invoicesTitle": "Rechnungen",
   "invoicesEmpty": "Noch keine Rechnungen.",
   "invoiceCreate": "Neue Rechnung",

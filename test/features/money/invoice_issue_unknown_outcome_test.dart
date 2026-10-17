@@ -10,6 +10,7 @@ import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
@@ -30,36 +31,28 @@ class _LostAnswer extends FakeMoneyRepository {
   final fetched = <String>[];
 
   @override
-  Future<String> createInvoice({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    String? replacesId,
-    bool detailed = false,
-    InvoiceKind kind = InvoiceKind.full,
-    String buyerReference = '',
-    String purchaseOrder = '',
-    String correctionReason = '',
-  }) async {
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command) async {
     writes++;
-    if (commits) {
-      await super.createInvoice(
-        workspaceId: workspaceId,
-        memberId: memberId,
-        period: period,
-        replacesId: replacesId,
-        detailed: detailed,
-        kind: kind,
-        buyerReference: buyerReference,
-        purchaseOrder: purchaseOrder,
-        correctionReason: correctionReason,
-      );
-    }
+    if (commits) await super.issueInvoiceWithReceipt(command);
     throw const JsonShapeException(
-      'request_invoice_issue',
+      'request_invoice_issue_v1',
       'invoice_id',
       'String',
       'null',
+    );
+  }
+
+  /// #2585 C2 — the form's attempt carries a request id, so the look reads
+  /// its receipt (recorded here as the workspace it was read on).
+  @override
+  Future<CommandReceipt> invoiceCommandOutcome({
+    required String workspaceId,
+    required String requestId,
+  }) {
+    fetched.add(workspaceId);
+    return super.invoiceCommandOutcome(
+      workspaceId: workspaceId,
+      requestId: requestId,
     );
   }
 

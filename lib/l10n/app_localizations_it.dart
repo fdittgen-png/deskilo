@@ -8544,6 +8544,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceIssueCheckAgain => 'Controlla di nuovo';
 
   @override
+  String get invoiceIssueDeclined =>
+      'La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.';
+
+  @override
   String get invoiceIssueNotFoundYet =>
       'Non ancora trovata. Non è stato reinviato nulla.';
 

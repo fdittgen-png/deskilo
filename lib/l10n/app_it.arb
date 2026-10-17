@@ -5767,6 +5767,7 @@
     }
   },
   "invoiceIssueCheckAgain": "Controlla di nuovo",
+  "invoiceIssueDeclined": "La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.",
   "invoiceIssueNotFoundYet": "Non ancora trovata. Non è stato reinviato nulla.",
   "invoiceIssueOne": "Fattura",
   "invoiceIssueUnknownBody": "La fattura è stata inviata ma la risposta non è arrivata, quindi potrebbe già esistere. Non viene reinviato nulla. Controlla di nuovo per cercarla.",

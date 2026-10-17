@@ -3,10 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../domain/billing_rules.dart';
+import '../domain/command_receipt.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/reminder_evidence.dart';
 import '../domain/vat_tax_point.dart';
+import 'command_receipt_decoder.dart';
 import 'invoice_preview_decoder.dart';
 import 'invoice_reminder_fold.dart';
 
@@ -32,6 +34,18 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
           .order('id', ascending: true),
     );
     return rows.map(Invoice.fromRow).toList();
+  }
+
+  @override
+  Future<CommandReceipt> invoiceCommandOutcome({
+    required String workspaceId,
+    required String requestId,
+  }) async {
+    final answer = await _client.rpc<Object?>(
+      'financial_command_outcome_v1',
+      params: {'p_workspace_id': workspaceId, 'p_request_id': requestId},
+    );
+    return decodeCommandReceipt(answer);
   }
 
   @override

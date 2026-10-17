@@ -7,12 +7,13 @@ import '../../application/issue_invoice.dart';
 /// The answer to issuing an invoice was lost. The draft is kept in the
 /// attempt, and the only action is to LOOK for the invoice in the archive
 /// of the attempt's own workspace: nothing here can send the command again.
-/// Returns the found [InvoiceIssued], or null when the person leaves it.
-Future<InvoiceIssued?> showInvoiceUnknownOutcomeDialog(
+/// Returns the resolved outcome (issued, held or declined), or null when
+/// the person leaves it.
+Future<InvoiceIssueOutcome?> showInvoiceUnknownOutcomeDialog(
   BuildContext context, {
   required InvoiceIssuance issuance,
   required InvoiceIssueUnknown unknown,
-}) => showDialog<InvoiceIssued>(
+}) => showDialog<InvoiceIssueOutcome>(
   context: context,
   barrierDismissible: false,
   builder: (_) => _UnknownOutcome(issuance: issuance, unknown: unknown),
@@ -36,13 +37,11 @@ class _UnknownOutcome extends StatelessWidget {
     _checking.value = false;
     if (!context.mounted) return;
     switch (outcome) {
-      case InvoiceIssued():
+      case InvoiceIssued() || InvoiceIssueHeld() || InvoiceIssueRefused():
         Navigator.of(context).pop(outcome);
       case InvoiceIssueUnknown():
         _current.value = outcome;
         _notFound.value = true;
-      case InvoiceIssueHeld() || InvoiceIssueRefused():
-        break;
     }
   }
 

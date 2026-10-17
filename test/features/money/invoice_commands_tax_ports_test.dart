@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/application/declare_vat.dart';
 import 'package:deskilo/features/money/application/settle_invoices.dart';
 import 'package:deskilo/features/money/data/supabase_money_repository.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
@@ -34,6 +35,12 @@ class _Commands implements InvoiceCommands {
     String correctionReason = '',
   }) async {
     calls.add('create:$memberId:$period');
+    return 'inv-1';
+  }
+
+  @override
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command) async {
+    calls.add('issue:${command.memberId}:${command.period}:${command.requestId}');
     return 'inv-1';
   }
 
@@ -110,6 +117,12 @@ class _Tax implements TaxReportingRepository {
 
 /// The reads the decision classes use, and nothing else answers.
 class _Reads implements InvoiceQueries {
+  @override
+  Future<CommandReceipt> invoiceCommandOutcome({
+    required String workspaceId,
+    required String requestId,
+  }) async => const CommandReceipt(CommandReceiptState.notObserved);
+
   @override
   Future<List<Invoice>> fetchInvoices(String workspaceId) async => const [];
 

@@ -8482,6 +8482,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceIssueCheckAgain => 'Check again';
 
   @override
+  String get invoiceIssueDeclined =>
+      'The validation was declined or expired. No invoice was issued.';
+
+  @override
   String get invoiceIssueNotFoundYet =>
       'Not found yet. Nothing was sent again.';
 

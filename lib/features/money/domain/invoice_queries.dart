@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'billing_rules.dart';
+import 'command_receipt.dart';
 import 'invoice.dart';
 import 'reminder_evidence.dart';
 import 'vat_tax_point.dart';
@@ -12,6 +13,14 @@ abstract interface class InvoiceQueries {
   /// The invoice archive (0060): the member's own invoices — admins see
   /// everyone's (RLS decides).
   Future<List<Invoice>> fetchInvoices(String workspaceId);
+
+  /// #2585 C2 — the receipt of the attempt named [requestId] (RPC
+  /// `financial_command_outcome_v1`): only the caller's own attempt in
+  /// [workspaceId] can be found. Reads, never writes.
+  Future<CommandReceipt> invoiceCommandOutcome({
+    required String workspaceId,
+    required String requestId,
+  });
 
   /// Every payment already consumed by a match (#506, 0101) — the
   /// candidates list must not offer them again.

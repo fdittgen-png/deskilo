@@ -301,6 +301,17 @@ constraint fee_bands.fee_bands_workspace_id_fkey FOREIGN KEY (workspace_id) REFE
 constraint fee_bands.fee_bands_workspace_id_from_pct_key UNIQUE (workspace_id, from_pct)
 constraint fee_bands.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint fee_bands.system_company_present CHECK ((company_id IS NOT NULL))
+constraint financial_command_receipts.financial_command_receipts_actor_member_id_fkey FOREIGN KEY (actor_member_id) REFERENCES members(id) ON DELETE CASCADE
+constraint financial_command_receipts.financial_command_receipts_check CHECK (((state = 'applied'::text) = (invoice_id IS NOT NULL)))
+constraint financial_command_receipts.financial_command_receipts_check1 CHECK (((state = 'pending'::text) = (event_id IS NOT NULL)))
+constraint financial_command_receipts.financial_command_receipts_command_kind_check CHECK ((command_kind = 'invoice_issue'::text))
+constraint financial_command_receipts.financial_command_receipts_payload_digest_check CHECK ((char_length(payload_digest) = 64))
+constraint financial_command_receipts.financial_command_receipts_pkey PRIMARY KEY (id)
+constraint financial_command_receipts.financial_command_receipts_state_check CHECK ((state = ANY (ARRAY['applied'::text, 'pending'::text])))
+constraint financial_command_receipts.financial_command_receipts_workspace_id_actor_member_id_req_key UNIQUE (workspace_id, actor_member_id, request_id)
+constraint financial_command_receipts.financial_command_receipts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint financial_command_receipts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint financial_command_receipts.system_company_present CHECK ((company_id IS NOT NULL))
 constraint guest_participation_audit.guest_participation_audit_action_check CHECK ((action = ANY (ARRAY['requested'::text, 'confirmed'::text, 'declined'::text, 'cancelled'::text])))
 constraint guest_participation_audit.guest_participation_audit_participation_id_fkey FOREIGN KEY (participation_id) REFERENCES guest_participations(id) ON DELETE CASCADE
 constraint guest_participation_audit.guest_participation_audit_pkey PRIMARY KEY (id)
@@ -1538,6 +1549,7 @@ routine public.field_definitions_import(p_workspace_id uuid, p_definitions jsonb
 routine public.field_named_validators() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:da8e3e411961
 routine public.field_validation_keys() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:43485317584a
 routine public.finalize_identity_binding() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:068d7ab3f609
+routine public.financial_command_outcome_v1(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b5fe8f3c136b
 routine public.floor_plan_rows(p_tree jsonb) -> TABLE(key text, data jsonb) | function | invoker | immutable | exec:authenticated,service_role | body:a75fadf6de56
 routine public.forward_message(p_kind text, p_message_id uuid, p_target_kind text, p_target_id uuid, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c8d07684e4eb
 routine public.gen_invite_code() -> text | function | invoker | volatile | exec:service_role | body:250cc8705573
@@ -1946,6 +1958,7 @@ routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | f
 routine public.report_image_names(p_workspace_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:0d0dafdd6573
 routine public.request_guest_visit(p_workspace_id uuid, p_site_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_client_request_id uuid, p_message text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:50e24d8f05cb
 routine public.request_invoice_issue(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:497bbdf8767a
+routine public.request_invoice_issue_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_request_id uuid, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:16ccdcd46131
 routine public.request_invoice_void(p_invoice_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:45f6b7cdf8e6
 routine public.request_invoice_writeoff(p_invoice_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9b16254efc5c
 routine public.request_matrix_change(p_workspace_id uuid, p_role text, p_permissions text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f086ccb35dd3
@@ -2294,6 +2307,7 @@ trigger expense_repartitions.zz_system_columns_stamp CREATE TRIGGER zz_system_co
 trigger expense_schedules.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_schedules FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger fee_bands.fee_bands_contiguous CREATE CONSTRAINT TRIGGER fee_bands_contiguous AFTER INSERT OR DELETE OR UPDATE ON public.fee_bands DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_fee_bands_contiguous()
 trigger fee_bands.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.fee_bands FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger financial_command_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.financial_command_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger guest_participation_audit.guest_participation_audit_append_only CREATE TRIGGER guest_participation_audit_append_only BEFORE DELETE OR UPDATE ON public.guest_participation_audit FOR EACH ROW EXECUTE FUNCTION guest_participation_audit_append_only()
 trigger guest_participation_audit.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.guest_participation_audit FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger guest_participations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.guest_participations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

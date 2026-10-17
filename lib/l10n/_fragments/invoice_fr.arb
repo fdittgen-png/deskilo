@@ -4,6 +4,7 @@
   "invoiceIssueUnknownBody": "La facture a été envoyée mais la réponse n'est pas arrivée : elle existe peut-être déjà. Rien n'est renvoyé. Vérifiez à nouveau pour la chercher.",
   "invoiceIssueCheckAgain": "Vérifier à nouveau",
   "invoiceIssueNotFoundYet": "Introuvable pour l'instant. Rien n'a été renvoyé.",
+  "invoiceIssueDeclined": "La validation a été refusée ou a expiré. Aucune facture n'a été émise.",
   "invoicesTitle": "Factures",
   "invoicesEmpty": "Aucune facture pour l'instant.",
   "invoiceCreate": "Nouvelle facture",

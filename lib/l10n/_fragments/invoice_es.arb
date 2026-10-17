@@ -4,6 +4,7 @@
   "invoiceIssueUnknownBody": "La factura se envió pero la respuesta no llegó, así que puede que ya exista. No se vuelve a enviar nada. Compruebe de nuevo para buscarla.",
   "invoiceIssueCheckAgain": "Comprobar de nuevo",
   "invoiceIssueNotFoundYet": "Aún no se encuentra. No se volvió a enviar nada.",
+  "invoiceIssueDeclined": "La validación fue rechazada o caducó. No se emitió ninguna factura.",
   "invoicesTitle": "Facturas",
   "invoicesEmpty": "Aún no hay facturas.",
   "invoiceCreate": "Nueva factura",
