@@ -8239,6 +8239,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diesen Zeitraum gibt es nichts zu exportieren.';
 
   @override
+  String get invoiceActionDeclined =>
+      'Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde nichts geändert.';
+
+  @override
+  String get invoiceActionUnknownBody =>
+      'Die Anfrage wurde gesendet, aber die Antwort kam nicht an – sie wurde möglicherweise schon ausgeführt. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu finden.';
+
+  @override
   String get invoiceAllCaughtUp => 'Alles erledigt — nichts zu berechnen.';
 
   @override

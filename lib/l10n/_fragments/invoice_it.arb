@@ -5,6 +5,8 @@
   "invoiceIssueCheckAgain": "Controlla di nuovo",
   "invoiceIssueNotFoundYet": "Non ancora trovata. Non è stato reinviato nulla.",
   "invoiceIssueDeclined": "La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.",
+  "invoiceActionUnknownBody": "La richiesta è stata inviata ma la risposta non è arrivata, quindi potrebbe essere già stata applicata. Non viene rinviato nulla. Controlla di nuovo per trovarla.",
+  "invoiceActionDeclined": "La convalida è stata rifiutata o è scaduta. Non è stato modificato nulla.",
   "invoicesTitle": "Fatture",
   "invoicesEmpty": "Ancora nessuna fattura.",
   "invoiceCreate": "Nuova fattura",

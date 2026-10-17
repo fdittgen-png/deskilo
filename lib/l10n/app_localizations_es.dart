@@ -8226,6 +8226,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hay nada que exportar en este periodo.';
 
   @override
+  String get invoiceActionDeclined =>
+      'La validación fue rechazada o caducó. No se cambió nada.';
+
+  @override
+  String get invoiceActionUnknownBody =>
+      'La solicitud se envió pero la respuesta no llegó, así que quizá ya se aplicó. No se vuelve a enviar nada. Compruebe de nuevo para encontrarla.';
+
+  @override
   String get invoiceAllCaughtUp => 'Todo al día — nada que facturar.';
 
   @override

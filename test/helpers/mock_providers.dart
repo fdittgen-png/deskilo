@@ -531,6 +531,9 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
       memberAccountQueriesProvider.overrideWithValue(money),
       reportTemplateRepositoryProvider.overrideWithValue(money),
       invoiceCommandsProvider.overrideWithValue(money),
+      invoiceActionCommandsProvider.overrideWithValue(
+        money is FakeMoneyRepository ? FakeInvoiceActionCommands(money) : _NoActionCommands(),
+      ),
       taxReportingRepositoryProvider.overrideWithValue(money),
       commercialTermsProvider.overrideWithValue(money),
       expenseRepositoryProvider.overrideWithValue(money),
@@ -538,3 +541,14 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
         money is AccountingSourceQueries ? money as AccountingSourceQueries : FakeMoneyRepository(),
       ),
     ];
+
+/// A money fake that is not the shared one has no void / refund receipts.
+class _NoActionCommands implements InvoiceActionCommands {
+  @override
+  Future<void> voidInvoice(String invoiceId, {required String requestId, String reason = ''}) =>
+      throw UnsupportedError('no void in this fake');
+
+  @override
+  Future<void> settleCreditInvoice(String invoiceId, {required String requestId, String note = ''}) =>
+      throw UnsupportedError('no refund in this fake');
+}

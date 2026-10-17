@@ -17,7 +17,6 @@
 // one-active-invoice-per-member-and-month rule (0067) is what makes the
 // archive an answer. A change of the selected workspace or account since
 // does not move the look: it reads the captured workspace, or nothing.
-import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
@@ -25,6 +24,7 @@ import '../domain/command_receipt.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
+import 'command_failure.dart';
 
 /// What the person confirmed: the context it was made in and the draft.
 /// Immutable, so a look can only ever concern this attempt.
@@ -145,21 +145,10 @@ class InvoiceIssuance {
       return InvoiceIssueHeld(attempt, e.eventId);
     } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'invoice issue failed', error: e, stackTrace: st);
-      return _isRefusal(e)
+      return isDefiniteRefusal(e)
           ? InvoiceIssueRefused(attempt, e)
           : InvoiceIssueUnknown(attempt, e);
     }
-  }
-
-  /// Only an answer the function itself raised is a refusal. A three-digit
-  /// code is the gateway's HTTP status (a 502 or 504 says nothing about the
-  /// commit); a [StateError] is a local refusal raised before anything was
-  /// sent. Everything else — a lost socket, an answer that does not decode —
-  /// leaves the commit unknown.
-  bool _isRefusal(Object e) {
-    final code = serverErrorCode(e);
-    if (code != null && RegExp(r'^\d{3}$').hasMatch(code)) return false;
-    return serverErrorMessage(e) != null || e is StateError;
   }
 
   /// Reads the archive of the attempt's own workspace for the invoice the

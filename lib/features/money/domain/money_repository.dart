@@ -16,6 +16,7 @@ import 'tax_reporting_repository.dart';
 import 'workspace_status.dart';
 
 export 'command_receipt.dart';
+export 'invoice_action_commands.dart';
 
 /// Compatibility facade (#2591 C4): it implements every narrow money port
 /// (invoice and account reads, report templates, invoice commands, tax

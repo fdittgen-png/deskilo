@@ -14064,6 +14064,18 @@ abstract class AppLocalizations {
   /// **'Nothing to export for this period.'**
   String get invoiceAccountingExportEmpty;
 
+  /// Result of a look: the validators declined a held void or refund
+  ///
+  /// In en, this message translates to:
+  /// **'The validation was declined or expired. Nothing was changed.'**
+  String get invoiceActionDeclined;
+
+  /// Body of the dialog when the answer to a void or refund was lost
+  ///
+  /// In en, this message translates to:
+  /// **'The request was sent but the answer did not arrive, so it may already have been applied. Nothing is sent again. Check again to look for it.'**
+  String get invoiceActionUnknownBody;
+
   /// To-invoice tab empty state
   ///
   /// In en, this message translates to:

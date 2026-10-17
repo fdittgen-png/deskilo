@@ -5,6 +5,8 @@
   "invoiceIssueCheckAgain": "Vérifier à nouveau",
   "invoiceIssueNotFoundYet": "Introuvable pour l'instant. Rien n'a été renvoyé.",
   "invoiceIssueDeclined": "La validation a été refusée ou a expiré. Aucune facture n'a été émise.",
+  "invoiceActionUnknownBody": "La demande a été envoyée mais la réponse n'est pas arrivée : elle a peut-être déjà été appliquée. Rien n'est renvoyé. Vérifiez à nouveau pour la retrouver.",
+  "invoiceActionDeclined": "La validation a été refusée ou a expiré. Rien n'a été modifié.",
   "invoicesTitle": "Factures",
   "invoicesEmpty": "Aucune facture pour l'instant.",
   "invoiceCreate": "Nouvelle facture",

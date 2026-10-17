@@ -20,6 +20,14 @@
   "@invoiceIssueDeclined": {
     "description": "Result of a look: the validators declined the held invoice request"
   },
+  "invoiceActionUnknownBody": "The request was sent but the answer did not arrive, so it may already have been applied. Nothing is sent again. Check again to look for it.",
+  "@invoiceActionUnknownBody": {
+    "description": "Body of the dialog when the answer to a void or refund was lost"
+  },
+  "invoiceActionDeclined": "The validation was declined or expired. Nothing was changed.",
+  "@invoiceActionDeclined": {
+    "description": "Result of a look: the validators declined a held void or refund"
+  },
   "invoicesTitle": "Invoices",
   "@invoicesTitle": {
     "description": "The invoice archive screen title and its Money entry button (0060)"
