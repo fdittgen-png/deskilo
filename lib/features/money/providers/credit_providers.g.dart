@@ -57,7 +57,7 @@ final class CreditRepositoryProvider
   }
 }
 
-String _$creditRepositoryHash() => r'184c6aec07a892a7689fbc1cbb739e1aceb7d095';
+String _$creditRepositoryHash() => r'0dce9233ac94fe031cf24e6aebb6058e22c8897f';
 
 /// The current workspace's carnet catalogue, active and not.
 

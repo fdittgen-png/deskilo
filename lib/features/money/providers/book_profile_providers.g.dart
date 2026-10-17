@@ -59,7 +59,7 @@ final class BookProfileRepositoryProvider
 }
 
 String _$bookProfileRepositoryHash() =>
-    r'00e1516d2fd1e88675d53742300a8daf6faaed69';
+    r'88ac10b9be3205f7bbbe64ded17b0e5a88bc37e5';
 
 /// Saving a book profile (the decision the sheet asks for).
 

@@ -55,7 +55,7 @@ final class SalesTaxRepositoryProvider
 }
 
 String _$salesTaxRepositoryHash() =>
-    r'd1927877634eca67b96741174ae26119b17224f3';
+    r'51bd70fcb249256349740df17f34ed03206520f8';
 
 @ProviderFor(salesTaxCommands)
 final salesTaxCommandsProvider = SalesTaxCommandsProvider._();
