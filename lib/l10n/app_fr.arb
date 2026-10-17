@@ -9368,7 +9368,7 @@
   "readinessReasonNoPolicies": "Aucune demande n’attend de validateur",
   "readinessReasonNotExposed": "Cet espace n’expose encore rien aux assistants",
   "readinessReasonRecentExport": "Un export récent est enregistré",
-  "readinessReasonStaleExport": "Le dernier export enregistré date de plus de 90 jours",
+  "readinessReasonStaleExport": "Le dernier export enregistré est plus ancien que la fenêtre d’export récent",
   "readinessReasonTooFewValidators": "Une règle demande plus de validateurs que cet espace n’en compte",
   "readinessSetAside": "Mis de côté pour plus tard",
   "readinessSetAsideAction": "Plus tard",
@@ -11130,6 +11130,10 @@
   "@settingGroupDunning": {
     "description": "#2484 settings: Settings group title."
   },
+  "settingGroupKpi": "Indicateurs",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
   "settingGroupMessaging": "Messagerie",
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
@@ -11137,6 +11141,10 @@
   "settingGroupPresence": "Présence",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
+  },
+  "settingGroupReadiness": "Mise en service",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
   },
   "settingGroupSecurity": "Limites de sécurité et d'accès",
   "@settingGroupSecurity": {
@@ -11178,6 +11186,10 @@
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintCalendarRangeDays": "Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintDirectoryUpcomingWindowDays": "Combien de jours à l'avance l'annuaire affiche la prochaine réservation d'un membre.",
   "@settingHintDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting hint."
@@ -11186,6 +11198,14 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintKpiCapacityRangeDays": "Fixée par la plateforme : la période la plus longue qu’un indicateur de capacité peut couvrir. Elle borne la requête.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fixée par la plateforme : les mois au-delà du premier qu’un indicateur financier peut couvrir (23 signifie 24 mois en tout). Elle borne la requête.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minutes dont dispose la personne pour confirmer une action demandée par un assistant. Les demandes déjà faites gardent leur délai. Peut seulement être raccourci.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -11193,6 +11213,10 @@
   "settingHintMcpProbeFreshnessMinutes": "Minutes pendant lesquelles un contrôle réussi du point d'accès de l'assistant compte avant d'activer l'interface. Peut seulement être raccourcie.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintMcpReadRangeDays": "Fixée par la plateforme : la fenêtre la plus longue qu’une lecture de l’assistant peut demander. Elle borne la requête ; ce n’est pas une autorisation d’en lire davantage.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintMessagingEditWindowMinutes": "Minutes après l'envoi pendant lesquelles l'auteur peut encore corriger un message. Un message d'espace lit son espace, un message personnel ou de groupe la valeur de la plateforme.",
   "@settingHintMessagingEditWindowMinutes": {
@@ -11217,6 +11241,10 @@
   "settingHintPresenceOnlineWindowMinutes": "Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
+  },
+  "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
   },
   "settingHintSecurityBadgeLockoutFailures": "Nombre d'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.",
   "@settingHintSecurityBadgeLockoutFailures": {
@@ -11266,6 +11294,10 @@
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelCalendarRangeDays": "Période du calendrier",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelDirectoryUpcomingWindowDays": "Aperçu de l'annuaire",
   "@settingLabelDirectoryUpcomingWindowDays": {
     "description": "#2486 settings: Setting label."
@@ -11274,6 +11306,14 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelKpiCapacityRangeDays": "Période de l’indicateur de capacité",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Période de l’indicateur financier",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
   "settingLabelMcpConfirmationExpiryMinutes": "Délai de confirmation d'une action d'assistant",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
@@ -11281,6 +11321,10 @@
   "settingLabelMcpProbeFreshnessMinutes": "Fraîcheur du contrôle du point d'accès de l'assistant",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelMcpReadRangeDays": "Période de lecture de l’assistant",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelMessagingEditWindowMinutes": "Délai de modification d'un message",
   "@settingLabelMessagingEditWindowMinutes": {
@@ -11305,6 +11349,10 @@
   "settingLabelPresenceOnlineWindowMinutes": "Fenêtre en ligne",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
+  },
+  "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Essais de code PIN du badge avant verrouillage",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -11424,6 +11472,10 @@
   "settingUnitMinutes": "minutes",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitMonths": "mois",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
   },
   "settingUnitPerDay": "par jour",
   "@settingUnitPerDay": {

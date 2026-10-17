@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+  "settingGroupReadiness": "Readiness",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingGroupKpi": "Key figures",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingUnitMonths": "months",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
+  },
+  "settingLabelReadinessRecentExportDays": "Recent export window",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpReadRangeDays": "Assistant read range",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMcpReadRangeDays": "Fixed by the platform: the longest window one assistant read may ask for. It bounds the query; it is not a permission to scan more.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelCalendarRangeDays": "Calendar range",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintCalendarRangeDays": "Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiCapacityRangeDays": "Capacity figure range",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiCapacityRangeDays": "Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Finance figure range",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

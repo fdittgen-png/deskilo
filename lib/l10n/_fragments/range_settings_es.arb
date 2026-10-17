@@ -1,0 +1,55 @@
+{
+  "@@locale": "es",
+  "settingGroupReadiness": "Puesta en marcha",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingGroupKpi": "Indicadores",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingUnitMonths": "meses",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
+  },
+  "settingLabelReadinessRecentExportDays": "Ventana de exportación reciente",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintReadinessRecentExportDays": "Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpReadRangeDays": "Periodo de lectura del asistente",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMcpReadRangeDays": "Fijado por la plataforma: la ventana más larga que puede pedir una lectura del asistente. Acota la consulta; no es un permiso para leer más.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelCalendarRangeDays": "Periodo del calendario",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintCalendarRangeDays": "Fijado por la plataforma: el periodo más largo que puede pedir una consulta del calendario. Acota la consulta.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiCapacityRangeDays": "Periodo del indicador de capacidad",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiCapacityRangeDays": "Fijado por la plataforma: el periodo más largo que puede abarcar un indicador de capacidad. Acota la consulta.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Periodo del indicador financiero",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fijado por la plataforma: los meses posteriores al primero que puede abarcar un indicador financiero (23 significa 24 meses en total). Acota la consulta.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

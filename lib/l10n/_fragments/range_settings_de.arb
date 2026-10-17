@@ -1,0 +1,55 @@
+{
+  "@@locale": "de",
+  "settingGroupReadiness": "Einsatzbereitschaft",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingGroupKpi": "Kennzahlen",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingUnitMonths": "Monate",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
+  },
+  "settingLabelReadinessRecentExportDays": "Zeitfenster für aktuelle Exporte",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintReadinessRecentExportDays": "Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpReadRangeDays": "Lesezeitraum des Assistenten",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMcpReadRangeDays": "Von der Plattform festgelegt: das längste Zeitfenster, das eine Assistenten-Abfrage anfordern darf. Es begrenzt die Abfrage; es ist keine Erlaubnis, mehr zu lesen.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelCalendarRangeDays": "Kalenderzeitraum",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintCalendarRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiCapacityRangeDays": "Zeitraum der Kapazitätskennzahl",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiCapacityRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kapazitätskennzahl abdecken darf. Er begrenzt die Abfrage.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Zeitraum der Finanzkennzahl",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiFinanceRangeMonths": "Von der Plattform festgelegt: die Monate nach dem ersten, die eine Finanzkennzahl umfassen darf (23 bedeutet insgesamt 24 Monate). Er begrenzt die Abfrage.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

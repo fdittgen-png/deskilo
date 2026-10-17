@@ -1,0 +1,55 @@
+{
+  "@@locale": "fr",
+  "settingGroupReadiness": "Mise en service",
+  "@settingGroupReadiness": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingGroupKpi": "Indicateurs",
+  "@settingGroupKpi": {
+    "description": "#2487 settings: Settings group title."
+  },
+  "settingUnitMonths": "mois",
+  "@settingUnitMonths": {
+    "description": "#2487 settings: Unit."
+  },
+  "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
+  "@settingLabelReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
+  "@settingHintReadinessRecentExportDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpReadRangeDays": "Période de lecture de l’assistant",
+  "@settingLabelMcpReadRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintMcpReadRangeDays": "Fixée par la plateforme : la fenêtre la plus longue qu’une lecture de l’assistant peut demander. Elle borne la requête ; ce n’est pas une autorisation d’en lire davantage.",
+  "@settingHintMcpReadRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelCalendarRangeDays": "Période du calendrier",
+  "@settingLabelCalendarRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintCalendarRangeDays": "Fixée par la plateforme : la période la plus longue qu’une requête de calendrier peut demander. Elle borne la requête.",
+  "@settingHintCalendarRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiCapacityRangeDays": "Période de l’indicateur de capacité",
+  "@settingLabelKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiCapacityRangeDays": "Fixée par la plateforme : la période la plus longue qu’un indicateur de capacité peut couvrir. Elle borne la requête.",
+  "@settingHintKpiCapacityRangeDays": {
+    "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelKpiFinanceRangeMonths": "Période de l’indicateur financier",
+  "@settingLabelKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting label."
+  },
+  "settingHintKpiFinanceRangeMonths": "Fixée par la plateforme : les mois au-delà du premier qu’un indicateur financier peut couvrir (23 signifie 24 mois en tout). Elle borne la requête.",
+  "@settingHintKpiFinanceRangeMonths": {
+    "description": "#2487 settings: Setting hint."
+  }
+}

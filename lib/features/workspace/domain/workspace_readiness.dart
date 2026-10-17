@@ -4,7 +4,8 @@
 // as workspace_readiness (0285) reads it from what the space holds.
 // Nothing here is a checkbox: a section is ready because the data is
 // there, and recovery stays unverified until evidence exists — a real
-// export the app recorded within 90 days (0301). Setting an optional
+// export the app recorded within the recent-export window (0301;
+// `readiness.recent_export_days`, 90 days by default, 0457). Setting an optional
 // section aside for later (0307) is the one explicit choice stored, and it
 // only moves the next step on: it never makes a section ready.
 

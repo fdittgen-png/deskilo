@@ -24899,7 +24899,7 @@ abstract class AppLocalizations {
   /// #1636 workspace_readiness recovery evidence
   ///
   /// In en, this message translates to:
-  /// **'The last recorded export is more than 90 days old'**
+  /// **'The last recorded export is older than the recent-export window'**
   String get readinessReasonStaleExport;
 
   /// #1636 workspace_readiness
@@ -28457,6 +28457,12 @@ abstract class AppLocalizations {
   /// #2487 settings: Settings group title.
   ///
   /// In en, this message translates to:
+  /// **'Key figures'**
+  String get settingGroupKpi;
+
+  /// #2487 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
   /// **'Messaging'**
   String get settingGroupMessaging;
 
@@ -28465,6 +28471,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Presence'**
   String get settingGroupPresence;
+
+  /// #2487 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Readiness'**
+  String get settingGroupReadiness;
 
   /// #2485 settings: Settings group title.
   ///
@@ -28526,6 +28538,12 @@ abstract class AppLocalizations {
   /// **'Length of the stay booked on the spot with a badge or a space code on a minute grid.'**
   String get settingHintBookingWalkUpWindowMinutes;
 
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.'**
+  String get settingHintCalendarRangeDays;
+
   /// #2486 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -28538,6 +28556,18 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.'**
+  String get settingHintKpiCapacityRangeDays;
+
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.'**
+  String get settingHintKpiFinanceRangeMonths;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -28549,6 +28579,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.'**
   String get settingHintMcpProbeFreshnessMinutes;
+
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the platform: the longest window one assistant read may ask for. It bounds the query; it is not a permission to scan more.'**
+  String get settingHintMcpReadRangeDays;
 
   /// #2487 settings: Setting hint.
   ///
@@ -28585,6 +28621,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.'**
   String get settingHintPresenceOnlineWindowMinutes;
+
+  /// #2487 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.'**
+  String get settingHintReadinessRecentExportDays;
 
   /// #2485 settings: Setting hint.
   ///
@@ -28658,6 +28700,12 @@ abstract class AppLocalizations {
   /// **'On-the-spot stay'**
   String get settingLabelBookingWalkUpWindowMinutes;
 
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar range'**
+  String get settingLabelCalendarRangeDays;
+
   /// #2486 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -28670,6 +28718,18 @@ abstract class AppLocalizations {
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
 
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity figure range'**
+  String get settingLabelKpiCapacityRangeDays;
+
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance figure range'**
+  String get settingLabelKpiFinanceRangeMonths;
+
   /// #2485 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -28681,6 +28741,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Assistant endpoint check freshness'**
   String get settingLabelMcpProbeFreshnessMinutes;
+
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Assistant read range'**
+  String get settingLabelMcpReadRangeDays;
 
   /// #2487 settings: Setting label.
   ///
@@ -28717,6 +28783,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online window'**
   String get settingLabelPresenceOnlineWindowMinutes;
+
+  /// #2487 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent export window'**
+  String get settingLabelReadinessRecentExportDays;
 
   /// #2485 settings: Setting label.
   ///
@@ -28855,6 +28927,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'minutes'**
   String get settingUnitMinutes;
+
+  /// #2487 settings: Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'months'**
+  String get settingUnitMonths;
 
   /// #2485 settings: Unit.
   ///

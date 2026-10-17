@@ -51,7 +51,7 @@
   "readinessReasonNoPolicies": "Aucune demande n’attend de validateur",
   "readinessReasonNoEvidence": "Aucun export ni restauration enregistré",
   "readinessReasonRecentExport": "Un export récent est enregistré",
-  "readinessReasonStaleExport": "Le dernier export enregistré date de plus de 90 jours",
+  "readinessReasonStaleExport": "Le dernier export enregistré est plus ancien que la fenêtre d’export récent",
   "readinessActorOwner": "Vous",
   "readinessActorOperator": "L’opérateur du serveur",
   "readinessActor": "Qui : {who}",
