@@ -1391,7 +1391,7 @@ routine public.directory_identity_unlinked() -> trigger | function | definer | v
 routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3010ff33462d
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
 routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:42537c6febc6
-routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void | function | definer | volatile | exec:authenticated,service_role | body:4c9604b53ec8
+routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void | function | definer | volatile | exec:authenticated,service_role | body:ecca59e978a3
 routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:7b9035a41e2d
 routine public.einvoice_credentials_resolved(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:77e05a44c17e
