@@ -14325,6 +14325,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesAddBill => 'Ajouter une facture fournisseur';
 
   @override
+  String get purchasesApproveAction => 'Approuver';
+
+  @override
+  String get purchasesApprovedDone =>
+      'Approuvée : elle est désormais due au fournisseur';
+
+  @override
   String purchasesClaimApplied(String number) {
     return 'Appliqué à la facture $number';
   }
@@ -14352,11 +14359,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesClaimsTitle => 'Remboursement';
 
   @override
+  String get purchasesDecisionRefused =>
+      'Ce n\'est pas enregistré. Une autre personne que celle qui l\'a soumise doit décider, et la facture doit être encore en attente.';
+
+  @override
   String get purchasesDescription => 'Description';
 
   @override
   String get purchasesDraftNote =>
-      'Un brouillon : il est soumis dès que sa dette existe.';
+      'Un brouillon : envoyez-le pour approbation une fois complet.';
 
   @override
   String get purchasesDueDate => 'Échéance';
@@ -14377,7 +14388,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesIntro =>
-      'Les factures fournisseur et les reçus payés par les membres pour l\'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici et reste un brouillon tant que sa dette n\'existe pas.';
+      'Les factures fournisseur et les reçus payés par les membres pour l\'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici, envoyée pour approbation, décidée par une autre personne, puis due au fournisseur jusqu\'à son paiement.';
 
   @override
   String get purchasesInvalid =>
@@ -14482,6 +14493,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'achat n\'a pas pu être enregistré. Votre saisie est conservée ; réessayez.';
 
   @override
+  String get purchasesRejectAction => 'Refuser';
+
+  @override
+  String get purchasesRejectReason => 'Pourquoi est-il refusé ?';
+
+  @override
+  String get purchasesRejectTitle => 'Refuser cet achat';
+
+  @override
+  String get purchasesRejectedDone => 'Refusée';
+
+  @override
   String purchasesReversalLine(String amount) {
     return 'Annulation · $amount';
   }
@@ -14533,6 +14556,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesStateRejected => 'Refusé';
+
+  @override
+  String get purchasesSubmitAction => 'Envoyer pour approbation';
+
+  @override
+  String get purchasesSubmitRefused =>
+      'Elle n\'a pas été envoyée. Une facture a besoin de son fournisseur et d\'un montant, et doit être encore à payer.';
+
+  @override
+  String get purchasesSubmitted => 'Envoyée pour approbation';
 
   @override
   String get purchasesSupplier => 'Fournisseur';

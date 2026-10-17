@@ -107,6 +107,7 @@ class PurchaseObligation {
     this.paidCents = 0,
     this.revision = 1,
     this.mine = false,
+    this.creditorName,
     this.allocations = const [],
     this.state = ObligationState.open,
     this.dueOn,
@@ -130,6 +131,7 @@ class PurchaseObligation {
       paidCents: r.integer('paid_cents'),
       revision: r.integer('revision'),
       mine: r.boolOr('mine', fallback: false),
+      creditorName: r.stringOrNull('creditor_name'),
       allocations: [
         for (final a in r.list('allocations')) SettlementAllocation.fromJson(a),
       ],
@@ -161,12 +163,14 @@ class PurchaseObligation {
   /// The signed-in person is the creditor (they cannot record their own
   /// payment).
   final bool mine;
+
+  /// A supplier creditor's name (a member's is read from the members).
+  final String? creditorName;
   final List<SettlementAllocation> allocations;
   final AppliedInvoice? appliedInvoice;
 
   /// Cash may be recorded: something remains and no invoice has applied it.
   bool get payable =>
-      creditorKind == CreditorKind.member &&
       state == ObligationState.open &&
       remainingCents > 0 &&
       appliedInvoice == null;
@@ -195,6 +199,7 @@ class ReimbursementCommand {
     required this.paidOn,
     this.method = PaymentMethod.bankTransfer,
     this.reference = '',
+    this.creditorKind = CreditorKind.member,
   });
 
   final String obligationId;
@@ -205,13 +210,17 @@ class ReimbursementCommand {
   final PaymentMethod method;
   final String reference;
 
+  /// Whose payable it is: a member's claim or a supplier's bill.
+  final CreditorKind creditorKind;
+
   bool sameEntriesAs(ReimbursementCommand o) =>
       obligationId == o.obligationId &&
       amountCents == o.amountCents &&
       revision == o.revision &&
       paidOn == o.paidOn &&
       method == o.method &&
-      reference == o.reference;
+      reference == o.reference &&
+      creditorKind == o.creditorKind;
 }
 
 /// One line of the To-pay list: the claim and the document behind it.

@@ -16,7 +16,7 @@
   "@purchasesTitle": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst und bleibt ein Entwurf, bis ihre Verbindlichkeit besteht.",
+  "purchasesIntro": "Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst, zur Genehmigung eingereicht, von einer anderen Person entschieden und dann dem Lieferanten bis zur Zahlung geschuldet.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -154,7 +154,7 @@
   "@purchasesInvalid": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Ein Entwurf: Er wird eingereicht, sobald seine Verbindlichkeit besteht.",
+  "purchasesDraftNote": "Ein Entwurf: Reichen Sie ihn zur Genehmigung ein, wenn er vollständig ist.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },

@@ -16,7 +16,7 @@
   "@purchasesTitle": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.",
+  "purchasesIntro": "Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here, sent for approval, decided by another person, and then owed to the supplier until it is paid.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -154,7 +154,7 @@
   "@purchasesInvalid": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "A draft: it is submitted once its payable exists.",
+  "purchasesDraftNote": "A draft: send it for approval when it is complete.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },

@@ -9129,6 +9129,14 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApproveAction": "Genehmigen",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Genehmigt: Sie wird dem Lieferanten nun geschuldet",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesClaimApplied": "Auf Rechnung {number} angewendet",
   "@purchasesClaimApplied": {
     "description": "#2574 purchase payables",
@@ -9172,11 +9180,15 @@
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
   },
+  "purchasesDecisionRefused": "Es wurde nicht erfasst. Eine andere Person als die einreichende muss entscheiden, und die Rechnung muss noch auf Genehmigung warten.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesDescription": "Beschreibung",
   "@purchasesDescription": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Ein Entwurf: Er wird eingereicht, sobald seine Verbindlichkeit besteht.",
+  "purchasesDraftNote": "Ein Entwurf: Reichen Sie ihn zur Genehmigung ein, wenn er vollständig ist.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },
@@ -9205,7 +9217,7 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst und bleibt ein Entwurf, bis ihre Verbindlichkeit besteht.",
+  "purchasesIntro": "Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst, zur Genehmigung eingereicht, von einer anderen Person entschieden und dann dem Lieferanten bis zur Zahlung geschuldet.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -9349,6 +9361,22 @@
   "@purchasesRefused": {
     "description": "#2573 purchases"
   },
+  "purchasesRejectAction": "Ablehnen",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Warum wird er abgelehnt?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Diesen Einkauf ablehnen",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Abgelehnt",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesReversalLine": "Stornierung · {amount}",
   "@purchasesReversalLine": {
     "description": "#2574 purchase payments",
@@ -9422,6 +9450,18 @@
   "purchasesStateRejected": "Abgelehnt",
   "@purchasesStateRejected": {
     "description": "#2573 purchases"
+  },
+  "purchasesSubmitAction": "Zur Genehmigung einreichen",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "Sie wurde nicht eingereicht. Eine Rechnung braucht ihren Lieferanten und einen Betrag und muss noch zu zahlen sein.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Zur Genehmigung eingereicht",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
   },
   "purchasesSupplier": "Lieferant",
   "@purchasesSupplier": {

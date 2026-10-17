@@ -78,7 +78,9 @@ class SupabasePurchaseRepository implements PurchaseRepository {
     ReimbursementCommand command,
   ) async {
     final json = await _client.rpc<Object?>(
-      'record_member_reimbursement_v1',
+      command.creditorKind == CreditorKind.supplier
+          ? 'record_supplier_payment_v1'
+          : 'record_member_reimbursement_v1',
       params: {
         'p_workspace_id': workspaceId,
         'p_obligation_id': command.obligationId,
@@ -94,6 +96,52 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       JsonReader.of(json, context: 'record_member_reimbursement_v1').raw(
         'obligation',
       ),
+    );
+  }
+
+  @override
+  Future<PurchaseState> submitBill(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  ) async {
+    final json = await _client.rpc<Object?>(
+      'submit_purchase_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_purchase_id': purchaseId,
+        'p_revision': revision,
+        'p_request_id': requestId,
+      },
+    );
+    return PurchaseState.of(
+      JsonReader.of(json, context: 'submit_purchase_v1').string('state'),
+    );
+  }
+
+  @override
+  Future<PurchaseState> decideBill(
+    String workspaceId,
+    String purchaseId,
+    int revision, {
+    required bool approve,
+    required String reason,
+    required String requestId,
+  }) async {
+    final json = await _client.rpc<Object?>(
+      'decide_purchase_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_purchase_id': purchaseId,
+        'p_revision': revision,
+        'p_approve': approve,
+        'p_reason': reason,
+        'p_request_id': requestId,
+      },
+    );
+    return PurchaseState.of(
+      JsonReader.of(json, context: 'decide_purchase_v1').string('state'),
     );
   }
 

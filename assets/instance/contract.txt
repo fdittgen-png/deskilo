@@ -836,15 +836,17 @@ constraint public_workspace_cards.public_workspace_cards_pkey PRIMARY KEY (works
 constraint public_workspace_cards.public_workspace_cards_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint public_workspace_cards.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint public_workspace_cards.system_company_present CHECK ((company_id IS NOT NULL))
+constraint purchase_documents.purchase_documents_approval_check CHECK (((state = 'approved'::text) = ((approved_event_id IS NOT NULL) OR ((decided_by_member_id IS NOT NULL) AND (state <> 'rejected'::text)))))
 constraint purchase_documents.purchase_documents_approved_event_id_fkey FOREIGN KEY (approved_event_id) REFERENCES events(id)
 constraint purchase_documents.purchase_documents_category_check CHECK ((char_length(category) <= 80))
 constraint purchase_documents.purchase_documents_check CHECK (((payer_kind = 'member'::text) = (payer_member_id IS NOT NULL)))
 constraint purchase_documents.purchase_documents_check1 CHECK (((kind <> 'member_receipt'::text) OR (payer_kind = 'member'::text)))
 constraint purchase_documents.purchase_documents_check2 CHECK (((kind = 'credit_note'::text) OR (original_document_id IS NULL)))
 constraint purchase_documents.purchase_documents_check3 CHECK (((service_from IS NULL) OR (service_to IS NULL) OR (service_to >= service_from)))
-constraint purchase_documents.purchase_documents_check4 CHECK (((state = 'approved'::text) = (approved_event_id IS NOT NULL)))
 constraint purchase_documents.purchase_documents_classification_status_check CHECK ((classification_status = ANY (ARRAY['unreviewed'::text, 'reviewed'::text, 'legacy'::text])))
 constraint purchase_documents.purchase_documents_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint purchase_documents.purchase_documents_decider_fkey FOREIGN KEY (workspace_id, decided_by_member_id) REFERENCES members(workspace_id, id)
+constraint purchase_documents.purchase_documents_decision_reason_check CHECK ((char_length(decision_reason) <= 300))
 constraint purchase_documents.purchase_documents_kind_check CHECK ((kind = ANY (ARRAY['bill'::text, 'credit_note'::text, 'member_receipt'::text])))
 constraint purchase_documents.purchase_documents_legacy_qualification_check CHECK ((legacy_qualification = ANY (ARRAY['none'::text, 'legacy_unverified'::text])))
 constraint purchase_documents.purchase_documents_original_reference_check CHECK ((char_length(original_reference) <= 200))
@@ -852,6 +854,7 @@ constraint purchase_documents.purchase_documents_payer_kind_check CHECK ((payer_
 constraint purchase_documents.purchase_documents_pkey PRIMARY KEY (id)
 constraint purchase_documents.purchase_documents_revision_check CHECK ((revision >= 1))
 constraint purchase_documents.purchase_documents_state_check CHECK ((state = ANY (ARRAY['draft'::text, 'pending'::text, 'approved'::text, 'rejected'::text, 'cancelled'::text])))
+constraint purchase_documents.purchase_documents_submitter_fkey FOREIGN KEY (workspace_id, submitted_by_member_id) REFERENCES members(workspace_id, id)
 constraint purchase_documents.purchase_documents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint purchase_documents.purchase_documents_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint purchase_documents.purchase_documents_workspace_id_original_document_id_fkey FOREIGN KEY (workspace_id, original_document_id) REFERENCES purchase_documents(workspace_id, id)
@@ -1537,6 +1540,7 @@ routine public.database_authority_audit_append_only() -> trigger | function | in
 routine public.decide_guest_visit(p_id uuid, p_accept boolean, p_host_note text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c57a6a11a14a
 routine public.decide_mcp_eligibility(p_subject uuid, p_decision_id uuid, p_approve boolean, p_expected_revision integer, p_valid_days integer, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:182c92ef19ef
 routine public.decide_member_join(p_member_id uuid, p_approve boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:b960ba2e966e
+routine public.decide_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_approve boolean, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f4d0e1f23290
 routine public.decide_workspace_application(p_member_id uuid, p_approve boolean, p_comment text, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:b39bd8e3de9e
 routine public.default_site(p_workspace_id uuid) -> sites | function | definer | stable | exec:service_role | body:d4264f2b6a91
 routine public.default_tariff_of(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b0647444285a
@@ -1969,7 +1973,7 @@ routine public.purchase_apply_event_state(p_event events) -> void | function | d
 routine public.purchase_bridge_expense(p_event events) -> uuid | function | definer | volatile | exec:service_role | body:0f3850d27cee
 routine public.purchase_credit_paid(p_credit_id uuid) -> bigint | function | definer | stable | exec:service_role | body:a4613107ec97
 routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b73cb2bb60
-routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:c4ecf8fcfe1b
+routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:ec4ccc997aab
 routine public.purchase_expense_event_bridge() -> trigger | function | definer | volatile | exec:service_role | body:09e3276249cb
 routine public.purchase_expense_event_stamp() -> trigger | function | invoker | volatile | exec:service_role | body:7f3e306d9c6e
 routine public.purchase_expense_event_state() -> trigger | function | definer | volatile | exec:service_role | body:f22428af16bf
@@ -1977,7 +1981,7 @@ routine public.purchase_inbox_match_link() -> trigger | function | definer | vol
 routine public.purchase_lines_guard() -> trigger | function | definer | volatile | exec:service_role | body:40642366cd83
 routine public.purchase_obligation_credit_link() -> trigger | function | definer | volatile | exec:service_role | body:72014b7ada91
 routine public.purchase_obligation_invoice(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:1b9672ee6aa2
-routine public.purchase_obligation_json(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:6dd7888dc9dc
+routine public.purchase_obligation_json(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:6a722f219b24
 routine public.purchase_obligation_sync(p_purchase_id uuid) -> void | function | definer | volatile | exec:service_role | body:75dc2eeabe2e
 routine public.purchase_obligations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:964677fdeeaa
 routine public.purchase_payables_page_v1(p_workspace_id uuid, p_creditor_kind text, p_limit integer, p_after_created timestamp with time zone, p_after_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2856f7dc52f
@@ -1998,6 +2002,7 @@ routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_ce
 routine public.record_rights_request(p_workspace_id uuid, p_member_id uuid, p_kind text, p_details text, p_received_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:55e23d40bfd3
 routine public.record_screen_capture(p_kind text, p_context_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:af9f0254e495
 routine public.record_service_charge(p_workspace_id uuid, p_subject_member_id uuid, p_service_id uuid, p_quantity integer, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9cecdcbb548f
+routine public.record_supplier_payment_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:75cc96522c69
 routine public.record_vies_check(p_member_id uuid, p_vat_id text, p_status text, p_consultation text, p_detail text) -> jsonb | function | definer | volatile | exec:service_role | body:5dedd386e324
 routine public.record_workspace_application_decision() -> trigger | function | definer | volatile | exec:service_role | body:9c3fe56cd597
 routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row_count integer) -> workspace_recovery_evidence | function | definer | volatile | exec:authenticated,service_role | body:32f4d263514d
@@ -2057,7 +2062,7 @@ routine public.resource_kind_feature(p_kind text) -> text | function | invoker |
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf90d17406dd
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
 routine public.retire_invite_code() -> trigger | function | definer | volatile | exec:service_role | body:be59ed519e67
-routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2fb451e87017
+routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:acc4131b50b3
 routine public.revoke_mcp_connection(p_client_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:759db1a7619a
@@ -2189,7 +2194,7 @@ routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
 routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8896fc904a9c
-routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:02ee3fe794e5
+routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8c3a141fde5f
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
 routine public.supplier_backfill(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fea258b2c4f8
 routine public.supplier_guard(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:7a97e17aca1a

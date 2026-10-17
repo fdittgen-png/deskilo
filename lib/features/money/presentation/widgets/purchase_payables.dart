@@ -89,7 +89,9 @@ class PurchasePayablesView extends ConsumerWidget {
               contentPadding: EdgeInsets.zero,
               title: Text(
                 l10n.purchasesClaimOwedTo(
-                  names[r.obligation.creditorId] ?? l10n.purchasesClaimYou,
+                  r.obligation.creditorName ??
+                      names[r.obligation.creditorId] ??
+                      l10n.purchasesClaimYou,
                 ),
               ),
               subtitle: Text(

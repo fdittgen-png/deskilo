@@ -1,0 +1,43 @@
+{
+  "@@locale": "de",
+  "purchasesSubmitAction": "Zur Genehmigung einreichen",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApproveAction": "Genehmigen",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectAction": "Ablehnen",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Diesen Einkauf ablehnen",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Warum wird er abgelehnt?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesDecisionRefused": "Es wurde nicht erfasst. Eine andere Person als die einreichende muss entscheiden, und die Rechnung muss noch auf Genehmigung warten.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Zur Genehmigung eingereicht",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Genehmigt: Sie wird dem Lieferanten nun geschuldet",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Abgelehnt",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "Sie wurde nicht eingereicht. Eine Rechnung braucht ihren Lieferanten und einen Betrag und muss noch zu zahlen sein.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  }
+}

@@ -157,6 +157,21 @@ void main() {
         PurchaseState.rejected,
       ]),
     );
+    // Supplier bills at every step: draft, awaiting approval, approved and
+    // owed to the supplier (part-paid, and paid in full).
+    final suppliersOwed = (await p.purchases.fetchPayables(
+      'ws-1',
+      kind: CreditorKind.supplier,
+    )).map((c) => c.obligation).toList();
+    expect(suppliersOwed, hasLength(2));
+    expect(suppliersOwed.map((o) => o.remainingCents), containsAll([0, 4400]));
+    expect(suppliersOwed.every((o) => o.creditorName != null), isTrue);
+    expect(
+      docs.where(
+        (d) => d.kind == PurchaseKind.bill && d.state == PurchaseState.pending,
+      ),
+      isNotEmpty,
+    );
     final claims = await p.purchases.fetchPayables('ws-1');
     expect(claims.any((c) => c.obligation.paidCents > 0), isTrue);
     expect(claims.any((c) => c.obligation.paidCents == 0), isTrue);

@@ -24362,6 +24362,18 @@ abstract class AppLocalizations {
   /// **'Add supplier bill'**
   String get purchasesAddBill;
 
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get purchasesApproveAction;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Approved: it is now owed to the supplier'**
+  String get purchasesApprovedDone;
+
   /// #2574 purchase payables
   ///
   /// In en, this message translates to:
@@ -24404,6 +24416,12 @@ abstract class AppLocalizations {
   /// **'Reimbursement'**
   String get purchasesClaimsTitle;
 
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'It was not recorded. Another person than the one who submitted it must decide, and the bill must still be awaiting approval.'**
+  String get purchasesDecisionRefused;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24413,7 +24431,7 @@ abstract class AppLocalizations {
   /// #2573 purchases
   ///
   /// In en, this message translates to:
-  /// **'A draft: it is submitted once its payable exists.'**
+  /// **'A draft: send it for approval when it is complete.'**
   String get purchasesDraftNote;
 
   /// #2573 purchases
@@ -24449,7 +24467,7 @@ abstract class AppLocalizations {
   /// #2573 purchases
   ///
   /// In en, this message translates to:
-  /// **'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.'**
+  /// **'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here, sent for approval, decided by another person, and then owed to the supplier until it is paid.'**
   String get purchasesIntro;
 
   /// #2573 purchases
@@ -24638,6 +24656,30 @@ abstract class AppLocalizations {
   /// **'The purchase could not be saved. Your entries are kept; try again.'**
   String get purchasesRefused;
 
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get purchasesRejectAction;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it rejected?'**
+  String get purchasesRejectReason;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this purchase'**
+  String get purchasesRejectTitle;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get purchasesRejectedDone;
+
   /// #2574 purchase payments
   ///
   /// In en, this message translates to:
@@ -24733,6 +24775,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rejected'**
   String get purchasesStateRejected;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Send for approval'**
+  String get purchasesSubmitAction;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'It was not sent. A bill needs its supplier and an amount, and must still be to pay.'**
+  String get purchasesSubmitRefused;
+
+  /// #2574 supplier bills
+  ///
+  /// In en, this message translates to:
+  /// **'Sent for approval'**
+  String get purchasesSubmitted;
 
   /// #2573 purchases
   ///

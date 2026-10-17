@@ -89,7 +89,8 @@ class FakePurchaseRepository implements PurchaseRepository {
 
   @override
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => [
-    for (final p in payables) p.purchase,
+    for (final p in payables)
+      if (_doc(p.purchase.id) < 0) p.purchase,
     for (final d in _documents.reversed) d.summary,
   ];
 
@@ -99,7 +100,20 @@ class FakePurchaseRepository implements PurchaseRepository {
     String purchaseId,
   ) async {
     for (final d in _documents) {
-      if (d.summary.id == purchaseId) return d;
+      if (d.summary.id != purchaseId) continue;
+      return PurchaseDetail(
+        summary: d.summary,
+        revision: d.revision,
+        lines: d.lines,
+        sources: d.sources,
+        obligations: [
+          for (final r in payables)
+            if (r.purchase.id == purchaseId) r.obligation,
+        ],
+        supplierName: d.supplierName,
+        supplierNumber: d.supplierNumber,
+        dueOn: d.dueOn,
+      );
     }
     // A claim's receipt, as the server reads it: one line, its claim.
     final row = payables.firstWhere(
@@ -172,10 +186,8 @@ class FakePurchaseRepository implements PurchaseRepository {
     appliedInvoice: o.appliedInvoice,
   );
 
-  void _store(int i, PurchaseObligation o) => payables[i] = PayableRow(
-    obligation: o,
-    purchase: payables[i].purchase,
-  );
+  void _store(int i, PurchaseObligation o) =>
+      payables[i] = PayableRow(obligation: o, purchase: payables[i].purchase);
 
   @override
   Future<PurchaseObligation> recordReimbursement(
@@ -188,7 +200,9 @@ class FakePurchaseRepository implements PurchaseRepository {
     if (i < 0) throw StateError('unknown obligation');
     final o = payables[i].obligation;
     if (o.revision != command.revision) throw StateError('stale revision');
-    if (!o.payable || command.amountCents <= 0 || command.amountCents > o.remainingCents) {
+    if (!o.payable ||
+        command.amountCents <= 0 ||
+        command.amountCents > o.remainingCents) {
       throw StateError('the amount exceeds what remains of the claim');
     }
     final next = _restate(
@@ -208,6 +222,126 @@ class FakePurchaseRepository implements PurchaseRepository {
     );
     _store(i, next);
     return _paid[command.requestId] = next;
+  }
+
+  /// A supplier bill the demo space already approved: it stands as a payable
+  /// to [supplierId], with the payments reported against it so far.
+  void addApprovedBill(
+    PurchaseDetail bill,
+    String supplierId, {
+    List<SettlementAllocation> payments = const [],
+  }) {
+    final paid = payments.fold(0, (s, p) => s + p.amountCents);
+    final approved = _inState(bill, PurchaseState.approved);
+    _documents.add(approved);
+    payables.insert(
+      0,
+      PayableRow(
+        obligation: PurchaseObligation(
+          id: 'demo-payable-${bill.summary.id}',
+          purchaseId: bill.summary.id,
+          creditorKind: CreditorKind.supplier,
+          creditorId: supplierId,
+          creditorName: bill.supplierName,
+          amountCents: bill.grossCents,
+          currency: bill.summary.currency,
+          dueOn: bill.dueOn,
+          paidCents: paid,
+          appliedCents: 0,
+          remainingCents: bill.grossCents - paid,
+          allocations: payments,
+        ),
+        purchase: approved.summary,
+      ),
+    );
+  }
+
+  /// A bill sent for approval and waiting for a second person.
+  void addPendingBill(PurchaseDetail bill) =>
+      _documents.add(_inState(bill, PurchaseState.pending));
+
+  int _doc(String id) => _documents.indexWhere((d) => d.summary.id == id);
+
+  PurchaseDetail _inState(PurchaseDetail d, PurchaseState state) {
+    final x = d.summary;
+    return PurchaseDetail(
+      summary: PurchaseSummary(
+        id: x.id,
+        kind: x.kind,
+        state: state,
+        category: x.category,
+        reference: x.reference,
+        currency: x.currency,
+        grossCents: x.grossCents,
+        receivedOn: x.receivedOn,
+        legacy: x.legacy,
+      ),
+      revision: d.revision,
+      lines: d.lines,
+      sources: d.sources,
+      supplierName: d.supplierName,
+      supplierNumber: d.supplierNumber,
+      dueOn: d.dueOn,
+    );
+  }
+
+  @override
+  Future<PurchaseState> submitBill(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  ) async {
+    final i = _doc(purchaseId);
+    if (i < 0) throw StateError('unknown purchase');
+    final d = _documents[i];
+    if (d.summary.kind != PurchaseKind.bill ||
+        d.summary.state != PurchaseState.draft ||
+        d.revision != revision) {
+      throw StateError('only a draft bill can be submitted');
+    }
+    _documents[i] = _inState(d, PurchaseState.pending);
+    return PurchaseState.pending;
+  }
+
+  @override
+  Future<PurchaseState> decideBill(
+    String workspaceId,
+    String purchaseId,
+    int revision, {
+    required bool approve,
+    required String reason,
+    required String requestId,
+  }) async {
+    final i = _doc(purchaseId);
+    if (i < 0) throw StateError('unknown purchase');
+    final d = _documents[i];
+    if (d.summary.state != PurchaseState.pending || d.revision != revision) {
+      throw StateError('only a purchase awaiting approval is decided');
+    }
+    final state = approve ? PurchaseState.approved : PurchaseState.rejected;
+    _documents[i] = _inState(d, state);
+    if (approve) {
+      payables.insert(
+        0,
+        PayableRow(
+          obligation: PurchaseObligation(
+            id: 'demo-payable-$purchaseId',
+            purchaseId: purchaseId,
+            creditorKind: CreditorKind.supplier,
+            creditorId: 'supplier-of-$purchaseId',
+            creditorName: d.supplierName,
+            amountCents: d.grossCents,
+            currency: d.summary.currency,
+            dueOn: d.dueOn,
+            appliedCents: 0,
+            remainingCents: d.grossCents,
+          ),
+          purchase: _documents[i].summary,
+        ),
+      );
+    }
+    return state;
   }
 
   @override

@@ -14299,6 +14299,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesAddBill => 'Aggiungi fattura fornitore';
 
   @override
+  String get purchasesApproveAction => 'Approva';
+
+  @override
+  String get purchasesApprovedDone => 'Approvata: ora è dovuta al fornitore';
+
+  @override
   String purchasesClaimApplied(String number) {
     return 'Applicato alla fattura $number';
   }
@@ -14326,11 +14332,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesClaimsTitle => 'Rimborso';
 
   @override
+  String get purchasesDecisionRefused =>
+      'Non è stato registrato. Deve decidere una persona diversa da chi l\'ha inviata e la fattura deve essere ancora in attesa.';
+
+  @override
   String get purchasesDescription => 'Descrizione';
 
   @override
   String get purchasesDraftNote =>
-      'Una bozza: viene inviata quando esiste il relativo debito.';
+      'Una bozza: la invii all\'approvazione quando è completa.';
 
   @override
   String get purchasesDueDate => 'Scadenza';
@@ -14351,7 +14361,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesIntro =>
-      'Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui e resta una bozza finché non esiste il relativo debito.';
+      'Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui, si invia all\'approvazione, la decide un\'altra persona e poi è dovuta al fornitore fino al pagamento.';
 
   @override
   String get purchasesInvalid =>
@@ -14456,6 +14466,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare l\'acquisto. I dati inseriti sono conservati; riprova.';
 
   @override
+  String get purchasesRejectAction => 'Rifiuta';
+
+  @override
+  String get purchasesRejectReason => 'Perché viene rifiutato?';
+
+  @override
+  String get purchasesRejectTitle => 'Rifiuta questo acquisto';
+
+  @override
+  String get purchasesRejectedDone => 'Rifiutata';
+
+  @override
   String purchasesReversalLine(String amount) {
     return 'Storno · $amount';
   }
@@ -14507,6 +14529,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesStateRejected => 'Rifiutato';
+
+  @override
+  String get purchasesSubmitAction => 'Invia all\'approvazione';
+
+  @override
+  String get purchasesSubmitRefused =>
+      'Non è stata inviata. Una fattura richiede il fornitore e un importo e deve essere ancora da pagare.';
+
+  @override
+  String get purchasesSubmitted => 'Inviata all\'approvazione';
 
   @override
   String get purchasesSupplier => 'Fornitore';

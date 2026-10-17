@@ -9129,6 +9129,14 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApproveAction": "Approuver",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Approuvée : elle est désormais due au fournisseur",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesClaimApplied": "Appliqué à la facture {number}",
   "@purchasesClaimApplied": {
     "description": "#2574 purchase payables",
@@ -9172,11 +9180,15 @@
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
   },
+  "purchasesDecisionRefused": "Ce n'est pas enregistré. Une autre personne que celle qui l'a soumise doit décider, et la facture doit être encore en attente.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesDescription": "Description",
   "@purchasesDescription": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Un brouillon : il est soumis dès que sa dette existe.",
+  "purchasesDraftNote": "Un brouillon : envoyez-le pour approbation une fois complet.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },
@@ -9205,7 +9217,7 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Les factures fournisseur et les reçus payés par les membres pour l'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici et reste un brouillon tant que sa dette n'existe pas.",
+  "purchasesIntro": "Les factures fournisseur et les reçus payés par les membres pour l'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici, envoyée pour approbation, décidée par une autre personne, puis due au fournisseur jusqu'à son paiement.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -9349,6 +9361,22 @@
   "@purchasesRefused": {
     "description": "#2573 purchases"
   },
+  "purchasesRejectAction": "Refuser",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "Pourquoi est-il refusé ?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Refuser cet achat",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Refusée",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesReversalLine": "Annulation · {amount}",
   "@purchasesReversalLine": {
     "description": "#2574 purchase payments",
@@ -9422,6 +9450,18 @@
   "purchasesStateRejected": "Refusé",
   "@purchasesStateRejected": {
     "description": "#2573 purchases"
+  },
+  "purchasesSubmitAction": "Envoyer pour approbation",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "Elle n'a pas été envoyée. Une facture a besoin de son fournisseur et d'un montant, et doit être encore à payer.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Envoyée pour approbation",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
   },
   "purchasesSupplier": "Fournisseur",
   "@purchasesSupplier": {

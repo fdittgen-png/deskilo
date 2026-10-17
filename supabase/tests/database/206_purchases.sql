@@ -319,7 +319,7 @@ select is((select coalesce(l.tax_cents::text, 'null') || '/' || coalesce(l.net_c
   'null/null', 'G: a bill that states no tax keeps it unknown: partial, not zero');
 select is(pg_temp.as_json(pg_temp.u(1), format('select public.purchase_detail_v1(%L, %L)', current_setting('t.a'), current_setting('t.pb'))) #>> '{supplier,name}',
   'ACME Sarl', 'G: the detail names the supplier');
-select ok((pg_temp.as_json(pg_temp.u(1), format('select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), current_setting('t.pb'), 'a0000000-0000-4000-8000-000000000021'))::text) like '%payable exists%', 'G: a bill is not submitted yet: its payable is the next checkpoint');
+select ok((pg_temp.as_json(pg_temp.u(2), format('select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), current_setting('t.pb'), 'a0000000-0000-4000-8000-000000000021'))::text) like '%not allowed to capture supplier bills%', 'G: a member without managePurchases cannot send a bill to approval');
 select ok((pg_temp.as_json(pg_temp.u(3), format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', current_setting('t.a'), 'a0000000-0000-4000-8000-000000000022',
   '{"kind":"bill","lines":[{"gross_cents":100}]}'))::text) like '%not allowed to capture supplier bills%', 'G: a plain member cannot capture a bill');
 select ok((pg_temp.as_json(pg_temp.u(4), format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', current_setting('t.a'), 'a0000000-0000-4000-8000-000000000023',

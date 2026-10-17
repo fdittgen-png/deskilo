@@ -9129,6 +9129,14 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApproveAction": "Aprobar",
+  "@purchasesApproveAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesApprovedDone": "Aprobada: ahora se debe al proveedor",
+  "@purchasesApprovedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesClaimApplied": "Aplicado a la factura {number}",
   "@purchasesClaimApplied": {
     "description": "#2574 purchase payables",
@@ -9172,11 +9180,15 @@
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
   },
+  "purchasesDecisionRefused": "No se registró. Debe decidir otra persona distinta de quien la envió, y la factura debe seguir pendiente.",
+  "@purchasesDecisionRefused": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesDescription": "Descripción",
   "@purchasesDescription": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Un borrador: se presenta cuando exista su deuda.",
+  "purchasesDraftNote": "Un borrador: envíelo a aprobación cuando esté completo.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },
@@ -9205,7 +9217,7 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí y sigue siendo un borrador hasta que exista su deuda.",
+  "purchasesIntro": "Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí, se envía a aprobación, la decide otra persona y después se debe al proveedor hasta que se paga.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -9349,6 +9361,22 @@
   "@purchasesRefused": {
     "description": "#2573 purchases"
   },
+  "purchasesRejectAction": "Rechazar",
+  "@purchasesRejectAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectReason": "¿Por qué se rechaza?",
+  "@purchasesRejectReason": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectTitle": "Rechazar esta compra",
+  "@purchasesRejectTitle": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesRejectedDone": "Rechazada",
+  "@purchasesRejectedDone": {
+    "description": "#2574 supplier bills"
+  },
   "purchasesReversalLine": "Reversión · {amount}",
   "@purchasesReversalLine": {
     "description": "#2574 purchase payments",
@@ -9422,6 +9450,18 @@
   "purchasesStateRejected": "Rechazado",
   "@purchasesStateRejected": {
     "description": "#2573 purchases"
+  },
+  "purchasesSubmitAction": "Enviar a aprobación",
+  "@purchasesSubmitAction": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitRefused": "No se envió. Una factura necesita su proveedor y un importe, y debe estar aún por pagar.",
+  "@purchasesSubmitRefused": {
+    "description": "#2574 supplier bills"
+  },
+  "purchasesSubmitted": "Enviada a aprobación",
+  "@purchasesSubmitted": {
+    "description": "#2574 supplier bills"
   },
   "purchasesSupplier": "Proveedor",
   "@purchasesSupplier": {

@@ -16,7 +16,7 @@
   "@purchasesTitle": {
     "description": "#2573 purchases"
   },
-  "purchasesIntro": "Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí y sigue siendo un borrador hasta que exista su deuda.",
+  "purchasesIntro": "Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí, se envía a aprobación, la decide otra persona y después se debe al proveedor hasta que se paga.",
   "@purchasesIntro": {
     "description": "#2573 purchases"
   },
@@ -154,7 +154,7 @@
   "@purchasesInvalid": {
     "description": "#2573 purchases"
   },
-  "purchasesDraftNote": "Un borrador: se presenta cuando exista su deuda.",
+  "purchasesDraftNote": "Un borrador: envíelo a aprobación cuando esté completo.",
   "@purchasesDraftNote": {
     "description": "#2573 purchases"
   },
