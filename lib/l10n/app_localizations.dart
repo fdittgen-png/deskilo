@@ -22286,6 +22286,12 @@ abstract class AppLocalizations {
   /// **'Request payment-condition changes'**
   String get permPaymentTermsEdit;
 
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Record payments to members'**
+  String get permRecordOutgoingPayments;
+
   /// everyday permission
   ///
   /// In en, this message translates to:
@@ -24488,6 +24494,30 @@ abstract class AppLocalizations {
   /// **'Lines'**
   String get purchasesLines;
 
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get purchasesMethodBank;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get purchasesMethodCard;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get purchasesMethodCash;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get purchasesMethodOther;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24512,6 +24542,84 @@ abstract class AppLocalizations {
   /// **'Owed to suppliers'**
   String get purchasesOwedSuppliers;
 
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get purchasesPayAction;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Amount paid'**
+  String get purchasesPayAmount;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get purchasesPayDate;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.'**
+  String get purchasesPayHint;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero, at most {remaining}.'**
+  String purchasesPayInvalid(String remaining);
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get purchasesPayMethod;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Reference (optional)'**
+  String get purchasesPayReference;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'The payment was not recorded. Check the claim and try again; a retry sends the same request.'**
+  String get purchasesPayRefused;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Payment recorded'**
+  String get purchasesPaySaved;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Record a payment'**
+  String get purchasesPayTitle;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} · {date} · {method}'**
+  String purchasesPaymentLine(String amount, String date, String method);
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get purchasesPaymentReversed;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get purchasesPayments;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -24529,6 +24637,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The purchase could not be saved. Your entries are kept; try again.'**
   String get purchasesRefused;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Reversal · {amount}'**
+  String purchasesReversalLine(String amount);
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse'**
+  String get purchasesReverseAction;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it reversed?'**
+  String get purchasesReverseReason;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'State the reason.'**
+  String get purchasesReverseReasonNeeded;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'The payment was not reversed. It may already be applied to an invoice.'**
+  String get purchasesReverseRefused;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reversed'**
+  String get purchasesReverseSaved;
+
+  /// #2574 purchase payments
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse this payment'**
+  String get purchasesReverseTitle;
 
   /// #2573 purchases
   ///

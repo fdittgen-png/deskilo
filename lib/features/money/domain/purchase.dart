@@ -10,6 +10,9 @@ export 'purchase_obligation.dart';
 /// screen asks for it without importing the workspace permission catalogue.
 const purchaseManagePermission = 'managePurchases';
 
+/// Likewise for recording cash paid out (`recordOutgoingPayments`).
+const purchasePayPermission = 'recordOutgoingPayments';
+
 /// What a purchase document is: a supplier bill, a credit note, or the
 /// receipt of something a member paid (the expense flow's own document).
 enum PurchaseKind {
@@ -272,6 +275,24 @@ abstract interface class PurchaseRepository {
   Future<List<PayableRow>> fetchPayables(
     String workspaceId, {
     CreditorKind? kind,
+  });
+
+  /// Records cash paid against a member's claim. The same request id with
+  /// the same entries answers the original; returns the claim as it now
+  /// stands.
+  Future<PurchaseObligation> recordReimbursement(
+    String workspaceId,
+    ReimbursementCommand command,
+  );
+
+  /// Reverses a recorded payment: the credit is whole again. Returns the
+  /// claim as it now stands.
+  Future<PurchaseObligation> reverseAllocation(
+    String workspaceId, {
+    required String allocationId,
+    required int revision,
+    required String reason,
+    required String requestId,
   });
 
   /// Creates or updates a draft. The same [requestId] with the same draft

@@ -12945,6 +12945,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permPaymentTermsEdit => 'Request payment-condition changes';
 
   @override
+  String get permRecordOutgoingPayments => 'Record payments to members';
+
+  @override
   String get permUseMessages => 'Use the messenger';
 
   @override
@@ -14255,6 +14258,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesLines => 'Lines';
 
   @override
+  String get purchasesMethodBank => 'Bank transfer';
+
+  @override
+  String get purchasesMethodCard => 'Card';
+
+  @override
+  String get purchasesMethodCash => 'Cash';
+
+  @override
+  String get purchasesMethodOther => 'Other';
+
+  @override
   String get purchasesNoSupplier => 'No supplier chosen';
 
   @override
@@ -14267,6 +14282,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesOwedSuppliers => 'Owed to suppliers';
 
   @override
+  String get purchasesPayAction => 'Record payment';
+
+  @override
+  String get purchasesPayAmount => 'Amount paid';
+
+  @override
+  String get purchasesPayDate => 'Paid on';
+
+  @override
+  String get purchasesPayHint =>
+      'Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.';
+
+  @override
+  String purchasesPayInvalid(String remaining) {
+    return 'Enter an amount above zero, at most $remaining.';
+  }
+
+  @override
+  String get purchasesPayMethod => 'Method';
+
+  @override
+  String get purchasesPayReference => 'Reference (optional)';
+
+  @override
+  String get purchasesPayRefused =>
+      'The payment was not recorded. Check the claim and try again; a retry sends the same request.';
+
+  @override
+  String get purchasesPaySaved => 'Payment recorded';
+
+  @override
+  String get purchasesPayTitle => 'Record a payment';
+
+  @override
+  String purchasesPaymentLine(String amount, String date, String method) {
+    return '$amount · $date · $method';
+  }
+
+  @override
+  String get purchasesPaymentReversed => 'Reversed';
+
+  @override
+  String get purchasesPayments => 'Payments';
+
+  @override
   String get purchasesPickDate => 'Choose a date';
 
   @override
@@ -14275,6 +14335,30 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get purchasesRefused =>
       'The purchase could not be saved. Your entries are kept; try again.';
+
+  @override
+  String purchasesReversalLine(String amount) {
+    return 'Reversal · $amount';
+  }
+
+  @override
+  String get purchasesReverseAction => 'Reverse';
+
+  @override
+  String get purchasesReverseReason => 'Why is it reversed?';
+
+  @override
+  String get purchasesReverseReasonNeeded => 'State the reason.';
+
+  @override
+  String get purchasesReverseRefused =>
+      'The payment was not reversed. It may already be applied to an invoice.';
+
+  @override
+  String get purchasesReverseSaved => 'Payment reversed';
+
+  @override
+  String get purchasesReverseTitle => 'Reverse this payment';
 
   @override
   String get purchasesSave => 'Save draft';

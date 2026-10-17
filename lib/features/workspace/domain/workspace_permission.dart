@@ -122,7 +122,12 @@ enum WorkspacePermission {
   /// documents). Approving an expense stays approveExpenses; reading the
   /// workspace's finances stays viewFinances. Nobody but an owner and the
   /// co-owners holds it until a role is given it.
-  managePurchases;
+  managePurchases,
+
+  /// #2574 — record the cash paid out to a member for an approved claim, and
+  /// reverse it. Never implied by approving an expense (approveExpenses) and
+  /// not an admin default; the person owed cannot record their own payment.
+  recordOutgoingPayments;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

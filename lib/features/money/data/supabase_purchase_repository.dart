@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/time/date_text.dart';
 import '../domain/purchase.dart';
 
 /// The purchase documents and their RPCs (0461). The tables are read under
@@ -69,6 +70,56 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       afterId = next.string('id');
     }
     return rows;
+  }
+
+  @override
+  Future<PurchaseObligation> recordReimbursement(
+    String workspaceId,
+    ReimbursementCommand command,
+  ) async {
+    final json = await _client.rpc<Object?>(
+      'record_member_reimbursement_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_obligation_id': command.obligationId,
+        'p_amount_cents': command.amountCents,
+        'p_revision': command.revision,
+        'p_request_id': command.requestId,
+        'p_paid_on': isoDay(command.paidOn),
+        'p_method': command.method.wire,
+        'p_reference': command.reference,
+      },
+    );
+    return PurchaseObligation.fromJson(
+      JsonReader.of(json, context: 'record_member_reimbursement_v1').raw(
+        'obligation',
+      ),
+    );
+  }
+
+  @override
+  Future<PurchaseObligation> reverseAllocation(
+    String workspaceId, {
+    required String allocationId,
+    required int revision,
+    required String reason,
+    required String requestId,
+  }) async {
+    final json = await _client.rpc<Object?>(
+      'reverse_purchase_allocation_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_allocation_id': allocationId,
+        'p_revision': revision,
+        'p_reason': reason,
+        'p_request_id': requestId,
+      },
+    );
+    return PurchaseObligation.fromJson(
+      JsonReader.of(json, context: 'reverse_purchase_allocation_v1').raw(
+        'obligation',
+      ),
+    );
   }
 
   @override

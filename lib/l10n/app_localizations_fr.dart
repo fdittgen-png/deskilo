@@ -13076,6 +13076,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Demander un changement de conditions de paiement';
 
   @override
+  String get permRecordOutgoingPayments =>
+      'Enregistrer les paiements aux membres';
+
+  @override
   String get permUseMessages => 'Utiliser la messagerie';
 
   @override
@@ -14399,6 +14403,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesLines => 'Lignes';
 
   @override
+  String get purchasesMethodBank => 'Virement';
+
+  @override
+  String get purchasesMethodCard => 'Carte';
+
+  @override
+  String get purchasesMethodCash => 'Espèces';
+
+  @override
+  String get purchasesMethodOther => 'Autre';
+
+  @override
   String get purchasesNoSupplier => 'Aucun fournisseur choisi';
 
   @override
@@ -14411,6 +14427,51 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesOwedSuppliers => 'Dû aux fournisseurs';
 
   @override
+  String get purchasesPayAction => 'Enregistrer le paiement';
+
+  @override
+  String get purchasesPayAmount => 'Montant versé';
+
+  @override
+  String get purchasesPayDate => 'Payé le';
+
+  @override
+  String get purchasesPayHint =>
+      'N\'enregistrez que de l\'argent réellement versé. Le paiement est déclaré par vous ; il n\'est pas confirmé par la banque.';
+
+  @override
+  String purchasesPayInvalid(String remaining) {
+    return 'Saisissez un montant supérieur à zéro, au plus $remaining.';
+  }
+
+  @override
+  String get purchasesPayMethod => 'Mode de paiement';
+
+  @override
+  String get purchasesPayReference => 'Référence (facultatif)';
+
+  @override
+  String get purchasesPayRefused =>
+      'Le paiement n\'a pas été enregistré. Vérifiez la créance et réessayez ; une nouvelle tentative envoie la même demande.';
+
+  @override
+  String get purchasesPaySaved => 'Paiement enregistré';
+
+  @override
+  String get purchasesPayTitle => 'Enregistrer un paiement';
+
+  @override
+  String purchasesPaymentLine(String amount, String date, String method) {
+    return '$amount · $date · $method';
+  }
+
+  @override
+  String get purchasesPaymentReversed => 'Annulé';
+
+  @override
+  String get purchasesPayments => 'Paiements';
+
+  @override
   String get purchasesPickDate => 'Choisir une date';
 
   @override
@@ -14419,6 +14480,30 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get purchasesRefused =>
       'L\'achat n\'a pas pu être enregistré. Votre saisie est conservée ; réessayez.';
+
+  @override
+  String purchasesReversalLine(String amount) {
+    return 'Annulation · $amount';
+  }
+
+  @override
+  String get purchasesReverseAction => 'Annuler';
+
+  @override
+  String get purchasesReverseReason => 'Pourquoi l\'annule-t-on ?';
+
+  @override
+  String get purchasesReverseReasonNeeded => 'Indiquez le motif.';
+
+  @override
+  String get purchasesReverseRefused =>
+      'Le paiement n\'a pas été annulé. Il est peut-être déjà appliqué à une facture.';
+
+  @override
+  String get purchasesReverseSaved => 'Paiement annulé';
+
+  @override
+  String get purchasesReverseTitle => 'Annuler ce paiement';
 
   @override
   String get purchasesSave => 'Enregistrer le brouillon';

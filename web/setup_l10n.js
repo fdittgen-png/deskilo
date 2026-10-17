@@ -1379,7 +1379,8 @@ window.SETUP_L10N={
    "viewDirectory": "See the member directory",
    "viewMyMoney": "See their own account and invoices",
    "viewDocuments": "See the shared documents",
-   "managePurchases": "Capture supplier bills"
+   "managePurchases": "Capture supplier bills",
+   "recordOutgoingPayments": "Record payments to members"
   },
   "domain": {
    "payment": "Payment",
@@ -2816,7 +2817,8 @@ window.SETUP_L10N={
    "viewDirectory": "Voir l'annuaire des membres",
    "viewMyMoney": "Voir son propre compte et ses factures",
    "viewDocuments": "Voir les documents partagés",
-   "managePurchases": "Saisir les factures fournisseur"
+   "managePurchases": "Saisir les factures fournisseur",
+   "recordOutgoingPayments": "Enregistrer les paiements aux membres"
   },
   "domain": {
    "payment": "Paiement",
@@ -4253,7 +4255,8 @@ window.SETUP_L10N={
    "viewDirectory": "Das Mitgliederverzeichnis sehen",
    "viewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
    "viewDocuments": "Die geteilten Dokumente sehen",
-   "managePurchases": "Lieferantenrechnungen erfassen"
+   "managePurchases": "Lieferantenrechnungen erfassen",
+   "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -5690,7 +5693,8 @@ window.SETUP_L10N={
    "viewDirectory": "Ver el directorio de miembros",
    "viewMyMoney": "Ver su propia cuenta y sus facturas",
    "viewDocuments": "Ver los documentos compartidos",
-   "managePurchases": "Registrar facturas de proveedor"
+   "managePurchases": "Registrar facturas de proveedor",
+   "recordOutgoingPayments": "Registrar pagos a miembros"
   },
   "domain": {
    "payment": "Pago",
@@ -7127,7 +7131,8 @@ window.SETUP_L10N={
    "viewDirectory": "Vedere l'elenco dei membri",
    "viewMyMoney": "Vedere il proprio conto e le proprie fatture",
    "viewDocuments": "Vedere i documenti condivisi",
-   "managePurchases": "Registrare le fatture dei fornitori"
+   "managePurchases": "Registrare le fatture dei fornitori",
+   "recordOutgoingPayments": "Registrare i pagamenti ai soci"
   },
   "domain": {
    "payment": "Pagamento",

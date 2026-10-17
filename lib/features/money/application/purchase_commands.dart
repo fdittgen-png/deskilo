@@ -23,4 +23,38 @@ class PurchaseCommands {
     if (tax != null && (tax < 0 || tax > draft.grossCents)) return null;
     return _repository.saveDraft(workspaceId, requestId, draft);
   }
+
+  /// Records cash paid against [claim]. Null, nothing sent, when the amount
+  /// is not positive or exceeds what remains; the server decides the rest
+  /// (permission, revision, an invoice that applied the claim).
+  Future<PurchaseObligation?> reimburse(
+    String workspaceId,
+    PurchaseObligation claim,
+    ReimbursementCommand command,
+  ) async {
+    if (!claim.payable ||
+        command.amountCents <= 0 ||
+        command.amountCents > claim.remainingCents) {
+      return null;
+    }
+    return _repository.recordReimbursement(workspaceId, command);
+  }
+
+  /// Reverses one recorded payment of [claim] for [reason].
+  Future<PurchaseObligation?> reverse(
+    String workspaceId,
+    PurchaseObligation claim,
+    SettlementAllocation payment, {
+    required String reason,
+    required String requestId,
+  }) async {
+    if (!payment.reversible || reason.trim().isEmpty) return null;
+    return _repository.reverseAllocation(
+      workspaceId,
+      allocationId: payment.id,
+      revision: claim.revision,
+      reason: reason.trim(),
+      requestId: requestId,
+    );
+  }
 }

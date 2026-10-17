@@ -11,6 +11,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
 import '../../providers/purchase_providers.dart';
+import 'purchase_claims.dart';
 import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
 import 'purchase_payables.dart';
@@ -21,11 +22,15 @@ Future<void> showPurchasesSheet(
   BuildContext context,
   String workspaceId, {
   required bool canCapture,
+  bool canPay = false,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (_) =>
-      PurchasesView(workspaceId: workspaceId, canCapture: canCapture),
+  builder: (_) => PurchasesView(
+    workspaceId: workspaceId,
+    canCapture: canCapture,
+    canPay: canPay,
+  ),
 );
 
 /// The list of documents, with the supplier-bill door for who may capture.
@@ -34,10 +39,14 @@ class PurchasesView extends ConsumerStatefulWidget {
   const PurchasesView({
     required this.workspaceId,
     required this.canCapture,
+    this.canPay = false,
     super.key,
   });
 
   final String workspaceId;
+
+  /// Whether the signed-in person holds recordOutgoingPayments.
+  final bool canPay;
 
   /// Whether the signed-in person holds managePurchases; the server decides
   /// again on every write.
@@ -86,7 +95,9 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
         if (_toPay)
           PurchasePayablesView(
             workspaceId: workspaceId,
-            onOpen: (id) => _showDetailSheet(context, workspaceId, id),
+            canPay: widget.canPay,
+            onOpen: (id) =>
+                _showDetailSheet(context, workspaceId, id, widget.canPay),
           )
         else ...[
           Text(
@@ -131,7 +142,8 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
               ].join(' · '),
             ),
             trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
-            onTap: () => _showDetailSheet(context, workspaceId, p.id),
+            onTap: () =>
+                _showDetailSheet(context, workspaceId, p.id, widget.canPay),
           ),
     ];
   }
@@ -142,11 +154,15 @@ Future<void> _showDetailSheet(
   BuildContext context,
   String workspaceId,
   String purchaseId,
+  bool canPay,
 ) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (_) =>
-      _PurchaseDetailView(workspaceId: workspaceId, purchaseId: purchaseId),
+  builder: (_) => _PurchaseDetailView(
+    workspaceId: workspaceId,
+    purchaseId: purchaseId,
+    canPay: canPay,
+  ),
 );
 
 /// One purchase document as the server read it.
@@ -154,10 +170,12 @@ class _PurchaseDetailView extends ConsumerWidget {
   const _PurchaseDetailView({
     required this.workspaceId,
     required this.purchaseId,
+    required this.canPay,
   });
 
   final String workspaceId;
   final String purchaseId;
+  final bool canPay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -225,17 +243,12 @@ class _PurchaseDetailView extends ConsumerWidget {
         ),
         if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
           Text(l10n.purchasesTaxPartial),
-        if (detail.obligations.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.lg),
-          Text(l10n.purchasesClaimsTitle, style: theme.textTheme.titleSmall),
-          for (final o in detail.obligations)
-            ListTile(
-              key: ValueKey('purchase-claim-${o.id}'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(claimStatusLabel(l10n, o)),
-              trailing: Text(money.formatMinor(o.amountCents)),
-            ),
-        ],
+        if (detail.obligations.isNotEmpty)
+          PurchaseClaimsSection(
+            workspaceId: workspaceId,
+            claims: detail.obligations,
+            canPay: canPay,
+          ),
         if (detail.sources.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.lg),
           Text(l10n.purchasesEvidence, style: theme.textTheme.titleSmall),

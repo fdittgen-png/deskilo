@@ -5,12 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
 import 'purchase_labels.dart';
+import 'purchase_payment_dialogs.dart';
 
 /// "Open · 50.00 remaining", "Applied to invoice N", "On hold": where a claim
 /// stands, in words the person can act on.
@@ -32,11 +34,28 @@ class PurchasePayablesView extends ConsumerWidget {
   const PurchasePayablesView({
     required this.workspaceId,
     required this.onOpen,
+    this.canPay = false,
     super.key,
   });
 
   final String workspaceId;
   final void Function(String purchaseId) onOpen;
+
+  /// The signed-in person holds recordOutgoingPayments; the server decides
+  /// again on every write.
+  final bool canPay;
+
+  Future<void> _pay(
+    BuildContext context,
+    WidgetRef ref,
+    PurchaseObligation claim,
+  ) async {
+    final saved = await showReimbursementDialog(context, workspaceId, claim);
+    // Saved or not, the claim is read again: a lost answer may have landed.
+    ref.invalidate(payablesProvider(workspaceId));
+    if (saved != true || !context.mounted) return;
+    AppSnack.success(context, context.l10n.purchasesPaySaved);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,9 +99,22 @@ class PurchasePayablesView extends ConsumerWidget {
                   claimStatusLabel(l10n, r.obligation),
                 ].join(' · '),
               ),
-              trailing: Text(
-                moneyFormat(r.obligation.currency)
-                    .formatMinor(r.obligation.amountCents),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    moneyFormat(
+                      r.obligation.currency,
+                    ).formatMinor(r.obligation.amountCents),
+                  ),
+                  if (canPay && r.obligation.payable && !r.obligation.mine)
+                    IconButton(
+                      key: ValueKey('payable-pay-${r.obligation.id}'),
+                      tooltip: l10n.purchasesPayAction,
+                      icon: const Icon(Icons.payments_outlined),
+                      onPressed: () => _pay(context, ref, r.obligation),
+                    ),
+                ],
               ),
               onTap: () => onOpen(r.purchase.id),
             ),

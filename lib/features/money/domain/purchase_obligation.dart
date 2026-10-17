@@ -50,6 +50,48 @@ class AppliedInvoice {
   final int totalCents;
 }
 
+/// One movement against a claim: a payment recorded, or its reversal (a
+/// negative amount). History: never edited.
+class SettlementAllocation {
+  const SettlementAllocation({
+    required this.id,
+    required this.isReversal,
+    required this.amountCents,
+    required this.method,
+    required this.reference,
+    this.paidOn,
+    this.reversed = false,
+  });
+
+  factory SettlementAllocation.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'settlement allocation');
+    return SettlementAllocation(
+      id: r.string('id'),
+      isReversal: r.string('kind') == 'reversal',
+      amountCents: r.integer('amount_cents'),
+      method: r.stringOr('method'),
+      reference: r.stringOr('reference'),
+      paidOn: DateTime.tryParse(r.stringOr('paid_on')),
+      reversed: r.boolOr('reversed', fallback: false),
+    );
+  }
+
+  final String id;
+  final bool isReversal;
+
+  /// Positive for a payment, negative for its reversal.
+  final int amountCents;
+  final String method;
+  final String reference;
+  final DateTime? paidOn;
+
+  /// A payment that a later reversal cancelled.
+  final bool reversed;
+
+  /// A payment that can still be reversed.
+  bool get reversible => !isReversal && !reversed;
+}
+
 /// What the space owes a creditor for one approved purchase. It indexes the
 /// existing running-account credit; it is not an expense and not a payment.
 class PurchaseObligation {
@@ -62,6 +104,10 @@ class PurchaseObligation {
     required this.currency,
     required this.appliedCents,
     required this.remainingCents,
+    this.paidCents = 0,
+    this.revision = 1,
+    this.mine = false,
+    this.allocations = const [],
     this.state = ObligationState.open,
     this.dueOn,
     this.appliedInvoice,
@@ -81,6 +127,12 @@ class PurchaseObligation {
       dueOn: DateTime.tryParse(r.stringOr('due_on')),
       appliedCents: r.integer('applied_cents'),
       remainingCents: r.integer('remaining_cents'),
+      paidCents: r.integer('paid_cents'),
+      revision: r.integer('revision'),
+      mine: r.boolOr('mine', fallback: false),
+      allocations: [
+        for (final a in r.list('allocations')) SettlementAllocation.fromJson(a),
+      ],
       appliedInvoice: invoice == null
           ? null
           : AppliedInvoice.fromJson(r.raw('applied_invoice')),
@@ -99,7 +151,67 @@ class PurchaseObligation {
   final DateTime? dueOn;
   final int appliedCents;
   final int remainingCents;
+
+  /// Cash recorded against the claim, net of reversals.
+  final int paidCents;
+
+  /// The version a payment is recorded against; a stale one is refused.
+  final int revision;
+
+  /// The signed-in person is the creditor (they cannot record their own
+  /// payment).
+  final bool mine;
+  final List<SettlementAllocation> allocations;
   final AppliedInvoice? appliedInvoice;
+
+  /// Cash may be recorded: something remains and no invoice has applied it.
+  bool get payable =>
+      creditorKind == CreditorKind.member &&
+      state == ObligationState.open &&
+      remainingCents > 0 &&
+      appliedInvoice == null;
+}
+
+/// How a payment was made.
+enum PaymentMethod {
+  bankTransfer('bank_transfer'),
+  cash('cash'),
+  card('card'),
+  other('other');
+
+  const PaymentMethod(this.wire);
+
+  final String wire;
+}
+
+/// A payment to record against a claim. The same [requestId] with the same
+/// entries answers the original; the server derives the actor.
+class ReimbursementCommand {
+  const ReimbursementCommand({
+    required this.obligationId,
+    required this.amountCents,
+    required this.revision,
+    required this.requestId,
+    required this.paidOn,
+    this.method = PaymentMethod.bankTransfer,
+    this.reference = '',
+  });
+
+  final String obligationId;
+  final int amountCents;
+  final int revision;
+  final String requestId;
+  final DateTime paidOn;
+  final PaymentMethod method;
+  final String reference;
+
+  bool sameEntriesAs(ReimbursementCommand o) =>
+      obligationId == o.obligationId &&
+      amountCents == o.amountCents &&
+      revision == o.revision &&
+      paidOn == o.paidOn &&
+      method == o.method &&
+      reference == o.reference;
 }
 
 /// One line of the To-pay list: the claim and the document behind it.

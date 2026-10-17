@@ -8369,6 +8369,10 @@
   "@permPaymentTermsEdit": {
     "description": "#881 member payment conditions: permPaymentTermsEdit"
   },
+  "permRecordOutgoingPayments": "Enregistrer les paiements aux membres",
+  "@permRecordOutgoingPayments": {
+    "description": "#2574 purchase payments"
+  },
   "permUseMessages": "Utiliser la messagerie",
   "@permUseMessages": {
     "description": "everyday permission"
@@ -9233,6 +9237,22 @@
   "@purchasesLines": {
     "description": "#2573 purchases"
   },
+  "purchasesMethodBank": "Virement",
+  "@purchasesMethodBank": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCard": "Carte",
+  "@purchasesMethodCard": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodCash": "Espèces",
+  "@purchasesMethodCash": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesMethodOther": "Autre",
+  "@purchasesMethodOther": {
+    "description": "#2574 purchase payments"
+  },
   "purchasesNoSupplier": "Aucun fournisseur choisi",
   "@purchasesNoSupplier": {
     "description": "#2573 purchases"
@@ -9249,6 +9269,74 @@
   "@purchasesOwedSuppliers": {
     "description": "#2574 purchase payables"
   },
+  "purchasesPayAction": "Enregistrer le paiement",
+  "@purchasesPayAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayAmount": "Montant versé",
+  "@purchasesPayAmount": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayDate": "Payé le",
+  "@purchasesPayDate": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayHint": "N'enregistrez que de l'argent réellement versé. Le paiement est déclaré par vous ; il n'est pas confirmé par la banque.",
+  "@purchasesPayHint": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayInvalid": "Saisissez un montant supérieur à zéro, au plus {remaining}.",
+  "@purchasesPayInvalid": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPayMethod": "Mode de paiement",
+  "@purchasesPayMethod": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayReference": "Référence (facultatif)",
+  "@purchasesPayReference": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayRefused": "Le paiement n'a pas été enregistré. Vérifiez la créance et réessayez ; une nouvelle tentative envoie la même demande.",
+  "@purchasesPayRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaySaved": "Paiement enregistré",
+  "@purchasesPaySaved": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayTitle": "Enregistrer un paiement",
+  "@purchasesPayTitle": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPaymentLine": "{amount} · {date} · {method}",
+  "@purchasesPaymentLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesPaymentReversed": "Annulé",
+  "@purchasesPaymentReversed": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesPayments": "Paiements",
+  "@purchasesPayments": {
+    "description": "#2574 purchase payments"
+  },
   "purchasesPickDate": "Choisir une date",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
@@ -9260,6 +9348,39 @@
   "purchasesRefused": "L'achat n'a pas pu être enregistré. Votre saisie est conservée ; réessayez.",
   "@purchasesRefused": {
     "description": "#2573 purchases"
+  },
+  "purchasesReversalLine": "Annulation · {amount}",
+  "@purchasesReversalLine": {
+    "description": "#2574 purchase payments",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesReverseAction": "Annuler",
+  "@purchasesReverseAction": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReason": "Pourquoi l'annule-t-on ?",
+  "@purchasesReverseReason": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseReasonNeeded": "Indiquez le motif.",
+  "@purchasesReverseReasonNeeded": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseRefused": "Le paiement n'a pas été annulé. Il est peut-être déjà appliqué à une facture.",
+  "@purchasesReverseRefused": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseSaved": "Paiement annulé",
+  "@purchasesReverseSaved": {
+    "description": "#2574 purchase payments"
+  },
+  "purchasesReverseTitle": "Annuler ce paiement",
+  "@purchasesReverseTitle": {
+    "description": "#2574 purchase payments"
   },
   "purchasesSave": "Enregistrer le brouillon",
   "@purchasesSave": {
