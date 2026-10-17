@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../../../core/validation/pending_validation.dart';
+import '../domain/command_receipt.dart';
 import '../domain/invoice_action_commands.dart';
 
 /// #2585 C2 — void and refund under a request id (0463). No retry: a lost
@@ -43,5 +45,48 @@ class SupabaseInvoiceActionCommands implements InvoiceActionCommands {
       },
     );
     applyOrPendingVoid(answer);
+  }
+
+  @override
+  Future<String> createInvoiceOnce(InvoiceIssueCommand command) async {
+    final answer = await _client.rpc<Object?>(
+      'create_invoice_receipted_v1',
+      params: {
+        'p_workspace_id': command.workspaceId,
+        'p_member_id': command.memberId,
+        'p_period': command.period,
+        'p_request_id': command.requestId,
+        'p_kind': command.kind.name,
+      },
+    );
+    return _id(answer, 'create_invoice_receipted_v1');
+  }
+
+  @override
+  Future<String> settleInvoicesOnce({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
+    required String requestId,
+    String note = '',
+  }) async {
+    final answer = await _client.rpc<Object?>(
+      'settle_invoices_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_member_id': memberId,
+        'p_invoice_ids': invoiceIds,
+        'p_request_id': requestId,
+        'p_note': note,
+      },
+    );
+    return _id(answer, 'settle_invoices_v1');
+  }
+
+  /// The answer promises an id: anything else is a shape error (unknown
+  /// outcome), never an empty id.
+  String _id(Object? answer, String rpc) {
+    if (answer is String && answer.isNotEmpty) return answer;
+    throw JsonShapeException(rpc, 'id', 'non-empty String', '${answer.runtimeType}');
   }
 }

@@ -22,6 +22,7 @@ import '../../../core/validation/pending_validation.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice.dart';
+import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
 import 'command_failure.dart';
@@ -40,6 +41,7 @@ final class InvoiceIssueAttempt {
     this.purchaseOrder = '',
     this.correctionReason = '',
     this.requestId,
+    this.direct = false,
   });
 
   /// #2585 C2 — the attempt's identity, drawn once when the draft becomes
@@ -47,6 +49,10 @@ final class InvoiceIssueAttempt {
   /// looked up by it; a replacement (or an attempt without one) keeps the
   /// archive look of before, which is a bounded safety net, not an identity.
   final String? requestId;
+
+  /// The wizard / sweep issue: straight to `create_invoice`, no validation
+  /// policy (as before), under the same receipt.
+  final bool direct;
 
   bool get hasReceipt => requestId != null && replacesId == null;
 
@@ -104,30 +110,18 @@ final class InvoiceIssueUnknown extends InvoiceIssueOutcome {
 
 /// Issuing an invoice exactly once, and looking for it afterwards.
 class InvoiceIssuance {
-  const InvoiceIssuance(this._commands, this._queries);
+  const InvoiceIssuance(this._commands, this._queries, [this._actions]);
 
   final InvoiceCommands _commands;
+  final InvoiceActionCommands? _actions;
   final InvoiceQueries _queries;
 
   /// Sends [attempt] ONCE. Never resends: a decoding or transport error is
   /// [InvoiceIssueUnknown], not a reason to try again.
   Future<InvoiceIssueOutcome> issue(InvoiceIssueAttempt attempt) async {
     try {
-      final requestId = attempt.requestId;
       final id = attempt.hasReceipt
-          ? await _commands.issueInvoiceWithReceipt(
-              InvoiceIssueCommand(
-                workspaceId: attempt.workspaceId,
-                memberId: attempt.memberId,
-                period: attempt.period,
-                requestId: requestId!,
-                detailed: attempt.detailed,
-                kind: attempt.kind,
-                buyerReference: attempt.buyerReference,
-                purchaseOrder: attempt.purchaseOrder,
-                correctionReason: attempt.correctionReason,
-              ),
-            )
+          ? await _sendReceipted(attempt)
           : await _commands.createInvoice(
         workspaceId: attempt.workspaceId,
         memberId: attempt.memberId,
@@ -149,6 +143,23 @@ class InvoiceIssuance {
           ? InvoiceIssueRefused(attempt, e)
           : InvoiceIssueUnknown(attempt, e);
     }
+  }
+
+  Future<String> _sendReceipted(InvoiceIssueAttempt attempt) {
+    final command = InvoiceIssueCommand(
+      workspaceId: attempt.workspaceId,
+      memberId: attempt.memberId,
+      period: attempt.period,
+      requestId: attempt.requestId!,
+      detailed: attempt.detailed,
+      kind: attempt.kind,
+      buyerReference: attempt.buyerReference,
+      purchaseOrder: attempt.purchaseOrder,
+      correctionReason: attempt.correctionReason,
+    );
+    return attempt.direct
+        ? _actions!.createInvoiceOnce(command)
+        : _commands.issueInvoiceWithReceipt(command);
   }
 
   /// Reads the archive of the attempt's own workspace for the invoice the

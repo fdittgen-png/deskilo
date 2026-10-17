@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'command_receipt.dart';
 
 /// #2585 C2 — the two acts on an EXISTING invoice that answer no new id,
 /// sent under the attempt's own request id (RPCs `request_invoice_void_v1`
@@ -21,6 +22,24 @@ abstract interface class InvoiceActionCommands {
   /// pays — through the refund policy.
   Future<void> settleCreditInvoice(
     String invoiceId, {
+    required String requestId,
+    String note = '',
+  });
+
+  /// The direct issue the invoicing wizard and the sweep use (RPC
+  /// `create_invoice_receipted_v1`, 0464): no validation policy, as before,
+  /// but one receipt per [InvoiceIssueCommand.requestId]. A constituent that
+  /// already committed replays its original id instead of failing on "already
+  /// invoiced". Returns the invoice id.
+  Future<String> createInvoiceOnce(InvoiceIssueCommand command);
+
+  /// Regroups [invoiceIds] into ONE invoice the member pays (RPC
+  /// `settle_invoices_v1`, 0464) under [requestId]. Returns the settlement's
+  /// id; the same id with the same set answers the same settlement.
+  Future<String> settleInvoicesOnce({
+    required String workspaceId,
+    required String memberId,
+    required List<String> invoiceIds,
     required String requestId,
     String note = '',
   });

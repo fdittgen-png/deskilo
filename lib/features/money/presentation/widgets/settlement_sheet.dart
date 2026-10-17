@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -21,6 +22,7 @@ import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
+import 'command_unknown_dialog.dart';
 import 'wizard_scaffold.dart';
 
 /// Opens the settlement assistant (kept under its historical name).
@@ -47,6 +49,8 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
   final _picked = <String>{};
   int _index = 0;
   bool _busy = false;
+  String? _attemptKey;
+  String? _requestId;
 
   /// #1449 — the eligibility rule itself lives in
   /// `application/settle_invoices.dart`, where it is a unit test rather
@@ -65,24 +69,54 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
       return;
     }
     setState(() => _busy = true);
-    String number;
-    try {
-      // The write and the look-up that follows it are one decision
-      // (#1449): what the person is told is the new document's NUMBER.
-      number = await ref.read(settlementsProvider).settle(
-            workspaceId: workspace.id,
-            memberId: memberId,
-            invoiceIds: chosen.map((i) => i.id).toList(),
-          );
-    } on Object catch (e, st) {
-      TraceLogger.instance
-          .error('money', 'settle invoices failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      setState(() => _busy = false);
-      AppSnack.error(
+    // The attempt's identity is drawn once per chosen set and kept across
+    // "settle again": a regrouping that committed replays, it never doubles.
+    final ids = chosen.map((i) => i.id).toList()..sort();
+    final key = '$memberId|${ids.join(',')}';
+    if (_attemptKey != key) {
+      _attemptKey = key;
+      _requestId = newRequestId();
+    }
+    final settlements = ref.read(settlementsProvider);
+    // The write and the look-up that follows it are one decision (#1449):
+    // what the person is told is the new document's NUMBER.
+    var outcome = await settlements.settle(
+      SettleAttempt(
+        workspaceId: workspace.id,
+        memberId: memberId,
+        invoiceIds: ids,
+        requestId: _requestId!,
+      ),
+    );
+    if (outcome is SettleUnknown && mounted) {
+      var current = outcome;
+      final resolved = await showCommandUnknownDialog<SettleOutcome>(
         context,
-        l10n.workspaceGenericError,
+        body: l10n.invoiceActionUnknownBody,
+        check: () async {
+          final looked = await settlements.look(current);
+          if (looked is SettleUnknown) {
+            current = looked;
+            return null;
+          }
+          return looked;
+        },
       );
+      if (resolved != null) outcome = resolved;
+    }
+    if (!mounted) return;
+    final number = switch (outcome) {
+      Settled(:final number) => number,
+      _ => null,
+    };
+    if (number == null) {
+      setState(() => _busy = false);
+      if (outcome is SettleRefused) {
+        TraceLogger.instance.error('money', 'settle invoices refused', error: outcome.error);
+        // A definite refusal committed nothing: the next try is a new act.
+        _attemptKey = null;
+      }
+      AppSnack.error(context, l10n.workspaceGenericError);
       return;
     }
     ref

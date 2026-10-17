@@ -2,16 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../application/issue_invoice.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../period_label.dart';
+import 'command_unknown_dialog.dart';
 import 'wizard_context.dart';
 
 /// #827 — step 1: which run, which period, and what the workspace holds
@@ -107,26 +111,65 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
   final Set<String> _skipped = {};
   bool _busy = false;
 
+  /// #2585 C2 — one request id per member, kept until that member's invoice
+  /// is known: "issue again" after a lost answer replays the receipt of the
+  /// constituent that committed instead of failing on "already invoiced".
+  final Map<String, String> _requestIds = {};
+
   Future<void> _issueAll(List<WizardIssueItem> todo) async {
     final l10n = context.l10n;
     setState(() => _busy = true);
+    final issuance = InvoiceIssuance(
+      ref.read(invoiceCommandsProvider),
+      ref.read(invoiceQueriesProvider),
+      ref.read(invoiceActionCommandsProvider),
+    );
     var done = 0;
     for (final item in todo) {
       if (_skipped.contains(item.memberId)) continue;
-      final ok = await runGuarded(
-        context,
-        domain: 'money',
-        message: 'wizard issue failed',
-        errorText: l10n.wizardIssueFailed(item.memberName),
-        action: () => ref.read(invoiceCommandsProvider).createInvoice(
-              workspaceId: widget.wiz.workspaceId,
-              memberId: item.memberId,
-              period: widget.wiz.period,
-              kind: widget.wiz.kind,
-            ),
+      var outcome = await issuance.issue(
+        InvoiceIssueAttempt(
+          workspaceId: widget.wiz.workspaceId,
+          memberId: item.memberId,
+          period: widget.wiz.period,
+          kind: widget.wiz.kind,
+          requestId: _requestIds.putIfAbsent(item.memberId, newRequestId),
+          direct: true,
+        ),
       );
-      if (ok) done++;
+      if (outcome is InvoiceIssueUnknown && mounted) {
+        var current = outcome;
+        final resolved = await showCommandUnknownDialog<InvoiceIssueOutcome>(
+          context,
+          body: l10n.invoiceIssueUnknownBody,
+          check: () async {
+            final looked = await issuance.look(current);
+            if (looked is InvoiceIssueUnknown) {
+              current = looked;
+              return null;
+            }
+            return looked;
+          },
+        );
+        if (resolved != null) outcome = resolved;
+      }
       if (!mounted) return;
+      switch (outcome) {
+        case InvoiceIssued():
+          done++;
+          _requestIds.remove(item.memberId);
+        case InvoiceIssueRefused():
+          // A definite refusal committed nothing: a later try is a new act.
+          _requestIds.remove(item.memberId);
+          AppSnack.error(context, l10n.wizardIssueFailed(item.memberName));
+        case InvoiceIssueHeld():
+          _requestIds.remove(item.memberId);
+          AppSnack.info(context, l10n.validationSentForApproval);
+        case InvoiceIssueUnknown():
+          // Retained: the next "issue all" sends the SAME id, which replays
+          // the constituent if it did commit.
+          AppSnack.error(context, l10n.wizardIssueFailed(item.memberName));
+      }
     }
     ref
       ..invalidate(invoicesProvider)

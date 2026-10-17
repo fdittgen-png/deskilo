@@ -71,7 +71,7 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 /// person is told afterwards.
 @riverpod
 Settlements settlements(Ref ref) => Settlements(
-    ref.watch(invoiceCommandsProvider), ref.watch(invoiceQueriesProvider));
+    ref.watch(invoiceActionCommandsProvider), ref.watch(invoiceQueriesProvider));
 
 @riverpod
 Repartitions repartitions(Ref ref) =>
