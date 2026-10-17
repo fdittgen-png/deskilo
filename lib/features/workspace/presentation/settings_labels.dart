@@ -9,11 +9,6 @@ import '../../../core/settings/settings.dart';
 import '../../../l10n/app_localizations.dart';
 
 String settingLabel(AppLocalizations l10n, String key) => switch (key) {
-      'readiness.recent_export_days' => l10n.settingLabelReadinessRecentExportDays,
-      'mcp.read_range_days' => l10n.settingLabelMcpReadRangeDays,
-      'calendar.range_days' => l10n.settingLabelCalendarRangeDays,
-      'kpi.capacity_range_days' => l10n.settingLabelKpiCapacityRangeDays,
-      'kpi.finance_range_months' => l10n.settingLabelKpiFinanceRangeMonths,
       'messaging.edit_window_minutes' => l10n.settingLabelMessagingEditWindowMinutes,
       'messaging.thread_poll_seconds' => l10n.settingLabelMessagingThreadPollSeconds,
       'messaging.inbox_poll_seconds' => l10n.settingLabelMessagingInboxPollSeconds,
@@ -34,15 +29,20 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
       'mcp.probe_freshness_minutes' => l10n.settingLabelMcpProbeFreshnessMinutes,
       'messaging.group_creation_per_hour' => l10n.settingLabelMessagingGroupCreationPerHour,
       'messaging.message_requests_per_day' => l10n.settingLabelMessagingMessageRequestsPerDay,
+      _ => _rangeSettingLabel(l10n, key),
+    };
+
+/// #2487 -- the export window and the four read-only query-range guardrails.
+String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'readiness.recent_export_days' => l10n.settingLabelReadinessRecentExportDays,
+      'mcp.read_range_days' => l10n.settingLabelMcpReadRangeDays,
+      'calendar.range_days' => l10n.settingLabelCalendarRangeDays,
+      'kpi.capacity_range_days' => l10n.settingLabelKpiCapacityRangeDays,
+      'kpi.finance_range_months' => l10n.settingLabelKpiFinanceRangeMonths,
       _ => key,
     };
 
 String? settingHint(AppLocalizations l10n, String key) => switch (key) {
-      'readiness.recent_export_days' => l10n.settingHintReadinessRecentExportDays,
-      'mcp.read_range_days' => l10n.settingHintMcpReadRangeDays,
-      'calendar.range_days' => l10n.settingHintCalendarRangeDays,
-      'kpi.capacity_range_days' => l10n.settingHintKpiCapacityRangeDays,
-      'kpi.finance_range_months' => l10n.settingHintKpiFinanceRangeMonths,
       'messaging.edit_window_minutes' => l10n.settingHintMessagingEditWindowMinutes,
       'messaging.thread_poll_seconds' => l10n.settingHintMessagingThreadPollSeconds,
       'messaging.inbox_poll_seconds' => l10n.settingHintMessagingInboxPollSeconds,
@@ -63,6 +63,15 @@ String? settingHint(AppLocalizations l10n, String key) => switch (key) {
       'mcp.probe_freshness_minutes' => l10n.settingHintMcpProbeFreshnessMinutes,
       'messaging.group_creation_per_hour' => l10n.settingHintMessagingGroupCreationPerHour,
       'messaging.message_requests_per_day' => l10n.settingHintMessagingMessageRequestsPerDay,
+      _ => _rangeSettingHint(l10n, key),
+    };
+
+String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'readiness.recent_export_days' => l10n.settingHintReadinessRecentExportDays,
+      'mcp.read_range_days' => l10n.settingHintMcpReadRangeDays,
+      'calendar.range_days' => l10n.settingHintCalendarRangeDays,
+      'kpi.capacity_range_days' => l10n.settingHintKpiCapacityRangeDays,
+      'kpi.finance_range_months' => l10n.settingHintKpiFinanceRangeMonths,
       _ => null,
     };
 
