@@ -1,8 +1,8 @@
 {
-  "recordedSha": "7b6569ad52a7b07ee3f621fe630217fdc9f0d539",
-  "recordedDate": "2026-10-16",
+  "recordedSha": "a1337bc58a6fba0e20c113d259102ecd22dfcb78",
+  "recordedDate": "2026-10-17",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1610,"functions":8861,"cyclomatic>=9":943,"cyclomatic>=25":128,"cognitive>=15":395,"cognitive>=30":118,"length>=150":94,"parameters>=5":413,"parameters>=7":143,"partOfFiles":75},
+  "totals": {"files":1613,"functions":8871,"cyclomatic>=9":943,"cyclomatic>=25":128,"cognitive>=15":395,"cognitive>=30":118,"length>=150":94,"parameters>=5":413,"parameters>=7":143,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -784,9 +784,11 @@
     {"p":"lib/core/backend/callback_history_native.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":1,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/callback_history_web.dart","loc":20,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":19,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/connected_installation_providers.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":16,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/backend/connected_installations.dart","loc":396,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":9,"cyc":9,"len":56,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/backend/connected_installations.dart","loc":401,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":9,"cyc":9,"len":48,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/backend/connected_pool_clients.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":11,"cyc":10,"len":40,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/backend/connected_pool_host_resolver.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":14,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/connection_outcome.dart","loc":102,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":23,"cyc":27,"len":55,"params":3,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/core/backend/context_client_providers.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":0,"cyc":1,"len":8,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/backend/context_client_providers.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":3,"cyc":3,"len":19,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/context_clients.dart","loc":63,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":3,"len":11,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/federation_authority.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":13,"len":25,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/federation_handoff.dart","loc":61,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":7,"len":18,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -794,6 +796,7 @@
     {"p":"lib/core/backend/instance_facts.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":6,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/native_federation_flow.dart","loc":221,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":25,"cyc":28,"len":116,"params":2,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/core/backend/operation_context.dart","loc":129,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":2,"cyc":7,"len":11,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/backend/origin_only_client.dart","loc":16,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":8,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/reference_backend.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":8,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/schema_version.dart","loc":72,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":5,"cyc":5,"len":28,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/secondary_federation.dart","loc":461,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":25,"cyc":27,"len":122,"params":2,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},

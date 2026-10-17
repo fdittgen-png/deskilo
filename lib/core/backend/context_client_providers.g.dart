@@ -235,14 +235,91 @@ final class InstallationIdReaderProvider
 String _$installationIdReaderHash() =>
     r'd8d48f09f2d1cf903d09ce3286fd897ab3a4ff91';
 
-/// Finds the host of a workspace; the combined deployment's is the
-/// installation the app is signed in to.
+/// The connected installation the selected workspace lives on, or none
+/// when it lives on the installation the app is signed in to.
+
+@ProviderFor(SelectedWorkspaceHost)
+final selectedWorkspaceHostProvider = SelectedWorkspaceHostProvider._();
+
+/// The connected installation the selected workspace lives on, or none
+/// when it lives on the installation the app is signed in to.
+final class SelectedWorkspaceHostProvider
+    extends
+        $NotifierProvider<
+          SelectedWorkspaceHost,
+          ({String source, String workspaceId})?
+        > {
+  /// The connected installation the selected workspace lives on, or none
+  /// when it lives on the installation the app is signed in to.
+  SelectedWorkspaceHostProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedWorkspaceHostProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedWorkspaceHostHash();
+
+  @$internal
+  @override
+  SelectedWorkspaceHost create() => SelectedWorkspaceHost();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(({String source, String workspaceId})? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<({String source, String workspaceId})?>(value),
+    );
+  }
+}
+
+String _$selectedWorkspaceHostHash() =>
+    r'a115da9345296f6c4b163418ac1796fe3f582c09';
+
+/// The connected installation the selected workspace lives on, or none
+/// when it lives on the installation the app is signed in to.
+
+abstract class _$SelectedWorkspaceHost
+    extends $Notifier<({String source, String workspaceId})?> {
+  ({String source, String workspaceId})? build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref
+            as $Ref<
+              ({String source, String workspaceId})?,
+              ({String source, String workspaceId})?
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                ({String source, String workspaceId})?,
+                ({String source, String workspaceId})?
+              >,
+              ({String source, String workspaceId})?,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+/// Finds the host of a workspace: the connected installation its selection
+/// names, else the installation the app is signed in to.
 
 @ProviderFor(workspaceHostResolver)
 final workspaceHostResolverProvider = WorkspaceHostResolverProvider._();
 
-/// Finds the host of a workspace; the combined deployment's is the
-/// installation the app is signed in to.
+/// Finds the host of a workspace: the connected installation its selection
+/// names, else the installation the app is signed in to.
 
 final class WorkspaceHostResolverProvider
     extends
@@ -252,8 +329,8 @@ final class WorkspaceHostResolverProvider
           WorkspaceHostResolver
         >
     with $Provider<WorkspaceHostResolver> {
-  /// Finds the host of a workspace; the combined deployment's is the
-  /// installation the app is signed in to.
+  /// Finds the host of a workspace: the connected installation its selection
+  /// names, else the installation the app is signed in to.
   WorkspaceHostResolverProvider._()
     : super(
         from: null,
@@ -289,7 +366,7 @@ final class WorkspaceHostResolverProvider
 }
 
 String _$workspaceHostResolverHash() =>
-    r'241caa89dea353f71c86a026cdc2840a45fb9a6e';
+    r'5b164d98b5ac5ba2297e320fde014b6c242bc6cf';
 
 @ProviderFor(epochLedger)
 final epochLedgerProvider = EpochLedgerProvider._();
