@@ -165,8 +165,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       mcpConnectionRepositoryProvider.overrideWithValue(
         FakeMcpConnectionRepository(installationId: _kDemoInstallationId),
       ),
-      // #1626/#1627 — no policy to save and no queue to review; and no
-      // second factor, since Demo has no Auth server to verify one.
+      // #1626/#1627 — no policy to save, no queue, no second factor (no Auth).
       mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
       // #2145 — no client to approve, no endpoint, no notices.
       mcpOnboardingRepositoryProvider
@@ -186,6 +185,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       secondFactorRepositoryProvider
           .overrideWithValue(FakeSecondFactorRepository()),
       workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
+      workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       ..._resourceOverrides(fixture),
       reservationRepositoryProvider.overrideWithValue(fixture.reservations),

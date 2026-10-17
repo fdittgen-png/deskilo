@@ -55,7 +55,7 @@ final class ChargingStationRepositoryProvider
 }
 
 String _$chargingStationRepositoryHash() =>
-    r'1f0fa4382bc69c43942ccef493e82653577f9ec0';
+    r'597261c56bf939f6d0422447c6f19617bb450ac7';
 
 @ProviderFor(planResourceRepository)
 final planResourceRepositoryProvider = PlanResourceRepositoryProvider._();
@@ -103,7 +103,7 @@ final class PlanResourceRepositoryProvider
 }
 
 String _$planResourceRepositoryHash() =>
-    r'70a7d2ab7668f816aa22567b5531044aa4509f8b';
+    r'723fb8d1be6706a0d438bbb9d82237253c4836fc';
 
 @ProviderFor(resourceCommands)
 final resourceCommandsProvider = ResourceCommandsProvider._();

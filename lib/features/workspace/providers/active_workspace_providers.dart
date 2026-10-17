@@ -40,6 +40,17 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
   void activateConnected(String workspaceId, String source) {
     state = AsyncData(workspaceId);
     ref.read(selectedWorkspaceHostProvider.notifier).select(workspaceId, source);
+    // #2564 -- entering the SAME space again is no change of selection, so a
+    // refusal the connection ended with (the typed ConnectionFailure) would
+    // outlive the new connection: a fresh entry reads the space again.
+    if (ref.exists(currentWorkspaceProvider) &&
+        ref.read(currentWorkspaceProvider).hasError) {
+      ref.invalidate(currentWorkspaceProvider);
+    }
+    if (ref.exists(workspaceContextProvider) &&
+        ref.read(workspaceContextProvider).hasError) {
+      ref.invalidate(workspaceContextProvider);
+    }
   }
 
   Future<void> select(String workspaceId) async {

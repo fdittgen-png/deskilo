@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
 import '../../../core/backend/connected_installation_providers.dart';
@@ -41,6 +40,7 @@ import '../domain/workspace_permission.dart';
 import '../domain/workspace_repository.dart';
 import '../domain/workspace_template.dart';
 import 'active_workspace_providers.dart';
+import 'operation_context_providers.dart';
 import 'workspace_roles_providers.dart';
 
 export 'active_workspace_providers.dart';
@@ -54,9 +54,23 @@ final enabledFeatureKeysFromWorkspace = enabledFeatureKeysProvider.overrideWith(
   (ref) => {for (final f in ref.watch(enabledFeaturesSyncProvider)) f.dbKey},
 );
 
+/// #2564 O1 -- the OPERATIONS half: everything done to the selected
+/// workspace (members, sites, rules, identity, documents, templates,
+/// conversations, badges) runs on the verified host client of the captured
+/// context. It is never the source of [currentWorkspace]: that reads
+/// [workspaceListRepository], so the context does not depend on itself.
 @Riverpod(keepAlive: true)
 WorkspaceRepository workspaceRepository(Ref ref) =>
-    SupabaseWorkspaceRepository(Supabase.instance.client);
+    SupabaseWorkspaceRepository(ref.watch(selectedWorkspaceClientProvider));
+
+/// #2564 O1 -- the LIST half: which workspaces and memberships the person
+/// has, the default workspace, creating or joining one and the platform
+/// views. These belong to the installation the app is signed in to (the
+/// root session), before any workspace is selected, and feed
+/// [currentWorkspace].
+@Riverpod(keepAlive: true)
+WorkspaceRepository workspaceListRepository(Ref ref) =>
+    SupabaseWorkspaceRepository(ref.watch(personalClientProvider));
 
 /// #2562 -- how the workspaces of a connected installation are read, given
 /// that installation's own pinned client.
@@ -68,7 +82,7 @@ ConnectedWorkspaceReader connectedWorkspaceReader(Ref ref) =>
 Future<List<Workspace>> myWorkspaces(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchMyWorkspaces();
+  return ref.watch(workspaceListRepositoryProvider).fetchMyWorkspaces();
 }
 
 /// #1654 — the signed-in account, for scoping a per-account device
@@ -110,7 +124,7 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
     if (ref.watch(authStateProvider).value == null || account == null) return null;
     try {
       final server = await ref
-          .watch(workspaceRepositoryProvider)
+          .watch(workspaceListRepositoryProvider)
           .fetchDefaultWorkspaceId();
       await store.write(account, server);
       return server;
@@ -136,7 +150,7 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
 
   Future<void> _write(String? next) async {
     await ref
-        .read(workspaceRepositoryProvider)
+        .read(workspaceListRepositoryProvider)
         .setDefaultWorkspaceId(next);
     if (ref.read(currentAccountIdProvider) case final account?) await ref.read(defaultWorkspaceStoreProvider).write(account, next);
     state = AsyncData(next);
@@ -166,7 +180,7 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
 /// and the request id that makes a retry the SAME creation.
 @riverpod
 WorkspaceStart workspaceStart(Ref ref) =>
-    WorkspaceStart(ref.watch(workspaceRepositoryProvider));
+    WorkspaceStart(ref.watch(workspaceListRepositoryProvider));
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
@@ -202,7 +216,7 @@ bool _recordingOn(Ref ref) => ref
 Future<List<Member>> myMemberships(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return const [];
-  return ref.watch(workspaceRepositoryProvider).fetchMyMembers();
+  return ref.watch(workspaceListRepositoryProvider).fetchMyMembers();
 }
 
 /// ISO weekdays (1=Mon..7=Sun) the active workspace is open on (#127).
@@ -606,7 +620,7 @@ Future<ManagedIdentityRead> managedIdentity(Ref ref, String memberId) async {
 Future<bool> isPlatformOwner(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return false;
-  return ref.watch(workspaceRepositoryProvider).isPlatformOwner();
+  return ref.watch(workspaceListRepositoryProvider).isPlatformOwner();
 }
 
 /// #937 — every workspace in the database; empty for anyone who is not
@@ -614,7 +628,7 @@ Future<bool> isPlatformOwner(Ref ref) async {
 @riverpod
 Future<List<WorkspaceOverview>> allWorkspaces(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap.
-  final repository = ref.watch(workspaceRepositoryProvider);
+  final repository = ref.watch(workspaceListRepositoryProvider);
   if (!(await ref.watch(isPlatformOwnerProvider.future))) return const [];
   return repository.fetchAllWorkspaces();
 }

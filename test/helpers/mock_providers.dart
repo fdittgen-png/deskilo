@@ -340,6 +340,7 @@ List<Override> standardTestOverrides({
     secondFactorRepositoryProvider
         .overrideWithValue(secondFactor ?? FakeSecondFactorRepository()),
     workspaceRepositoryProvider.overrideWithValue(workspaceRepo),
+    workspaceListRepositoryProvider.overrideWithValue(workspaceRepo), // #2564
     floorPlanRepositoryProvider.overrideWithValue(planRepo),
     // #2631 — rooms, parking areas and chargers, in memory.
     planResourceRepositoryProvider.overrideWithValue(FakePlanResourceRepository(

@@ -16,10 +16,17 @@ import '../domain/level.dart';
 
 part 'floor_plan_providers.g.dart';
 
+/// #2564 O1 -- the client the plan feature's repositories run on: the
+/// verified host of the selected workspace (never the root for a connected
+/// one).
+@Riverpod(keepAlive: true)
+SupabaseClient planClient(Ref ref) =>
+    ref.watch(selectedWorkspaceClientProvider);
+
 @Riverpod(keepAlive: true)
 FloorPlanRepository floorPlanRepository(Ref ref) =>
     SupabaseFloorPlanRepository(
-      Supabase.instance.client,
+      ref.watch(planClientProvider),
       ref.watch(cacheStoreProvider),
     );
 

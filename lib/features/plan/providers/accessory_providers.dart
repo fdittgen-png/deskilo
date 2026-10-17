@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_accessory_repository.dart';
 import '../domain/accessory.dart';
 import '../domain/accessory_repository.dart';
+import 'floor_plan_providers.dart';
 
 part 'accessory_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AccessoryRepository accessoryRepository(Ref ref) =>
-    SupabaseAccessoryRepository(Supabase.instance.client);
+    SupabaseAccessoryRepository(ref.watch(planClientProvider));
 
 /// Accessory catalog of the active workspace, ordered by sort_order then
 /// name. The catalog editor (#167) passes [includeInactive]; booking

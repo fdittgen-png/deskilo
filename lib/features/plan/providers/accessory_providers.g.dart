@@ -55,7 +55,7 @@ final class AccessoryRepositoryProvider
 }
 
 String _$accessoryRepositoryHash() =>
-    r'325bf1622e960a13f1c4cdfe705d9c8885506c67';
+    r'035d027a7f5bac3e6105c2bb2263e3c9e825437c';
 
 /// Accessory catalog of the active workspace, ordered by sort_order then
 /// name. The catalog editor (#167) passes [includeInactive]; booking
