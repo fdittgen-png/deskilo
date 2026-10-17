@@ -61,6 +61,13 @@ String permissionLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permAccessProd,
         WorkspacePermission.viewAnalytics =>
           l10n.permViewAnalytics,
+        _ => _laterLabel(l10n, permission),
+      };
+
+/// The permissions added after the administration ones; kept apart so the
+/// main switch does not grow with the catalogue.
+String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
+    switch (permission) {
         WorkspacePermission.useMessages =>
           l10n.permUseMessages,
         WorkspacePermission.makeReservations =>
@@ -73,4 +80,7 @@ String permissionLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permViewMyMoney,
         WorkspacePermission.viewDocuments =>
           l10n.permViewDocuments,
+        WorkspacePermission.managePurchases =>
+          l10n.permManagePurchases,
+        _ => permission.name,
       };

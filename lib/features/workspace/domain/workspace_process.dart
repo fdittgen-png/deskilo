@@ -159,6 +159,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.expenseRepartitionWizard,
       WorkspaceFeature.scheduledExpenses,
       WorkspaceFeature.expenseRepartition,
+      WorkspaceFeature.purchases,
     ]),
     WorkspaceSubprocess('tax', [
       WorkspaceFeature.accountingBook,

@@ -116,6 +116,10 @@ class MoneyViewData {
   bool get suppliersOn =>
       _on(WorkspaceFeature.supplyExpenses) && (member?.isAdmin ?? false);
 
+  /// #2573 — the purchase documents: a member's own receipts, and the
+  /// supplier bills of those who manage them.
+  bool get purchasesOn => _on(WorkspaceFeature.purchases);
+
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;
 

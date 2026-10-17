@@ -5951,6 +5951,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.';
 
   @override
+  String get featurePurchasesDesc =>
+      'Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.';
+
+  @override
+  String get featurePurchasesTitle => 'Acquisti';
+
+  @override
   String get featurePushNotifications => 'Notifiche push';
 
   @override
@@ -13010,6 +13017,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permManageNegotiations => 'Gestire gli accordi commerciali';
 
   @override
+  String get permManagePurchases => 'Registrare le fatture dei fornitori';
+
+  @override
   String get permManageReservations => 'Gestire le prenotazioni degli altri';
 
   @override
@@ -14269,6 +14279,121 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Profilo pubblico';
+
+  @override
+  String get purchasesAddBill => 'Aggiungi fattura fornitore';
+
+  @override
+  String get purchasesDescription => 'Descrizione';
+
+  @override
+  String get purchasesDraftNote =>
+      'Una bozza: viene inviata quando esiste il relativo debito.';
+
+  @override
+  String get purchasesDueDate => 'Scadenza';
+
+  @override
+  String purchasesDueOn(String date) {
+    return 'Scade il $date';
+  }
+
+  @override
+  String get purchasesEmpty => 'Nessun acquisto per ora.';
+
+  @override
+  String get purchasesEvidence => 'Giustificativi';
+
+  @override
+  String get purchasesGross => 'Totale imposte incluse';
+
+  @override
+  String get purchasesIntro =>
+      'Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui e resta una bozza finché non esiste il relativo debito.';
+
+  @override
+  String get purchasesInvalid =>
+      'Inserisci un totale positivo e un\'imposta che non lo superi.';
+
+  @override
+  String get purchasesInvoiceDate => 'Data della fattura';
+
+  @override
+  String get purchasesKindBill => 'Fattura fornitore';
+
+  @override
+  String get purchasesKindCreditNote => 'Nota di credito';
+
+  @override
+  String get purchasesKindReceipt => 'Ricevuta di un membro';
+
+  @override
+  String get purchasesLegacyTag =>
+      'Registrato prima dei documenti di acquisto: fornitore, data e classificazione non verificati.';
+
+  @override
+  String get purchasesLines => 'Righe';
+
+  @override
+  String get purchasesNoSupplier => 'Nessun fornitore scelto';
+
+  @override
+  String get purchasesPickDate => 'Scegli una data';
+
+  @override
+  String get purchasesReference => 'Numero di fattura';
+
+  @override
+  String get purchasesRefused =>
+      'Impossibile salvare l\'acquisto. I dati inseriti sono conservati; riprova.';
+
+  @override
+  String get purchasesSave => 'Salva bozza';
+
+  @override
+  String get purchasesSaved => 'Bozza salvata.';
+
+  @override
+  String get purchasesSourceExpense => 'Spesa presentata';
+
+  @override
+  String purchasesSourceInbox(String reference) {
+    return 'Fattura fornitore $reference';
+  }
+
+  @override
+  String get purchasesStateApproved => 'Approvato';
+
+  @override
+  String get purchasesStateCancelled => 'Annullato';
+
+  @override
+  String get purchasesStateDraft => 'Bozza';
+
+  @override
+  String get purchasesStatePending => 'In attesa di approvazione';
+
+  @override
+  String get purchasesStateRejected => 'Rifiutato';
+
+  @override
+  String get purchasesSupplier => 'Fornitore';
+
+  @override
+  String get purchasesTaxField =>
+      'Imposta inclusa (vuoto se la fattura non la indica)';
+
+  @override
+  String get purchasesTaxNotStated => 'Imposta non indicata';
+
+  @override
+  String get purchasesTaxPartial => 'Imposta indicata solo su alcune righe';
+
+  @override
+  String get purchasesTitle => 'Acquisti';
+
+  @override
+  String get purchasesTotal => 'Totale';
 
   @override
   String get pushCancelledBody =>

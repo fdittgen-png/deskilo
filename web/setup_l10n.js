@@ -1213,6 +1213,10 @@ window.SETUP_L10N={
    "webMcp": [
     "Browser agent tools",
     "Lets an AI agent in the web browser use this app's own functions, each with the person's confirmation and the permissions they already have. Needs the MCP interface. Off: no tool is offered."
+   ],
+   "purchases": [
+    "Purchases",
+    "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched."
    ]
   },
   "process": {
@@ -1374,7 +1378,8 @@ window.SETUP_L10N={
    "viewCalendar": "See the calendar",
    "viewDirectory": "See the member directory",
    "viewMyMoney": "See their own account and invoices",
-   "viewDocuments": "See the shared documents"
+   "viewDocuments": "See the shared documents",
+   "managePurchases": "Capture supplier bills"
   },
   "domain": {
    "payment": "Payment",
@@ -2645,6 +2650,10 @@ window.SETUP_L10N={
    "webMcp": [
     "Outils pour agent de navigateur",
     "Permet à un agent IA du navigateur d'utiliser les fonctions propres de l'application, chacune avec la confirmation de la personne et les droits qu'elle a déjà. Nécessite l'interface MCP. Désactivé : aucun outil n'est proposé."
+   ],
+   "purchases": [
+    "Achats",
+    "Un seul document pour ce que l'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts."
    ]
   },
   "process": {
@@ -2806,7 +2815,8 @@ window.SETUP_L10N={
    "viewCalendar": "Voir le calendrier",
    "viewDirectory": "Voir l'annuaire des membres",
    "viewMyMoney": "Voir son propre compte et ses factures",
-   "viewDocuments": "Voir les documents partagés"
+   "viewDocuments": "Voir les documents partagés",
+   "managePurchases": "Saisir les factures fournisseur"
   },
   "domain": {
    "payment": "Paiement",
@@ -4077,6 +4087,10 @@ window.SETUP_L10N={
    "webMcp": [
     "Werkzeuge für Browser-Agenten",
     "Erlaubt einem KI-Agenten im Webbrowser, die eigenen Funktionen der App zu nutzen, jeweils mit Bestätigung der Person und mit den Rechten, die sie bereits hat. Setzt die MCP-Schnittstelle voraus. Aus: Es wird kein Werkzeug angeboten."
+   ],
+   "purchases": [
+    "Einkäufe",
+    "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert."
    ]
   },
   "process": {
@@ -4238,7 +4252,8 @@ window.SETUP_L10N={
    "viewCalendar": "Den Kalender sehen",
    "viewDirectory": "Das Mitgliederverzeichnis sehen",
    "viewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
-   "viewDocuments": "Die geteilten Dokumente sehen"
+   "viewDocuments": "Die geteilten Dokumente sehen",
+   "managePurchases": "Lieferantenrechnungen erfassen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -5509,6 +5524,10 @@ window.SETUP_L10N={
    "webMcp": [
     "Herramientas para agentes del navegador",
     "Permite que un agente de IA del navegador use las funciones propias de la aplicación, cada una con la confirmación de la persona y los permisos que ya tiene. Requiere la interfaz MCP. Desactivado: no se ofrece ninguna herramienta."
+   ],
+   "purchases": [
+    "Compras",
+    "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian."
    ]
   },
   "process": {
@@ -5670,7 +5689,8 @@ window.SETUP_L10N={
    "viewCalendar": "Ver el calendario",
    "viewDirectory": "Ver el directorio de miembros",
    "viewMyMoney": "Ver su propia cuenta y sus facturas",
-   "viewDocuments": "Ver los documentos compartidos"
+   "viewDocuments": "Ver los documentos compartidos",
+   "managePurchases": "Registrar facturas de proveedor"
   },
   "domain": {
    "payment": "Pago",
@@ -6941,6 +6961,10 @@ window.SETUP_L10N={
    "webMcp": [
     "Strumenti per agenti del browser",
     "Permette a un agente IA nel browser di usare le funzioni proprie dell'app, ciascuna con la conferma della persona e i permessi che ha già. Richiede l'interfaccia MCP. Disattivato: nessuno strumento viene offerto."
+   ],
+   "purchases": [
+    "Acquisti",
+    "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati."
    ]
   },
   "process": {
@@ -7102,7 +7126,8 @@ window.SETUP_L10N={
    "viewCalendar": "Vedere il calendario",
    "viewDirectory": "Vedere l'elenco dei membri",
    "viewMyMoney": "Vedere il proprio conto e le proprie fatture",
-   "viewDocuments": "Vedere i documenti condivisi"
+   "viewDocuments": "Vedere i documenti condivisi",
+   "managePurchases": "Registrare le fatture dei fornitori"
   },
   "domain": {
    "payment": "Pagamento",

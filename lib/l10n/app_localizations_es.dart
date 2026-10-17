@@ -5955,6 +5955,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
 
   @override
+  String get featurePurchasesDesc =>
+      'Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.';
+
+  @override
+  String get featurePurchasesTitle => 'Compras';
+
+  @override
   String get featurePushNotifications => 'Notificaciones push';
 
   @override
@@ -12996,6 +13003,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageNegotiations => 'Gestionar los acuerdos comerciales';
 
   @override
+  String get permManagePurchases => 'Registrar facturas de proveedor';
+
+  @override
   String get permManageReservations => 'Gestionar reservas de otros';
 
   @override
@@ -14255,6 +14265,121 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Perfil público';
+
+  @override
+  String get purchasesAddBill => 'Añadir factura de proveedor';
+
+  @override
+  String get purchasesDescription => 'Descripción';
+
+  @override
+  String get purchasesDraftNote =>
+      'Un borrador: se presenta cuando exista su deuda.';
+
+  @override
+  String get purchasesDueDate => 'Vencimiento';
+
+  @override
+  String purchasesDueOn(String date) {
+    return 'Vence el $date';
+  }
+
+  @override
+  String get purchasesEmpty => 'Aún no hay compras.';
+
+  @override
+  String get purchasesEvidence => 'Justificantes';
+
+  @override
+  String get purchasesGross => 'Total con impuestos';
+
+  @override
+  String get purchasesIntro =>
+      'Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí y sigue siendo un borrador hasta que exista su deuda.';
+
+  @override
+  String get purchasesInvalid =>
+      'Introduzca un total positivo y un impuesto que no lo supere.';
+
+  @override
+  String get purchasesInvoiceDate => 'Fecha de la factura';
+
+  @override
+  String get purchasesKindBill => 'Factura de proveedor';
+
+  @override
+  String get purchasesKindCreditNote => 'Nota de crédito';
+
+  @override
+  String get purchasesKindReceipt => 'Recibo de miembro';
+
+  @override
+  String get purchasesLegacyTag =>
+      'Registrado antes de los documentos de compra: proveedor, fecha y clasificación sin verificar.';
+
+  @override
+  String get purchasesLines => 'Líneas';
+
+  @override
+  String get purchasesNoSupplier => 'Ningún proveedor elegido';
+
+  @override
+  String get purchasesPickDate => 'Elegir una fecha';
+
+  @override
+  String get purchasesReference => 'Número de factura';
+
+  @override
+  String get purchasesRefused =>
+      'No se pudo guardar la compra. Sus datos se conservan; inténtelo de nuevo.';
+
+  @override
+  String get purchasesSave => 'Guardar borrador';
+
+  @override
+  String get purchasesSaved => 'Borrador guardado.';
+
+  @override
+  String get purchasesSourceExpense => 'Gasto presentado';
+
+  @override
+  String purchasesSourceInbox(String reference) {
+    return 'Factura de proveedor $reference';
+  }
+
+  @override
+  String get purchasesStateApproved => 'Aprobado';
+
+  @override
+  String get purchasesStateCancelled => 'Cancelado';
+
+  @override
+  String get purchasesStateDraft => 'Borrador';
+
+  @override
+  String get purchasesStatePending => 'Pendiente de aprobación';
+
+  @override
+  String get purchasesStateRejected => 'Rechazado';
+
+  @override
+  String get purchasesSupplier => 'Proveedor';
+
+  @override
+  String get purchasesTaxField =>
+      'Impuesto incluido (vacío si la factura no lo indica)';
+
+  @override
+  String get purchasesTaxNotStated => 'Impuesto no indicado';
+
+  @override
+  String get purchasesTaxPartial => 'Impuesto indicado solo en algunas líneas';
+
+  @override
+  String get purchasesTitle => 'Compras';
+
+  @override
+  String get purchasesTotal => 'Total';
 
   @override
   String get pushCancelledBody => 'Un admin eliminó una reserva.';

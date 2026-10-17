@@ -116,7 +116,13 @@ enum WorkspacePermission {
   viewMyMoney,
 
   /// The documents shared with the member.
-  viewDocuments;
+  viewDocuments,
+
+  /// #2573 — capture and link the workspace's supplier bills (purchase
+  /// documents). Approving an expense stays approveExpenses; reading the
+  /// workspace's finances stays viewFinances. Nobody but an owner and the
+  /// co-owners holds it until a role is given it.
+  managePurchases;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

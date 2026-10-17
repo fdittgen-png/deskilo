@@ -1275,6 +1275,12 @@
       "capabilities": []
     },
     {
+      "key": "purchases",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "pushNotifications",
       "maturity": "beta",
       "lifecycle": "active",

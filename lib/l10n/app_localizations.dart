@@ -10254,6 +10254,18 @@ abstract class AppLocalizations {
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
   String get featurePublicListingsDesc;
 
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.'**
+  String get featurePurchasesDesc;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get featurePurchasesTitle;
+
   /// Feature switch: push delivery of confirmations (FCM, ADR 0011)
   ///
   /// In en, this message translates to:
@@ -22208,6 +22220,12 @@ abstract class AppLocalizations {
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Capture supplier bills'**
+  String get permManagePurchases;
+
   /// #982 permission catalog: permManageReservations
   ///
   /// In en, this message translates to:
@@ -24313,6 +24331,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public profile'**
   String get publicProfileTitle;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Add supplier bill'**
+  String get purchasesAddBill;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get purchasesDescription;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'A draft: it is submitted once its payable exists.'**
+  String get purchasesDraftNote;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get purchasesDueDate;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String purchasesDueOn(String date);
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase yet.'**
+  String get purchasesEmpty;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Evidence'**
+  String get purchasesEvidence;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Total including tax'**
+  String get purchasesGross;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.'**
+  String get purchasesIntro;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive total, and a tax that does not exceed it.'**
+  String get purchasesInvalid;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice date'**
+  String get purchasesInvoiceDate;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier bill'**
+  String get purchasesKindBill;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get purchasesKindCreditNote;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Member receipt'**
+  String get purchasesKindReceipt;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Filed before purchase documents: supplier, date and classification are not verified.'**
+  String get purchasesLegacyTag;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get purchasesLines;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier chosen'**
+  String get purchasesNoSupplier;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get purchasesPickDate;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number'**
+  String get purchasesReference;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase could not be saved. Your entries are kept; try again.'**
+  String get purchasesRefused;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Save draft'**
+  String get purchasesSave;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved.'**
+  String get purchasesSaved;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Expense submission'**
+  String get purchasesSourceExpense;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoice {reference}'**
+  String purchasesSourceInbox(String reference);
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get purchasesStateApproved;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get purchasesStateCancelled;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get purchasesStateDraft;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get purchasesStatePending;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get purchasesStateRejected;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get purchasesSupplier;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Tax included (empty if the bill does not state it)'**
+  String get purchasesTaxField;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Tax not stated'**
+  String get purchasesTaxNotStated;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Tax stated on some lines only'**
+  String get purchasesTaxPartial;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get purchasesTitle;
+
+  /// #2573 purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get purchasesTotal;
 
   /// Push body for the removed-reservation ping — generic, no personal data (#424)
   ///

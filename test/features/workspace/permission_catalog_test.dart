@@ -3,6 +3,8 @@
 // #982 — the nine permissions: in the catalog, with defaults that keep
 // what admins could always do and withhold what only owners could.
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/presentation/screens/roles_screen_labels.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -10,11 +12,19 @@ void main() {
   // KPIs without holding a write right.
   // 25→31 (2026-10-04): the everyday features are permissions — useMessages,
   // makeReservations, viewCalendar, viewDirectory, viewMyMoney, viewDocuments.
-  test('the catalog carries 31 permissions, wire names equal to Dart names',
+  // 31→32 (2026-10-16): #2573 managePurchases — capture the supplier bills.
+  test('the catalog carries 32 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(31));
+    expect(WorkspacePermission.values, hasLength(32));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
+    }
+  });
+
+  test('every permission has a human label, never its wire name', () {
+    final l10n = AppLocalizationsEn();
+    for (final p in WorkspacePermission.values) {
+      expect(permissionLabel(l10n, p), isNot(p.name), reason: '$p');
     }
   });
 
@@ -36,6 +46,8 @@ void main() {
       // #989 — pushing to production stays with the owner; refreshing
       // the dev and entering the prod are an admin's.
       WorkspacePermission.deployToProd,
+      // #2573 — supplier bills are captured by who is given the right.
+      WorkspacePermission.managePurchases,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }

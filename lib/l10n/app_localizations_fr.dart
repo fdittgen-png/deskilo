@@ -5964,6 +5964,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires.';
 
   @override
+  String get featurePurchasesDesc =>
+      'Un seul document pour ce que l\'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts.';
+
+  @override
+  String get featurePurchasesTitle => 'Achats';
+
+  @override
   String get featurePushNotifications => 'Notifications push';
 
   @override
@@ -13032,6 +13039,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageNegotiations => 'Gérer les accords commerciaux';
 
   @override
+  String get permManagePurchases => 'Saisir les factures fournisseur';
+
+  @override
   String get permManageReservations => 'Gérer les réservations des autres';
 
   @override
@@ -14294,6 +14304,122 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Profil public';
+
+  @override
+  String get purchasesAddBill => 'Ajouter une facture fournisseur';
+
+  @override
+  String get purchasesDescription => 'Description';
+
+  @override
+  String get purchasesDraftNote =>
+      'Un brouillon : il est soumis dès que sa dette existe.';
+
+  @override
+  String get purchasesDueDate => 'Échéance';
+
+  @override
+  String purchasesDueOn(String date) {
+    return 'Échéance $date';
+  }
+
+  @override
+  String get purchasesEmpty => 'Aucun achat pour l\'instant.';
+
+  @override
+  String get purchasesEvidence => 'Justificatifs';
+
+  @override
+  String get purchasesGross => 'Total TTC';
+
+  @override
+  String get purchasesIntro =>
+      'Les factures fournisseur et les reçus payés par les membres pour l\'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici et reste un brouillon tant que sa dette n\'existe pas.';
+
+  @override
+  String get purchasesInvalid =>
+      'Saisissez un total positif et une taxe qui ne le dépasse pas.';
+
+  @override
+  String get purchasesInvoiceDate => 'Date de la facture';
+
+  @override
+  String get purchasesKindBill => 'Facture fournisseur';
+
+  @override
+  String get purchasesKindCreditNote => 'Avoir';
+
+  @override
+  String get purchasesKindReceipt => 'Reçu de membre';
+
+  @override
+  String get purchasesLegacyTag =>
+      'Saisi avant les documents d\'achat : fournisseur, date et classement non vérifiés.';
+
+  @override
+  String get purchasesLines => 'Lignes';
+
+  @override
+  String get purchasesNoSupplier => 'Aucun fournisseur choisi';
+
+  @override
+  String get purchasesPickDate => 'Choisir une date';
+
+  @override
+  String get purchasesReference => 'Numéro de facture';
+
+  @override
+  String get purchasesRefused =>
+      'L\'achat n\'a pas pu être enregistré. Votre saisie est conservée ; réessayez.';
+
+  @override
+  String get purchasesSave => 'Enregistrer le brouillon';
+
+  @override
+  String get purchasesSaved => 'Brouillon enregistré.';
+
+  @override
+  String get purchasesSourceExpense => 'Note de frais soumise';
+
+  @override
+  String purchasesSourceInbox(String reference) {
+    return 'Facture fournisseur $reference';
+  }
+
+  @override
+  String get purchasesStateApproved => 'Approuvé';
+
+  @override
+  String get purchasesStateCancelled => 'Annulé';
+
+  @override
+  String get purchasesStateDraft => 'Brouillon';
+
+  @override
+  String get purchasesStatePending => 'En attente d\'approbation';
+
+  @override
+  String get purchasesStateRejected => 'Refusé';
+
+  @override
+  String get purchasesSupplier => 'Fournisseur';
+
+  @override
+  String get purchasesTaxField =>
+      'Dont taxe (vide si la facture ne l\'indique pas)';
+
+  @override
+  String get purchasesTaxNotStated => 'Taxe non indiquée';
+
+  @override
+  String get purchasesTaxPartial =>
+      'Taxe indiquée sur certaines lignes seulement';
+
+  @override
+  String get purchasesTitle => 'Achats';
+
+  @override
+  String get purchasesTotal => 'Total';
 
   @override
   String get pushCancelledBody => 'Une réservation a été retirée par un admin.';

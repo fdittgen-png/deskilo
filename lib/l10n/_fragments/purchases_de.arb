@@ -1,0 +1,165 @@
+{
+  "@@locale": "de",
+  "featurePurchasesTitle": "Einkäufe",
+  "@featurePurchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "featurePurchasesDesc": "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.",
+  "@featurePurchasesDesc": {
+    "description": "#2573 purchases"
+  },
+  "permManagePurchases": "Lieferantenrechnungen erfassen",
+  "@permManagePurchases": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTitle": "Einkäufe",
+  "@purchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "purchasesIntro": "Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst und bleibt ein Entwurf, bis ihre Verbindlichkeit besteht.",
+  "@purchasesIntro": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEmpty": "Noch kein Einkauf.",
+  "@purchasesEmpty": {
+    "description": "#2573 purchases"
+  },
+  "purchasesAddBill": "Lieferantenrechnung hinzufügen",
+  "@purchasesAddBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindBill": "Lieferantenrechnung",
+  "@purchasesKindBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindCreditNote": "Gutschrift",
+  "@purchasesKindCreditNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindReceipt": "Mitgliedsbeleg",
+  "@purchasesKindReceipt": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateDraft": "Entwurf",
+  "@purchasesStateDraft": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStatePending": "Wartet auf Genehmigung",
+  "@purchasesStatePending": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateApproved": "Genehmigt",
+  "@purchasesStateApproved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateRejected": "Abgelehnt",
+  "@purchasesStateRejected": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateCancelled": "Storniert",
+  "@purchasesStateCancelled": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLegacyTag": "Vor den Einkaufsbelegen erfasst: Lieferant, Datum und Einordnung sind nicht geprüft.",
+  "@purchasesLegacyTag": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSupplier": "Lieferant",
+  "@purchasesSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesNoSupplier": "Kein Lieferant gewählt",
+  "@purchasesNoSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesReference": "Rechnungsnummer",
+  "@purchasesReference": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvoiceDate": "Rechnungsdatum",
+  "@purchasesInvoiceDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueDate": "Fälligkeit",
+  "@purchasesDueDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDescription": "Beschreibung",
+  "@purchasesDescription": {
+    "description": "#2573 purchases"
+  },
+  "purchasesGross": "Gesamtbetrag inkl. Steuer",
+  "@purchasesGross": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxField": "Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)",
+  "@purchasesTaxField": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxNotStated": "Steuer nicht ausgewiesen",
+  "@purchasesTaxNotStated": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxPartial": "Steuer nur auf einigen Positionen ausgewiesen",
+  "@purchasesTaxPartial": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTotal": "Gesamt",
+  "@purchasesTotal": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLines": "Positionen",
+  "@purchasesLines": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEvidence": "Nachweise",
+  "@purchasesEvidence": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceExpense": "Eingereichte Auslage",
+  "@purchasesSourceExpense": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceInbox": "Lieferantenrechnung {reference}",
+  "@purchasesSourceInbox": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesDueOn": "Fällig am {date}",
+  "@purchasesDueOn": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesSave": "Entwurf speichern",
+  "@purchasesSave": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSaved": "Entwurf gespeichert.",
+  "@purchasesSaved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesRefused": "Der Einkauf konnte nicht gespeichert werden. Ihre Eingaben bleiben erhalten; versuchen Sie es erneut.",
+  "@purchasesRefused": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvalid": "Geben Sie einen positiven Gesamtbetrag ein und eine Steuer, die ihn nicht übersteigt.",
+  "@purchasesInvalid": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDraftNote": "Ein Entwurf: Er wird eingereicht, sobald seine Verbindlichkeit besteht.",
+  "@purchasesDraftNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesPickDate": "Datum wählen",
+  "@purchasesPickDate": {
+    "description": "#2573 purchases"
+  }
+}

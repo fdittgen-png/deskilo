@@ -156,6 +156,7 @@
         "priceNegotiations": false,
         "publicHolidays": false,
         "publicListings": false,
+        "purchases": false,
         "pushNotifications": true,
         "qrBadges": false,
         "recapitulativeStatement": false,

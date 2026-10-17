@@ -226,6 +226,7 @@ begin
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,
+      "purchases": false,
       "pushNotifications": true,
       "qrBadges": false,
       "recapitulativeStatement": false,

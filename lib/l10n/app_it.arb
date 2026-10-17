@@ -4228,6 +4228,14 @@
   },
   "featurePublicListings": "Scheda pubblica dello spazio",
   "featurePublicListingsDesc": "Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.",
+  "featurePurchasesDesc": "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.",
+  "@featurePurchasesDesc": {
+    "description": "#2573 purchases"
+  },
+  "featurePurchasesTitle": "Acquisti",
+  "@featurePurchasesTitle": {
+    "description": "#2573 purchases"
+  },
   "featurePushNotifications": "Notifiche push",
   "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
   "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
@@ -8326,6 +8334,10 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Gestire gli accordi commerciali",
+  "permManagePurchases": "Registrare le fatture dei fornitori",
+  "@permManagePurchases": {
+    "description": "#2573 purchases"
+  },
   "permManageReservations": "Gestire le prenotazioni degli altri",
   "@permManageReservations": {
     "description": "#982 permission catalog: permManageReservations"
@@ -9106,6 +9118,156 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
+  "purchasesAddBill": "Aggiungi fattura fornitore",
+  "@purchasesAddBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDescription": "Descrizione",
+  "@purchasesDescription": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDraftNote": "Una bozza: viene inviata quando esiste il relativo debito.",
+  "@purchasesDraftNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueDate": "Scadenza",
+  "@purchasesDueDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueOn": "Scade il {date}",
+  "@purchasesDueOn": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesEmpty": "Nessun acquisto per ora.",
+  "@purchasesEmpty": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEvidence": "Giustificativi",
+  "@purchasesEvidence": {
+    "description": "#2573 purchases"
+  },
+  "purchasesGross": "Totale imposte incluse",
+  "@purchasesGross": {
+    "description": "#2573 purchases"
+  },
+  "purchasesIntro": "Le fatture dei fornitori e le ricevute pagate dai membri per lo spazio, un documento ciascuna. Una ricevuta si approva come ogni spesa; una fattura si registra qui e resta una bozza finché non esiste il relativo debito.",
+  "@purchasesIntro": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvalid": "Inserisci un totale positivo e un'imposta che non lo superi.",
+  "@purchasesInvalid": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvoiceDate": "Data della fattura",
+  "@purchasesInvoiceDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindBill": "Fattura fornitore",
+  "@purchasesKindBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindCreditNote": "Nota di credito",
+  "@purchasesKindCreditNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindReceipt": "Ricevuta di un membro",
+  "@purchasesKindReceipt": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLegacyTag": "Registrato prima dei documenti di acquisto: fornitore, data e classificazione non verificati.",
+  "@purchasesLegacyTag": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLines": "Righe",
+  "@purchasesLines": {
+    "description": "#2573 purchases"
+  },
+  "purchasesNoSupplier": "Nessun fornitore scelto",
+  "@purchasesNoSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesPickDate": "Scegli una data",
+  "@purchasesPickDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesReference": "Numero di fattura",
+  "@purchasesReference": {
+    "description": "#2573 purchases"
+  },
+  "purchasesRefused": "Impossibile salvare l'acquisto. I dati inseriti sono conservati; riprova.",
+  "@purchasesRefused": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSave": "Salva bozza",
+  "@purchasesSave": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSaved": "Bozza salvata.",
+  "@purchasesSaved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceExpense": "Spesa presentata",
+  "@purchasesSourceExpense": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceInbox": "Fattura fornitore {reference}",
+  "@purchasesSourceInbox": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesStateApproved": "Approvato",
+  "@purchasesStateApproved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateCancelled": "Annullato",
+  "@purchasesStateCancelled": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateDraft": "Bozza",
+  "@purchasesStateDraft": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStatePending": "In attesa di approvazione",
+  "@purchasesStatePending": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateRejected": "Rifiutato",
+  "@purchasesStateRejected": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSupplier": "Fornitore",
+  "@purchasesSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxField": "Imposta inclusa (vuoto se la fattura non la indica)",
+  "@purchasesTaxField": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxNotStated": "Imposta non indicata",
+  "@purchasesTaxNotStated": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxPartial": "Imposta indicata solo su alcune righe",
+  "@purchasesTaxPartial": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTitle": "Acquisti",
+  "@purchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTotal": "Totale",
+  "@purchasesTotal": {
+    "description": "#2573 purchases"
+  },
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
   "pushPendingBody": "Qualcuno attende la sua conferma.",

@@ -1,0 +1,165 @@
+{
+  "@@locale": "fr",
+  "featurePurchasesTitle": "Achats",
+  "@featurePurchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "featurePurchasesDesc": "Un seul document pour ce que l'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts.",
+  "@featurePurchasesDesc": {
+    "description": "#2573 purchases"
+  },
+  "permManagePurchases": "Saisir les factures fournisseur",
+  "@permManagePurchases": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTitle": "Achats",
+  "@purchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "purchasesIntro": "Les factures fournisseur et les reçus payés par les membres pour l'espace, un document chacun. Un reçu est approuvé comme toute note de frais ; une facture est saisie ici et reste un brouillon tant que sa dette n'existe pas.",
+  "@purchasesIntro": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEmpty": "Aucun achat pour l'instant.",
+  "@purchasesEmpty": {
+    "description": "#2573 purchases"
+  },
+  "purchasesAddBill": "Ajouter une facture fournisseur",
+  "@purchasesAddBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindBill": "Facture fournisseur",
+  "@purchasesKindBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindCreditNote": "Avoir",
+  "@purchasesKindCreditNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindReceipt": "Reçu de membre",
+  "@purchasesKindReceipt": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateDraft": "Brouillon",
+  "@purchasesStateDraft": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStatePending": "En attente d'approbation",
+  "@purchasesStatePending": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateApproved": "Approuvé",
+  "@purchasesStateApproved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateRejected": "Refusé",
+  "@purchasesStateRejected": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateCancelled": "Annulé",
+  "@purchasesStateCancelled": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLegacyTag": "Saisi avant les documents d'achat : fournisseur, date et classement non vérifiés.",
+  "@purchasesLegacyTag": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSupplier": "Fournisseur",
+  "@purchasesSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesNoSupplier": "Aucun fournisseur choisi",
+  "@purchasesNoSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesReference": "Numéro de facture",
+  "@purchasesReference": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvoiceDate": "Date de la facture",
+  "@purchasesInvoiceDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueDate": "Échéance",
+  "@purchasesDueDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDescription": "Description",
+  "@purchasesDescription": {
+    "description": "#2573 purchases"
+  },
+  "purchasesGross": "Total TTC",
+  "@purchasesGross": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxField": "Dont taxe (vide si la facture ne l'indique pas)",
+  "@purchasesTaxField": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxNotStated": "Taxe non indiquée",
+  "@purchasesTaxNotStated": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxPartial": "Taxe indiquée sur certaines lignes seulement",
+  "@purchasesTaxPartial": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTotal": "Total",
+  "@purchasesTotal": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLines": "Lignes",
+  "@purchasesLines": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEvidence": "Justificatifs",
+  "@purchasesEvidence": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceExpense": "Note de frais soumise",
+  "@purchasesSourceExpense": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceInbox": "Facture fournisseur {reference}",
+  "@purchasesSourceInbox": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesDueOn": "Échéance {date}",
+  "@purchasesDueOn": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesSave": "Enregistrer le brouillon",
+  "@purchasesSave": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSaved": "Brouillon enregistré.",
+  "@purchasesSaved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesRefused": "L'achat n'a pas pu être enregistré. Votre saisie est conservée ; réessayez.",
+  "@purchasesRefused": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvalid": "Saisissez un total positif et une taxe qui ne le dépasse pas.",
+  "@purchasesInvalid": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDraftNote": "Un brouillon : il est soumis dès que sa dette existe.",
+  "@purchasesDraftNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesPickDate": "Choisir une date",
+  "@purchasesPickDate": {
+    "description": "#2573 purchases"
+  }
+}

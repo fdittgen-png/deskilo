@@ -5958,6 +5958,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.';
 
   @override
+  String get featurePurchasesDesc =>
+      'Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.';
+
+  @override
+  String get featurePurchasesTitle => 'Einkäufe';
+
+  @override
   String get featurePushNotifications => 'Push-Benachrichtigungen';
 
   @override
@@ -13021,6 +13028,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permManageNegotiations => 'Geschäftsvereinbarungen verwalten';
 
   @override
+  String get permManagePurchases => 'Lieferantenrechnungen erfassen';
+
+  @override
   String get permManageReservations => 'Reservierungen anderer verwalten';
 
   @override
@@ -14289,6 +14299,122 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Öffentliches Profil';
+
+  @override
+  String get purchasesAddBill => 'Lieferantenrechnung hinzufügen';
+
+  @override
+  String get purchasesDescription => 'Beschreibung';
+
+  @override
+  String get purchasesDraftNote =>
+      'Ein Entwurf: Er wird eingereicht, sobald seine Verbindlichkeit besteht.';
+
+  @override
+  String get purchasesDueDate => 'Fälligkeit';
+
+  @override
+  String purchasesDueOn(String date) {
+    return 'Fällig am $date';
+  }
+
+  @override
+  String get purchasesEmpty => 'Noch kein Einkauf.';
+
+  @override
+  String get purchasesEvidence => 'Nachweise';
+
+  @override
+  String get purchasesGross => 'Gesamtbetrag inkl. Steuer';
+
+  @override
+  String get purchasesIntro =>
+      'Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, je ein Beleg. Ein Beleg wird wie jede Auslage genehmigt; eine Rechnung wird hier erfasst und bleibt ein Entwurf, bis ihre Verbindlichkeit besteht.';
+
+  @override
+  String get purchasesInvalid =>
+      'Geben Sie einen positiven Gesamtbetrag ein und eine Steuer, die ihn nicht übersteigt.';
+
+  @override
+  String get purchasesInvoiceDate => 'Rechnungsdatum';
+
+  @override
+  String get purchasesKindBill => 'Lieferantenrechnung';
+
+  @override
+  String get purchasesKindCreditNote => 'Gutschrift';
+
+  @override
+  String get purchasesKindReceipt => 'Mitgliedsbeleg';
+
+  @override
+  String get purchasesLegacyTag =>
+      'Vor den Einkaufsbelegen erfasst: Lieferant, Datum und Einordnung sind nicht geprüft.';
+
+  @override
+  String get purchasesLines => 'Positionen';
+
+  @override
+  String get purchasesNoSupplier => 'Kein Lieferant gewählt';
+
+  @override
+  String get purchasesPickDate => 'Datum wählen';
+
+  @override
+  String get purchasesReference => 'Rechnungsnummer';
+
+  @override
+  String get purchasesRefused =>
+      'Der Einkauf konnte nicht gespeichert werden. Ihre Eingaben bleiben erhalten; versuchen Sie es erneut.';
+
+  @override
+  String get purchasesSave => 'Entwurf speichern';
+
+  @override
+  String get purchasesSaved => 'Entwurf gespeichert.';
+
+  @override
+  String get purchasesSourceExpense => 'Eingereichte Auslage';
+
+  @override
+  String purchasesSourceInbox(String reference) {
+    return 'Lieferantenrechnung $reference';
+  }
+
+  @override
+  String get purchasesStateApproved => 'Genehmigt';
+
+  @override
+  String get purchasesStateCancelled => 'Storniert';
+
+  @override
+  String get purchasesStateDraft => 'Entwurf';
+
+  @override
+  String get purchasesStatePending => 'Wartet auf Genehmigung';
+
+  @override
+  String get purchasesStateRejected => 'Abgelehnt';
+
+  @override
+  String get purchasesSupplier => 'Lieferant';
+
+  @override
+  String get purchasesTaxField =>
+      'Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)';
+
+  @override
+  String get purchasesTaxNotStated => 'Steuer nicht ausgewiesen';
+
+  @override
+  String get purchasesTaxPartial =>
+      'Steuer nur auf einigen Positionen ausgewiesen';
+
+  @override
+  String get purchasesTitle => 'Einkäufe';
+
+  @override
+  String get purchasesTotal => 'Gesamt';
 
   @override
   String get pushCancelledBody =>

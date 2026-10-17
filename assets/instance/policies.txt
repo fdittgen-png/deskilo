@@ -186,6 +186,13 @@ public.public_person_cards.mcp_delegated_deny
 public.public_person_cards.published_people
 public.public_workspace_cards.mcp_delegated_deny
 public.public_workspace_cards.published_cards
+public.purchase_documents.mcp_delegated_deny
+public.purchase_documents.purchase_documents_select
+public.purchase_lines.mcp_delegated_deny
+public.purchase_lines.purchase_lines_select
+public.purchase_requests.mcp_delegated_deny
+public.purchase_sources.mcp_delegated_deny
+public.purchase_sources.purchase_sources_select
 public.push_config.mcp_delegated_deny
 public.push_endpoints.mcp_delegated_deny
 public.push_endpoints.push_endpoints_own
