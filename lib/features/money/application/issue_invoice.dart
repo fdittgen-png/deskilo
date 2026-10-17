@@ -54,7 +54,7 @@ final class InvoiceIssueAttempt {
   /// policy (as before), under the same receipt.
   final bool direct;
 
-  bool get hasReceipt => requestId != null && replacesId == null;
+  bool get hasReceipt => requestId != null;
 
   final String workspaceId;
   final String memberId;
@@ -156,7 +156,9 @@ class InvoiceIssuance {
       buyerReference: attempt.buyerReference,
       purchaseOrder: attempt.purchaseOrder,
       correctionReason: attempt.correctionReason,
+      replacesId: attempt.replacesId,
     );
+    if (attempt.replacesId != null) return _actions!.replaceInvoiceOnce(command);
     return attempt.direct
         ? _actions!.createInvoiceOnce(command)
         : _commands.issueInvoiceWithReceipt(command);

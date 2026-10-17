@@ -63,6 +63,26 @@ class SupabaseInvoiceActionCommands implements InvoiceActionCommands {
   }
 
   @override
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand command) async {
+    final answer = await _client.rpc<Object?>(
+      'create_invoice_replacement_v1',
+      params: {
+        'p_workspace_id': command.workspaceId,
+        'p_member_id': command.memberId,
+        'p_period': command.period,
+        'p_replaces': command.replacesId,
+        'p_request_id': command.requestId,
+        'p_detailed': command.detailed,
+        'p_kind': command.kind.name,
+        'p_buyer_reference': command.buyerReference,
+        'p_purchase_order': command.purchaseOrder,
+        'p_correction_reason': command.correctionReason,
+      },
+    );
+    return _id(answer, 'create_invoice_replacement_v1');
+  }
+
+  @override
   Future<String> settleInvoicesOnce({
     required String workspaceId,
     required String memberId,

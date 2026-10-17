@@ -186,6 +186,10 @@ class _Actions implements InvoiceActionCommands {
   }
 
   @override
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand command) async =>
+      'inv-2';
+
+  @override
   Future<String> createInvoiceOnce(InvoiceIssueCommand command) async =>
       'inv-1';
 

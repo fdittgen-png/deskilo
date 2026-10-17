@@ -5,6 +5,7 @@
 // back, nothing is written again, and an invoice that merely looks like the
 // attempt (same member and month) is never taken for it.
 import 'package:deskilo/core/data/json_reader.dart';
+import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/validation/pending_validation.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/data/command_receipt_decoder.dart';
@@ -89,6 +90,26 @@ InvoiceIssueAttempt _attempt(
   requestId: requestId,
   replacesId: replacesId,
 );
+
+/// Commits the replacement, then loses the answer.
+class _LossyReplace extends FakeInvoiceActionCommands {
+  // ignore: use_super_parameters
+  _LossyReplace(FakeMoneyRepository repo) : super(repo);
+
+  int sends = 0;
+
+  @override
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand c) async {
+    sends++;
+    await super.replaceInvoiceOnce(c);
+    throw const JsonShapeException(
+      'create_invoice_replacement_v1',
+      'id',
+      'String',
+      'null',
+    );
+  }
+}
 
 void main() {
   late _Server server;
@@ -180,14 +201,56 @@ void main() {
     expect(out.attempt.requestId, 'req-4');
   });
 
-  test('a replacement keeps the archive look and sends no receipt', () async {
-    final attempt = _attempt('req-5', replacesId: 'inv-x');
+  test('an attempt without a request id keeps the legacy path', () async {
+    const attempt = InvoiceIssueAttempt(
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      period: '2026-09',
+      replacesId: 'inv-x',
+    );
     expect(attempt.hasReceipt, isFalse);
     final out = await issuance.issue(attempt);
     expect(server.legacyCalls, 1);
     expect(server.issueCalls, 0);
     expect(out, isA<InvoiceIssueRefused>()); // unknown replaced invoice
   });
+
+  test(
+    'a replacement under a request id is recovered by it after a lost answer',
+    () async {
+      server.loseAnswer = false;
+      final erroneous = await server.createInvoice(
+        workspaceId: 'ws-1',
+        memberId: 'member-1',
+        period: '2026-09',
+      );
+      final lossy = _LossyReplace(server);
+      final withActions = InvoiceIssuance(server, server, lossy);
+      final attempt = InvoiceIssueAttempt(
+        workspaceId: 'ws-1',
+        memberId: 'member-1',
+        period: '2026-09',
+        replacesId: erroneous,
+        correctionReason: 'R2',
+        requestId: 'rep-1',
+      );
+      expect(attempt.hasReceipt, isTrue);
+      final out = await withActions.issue(attempt);
+      expect(out, isA<InvoiceIssueUnknown>());
+      final found =
+          await withActions.look(out as InvoiceIssueUnknown) as InvoiceIssued;
+      final replacement = server.invoices.firstWhere(
+        (i) => i.replacesInvoiceId == erroneous,
+      );
+      expect(found.invoiceId, replacement.id);
+      await withActions.look(out);
+      expect(lossy.sends, 1, reason: 'looking never sends again');
+      expect(
+        server.invoices.where((i) => i.replacesInvoiceId == erroneous),
+        hasLength(1),
+      );
+    },
+  );
 
   test('the pending answer of the receipt path is a hold, not a failure', () {
     expect(

@@ -33,6 +33,13 @@ abstract interface class InvoiceActionCommands {
   /// invoiced". Returns the invoice id.
   Future<String> createInvoiceOnce(InvoiceIssueCommand command);
 
+  /// The correction of an erroneous invoice (RPC
+  /// `create_invoice_replacement_v1`, 0465): issues directly, voids the
+  /// replaced one in the same step and records one receipt under
+  /// [InvoiceIssueCommand.requestId]. [InvoiceIssueCommand.replacesId] is
+  /// required. Returns the new invoice's id; the same id replays it.
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand command);
+
   /// Regroups [invoiceIds] into ONE invoice the member pays (RPC
   /// `settle_invoices_v1`, 0464) under [requestId]. Returns the settlement's
   /// id; the same id with the same set answers the same settlement.

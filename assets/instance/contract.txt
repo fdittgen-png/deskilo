@@ -302,13 +302,13 @@ constraint fee_bands.fee_bands_workspace_id_from_pct_key UNIQUE (workspace_id, f
 constraint fee_bands.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint fee_bands.system_company_present CHECK ((company_id IS NOT NULL))
 constraint financial_command_receipts.financial_command_receipts_actor_member_id_fkey FOREIGN KEY (actor_member_id) REFERENCES members(id) ON DELETE CASCADE
-constraint financial_command_receipts.financial_command_receipts_applied_check CHECK (((state <> 'applied'::text) OR ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'settle_invoices'::text])) = (invoice_id IS NOT NULL))))
+constraint financial_command_receipts.financial_command_receipts_applied_check CHECK (((state <> 'applied'::text) OR ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text])) = (invoice_id IS NOT NULL))))
 constraint financial_command_receipts.financial_command_receipts_check1 CHECK (((state = 'pending'::text) = (event_id IS NOT NULL)))
-constraint financial_command_receipts.financial_command_receipts_kind_check CHECK ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'settle_invoices'::text, 'invoice_void'::text, 'refund'::text])))
+constraint financial_command_receipts.financial_command_receipts_kind_check CHECK ((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text, 'invoice_void'::text, 'refund'::text])))
 constraint financial_command_receipts.financial_command_receipts_payload_digest_check CHECK ((char_length(payload_digest) = 64))
 constraint financial_command_receipts.financial_command_receipts_pkey PRIMARY KEY (id)
 constraint financial_command_receipts.financial_command_receipts_state_check CHECK ((state = ANY (ARRAY['applied'::text, 'pending'::text])))
-constraint financial_command_receipts.financial_command_receipts_subject_check CHECK (((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'settle_invoices'::text])) = (subject_invoice_id IS NULL)))
+constraint financial_command_receipts.financial_command_receipts_subject_check CHECK (((command_kind = ANY (ARRAY['invoice_issue'::text, 'invoice_create'::text, 'invoice_replace'::text, 'settle_invoices'::text])) = (subject_invoice_id IS NULL)))
 constraint financial_command_receipts.financial_command_receipts_workspace_id_actor_member_id_req_key UNIQUE (workspace_id, actor_member_id, request_id)
 constraint financial_command_receipts.financial_command_receipts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint financial_command_receipts.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -1476,6 +1476,7 @@ routine public.create_group_conversation(p_workspace_id uuid, p_title text, p_me
 routine public.create_invitation(p_workspace_id uuid, p_is_admin boolean, p_first_name text, p_last_name text, p_member_id uuid, p_also_prod boolean) -> text | function | definer | volatile | exec:authenticated,service_role | body:ce3ffd5aee17
 routine public.create_invoice(p_workspace_id uuid, p_member_id uuid, p_period text, p_replaces uuid, p_detailed boolean, p_kind text, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text, p_correction_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:022b3a473782
 routine public.create_invoice_receipted_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_request_id uuid, p_kind text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:eba62f2781e6
+routine public.create_invoice_replacement_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_replaces uuid, p_request_id uuid, p_detailed boolean, p_kind text, p_buyer_reference text, p_purchase_order text, p_correction_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:2bd5cc408fcc
 routine public.create_managed_member(p_workspace_id uuid, p_identity jsonb, p_access jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:aaed1f720349
 routine public.create_reservation(p_workspace_id uuid, p_seat_id uuid, p_office_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean, p_level_id uuid, p_desk_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:09be234a89e1
 routine public.create_reservation_once(p_client_request_id uuid, p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:fab7292b9325

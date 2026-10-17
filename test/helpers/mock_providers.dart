@@ -553,6 +553,10 @@ class _NoActionCommands implements InvoiceActionCommands {
       throw UnsupportedError('no refund in this fake');
 
   @override
+  Future<String> replaceInvoiceOnce(InvoiceIssueCommand command) =>
+      throw UnsupportedError('no replacement in this fake');
+
+  @override
   Future<String> createInvoiceOnce(InvoiceIssueCommand command) =>
       throw UnsupportedError('no direct issue in this fake');
 
