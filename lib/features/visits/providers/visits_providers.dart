@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/context_client_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/guest_visit_actions.dart';
 import '../data/supabase_guest_participation_repository.dart';
@@ -12,7 +12,7 @@ part 'visits_providers.g.dart';
 /// #1835 — the guest's own visits, over this server's definer functions.
 @Riverpod(keepAlive: true)
 GuestParticipationRepository guestParticipationRepository(Ref ref) =>
-    SupabaseGuestParticipationRepository(Supabase.instance.client);
+    SupabaseGuestParticipationRepository(ref.watch(personalClientProvider));
 
 /// The guest's actions on their own visits.
 @riverpod

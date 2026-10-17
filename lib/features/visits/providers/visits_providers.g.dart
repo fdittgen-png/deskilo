@@ -60,7 +60,7 @@ final class GuestParticipationRepositoryProvider
 }
 
 String _$guestParticipationRepositoryHash() =>
-    r'4abec970bdc02806679e4a7d9c873756f36f4a22';
+    r'888a11d5fc2e57dc53df24639e9c5ab80b70a0bb';
 
 /// The guest's actions on their own visits.
 
