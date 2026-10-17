@@ -1,0 +1,207 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2365 — the fiscal source of an export is accepted only as the answer to
+// the question asked: its own workspace, period and principal, a version it
+// knows, and control totals that equal the sums of the rows it delivered
+// (worked out here by hand, not by the code under test). Anything else
+// stops the export with a named failure, never a smaller file. The export
+// consumer takes its ledger and repartitions from that one answer and
+// refuses when the invoice list the person holds has moved.
+import 'package:deskilo/core/data/read_provenance.dart';
+import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
+import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/presentation/export_year_books.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'support/seeded_export_year.dart';
+
+const _ws = 'ws-1';
+const _me = 'user-1';
+
+Map<String, Object?> _ledger(String id, String kind, String category, int cents) => {
+      'id': id,
+      'workspace_id': _ws,
+      'member_id': 'm-1',
+      'kind': kind,
+      'category': category,
+      'amount_cents': cents,
+      'description': 'd',
+      'period': '2026-03',
+      'created_at': '2026-03-13T08:00:00+00:00',
+      'occurred_on': '2026-03-12',
+    };
+
+/// 12000 payment + 3000 service charge + 3000 expense credit = 18000 (credit
+/// 15000, charge 3000); invoices 12000 + 7000 = 19000; one match of 12000;
+/// one repartition of 6000.
+Map<String, Object?> _answer() => {
+      'version': 1,
+      'status': 'ok',
+      'workspace_id': _ws,
+      'from': '2026-01-01',
+      'to': '2026-12-31',
+      'principal': _me,
+      'cutoff': '100:110:',
+      'invoices': [
+        {'id': 'i-a', 'number': 'A', 'total_cents': 12000},
+        {'id': 'i-c', 'number': 'C', 'total_cents': 7000},
+      ],
+      'matches': [
+        {'id': 'm-a', 'paid_cents': 12000},
+      ],
+      'ledger': [
+        _ledger('l-1', 'credit', 'payment', 12000),
+        _ledger('l-2', 'charge', 'service', 3000),
+        _ledger('l-3', 'credit', 'expense', 3000),
+      ],
+      'repartitions': [
+        {
+          'id': 'r-1',
+          'title': 'rent',
+          'amount_cents': 6000,
+          'method': 'equal',
+          'period': '2026-04',
+          'shares': <Object?>[],
+          'status': 'confirmed',
+          'created_at': '2026-03-30T08:00:00+00:00',
+          'applied_at': '2026-04-01T08:00:00+00:00',
+        },
+      ],
+      'totals': {
+        'invoices': {'count': 2, 'total_cents': 19000},
+        'matches': {'count': 1, 'paid_cents': 12000},
+        'ledger': {
+          'count': 3,
+          'sum_cents': 18000,
+          'credit_cents': 15000,
+          'charge_cents': 3000,
+        },
+        'repartitions': {'count': 1, 'amount_cents': 6000},
+      },
+    };
+
+AccountingSourceSnapshot _parse(Object? raw) => AccountingSourceSnapshot.fromRpc(
+      raw,
+      workspaceId: _ws,
+      from: '2026-01-01',
+      to: '2026-12-31',
+      principal: _me,
+    );
+
+void _refused(Map<String, Object?> a, AccountingSourceFailure failure) {
+  expect(
+    () => _parse(a),
+    throwsA(
+      isA<AccountingSourceException>().having((e) => e.failure, 'failure', failure),
+    ),
+  );
+}
+
+class _Source implements AccountingSourceQueries {
+  _Source(this.answer);
+  final Map<String, Object?> answer;
+  int calls = 0;
+
+  @override
+  Future<AccountingSourceSnapshot> fetchAccountingSource({
+    required String workspaceId,
+    required int year,
+  }) async {
+    calls++;
+    return _parse(answer);
+  }
+}
+
+void main() {
+  test('the answer to the question asked is accepted and is a snapshot', () {
+    final s = _parse(_answer());
+    expect(s.provenance.completeness, ReadCompleteness.snapshot);
+    expect(s.provenance.sourceRevision, '100:110:');
+    expect(s.provenance.target, _ws);
+    expect(s.invoices.map((i) => i.number), ['A', 'C']);
+    expect(s.ledger.fold<int>(0, (a, e) => a + e.amountCents), 18000);
+    expect(s.repartitions.single.amountCents, 6000);
+    expect(s.matchedCents, 12000);
+  });
+
+  test('an over-budget scope is a named refusal with no rows', () {
+    _refused({
+      'version': 1,
+      'status': 'refused',
+      'reason': 'over_budget',
+      'action': 'narrow_period',
+    }, AccountingSourceFailure.overBudget);
+  });
+
+  test('an answer for another workspace, period, principal or version stops', () {
+    _refused(_answer()..['workspace_id'] = 'ws-2', AccountingSourceFailure.inconsistent);
+    _refused(_answer()..['to'] = '2026-06-30', AccountingSourceFailure.inconsistent);
+    _refused(_answer()..['principal'] = 'user-2', AccountingSourceFailure.inconsistent);
+    _refused(_answer()..['version'] = 2, AccountingSourceFailure.inconsistent);
+    _refused(_answer()..['cutoff'] = '', AccountingSourceFailure.inconsistent);
+  });
+
+  test('a control total that is not the sum of its rows stops', () {
+    final a = _answer();
+    ((a['totals']! as Map)['ledger']! as Map)['sum_cents'] = 17999;
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    ((b['totals']! as Map)['ledger']! as Map)['charge_cents'] = 2000;
+    _refused(b, AccountingSourceFailure.inconsistent);
+    final c = _answer();
+    (c['ledger']! as List).removeLast();
+    _refused(c, AccountingSourceFailure.inconsistent);
+    final d = _answer();
+    ((d['totals']! as Map)['repartitions']! as Map)['count'] = 2;
+    _refused(d, AccountingSourceFailure.inconsistent);
+  });
+
+  test('a ledger kind or category this build does not know stops, never skipped', () {
+    final a = _answer();
+    (a['ledger']! as List)[1] = _ledger('l-2', 'charge', 'carbon_credit', 3000);
+    _refused(a, AccountingSourceFailure.inconsistent);
+  });
+
+  test('the invoices held must be the invoices of the source, at their value', () {
+    final s = _parse(_answer())
+      ..requireInvoicesHeld([
+        (id: 'i-a', number: 'A', totalCents: 12000),
+        (id: 'i-c', number: 'C', totalCents: 7000),
+        (id: 'i-z', number: 'Z', totalCents: 1),
+      ]);
+    expect(
+      () => s.requireInvoicesHeld([(id: 'i-a', number: 'A', totalCents: 12000)]),
+      throwsA(isA<AccountingSourceException>()
+          .having((e) => e.failure, 'f', AccountingSourceFailure.invoicesMoved)),
+    );
+    expect(
+      () => s.requireInvoicesHeld([
+        (id: 'i-a', number: 'A', totalCents: 12001),
+        (id: 'i-c', number: 'C', totalCents: 7000),
+      ]),
+      throwsA(isA<AccountingSourceException>()),
+    );
+  });
+
+  test('the export consumer takes the year books from the one source response', () async {
+    final source = _Source(_answer());
+    final loaded = <Invoice>[
+      SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
+      SeededExportYear.invoices.first.copyWith(id: 'i-c', number: 'C', totalCents: 7000),
+    ];
+    final books = (await exportYearBooks(source, _ws, 2026, loaded, loaded: loaded))!;
+    expect(source.calls, 1);
+    expect(books.ledger.map((e) => e.id), ['l-1', 'l-2', 'l-3']);
+    expect(books.ledger.fold<int>(0, (a, e) => a + e.amountCents), 18000);
+    expect(books.repartitions.single.id, 'r-1');
+  });
+
+  test('the consumer stops (null) when an invoice moved since the list was loaded', () {
+    final source = _Source(_answer());
+    final loaded = <Invoice>[
+      SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
+    ];
+    expect(exportYearBooks(source, _ws, 2026, loaded, loaded: loaded), completion(isNull));
+  });
+}

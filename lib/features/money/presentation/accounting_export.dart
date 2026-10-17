@@ -113,10 +113,17 @@ Future<void> exportAccountingFile(
   final development = workspace.environment != 'prod';
   final repo = ref.read(moneyRepositoryProvider);
   final invoiceQueries = ref.read(invoiceQueriesProvider);
-  final accountQueries = ref.read(memberAccountQueriesProvider);
   // #2365 — the books of the export year only.
-  final (invoices: exported, :ledger, :repartitions) =
-      await exportYearBooks(accountQueries, ref.read(expenseRepositoryProvider), workspace.id, year, view.invoices);
+  final books = await exportYearBooksOrSay(
+    context,
+    ref.read(accountingSourceQueriesProvider),
+    workspace.id,
+    year,
+    view.invoices,
+    loaded: invoices,
+  );
+  if (books == null) return;
+  final (invoices: exported, :ledger, :repartitions) = books;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
@@ -129,12 +136,7 @@ Future<void> exportAccountingFile(
   final memberNames =
       ref.read(memberNamesProvider).value ?? const <String, String>{};
   if (!context.mounted) return;
-  if (development) {
-    AppSnack.info(
-      context,
-      l10n.accountingExportDevelopment,
-    );
-  }
+  noteDevelopmentBooks(context, development: development);
 
   Future<void> save(String content, String fileName) async {
     final bytes = Uint8List.fromList(utf8.encode(content));
@@ -481,12 +483,8 @@ Future<void> exportAccountingFile(
         message: 'audit trail export failed',
         errorText: l10n.workspaceGenericError,
         action: () async {
-          // The ledger is fetched HERE rather than read from a cached
-          // provider: a trail assembled from a stale cache would be
-          // missing exactly the recent movements someone is asking
-          // about.
-          final ledger = await accountQueries
-              .fetchWorkspaceLedger(workspace.id);
+          // The ledger is the export year's, read with the invoices in
+          // the one source response above: never a cached provider.
           await save(
             buildAuditTrailCsv(
               events: buildAuditEvents(

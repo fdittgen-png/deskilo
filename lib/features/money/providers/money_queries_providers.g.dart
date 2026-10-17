@@ -378,3 +378,56 @@ final class ExpenseRepositoryProvider
 }
 
 String _$expenseRepositoryHash() => r'47e715506ef078e689536799b290b90cf9e34a0d';
+
+/// #2365 — the one fiscal source an accounting export reads.
+
+@ProviderFor(accountingSourceQueries)
+final accountingSourceQueriesProvider = AccountingSourceQueriesProvider._();
+
+/// #2365 — the one fiscal source an accounting export reads.
+
+final class AccountingSourceQueriesProvider
+    extends
+        $FunctionalProvider<
+          AccountingSourceQueries,
+          AccountingSourceQueries,
+          AccountingSourceQueries
+        >
+    with $Provider<AccountingSourceQueries> {
+  /// #2365 — the one fiscal source an accounting export reads.
+  AccountingSourceQueriesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'accountingSourceQueriesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$accountingSourceQueriesHash();
+
+  @$internal
+  @override
+  $ProviderElement<AccountingSourceQueries> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AccountingSourceQueries create(Ref ref) {
+    return accountingSourceQueries(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AccountingSourceQueries value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AccountingSourceQueries>(value),
+    );
+  }
+}
+
+String _$accountingSourceQueriesHash() =>
+    r'49785a0d86c4e9344ce35422225a1f5fec9d102e';

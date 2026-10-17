@@ -235,6 +235,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Espacio de desarrollo: el archivo lleva la marca DEV y no es la contabilidad real.';
 
   @override
+  String get accountingSourceRefused =>
+      'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
+
+  @override
   String get addressCountryLabel => 'País';
 
   @override

@@ -76,6 +76,7 @@ import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
+import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
@@ -527,4 +528,7 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
       taxReportingRepositoryProvider.overrideWithValue(money),
       commercialTermsProvider.overrideWithValue(money),
       expenseRepositoryProvider.overrideWithValue(money),
+      accountingSourceQueriesProvider.overrideWithValue(
+        money is AccountingSourceQueries ? money as AccountingSourceQueries : FakeMoneyRepository(),
+      ),
     ];

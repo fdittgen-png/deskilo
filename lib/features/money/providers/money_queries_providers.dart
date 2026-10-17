@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/supabase_accounting_source_queries.dart';
 import '../data/supabase_commercial_terms_repository.dart';
 import '../data/supabase_expense_repository.dart';
 import '../data/supabase_invoice_commands.dart';
@@ -9,6 +10,7 @@ import '../data/supabase_invoice_queries.dart';
 import '../data/supabase_member_account_queries.dart';
 import '../data/supabase_report_template_repository.dart';
 import '../data/supabase_tax_reporting_repository.dart';
+import '../domain/accounting_source_queries.dart';
 import '../domain/commercial_terms_repository.dart';
 import '../domain/expense_repository.dart';
 import '../domain/invoice_commands.dart';
@@ -58,3 +60,8 @@ CommercialTermsRepository commercialTerms(Ref ref) =>
 @Riverpod(keepAlive: true)
 ExpenseRepository expenseRepository(Ref ref) =>
     SupabaseExpenseRepository(Supabase.instance.client);
+
+/// #2365 — the one fiscal source an accounting export reads.
+@Riverpod(keepAlive: true)
+AccountingSourceQueries accountingSourceQueries(Ref ref) =>
+    SupabaseAccountingSourceQueries(Supabase.instance.client);

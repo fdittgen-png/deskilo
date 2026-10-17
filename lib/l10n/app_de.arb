@@ -182,6 +182,10 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
+  "@accountingSourceRefused": {
+    "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
+  },
   "addressCountryLabel": "Land",
   "addressNone": "Keine Adresse",
   "addressSaved": "Adresse gespeichert",

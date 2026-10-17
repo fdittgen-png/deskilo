@@ -234,6 +234,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.';
 
   @override
+  String get accountingSourceRefused =>
+      'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
+
+  @override
   String get addressCountryLabel => 'Land';
 
   @override

@@ -234,6 +234,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Development workspace: the file is marked DEV and is not the real books.';
 
   @override
+  String get accountingSourceRefused =>
+      'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
+
+  @override
   String get addressCountryLabel => 'Country';
 
   @override

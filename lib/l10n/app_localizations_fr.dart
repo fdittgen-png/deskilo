@@ -235,6 +235,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Espace de développement : le fichier est marqué DEV et n\'est pas la comptabilité réelle.';
 
   @override
+  String get accountingSourceRefused =>
+      'Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.';
+
+  @override
   String get addressCountryLabel => 'Pays';
 
   @override
