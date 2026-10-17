@@ -272,6 +272,10 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingSourceRefused": "The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.",
+  "@accountingSourceRefused": {
+    "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
+  },
   "addressCountryLabel": "Country",
   "@addressCountryLabel": {
     "description": "Country field on the member address sheet"

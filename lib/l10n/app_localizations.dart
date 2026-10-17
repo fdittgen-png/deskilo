@@ -500,6 +500,12 @@ abstract class AppLocalizations {
   /// **'Development workspace: the file is marked DEV and is not the real books.'**
   String get accountingExportDevelopment;
 
+  /// #2365 accounting export refused: the fiscal source changed or is over budget
+  ///
+  /// In en, this message translates to:
+  /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
+  String get accountingSourceRefused;
+
   /// Country field on the member address sheet
   ///
   /// In en, this message translates to:

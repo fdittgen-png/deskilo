@@ -7,5 +7,9 @@
   "accountingExportDevelopment": "Spazio di sviluppo: il file è contrassegnato DEV e non è la contabilità reale.",
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
+  },
+  "accountingSourceRefused": "Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.",
+  "@accountingSourceRefused": {
+    "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   }
 }

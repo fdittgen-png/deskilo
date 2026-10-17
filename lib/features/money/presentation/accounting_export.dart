@@ -10,16 +10,19 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
+import '../domain/export_year.dart';
 import '../domain/fec.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice.dart';
@@ -113,10 +116,23 @@ Future<void> exportAccountingFile(
   final development = workspace.environment != 'prod';
   final repo = ref.read(moneyRepositoryProvider);
   final invoiceQueries = ref.read(invoiceQueriesProvider);
-  final accountQueries = ref.read(memberAccountQueriesProvider);
   // #2365 — the books of the export year only.
-  final (invoices: exported, :ledger, :repartitions) =
-      await exportYearBooks(accountQueries, ref.read(expenseRepositoryProvider), workspace.id, year, view.invoices);
+  final ExportYearBooks books;
+  try {
+    books = await exportYearBooks(
+      ref.read(accountingSourceQueriesProvider),
+      workspace.id,
+      year,
+      view.invoices,
+      loaded: invoices,
+    );
+  } on AccountingSourceException catch (e, st) {
+    TraceLogger.instance.warn('money', 'accounting source refused: $e\n$st');
+    if (!context.mounted) return;
+    AppSnack.error(context, l10n.accountingSourceRefused);
+    return;
+  }
+  final (invoices: exported, :ledger, :repartitions) = books;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
@@ -481,12 +497,8 @@ Future<void> exportAccountingFile(
         message: 'audit trail export failed',
         errorText: l10n.workspaceGenericError,
         action: () async {
-          // The ledger is fetched HERE rather than read from a cached
-          // provider: a trail assembled from a stale cache would be
-          // missing exactly the recent movements someone is asking
-          // about.
-          final ledger = await accountQueries
-              .fetchWorkspaceLedger(workspace.id);
+          // The ledger is the export year's, read with the invoices in
+          // the one source response above: never a cached provider.
           await save(
             buildAuditTrailCsv(
               events: buildAuditEvents(

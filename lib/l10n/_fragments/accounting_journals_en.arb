@@ -7,5 +7,9 @@
   "accountingExportDevelopment": "Development workspace: the file is marked DEV and is not the real books.",
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
+  },
+  "accountingSourceRefused": "The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.",
+  "@accountingSourceRefused": {
+    "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   }
 }

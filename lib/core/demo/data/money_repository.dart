@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
+import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -45,7 +47,7 @@ part 'money_repository_part4.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
-class FakeMoneyRepository implements MoneyRepository {
+class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   /// VAT declarations (0107), newest period first on read.
   final List<VatDeclaration> vatDeclarations = [];
 
@@ -474,4 +476,23 @@ class FakeMoneyRepository implements MoneyRepository {
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _clearPaymentProviderImpl(workspaceId, provider);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _createPaymentOrderImpl(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
 
+  @override
+  Future<AccountingSourceSnapshot> fetchAccountingSource({
+    required String workspaceId,
+    required int year,
+  }) async => AccountingSourceSnapshot.demo(
+    invoices: [
+      for (final i in invoices)
+        if (i.issuedAt.year == year)
+          (id: i.id, number: i.number, totalCents: i.totalCents),
+    ],
+    ledger: [
+      for (final e in ledger)
+        if (e.on.year == year) e,
+    ],
+    repartitions: [
+      for (final r in repartitions)
+        if ((r.appliedAt ?? r.createdAt).year == year) r,
+    ],
+  );
 }

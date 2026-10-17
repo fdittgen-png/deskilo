@@ -182,6 +182,10 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
+  "@accountingSourceRefused": {
+    "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
+  },
   "addressCountryLabel": "País",
   "addressNone": "Sin dirección",
   "addressSaved": "Dirección guardada",
