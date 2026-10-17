@@ -62,4 +62,4 @@ final class WorkspaceImportRepositoryProvider
 }
 
 String _$workspaceImportRepositoryHash() =>
-    r'0a5054866b0baf108c712e3994ee9e8a34e5b2e1';
+    r'e0d2b78098878048485a0b5a42b9c47f28a885aa';

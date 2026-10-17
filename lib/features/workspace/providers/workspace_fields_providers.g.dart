@@ -59,7 +59,7 @@ final class WorkspaceFieldsRepositoryProvider
 }
 
 String _$workspaceFieldsRepositoryHash() =>
-    r'0edb887cb0e1c4b21129c28cd322c9bab42d76eb';
+    r'90d0670735d26f0c73d0dbe27ecceab782af38ac';
 
 /// The active workspace's questions, or none while the feature is off.
 ///

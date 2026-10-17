@@ -2,8 +2,8 @@
 import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/capture/capture_providers.dart';
 import '../../../core/privacy/privacy_policy.dart';
 import '../../../core/privacy/recording_privacy.dart';
@@ -30,9 +30,18 @@ final Override captureReaderNameFromProfile =
   (ref) => ref.watch(myProfileProvider).value?.fullName ?? '',
 );
 
+/// #2564 -- MY row: profile, preferences, consent and rights live with the
+/// root session (P), whatever workspace is selected.
 @Riverpod(keepAlive: true)
 ProfileRepository profileRepository(Ref ref) =>
-    SupabaseProfileRepository(Supabase.instance.client);
+    SupabaseProfileRepository(ref.watch(personalClientProvider));
+
+/// #2564 -- OTHER members' rows (the directory projection and avatars) are
+/// the selected workspace's (W): the same boundary on the host that holds
+/// the space.
+@Riverpod(keepAlive: true)
+ProfileRepository memberProfileRepository(Ref ref) =>
+    SupabaseProfileRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
@@ -94,7 +103,7 @@ Future<Uint8List?> memberAvatar(Ref ref, String userId) async {
   // receipt carry nobody's likeness. The photograph is never fetched at
   // all, so it is not merely hidden.
   if (ref.watch(recordingPrivacyProvider)) return null;
-  return ref.watch(profileRepositoryProvider).fetchAvatarBytes(userId);
+  return ref.watch(memberProfileRepositoryProvider).fetchAvatarBytes(userId);
 }
 
 /// #793 — the monogram each member's avatar shows, keyed by auth user id

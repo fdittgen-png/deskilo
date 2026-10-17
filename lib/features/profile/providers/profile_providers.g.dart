@@ -8,9 +8,14 @@ part of 'profile_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// #2564 -- MY row: profile, preferences, consent and rights live with the
+/// root session (P), whatever workspace is selected.
 
 @ProviderFor(profileRepository)
 final profileRepositoryProvider = ProfileRepositoryProvider._();
+
+/// #2564 -- MY row: profile, preferences, consent and rights live with the
+/// root session (P), whatever workspace is selected.
 
 final class ProfileRepositoryProvider
     extends
@@ -20,6 +25,8 @@ final class ProfileRepositoryProvider
           ProfileRepository
         >
     with $Provider<ProfileRepository> {
+  /// #2564 -- MY row: profile, preferences, consent and rights live with the
+  /// root session (P), whatever workspace is selected.
   ProfileRepositoryProvider._()
     : super(
         from: null,
@@ -54,7 +61,66 @@ final class ProfileRepositoryProvider
   }
 }
 
-String _$profileRepositoryHash() => r'45c52cb7ca00235e652426023c450cae54c82031';
+String _$profileRepositoryHash() => r'e749ed42b1f300842852b83782b50674e06108ea';
+
+/// #2564 -- OTHER members' rows (the directory projection and avatars) are
+/// the selected workspace's (W): the same boundary on the host that holds
+/// the space.
+
+@ProviderFor(memberProfileRepository)
+final memberProfileRepositoryProvider = MemberProfileRepositoryProvider._();
+
+/// #2564 -- OTHER members' rows (the directory projection and avatars) are
+/// the selected workspace's (W): the same boundary on the host that holds
+/// the space.
+
+final class MemberProfileRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ProfileRepository,
+          ProfileRepository,
+          ProfileRepository
+        >
+    with $Provider<ProfileRepository> {
+  /// #2564 -- OTHER members' rows (the directory projection and avatars) are
+  /// the selected workspace's (W): the same boundary on the host that holds
+  /// the space.
+  MemberProfileRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberProfileRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberProfileRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ProfileRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ProfileRepository create(Ref ref) {
+    return memberProfileRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ProfileRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ProfileRepository>(value),
+    );
+  }
+}
+
+String _$memberProfileRepositoryHash() =>
+    r'b9c9b4c669c98d6d66b1a02b81e832394999c7b0';
 
 /// My own profile row (#223); null while signed out. Invalidated by the
 /// WhatsApp editor after a successful save.
@@ -360,7 +426,7 @@ final class MemberAvatarProvider
   }
 }
 
-String _$memberAvatarHash() => r'06464f3d85a99036adaa4e50f40682d5779f9260';
+String _$memberAvatarHash() => r'77ea3c5481dfdfb46864fc709f8ba64a1a488a07';
 
 /// Bytes of [userId]'s profile photo (0038), or null when they have none.
 /// Kept alive so a member's avatar is fetched once and reused across the

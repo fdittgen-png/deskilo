@@ -67,7 +67,7 @@ final class MemberProfilesProvider
   }
 }
 
-String _$memberProfilesHash() => r'b16eace7d4bd05f79c63ba42625a06ebdd5c7de4';
+String _$memberProfilesHash() => r'859101558ebf916f79f70b20bc9c65edbfe1ce3c';
 
 /// All reservations feeding the directory's reservation chips (#237):
 /// the month windows covering now through

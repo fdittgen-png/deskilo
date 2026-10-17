@@ -2,22 +2,22 @@
 //
 // #1918 — the KPI repository, overridable in tests.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/workspace_time.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/kpi_contract.dart';
+import 'workspace_providers.dart';
 
 part 'kpi_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 KpiRepository kpiRepository(Ref ref) =>
-    SupabaseKpiRepository(Supabase.instance.client);
+    SupabaseKpiRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// #1924 — the finance KPIs.
 @Riverpod(keepAlive: true)
 FinanceKpiRepository financeKpiRepository(Ref ref) =>
-    SupabaseFinanceKpiRepository(Supabase.instance.client);
+    SupabaseFinanceKpiRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// One read per workspace and months, shared by every finance card.
 @Riverpod(retry: kpiRetry)

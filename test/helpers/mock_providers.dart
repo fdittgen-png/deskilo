@@ -413,8 +413,7 @@ List<Override> standardTestOverrides({
         .overrideWithValue(shellBarHidden ?? InMemoryShellFlagStore()),
     shellSwipeCoachStoreProvider
         .overrideWithValue(shellSwipeCoach ?? InMemoryShellFlagStore(value: true)),
-    profileRepositoryProvider
-        .overrideWithValue(profile ?? FakeProfileRepository()),
+    ..._profileOverrides(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
     frontCameraStoreProvider
         .overrideWithValue(frontCamera ?? InMemoryFrontCameraStore()),
@@ -518,6 +517,12 @@ class FixedSchemaVersionSource implements SchemaVersionSource {
     return version;
   }
 }
+
+/// #2564 — one fake serves my own row and the members' rows.
+List<Override> _profileOverrides(ProfileRepository profile) => [
+      profileRepositoryProvider.overrideWithValue(profile),
+      memberProfileRepositoryProvider.overrideWithValue(profile),
+    ];
 
 /// #2591 — one fake serves the whole money boundary and its narrow reads.
 List<Override> _moneyOverrides(MoneyRepository money) => [
