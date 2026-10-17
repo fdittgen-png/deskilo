@@ -95,9 +95,19 @@ database address as its output — and every discipline after it attaches
 to that stack; nothing under `scripts/` starts one. Fixtures that stay in
 the shared database (the restore seed) run after the steps that expect
 only their own rows there, and the drills that need a database of their
-own come last. A producer added later (MCP, auth) is one more step after
-`migrations`, never a second stack.
+own come last. A producer added later (MCP, auth) that is an ordinary
+database test is one more step after `migrations`, never a second stack.
 `test/lint/local_stack_harness_test.dart` holds that shape (#1446 C5).
+
+The one exception is the physical topology (#2561 C2). Three projects
+cannot be schemas or endpoint labels on one stack, so the same job starts
+two more stacks through the same action with a `workdir`: P and W-B, each
+with its own Postgres, Auth and Storage containers, project id, ports,
+volumes and JWT secret (`scripts/topology_stacks.sh` prepares, seeds and
+stops them), while the job's replayed stack is W-A. They exist only for
+`test/topology`, which runs the production P profile and W reservation
+code over real signed requests with database readback; ordinary
+disciplines never attach to them. The row is `Physical topology`.
 
 The generated code is gated in the required job and in the F-Droid audit
 through one call, `scripts/generated_drift.sh` (#1446 C5a): build_runner

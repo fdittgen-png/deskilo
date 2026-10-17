@@ -63,7 +63,11 @@ void main() {
   test('the database job starts it once, as the replay, and every consumer '
       'takes the address from that step', () {
     final steps = _database();
-    final starts = steps.where((s) => s['uses'] == _action).toList();
+    // #2561 C2: the topology's own stacks pass a workdir; the job's
+    // ordinary stack, which every discipline shares, takes none.
+    final starts = steps
+        .where((s) => s['uses'] == _action && (s['with'] as YamlMap?)?['workdir'] == null)
+        .toList();
     expect(starts, hasLength(1));
     expect(starts.single['id'], 'migrations');
     expect(starts.single['continue-on-error'], isTrue,
@@ -83,6 +87,39 @@ void main() {
             reason: '${s['name']}');
       }
     }
+  });
+
+  test('#2561 C2 the topology starts exactly two more stacks, each of its own '
+      'directory, and its consumer needs all of them', () {
+    final steps = _database();
+    final extra = steps
+        .where((s) => s['uses'] == _action && (s['with'] as YamlMap?)?['workdir'] != null)
+        .toList();
+    expect(extra.map((s) => s['id']), ['topology_p', 'topology_wb']);
+    expect(extra.map((s) => (s['with'] as YamlMap)['workdir']).toSet(), hasLength(2));
+    for (final s in extra) {
+      expect(s['if'], "steps.migrations.outcome == 'success'");
+      expect(s['continue-on-error'], isTrue);
+    }
+    final ids = steps.map((s) => '${s['id']}').toList();
+    final consumer = steps.firstWhere((s) => s['id'] == 'topology');
+    for (final id in ['topology_prepare', 'topology_p', 'topology_wb']) {
+      expect(ids.indexOf(id), lessThan(ids.indexOf('topology')), reason: id);
+      expect(_run(consumer), contains('steps.$id.outcome'), reason: id);
+    }
+    expect(_run(consumer), contains('test/topology/three_stacks_test.dart'));
+    expect(_run(consumer), contains("All tests passed!"),
+        reason: 'a skipped test file is not evidence');
+    // The ordinary disciplines never attach to the extra stacks, and the
+    // stacks are stopped whatever happened.
+    final stop = steps.firstWhere((s) => '${s['name']}'.startsWith('Topology stacks, stopped'));
+    expect(stop['if'], contains('always()'));
+    final gate = steps.firstWhere((s) => s['name'] == 'Gate');
+    for (final id in ['topology_prepare', 'topology_p', 'topology_wb', 'topology']) {
+      expect(_run(gate), contains('steps.$id.outcome'), reason: 'gate: $id');
+    }
+    expect(File('.github/quality-manifest.psv').readAsStringSync(),
+        contains('Physical topology|database|step|conditional|'));
   });
 
   test('shared-database fixtures run before the seed that persists, and '

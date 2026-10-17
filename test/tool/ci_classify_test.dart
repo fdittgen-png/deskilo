@@ -36,6 +36,30 @@ void main() {
     }
   });
 
+  test('#2561 C2 every source the topology consumer runs through selects the '
+      'database job; an unrelated feature file still stands down', () {
+    for (final path in [
+      'test/topology/three_stacks_test.dart',
+      'lib/core/session/session_source.dart',
+      'lib/core/identity/new_identity.dart',
+      'lib/core/settings/settings.dart',
+      'lib/core/cache/target_cache_store.dart',
+      'lib/core/realtime/realtime_sync.dart',
+      'lib/features/me/providers/me_providers.dart',
+      'lib/features/me/data/supabase_me_repository.dart',
+      'lib/features/reservations/data/context_reservation_repository.dart',
+      'lib/features/reservations/providers/reservation_providers.dart',
+      'lib/features/workspace/providers/workspace_providers.dart',
+      'lib/features/auth/providers/auth_providers.dart',
+    ]) {
+      expect(_by(classify(_pr([path])))['database']!.required, isTrue,
+          reason: path);
+    }
+    expect(
+        _by(classify(_pr(['lib/features/money/presentation/invoices_page.dart'])))['database']!.required,
+        isFalse);
+  });
+
   test('#1632 every MCP producer path selects the database job, whose MCP '
       'coverage evidence it must then produce', () {
     for (final path in [
