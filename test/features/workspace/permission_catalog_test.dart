@@ -10,9 +10,10 @@ void main() {
   // KPIs without holding a write right.
   // 25→31 (2026-10-04): the everyday features are permissions — useMessages,
   // makeReservations, viewCalendar, viewDirectory, viewMyMoney, viewDocuments.
-  test('the catalog carries 31 permissions, wire names equal to Dart names',
+  // 31→32 (2026-10-16): #2573 managePurchases — capture the supplier bills.
+  test('the catalog carries 32 permissions, wire names equal to Dart names',
       () {
-    expect(WorkspacePermission.values, hasLength(31));
+    expect(WorkspacePermission.values, hasLength(32));
     for (final p in WorkspacePermission.values) {
       expect(p.wireName, p.name);
     }
@@ -36,6 +37,8 @@ void main() {
       // #989 — pushing to production stays with the owner; refreshing
       // the dev and entering the prod are an admin's.
       WorkspacePermission.deployToProd,
+      // #2573 — supplier bills are captured by who is given the right.
+      WorkspacePermission.managePurchases,
     ]) {
       expect(admin, isNot(contains(p)), reason: '$p stays with the owner');
     }

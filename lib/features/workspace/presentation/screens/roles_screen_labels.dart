@@ -73,4 +73,6 @@ String permissionLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permViewMyMoney,
         WorkspacePermission.viewDocuments =>
           l10n.permViewDocuments,
+        WorkspacePermission.managePurchases =>
+          l10n.permManagePurchases,
       };

@@ -48,6 +48,7 @@ const Set<String> workspacePermissionKeys = {
   'viewDirectory',
   'viewMyMoney',
   'viewDocuments',
+  'managePurchases',
 };
 
 /// The event types a validation rule can be for (EventType.dbName, the

@@ -5909,6 +5909,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.';
 
   @override
+  String get featurePurchasesDesc =>
+      'One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.';
+
+  @override
+  String get featurePurchasesTitle => 'Purchases';
+
+  @override
   String get featurePushNotifications => 'Push notifications';
 
   @override
@@ -12902,6 +12909,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageNegotiations => 'Manage commercial agreements';
 
   @override
+  String get permManagePurchases => 'Capture supplier bills';
+
+  @override
   String get permManageReservations => 'Manage reservations of others';
 
   @override
@@ -14150,6 +14160,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Public profile';
+
+  @override
+  String get purchasesAddBill => 'Add supplier bill';
+
+  @override
+  String get purchasesDescription => 'Description';
+
+  @override
+  String get purchasesDraftNote =>
+      'A draft: it is submitted once its payable exists.';
+
+  @override
+  String get purchasesDueDate => 'Due date';
+
+  @override
+  String purchasesDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get purchasesEmpty => 'No purchase yet.';
+
+  @override
+  String get purchasesEvidence => 'Evidence';
+
+  @override
+  String get purchasesGross => 'Total including tax';
+
+  @override
+  String get purchasesIntro =>
+      'Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.';
+
+  @override
+  String get purchasesInvalid =>
+      'Enter a positive total, and a tax that does not exceed it.';
+
+  @override
+  String get purchasesInvoiceDate => 'Invoice date';
+
+  @override
+  String get purchasesKindBill => 'Supplier bill';
+
+  @override
+  String get purchasesKindCreditNote => 'Credit note';
+
+  @override
+  String get purchasesKindReceipt => 'Member receipt';
+
+  @override
+  String get purchasesLegacyTag =>
+      'Filed before purchase documents: supplier, date and classification are not verified.';
+
+  @override
+  String get purchasesLines => 'Lines';
+
+  @override
+  String get purchasesNoSupplier => 'No supplier chosen';
+
+  @override
+  String get purchasesPickDate => 'Choose a date';
+
+  @override
+  String get purchasesReference => 'Invoice number';
+
+  @override
+  String get purchasesRefused =>
+      'The purchase could not be saved. Your entries are kept; try again.';
+
+  @override
+  String get purchasesSave => 'Save draft';
+
+  @override
+  String get purchasesSaved => 'Draft saved.';
+
+  @override
+  String get purchasesSourceExpense => 'Expense submission';
+
+  @override
+  String purchasesSourceInbox(String reference) {
+    return 'Supplier invoice $reference';
+  }
+
+  @override
+  String get purchasesStateApproved => 'Approved';
+
+  @override
+  String get purchasesStateCancelled => 'Cancelled';
+
+  @override
+  String get purchasesStateDraft => 'Draft';
+
+  @override
+  String get purchasesStatePending => 'Awaiting approval';
+
+  @override
+  String get purchasesStateRejected => 'Rejected';
+
+  @override
+  String get purchasesSupplier => 'Supplier';
+
+  @override
+  String get purchasesTaxField =>
+      'Tax included (empty if the bill does not state it)';
+
+  @override
+  String get purchasesTaxNotStated => 'Tax not stated';
+
+  @override
+  String get purchasesTaxPartial => 'Tax stated on some lines only';
+
+  @override
+  String get purchasesTitle => 'Purchases';
+
+  @override
+  String get purchasesTotal => 'Total';
 
   @override
   String get pushCancelledBody => 'A reservation was removed by an admin.';

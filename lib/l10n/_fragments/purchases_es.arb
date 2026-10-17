@@ -1,0 +1,165 @@
+{
+  "@@locale": "es",
+  "featurePurchasesTitle": "Compras",
+  "@featurePurchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "featurePurchasesDesc": "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.",
+  "@featurePurchasesDesc": {
+    "description": "#2573 purchases"
+  },
+  "permManagePurchases": "Registrar facturas de proveedor",
+  "@permManagePurchases": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTitle": "Compras",
+  "@purchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "purchasesIntro": "Las facturas de proveedor y los recibos que los miembros pagaron por el espacio, un documento cada uno. Un recibo se aprueba como cualquier gasto; una factura se registra aquí y sigue siendo un borrador hasta que exista su deuda.",
+  "@purchasesIntro": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEmpty": "Aún no hay compras.",
+  "@purchasesEmpty": {
+    "description": "#2573 purchases"
+  },
+  "purchasesAddBill": "Añadir factura de proveedor",
+  "@purchasesAddBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindBill": "Factura de proveedor",
+  "@purchasesKindBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindCreditNote": "Nota de crédito",
+  "@purchasesKindCreditNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindReceipt": "Recibo de miembro",
+  "@purchasesKindReceipt": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateDraft": "Borrador",
+  "@purchasesStateDraft": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStatePending": "Pendiente de aprobación",
+  "@purchasesStatePending": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateApproved": "Aprobado",
+  "@purchasesStateApproved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateRejected": "Rechazado",
+  "@purchasesStateRejected": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateCancelled": "Cancelado",
+  "@purchasesStateCancelled": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLegacyTag": "Registrado antes de los documentos de compra: proveedor, fecha y clasificación sin verificar.",
+  "@purchasesLegacyTag": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSupplier": "Proveedor",
+  "@purchasesSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesNoSupplier": "Ningún proveedor elegido",
+  "@purchasesNoSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesReference": "Número de factura",
+  "@purchasesReference": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvoiceDate": "Fecha de la factura",
+  "@purchasesInvoiceDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueDate": "Vencimiento",
+  "@purchasesDueDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDescription": "Descripción",
+  "@purchasesDescription": {
+    "description": "#2573 purchases"
+  },
+  "purchasesGross": "Total con impuestos",
+  "@purchasesGross": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxField": "Impuesto incluido (vacío si la factura no lo indica)",
+  "@purchasesTaxField": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxNotStated": "Impuesto no indicado",
+  "@purchasesTaxNotStated": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxPartial": "Impuesto indicado solo en algunas líneas",
+  "@purchasesTaxPartial": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTotal": "Total",
+  "@purchasesTotal": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLines": "Líneas",
+  "@purchasesLines": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEvidence": "Justificantes",
+  "@purchasesEvidence": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceExpense": "Gasto presentado",
+  "@purchasesSourceExpense": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceInbox": "Factura de proveedor {reference}",
+  "@purchasesSourceInbox": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesDueOn": "Vence el {date}",
+  "@purchasesDueOn": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesSave": "Guardar borrador",
+  "@purchasesSave": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSaved": "Borrador guardado.",
+  "@purchasesSaved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesRefused": "No se pudo guardar la compra. Sus datos se conservan; inténtelo de nuevo.",
+  "@purchasesRefused": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvalid": "Introduzca un total positivo y un impuesto que no lo supere.",
+  "@purchasesInvalid": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDraftNote": "Un borrador: se presenta cuando exista su deuda.",
+  "@purchasesDraftNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesPickDate": "Elegir una fecha",
+  "@purchasesPickDate": {
+    "description": "#2573 purchases"
+  }
+}

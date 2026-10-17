@@ -1,0 +1,165 @@
+{
+  "@@locale": "en",
+  "featurePurchasesTitle": "Purchases",
+  "@featurePurchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "featurePurchasesDesc": "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.",
+  "@featurePurchasesDesc": {
+    "description": "#2573 purchases"
+  },
+  "permManagePurchases": "Capture supplier bills",
+  "@permManagePurchases": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTitle": "Purchases",
+  "@purchasesTitle": {
+    "description": "#2573 purchases"
+  },
+  "purchasesIntro": "Supplier bills and the receipts members paid for the space, one document each. A receipt is approved like any expense; a bill is captured here and stays a draft until its payable exists.",
+  "@purchasesIntro": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEmpty": "No purchase yet.",
+  "@purchasesEmpty": {
+    "description": "#2573 purchases"
+  },
+  "purchasesAddBill": "Add supplier bill",
+  "@purchasesAddBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindBill": "Supplier bill",
+  "@purchasesKindBill": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindCreditNote": "Credit note",
+  "@purchasesKindCreditNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesKindReceipt": "Member receipt",
+  "@purchasesKindReceipt": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateDraft": "Draft",
+  "@purchasesStateDraft": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStatePending": "Awaiting approval",
+  "@purchasesStatePending": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateApproved": "Approved",
+  "@purchasesStateApproved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateRejected": "Rejected",
+  "@purchasesStateRejected": {
+    "description": "#2573 purchases"
+  },
+  "purchasesStateCancelled": "Cancelled",
+  "@purchasesStateCancelled": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLegacyTag": "Filed before purchase documents: supplier, date and classification are not verified.",
+  "@purchasesLegacyTag": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSupplier": "Supplier",
+  "@purchasesSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesNoSupplier": "No supplier chosen",
+  "@purchasesNoSupplier": {
+    "description": "#2573 purchases"
+  },
+  "purchasesReference": "Invoice number",
+  "@purchasesReference": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvoiceDate": "Invoice date",
+  "@purchasesInvoiceDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDueDate": "Due date",
+  "@purchasesDueDate": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDescription": "Description",
+  "@purchasesDescription": {
+    "description": "#2573 purchases"
+  },
+  "purchasesGross": "Total including tax",
+  "@purchasesGross": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxField": "Tax included (empty if the bill does not state it)",
+  "@purchasesTaxField": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxNotStated": "Tax not stated",
+  "@purchasesTaxNotStated": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTaxPartial": "Tax stated on some lines only",
+  "@purchasesTaxPartial": {
+    "description": "#2573 purchases"
+  },
+  "purchasesTotal": "Total",
+  "@purchasesTotal": {
+    "description": "#2573 purchases"
+  },
+  "purchasesLines": "Lines",
+  "@purchasesLines": {
+    "description": "#2573 purchases"
+  },
+  "purchasesEvidence": "Evidence",
+  "@purchasesEvidence": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceExpense": "Expense submission",
+  "@purchasesSourceExpense": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSourceInbox": "Supplier invoice {reference}",
+  "@purchasesSourceInbox": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesDueOn": "Due {date}",
+  "@purchasesDueOn": {
+    "description": "#2573 purchases",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesSave": "Save draft",
+  "@purchasesSave": {
+    "description": "#2573 purchases"
+  },
+  "purchasesSaved": "Draft saved.",
+  "@purchasesSaved": {
+    "description": "#2573 purchases"
+  },
+  "purchasesRefused": "The purchase could not be saved. Your entries are kept; try again.",
+  "@purchasesRefused": {
+    "description": "#2573 purchases"
+  },
+  "purchasesInvalid": "Enter a positive total, and a tax that does not exceed it.",
+  "@purchasesInvalid": {
+    "description": "#2573 purchases"
+  },
+  "purchasesDraftNote": "A draft: it is submitted once its payable exists.",
+  "@purchasesDraftNote": {
+    "description": "#2573 purchases"
+  },
+  "purchasesPickDate": "Choose a date",
+  "@purchasesPickDate": {
+    "description": "#2573 purchases"
+  }
+}

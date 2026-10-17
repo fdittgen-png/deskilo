@@ -402,7 +402,11 @@ enum WorkspaceFeature {
   parking,
 
   /// #2504 — WebMCP tools of the web app (platform, OFF, under mcpAccess).
-  webMcp;
+  webMcp,
+
+  /// #2573 — one purchase document for supplier bills and member
+  /// expenses (platform, OFF, under moneyTab).
+  purchases;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

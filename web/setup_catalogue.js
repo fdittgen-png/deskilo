@@ -188,7 +188,8 @@ window.SETUP_PROCESSES=[
      "supplyExpenses",
      "expenseRepartitionWizard",
      "scheduledExpenses",
-     "expenseRepartition"
+     "expenseRepartition",
+     "purchases"
     ]
    },
    {

@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
@@ -47,6 +48,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
@@ -203,7 +205,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       eInvoiceInboxRepositoryProvider
-          .overrideWithValue(FakeEInvoiceInboxRepository()), supplierRepositoryProvider.overrideWithValue(FakeSupplierRepository()), // #2358, #2567
+          .overrideWithValue(FakeEInvoiceInboxRepository()), supplierRepositoryProvider.overrideWithValue(FakeSupplierRepository()), purchaseRepositoryProvider.overrideWithValue(FakePurchaseRepository()), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()), // #1869 in memory
       creditRepositoryProvider.overrideWithValue(fixture.credits),

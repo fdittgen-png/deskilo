@@ -1,0 +1,201 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/form_sheet.dart';
+import '../../../workspace/domain/workspace_permission.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/purchase.dart';
+import '../../providers/purchase_providers.dart';
+import 'purchase_dialogs.dart';
+import 'purchase_labels.dart';
+
+/// Opens the purchase documents of [workspaceId]. The caller decides when to
+/// offer it; the server shows a member their own documents and a manager all.
+Future<void> showPurchasesSheet(BuildContext context, String workspaceId) =>
+    showAppSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => PurchasesView(workspaceId: workspaceId),
+    );
+
+/// The list of documents, with the supplier-bill door for who may capture.
+@visibleForTesting
+class PurchasesView extends ConsumerWidget {
+  const PurchasesView({required this.workspaceId, super.key});
+
+  final String workspaceId;
+
+  Future<void> _add(BuildContext context, WidgetRef ref) async {
+    final saved = await showPurchaseBillDialog(context, workspaceId);
+    if (saved != true || !context.mounted) return;
+    ref.invalidate(purchasesProvider(workspaceId));
+    AppSnack.success(context, context.l10n.purchasesSaved);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final canCapture = ref
+        .watch(myPermissionsProvider)
+        .contains(WorkspacePermission.managePurchases);
+    final purchases =
+        ref.watch(purchasesProvider(workspaceId)).value ??
+        const <PurchaseSummary>[];
+    return SheetShell(
+      title: l10n.purchasesTitle,
+      children: [
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          l10n.purchasesIntro,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        if (canCapture) ...[
+          const SizedBox(height: AppSpacing.sm),
+          FilledButton.icon(
+            key: const ValueKey('purchase-add-bill'),
+            onPressed: () => _add(context, ref),
+            icon: const Icon(Icons.add),
+            label: Text(l10n.purchasesAddBill),
+          ),
+        ],
+        const SizedBox(height: AppSpacing.lg),
+        if (purchases.isEmpty) Text(l10n.purchasesEmpty),
+        for (final p in purchases)
+          ListTile(
+            key: ValueKey('purchase-${p.id}'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              p.reference.isEmpty
+                  ? purchaseKindLabel(l10n, p.kind)
+                  : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
+            ),
+            subtitle: Text(
+              [
+                purchaseStateLabel(l10n, p.state),
+                if (p.category.isNotEmpty) p.category,
+              ].join(' · '),
+            ),
+            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+            onTap: () => showPurchaseDetailSheet(context, workspaceId, p.id),
+          ),
+      ],
+    );
+  }
+}
+
+/// Opens one document with its lines and evidence.
+Future<void> showPurchaseDetailSheet(
+  BuildContext context,
+  String workspaceId,
+  String purchaseId,
+) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) =>
+      PurchaseDetailView(workspaceId: workspaceId, purchaseId: purchaseId),
+);
+
+/// One purchase document as the server read it.
+@visibleForTesting
+class PurchaseDetailView extends ConsumerWidget {
+  const PurchaseDetailView({
+    required this.workspaceId,
+    required this.purchaseId,
+    super.key,
+  });
+
+  final String workspaceId;
+  final String purchaseId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final detail = ref
+        .watch(
+          purchaseDetailProvider((
+            workspaceId: workspaceId,
+            purchaseId: purchaseId,
+          )),
+        )
+        .value;
+    if (detail == null) {
+      return SheetShell(
+        title: l10n.purchasesTitle,
+        children: const [Center(child: CircularProgressIndicator())],
+      );
+    }
+    final s = detail.summary;
+    final money = moneyFormat(s.currency);
+    final supplier = detail.supplierName == null
+        ? l10n.purchasesNoSupplier
+        : '${detail.supplierNumber} · ${detail.supplierName}';
+    return SheetShell(
+      title: purchaseKindLabel(l10n, s.kind),
+      children: [
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          purchaseStateLabel(l10n, s.state),
+          key: const ValueKey('purchase-state'),
+          style: theme.textTheme.titleSmall,
+        ),
+        if (s.state == PurchaseState.draft && s.kind != PurchaseKind.memberReceipt)
+          Text(l10n.purchasesDraftNote),
+        if (s.legacy) Text(l10n.purchasesLegacyTag),
+        const SizedBox(height: AppSpacing.sm),
+        Text('${l10n.purchasesSupplier}: $supplier'),
+        if (s.reference.isNotEmpty)
+          Text('${l10n.purchasesReference}: ${s.reference}'),
+        if (detail.dueOn != null)
+          Text(
+            l10n.purchasesDueOn(
+              MaterialLocalizations.of(context).formatMediumDate(detail.dueOn!),
+            ),
+          ),
+        const SizedBox(height: AppSpacing.lg),
+        Text(l10n.purchasesLines, style: theme.textTheme.titleSmall),
+        for (final line in detail.lines)
+          ListTile(
+            key: ValueKey('purchase-line-${line.lineNo}'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(line.description),
+            subtitle: Text(
+              line.taxStated
+                  ? money.formatMinor(line.taxCents!)
+                  : l10n.purchasesTaxNotStated,
+            ),
+            trailing: Text(money.formatMinor(line.grossCents)),
+          ),
+        Text(
+          '${l10n.purchasesTotal}: ${money.formatMinor(detail.grossCents)}',
+          key: const ValueKey('purchase-total'),
+        ),
+        if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
+          Text(l10n.purchasesTaxPartial),
+        if (detail.sources.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.lg),
+          Text(l10n.purchasesEvidence, style: theme.textTheme.titleSmall),
+          for (final src in detail.sources)
+            ListTile(
+              key: ValueKey('purchase-source-${src.id}'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                src.kind == 'inbox'
+                    ? l10n.purchasesSourceInbox(src.reference)
+                    : l10n.purchasesSourceExpense,
+              ),
+            ),
+        ],
+      ],
+    );
+  }
+}

@@ -14,6 +14,7 @@ import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/money_faces_view.dart';
+import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
@@ -146,6 +147,15 @@ class MoneyActionSet {
           onPressed: () => showSuppliersSheet(context, data.workspace!.id),
           icon: const Icon(Icons.storefront_outlined),
           label: fitted(l10n.suppliersTitle),
+        ),
+      // #2573 — one document per purchase: the member's receipts and the
+      // supplier bills.
+      if (data.purchasesOn && data.workspace != null)
+        OutlinedButton.icon(
+          key: const ValueKey('purchases-button'),
+          onPressed: () => showPurchasesSheet(context, data.workspace!.id),
+          icon: const Icon(Icons.shopping_cart_outlined),
+          label: fitted(l10n.purchasesTitle),
         ),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),

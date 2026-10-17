@@ -265,4 +265,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.mcpAccess,
     defaultOn: false,
   ),
+  // #2573 — the purchase document: supplier bills captured beside the
+  // member receipts the expense flow already files.
+  WorkspaceFeature.purchases: FeatureManifestEntry(
+    feature: WorkspaceFeature.purchases,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.moneyTab,
+    defaultOn: false,
+  ),
 };

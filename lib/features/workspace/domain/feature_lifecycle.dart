@@ -415,7 +415,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.recapitulativeStatement: _ownerBeta,
   WorkspaceFeature.inputVat: _ownerBeta,
   WorkspaceFeature.configurableSettings: _ownerBeta,
-  WorkspaceFeature.salesTax: _ownerBeta, WorkspaceFeature.meetingRooms: _ownerBeta, WorkspaceFeature.parking: _ownerBeta, WorkspaceFeature.webMcp: _ownerBeta,
+  WorkspaceFeature.salesTax: _ownerBeta, WorkspaceFeature.meetingRooms: _ownerBeta, WorkspaceFeature.parking: _ownerBeta, WorkspaceFeature.webMcp: _ownerBeta, WorkspaceFeature.purchases: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a
