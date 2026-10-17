@@ -6,6 +6,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'connected_installation_providers.dart';
+import 'connected_pool_host_resolver.dart';
 import 'context_clients.dart';
 import 'operation_context.dart';
 
@@ -31,14 +33,38 @@ SupabaseClient workspaceClient(Ref ref, String installationId) =>
 @Riverpod(keepAlive: true)
 InstallationIdReader installationIdReader(Ref ref) => readInstallationId;
 
-/// Finds the host of a workspace; the combined deployment's is the
-/// installation the app is signed in to.
+/// The connected installation the selected workspace lives on, or none
+/// when it lives on the installation the app is signed in to.
 @Riverpod(keepAlive: true)
-WorkspaceHostResolver workspaceHostResolver(Ref ref) =>
-    ActiveInstallationHostResolver(
-      ref.watch(personalClientProvider),
-      ref.watch(installationIdReaderProvider),
-    );
+class SelectedWorkspaceHost extends _$SelectedWorkspaceHost {
+  @override
+  ({String workspaceId, String source})? build() => null;
+
+  void select(String workspaceId, String source) =>
+      state = (workspaceId: workspaceId, source: source);
+
+  void clear() => state = null;
+}
+
+/// Finds the host of a workspace: the connected installation its selection
+/// names, else the installation the app is signed in to.
+@Riverpod(keepAlive: true)
+WorkspaceHostResolver workspaceHostResolver(Ref ref) {
+  final active = ActiveInstallationHostResolver(
+    ref.watch(personalClientProvider),
+    ref.watch(installationIdReaderProvider),
+  );
+  final selected = ref.watch(selectedWorkspaceHostProvider);
+  return ConnectedPoolHostResolver(
+    active: active,
+    root: ref.watch(personalClientProvider),
+    pool: () => ref.read(connectedInstallationsProvider),
+    sourceOf: (workspaceId) =>
+        selected != null && selected.workspaceId == workspaceId
+        ? selected.source
+        : null,
+  );
+}
 
 @Riverpod(keepAlive: true)
 EpochLedger epochLedger(Ref ref) => EpochLedger();

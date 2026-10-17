@@ -9,9 +9,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../trace/trace_logger.dart';
 import 'auth_secret_store.dart';
 import 'backend_settings.dart';
+import 'connected_pool_clients.dart';
 import 'connection_outcome.dart';
+import 'origin_only_client.dart';
 
+export 'connected_pool_clients.dart' show PoolRecord, PooledClient;
 export 'connection_outcome.dart';
+export 'origin_only_client.dart';
 
 class ConnectedInstallation {
   const ConnectedInstallation({
@@ -48,6 +52,15 @@ class ConnectedInstallations {
   Future<void> _writes = Future.value();
   final _epochs = <String, int>{};
   final _reads = <String, Future<void>>{};
+  late final PooledClients _clients = PooledClients(
+    origin: origin,
+    check: _check,
+    epochOf: (source) => _epochs[source] ?? 0,
+    record: _record,
+    newClient: (endpoint) => _client(endpoint, autoRefresh: true),
+    verify: _verify,
+    save: _saveSession,
+  );
 
   /// Targets whose last committed action could not save its refreshed
   /// session: the result stood, the next use may need a sign-in again.
@@ -66,18 +79,19 @@ class ConnectedInstallations {
 
   void close() {
     _closed = true;
+    unawaited(_clients.closeAll());
   }
 
-  Future<Map<String, dynamic>> _records() async {
+  Future<PoolRecord> _records() async {
     _check();
     final raw = await secrets.read(_key);
     _check();
-    return raw == null ? {} : jsonDecode(raw) as Map<String, dynamic>;
+    return raw == null ? {} : jsonDecode(raw) as PoolRecord;
   }
 
   Future<void> _write(
     String source,
-    Map<String, dynamic>? record, {
+    PoolRecord? record, {
     int? epoch,
   }) {
     final next = _writes.then((_) async {
@@ -116,7 +130,7 @@ class ConnectedInstallations {
     ];
   }
 
-  SupabaseClient _client(BackendEndpoint endpoint) {
+  SupabaseClient _client(BackendEndpoint endpoint, {bool autoRefresh = false}) {
     if (validateBackendEndpoint(endpoint.url, endpoint.key) != null) {
       throw ConnectionFailure(
         endpoint.url,
@@ -127,7 +141,7 @@ class ConnectedInstallations {
       endpoint.url,
       endpoint.key,
       httpClient: OriginOnlyClient(Uri.parse(endpoint.url).origin, transport()),
-      authOptions: const AuthClientOptions(autoRefreshToken: false),
+      authOptions: AuthClientOptions(autoRefreshToken: autoRefresh),
     );
   }
 
@@ -279,6 +293,24 @@ class ConnectedInstallations {
     _unsaved.remove(source);
   }
 
+  /// The saved record of [source]; a target that is not connected, or that is
+  /// quarantined, is not called at all until it is connected again: a retry
+  /// must not silently trust a replacement backend.
+  Future<PoolRecord> _record(String source) async {
+    final record = (await _records())[source] as PoolRecord?;
+    if (record == null) {
+      throw ConnectionFailure(source, ConnectionFailureReason.notConnected);
+    }
+    if (record['quarantined'] == true) {
+      throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
+    }
+    return record;
+  }
+
+  /// #2562 -- the long-lived, self-refreshing client of the connected target
+  /// [source], verified like [use]; see [PooledClients.open].
+  Future<PooledClient> open(String source) => _clients.open(source);
+
   Future<T> use<T>(String source, Future<T> Function(SupabaseClient) action) {
     final next = (_reads[source] ?? Future<void>.value()).then(
       (_) => _use(source, action),
@@ -299,15 +331,7 @@ class ConnectedInstallations {
       return result;
     }
     final epoch = _epochs[source] ?? 0;
-    final record = (await _records())[source] as Map<String, dynamic>?;
-    if (record == null) {
-      throw ConnectionFailure(source, ConnectionFailureReason.notConnected);
-    }
-    // A quarantined target is not called at all until it is connected
-    // again: a retry must not silently trust a replacement backend.
-    if (record['quarantined'] == true) {
-      throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
-    }
+    final record = await _record(source);
     final client = _client(BackendEndpoint(source, record['key'] as String));
     try {
       await _verify(source, record, epoch, client);
@@ -349,7 +373,7 @@ class ConnectedInstallations {
   /// connected; a change quarantines it.
   Future<void> _verify(
     String source,
-    Map<String, dynamic> record,
+    PoolRecord record,
     int epoch,
     SupabaseClient client,
   ) async {
@@ -378,7 +402,7 @@ class ConnectedInstallations {
 
   Future<void> _quarantine(
     String source,
-    Map<String, dynamic> record,
+    PoolRecord record,
     int epoch,
   ) async {
     try {
@@ -397,7 +421,7 @@ class ConnectedInstallations {
   /// and the next use asks for a sign-in again if the session is gone.
   Future<void> _saveSession(
     String source,
-    Map<String, dynamic> record,
+    PoolRecord record,
     int epoch,
     SupabaseClient client,
   ) async {
@@ -449,24 +473,7 @@ class ConnectedInstallations {
     // installation or main app session is signed out.
     _epochs[source] = (_epochs[source] ?? 0) + 1;
     _unsaved.remove(source);
+    await _clients.discard(source);
     await _write(source, null);
   }
-}
-
-/// Never follow a redirect carrying any installation's key or bearer elsewhere.
-class OriginOnlyClient extends http.BaseClient {
-  OriginOnlyClient(this.origin, this.inner);
-  final String origin;
-  final http.Client inner;
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    if (request.url.origin != origin) {
-      throw StateError('cross-origin request refused');
-    }
-    request.followRedirects = false;
-    return inner.send(request).timeout(const Duration(seconds: 20));
-  }
-
-  @override
-  void close() => inner.close();
 }
