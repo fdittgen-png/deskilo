@@ -118,6 +118,14 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
 
   Future<void> _issueAll(List<WizardIssueItem> todo) async {
     final l10n = context.l10n;
+    // #2585 C2 — the run's target is captured before the first await: a
+    // workspace or account switched meanwhile neither redirects the next
+    // member's issue nor the look for a lost answer, which keep to the
+    // clients and the context confirmed here.
+    final wiz = widget.wiz;
+    final workspaceId = wiz.workspaceId;
+    final period = wiz.period;
+    final kind = wiz.kind;
     setState(() => _busy = true);
     final issuance = InvoiceIssuance(
       ref.read(invoiceCommandsProvider),
@@ -129,10 +137,10 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
       if (_skipped.contains(item.memberId)) continue;
       var outcome = await issuance.issue(
         InvoiceIssueAttempt(
-          workspaceId: widget.wiz.workspaceId,
+          workspaceId: workspaceId,
           memberId: item.memberId,
-          period: widget.wiz.period,
-          kind: widget.wiz.kind,
+          period: period,
+          kind: kind,
           requestId: _requestIds.putIfAbsent(item.memberId, newRequestId),
           direct: true,
         ),
@@ -174,7 +182,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
     ref
       ..invalidate(invoicesProvider)
       ..invalidate(invoicingOverviewProvider)
-      ..invalidate(wizardPreviewsProvider(widget.wiz.period));
+      ..invalidate(wizardPreviewsProvider(period));
     ref
         .read(invoicingWizardControllerProvider.notifier)
         .bump((t) => t.copyWith(issued: t.issued + done));
