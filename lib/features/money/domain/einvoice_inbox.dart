@@ -25,6 +25,8 @@ class InboxDocument {
     required this.status,
     this.documentType = '380',
     this.rejectReason = '',
+    this.supplierId,
+    this.supplierNumber = '',
   });
 
   factory InboxDocument.fromRow(Object? raw) {
@@ -39,6 +41,9 @@ class InboxDocument {
       status: InboxStatus.of(r.stringOrNull('status')),
       documentType: r.stringOr('document_type', '380'),
       rejectReason: r.stringOr('reject_reason'),
+      supplierId: r.stringOrNull('supplier_id'),
+      supplierNumber:
+          r.objectOrNull('suppliers')?.stringOr('supplier_number') ?? '',
     );
   }
 
@@ -51,6 +56,12 @@ class InboxDocument {
   final InboxStatus status;
   final String documentType;
   final String rejectReason;
+
+  /// #2567 — the supplier this document was linked to (by its verified tax
+  /// identifier, or by a person); null while it waits for a review. The
+  /// raw [supplierName] above stays what the document said.
+  final String? supplierId;
+  final String supplierNumber;
 }
 
 /// A filed expense a document may be the invoice of.

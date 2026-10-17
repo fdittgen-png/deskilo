@@ -4178,6 +4178,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eInvoiceInboxStatusRejected => 'Rejected';
 
   @override
+  String eInvoiceInboxSupplierNumber(String number) {
+    return 'Supplier $number';
+  }
+
+  @override
   String get eInvoiceInboxTitle => 'Supplier invoices';
 
   @override
@@ -17335,6 +17340,142 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Maintain VAT groups, rates and declarations.';
+
+  @override
+  String get suppliersAdd => 'Add supplier';
+
+  @override
+  String get suppliersArchive => 'Archive';
+
+  @override
+  String get suppliersArchivedTag => 'archived';
+
+  @override
+  String get suppliersBank => 'Bank details';
+
+  @override
+  String get suppliersBankBic => 'BIC';
+
+  @override
+  String get suppliersBankCleared => 'cleared';
+
+  @override
+  String get suppliersBankHistory => 'Revisions';
+
+  @override
+  String get suppliersBankHolder => 'Account holder';
+
+  @override
+  String get suppliersBankIban => 'IBAN';
+
+  @override
+  String get suppliersBankInvalid => 'invalid';
+
+  @override
+  String get suppliersBankNone => 'No bank details recorded.';
+
+  @override
+  String suppliersBankRevision(String revision, String outcome) {
+    return 'Revision $revision: $outcome';
+  }
+
+  @override
+  String suppliersBankSaved(String revision) {
+    return 'Bank details saved (revision $revision).';
+  }
+
+  @override
+  String get suppliersBankValid => 'valid';
+
+  @override
+  String get suppliersEdit => 'Edit supplier';
+
+  @override
+  String get suppliersEmpty => 'No supplier yet.';
+
+  @override
+  String get suppliersFieldCity => 'City';
+
+  @override
+  String get suppliersFieldContact => 'Contact';
+
+  @override
+  String get suppliersFieldCountry => 'Country (2 letters)';
+
+  @override
+  String get suppliersFieldGroup => 'This is a VAT-group identifier';
+
+  @override
+  String get suppliersFieldName => 'Name';
+
+  @override
+  String get suppliersFieldNumber => 'Supplier number';
+
+  @override
+  String get suppliersFieldNumberHelp =>
+      'Leave blank for the next free number.';
+
+  @override
+  String get suppliersFieldPostalCode => 'Postal code';
+
+  @override
+  String get suppliersFieldStreet => 'Street';
+
+  @override
+  String get suppliersFieldTaxId =>
+      'Tax identifier (VAT number with country prefix)';
+
+  @override
+  String get suppliersIntro =>
+      'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.';
+
+  @override
+  String get suppliersRefused =>
+      'The supplier could not be saved. A number or tax identifier may already be used, or you may not manage suppliers.';
+
+  @override
+  String get suppliersRestore => 'Restore';
+
+  @override
+  String get suppliersReviewDone => 'Resolved.';
+
+  @override
+  String suppliersReviewGroup(String name, String identifier) {
+    return '$name: \"$identifier\" is a VAT-group identifier shared by several legal parties.';
+  }
+
+  @override
+  String suppliersReviewLinkTo(String supplier) {
+    return 'Link to $supplier';
+  }
+
+  @override
+  String suppliersReviewMissing(String name) {
+    return '$name: the invoice carries no tax identifier.';
+  }
+
+  @override
+  String get suppliersReviewNew => 'Create a new supplier';
+
+  @override
+  String get suppliersReviewTitle => 'To review';
+
+  @override
+  String suppliersReviewUnverified(String name, String identifier) {
+    return '$name: the tax identifier \"$identifier\" could not be verified.';
+  }
+
+  @override
+  String get suppliersSaved => 'Supplier saved.';
+
+  @override
+  String get suppliersTaxUnverified => 'Tax identifier not verified';
+
+  @override
+  String get suppliersTaxVerified => 'Tax identifier verified';
+
+  @override
+  String get suppliersTitle => 'Suppliers';
 
   @override
   String get supplyClassGeneral =>

@@ -2960,6 +2960,15 @@
   "@eInvoiceInboxStatusRejected": {
     "description": "#2358 supplier e-invoice inbox"
   },
+  "eInvoiceInboxSupplierNumber": "Lieferant {number}",
+  "@eInvoiceInboxSupplierNumber": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceInboxTitle": "Lieferantenrechnungen",
   "@eInvoiceInboxTitle": {
     "description": "#2358 supplier e-invoice inbox"
@@ -11907,6 +11916,205 @@
   "subprocessStructureDesc": "Standorte und die Verfügbarkeit von Planobjekten verwalten.",
   "subprocessTax": "Umsatzsteuerverwaltung",
   "subprocessTaxDesc": "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.",
+  "suppliersAdd": "Lieferant hinzufügen",
+  "@suppliersAdd": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchive": "Archivieren",
+  "@suppliersArchive": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchivedTag": "archiviert",
+  "@suppliersArchivedTag": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBank": "Bankverbindung",
+  "@suppliersBank": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankBic": "BIC",
+  "@suppliersBankBic": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankCleared": "gelöscht",
+  "@suppliersBankCleared": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHistory": "Revisionen",
+  "@suppliersBankHistory": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHolder": "Kontoinhaber",
+  "@suppliersBankHolder": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankIban": "IBAN",
+  "@suppliersBankIban": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankInvalid": "ungültig",
+  "@suppliersBankInvalid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankNone": "Keine Bankverbindung hinterlegt.",
+  "@suppliersBankNone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankRevision": "Revision {revision}: {outcome}",
+  "@suppliersBankRevision": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankSaved": "Bankverbindung gespeichert (Revision {revision}).",
+  "@suppliersBankSaved": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankValid": "gültig",
+  "@suppliersBankValid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEdit": "Lieferant bearbeiten",
+  "@suppliersEdit": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEmpty": "Noch kein Lieferant.",
+  "@suppliersEmpty": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCity": "Ort",
+  "@suppliersFieldCity": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldContact": "Kontakt",
+  "@suppliersFieldContact": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCountry": "Land (2 Buchstaben)",
+  "@suppliersFieldCountry": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldGroup": "Das ist eine Umsatzsteuer-Gruppennummer",
+  "@suppliersFieldGroup": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldName": "Name",
+  "@suppliersFieldName": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumber": "Lieferantennummer",
+  "@suppliersFieldNumber": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumberHelp": "Leer lassen für die nächste freie Nummer.",
+  "@suppliersFieldNumberHelp": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldPostalCode": "Postleitzahl",
+  "@suppliersFieldPostalCode": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldStreet": "Straße",
+  "@suppliersFieldStreet": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldTaxId": "Steuernummer (USt-IdNr. mit Länderpräfix)",
+  "@suppliersFieldTaxId": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersIntro": "Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.",
+  "@suppliersIntro": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRefused": "Der Lieferant konnte nicht gespeichert werden. Eine Nummer oder Steuernummer ist eventuell schon vergeben, oder Sie verwalten keine Lieferanten.",
+  "@suppliersRefused": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRestore": "Wiederherstellen",
+  "@suppliersRestore": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewDone": "Erledigt.",
+  "@suppliersReviewDone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewGroup": "{name}: „{identifier}“ ist eine Gruppennummer, die mehrere Rechtsträger teilen.",
+  "@suppliersReviewGroup": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewLinkTo": "Mit {supplier} verknüpfen",
+  "@suppliersReviewLinkTo": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewMissing": "{name}: Die Rechnung enthält keine Steuernummer.",
+  "@suppliersReviewMissing": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewNew": "Neuen Lieferanten anlegen",
+  "@suppliersReviewNew": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewTitle": "Zu prüfen",
+  "@suppliersReviewTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewUnverified": "{name}: Die Steuernummer „{identifier}“ konnte nicht geprüft werden.",
+  "@suppliersReviewUnverified": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersSaved": "Lieferant gespeichert.",
+  "@suppliersSaved": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxUnverified": "Steuernummer nicht geprüft",
+  "@suppliersTaxUnverified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxVerified": "Steuernummer geprüft",
+  "@suppliersTaxVerified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTitle": "Lieferanten",
+  "@suppliersTitle": {
+    "description": "#2567 suppliers"
+  },
   "supplyClassGeneral": "Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)",
   "supplyClassHelper": "Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.",
   "supplyClassLabel": "Leistungsort",

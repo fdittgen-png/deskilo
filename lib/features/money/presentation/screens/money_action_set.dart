@@ -14,6 +14,7 @@ import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/money_faces_view.dart';
+import '../widgets/suppliers_sheet.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
 
@@ -136,6 +137,15 @@ class MoneyActionSet {
           onPressed: () => showExpenseSchedulesSheet(context, ref, currency),
           icon: const Icon(Icons.event_repeat_outlined),
           label: fitted(l10n.scheduledExpensesTitle),
+        ),
+      // #2567 — the payees of the purchase side, for those who manage the
+      // money.
+      if (data.suppliersOn && data.workspace != null)
+        OutlinedButton.icon(
+          key: const ValueKey('suppliers-button'),
+          onPressed: () => showSuppliersSheet(context, data.workspace!.id),
+          icon: const Icon(Icons.storefront_outlined),
+          label: fitted(l10n.suppliersTitle),
         ),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),

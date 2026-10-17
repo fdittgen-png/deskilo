@@ -4833,6 +4833,15 @@
   "@eInvoiceInboxStatusRejected": {
     "description": "#2358 supplier e-invoice inbox"
   },
+  "eInvoiceInboxSupplierNumber": "Supplier {number}",
+  "@eInvoiceInboxSupplierNumber": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "eInvoiceInboxTitle": "Supplier invoices",
   "@eInvoiceInboxTitle": {
     "description": "#2358 supplier e-invoice inbox"
@@ -19818,6 +19827,205 @@
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
   "subprocessTax": "VAT management",
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "suppliersAdd": "Add supplier",
+  "@suppliersAdd": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchive": "Archive",
+  "@suppliersArchive": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersArchivedTag": "archived",
+  "@suppliersArchivedTag": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBank": "Bank details",
+  "@suppliersBank": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankBic": "BIC",
+  "@suppliersBankBic": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankCleared": "cleared",
+  "@suppliersBankCleared": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHistory": "Revisions",
+  "@suppliersBankHistory": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankHolder": "Account holder",
+  "@suppliersBankHolder": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankIban": "IBAN",
+  "@suppliersBankIban": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankInvalid": "invalid",
+  "@suppliersBankInvalid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankNone": "No bank details recorded.",
+  "@suppliersBankNone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersBankRevision": "Revision {revision}: {outcome}",
+  "@suppliersBankRevision": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankSaved": "Bank details saved (revision {revision}).",
+  "@suppliersBankSaved": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersBankValid": "valid",
+  "@suppliersBankValid": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEdit": "Edit supplier",
+  "@suppliersEdit": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersEmpty": "No supplier yet.",
+  "@suppliersEmpty": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCity": "City",
+  "@suppliersFieldCity": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldContact": "Contact",
+  "@suppliersFieldContact": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldCountry": "Country (2 letters)",
+  "@suppliersFieldCountry": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldGroup": "This is a VAT-group identifier",
+  "@suppliersFieldGroup": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldName": "Name",
+  "@suppliersFieldName": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumber": "Supplier number",
+  "@suppliersFieldNumber": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldNumberHelp": "Leave blank for the next free number.",
+  "@suppliersFieldNumberHelp": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldPostalCode": "Postal code",
+  "@suppliersFieldPostalCode": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldStreet": "Street",
+  "@suppliersFieldStreet": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersFieldTaxId": "Tax identifier (VAT number with country prefix)",
+  "@suppliersFieldTaxId": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersIntro": "The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.",
+  "@suppliersIntro": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRefused": "The supplier could not be saved. A number or tax identifier may already be used, or you may not manage suppliers.",
+  "@suppliersRefused": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersRestore": "Restore",
+  "@suppliersRestore": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewDone": "Resolved.",
+  "@suppliersReviewDone": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewGroup": "{name}: \"{identifier}\" is a VAT-group identifier shared by several legal parties.",
+  "@suppliersReviewGroup": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewLinkTo": "Link to {supplier}",
+  "@suppliersReviewLinkTo": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewMissing": "{name}: the invoice carries no tax identifier.",
+  "@suppliersReviewMissing": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersReviewNew": "Create a new supplier",
+  "@suppliersReviewNew": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewTitle": "To review",
+  "@suppliersReviewTitle": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersReviewUnverified": "{name}: the tax identifier \"{identifier}\" could not be verified.",
+  "@suppliersReviewUnverified": {
+    "description": "#2567 suppliers",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "suppliersSaved": "Supplier saved.",
+  "@suppliersSaved": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxUnverified": "Tax identifier not verified",
+  "@suppliersTaxUnverified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTaxVerified": "Tax identifier verified",
+  "@suppliersTaxVerified": {
+    "description": "#2567 suppliers"
+  },
+  "suppliersTitle": "Suppliers",
+  "@suppliersTitle": {
+    "description": "#2567 suppliers"
+  },
   "supplyClassGeneral": "General service (not connected with the premises)",
   "@supplyClassGeneral": {
     "description": "#2354 place of supply: supplyClassGeneral"

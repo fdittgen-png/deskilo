@@ -54,6 +54,8 @@ class FakeEInvoiceInboxRepository implements EInvoiceInboxRepository {
       status: InboxStatus.rejected,
       documentType: d.documentType,
       rejectReason: reason,
+      supplierId: d.supplierId,
+      supplierNumber: d.supplierNumber,
     );
   }
 }

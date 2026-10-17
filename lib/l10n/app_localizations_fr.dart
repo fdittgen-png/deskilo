@@ -4204,6 +4204,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eInvoiceInboxStatusRejected => 'Rejetée';
 
   @override
+  String eInvoiceInboxSupplierNumber(String number) {
+    return 'Fournisseur $number';
+  }
+
+  @override
   String get eInvoiceInboxTitle => 'Factures fournisseurs';
 
   @override
@@ -17529,6 +17534,142 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Gérer les groupes, taux et déclarations de TVA.';
+
+  @override
+  String get suppliersAdd => 'Ajouter un fournisseur';
+
+  @override
+  String get suppliersArchive => 'Archiver';
+
+  @override
+  String get suppliersArchivedTag => 'archivé';
+
+  @override
+  String get suppliersBank => 'Coordonnées bancaires';
+
+  @override
+  String get suppliersBankBic => 'BIC';
+
+  @override
+  String get suppliersBankCleared => 'effacé';
+
+  @override
+  String get suppliersBankHistory => 'Révisions';
+
+  @override
+  String get suppliersBankHolder => 'Titulaire du compte';
+
+  @override
+  String get suppliersBankIban => 'IBAN';
+
+  @override
+  String get suppliersBankInvalid => 'invalide';
+
+  @override
+  String get suppliersBankNone => 'Aucune coordonnée bancaire enregistrée.';
+
+  @override
+  String suppliersBankRevision(String revision, String outcome) {
+    return 'Révision $revision : $outcome';
+  }
+
+  @override
+  String suppliersBankSaved(String revision) {
+    return 'Coordonnées bancaires enregistrées (révision $revision).';
+  }
+
+  @override
+  String get suppliersBankValid => 'valide';
+
+  @override
+  String get suppliersEdit => 'Modifier le fournisseur';
+
+  @override
+  String get suppliersEmpty => 'Aucun fournisseur pour le moment.';
+
+  @override
+  String get suppliersFieldCity => 'Ville';
+
+  @override
+  String get suppliersFieldContact => 'Contact';
+
+  @override
+  String get suppliersFieldCountry => 'Pays (2 lettres)';
+
+  @override
+  String get suppliersFieldGroup => 'C’est un identifiant de groupe TVA';
+
+  @override
+  String get suppliersFieldName => 'Nom';
+
+  @override
+  String get suppliersFieldNumber => 'Numéro de fournisseur';
+
+  @override
+  String get suppliersFieldNumberHelp =>
+      'Laissez vide pour le prochain numéro libre.';
+
+  @override
+  String get suppliersFieldPostalCode => 'Code postal';
+
+  @override
+  String get suppliersFieldStreet => 'Rue';
+
+  @override
+  String get suppliersFieldTaxId =>
+      'Identifiant fiscal (n° de TVA avec préfixe pays)';
+
+  @override
+  String get suppliersIntro =>
+      'Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.';
+
+  @override
+  String get suppliersRefused =>
+      'Le fournisseur n’a pas pu être enregistré. Un numéro ou un identifiant fiscal est peut-être déjà utilisé, ou vous ne gérez pas les fournisseurs.';
+
+  @override
+  String get suppliersRestore => 'Restaurer';
+
+  @override
+  String get suppliersReviewDone => 'Résolu.';
+
+  @override
+  String suppliersReviewGroup(String name, String identifier) {
+    return '$name : « $identifier » est un identifiant de groupe TVA partagé par plusieurs entités juridiques.';
+  }
+
+  @override
+  String suppliersReviewLinkTo(String supplier) {
+    return 'Rattacher à $supplier';
+  }
+
+  @override
+  String suppliersReviewMissing(String name) {
+    return '$name : la facture ne porte aucun identifiant fiscal.';
+  }
+
+  @override
+  String get suppliersReviewNew => 'Créer un nouveau fournisseur';
+
+  @override
+  String get suppliersReviewTitle => 'À examiner';
+
+  @override
+  String suppliersReviewUnverified(String name, String identifier) {
+    return '$name : l’identifiant fiscal « $identifier » n’a pas pu être vérifié.';
+  }
+
+  @override
+  String get suppliersSaved => 'Fournisseur enregistré.';
+
+  @override
+  String get suppliersTaxUnverified => 'Identifiant fiscal non vérifié';
+
+  @override
+  String get suppliersTaxVerified => 'Identifiant fiscal vérifié';
+
+  @override
+  String get suppliersTitle => 'Fournisseurs';
 
   @override
   String get supplyClassGeneral =>

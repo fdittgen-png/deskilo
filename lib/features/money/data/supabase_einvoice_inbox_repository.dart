@@ -16,7 +16,8 @@ class SupabaseEInvoiceInboxRepository implements EInvoiceInboxRepository {
         .from('einvoice_inbox')
         .select(
           'id, invoice_number, issue_date, currency, supplier_name, '
-          'gross_cents, status, document_type, reject_reason',
+          'gross_cents, status, document_type, reject_reason, supplier_id, '
+          'suppliers(supplier_number)',
         )
         .eq('workspace_id', workspaceId)
         .order('issue_date', ascending: false)

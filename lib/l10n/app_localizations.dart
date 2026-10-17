@@ -7273,6 +7273,12 @@ abstract class AppLocalizations {
   /// **'Rejected'**
   String get eInvoiceInboxStatusRejected;
 
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier {number}'**
+  String eInvoiceInboxSupplierNumber(String number);
+
   /// #2358 supplier e-invoice inbox
   ///
   /// In en, this message translates to:
@@ -29941,6 +29947,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Maintain VAT groups, rates and declarations.'**
   String get subprocessTaxDesc;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Add supplier'**
+  String get suppliersAdd;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get suppliersArchive;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'archived'**
+  String get suppliersArchivedTag;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Bank details'**
+  String get suppliersBank;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'BIC'**
+  String get suppliersBankBic;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'cleared'**
+  String get suppliersBankCleared;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Revisions'**
+  String get suppliersBankHistory;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder'**
+  String get suppliersBankHolder;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get suppliersBankIban;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'invalid'**
+  String get suppliersBankInvalid;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'No bank details recorded.'**
+  String get suppliersBankNone;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Revision {revision}: {outcome}'**
+  String suppliersBankRevision(String revision, String outcome);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Bank details saved (revision {revision}).'**
+  String suppliersBankSaved(String revision);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'valid'**
+  String get suppliersBankValid;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Edit supplier'**
+  String get suppliersEdit;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier yet.'**
+  String get suppliersEmpty;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get suppliersFieldCity;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get suppliersFieldContact;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Country (2 letters)'**
+  String get suppliersFieldCountry;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'This is a VAT-group identifier'**
+  String get suppliersFieldGroup;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get suppliersFieldName;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier number'**
+  String get suppliersFieldNumber;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank for the next free number.'**
+  String get suppliersFieldNumberHelp;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get suppliersFieldPostalCode;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get suppliersFieldStreet;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Tax identifier (VAT number with country prefix)'**
+  String get suppliersFieldTaxId;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.'**
+  String get suppliersIntro;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'The supplier could not be saved. A number or tax identifier may already be used, or you may not manage suppliers.'**
+  String get suppliersRefused;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get suppliersRestore;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved.'**
+  String get suppliersReviewDone;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: \"{identifier}\" is a VAT-group identifier shared by several legal parties.'**
+  String suppliersReviewGroup(String name, String identifier);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Link to {supplier}'**
+  String suppliersReviewLinkTo(String supplier);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: the invoice carries no tax identifier.'**
+  String suppliersReviewMissing(String name);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new supplier'**
+  String get suppliersReviewNew;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'To review'**
+  String get suppliersReviewTitle;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: the tax identifier \"{identifier}\" could not be verified.'**
+  String suppliersReviewUnverified(String name, String identifier);
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier saved.'**
+  String get suppliersSaved;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Tax identifier not verified'**
+  String get suppliersTaxUnverified;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Tax identifier verified'**
+  String get suppliersTaxVerified;
+
+  /// #2567 suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get suppliersTitle;
 
   /// #2354 place of supply: supplyClassGeneral
   ///

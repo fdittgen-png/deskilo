@@ -4197,6 +4197,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eInvoiceInboxStatusRejected => 'Rechazada';
 
   @override
+  String eInvoiceInboxSupplierNumber(String number) {
+    return 'Proveedor $number';
+  }
+
+  @override
   String get eInvoiceInboxTitle => 'Facturas de proveedores';
 
   @override
@@ -17488,6 +17493,142 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Gestionar grupos, tipos y declaraciones de IVA.';
+
+  @override
+  String get suppliersAdd => 'Añadir proveedor';
+
+  @override
+  String get suppliersArchive => 'Archivar';
+
+  @override
+  String get suppliersArchivedTag => 'archivado';
+
+  @override
+  String get suppliersBank => 'Datos bancarios';
+
+  @override
+  String get suppliersBankBic => 'BIC';
+
+  @override
+  String get suppliersBankCleared => 'borrado';
+
+  @override
+  String get suppliersBankHistory => 'Revisiones';
+
+  @override
+  String get suppliersBankHolder => 'Titular de la cuenta';
+
+  @override
+  String get suppliersBankIban => 'IBAN';
+
+  @override
+  String get suppliersBankInvalid => 'no válido';
+
+  @override
+  String get suppliersBankNone => 'Sin datos bancarios registrados.';
+
+  @override
+  String suppliersBankRevision(String revision, String outcome) {
+    return 'Revisión $revision: $outcome';
+  }
+
+  @override
+  String suppliersBankSaved(String revision) {
+    return 'Datos bancarios guardados (revisión $revision).';
+  }
+
+  @override
+  String get suppliersBankValid => 'válido';
+
+  @override
+  String get suppliersEdit => 'Editar proveedor';
+
+  @override
+  String get suppliersEmpty => 'Aún no hay proveedores.';
+
+  @override
+  String get suppliersFieldCity => 'Ciudad';
+
+  @override
+  String get suppliersFieldContact => 'Contacto';
+
+  @override
+  String get suppliersFieldCountry => 'País (2 letras)';
+
+  @override
+  String get suppliersFieldGroup => 'Es un identificador de grupo de IVA';
+
+  @override
+  String get suppliersFieldName => 'Nombre';
+
+  @override
+  String get suppliersFieldNumber => 'Número de proveedor';
+
+  @override
+  String get suppliersFieldNumberHelp =>
+      'Déjelo vacío para el siguiente número libre.';
+
+  @override
+  String get suppliersFieldPostalCode => 'Código postal';
+
+  @override
+  String get suppliersFieldStreet => 'Calle';
+
+  @override
+  String get suppliersFieldTaxId =>
+      'Identificador fiscal (NIF-IVA con prefijo de país)';
+
+  @override
+  String get suppliersIntro =>
+      'Los beneficiarios de sus compras. Un proveedor se reconoce por un identificador fiscal verificado, nunca solo por su nombre.';
+
+  @override
+  String get suppliersRefused =>
+      'No se pudo guardar el proveedor. Quizá el número o el identificador fiscal ya se usa, o no gestiona proveedores.';
+
+  @override
+  String get suppliersRestore => 'Restaurar';
+
+  @override
+  String get suppliersReviewDone => 'Resuelto.';
+
+  @override
+  String suppliersReviewGroup(String name, String identifier) {
+    return '$name: «$identifier» es un identificador de grupo de IVA compartido por varias entidades.';
+  }
+
+  @override
+  String suppliersReviewLinkTo(String supplier) {
+    return 'Vincular a $supplier';
+  }
+
+  @override
+  String suppliersReviewMissing(String name) {
+    return '$name: la factura no lleva identificador fiscal.';
+  }
+
+  @override
+  String get suppliersReviewNew => 'Crear un proveedor nuevo';
+
+  @override
+  String get suppliersReviewTitle => 'Por revisar';
+
+  @override
+  String suppliersReviewUnverified(String name, String identifier) {
+    return '$name: no se pudo verificar el identificador fiscal «$identifier».';
+  }
+
+  @override
+  String get suppliersSaved => 'Proveedor guardado.';
+
+  @override
+  String get suppliersTaxUnverified => 'Identificador fiscal no verificado';
+
+  @override
+  String get suppliersTaxVerified => 'Identificador fiscal verificado';
+
+  @override
+  String get suppliersTitle => 'Proveedores';
 
   @override
   String get supplyClassGeneral =>

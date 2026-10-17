@@ -4205,6 +4205,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eInvoiceInboxStatusRejected => 'Abgelehnt';
 
   @override
+  String eInvoiceInboxSupplierNumber(String number) {
+    return 'Lieferant $number';
+  }
+
+  @override
   String get eInvoiceInboxTitle => 'Lieferantenrechnungen';
 
   @override
@@ -17514,6 +17519,141 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
+
+  @override
+  String get suppliersAdd => 'Lieferant hinzufügen';
+
+  @override
+  String get suppliersArchive => 'Archivieren';
+
+  @override
+  String get suppliersArchivedTag => 'archiviert';
+
+  @override
+  String get suppliersBank => 'Bankverbindung';
+
+  @override
+  String get suppliersBankBic => 'BIC';
+
+  @override
+  String get suppliersBankCleared => 'gelöscht';
+
+  @override
+  String get suppliersBankHistory => 'Revisionen';
+
+  @override
+  String get suppliersBankHolder => 'Kontoinhaber';
+
+  @override
+  String get suppliersBankIban => 'IBAN';
+
+  @override
+  String get suppliersBankInvalid => 'ungültig';
+
+  @override
+  String get suppliersBankNone => 'Keine Bankverbindung hinterlegt.';
+
+  @override
+  String suppliersBankRevision(String revision, String outcome) {
+    return 'Revision $revision: $outcome';
+  }
+
+  @override
+  String suppliersBankSaved(String revision) {
+    return 'Bankverbindung gespeichert (Revision $revision).';
+  }
+
+  @override
+  String get suppliersBankValid => 'gültig';
+
+  @override
+  String get suppliersEdit => 'Lieferant bearbeiten';
+
+  @override
+  String get suppliersEmpty => 'Noch kein Lieferant.';
+
+  @override
+  String get suppliersFieldCity => 'Ort';
+
+  @override
+  String get suppliersFieldContact => 'Kontakt';
+
+  @override
+  String get suppliersFieldCountry => 'Land (2 Buchstaben)';
+
+  @override
+  String get suppliersFieldGroup => 'Das ist eine Umsatzsteuer-Gruppennummer';
+
+  @override
+  String get suppliersFieldName => 'Name';
+
+  @override
+  String get suppliersFieldNumber => 'Lieferantennummer';
+
+  @override
+  String get suppliersFieldNumberHelp =>
+      'Leer lassen für die nächste freie Nummer.';
+
+  @override
+  String get suppliersFieldPostalCode => 'Postleitzahl';
+
+  @override
+  String get suppliersFieldStreet => 'Straße';
+
+  @override
+  String get suppliersFieldTaxId => 'Steuernummer (USt-IdNr. mit Länderpräfix)';
+
+  @override
+  String get suppliersIntro =>
+      'Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.';
+
+  @override
+  String get suppliersRefused =>
+      'Der Lieferant konnte nicht gespeichert werden. Eine Nummer oder Steuernummer ist eventuell schon vergeben, oder Sie verwalten keine Lieferanten.';
+
+  @override
+  String get suppliersRestore => 'Wiederherstellen';
+
+  @override
+  String get suppliersReviewDone => 'Erledigt.';
+
+  @override
+  String suppliersReviewGroup(String name, String identifier) {
+    return '$name: „$identifier“ ist eine Gruppennummer, die mehrere Rechtsträger teilen.';
+  }
+
+  @override
+  String suppliersReviewLinkTo(String supplier) {
+    return 'Mit $supplier verknüpfen';
+  }
+
+  @override
+  String suppliersReviewMissing(String name) {
+    return '$name: Die Rechnung enthält keine Steuernummer.';
+  }
+
+  @override
+  String get suppliersReviewNew => 'Neuen Lieferanten anlegen';
+
+  @override
+  String get suppliersReviewTitle => 'Zu prüfen';
+
+  @override
+  String suppliersReviewUnverified(String name, String identifier) {
+    return '$name: Die Steuernummer „$identifier“ konnte nicht geprüft werden.';
+  }
+
+  @override
+  String get suppliersSaved => 'Lieferant gespeichert.';
+
+  @override
+  String get suppliersTaxUnverified => 'Steuernummer nicht geprüft';
+
+  @override
+  String get suppliersTaxVerified => 'Steuernummer geprüft';
+
+  @override
+  String get suppliersTitle => 'Lieferanten';
 
   @override
   String get supplyClassGeneral =>
