@@ -50,6 +50,28 @@ local_only() {
   esac
 }
 
+# An ES256 signing key (a JWK set of one) from openssl alone.
+new_signing_key() {
+  local pem; pem=$(mktemp)
+  openssl ecparam -name prime256v1 -genkey -noout -out "$pem" || return 1
+  python3 - "$pem" "$1" <<'PY' || { rm -f "$pem"; return 1; }
+import base64, json, re, subprocess, sys, uuid
+text = subprocess.run(['openssl', 'ec', '-in', sys.argv[1], '-text', '-noout'],
+                      capture_output=True, text=True, check=True).stdout
+def block(name):
+    m = re.search(name + r':\s*((?:[0-9a-f]{2}:?\s*)+)', text)
+    return bytes.fromhex(re.sub(r'[^0-9a-f]', '', m.group(1)))
+d = block('priv').lstrip(b'\x00').rjust(32, b'\x00')
+pub = block('pub')
+assert pub[0] == 4 and len(pub) == 65, 'unexpected public key'
+b64 = lambda b: base64.urlsafe_b64encode(b).rstrip(b'=').decode()
+jwk = {'kty': 'EC', 'kid': str(uuid.uuid4()), 'use': 'sig', 'key_ops': ['sign', 'verify'],
+       'alg': 'ES256', 'ext': True, 'crv': 'P-256', 'd': b64(d), 'x': b64(pub[1:33]), 'y': b64(pub[33:])}
+json.dump([jwk], open(sys.argv[2], 'w'))
+PY
+  rm -f "$pem"
+}
+
 prepare() {
   rm -rf "$DIR"
   mkdir -p "$DIR"
@@ -106,10 +128,7 @@ TOML
     # The CLI signs user tokens with a signing key it ships as a default,
     # so a secret alone leaves every local stack accepting the others'
     # tokens (run 39015390424). Each stack gets a key of its own.
-    supabase gen signing-key --algorithm ES256 --workdir "$DIR/$name" </dev/null >/dev/null 2>&1 \
-      || supabase gen signing-key --algorithm ES256 --append --workdir "$DIR/$name" </dev/null >/dev/null 2>&1 \
-      || fail "$name: no signing key could be generated"
-    [ -s "$DIR/$name/supabase/signing_keys.json" ] || fail "$name: the signing key file is missing"
+    new_signing_key "$DIR/$name/supabase/signing_keys.json" || fail "$name: no signing key could be generated"
   done
   say "prepared P and W-B under $DIR"
 }
