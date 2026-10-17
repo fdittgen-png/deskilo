@@ -14,8 +14,9 @@ Future<void> acknowledgeSpaceNotice(
   String workspaceId,
   String version,
 ) async {
+  // #2564 — a space's notice is acknowledged on the host that holds the space.
   await ref
-      .read(profileRepositoryProvider)
+      .read(memberProfileRepositoryProvider)
       .acknowledgeWorkspaceNotice(workspaceId, version);
   ref.invalidate(privacyNoticesProvider);
 }

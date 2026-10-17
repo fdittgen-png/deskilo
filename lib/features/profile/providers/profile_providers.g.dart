@@ -179,7 +179,7 @@ final class PrivacyNoticesProvider
   }
 }
 
-String _$privacyNoticesHash() => r'0f85f74ac0c512eb44ad7a1a5823b8061ba529a4';
+String _$privacyNoticesHash() => r'32637ae038ef722cd5e00c28c138ad592137d41a';
 
 /// #1915 — my rights requests, newest first.
 
