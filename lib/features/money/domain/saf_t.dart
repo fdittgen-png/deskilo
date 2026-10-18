@@ -301,7 +301,7 @@ String buildSafTFile({
       var lineNo = 0;
       // Built first: SAF-T states the totals BEFORE the entries, so they
       // are the sums of the transactions about to be written.
-      final sales = safTSalesTransactions(live, accounts);
+      final sales = [...safTSalesTransactions(live, accounts), ...safTWriteOffs(settled, accounts)];
       final bank = [
         ...safTNettedReceipts(live, accounts),
         ...safTSettlements(settled, accounts),

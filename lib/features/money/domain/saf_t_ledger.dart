@@ -13,12 +13,17 @@ class SafTLedgerAccounts {
     required this.revenue,
     required this.bank,
     required this.vat,
+    this.writeOff = '',
   });
 
   final String customers;
   final String revenue;
   final String bank;
   final String vat;
+
+  /// #2365 -- the loss account of a written-off rest; empty means unmapped,
+  /// and then no write-off is posted (an invented account would look complete).
+  final String writeOff;
 }
 
 /// One posting line of a SAF-T ledger transaction. Exactly one of
@@ -189,4 +194,25 @@ List<SafTLedgerTransaction> safTSettlements(
               ),
             ],
     ),
+];
+
+/// #2365 -- what the owner gave up of an invoice: the unpaid rest leaves the
+/// customers for the loss account, on the write-off day, at the gross amount.
+/// Without a mapped loss account nothing is posted.
+List<SafTLedgerTransaction> safTWriteOffs(
+  Iterable<({Invoice invoice, InvoiceMatch match})> settled,
+  SafTLedgerAccounts accounts,
+) => [
+  if (accounts.writeOff.isNotEmpty)
+    for (final e in settled)
+      if (e.match.writeoffAt case final day? when e.invoice.totalCents > e.match.paidCents)
+        SafTLedgerTransaction(
+          id: '${e.invoice.number}-W',
+          date: day,
+          description: 'Write-off ${e.invoice.number}',
+          lines: [
+            SafTLedgerLine(accounts.writeOff, e.invoice.totalCents - e.match.paidCents, 0, e.invoice.number),
+            SafTLedgerLine(accounts.customers, 0, e.invoice.totalCents - e.match.paidCents, e.invoice.number),
+          ],
+        ),
 ];

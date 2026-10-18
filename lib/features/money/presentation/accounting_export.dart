@@ -292,7 +292,7 @@ Future<void> exportAccountingFile(
                   customers: chosen.accounts.customers,
                   revenue: chosen.accounts.revenue,
                   bank: chosen.accounts.bank,
-                  vat: chosen.accounts.vat,
+                  vat: chosen.accounts.vat, writeOff: chosen.accounts.writeOff,
                 )
               : null;
         } else {

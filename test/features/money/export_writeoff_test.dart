@@ -8,6 +8,7 @@
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -156,6 +157,59 @@ void main() {
         ),
       };
       expect(sage(matches: pending).where((l) => l.contains('Write-off')), isEmpty);
+    });
+  });
+
+  group('SAF-T', () {
+    String saft({String writeOff = '654', Map<String, InvoiceMatch>? matches}) => buildSafTFile(
+      invoices: SeededExportYear.invoices,
+      matches: matches ?? SeededExportYear.matches,
+      company: seededCompany,
+      currency: 'EUR',
+      softwareVersion: '1',
+      createdAt: DateTime(2027, 1, 5),
+      lineText: (l) => l.label,
+      ledgerAccounts: SafTLedgerAccounts(
+        customers: '411',
+        revenue: '706',
+        bank: '512',
+        vat: '4457',
+        writeOff: writeOff,
+      ),
+    );
+
+    test('the written-off rest is a balanced transaction in the sales journal', () {
+      final xml = saft();
+      final start = xml.indexOf('<TransactionID>INV-3-W</TransactionID>');
+      expect(start, greaterThan(0));
+      final t = xml.substring(start, xml.indexOf('</Transaction>', start));
+      expect(t, contains('<TransactionDate>2026-05-25</TransactionDate>'));
+      expect(t, contains('<AccountID>654</AccountID>'));
+      expect(t, contains('<DebitAmount>40.00</DebitAmount>'));
+      expect(t, contains('<CreditAmount>40.00</CreditAmount>'));
+      // the sales journal carries the adjustment of the receivable
+      expect(xml.indexOf('INV-3-W'), greaterThan(xml.indexOf('<JournalID>VE</JournalID>')));
+      expect(xml.indexOf('INV-3-W'), lessThan(xml.indexOf('<JournalID>BQ</JournalID>')));
+    });
+
+    test('without a mapped loss account nothing is invented', () {
+      final xml = saft(writeOff: '');
+      expect(xml, isNot(contains('INV-3-W')));
+    });
+
+    test('a pending write-off is not posted', () {
+      final pending = {
+        ...SeededExportYear.matches,
+        SeededExportYear.inv3.id: InvoiceMatch(
+          invoiceId: SeededExportYear.inv3.id,
+          paidCents: 6000,
+          resolution: 'writeoff',
+          matchedAt: DateTime(2026, 5, 20),
+          writeoffAt: DateTime(2026, 5, 25),
+          status: 'pending',
+        ),
+      };
+      expect(saft(matches: pending), isNot(contains('INV-3-W')));
     });
   });
 }

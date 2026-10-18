@@ -27,15 +27,21 @@ authority. Widening one needs the authority's own spec in hand.
 
 | format | claim | countries | verified by |
 |---|---|---|---|
-| FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM, `DateLet` on every lettered row |
+| FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM, `DateLet` on every lettered row, a written-off rest on 654 lettered with its invoice |
 | SAF-T (PT), `TaxAccountingBasis` **F** | regulatory | PT | declared invoicing-only, `SoftwareCertificateNumber` 0 |
-| DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header (SKR in field 27, fiscal-year start from the book profile), first 20 fields per row, Belegfeld 1 cut at 36 and Buchungstext at 60, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM** |
-| Sage 50 audit trail | exchange | GB, IE | |
+| DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header (SKR in field 27, fiscal-year start from the book profile), first 20 fields per row, Belegfeld 1 cut at 36 and Buchungstext at 60, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM**, a written-off rest on SKR03 2400 |
+| Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
-| SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted |
+| SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted, a written-off rest to the mapped loss account, in the sales journal (none mapped, none posted) |
 | Accountant CSV | exchange | everywhere | |
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip |
+
+Write-offs are posted **gross**, as a loss, on the day they were given up:
+the VAT correction (bad debt relief, e.g. art. 272 CGI, §17 UStG, Sage's relief
+claim) has its own conditions and stays with the accountant. The loss accounts
+are `account_map` rows of the tax reference store (FR 654000 confirmed; DE 2400
+and GB 8100 unconfirmed until an accountant has checked the chart in use).
 
 ## What each country mandates that this app does not produce
 
