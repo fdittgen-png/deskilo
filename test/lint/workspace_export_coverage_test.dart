@@ -309,6 +309,9 @@ const Map<String, String> _notExported = {
       '#2569 — the lease the space holds as tenant: one contract of this '
           'server\'s lessor, with a deposit and a termination; a fresh space does '
           'not import it',
+  'purchase_commitment_matches':
+      '#2575 — the append-only link from a lease\'s expected rent to the bill '
+          'lines that replaced it; it names rows of this server',
   'lease_terms':
       '#2569 — the history of the amounts of one lease; it names the '
           'scheduled expense it generated on this server',

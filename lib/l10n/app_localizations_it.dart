@@ -9629,6 +9629,33 @@ class AppLocalizationsIt extends AppLocalizations {
   String get leaseAddTerm => 'Nuovo importo';
 
   @override
+  String get leaseCommitmentExpected => 'Atteso';
+
+  @override
+  String leaseCommitmentLine(String expected, String matched) {
+    return 'Atteso $expected · abbinato $matched';
+  }
+
+  @override
+  String get leaseCommitmentMatched => 'Abbinato';
+
+  @override
+  String get leaseCommitmentPartial => 'Parzialmente abbinato';
+
+  @override
+  String get leaseCommitments => 'Scadenze';
+
+  @override
+  String get leaseCommitmentsEmpty => 'Non si attende ancora nulla.';
+
+  @override
+  String get leaseCommitmentsIntro =>
+      'Il canone che il contratto si aspetta ogni mese e le fatture che lo hanno sostituito. Una fattura assegnata a un mese ne sostituisce l’attesa; non aggiunge mai un secondo costo.';
+
+  @override
+  String get leaseCommitmentsLoadFailed => 'Impossibile caricare le scadenze.';
+
+  @override
   String leaseDeposit(String amount) {
     return 'Deposito $amount';
   }
@@ -9717,6 +9744,73 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get leaseLoadFailed => 'Impossibile caricare il contratto.';
+
+  @override
+  String get leaseMatchAction => 'Abbina una fattura';
+
+  @override
+  String get leaseMatchAmount => 'Importo coperto';
+
+  @override
+  String get leaseMatchBill => 'Fattura';
+
+  @override
+  String get leaseMatchDone => 'Abbinato';
+
+  @override
+  String leaseMatchHint(String remaining) {
+    return 'Questo mese attende ancora $remaining. Scegli la fattura del locatore che lo copre.';
+  }
+
+  @override
+  String leaseMatchInvalid(String remaining) {
+    return 'Inserisci un importo superiore a zero e al massimo $remaining.';
+  }
+
+  @override
+  String get leaseMatchLine => 'Riga della fattura';
+
+  @override
+  String leaseMatchLineText(String reference, String amount) {
+    return 'Fattura $reference · $amount';
+  }
+
+  @override
+  String get leaseMatchNoBills =>
+      'Non c’è nessuna fattura fornitore in attesa o approvata da abbinare.';
+
+  @override
+  String get leaseMatchRefused =>
+      'Non registrato. La fattura deve essere quella del locatore e l’importo deve rientrare in ciò che il mese attende e in ciò che resta della riga.';
+
+  @override
+  String get leaseMatchReverse => 'Annulla';
+
+  @override
+  String get leaseMatchReverseAction => 'Annulla';
+
+  @override
+  String get leaseMatchReverseReason => 'Perché viene annullato?';
+
+  @override
+  String get leaseMatchReverseTitle => 'Annulla questo abbinamento';
+
+  @override
+  String get leaseMatchReversed => 'Annullato';
+
+  @override
+  String get leaseMatchSave => 'Abbina';
+
+  @override
+  String get leaseMatchTitle => 'Abbina una fattura';
+
+  @override
+  String leaseMatchVariance(String amount) {
+    return '$amount della riga di fattura non sono assegnati a nessun mese';
+  }
+
+  @override
+  String get leaseMatchWasReversed => 'Annullato';
 
   @override
   String get leaseNeedSupplier => 'Registra prima il locatore come fornitore.';

@@ -154,6 +154,9 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     premisesLeaseRepositoryProvider.overrideWithValue(
       seedDemoLease(fixture.seededAt),
     ),
+    leaseCommitmentRepositoryProvider.overrideWithValue(
+      seedDemoCommitments(fixture.seededAt),
+    ),
   ];
 }
 

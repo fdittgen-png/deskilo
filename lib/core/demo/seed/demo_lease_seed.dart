@@ -3,7 +3,10 @@
 // #2569 — the premises lease the demo space holds as tenant: the nine-year
 // commercial lease of the premises in Pézenas, its rent and its service
 // charge advance. The rent matches the scheduled expense of the demo year.
+import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/premises_lease.dart';
+import '../../time/date_text.dart';
+import '../data/lease_commitment_repository.dart';
 import '../data/premises_lease_repository.dart';
 
 FakePremisesLeaseRepository seedDemoLease(DateTime now) {
@@ -43,4 +46,38 @@ FakePremisesLeaseRepository seedDemoLease(DateTime now) {
       ],
     ),
   ]);
+}
+
+/// The rent the demo lease expects, one occurrence a month from its start to
+/// this month: the older months matched by the lessor's bills, this month
+/// still expected.
+FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
+  final starts = DateTime(now.year - 1, 7);
+  final months = (now.year - starts.year) * 12 + now.month - starts.month + 1;
+  final out = <CommitmentOccurrence>[];
+  for (var k = months - 1; k >= 0; k--) {
+    final due = DateTime(starts.year, starts.month + k);
+    final matched = k < months - 1;
+    out.add(
+      CommitmentOccurrence(
+        id: 'demo-occ-$k',
+        dueOn: due,
+        expectedCents: 222000,
+        matchedCents: matched ? 222000 : 0,
+        matches: [
+          if (matched)
+            CommitmentMatch(
+              id: 'demo-match-seed-$k',
+              purchaseId: 'demo-bill-rent-$k',
+              lineNo: 1,
+              allocatedCents: 222000,
+              reference:
+                  'LOY-${yearMonth(due.year, due.month)}',
+              lineGrossCents: 222000,
+            ),
+        ],
+      ),
+    );
+  }
+  return FakeLeaseCommitmentRepository({'demo-lease-premises': out});
 }

@@ -873,6 +873,21 @@ constraint public_workspace_cards.public_workspace_cards_pkey PRIMARY KEY (works
 constraint public_workspace_cards.public_workspace_cards_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint public_workspace_cards.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint public_workspace_cards.system_company_present CHECK ((company_id IS NOT NULL))
+constraint purchase_commitment_matches.purchase_commitment_matches_allocated_cents_check CHECK ((allocated_cents <> 0))
+constraint purchase_commitment_matches.purchase_commitment_matches_check CHECK (((kind = 'match'::text) = (allocated_cents > 0)))
+constraint purchase_commitment_matches.purchase_commitment_matches_check1 CHECK (((kind = 'reversal'::text) = (original_match_id IS NOT NULL)))
+constraint purchase_commitment_matches.purchase_commitment_matches_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint purchase_commitment_matches.purchase_commitment_matches_kind_check CHECK ((kind = ANY (ARRAY['match'::text, 'reversal'::text])))
+constraint purchase_commitment_matches.purchase_commitment_matches_occurrence_id_fkey FOREIGN KEY (occurrence_id) REFERENCES expense_occurrences(id)
+constraint purchase_commitment_matches.purchase_commitment_matches_original_match_id_fkey FOREIGN KEY (original_match_id) REFERENCES purchase_commitment_matches(id)
+constraint purchase_commitment_matches.purchase_commitment_matches_pkey PRIMARY KEY (id)
+constraint purchase_commitment_matches.purchase_commitment_matches_purchase_line_id_fkey FOREIGN KEY (purchase_line_id) REFERENCES purchase_lines(id)
+constraint purchase_commitment_matches.purchase_commitment_matches_reason_check CHECK ((char_length(reason) <= 300))
+constraint purchase_commitment_matches.purchase_commitment_matches_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint purchase_commitment_matches.purchase_commitment_matches_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint purchase_commitment_matches.purchase_commitment_matches_workspace_id_purchase_id_fkey FOREIGN KEY (workspace_id, purchase_id) REFERENCES purchase_documents(workspace_id, id)
+constraint purchase_commitment_matches.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint purchase_commitment_matches.system_company_present CHECK ((company_id IS NOT NULL))
 constraint purchase_documents.purchase_documents_approval_check CHECK (((state = 'approved'::text) = ((approved_event_id IS NOT NULL) OR ((decided_by_member_id IS NOT NULL) AND (state <> 'rejected'::text)))))
 constraint purchase_documents.purchase_documents_approved_event_id_fkey FOREIGN KEY (approved_event_id) REFERENCES events(id)
 constraint purchase_documents.purchase_documents_category_check CHECK ((char_length(category) <= 80))
@@ -1764,6 +1779,7 @@ routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | f
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:a65d618c53b6
 routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
 routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
+routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:135ef984459a
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
 routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4a02ac9c0f76
@@ -2020,6 +2036,8 @@ routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_man
 routine public.purchase_allocations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:d49cfc07ddd5
 routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:866a954639c4
 routine public.purchase_bridge_expense(p_event events) -> uuid | function | definer | volatile | exec:service_role | body:0f3850d27cee
+routine public.purchase_commitment_matches_guard() -> trigger | function | invoker | volatile | exec:service_role | body:b34b8aa95a2b
+routine public.purchase_commitment_page_v1(p_workspace_id uuid, p_lease_id uuid, p_before date, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:90cea48af978
 routine public.purchase_credit_paid(p_credit_id uuid) -> bigint | function | definer | stable | exec:service_role | body:a4613107ec97
 routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b73cb2bb60
 routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:ec4ccc997aab
@@ -2112,6 +2130,7 @@ routine public.resource_kind_feature(p_kind text) -> text | function | invoker |
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf90d17406dd
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
 routine public.retire_invite_code() -> trigger | function | definer | volatile | exec:service_role | body:be59ed519e67
+routine public.reverse_commitment_match_v1(p_workspace_id uuid, p_match_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7cf563d6be5d
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:acc4131b50b3
@@ -2542,6 +2561,8 @@ trigger profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp 
 trigger public_directory_sources.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_directory_sources FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger public_person_cards.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_person_cards FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger public_workspace_cards.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.public_workspace_cards FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger purchase_commitment_matches.purchase_commitment_matches_guard CREATE TRIGGER purchase_commitment_matches_guard BEFORE DELETE OR UPDATE ON public.purchase_commitment_matches FOR EACH ROW EXECUTE FUNCTION purchase_commitment_matches_guard()
+trigger purchase_commitment_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_commitment_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_documents.purchase_documents_guard CREATE TRIGGER purchase_documents_guard BEFORE UPDATE ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION purchase_documents_guard()
 trigger purchase_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_lines.purchase_lines_guard CREATE TRIGGER purchase_lines_guard BEFORE INSERT OR DELETE OR UPDATE ON public.purchase_lines FOR EACH ROW EXECUTE FUNCTION purchase_lines_guard()
