@@ -238,5 +238,27 @@
   "calendarValidationRefused": "Abgelehnt: {what}",
   "calendarEventActionValidated": "freigegeben",
   "calendarEventActionRefused": "abgelehnt",
-  "calendarViewAlerts": "Hinweise"
+  "calendarViewAlerts": "Hinweise",
+  "calendarKindLease": "Mietvertragstermine",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
+  "calendarLeaseNotice": "Mietvertrag · Kündigung bis {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseEnd": "Mietvertrag · Ende {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

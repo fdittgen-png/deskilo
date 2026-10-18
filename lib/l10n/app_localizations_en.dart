@@ -2475,6 +2475,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarKindInvoice => 'Invoices';
 
   @override
+  String get calendarKindLease => 'Lease dates';
+
+  @override
   String get calendarKindMessage => 'Messages';
 
   @override
@@ -2491,6 +2494,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarKindValidation => 'Validations';
+
+  @override
+  String calendarLeaseEnd(String name) {
+    return 'Lease · ends $name';
+  }
+
+  @override
+  String calendarLeaseNotice(String name) {
+    return 'Lease · notice by $name';
+  }
 
   @override
   String calendarLevelCollapsed(String level) {

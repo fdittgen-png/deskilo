@@ -4297,6 +4297,12 @@ abstract class AppLocalizations {
   /// **'Invoices'**
   String get calendarKindInvoice;
 
+  /// #2569 lease reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Lease dates'**
+  String get calendarKindLease;
+
   /// #718/#719 - calendar hub
   ///
   /// In en, this message translates to:
@@ -4332,6 +4338,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Validations'**
   String get calendarKindValidation;
+
+  /// #2569 lease reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Lease · ends {name}'**
+  String calendarLeaseEnd(String name);
+
+  /// #2569 lease reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Lease · notice by {name}'**
+  String calendarLeaseNotice(String name);
 
   /// Accessibility label of a collapsed level header in the all-levels timeline; tapping expands it
   ///

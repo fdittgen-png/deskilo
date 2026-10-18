@@ -25,6 +25,7 @@ IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
       CalendarKind.due => Icons.event_available_outlined,
       CalendarKind.validation => Icons.how_to_reg_outlined,
       CalendarKind.scheduled => Icons.event_repeat_outlined,
+      CalendarKind.lease => Icons.vpn_key_outlined,
     };
 
 /// #818 — the group's colour, the same on the grid marker and the row.
@@ -58,6 +59,7 @@ String calendarKindLabel(AppLocalizations l10n, CalendarKind kind) =>
       CalendarKind.due => l10n.calendarKindDue,
       CalendarKind.scheduled =>
         l10n.calendarKindScheduled,
+      CalendarKind.lease => l10n.calendarKindLease,
       CalendarKind.validation =>
         l10n.calendarKindValidation,
     };
@@ -101,6 +103,9 @@ class CalendarItemRow extends ConsumerWidget {
       CalendarKind.due =>
         l10n.calendarDueTitle(item.title),
       CalendarKind.scheduled => l10n.calendarScheduledTitle(item.title),
+      CalendarKind.lease => item.status == 'notice_deadline'
+          ? l10n.calendarLeaseNotice(item.title)
+          : l10n.calendarLeaseEnd(item.title),
       _ => item.title.isEmpty ? calendarKindLabel(l10n, item.kind) : item.title,
     };
     final money = item.amountCents == null

@@ -238,5 +238,27 @@
   "calendarValidationRefused": "Rifiutato: {what}",
   "calendarEventActionValidated": "convalidato",
   "calendarEventActionRefused": "rifiutato",
-  "calendarViewAlerts": "Avvisi"
+  "calendarViewAlerts": "Avvisi",
+  "calendarKindLease": "Scadenze del contratto di locazione",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
+  "calendarLeaseNotice": "Locazione · disdetta entro {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseEnd": "Locazione · termina {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

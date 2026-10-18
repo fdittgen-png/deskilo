@@ -334,5 +334,27 @@
   "@calendarEventActionRefused": {
     "description": "#843 - verb of a refused decision"
   },
-  "calendarViewAlerts": "Alerts"
+  "calendarViewAlerts": "Alerts",
+  "calendarKindLease": "Lease dates",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
+  "calendarLeaseNotice": "Lease · notice by {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseEnd": "Lease · ends {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }
