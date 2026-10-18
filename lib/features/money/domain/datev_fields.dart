@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'book_profile.dart';
+import 'invoice.dart';
 
 /// #2365 — DATEV's field limits: `Belegfeld 1` holds 36 characters and
 /// `Buchungstext` 60. The importer rejects the row, or the whole stack,
@@ -46,4 +47,33 @@ DateTime? datevProfileFiscalStart(
       _fiscalYearStart(p.fiscalYearStartMonth, p.fiscalYearStartDay, from),
   };
   return starts.length == 1 ? starts.single : null;
+}
+
+/// One booking line of the Buchungsstapel, as the builder writes it.
+typedef DatevBook = void Function({
+  required int cents,
+  required String debit,
+  required String credit,
+  required DateTime date,
+  required String documentRef,
+  required String text,
+});
+
+/// #2365 — the rest of [invoice] the owner gave up leaves the receivable for
+/// the loss account, on the write-off day, at the gross amount; the VAT
+/// correction is the tax adviser's.
+void bookDatevWriteOff(
+  DatevBook book,
+  Invoice invoice,
+  InvoiceMatch match,
+  String lossAccount,
+  String customersAccount,
+) {
+  final owed = invoice.totalCents - match.paidCents;
+  final day = match.writeoffAt;
+  if (day == null || owed <= 0) return;
+  book(
+    cents: owed, debit: lossAccount, credit: customersAccount, date: day,
+    documentRef: invoice.number, text: 'Forderungsverlust ${invoice.number}',
+  );
 }

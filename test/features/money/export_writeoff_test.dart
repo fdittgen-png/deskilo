@@ -5,6 +5,7 @@
 // day, lettered with the invoice so the group closes, at the gross amount
 // (the VAT regularisation is the accountant's). Seeded year: INV-3 of
 // 100.00 was paid 60.00 and the remaining 40.00 written off on 25 May.
+import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -77,5 +78,46 @@ void main() {
       ),
     };
     expect(_fec(matches: matches).where((r) => r['CompteNum'] == '654000'), isEmpty);
+  });
+
+  group('DATEV', () {
+    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(
+      invoices: SeededExportYear.invoices,
+      matches: matches ?? SeededExportYear.matches,
+      accounts: const DatevAccounts(),
+      from: DateTime(2026),
+      to: DateTime(2026, 12, 31),
+      generatedAt: DateTime(2027, 1, 5),
+      consultantNumber: '1001',
+      clientNumber: '20002',
+      ledger: SeededExportYear.ledger,
+    ).split('\r\n');
+
+    test('the written-off rest is a Forderungsverlust on the write-off day', () {
+      final rows = datev().where((l) => l.contains('Forderungsverlust INV-3')).toList();
+      expect(rows, hasLength(1));
+      final f = rows.single.split(';');
+      expect(f[0], '40,00');
+      expect(f[1], '"S"');
+      expect(f[6], '2400');
+      expect(f[7], '10000');
+      expect(f[9], '2505');
+    });
+
+    test('an invoice that was not written off books no loss, nor does a pending one', () {
+      expect(datev().where((l) => l.contains('Forderungsverlust')), hasLength(1));
+      final pending = {
+        ...SeededExportYear.matches,
+        SeededExportYear.inv3.id: InvoiceMatch(
+          invoiceId: SeededExportYear.inv3.id,
+          paidCents: 6000,
+          resolution: 'writeoff',
+          matchedAt: DateTime(2026, 5, 20),
+          writeoffAt: DateTime(2026, 5, 25),
+          status: 'pending',
+        ),
+      };
+      expect(datev(matches: pending).where((l) => l.contains('Forderungsverlust')), isEmpty);
+    });
   });
 }
