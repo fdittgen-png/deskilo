@@ -60,4 +60,23 @@ void main() {
       }
     }
   });
+
+  test('the archive notice states each period, the first free day and the status', () {
+    final gb = retentionNotice('gb', 2026);
+    expect(gb, contains('workspace country: GB'));
+    expect(gb, contains('invoice: 6 years from the end of the fiscal year -> 2032-12-31 (not yet confirmed)'));
+    expect(gb, contains('books: 6 years'));
+    final de = retentionNotice('DE', 2026);
+    expect(de, contains('invoice: 8 years from the end of the fiscal year -> 2034-12-31'));
+    expect(de, contains('books: 10 years from the end of the fiscal year -> 2036-12-31'));
+    final us = retentionNotice('US', 2026);
+    expect(us, contains('invoice: 4 years from the document date -> 2030-12-31'));
+  });
+
+  test('the notice is the same bytes for the same inputs and names its statute', () {
+    expect(retentionNotice('FR', 2025), retentionNotice('FR', 2025));
+    expect(retentionNotice('FR', 2025), contains('source: Code de commerce L123-22'));
+    // a country without rows of its own takes the shared rule
+    expect(retentionNotice('ZZ', 2026), contains('invoice: 10 years'));
+  });
 }

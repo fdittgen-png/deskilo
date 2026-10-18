@@ -13,6 +13,7 @@ import 'package:archive/archive.dart';
 
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
+import '../../../core/vat/retention.dart';
 import 'invoice.dart';
 
 /// `<SIREN>-<year>-archive.zip`, `DEV-` first for a development workspace.
@@ -79,3 +80,11 @@ void addArchiveFec(
 ) {
   if (countryCode.toUpperCase() == 'FR') files['fec.txt'] = textBytes(fec);
 }
+
+/// #2571 — the bundle with its retention notice: how long the country makes
+/// the space keep these records, and from when the clock runs.
+Map<String, List<int>> withRetentionNotice(
+  Map<String, List<int>> files,
+  String countryCode,
+  int year,
+) => {...files, 'retention.txt': textBytes(retentionNotice(countryCode, year))};
