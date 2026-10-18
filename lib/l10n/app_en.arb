@@ -11150,6 +11150,46 @@
   "@leaseAddTerm": {
     "description": "#2569 premises lease"
   },
+  "leaseCommitmentExpected": "Expected",
+  "@leaseCommitmentExpected": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentLine": "Expected {expected} · matched {matched}",
+  "@leaseCommitmentLine": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "matched": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseCommitmentMatched": "Matched",
+  "@leaseCommitmentMatched": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentPartial": "Partly matched",
+  "@leaseCommitmentPartial": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitments": "Commitments",
+  "@leaseCommitments": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsEmpty": "Nothing is expected yet.",
+  "@leaseCommitmentsEmpty": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsIntro": "The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.",
+  "@leaseCommitmentsIntro": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsLoadFailed": "The commitments could not be loaded.",
+  "@leaseCommitmentsLoadFailed": {
+    "description": "#2575 commitment matching"
+  },
   "leaseDeposit": "Deposit {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -11281,6 +11321,105 @@
   "leaseLoadFailed": "The lease could not be loaded.",
   "@leaseLoadFailed": {
     "description": "#2569 premises lease"
+  },
+  "leaseMatchAction": "Match a bill",
+  "@leaseMatchAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchAmount": "Amount covered",
+  "@leaseMatchAmount": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchBill": "Bill",
+  "@leaseMatchBill": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchDone": "Matched",
+  "@leaseMatchDone": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchHint": "This month still expects {remaining}. Pick the lessor’s bill that covers it.",
+  "@leaseMatchHint": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchInvalid": "Enter an amount above zero and at most {remaining}.",
+  "@leaseMatchInvalid": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchLine": "Line of the bill",
+  "@leaseMatchLine": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchLineText": "Bill {reference} · {amount}",
+  "@leaseMatchLineText": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchNoBills": "There is no pending or approved supplier bill to match.",
+  "@leaseMatchNoBills": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchRefused": "It was not recorded. The bill must be the lessor’s, and the amount must fit what the month expects and what is left of the line.",
+  "@leaseMatchRefused": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverse": "Reverse",
+  "@leaseMatchReverse": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseAction": "Reverse",
+  "@leaseMatchReverseAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseReason": "Why is it reversed?",
+  "@leaseMatchReverseReason": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseTitle": "Reverse this match",
+  "@leaseMatchReverseTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReversed": "Reversed",
+  "@leaseMatchReversed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchSave": "Match",
+  "@leaseMatchSave": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchTitle": "Match a bill",
+  "@leaseMatchTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchVariance": "{amount} of the bill line is not allocated to any month",
+  "@leaseMatchVariance": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchWasReversed": "Reversed",
+  "@leaseMatchWasReversed": {
+    "description": "#2575 commitment matching"
   },
   "leaseNeedSupplier": "Record the lessor as a supplier first.",
   "@leaseNeedSupplier": {

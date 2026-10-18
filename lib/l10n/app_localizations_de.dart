@@ -9639,6 +9639,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get leaseAddTerm => 'Neuer Betrag';
 
   @override
+  String get leaseCommitmentExpected => 'Erwartet';
+
+  @override
+  String leaseCommitmentLine(String expected, String matched) {
+    return 'Erwartet $expected · zugeordnet $matched';
+  }
+
+  @override
+  String get leaseCommitmentMatched => 'Zugeordnet';
+
+  @override
+  String get leaseCommitmentPartial => 'Teilweise zugeordnet';
+
+  @override
+  String get leaseCommitments => 'Fälligkeiten';
+
+  @override
+  String get leaseCommitmentsEmpty => 'Noch nichts erwartet.';
+
+  @override
+  String get leaseCommitmentsIntro =>
+      'Die Miete, die der Vertrag jeden Monat erwartet, und die Rechnungen, die sie ersetzt haben. Eine einem Monat zugeordnete Rechnung ersetzt dessen Erwartung; sie fügt nie eine zweite Last hinzu.';
+
+  @override
+  String get leaseCommitmentsLoadFailed =>
+      'Die Fälligkeiten konnten nicht geladen werden.';
+
+  @override
   String leaseDeposit(String amount) {
     return 'Kaution $amount';
   }
@@ -9727,6 +9755,73 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get leaseLoadFailed => 'Der Mietvertrag konnte nicht geladen werden.';
+
+  @override
+  String get leaseMatchAction => 'Rechnung zuordnen';
+
+  @override
+  String get leaseMatchAmount => 'Gedeckter Betrag';
+
+  @override
+  String get leaseMatchBill => 'Rechnung';
+
+  @override
+  String get leaseMatchDone => 'Zugeordnet';
+
+  @override
+  String leaseMatchHint(String remaining) {
+    return 'Dieser Monat erwartet noch $remaining. Wählen Sie die Rechnung des Vermieters, die ihn deckt.';
+  }
+
+  @override
+  String leaseMatchInvalid(String remaining) {
+    return 'Geben Sie einen Betrag über null und höchstens $remaining an.';
+  }
+
+  @override
+  String get leaseMatchLine => 'Zeile der Rechnung';
+
+  @override
+  String leaseMatchLineText(String reference, String amount) {
+    return 'Rechnung $reference · $amount';
+  }
+
+  @override
+  String get leaseMatchNoBills =>
+      'Es gibt keine ausstehende oder genehmigte Lieferantenrechnung zum Zuordnen.';
+
+  @override
+  String get leaseMatchRefused =>
+      'Nicht erfasst. Die Rechnung muss die des Vermieters sein, und der Betrag muss zu dem passen, was der Monat erwartet und was von der Zeile übrig ist.';
+
+  @override
+  String get leaseMatchReverse => 'Rückgängig';
+
+  @override
+  String get leaseMatchReverseAction => 'Rückgängig machen';
+
+  @override
+  String get leaseMatchReverseReason => 'Warum wird sie rückgängig gemacht?';
+
+  @override
+  String get leaseMatchReverseTitle => 'Diese Zuordnung rückgängig machen';
+
+  @override
+  String get leaseMatchReversed => 'Rückgängig gemacht';
+
+  @override
+  String get leaseMatchSave => 'Zuordnen';
+
+  @override
+  String get leaseMatchTitle => 'Rechnung zuordnen';
+
+  @override
+  String leaseMatchVariance(String amount) {
+    return '$amount der Rechnungszeile sind keinem Monat zugeordnet';
+  }
+
+  @override
+  String get leaseMatchWasReversed => 'Rückgängig gemacht';
 
   @override
   String get leaseNeedSupplier =>

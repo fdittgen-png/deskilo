@@ -6700,6 +6700,46 @@
   "@leaseAddTerm": {
     "description": "#2569 premises lease"
   },
+  "leaseCommitmentExpected": "Erwartet",
+  "@leaseCommitmentExpected": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentLine": "Erwartet {expected} · zugeordnet {matched}",
+  "@leaseCommitmentLine": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "matched": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseCommitmentMatched": "Zugeordnet",
+  "@leaseCommitmentMatched": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentPartial": "Teilweise zugeordnet",
+  "@leaseCommitmentPartial": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitments": "Fälligkeiten",
+  "@leaseCommitments": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsEmpty": "Noch nichts erwartet.",
+  "@leaseCommitmentsEmpty": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsIntro": "Die Miete, die der Vertrag jeden Monat erwartet, und die Rechnungen, die sie ersetzt haben. Eine einem Monat zugeordnete Rechnung ersetzt dessen Erwartung; sie fügt nie eine zweite Last hinzu.",
+  "@leaseCommitmentsIntro": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsLoadFailed": "Die Fälligkeiten konnten nicht geladen werden.",
+  "@leaseCommitmentsLoadFailed": {
+    "description": "#2575 commitment matching"
+  },
   "leaseDeposit": "Kaution {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -6831,6 +6871,105 @@
   "leaseLoadFailed": "Der Mietvertrag konnte nicht geladen werden.",
   "@leaseLoadFailed": {
     "description": "#2569 premises lease"
+  },
+  "leaseMatchAction": "Rechnung zuordnen",
+  "@leaseMatchAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchAmount": "Gedeckter Betrag",
+  "@leaseMatchAmount": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchBill": "Rechnung",
+  "@leaseMatchBill": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchDone": "Zugeordnet",
+  "@leaseMatchDone": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchHint": "Dieser Monat erwartet noch {remaining}. Wählen Sie die Rechnung des Vermieters, die ihn deckt.",
+  "@leaseMatchHint": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchInvalid": "Geben Sie einen Betrag über null und höchstens {remaining} an.",
+  "@leaseMatchInvalid": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchLine": "Zeile der Rechnung",
+  "@leaseMatchLine": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchLineText": "Rechnung {reference} · {amount}",
+  "@leaseMatchLineText": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchNoBills": "Es gibt keine ausstehende oder genehmigte Lieferantenrechnung zum Zuordnen.",
+  "@leaseMatchNoBills": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchRefused": "Nicht erfasst. Die Rechnung muss die des Vermieters sein, und der Betrag muss zu dem passen, was der Monat erwartet und was von der Zeile übrig ist.",
+  "@leaseMatchRefused": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverse": "Rückgängig",
+  "@leaseMatchReverse": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseAction": "Rückgängig machen",
+  "@leaseMatchReverseAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseReason": "Warum wird sie rückgängig gemacht?",
+  "@leaseMatchReverseReason": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseTitle": "Diese Zuordnung rückgängig machen",
+  "@leaseMatchReverseTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReversed": "Rückgängig gemacht",
+  "@leaseMatchReversed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchSave": "Zuordnen",
+  "@leaseMatchSave": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchTitle": "Rechnung zuordnen",
+  "@leaseMatchTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchVariance": "{amount} der Rechnungszeile sind keinem Monat zugeordnet",
+  "@leaseMatchVariance": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchWasReversed": "Rückgängig gemacht",
+  "@leaseMatchWasReversed": {
+    "description": "#2575 commitment matching"
   },
   "leaseNeedSupplier": "Erfassen Sie den Vermieter zuerst als Lieferanten.",
   "@leaseNeedSupplier": {

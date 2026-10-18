@@ -6700,6 +6700,46 @@
   "@leaseAddTerm": {
     "description": "#2569 premises lease"
   },
+  "leaseCommitmentExpected": "Atteso",
+  "@leaseCommitmentExpected": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentLine": "Atteso {expected} · abbinato {matched}",
+  "@leaseCommitmentLine": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "matched": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseCommitmentMatched": "Abbinato",
+  "@leaseCommitmentMatched": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentPartial": "Parzialmente abbinato",
+  "@leaseCommitmentPartial": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitments": "Scadenze",
+  "@leaseCommitments": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsEmpty": "Non si attende ancora nulla.",
+  "@leaseCommitmentsEmpty": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsIntro": "Il canone che il contratto si aspetta ogni mese e le fatture che lo hanno sostituito. Una fattura assegnata a un mese ne sostituisce l’attesa; non aggiunge mai un secondo costo.",
+  "@leaseCommitmentsIntro": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsLoadFailed": "Impossibile caricare le scadenze.",
+  "@leaseCommitmentsLoadFailed": {
+    "description": "#2575 commitment matching"
+  },
   "leaseDeposit": "Deposito {amount}",
   "@leaseDeposit": {
     "description": "#2569 premises lease",
@@ -6831,6 +6871,105 @@
   "leaseLoadFailed": "Impossibile caricare il contratto.",
   "@leaseLoadFailed": {
     "description": "#2569 premises lease"
+  },
+  "leaseMatchAction": "Abbina una fattura",
+  "@leaseMatchAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchAmount": "Importo coperto",
+  "@leaseMatchAmount": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchBill": "Fattura",
+  "@leaseMatchBill": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchDone": "Abbinato",
+  "@leaseMatchDone": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchHint": "Questo mese attende ancora {remaining}. Scegli la fattura del locatore che lo copre.",
+  "@leaseMatchHint": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchInvalid": "Inserisci un importo superiore a zero e al massimo {remaining}.",
+  "@leaseMatchInvalid": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchLine": "Riga della fattura",
+  "@leaseMatchLine": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchLineText": "Fattura {reference} · {amount}",
+  "@leaseMatchLineText": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchNoBills": "Non c’è nessuna fattura fornitore in attesa o approvata da abbinare.",
+  "@leaseMatchNoBills": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchRefused": "Non registrato. La fattura deve essere quella del locatore e l’importo deve rientrare in ciò che il mese attende e in ciò che resta della riga.",
+  "@leaseMatchRefused": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverse": "Annulla",
+  "@leaseMatchReverse": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseAction": "Annulla",
+  "@leaseMatchReverseAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseReason": "Perché viene annullato?",
+  "@leaseMatchReverseReason": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseTitle": "Annulla questo abbinamento",
+  "@leaseMatchReverseTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReversed": "Annullato",
+  "@leaseMatchReversed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchSave": "Abbina",
+  "@leaseMatchSave": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchTitle": "Abbina una fattura",
+  "@leaseMatchTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchVariance": "{amount} della riga di fattura non sono assegnati a nessun mese",
+  "@leaseMatchVariance": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchWasReversed": "Annullato",
+  "@leaseMatchWasReversed": {
+    "description": "#2575 commitment matching"
   },
   "leaseNeedSupplier": "Registra prima il locatore come fornitore.",
   "@leaseNeedSupplier": {

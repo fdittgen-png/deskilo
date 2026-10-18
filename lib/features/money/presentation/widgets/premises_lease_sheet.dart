@@ -12,6 +12,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/premises_lease.dart';
 import '../../providers/premises_lease_providers.dart';
+import 'lease_commitments_sheet.dart';
 import 'premises_lease_dialogs.dart';
 import 'premises_lease_notice_dialog.dart';
 import 'premises_lease_term_dialogs.dart';
@@ -23,6 +24,7 @@ Future<void> showPremisesLeaseSheet(
   String workspaceId, {
   required String currencyCode,
   required bool canManage,
+  bool canMatch = false,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -30,6 +32,7 @@ Future<void> showPremisesLeaseSheet(
     workspaceId: workspaceId,
     currencyCode: currencyCode,
     canManage: canManage,
+    canMatch: canMatch,
   ),
 );
 
@@ -49,12 +52,16 @@ class PremisesLeaseView extends ConsumerWidget {
     required this.workspaceId,
     required this.currencyCode,
     required this.canManage,
+    this.canMatch = false,
     super.key,
   });
 
   final String workspaceId;
   final String currencyCode;
   final bool canManage;
+
+  /// Whether the signed-in person may link supplier bills (managePurchases).
+  final bool canMatch;
 
   Future<void> _open(
     BuildContext context,
@@ -106,6 +113,13 @@ class PremisesLeaseView extends ConsumerWidget {
                       _LeaseCard(
                         lease: lease,
                         currencyCode: currencyCode,
+                        onCommitments: () => showLeaseCommitmentsSheet(
+                          context,
+                          workspaceId,
+                          lease.id,
+                          currencyCode: currencyCode,
+                          canMatch: canMatch,
+                        ),
                         onTerm: !canManage || lease.terminated
                             ? null
                             : () => _open(
@@ -156,6 +170,7 @@ class _LeaseCard extends StatelessWidget {
     required this.onTerm,
     required this.onNotice,
     required this.onEdit,
+    required this.onCommitments,
   });
 
   final PremisesLease lease;
@@ -163,6 +178,7 @@ class _LeaseCard extends StatelessWidget {
   final VoidCallback? onTerm;
   final VoidCallback? onNotice;
   final VoidCallback? onEdit;
+  final VoidCallback onCommitments;
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +263,11 @@ class _LeaseCard extends StatelessWidget {
             Wrap(
               spacing: AppSpacing.sm,
               children: [
+                TextButton(
+                  key: ValueKey('lease-commitments-${lease.id}'),
+                  onPressed: onCommitments,
+                  child: Text(l10n.leaseCommitments),
+                ),
                 if (onEdit != null)
                   TextButton(
                     key: ValueKey('lease-edit-${lease.id}'),

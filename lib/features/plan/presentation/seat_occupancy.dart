@@ -5,6 +5,7 @@
 // the per-seat paint states and the online (presence-dot) seats. Formerly
 // duplicated between plan_screen and reserve_screen ("same rule as the
 // Plan tab").
+import '../../../core/presence/presence_rules.dart';
 import '../../members/domain/directory_status.dart';
 import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
@@ -164,14 +165,17 @@ Map<String, SeatDayPhase> seatDayPhasesFor({
 /// Seats whose occupant is online (presence heartbeat): the painter marks
 /// them with a green dot. Resolves each taken seat's occupant → member →
 /// profile last-seen, same rule as the directory.
+///
+/// #2486 -- [onlineWindow] is the workspace's presence setting
+/// (`presence.online_window_minutes`), the registry default when omitted;
+/// [window] is the booking window the dots are drawn for and the clock.
 Set<String> onlineSeatIdsFor({
   required FloorPlan plan,
   required List<Reservation> reservations,
   required List<Member> members,
   required Map<String, Profile> profiles,
-  required DateTime from,
-  DateTime? to,
-  required DateTime now,
+  required ({DateTime from, DateTime? to, DateTime now}) window,
+  Duration onlineWindow = PresenceRules.onlineWindow,
 }) {
   if (profiles.isEmpty || members.isEmpty) return const {};
   final userIdOf = {for (final m in members) m.id: m.userId};
@@ -180,7 +184,8 @@ Set<String> onlineSeatIdsFor({
     final profile = uid == null ? null : profiles[uid];
     return resolveDirectoryPresence(
           lastSeenAt: profile?.lastSeenAt,
-          now: now,
+          now: window.now,
+          onlineWindow: onlineWindow,
         ).kind ==
         DirectoryPresenceKind.online;
   }
@@ -191,8 +196,8 @@ Set<String> onlineSeatIdsFor({
             plan: plan,
             seat: seat,
             reservations: reservations,
-            from: from,
-            to: to,
+            from: window.from,
+            to: window.to,
           )
           case final r?)
         if (online(r.memberId)) seat.id,

@@ -9556,6 +9556,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaseAddTerm => 'New amount';
 
   @override
+  String get leaseCommitmentExpected => 'Expected';
+
+  @override
+  String leaseCommitmentLine(String expected, String matched) {
+    return 'Expected $expected · matched $matched';
+  }
+
+  @override
+  String get leaseCommitmentMatched => 'Matched';
+
+  @override
+  String get leaseCommitmentPartial => 'Partly matched';
+
+  @override
+  String get leaseCommitments => 'Commitments';
+
+  @override
+  String get leaseCommitmentsEmpty => 'Nothing is expected yet.';
+
+  @override
+  String get leaseCommitmentsIntro =>
+      'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.';
+
+  @override
+  String get leaseCommitmentsLoadFailed =>
+      'The commitments could not be loaded.';
+
+  @override
   String leaseDeposit(String amount) {
     return 'Deposit $amount';
   }
@@ -9644,6 +9672,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaseLoadFailed => 'The lease could not be loaded.';
+
+  @override
+  String get leaseMatchAction => 'Match a bill';
+
+  @override
+  String get leaseMatchAmount => 'Amount covered';
+
+  @override
+  String get leaseMatchBill => 'Bill';
+
+  @override
+  String get leaseMatchDone => 'Matched';
+
+  @override
+  String leaseMatchHint(String remaining) {
+    return 'This month still expects $remaining. Pick the lessor’s bill that covers it.';
+  }
+
+  @override
+  String leaseMatchInvalid(String remaining) {
+    return 'Enter an amount above zero and at most $remaining.';
+  }
+
+  @override
+  String get leaseMatchLine => 'Line of the bill';
+
+  @override
+  String leaseMatchLineText(String reference, String amount) {
+    return 'Bill $reference · $amount';
+  }
+
+  @override
+  String get leaseMatchNoBills =>
+      'There is no pending or approved supplier bill to match.';
+
+  @override
+  String get leaseMatchRefused =>
+      'It was not recorded. The bill must be the lessor’s, and the amount must fit what the month expects and what is left of the line.';
+
+  @override
+  String get leaseMatchReverse => 'Reverse';
+
+  @override
+  String get leaseMatchReverseAction => 'Reverse';
+
+  @override
+  String get leaseMatchReverseReason => 'Why is it reversed?';
+
+  @override
+  String get leaseMatchReverseTitle => 'Reverse this match';
+
+  @override
+  String get leaseMatchReversed => 'Reversed';
+
+  @override
+  String get leaseMatchSave => 'Match';
+
+  @override
+  String get leaseMatchTitle => 'Match a bill';
+
+  @override
+  String leaseMatchVariance(String amount) {
+    return '$amount of the bill line is not allocated to any month';
+  }
+
+  @override
+  String get leaseMatchWasReversed => 'Reversed';
 
   @override
   String get leaseNeedSupplier => 'Record the lessor as a supplier first.';

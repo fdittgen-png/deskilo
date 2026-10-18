@@ -9647,6 +9647,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get leaseAddTerm => 'Nouveau montant';
 
   @override
+  String get leaseCommitmentExpected => 'Attendu';
+
+  @override
+  String leaseCommitmentLine(String expected, String matched) {
+    return 'Attendu $expected · rapproché $matched';
+  }
+
+  @override
+  String get leaseCommitmentMatched => 'Rapproché';
+
+  @override
+  String get leaseCommitmentPartial => 'En partie rapproché';
+
+  @override
+  String get leaseCommitments => 'Échéances';
+
+  @override
+  String get leaseCommitmentsEmpty => 'Rien n’est encore attendu.';
+
+  @override
+  String get leaseCommitmentsIntro =>
+      'Le loyer que le bail attend chaque mois et les factures qui l’ont remplacé. Une facture affectée à un mois remplace son attente ; elle n’ajoute jamais un second coût.';
+
+  @override
+  String get leaseCommitmentsLoadFailed =>
+      'Les échéances n’ont pas pu être chargées.';
+
+  @override
   String leaseDeposit(String amount) {
     return 'Dépôt de garantie $amount';
   }
@@ -9735,6 +9763,73 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get leaseLoadFailed => 'Le bail n’a pas pu être chargé.';
+
+  @override
+  String get leaseMatchAction => 'Rapprocher une facture';
+
+  @override
+  String get leaseMatchAmount => 'Montant couvert';
+
+  @override
+  String get leaseMatchBill => 'Facture';
+
+  @override
+  String get leaseMatchDone => 'Rapproché';
+
+  @override
+  String leaseMatchHint(String remaining) {
+    return 'Ce mois attend encore $remaining. Choisissez la facture du bailleur qui le couvre.';
+  }
+
+  @override
+  String leaseMatchInvalid(String remaining) {
+    return 'Saisissez un montant supérieur à zéro et au plus $remaining.';
+  }
+
+  @override
+  String get leaseMatchLine => 'Ligne de la facture';
+
+  @override
+  String leaseMatchLineText(String reference, String amount) {
+    return 'Facture $reference · $amount';
+  }
+
+  @override
+  String get leaseMatchNoBills =>
+      'Aucune facture fournisseur en attente ou approuvée à rapprocher.';
+
+  @override
+  String get leaseMatchRefused =>
+      'Non enregistré. La facture doit être celle du bailleur, et le montant doit tenir dans ce que le mois attend et ce qui reste de la ligne.';
+
+  @override
+  String get leaseMatchReverse => 'Annuler';
+
+  @override
+  String get leaseMatchReverseAction => 'Annuler';
+
+  @override
+  String get leaseMatchReverseReason => 'Pourquoi est-il annulé ?';
+
+  @override
+  String get leaseMatchReverseTitle => 'Annuler ce rapprochement';
+
+  @override
+  String get leaseMatchReversed => 'Annulé';
+
+  @override
+  String get leaseMatchSave => 'Rapprocher';
+
+  @override
+  String get leaseMatchTitle => 'Rapprocher une facture';
+
+  @override
+  String leaseMatchVariance(String amount) {
+    return '$amount de la ligne de facture ne sont affectés à aucun mois';
+  }
+
+  @override
+  String get leaseMatchWasReversed => 'Annulé';
 
   @override
   String get leaseNeedSupplier =>

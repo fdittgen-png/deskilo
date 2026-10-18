@@ -14,6 +14,7 @@ import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/realtime/realtime_providers.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
+import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/work_hours.dart';
@@ -525,8 +526,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                           const [],
                       profiles: ref.watch(memberProfilesProvider).value ??
                           const {},
-                      from: now,
-                      now: now,
+                      window: (from: now, to: null, now: now),
+                      onlineWindow: ref.watch(directoryWindowsProvider).onlineWindow,
                     ),
                     deskOpacity:
                         (workspace?.deskOpacity ?? 100) / 100,
