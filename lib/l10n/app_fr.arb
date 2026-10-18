@@ -12252,6 +12252,14 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPurchasePaymentChecker": "Un paiement d'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu'il règle. 0 désactive la règle.",
+  "@settingHintPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchaseSingleApproval": "Une facture fournisseur inférieure à ce montant peut être approuvée par la personne qui l'a saisie ou envoyée, si elle peut approuver les dépenses. 0 conserve la règle selon laquelle une autre personne approuve chaque facture. Refuser demande toujours une autre personne.",
+  "@settingHintPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -12372,6 +12380,14 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPurchasePaymentChecker": "Paiements enregistrés par une seconde personne à partir de (unités monétaires)",
+  "@settingLabelPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchaseSingleApproval": "Factures qu'une seule personne peut approuver en dessous de (unités monétaires)",
+  "@settingLabelPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -12486,6 +12502,10 @@
   "settingUnitAttempts": "essais",
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitCurrencyUnits": "unités monétaires",
+  "@settingUnitCurrencyUnits": {
+    "description": "#2574 maker-checker settings"
   },
   "settingUnitDays": "jours",
   "@settingUnitDays": {

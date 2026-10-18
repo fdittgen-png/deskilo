@@ -17294,6 +17294,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.';
 
   @override
+  String get settingHintPurchasePaymentChecker =>
+      'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
+
+  @override
+  String get settingHintPurchaseSingleApproval =>
+      'Bills of the space\'s supplier below this amount may be approved by the person who drafted or sent them, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
@@ -17400,6 +17408,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Online window';
 
   @override
+  String get settingLabelPurchasePaymentChecker =>
+      'Payments a second person records from (currency units)';
+
+  @override
+  String get settingLabelPurchaseSingleApproval =>
+      'Bills one person may approve below (currency units)';
+
+  @override
   String get settingLabelReadinessRecentExportDays => 'Recent export window';
 
   @override
@@ -17472,6 +17488,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'attempts';
+
+  @override
+  String get settingUnitCurrencyUnits => 'currency units';
 
   @override
   String get settingUnitDays => 'days';

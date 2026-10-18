@@ -12252,6 +12252,14 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
+  "@settingHintPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchaseSingleApproval": "Lieferantenrechnungen unter diesem Betrag darf die Person freigeben, die sie erfasst oder gesendet hat, wenn sie Ausgaben freigeben darf. 0 behält die Regel bei, dass jede Rechnung eine andere Person freigibt. Ablehnen erfordert immer eine andere Person.",
+  "@settingHintPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingHintReadinessRecentExportDays": "Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -12372,6 +12380,14 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
+  "@settingLabelPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchaseSingleApproval": "Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)",
+  "@settingLabelPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingLabelReadinessRecentExportDays": "Zeitfenster für aktuelle Exporte",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -12486,6 +12502,10 @@
   "settingUnitAttempts": "Versuche",
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitCurrencyUnits": "Währungseinheiten",
+  "@settingUnitCurrencyUnits": {
+    "description": "#2574 maker-checker settings"
   },
   "settingUnitDays": "Tage",
   "@settingUnitDays": {

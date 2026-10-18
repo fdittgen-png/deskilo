@@ -50,6 +50,10 @@ abstract final class SettingDefaults {
   static const int messagingThreadPollSeconds = 15;
   /// `presence.online_window_minutes`
   static const int presenceOnlineWindowMinutes = 5;
+  /// `purchase.payment_checker_from_units`
+  static const int purchasePaymentCheckerFromUnits = 0;
+  /// `purchase.single_approval_below_units`
+  static const int purchaseSingleApprovalBelowUnits = 0;
   /// `readiness.recent_export_days`
   static const int readinessRecentExportDays = 90;
   /// `retention.us_years`

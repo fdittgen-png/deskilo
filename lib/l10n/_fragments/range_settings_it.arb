@@ -83,5 +83,25 @@
   "settingUnitYears": "anni",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
+  },
+  "settingLabelPurchaseSingleApproval": "Fatture che una sola persona può approvare sotto (unità monetarie)",
+  "@settingLabelPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchaseSingleApproval": "Una fattura fornitore inferiore a questo importo può essere approvata da chi l'ha redatta o inviata, se può approvare le spese. 0 mantiene la regola per cui un'altra persona approva ogni fattura. Respingere richiede sempre un'altra persona.",
+  "@settingHintPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchasePaymentChecker": "Pagamenti registrati da una seconda persona a partire da (unità monetarie)",
+  "@settingLabelPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchasePaymentChecker": "Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.",
+  "@settingHintPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingUnitCurrencyUnits": "unità monetarie",
+  "@settingUnitCurrencyUnits": {
+    "description": "#2574 maker-checker settings"
   }
 }

@@ -83,5 +83,25 @@
   "settingUnitYears": "Jahre",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
+  },
+  "settingLabelPurchaseSingleApproval": "Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)",
+  "@settingLabelPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchaseSingleApproval": "Lieferantenrechnungen unter diesem Betrag darf die Person freigeben, die sie erfasst oder gesendet hat, wenn sie Ausgaben freigeben darf. 0 behält die Regel bei, dass jede Rechnung eine andere Person freigibt. Ablehnen erfordert immer eine andere Person.",
+  "@settingHintPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchasePaymentChecker": "Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)",
+  "@settingLabelPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchasePaymentChecker": "Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.",
+  "@settingHintPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingUnitCurrencyUnits": "Währungseinheiten",
+  "@settingUnitCurrencyUnits": {
+    "description": "#2574 maker-checker settings"
   }
 }
