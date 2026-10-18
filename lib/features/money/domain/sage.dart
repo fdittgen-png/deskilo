@@ -70,6 +70,10 @@ class SageAccounts {
   /// The Bank Current Account.
   String get bank => _givenBank ?? _account('bank');
 
+  /// #2365 -- Sage's Bad Debt Write Off nominal (8100): what the owner gave
+  /// up of an invoice, cleared from the debtor by a sales credit (T9).
+  String get writeOff => _account('write_off');
+
   /// The VAT code for the standard rate: Sage's shipped standard rate. The
   /// zero-rated code and the out-of-scope code are the other ends of it —
   /// out of scope is the one an exempt workspace wants, and getting it wrong
@@ -228,6 +232,7 @@ String buildSageFile({
         taxCents: 0,
         customer: customer,
       );
+      _bookWriteOff(row, invoice, match, accounts, customer);
     }
   }
 
@@ -279,3 +284,30 @@ void _bookNettedReceipts(
     refundedCents(invoice, m) > 0
     ? (type: 'SP', details: 'Refund ${invoice.number}')
     : (type: 'SR', details: 'Payment ${invoice.number}');
+
+/// #2365 -- the rest of an invoice the owner gave up: a sales credit (SC)
+/// against the customer posted to the bad-debt nominal, positive and
+/// without tax (T9), on the write-off day. The VAT bad debt relief is the
+/// accountant's.
+void _bookWriteOff(
+  _SageRow row,
+  Invoice invoice,
+  InvoiceMatch match,
+  SageAccounts accounts,
+  String customer,
+) {
+  final owed = invoice.totalCents - match.paidCents;
+  final day = match.writeoffAt;
+  if (day == null || owed <= 0) return;
+  row(
+    type: 'SC',
+    nominal: accounts.writeOff,
+    on: day,
+    reference: invoice.number,
+    details: 'Write-off ${invoice.number}',
+    netCents: owed,
+    taxCode: accounts.noTax,
+    taxCents: 0,
+    customer: customer,
+  );
+}
