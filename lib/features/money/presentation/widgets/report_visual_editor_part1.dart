@@ -239,8 +239,16 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
         );
       case ReportLineKind.image:
         final image = line.image;
-        final bytes =
-            ref.watch(reportImageBytesProvider(image.name)).value;
+        final loaded = ref.watch(reportImageBytesProvider(image.name));
+        final bytes = loaded.value;
+        // #2586 — a read that failed is not a deleted image: say why, retry.
+        if (loaded.hasError) {
+          return ReportImageNotice(
+            name: image.name,
+            error: loaded.error!,
+            onRetry: () => ref.invalidate(reportImageBytesProvider(image.name)),
+          );
+        }
         return bytes == null
             ? Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.image_outlined,

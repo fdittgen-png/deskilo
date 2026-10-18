@@ -10,6 +10,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import 'report_field_picker.dart';
+import 'report_image_notice.dart';
 import 'report_page_style.dart';
 
 part 'report_visual_editor_part1.dart';

@@ -11288,10 +11288,38 @@
   "reportImageAlignCenter": "Mitte",
   "reportImageAlignLeft": "Links",
   "reportImageAlignRight": "Rechts",
+  "reportImageForbidden": "Dieses Bild darf nicht gelesen werden",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "Die Datei ist kein verwendbares Bild",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name}: {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reportImageRetry": "Bild erneut lesen",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
   "reportImageSize": "Größe",
   "reportImageSizeLarge": "Groß",
   "reportImageSizeMedium": "Mittel",
   "reportImageSizeSmall": "Klein",
+  "reportImageUnavailable": "Das Bild konnte gerade nicht gelesen werden",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
   "reportImageUpload": "Bild hochladen",
   "@reportImageUpload": {
     "description": "Report WYSIWYG editor + image library (#488)"

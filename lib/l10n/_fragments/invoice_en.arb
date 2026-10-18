@@ -2045,5 +2045,33 @@
   "invoiceHoldFailed": "The reminder hold could not be changed. Please try again.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
+  "reportImageForbidden": "Not allowed to read this image",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageUnavailable": "The image could not be read right now",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "The file is not a usable image",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageRetry": "Retry reading the image",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name}: {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

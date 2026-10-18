@@ -10,6 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
+import 'report_image_notice.dart';
 import 'report_page_style.dart';
 import 'report_preview.dart';
 import 'report_visual_editor.dart';
@@ -236,13 +237,30 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
       );
     }
     final images = <String, Uint8List>{};
+    final failed = <String, Object>{};
     for (final name in reportImageRefs(report)) {
-      final bytes = ref.watch(reportImageBytesProvider(name)).value;
+      final loaded = ref.watch(reportImageBytesProvider(name));
+      final bytes = loaded.value;
       if (bytes != null) images[name] = bytes;
+      if (loaded.hasError) failed[name] = loaded.error!;
     }
-    return KeyedSubtree(
+    final view = KeyedSubtree(
       key: const ValueKey('report-designer-preview'),
       child: ReportBlocksView(report: report, images: images),
+    );
+    if (failed.isEmpty) return view;
+    // #2586 — a read that failed is named with its reason and can be retried.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final MapEntry(key: name, value: error) in failed.entries)
+          ReportImageNotice(
+            name: name,
+            error: error,
+            onRetry: () => ref.invalidate(reportImageBytesProvider(name)),
+          ),
+        view,
+      ],
     );
   }
 

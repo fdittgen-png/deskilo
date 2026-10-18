@@ -27985,6 +27985,30 @@ abstract class AppLocalizations {
   /// **'Right'**
   String get reportImageAlignRight;
 
+  /// #2586 report image failure
+  ///
+  /// In en, this message translates to:
+  /// **'Not allowed to read this image'**
+  String get reportImageForbidden;
+
+  /// #2586 report image failure
+  ///
+  /// In en, this message translates to:
+  /// **'The file is not a usable image'**
+  String get reportImageInvalid;
+
+  /// #2586 report image failure
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {reason}'**
+  String reportImageProblem(String name, String reason);
+
+  /// #2586 report image failure
+  ///
+  /// In en, this message translates to:
+  /// **'Retry reading the image'**
+  String get reportImageRetry;
+
   /// No description provided for @reportImageSize.
   ///
   /// In en, this message translates to:
@@ -28008,6 +28032,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Small'**
   String get reportImageSizeSmall;
+
+  /// #2586 report image failure
+  ///
+  /// In en, this message translates to:
+  /// **'The image could not be read right now'**
+  String get reportImageUnavailable;
 
   /// Report WYSIWYG editor + image library (#488)
   ///

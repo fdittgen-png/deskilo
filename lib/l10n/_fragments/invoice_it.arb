@@ -1299,5 +1299,33 @@
   "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprovi.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
+  "reportImageForbidden": "Lettura di questa immagine non consentita",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageUnavailable": "Impossibile leggere l'immagine in questo momento",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "Il file non è un'immagine utilizzabile",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageRetry": "Rileggi l'immagine",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name}: {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }
