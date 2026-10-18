@@ -119,6 +119,11 @@ class DatevAccounts {
   /// betriebliche Aufwendungen" in SKR03.
   String get expenses => _givenExpenses ?? _default('expenses');
 
+  /// #2365 — SKR03 2400, Forderungsverluste: what the owner gave up of an
+  /// invoice, booked at the gross amount it was still owed.
+  String get writeOff =>
+      (reference ?? ActiveTaxReference.current).accountOf('datev', 'write_off', 'DE');
+
   /// #2365 — header field 27, the Standardkontenrahmen as DATEV writes it:
   /// the digits of the chart's name ('03' for SKR03), empty when it has
   /// none.
@@ -350,7 +355,6 @@ String buildDatevFile({
     // not agreed it received. The FEC makes the same exclusion.
     // Skipped when the document already settled itself: that money is
     // the credit lines above, and booking it twice inflates the bank.
-    // The FEC makes the same exclusion.
     if (match != null && !match.pending && invoice.totalCents != 0) {
       // The settlement: money in, receivable cleared. Booked on the day
       // the money moved (0070), not the day it was recorded.
@@ -362,6 +366,7 @@ String buildDatevFile({
         documentRef: invoice.number,
         text: 'Zahlung ${invoice.number}',
       );
+      bookDatevWriteOff(book, invoice, match, accounts.writeOff, accounts.customers);
     }
   }
 
