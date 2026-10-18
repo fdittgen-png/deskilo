@@ -17,6 +17,7 @@ import '../../domain/purchase.dart' show
         purchaseOffsetPermission,
         purchasePayPermission;
 import '../widgets/consumption_sheet.dart';
+import '../widgets/equipment_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/money_faces_view.dart';
@@ -196,6 +197,12 @@ class MoneyActionSet {
           ),
           icon: const Icon(Icons.apartment_outlined),
           label: fitted(l10n.leaseTitle),
+        ),
+      // #2576 — the equipment the space bought, and the treatment of each piece.
+      if (data.assetRegisterOn && data.workspace != null)
+        EquipmentButton(
+          workspaceId: data.workspace!.id,
+          held: {for (final p in ref.read(myPermissionsProvider)) p.wireName},
         ),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),

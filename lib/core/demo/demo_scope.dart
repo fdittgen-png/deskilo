@@ -44,6 +44,7 @@ import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
@@ -131,6 +132,7 @@ import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
+import 'seed/demo_asset_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 
@@ -153,6 +155,10 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     // #2569 — the lease the demo space holds as tenant.
     premisesLeaseRepositoryProvider.overrideWithValue(
       seedDemoLease(fixture.seededAt),
+    ),
+    // #2576 — the equipment the demo space bought.
+    workspaceAssetRepositoryProvider.overrideWithValue(
+      seedDemoAssets(fixture.seededAt),
     ),
     leaseCommitmentRepositoryProvider.overrideWithValue(
       seedDemoCommitments(fixture.seededAt),

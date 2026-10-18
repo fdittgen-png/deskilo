@@ -1568,6 +1568,7 @@ routine public.assert_member_quota(p_member_id uuid, p_at timestamp with time zo
 routine public.assert_seat_not_blocked(p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:597dcd20ef44
 routine public.assert_workspace_open(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:5ca98e4986fa
 routine public.asset_actor(p_workspace_id uuid, p_review boolean) -> uuid | function | definer | stable | exec:service_role | body:c3bc8ec2cc4d
+routine public.asset_candidate_lines_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:882cf98c43dd
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d7e8160735b
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:72d7485dcf0b
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
@@ -2116,6 +2117,7 @@ routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row
 routine public.refresh_public_person_card(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:92b2d2dba224
 routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:dc0e56065f83
 routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:4ddfb2ff4fe1
+routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_id uuid, p_line_no integer, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b5137c57cdf6
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_line_id uuid, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c55d031a8ede
 routine public.register_my_nfc_badge(p_workspace_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:741684565a6f
 routine public.register_nfc_badge(p_workspace_id uuid, p_member_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:4939d344b76b

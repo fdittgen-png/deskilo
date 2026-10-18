@@ -543,5 +543,168 @@
   "featureAssetRegisterDesc": "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo.",
   "@featureAssetRegisterDesc": {
     "description": "#2576 equipment register"
+  },
+  "equipmentTitle": "Equipos",
+  "@equipmentTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentIntro": "Los equipos duraderos que compra el espacio. Una línea de compra clasificada como equipo se registra aquí; quien gestiona la contabilidad decide después si se capitaliza o se lleva a gasto. No se contabiliza nada: la amortización sigue siendo del contable.",
+  "@equipmentIntro": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentEmpty": "Aún no hay equipos registrados.",
+  "@equipmentEmpty": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentLoadFailed": "No se pudieron cargar los equipos.",
+  "@equipmentLoadFailed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSaved": "Guardado.",
+  "@equipmentSaved": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegister": "Registrar un equipo",
+  "@equipmentRegister": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterTitle": "Registrar un equipo",
+  "@equipmentRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterHint": "Elija una línea de compra clasificada como equipo duradero y póngale nombre.",
+  "@equipmentRegisterHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterNone": "Ninguna línea de compra espera: clasifique primero una línea como equipo duradero en su compra.",
+  "@equipmentRegisterNone": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldLine": "Línea de compra",
+  "@equipmentFieldLine": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldName": "Nombre del equipo",
+  "@equipmentFieldName": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterSave": "Registrar",
+  "@equipmentRegisterSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterRefused": "No se pudo registrar el equipo",
+  "@equipmentRegisterRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentInvalid": "Elija una línea de compra y, para una decisión, indique su fundamento.",
+  "@equipmentInvalid": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecide": "Decidir el tratamiento",
+  "@equipmentDecide": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideTitle": "Tratamiento de {name}",
+  "@equipmentDecideTitle": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentDecideHint": "Capitalícela como equipo o llévela a gasto. Indique el fundamento. Dé la fecha de puesta en uso solo si la conoce; no se supone nada.",
+  "@equipmentDecideHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionCapitalise": "Capitalizar como equipo",
+  "@equipmentDecisionCapitalise": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionExpense": "Llevar a gasto",
+  "@equipmentDecisionExpense": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldBasis": "Fundamento de la decisión",
+  "@equipmentFieldBasis": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldUseDate": "En uso desde",
+  "@equipmentFieldUseDate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldExternalId": "Número de activo en el sistema contable (opcional)",
+  "@equipmentFieldExternalId": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideSave": "Registrar la decisión",
+  "@equipmentDecideSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideRefused": "No se pudo registrar la decisión",
+  "@equipmentDecideRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateCandidate": "Pendiente de tratamiento",
+  "@equipmentStateCandidate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateInUse": "Capitalizado, en uso",
+  "@equipmentStateInUse": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateDisposed": "Dado de baja",
+  "@equipmentStateDisposed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateExpensed": "Llevado a gasto",
+  "@equipmentStateExpensed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentHeading": "n.º {number} {name}",
+  "@equipmentHeading": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentUsedSince": "en uso desde {date}",
+  "@equipmentUsedSince": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCost": "Coste {amount}",
+  "@equipmentCost": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCostUnknown": "Coste aún desconocido: califique primero la parte deducible de la compra.",
+  "@equipmentCostUnknown": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSource": "{supplier} · {reference}",
+  "@equipmentSource": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

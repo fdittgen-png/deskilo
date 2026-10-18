@@ -543,5 +543,168 @@
   "featureAssetRegisterDesc": "Les équipements durables que l'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n'est enregistré.",
   "@featureAssetRegisterDesc": {
     "description": "#2576 equipment register"
+  },
+  "equipmentTitle": "Équipements",
+  "@equipmentTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentIntro": "Les équipements durables que l'espace achète. Une ligne d'achat classée comme équipement est enregistrée ici ; la personne qui gère la comptabilité décide ensuite si elle est immobilisée ou passée en charge. Rien n'est comptabilisé : l'amortissement reste au comptable.",
+  "@equipmentIntro": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentEmpty": "Aucun équipement enregistré pour l'instant.",
+  "@equipmentEmpty": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentLoadFailed": "Les équipements n'ont pas pu être chargés.",
+  "@equipmentLoadFailed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSaved": "Enregistré.",
+  "@equipmentSaved": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegister": "Enregistrer un équipement",
+  "@equipmentRegister": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterTitle": "Enregistrer un équipement",
+  "@equipmentRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterHint": "Choisissez une ligne d'achat classée comme équipement durable, et nommez-la.",
+  "@equipmentRegisterHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterNone": "Aucune ligne d'achat n'attend : classez d'abord une ligne comme équipement durable dans son achat.",
+  "@equipmentRegisterNone": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldLine": "Ligne d'achat",
+  "@equipmentFieldLine": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldName": "Nom de l'équipement",
+  "@equipmentFieldName": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterSave": "Enregistrer",
+  "@equipmentRegisterSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterRefused": "L'équipement n'a pas pu être enregistré",
+  "@equipmentRegisterRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentInvalid": "Choisissez une ligne d'achat et, pour une décision, indiquez son fondement.",
+  "@equipmentInvalid": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecide": "Décider du traitement",
+  "@equipmentDecide": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideTitle": "Traitement de {name}",
+  "@equipmentDecideTitle": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentDecideHint": "Immobilisez-la comme équipement ou passez-la en charge. Indiquez le fondement. Donnez la date de mise en service seulement si vous la connaissez ; rien n'est supposé.",
+  "@equipmentDecideHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionCapitalise": "Immobiliser comme équipement",
+  "@equipmentDecisionCapitalise": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionExpense": "Passer en charge",
+  "@equipmentDecisionExpense": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldBasis": "Fondement de la décision",
+  "@equipmentFieldBasis": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldUseDate": "Mise en service le",
+  "@equipmentFieldUseDate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldExternalId": "Numéro d'immobilisation dans le logiciel comptable (facultatif)",
+  "@equipmentFieldExternalId": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideSave": "Enregistrer la décision",
+  "@equipmentDecideSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideRefused": "La décision n'a pas pu être enregistrée",
+  "@equipmentDecideRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateCandidate": "En attente de traitement",
+  "@equipmentStateCandidate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateInUse": "Immobilisé, en service",
+  "@equipmentStateInUse": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateDisposed": "Sorti de l'actif",
+  "@equipmentStateDisposed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateExpensed": "Passé en charge",
+  "@equipmentStateExpensed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentHeading": "n° {number} {name}",
+  "@equipmentHeading": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentUsedSince": "en service depuis le {date}",
+  "@equipmentUsedSince": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCost": "Coût {amount}",
+  "@equipmentCost": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCostUnknown": "Coût encore inconnu : qualifiez d'abord la part déductible de l'achat.",
+  "@equipmentCostUnknown": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSource": "{supplier} · {reference}",
+  "@equipmentSource": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

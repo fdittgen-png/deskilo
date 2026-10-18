@@ -4798,6 +4798,123 @@ class AppLocalizationsIt extends AppLocalizations {
   String get environmentSaved => 'Tipo di spazio salvato.';
 
   @override
+  String equipmentCost(String amount) {
+    return 'Costo $amount';
+  }
+
+  @override
+  String get equipmentCostUnknown =>
+      'Costo ancora sconosciuto: qualifichi prima la quota detraibile dell\'acquisto.';
+
+  @override
+  String get equipmentDecide => 'Decidi il trattamento';
+
+  @override
+  String get equipmentDecideHint =>
+      'La capitalizzi come attrezzatura o la imputi a costo. Indichi il fondamento. Indichi la data di entrata in uso solo se la conosce; nulla viene presunto.';
+
+  @override
+  String get equipmentDecideRefused => 'Impossibile registrare la decisione';
+
+  @override
+  String get equipmentDecideSave => 'Registra la decisione';
+
+  @override
+  String equipmentDecideTitle(String name) {
+    return 'Trattamento di $name';
+  }
+
+  @override
+  String get equipmentDecisionCapitalise => 'Capitalizza come attrezzatura';
+
+  @override
+  String get equipmentDecisionExpense => 'Imputa a costo';
+
+  @override
+  String get equipmentEmpty => 'Nessuna attrezzatura registrata per ora.';
+
+  @override
+  String get equipmentFieldBasis => 'Fondamento della decisione';
+
+  @override
+  String get equipmentFieldExternalId =>
+      'Numero cespite nel sistema contabile (facoltativo)';
+
+  @override
+  String get equipmentFieldLine => 'Riga d\'acquisto';
+
+  @override
+  String get equipmentFieldName => 'Nome dell\'attrezzatura';
+
+  @override
+  String get equipmentFieldUseDate => 'In uso dal';
+
+  @override
+  String equipmentHeading(int number, String name) {
+    return 'n. $number $name';
+  }
+
+  @override
+  String get equipmentIntro =>
+      'Le attrezzature durevoli che lo spazio acquista. Una riga d\'acquisto classificata come attrezzatura viene registrata qui; chi gestisce la contabilità decide poi se capitalizzarla o imputarla a costo. Nulla viene contabilizzato: l\'ammortamento resta al commercialista.';
+
+  @override
+  String get equipmentInvalid =>
+      'Scelga una riga d\'acquisto e, per una decisione, ne indichi il fondamento.';
+
+  @override
+  String get equipmentLoadFailed => 'Impossibile caricare le attrezzature.';
+
+  @override
+  String get equipmentRegister => 'Registra un\'attrezzatura';
+
+  @override
+  String get equipmentRegisterHint =>
+      'Scelga una riga d\'acquisto classificata come attrezzatura durevole e le dia un nome.';
+
+  @override
+  String get equipmentRegisterNone =>
+      'Nessuna riga d\'acquisto in attesa: classifichi prima una riga come attrezzatura durevole nel suo acquisto.';
+
+  @override
+  String get equipmentRegisterRefused =>
+      'Impossibile registrare l\'attrezzatura';
+
+  @override
+  String get equipmentRegisterSave => 'Registra';
+
+  @override
+  String get equipmentRegisterTitle => 'Registra un\'attrezzatura';
+
+  @override
+  String get equipmentSaved => 'Salvato.';
+
+  @override
+  String equipmentSource(String supplier, String reference) {
+    return '$supplier · $reference';
+  }
+
+  @override
+  String get equipmentStateCandidate => 'In attesa di trattamento';
+
+  @override
+  String get equipmentStateDisposed => 'Dismessa';
+
+  @override
+  String get equipmentStateExpensed => 'Imputata a costo';
+
+  @override
+  String get equipmentStateInUse => 'Capitalizzata, in uso';
+
+  @override
+  String get equipmentTitle => 'Attrezzature';
+
+  @override
+  String equipmentUsedSince(String date) {
+    return 'in uso dal $date';
+  }
+
+  @override
   String get erasurePreviewKept => 'Conservato, e perché';
 
   @override

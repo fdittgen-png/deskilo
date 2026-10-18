@@ -543,5 +543,168 @@
   "featureAssetRegisterDesc": "The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered.",
   "@featureAssetRegisterDesc": {
     "description": "#2576 equipment register"
+  },
+  "equipmentTitle": "Equipment",
+  "@equipmentTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentIntro": "The long-lasting equipment the space buys. A purchase line classified as equipment is registered here; whoever manages the accounting then decides whether it is capitalised or expensed. Nothing is posted: depreciation stays with the accountant.",
+  "@equipmentIntro": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentEmpty": "No equipment registered yet.",
+  "@equipmentEmpty": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentLoadFailed": "The equipment could not be loaded.",
+  "@equipmentLoadFailed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSaved": "Saved.",
+  "@equipmentSaved": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegister": "Register equipment",
+  "@equipmentRegister": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterTitle": "Register equipment",
+  "@equipmentRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterHint": "Choose a purchase line that was classified as long-lasting equipment, and name it.",
+  "@equipmentRegisterHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterNone": "No purchase line is waiting: classify a line as long-lasting equipment on its purchase first.",
+  "@equipmentRegisterNone": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldLine": "Purchase line",
+  "@equipmentFieldLine": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldName": "Name of the equipment",
+  "@equipmentFieldName": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterSave": "Register",
+  "@equipmentRegisterSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterRefused": "The equipment could not be registered",
+  "@equipmentRegisterRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentInvalid": "Choose a purchase line, and for a decision give its basis.",
+  "@equipmentInvalid": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecide": "Decide treatment",
+  "@equipmentDecide": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideTitle": "Treatment of {name}",
+  "@equipmentDecideTitle": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentDecideHint": "Capitalise it as equipment, or expense it. State the basis. Give the date it was available for use only if you know it; nothing is assumed.",
+  "@equipmentDecideHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionCapitalise": "Capitalise as equipment",
+  "@equipmentDecisionCapitalise": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionExpense": "Expense",
+  "@equipmentDecisionExpense": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldBasis": "Basis of the decision",
+  "@equipmentFieldBasis": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldUseDate": "Available for use on",
+  "@equipmentFieldUseDate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldExternalId": "Asset number in the accounting system (optional)",
+  "@equipmentFieldExternalId": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideSave": "Record decision",
+  "@equipmentDecideSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideRefused": "The decision could not be recorded",
+  "@equipmentDecideRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateCandidate": "Waiting for treatment",
+  "@equipmentStateCandidate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateInUse": "Capitalised, in use",
+  "@equipmentStateInUse": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateDisposed": "Disposed of",
+  "@equipmentStateDisposed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateExpensed": "Expensed",
+  "@equipmentStateExpensed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentHeading": "#{number} {name}",
+  "@equipmentHeading": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentUsedSince": "in use since {date}",
+  "@equipmentUsedSince": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCost": "Cost {amount}",
+  "@equipmentCost": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCostUnknown": "Cost not known yet: qualify the deductible share of the purchase first.",
+  "@equipmentCostUnknown": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSource": "{supplier} · {reference}",
+  "@equipmentSource": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

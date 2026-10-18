@@ -3439,6 +3439,169 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "equipmentCost": "Costo {amount}",
+  "@equipmentCost": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCostUnknown": "Costo ancora sconosciuto: qualifichi prima la quota detraibile dell'acquisto.",
+  "@equipmentCostUnknown": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecide": "Decidi il trattamento",
+  "@equipmentDecide": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideHint": "La capitalizzi come attrezzatura o la imputi a costo. Indichi il fondamento. Indichi la data di entrata in uso solo se la conosce; nulla viene presunto.",
+  "@equipmentDecideHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideRefused": "Impossibile registrare la decisione",
+  "@equipmentDecideRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideSave": "Registra la decisione",
+  "@equipmentDecideSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideTitle": "Trattamento di {name}",
+  "@equipmentDecideTitle": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentDecisionCapitalise": "Capitalizza come attrezzatura",
+  "@equipmentDecisionCapitalise": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionExpense": "Imputa a costo",
+  "@equipmentDecisionExpense": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentEmpty": "Nessuna attrezzatura registrata per ora.",
+  "@equipmentEmpty": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldBasis": "Fondamento della decisione",
+  "@equipmentFieldBasis": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldExternalId": "Numero cespite nel sistema contabile (facoltativo)",
+  "@equipmentFieldExternalId": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldLine": "Riga d'acquisto",
+  "@equipmentFieldLine": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldName": "Nome dell'attrezzatura",
+  "@equipmentFieldName": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldUseDate": "In uso dal",
+  "@equipmentFieldUseDate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentHeading": "n. {number} {name}",
+  "@equipmentHeading": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentIntro": "Le attrezzature durevoli che lo spazio acquista. Una riga d'acquisto classificata come attrezzatura viene registrata qui; chi gestisce la contabilità decide poi se capitalizzarla o imputarla a costo. Nulla viene contabilizzato: l'ammortamento resta al commercialista.",
+  "@equipmentIntro": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentInvalid": "Scelga una riga d'acquisto e, per una decisione, ne indichi il fondamento.",
+  "@equipmentInvalid": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentLoadFailed": "Impossibile caricare le attrezzature.",
+  "@equipmentLoadFailed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegister": "Registra un'attrezzatura",
+  "@equipmentRegister": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterHint": "Scelga una riga d'acquisto classificata come attrezzatura durevole e le dia un nome.",
+  "@equipmentRegisterHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterNone": "Nessuna riga d'acquisto in attesa: classifichi prima una riga come attrezzatura durevole nel suo acquisto.",
+  "@equipmentRegisterNone": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterRefused": "Impossibile registrare l'attrezzatura",
+  "@equipmentRegisterRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterSave": "Registra",
+  "@equipmentRegisterSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterTitle": "Registra un'attrezzatura",
+  "@equipmentRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSaved": "Salvato.",
+  "@equipmentSaved": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSource": "{supplier} · {reference}",
+  "@equipmentSource": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentStateCandidate": "In attesa di trattamento",
+  "@equipmentStateCandidate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateDisposed": "Dismessa",
+  "@equipmentStateDisposed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateExpensed": "Imputata a costo",
+  "@equipmentStateExpensed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateInUse": "Capitalizzata, in uso",
+  "@equipmentStateInUse": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentTitle": "Attrezzature",
+  "@equipmentTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentUsedSince": "in uso dal {date}",
+  "@equipmentUsedSince": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "erasurePreviewKept": "Conservato, e perché",
   "@erasurePreviewKept": {
     "description": "#1915 rights requests: erasurePreviewKept"

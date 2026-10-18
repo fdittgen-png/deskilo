@@ -3439,6 +3439,169 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "equipmentCost": "Anschaffungskosten {amount}",
+  "@equipmentCost": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentCostUnknown": "Anschaffungskosten noch unbekannt: Klären Sie zuerst den abziehbaren Anteil des Einkaufs.",
+  "@equipmentCostUnknown": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecide": "Behandlung festlegen",
+  "@equipmentDecide": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideHint": "Aktivieren Sie sie als Anlage oder buchen Sie sie als Aufwand. Nennen Sie die Grundlage. Nennen Sie das Datum der Nutzungsbereitschaft nur, wenn Sie es kennen; es wird nichts angenommen.",
+  "@equipmentDecideHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideRefused": "Die Entscheidung konnte nicht erfasst werden",
+  "@equipmentDecideRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideSave": "Entscheidung erfassen",
+  "@equipmentDecideSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecideTitle": "Behandlung von {name}",
+  "@equipmentDecideTitle": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentDecisionCapitalise": "Als Anlage aktivieren",
+  "@equipmentDecisionCapitalise": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentDecisionExpense": "Als Aufwand buchen",
+  "@equipmentDecisionExpense": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentEmpty": "Noch keine Anlage erfasst.",
+  "@equipmentEmpty": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldBasis": "Grundlage der Entscheidung",
+  "@equipmentFieldBasis": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldExternalId": "Anlagennummer im Buchhaltungssystem (optional)",
+  "@equipmentFieldExternalId": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldLine": "Einkaufszeile",
+  "@equipmentFieldLine": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldName": "Bezeichnung der Anlage",
+  "@equipmentFieldName": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentFieldUseDate": "Nutzungsbereit seit",
+  "@equipmentFieldUseDate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentHeading": "Nr. {number} {name}",
+  "@equipmentHeading": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentIntro": "Die langlebige Ausstattung, die der Space kauft. Eine als Ausstattung eingestufte Einkaufszeile wird hier erfasst; wer die Buchhaltung verantwortet, entscheidet dann, ob sie aktiviert oder als Aufwand gebucht wird. Es wird nichts gebucht: Die Abschreibung bleibt beim Steuerberater.",
+  "@equipmentIntro": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentInvalid": "Wählen Sie eine Einkaufszeile und nennen Sie bei einer Entscheidung deren Grundlage.",
+  "@equipmentInvalid": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentLoadFailed": "Die Anlagen konnten nicht geladen werden.",
+  "@equipmentLoadFailed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegister": "Anlage erfassen",
+  "@equipmentRegister": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterHint": "Wählen Sie eine Einkaufszeile, die als langlebige Ausstattung eingestuft wurde, und benennen Sie sie.",
+  "@equipmentRegisterHint": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterNone": "Keine Einkaufszeile wartet: Stufen Sie zuerst eine Zeile im Einkauf als langlebige Ausstattung ein.",
+  "@equipmentRegisterNone": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterRefused": "Die Anlage konnte nicht erfasst werden",
+  "@equipmentRegisterRefused": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterSave": "Erfassen",
+  "@equipmentRegisterSave": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentRegisterTitle": "Anlage erfassen",
+  "@equipmentRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSaved": "Gespeichert.",
+  "@equipmentSaved": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentSource": "{supplier} · {reference}",
+  "@equipmentSource": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "equipmentStateCandidate": "Behandlung offen",
+  "@equipmentStateCandidate": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateDisposed": "Ausgeschieden",
+  "@equipmentStateDisposed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateExpensed": "Als Aufwand gebucht",
+  "@equipmentStateExpensed": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentStateInUse": "Aktiviert, in Gebrauch",
+  "@equipmentStateInUse": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentTitle": "Anlagen",
+  "@equipmentTitle": {
+    "description": "#2576 equipment register"
+  },
+  "equipmentUsedSince": "in Gebrauch seit {date}",
+  "@equipmentUsedSince": {
+    "description": "#2576 equipment register",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "erasurePreviewKept": "Aufbewahrt, und warum",
   "@erasurePreviewKept": {
     "description": "#1915 rights requests: erasurePreviewKept"

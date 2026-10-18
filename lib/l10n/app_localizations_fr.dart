@@ -4805,6 +4805,125 @@ class AppLocalizationsFr extends AppLocalizations {
   String get environmentSaved => 'Type d’espace enregistré.';
 
   @override
+  String equipmentCost(String amount) {
+    return 'Coût $amount';
+  }
+
+  @override
+  String get equipmentCostUnknown =>
+      'Coût encore inconnu : qualifiez d\'abord la part déductible de l\'achat.';
+
+  @override
+  String get equipmentDecide => 'Décider du traitement';
+
+  @override
+  String get equipmentDecideHint =>
+      'Immobilisez-la comme équipement ou passez-la en charge. Indiquez le fondement. Donnez la date de mise en service seulement si vous la connaissez ; rien n\'est supposé.';
+
+  @override
+  String get equipmentDecideRefused =>
+      'La décision n\'a pas pu être enregistrée';
+
+  @override
+  String get equipmentDecideSave => 'Enregistrer la décision';
+
+  @override
+  String equipmentDecideTitle(String name) {
+    return 'Traitement de $name';
+  }
+
+  @override
+  String get equipmentDecisionCapitalise => 'Immobiliser comme équipement';
+
+  @override
+  String get equipmentDecisionExpense => 'Passer en charge';
+
+  @override
+  String get equipmentEmpty => 'Aucun équipement enregistré pour l\'instant.';
+
+  @override
+  String get equipmentFieldBasis => 'Fondement de la décision';
+
+  @override
+  String get equipmentFieldExternalId =>
+      'Numéro d\'immobilisation dans le logiciel comptable (facultatif)';
+
+  @override
+  String get equipmentFieldLine => 'Ligne d\'achat';
+
+  @override
+  String get equipmentFieldName => 'Nom de l\'équipement';
+
+  @override
+  String get equipmentFieldUseDate => 'Mise en service le';
+
+  @override
+  String equipmentHeading(int number, String name) {
+    return 'n° $number $name';
+  }
+
+  @override
+  String get equipmentIntro =>
+      'Les équipements durables que l\'espace achète. Une ligne d\'achat classée comme équipement est enregistrée ici ; la personne qui gère la comptabilité décide ensuite si elle est immobilisée ou passée en charge. Rien n\'est comptabilisé : l\'amortissement reste au comptable.';
+
+  @override
+  String get equipmentInvalid =>
+      'Choisissez une ligne d\'achat et, pour une décision, indiquez son fondement.';
+
+  @override
+  String get equipmentLoadFailed =>
+      'Les équipements n\'ont pas pu être chargés.';
+
+  @override
+  String get equipmentRegister => 'Enregistrer un équipement';
+
+  @override
+  String get equipmentRegisterHint =>
+      'Choisissez une ligne d\'achat classée comme équipement durable, et nommez-la.';
+
+  @override
+  String get equipmentRegisterNone =>
+      'Aucune ligne d\'achat n\'attend : classez d\'abord une ligne comme équipement durable dans son achat.';
+
+  @override
+  String get equipmentRegisterRefused =>
+      'L\'équipement n\'a pas pu être enregistré';
+
+  @override
+  String get equipmentRegisterSave => 'Enregistrer';
+
+  @override
+  String get equipmentRegisterTitle => 'Enregistrer un équipement';
+
+  @override
+  String get equipmentSaved => 'Enregistré.';
+
+  @override
+  String equipmentSource(String supplier, String reference) {
+    return '$supplier · $reference';
+  }
+
+  @override
+  String get equipmentStateCandidate => 'En attente de traitement';
+
+  @override
+  String get equipmentStateDisposed => 'Sorti de l\'actif';
+
+  @override
+  String get equipmentStateExpensed => 'Passé en charge';
+
+  @override
+  String get equipmentStateInUse => 'Immobilisé, en service';
+
+  @override
+  String get equipmentTitle => 'Équipements';
+
+  @override
+  String equipmentUsedSince(String date) {
+    return 'en service depuis le $date';
+  }
+
+  @override
   String get erasurePreviewKept => 'Conservé, et pourquoi';
 
   @override

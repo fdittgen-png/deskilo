@@ -4800,6 +4800,122 @@ class AppLocalizationsEs extends AppLocalizations {
   String get environmentSaved => 'Tipo de espacio guardado.';
 
   @override
+  String equipmentCost(String amount) {
+    return 'Coste $amount';
+  }
+
+  @override
+  String get equipmentCostUnknown =>
+      'Coste aún desconocido: califique primero la parte deducible de la compra.';
+
+  @override
+  String get equipmentDecide => 'Decidir el tratamiento';
+
+  @override
+  String get equipmentDecideHint =>
+      'Capitalícela como equipo o llévela a gasto. Indique el fundamento. Dé la fecha de puesta en uso solo si la conoce; no se supone nada.';
+
+  @override
+  String get equipmentDecideRefused => 'No se pudo registrar la decisión';
+
+  @override
+  String get equipmentDecideSave => 'Registrar la decisión';
+
+  @override
+  String equipmentDecideTitle(String name) {
+    return 'Tratamiento de $name';
+  }
+
+  @override
+  String get equipmentDecisionCapitalise => 'Capitalizar como equipo';
+
+  @override
+  String get equipmentDecisionExpense => 'Llevar a gasto';
+
+  @override
+  String get equipmentEmpty => 'Aún no hay equipos registrados.';
+
+  @override
+  String get equipmentFieldBasis => 'Fundamento de la decisión';
+
+  @override
+  String get equipmentFieldExternalId =>
+      'Número de activo en el sistema contable (opcional)';
+
+  @override
+  String get equipmentFieldLine => 'Línea de compra';
+
+  @override
+  String get equipmentFieldName => 'Nombre del equipo';
+
+  @override
+  String get equipmentFieldUseDate => 'En uso desde';
+
+  @override
+  String equipmentHeading(int number, String name) {
+    return 'n.º $number $name';
+  }
+
+  @override
+  String get equipmentIntro =>
+      'Los equipos duraderos que compra el espacio. Una línea de compra clasificada como equipo se registra aquí; quien gestiona la contabilidad decide después si se capitaliza o se lleva a gasto. No se contabiliza nada: la amortización sigue siendo del contable.';
+
+  @override
+  String get equipmentInvalid =>
+      'Elija una línea de compra y, para una decisión, indique su fundamento.';
+
+  @override
+  String get equipmentLoadFailed => 'No se pudieron cargar los equipos.';
+
+  @override
+  String get equipmentRegister => 'Registrar un equipo';
+
+  @override
+  String get equipmentRegisterHint =>
+      'Elija una línea de compra clasificada como equipo duradero y póngale nombre.';
+
+  @override
+  String get equipmentRegisterNone =>
+      'Ninguna línea de compra espera: clasifique primero una línea como equipo duradero en su compra.';
+
+  @override
+  String get equipmentRegisterRefused => 'No se pudo registrar el equipo';
+
+  @override
+  String get equipmentRegisterSave => 'Registrar';
+
+  @override
+  String get equipmentRegisterTitle => 'Registrar un equipo';
+
+  @override
+  String get equipmentSaved => 'Guardado.';
+
+  @override
+  String equipmentSource(String supplier, String reference) {
+    return '$supplier · $reference';
+  }
+
+  @override
+  String get equipmentStateCandidate => 'Pendiente de tratamiento';
+
+  @override
+  String get equipmentStateDisposed => 'Dado de baja';
+
+  @override
+  String get equipmentStateExpensed => 'Llevado a gasto';
+
+  @override
+  String get equipmentStateInUse => 'Capitalizado, en uso';
+
+  @override
+  String get equipmentTitle => 'Equipos';
+
+  @override
+  String equipmentUsedSince(String date) {
+    return 'en uso desde $date';
+  }
+
+  @override
   String get erasurePreviewKept => 'Conservado, y por qué';
 
   @override
