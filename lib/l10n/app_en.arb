@@ -19437,6 +19437,57 @@
   "@reserveWeekView": {
     "description": "Reserve hub view segment paging one day timeline per day, synced with the date strip (#208)"
   },
+  "retentionClassBooks": "Books",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Correspondence",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassInvoice": "Invoices",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Vouchers",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromDocument": "{years} years from the document date",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromYearEnd": "{years} years from the end of the fiscal year",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHint": "How long {country} makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionTitle": "Record retention",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionUnconfirmed": "not yet confirmed",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
+  },
   "reverseChargeSubtitle": "A customer with a VAT number in another member state is invoiced without tax and self-assesses it (art. 196). Turn it off if you never invoice businesses abroad.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"

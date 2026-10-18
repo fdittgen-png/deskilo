@@ -11729,6 +11729,57 @@
   "reserveStaleRetry": "Réessayer",
   "reserveViewMenu": "Vue",
   "reserveWeekView": "Semaine",
+  "retentionClassBooks": "Livres comptables",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Correspondance",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassInvoice": "Factures",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Pièces justificatives",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromDocument": "{years} ans à partir de la date du document",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromYearEnd": "{years} ans à partir de la fin de l'exercice",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHint": "Combien de temps {country} impose à cet espace de conserver chaque type de pièce. Les durées sont des données de référence ; une règle non encore confirmée n'a pas été vérifiée par une personne habilitée à la confirmer.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionTitle": "Durées de conservation",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionUnconfirmed": "pas encore confirmée",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
+  },
   "reverseChargeSubtitle": "Un client titulaire d'un numéro de TVA dans un autre État membre est facturé sans taxe et l'autoliquide (art. 196). Désactivez si vous ne facturez jamais d'entreprises à l'étranger.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"

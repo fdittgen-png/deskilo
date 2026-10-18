@@ -11729,6 +11729,57 @@
   "reserveStaleRetry": "Riprova",
   "reserveViewMenu": "Vista",
   "reserveWeekView": "Settimana",
+  "retentionClassBooks": "Libri contabili",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Corrispondenza",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassInvoice": "Fatture",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Giustificativi",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromDocument": "{years} anni dalla data del documento",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromYearEnd": "{years} anni dalla fine dell'esercizio",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHint": "Per quanto tempo {country} impone a questo spazio di conservare ogni tipo di documento. I termini sono dati di riferimento; una regola non ancora confermata non è stata verificata da una persona con l'autorità di confermarla.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionTitle": "Termini di conservazione",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionUnconfirmed": "non ancora confermata",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
+  },
   "reverseChargeSubtitle": "Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattivi se non fattura mai imprese all'estero.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"

@@ -16809,6 +16809,39 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reserveWeekView => 'Settimana';
 
   @override
+  String get retentionClassBooks => 'Libri contabili';
+
+  @override
+  String get retentionClassCorrespondence => 'Corrispondenza';
+
+  @override
+  String get retentionClassInvoice => 'Fatture';
+
+  @override
+  String get retentionClassVoucher => 'Giustificativi';
+
+  @override
+  String retentionFromDocument(int years) {
+    return '$years anni dalla data del documento';
+  }
+
+  @override
+  String retentionFromYearEnd(int years) {
+    return '$years anni dalla fine dell\'esercizio';
+  }
+
+  @override
+  String retentionHint(String country) {
+    return 'Per quanto tempo $country impone a questo spazio di conservare ogni tipo di documento. I termini sono dati di riferimento; una regola non ancora confermata non è stata verificata da una persona con l\'autorità di confermarla.';
+  }
+
+  @override
+  String get retentionTitle => 'Termini di conservazione';
+
+  @override
+  String get retentionUnconfirmed => 'non ancora confermata';
+
+  @override
   String get reverseChargeSubtitle =>
       'Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattivi se non fattura mai imprese all\'estero.';
 

@@ -2073,5 +2073,56 @@
         "type": "String"
       }
     }
+  },
+  "retentionTitle": "Record retention",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionHint": "How long {country} makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionClassInvoice": "Invoices",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassBooks": "Books",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Correspondence",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Vouchers",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromYearEnd": "{years} years from the end of the fiscal year",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromDocument": "{years} years from the document date",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionUnconfirmed": "not yet confirmed",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
   }
 }

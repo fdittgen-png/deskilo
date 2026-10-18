@@ -16843,6 +16843,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reserveWeekView => 'Semaine';
 
   @override
+  String get retentionClassBooks => 'Livres comptables';
+
+  @override
+  String get retentionClassCorrespondence => 'Correspondance';
+
+  @override
+  String get retentionClassInvoice => 'Factures';
+
+  @override
+  String get retentionClassVoucher => 'Pièces justificatives';
+
+  @override
+  String retentionFromDocument(int years) {
+    return '$years ans à partir de la date du document';
+  }
+
+  @override
+  String retentionFromYearEnd(int years) {
+    return '$years ans à partir de la fin de l\'exercice';
+  }
+
+  @override
+  String retentionHint(String country) {
+    return 'Combien de temps $country impose à cet espace de conserver chaque type de pièce. Les durées sont des données de référence ; une règle non encore confirmée n\'a pas été vérifiée par une personne habilitée à la confirmer.';
+  }
+
+  @override
+  String get retentionTitle => 'Durées de conservation';
+
+  @override
+  String get retentionUnconfirmed => 'pas encore confirmée';
+
+  @override
   String get reverseChargeSubtitle =>
       'Un client titulaire d\'un numéro de TVA dans un autre État membre est facturé sans taxe et l\'autoliquide (art. 196). Désactivez si vous ne facturez jamais d\'entreprises à l\'étranger.';
 

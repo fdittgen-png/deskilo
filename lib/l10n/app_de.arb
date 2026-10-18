@@ -11729,6 +11729,57 @@
   "reserveStaleRetry": "Erneut versuchen",
   "reserveViewMenu": "Ansicht",
   "reserveWeekView": "Woche",
+  "retentionClassBooks": "Bücher",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Korrespondenz",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassInvoice": "Rechnungen",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Belege",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromDocument": "{years} Jahre ab dem Belegdatum",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromYearEnd": "{years} Jahre ab Ende des Geschäftsjahres",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHint": "Wie lange {country} diesen Space jede Art von Unterlagen aufbewahren lässt. Die Fristen sind Referenzdaten; eine noch nicht bestätigte Regel wurde noch nicht von einer dazu befugten Person geprüft.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionTitle": "Aufbewahrungsfristen",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionUnconfirmed": "noch nicht bestätigt",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
+  },
   "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn Sie nie Unternehmen im Ausland fakturieren.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"

@@ -1327,5 +1327,56 @@
         "type": "String"
       }
     }
+  },
+  "retentionTitle": "Aufbewahrungsfristen",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionHint": "Wie lange {country} diesen Space jede Art von Unterlagen aufbewahren lässt. Die Fristen sind Referenzdaten; eine noch nicht bestätigte Regel wurde noch nicht von einer dazu befugten Person geprüft.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionClassInvoice": "Rechnungen",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassBooks": "Bücher",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Korrespondenz",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Belege",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromYearEnd": "{years} Jahre ab Ende des Geschäftsjahres",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromDocument": "{years} Jahre ab dem Belegdatum",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionUnconfirmed": "noch nicht bestätigt",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
   }
 }

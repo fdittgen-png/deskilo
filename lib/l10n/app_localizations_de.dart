@@ -16830,6 +16830,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reserveWeekView => 'Woche';
 
   @override
+  String get retentionClassBooks => 'Bücher';
+
+  @override
+  String get retentionClassCorrespondence => 'Korrespondenz';
+
+  @override
+  String get retentionClassInvoice => 'Rechnungen';
+
+  @override
+  String get retentionClassVoucher => 'Belege';
+
+  @override
+  String retentionFromDocument(int years) {
+    return '$years Jahre ab dem Belegdatum';
+  }
+
+  @override
+  String retentionFromYearEnd(int years) {
+    return '$years Jahre ab Ende des Geschäftsjahres';
+  }
+
+  @override
+  String retentionHint(String country) {
+    return 'Wie lange $country diesen Space jede Art von Unterlagen aufbewahren lässt. Die Fristen sind Referenzdaten; eine noch nicht bestätigte Regel wurde noch nicht von einer dazu befugten Person geprüft.';
+  }
+
+  @override
+  String get retentionTitle => 'Aufbewahrungsfristen';
+
+  @override
+  String get retentionUnconfirmed => 'noch nicht bestätigt';
+
+  @override
   String get reverseChargeSubtitle =>
       'Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn Sie nie Unternehmen im Ausland fakturieren.';
 

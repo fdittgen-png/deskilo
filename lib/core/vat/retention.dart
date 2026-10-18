@@ -57,6 +57,32 @@ DateTime retentionUntil(
   return DateTime.utc(year, base.month, base.day > last ? last : base.day);
 }
 
+/// #2571 — one rule of [country] as the tax reference holds it.
+typedef RetentionRule = ({
+  String docClass,
+  int years,
+  String from,
+  bool confirmed,
+  String source,
+});
+
+/// The rules in force for [country] (the shared rule where it has none),
+/// one per document class that has one, in class order.
+List<RetentionRule> retentionRules(String country, {TaxReferenceSet? reference}) {
+  final set = reference ?? ActiveTaxReference.current;
+  return [
+    for (final docClass in retentionClasses)
+      if (set.retentionRowOf(country, docClass) case final row?)
+        (
+          docClass: docClass,
+          years: (row.value as RetentionValue).years,
+          from: (row.value as RetentionValue).from,
+          confirmed: row.confirmed,
+          source: row.source,
+        ),
+  ];
+}
+
 /// #2571 — the retention rules of [country] in words, for the archive of
 /// fiscal year [year]: per document class the period, where the clock
 /// starts, the first day a document of that year may go, the statute and
