@@ -1779,7 +1779,7 @@ routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | f
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:a65d618c53b6
 routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
 routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
-routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6cd2d0e0f42d
+routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:135ef984459a
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
 routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4a02ac9c0f76
@@ -2037,7 +2037,7 @@ routine public.purchase_allocations_guard() -> trigger | function | invoker | vo
 routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:866a954639c4
 routine public.purchase_bridge_expense(p_event events) -> uuid | function | definer | volatile | exec:service_role | body:0f3850d27cee
 routine public.purchase_commitment_matches_guard() -> trigger | function | invoker | volatile | exec:service_role | body:b34b8aa95a2b
-routine public.purchase_commitment_page_v1(p_workspace_id uuid, p_lease_id uuid, p_before date, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:621dfa9c3ca7
+routine public.purchase_commitment_page_v1(p_workspace_id uuid, p_lease_id uuid, p_before date, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:90cea48af978
 routine public.purchase_credit_paid(p_credit_id uuid) -> bigint | function | definer | stable | exec:service_role | body:a4613107ec97
 routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b73cb2bb60
 routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:ec4ccc997aab
