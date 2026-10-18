@@ -15,7 +15,7 @@ Widget _list(String? country) => MaterialApp(
   home: Scaffold(
     body: FeatureCapabilityList(
       rows: [featureManifest[WorkspaceFeature.recapitulativeStatement]!],
-      raw: {
+      raw: const {
         WorkspaceFeature.vatDeclarations,
         WorkspaceFeature.recapitulativeStatement,
       },
