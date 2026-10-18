@@ -18,13 +18,15 @@ class FecAccounts {
     String? vat,
     String? expenses,
     String? vatPending,
+    String? writeOff,
     this.reference,
   }) : _givenCustomers = customers,
        _givenRevenue = revenue,
        _givenBank = bank,
        _givenVat = vat,
        _givenExpenses = expenses,
-       _givenVatPending = vatPending;
+       _givenVatPending = vatPending,
+       _givenWriteOff = writeOff;
 
   final TaxReferenceSet? reference;
   final String? _givenCustomers;
@@ -33,6 +35,7 @@ class FecAccounts {
   final String? _givenVat;
   final String? _givenExpenses;
   final String? _givenVatPending;
+  final String? _givenWriteOff;
 
   String _default(String format, String role) =>
       (reference ?? ActiveTaxReference.current).accountOf(format, role, 'FR');
@@ -59,4 +62,8 @@ class FecAccounts {
   /// carries but whose tax point has not come yet (services on receipts,
   /// a service month still to come). It moves to [vat] on the tax point.
   String get vatPending => _givenVatPending ?? _default('fec', 'vat_pending');
+
+  /// #2365 — PCG 654, pertes sur créances irrécouvrables: what the owner
+  /// gave up of an invoice, booked at the gross amount it was still owed.
+  String get writeOff => _givenWriteOff ?? _default('fec', 'write_off');
 }

@@ -278,8 +278,7 @@ String buildFecFile({
         letter: letter, validDate: invoice.issuedAt,
       );
       if (pending) releaseVat(invoice, label);
-      bookFecRefund(write, invoice, matches[invoice.id], accounts,
-          customersLabel, bankLabel);
+      bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel);
       continue;
     }
     final charges = invoice.lines
@@ -451,6 +450,7 @@ String buildFecFile({
         validDate: match.matchedAt,
       );
     }
+    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
   }
 
   // CRLF: the file goes to accounting software that mostly runs on
