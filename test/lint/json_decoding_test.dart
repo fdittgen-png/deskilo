@@ -22,7 +22,7 @@ const _rawReadBudget = 207;
 /// split the demo repositories: four forwarders repeat a signature). Most are
 /// `Map<String, dynamic>` signatures of the decoders; they go as the
 /// signatures move to `Map<String, Object?>`.
-const _dynamicBudget = 679;
+const _dynamicBudget = 677;
 
 void main() {
   // #2592/#2593 — layout reader and recording codec moved into packages; their reads still count.

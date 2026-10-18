@@ -18,10 +18,5 @@ final usageCommandProvider = Provider<UsageCommands>(
   (ref) => UsageCommands(ref.watch(usagePreparationProvider)),
 );
 
-/// A usage month changed (a record made, corrected or removed): both the pure
-/// read and the compatibility list reread it.
-void invalidateUsage(WidgetRef ref) {
-  ref
-    ..invalidate(usageReadProvider)
-    ..invalidate(usageRecordsProvider);
-}
+/// A usage month changed (a record made, corrected or removed): reread it.
+void invalidateUsage(WidgetRef ref) => ref.invalidate(usageReadProvider);

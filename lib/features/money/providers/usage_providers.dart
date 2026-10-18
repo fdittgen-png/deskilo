@@ -24,28 +24,6 @@ class UsageFilter extends _$UsageFilter {
       state = (period: state.period, memberId: memberId);
 }
 
-/// One month of usage records. The server backfills the month's
-/// no-shows before answering, so reading a month is what makes its
-/// uncounted bookings appear — there is no cron behind this.
-@riverpod
-Future<List<UsageRecord>> usageRecords(Ref ref, String period) async {
-  // #1218 — every dependency registered BEFORE the first await: a
-  // bare `ref.watch` on the far side of an async gap throws if the
-  // provider was disposed while the future was in flight.
-  final memberId = ref.watch(usageFilterProvider).memberId;
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null || period.isEmpty) return const [];
-  return traced(
-    'money',
-    'usage records',
-    () => ref.read(memberAccountQueriesProvider).fetchUsageRecords(
-          workspaceId: workspace.id,
-          period: period,
-          memberId: memberId,
-        ),
-  );
-}
-
 /// #2590 — one month of usage as a PURE read, with how complete it is: it
 /// records nothing, and a month nobody has recorded reads as incomplete.
 @riverpod

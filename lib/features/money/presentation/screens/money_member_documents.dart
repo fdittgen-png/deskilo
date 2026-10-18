@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../../core/time/date_text.dart';
@@ -30,6 +31,7 @@ import '../../domain/report_data_letters.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
+import '../../providers/usage_read_providers.dart';
 import '../invoice_documents.dart';
 import '../period_label.dart';
 import '../report_actions.dart';
@@ -78,7 +80,16 @@ class MoneyMemberDocuments {
     if (docId == 'usage') {
       // #873 — the figures come from the statement and the records.
       await _ref.read(memberStatementProvider(me.id, period).future);
-      await _ref.read(usageRecordsProvider(period).future);
+      // #2590 — printing the letter is the person's own action, so the month
+      // is recorded explicitly first; the read itself writes nothing.
+      final workspace = _ref.read(currentWorkspaceProvider).value;
+      if (workspace != null) {
+        await _ref
+            .read(usageCommandProvider)
+            .prepare(workspace.id, period, newRequestId());
+        invalidateUsage(_ref);
+      }
+      await _ref.read(usageReadProvider(period).future);
       if (!_context.mounted) return;
     }
     final data = _letterData(

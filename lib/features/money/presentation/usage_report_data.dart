@@ -37,7 +37,7 @@ Map<String, Object?> usageReportData(
   final dateFormat = DateFormat.yMMMd(locale);
   final dayFormat = DateFormat.MMMEd(locale);
   final statement = ref.read(memberStatementProvider(memberId, period)).value;
-  final records = (ref.read(usageRecordsProvider(period)).value ??
+  final records = (ref.read(usageReadProvider(period)).value?.records ??
           const <UsageRecord>[])
       .where((r) => r.memberId == memberId)
       .toList()

@@ -6,7 +6,6 @@
 import 'package:deskilo/features/money/application/usage_commands.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/presentation/widgets/usage_face.dart';
-import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,10 +80,10 @@ void main() {
         ..onPrepared = () => reads.unprepared = 0;
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            ...standardTestOverrides(money: reads),
-            usagePreparationProvider.overrideWithValue(preparation),
-          ],
+          overrides: standardTestOverrides(
+            money: reads,
+            usagePreparation: preparation,
+          ),
           child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
