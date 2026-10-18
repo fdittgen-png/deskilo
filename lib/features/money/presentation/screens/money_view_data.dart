@@ -120,6 +120,7 @@ class MoneyViewData {
   /// supplier bills of those who manage them.
   bool get purchasesOn => _on(WorkspaceFeature.purchases);
   bool get premisesLeaseOn => _on(WorkspaceFeature.premisesLease);
+  bool get assetRegisterOn => _on(WorkspaceFeature.assetRegister);
 
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;

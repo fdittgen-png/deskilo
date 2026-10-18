@@ -4805,6 +4805,124 @@ class AppLocalizationsDe extends AppLocalizations {
   String get environmentSaved => 'Art des Space gespeichert.';
 
   @override
+  String equipmentCost(String amount) {
+    return 'Anschaffungskosten $amount';
+  }
+
+  @override
+  String get equipmentCostUnknown =>
+      'Anschaffungskosten noch unbekannt: Klären Sie zuerst den abziehbaren Anteil des Einkaufs.';
+
+  @override
+  String get equipmentDecide => 'Behandlung festlegen';
+
+  @override
+  String get equipmentDecideHint =>
+      'Aktivieren Sie sie als Anlage oder buchen Sie sie als Aufwand. Nennen Sie die Grundlage. Nennen Sie das Datum der Nutzungsbereitschaft nur, wenn Sie es kennen; es wird nichts angenommen.';
+
+  @override
+  String get equipmentDecideRefused =>
+      'Die Entscheidung konnte nicht erfasst werden';
+
+  @override
+  String get equipmentDecideSave => 'Entscheidung erfassen';
+
+  @override
+  String equipmentDecideTitle(String name) {
+    return 'Behandlung von $name';
+  }
+
+  @override
+  String get equipmentDecisionCapitalise => 'Als Anlage aktivieren';
+
+  @override
+  String get equipmentDecisionExpense => 'Als Aufwand buchen';
+
+  @override
+  String get equipmentEmpty => 'Noch keine Anlage erfasst.';
+
+  @override
+  String get equipmentFieldBasis => 'Grundlage der Entscheidung';
+
+  @override
+  String get equipmentFieldExternalId =>
+      'Anlagennummer im Buchhaltungssystem (optional)';
+
+  @override
+  String get equipmentFieldLine => 'Einkaufszeile';
+
+  @override
+  String get equipmentFieldName => 'Bezeichnung der Anlage';
+
+  @override
+  String get equipmentFieldUseDate => 'Nutzungsbereit seit';
+
+  @override
+  String equipmentHeading(int number, String name) {
+    return 'Nr. $number $name';
+  }
+
+  @override
+  String get equipmentIntro =>
+      'Die langlebige Ausstattung, die der Space kauft. Eine als Ausstattung eingestufte Einkaufszeile wird hier erfasst; wer die Buchhaltung verantwortet, entscheidet dann, ob sie aktiviert oder als Aufwand gebucht wird. Es wird nichts gebucht: Die Abschreibung bleibt beim Steuerberater.';
+
+  @override
+  String get equipmentInvalid =>
+      'Wählen Sie eine Einkaufszeile und nennen Sie bei einer Entscheidung deren Grundlage.';
+
+  @override
+  String get equipmentLoadFailed => 'Die Anlagen konnten nicht geladen werden.';
+
+  @override
+  String get equipmentRegister => 'Anlage erfassen';
+
+  @override
+  String get equipmentRegisterHint =>
+      'Wählen Sie eine Einkaufszeile, die als langlebige Ausstattung eingestuft wurde, und benennen Sie sie.';
+
+  @override
+  String get equipmentRegisterNone =>
+      'Keine Einkaufszeile wartet: Stufen Sie zuerst eine Zeile im Einkauf als langlebige Ausstattung ein.';
+
+  @override
+  String get equipmentRegisterRefused =>
+      'Die Anlage konnte nicht erfasst werden';
+
+  @override
+  String get equipmentRegisterSave => 'Erfassen';
+
+  @override
+  String get equipmentRegisterTitle => 'Anlage erfassen';
+
+  @override
+  String get equipmentSaved => 'Gespeichert.';
+
+  @override
+  String equipmentSource(String supplier, String reference) {
+    return '$supplier · $reference';
+  }
+
+  @override
+  String get equipmentStateCandidate => 'Behandlung offen';
+
+  @override
+  String get equipmentStateDisposed => 'Ausgeschieden';
+
+  @override
+  String get equipmentStateExpensed => 'Als Aufwand gebucht';
+
+  @override
+  String get equipmentStateInUse => 'Aktiviert, in Gebrauch';
+
+  @override
+  String get equipmentTitle => 'Anlagen';
+
+  @override
+  String equipmentUsedSince(String date) {
+    return 'in Gebrauch seit $date';
+  }
+
+  @override
   String get erasurePreviewKept => 'Aufbewahrt, und warum';
 
   @override

@@ -7,7 +7,7 @@
 --   machine net 1 200.00 + VAT 240.00, 120.00 recoverable  -> cost 1 320.00
 --   machine whose deductible share is not qualified        -> cost unknown
 begin;
-select plan(21);
+select plan(25);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -160,11 +160,13 @@ select set_config('t.p', pg_temp.draft(200, jsonb_build_array(
   pg_temp.line(144000, 120000, 24000, 24000, 'asset'),
   pg_temp.line(144000, 120000, 24000, 12000, 'asset'),
   pg_temp.line(144000, 120000, 24000, null, 'asset'),
-  pg_temp.line(5000, 4167, 833, 833, 'operating')))->>'purchase_id', true);
+  pg_temp.line(5000, 4167, 833, 833, 'operating'),
+  pg_temp.line(144000, 120000, 24000, 24000, 'asset')))->>'purchase_id', true);
 select set_config('t.l1', pg_temp.lineid(current_setting('t.p'), 1), true);
 select set_config('t.l2', pg_temp.lineid(current_setting('t.p'), 2), true);
 select set_config('t.l3', pg_temp.lineid(current_setting('t.p'), 3), true);
 select set_config('t.l4', pg_temp.lineid(current_setting('t.p'), 4), true);
+select set_config('t.l5', pg_temp.lineid(current_setting('t.p'), 5), true);
 
 -- ── the flag and the rights ────────────────────────────────────────────
 select ok((pg_temp.reg(pg_temp.u(1), current_setting('t.l1'), 201)::text) like '%switched off%', 'with the flag off nothing is registered');
@@ -172,6 +174,12 @@ update public.workspaces set feature_flags = feature_flags || '{"assetRegister":
 select ok((pg_temp.reg(pg_temp.u(4), current_setting('t.l1'), 202)::text) like '%may not register equipment%', 'an admin without managePurchases registers nothing');
 select ok((pg_temp.reg(pg_temp.u(5), current_setting('t.l1'), 203)::text) like '%not an active member%', 'nor does a foreign owner');
 select is((select count(*)::int from public.workspace_assets), 0, 'readback: no refusal left a row');
+
+-- ── what can be registered ─────────────────────────────────────────────
+select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.asset_candidate_lines_v1(%L)', current_setting('t.a'))) -> 'lines'), 4,
+  'the four equipment lines are offered, the operating line is not');
+select ok((pg_temp.as_json(pg_temp.u(4), format('select public.asset_candidate_lines_v1(%L)', current_setting('t.a')))::text) like '%may not register equipment%',
+  'an admin without managePurchases is offered nothing');
 
 -- ── registering ────────────────────────────────────────────────────────
 select ok((pg_temp.reg(pg_temp.u(1), current_setting('t.l4'), 204)::text) like '%not classified as long-lasting equipment%', 'a line that is not equipment is refused');
@@ -185,6 +193,12 @@ select is(current_setting('t.a2')::jsonb ->> 'acquisition_cost_cents', '132000',
 select set_config('t.a3', pg_temp.reg(pg_temp.u(1), current_setting('t.l3'), 208)::text, true);
 select ok(current_setting('t.a3')::jsonb -> 'acquisition_cost_cents' = 'null'::jsonb, 'an unqualified deductible share leaves the cost unknown, not zero');
 
+select set_config('t.a5', pg_temp.as_json(pg_temp.u(1), format('select public.register_asset_candidate_v1(%L, %L, 5, ''Second machine'', %L)',
+  current_setting('t.a'), current_setting('t.p'), pg_temp.rq(216)))::text, true);
+select is(current_setting('t.a5')::jsonb ->> 'description', 'Second machine', 'a line is registered by its purchase and number too, with the name given');
+select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.asset_candidate_lines_v1(%L)', current_setting('t.a'))) -> 'lines'), 0,
+  'and once all are registered nothing is offered');
+
 -- ── deciding ───────────────────────────────────────────────────────────
 select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.a1')::jsonb ->> 'id', 1, 'capitalise', 'IAS 16', date '2026-03-01', 209)::text) like '%may not decide%', 'an admin without manageBilling decides nothing');
 select ok((pg_temp.decide(pg_temp.u(1), current_setting('t.a1')::jsonb ->> 'id', 1, 'capitalise', '', date '2026-03-01', 210)::text) like '%basis%', 'a decision states its basis');
@@ -195,11 +209,11 @@ select is(current_setting('t.d1')::jsonb ->> 'state', 'in_use', 'capitalised wit
 select set_config('t.d2', pg_temp.decide(pg_temp.u(1), current_setting('t.a2')::jsonb ->> 'id', 1, 'expense', 'below the space''s approved policy', null, 214)::text, true);
 select is(current_setting('t.d2')::jsonb ->> 'state', 'expensed', 'an expensed item is not an asset');
 select ok((pg_temp.decide(pg_temp.u(1), current_setting('t.a1')::jsonb ->> 'id', 2, 'expense', 'changed my mind', null, 215)::text) like '%corrected in the open period%', 'a decided asset is not re-decided here');
-select is((select count(*)::int from public.workspace_assets where state = 'candidate'), 1, 'readback: one candidate left, the unqualified one');
+select is((select count(*)::int from public.workspace_assets where state = 'candidate'), 2, 'readback: two candidates left, the unqualified one and the second machine');
 
 -- ── reading ────────────────────────────────────────────────────────────
-select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.workspace_assets_v1(%L)', current_setting('t.a'))) -> 'assets'), 3,
-  'the owner reads the three assets');
+select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.workspace_assets_v1(%L)', current_setting('t.a'))) -> 'assets'), 4,
+  'the owner reads the four assets');
 select ok((pg_temp.as_json(pg_temp.u(5), format('select public.workspace_assets_v1(%L)', current_setting('t.a')))::text) like '%not an active member%', 'a foreign owner reads nothing');
 
 select * from finish();

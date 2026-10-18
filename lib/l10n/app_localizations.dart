@@ -8347,6 +8347,204 @@ abstract class AppLocalizations {
   /// **'Workspace type saved.'**
   String get environmentSaved;
 
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Cost {amount}'**
+  String equipmentCost(String amount);
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Cost not known yet: qualify the deductible share of the purchase first.'**
+  String get equipmentCostUnknown;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Decide treatment'**
+  String get equipmentDecide;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Capitalise it as equipment, or expense it. State the basis. Give the date it was available for use only if you know it; nothing is assumed.'**
+  String get equipmentDecideHint;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'The decision could not be recorded'**
+  String get equipmentDecideRefused;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Record decision'**
+  String get equipmentDecideSave;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment of {name}'**
+  String equipmentDecideTitle(String name);
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Capitalise as equipment'**
+  String get equipmentDecisionCapitalise;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get equipmentDecisionExpense;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'No equipment registered yet.'**
+  String get equipmentEmpty;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Basis of the decision'**
+  String get equipmentFieldBasis;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Asset number in the accounting system (optional)'**
+  String get equipmentFieldExternalId;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase line'**
+  String get equipmentFieldLine;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the equipment'**
+  String get equipmentFieldName;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Available for use on'**
+  String get equipmentFieldUseDate;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'#{number} {name}'**
+  String equipmentHeading(int number, String name);
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'The long-lasting equipment the space buys. A purchase line classified as equipment is registered here; whoever manages the accounting then decides whether it is capitalised or expensed. Nothing is posted: depreciation stays with the accountant.'**
+  String get equipmentIntro;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a purchase line, and for a decision give its basis.'**
+  String get equipmentInvalid;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'The equipment could not be loaded.'**
+  String get equipmentLoadFailed;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Register equipment'**
+  String get equipmentRegister;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a purchase line that was classified as long-lasting equipment, and name it.'**
+  String get equipmentRegisterHint;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase line is waiting: classify a line as long-lasting equipment on its purchase first.'**
+  String get equipmentRegisterNone;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'The equipment could not be registered'**
+  String get equipmentRegisterRefused;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get equipmentRegisterSave;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Register equipment'**
+  String get equipmentRegisterTitle;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get equipmentSaved;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} · {reference}'**
+  String equipmentSource(String supplier, String reference);
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for treatment'**
+  String get equipmentStateCandidate;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Disposed of'**
+  String get equipmentStateDisposed;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Expensed'**
+  String get equipmentStateExpensed;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Capitalised, in use'**
+  String get equipmentStateInUse;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get equipmentTitle;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'in use since {date}'**
+  String equipmentUsedSince(String date);
+
   /// #1915 rights requests: erasurePreviewKept
   ///
   /// In en, this message translates to:

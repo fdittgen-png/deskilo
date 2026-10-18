@@ -4765,6 +4765,123 @@ class AppLocalizationsEn extends AppLocalizations {
   String get environmentSaved => 'Workspace type saved.';
 
   @override
+  String equipmentCost(String amount) {
+    return 'Cost $amount';
+  }
+
+  @override
+  String get equipmentCostUnknown =>
+      'Cost not known yet: qualify the deductible share of the purchase first.';
+
+  @override
+  String get equipmentDecide => 'Decide treatment';
+
+  @override
+  String get equipmentDecideHint =>
+      'Capitalise it as equipment, or expense it. State the basis. Give the date it was available for use only if you know it; nothing is assumed.';
+
+  @override
+  String get equipmentDecideRefused => 'The decision could not be recorded';
+
+  @override
+  String get equipmentDecideSave => 'Record decision';
+
+  @override
+  String equipmentDecideTitle(String name) {
+    return 'Treatment of $name';
+  }
+
+  @override
+  String get equipmentDecisionCapitalise => 'Capitalise as equipment';
+
+  @override
+  String get equipmentDecisionExpense => 'Expense';
+
+  @override
+  String get equipmentEmpty => 'No equipment registered yet.';
+
+  @override
+  String get equipmentFieldBasis => 'Basis of the decision';
+
+  @override
+  String get equipmentFieldExternalId =>
+      'Asset number in the accounting system (optional)';
+
+  @override
+  String get equipmentFieldLine => 'Purchase line';
+
+  @override
+  String get equipmentFieldName => 'Name of the equipment';
+
+  @override
+  String get equipmentFieldUseDate => 'Available for use on';
+
+  @override
+  String equipmentHeading(int number, String name) {
+    return '#$number $name';
+  }
+
+  @override
+  String get equipmentIntro =>
+      'The long-lasting equipment the space buys. A purchase line classified as equipment is registered here; whoever manages the accounting then decides whether it is capitalised or expensed. Nothing is posted: depreciation stays with the accountant.';
+
+  @override
+  String get equipmentInvalid =>
+      'Choose a purchase line, and for a decision give its basis.';
+
+  @override
+  String get equipmentLoadFailed => 'The equipment could not be loaded.';
+
+  @override
+  String get equipmentRegister => 'Register equipment';
+
+  @override
+  String get equipmentRegisterHint =>
+      'Choose a purchase line that was classified as long-lasting equipment, and name it.';
+
+  @override
+  String get equipmentRegisterNone =>
+      'No purchase line is waiting: classify a line as long-lasting equipment on its purchase first.';
+
+  @override
+  String get equipmentRegisterRefused =>
+      'The equipment could not be registered';
+
+  @override
+  String get equipmentRegisterSave => 'Register';
+
+  @override
+  String get equipmentRegisterTitle => 'Register equipment';
+
+  @override
+  String get equipmentSaved => 'Saved.';
+
+  @override
+  String equipmentSource(String supplier, String reference) {
+    return '$supplier · $reference';
+  }
+
+  @override
+  String get equipmentStateCandidate => 'Waiting for treatment';
+
+  @override
+  String get equipmentStateDisposed => 'Disposed of';
+
+  @override
+  String get equipmentStateExpensed => 'Expensed';
+
+  @override
+  String get equipmentStateInUse => 'Capitalised, in use';
+
+  @override
+  String get equipmentTitle => 'Equipment';
+
+  @override
+  String equipmentUsedSince(String date) {
+    return 'in use since $date';
+  }
+
+  @override
   String get erasurePreviewKept => 'Kept, and why';
 
   @override
