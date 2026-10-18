@@ -20414,6 +20414,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usageNoShow => 'Nobody checked in — the booking bills in full';
 
   @override
+  String get usagePrepareAction => 'Record this month\'s usage';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count bookings of this month are not recorded yet, so this list may be incomplete.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'It was not recorded. Try again, or ask someone who manages the workspace.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Recorded: $count';
+  }
+
+  @override
   String get usagePresent => 'Present';
 
   @override

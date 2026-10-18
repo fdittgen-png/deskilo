@@ -1992,6 +1992,7 @@ routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:efec542b20e0
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
+routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8
 routine public.preview_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | stable | exec:authenticated,service_role | body:e360ad9d105a
 routine public.preview_invoice(p_workspace_id uuid, p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3087814d455f
@@ -2297,6 +2298,7 @@ routine public.upsert_site(p_workspace_id uuid, p_id uuid, p_name text, p_street
 routine public.upsert_usage_record(p_reservation_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:be7626ca798d
 routine public.usage_record_on_reservation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:96dd21fe166c
 routine public.usage_records_for(p_workspace_id uuid, p_period text, p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b424f38a06f7
+routine public.usage_records_read_v1(p_workspace_id uuid, p_period text, p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:31759c408b90
 routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:96b330bb6f32
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a772dde0819a

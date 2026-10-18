@@ -1,3 +1,4 @@
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
@@ -119,4 +120,39 @@ String usageDuration(int minutes) {
   if (hours == 0) return '$rest min';
   if (rest == 0) return '$hours h';
   return '$hours h ${rest.toString().padLeft(2, '0')}';
+}
+
+/// #2590 — a month of usage as a pure read gives it: the records, and how
+/// many past bookings of the month have no record YET. A month nobody has
+/// prepared is incomplete, never zero.
+class UsageRead {
+  const UsageRead({required this.records, this.unpreparedReservations = 0});
+
+  factory UsageRead.fromRpc(Object? raw) {
+    final r = JsonReader.of(raw, context: 'usage read');
+    return UsageRead(
+      records: [
+        for (final row in r.list('records'))
+          UsageRecord.fromJson((row! as Map).cast<String, Object?>()),
+      ],
+      unpreparedReservations:
+          r.objectOrNull('coverage')?.intOrNull('unprepared_reservations') ?? 0,
+    );
+  }
+
+  final List<UsageRecord> records;
+
+  /// Past bookings the person may see that have no usage record yet; an upper
+  /// bound (a booking that counts for nothing stays unrecorded).
+  final int unpreparedReservations;
+
+  bool get complete => unpreparedReservations == 0;
+}
+
+/// #2590 — recording the month's usage is a command, not a side effect of
+/// reading it.
+abstract interface class UsagePreparation {
+  /// Records the month's missing usage; returns how many records it made. The
+  /// same [requestId] answers the same result.
+  Future<int> prepare(String workspaceId, String period, String requestId);
 }

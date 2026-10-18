@@ -35293,6 +35293,30 @@ abstract class AppLocalizations {
   /// **'Nobody checked in — the booking bills in full'**
   String get usageNoShow;
 
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'Record this month\'s usage'**
+  String get usagePrepareAction;
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bookings of this month are not recorded yet, so this list may be incomplete.'**
+  String usagePrepareBanner(int count);
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'It was not recorded. Try again, or ask someone who manages the workspace.'**
+  String get usagePrepareRefused;
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded: {count}'**
+  String usagePrepared(int count);
+
   /// #833 - time actually checked in
   ///
   /// In en, this message translates to:

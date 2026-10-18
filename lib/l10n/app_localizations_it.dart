@@ -20613,6 +20613,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è venuto nessuno: la prenotazione è fatturata per intero';
 
   @override
+  String get usagePrepareAction => 'Registra l’uso di questo mese';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count prenotazioni di questo mese non sono ancora registrate, quindi questo elenco può essere incompleto.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'Non registrato. Riprova o chiedi a chi gestisce lo spazio.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Registrato: $count';
+  }
+
+  @override
   String get usagePresent => 'Presente';
 
   @override

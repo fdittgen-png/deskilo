@@ -14059,6 +14059,32 @@
   "usageMember": "Membre",
   "usageMemberAll": "Tout le monde",
   "usageNoShow": "Personne n'est arrivé — la réservation est facturée en entier",
+  "usagePrepareAction": "Enregistrer l’usage de ce mois",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepareBanner": "{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "Non enregistré. Réessayez ou demandez à une personne qui gère l’espace.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Enregistré : {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "usagePresent": "Présent",
   "usageReasonLabel": "Pourquoi (facultatif)",
   "usageReportButton": "Rapport de consommation du mois",

@@ -20591,6 +20591,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get usageNoShow => 'Nadie llegó: la reserva se factura entera';
 
   @override
+  String get usagePrepareAction => 'Registrar el uso de este mes';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count reservas de este mes aún no están registradas, por lo que esta lista puede estar incompleta.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'No se registró. Inténtelo de nuevo o pida a quien gestiona el espacio.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Registrado: $count';
+  }
+
+  @override
   String get usagePresent => 'Presente';
 
   @override

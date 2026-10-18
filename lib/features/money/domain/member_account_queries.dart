@@ -22,6 +22,15 @@ abstract interface class MemberAccountQueries {
     String? memberId,
   });
 
+  /// #2590 — the same month as a PURE read (RPC `usage_records_read_v1`,
+  /// 0477): it writes nothing and says how many past bookings have no record
+  /// yet. Recording them is `UsagePreparation`.
+  Future<UsageRead> readUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  });
+
   Future<Statement> fetchStatement(String memberId, String period);
 
   Future<List<LedgerEntry>> fetchLedger(String memberId);

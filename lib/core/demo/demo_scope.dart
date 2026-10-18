@@ -51,6 +51,7 @@ import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
+import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
@@ -127,6 +128,7 @@ import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/template_search_repository.dart';
+import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
 import 'seed/demo_lease_seed.dart';
@@ -212,7 +214,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
       invoiceQueriesProvider.overrideWithValue(fixture.money), // #2591
-      memberAccountQueriesProvider.overrideWithValue(fixture.money), // #2591
+      memberAccountQueriesProvider.overrideWithValue(fixture.money), usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2591, #2590
       reportTemplateRepositoryProvider.overrideWithValue(fixture.money), // #2591
       invoiceCommandsProvider.overrideWithValue(fixture.money), invoiceActionCommandsProvider.overrideWithValue(FakeInvoiceActionCommands(fixture.money)), // #2591, #2585
       taxReportingRepositoryProvider.overrideWithValue(fixture.money), // #2591

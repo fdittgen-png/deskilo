@@ -23741,6 +23741,32 @@
   "@usageNoShow": {
     "description": "#833 - nobody checked in"
   },
+  "usagePrepareAction": "Record this month's usage",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepareBanner": "{count} bookings of this month are not recorded yet, so this list may be incomplete.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "It was not recorded. Try again, or ask someone who manages the workspace.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Recorded: {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "usagePresent": "Present",
   "@usagePresent": {
     "description": "#833 - time actually checked in"

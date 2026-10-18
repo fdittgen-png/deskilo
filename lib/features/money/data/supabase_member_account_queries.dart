@@ -49,6 +49,23 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
   }
 
   @override
+  Future<UsageRead> readUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  }) async {
+    final data = await _client.rpc<Object?>(
+      'usage_records_read_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_period': period,
+        'p_member_id': memberId,
+      },
+    );
+    return UsageRead.fromRpc(data);
+  }
+
+  @override
   Future<Statement> fetchStatement(String memberId, String period) async {
     final result = await _client.rpc<dynamic>(
       'member_statement',

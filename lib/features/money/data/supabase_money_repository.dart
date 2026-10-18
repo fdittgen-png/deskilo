@@ -130,6 +130,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<String> previewDocumentNumber(String workspaceId, String journal) => _previewDocumentNumberImpl(workspaceId, journal);
   @override Future<String> distributeExpense({required String workspaceId, required String title, required int amountCents, required RepartitionMethod method, required String period, required List<RepartitionShare> shares, String? sourceEventId}) => _expenses.distributeExpense(workspaceId: workspaceId, title: title, amountCents: amountCents, method: method, period: period, shares: shares, sourceEventId: sourceEventId);
   @override Future<List<UsageRecord>> fetchUsageRecords({required String workspaceId, required String period, String? memberId}) => _accounts.fetchUsageRecords(workspaceId: workspaceId, period: period, memberId: memberId);
+  @override Future<UsageRead> readUsageRecords({required String workspaceId, required String period, String? memberId}) => _accounts.readUsageRecords(workspaceId: workspaceId, period: period, memberId: memberId);
   @override Future<String> requestUsageCorrection(String recordId, {String reason = ''}) => _requestUsageCorrectionImpl(recordId, reason: reason);
   @override Future<String> requestUsageRecordDelete(String recordId, {String reason = ''}) => _requestUsageRecordDeleteImpl(recordId, reason: reason);
   @override Future<List<ExpenseRepartition>> fetchExpenseRepartitions(String workspaceId) => _expenses.fetchExpenseRepartitions(workspaceId);

@@ -87,5 +87,31 @@
   "usageMemberAll": "Everyone",
   "@usageMemberAll": {
     "description": "#833 - member filter: no narrowing"
+  },
+  "usagePrepareBanner": "{count} bookings of this month are not recorded yet, so this list may be incomplete.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareAction": "Record this month's usage",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Recorded: {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "It was not recorded. Try again, or ask someone who manages the workspace.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
   }
 }

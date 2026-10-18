@@ -20641,6 +20641,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get usageNoShow => 'Niemand kam — die Buchung wird voll berechnet';
 
   @override
+  String get usagePrepareAction => 'Nutzung dieses Monats erfassen';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count Buchungen dieses Monats sind noch nicht erfasst, diese Liste kann daher unvollständig sein.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'Nicht erfasst. Versuchen Sie es erneut oder fragen Sie jemanden, der den Space verwaltet.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Erfasst: $count';
+  }
+
+  @override
   String get usagePresent => 'Anwesend';
 
   @override
