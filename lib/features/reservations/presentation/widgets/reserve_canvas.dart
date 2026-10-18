@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/time/clock.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -148,9 +149,8 @@ class ReserveCanvas extends ConsumerWidget {
           reservations: reservations,
           members: ref.watch(workspaceMembersProvider).value ?? const [],
           profiles: ref.watch(memberProfilesProvider).value ?? const {},
-          from: window.start,
-          to: window.end,
-          now: ref.watch(clockProvider).now(),
+          window: (from: window.start, to: window.end, now: ref.watch(clockProvider).now()),
+          onlineWindow: ref.watch(directoryWindowsProvider).onlineWindow,
         ),
         deskOpacity:
             (ref.watch(currentWorkspaceProvider).value?.deskOpacity ?? 100) /
