@@ -24362,6 +24362,12 @@ abstract class AppLocalizations {
   /// **'Add supplier bill'**
   String get purchasesAddBill;
 
+  /// #2574 supplier credit notes
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to its bill'**
+  String get purchasesApplyCreditAction;
+
   /// #2574 supplier bills
   ///
   /// In en, this message translates to:
@@ -24415,6 +24421,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reimbursement'**
   String get purchasesClaimsTitle;
+
+  /// #2574 supplier credit notes
+  ///
+  /// In en, this message translates to:
+  /// **'Applied: the payable is lowered by the credit note'**
+  String get purchasesCreditApplied;
+
+  /// #2574 supplier credit notes
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note · {amount} · {reference}'**
+  String purchasesCreditLine(String amount, String reference);
+
+  /// #2574 supplier credit notes
+  ///
+  /// In en, this message translates to:
+  /// **'It was not applied. Another person than the one who captured it must apply it, to an approved bill of the same supplier that still owes at least that much.'**
+  String get purchasesCreditRefused;
 
   /// #2574 supplier bills
   ///

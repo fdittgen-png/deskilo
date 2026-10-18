@@ -14285,6 +14285,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesAddBill => 'Añadir factura de proveedor';
 
   @override
+  String get purchasesApplyCreditAction => 'Aplicar a su factura';
+
+  @override
   String get purchasesApproveAction => 'Aprobar';
 
   @override
@@ -14316,6 +14319,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesClaimsTitle => 'Reembolso';
+
+  @override
+  String get purchasesCreditApplied =>
+      'Aplicado: la deuda se reduce con la nota de crédito';
+
+  @override
+  String purchasesCreditLine(String amount, String reference) {
+    return 'Nota de crédito · $amount · $reference';
+  }
+
+  @override
+  String get purchasesCreditRefused =>
+      'No se aplicó. Otra persona distinta de quien la registró debe aplicarla a una factura aprobada del mismo proveedor que aún deba al menos ese importe.';
 
   @override
   String get purchasesDecisionRefused =>

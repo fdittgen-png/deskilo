@@ -39,5 +39,29 @@
   "purchasesSubmitRefused": "It was not sent. A bill needs its supplier and an amount, and must still be to pay.",
   "@purchasesSubmitRefused": {
     "description": "#2574 supplier bills"
+  },
+  "purchasesApplyCreditAction": "Apply to its bill",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditApplied": "Applied: the payable is lowered by the credit note",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditRefused": "It was not applied. Another person than the one who captured it must apply it, to an approved bill of the same supplier that still owes at least that much.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Credit note · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

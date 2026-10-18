@@ -66,7 +66,12 @@ class PurchaseClaimsSection extends ConsumerWidget {
               contentPadding: const EdgeInsets.only(left: AppSpacing.md),
               dense: true,
               title: Text(
-                a.isOffset
+                a.isCredit
+                    ? l10n.purchasesCreditLine(
+                        moneyFormat(o.currency).formatMinor(a.amountCents),
+                        a.reference,
+                      )
+                    : a.isOffset
                     ? l10n.purchasesOffsetLine(
                         moneyFormat(o.currency).formatMinor(a.amountCents),
                         a.reference,

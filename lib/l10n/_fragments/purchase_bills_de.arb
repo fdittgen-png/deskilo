@@ -39,5 +39,29 @@
   "purchasesSubmitRefused": "Sie wurde nicht eingereicht. Eine Rechnung braucht ihren Lieferanten und einen Betrag und muss noch zu zahlen sein.",
   "@purchasesSubmitRefused": {
     "description": "#2574 supplier bills"
+  },
+  "purchasesApplyCreditAction": "Auf die Rechnung anwenden",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditApplied": "Angewendet: die Verbindlichkeit sinkt um die Gutschrift",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditRefused": "Nicht angewendet. Eine andere Person als die, die sie erfasst hat, muss sie auf eine genehmigte Rechnung desselben Lieferanten anwenden, die noch mindestens so viel schuldet.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Gutschrift · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

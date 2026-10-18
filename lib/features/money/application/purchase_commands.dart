@@ -95,6 +95,25 @@ class PurchaseCommands {
     );
   }
 
+  /// Applies a drafted credit note to its bill; null, nothing sent, when it
+  /// is not a draft credit note.
+  Future<PurchaseState?> applyCredit(
+    String workspaceId,
+    PurchaseDetail credit,
+    String requestId,
+  ) async {
+    final s = credit.summary;
+    if (s.kind != PurchaseKind.creditNote || s.state != PurchaseState.draft) {
+      return null;
+    }
+    return _repository.applyCreditNote(
+      workspaceId,
+      s.id,
+      credit.revision,
+      requestId,
+    );
+  }
+
   /// Offsets [amountCents] of [claim] against an open invoice of the same
   /// member that still owes at least that much; null, nothing sent, when the
   /// amount cannot be.
