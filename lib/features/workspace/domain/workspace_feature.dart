@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'feature_countries.dart';
+
+export 'feature_countries.dart';
+export 'feature_resolution.dart';
+
 part 'feature_manifest_part1.dart';
 part 'feature_manifest_part2.dart';
 part 'feature_manifest_part3.dart';
@@ -471,6 +476,7 @@ class FeatureManifestEntry {
     required this.surface,
     this.defaultOn = true,
     this.requires,
+    this.availableIn,
   });
 
   final WorkspaceFeature feature;
@@ -491,6 +497,11 @@ class FeatureManifestEntry {
 
   /// The parent feature this one needs, or null for a root feature.
   final WorkspaceFeature? requires;
+
+  /// #2454 — the countries (ISO 3166-1 alpha-2, or [featureCountriesEu])
+  /// the feature is available in; null means every country. Derived, never
+  /// stored: the owner's switch is kept when the country does not match.
+  final Set<String>? availableIn;
 }
 
 /// The declarative feature registry, in DISPLAY order: children follow
@@ -532,26 +543,6 @@ Set<WorkspaceFeature> resolveEnabledFeatures(
     value ? enabled.add(feature) : enabled.remove(feature);
   }
   return enabled;
-}
-
-/// Applies the hierarchy to a RAW resolved set: a feature stays only
-/// while its whole `requires` chain is present. The stored child flag
-/// survives a parent toggle — switch the parent back on and the child
-/// returns exactly as configured.
-Set<WorkspaceFeature> effectiveFeatures(Set<WorkspaceFeature> raw) {
-  bool chainOn(WorkspaceFeature feature) {
-    var current = featureManifest[feature]?.requires;
-    while (current != null) {
-      if (!raw.contains(current)) return false;
-      current = featureManifest[current]?.requires;
-    }
-    return true;
-  }
-
-  return {
-    for (final feature in raw)
-      if (chainOn(feature)) feature,
-  };
 }
 
 /// Everything [feature] NEEDS in order to work, nearest parent first

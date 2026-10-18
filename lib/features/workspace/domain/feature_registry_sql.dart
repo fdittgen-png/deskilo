@@ -22,9 +22,12 @@ String featureRegistryJson() {
   final lines = <String>[];
   for (final entry in featureManifest.values) {
     final parent = entry.requires == null ? 'null' : '"${entry.requires!.dbKey}"';
+    final countries = entry.availableIn == null
+        ? ''
+        : ', "countries": [${([...entry.availableIn!]..sort()).map((c) => '"$c"').join(', ')}]';
     lines.add('    "${entry.feature.dbKey}": {"parent": $parent, '
         '"default": ${entry.defaultOn}, '
-        '"core": ${entry.tier == FeatureTier.core}}');
+        '"core": ${entry.tier == FeatureTier.core}$countries}');
   }
   return '{\n${lines.join(',\n')}\n  }';
 }
