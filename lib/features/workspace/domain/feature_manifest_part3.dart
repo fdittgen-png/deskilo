@@ -222,6 +222,9 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,
+    // #2454 — the EC Sales List is an EU obligation: a seller outside the
+    // Union files none (evidence: place_of_supply.dart, 0405).
+    availableIn: {featureCountriesEu},
   ),
   // #2357 — deductible VAT only matters to a space that files returns.
   WorkspaceFeature.inputVat: FeatureManifestEntry(
