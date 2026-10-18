@@ -10168,6 +10168,34 @@
   "@purchasesPickDate": {
     "description": "#2573 purchases"
   },
+  "purchasesPurpose": "Wofür ist es?",
+  "@purchasesPurpose": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeAsset": "Langlebige Ausstattung",
+  "@purchasesPurposeAsset": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeDeposit": "Rückzahlbare Kaution",
+  "@purchasesPurposeDeposit": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeOperating": "Laufender Bedarf",
+  "@purchasesPurposeOperating": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposePrepayment": "Vorauszahlung",
+  "@purchasesPurposePrepayment": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeReview": "Zu prüfen",
+  "@purchasesPurposeReview": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeStock": "Handelsware zum Weiterverkauf",
+  "@purchasesPurposeStock": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
   "purchasesReference": "Rechnungsnummer",
   "@purchasesReference": {
     "description": "#2573 purchases"

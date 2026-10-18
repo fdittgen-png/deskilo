@@ -40,6 +40,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   final _gross = TextEditingController();
   final _tax = TextEditingController();
   String? _supplierId;
+  var _purpose = 'unresolved';
   DateTime? _invoiceDate;
   DateTime? _dueDate;
   bool _invalid = false;
@@ -70,6 +71,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       originalDate: _invoiceDate,
       dueOn: _dueDate,
       taxCents: tax,
+      recognitionKind: _purpose,
     );
   }
 
@@ -108,6 +110,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.reference == b.reference &&
       a.description == b.description &&
       a.originalDate == b.originalDate &&
+      a.recognitionKind == b.recognitionKind &&
       a.dueOn == b.dueOn;
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
@@ -150,6 +153,23 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
                   ),
               ],
               onChanged: (v) => setState(() => _supplierId = v),
+            ),
+            // #2576 — what it is for, in plain words; no tax class or useful
+            // life is asked of whoever submits.
+            DropdownButtonFormField<String>(
+              key: const ValueKey('purchase-purpose'),
+              initialValue: _purpose,
+              isExpanded: true,
+              decoration: InputDecoration(labelText: l10n.purchasesPurpose),
+              items: [
+                DropdownMenuItem(value: 'operating', child: Text(l10n.purchasesPurposeOperating)),
+                DropdownMenuItem(value: 'stock', child: Text(l10n.purchasesPurposeStock)),
+                DropdownMenuItem(value: 'asset', child: Text(l10n.purchasesPurposeAsset)),
+                DropdownMenuItem(value: 'prepayment', child: Text(l10n.purchasesPurposePrepayment)),
+                DropdownMenuItem(value: 'deposit', child: Text(l10n.purchasesPurposeDeposit)),
+                DropdownMenuItem(value: 'unresolved', child: Text(l10n.purchasesPurposeReview)),
+              ],
+              onChanged: (v) => _purpose = v ?? _purpose,
             ),
             AppTextField(
               key: const ValueKey('purchase-reference'),

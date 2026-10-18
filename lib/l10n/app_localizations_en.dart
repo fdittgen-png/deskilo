@@ -14905,6 +14905,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesPickDate => 'Choose a date';
 
   @override
+  String get purchasesPurpose => 'What is it for?';
+
+  @override
+  String get purchasesPurposeAsset => 'Long-lasting equipment';
+
+  @override
+  String get purchasesPurposeDeposit => 'Refundable deposit';
+
+  @override
+  String get purchasesPurposeOperating => 'Day-to-day use';
+
+  @override
+  String get purchasesPurposePrepayment => 'Prepayment';
+
+  @override
+  String get purchasesPurposeReview => 'Needs review';
+
+  @override
+  String get purchasesPurposeStock => 'Goods for resale';
+
+  @override
   String get purchasesReference => 'Invoice number';
 
   @override

@@ -235,4 +235,33 @@ void main() {
     expect(find.byKey(const ValueKey('purchase-invalid')), findsOneWidget);
     expect(await repo.fetchPurchases('ws'), isEmpty);
   });
+
+  testWidgets('what the bill is for is chosen in plain words, defaults to review '
+      'and travels with the line (#2576)', (tester) async {
+    final repo = FakePurchaseRepository();
+    await tester.pumpWidget(
+      _app(const PurchasesView(workspaceId: 'ws', canCapture: true), [
+        purchaseRepositoryProvider.overrideWithValue(repo),
+      ]),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchase-add-bill')));
+    await tester.pumpAndSettle();
+    expect(find.text('Needs review'), findsOneWidget, reason: 'no one has to choose to submit');
+    await tester.enterText(find.byKey(const ValueKey('purchase-gross')), '1440');
+    await tester.tap(find.byKey(const ValueKey('purchase-purpose')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Long-lasting equipment').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchase-save')));
+    await tester.pumpAndSettle();
+    final id = (await repo.fetchPurchases('ws')).single.id;
+    expect((await repo.fetchDetail('ws', id)).lines.single.recognitionKind, 'asset');
+  });
+
+  test('the draft payload carries the purpose of the line', () {
+    const draft = PurchaseBillDraft(grossCents: 100, recognitionKind: 'deposit');
+    expect((draft.toPayload()['lines']! as List<Object?>).single, containsPair('recognition_kind', 'deposit'));
+    expect(const PurchaseBillDraft(grossCents: 100).toPayload()['lines'].toString(), contains('unresolved'));
+  });
 }

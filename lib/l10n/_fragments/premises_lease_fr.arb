@@ -706,5 +706,33 @@
         "type": "String"
       }
     }
+  },
+  "purchasesPurpose": "À quoi cela sert-il ?",
+  "@purchasesPurpose": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeOperating": "Usage courant",
+  "@purchasesPurposeOperating": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeStock": "Marchandises à revendre",
+  "@purchasesPurposeStock": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeAsset": "Équipement durable",
+  "@purchasesPurposeAsset": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposePrepayment": "Paiement d'avance",
+  "@purchasesPurposePrepayment": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeDeposit": "Dépôt remboursable",
+  "@purchasesPurposeDeposit": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeReview": "À vérifier",
+  "@purchasesPurposeReview": {
+    "description": "#2576 equipment register: what a purchase line is for"
   }
 }

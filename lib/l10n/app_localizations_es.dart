@@ -15009,6 +15009,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesPickDate => 'Elegir una fecha';
 
   @override
+  String get purchasesPurpose => '¿Para qué es?';
+
+  @override
+  String get purchasesPurposeAsset => 'Equipo duradero';
+
+  @override
+  String get purchasesPurposeDeposit => 'Fianza reembolsable';
+
+  @override
+  String get purchasesPurposeOperating => 'Uso corriente';
+
+  @override
+  String get purchasesPurposePrepayment => 'Pago anticipado';
+
+  @override
+  String get purchasesPurposeReview => 'Por revisar';
+
+  @override
+  String get purchasesPurposeStock => 'Mercancías para reventa';
+
+  @override
   String get purchasesReference => 'Número de factura';
 
   @override

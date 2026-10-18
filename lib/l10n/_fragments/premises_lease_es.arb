@@ -706,5 +706,33 @@
         "type": "String"
       }
     }
+  },
+  "purchasesPurpose": "¿Para qué es?",
+  "@purchasesPurpose": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeOperating": "Uso corriente",
+  "@purchasesPurposeOperating": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeStock": "Mercancías para reventa",
+  "@purchasesPurposeStock": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeAsset": "Equipo duradero",
+  "@purchasesPurposeAsset": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposePrepayment": "Pago anticipado",
+  "@purchasesPurposePrepayment": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeDeposit": "Fianza reembolsable",
+  "@purchasesPurposeDeposit": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeReview": "Por revisar",
+  "@purchasesPurposeReview": {
+    "description": "#2576 equipment register: what a purchase line is for"
   }
 }

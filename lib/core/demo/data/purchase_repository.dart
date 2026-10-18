@@ -483,7 +483,7 @@ class FakePurchaseRepository implements PurchaseRepository {
           description: draft.description,
           grossCents: draft.grossCents,
           netCents: tax == null ? null : draft.grossCents - tax,
-          taxCents: tax,
+          taxCents: tax, recognitionKind: draft.recognitionKind,
         ),
       ],
       sources: const [],
