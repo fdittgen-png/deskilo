@@ -16666,6 +16666,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reserveWeekView => 'Week';
 
   @override
+  String get retentionClassBooks => 'Books';
+
+  @override
+  String get retentionClassCorrespondence => 'Correspondence';
+
+  @override
+  String get retentionClassInvoice => 'Invoices';
+
+  @override
+  String get retentionClassVoucher => 'Vouchers';
+
+  @override
+  String retentionFromDocument(int years) {
+    return '$years years from the document date';
+  }
+
+  @override
+  String retentionFromYearEnd(int years) {
+    return '$years years from the end of the fiscal year';
+  }
+
+  @override
+  String retentionHint(String country) {
+    return 'How long $country makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.';
+  }
+
+  @override
+  String get retentionTitle => 'Record retention';
+
+  @override
+  String get retentionUnconfirmed => 'not yet confirmed';
+
+  @override
   String get reverseChargeSubtitle =>
       'A customer with a VAT number in another member state is invoiced without tax and self-assesses it (art. 196). Turn it off if you never invoice businesses abroad.';
 

@@ -1327,5 +1327,56 @@
         "type": "String"
       }
     }
+  },
+  "retentionTitle": "Durées de conservation",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionHint": "Combien de temps {country} impose à cet espace de conserver chaque type de pièce. Les durées sont des données de référence ; une règle non encore confirmée n'a pas été vérifiée par une personne habilitée à la confirmer.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionClassInvoice": "Factures",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassBooks": "Livres comptables",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Correspondance",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Pièces justificatives",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromYearEnd": "{years} ans à partir de la fin de l'exercice",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromDocument": "{years} ans à partir de la date du document",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionUnconfirmed": "pas encore confirmée",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
   }
 }

@@ -1327,5 +1327,56 @@
         "type": "String"
       }
     }
+  },
+  "retentionTitle": "Termini di conservazione",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionHint": "Per quanto tempo {country} impone a questo spazio di conservare ogni tipo di documento. I termini sono dati di riferimento; una regola non ancora confermata non è stata verificata da una persona con l'autorità di confermarla.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionClassInvoice": "Fatture",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassBooks": "Libri contabili",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Corrispondenza",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Giustificativi",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromYearEnd": "{years} anni dalla fine dell'esercizio",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromDocument": "{years} anni dalla data del documento",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionUnconfirmed": "non ancora confermata",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
   }
 }

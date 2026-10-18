@@ -28795,6 +28795,60 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get reserveWeekView;
 
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'Books'**
+  String get retentionClassBooks;
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'Correspondence'**
+  String get retentionClassCorrespondence;
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get retentionClassInvoice;
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'Vouchers'**
+  String get retentionClassVoucher;
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'{years} years from the document date'**
+  String retentionFromDocument(int years);
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'{years} years from the end of the fiscal year'**
+  String retentionFromYearEnd(int years);
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'How long {country} makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.'**
+  String retentionHint(String country);
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'Record retention'**
+  String get retentionTitle;
+
+  /// #2571 retention clocks
+  ///
+  /// In en, this message translates to:
+  /// **'not yet confirmed'**
+  String get retentionUnconfirmed;
+
   /// #895 reverse charge: reverseChargeSubtitle
   ///
   /// In en, this message translates to:

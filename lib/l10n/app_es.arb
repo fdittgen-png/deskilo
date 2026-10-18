@@ -11729,6 +11729,57 @@
   "reserveStaleRetry": "Reintentar",
   "reserveViewMenu": "Vista",
   "reserveWeekView": "Semana",
+  "retentionClassBooks": "Libros contables",
+  "@retentionClassBooks": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassCorrespondence": "Correspondencia",
+  "@retentionClassCorrespondence": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassInvoice": "Facturas",
+  "@retentionClassInvoice": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionClassVoucher": "Justificantes",
+  "@retentionClassVoucher": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionFromDocument": "{years} años desde la fecha del documento",
+  "@retentionFromDocument": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionFromYearEnd": "{years} años desde el cierre del ejercicio",
+  "@retentionFromYearEnd": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHint": "Cuánto tiempo obliga {country} a este espacio a conservar cada tipo de documento. Los plazos son datos de referencia; una regla aún sin confirmar no ha sido verificada por una persona con autoridad para confirmarla.",
+  "@retentionHint": {
+    "description": "#2571 retention clocks",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionTitle": "Plazos de conservación",
+  "@retentionTitle": {
+    "description": "#2571 retention clocks"
+  },
+  "retentionUnconfirmed": "aún sin confirmar",
+  "@retentionUnconfirmed": {
+    "description": "#2571 retention clocks"
+  },
   "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívelo si nunca factura a empresas en el extranjero.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"

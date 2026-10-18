@@ -16798,6 +16798,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reserveWeekView => 'Semana';
 
   @override
+  String get retentionClassBooks => 'Libros contables';
+
+  @override
+  String get retentionClassCorrespondence => 'Correspondencia';
+
+  @override
+  String get retentionClassInvoice => 'Facturas';
+
+  @override
+  String get retentionClassVoucher => 'Justificantes';
+
+  @override
+  String retentionFromDocument(int years) {
+    return '$years años desde la fecha del documento';
+  }
+
+  @override
+  String retentionFromYearEnd(int years) {
+    return '$years años desde el cierre del ejercicio';
+  }
+
+  @override
+  String retentionHint(String country) {
+    return 'Cuánto tiempo obliga $country a este espacio a conservar cada tipo de documento. Los plazos son datos de referencia; una regla aún sin confirmar no ha sido verificada por una persona con autoridad para confirmarla.';
+  }
+
+  @override
+  String get retentionTitle => 'Plazos de conservación';
+
+  @override
+  String get retentionUnconfirmed => 'aún sin confirmar';
+
+  @override
   String get reverseChargeSubtitle =>
       'Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívelo si nunca factura a empresas en el extranjero.';
 
