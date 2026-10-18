@@ -20,6 +20,7 @@ import 'dart:io';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 void main() {
   late String html;
@@ -210,10 +211,9 @@ void main() {
       final comment = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9.-]*)\s*-->');
       return {
         for (final dir in ['docs/guide/user', 'docs/guide/setup'])
-          for (final file in Directory(dir).listSync().whereType<File>())
-            if (file.path.endsWith('.en.md'))
-              for (final m in comment.allMatches(file.readAsStringSync()))
-                m.group(1)!,
+          for (final file in filesWithExtension(dir, '.en.md'))
+            for (final m in comment.allMatches(file.readAsStringSync()))
+              m.group(1)!,
       };
     }
 

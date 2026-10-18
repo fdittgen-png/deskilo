@@ -25,12 +25,7 @@ import 'lint_sources.dart';
 
 
 List<Map<String, dynamic>> _builtins() => [
-      for (final f in Directory('supabase/templates')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.json'))
-          .toList()
-        ..sort((a, b) => a.path.compareTo(b.path)))
+      for (final f in filesWithExtension('supabase/templates', '.json'))
         Map<String, dynamic>.from(jsonDecode(f.readAsStringSync()) as Map),
     ];
 

@@ -13,14 +13,10 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 void main() {
-  final files = Directory('docs/decisions')
-      .listSync()
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.md'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final files = markdownFiles('docs/decisions', recursive: false);
 
   test('ADR numbering is contiguous from 0001, no gaps or duplicates', () {
     final numbers = <int>[];

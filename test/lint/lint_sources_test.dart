@@ -18,33 +18,14 @@ import 'lint_sources.dart';
 /// moved to [handWrittenDartFiles], [sqlFiles] or [markdownFiles]. RATCHET:
 /// remove a name when its file stops; never add one.
 const _stillWalkingByHand = <String>{
-  'adr_format_test.dart',
   'applied_migrations_immutable_test.dart',
-  'arb_register_test.dart',
   'coverage_gate_test.dart',
-  'database_clock_test.dart',
-  'demo_coverage_test.dart',
-  'edge_exposure_test.dart',
-  'feature_registry_test.dart',
-  'flutter_pin_test.dart',
-  'foss_flavour_test.dart',
   'help_host_inventory_test.dart',
-  'instance_bundle_test.dart',
   'literal_ratchet.dart',
-  'local_stack_harness_test.dart',
   'main_exit_code_test.dart',
-  'mcp_operation_literals_test.dart',
   'play_listing_test.dart',
-  'required_contexts_test.dart',
-  'setup_html_test.dart',
   'spdx_headers_test.dart',
-  'template_contract_test.dart',
-  'template_coverage_test.dart',
   'user_guide_test.dart',
-  'workflow_naming_test.dart',
-  'workflow_pins_test.dart',
-  'workflow_source_identity_test.dart',
-  'workspace_isolation_test.dart',
 };
 
 final _directoryCall = RegExp(r'\bDirectory\(');

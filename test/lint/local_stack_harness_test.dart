@@ -16,6 +16,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
+import 'lint_sources.dart';
 
 const _action = './.github/actions/local-stack';
 const _actionFile = '.github/actions/local-stack/action.yml';
@@ -37,10 +38,8 @@ List<YamlMap> _steps(YamlMap job) =>
     ((job['steps'] as YamlList?) ?? YamlList()).cast<YamlMap>();
 List<YamlMap> _database() =>
     _steps((_yaml('.github/workflows/quality.yml')['jobs'] as YamlMap)['database'] as YamlMap);
-Iterable<File> _files(String dir, String ext) => Directory(dir)
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith(ext));
+Iterable<File> _files(String dir, String ext) =>
+    filesWithExtension(dir, ext, recursive: true);
 String _run(YamlMap s) => '${s['run'] ?? ''}';
 
 void main() {

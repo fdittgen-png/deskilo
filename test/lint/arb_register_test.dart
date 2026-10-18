@@ -24,6 +24,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The informal second-person words per locale. Exact, case-sensitive
 /// alternatives: German "Ihr"/"Sie" (formal) must never match, and an
@@ -104,13 +105,7 @@ String _messageText(String value) => value
     .replaceAll(RegExp(r'(=\d+|\w+)\s*\{'), ' ');
 
 void main() {
-  final fragments =
-      Directory('lib/l10n/_fragments')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.arb'))
-          .toList()
-        ..sort((a, b) => a.path.compareTo(b.path));
+  final fragments = filesWithExtension('lib/l10n/_fragments', '.arb');
 
   for (final entry in _informal.entries) {
     final locale = entry.key;

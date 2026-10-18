@@ -10,7 +10,6 @@
 // is itself one workspace's (a level's offices, an office's desks). A call
 // that does none of these would return every workspace the person belongs to
 // at once.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
@@ -60,8 +59,7 @@ void main() {
     );
     final offenders = <String>[];
     final used = <String>{};
-    for (final f in Directory('lib').listSync(recursive: true).whereType<File>()) {
-      if (!f.path.endsWith('.dart')) continue;
+    for (final f in filesWithExtension('lib', '.dart', recursive: true)) {
       final src = f.readAsStringSync();
       for (final m in call.allMatches(src)) {
         final table = m.group(1)!;

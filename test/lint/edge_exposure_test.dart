@@ -9,16 +9,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 void main() {
   final manifest = (jsonDecode(File('supabase/functions/exposure.json').readAsStringSync())
       as Map<String, dynamic>)['functions'] as Map<String, dynamic>;
-  final functions = Directory('supabase/functions')
-      .listSync()
-      .whereType<Directory>()
-      .map((d) => d.uri.pathSegments.where((s) => s.isNotEmpty).last)
-      .where((n) => !n.startsWith('_'))
-      .toSet();
+  final functions =
+      directoryNames('supabase/functions').where((n) => !n.startsWith('_')).toSet();
 
   test('the manifest names exactly the functions that exist', () {
     expect(manifest.keys.toSet(), functions);

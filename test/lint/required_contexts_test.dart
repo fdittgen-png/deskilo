@@ -28,6 +28,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 /// The contexts `branch_protection.sh` would require.
 List<String> _targetChecks() {
   final sh = File('scripts/branch_protection.sh').readAsStringSync();
@@ -58,10 +60,7 @@ void main() {
 
   test('every required context is a job some workflow actually emits', () {
     final emitted = <String>{
-      for (final file in Directory('.github/workflows')
-          .listSync()
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.yml')))
+      for (final file in filesWithExtension('.github/workflows', '.yml'))
         ..._jobNames(file.uri.pathSegments.last),
     };
 

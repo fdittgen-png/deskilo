@@ -12,6 +12,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const String mapPath = 'docs/testing/DEMO_COVERAGE.md';
 
@@ -39,11 +40,7 @@ void main() {
 
   test('every Demo test is on the map', () {
     final onDisk = [
-      ...Directory('test/core/demo')
-          .listSync()
-          .whereType<File>()
-          .map((f) => f.path)
-          .where((p) => p.endsWith('_test.dart')),
+      ...filesWithExtension('test/core/demo', '_test.dart').map((f) => f.path),
       'test/ux/demo_journeys_test.dart',
       'test/lint/no_render_tree_blur_test.dart',
     ]..sort();

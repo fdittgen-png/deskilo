@@ -12,13 +12,11 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 void main() {
   test('the app never imports Firebase directly', () {
-    final offenders = Directory('lib')
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.dart'))
+    final offenders = filesWithExtension('lib', '.dart', recursive: true)
         .where((f) => f.readAsStringSync().contains('package:firebase_'))
         .map((f) => f.path)
         .toList();
@@ -27,9 +25,8 @@ void main() {
   });
 
   test('the FOSS package carries no Firebase, no Google', () {
-    final files = Directory('packages/deskilo_push_foss')
-        .listSync(recursive: true)
-        .whereType<File>();
+    final files = filesWithExtension('packages/deskilo_push_foss', '',
+        recursive: true);
     for (final f in files) {
       final text = f.readAsStringSync();
       // Code, not prose: the package may SAY it carries no Firebase.

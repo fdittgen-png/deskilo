@@ -13,18 +13,14 @@
 // The failure mode is silent by construction, which is what makes it
 // worth a test rather than a comment: nothing goes red, the build just
 // comes from somewhere else.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 void main() {
   test('every Flutter setup reads the version from its workflow env', () {
-    final workflows = Directory('.github/workflows')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.yml'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final workflows = filesWithExtension('.github/workflows', '.yml');
     expect(workflows, isNotEmpty, reason: 'no workflows found — wrong cwd?');
 
     final versions = <String, String>{};
