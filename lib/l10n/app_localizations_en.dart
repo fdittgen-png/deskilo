@@ -17251,6 +17251,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
   @override
+  String get settingHintRetentionUsYears =>
+      'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.';
 
@@ -17352,6 +17356,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingLabelReadinessRecentExportDays => 'Recent export window';
 
   @override
+  String get settingLabelRetentionUsYears =>
+      'Record retention, US state (years)';
+
+  @override
   String get settingLabelSecurityBadgeLockoutFailures =>
       'Badge PIN attempts before a lock';
 
@@ -17441,6 +17449,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'seconds';
+
+  @override
+  String get settingUnitYears => 'years';
 
   @override
   String get settingValueField => 'Value';

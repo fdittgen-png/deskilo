@@ -19977,6 +19977,10 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
   "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -20092,6 +20096,10 @@
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelRetentionUsYears": "Record retention, US state (years)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
   },
   "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -20231,6 +20239,10 @@
   "settingUnitSeconds": "seconds",
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitYears": "years",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   },
   "settingValueField": "Value",
   "@settingValueField": {

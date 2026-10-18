@@ -12183,6 +12183,10 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
   "settingHintSecurityBadgeLockoutFailures": "Nombre d'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -12298,6 +12302,10 @@
   "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelRetentionUsYears": "Conservation aux États-Unis, État (années)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
   },
   "settingLabelSecurityBadgeLockoutFailures": "Essais de code PIN du badge avant verrouillage",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -12437,6 +12445,10 @@
   "settingUnitSeconds": "secondes",
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitYears": "années",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   },
   "settingValueField": "Valeur",
   "@settingValueField": {

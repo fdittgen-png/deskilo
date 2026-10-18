@@ -546,6 +546,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.',
     ),
   ),
+  (
+    since: 'retention_us_override',
+    row: (
+      key: 'retention.us_years',
+      type: 'int',
+      defaultValue: 0,
+      min: 0,
+      max: 30,
+      unit: 'years',
+      group: 'vat',
+      scopes: ['workspace'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'retention_rule_for (0481)',
+      note: 'Years a US space keeps its records when its state asks for more or less than the federal default of the retention rule. 0 means the rule applies. Never legal advice: confirm the period of your state.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

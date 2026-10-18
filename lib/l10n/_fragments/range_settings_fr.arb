@@ -71,5 +71,17 @@
   "settingGroupVat": "TVA",
   "@settingGroupVat": {
     "description": "#2487 retention settings"
+  },
+  "settingLabelRetentionUsYears": "Conservation aux États-Unis, État (années)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingUnitYears": "ann\u00e9es",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   }
 }

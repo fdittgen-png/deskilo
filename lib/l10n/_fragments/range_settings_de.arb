@@ -71,5 +71,17 @@
   "settingGroupVat": "Umsatzsteuer",
   "@settingGroupVat": {
     "description": "#2487 retention settings"
+  },
+  "settingLabelRetentionUsYears": "Aufbewahrung in den USA, Bundesstaat (Jahre)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingUnitYears": "Jahre",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   }
 }

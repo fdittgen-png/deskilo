@@ -17395,6 +17395,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.';
 
   @override
+  String get settingHintRetentionUsYears =>
+      'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più o meno della regola federale. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.';
 
@@ -17507,6 +17511,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Finestra dell’esportazione recente';
 
   @override
+  String get settingLabelRetentionUsYears =>
+      'Conservazione negli USA, stato (anni)';
+
+  @override
   String get settingLabelSecurityBadgeLockoutFailures =>
       'Tentativi di PIN del badge prima del blocco';
 
@@ -17599,6 +17607,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'secondi';
+
+  @override
+  String get settingUnitYears => 'anni';
 
   @override
   String get settingValueField => 'Valore';

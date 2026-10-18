@@ -71,5 +71,17 @@
   "settingGroupVat": "IVA",
   "@settingGroupVat": {
     "description": "#2487 retention settings"
+  },
+  "settingLabelRetentionUsYears": "Conservazione negli USA, stato (anni)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingHintRetentionUsYears": "Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più o meno della regola federale. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
+  "settingUnitYears": "anni",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   }
 }

@@ -52,6 +52,8 @@ abstract final class SettingDefaults {
   static const int presenceOnlineWindowMinutes = 5;
   /// `readiness.recent_export_days`
   static const int readinessRecentExportDays = 90;
+  /// `retention.us_years`
+  static const int retentionUsYears = 0;
   /// `security.badge_lockout_failures`
   static const int securityBadgeLockoutFailures = 5;
   /// `security.badge_lockout_minutes`

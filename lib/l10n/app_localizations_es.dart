@@ -17387,6 +17387,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.';
 
   @override
+  String get settingHintRetentionUsYears =>
+      'Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más o menos que la norma federal. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.';
 
@@ -17498,6 +17502,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ventana de exportación reciente';
 
   @override
+  String get settingLabelRetentionUsYears =>
+      'Conservación en EE. UU., estado (años)';
+
+  @override
   String get settingLabelSecurityBadgeLockoutFailures =>
       'Intentos de PIN de la credencial antes del bloqueo';
 
@@ -17590,6 +17598,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'segundos';
+
+  @override
+  String get settingUnitYears => 'años';
 
   @override
   String get settingValueField => 'Valor';

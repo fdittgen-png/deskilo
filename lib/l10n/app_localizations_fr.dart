@@ -17433,6 +17433,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
   @override
+  String get settingHintRetentionUsYears =>
+      'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Nombre d\'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.';
 
@@ -17543,6 +17547,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
 
   @override
+  String get settingLabelRetentionUsYears =>
+      'Conservation aux États-Unis, État (années)';
+
+  @override
   String get settingLabelSecurityBadgeLockoutFailures =>
       'Essais de code PIN du badge avant verrouillage';
 
@@ -17635,6 +17643,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'secondes';
+
+  @override
+  String get settingUnitYears => 'années';
 
   @override
   String get settingValueField => 'Valeur';

@@ -12183,6 +12183,10 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRetentionUsYears": "Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più o meno della regola federale. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.",
+  "@settingHintRetentionUsYears": {
+    "description": "#2571 retention settings"
+  },
   "settingHintSecurityBadgeLockoutFailures": "Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -12298,6 +12302,10 @@
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelRetentionUsYears": "Conservazione negli USA, stato (anni)",
+  "@settingLabelRetentionUsYears": {
+    "description": "#2571 retention settings"
   },
   "settingLabelSecurityBadgeLockoutFailures": "Tentativi di PIN del badge prima del blocco",
   "@settingLabelSecurityBadgeLockoutFailures": {
@@ -12437,6 +12445,10 @@
   "settingUnitSeconds": "secondi",
   "@settingUnitSeconds": {
     "description": "#2484 settings: Unit."
+  },
+  "settingUnitYears": "anni",
+  "@settingUnitYears": {
+    "description": "#2571 retention settings"
   },
   "settingValueField": "Valore",
   "@settingValueField": {
