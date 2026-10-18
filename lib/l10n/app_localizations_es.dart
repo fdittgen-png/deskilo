@@ -5261,6 +5261,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.';
 
   @override
+  String featureAvailableOnlyIn(String countries) {
+    return 'Disponible en: $countries';
+  }
+
+  @override
   String get featureBadgeSignInDesc =>
       'Los miembros pueden iniciar sesión escaneando su credencial e introduciendo su PIN, en lugar de escribir un correo en una tableta compartida. Cada miembro define su propio PIN y activa su propia credencial.';
 
@@ -5375,6 +5380,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.';
+
+  @override
+  String get featureCountriesEuName => 'la Unión Europea';
 
   @override
   String get featureCustomFieldsDesc =>

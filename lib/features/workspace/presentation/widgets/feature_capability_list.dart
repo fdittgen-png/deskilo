@@ -34,6 +34,7 @@ class FeatureCapabilityList extends StatelessWidget {
     required this.showHint,
     required this.onChanged,
     this.assessments = featureAssessments,
+    this.country,
   });
 
   /// The rows that survived the screen's filter, in registry order.
@@ -52,6 +53,9 @@ class FeatureCapabilityList extends StatelessWidget {
 
   /// #1850 — the maturity ledger the badges read.
   final Map<WorkspaceFeature, FeatureAssessment> assessments;
+
+  /// #2454 — the workspace's country; a feature not available in it says why.
+  final String? country;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +115,9 @@ class FeatureCapabilityList extends StatelessWidget {
           .map((f) => featureName(l10n, f))
           .toList(),
       onChanged: (value) => onChanged(entry.feature, value: value),
+      unavailableNote: featureAvailableIn(entry.availableIn, country)
+          ? null
+          : featureAvailableNote(l10n, entry.availableIn!),
     );
   }
 }

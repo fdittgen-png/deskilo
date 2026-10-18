@@ -3782,6 +3782,15 @@
   "featureAlsoEnables": "Activar esto también habilita {features}",
   "featureAutoCheckInOut": "Entrada/salida automática al final del día",
   "featureAutoCheckInOutDesc": "Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.",
+  "featureAvailableOnlyIn": "Disponible en: {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
   "featureBadgeSignInDesc": "Los miembros pueden iniciar sesión escaneando su credencial e introduciendo su PIN, en lugar de escribir un correo en una tableta compartida. Cada miembro define su propio PIN y activa su propia credencial.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
@@ -3855,6 +3864,10 @@
   "featureConfigurationTransferDesc": "El archivo del espacio (XML) lleva toda la configuración — tarifas, identidad legal, reglas de reserva y validación, roles, diseños de documentos, sedes, días de cierre — y la importación la aplica, incluso en un espacio que ya tiene reservas. Desactivado: el archivo solo lleva ajustes y plano.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCountriesEuName": "la Unión Europea",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
   },
   "featureCustomFieldsDesc": "El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio.",
   "@featureCustomFieldsDesc": {

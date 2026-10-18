@@ -236,5 +236,18 @@
   "featureOptInStage": "{feature} : {stage}",
   "featureChangedMeanwhile": "Les fonctionnalités ont changé entre-temps, rien n'a donc été enregistré. Vérifiez la liste et recommencez.",
   "featureChangeUnconfirmed": "La modification a été envoyée, mais les fonctionnalités n'ont pas pu être rechargées pour la confirmer. Rouvrez l'écran pour voir l'état actuel.",
-  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas."
+  "featureIntakeUnconfirmedNote": "Désactivé : rien de nouveau ne commence. Ce serveur n'a pas pu confirmer que ce qui est déjà ouvert reste traitable ; n'y comptez pas.",
+  "featureAvailableOnlyIn": "Disponible dans : {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
+  "featureCountriesEuName": "l'Union européenne",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
+  }
 }

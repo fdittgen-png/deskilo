@@ -3782,6 +3782,15 @@
   "featureAlsoEnables": "Activer ceci active aussi {features}",
   "featureAutoCheckInOut": "Arrivée/départ auto en fin de journée",
   "featureAutoCheckInOutDesc": "Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.",
+  "featureAvailableOnlyIn": "Disponible dans : {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
   "featureBadgeSignInDesc": "Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
@@ -3855,6 +3864,10 @@
   "featureConfigurationTransferDesc": "Le fichier de l'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l'import l'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n'emporte que les réglages et le plan.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCountriesEuName": "l'Union européenne",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
   },
   "featureCustomFieldsDesc": "L'espace peut poser ses propres questions dans le formulaire d'identité : une fonction au bureau, une date d'adhésion, un contact d'urgence. Les réponses appartiennent à l'adhésion : une question posée ici ne suit personne ailleurs.",
   "@featureCustomFieldsDesc": {

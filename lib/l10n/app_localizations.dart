@@ -9084,6 +9084,12 @@ abstract class AppLocalizations {
   /// **'Reservations never checked in or out complete themselves once their time has passed.'**
   String get featureAutoCheckInOutDesc;
 
+  /// #2454 feature availability by country
+  ///
+  /// In en, this message translates to:
+  /// **'Available in {countries}'**
+  String featureAvailableOnlyIn(String countries);
+
   /// #662 - feature registry entry
   ///
   /// In en, this message translates to:
@@ -9275,6 +9281,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.'**
   String get featureConfigurationTransferDesc;
+
+  /// #2454 feature availability by country
+  ///
+  /// In en, this message translates to:
+  /// **'the European Union'**
+  String get featureCountriesEuName;
 
   /// #1288 custom fields: featureCustomFieldsDesc
   ///
