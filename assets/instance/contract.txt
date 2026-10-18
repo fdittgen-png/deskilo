@@ -1316,6 +1316,29 @@ constraint workspace_applications.workspace_applications_applicant_user_id_fkey 
 constraint workspace_applications.workspace_applications_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 constraint workspace_applications.workspace_applications_pkey PRIMARY KEY (event_id)
 constraint workspace_applications.workspace_applications_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint workspace_assets.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint workspace_assets.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspace_assets.workspace_assets_acquisition_cost_cents_check CHECK (((acquisition_cost_cents IS NULL) OR (acquisition_cost_cents >= 0)))
+constraint workspace_assets.workspace_assets_asset_number_check CHECK ((asset_number >= 1))
+constraint workspace_assets.workspace_assets_check CHECK (((decision = 'pending'::text) = (decided_at IS NULL)))
+constraint workspace_assets.workspace_assets_check1 CHECK (((state <> 'in_use'::text) OR ((decision = 'capitalise'::text) AND (available_for_use_on IS NOT NULL))))
+constraint workspace_assets.workspace_assets_check2 CHECK (((decision <> 'pending'::text) OR (state = 'candidate'::text)))
+constraint workspace_assets.workspace_assets_check3 CHECK (((state = 'expensed'::text) = (decision = 'expense'::text)))
+constraint workspace_assets.workspace_assets_created_by_member_id_fkey FOREIGN KEY (created_by_member_id) REFERENCES members(id)
+constraint workspace_assets.workspace_assets_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint workspace_assets.workspace_assets_custodian_member_id_fkey FOREIGN KEY (custodian_member_id) REFERENCES members(id)
+constraint workspace_assets.workspace_assets_decided_by_member_id_fkey FOREIGN KEY (decided_by_member_id) REFERENCES members(id)
+constraint workspace_assets.workspace_assets_decision_basis_check CHECK ((char_length(decision_basis) <= 300))
+constraint workspace_assets.workspace_assets_decision_check CHECK ((decision = ANY (ARRAY['pending'::text, 'capitalise'::text, 'expense'::text])))
+constraint workspace_assets.workspace_assets_description_check CHECK (((char_length(description) >= 1) AND (char_length(description) <= 200)))
+constraint workspace_assets.workspace_assets_external_asset_id_check CHECK ((char_length(external_asset_id) <= 100))
+constraint workspace_assets.workspace_assets_pkey PRIMARY KEY (id)
+constraint workspace_assets.workspace_assets_purchase_line_id_fkey FOREIGN KEY (purchase_line_id) REFERENCES purchase_lines(id)
+constraint workspace_assets.workspace_assets_purchase_line_id_key UNIQUE (purchase_line_id)
+constraint workspace_assets.workspace_assets_revision_check CHECK ((revision >= 1))
+constraint workspace_assets.workspace_assets_state_check CHECK ((state = ANY (ARRAY['candidate'::text, 'in_use'::text, 'disposed'::text, 'expensed'::text])))
+constraint workspace_assets.workspace_assets_workspace_id_asset_number_key UNIQUE (workspace_id, asset_number)
+constraint workspace_assets.workspace_assets_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_creation_requests.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspace_creation_requests.workspace_creation_requests_created_by_fkey FOREIGN KEY (created_by) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint workspace_creation_requests.workspace_creation_requests_created_workspace_id_fkey FOREIGN KEY (created_workspace_id) REFERENCES workspaces(id) ON DELETE SET NULL
@@ -1544,6 +1567,7 @@ routine public.assert_fee_bands_contiguous() -> trigger | function | definer | v
 routine public.assert_member_quota(p_member_id uuid, p_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:aa0847617c4d
 routine public.assert_seat_not_blocked(p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:597dcd20ef44
 routine public.assert_workspace_open(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> void | function | definer | stable | exec:service_role | body:5ca98e4986fa
+routine public.asset_actor(p_workspace_id uuid, p_review boolean) -> uuid | function | definer | stable | exec:service_role | body:c3bc8ec2cc4d
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d7e8160735b
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:72d7485dcf0b
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
@@ -1607,6 +1631,7 @@ routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | d
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
 routine public.database_administrator_deleted() -> trigger | function | definer | volatile | exec:service_role | body:0c760eddc629
 routine public.database_authority_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:4df85237f376
+routine public.decide_asset_v1(p_workspace_id uuid, p_asset_id uuid, p_revision integer, p_decision text, p_basis text, p_available_for_use_on date, p_site_id uuid, p_custodian_member_id uuid, p_external_asset_id text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e2f3cd833f95
 routine public.decide_guest_visit(p_id uuid, p_accept boolean, p_host_note text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c57a6a11a14a
 routine public.decide_mcp_eligibility(p_subject uuid, p_decision_id uuid, p_approve boolean, p_expected_revision integer, p_valid_days integer, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:182c92ef19ef
 routine public.decide_member_join(p_member_id uuid, p_approve boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:b960ba2e966e
@@ -1664,7 +1689,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:58e62dc0ad64
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:61d853bc10bd
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -2091,6 +2116,7 @@ routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row
 routine public.refresh_public_person_card(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:92b2d2dba224
 routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:dc0e56065f83
 routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:4ddfb2ff4fe1
+routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_line_id uuid, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c55d031a8ede
 routine public.register_my_nfc_badge(p_workspace_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:741684565a6f
 routine public.register_nfc_badge(p_workspace_id uuid, p_member_id uuid, p_uid text, p_label text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:4939d344b76b
 routine public.register_public_directory(p_origin text, p_key text) -> void | function | definer | volatile | exec:authenticated,service_role | body:8e68c4d88fab
@@ -2309,7 +2335,7 @@ routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | fu
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:235160563e61
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:4d6894278968
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -2373,6 +2399,8 @@ routine public.withdraw_mcp_eligibility() -> jsonb | function | definer | volati
 routine public.withdraw_tax_reference(p_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2e852ebaacb5
 routine public.work_hours_provenance(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:55b4b4acd88c
 routine public.workspace_application_thread(p_event_id uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:526d8c191121
+routine public.workspace_asset_json(a workspace_assets) -> jsonb | function | definer | stable | exec:service_role | body:7651514f78d3
+routine public.workspace_assets_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1068f97ee2bc
 routine public.workspace_charges_vat(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:02505152fd8a
 routine public.workspace_default_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:service_role | body:9b1c2bfc4051
 routine public.workspace_default_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:f8f0dfd76674
@@ -2649,6 +2677,7 @@ trigger vat_return_entries.vat_return_entries_guard CREATE TRIGGER vat_return_en
 trigger vat_return_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_return_entries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_application_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_application_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_applications.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_applications FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_assets.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_assets FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_creation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_creation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_favorites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_favorites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
