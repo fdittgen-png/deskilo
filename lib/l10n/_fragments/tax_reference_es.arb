@@ -287,5 +287,17 @@
   "taxRefInvalidRateComponents": "Un impuesto por línea: régimen, autoridad, porcentaje; juntos deben igualar la tasa combinada",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
+  "taxRefDomainRetention": "Plazo de conservación",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
+  "taxRefYears": "Años de conservación",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
+  },
+  "taxRefRetentionStart": "El plazo empieza en (fiscal_year_end o document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
   }
 }

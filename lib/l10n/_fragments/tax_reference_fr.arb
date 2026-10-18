@@ -287,5 +287,17 @@
   "taxRefInvalidRateComponents": "Une taxe par ligne : régime, autorité, pourcentage ; leur somme doit égaler le taux combiné",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
+  "taxRefDomainRetention": "Durée de conservation",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
+  "taxRefYears": "Années de conservation",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
+  },
+  "taxRefRetentionStart": "Le délai court à partir de (fiscal_year_end ou document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
   }
 }

@@ -13793,6 +13793,10 @@
   "@taxRefDomainRateComponent": {
     "description": "#2539 rate components: taxRefDomainRateComponent"
   },
+  "taxRefDomainRetention": "Plazo de conservación",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
   "taxRefDomainSalesTax": "Impuesto sobre las ventas por código postal",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -13949,6 +13953,10 @@
   "@taxRefRequiresTaxNumber": {
     "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
   },
+  "taxRefRetentionStart": "El plazo empieza en (fiscal_year_end o document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
+  },
   "taxRefRole": "Función",
   "@taxRefRole": {
     "description": "#2481 tax reference: Field: the role of an account row."
@@ -14016,6 +14024,10 @@
   "taxRefWithdrawReason": "Motivo para retirar esta versión prevista",
   "@taxRefWithdrawReason": {
     "description": "#2565 tax reference: taxRefWithdrawReason"
+  },
+  "taxRefYears": "Años de conservación",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
   },
   "templateApplyConflict": "Esta solicitud ya se usó para otra cosa. No se aplicó nada.",
   "templateChangedSinceReview": "Esta plantilla cambió desde que la revisó. No se aplicó nada; ábrala de nuevo para revisar la nueva versión.",

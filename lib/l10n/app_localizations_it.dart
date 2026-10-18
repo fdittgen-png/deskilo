@@ -19926,6 +19926,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefDomainRateComponent => 'Imposte di un\'aliquota combinata';
 
   @override
+  String get taxRefDomainRetention => 'Termine di conservazione';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales tax per codice postale';
 
   @override
@@ -20053,6 +20056,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Numero fiscale obbligatorio';
 
   @override
+  String get taxRefRetentionStart =>
+      'Il termine decorre da (fiscal_year_end o document_date)';
+
+  @override
   String get taxRefRole => 'Ruolo';
 
   @override
@@ -20103,6 +20110,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefWithdrawReason =>
       'Motivo del ritiro di questa versione prevista';
+
+  @override
+  String get taxRefYears => 'Anni di conservazione';
 
   @override
   String get templateApplyConflict =>

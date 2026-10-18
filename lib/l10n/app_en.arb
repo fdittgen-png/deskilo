@@ -22972,6 +22972,10 @@
   "@taxRefDomainRateComponent": {
     "description": "#2539 rate components: taxRefDomainRateComponent"
   },
+  "taxRefDomainRetention": "Retention period",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
   "taxRefDomainSalesTax": "Sales tax by ZIP code",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -23128,6 +23132,10 @@
   "@taxRefRequiresTaxNumber": {
     "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
   },
+  "taxRefRetentionStart": "The clock starts at (fiscal_year_end or document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
+  },
   "taxRefRole": "Role",
   "@taxRefRole": {
     "description": "#2481 tax reference: Field: the role of an account row."
@@ -23195,6 +23203,10 @@
   "taxRefWithdrawReason": "Reason for withdrawing this planned version",
   "@taxRefWithdrawReason": {
     "description": "#2565 tax reference: taxRefWithdrawReason"
+  },
+  "taxRefYears": "Years to keep",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
   },
   "templateApplyConflict": "This request was already used for something else. Nothing was applied.",
   "@templateApplyConflict": {

@@ -19736,6 +19736,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefDomainRateComponent => 'Taxes inside a combined rate';
 
   @override
+  String get taxRefDomainRetention => 'Retention period';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales tax by ZIP code';
 
   @override
@@ -19860,6 +19863,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Tax number required';
 
   @override
+  String get taxRefRetentionStart =>
+      'The clock starts at (fiscal_year_end or document_date)';
+
+  @override
   String get taxRefRole => 'Role';
 
   @override
@@ -19910,6 +19917,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefWithdrawReason =>
       'Reason for withdrawing this planned version';
+
+  @override
+  String get taxRefYears => 'Years to keep';
 
   @override
   String get templateApplyConflict =>

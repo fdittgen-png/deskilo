@@ -18,6 +18,12 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The retention clock's Dart twin of retention_until (0480): the accounting
+  // settings panel and the archive README that print the clocks read it next.
+  'lib/core/vat/retention.dart::retentionClasses':
+      '#2571 — the accounting settings panel lists the classes',
+  'lib/core/vat/retention.dart::retentionUntil':
+      '#2571 — the archive README and the accounting settings print the dates',
   // WebMCP: the registry exists before the flag and the app wiring that
   // feed it conditions (the flag is a registry-lane change).
   'lib/core/webmcp/webmcp_registry.dart::WebMcpRegistry':

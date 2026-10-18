@@ -13793,6 +13793,10 @@
   "@taxRefDomainRateComponent": {
     "description": "#2539 rate components: taxRefDomainRateComponent"
   },
+  "taxRefDomainRetention": "Aufbewahrungsfrist",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
   "taxRefDomainSalesTax": "Sales Tax je Postleitzahl",
   "@taxRefDomainSalesTax": {
     "description": "#2362 sales tax: taxRefDomainSalesTax"
@@ -13949,6 +13953,10 @@
   "@taxRefRequiresTaxNumber": {
     "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."
   },
+  "taxRefRetentionStart": "Die Frist beginnt mit (fiscal_year_end oder document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
+  },
   "taxRefRole": "Rolle",
   "@taxRefRole": {
     "description": "#2481 tax reference: Field: the role of an account row."
@@ -14016,6 +14024,10 @@
   "taxRefWithdrawReason": "Grund für das Zurückziehen dieser geplanten Version",
   "@taxRefWithdrawReason": {
     "description": "#2565 tax reference: taxRefWithdrawReason"
+  },
+  "taxRefYears": "Jahre der Aufbewahrung",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
   },
   "templateApplyConflict": "Diese Anfrage wurde bereits für etwas anderes verwendet. Es wurde nichts übernommen.",
   "templateChangedSinceReview": "Diese Vorlage hat sich seit Ihrer Prüfung geändert. Es wurde nichts übernommen; öffnen Sie sie erneut, um die neue Version zu prüfen.",

@@ -287,5 +287,17 @@
   "taxRefInvalidRateComponents": "One tax per line as scheme, authority, percent; together they must equal the combined rate",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
+  "taxRefDomainRetention": "Retention period",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
+  "taxRefYears": "Years to keep",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
+  },
+  "taxRefRetentionStart": "The clock starts at (fiscal_year_end or document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
   }
 }

@@ -19951,6 +19951,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefDomainRateComponent => 'Steuern eines kombinierten Satzes';
 
   @override
+  String get taxRefDomainRetention => 'Aufbewahrungsfrist';
+
+  @override
   String get taxRefDomainSalesTax => 'Sales Tax je Postleitzahl';
 
   @override
@@ -20081,6 +20084,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Steuernummer erforderlich';
 
   @override
+  String get taxRefRetentionStart =>
+      'Die Frist beginnt mit (fiscal_year_end oder document_date)';
+
+  @override
   String get taxRefRole => 'Rolle';
 
   @override
@@ -20131,6 +20138,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefWithdrawReason =>
       'Grund für das Zurückziehen dieser geplanten Version';
+
+  @override
+  String get taxRefYears => 'Jahre der Aufbewahrung';
 
   @override
   String get templateApplyConflict =>

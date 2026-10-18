@@ -61,7 +61,10 @@ enum TaxDomain {
   taxability('taxability'),
 
   /// #2539 -- the taxes inside a combined rate, keyed by the combined percent.
-  rateComponent('rate_component');
+  rateComponent('rate_component'),
+
+  /// #2571 -- how long a space must keep a class of record.
+  retention('retention');
 
   const TaxDomain(this.wire);
   final String wire;
@@ -158,6 +161,7 @@ sealed class TaxValue {
           percent: r.number('percent'),
           components: r.objects('components', RateComponent.fromReader),
         ),
+      TaxDomain.retention => RetentionValue(years: r.integer('years'), from: r.string('from')),
     };
   }
 }
@@ -517,4 +521,18 @@ class RateComponentValue extends TaxValue {
         'percent': percent,
         'components': [for (final c in components) c.toJson()],
       };
+}
+
+/// `retention`: {years, from}; the key is the class, [from] where the clock starts.
+class RetentionValue extends TaxValue {
+  const RetentionValue({required this.years, required this.from});
+
+  final int years;
+  final String from;
+
+  @override
+  TaxDomain get domain => TaxDomain.retention;
+
+  @override
+  Map<String, Object?> toJson() => {'years': years, 'from': from};
 }
