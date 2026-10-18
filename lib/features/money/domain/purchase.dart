@@ -307,6 +307,15 @@ abstract interface class PurchaseRepository {
     required String requestId,
   });
 
+  /// Applies a drafted credit note to the payable of the bill it reverses
+  /// (another person than the one who captured it). Returns the new state.
+  Future<PurchaseState> applyCreditNote(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  );
+
   /// Settles (all or part of) one open invoice of the claimant from their
   /// claim. Returns the claim as it now stands.
   Future<PurchaseObligation> offsetClaim(String workspaceId, ClaimOffset offset);

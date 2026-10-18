@@ -907,14 +907,15 @@ constraint purchase_requests.system_company_present CHECK ((company_id IS NOT NU
 constraint purchase_settlement_allocations.purchase_settlement_allocatio_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_amount_cents_check CHECK ((amount_cents <> 0))
 constraint purchase_settlement_allocations.purchase_settlement_allocations_check1 CHECK (((kind = 'reversal'::text) = (original_allocation_id IS NOT NULL)))
+constraint purchase_settlement_allocations.purchase_settlement_allocations_credit_fkey FOREIGN KEY (workspace_id, credit_document_id) REFERENCES purchase_documents(workspace_id, id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id)
-constraint purchase_settlement_allocations.purchase_settlement_allocations_kind_check CHECK ((kind = ANY (ARRAY['payment'::text, 'reversal'::text, 'offset'::text])))
+constraint purchase_settlement_allocations.purchase_settlement_allocations_kind_check CHECK ((kind = ANY (ARRAY['payment'::text, 'reversal'::text, 'offset'::text, 'credit'::text])))
 constraint purchase_settlement_allocations.purchase_settlement_allocations_ledger_entry_id_fkey FOREIGN KEY (ledger_entry_id) REFERENCES ledger_entries(id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_original_allocation_id_fkey FOREIGN KEY (original_allocation_id) REFERENCES purchase_settlement_allocations(id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_pkey PRIMARY KEY (id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_reason_check CHECK ((char_length(reason) <= 300))
-constraint purchase_settlement_allocations.purchase_settlement_allocations_sign_check CHECK (((kind = ANY (ARRAY['payment'::text, 'offset'::text])) = (amount_cents > 0)))
-constraint purchase_settlement_allocations.purchase_settlement_allocations_source_check CHECK ((((kind = 'offset'::text) = (invoice_id IS NOT NULL)) AND ((kind = 'offset'::text) = (payment_id IS NULL))))
+constraint purchase_settlement_allocations.purchase_settlement_allocations_sign_check CHECK (((kind = ANY (ARRAY['payment'::text, 'offset'::text, 'credit'::text])) = (amount_cents > 0)))
+constraint purchase_settlement_allocations.purchase_settlement_allocations_source_check CHECK ((((kind = 'offset'::text) = (invoice_id IS NOT NULL)) AND ((kind = 'credit'::text) = (credit_document_id IS NOT NULL)) AND ((kind = ANY (ARRAY['offset'::text, 'credit'::text])) = (payment_id IS NULL))))
 constraint purchase_settlement_allocations.purchase_settlement_allocations_workspace_id_obligation_id_fkey FOREIGN KEY (workspace_id, obligation_id) REFERENCES purchase_obligations(workspace_id, id)
 constraint purchase_settlement_allocations.purchase_settlement_allocations_workspace_id_payment_id_fkey FOREIGN KEY (workspace_id, payment_id) REFERENCES outgoing_payments(workspace_id, id)
 constraint purchase_settlement_allocations.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -1466,6 +1467,7 @@ routine public.apply_negotiation_on_decision() -> trigger | function | definer |
 routine public.apply_payment_terms_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:8de191499b5a
 routine public.apply_role_permission_delta(p_workspace_id uuid, p_role text, p_permission text, p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:269e43fa895e
 routine public.apply_stock_on_confirm() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:26785b5b7376
+routine public.apply_supplier_credit_note_v1(p_workspace_id uuid, p_credit_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f281f26dce4d
 routine public.apply_usage_correction(p_record_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:ef0a2795fc1a
 routine public.apply_usage_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:2144e8924671
 routine public.apply_validated_decision_0181() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:0c4d74c777c8
@@ -1984,7 +1986,7 @@ routine public.purchase_inbox_match_link() -> trigger | function | definer | vol
 routine public.purchase_lines_guard() -> trigger | function | definer | volatile | exec:service_role | body:40642366cd83
 routine public.purchase_obligation_credit_link() -> trigger | function | definer | volatile | exec:service_role | body:72014b7ada91
 routine public.purchase_obligation_invoice(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:1b9672ee6aa2
-routine public.purchase_obligation_json(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:e91441c090c3
+routine public.purchase_obligation_json(p_ob purchase_obligations) -> jsonb | function | definer | stable | exec:service_role | body:8e4a5408bce0
 routine public.purchase_obligation_sync(p_purchase_id uuid) -> void | function | definer | volatile | exec:service_role | body:75dc2eeabe2e
 routine public.purchase_obligations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:964677fdeeaa
 routine public.purchase_payables_page_v1(p_workspace_id uuid, p_creditor_kind text, p_limit integer, p_after_created timestamp with time zone, p_after_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2856f7dc52f

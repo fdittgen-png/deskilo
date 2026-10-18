@@ -13,7 +13,7 @@ import '../../providers/purchase_providers.dart';
 
 /// What can be done to a supplier bill from its detail: send a captured
 /// draft for approval, or -- for another person holding approveExpenses --
-/// approve or reject it. The server decides again on every write.
+/// approve or reject it, or apply a credit note to its bill. The server decides again on every write.
 class PurchaseDecisionBar extends ConsumerWidget {
   const PurchaseDecisionBar({
     required this.workspaceId,
@@ -50,6 +50,24 @@ class PurchaseDecisionBar extends ConsumerWidget {
     _refresh(ref);
     if (ok && context.mounted) {
       AppSnack.success(context, context.l10n.purchasesSubmitted);
+    }
+  }
+
+  Future<void> _applyCredit(BuildContext context, WidgetRef ref) async {
+    final ok = await runGuarded(
+      context,
+      domain: 'money',
+      message: 'credit note application failed',
+      errorText: context.l10n.purchasesCreditRefused,
+      action: () async {
+        await ref
+            .read(purchaseCommandProvider)
+            .applyCredit(workspaceId, detail, newRequestId());
+      },
+    );
+    _refresh(ref);
+    if (ok && context.mounted) {
+      AppSnack.success(context, context.l10n.purchasesCreditApplied);
     }
   }
 
@@ -120,6 +138,19 @@ class PurchaseDecisionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final s = detail.summary;
+    if (s.kind == PurchaseKind.creditNote) {
+      if (!canDecide || s.state != PurchaseState.draft) {
+        return const SizedBox.shrink();
+      }
+      return Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.sm),
+        child: FilledButton(
+          key: const ValueKey('purchase-apply-credit'),
+          onPressed: () => _applyCredit(context, ref),
+          child: Text(l10n.purchasesApplyCreditAction),
+        ),
+      );
+    }
     if (s.kind != PurchaseKind.bill) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),

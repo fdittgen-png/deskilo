@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/purchase.dart';
-import '../../../features/money/domain/vat_rate.dart';
+import 'purchase_receipt_line.dart';
 
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
@@ -127,30 +127,9 @@ class FakePurchaseRepository implements PurchaseRepository {
     return PurchaseDetail(
       summary: row.purchase,
       revision: 1,
-      lines: [_receiptLine(row, claimRates[purchaseId])],
+      lines: [claimReceiptLine(row, claimRates[purchaseId])],
       sources: const [],
       obligations: [row.obligation],
-    );
-  }
-
-  static PurchaseLine _receiptLine(PayableRow row, double? rate) {
-    final gross = row.purchase.grossCents;
-    if (rate == null) {
-      return PurchaseLine(
-        lineNo: 1,
-        description: row.purchase.category,
-        grossCents: gross,
-      );
-    }
-    final split = vatSplit(gross, rate);
-    return PurchaseLine(
-      lineNo: 1,
-      description: row.purchase.category,
-      grossCents: gross,
-      netCents: split.netCents,
-      taxCents: split.vatCents,
-      taxRatePercent: rate,
-      recoverableTaxCents: split.vatCents,
     );
   }
 
@@ -381,6 +360,50 @@ class FakePurchaseRepository implements PurchaseRepository {
       );
     }
     return state;
+  }
+
+  @override
+  Future<PurchaseState> applyCreditNote(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  ) async {
+    final i = _doc(purchaseId);
+    final d = _documents[i]; // RangeError for an unknown purchase
+    if (d.summary.kind != PurchaseKind.creditNote ||
+        d.summary.state != PurchaseState.draft ||
+        d.revision != revision) {
+      throw StateError('only a draft credit note is applied');
+    }
+    final p = payables.indexWhere(
+      (r) =>
+          r.obligation.creditorKind == CreditorKind.supplier &&
+          r.obligation.creditorName == d.supplierName &&
+          r.obligation.remainingCents >= d.grossCents,
+    );
+    if (p < 0) throw StateError('the bill has no payable large enough');
+    final o = payables[p].obligation;
+    _store(
+      p,
+      _restate(
+        o,
+        paid: o.paidCents + d.grossCents,
+        allocations: [
+          ...o.allocations,
+          SettlementAllocation(
+            id: 'demo-credit-$purchaseId',
+            isReversal: false,
+            isCredit: true,
+            amountCents: d.grossCents,
+            method: 'credit',
+            reference: d.summary.reference,
+          ),
+        ],
+      ),
+    );
+    _documents[i] = _inState(d, PurchaseState.approved);
+    return PurchaseState.approved;
   }
 
   @override

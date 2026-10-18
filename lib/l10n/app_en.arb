@@ -16450,6 +16450,10 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApplyCreditAction": "Apply to its bill",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
   "purchasesApproveAction": "Approve",
   "@purchasesApproveAction": {
     "description": "#2574 supplier bills"
@@ -16500,6 +16504,26 @@
   "purchasesClaimsTitle": "Reimbursement",
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
+  },
+  "purchasesCreditApplied": "Applied: the payable is lowered by the credit note",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Credit note · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesCreditRefused": "It was not applied. Another person than the one who captured it must apply it, to an approved bill of the same supplier that still owes at least that much.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
   },
   "purchasesDecisionRefused": "It was not recorded. Another person than the one who submitted it must decide, and the bill must still be awaiting approval.",
   "@purchasesDecisionRefused": {

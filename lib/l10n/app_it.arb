@@ -9129,6 +9129,10 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApplyCreditAction": "Applica alla sua fattura",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
   "purchasesApproveAction": "Approva",
   "@purchasesApproveAction": {
     "description": "#2574 supplier bills"
@@ -9179,6 +9183,26 @@
   "purchasesClaimsTitle": "Rimborso",
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
+  },
+  "purchasesCreditApplied": "Applicata: il debito si riduce della nota di credito",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Nota di credito · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesCreditRefused": "Non applicata. Un'altra persona rispetto a chi l'ha registrata deve applicarla a una fattura approvata dello stesso fornitore che deve ancora almeno quell'importo.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
   },
   "purchasesDecisionRefused": "Non è stato registrato. Deve decidere una persona diversa da chi l'ha inviata e la fattura deve essere ancora in attesa.",
   "@purchasesDecisionRefused": {

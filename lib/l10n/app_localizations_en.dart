@@ -14180,6 +14180,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesAddBill => 'Add supplier bill';
 
   @override
+  String get purchasesApplyCreditAction => 'Apply to its bill';
+
+  @override
   String get purchasesApproveAction => 'Approve';
 
   @override
@@ -14212,6 +14215,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesClaimsTitle => 'Reimbursement';
+
+  @override
+  String get purchasesCreditApplied =>
+      'Applied: the payable is lowered by the credit note';
+
+  @override
+  String purchasesCreditLine(String amount, String reference) {
+    return 'Credit note · $amount · $reference';
+  }
+
+  @override
+  String get purchasesCreditRefused =>
+      'It was not applied. Another person than the one who captured it must apply it, to an approved bill of the same supplier that still owes at least that much.';
 
   @override
   String get purchasesDecisionRefused =>

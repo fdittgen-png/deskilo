@@ -55,6 +55,25 @@ PurchaseDetail _bill({
   supplierNumber: '2',
 );
 
+PurchaseDetail _credit({String id = 'c1'}) => PurchaseDetail(
+  summary: PurchaseSummary(
+    id: id,
+    kind: PurchaseKind.creditNote,
+    state: PurchaseState.draft,
+    category: 'Cleaning',
+    reference: 'AV-1',
+    currency: 'EUR',
+    grossCents: 2400,
+  ),
+  revision: 1,
+  lines: const [
+    PurchaseLine(lineNo: 1, description: 'Missed visit', grossCents: 2400),
+  ],
+  sources: const [],
+  supplierName: 'Net & Clair',
+  supplierNumber: '2',
+);
+
 void main() {
   test('the permission the money screen asks for is the catalogue\'s', () {
     expect(
@@ -220,5 +239,76 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.payables.single.obligation.paidCents, 9000);
     expect(repo.payables.single.obligation.remainingCents, 5400);
+  });
+
+  testWidgets('a credit note is applied to the payable of its bill', (
+    tester,
+  ) async {
+    final repo = FakePurchaseRepository()
+      ..addApprovedBill(_bill(id: 'b3'), 'sup-1')
+      ..add(_credit());
+    Future<void> open({required bool decide}) async {
+      await tester.pumpWidget(
+        _app(
+          PurchasesView(
+            workspaceId: 'ws',
+            canCapture: true,
+            canPay: true,
+            canDecide: decide,
+          ),
+          [
+            purchaseRepositoryProvider.overrideWithValue(repo),
+            memberLabelsProvider.overrideWithValue({}),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('purchase-c1')));
+      await tester.pumpAndSettle();
+    }
+
+    await open(decide: false);
+    expect(find.byKey(const ValueKey('purchase-apply-credit')), findsNothing);
+
+    await open(decide: true);
+    await tester.tap(find.byKey(const ValueKey('purchase-apply-credit')));
+    await tester.pumpAndSettle();
+    final o = repo.payables.single.obligation;
+    expect(o.paidCents, 2400);
+    expect(o.remainingCents, 12000);
+    expect(o.allocations.single.isCredit, isTrue);
+    expect(o.allocations.single.reversible, isFalse);
+    expect(
+      (await repo.fetchDetail('ws', 'c1')).summary.state,
+      PurchaseState.approved,
+    );
+    expect(find.byKey(const ValueKey('purchase-apply-credit')), findsNothing);
+  });
+
+  test('only a draft credit note is sent to be applied', () async {
+    final repo = FakePurchaseRepository()..add(_bill());
+    final commands = PurchaseCommands(repo);
+    expect(await commands.applyCredit('ws', _bill(), 'r'), isNull);
+    expect(
+      await commands.applyCredit(
+        'ws',
+        const PurchaseDetail(
+          summary: PurchaseSummary(
+            id: 'c9',
+            kind: PurchaseKind.creditNote,
+            state: PurchaseState.approved,
+            category: 'Cleaning',
+            reference: 'AV-9',
+            currency: 'EUR',
+            grossCents: 100,
+          ),
+          revision: 1,
+          lines: [],
+          sources: [],
+        ),
+        'r',
+      ),
+      isNull,
+    );
   });
 }

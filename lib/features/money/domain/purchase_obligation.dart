@@ -57,6 +57,7 @@ class SettlementAllocation {
     required this.id,
     required this.isReversal,
     this.isOffset = false,
+    this.isCredit = false,
     required this.amountCents,
     required this.method,
     required this.reference,
@@ -70,6 +71,7 @@ class SettlementAllocation {
       id: r.string('id'),
       isReversal: r.string('kind') == 'reversal',
       isOffset: r.string('kind') == 'offset',
+      isCredit: r.string('kind') == 'credit',
       amountCents: r.integer('amount_cents'),
       method: r.stringOr('method'),
       reference: r.stringOr('reference'),
@@ -84,6 +86,9 @@ class SettlementAllocation {
   /// Settled an invoice of the claimant instead of paying cash.
   final bool isOffset;
 
+  /// A supplier's credit note lowered the payable; no money moved.
+  final bool isCredit;
+
   /// Positive for a payment, negative for its reversal.
   final int amountCents;
   final String method;
@@ -94,7 +99,7 @@ class SettlementAllocation {
   final bool reversed;
 
   /// A payment that can still be reversed.
-  bool get reversible => !isReversal && !isOffset && !reversed;
+  bool get reversible => !isReversal && !isOffset && !isCredit && !reversed;
 }
 
 /// What the space owes a creditor for one approved purchase. It indexes the

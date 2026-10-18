@@ -9129,6 +9129,10 @@
   "@purchasesAddBill": {
     "description": "#2573 purchases"
   },
+  "purchasesApplyCreditAction": "Appliquer à sa facture",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
   "purchasesApproveAction": "Approuver",
   "@purchasesApproveAction": {
     "description": "#2574 supplier bills"
@@ -9179,6 +9183,26 @@
   "purchasesClaimsTitle": "Remboursement",
   "@purchasesClaimsTitle": {
     "description": "#2574 purchase payables"
+  },
+  "purchasesCreditApplied": "Appliqué : la dette est réduite de l'avoir",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Avoir · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesCreditRefused": "Non appliqué. Une autre personne que celle qui l'a saisi doit l'appliquer, à une facture approuvée du même fournisseur qui doit encore au moins ce montant.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
   },
   "purchasesDecisionRefused": "Ce n'est pas enregistré. Une autre personne que celle qui l'a soumise doit décider, et la facture doit être encore en attente.",
   "@purchasesDecisionRefused": {

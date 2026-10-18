@@ -39,5 +39,29 @@
   "purchasesSubmitRefused": "Non è stata inviata. Una fattura richiede il fornitore e un importo e deve essere ancora da pagare.",
   "@purchasesSubmitRefused": {
     "description": "#2574 supplier bills"
+  },
+  "purchasesApplyCreditAction": "Applica alla sua fattura",
+  "@purchasesApplyCreditAction": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditApplied": "Applicata: il debito si riduce della nota di credito",
+  "@purchasesCreditApplied": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditRefused": "Non applicata. Un'altra persona rispetto a chi l'ha registrata deve applicarla a una fattura approvata dello stesso fornitore che deve ancora almeno quell'importo.",
+  "@purchasesCreditRefused": {
+    "description": "#2574 supplier credit notes"
+  },
+  "purchasesCreditLine": "Nota di credito · {amount} · {reference}",
+  "@purchasesCreditLine": {
+    "description": "#2574 supplier credit notes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
   }
 }

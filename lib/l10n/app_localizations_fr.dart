@@ -14325,6 +14325,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesAddBill => 'Ajouter une facture fournisseur';
 
   @override
+  String get purchasesApplyCreditAction => 'Appliquer à sa facture';
+
+  @override
   String get purchasesApproveAction => 'Approuver';
 
   @override
@@ -14357,6 +14360,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesClaimsTitle => 'Remboursement';
+
+  @override
+  String get purchasesCreditApplied =>
+      'Appliqué : la dette est réduite de l\'avoir';
+
+  @override
+  String purchasesCreditLine(String amount, String reference) {
+    return 'Avoir · $amount · $reference';
+  }
+
+  @override
+  String get purchasesCreditRefused =>
+      'Non appliqué. Une autre personne que celle qui l\'a saisi doit l\'appliquer, à une facture approuvée du même fournisseur qui doit encore au moins ce montant.';
 
   @override
   String get purchasesDecisionRefused =>

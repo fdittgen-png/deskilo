@@ -169,6 +169,28 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   }
 
   @override
+  Future<PurchaseState> applyCreditNote(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  ) async {
+    final json = await _client.rpc<Object?>(
+      'apply_supplier_credit_note_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_credit_id': purchaseId,
+        'p_revision': revision,
+        'p_request_id': requestId,
+      },
+    );
+    return PurchaseState.of(
+      JsonReader.of(json, context: 'apply_supplier_credit_note_v1')
+          .string('state'),
+    );
+  }
+
+  @override
   Future<PurchaseObligation> reverseAllocation(
     String workspaceId, {
     required String allocationId,

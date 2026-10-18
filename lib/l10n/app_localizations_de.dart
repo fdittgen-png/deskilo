@@ -14319,6 +14319,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesAddBill => 'Lieferantenrechnung hinzufügen';
 
   @override
+  String get purchasesApplyCreditAction => 'Auf die Rechnung anwenden';
+
+  @override
   String get purchasesApproveAction => 'Genehmigen';
 
   @override
@@ -14351,6 +14354,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesClaimsTitle => 'Erstattung';
+
+  @override
+  String get purchasesCreditApplied =>
+      'Angewendet: die Verbindlichkeit sinkt um die Gutschrift';
+
+  @override
+  String purchasesCreditLine(String amount, String reference) {
+    return 'Gutschrift · $amount · $reference';
+  }
+
+  @override
+  String get purchasesCreditRefused =>
+      'Nicht angewendet. Eine andere Person als die, die sie erfasst hat, muss sie auf eine genehmigte Rechnung desselben Lieferanten anwenden, die noch mindestens so viel schuldet.';
 
   @override
   String get purchasesDecisionRefused =>
