@@ -9875,6 +9875,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String get leaseSaved => 'Gespeichert';
 
   @override
+  String get leaseSettle => 'Nebenkosten abrechnen';
+
+  @override
+  String get leaseSettleBilled => 'Abgerechneter Betrag';
+
+  @override
+  String get leaseSettleDue => 'Fällig am';
+
+  @override
+  String get leaseSettleFrom => 'Zeitraum von';
+
+  @override
+  String get leaseSettleHint =>
+      'Geben Sie den vom Vermieter abgerechneten Zeitraum und den Rechnungsbetrag ein. Die im Zeitraum gezahlten Vorauszahlungen werden abgezogen: Ein Saldo ist an dem gewählten Tag fällig, ein Überschuss wird als Guthaben festgehalten. Eine Abrechnung ist endgültig.';
+
+  @override
+  String get leaseSettleInvalid =>
+      'Geben Sie einen abgelaufenen Zeitraum, den abgerechneten Betrag und einen Fälligkeitstag nicht vor Ende des Zeitraums an. Ein bereits abgerechneter Zeitraum kann nicht erneut abgerechnet werden.';
+
+  @override
+  String get leaseSettleRefused => 'Die Abrechnung konnte nicht erfasst werden';
+
+  @override
+  String get leaseSettleSave => 'Abrechnung erfassen';
+
+  @override
+  String get leaseSettleTitle => 'Nebenkosten abrechnen';
+
+  @override
+  String get leaseSettleTo => 'Zeitraum bis';
+
+  @override
+  String leaseSettlementCredit(String from, String to, String amount) {
+    return 'Abgerechnet $from bis $to: Guthaben von $amount';
+  }
+
+  @override
+  String leaseSettlementOwed(
+    String from,
+    String to,
+    String amount,
+    String due,
+  ) {
+    return 'Abgerechnet $from bis $to: $amount zu zahlen, fällig $due';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Seit $date';
   }

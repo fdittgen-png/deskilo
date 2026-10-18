@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/premises_lease.dart';
+import '../../time/date_text.dart';
 
 /// #2569 — the lease in memory, with the server's rules that the screen
 /// shows: a term supersedes the one in force of its kind the day before it
@@ -34,9 +35,8 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
     PremisesLease l, {
     LeaseStatus? status,
     List<LeaseTerm>? terms,
-    DateTime? noticeGivenOn,
-    DateTime? effectiveEnd,
-    String? reason,
+    ({DateTime given, DateTime end, String reason})? notice,
+    List<LeaseSettlement>? settlements,
   }) => PremisesLease(
     id: l.id,
     revision: l.revision + 1,
@@ -52,13 +52,14 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
     indexationNote: l.indexationNote,
     depositCents: l.depositCents,
     status: status ?? l.status,
-    noticeGivenOn: noticeGivenOn ?? l.noticeGivenOn,
-    effectiveEnd: effectiveEnd ?? l.effectiveEnd,
-    terminationReason: reason ?? l.terminationReason,
+    noticeGivenOn: notice?.given ?? l.noticeGivenOn,
+    effectiveEnd: notice?.end ?? l.effectiveEnd,
+    terminationReason: notice?.reason ?? l.terminationReason,
     depositDueBackCents: status == LeaseStatus.noticeGiven
         ? l.depositCents
         : l.depositDueBackCents,
     terms: terms ?? l.terms,
+    settlements: settlements ?? l.settlements,
   );
 
   @override
@@ -184,9 +185,74 @@ class FakePremisesLeaseRepository implements PremisesLeaseRepository {
         l,
         status: LeaseStatus.noticeGiven,
         terms: terms,
-        noticeGivenOn: command.givenOn,
-        effectiveEnd: command.effectiveEnd,
-        reason: command.reason,
+        notice: (
+          given: command.givenOn,
+          end: command.effectiveEnd,
+          reason: command.reason,
+        ),
+      ),
+      command.requestId,
+    );
+  }
+
+  @override
+  Future<PremisesLease> settleCharges(
+    String workspaceId,
+    LeaseSettlementCommand command,
+  ) async {
+    final replay = _answers[command.requestId];
+    if (replay != null) return replay;
+    final l = _current(command.leaseId, command.revision);
+    final overlaps = l.settlements.any(
+      (s) =>
+          !command.periodStart.isAfter(s.periodEnd) &&
+          !command.periodEnd.isBefore(s.periodStart),
+    );
+    if (overlaps) throw StateError('that period is already settled');
+    // The advances are what each service-charge term produced in the period.
+    var advances = 0;
+    for (final t in l.terms.where(
+      (t) => t.kind == LeaseTermKind.serviceChargeAdvance,
+    )) {
+      final from = t.effectiveFrom.isAfter(command.periodStart)
+          ? t.effectiveFrom
+          : command.periodStart;
+      final to = t.effectiveTo != null && t.effectiveTo!.isBefore(command.periodEnd)
+          ? t.effectiveTo!
+          : command.periodEnd;
+      if (to.isBefore(from)) continue;
+      final months = (to.year - from.year) * 12 + to.month - from.month + 1;
+      advances += months ~/ t.everyMonths * t.amountCents;
+    }
+    final balance = command.actualCents - advances;
+    final terms = [
+      ...l.terms,
+      if (balance > 0)
+        LeaseTerm(
+          id: 'demo-term-${_next++}',
+          kind: LeaseTermKind.other,
+          label: isoDay(command.periodEnd),
+          amountCents: balance,
+          effectiveFrom: command.dueOn,
+          effectiveTo: command.dueOn,
+        ),
+    ];
+    return _put(
+      _copy(
+        l,
+        terms: terms,
+        settlements: [
+          ...l.settlements,
+          LeaseSettlement(
+            id: 'demo-settlement-${_next++}',
+            periodStart: command.periodStart,
+            periodEnd: command.periodEnd,
+            advancesCents: advances,
+            actualCents: command.actualCents,
+            balanceCents: balance,
+            dueOn: command.dueOn,
+          ),
+        ],
       ),
       command.requestId,
     );

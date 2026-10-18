@@ -9862,6 +9862,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get leaseSaved => 'Guardado';
 
   @override
+  String get leaseSettle => 'Liquidar gastos';
+
+  @override
+  String get leaseSettleBilled => 'Importe facturado';
+
+  @override
+  String get leaseSettleDue => 'Vence el';
+
+  @override
+  String get leaseSettleFrom => 'Período desde';
+
+  @override
+  String get leaseSettleHint =>
+      'Indique el período facturado por el arrendador y el importe de la factura. Se descuentan los anticipos pagados en el período: un saldo se debe el día elegido, un excedente se registra como crédito. Una liquidación es definitiva.';
+
+  @override
+  String get leaseSettleInvalid =>
+      'Indique un período ya terminado, el importe facturado y un vencimiento no anterior al fin del período. Un período ya liquidado no puede liquidarse dos veces.';
+
+  @override
+  String get leaseSettleRefused => 'No se pudo registrar la liquidación';
+
+  @override
+  String get leaseSettleSave => 'Registrar liquidación';
+
+  @override
+  String get leaseSettleTitle => 'Liquidar los gastos de servicios';
+
+  @override
+  String get leaseSettleTo => 'Período hasta';
+
+  @override
+  String leaseSettlementCredit(String from, String to, String amount) {
+    return 'Liquidado del $from al $to: crédito de $amount';
+  }
+
+  @override
+  String leaseSettlementOwed(
+    String from,
+    String to,
+    String amount,
+    String due,
+  ) {
+    return 'Liquidado del $from al $to: $amount a pagar, vence $due';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Desde el $date';
   }

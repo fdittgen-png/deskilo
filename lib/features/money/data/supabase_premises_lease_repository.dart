@@ -81,4 +81,24 @@ class SupabasePremisesLeaseRepository implements PremisesLeaseRepository {
       },
     ),
   );
+
+  @override
+  Future<PremisesLease> settleCharges(
+    String workspaceId,
+    LeaseSettlementCommand command,
+  ) async => PremisesLease.fromJson(
+    await _client.rpc<Object?>(
+      'settle_lease_charges_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_lease_id': command.leaseId,
+        'p_revision': command.revision,
+        'p_period_start': isoDay(command.periodStart),
+        'p_period_end': isoDay(command.periodEnd),
+        'p_actual_cents': command.actualCents,
+        'p_due_on': isoDay(command.dueOn),
+        'p_request_id': command.requestId,
+      },
+    ),
+  );
 }

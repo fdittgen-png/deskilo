@@ -9883,6 +9883,54 @@ class AppLocalizationsFr extends AppLocalizations {
   String get leaseSaved => 'Enregistré';
 
   @override
+  String get leaseSettle => 'Régulariser les charges';
+
+  @override
+  String get leaseSettleBilled => 'Montant facturé';
+
+  @override
+  String get leaseSettleDue => 'Échéance le';
+
+  @override
+  String get leaseSettleFrom => 'Période du';
+
+  @override
+  String get leaseSettleHint =>
+      'Saisissez la période facturée par le bailleur et le montant de la facture. Les provisions payées sur la période sont déduites : un solde est dû à la date choisie, un excédent est enregistré comme avoir. Une régularisation est définitive.';
+
+  @override
+  String get leaseSettleInvalid =>
+      'Indiquez une période révolue, le montant facturé et une échéance qui n\'est pas antérieure à la fin de la période. Une période déjà régularisée ne peut pas l\'être deux fois.';
+
+  @override
+  String get leaseSettleRefused =>
+      'La régularisation n\'a pas pu être enregistrée';
+
+  @override
+  String get leaseSettleSave => 'Enregistrer la régularisation';
+
+  @override
+  String get leaseSettleTitle => 'Régulariser les charges';
+
+  @override
+  String get leaseSettleTo => 'Période au';
+
+  @override
+  String leaseSettlementCredit(String from, String to, String amount) {
+    return 'Régularisé du $from au $to : avoir de $amount';
+  }
+
+  @override
+  String leaseSettlementOwed(
+    String from,
+    String to,
+    String amount,
+    String due,
+  ) {
+    return 'Régularisé du $from au $to : $amount dus, échéance $due';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Depuis le $date';
   }

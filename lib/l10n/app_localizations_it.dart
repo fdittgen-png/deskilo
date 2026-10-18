@@ -9863,6 +9863,54 @@ class AppLocalizationsIt extends AppLocalizations {
   String get leaseSaved => 'Salvato';
 
   @override
+  String get leaseSettle => 'Conguagliare le spese';
+
+  @override
+  String get leaseSettleBilled => 'Importo fatturato';
+
+  @override
+  String get leaseSettleDue => 'Scadenza il';
+
+  @override
+  String get leaseSettleFrom => 'Periodo dal';
+
+  @override
+  String get leaseSettleHint =>
+      'Indichi il periodo fatturato dal locatore e l\'importo della fattura. Gli acconti versati nel periodo vengono detratti: un saldo è dovuto nel giorno scelto, un\'eccedenza è registrata come credito. Un conguaglio è definitivo.';
+
+  @override
+  String get leaseSettleInvalid =>
+      'Indichi un periodo concluso, l\'importo fatturato e una scadenza non anteriore alla fine del periodo. Un periodo già conguagliato non può esserlo due volte.';
+
+  @override
+  String get leaseSettleRefused =>
+      'Non è stato possibile registrare il conguaglio';
+
+  @override
+  String get leaseSettleSave => 'Registra il conguaglio';
+
+  @override
+  String get leaseSettleTitle => 'Conguaglio delle spese di servizio';
+
+  @override
+  String get leaseSettleTo => 'Periodo al';
+
+  @override
+  String leaseSettlementCredit(String from, String to, String amount) {
+    return 'Conguagliato dal $from al $to: credito di $amount';
+  }
+
+  @override
+  String leaseSettlementOwed(
+    String from,
+    String to,
+    String amount,
+    String due,
+  ) {
+    return 'Conguagliato dal $from al $to: $amount dovuti, scadenza $due';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Dal $date';
   }

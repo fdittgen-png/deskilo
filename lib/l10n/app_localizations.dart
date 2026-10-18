@@ -16827,6 +16827,78 @@ abstract class AppLocalizations {
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
+  /// **'Settle charges'**
+  String get leaseSettle;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Amount billed'**
+  String get leaseSettleBilled;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Due on'**
+  String get leaseSettleDue;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Period from'**
+  String get leaseSettleFrom;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the period the lessor billed and the amount of the bill. The advances paid in the period are deducted: a balance is owed on the day you choose, a surplus is recorded as a credit. A settlement is final.'**
+  String get leaseSettleHint;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Give a period that is over, the amount billed, and a due day not before the period ends. A period already settled cannot be settled twice.'**
+  String get leaseSettleInvalid;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'The settlement could not be recorded'**
+  String get leaseSettleRefused;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Record settlement'**
+  String get leaseSettleSave;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Settle the service charges'**
+  String get leaseSettleTitle;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Period to'**
+  String get leaseSettleTo;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Settled {from} to {to}: credit of {amount}'**
+  String leaseSettlementCredit(String from, String to, String amount);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Settled {from} to {to}: {amount} owed, due {due}'**
+  String leaseSettlementOwed(String from, String to, String amount, String due);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
   /// **'Since {date}'**
   String leaseStarted(String date);
 
