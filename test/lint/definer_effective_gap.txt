@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #2588 C2 -- SECURITY DEFINER routines the effective contract shows executable
+# by authenticated that the migration text scan (definer_scan.dart) cannot see
+# as defined: they were created by a patch that rebuilds the function from its
+# live definition. `name/parameters | status`. Each was read against the live
+# schema; the list only shrinks (an entry the scan now sees fails, a routine
+# not listed here and not seen fails).
+create_invoice/10 | reviewed: built by anchored patches over 0142; the live body checks the member and has_permission(..., 'issueInvoices') before any read or write
+import_floor_plan_v3/3 | reviewed: the live body checks has_permission(workspace, 'manageConfiguration')
+import_workspace_configuration/3 | reviewed: the live body checks auth.uid() and has_permission(workspace, 'manageConfiguration')

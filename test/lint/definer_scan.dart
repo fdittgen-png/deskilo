@@ -89,7 +89,7 @@ int _arity(String params) {
 }
 
 final _definition = RegExp(
-  r'create\s+or\s+replace\s+function\s+public\.(\w+)\s*\(',
+  r'create\s+(?:or\s+replace\s+)?function\s+public\.(\w+)\s*\(',
   caseSensitive: false,
 );
 final _privilege = RegExp(
@@ -100,10 +100,16 @@ final _privilege = RegExp(
 
 bool _guarded(String body) => callerGuards.any(body.contains);
 
-/// The `name/parameter count` of every exposed, elevated, non-trigger
-/// function whose body neither checks the caller nor hands over to a function
-/// that does, sorted. [migrations] are read in the order given.
-List<String> unguardedExposedDefiners(Iterable<MigrationText> migrations) {
+typedef _Scan = ({
+  Map<String, _Routine> latest,
+  Map<String, List<_Routine>> byName,
+  Map<String, bool> exposed,
+});
+
+/// Reads the migrations in order: the latest definition of every function,
+/// the definitions by name, and whether authenticated may execute each one
+/// after the grants and revokes the text states.
+_Scan _scan(Iterable<MigrationText> migrations) {
   final latest = <String, _Routine>{};
   final byName = <String, List<_Routine>>{};
   final exposed = <String, bool>{};
@@ -166,6 +172,33 @@ List<String> unguardedExposedDefiners(Iterable<MigrationText> migrations) {
     }
   }
 
+  return (latest: latest, byName: byName, exposed: exposed);
+}
+
+/// #2588 C2 -- the `name/parameter count` of every elevated, non-trigger
+/// function the TEXT leaves executable by authenticated. The effective
+/// contract (assets/instance/contract.txt, written from the replayed
+/// database) is checked against it: a function the database exposes that
+/// this does not list is one the scan cannot see.
+List<String> scannedExposedDefiners(Iterable<MigrationText> migrations) {
+  final scan = _scan(migrations);
+  return [
+    for (final entry in scan.latest.entries)
+      if (entry.value.definer &&
+          !entry.value.returnsTrigger &&
+          scan.exposed[entry.key] == true)
+        entry.key,
+  ]..sort();
+}
+
+/// The `name/parameter count` of every exposed, elevated, non-trigger
+/// function whose body neither checks the caller nor hands over to a function
+/// that does, sorted. [migrations] are read in the order given.
+List<String> unguardedExposedDefiners(Iterable<MigrationText> migrations) {
+  final scan = _scan(migrations);
+  final latest = scan.latest;
+  final byName = scan.byName;
+  final exposed = scan.exposed;
   final call = RegExp(r'\b(\w+)\s*\(');
   final out = <String>[];
   for (final entry in latest.entries) {
