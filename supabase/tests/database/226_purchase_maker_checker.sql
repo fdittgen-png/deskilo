@@ -6,7 +6,7 @@
 --   bill 144.00 and bill 300.00; single-approval limit 200 units;
 --   payment-checker limit 100 units on a 144.00 payable
 begin;
-select plan(12);
+select plan(15);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -170,11 +170,19 @@ update public.members set is_owner = true where id = pg_temp.mem(4, 't.a');
 select set_config('t.ob', (select o.id::text from public.purchase_obligations o where o.purchase_id = current_setting('t.p1')::uuid), true);
 select is(pg_temp.setting('purchase.payment_checker_from_units', '100') ->> 'status', 'saved', 'the owner sets the payment limit to 100 units');
 select ok((pg_temp.paysup(pg_temp.u(1), current_setting('t.ob'), 10000, 1, 120)::text) like '%another person than the approver%',
-  'the approver cannot record a payment of 100.00 or more');
+  'the approver cannot pay a 144.00 payable, the limit being 100.00');
 select is((select count(*)::int from public.purchase_settlement_allocations where obligation_id = current_setting('t.ob')::uuid), 0, 'readback: nothing was paid');
-select ok(pg_temp.paysup(pg_temp.u(1), current_setting('t.ob'), 9999, 1, 121) ? 'payment_id', 'the approver records 99.99, below the limit');
-select ok(pg_temp.paysup(pg_temp.u(4), current_setting('t.ob'), 4401, 2, 122) ? 'payment_id', 'a second person records the rest');
+select ok((pg_temp.paysup(pg_temp.u(1), current_setting('t.ob'), 9999, 1, 121)::text) like '%another person than the approver%',
+  'nor in small pieces: 99.99 is refused too');
+select ok(pg_temp.paysup(pg_temp.u(4), current_setting('t.ob'), 9999, 1, 122) ? 'payment_id', 'a second person records 99.99');
+select ok(pg_temp.paysup(pg_temp.u(4), current_setting('t.ob'), 4401, 2, 123) ? 'payment_id', 'and the rest');
 select is((select sum(amount_cents)::int from public.purchase_settlement_allocations where obligation_id = current_setting('t.ob')::uuid), 14400, 'and the 144.00 payable is paid in full');
+
+-- a payable below the limit is paid by whoever approved it
+select set_config('t.p3', pg_temp.draft_and_submit('NC-3', 5000, 130), true);
+select is(pg_temp.decide(pg_temp.u(4), current_setting('t.p3'), pg_temp.rev(current_setting('t.p3')), true, '', 132) ->> 'state', 'approved', 'a 50.00 bill is approved by the second owner');
+select set_config('t.ob3', (select o.id::text from public.purchase_obligations o where o.purchase_id = current_setting('t.p3')::uuid), true);
+select ok(pg_temp.paysup(pg_temp.u(4), current_setting('t.ob3'), 5000, 1, 133) ? 'payment_id', 'who may pay it in full, being below the limit');
 
 select * from finish();
 rollback;

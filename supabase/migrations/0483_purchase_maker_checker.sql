@@ -11,8 +11,10 @@
 --       the rule of 0468: another person approves every bill. Rejecting a bill
 --       one submitted always takes another person.
 --   purchase.payment_checker_from_units    0..100 000 000 currency units, default 0
---       a payment of at least this amount cannot be recorded by the person who
---       approved the bill it pays. 0 switches the rule off (today's behaviour).
+--       a payable of at least this amount is paid by someone other than the
+--       person who approved its bill: the limit is read on the PAYABLE, so
+--       splitting it into small payments does not get round it. 0 switches
+--       the rule off (today's behaviour).
 --
 -- Anchored patches of decide_purchase_v1 and record_supplier_payment_v1, each
 -- anchor asserted to occur exactly once.
@@ -23,7 +25,7 @@ insert into public.setting_definitions
    edit_permission, floor_value, editable, choices, source, note)
 values
 ('purchase.single_approval_below_units', 'int', '0'::jsonb, 0, 100000, 'currency units', 'billing', array['workspace'], 'manageBilling', null, true, null, 'decide_purchase_v1 (0468)', 'A supplier bill below this amount, in whole currency units, may be approved by the person who drafted or sent it, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.'),
-('purchase.payment_checker_from_units', 'int', '0'::jsonb, 0, 100000000, 'currency units', 'billing', array['workspace'], 'manageBilling', null, true, null, 'record_supplier_payment_v1 (0468)', 'A payment of at least this amount, in whole currency units, cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.')
+('purchase.payment_checker_from_units', 'int', '0'::jsonb, 0, 100000000, 'currency units', 'billing', array['workspace'], 'manageBilling', null, true, null, 'record_supplier_payment_v1 (0468)', 'A payable of at least this amount, in whole currency units, is paid by someone other than the person who approved its bill; splitting it into small payments does not get round the limit. 0 switches the rule off.')
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
@@ -52,17 +54,17 @@ select pg_temp.patch_function(
   array[$a$  if (d.submitter_member_id = v_me or d.submitted_by_member_id = v_me)
      and not (coalesce(p_approve, false)
               and (select coalesce(sum(l.gross_cents), 0) from public.purchase_lines l where l.purchase_id = d.id)
-                  < (public.setting_value(p_workspace_id, 'purchase.single_approval_below_units') #>> '{}')::bigint * 100) then$a$]);
+                  < coalesce((public.setting_value(p_workspace_id, 'purchase.single_approval_below_units') #>> '{}')::bigint, 0) * 100) then$a$]);
 
 select pg_temp.patch_function(
   'public.record_supplier_payment_v1(uuid, uuid, bigint, int, uuid, date, text, text)'::regprocedure,
   array[$a$  if o.state <> 'open' then raise exception 'this payable is not open'; end if;$a$],
   array[$a$  if o.state <> 'open' then raise exception 'this payable is not open'; end if;
-  if (public.setting_value(p_workspace_id, 'purchase.payment_checker_from_units') #>> '{}')::bigint > 0
-     and p_amount_cents >= (public.setting_value(p_workspace_id, 'purchase.payment_checker_from_units') #>> '{}')::bigint * 100
+  if coalesce((public.setting_value(p_workspace_id, 'purchase.payment_checker_from_units') #>> '{}')::bigint, 0) > 0
+     and o.amount_cents >= (public.setting_value(p_workspace_id, 'purchase.payment_checker_from_units') #>> '{}')::bigint * 100
      and exists (select 1 from public.purchase_documents pd
                   where pd.id = o.purchase_id and pd.decided_by_member_id = v_me) then
-    raise exception 'another person than the approver records a payment of this size';
+    raise exception 'another person than the approver records the payments of a payable this size';
   end if;$a$]);
 
 select public.set_deskilo_schema_version(483);

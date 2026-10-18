@@ -600,7 +600,7 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       editable: true,
       choices: null,
       source: 'record_supplier_payment_v1 (0468)',
-      note: 'A payment of at least this amount, in whole currency units, cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.',
+      note: 'A payable of at least this amount, in whole currency units, is paid by someone other than the person who approved its bill; splitting it into small payments does not get round the limit. 0 switches the rule off.',
     ),
   ),
 ];
