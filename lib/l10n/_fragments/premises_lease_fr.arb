@@ -323,5 +323,144 @@
   "leaseNoticeRefused": "Non enregistré. Seul un bail en cours est résilié, et un montant ne peut pas commencer après la fin.",
   "@leaseNoticeRefused": {
     "description": "#2569 premises lease"
+  },
+  "leaseCommitments": "Échéances",
+  "@leaseCommitments": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsIntro": "Le loyer que le bail attend chaque mois et les factures qui l’ont remplacé. Une facture affectée à un mois remplace son attente ; elle n’ajoute jamais un second coût.",
+  "@leaseCommitmentsIntro": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsEmpty": "Rien n’est encore attendu.",
+  "@leaseCommitmentsEmpty": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentsLoadFailed": "Les échéances n’ont pas pu être chargées.",
+  "@leaseCommitmentsLoadFailed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentExpected": "Attendu",
+  "@leaseCommitmentExpected": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentPartial": "En partie rapproché",
+  "@leaseCommitmentPartial": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentMatched": "Rapproché",
+  "@leaseCommitmentMatched": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseCommitmentLine": "Attendu {expected} · rapproché {matched}",
+  "@leaseCommitmentLine": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "expected": {
+        "type": "String"
+      },
+      "matched": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchLineText": "Facture {reference} · {amount}",
+  "@leaseMatchLineText": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchWasReversed": "Annulé",
+  "@leaseMatchWasReversed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchVariance": "{amount} de la ligne de facture ne sont affectés à aucun mois",
+  "@leaseMatchVariance": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchAction": "Rapprocher une facture",
+  "@leaseMatchAction": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchTitle": "Rapprocher une facture",
+  "@leaseMatchTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchHint": "Ce mois attend encore {remaining}. Choisissez la facture du bailleur qui le couvre.",
+  "@leaseMatchHint": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchBill": "Facture",
+  "@leaseMatchBill": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchLine": "Ligne de la facture",
+  "@leaseMatchLine": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchAmount": "Montant couvert",
+  "@leaseMatchAmount": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchSave": "Rapprocher",
+  "@leaseMatchSave": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchInvalid": "Saisissez un montant supérieur à zéro et au plus {remaining}.",
+  "@leaseMatchInvalid": {
+    "description": "#2575 commitment matching",
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseMatchNoBills": "Aucune facture fournisseur en attente ou approuvée à rapprocher.",
+  "@leaseMatchNoBills": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchRefused": "Non enregistré. La facture doit être celle du bailleur, et le montant doit tenir dans ce que le mois attend et ce qui reste de la ligne.",
+  "@leaseMatchRefused": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchDone": "Rapproché",
+  "@leaseMatchDone": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReversed": "Annulé",
+  "@leaseMatchReversed": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverse": "Annuler",
+  "@leaseMatchReverse": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseTitle": "Annuler ce rapprochement",
+  "@leaseMatchReverseTitle": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseReason": "Pourquoi est-il annulé ?",
+  "@leaseMatchReverseReason": {
+    "description": "#2575 commitment matching"
+  },
+  "leaseMatchReverseAction": "Annuler",
+  "@leaseMatchReverseAction": {
+    "description": "#2575 commitment matching"
   }
 }

@@ -16422,6 +16422,54 @@ abstract class AppLocalizations {
   /// **'New amount'**
   String get leaseAddTerm;
 
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get leaseCommitmentExpected;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {expected} · matched {matched}'**
+  String leaseCommitmentLine(String expected, String matched);
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Matched'**
+  String get leaseCommitmentMatched;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Partly matched'**
+  String get leaseCommitmentPartial;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Commitments'**
+  String get leaseCommitments;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is expected yet.'**
+  String get leaseCommitmentsEmpty;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'The rent the lease expects each month and the bills that replaced it. A bill allocated to a month replaces its expectation; it never adds a second cost.'**
+  String get leaseCommitmentsIntro;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'The commitments could not be loaded.'**
+  String get leaseCommitmentsLoadFailed;
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -16577,6 +16625,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The lease could not be loaded.'**
   String get leaseLoadFailed;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Match a bill'**
+  String get leaseMatchAction;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Amount covered'**
+  String get leaseMatchAmount;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Bill'**
+  String get leaseMatchBill;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Matched'**
+  String get leaseMatchDone;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'This month still expects {remaining}. Pick the lessor’s bill that covers it.'**
+  String leaseMatchHint(String remaining);
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero and at most {remaining}.'**
+  String leaseMatchInvalid(String remaining);
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Line of the bill'**
+  String get leaseMatchLine;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Bill {reference} · {amount}'**
+  String leaseMatchLineText(String reference, String amount);
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'There is no pending or approved supplier bill to match.'**
+  String get leaseMatchNoBills;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'It was not recorded. The bill must be the lessor’s, and the amount must fit what the month expects and what is left of the line.'**
+  String get leaseMatchRefused;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse'**
+  String get leaseMatchReverse;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse'**
+  String get leaseMatchReverseAction;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Why is it reversed?'**
+  String get leaseMatchReverseReason;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse this match'**
+  String get leaseMatchReverseTitle;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get leaseMatchReversed;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get leaseMatchSave;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Match a bill'**
+  String get leaseMatchTitle;
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} of the bill line is not allocated to any month'**
+  String leaseMatchVariance(String amount);
+
+  /// #2575 commitment matching
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get leaseMatchWasReversed;
 
   /// #2569 premises lease
   ///

@@ -9626,6 +9626,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get leaseAddTerm => 'Nuevo importe';
 
   @override
+  String get leaseCommitmentExpected => 'Esperado';
+
+  @override
+  String leaseCommitmentLine(String expected, String matched) {
+    return 'Esperado $expected · conciliado $matched';
+  }
+
+  @override
+  String get leaseCommitmentMatched => 'Conciliado';
+
+  @override
+  String get leaseCommitmentPartial => 'Parcialmente conciliado';
+
+  @override
+  String get leaseCommitments => 'Vencimientos';
+
+  @override
+  String get leaseCommitmentsEmpty => 'Todavía no se espera nada.';
+
+  @override
+  String get leaseCommitmentsIntro =>
+      'El alquiler que el contrato espera cada mes y las facturas que lo han sustituido. Una factura asignada a un mes sustituye su expectativa; nunca añade un segundo coste.';
+
+  @override
+  String get leaseCommitmentsLoadFailed =>
+      'No se pudieron cargar los vencimientos.';
+
+  @override
   String leaseDeposit(String amount) {
     return 'Fianza $amount';
   }
@@ -9714,6 +9742,73 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get leaseLoadFailed => 'No se pudo cargar el contrato.';
+
+  @override
+  String get leaseMatchAction => 'Conciliar una factura';
+
+  @override
+  String get leaseMatchAmount => 'Importe cubierto';
+
+  @override
+  String get leaseMatchBill => 'Factura';
+
+  @override
+  String get leaseMatchDone => 'Conciliado';
+
+  @override
+  String leaseMatchHint(String remaining) {
+    return 'Este mes aún espera $remaining. Elija la factura del arrendador que lo cubre.';
+  }
+
+  @override
+  String leaseMatchInvalid(String remaining) {
+    return 'Indique un importe superior a cero y como máximo $remaining.';
+  }
+
+  @override
+  String get leaseMatchLine => 'Línea de la factura';
+
+  @override
+  String leaseMatchLineText(String reference, String amount) {
+    return 'Factura $reference · $amount';
+  }
+
+  @override
+  String get leaseMatchNoBills =>
+      'No hay ninguna factura de proveedor pendiente o aprobada que conciliar.';
+
+  @override
+  String get leaseMatchRefused =>
+      'No se registró. La factura debe ser la del arrendador y el importe debe caber en lo que el mes espera y en lo que queda de la línea.';
+
+  @override
+  String get leaseMatchReverse => 'Revertir';
+
+  @override
+  String get leaseMatchReverseAction => 'Revertir';
+
+  @override
+  String get leaseMatchReverseReason => '¿Por qué se revierte?';
+
+  @override
+  String get leaseMatchReverseTitle => 'Revertir esta conciliación';
+
+  @override
+  String get leaseMatchReversed => 'Revertido';
+
+  @override
+  String get leaseMatchSave => 'Conciliar';
+
+  @override
+  String get leaseMatchTitle => 'Conciliar una factura';
+
+  @override
+  String leaseMatchVariance(String amount) {
+    return '$amount de la línea de factura no están asignados a ningún mes';
+  }
+
+  @override
+  String get leaseMatchWasReversed => 'Revertido';
 
   @override
   String get leaseNeedSupplier =>

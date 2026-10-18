@@ -190,6 +190,9 @@ class MoneyActionSet {
             canManage: ref
                 .read(myPermissionsProvider)
                 .any((p) => p.wireName == leaseManagePermission),
+            canMatch: ref
+                .read(myPermissionsProvider)
+                .any((p) => p.wireName == purchaseManagePermission),
           ),
           icon: const Icon(Icons.apartment_outlined),
           label: fitted(l10n.leaseTitle),
