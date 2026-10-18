@@ -5253,6 +5253,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get featureAssetRegisterDesc =>
+      'Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo.';
+
+  @override
+  String get featureAssetRegisterTitle => 'Registro de equipos';
+
+  @override
   String get featureAutoCheckInOut =>
       'Entrada/salida automática al final del día';
 

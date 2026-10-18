@@ -535,5 +535,13 @@
         "type": "String"
       }
     }
+  },
+  "featureAssetRegisterTitle": "Registro delle attrezzature",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterDesc": "Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
   }
 }

@@ -5215,6 +5215,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get featureAssetRegisterDesc =>
+      'The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered.';
+
+  @override
+  String get featureAssetRegisterTitle => 'Equipment register';
+
+  @override
   String get featureAutoCheckInOut => 'Auto check-in/out at day end';
 
   @override

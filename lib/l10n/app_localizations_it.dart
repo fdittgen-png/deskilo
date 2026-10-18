@@ -5250,6 +5250,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get featureAssetRegisterDesc =>
+      'Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata.';
+
+  @override
+  String get featureAssetRegisterTitle => 'Registro delle attrezzature';
+
+  @override
   String get featureAutoCheckInOut => 'Check-in/out automatico a fine giornata';
 
   @override

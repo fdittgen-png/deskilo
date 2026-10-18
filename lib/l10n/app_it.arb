@@ -3780,6 +3780,14 @@
   "featureAdminSeatBlockingDesc": "Gli admin contrassegnano i posti come non prenotabili per manutenzione. Il proprietario può sempre.",
   "featureAlsoEnabled": "Attivato anche: {features}",
   "featureAlsoEnables": "Attivando questa si abilita anche {features}",
+  "featureAssetRegisterDesc": "Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterTitle": "Registro delle attrezzature",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
   "featureAutoCheckInOut": "Check-in/out automatico a fine giornata",
   "featureAutoCheckInOutDesc": "Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.",
   "featureAvailableOnlyIn": "Disponibile in: {countries}",

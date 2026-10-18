@@ -5260,6 +5260,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get featureAssetRegisterDesc =>
+      'Les équipements durables que l\'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu\'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n\'est enregistré.';
+
+  @override
+  String get featureAssetRegisterTitle => 'Registre des équipements';
+
+  @override
   String get featureAutoCheckInOut => 'Arrivée/départ auto en fin de journée';
 
   @override

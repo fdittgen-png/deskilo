@@ -535,5 +535,13 @@
         "type": "String"
       }
     }
+  },
+  "featureAssetRegisterTitle": "Anlagenregister",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterDesc": "Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
   }
 }

@@ -9072,6 +9072,18 @@ abstract class AppLocalizations {
   /// **'Switching this on also enables {features}'**
   String featureAlsoEnables(String features);
 
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered.'**
+  String get featureAssetRegisterDesc;
+
+  /// #2576 equipment register
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment register'**
+  String get featureAssetRegisterTitle;
+
   /// Feature toggle (#396): reservations never checked in or out complete themselves once their time has passed.
   ///
   /// In en, this message translates to:

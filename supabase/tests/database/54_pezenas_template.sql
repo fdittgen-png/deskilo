@@ -224,6 +224,7 @@ begin
       "planMemberPhotos": false,
       "planObjectDelete": true,
       "premisesLease": false,
+      "assetRegister": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

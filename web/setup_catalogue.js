@@ -190,7 +190,8 @@ window.SETUP_PROCESSES=[
      "scheduledExpenses",
      "expenseRepartition",
      "purchases",
-     "premisesLease"
+     "premisesLease",
+     "assetRegister"
     ]
    },
    {

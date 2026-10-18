@@ -73,6 +73,7 @@
         "adminInvoicing": false,
         "adminLevelAssign": false,
         "adminSeatBlocking": false,
+        "assetRegister": false,
         "autoCheckInOut": false,
         "badgeSignIn": false,
         "bookForOthers": true,

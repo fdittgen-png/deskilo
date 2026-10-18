@@ -1221,6 +1221,10 @@ window.SETUP_L10N={
    "premisesLease": [
     "Premises lease",
     "The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are."
+   ],
+   "assetRegister": [
+    "Equipment register",
+    "The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered."
    ]
   },
   "process": {
@@ -2664,6 +2668,10 @@ window.SETUP_L10N={
    "premisesLease": [
     "Bail des locaux",
     "Le bail que l'espace détient comme locataire : le bailleur, les locaux, la durée, le préavis et le dépôt de garantie, avec son loyer et ses charges et leur historique. Chaque montant génère la dépense planifiée de sa charge. Désactivé : aucun bail n'est enregistré et les dépenses planifiées restent telles quelles."
+   ],
+   "assetRegister": [
+    "Registre des équipements",
+    "Les équipements durables que l'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n'est enregistré."
    ]
   },
   "process": {
@@ -4107,6 +4115,10 @@ window.SETUP_L10N={
    "premisesLease": [
     "Mietvertrag der Räume",
     "Der Mietvertrag, den der Space als Mieter hält: Vermieter, Räume, Laufzeit, Kündigungsfrist und Kaution, mit Miete und Nebenkosten und deren Verlauf. Jeder Betrag erzeugt die geplante Ausgabe seiner Kostenart. Aus: kein Mietvertrag wird erfasst, die geplanten Ausgaben bleiben unverändert."
+   ],
+   "assetRegister": [
+    "Anlagenregister",
+    "Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst."
    ]
   },
   "process": {
@@ -5550,6 +5562,10 @@ window.SETUP_L10N={
    "premisesLease": [
     "Contrato de alquiler del local",
     "El contrato de alquiler que el espacio tiene como inquilino: el arrendador, el local, la duración, el preaviso y la fianza, con su renta y sus gastos y su historial. Cada importe genera el gasto programado de su concepto. Desactivado: no se registra ningún contrato y los gastos programados quedan como están."
+   ],
+   "assetRegister": [
+    "Registro de equipos",
+    "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo."
    ]
   },
   "process": {
@@ -6993,6 +7009,10 @@ window.SETUP_L10N={
    "premisesLease": [
     "Contratto di locazione dei locali",
     "Il contratto di locazione che lo spazio detiene come conduttore: il locatore, i locali, la durata, il preavviso e il deposito, con canone e spese e il loro storico. Ogni importo genera la spesa programmata della sua voce. Disattivato: nessun contratto viene registrato e le spese programmate restano invariate."
+   ],
+   "assetRegister": [
+    "Registro delle attrezzature",
+    "Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata."
    ]
   },
   "process": {

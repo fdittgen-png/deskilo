@@ -535,5 +535,13 @@
         "type": "String"
       }
     }
+  },
+  "featureAssetRegisterTitle": "Registro de equipos",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterDesc": "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
   }
 }

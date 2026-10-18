@@ -6260,6 +6260,14 @@
       }
     }
   },
+  "featureAssetRegisterDesc": "The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterTitle": "Equipment register",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
   "featureAutoCheckInOut": "Auto check-in/out at day end",
   "@featureAutoCheckInOut": {
     "description": "Feature toggle (#396): reservations never checked in or out complete themselves once their time has passed."
