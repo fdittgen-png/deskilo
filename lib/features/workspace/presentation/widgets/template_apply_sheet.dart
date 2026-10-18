@@ -331,7 +331,7 @@ class _GroupRow extends StatelessWidget {
 /// #1330 — the same change-set the server will apply, grouped by the
 /// business process each flip belongs to. Read-only: the group above is
 /// what gets ticked, a process is where a flip is shown.
-class _ProcessChanges extends StatelessWidget {
+class _ProcessChanges extends ConsumerWidget {
   const _ProcessChanges({required this.groups, required this.wire, this.unmet = const {}});
 
   final List<ProcessChangeGroup> groups;
@@ -339,9 +339,14 @@ class _ProcessChanges extends StatelessWidget {
   final Map<WorkspaceFeature, WorkspaceFeature> unmet;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    // #2454 — switched on, but not available in the workspace's country.
+    final unavailable = unavailableInCountry(
+      {for (final g in groups) for (final c in g.changes) c.feature.name: c.enabled},
+      ref.watch(currentWorkspaceProvider).value?.countryCode,
+    );
     return Padding(
       padding: const EdgeInsets.only(
         left: AppSpacing.xl,
@@ -371,6 +376,13 @@ class _ProcessChanges extends StatelessWidget {
                 Text(
                   l10n.libraryFeatureNeeds(featureName(l10n, c.feature), featureName(l10n, unmet[c.feature]!)),
                   key: ValueKey('template-feature-blocked-${c.feature.name}'),
+                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+                ),
+            for (final c in g.changes)
+              if (unavailable.contains(c.feature))
+                Text(
+                  l10n.libraryFeatureNotApplicable(featureName(l10n, c.feature)),
+                  key: ValueKey('template-feature-unavailable-${c.feature.name}'),
                   style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
                 ),
             const SizedBox(height: AppSpacing.xs),

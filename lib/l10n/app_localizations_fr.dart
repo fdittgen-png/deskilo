@@ -10263,6 +10263,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String libraryFeatureNotApplicable(String feature) {
+    return '$feature reste telle que configurée mais ne fait rien dans le pays de cet espace';
+  }
+
+  @override
   String get libraryGroupAppearance => 'Apparence';
 
   @override

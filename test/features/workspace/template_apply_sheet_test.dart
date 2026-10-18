@@ -20,13 +20,18 @@ const _template = WorkspaceTemplate(
   entities: ['floor_plan', 'features'],
 );
 
-Future<void> _pump(WidgetTester tester, TemplatePreview preview) async {
+Future<void> _pump(WidgetTester tester, TemplatePreview preview, {String? country}) async {
   tester.view.physicalSize = const Size(800, 1200);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
-  final workspace = FakeWorkspaceRepository()
+  final workspace = (country == null
+      ? FakeWorkspaceRepository()
+      : FakeWorkspaceRepository.withWorkspace())
     ..templates.add(_template)
     ..templatePreviews['tpl-1'] = preview;
+  if (country != null) {
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(countryCode: country);
+  }
   await pumpApp(tester, const Scaffold(
           body: TemplateApplySheet(workspaceId: 'ws-1', template: _template),
         ), overrides: standardTestOverrides(workspace: workspace));
@@ -162,5 +167,50 @@ void main() {
       find.byKey(const ValueKey('template-feature-blocked-invoicing')),
       findsOneWidget,
     );
+  });
+
+  group('availability by country (#2454)', () {
+    test('a feature switched on that the country cannot have is named', () {
+      const on = {'recapitulativeStatement': true, 'invoicing': true};
+      expect(unavailableInCountry(on, 'GB'), {WorkspaceFeature.recapitulativeStatement});
+      expect(unavailableInCountry(on, 'FR'), isEmpty);
+      expect(unavailableInCountry(on, null), isEmpty, reason: 'no country, no restriction');
+      expect(
+        unavailableInCountry({'recapitulativeStatement': false}, 'GB'),
+        isEmpty,
+        reason: 'switching a feature off needs no country',
+      );
+      expect(unavailableInCountry({'notAFeature': true}, 'GB'), isEmpty);
+    });
+
+    TemplatePreview preview() => TemplatePreview.fromJson(<String, dynamic>{
+      'compatibility': 'supported',
+      'groups': [
+        {
+          'group': 'documents_operations',
+          'state': 'change',
+          'items': [
+            {
+              'scope': 'workspace',
+              'op': 'change',
+              'key': 'feature_flags',
+              'before': {'recapitulativeStatement': false},
+              'after': {'recapitulativeStatement': true},
+            },
+          ],
+        },
+      ],
+    });
+
+    testWidgets('the preview says it does nothing in a British space', (tester) async {
+      await _pump(tester, preview(), country: 'GB');
+      expect(find.byKey(const ValueKey('template-feature-unavailable-recapitulativeStatement')), findsOneWidget);
+    });
+
+    testWidgets('and says nothing of it in a French one', (tester) async {
+      await _pump(tester, preview(), country: 'FR');
+      expect(find.byKey(const ValueKey('template-process-feature-recapitulativeStatement')), findsOneWidget);
+      expect(find.byKey(const ValueKey('template-feature-unavailable-recapitulativeStatement')), findsNothing);
+    });
   });
 }

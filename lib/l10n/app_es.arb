@@ -7364,6 +7364,15 @@
   },
   "libraryEmpty": "Nada aquí todavía. Guarde este espacio como plantilla o espere a que alguien comparta una con usted.",
   "libraryFeatureNeeds": "{feature} necesita {prerequisite}, que sigue desactivado: todavía no funcionará.",
+  "libraryFeatureNotApplicable": "{feature} se queda como está configurada pero no hace nada en el país de este espacio",
+  "@libraryFeatureNotApplicable": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
   "libraryGroupAppearance": "Apariencia",
   "libraryGroupCalendarNavigation": "Calendario y cierres",
   "libraryGroupDocumentsOperations": "Documentos y funcionamiento",

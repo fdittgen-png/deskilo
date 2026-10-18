@@ -249,5 +249,14 @@
   "featureCountriesEuName": "l'Union européenne",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
+  },
+  "libraryFeatureNotApplicable": "{feature} reste telle que configurée mais ne fait rien dans le pays de cet espace",
+  "@libraryFeatureNotApplicable": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
   }
 }
