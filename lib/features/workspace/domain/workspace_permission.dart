@@ -127,7 +127,12 @@ enum WorkspacePermission {
   /// #2574 — record the cash paid out to a member for an approved claim, and
   /// reverse it. Never implied by approving an expense (approveExpenses) and
   /// not an admin default; the person owed cannot record their own payment.
-  recordOutgoingPayments;
+  recordOutgoingPayments,
+
+  /// #2569 — record the premises lease the space holds as tenant: its terms,
+  /// their history and its termination. Not an admin default; reading the
+  /// finances stays viewFinances.
+  manageLease;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

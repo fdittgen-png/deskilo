@@ -46,6 +46,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
+import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
@@ -128,6 +129,7 @@ import 'data/plan_resource_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
+import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 
 /// #2631 — rooms, parking areas and chargers live in memory.
@@ -146,6 +148,10 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
+    // #2569 — the lease the demo space holds as tenant.
+    premisesLeaseRepositoryProvider.overrideWithValue(
+      seedDemoLease(fixture.seededAt),
+    ),
   ];
 }
 

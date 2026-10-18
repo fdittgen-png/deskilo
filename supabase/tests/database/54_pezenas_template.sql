@@ -223,6 +223,7 @@ begin
       "personalInfo": true,
       "planMemberPhotos": false,
       "planObjectDelete": true,
+      "premisesLease": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

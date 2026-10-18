@@ -153,6 +153,7 @@
         "placeFeedback": true,
         "planMemberPhotos": false,
         "planObjectDelete": true,
+        "premisesLease": false,
         "priceNegotiations": false,
         "publicHolidays": false,
         "publicListings": false,

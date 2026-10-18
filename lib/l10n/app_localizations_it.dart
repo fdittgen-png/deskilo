@@ -5930,6 +5930,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featurePlanObjectDeleteTitle => 'Eliminare spazi con cronologia';
 
   @override
+  String get featurePremisesLeaseDesc =>
+      'Il contratto di locazione che lo spazio detiene come conduttore: il locatore, i locali, la durata, il preavviso e il deposito, con canone e spese e il loro storico. Ogni importo genera la spesa programmata della sua voce. Disattivato: nessun contratto viene registrato e le spese programmate restano invariate.';
+
+  @override
+  String get featurePremisesLeaseTitle => 'Contratto di locazione dei locali';
+
+  @override
   String get featurePriceNegotiationsDesc =>
       'La tariffa è il valore predefinito; un membro può avere condizioni proprie — canone mensile, tariffa di superamento, sconto sui supplementi, prezzi unitari per servizio e pacchetto, percentuale di occupazione — proposte da chi detiene «Gestire gli accordi commerciali» e validate secondo le regole. Le vedono il membro, i proprietari e chi ha «Consultare gli accordi commerciali»; ogni consultazione è registrata.';
 
@@ -9616,6 +9623,223 @@ class AppLocalizationsIt extends AppLocalizations {
   String get languageTitle => 'Lingua';
 
   @override
+  String get leaseAdd => 'Aggiungi un contratto';
+
+  @override
+  String get leaseAddTerm => 'Nuovo importo';
+
+  @override
+  String leaseDeposit(String amount) {
+    return 'Deposito $amount';
+  }
+
+  @override
+  String leaseDepositBack(String amount) {
+    return 'Deposito da restituire: $amount';
+  }
+
+  @override
+  String get leaseEdit => 'Modifica';
+
+  @override
+  String get leaseEmpty => 'Nessun contratto registrato.';
+
+  @override
+  String leaseEndsOn(String date, String reason) {
+    return 'Termina il $date: $reason';
+  }
+
+  @override
+  String get leaseEveryHalfYear => 'Ogni 6 mesi';
+
+  @override
+  String get leaseEveryMonth => 'Ogni mese';
+
+  @override
+  String get leaseEveryQuarter => 'Ogni 3 mesi';
+
+  @override
+  String get leaseEveryYear => 'Ogni anno';
+
+  @override
+  String get leaseFieldDeposit => 'Deposito';
+
+  @override
+  String get leaseFieldFixedUntil => 'Fisso fino al';
+
+  @override
+  String get leaseFieldIndexation => 'Indicizzazione (nota)';
+
+  @override
+  String get leaseFieldLessor => 'Locatore (un fornitore)';
+
+  @override
+  String get leaseFieldNoticeMonths => 'Preavviso in mesi';
+
+  @override
+  String get leaseFieldPremises => 'Locali (indirizzo)';
+
+  @override
+  String get leaseFieldStarts => 'Inizio';
+
+  @override
+  String leaseFixedUntil(String date) {
+    return 'Fisso fino al $date';
+  }
+
+  @override
+  String get leaseFormTitle => 'Contratto';
+
+  @override
+  String get leaseGiveNotice => 'Dare disdetta';
+
+  @override
+  String get leaseIntro =>
+      'Il contratto di locazione che lo spazio detiene come conduttore, con canone e spese. Un nuovo importo sostituisce quello in vigore dalla sua data; i precedenti restano nello storico.';
+
+  @override
+  String get leaseInvalid =>
+      'Scegli il locatore, indica i locali e imposta la data di inizio.';
+
+  @override
+  String get leaseKindOther => 'Altra voce';
+
+  @override
+  String get leaseKindRent => 'Canone';
+
+  @override
+  String get leaseKindServiceCharge => 'Anticipo spese';
+
+  @override
+  String leaseLessor(String name) {
+    return 'Locatore: $name';
+  }
+
+  @override
+  String get leaseLoadFailed => 'Impossibile caricare il contratto.';
+
+  @override
+  String get leaseNeedSupplier => 'Registra prima il locatore come fornitore.';
+
+  @override
+  String leaseNoticeDeadline(String date) {
+    return 'Disdetta entro il $date';
+  }
+
+  @override
+  String get leaseNoticeEnd => 'Il contratto termina il';
+
+  @override
+  String get leaseNoticeGivenOn => 'Disdetta data il';
+
+  @override
+  String get leaseNoticeHint =>
+      'Registra chi ha dato la disdetta, quando e perché. Gli importi programmati terminano il giorno della fine del contratto; le scadenze già presentate sono conservate.';
+
+  @override
+  String get leaseNoticeInvalid =>
+      'Indica la data di fine, non prima della disdetta, e il motivo.';
+
+  @override
+  String get leaseNoticeReason => 'Perché termina?';
+
+  @override
+  String get leaseNoticeRefused =>
+      'Non registrato. Si termina solo un contratto in corso e un importo non può iniziare dopo la fine.';
+
+  @override
+  String get leaseNoticeSave => 'Registra la disdetta';
+
+  @override
+  String get leaseNoticeTitle => 'Dare disdetta';
+
+  @override
+  String leaseOccurrencesAfter(int count) {
+    return 'Sono già state presentate $count scadenze con data successiva alla fine.';
+  }
+
+  @override
+  String get leaseRefused =>
+      'Non salvato. Controlla il locatore, le date e che il contratto non sia già terminato.';
+
+  @override
+  String get leaseSave => 'Salva';
+
+  @override
+  String get leaseSaved => 'Salvato';
+
+  @override
+  String leaseStarted(String date) {
+    return 'Dal $date';
+  }
+
+  @override
+  String get leaseStatusActive => 'In corso';
+
+  @override
+  String get leaseStatusDraft => 'Bozza';
+
+  @override
+  String get leaseStatusEnded => 'Terminato';
+
+  @override
+  String get leaseStatusNotice => 'Disdetta data';
+
+  @override
+  String get leaseTermAmount => 'Importo';
+
+  @override
+  String get leaseTermEvery => 'Pagamento';
+
+  @override
+  String get leaseTermFrom => 'Dal';
+
+  @override
+  String get leaseTermHint =>
+      'Dalla sua data sostituisce l’importo in vigore per la stessa voce; il precedente resta nello storico e le sue scadenze sono conservate.';
+
+  @override
+  String get leaseTermInvalid =>
+      'Inserisci un importo superiore a zero e la data di inizio; assegna un nome a un’altra voce.';
+
+  @override
+  String get leaseTermKind => 'Voce';
+
+  @override
+  String get leaseTermLabel => 'Nome della voce';
+
+  @override
+  String leaseTermLine(String kind, String amount, String from) {
+    return '$kind · $amount dal $from';
+  }
+
+  @override
+  String leaseTermLineClosed(
+    String kind,
+    String amount,
+    String from,
+    String to,
+  ) {
+    return '$kind · $amount dal $from al $to';
+  }
+
+  @override
+  String get leaseTermRefused =>
+      'Non aggiunto. Un nuovo importo deve iniziare dopo quello in vigore e il contratto non deve essere terminato.';
+
+  @override
+  String get leaseTermSave => 'Aggiungi';
+
+  @override
+  String get leaseTermTitle => 'Nuovo importo';
+
+  @override
+  String get leaseTermsHeading => 'Canone e spese';
+
+  @override
+  String get leaseTitle => 'Contratto di locazione';
+
+  @override
   String get ledgerCategoryAdjustment => 'Rettifica';
 
   @override
@@ -13021,6 +13245,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get permManageIntegrations => 'Gestire le integrazioni';
+
+  @override
+  String get permManageLease => 'Registrare il contratto di locazione';
 
   @override
   String get permManageMembers => 'Gestire i membri';

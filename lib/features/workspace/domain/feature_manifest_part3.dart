@@ -274,4 +274,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.moneyTab,
     defaultOn: false,
   ),
+  // #2569 — the lease the space holds as tenant: its rent terms generate the
+  // scheduled expenses.
+  WorkspaceFeature.premisesLease: FeatureManifestEntry(
+    feature: WorkspaceFeature.premisesLease,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.scheduledExpenses,
+    defaultOn: false,
+  ),
 };

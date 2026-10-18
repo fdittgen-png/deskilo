@@ -5934,6 +5934,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featurePlanObjectDeleteTitle => 'Eliminar espacios con historial';
 
   @override
+  String get featurePremisesLeaseDesc =>
+      'El contrato de alquiler que el espacio tiene como inquilino: el arrendador, el local, la duración, el preaviso y la fianza, con su renta y sus gastos y su historial. Cada importe genera el gasto programado de su concepto. Desactivado: no se registra ningún contrato y los gastos programados quedan como están.';
+
+  @override
+  String get featurePremisesLeaseTitle => 'Contrato de alquiler del local';
+
+  @override
   String get featurePriceNegotiationsDesc =>
       'La tarifa es el valor por defecto; un miembro puede tener sus propias condiciones — cuota mensual, tarifa de exceso, descuento en suplementos, precios unitarios por servicio y paquete, porcentaje de ocupación — propuestas por quien tiene «Gestionar los acuerdos comerciales» y validadas según las reglas. Las ven el miembro, los propietarios y quienes tienen «Consultar los acuerdos comerciales»; cada consulta queda registrada.';
 
@@ -9613,6 +9620,224 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageTitle => 'Idioma';
 
   @override
+  String get leaseAdd => 'Añadir un contrato';
+
+  @override
+  String get leaseAddTerm => 'Nuevo importe';
+
+  @override
+  String leaseDeposit(String amount) {
+    return 'Fianza $amount';
+  }
+
+  @override
+  String leaseDepositBack(String amount) {
+    return 'Fianza a devolver: $amount';
+  }
+
+  @override
+  String get leaseEdit => 'Editar';
+
+  @override
+  String get leaseEmpty => 'Ningún contrato registrado.';
+
+  @override
+  String leaseEndsOn(String date, String reason) {
+    return 'Termina el $date: $reason';
+  }
+
+  @override
+  String get leaseEveryHalfYear => 'Cada 6 meses';
+
+  @override
+  String get leaseEveryMonth => 'Cada mes';
+
+  @override
+  String get leaseEveryQuarter => 'Cada 3 meses';
+
+  @override
+  String get leaseEveryYear => 'Cada año';
+
+  @override
+  String get leaseFieldDeposit => 'Fianza';
+
+  @override
+  String get leaseFieldFixedUntil => 'Fijo hasta';
+
+  @override
+  String get leaseFieldIndexation => 'Indexación (nota)';
+
+  @override
+  String get leaseFieldLessor => 'Arrendador (un proveedor)';
+
+  @override
+  String get leaseFieldNoticeMonths => 'Preaviso en meses';
+
+  @override
+  String get leaseFieldPremises => 'Local (dirección)';
+
+  @override
+  String get leaseFieldStarts => 'Inicio';
+
+  @override
+  String leaseFixedUntil(String date) {
+    return 'Fijo hasta el $date';
+  }
+
+  @override
+  String get leaseFormTitle => 'Contrato';
+
+  @override
+  String get leaseGiveNotice => 'Dar preaviso';
+
+  @override
+  String get leaseIntro =>
+      'El contrato de alquiler que el espacio tiene como inquilino, con su renta y sus gastos. Un nuevo importe sustituye al vigente desde su fecha; los anteriores quedan en el historial.';
+
+  @override
+  String get leaseInvalid =>
+      'Elija al arrendador, nombre el local y fije la fecha de inicio.';
+
+  @override
+  String get leaseKindOther => 'Otro concepto';
+
+  @override
+  String get leaseKindRent => 'Renta';
+
+  @override
+  String get leaseKindServiceCharge => 'Anticipo de gastos';
+
+  @override
+  String leaseLessor(String name) {
+    return 'Arrendador: $name';
+  }
+
+  @override
+  String get leaseLoadFailed => 'No se pudo cargar el contrato.';
+
+  @override
+  String get leaseNeedSupplier =>
+      'Registre primero al arrendador como proveedor.';
+
+  @override
+  String leaseNoticeDeadline(String date) {
+    return 'Preaviso antes del $date';
+  }
+
+  @override
+  String get leaseNoticeEnd => 'El contrato termina el';
+
+  @override
+  String get leaseNoticeGivenOn => 'Preaviso dado el';
+
+  @override
+  String get leaseNoticeHint =>
+      'Registra quién dio el preaviso, cuándo y por qué. Los importes programados terminan el día del fin del contrato; se conservan los vencimientos ya presentados.';
+
+  @override
+  String get leaseNoticeInvalid =>
+      'Indique la fecha de fin, no anterior al preaviso, y el motivo.';
+
+  @override
+  String get leaseNoticeReason => '¿Por qué termina?';
+
+  @override
+  String get leaseNoticeRefused =>
+      'No se registró. Solo se termina un contrato en curso, y un importe no puede empezar después del final.';
+
+  @override
+  String get leaseNoticeSave => 'Registrar el preaviso';
+
+  @override
+  String get leaseNoticeTitle => 'Dar preaviso';
+
+  @override
+  String leaseOccurrencesAfter(int count) {
+    return 'Ya se presentaron $count vencimientos con fecha posterior al final.';
+  }
+
+  @override
+  String get leaseRefused =>
+      'No se guardó. Compruebe el arrendador, las fechas y que el contrato no esté ya terminado.';
+
+  @override
+  String get leaseSave => 'Guardar';
+
+  @override
+  String get leaseSaved => 'Guardado';
+
+  @override
+  String leaseStarted(String date) {
+    return 'Desde el $date';
+  }
+
+  @override
+  String get leaseStatusActive => 'En curso';
+
+  @override
+  String get leaseStatusDraft => 'Borrador';
+
+  @override
+  String get leaseStatusEnded => 'Terminado';
+
+  @override
+  String get leaseStatusNotice => 'Preaviso dado';
+
+  @override
+  String get leaseTermAmount => 'Importe';
+
+  @override
+  String get leaseTermEvery => 'Pago';
+
+  @override
+  String get leaseTermFrom => 'Desde';
+
+  @override
+  String get leaseTermHint =>
+      'Desde su fecha sustituye al importe vigente del mismo concepto; el anterior queda en el historial y se conservan sus vencimientos.';
+
+  @override
+  String get leaseTermInvalid =>
+      'Indique un importe superior a cero y su fecha de inicio; nombre otro concepto.';
+
+  @override
+  String get leaseTermKind => 'Concepto';
+
+  @override
+  String get leaseTermLabel => 'Nombre del concepto';
+
+  @override
+  String leaseTermLine(String kind, String amount, String from) {
+    return '$kind · $amount desde el $from';
+  }
+
+  @override
+  String leaseTermLineClosed(
+    String kind,
+    String amount,
+    String from,
+    String to,
+  ) {
+    return '$kind · $amount del $from al $to';
+  }
+
+  @override
+  String get leaseTermRefused =>
+      'No se añadió. Un nuevo importe debe empezar después del vigente y el contrato no debe estar terminado.';
+
+  @override
+  String get leaseTermSave => 'Añadir';
+
+  @override
+  String get leaseTermTitle => 'Nuevo importe';
+
+  @override
+  String get leaseTermsHeading => 'Renta y gastos';
+
+  @override
+  String get leaseTitle => 'Contrato de alquiler';
+
+  @override
   String get ledgerCategoryAdjustment => 'Ajuste';
 
   @override
@@ -13007,6 +13232,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permManageIntegrations => 'Gestionar integraciones';
+
+  @override
+  String get permManageLease => 'Registrar el contrato de alquiler';
 
   @override
   String get permManageMembers => 'Gestionar miembros';

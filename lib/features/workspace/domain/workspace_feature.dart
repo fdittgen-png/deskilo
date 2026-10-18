@@ -377,9 +377,8 @@ enum WorkspaceFeature {
   /// invoices outside the app.
   viesVerification,
 
-  /// #2354 — the recapitulative statement (EU sales list: DES, ZM, 349):
-  /// reverse-charged services per customer VAT number and month as a CSV,
-  /// and a notice on Invoicing while one is due. Platform, default ON.
+  /// #2354 — the recapitulative statement (EU sales list: DES, ZM, 349) as a
+  /// CSV, and a notice on Invoicing while one is due. Platform, default ON.
   recapitulativeStatement,
 
   /// #2357 — input VAT: an expense states its rate and deductible share,
@@ -389,9 +388,8 @@ enum WorkspaceFeature {
   /// #2484 — the settings editor (platform tier, default ON; OFF hides it).
   configurableSettings,
 
-  /// #2362 — a US seller issues in sales-tax mode: net prices, the tax of the
-  /// site's postal code stated apart, taxability per kind of line, exemption
-  /// certificates. Platform, default ON, under invoicing.
+  /// #2362 — a US seller issues in sales-tax mode: net prices, the site's tax
+  /// stated apart, taxability per line, exemption certificates. Platform, ON.
   salesTax,
 
   /// #2631 — a meeting room on the plan, booked in its own slot; a parking
@@ -399,10 +397,11 @@ enum WorkspaceFeature {
   meetingRooms,
   parking,
 
-  /// #2504 — WebMCP tools (platform, OFF, under mcpAccess); #2573 — one
-  /// purchase document (platform, OFF, under moneyTab).
+  /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
+  /// moneyTab); #2569 premises lease (under scheduledExpenses). Platform, OFF.
   webMcp,
-  purchases;
+  purchases,
+  premisesLease;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

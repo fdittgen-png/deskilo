@@ -5943,6 +5943,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Supprimer des espaces avec historique';
 
   @override
+  String get featurePremisesLeaseDesc =>
+      'Le bail que l\'espace détient comme locataire : le bailleur, les locaux, la durée, le préavis et le dépôt de garantie, avec son loyer et ses charges et leur historique. Chaque montant génère la dépense planifiée de sa charge. Désactivé : aucun bail n\'est enregistré et les dépenses planifiées restent telles quelles.';
+
+  @override
+  String get featurePremisesLeaseTitle => 'Bail des locaux';
+
+  @override
   String get featurePriceNegotiationsDesc =>
       'Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d\'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.';
 
@@ -9634,6 +9641,224 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageTitle => 'Langue';
 
   @override
+  String get leaseAdd => 'Ajouter un bail';
+
+  @override
+  String get leaseAddTerm => 'Nouveau montant';
+
+  @override
+  String leaseDeposit(String amount) {
+    return 'Dépôt de garantie $amount';
+  }
+
+  @override
+  String leaseDepositBack(String amount) {
+    return 'Dépôt à restituer : $amount';
+  }
+
+  @override
+  String get leaseEdit => 'Modifier';
+
+  @override
+  String get leaseEmpty => 'Aucun bail enregistré.';
+
+  @override
+  String leaseEndsOn(String date, String reason) {
+    return 'Se termine le $date : $reason';
+  }
+
+  @override
+  String get leaseEveryHalfYear => 'Tous les 6 mois';
+
+  @override
+  String get leaseEveryMonth => 'Chaque mois';
+
+  @override
+  String get leaseEveryQuarter => 'Tous les 3 mois';
+
+  @override
+  String get leaseEveryYear => 'Chaque année';
+
+  @override
+  String get leaseFieldDeposit => 'Dépôt de garantie';
+
+  @override
+  String get leaseFieldFixedUntil => 'Ferme jusqu’au';
+
+  @override
+  String get leaseFieldIndexation => 'Indexation (note)';
+
+  @override
+  String get leaseFieldLessor => 'Bailleur (un fournisseur)';
+
+  @override
+  String get leaseFieldNoticeMonths => 'Préavis en mois';
+
+  @override
+  String get leaseFieldPremises => 'Locaux (adresse)';
+
+  @override
+  String get leaseFieldStarts => 'Début';
+
+  @override
+  String leaseFixedUntil(String date) {
+    return 'Ferme jusqu’au $date';
+  }
+
+  @override
+  String get leaseFormTitle => 'Bail';
+
+  @override
+  String get leaseGiveNotice => 'Donner congé';
+
+  @override
+  String get leaseIntro =>
+      'Le bail que l\'espace détient comme locataire, avec son loyer et ses charges. Un nouveau montant remplace celui en vigueur à partir de sa date ; les montants précédents restent dans l\'historique.';
+
+  @override
+  String get leaseInvalid =>
+      'Choisissez le bailleur, nommez les locaux et fixez la date de début.';
+
+  @override
+  String get leaseKindOther => 'Autre charge';
+
+  @override
+  String get leaseKindRent => 'Loyer';
+
+  @override
+  String get leaseKindServiceCharge => 'Provision sur charges';
+
+  @override
+  String leaseLessor(String name) {
+    return 'Bailleur : $name';
+  }
+
+  @override
+  String get leaseLoadFailed => 'Le bail n’a pas pu être chargé.';
+
+  @override
+  String get leaseNeedSupplier =>
+      'Enregistrez d’abord le bailleur comme fournisseur.';
+
+  @override
+  String leaseNoticeDeadline(String date) {
+    return 'Préavis à donner avant le $date';
+  }
+
+  @override
+  String get leaseNoticeEnd => 'Le bail se termine le';
+
+  @override
+  String get leaseNoticeGivenOn => 'Congé donné le';
+
+  @override
+  String get leaseNoticeHint =>
+      'Enregistre qui a donné congé, quand et pourquoi. Les montants planifiés s’arrêtent le jour de la fin du bail ; les échéances déjà présentées sont conservées.';
+
+  @override
+  String get leaseNoticeInvalid =>
+      'Indiquez la date de fin, pas avant le congé, et le motif.';
+
+  @override
+  String get leaseNoticeReason => 'Pourquoi se termine-t-il ?';
+
+  @override
+  String get leaseNoticeRefused =>
+      'Non enregistré. Seul un bail en cours est résilié, et un montant ne peut pas commencer après la fin.';
+
+  @override
+  String get leaseNoticeSave => 'Enregistrer le congé';
+
+  @override
+  String get leaseNoticeTitle => 'Donner congé';
+
+  @override
+  String leaseOccurrencesAfter(int count) {
+    return '$count échéances ont déjà été présentées pour une date postérieure à la fin.';
+  }
+
+  @override
+  String get leaseRefused =>
+      'Non enregistré. Vérifiez le bailleur, les dates et que le bail n’est pas déjà résilié.';
+
+  @override
+  String get leaseSave => 'Enregistrer';
+
+  @override
+  String get leaseSaved => 'Enregistré';
+
+  @override
+  String leaseStarted(String date) {
+    return 'Depuis le $date';
+  }
+
+  @override
+  String get leaseStatusActive => 'En cours';
+
+  @override
+  String get leaseStatusDraft => 'Brouillon';
+
+  @override
+  String get leaseStatusEnded => 'Terminé';
+
+  @override
+  String get leaseStatusNotice => 'Préavis donné';
+
+  @override
+  String get leaseTermAmount => 'Montant';
+
+  @override
+  String get leaseTermEvery => 'Payé';
+
+  @override
+  String get leaseTermFrom => 'À partir du';
+
+  @override
+  String get leaseTermHint =>
+      'À partir de sa date il remplace le montant en vigueur pour la même charge ; le précédent reste dans l’historique et ses échéances sont conservées.';
+
+  @override
+  String get leaseTermInvalid =>
+      'Saisissez un montant supérieur à zéro et sa date de début ; nommez une autre charge.';
+
+  @override
+  String get leaseTermKind => 'Charge';
+
+  @override
+  String get leaseTermLabel => 'Nom de la charge';
+
+  @override
+  String leaseTermLine(String kind, String amount, String from) {
+    return '$kind · $amount à partir du $from';
+  }
+
+  @override
+  String leaseTermLineClosed(
+    String kind,
+    String amount,
+    String from,
+    String to,
+  ) {
+    return '$kind · $amount du $from au $to';
+  }
+
+  @override
+  String get leaseTermRefused =>
+      'Non ajouté. Un nouveau montant doit commencer après celui en vigueur et le bail ne doit pas être résilié.';
+
+  @override
+  String get leaseTermSave => 'Ajouter';
+
+  @override
+  String get leaseTermTitle => 'Nouveau montant';
+
+  @override
+  String get leaseTermsHeading => 'Loyer et charges';
+
+  @override
+  String get leaseTitle => 'Bail des locaux';
+
+  @override
   String get ledgerCategoryAdjustment => 'Ajustement';
 
   @override
@@ -13043,6 +13268,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get permManageIntegrations => 'Gérer les intégrations';
+
+  @override
+  String get permManageLease => 'Enregistrer le bail des locaux';
 
   @override
   String get permManageMembers => 'Gérer les membres';
