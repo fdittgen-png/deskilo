@@ -1299,5 +1299,33 @@
   "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtelo de nuevo.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
+  "reportImageForbidden": "No se permite leer esta imagen",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageUnavailable": "No se pudo leer la imagen en este momento",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "El archivo no es una imagen utilizable",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageRetry": "Volver a leer la imagen",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name}: {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

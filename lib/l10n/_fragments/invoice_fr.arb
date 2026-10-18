@@ -1299,5 +1299,33 @@
   "invoiceHoldFailed": "La suspension des relances n'a pas pu être modifiée. Veuillez réessayer.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
+  "reportImageForbidden": "Lecture de cette image non autorisée",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageUnavailable": "L'image n'a pas pu être lue pour le moment",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "Le fichier n'est pas une image utilisable",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageRetry": "Relire l'image",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name} : {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -10,6 +10,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
+import 'report_image_notice.dart';
 
 /// The report-image LIBRARY picker (#488): the workspace's uploaded
 /// images with an upload button. Pops with the chosen image's name, or
@@ -111,6 +112,21 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
                         height: 40,
                         child: ref
                                     .watch(reportImageBytesProvider(name))
+                                    .hasError
+                            ? Tooltip(
+                                message: reportImageReason(
+                                  l10n,
+                                  ref
+                                      .watch(reportImageBytesProvider(name))
+                                      .error!,
+                                ),
+                                child: Icon(
+                                  Icons.error_outline,
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                              )
+                            : ref
+                                    .watch(reportImageBytesProvider(name))
                                     .value ==
                                 null
                             ? const Icon(Icons.image_outlined)
@@ -125,6 +141,15 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
                       ),
                       title: Text(name,
                           maxLines: 1, overflow: TextOverflow.ellipsis),
+                      trailing: ref.watch(reportImageBytesProvider(name)).hasError
+                          ? IconButton(
+                              key: ValueKey('report-image-retry-$name'),
+                              tooltip: l10n.reportImageRetry,
+                              icon: const Icon(Icons.refresh),
+                              onPressed: () =>
+                                  ref.invalidate(reportImageBytesProvider(name)),
+                            )
+                          : null,
                       onTap: () => Navigator.of(context).pop(name),
                     ),
                 ],

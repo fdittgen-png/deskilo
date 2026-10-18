@@ -1299,5 +1299,33 @@
   "invoiceHoldFailed": "Der Mahnstopp konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
+  },
+  "reportImageForbidden": "Dieses Bild darf nicht gelesen werden",
+  "@reportImageForbidden": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageUnavailable": "Das Bild konnte gerade nicht gelesen werden",
+  "@reportImageUnavailable": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageInvalid": "Die Datei ist kein verwendbares Bild",
+  "@reportImageInvalid": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageRetry": "Bild erneut lesen",
+  "@reportImageRetry": {
+    "description": "#2586 report image failure"
+  },
+  "reportImageProblem": "{name}: {reason}",
+  "@reportImageProblem": {
+    "description": "#2586 report image failure",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

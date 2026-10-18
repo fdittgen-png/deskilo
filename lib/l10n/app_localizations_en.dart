@@ -16228,6 +16228,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportImageAlignRight => 'Right';
 
   @override
+  String get reportImageForbidden => 'Not allowed to read this image';
+
+  @override
+  String get reportImageInvalid => 'The file is not a usable image';
+
+  @override
+  String reportImageProblem(String name, String reason) {
+    return '$name: $reason';
+  }
+
+  @override
+  String get reportImageRetry => 'Retry reading the image';
+
+  @override
   String get reportImageSize => 'Size';
 
   @override
@@ -16238,6 +16252,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportImageSizeSmall => 'Small';
+
+  @override
+  String get reportImageUnavailable => 'The image could not be read right now';
 
   @override
   String get reportImageUpload => 'Upload image';
