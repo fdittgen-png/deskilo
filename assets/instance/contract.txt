@@ -2245,7 +2245,7 @@ routine public.set_role_permission(p_workspace_id uuid, p_role text, p_permissio
 routine public.set_role_permissions(p_workspace_id uuid, p_role text, p_permissions text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:75d64e57ab19
 routine public.set_seat_block(p_seat_id uuid, p_blocked_from timestamp with time zone, p_blocked_to timestamp with time zone) -> void | function | definer | volatile | exec:authenticated,service_role | body:f81dc944c6c3
 routine public.set_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:32bfa990e281
-routine public.set_supplier_bank(p_supplier_id uuid, p_account_holder text, p_iban text, p_bic text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:4601148c86e7
+routine public.set_supplier_bank(p_supplier_id uuid, p_account_holder text, p_iban text, p_bic text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:cd9a4434261e
 routine public.set_supplier_status(p_supplier_id uuid, p_status text) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d297c73d180
 routine public.set_tax_exemption_certificate(p_workspace_id uuid, p_member_id uuid, p_kind text, p_state text, p_number text, p_valid_from date, p_valid_to date, p_file_path text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:179463889b51
 routine public.set_tax_reference(p_domain text, p_country text, p_key text, p_value jsonb, p_source text, p_confirmed boolean, p_valid_from date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6fbadd0c7203
@@ -2286,7 +2286,7 @@ routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_cat
 routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8c3a141fde5f
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
 routine public.supplier_backfill(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fea258b2c4f8
-routine public.supplier_guard(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:7a97e17aca1a
+routine public.supplier_guard(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:service_role | body:bc6e9123a7cd
 routine public.supplier_iban_check(p_iban text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:0e83b912b0b2
 routine public.supplier_link_source(p_source_table text, p_source_id uuid) -> text | function | definer | volatile | exec:service_role | body:94484303da4f
 routine public.supplier_next_number(p_workspace_id uuid) -> text | function | definer | volatile | exec:service_role | body:bab10c3c4364
