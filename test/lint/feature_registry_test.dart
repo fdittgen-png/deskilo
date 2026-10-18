@@ -16,13 +16,13 @@
 //      pins: the catalogue row and the server registry are the review).
 // See docs/AGENT_RULES.md ("Feature management").
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/feature_lifecycle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 
 void main() {
@@ -163,8 +163,7 @@ void _tierPins() {
 Set<String> everRegisteredFeatureKeys() {
   const definition = 'create or replace function public.feature_registry()';
   final keys = <String>{};
-  for (final f in Directory('supabase/migrations').listSync().whereType<File>()) {
-    if (!f.path.endsWith('.sql')) continue;
+  for (final f in sqlFiles('supabase/migrations')) {
     final sql = f.readAsStringSync();
     final at = sql.indexOf(definition);
     if (at < 0) continue;

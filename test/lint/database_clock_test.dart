@@ -20,6 +20,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// The RPCs whose refusals are the clock itself — "check-in window
 /// closed", "check-in window not open yet", "outside the opening hours".
@@ -66,12 +67,7 @@ List<String> clockDependentFiles(Iterable<File> files) {
 
 void main() {
   test('no database test depends on the hour the pipeline runs', () {
-    final files = Directory('supabase/tests/database')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/tests/database');
     expect(files, isNotEmpty, reason: 'the suite moved; fix the path');
 
     expect(

@@ -14,14 +14,11 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 const _groups = ['CI', 'Nightly', 'Release', 'Publish', 'Status', 'Tools'];
 
-List<File> _workflows() => Directory('.github/workflows')
-    .listSync()
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.yml'))
-    .toList()
-  ..sort((a, b) => a.path.compareTo(b.path));
+List<File> _workflows() => filesWithExtension('.github/workflows', '.yml');
 
 /// The workflow's top-level `name:` — the first column-0 `name:` line.
 /// A line scanner rather than a YAML parser: the grammar is regular

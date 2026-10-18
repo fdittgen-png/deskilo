@@ -20,7 +20,6 @@
 // The registry is also held to itself: unique canonical ids, a reason on
 // everything that never travels, a binding on every reference, enum
 // values equal to the Dart enums the client writes.
-import 'dart:io';
 
 import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/core/time/work_hours.dart';
@@ -40,6 +39,7 @@ import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/lint/configuration_classification.dart' show deployableEntityKeys, workspaceColumns;
+import 'lint_sources.dart';
 
 final _registry = templateFieldRegistry();
 final _ids = {for (final s in _registry) s.id};
@@ -58,12 +58,7 @@ bool _columnCovered(String table, String column) {
 
 /// Every migration, with the doubled quotes of plpgsql string literals
 /// folded: 0186 builds the accessories export as `'' || E'\n' ||` text.
-Iterable<String> _sql() => (Directory('supabase/migrations')
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.sql'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path)))
+Iterable<String> _sql() => sqlFiles('supabase/migrations')
     .map((f) => f.readAsStringSync().replaceAll("''", "'"));
 
 /// Every value ever listed under `'<field>', '[…]'::jsonb` in an entity

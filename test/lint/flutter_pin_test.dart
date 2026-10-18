@@ -14,6 +14,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 final _envPin = RegExp(r'FLUTTER_VERSION:\s*"([0-9.]+)"');
 
 void main() {
@@ -26,8 +28,7 @@ void main() {
         reason: 'a bare version, nothing else: the recipe cats this file');
 
     final disagreeing = <String>[];
-    for (final entity in Directory('.github/workflows').listSync()) {
-      if (entity is! File || !entity.path.endsWith('.yml')) continue;
+    for (final entity in filesWithExtension('.github/workflows', '.yml')) {
       final source = entity.readAsStringSync();
       for (final match in _envPin.allMatches(source)) {
         if (match.group(1) != pin) {

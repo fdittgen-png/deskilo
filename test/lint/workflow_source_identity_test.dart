@@ -22,6 +22,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 
+import 'lint_sources.dart';
+
 const _legs = {
   'android': 'play-internal.yml',
   'apple': 'ios-testflight.yml',
@@ -49,10 +51,7 @@ YamlMap _yaml(String path) => loadYaml(File(path).readAsStringSync()) as YamlMap
 YamlMap _workflow(String file) => _yaml('.github/workflows/$file');
 YamlMap _on(YamlMap w) => (w['on'] ?? w[true]) as YamlMap;
 List<YamlMap> _steps(YamlMap job) => (job['steps'] as YamlList).cast<YamlMap>();
-Iterable<File> _workflows() => Directory('.github/workflows')
-    .listSync()
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.yml'));
+Iterable<File> _workflows() => filesWithExtension('.github/workflows', '.yml');
 
 void main() {
   test('the train resolves the ref once and hands the SHA to every leg',

@@ -22,6 +22,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// An LCOV record for [file] with [found] lines, [hit] of them covered.
 String _record(String file, {required int hit, required int found}) =>
@@ -143,7 +144,7 @@ void main() {
         reason: '$what: a percentage was computed from malformed evidence');
     expect(r.out, isNot(contains('%')),
         reason: '$what: a percentage was printed from malformed evidence');
-    expect(Directory('${_dir.path}/report').existsSync(), isFalse,
+    expect(directoryAt('${_dir.path}/report').existsSync(), isFalse,
         reason: '$what: the report was written from malformed evidence');
   }
 

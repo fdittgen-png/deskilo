@@ -20,8 +20,7 @@ void main() {
         reason: 'stale bundle — run: dart run tool/build_instance.dart');
     final decoded = jsonDecode(onDisk) as Map<String, dynamic>;
     final schema = decoded['schema'] as List;
-    expect(schema.length,
-        Directory('supabase/migrations').listSync().whereType<File>().length);
+    expect(schema.length, sqlFiles('supabase/migrations').length);
     expect((schema.first as Map)['name'], startsWith('0001_'));
     final functions = decoded['functions'] as List;
     expect(functions.map((f) => (f as Map)['slug']),
@@ -36,9 +35,7 @@ void main() {
   test('#1137 — every function carries the shared modules, path-named', () {
     final decoded = jsonDecode(
         File('assets/instance/bundle.json').readAsStringSync()) as Map;
-    final shared = Directory('supabase/functions/_shared')
-        .listSync()
-        .whereType<File>()
+    final shared = filesWithExtension('supabase/functions/_shared', '.ts')
         .map((f) => '_shared/${f.uri.pathSegments.last}')
         .toSet();
     expect(shared, isNotEmpty, reason: 'money.ts lives there');

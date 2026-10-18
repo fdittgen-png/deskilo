@@ -41,6 +41,13 @@ List<File> sqlFiles(String root, {bool recursive = false}) =>
 List<File> markdownFiles(String root, {bool recursive = true}) =>
     _filesWithExtension(root, '.md', recursive: recursive);
 
+/// The files ending in [extension] under [root], sorted by path — the walk
+/// behind [sqlFiles] and [markdownFiles], for the other kinds a lint reads
+/// (workflows, JSON, ARB) with no generated-file exclusion (#2604).
+List<File> filesWithExtension(String root, String extension,
+        {bool recursive = false}) =>
+    _filesWithExtension(root, extension, recursive: recursive);
+
 List<File> _filesWithExtension(String root, String extension,
         {required bool recursive}) =>
     Directory(root)
@@ -49,6 +56,16 @@ List<File> _filesWithExtension(String root, String extension,
         .where((f) => f.path.endsWith(extension))
         .toList()
       ..sort((a, b) => a.path.compareTo(b.path));
+
+/// A directory by path: the one place a lint test builds a [Directory], so a
+/// walk is always this file's (#2604).
+Directory directoryAt(String path) => Directory(path);
+
+/// The names of the directories directly under [root], sorted (#2604).
+List<String> directoryNames(String root) => [
+      for (final d in Directory(root).listSync().whereType<Directory>())
+        d.uri.pathSegments.where((s) => s.isNotEmpty).last,
+    ]..sort();
 
 /// Reading a small text file of a lint (a baseline list), line by line.
 abstract final class File2 {

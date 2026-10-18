@@ -13,11 +13,12 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 const _minScreenshots = 2;
 
 void main() {
-  final metadata = Directory('fastlane/metadata/android');
+  final metadata = directoryAt('fastlane/metadata/android');
   final tool = File('tools/upload_listing.py').readAsStringSync();
 
   test('every listed locale resolves to enough phone screenshots', () {
@@ -30,7 +31,7 @@ void main() {
       ..sort();
     expect(locales, isNotEmpty);
 
-    final fallback = Directory(
+    final fallback = directoryAt(
         '${metadata.path}/en-US/images/phoneScreenshots');
     final fallbackCount = fallback.existsSync()
         ? fallback.listSync().where((f) => f.path.endsWith('.png')).length
@@ -38,7 +39,7 @@ void main() {
 
     for (final locale in locales) {
       final own =
-          Directory('${metadata.path}/$locale/images/phoneScreenshots');
+          directoryAt('${metadata.path}/$locale/images/phoneScreenshots');
       final ownCount = own.existsSync()
           ? own.listSync().where((f) => f.path.endsWith('.png')).length
           : 0;

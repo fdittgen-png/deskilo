@@ -7,6 +7,7 @@
 // skipped), and fails when the count differs from its recorded ceiling --
 // up is a defect, down must be recorded.
 import 'dart:io';
+import 'lint_sources.dart';
 
 /// A named class of literal: what it matches and why it is a business value.
 class LiteralKind {
@@ -24,7 +25,7 @@ List<File> filesUnder(Iterable<String> roots, {String suffix = '.dart'}) {
     if (entity == FileSystemEntityType.file) {
       out.add(File(root));
     } else if (entity == FileSystemEntityType.directory) {
-      out.addAll(Directory(root)
+      out.addAll(directoryAt(root)
           .listSync(recursive: true)
           .whereType<File>()
           .where((f) => f.path.endsWith(suffix)));

@@ -13,9 +13,10 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/applied_migrations/applied.dart';
+import 'lint_sources.dart';
 
 void main() {
-  final dir = Directory(migrationsDir);
+  final dir = directoryAt(migrationsDir);
   final baseline = parseBaseline(File(baselinePath).readAsStringSync());
 
   test('the baseline records every applied migration, and the tree honours it', () {

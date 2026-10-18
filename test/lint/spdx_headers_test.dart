@@ -71,7 +71,7 @@ void main() {
     final wrong = <String>[];
 
     for (final root in _roots) {
-      final dir = Directory(root);
+      final dir = directoryAt(root);
       if (!dir.existsSync()) continue;
       final files = dir
           .listSync(recursive: true)

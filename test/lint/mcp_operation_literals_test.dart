@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// `path:line: id` for every catalogued id quoted in [sources].
 List<String> mcpOperationLiterals(
@@ -41,9 +42,7 @@ void main() {
             path.startsWith('lib/core/mcp/') ||
             RegExp(r'^lib/core/instance/mcp_\w+\.dart$').hasMatch(path));
     final sources = {
-      for (final f in Directory(
-        'lib',
-      ).listSync(recursive: true).whereType<File>())
+      for (final f in filesWithExtension('lib', '', recursive: true))
         if (scanned(f.path)) f.path: f.readAsStringSync(),
     };
     expect(sources, isNotEmpty);
