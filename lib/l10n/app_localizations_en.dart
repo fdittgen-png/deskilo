@@ -5222,6 +5222,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Reservations never checked in or out complete themselves once their time has passed.';
 
   @override
+  String featureAvailableOnlyIn(String countries) {
+    return 'Available in $countries';
+  }
+
+  @override
   String get featureBadgeSignInDesc =>
       'Members can sign in by scanning their badge and entering their PIN, instead of typing an e-mail on a shared tablet. Each member sets their own PIN and arms their own badge.';
 
@@ -5333,6 +5338,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'The space file (XML) carries the whole configuration — tariffs, legal identity, booking and validation rules, roles, document designs, sites, closure days — and importing it applies it, even on a space that already has bookings. Off: the file carries settings and floor plan only.';
+
+  @override
+  String get featureCountriesEuName => 'the European Union';
 
   @override
   String get featureCustomFieldsDesc =>

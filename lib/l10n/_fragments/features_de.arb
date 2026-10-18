@@ -236,5 +236,18 @@
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
   "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen.",
-  "featureIntakeUnconfirmedNote": "Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf."
+  "featureIntakeUnconfirmedNote": "Aus: nichts Neues beginnt. Dieser Server konnte nicht bestätigen, dass Offenes weiter bearbeitet werden kann; verlassen Sie sich nicht darauf.",
+  "featureAvailableOnlyIn": "Verfügbar in: {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
+  "featureCountriesEuName": "der Europäischen Union",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
+  }
 }

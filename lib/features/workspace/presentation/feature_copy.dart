@@ -272,3 +272,11 @@ String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         WorkspaceFeature.premisesLease => l10n.featurePremisesLeaseDesc,
       _ => feature.name,
     };
+
+/// #2454 — "Available in the European Union, Norway": the countries a
+/// feature is available in, the Union token spelled out.
+String featureAvailableNote(AppLocalizations l10n, Set<String> availableIn) =>
+    l10n.featureAvailableOnlyIn([
+      for (final c in availableIn.toList()..sort())
+        if (c == featureCountriesEu) l10n.featureCountriesEuName else c,
+    ].join(', '));

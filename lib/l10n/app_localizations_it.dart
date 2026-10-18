@@ -5257,6 +5257,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.';
 
   @override
+  String featureAvailableOnlyIn(String countries) {
+    return 'Disponibile in: $countries';
+  }
+
+  @override
   String get featureBadgeSignInDesc =>
       'I membri possono accedere scansionando il proprio badge e inserendo il PIN, invece di digitare un\'e-mail su un tablet condiviso. Ogni membro imposta il proprio PIN e attiva il proprio badge.';
 
@@ -5371,6 +5376,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Il file dello spazio (XML) porta l\'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l\'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.';
+
+  @override
+  String get featureCountriesEuName => 'l\'Unione europea';
 
   @override
   String get featureCustomFieldsDesc =>

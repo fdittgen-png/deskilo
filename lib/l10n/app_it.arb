@@ -3782,6 +3782,15 @@
   "featureAlsoEnables": "Attivando questa si abilita anche {features}",
   "featureAutoCheckInOut": "Check-in/out automatico a fine giornata",
   "featureAutoCheckInOutDesc": "Le prenotazioni senza check-in o check-out si completano da sole una volta trascorso il loro orario.",
+  "featureAvailableOnlyIn": "Disponibile in: {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
   "featureBadgeSignInDesc": "I membri possono accedere scansionando il proprio badge e inserendo il PIN, invece di digitare un'e-mail su un tablet condiviso. Ogni membro imposta il proprio PIN e attiva il proprio badge.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
@@ -3855,6 +3864,10 @@
   "featureConfigurationTransferDesc": "Il file dello spazio (XML) porta l'intera configurazione — tariffe, identità legale, regole di prenotazione e convalida, ruoli, layout dei documenti, sedi, giorni di chiusura — e l'importazione la applica, anche su uno spazio che ha già prenotazioni. Disattivato: il file porta solo impostazioni e planimetria.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCountriesEuName": "l'Unione europea",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
   },
   "featureCustomFieldsDesc": "Lo spazio può porre le proprie domande dentro il modulo d'identità: un incarico nel direttivo, una data di adesione, un contatto d'emergenza. Le risposte appartengono all'iscrizione, quindi una domanda posta qui non segue nessuno altrove.",
   "@featureCustomFieldsDesc": {

@@ -5265,6 +5265,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.';
 
   @override
+  String featureAvailableOnlyIn(String countries) {
+    return 'Verfügbar in: $countries';
+  }
+
+  @override
   String get featureBadgeSignInDesc =>
       'Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.';
 
@@ -5377,6 +5382,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.';
+
+  @override
+  String get featureCountriesEuName => 'der Europäischen Union';
 
   @override
   String get featureCustomFieldsDesc =>

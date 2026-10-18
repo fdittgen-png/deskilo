@@ -79,6 +79,7 @@ class FeatureTile extends ConsumerWidget {
     required this.alsoEnables,
     required this.onChanged,
     this.assessment,
+    this.unavailableNote,
   });
 
   final FeatureManifestEntry entry;
@@ -97,6 +98,11 @@ class FeatureTile extends ConsumerWidget {
 
   /// #1850 — the row's maturity and lifecycle; the registry's when null.
   final FeatureAssessment? assessment;
+
+  /// #2454 — why the feature is unavailable in the workspace's country
+  /// ("Available in the European Union"); null when it is available. The
+  /// owner's switch is kept and shown, but nothing happens.
+  final String? unavailableNote;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,13 +129,14 @@ class FeatureTile extends ConsumerWidget {
         l10n.featureIntakeUnconfirmedNote,
       if (value && inactive)
         l10n.featureHeldBack,
+      ?unavailableNote,
     ];
     // #1221 — the lead sentence says WHAT it is; the rest says how it
     // behaves, and only matters for the one row you stopped on. The
     // descriptions average 158 characters and run to 390, so shown
     // whole they were prose you scrolled past rather than read.
     final split = splitFeatureDescription(description);
-    final held = value && inactive;
+    final held = (value && inactive) || unavailableNote != null;
     return Padding(
       padding: EdgeInsets.only(left: child ? 24 : 0),
       child: SwitchListTile(

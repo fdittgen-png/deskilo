@@ -141,6 +141,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                       key: const ValueKey('features-feature-capability-list'),
                       rows: rows,
                       raw: raw,
+                      country: workspace.countryCode,
                       assessments: widget.assessments,
                       // Hidden while filtering: somebody who typed a name
                       // is past being introduced. The list takes the

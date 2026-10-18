@@ -5267,6 +5267,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.';
 
   @override
+  String featureAvailableOnlyIn(String countries) {
+    return 'Disponible dans : $countries';
+  }
+
+  @override
   String get featureBadgeSignInDesc =>
       'Les membres peuvent se connecter en scannant leur badge puis en saisissant leur code, au lieu de taper une adresse e-mail sur une tablette partagée. Chaque membre définit son propre code et active son propre badge.';
 
@@ -5382,6 +5387,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureConfigurationTransferDesc =>
       'Le fichier de l\'espace (XML) emporte toute la configuration — tarifs, identité légale, règles de réservation et de validation, rôles, maquettes de documents, sites, jours de fermeture — et l\'import l\'applique, même sur un espace qui a déjà des réservations. Désactivé : le fichier n\'emporte que les réglages et le plan.';
+
+  @override
+  String get featureCountriesEuName => 'l\'Union européenne';
 
   @override
   String get featureCustomFieldsDesc =>

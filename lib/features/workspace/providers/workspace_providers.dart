@@ -436,8 +436,8 @@ Future<Set<WorkspaceFeature>> enabledFeatures(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   // Hierarchy applied here: gates all over the app see the EFFECTIVE
   // set, so switching a parent off takes its whole subtree with it.
-  return effectiveFeatures(resolveEnabledFeatures(
-      workspace?.featureFlags ?? platformFeaturesOnByDefault)); // #2566
+  final flags = workspace?.featureFlags ?? platformFeaturesOnByDefault; // #2566
+  return effectiveFeatures(resolveEnabledFeatures(flags), country: workspace?.countryCode); // #2454
 }
 
 /// Sync convenience over [enabledFeatures] for build methods and router

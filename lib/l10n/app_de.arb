@@ -3782,6 +3782,15 @@
   "featureAlsoEnables": "Das schaltet außerdem {features} ein",
   "featureAutoCheckInOut": "Auto-Check-in/-out am Tagesende",
   "featureAutoCheckInOutDesc": "Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.",
+  "featureAvailableOnlyIn": "Verfügbar in: {countries}",
+  "@featureAvailableOnlyIn": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "countries": {
+        "type": "String"
+      }
+    }
+  },
   "featureBadgeSignInDesc": "Mitglieder melden sich an, indem sie ihren Ausweis scannen und ihre PIN eingeben, statt eine E-Mail-Adresse auf einem gemeinsam genutzten Tablet zu tippen. Jedes Mitglied setzt seine eigene PIN und aktiviert seinen eigenen Ausweis.",
   "@featureBadgeSignInDesc": {
     "description": "#662 - feature registry entry"
@@ -3855,6 +3864,10 @@
   "featureConfigurationTransferDesc": "Die Raumdatei (XML) trägt die gesamte Konfiguration — Tarife, rechtliche Identität, Buchungs- und Freigaberegeln, Rollen, Dokumentvorlagen, Standorte, Schließtage — und der Import wendet sie an, auch auf einen Raum, der schon Buchungen hat. Aus: die Datei trägt nur Einstellungen und Grundriss.",
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
+  },
+  "featureCountriesEuName": "der Europäischen Union",
+  "@featureCountriesEuName": {
+    "description": "#2454 feature availability by country"
   },
   "featureCustomFieldsDesc": "Der Bereich kann im Identitätsformular eigene Fragen stellen — eine Funktion im Vorstand, ein Eintrittsdatum, ein Notfallkontakt. Die Antworten gehören zur Mitgliedschaft, eine hier gestellte Frage folgt also niemandem anderswohin.",
   "@featureCustomFieldsDesc": {
