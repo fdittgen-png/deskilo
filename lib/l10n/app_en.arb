@@ -11487,6 +11487,79 @@
   "@leaseSaved": {
     "description": "#2569 premises lease"
   },
+  "leaseSettle": "Settle charges",
+  "@leaseSettle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleBilled": "Amount billed",
+  "@leaseSettleBilled": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleDue": "Due on",
+  "@leaseSettleDue": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleFrom": "Period from",
+  "@leaseSettleFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleHint": "Enter the period the lessor billed and the amount of the bill. The advances paid in the period are deducted: a balance is owed on the day you choose, a surplus is recorded as a credit. A settlement is final.",
+  "@leaseSettleHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleInvalid": "Give a period that is over, the amount billed, and a due day not before the period ends. A period already settled cannot be settled twice.",
+  "@leaseSettleInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleRefused": "The settlement could not be recorded",
+  "@leaseSettleRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleSave": "Record settlement",
+  "@leaseSettleSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTitle": "Settle the service charges",
+  "@leaseSettleTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTo": "Period to",
+  "@leaseSettleTo": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettlementCredit": "Settled {from} to {to}: credit of {amount}",
+  "@leaseSettlementCredit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseSettlementOwed": "Settled {from} to {to}: {amount} owed, due {due}",
+  "@leaseSettlementOwed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Since {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",

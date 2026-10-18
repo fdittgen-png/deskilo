@@ -7037,6 +7037,79 @@
   "@leaseSaved": {
     "description": "#2569 premises lease"
   },
+  "leaseSettle": "Régulariser les charges",
+  "@leaseSettle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleBilled": "Montant facturé",
+  "@leaseSettleBilled": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleDue": "Échéance le",
+  "@leaseSettleDue": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleFrom": "Période du",
+  "@leaseSettleFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleHint": "Saisissez la période facturée par le bailleur et le montant de la facture. Les provisions payées sur la période sont déduites : un solde est dû à la date choisie, un excédent est enregistré comme avoir. Une régularisation est définitive.",
+  "@leaseSettleHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleInvalid": "Indiquez une période révolue, le montant facturé et une échéance qui n'est pas antérieure à la fin de la période. Une période déjà régularisée ne peut pas l'être deux fois.",
+  "@leaseSettleInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleRefused": "La régularisation n'a pas pu être enregistrée",
+  "@leaseSettleRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleSave": "Enregistrer la régularisation",
+  "@leaseSettleSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTitle": "Régulariser les charges",
+  "@leaseSettleTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTo": "Période au",
+  "@leaseSettleTo": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettlementCredit": "Régularisé du {from} au {to} : avoir de {amount}",
+  "@leaseSettlementCredit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseSettlementOwed": "Régularisé du {from} au {to} : {amount} dus, échéance {due}",
+  "@leaseSettlementOwed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Depuis le {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",

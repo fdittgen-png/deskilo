@@ -462,5 +462,78 @@
   "leaseMatchReverseAction": "Revertir",
   "@leaseMatchReverseAction": {
     "description": "#2575 commitment matching"
+  },
+  "leaseSettle": "Liquidar gastos",
+  "@leaseSettle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTitle": "Liquidar los gastos de servicios",
+  "@leaseSettleTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleHint": "Indique el período facturado por el arrendador y el importe de la factura. Se descuentan los anticipos pagados en el período: un saldo se debe el día elegido, un excedente se registra como crédito. Una liquidación es definitiva.",
+  "@leaseSettleHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleFrom": "Período desde",
+  "@leaseSettleFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTo": "Período hasta",
+  "@leaseSettleTo": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleBilled": "Importe facturado",
+  "@leaseSettleBilled": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleDue": "Vence el",
+  "@leaseSettleDue": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleInvalid": "Indique un período ya terminado, el importe facturado y un vencimiento no anterior al fin del período. Un período ya liquidado no puede liquidarse dos veces.",
+  "@leaseSettleInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleRefused": "No se pudo registrar la liquidación",
+  "@leaseSettleRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleSave": "Registrar liquidación",
+  "@leaseSettleSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettlementOwed": "Liquidado del {from} al {to}: {amount} a pagar, vence {due}",
+  "@leaseSettlementOwed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseSettlementCredit": "Liquidado del {from} al {to}: crédito de {amount}",
+  "@leaseSettlementCredit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

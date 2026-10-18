@@ -15,6 +15,7 @@ import '../../providers/premises_lease_providers.dart';
 import 'lease_commitments_sheet.dart';
 import 'premises_lease_dialogs.dart';
 import 'premises_lease_notice_dialog.dart';
+import 'premises_lease_settlement_dialog.dart';
 import 'premises_lease_term_dialogs.dart';
 
 /// Opens the premises lease of [workspaceId]. The caller decides when to offer
@@ -143,6 +144,24 @@ class PremisesLeaseView extends ConsumerWidget {
                                   lease,
                                 ),
                               ),
+                        onSettle:
+                            !canManage ||
+                                lease.status == LeaseStatus.draft ||
+                                !lease.terms.any(
+                                  (t) =>
+                                      t.kind ==
+                                      LeaseTermKind.serviceChargeAdvance,
+                                )
+                            ? null
+                            : () => _open(
+                                context,
+                                ref,
+                                () => showLeaseSettlementDialog(
+                                  context,
+                                  workspaceId,
+                                  lease,
+                                ),
+                              ),
                         onEdit: !canManage || lease.terminated
                             ? null
                             : () => _open(
@@ -169,6 +188,7 @@ class _LeaseCard extends StatelessWidget {
     required this.currencyCode,
     required this.onTerm,
     required this.onNotice,
+    required this.onSettle,
     required this.onEdit,
     required this.onCommitments,
   });
@@ -177,6 +197,7 @@ class _LeaseCard extends StatelessWidget {
   final String currencyCode;
   final VoidCallback? onTerm;
   final VoidCallback? onNotice;
+  final VoidCallback? onSettle;
   final VoidCallback? onEdit;
   final VoidCallback onCommitments;
 
@@ -242,6 +263,7 @@ class _LeaseCard extends StatelessWidget {
                         ),
                 ),
               ),
+            _SettlementLines(lease: lease, money: money),
             if (lease.terminated) ...[
               Text(
                 l10n.leaseEndsOn(
@@ -280,6 +302,12 @@ class _LeaseCard extends StatelessWidget {
                     onPressed: onTerm,
                     child: Text(l10n.leaseAddTerm),
                   ),
+                if (onSettle != null)
+                  TextButton(
+                    key: ValueKey('lease-settle-${lease.id}'),
+                    onPressed: onSettle,
+                    child: Text(l10n.leaseSettle),
+                  ),
                 if (onNotice != null)
                   TextButton(
                     key: ValueKey('lease-notice-${lease.id}'),
@@ -291,6 +319,43 @@ class _LeaseCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// The settlements of the service charges: what was billed against the
+/// advances, and what is owed or credited.
+class _SettlementLines extends StatelessWidget {
+  const _SettlementLines({required this.lease, required this.money});
+
+  final PremisesLease lease;
+  final MoneyFormat money;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final material = MaterialLocalizations.of(context);
+    String day(DateTime d) => material.formatMediumDate(d);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final s in lease.settlements)
+          Text(
+            key: ValueKey('lease-settlement-${s.id}'),
+            s.creditCents > 0
+                ? l10n.leaseSettlementCredit(
+                    day(s.periodStart),
+                    day(s.periodEnd),
+                    money.formatMinor(s.creditCents),
+                  )
+                : l10n.leaseSettlementOwed(
+                    day(s.periodStart),
+                    day(s.periodEnd),
+                    money.formatMinor(s.owedCents),
+                    day(s.dueOn),
+                  ),
+          ),
+      ],
     );
   }
 }

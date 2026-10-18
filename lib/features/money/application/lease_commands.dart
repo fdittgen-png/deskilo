@@ -49,4 +49,23 @@ class LeaseCommands {
     }
     return _repository.giveNotice(workspaceId, command);
   }
+
+  /// A settlement closes a period that is over, bills a non-negative amount
+  /// and falls due on or after the period's end.
+  Future<PremisesLease?> settle(
+    String workspaceId,
+    PremisesLease lease,
+    LeaseSettlementCommand command,
+    DateTime today,
+  ) async {
+    if (lease.status == LeaseStatus.draft ||
+        command.periodEnd.isBefore(command.periodStart) ||
+        command.periodEnd.isAfter(today) ||
+        command.periodEnd.difference(command.periodStart).inDays > 400 ||
+        command.actualCents < 0 ||
+        command.dueOn.isBefore(command.periodEnd)) {
+      return null;
+    }
+    return _repository.settleCharges(workspaceId, command);
+  }
 }

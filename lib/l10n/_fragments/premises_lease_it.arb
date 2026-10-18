@@ -462,5 +462,78 @@
   "leaseMatchReverseAction": "Annulla",
   "@leaseMatchReverseAction": {
     "description": "#2575 commitment matching"
+  },
+  "leaseSettle": "Conguagliare le spese",
+  "@leaseSettle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTitle": "Conguaglio delle spese di servizio",
+  "@leaseSettleTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleHint": "Indichi il periodo fatturato dal locatore e l'importo della fattura. Gli acconti versati nel periodo vengono detratti: un saldo è dovuto nel giorno scelto, un'eccedenza è registrata come credito. Un conguaglio è definitivo.",
+  "@leaseSettleHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleFrom": "Periodo dal",
+  "@leaseSettleFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTo": "Periodo al",
+  "@leaseSettleTo": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleBilled": "Importo fatturato",
+  "@leaseSettleBilled": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleDue": "Scadenza il",
+  "@leaseSettleDue": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleInvalid": "Indichi un periodo concluso, l'importo fatturato e una scadenza non anteriore alla fine del periodo. Un periodo già conguagliato non può esserlo due volte.",
+  "@leaseSettleInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleRefused": "Non è stato possibile registrare il conguaglio",
+  "@leaseSettleRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleSave": "Registra il conguaglio",
+  "@leaseSettleSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettlementOwed": "Conguagliato dal {from} al {to}: {amount} dovuti, scadenza {due}",
+  "@leaseSettlementOwed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseSettlementCredit": "Conguagliato dal {from} al {to}: credito di {amount}",
+  "@leaseSettlementCredit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

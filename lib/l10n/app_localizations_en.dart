@@ -9791,6 +9791,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaseSaved => 'Saved';
 
   @override
+  String get leaseSettle => 'Settle charges';
+
+  @override
+  String get leaseSettleBilled => 'Amount billed';
+
+  @override
+  String get leaseSettleDue => 'Due on';
+
+  @override
+  String get leaseSettleFrom => 'Period from';
+
+  @override
+  String get leaseSettleHint =>
+      'Enter the period the lessor billed and the amount of the bill. The advances paid in the period are deducted: a balance is owed on the day you choose, a surplus is recorded as a credit. A settlement is final.';
+
+  @override
+  String get leaseSettleInvalid =>
+      'Give a period that is over, the amount billed, and a due day not before the period ends. A period already settled cannot be settled twice.';
+
+  @override
+  String get leaseSettleRefused => 'The settlement could not be recorded';
+
+  @override
+  String get leaseSettleSave => 'Record settlement';
+
+  @override
+  String get leaseSettleTitle => 'Settle the service charges';
+
+  @override
+  String get leaseSettleTo => 'Period to';
+
+  @override
+  String leaseSettlementCredit(String from, String to, String amount) {
+    return 'Settled $from to $to: credit of $amount';
+  }
+
+  @override
+  String leaseSettlementOwed(
+    String from,
+    String to,
+    String amount,
+    String due,
+  ) {
+    return 'Settled $from to $to: $amount owed, due $due';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Since $date';
   }

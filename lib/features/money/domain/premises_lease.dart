@@ -77,6 +77,46 @@ class LeaseTerm {
   bool get inForce => effectiveTo == null;
 }
 
+/// #2569 C2a -- the year-end settlement of the service charges: what the
+/// lessor billed against the advances paid. Final once recorded.
+class LeaseSettlement {
+  const LeaseSettlement({
+    required this.id,
+    required this.periodStart,
+    required this.periodEnd,
+    required this.advancesCents,
+    required this.actualCents,
+    required this.balanceCents,
+    required this.dueOn,
+  });
+
+  factory LeaseSettlement.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'lease settlement');
+    return LeaseSettlement(
+      id: r.string('id'),
+      periodStart: DateTime.parse(r.string('period_start')),
+      periodEnd: DateTime.parse(r.string('period_end')),
+      advancesCents: r.integer('advances_cents'),
+      actualCents: r.integer('actual_cents'),
+      balanceCents: r.integer('balance_cents'),
+      dueOn: DateTime.parse(r.string('due_on')),
+    );
+  }
+
+  final String id;
+  final DateTime periodStart;
+  final DateTime periodEnd;
+  final int advancesCents;
+  final int actualCents;
+
+  /// Billed minus advanced: positive is owed to the lessor, negative a credit.
+  final int balanceCents;
+  final DateTime dueOn;
+
+  int get owedCents => balanceCents > 0 ? balanceCents : 0;
+  int get creditCents => balanceCents < 0 ? -balanceCents : 0;
+}
+
 class PremisesLease {
   const PremisesLease({
     required this.id,
@@ -99,6 +139,7 @@ class PremisesLease {
     this.depositDueBackCents = 0,
     this.occurrencesAfterEnd = 0,
     this.terms = const [],
+    this.settlements = const [],
   });
 
   factory PremisesLease.fromJson(Object? raw) {
@@ -124,6 +165,9 @@ class PremisesLease {
       depositDueBackCents: r.intOrNull('deposit_due_back_cents') ?? 0,
       occurrencesAfterEnd: r.intOrNull('occurrences_after_end') ?? 0,
       terms: [for (final t in r.list('terms')) LeaseTerm.fromJson(t)],
+      settlements: [
+        for (final x in r.list('settlements')) LeaseSettlement.fromJson(x),
+      ],
     );
   }
 
@@ -153,6 +197,7 @@ class PremisesLease {
   /// Occurrences already presented for a date after the end.
   final int occurrencesAfterEnd;
   final List<LeaseTerm> terms;
+  final List<LeaseSettlement> settlements;
 
   bool get terminated =>
       status == LeaseStatus.noticeGiven || status == LeaseStatus.ended;
@@ -241,6 +286,26 @@ class LeaseNoticeCommand {
   final String requestId;
 }
 
+class LeaseSettlementCommand {
+  const LeaseSettlementCommand({
+    required this.leaseId,
+    required this.revision,
+    required this.periodStart,
+    required this.periodEnd,
+    required this.actualCents,
+    required this.dueOn,
+    required this.requestId,
+  });
+
+  final String leaseId;
+  final int revision;
+  final DateTime periodStart;
+  final DateTime periodEnd;
+  final int actualCents;
+  final DateTime dueOn;
+  final String requestId;
+}
+
 /// The leases of one space; every write goes through an RPC.
 abstract class PremisesLeaseRepository {
   Future<List<PremisesLease>> fetchLeases(String workspaceId);
@@ -255,5 +320,12 @@ abstract class PremisesLeaseRepository {
   Future<PremisesLease> giveNotice(
     String workspaceId,
     LeaseNoticeCommand command,
+  );
+
+  /// Settles the service charges of a period that is over: the balance
+  /// against the advances is owed (one scheduled amount) or a credit.
+  Future<PremisesLease> settleCharges(
+    String workspaceId,
+    LeaseSettlementCommand command,
   );
 }

@@ -7037,6 +7037,79 @@
   "@leaseSaved": {
     "description": "#2569 premises lease"
   },
+  "leaseSettle": "Nebenkosten abrechnen",
+  "@leaseSettle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleBilled": "Abgerechneter Betrag",
+  "@leaseSettleBilled": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleDue": "Fällig am",
+  "@leaseSettleDue": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleFrom": "Zeitraum von",
+  "@leaseSettleFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleHint": "Geben Sie den vom Vermieter abgerechneten Zeitraum und den Rechnungsbetrag ein. Die im Zeitraum gezahlten Vorauszahlungen werden abgezogen: Ein Saldo ist an dem gewählten Tag fällig, ein Überschuss wird als Guthaben festgehalten. Eine Abrechnung ist endgültig.",
+  "@leaseSettleHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleInvalid": "Geben Sie einen abgelaufenen Zeitraum, den abgerechneten Betrag und einen Fälligkeitstag nicht vor Ende des Zeitraums an. Ein bereits abgerechneter Zeitraum kann nicht erneut abgerechnet werden.",
+  "@leaseSettleInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleRefused": "Die Abrechnung konnte nicht erfasst werden",
+  "@leaseSettleRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleSave": "Abrechnung erfassen",
+  "@leaseSettleSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTitle": "Nebenkosten abrechnen",
+  "@leaseSettleTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettleTo": "Zeitraum bis",
+  "@leaseSettleTo": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSettlementCredit": "Abgerechnet {from} bis {to}: Guthaben von {amount}",
+  "@leaseSettlementCredit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseSettlementOwed": "Abgerechnet {from} bis {to}: {amount} zu zahlen, fällig {due}",
+  "@leaseSettlementOwed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Seit {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
