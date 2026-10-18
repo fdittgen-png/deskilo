@@ -314,4 +314,23 @@ void main() {
     expect(find.byKey(const ValueKey('invoice-accounting-export')),
         findsNothing);
   });
+
+  testWidgets('#2365 — an accountant reads the finances and exports without '
+      'holding the right to issue', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.myMember = workspace.myMember.copyWith(isOwner: false);
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      rolePermissions: {
+        'admin': [
+          WorkspacePermission.viewFinances.wireName,
+          WorkspacePermission.exportData.wireName,
+          WorkspacePermission.manageBilling.wireName,
+        ],
+      },
+    );
+    await _pumpRegister(tester, workspace: workspace);
+
+    expect(find.byKey(const ValueKey('invoice-accounting-export')),
+        findsOneWidget);
+  });
 }

@@ -72,6 +72,9 @@ class _InvoiceRegisterScreenState
         me != null && permissions.contains(WorkspacePermission.issueInvoices);
     final showMemberNames = (me?.canAdminister ?? false) ||
         permissions.contains(WorkspacePermission.viewFinances);
+    // #2365 — the accountant: reads the finances and exports, issues nothing.
+    final canExport = permissions.contains(WorkspacePermission.exportData) &&
+        (canIssue || permissions.contains(WorkspacePermission.viewFinances));
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
     final dateFormat = DateFormat.yMd(
       Localizations.maybeLocaleOf(context)?.toString(),
@@ -84,7 +87,7 @@ class _InvoiceRegisterScreenState
           // #1310 S0 — an accounting export (and the archive bundle
           // behind it) is a bulk export: exportData governs it, beside
           // the issuing right that decides whose invoices are visible.
-          if (canIssue && permissions.contains(WorkspacePermission.exportData))
+          if (canExport)
             IconButton(
               key: const ValueKey('invoice-accounting-export'),
               // Named for the ACTION, not for one of the seven formats
@@ -95,7 +98,7 @@ class _InvoiceRegisterScreenState
               onPressed: () => exportAccountingFile(
                 context,
                 ref,
-                _visible(invoicesAsync.value ?? const [], canIssue),
+                _visible(invoicesAsync.value ?? const [], canIssue || canExport),
                 label: _year?.toString() ??
                     (l10n.invoiceRegisterAllYears),
               ),
