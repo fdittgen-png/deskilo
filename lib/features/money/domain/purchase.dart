@@ -228,6 +228,7 @@ class PurchaseBillDraft {
     this.originalDate,
     this.dueOn,
     this.taxCents,
+    this.recognitionKind = 'unresolved',
   });
 
   final String? purchaseId;
@@ -241,6 +242,11 @@ class PurchaseBillDraft {
 
   /// The tax the bill states; null when it does not (partial, not zero).
   final int? taxCents;
+
+  /// #2576 — what the line is for, in the server's words: `operating`,
+  /// `stock`, `asset`, `prepayment`, `deposit` or `unresolved` (needs
+  /// review). Nobody has to choose a tax class or a useful life to submit.
+  final String recognitionKind;
 
   static String? _day(DateTime? d) => d == null ? null : isoDay(d);
 
@@ -257,6 +263,7 @@ class PurchaseBillDraft {
       {
         'description': description,
         'gross_cents': grossCents,
+        'recognition_kind': recognitionKind,
         if (taxCents != null) ...{
           'tax_cents': taxCents,
           'net_cents': grossCents - taxCents!,

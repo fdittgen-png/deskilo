@@ -17489,6 +17489,34 @@
   "@purchasesPickDate": {
     "description": "#2573 purchases"
   },
+  "purchasesPurpose": "What is it for?",
+  "@purchasesPurpose": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeAsset": "Long-lasting equipment",
+  "@purchasesPurposeAsset": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeDeposit": "Refundable deposit",
+  "@purchasesPurposeDeposit": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeOperating": "Day-to-day use",
+  "@purchasesPurposeOperating": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposePrepayment": "Prepayment",
+  "@purchasesPurposePrepayment": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeReview": "Needs review",
+  "@purchasesPurposeReview": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
+  "purchasesPurposeStock": "Goods for resale",
+  "@purchasesPurposeStock": {
+    "description": "#2576 equipment register: what a purchase line is for"
+  },
   "purchasesReference": "Invoice number",
   "@purchasesReference": {
     "description": "#2573 purchases"

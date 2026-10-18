@@ -25585,6 +25585,48 @@ abstract class AppLocalizations {
   /// **'Choose a date'**
   String get purchasesPickDate;
 
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'What is it for?'**
+  String get purchasesPurpose;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Long-lasting equipment'**
+  String get purchasesPurposeAsset;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Refundable deposit'**
+  String get purchasesPurposeDeposit;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Day-to-day use'**
+  String get purchasesPurposeOperating;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Prepayment'**
+  String get purchasesPurposePrepayment;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Needs review'**
+  String get purchasesPurposeReview;
+
+  /// #2576 equipment register: what a purchase line is for
+  ///
+  /// In en, this message translates to:
+  /// **'Goods for resale'**
+  String get purchasesPurposeStock;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
