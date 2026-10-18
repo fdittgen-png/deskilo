@@ -12252,6 +12252,14 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPurchasePaymentChecker": "Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.",
+  "@settingHintPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingHintPurchaseSingleApproval": "Una fattura fornitore inferiore a questo importo può essere approvata da chi l'ha redatta o inviata, se può approvare le spese. 0 mantiene la regola per cui un'altra persona approva ogni fattura. Respingere richiede sempre un'altra persona.",
+  "@settingHintPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -12372,6 +12380,14 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPurchasePaymentChecker": "Pagamenti registrati da una seconda persona a partire da (unità monetarie)",
+  "@settingLabelPurchasePaymentChecker": {
+    "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchaseSingleApproval": "Fatture che una sola persona può approvare sotto (unità monetarie)",
+  "@settingLabelPurchaseSingleApproval": {
+    "description": "#2574 maker-checker settings"
+  },
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -12486,6 +12502,10 @@
   "settingUnitAttempts": "tentativi",
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitCurrencyUnits": "unità monetarie",
+  "@settingUnitCurrencyUnits": {
+    "description": "#2574 maker-checker settings"
   },
   "settingUnitDays": "giorni",
   "@settingUnitDays": {

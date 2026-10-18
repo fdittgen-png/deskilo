@@ -29869,6 +29869,18 @@ abstract class AppLocalizations {
   /// **'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.'**
   String get settingHintPresenceOnlineWindowMinutes;
 
+  /// #2574 maker-checker settings
+  ///
+  /// In en, this message translates to:
+  /// **'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.'**
+  String get settingHintPurchasePaymentChecker;
+
+  /// #2574 maker-checker settings
+  ///
+  /// In en, this message translates to:
+  /// **'Bills of the space\'s supplier below this amount may be approved by the person who drafted or sent them, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.'**
+  String get settingHintPurchaseSingleApproval;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -30049,6 +30061,18 @@ abstract class AppLocalizations {
   /// **'Online window'**
   String get settingLabelPresenceOnlineWindowMinutes;
 
+  /// #2574 maker-checker settings
+  ///
+  /// In en, this message translates to:
+  /// **'Payments a second person records from (currency units)'**
+  String get settingLabelPurchasePaymentChecker;
+
+  /// #2574 maker-checker settings
+  ///
+  /// In en, this message translates to:
+  /// **'Bills one person may approve below (currency units)'**
+  String get settingLabelPurchaseSingleApproval;
+
   /// #2487 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -30180,6 +30204,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'attempts'**
   String get settingUnitAttempts;
+
+  /// #2574 maker-checker settings
+  ///
+  /// In en, this message translates to:
+  /// **'currency units'**
+  String get settingUnitCurrencyUnits;
 
   /// #2484 settings: Unit.
   ///

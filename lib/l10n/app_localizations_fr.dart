@@ -17477,6 +17477,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.';
 
   @override
+  String get settingHintPurchasePaymentChecker =>
+      'Un paiement d\'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu\'il règle. 0 désactive la règle.';
+
+  @override
+  String get settingHintPurchaseSingleApproval =>
+      'Une facture fournisseur inférieure à ce montant peut être approuvée par la personne qui l\'a saisie ou envoyée, si elle peut approuver les dépenses. 0 conserve la règle selon laquelle une autre personne approuve chaque facture. Refuser demande toujours une autre personne.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
@@ -17592,6 +17600,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Fenêtre en ligne';
 
   @override
+  String get settingLabelPurchasePaymentChecker =>
+      'Paiements enregistrés par une seconde personne à partir de (unités monétaires)';
+
+  @override
+  String get settingLabelPurchaseSingleApproval =>
+      'Factures qu\'une seule personne peut approuver en dessous de (unités monétaires)';
+
+  @override
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
 
   @override
@@ -17667,6 +17683,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'essais';
+
+  @override
+  String get settingUnitCurrencyUnits => 'unités monétaires';
 
   @override
   String get settingUnitDays => 'jours';

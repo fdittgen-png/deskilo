@@ -17463,6 +17463,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.';
 
   @override
+  String get settingHintPurchasePaymentChecker =>
+      'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
+
+  @override
+  String get settingHintPurchaseSingleApproval =>
+      'Lieferantenrechnungen unter diesem Betrag darf die Person freigeben, die sie erfasst oder gesendet hat, wenn sie Ausgaben freigeben darf. 0 behält die Regel bei, dass jede Rechnung eine andere Person freigibt. Ablehnen erfordert immer eine andere Person.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
@@ -17574,6 +17582,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingLabelPresenceOnlineWindowMinutes => 'Online-Fenster';
 
   @override
+  String get settingLabelPurchasePaymentChecker =>
+      'Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)';
+
+  @override
+  String get settingLabelPurchaseSingleApproval =>
+      'Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)';
+
+  @override
   String get settingLabelReadinessRecentExportDays =>
       'Zeitfenster für aktuelle Exporte';
 
@@ -17649,6 +17665,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'Versuche';
+
+  @override
+  String get settingUnitCurrencyUnits => 'Währungseinheiten';
 
   @override
   String get settingUnitDays => 'Tage';
