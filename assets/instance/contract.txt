@@ -457,6 +457,19 @@ constraint invoices.invoices_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint invoices.invoices_workspace_id_number_key UNIQUE (workspace_id, number)
 constraint invoices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint invoices.system_company_present CHECK ((company_id IS NOT NULL))
+constraint lease_settlements.lease_settlements_actual_cents_check CHECK ((actual_cents >= 0))
+constraint lease_settlements.lease_settlements_advances_cents_check CHECK ((advances_cents >= 0))
+constraint lease_settlements.lease_settlements_check CHECK ((period_end >= period_start))
+constraint lease_settlements.lease_settlements_check1 CHECK ((due_on >= period_end))
+constraint lease_settlements.lease_settlements_check2 CHECK ((balance_cents = (actual_cents - advances_cents)))
+constraint lease_settlements.lease_settlements_check3 CHECK (((balance_cents > 0) = (term_id IS NOT NULL)))
+constraint lease_settlements.lease_settlements_created_by_fkey FOREIGN KEY (created_by) REFERENCES members(id)
+constraint lease_settlements.lease_settlements_no_overlap EXCLUDE USING gist (lease_id WITH =, daterange(period_start, period_end, '[]'::text) WITH &&)
+constraint lease_settlements.lease_settlements_pkey PRIMARY KEY (id)
+constraint lease_settlements.lease_settlements_term_id_fkey FOREIGN KEY (term_id) REFERENCES lease_terms(id)
+constraint lease_settlements.lease_settlements_workspace_id_lease_id_fkey FOREIGN KEY (workspace_id, lease_id) REFERENCES premises_leases(workspace_id, id)
+constraint lease_settlements.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint lease_settlements.system_company_present CHECK ((company_id IS NOT NULL))
 constraint lease_terms.lease_terms_amount_cents_check CHECK ((amount_cents > 0))
 constraint lease_terms.lease_terms_check CHECK (((effective_to IS NULL) OR (effective_to >= effective_from)))
 constraint lease_terms.lease_terms_created_by_fkey FOREIGN KEY (created_by) REFERENCES members(id)
@@ -1751,6 +1764,7 @@ routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:a
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d509da87d1b8
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97
+routine public.lease_settlements_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e867aaafd40c
 routine public.lease_terms_guard() -> trigger | function | invoker | volatile | exec:service_role | body:baa7e1bb94af
 routine public.leave_account_group(p_group uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ec452b395726
 routine public.leave_conversation(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:39d9798213e7
@@ -2006,7 +2020,7 @@ routine public.place_feedback_of(p_workspace uuid, p_kind text, p_ids uuid[]) ->
 routine public.place_rating_summary(p_workspace uuid, p_kind text, p_resource uuid, p_member uuid) -> jsonb | function | definer | stable | exec:service_role | body:33058e62be96
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
-routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:efec542b20e0
+routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:4ceaa1e215ca
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
 routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8
@@ -2257,6 +2271,7 @@ routine public.setting_value_problem(p_type text, p_value jsonb, p_min numeric, 
 routine public.settle_credit_invoice(p_invoice_id uuid, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:86f6092cf8ec
 routine public.settle_invoices(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:be298f3521a0
 routine public.settle_invoices_v1(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_request_id uuid, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6799c4081d49
+routine public.settle_lease_charges_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_period_start date, p_period_end date, p_actual_cents bigint, p_due_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8768f6aaadf
 routine public.settle_online_payment(p_provider text, p_order_id text, p_capture_id text, p_amount_cents integer) -> void | function | definer | volatile | exec:service_role | body:a0e1b0cafb37
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
@@ -2482,6 +2497,8 @@ trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze 
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
 trigger invoices.invoices_reimbursement_guard CREATE TRIGGER invoices_reimbursement_guard BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_reimbursement_guard()
 trigger invoices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger lease_settlements.lease_settlements_guard CREATE TRIGGER lease_settlements_guard BEFORE DELETE OR UPDATE ON public.lease_settlements FOR EACH ROW EXECUTE FUNCTION lease_settlements_guard()
+trigger lease_settlements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_settlements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger lease_terms.lease_terms_guard CREATE TRIGGER lease_terms_guard BEFORE DELETE OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION lease_terms_guard()
 trigger lease_terms.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.lease_terms FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger ledger_entries.ledger_entries_no_rewrite CREATE TRIGGER ledger_entries_no_rewrite BEFORE DELETE OR UPDATE ON public.ledger_entries FOR EACH ROW EXECUTE FUNCTION ledger_entries_append_only()
