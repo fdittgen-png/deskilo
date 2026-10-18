@@ -160,6 +160,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.scheduledExpenses,
       WorkspaceFeature.expenseRepartition,
       WorkspaceFeature.purchases,
+      WorkspaceFeature.premisesLease,
     ]),
     WorkspaceSubprocess('tax', [
       WorkspaceFeature.accountingBook,

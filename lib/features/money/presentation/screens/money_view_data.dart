@@ -119,6 +119,7 @@ class MoneyViewData {
   /// #2573 — the purchase documents: a member's own receipts, and the
   /// supplier bills of those who manage them.
   bool get purchasesOn => _on(WorkspaceFeature.purchases);
+  bool get premisesLeaseOn => _on(WorkspaceFeature.premisesLease);
 
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;

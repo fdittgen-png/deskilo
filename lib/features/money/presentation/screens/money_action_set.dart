@@ -10,6 +10,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/premises_lease.dart' show leaseManagePermission;
 import '../../domain/purchase.dart' show
         purchaseDecidePermission,
         purchaseManagePermission,
@@ -19,6 +20,7 @@ import '../widgets/consumption_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/money_faces_view.dart';
+import '../widgets/premises_lease_sheet.dart';
 import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
 import 'money_screen_ops.dart';
@@ -176,6 +178,21 @@ class MoneyActionSet {
           ),
           icon: const Icon(Icons.shopping_cart_outlined),
           label: fitted(l10n.purchasesTitle),
+        ),
+      // #2569 — the lease the space holds as tenant, with its rent terms.
+      if (data.premisesLeaseOn && data.workspace != null)
+        OutlinedButton.icon(
+          key: const ValueKey('premises-lease-button'),
+          onPressed: () => showPremisesLeaseSheet(
+            context,
+            data.workspace!.id,
+            currencyCode: data.currencyCode,
+            canManage: ref
+                .read(myPermissionsProvider)
+                .any((p) => p.wireName == leaseManagePermission),
+          ),
+          icon: const Icon(Icons.apartment_outlined),
+          label: fitted(l10n.leaseTitle),
         ),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),

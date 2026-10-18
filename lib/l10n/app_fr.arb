@@ -4216,6 +4216,14 @@
   "@featurePlanObjectDeleteTitle": {
     "description": "Feature-registry completeness (#587)"
   },
+  "featurePremisesLeaseDesc": "Le bail que l'espace détient comme locataire : le bailleur, les locaux, la durée, le préavis et le dépôt de garantie, avec son loyer et ses charges et leur historique. Chaque montant génère la dépense planifiée de sa charge. Désactivé : aucun bail n'est enregistré et les dépenses planifiées restent telles quelles.",
+  "@featurePremisesLeaseDesc": {
+    "description": "#2569 premises lease"
+  },
+  "featurePremisesLeaseTitle": "Bail des locaux",
+  "@featurePremisesLeaseTitle": {
+    "description": "#2569 premises lease"
+  },
   "featurePriceNegotiationsDesc": "Le tarif est la valeur par défaut ; un membre peut avoir ses propres conditions — abonnement, dépassement, remise sur les suppléments, prix unitaires par service et forfait, pourcentage d'occupation — proposées par qui détient « Gérer les accords commerciaux » et validées selon les règles. Vues par le membre, les propriétaires et les titulaires de « Consulter les accords commerciaux » ; chaque consultation est journalisée.",
   "featurePriceNegotiationsTitle": "Négociations tarifaires",
   "featurePublicHolidaysDesc": "Le propriétaire choisit une année, voit les jours fériés qui deviendraient des jours de fermeture, puis confirme. Relancer une année n'ajoute rien, et un mois déjà facturé est ignoré et nommé — générer des jours fériés ne modifie jamais une facture déjà émise.",
@@ -6684,6 +6692,318 @@
   },
   "languageSystemDefault": "Par défaut du système",
   "languageTitle": "Langue",
+  "leaseAdd": "Ajouter un bail",
+  "@leaseAdd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseAddTerm": "Nouveau montant",
+  "@leaseAddTerm": {
+    "description": "#2569 premises lease"
+  },
+  "leaseDeposit": "Dépôt de garantie {amount}",
+  "@leaseDeposit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDepositBack": "Dépôt à restituer : {amount}",
+  "@leaseDepositBack": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseEdit": "Modifier",
+  "@leaseEdit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEmpty": "Aucun bail enregistré.",
+  "@leaseEmpty": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEndsOn": "Se termine le {date} : {reason}",
+  "@leaseEndsOn": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseEveryHalfYear": "Tous les 6 mois",
+  "@leaseEveryHalfYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryMonth": "Chaque mois",
+  "@leaseEveryMonth": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryQuarter": "Tous les 3 mois",
+  "@leaseEveryQuarter": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryYear": "Chaque année",
+  "@leaseEveryYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldDeposit": "Dépôt de garantie",
+  "@leaseFieldDeposit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldFixedUntil": "Ferme jusqu’au",
+  "@leaseFieldFixedUntil": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldIndexation": "Indexation (note)",
+  "@leaseFieldIndexation": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldLessor": "Bailleur (un fournisseur)",
+  "@leaseFieldLessor": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldNoticeMonths": "Préavis en mois",
+  "@leaseFieldNoticeMonths": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldPremises": "Locaux (adresse)",
+  "@leaseFieldPremises": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldStarts": "Début",
+  "@leaseFieldStarts": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFixedUntil": "Ferme jusqu’au {date}",
+  "@leaseFixedUntil": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseFormTitle": "Bail",
+  "@leaseFormTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseGiveNotice": "Donner congé",
+  "@leaseGiveNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseIntro": "Le bail que l'espace détient comme locataire, avec son loyer et ses charges. Un nouveau montant remplace celui en vigueur à partir de sa date ; les montants précédents restent dans l'historique.",
+  "@leaseIntro": {
+    "description": "#2569 premises lease"
+  },
+  "leaseInvalid": "Choisissez le bailleur, nommez les locaux et fixez la date de début.",
+  "@leaseInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindOther": "Autre charge",
+  "@leaseKindOther": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindRent": "Loyer",
+  "@leaseKindRent": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindServiceCharge": "Provision sur charges",
+  "@leaseKindServiceCharge": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLessor": "Bailleur : {name}",
+  "@leaseLessor": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseLoadFailed": "Le bail n’a pas pu être chargé.",
+  "@leaseLoadFailed": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNeedSupplier": "Enregistrez d’abord le bailleur comme fournisseur.",
+  "@leaseNeedSupplier": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeDeadline": "Préavis à donner avant le {date}",
+  "@leaseNoticeDeadline": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseNoticeEnd": "Le bail se termine le",
+  "@leaseNoticeEnd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeGivenOn": "Congé donné le",
+  "@leaseNoticeGivenOn": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeHint": "Enregistre qui a donné congé, quand et pourquoi. Les montants planifiés s’arrêtent le jour de la fin du bail ; les échéances déjà présentées sont conservées.",
+  "@leaseNoticeHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeInvalid": "Indiquez la date de fin, pas avant le congé, et le motif.",
+  "@leaseNoticeInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeReason": "Pourquoi se termine-t-il ?",
+  "@leaseNoticeReason": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeRefused": "Non enregistré. Seul un bail en cours est résilié, et un montant ne peut pas commencer après la fin.",
+  "@leaseNoticeRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeSave": "Enregistrer le congé",
+  "@leaseNoticeSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeTitle": "Donner congé",
+  "@leaseNoticeTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseOccurrencesAfter": "{count} échéances ont déjà été présentées pour une date postérieure à la fin.",
+  "@leaseOccurrencesAfter": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "leaseRefused": "Non enregistré. Vérifiez le bailleur, les dates et que le bail n’est pas déjà résilié.",
+  "@leaseRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSave": "Enregistrer",
+  "@leaseSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSaved": "Enregistré",
+  "@leaseSaved": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStarted": "Depuis le {date}",
+  "@leaseStarted": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseStatusActive": "En cours",
+  "@leaseStatusActive": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusDraft": "Brouillon",
+  "@leaseStatusDraft": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusEnded": "Terminé",
+  "@leaseStatusEnded": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusNotice": "Préavis donné",
+  "@leaseStatusNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermAmount": "Montant",
+  "@leaseTermAmount": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermEvery": "Payé",
+  "@leaseTermEvery": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermFrom": "À partir du",
+  "@leaseTermFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermHint": "À partir de sa date il remplace le montant en vigueur pour la même charge ; le précédent reste dans l’historique et ses échéances sont conservées.",
+  "@leaseTermHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermInvalid": "Saisissez un montant supérieur à zéro et sa date de début ; nommez une autre charge.",
+  "@leaseTermInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermKind": "Charge",
+  "@leaseTermKind": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLabel": "Nom de la charge",
+  "@leaseTermLabel": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLine": "{kind} · {amount} à partir du {from}",
+  "@leaseTermLine": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermLineClosed": "{kind} · {amount} du {from} au {to}",
+  "@leaseTermLineClosed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermRefused": "Non ajouté. Un nouveau montant doit commencer après celui en vigueur et le bail ne doit pas être résilié.",
+  "@leaseTermRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermSave": "Ajouter",
+  "@leaseTermSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermTitle": "Nouveau montant",
+  "@leaseTermTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermsHeading": "Loyer et charges",
+  "@leaseTermsHeading": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTitle": "Bail des locaux",
+  "@leaseTitle": {
+    "description": "#2569 premises lease"
+  },
   "ledgerCategoryAdjustment": "Ajustement",
   "ledgerCategoryExpense": "Remboursement de dépense",
   "ledgerCategoryOverage": "Dépassement",
@@ -8331,6 +8651,10 @@
   "permManageIntegrations": "Gérer les intégrations",
   "@permManageIntegrations": {
     "description": "#982 permission catalog: permManageIntegrations"
+  },
+  "permManageLease": "Enregistrer le bail des locaux",
+  "@permManageLease": {
+    "description": "#2569 premises lease"
   },
   "permManageMembers": "Gérer les membres",
   "@permManageMembers": {

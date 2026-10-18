@@ -126,8 +126,11 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   ) async {
     final rows = await _client
         .from('expense_occurrences')
-        .select('*, expense_schedules(title, amount_cents)')
+        // #2569 — a contract occurrence (a lease) is an expected obligation,
+        // matched to the supplier invoice, so only outlays are confirmed here.
+        .select('*, expense_schedules!inner(title, amount_cents, origin)')
         .eq('workspace_id', workspaceId)
+        .eq('expense_schedules.origin', 'member_outlay')
         .order('due_on');
     return [
       for (final r in rows as List)
