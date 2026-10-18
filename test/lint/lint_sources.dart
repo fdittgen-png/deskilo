@@ -50,6 +50,11 @@ List<File> _filesWithExtension(String root, String extension,
         .toList()
       ..sort((a, b) => a.path.compareTo(b.path));
 
+/// Reading a small text file of a lint (a baseline list), line by line.
+abstract final class File2 {
+  static List<String> lines(String path) => File(path).readAsLinesSync();
+}
+
 /// Scans [files] line by line and reports `path:line: content` for every
 /// line where [matches] is true. Comment lines are skipped by default —
 /// a comment explaining a rule is not a violation of it.
