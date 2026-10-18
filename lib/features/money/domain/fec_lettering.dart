@@ -97,3 +97,40 @@ void bookFecRefund(
     );
   }
 }
+
+/// #2365 — what the owner gave up of an invoice: the unpaid rest leaves the
+/// receivable for the loss account (PCG 654), on the write-off day, lettered
+/// with the invoice so its group closes. Booked gross: the VAT regularisation
+/// has its own conditions and is the accountant's. A write-off still awaiting
+/// validation books nothing.
+void bookFecWriteOff(
+  FecWrite write,
+  Invoice invoice,
+  InvoiceMatch? match,
+  FecAccounts accounts,
+  String customersLabel,
+  DateTime Function(DateTime instant) dayOf,
+) {
+  final writtenOff = match?.writeoffAt;
+  if (match == null || match.pending || writtenOff == null) return;
+  final owed = invoice.totalCents - match.paidCents;
+  if (owed <= 0) return;
+  final entry = 'OD-${invoice.number}-W';
+  final label = 'Créance irrécouvrable ${invoice.number}';
+  final day = dayOf(writtenOff);
+  for (final (account, accountLabel, aux, debit) in [
+    (accounts.writeOff, 'Pertes sur créances irrécouvrables', false, true),
+    (accounts.customers, customersLabel, true, false),
+  ]) {
+    write(
+      journal: 'OD', journalLabel: 'Opérations diverses',
+      number: entry, date: day,
+      account: account, accountLabel: accountLabel,
+      auxNumber: aux ? invoice.memberId : '',
+      auxLabel: aux ? invoice.memberName : '',
+      pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+      label: label, debitCents: debit ? owed : 0, creditCents: debit ? 0 : owed,
+      letter: invoice.number, validDate: day,
+    );
+  }
+}

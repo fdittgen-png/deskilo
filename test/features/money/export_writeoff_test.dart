@@ -1,0 +1,81 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2365 defect 7a -- what the owner gave up of an invoice is booked: the
+// unpaid rest leaves the receivable for the loss account on the write-off
+// day, lettered with the invoice so the group closes, at the gross amount
+// (the VAT regularisation is the accountant's). Seeded year: INV-3 of
+// 100.00 was paid 60.00 and the remaining 40.00 written off on 25 May.
+import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'support/seeded_export_year.dart';
+
+int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
+
+List<Map<String, String>> _fec({Map<String, InvoiceMatch>? matches}) {
+  final file = buildFecFile(
+    invoices: SeededExportYear.invoices,
+    matches: matches ?? SeededExportYear.matches,
+    company: seededCompany,
+    accounts: const FecAccounts(),
+    lineText: (l) => l.label,
+    ledger: SeededExportYear.ledger,
+  );
+  final lines = file.split('\r\n');
+  final head = lines.first.split('\t');
+  return [
+    for (final l in lines.skip(1))
+      if (l.isNotEmpty) Map.fromIterables(head, l.split('\t')),
+  ];
+}
+
+void main() {
+  test('FEC: the written-off rest is a loss on the write-off day', () {
+    final rows = _fec().where((r) => r['EcritureNum'] == 'OD-INV-3-W').toList();
+    expect(rows, hasLength(2));
+    final loss = rows.singleWhere((r) => r['CompteNum'] == '654000');
+    final customer = rows.singleWhere((r) => r['CompteNum'] == '411000');
+    expect(_cents(loss['Debit']!), 4000);
+    expect(_cents(customer['Credit']!), 4000);
+    expect(loss['EcritureDate'], '20260525');
+    expect(loss['JournalCode'], 'OD');
+    expect(loss['EcritureLib'], 'Créance irrécouvrable INV-3');
+  });
+
+  test('FEC: INV-3 is lettered whole — what was billed equals what was paid plus given up', () {
+    final group = _fec().where((r) => r['EcritureLet'] == 'INV-3').toList();
+    final debit = group.fold(0, (s, r) => s + (r['CompteNum'] == '411000' ? _cents(r['Debit']!) : 0));
+    final credit = group.fold(0, (s, r) => s + (r['CompteNum'] == '411000' ? _cents(r['Credit']!) : 0));
+    expect(debit, 10000);
+    expect(credit, 6000 + 4000);
+    // every lettered row carries the lettering date
+    expect(group.every((r) => r['DateLet']!.isNotEmpty), isTrue);
+  });
+
+  test('FEC: every entry stays balanced, and an invoice that was not written off books no loss', () {
+    final rows = _fec();
+    final byEntry = <String, int>{};
+    for (final r in rows) {
+      byEntry.update(r['EcritureNum']!, (v) => v + _cents(r['Debit']!) - _cents(r['Credit']!),
+          ifAbsent: () => _cents(r['Debit']!) - _cents(r['Credit']!));
+    }
+    expect(byEntry.entries.where((e) => e.value != 0), isEmpty);
+    expect(rows.where((r) => r['CompteNum'] == '654000'), hasLength(1));
+  });
+
+  test('FEC: a write-off still awaiting validation books nothing', () {
+    final matches = {
+      ...SeededExportYear.matches,
+      SeededExportYear.inv3.id: InvoiceMatch(
+        invoiceId: SeededExportYear.inv3.id,
+        paidCents: 6000,
+        resolution: 'writeoff',
+        matchedAt: DateTime(2026, 5, 20),
+        writeoffAt: DateTime(2026, 5, 25),
+        status: 'pending',
+      ),
+    };
+    expect(_fec(matches: matches).where((r) => r['CompteNum'] == '654000'), isEmpty);
+  });
+}
