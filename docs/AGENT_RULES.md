@@ -180,6 +180,7 @@ signal that the later one must take the next number.
 
 ## Testing rules
 
+- An evidence document (`docs/testing/*EVIDENCE*.md`, pilot checklists, issue comments) names roles, never people: "the pilot operator", "the owner". The operator rows of #1285 and #1974 follow it (#2605).
 - TDD pyramid 70/20/10 — the target, never a claim about the suite as it is; `dart run tool/test_inventory.dart` prints that (#1334). Bug fixes: write the failing test FIRST, calling the exact method the failing UI calls.
 - Twin-bug audit before closing: grep for the same anti-pattern elsewhere; fix all occurrences in one PR.
 - Producer + consumer ship together — never merge the reader half of a feature without the writer.

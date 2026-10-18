@@ -1,6 +1,7 @@
 # Pilot journey evidence — #1974
 
 Candidate: master `9c76375e0` plus `test/features/workspace/pilot_exclusions_test.dart`.
+Rule: this document names roles (the pilot operator), never people (#2605).
 Scope: the existing-community pilot (manual payment recording, external
 accountant). Status words are PASS, PARTIAL, FAIL, NOT RUN or BLOCKED; nothing
 here is a universal compliance assertion, and a status is only as strong as the
@@ -24,7 +25,7 @@ flutter test test/ux test/a11y test/app test/core/cache test/core/realtime \
 | Ordinary member / foreign workspace / revoked role refused; sign-out clears the cached scope; second-client changes and reconnect refresh the view | PASS | `test/lint/sign_out_test.dart`; `test/core/cache/cache_scope_test.dart`, `cache_store_barrier_test.dart` (#1849); `test/app/route_access_test.dart`; `test/core/realtime/channel_supervisor_test.dart`; pgTAP `10`, `11`, `12`, `157` | 2026-10-08: NEW `test/features/reservations/second_client_refresh_test.dart` — a booking made on another device turns the open plan's seat from free to reserved with no action on this device, and a booking committed while the channel was down lands through the reconnect resync; `test/core/realtime_sync_test.dart` covers a member change the same way. and a role given then taken on another device shows then hides this device's editor entry, through the same channel |
 | Pilot feature list; excluded features and their dependencies; unqualified local legal issuance blocked | PASS (pinned) / PARTIAL | NEW `pilot_exclusions_test.dart`: onlinePayments, mcpAccess, accountingBook, guestParticipation, publicListings are off by default, stay off whatever the other flags are, and take their dependents with them. Issuance: migration 0385 (#1917, PR #2226) refuses an unreviewed seller country and an unresolved VAT rate at `create_invoice`; pgTAP `150` | 2026-10-08: automatic collection and tax filing are refused at the server and asserted — `open_payment_intent` refuses a new payment while `onlinePayments` is off (0393), a not-VAT-registered space cannot save a VAT return (0107), both in pgTAP `160`; silent VAT defaults refuse issuing (0393, pgTAP `150`). Still missing: the operator's reviewed feature/route/command list (see BLOCKED) |
 | Backend compatible; restore rehearsal (database and objects) read back | PASS (disposable local) | `scripts/restore_check.sh --application`; [9 October report](evidence/pilot-recovery-2026-10-09.json) | Real local Auth sign-in, native export, database and private-object restore, exact financial readback, isolated installation identity and retained target MCP configuration passed. Deliberately damaged files were detected; owned stacks were removed. Schema 394 with the report’s pinned recovery-script hashes. Hosted recovery and email delivery were not exercised. |
-| Privacy / rights / contact / security responsibility review | BLOCKED | — | Florian is the sole reviewer (confirmed 9 October); the concrete review remains pending |
+| Privacy / rights / contact / security responsibility review | BLOCKED | — | The pilot operator is the sole reviewer (confirmed 9 October); the concrete review remains pending |
 | Critical journey at narrow width, large text, keyboard, screen reader | PARTIAL | `test/a11y/responsive_matrix_test.dart` (360 dp, 2× text, keyboard, motion off), `screen_guidelines_test.dart`, `matrix_coverage_test.dart`; the new unavailable states (#1848) are covered by `unavailable_availability_test.dart` | Confirmation that every critical-journey screen is a matrix row, and a semantic-order walk of the journey |
 
 ## Accessibility follow-up — 9 October 2026 (#1974)
@@ -76,7 +77,7 @@ Limits: this records two pinned local builds, not a production release or a
 hosted-service rehearsal. A full OS/browser process termination and a physical
 screen-reader session were not exercised. Database conflict/refusal and scoped
 read proofs remain the named pgTAP tests above. Final merged-candidate release
-and Florian's review of COWORKONTI development remain outstanding.
+and the pilot operator's review of COWORKONTI development remain outstanding.
 
 ## Remaining release gate
 
