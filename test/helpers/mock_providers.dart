@@ -35,6 +35,7 @@ import 'package:deskilo/core/demo/data/plan_resource_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/demo/data/template_search_repository.dart';
+import 'package:deskilo/core/demo/data/usage_preparation.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
 import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
@@ -79,9 +80,11 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
 import 'package:deskilo/features/plan/domain/charging_station_repository.dart';
@@ -165,6 +168,8 @@ const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
 List<Override> standardTestOverrides({
   FakeMeRepository? me,
+  // #2590 — a test of the usage month's preparation brings its own.
+  UsagePreparation? usagePreparation,
   // #1835 — the account's guest visits; none unless a test seeds them.
   FakeGuestParticipationRepository? guestVisits,
   FakeWorkspaceApplicationRepository? applications,
@@ -376,6 +381,10 @@ List<Override> standardTestOverrides({
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
     ..._moneyOverrides(money ?? FakeMoneyRepository()),
+    // #2590 — recording a month's usage is a command with no server here.
+    usagePreparationProvider.overrideWithValue(
+      usagePreparation ?? const FakeUsagePreparation(),
+    ),
     creditRepositoryProvider
         .overrideWithValue(credits ?? FakeCreditRepository()),
     notificationServiceProvider

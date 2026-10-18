@@ -12,19 +12,10 @@ abstract interface class MemberAccountQueries {
   /// open remainders, refunds due, net.
   Future<MemberAccount> fetchMemberAccount(String memberId);
 
-  /// #833 — one month's usage records (RPC `usage_records_for`, 0151).
-  /// The server backfills the month's no-shows before answering, so
-  /// reading a month is what makes its uncounted bookings appear.
+  /// #833, #2590 — one month's usage records as a PURE read (RPC
+  /// `usage_records_read_v1`, 0477): it writes nothing and says how many past
+  /// bookings have no record yet. Recording them is `UsagePreparation`.
   /// [memberId] null = everyone the caller may see.
-  Future<List<UsageRecord>> fetchUsageRecords({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  });
-
-  /// #2590 — the same month as a PURE read (RPC `usage_records_read_v1`,
-  /// 0477): it writes nothing and says how many past bookings have no record
-  /// yet. Recording them is `UsagePreparation`.
   Future<UsageRead> readUsageRecords({
     required String workspaceId,
     required String period,

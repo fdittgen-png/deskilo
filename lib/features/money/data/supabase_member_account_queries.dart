@@ -28,27 +28,6 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
   }
 
   @override
-  Future<List<UsageRecord>> fetchUsageRecords({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  }) async {
-    final data = await _client.rpc<dynamic>(
-      'usage_records_for',
-      params: {
-        'p_workspace_id': workspaceId,
-        'p_period': period,
-        'p_member_id': memberId,
-      },
-    );
-    final rows = (data as Map)['records'] as List? ?? const [];
-    return [
-      for (final row in rows)
-        UsageRecord.fromJson((row as Map).cast<String, dynamic>()),
-    ];
-  }
-
-  @override
   Future<UsageRead> readUsageRecords({
     required String workspaceId,
     required String period,

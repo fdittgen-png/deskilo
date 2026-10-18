@@ -103,13 +103,6 @@ class _AccountReads implements MemberAccountQueries {
       const [];
 
   @override
-  Future<List<UsageRecord>> fetchUsageRecords({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  }) async => const [];
-
-  @override
   Future<UsageRead> readUsageRecords({
     required String workspaceId,
     required String period,
