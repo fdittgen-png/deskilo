@@ -4,7 +4,7 @@
 -- back to the `*` rule, and only a member of the space reads it.
 -- Expected dates are written by hand from the statute rows.
 begin;
-select plan(14);
+select plan(15);
 
 select ok(public.tax_reference_valid('retention', '{"years":6,"from":"fiscal_year_end"}'), 'a rule with years and a start is valid');
 select ok(not public.tax_reference_valid('retention', '{"years":0,"from":"fiscal_year_end"}'), 'zero years is not a rule');
@@ -30,21 +30,23 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
-do $$
-declare v_ws uuid; v_user uuid;
-begin
-  select m.workspace_id, m.user_id into v_ws, v_user from public.members m
-   where m.status = 'active' order by m.id limit 1;
-  perform set_config('t.ws', v_ws::text, true);
-  perform set_config('t.user', v_user::text, true);
-end $$;
+create function pg_temp.u(n int) returns uuid language sql as $$
+  select ('00000000-0000-4000-8000-00002571' || lpad(n::text, 4, '0'))::uuid;
+$$;
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
+       'u' || i || '@clock.test', '', now(), now(), now()
+  from generate_series(1, 2) i;
+-- 1 owns a UK space, 2 belongs to none.
+select pg_temp.act_as(pg_temp.u(1));
+select set_config('t.ws', public.create_workspace('Clock', 'GB', 'GBP', 'Europe/London', 'dev', false, null)::text, true);
 
-select pg_temp.act_as(current_setting('t.user')::uuid);
-select ok(public.retention_until(current_setting('t.ws')::uuid, 'invoice', date '2020-06-01') is not null,
-  'a member reads the day an invoice may go');
+select is(public.retention_until(current_setting('t.ws')::uuid, 'invoice', date '2023-03-10'), date '2029-12-31',
+  'a UK member reads it: an invoice of March 2023 may go on 2029-12-31');
+select is(public.retention_rule(current_setting('t.ws')::uuid, 'invoice') ->> 'country', 'GB', 'and the rule is the UK''s own');
 reset role;
 
-select pg_temp.act_as('00000000-0000-4000-8000-000000000001');
+select pg_temp.act_as(pg_temp.u(2));
 select throws_ok(format('select public.retention_until(%L, ''invoice'', date ''2020-06-01'')', current_setting('t.ws')),
   null, null, 'a stranger reads nothing');
 reset role;
