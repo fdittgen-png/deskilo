@@ -2,12 +2,15 @@
 //
 // #2571 -- the retention clock. The rules are `retention` rows of the tax
 // reference store (one per country and document class); this is the Dart twin
-// of `retention_until` (0479): the first day a record may go.
+// of `retention_until` (0480): the first day a record may go.
+import 'package:meta/meta.dart';
+
 import '../time/date_text.dart';
 import 'tax_reference.dart';
 import 'tax_reference_active.dart';
 
 /// The document classes a retention rule is kept for.
+@visibleForTesting
 const retentionClasses = ['invoice', 'books', 'correspondence', 'voucher'];
 
 extension RetentionQueries on TaxReferenceSet {
@@ -26,6 +29,7 @@ extension RetentionQueries on TaxReferenceSet {
 /// clock starts at the end of the fiscal year the document falls in -- the
 /// year opening on [fiscalYearStartMonth]/[fiscalYearStartDay], the calendar
 /// year by default -- or at the document's own day.
+@visibleForTesting
 DateTime retentionUntil(
   RetentionValue rule,
   DateTime documentDate, {
