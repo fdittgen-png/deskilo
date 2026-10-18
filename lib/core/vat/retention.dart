@@ -2,14 +2,22 @@
 //
 // #2571 -- the retention clock. The rules are `retention` rows of the tax
 // reference store (one per country and document class); this is the Dart twin
-// of `retention_until` (0479): the first day a record may go.
+// of `retention_until` (0480): the first day a record may go.
+import 'package:meta/meta.dart';
+
+import '../time/date_text.dart';
 import 'tax_reference.dart';
 import 'tax_reference_active.dart';
 
 /// The document classes a retention rule is kept for.
+@visibleForTesting
 const retentionClasses = ['invoice', 'books', 'correspondence', 'voucher'];
 
 extension RetentionQueries on TaxReferenceSet {
+  /// The row (value, source, confirmed) behind [retentionOf].
+  TaxReferenceRow? retentionRowOf(String country, String docClass, {String? asOf}) =>
+      resolved(asOf).lookup(TaxDomain.retention, country, docClass);
+
   /// The rule for [docClass] in [country], the shared `*` rule where the
   /// country has none; null for a class nobody listed.
   RetentionValue? retentionOf(String country, String docClass, {String? asOf}) =>
@@ -21,6 +29,7 @@ extension RetentionQueries on TaxReferenceSet {
 /// clock starts at the end of the fiscal year the document falls in -- the
 /// year opening on [fiscalYearStartMonth]/[fiscalYearStartDay], the calendar
 /// year by default -- or at the document's own day.
+@visibleForTesting
 DateTime retentionUntil(
   RetentionValue rule,
   DateTime documentDate, {
@@ -46,4 +55,30 @@ DateTime retentionUntil(
   // 29 February in a year without one lands on the 28th, as the database does.
   final last = DateTime.utc(year, base.month + 1, 0).day;
   return DateTime.utc(year, base.month, base.day > last ? last : base.day);
+}
+
+/// #2571 — the retention rules of [country] in words, for the archive of
+/// fiscal year [year]: per document class the period, where the clock
+/// starts, the first day a document of that year may go, the statute and
+/// whether a person has confirmed the rule. Plain text, no timestamp: the
+/// same inputs are the same bytes. A class with no rule is absent.
+String retentionNotice(String country, int year, {TaxReferenceSet? reference}) {
+  final set = reference ?? ActiveTaxReference.current;
+  final lines = [
+    'Record retention for the fiscal year $year (workspace country: ${country.toUpperCase()}).',
+    'Dates are the first day a document dated 31 December $year may be erased.',
+    '',
+  ];
+  for (final docClass in retentionClasses) {
+    final row = set.retentionRowOf(country, docClass);
+    if (row == null) continue;
+    final rule = row.value as RetentionValue;
+    lines
+      ..add('$docClass: ${rule.years} years from '
+          '${rule.from == 'document_date' ? 'the document date' : 'the end of the fiscal year'}'
+          ' -> ${isoDay(retentionUntil(rule, DateTime(year, 12, 31)))}'
+          '${row.confirmed ? '' : ' (not yet confirmed)'}')
+      ..add('  source: ${row.source}');
+  }
+  return '${lines.join('\r\n')}\r\n';
 }

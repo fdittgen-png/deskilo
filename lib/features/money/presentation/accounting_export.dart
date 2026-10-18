@@ -443,7 +443,7 @@ Future<void> exportAccountingFile(
           await savePdfToDownloads(
             context,
             ref,
-            bytes: zipBundle(files),
+            bytes: zipBundle(withRetentionNotice(files, country, year)),
             fileName: archiveBundleFileName(company.legalId, year, development: development),
           );
         },
