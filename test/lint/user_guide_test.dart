@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_guide_site.dart' as site;
 import '../../tool/build_user_guide.dart';
+import 'lint_sources.dart';
 
 const _langs = ['en', 'fr', 'de', 'es', 'it'];
 final _anchor = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9]*(?:\.[a-z0-9-]+)+)\s*-->');
@@ -17,7 +18,7 @@ final _image = RegExp(r'images/([a-z0-9-]+(?:--[a-z0-9-]+)?)\.(?:en|fr|de|es|it)
 final _section = RegExp(r'^### ', multiLine: true);
 
 List<File> _chapters(Family family, String lang) {
-  final dir = Directory(family.chaptersDir);
+  final dir = directoryAt(family.chaptersDir);
   if (!dir.existsSync()) return [];
   return dir.listSync().whereType<File>().where((f) => f.path.endsWith('.$lang.md')).toList()
     ..sort((a, b) => a.path.compareTo(b.path));
@@ -102,7 +103,7 @@ void main() {
 }
 
 void _familyTests(Family family) {
-  final exists = Directory(family.chaptersDir).existsSync();
+  final exists = directoryAt(family.chaptersDir).existsSync();
 
   test('every chapter exists in all five languages', () {
     if (!exists) return;

@@ -60,7 +60,7 @@ void main() {
   });
 
   test('the Get started card is mounted only by the Reserve host', () {
-    final problems = audit(scan(Directory('lib')));
+    final problems = audit(scan(directoryAt('lib')));
     expect(problems, isEmpty, reason: problems.join('\n'));
   });
 

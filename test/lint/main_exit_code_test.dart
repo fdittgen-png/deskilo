@@ -12,12 +12,13 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 void main() {
   test('no tool returns its exit code from main — Dart ignores it', () {
     final offenders = <String>[];
     for (final root in ['tool', 'scripts']) {
-      final dir = Directory(root);
+      final dir = directoryAt(root);
       if (!dir.existsSync()) continue;
       for (final f in dir.listSync(recursive: true).whereType<File>()) {
         if (!f.path.endsWith('.dart')) continue;

@@ -17,16 +17,7 @@ import 'lint_sources.dart';
 /// The lint files that still build a `Directory(...)` themselves, each to be
 /// moved to [handWrittenDartFiles], [sqlFiles] or [markdownFiles]. RATCHET:
 /// remove a name when its file stops; never add one.
-const _stillWalkingByHand = <String>{
-  'applied_migrations_immutable_test.dart',
-  'coverage_gate_test.dart',
-  'help_host_inventory_test.dart',
-  'literal_ratchet.dart',
-  'main_exit_code_test.dart',
-  'play_listing_test.dart',
-  'spdx_headers_test.dart',
-  'user_guide_test.dart',
-};
+const _stillWalkingByHand = <String>{};
 
 final _directoryCall = RegExp(r'\bDirectory\(');
 

@@ -57,6 +57,10 @@ List<File> _filesWithExtension(String root, String extension,
         .toList()
       ..sort((a, b) => a.path.compareTo(b.path));
 
+/// A directory by path: the one place a lint test builds a [Directory], so a
+/// walk is always this file's (#2604).
+Directory directoryAt(String path) => Directory(path);
+
 /// The names of the directories directly under [root], sorted (#2604).
 List<String> directoryNames(String root) => [
       for (final d in Directory(root).listSync().whereType<Directory>())
