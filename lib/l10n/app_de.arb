@@ -3780,6 +3780,14 @@
   "featureAdminSeatBlockingDesc": "Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.",
   "featureAlsoEnabled": "Ebenfalls eingeschaltet: {features}",
   "featureAlsoEnables": "Das schaltet außerdem {features} ein",
+  "featureAssetRegisterDesc": "Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterTitle": "Anlagenregister",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
   "featureAutoCheckInOut": "Auto-Check-in/-out am Tagesende",
   "featureAutoCheckInOutDesc": "Reservierungen ohne Check-in oder Check-out schließen sich selbst, sobald ihre Zeit vorbei ist.",
   "featureAvailableOnlyIn": "Verfügbar in: {countries}",

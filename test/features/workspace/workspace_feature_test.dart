@@ -39,6 +39,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.purchases,
   // #2569 — a lease is recorded on purpose.
   WorkspaceFeature.premisesLease,
+  // #2576 — equipment is registered on purpose.
+  WorkspaceFeature.assetRegister,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -190,6 +192,7 @@ void main() {
       'webMcp': true,
       'purchases': true,
       'premisesLease': true,
+      'assetRegister': true,
       'guestParticipation': true,
     });
 

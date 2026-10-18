@@ -286,4 +286,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.scheduledExpenses,
     defaultOn: false,
   ),
+  // #2576 — the equipment the space buys: acquisitions kept apart from
+  // day-to-day purchases, each reviewed for its accounting treatment.
+  WorkspaceFeature.assetRegister: FeatureManifestEntry(
+    feature: WorkspaceFeature.assetRegister,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.purchases,
+    defaultOn: false,
+  ),
 };

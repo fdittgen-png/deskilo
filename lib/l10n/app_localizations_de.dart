@@ -5258,6 +5258,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get featureAssetRegisterDesc =>
+      'Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst.';
+
+  @override
+  String get featureAssetRegisterTitle => 'Anlagenregister';
+
+  @override
   String get featureAutoCheckInOut => 'Auto-Check-in/-out am Tagesende';
 
   @override

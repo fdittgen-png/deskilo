@@ -270,6 +270,7 @@ String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         WorkspaceFeature.webMcp => l10n.featureWebMcpDesc,
         WorkspaceFeature.purchases => l10n.featurePurchasesDesc,
         WorkspaceFeature.premisesLease => l10n.featurePremisesLeaseDesc,
+        WorkspaceFeature.assetRegister => l10n.featureAssetRegisterDesc,
       _ => feature.name,
     };
 

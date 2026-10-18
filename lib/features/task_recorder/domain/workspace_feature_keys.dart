@@ -146,4 +146,5 @@ const Set<String> workspaceFeatureKeys = {
   'webMcp',
   'purchases',
   'premisesLease',
+  'assetRegister',
 };

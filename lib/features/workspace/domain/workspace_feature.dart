@@ -403,10 +403,12 @@ enum WorkspaceFeature {
   parking,
 
   /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
-  /// moneyTab); #2569 premises lease (under scheduledExpenses). Platform, OFF.
+  /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
+  /// register (under purchases). Platform, OFF.
   webMcp,
   purchases,
-  premisesLease;
+  premisesLease,
+  assetRegister;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

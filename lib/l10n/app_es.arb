@@ -3780,6 +3780,14 @@
   "featureAdminSeatBlockingDesc": "Los administradores marcan sitios como no reservables por mantenimiento. El propietario siempre puede.",
   "featureAlsoEnabled": "También activado: {features}",
   "featureAlsoEnables": "Activar esto también habilita {features}",
+  "featureAssetRegisterDesc": "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterTitle": "Registro de equipos",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
   "featureAutoCheckInOut": "Entrada/salida automática al final del día",
   "featureAutoCheckInOutDesc": "Las reservas sin entrada o salida registradas se completan solas cuando pasa su horario.",
   "featureAvailableOnlyIn": "Disponible en: {countries}",

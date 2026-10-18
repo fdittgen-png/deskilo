@@ -3780,6 +3780,14 @@
   "featureAdminSeatBlockingDesc": "Les admins marquent des places comme non réservables pour maintenance. Le propriétaire le peut toujours.",
   "featureAlsoEnabled": "Également activé : {features}",
   "featureAlsoEnables": "Activer ceci active aussi {features}",
+  "featureAssetRegisterDesc": "Les équipements durables que l'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n'est enregistré.",
+  "@featureAssetRegisterDesc": {
+    "description": "#2576 equipment register"
+  },
+  "featureAssetRegisterTitle": "Registre des équipements",
+  "@featureAssetRegisterTitle": {
+    "description": "#2576 equipment register"
+  },
   "featureAutoCheckInOut": "Arrivée/départ auto en fin de journée",
   "featureAutoCheckInOutDesc": "Les réservations sans arrivée ou départ enregistrés se clôturent seules une fois leur créneau passé.",
   "featureAvailableOnlyIn": "Disponible dans : {countries}",
