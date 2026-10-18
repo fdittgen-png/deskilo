@@ -26,6 +26,7 @@ String taxValueSummary(TaxValue v) => switch (v) {
   SalesTaxValue() => '${v.state} ${percentText(v.percent)} %',
   TaxabilityValue() => v.status,
   RateComponentValue() => rateComponentsText(v).replaceAll('\n', ' + '),
+  RetentionValue() => '${v.years} (${v.from})',
 };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -44,4 +45,5 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
   TaxDomain.salesTax => context.l10n.taxRefDomainSalesTax,
   TaxDomain.taxability => context.l10n.taxRefDomainTaxability,
   TaxDomain.rateComponent => context.l10n.taxRefDomainRateComponent,
+  TaxDomain.retention => context.l10n.taxRefDomainRetention,
 };

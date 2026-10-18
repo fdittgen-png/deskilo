@@ -287,5 +287,17 @@
   "taxRefInvalidRateComponents": "Un'imposta per riga: regime, autorità, percentuale; insieme devono essere pari all'aliquota combinata",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
+  "taxRefDomainRetention": "Termine di conservazione",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
+  "taxRefYears": "Anni di conservazione",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
+  },
+  "taxRefRetentionStart": "Il termine decorre da (fiscal_year_end o document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
   }
 }

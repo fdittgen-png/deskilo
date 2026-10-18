@@ -34033,6 +34033,12 @@ abstract class AppLocalizations {
   /// **'Taxes inside a combined rate'**
   String get taxRefDomainRateComponent;
 
+  /// #2571 retention: taxRefDomainRetention
+  ///
+  /// In en, this message translates to:
+  /// **'Retention period'**
+  String get taxRefDomainRetention;
+
   /// #2362 sales tax: taxRefDomainSalesTax
   ///
   /// In en, this message translates to:
@@ -34267,6 +34273,12 @@ abstract class AppLocalizations {
   /// **'Tax number required'**
   String get taxRefRequiresTaxNumber;
 
+  /// #2571 retention: taxRefRetentionStart
+  ///
+  /// In en, this message translates to:
+  /// **'The clock starts at (fiscal_year_end or document_date)'**
+  String get taxRefRetentionStart;
+
   /// #2481 tax reference: Field: the role of an account row.
   ///
   /// In en, this message translates to:
@@ -34368,6 +34380,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reason for withdrawing this planned version'**
   String get taxRefWithdrawReason;
+
+  /// #2571 retention: taxRefYears
+  ///
+  /// In en, this message translates to:
+  /// **'Years to keep'**
+  String get taxRefYears;
 
   /// #1658 template_exact_apply
   ///

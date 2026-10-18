@@ -86,6 +86,7 @@ class _VersionForm {
           'pattern': from?.value is VatIdPatternValue
               ? (from!.value as VatIdPatternValue).pattern
               : '',
+          'years': from?.value is RetentionValue ? '${(from!.value as RetentionValue).years}' : '',
           'cents': switch (from?.value) {
             ThresholdValue(:final cents) => '$cents',
             _ => '',
@@ -134,6 +135,7 @@ class _VersionForm {
         'effect': v is ThresholdValue ? v.effect : 'next_year',
         'standard': v is TaxPointValue ? v.standard : 'invoice',
         'cash_backstop': v is TaxPointValue ? v.cashBackstop : 'none',
+        'start': v is RetentionValue ? v.from : 'fiscal_year_end',
         'duty': v is MandateValue ? v.duty : MandateDuty.receiveAll.wire,
         'format': v is AccountMapValue ? v.format : 'coa',
         'status': v is TaxabilityValue ? v.status : taxabilityStatuses.first,
@@ -167,6 +169,14 @@ class _VersionForm {
 
   double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
 
+  /// The two values that begin on a day: a duty, a retention clock.
+  TaxValue _datedValue() => domain == TaxDomain.mandate
+      ? MandateValue(duty: choice['duty']!, from: fields.text('from'))
+      : RetentionValue(
+          years: int.tryParse(fields.text('years')) ?? 0,
+          from: choice['start']!,
+        );
+
   TaxValue value() => switch (domain) {
         TaxDomain.rate => RateValue(
             label: fields.text('label'),
@@ -187,8 +197,7 @@ class _VersionForm {
             cashOption: flag['cash_option']!,
             cashBackstop: choice['cash_backstop']!,
           ),
-        TaxDomain.mandate =>
-          MandateValue(duty: choice['duty']!, from: fields.text('from')),
+        TaxDomain.mandate || TaxDomain.retention => _datedValue(),
         TaxDomain.issuingGate => IssuingGateValue(
             supported: flag['supported']!,
             requiresTaxNumber: flag['requires_tax_number']!,
@@ -265,6 +274,8 @@ class _VersionForm {
           'cents': l10n.taxRefInvalidNumber,
         if (fields.text('currency').length != 3) 'currency': l10n.taxRefRequired,
       },
+      if (domain == TaxDomain.retention && (int.tryParse(fields.text('years')) ?? 0) < 1)
+        'years': l10n.taxRefInvalidNumber,
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
         'from': l10n.taxRefInvalidDate,
@@ -358,6 +369,10 @@ class _VersionForm {
             _switch('cash_option', l10n.taxRefCashOption, refresh),
             _pick('cash_backstop', l10n.taxRefCashBackstop,
                 const ['none', 'end_of_following_year', 'one_year_after_issue']),
+          ],
+        TaxDomain.retention => [
+            _text('years', l10n.taxRefYears, type: TextInputType.number),
+            _pick('start', l10n.taxRefRetentionStart, const ['fiscal_year_end', 'document_date']),
           ],
         TaxDomain.mandate => [
             _pick('duty', l10n.taxRefDuty, MandateDuty.values.map((d) => d.wire)),

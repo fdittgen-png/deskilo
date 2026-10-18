@@ -287,5 +287,17 @@
   "taxRefInvalidRateComponents": "Eine Steuer je Zeile: Regime, Behörde, Prozent; zusammen müssen sie dem kombinierten Satz entsprechen",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
+  },
+  "taxRefDomainRetention": "Aufbewahrungsfrist",
+  "@taxRefDomainRetention": {
+    "description": "#2571 retention: taxRefDomainRetention"
+  },
+  "taxRefYears": "Jahre der Aufbewahrung",
+  "@taxRefYears": {
+    "description": "#2571 retention: taxRefYears"
+  },
+  "taxRefRetentionStart": "Die Frist beginnt mit (fiscal_year_end oder document_date)",
+  "@taxRefRetentionStart": {
+    "description": "#2571 retention: taxRefRetentionStart"
   }
 }

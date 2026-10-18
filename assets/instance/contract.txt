@@ -2111,6 +2111,9 @@ routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolea
 routine public.resource_kind_feature(p_kind text) -> text | function | invoker | immutable | exec:service_role | body:7629d243b2ff
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf90d17406dd
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
+routine public.retention_rule(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:26ee190658a3
+routine public.retention_rule_of(p_country text, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:9018c3af5615
+routine public.retention_until(p_workspace_id uuid, p_class text, p_document_date date) -> date | function | definer | stable | exec:authenticated,service_role | body:e35932c65c99
 routine public.retire_invite_code() -> trigger | function | definer | volatile | exec:service_role | body:be59ed519e67
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1

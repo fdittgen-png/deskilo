@@ -19810,6 +19810,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefDomainRateComponent => 'Impuestos de una tasa combinada';
 
   @override
+  String get taxRefDomainRetention => 'Plazo de conservación';
+
+  @override
   String get taxRefDomainSalesTax =>
       'Impuesto sobre las ventas por código postal';
 
@@ -19939,6 +19942,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefRequiresTaxNumber => 'Número fiscal obligatorio';
 
   @override
+  String get taxRefRetentionStart =>
+      'El plazo empieza en (fiscal_year_end o document_date)';
+
+  @override
   String get taxRefRole => 'Función';
 
   @override
@@ -19989,6 +19996,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get taxRefWithdrawReason =>
       'Motivo para retirar esta versión prevista';
+
+  @override
+  String get taxRefYears => 'Años de conservación';
 
   @override
   String get templateApplyConflict =>
