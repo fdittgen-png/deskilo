@@ -17435,6 +17435,12 @@ abstract class AppLocalizations {
   /// **'{feature} needs {prerequisite}, which stays off: it will not work yet.'**
   String libraryFeatureNeeds(String feature, String prerequisite);
 
+  /// #2454 feature availability by country
+  ///
+  /// In en, this message translates to:
+  /// **'{feature} stays as configured but does nothing in this space\'s country'**
+  String libraryFeatureNotApplicable(String feature);
+
   /// Template apply preview (#1280): libraryGroupAppearance
   ///
   /// In en, this message translates to:

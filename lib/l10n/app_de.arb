@@ -7364,6 +7364,15 @@
   },
   "libraryEmpty": "Noch nichts hier. Speichern Sie diesen Raum als Vorlage oder warten Sie, bis jemand eine mit Ihnen teilt.",
   "libraryFeatureNeeds": "{feature} braucht {prerequisite}, das ausgeschaltet bleibt: Es funktioniert noch nicht.",
+  "libraryFeatureNotApplicable": "{feature} bleibt wie konfiguriert, wirkt im Land dieses Space aber nicht",
+  "@libraryFeatureNotApplicable": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
   "libraryGroupAppearance": "Erscheinungsbild",
   "libraryGroupCalendarNavigation": "Kalender und Schließtage",
   "libraryGroupDocumentsOperations": "Dokumente und Betrieb",

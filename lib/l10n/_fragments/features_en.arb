@@ -560,5 +560,14 @@
   "featureCountriesEuName": "the European Union",
   "@featureCountriesEuName": {
     "description": "#2454 feature availability by country"
+  },
+  "libraryFeatureNotApplicable": "{feature} stays as configured but does nothing in this space's country",
+  "@libraryFeatureNotApplicable": {
+    "description": "#2454 feature availability by country",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
   }
 }

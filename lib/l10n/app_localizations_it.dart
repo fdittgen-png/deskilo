@@ -10242,6 +10242,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String libraryFeatureNotApplicable(String feature) {
+    return '$feature resta come configurata ma non fa nulla nel paese di questo spazio';
+  }
+
+  @override
   String get libraryGroupAppearance => 'Aspetto';
 
   @override

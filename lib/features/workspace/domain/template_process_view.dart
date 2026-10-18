@@ -103,3 +103,23 @@ Map<WorkspaceFeature, WorkspaceFeature> unmetPrerequisites(
           if (!onAfter(needed)) e.key: needed,
   };
 }
+
+/// #2454 — the features a change-set switches ON that the workspace's
+/// [country] cannot have (their `availableIn` excludes it): the preview says
+/// so instead of announcing a feature that would do nothing there. The flag
+/// is still written as configured, and works if the country ever matches.
+Set<WorkspaceFeature> unavailableInCountry(
+  Map<String, bool> changes,
+  String? country,
+) {
+  final byName = WorkspaceFeature.values.asNameMap();
+  final out = <WorkspaceFeature>{};
+  for (final e in changes.entries) {
+    final feature = byName[e.key];
+    if (feature == null || !e.value) continue;
+    if (!featureAvailableIn(featureManifest[feature]?.availableIn, country)) {
+      out.add(feature);
+    }
+  }
+  return out;
+}
