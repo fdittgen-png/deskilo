@@ -8,6 +8,7 @@
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
@@ -118,6 +119,43 @@ void main() {
         ),
       };
       expect(datev(matches: pending).where((l) => l.contains('Forderungsverlust')), isEmpty);
+    });
+  });
+
+  group('Sage', () {
+    List<String> sage({Map<String, InvoiceMatch>? matches}) => buildSageFile(
+      invoices: SeededExportYear.invoices,
+      matches: matches ?? SeededExportYear.matches,
+      accounts: const SageAccounts(),
+      customerRef: (i) => i.memberId,
+    ).split('\r\n');
+
+    test('the written-off rest is a sales credit to the bad-debt nominal, without tax', () {
+      final rows = sage().where((l) => l.contains('Write-off INV-3')).toList();
+      expect(rows, hasLength(1));
+      final f = rows.single.split(',');
+      expect(f[0], 'SC');
+      expect(f[2], '8100');
+      expect(f[4], '25/05/2026');
+      expect(f[7], '40.00');
+      expect(f[8], const SageAccounts().noTax);
+      expect(f[9], '0.00');
+    });
+
+    test('nothing is written off for an invoice that was not, nor for a pending match', () {
+      expect(sage().where((l) => l.contains('Write-off')), hasLength(1));
+      final pending = {
+        ...SeededExportYear.matches,
+        SeededExportYear.inv3.id: InvoiceMatch(
+          invoiceId: SeededExportYear.inv3.id,
+          paidCents: 6000,
+          resolution: 'writeoff',
+          matchedAt: DateTime(2026, 5, 20),
+          writeoffAt: DateTime(2026, 5, 25),
+          status: 'pending',
+        ),
+      };
+      expect(sage(matches: pending).where((l) => l.contains('Write-off')), isEmpty);
     });
   });
 }
