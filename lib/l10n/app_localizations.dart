@@ -29803,6 +29803,12 @@ abstract class AppLocalizations {
   /// **'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.'**
   String get settingHintReadinessRecentExportDays;
 
+  /// #2571 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
+  String get settingHintRetentionUsYears;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -29977,6 +29983,12 @@ abstract class AppLocalizations {
   /// **'Recent export window'**
   String get settingLabelReadinessRecentExportDays;
 
+  /// #2571 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'Record retention, US state (years)'**
+  String get settingLabelRetentionUsYears;
+
   /// #2485 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -30144,6 +30156,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'seconds'**
   String get settingUnitSeconds;
+
+  /// #2571 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get settingUnitYears;
 
   /// #2484 settings: Field label.
   ///

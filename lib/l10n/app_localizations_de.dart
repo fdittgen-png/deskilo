@@ -17420,6 +17420,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
   @override
+  String get settingHintRetentionUsYears =>
+      'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.';
 
@@ -17527,6 +17531,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zeitfenster für aktuelle Exporte';
 
   @override
+  String get settingLabelRetentionUsYears =>
+      'Aufbewahrung in den USA, Bundesstaat (Jahre)';
+
+  @override
   String get settingLabelSecurityBadgeLockoutFailures =>
       'PIN-Versuche am Badge vor der Sperre';
 
@@ -17618,6 +17626,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitSeconds => 'Sekunden';
+
+  @override
+  String get settingUnitYears => 'Jahre';
 
   @override
   String get settingValueField => 'Wert';
