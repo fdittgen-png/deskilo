@@ -17236,6 +17236,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupSecurity => 'Limites de sécurité et d\'accès';
 
   @override
+  String get settingGroupVat => 'TVA';
+
+  @override
   String get settingGuardrail => 'Garde-fou fixe';
 
   @override
@@ -17295,6 +17298,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Minutes dont dispose la personne pour confirmer une action demandée par un assistant. Les demandes déjà faites gardent leur délai. Peut seulement être raccourci.';
 
   @override
+  String get settingHintMcpNoticeReadRetentionDays =>
+      'Jours pendant lesquels une notice d’opérateur lue est conservée avant d’être purgée. Les notices non lues, les autorisations, les consentements et la piste d’audit ne sont jamais purgés par cette valeur.';
+
+  @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minutes pendant lesquelles un contrôle réussi du point d\'accès de l\'assistant compte avant d\'activer l\'interface. Peut seulement être raccourcie.';
 
@@ -17341,6 +17348,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.';
+
+  @override
+  String get settingHintVatViesEvidenceDays =>
+      'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
   @override
   String get settingHistory => 'Historique';
@@ -17399,6 +17410,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Délai de confirmation d\'une action d\'assistant';
 
   @override
+  String get settingLabelMcpNoticeReadRetentionDays =>
+      'Conservation des notices lues';
+
+  @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Fraîcheur du contrôle du point d\'accès de l\'assistant';
 
@@ -17443,6 +17458,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validité d\'une invitation';
+
+  @override
+  String get settingLabelVatViesEvidenceDays =>
+      'Fraîcheur du contrôle du numéro de TVA';
 
   @override
   String settingMaxOnly(String max, String unit) {

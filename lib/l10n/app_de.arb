@@ -11940,6 +11940,10 @@
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingGroupVat": "Umsatzsteuer",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
+  },
   "settingGuardrail": "Feste Schutzgrenze",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -12000,6 +12004,10 @@
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMcpNoticeReadRetentionDays": "Tage, die ein gelesener Betreiberhinweis aufbewahrt wird, bevor er gelöscht wird. Ungelesene Hinweise, Freigaben, Einwilligungen und das Prüfprotokoll werden durch diesen Wert nie gelöscht.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingHintMcpProbeFreshnessMinutes": "Minuten, die eine erfolgreiche Prüfung des Assistenten-Endpunkts gilt, bevor die Schnittstelle eingeschaltet wird. Kann nur verkürzt werden.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -12047,6 +12055,10 @@
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingHistory": "Verlauf",
   "@settingHistory": {
@@ -12108,6 +12120,10 @@
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMcpNoticeReadRetentionDays": "Aufbewahrung gelesener Hinweise",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingLabelMcpProbeFreshnessMinutes": "Aktualität der Prüfung des Assistenten-Endpunkts",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
@@ -12155,6 +12171,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Gültigkeit einer Einladung",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingMaxOnly": "Höchstens {max} {unit}",
   "@settingMaxOnly": {

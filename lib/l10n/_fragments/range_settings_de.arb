@@ -51,5 +51,25 @@
   "settingHintKpiFinanceRangeMonths": "Von der Plattform festgelegt: die Monate nach dem ersten, die eine Finanzkennzahl umfassen darf (23 bedeutet insgesamt 24 Monate). Er begrenzt die Abfrage.",
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpNoticeReadRetentionDays": "Aufbewahrung gelesener Hinweise",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintMcpNoticeReadRetentionDays": "Tage, die ein gelesener Betreiberhinweis aufbewahrt wird, bevor er gelöscht wird. Ungelesene Hinweise, Freigaben, Einwilligungen und das Prüfprotokoll werden durch diesen Wert nie gelöscht.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingGroupVat": "Umsatzsteuer",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
   }
 }

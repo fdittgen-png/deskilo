@@ -32,6 +32,8 @@ abstract final class SettingDefaults {
   static const int kpiFinanceRangeMonths = 23;
   /// `mcp.confirmation_expiry_minutes`
   static const int mcpConfirmationExpiryMinutes = 5;
+  /// `mcp.notice_read_retention_days`
+  static const int mcpNoticeReadRetentionDays = 90;
   /// `mcp.probe_freshness_minutes`
   static const int mcpProbeFreshnessMinutes = 15;
   /// `mcp.read_range_days`
@@ -56,4 +58,6 @@ abstract final class SettingDefaults {
   static const int securityBadgeLockoutMinutes = 15;
   /// `security.invitation_expiry_days`
   static const int securityInvitationExpiryDays = 14;
+  /// `vat.vies_evidence_days`
+  static const int vatViesEvidenceDays = 90;
 }

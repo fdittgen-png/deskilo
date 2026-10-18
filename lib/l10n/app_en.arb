@@ -19734,6 +19734,10 @@
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingGroupVat": "VAT",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
+  },
   "settingGuardrail": "Fixed guardrail",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -19794,6 +19798,10 @@
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMcpNoticeReadRetentionDays": "Days a read operator notice is kept before it is purged. Unread notices, grants, consents and the audit trail are never purged by this value.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingHintMcpProbeFreshnessMinutes": "Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -19841,6 +19849,10 @@
   "settingHintSecurityInvitationExpiryDays": "Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingHistory": "History",
   "@settingHistory": {
@@ -19902,6 +19914,10 @@
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMcpNoticeReadRetentionDays": "Read notice retention",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingLabelMcpProbeFreshnessMinutes": "Assistant endpoint check freshness",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
@@ -19949,6 +19965,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingMaxOnly": "At most {max} {unit}",
   "@settingMaxOnly": {

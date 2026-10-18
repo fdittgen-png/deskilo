@@ -35,6 +35,8 @@ String settingLabel(AppLocalizations l10n, String key) => switch (key) {
 /// #2487 -- the export window and the four read-only query-range guardrails.
 String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'readiness.recent_export_days' => l10n.settingLabelReadinessRecentExportDays,
+      'mcp.notice_read_retention_days' => l10n.settingLabelMcpNoticeReadRetentionDays,
+      'vat.vies_evidence_days' => l10n.settingLabelVatViesEvidenceDays,
       'mcp.read_range_days' => l10n.settingLabelMcpReadRangeDays,
       'calendar.range_days' => l10n.settingLabelCalendarRangeDays,
       'kpi.capacity_range_days' => l10n.settingLabelKpiCapacityRangeDays,
@@ -68,6 +70,8 @@ String? settingHint(AppLocalizations l10n, String key) => switch (key) {
 
 String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'readiness.recent_export_days' => l10n.settingHintReadinessRecentExportDays,
+      'mcp.notice_read_retention_days' => l10n.settingHintMcpNoticeReadRetentionDays,
+      'vat.vies_evidence_days' => l10n.settingHintVatViesEvidenceDays,
       'mcp.read_range_days' => l10n.settingHintMcpReadRangeDays,
       'calendar.range_days' => l10n.settingHintCalendarRangeDays,
       'kpi.capacity_range_days' => l10n.settingHintKpiCapacityRangeDays,
@@ -84,6 +88,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'presence' => l10n.settingGroupPresence,
       'messaging' => l10n.settingGroupMessaging,
       'readiness' => l10n.settingGroupReadiness,
+      'vat' => l10n.settingGroupVat,
       'kpi' => l10n.settingGroupKpi,
       _ => group,
     };

@@ -17190,6 +17190,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupSecurity => 'Límites de seguridad y acceso';
 
   @override
+  String get settingGroupVat => 'IVA';
+
+  @override
   String get settingGuardrail => 'Salvaguarda fija';
 
   @override
@@ -17249,6 +17252,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Minutos de que dispone la persona para confirmar una acción pedida por un asistente. Las solicitudes ya hechas conservan su plazo. Solo se puede acortar.';
 
   @override
+  String get settingHintMcpNoticeReadRetentionDays =>
+      'Días que se conserva un aviso de operador leído antes de purgarlo. Los avisos no leídos, las autorizaciones, los consentimientos y la pista de auditoría nunca se purgan con este valor.';
+
+  @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minutos durante los que cuenta una comprobación correcta del punto de acceso del asistente antes de activar la interfaz. Solo se puede acortar.';
 
@@ -17295,6 +17302,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.';
+
+  @override
+  String get settingHintVatViesEvidenceDays =>
+      'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
   @override
   String get settingHistory => 'Historial';
@@ -17354,6 +17365,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tiempo de confirmación de una acción del asistente';
 
   @override
+  String get settingLabelMcpNoticeReadRetentionDays =>
+      'Conservación de avisos leídos';
+
+  @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Vigencia de la comprobación del punto de acceso del asistente';
 
@@ -17398,6 +17413,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validez de una invitación';
+
+  @override
+  String get settingLabelVatViesEvidenceDays =>
+      'Vigencia de la comprobación del NIF-IVA';
 
   @override
   String settingMaxOnly(String max, String unit) {

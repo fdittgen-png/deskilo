@@ -51,5 +51,25 @@
   "settingHintKpiFinanceRangeMonths": "Fixed by the platform: the months beyond the first that one finance figure may span (23 means 24 months in all). It bounds the query.",
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpNoticeReadRetentionDays": "Read notice retention",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintMcpNoticeReadRetentionDays": "Days a read operator notice is kept before it is purged. Unread notices, grants, consents and the audit trail are never purged by this value.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingGroupVat": "VAT",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
   }
 }

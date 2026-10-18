@@ -1688,7 +1688,7 @@ routine public.instance_grant_database_admin(p_target uuid, p_can_provision bool
 routine public.instance_grant_mcp_eligibility(p_subject uuid, p_reason text, p_days integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0f7183059de9
 routine public.instance_mcp_endpoint_check() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8cc1713a1844
 routine public.instance_mcp_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92926f195fa0
-routine public.instance_notify_operators(p_kind text, p_subject text, p_payload jsonb, p_except uuid) -> integer | function | definer | volatile | exec:service_role | body:c0b2df148e6b
+routine public.instance_notify_operators(p_kind text, p_subject text, p_payload jsonb, p_except uuid) -> integer | function | definer | volatile | exec:service_role | body:480c77a0c07f
 routine public.instance_operator_require(p_change boolean) -> void | function | definer | stable | exec:service_role | body:3e1d8bca1f4c
 routine public.instance_probe_mcp_endpoint() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:803cb87aa178
 routine public.instance_responsibles() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:360149335b84
@@ -1758,7 +1758,7 @@ routine public.mark_account_group_read(p_group uuid) -> void | function | define
 routine public.mark_conversation_read(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:a053c8dac5e4
 routine public.mark_conversation_unread(p_conversation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c327e7a30b44
 routine public.mark_inquiry_read(p_inquiry uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fe0ea26cdb49
-routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6f6a75025f9d
+routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f919dabab454
 routine public.mark_member_notes_read(p_workspace_id uuid, p_from_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d0a83c717a6
 routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | function | definer | volatile | exec:service_role | body:75d9d37905a1
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:a65d618c53b6
@@ -1898,7 +1898,7 @@ routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time
 routine public.member_rows_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:ce0cc1f9212d
 routine public.member_simultaneous_allowance(p_member_id uuid) -> integer | function | definer | stable | exec:service_role | body:f681a04fbf0b
 routine public.member_statement(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a443da799ff5
-routine public.member_vies_verified(p_member_id uuid, p_vat_id text) -> boolean | function | definer | stable | exec:service_role | body:8ed5a7c3c3dc
+routine public.member_vies_verified(p_member_id uuid, p_vat_id text) -> boolean | function | definer | stable | exec:service_role | body:0f32fc93d2ff
 routine public.members_administrator_holding() -> trigger | function | definer | volatile | exec:service_role | body:c7f82b3888a8
 routine public.members_invitation_roles() -> trigger | function | definer | volatile | exec:service_role | body:bd2f17c947c3
 routine public.members_mcp_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:780fabdcf82f
