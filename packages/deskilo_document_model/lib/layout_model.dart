@@ -87,7 +87,11 @@ class LayoutCell {
 }
 
 class LayoutRow {
-  const LayoutRow(this.cells, {this.bold = false});
+  /// #2589 — the model is a value: every list it holds is copied into an
+  /// unmodifiable one on construction, so a caller that keeps its list cannot
+  /// change a document already built (a new design is a new document).
+  LayoutRow(List<LayoutCell> cells, {this.bold = false})
+    : cells = List.unmodifiable(cells);
   final List<LayoutCell> cells;
   final bool bold;
 }
@@ -95,11 +99,12 @@ class LayoutRow {
 /// A table with declared columns. Rows longer than the column list are
 /// an error at read time — a design must say what every column is.
 class LayoutTable extends LayoutElement {
-  const LayoutTable({
-    this.columns = const [],
-    this.rows = const [],
+  LayoutTable({
+    List<LayoutColumn> columns = const [],
+    List<LayoutRow> rows = const [],
     super.frame,
-  });
+  }) : columns = List.unmodifiable(columns),
+       rows = List.unmodifiable(rows);
   final List<LayoutColumn> columns;
   final List<LayoutRow> rows;
 }
@@ -107,14 +112,18 @@ class LayoutTable extends LayoutElement {
 /// A box: a parent for further elements, with its own frame. This is
 /// how "40% wide, at 60% across" is said.
 class LayoutBox extends LayoutElement {
-  const LayoutBox(this.children, {super.frame});
+  LayoutBox(List<LayoutElement> children, {super.frame})
+    : children = List.unmodifiable(children);
   final List<LayoutElement> children;
 }
 
 /// Equal-width side-by-side columns, each a list of flowing elements —
 /// the positioned twin of the banded `::: ||| :::`.
 class LayoutColumns extends LayoutElement {
-  const LayoutColumns(this.columns, {super.frame});
+  LayoutColumns(List<List<LayoutElement>> columns, {super.frame})
+    : columns = List.unmodifiable([
+        for (final column in columns) List<LayoutElement>.unmodifiable(column),
+      ]);
   final List<List<LayoutElement>> columns;
 }
 
@@ -129,9 +138,10 @@ class LayoutMarkup extends LayoutElement {
 /// One of the four page zones. [height] fixes a header/footer zone;
 /// [y] says where the body resumes (90 mm under a window envelope).
 class LayoutZone {
-  const LayoutZone({this.children = const [], this.height, this.y});
+  LayoutZone({List<LayoutElement> children = const [], this.height, this.y})
+    : children = List.unmodifiable(children);
 
-  static const LayoutZone empty = LayoutZone();
+  static final LayoutZone empty = LayoutZone();
 
   final List<LayoutElement> children;
   final Length? height;
@@ -160,17 +170,20 @@ class LayoutRecipient {
 /// footer on every page, body flowing between — the #872 contract,
 /// now stated by the design instead of assumed by the engine.
 class LayoutDocument {
-  const LayoutDocument({
+  LayoutDocument({
     this.page = 'A4',
     this.margin = const Length(20, LengthUnit.mm),
     this.marginTop,
     this.marginBottom,
-    this.header = LayoutZone.empty,
-    this.continuation = LayoutZone.empty,
-    this.body = LayoutZone.empty,
-    this.footer = LayoutZone.empty,
+    LayoutZone? header,
+    LayoutZone? continuation,
+    LayoutZone? body,
+    LayoutZone? footer,
     this.recipient,
-  });
+  }) : header = header ?? LayoutZone.empty,
+       continuation = continuation ?? LayoutZone.empty,
+       body = body ?? LayoutZone.empty,
+       footer = footer ?? LayoutZone.empty;
 
   final String page;
   final Length margin;
