@@ -1,0 +1,327 @@
+{
+  "@@locale": "de",
+  "featurePremisesLeaseTitle": "Mietvertrag der Räume",
+  "@featurePremisesLeaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "featurePremisesLeaseDesc": "Der Mietvertrag, den der Space als Mieter hält: Vermieter, Räume, Laufzeit, Kündigungsfrist und Kaution, mit Miete und Nebenkosten und deren Verlauf. Jeder Betrag erzeugt die geplante Ausgabe seiner Kostenart. Aus: kein Mietvertrag wird erfasst, die geplanten Ausgaben bleiben unverändert.",
+  "@featurePremisesLeaseDesc": {
+    "description": "#2569 premises lease"
+  },
+  "permManageLease": "Mietvertrag der Räume erfassen",
+  "@permManageLease": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTitle": "Mietvertrag",
+  "@leaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseIntro": "Der Mietvertrag, den der Space als Mieter hält, mit Miete und Nebenkosten. Ein neuer Betrag ersetzt den geltenden ab seinem Datum; die früheren bleiben im Verlauf.",
+  "@leaseIntro": {
+    "description": "#2569 premises lease"
+  },
+  "leaseAdd": "Mietvertrag hinzufügen",
+  "@leaseAdd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEdit": "Bearbeiten",
+  "@leaseEdit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEmpty": "Kein Mietvertrag erfasst.",
+  "@leaseEmpty": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLoadFailed": "Der Mietvertrag konnte nicht geladen werden.",
+  "@leaseLoadFailed": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSaved": "Gespeichert",
+  "@leaseSaved": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusDraft": "Entwurf",
+  "@leaseStatusDraft": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusActive": "Laufend",
+  "@leaseStatusActive": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusNotice": "Gekündigt",
+  "@leaseStatusNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusEnded": "Beendet",
+  "@leaseStatusEnded": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLessor": "Vermieter: {name}",
+  "@leaseLessor": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseStarted": "Seit {date}",
+  "@leaseStarted": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseFixedUntil": "Fest bis {date}",
+  "@leaseFixedUntil": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseNoticeDeadline": "Kündigung bis {date}",
+  "@leaseNoticeDeadline": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDeposit": "Kaution {amount}",
+  "@leaseDeposit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermsHeading": "Miete und Nebenkosten",
+  "@leaseTermsHeading": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLine": "{kind} · {amount} ab {from}",
+  "@leaseTermLine": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermLineClosed": "{kind} · {amount} von {from} bis {to}",
+  "@leaseTermLineClosed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseEndsOn": "Endet am {date}: {reason}",
+  "@leaseEndsOn": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDepositBack": "Kaution zurückzugeben: {amount}",
+  "@leaseDepositBack": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseOccurrencesAfter": "{count} Fälligkeiten wurden bereits für ein Datum nach dem Ende vorgelegt.",
+  "@leaseOccurrencesAfter": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "leaseAddTerm": "Neuer Betrag",
+  "@leaseAddTerm": {
+    "description": "#2569 premises lease"
+  },
+  "leaseGiveNotice": "Kündigen",
+  "@leaseGiveNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFormTitle": "Mietvertrag",
+  "@leaseFormTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldLessor": "Vermieter (ein Lieferant)",
+  "@leaseFieldLessor": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldPremises": "Räume (Adresse)",
+  "@leaseFieldPremises": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldStarts": "Beginn",
+  "@leaseFieldStarts": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldFixedUntil": "Fest bis",
+  "@leaseFieldFixedUntil": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldNoticeMonths": "Kündigungsfrist in Monaten",
+  "@leaseFieldNoticeMonths": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldDeposit": "Kaution",
+  "@leaseFieldDeposit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldIndexation": "Indexierung (Notiz)",
+  "@leaseFieldIndexation": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNeedSupplier": "Erfassen Sie den Vermieter zuerst als Lieferanten.",
+  "@leaseNeedSupplier": {
+    "description": "#2569 premises lease"
+  },
+  "leaseInvalid": "Wählen Sie den Vermieter, benennen Sie die Räume und setzen Sie das Beginndatum.",
+  "@leaseInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSave": "Speichern",
+  "@leaseSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseRefused": "Nicht gespeichert. Prüfen Sie Vermieter und Daten und dass der Vertrag nicht schon beendet ist.",
+  "@leaseRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermTitle": "Neuer Betrag",
+  "@leaseTermTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermHint": "Ab seinem Datum ersetzt er den geltenden Betrag derselben Kostenart; der frühere bleibt im Verlauf und seine Fälligkeiten bleiben erhalten.",
+  "@leaseTermHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermKind": "Kostenart",
+  "@leaseTermKind": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLabel": "Name der Kostenart",
+  "@leaseTermLabel": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermAmount": "Betrag",
+  "@leaseTermAmount": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermEvery": "Zahlung",
+  "@leaseTermEvery": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryMonth": "Monatlich",
+  "@leaseEveryMonth": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryQuarter": "Alle 3 Monate",
+  "@leaseEveryQuarter": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryHalfYear": "Alle 6 Monate",
+  "@leaseEveryHalfYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryYear": "Jährlich",
+  "@leaseEveryYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermFrom": "Ab",
+  "@leaseTermFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermInvalid": "Geben Sie einen Betrag über null und das Beginndatum an; benennen Sie eine andere Kostenart.",
+  "@leaseTermInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermSave": "Hinzufügen",
+  "@leaseTermSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermRefused": "Nicht hinzugefügt. Ein neuer Betrag muss nach dem geltenden beginnen und der Vertrag darf nicht beendet sein.",
+  "@leaseTermRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindRent": "Miete",
+  "@leaseKindRent": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindServiceCharge": "Nebenkostenvorauszahlung",
+  "@leaseKindServiceCharge": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindOther": "Andere Kosten",
+  "@leaseKindOther": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeTitle": "Kündigen",
+  "@leaseNoticeTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeHint": "Hält fest, wer wann und warum gekündigt hat. Die geplanten Beträge enden am Tag des Vertragsendes; bereits vorgelegte Fälligkeiten bleiben erhalten.",
+  "@leaseNoticeHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeGivenOn": "Gekündigt am",
+  "@leaseNoticeGivenOn": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeEnd": "Der Vertrag endet am",
+  "@leaseNoticeEnd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeReason": "Warum endet er?",
+  "@leaseNoticeReason": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeInvalid": "Geben Sie das Enddatum, nicht vor der Kündigung, und den Grund an.",
+  "@leaseNoticeInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeSave": "Kündigung erfassen",
+  "@leaseNoticeSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeRefused": "Nicht erfasst. Nur ein laufender Vertrag wird beendet, und ein Betrag darf nicht nach dem Ende beginnen.",
+  "@leaseNoticeRefused": {
+    "description": "#2569 premises lease"
+  }
+}

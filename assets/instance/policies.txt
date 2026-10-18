@@ -103,6 +103,8 @@ public.invoice_transmissions.invoice_transmissions_select
 public.invoice_transmissions.mcp_delegated_deny
 public.invoices.invoices_select
 public.invoices.mcp_delegated_deny
+public.lease_terms.lease_terms_select
+public.lease_terms.mcp_delegated_deny
 public.ledger_entries.ledger_select
 public.ledger_entries.mcp_delegated_deny
 public.levels.levels_select
@@ -174,6 +176,8 @@ public.platform_access_log.mcp_delegated_deny
 public.platform_access_log.platform_access_log_select
 public.platform_admins.mcp_delegated_deny
 public.platform_admins.platform_admins_self
+public.premises_leases.mcp_delegated_deny
+public.premises_leases.premises_leases_select
 public.price_negotiations.mcp_delegated_deny
 public.price_negotiations.price_negotiations_select
 public.privacy_notice_acknowledgments.mcp_delegated_deny

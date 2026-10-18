@@ -305,6 +305,13 @@ const Map<String, String> _notExported = {
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',
+  'premises_leases':
+      '#2569 — the lease the space holds as tenant: one contract of this '
+          'server\'s lessor, with a deposit and a termination; a fresh space does '
+          'not import it',
+  'lease_terms':
+      '#2569 — the history of the amounts of one lease; it names the '
+          'scheduled expense it generated on this server',
   'suppliers':
       '#2567 — the payees of the purchase side, master data the purchase '
           'documents point at; the documents carry their own raw snapshot, '

@@ -1,0 +1,327 @@
+{
+  "@@locale": "it",
+  "featurePremisesLeaseTitle": "Contratto di locazione dei locali",
+  "@featurePremisesLeaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "featurePremisesLeaseDesc": "Il contratto di locazione che lo spazio detiene come conduttore: il locatore, i locali, la durata, il preavviso e il deposito, con canone e spese e il loro storico. Ogni importo genera la spesa programmata della sua voce. Disattivato: nessun contratto viene registrato e le spese programmate restano invariate.",
+  "@featurePremisesLeaseDesc": {
+    "description": "#2569 premises lease"
+  },
+  "permManageLease": "Registrare il contratto di locazione",
+  "@permManageLease": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTitle": "Contratto di locazione",
+  "@leaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseIntro": "Il contratto di locazione che lo spazio detiene come conduttore, con canone e spese. Un nuovo importo sostituisce quello in vigore dalla sua data; i precedenti restano nello storico.",
+  "@leaseIntro": {
+    "description": "#2569 premises lease"
+  },
+  "leaseAdd": "Aggiungi un contratto",
+  "@leaseAdd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEdit": "Modifica",
+  "@leaseEdit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEmpty": "Nessun contratto registrato.",
+  "@leaseEmpty": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLoadFailed": "Impossibile caricare il contratto.",
+  "@leaseLoadFailed": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSaved": "Salvato",
+  "@leaseSaved": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusDraft": "Bozza",
+  "@leaseStatusDraft": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusActive": "In corso",
+  "@leaseStatusActive": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusNotice": "Disdetta data",
+  "@leaseStatusNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusEnded": "Terminato",
+  "@leaseStatusEnded": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLessor": "Locatore: {name}",
+  "@leaseLessor": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseStarted": "Dal {date}",
+  "@leaseStarted": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseFixedUntil": "Fisso fino al {date}",
+  "@leaseFixedUntil": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseNoticeDeadline": "Disdetta entro il {date}",
+  "@leaseNoticeDeadline": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDeposit": "Deposito {amount}",
+  "@leaseDeposit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermsHeading": "Canone e spese",
+  "@leaseTermsHeading": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLine": "{kind} · {amount} dal {from}",
+  "@leaseTermLine": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermLineClosed": "{kind} · {amount} dal {from} al {to}",
+  "@leaseTermLineClosed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseEndsOn": "Termina il {date}: {reason}",
+  "@leaseEndsOn": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDepositBack": "Deposito da restituire: {amount}",
+  "@leaseDepositBack": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseOccurrencesAfter": "Sono già state presentate {count} scadenze con data successiva alla fine.",
+  "@leaseOccurrencesAfter": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "leaseAddTerm": "Nuovo importo",
+  "@leaseAddTerm": {
+    "description": "#2569 premises lease"
+  },
+  "leaseGiveNotice": "Dare disdetta",
+  "@leaseGiveNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFormTitle": "Contratto",
+  "@leaseFormTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldLessor": "Locatore (un fornitore)",
+  "@leaseFieldLessor": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldPremises": "Locali (indirizzo)",
+  "@leaseFieldPremises": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldStarts": "Inizio",
+  "@leaseFieldStarts": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldFixedUntil": "Fisso fino al",
+  "@leaseFieldFixedUntil": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldNoticeMonths": "Preavviso in mesi",
+  "@leaseFieldNoticeMonths": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldDeposit": "Deposito",
+  "@leaseFieldDeposit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldIndexation": "Indicizzazione (nota)",
+  "@leaseFieldIndexation": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNeedSupplier": "Registra prima il locatore come fornitore.",
+  "@leaseNeedSupplier": {
+    "description": "#2569 premises lease"
+  },
+  "leaseInvalid": "Scegli il locatore, indica i locali e imposta la data di inizio.",
+  "@leaseInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSave": "Salva",
+  "@leaseSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseRefused": "Non salvato. Controlla il locatore, le date e che il contratto non sia già terminato.",
+  "@leaseRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermTitle": "Nuovo importo",
+  "@leaseTermTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermHint": "Dalla sua data sostituisce l’importo in vigore per la stessa voce; il precedente resta nello storico e le sue scadenze sono conservate.",
+  "@leaseTermHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermKind": "Voce",
+  "@leaseTermKind": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLabel": "Nome della voce",
+  "@leaseTermLabel": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermAmount": "Importo",
+  "@leaseTermAmount": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermEvery": "Pagamento",
+  "@leaseTermEvery": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryMonth": "Ogni mese",
+  "@leaseEveryMonth": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryQuarter": "Ogni 3 mesi",
+  "@leaseEveryQuarter": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryHalfYear": "Ogni 6 mesi",
+  "@leaseEveryHalfYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryYear": "Ogni anno",
+  "@leaseEveryYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermFrom": "Dal",
+  "@leaseTermFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermInvalid": "Inserisci un importo superiore a zero e la data di inizio; assegna un nome a un’altra voce.",
+  "@leaseTermInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermSave": "Aggiungi",
+  "@leaseTermSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermRefused": "Non aggiunto. Un nuovo importo deve iniziare dopo quello in vigore e il contratto non deve essere terminato.",
+  "@leaseTermRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindRent": "Canone",
+  "@leaseKindRent": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindServiceCharge": "Anticipo spese",
+  "@leaseKindServiceCharge": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindOther": "Altra voce",
+  "@leaseKindOther": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeTitle": "Dare disdetta",
+  "@leaseNoticeTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeHint": "Registra chi ha dato la disdetta, quando e perché. Gli importi programmati terminano il giorno della fine del contratto; le scadenze già presentate sono conservate.",
+  "@leaseNoticeHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeGivenOn": "Disdetta data il",
+  "@leaseNoticeGivenOn": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeEnd": "Il contratto termina il",
+  "@leaseNoticeEnd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeReason": "Perché termina?",
+  "@leaseNoticeReason": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeInvalid": "Indica la data di fine, non prima della disdetta, e il motivo.",
+  "@leaseNoticeInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeSave": "Registra la disdetta",
+  "@leaseNoticeSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeRefused": "Non registrato. Si termina solo un contratto in corso e un importo non può iniziare dopo la fine.",
+  "@leaseNoticeRefused": {
+    "description": "#2569 premises lease"
+  }
+}

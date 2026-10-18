@@ -1,0 +1,327 @@
+{
+  "@@locale": "en",
+  "featurePremisesLeaseTitle": "Premises lease",
+  "@featurePremisesLeaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "featurePremisesLeaseDesc": "The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are.",
+  "@featurePremisesLeaseDesc": {
+    "description": "#2569 premises lease"
+  },
+  "permManageLease": "Record the premises lease",
+  "@permManageLease": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTitle": "Premises lease",
+  "@leaseTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseIntro": "The lease the space holds as tenant, with its rent and charges. A new amount replaces the one in force from its date; the earlier amounts stay in the history.",
+  "@leaseIntro": {
+    "description": "#2569 premises lease"
+  },
+  "leaseAdd": "Add a lease",
+  "@leaseAdd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEdit": "Edit",
+  "@leaseEdit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEmpty": "No lease recorded.",
+  "@leaseEmpty": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLoadFailed": "The lease could not be loaded.",
+  "@leaseLoadFailed": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSaved": "Saved",
+  "@leaseSaved": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusDraft": "Draft",
+  "@leaseStatusDraft": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusActive": "Running",
+  "@leaseStatusActive": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusNotice": "Notice given",
+  "@leaseStatusNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseStatusEnded": "Ended",
+  "@leaseStatusEnded": {
+    "description": "#2569 premises lease"
+  },
+  "leaseLessor": "Lessor: {name}",
+  "@leaseLessor": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseStarted": "Since {date}",
+  "@leaseStarted": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseFixedUntil": "Fixed until {date}",
+  "@leaseFixedUntil": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseNoticeDeadline": "Give notice by {date}",
+  "@leaseNoticeDeadline": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDeposit": "Deposit {amount}",
+  "@leaseDeposit": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermsHeading": "Rent and charges",
+  "@leaseTermsHeading": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLine": "{kind} · {amount} from {from}",
+  "@leaseTermLine": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseTermLineClosed": "{kind} · {amount} from {from} to {to}",
+  "@leaseTermLineClosed": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseEndsOn": "Ends on {date}: {reason}",
+  "@leaseEndsOn": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseDepositBack": "Deposit due back: {amount}",
+  "@leaseDepositBack": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseOccurrencesAfter": "{count} occurrences were already presented for a date after the end.",
+  "@leaseOccurrencesAfter": {
+    "description": "#2569 premises lease",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "leaseAddTerm": "New amount",
+  "@leaseAddTerm": {
+    "description": "#2569 premises lease"
+  },
+  "leaseGiveNotice": "Give notice",
+  "@leaseGiveNotice": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFormTitle": "Lease",
+  "@leaseFormTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldLessor": "Lessor (a supplier)",
+  "@leaseFieldLessor": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldPremises": "Premises (address)",
+  "@leaseFieldPremises": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldStarts": "Starts on",
+  "@leaseFieldStarts": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldFixedUntil": "Fixed until",
+  "@leaseFieldFixedUntil": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldNoticeMonths": "Notice in months",
+  "@leaseFieldNoticeMonths": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldDeposit": "Deposit",
+  "@leaseFieldDeposit": {
+    "description": "#2569 premises lease"
+  },
+  "leaseFieldIndexation": "Indexation (note)",
+  "@leaseFieldIndexation": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNeedSupplier": "Record the lessor as a supplier first.",
+  "@leaseNeedSupplier": {
+    "description": "#2569 premises lease"
+  },
+  "leaseInvalid": "Choose the lessor, name the premises and set the start date.",
+  "@leaseInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseSave": "Save",
+  "@leaseSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseRefused": "It was not saved. Check the lessor, the dates and that the lease is not already terminated.",
+  "@leaseRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermTitle": "New amount",
+  "@leaseTermTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermHint": "From its date it replaces the amount in force for the same charge; the earlier one stays in the history and its occurrences are kept.",
+  "@leaseTermHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermKind": "Charge",
+  "@leaseTermKind": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermLabel": "Name of the charge",
+  "@leaseTermLabel": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermAmount": "Amount",
+  "@leaseTermAmount": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermEvery": "Paid",
+  "@leaseTermEvery": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryMonth": "Every month",
+  "@leaseEveryMonth": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryQuarter": "Every 3 months",
+  "@leaseEveryQuarter": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryHalfYear": "Every 6 months",
+  "@leaseEveryHalfYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseEveryYear": "Every year",
+  "@leaseEveryYear": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermFrom": "From",
+  "@leaseTermFrom": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermInvalid": "Enter an amount above zero and the date it starts; name an other charge.",
+  "@leaseTermInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermSave": "Add",
+  "@leaseTermSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseTermRefused": "It was not added. A new amount must start after the one in force and the lease must not be terminated.",
+  "@leaseTermRefused": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindRent": "Rent",
+  "@leaseKindRent": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindServiceCharge": "Service charge advance",
+  "@leaseKindServiceCharge": {
+    "description": "#2569 premises lease"
+  },
+  "leaseKindOther": "Other charge",
+  "@leaseKindOther": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeTitle": "Give notice",
+  "@leaseNoticeTitle": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeHint": "Records who gave notice, when and why. The scheduled amounts stop at the day the lease ends; the occurrences already presented are kept.",
+  "@leaseNoticeHint": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeGivenOn": "Notice given on",
+  "@leaseNoticeGivenOn": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeEnd": "The lease ends on",
+  "@leaseNoticeEnd": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeReason": "Why does it end?",
+  "@leaseNoticeReason": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeInvalid": "Give the end date, not before notice was given, and the reason.",
+  "@leaseNoticeInvalid": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeSave": "Record notice",
+  "@leaseNoticeSave": {
+    "description": "#2569 premises lease"
+  },
+  "leaseNoticeRefused": "It was not recorded. Only a running lease is terminated, and a term cannot start after its end.",
+  "@leaseNoticeRefused": {
+    "description": "#2569 premises lease"
+  }
+}

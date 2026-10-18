@@ -1257,6 +1257,12 @@
       "capabilities": []
     },
     {
+      "key": "premisesLease",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "priceNegotiations",
       "maturity": "beta",
       "lifecycle": "active",

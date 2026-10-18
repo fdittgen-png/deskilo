@@ -1217,6 +1217,10 @@ window.SETUP_L10N={
    "purchases": [
     "Purchases",
     "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched."
+   ],
+   "premisesLease": [
+    "Premises lease",
+    "The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are."
    ]
   },
   "process": {
@@ -1380,7 +1384,8 @@ window.SETUP_L10N={
    "viewMyMoney": "See their own account and invoices",
    "viewDocuments": "See the shared documents",
    "managePurchases": "Capture supplier bills",
-   "recordOutgoingPayments": "Record payments to members"
+   "recordOutgoingPayments": "Record payments to members",
+   "manageLease": "Record the premises lease"
   },
   "domain": {
    "payment": "Payment",
@@ -2655,6 +2660,10 @@ window.SETUP_L10N={
    "purchases": [
     "Achats",
     "Un seul document pour ce que l'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts."
+   ],
+   "premisesLease": [
+    "Bail des locaux",
+    "Le bail que l'espace détient comme locataire : le bailleur, les locaux, la durée, le préavis et le dépôt de garantie, avec son loyer et ses charges et leur historique. Chaque montant génère la dépense planifiée de sa charge. Désactivé : aucun bail n'est enregistré et les dépenses planifiées restent telles quelles."
    ]
   },
   "process": {
@@ -2818,7 +2827,8 @@ window.SETUP_L10N={
    "viewMyMoney": "Voir son propre compte et ses factures",
    "viewDocuments": "Voir les documents partagés",
    "managePurchases": "Saisir les factures fournisseur",
-   "recordOutgoingPayments": "Enregistrer les paiements aux membres"
+   "recordOutgoingPayments": "Enregistrer les paiements aux membres",
+   "manageLease": "Enregistrer le bail des locaux"
   },
   "domain": {
    "payment": "Paiement",
@@ -4093,6 +4103,10 @@ window.SETUP_L10N={
    "purchases": [
     "Einkäufe",
     "Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert."
+   ],
+   "premisesLease": [
+    "Mietvertrag der Räume",
+    "Der Mietvertrag, den der Space als Mieter hält: Vermieter, Räume, Laufzeit, Kündigungsfrist und Kaution, mit Miete und Nebenkosten und deren Verlauf. Jeder Betrag erzeugt die geplante Ausgabe seiner Kostenart. Aus: kein Mietvertrag wird erfasst, die geplanten Ausgaben bleiben unverändert."
    ]
   },
   "process": {
@@ -4256,7 +4270,8 @@ window.SETUP_L10N={
    "viewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
    "viewDocuments": "Die geteilten Dokumente sehen",
    "managePurchases": "Lieferantenrechnungen erfassen",
-   "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen"
+   "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
+   "manageLease": "Mietvertrag der Räume erfassen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -5531,6 +5546,10 @@ window.SETUP_L10N={
    "purchases": [
     "Compras",
     "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian."
+   ],
+   "premisesLease": [
+    "Contrato de alquiler del local",
+    "El contrato de alquiler que el espacio tiene como inquilino: el arrendador, el local, la duración, el preaviso y la fianza, con su renta y sus gastos y su historial. Cada importe genera el gasto programado de su concepto. Desactivado: no se registra ningún contrato y los gastos programados quedan como están."
    ]
   },
   "process": {
@@ -5694,7 +5713,8 @@ window.SETUP_L10N={
    "viewMyMoney": "Ver su propia cuenta y sus facturas",
    "viewDocuments": "Ver los documentos compartidos",
    "managePurchases": "Registrar facturas de proveedor",
-   "recordOutgoingPayments": "Registrar pagos a miembros"
+   "recordOutgoingPayments": "Registrar pagos a miembros",
+   "manageLease": "Registrar el contrato de alquiler"
   },
   "domain": {
    "payment": "Pago",
@@ -6969,6 +6989,10 @@ window.SETUP_L10N={
    "purchases": [
     "Acquisti",
     "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati."
+   ],
+   "premisesLease": [
+    "Contratto di locazione dei locali",
+    "Il contratto di locazione che lo spazio detiene come conduttore: il locatore, i locali, la durata, il preavviso e il deposito, con canone e spese e il loro storico. Ogni importo genera la spesa programmata della sua voce. Disattivato: nessun contratto viene registrato e le spese programmate restano invariate."
    ]
   },
   "process": {
@@ -7132,7 +7156,8 @@ window.SETUP_L10N={
    "viewMyMoney": "Vedere il proprio conto e le proprie fatture",
    "viewDocuments": "Vedere i documenti condivisi",
    "managePurchases": "Registrare le fatture dei fornitori",
-   "recordOutgoingPayments": "Registrare i pagamenti ai soci"
+   "recordOutgoingPayments": "Registrare i pagamenti ai soci",
+   "manageLease": "Registrare il contratto di locazione"
   },
   "domain": {
    "payment": "Pagamento",

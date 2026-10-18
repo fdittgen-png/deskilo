@@ -5888,6 +5888,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePlanObjectDeleteTitle => 'Delete spaces with history';
 
   @override
+  String get featurePremisesLeaseDesc =>
+      'The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are.';
+
+  @override
+  String get featurePremisesLeaseTitle => 'Premises lease';
+
+  @override
   String get featurePriceNegotiationsDesc =>
       'The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.';
 
@@ -9543,6 +9550,223 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageTitle => 'Language';
 
   @override
+  String get leaseAdd => 'Add a lease';
+
+  @override
+  String get leaseAddTerm => 'New amount';
+
+  @override
+  String leaseDeposit(String amount) {
+    return 'Deposit $amount';
+  }
+
+  @override
+  String leaseDepositBack(String amount) {
+    return 'Deposit due back: $amount';
+  }
+
+  @override
+  String get leaseEdit => 'Edit';
+
+  @override
+  String get leaseEmpty => 'No lease recorded.';
+
+  @override
+  String leaseEndsOn(String date, String reason) {
+    return 'Ends on $date: $reason';
+  }
+
+  @override
+  String get leaseEveryHalfYear => 'Every 6 months';
+
+  @override
+  String get leaseEveryMonth => 'Every month';
+
+  @override
+  String get leaseEveryQuarter => 'Every 3 months';
+
+  @override
+  String get leaseEveryYear => 'Every year';
+
+  @override
+  String get leaseFieldDeposit => 'Deposit';
+
+  @override
+  String get leaseFieldFixedUntil => 'Fixed until';
+
+  @override
+  String get leaseFieldIndexation => 'Indexation (note)';
+
+  @override
+  String get leaseFieldLessor => 'Lessor (a supplier)';
+
+  @override
+  String get leaseFieldNoticeMonths => 'Notice in months';
+
+  @override
+  String get leaseFieldPremises => 'Premises (address)';
+
+  @override
+  String get leaseFieldStarts => 'Starts on';
+
+  @override
+  String leaseFixedUntil(String date) {
+    return 'Fixed until $date';
+  }
+
+  @override
+  String get leaseFormTitle => 'Lease';
+
+  @override
+  String get leaseGiveNotice => 'Give notice';
+
+  @override
+  String get leaseIntro =>
+      'The lease the space holds as tenant, with its rent and charges. A new amount replaces the one in force from its date; the earlier amounts stay in the history.';
+
+  @override
+  String get leaseInvalid =>
+      'Choose the lessor, name the premises and set the start date.';
+
+  @override
+  String get leaseKindOther => 'Other charge';
+
+  @override
+  String get leaseKindRent => 'Rent';
+
+  @override
+  String get leaseKindServiceCharge => 'Service charge advance';
+
+  @override
+  String leaseLessor(String name) {
+    return 'Lessor: $name';
+  }
+
+  @override
+  String get leaseLoadFailed => 'The lease could not be loaded.';
+
+  @override
+  String get leaseNeedSupplier => 'Record the lessor as a supplier first.';
+
+  @override
+  String leaseNoticeDeadline(String date) {
+    return 'Give notice by $date';
+  }
+
+  @override
+  String get leaseNoticeEnd => 'The lease ends on';
+
+  @override
+  String get leaseNoticeGivenOn => 'Notice given on';
+
+  @override
+  String get leaseNoticeHint =>
+      'Records who gave notice, when and why. The scheduled amounts stop at the day the lease ends; the occurrences already presented are kept.';
+
+  @override
+  String get leaseNoticeInvalid =>
+      'Give the end date, not before notice was given, and the reason.';
+
+  @override
+  String get leaseNoticeReason => 'Why does it end?';
+
+  @override
+  String get leaseNoticeRefused =>
+      'It was not recorded. Only a running lease is terminated, and a term cannot start after its end.';
+
+  @override
+  String get leaseNoticeSave => 'Record notice';
+
+  @override
+  String get leaseNoticeTitle => 'Give notice';
+
+  @override
+  String leaseOccurrencesAfter(int count) {
+    return '$count occurrences were already presented for a date after the end.';
+  }
+
+  @override
+  String get leaseRefused =>
+      'It was not saved. Check the lessor, the dates and that the lease is not already terminated.';
+
+  @override
+  String get leaseSave => 'Save';
+
+  @override
+  String get leaseSaved => 'Saved';
+
+  @override
+  String leaseStarted(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String get leaseStatusActive => 'Running';
+
+  @override
+  String get leaseStatusDraft => 'Draft';
+
+  @override
+  String get leaseStatusEnded => 'Ended';
+
+  @override
+  String get leaseStatusNotice => 'Notice given';
+
+  @override
+  String get leaseTermAmount => 'Amount';
+
+  @override
+  String get leaseTermEvery => 'Paid';
+
+  @override
+  String get leaseTermFrom => 'From';
+
+  @override
+  String get leaseTermHint =>
+      'From its date it replaces the amount in force for the same charge; the earlier one stays in the history and its occurrences are kept.';
+
+  @override
+  String get leaseTermInvalid =>
+      'Enter an amount above zero and the date it starts; name an other charge.';
+
+  @override
+  String get leaseTermKind => 'Charge';
+
+  @override
+  String get leaseTermLabel => 'Name of the charge';
+
+  @override
+  String leaseTermLine(String kind, String amount, String from) {
+    return '$kind · $amount from $from';
+  }
+
+  @override
+  String leaseTermLineClosed(
+    String kind,
+    String amount,
+    String from,
+    String to,
+  ) {
+    return '$kind · $amount from $from to $to';
+  }
+
+  @override
+  String get leaseTermRefused =>
+      'It was not added. A new amount must start after the one in force and the lease must not be terminated.';
+
+  @override
+  String get leaseTermSave => 'Add';
+
+  @override
+  String get leaseTermTitle => 'New amount';
+
+  @override
+  String get leaseTermsHeading => 'Rent and charges';
+
+  @override
+  String get leaseTitle => 'Premises lease';
+
+  @override
   String get ledgerCategoryAdjustment => 'Adjustment';
 
   @override
@@ -12913,6 +13137,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permManageIntegrations => 'Manage integrations';
+
+  @override
+  String get permManageLease => 'Record the premises lease';
 
   @override
   String get permManageMembers => 'Manage members';

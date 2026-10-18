@@ -10218,6 +10218,18 @@ abstract class AppLocalizations {
   /// **'Delete spaces with history'**
   String get featurePlanObjectDeleteTitle;
 
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'The lease the space holds as tenant: the lessor, the premises, the term, the notice and the deposit, with its rent and charges and their history. Each amount generates the scheduled expense of its charge. Off: no lease is recorded and the scheduled expenses stay as they are.'**
+  String get featurePremisesLeaseDesc;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Premises lease'**
+  String get featurePremisesLeaseTitle;
+
   /// No description provided for @featurePriceNegotiationsDesc.
   ///
   /// In en, this message translates to:
@@ -16398,6 +16410,377 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get languageTitle;
 
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Add a lease'**
+  String get leaseAdd;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'New amount'**
+  String get leaseAddTerm;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit {amount}'**
+  String leaseDeposit(String amount);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit due back: {amount}'**
+  String leaseDepositBack(String amount);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get leaseEdit;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'No lease recorded.'**
+  String get leaseEmpty;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Ends on {date}: {reason}'**
+  String leaseEndsOn(String date, String reason);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Every 6 months'**
+  String get leaseEveryHalfYear;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get leaseEveryMonth;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Every 3 months'**
+  String get leaseEveryQuarter;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Every year'**
+  String get leaseEveryYear;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get leaseFieldDeposit;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed until'**
+  String get leaseFieldFixedUntil;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Indexation (note)'**
+  String get leaseFieldIndexation;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Lessor (a supplier)'**
+  String get leaseFieldLessor;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Notice in months'**
+  String get leaseFieldNoticeMonths;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Premises (address)'**
+  String get leaseFieldPremises;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Starts on'**
+  String get leaseFieldStarts;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed until {date}'**
+  String leaseFixedUntil(String date);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Lease'**
+  String get leaseFormTitle;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Give notice'**
+  String get leaseGiveNotice;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'The lease the space holds as tenant, with its rent and charges. A new amount replaces the one in force from its date; the earlier amounts stay in the history.'**
+  String get leaseIntro;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the lessor, name the premises and set the start date.'**
+  String get leaseInvalid;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Other charge'**
+  String get leaseKindOther;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get leaseKindRent;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Service charge advance'**
+  String get leaseKindServiceCharge;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Lessor: {name}'**
+  String leaseLessor(String name);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'The lease could not be loaded.'**
+  String get leaseLoadFailed;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Record the lessor as a supplier first.'**
+  String get leaseNeedSupplier;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Give notice by {date}'**
+  String leaseNoticeDeadline(String date);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'The lease ends on'**
+  String get leaseNoticeEnd;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Notice given on'**
+  String get leaseNoticeGivenOn;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Records who gave notice, when and why. The scheduled amounts stop at the day the lease ends; the occurrences already presented are kept.'**
+  String get leaseNoticeHint;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Give the end date, not before notice was given, and the reason.'**
+  String get leaseNoticeInvalid;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Why does it end?'**
+  String get leaseNoticeReason;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'It was not recorded. Only a running lease is terminated, and a term cannot start after its end.'**
+  String get leaseNoticeRefused;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Record notice'**
+  String get leaseNoticeSave;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Give notice'**
+  String get leaseNoticeTitle;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'{count} occurrences were already presented for a date after the end.'**
+  String leaseOccurrencesAfter(int count);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'It was not saved. Check the lessor, the dates and that the lease is not already terminated.'**
+  String get leaseRefused;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get leaseSave;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get leaseSaved;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String leaseStarted(String date);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get leaseStatusActive;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get leaseStatusDraft;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Ended'**
+  String get leaseStatusEnded;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Notice given'**
+  String get leaseStatusNotice;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get leaseTermAmount;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get leaseTermEvery;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get leaseTermFrom;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'From its date it replaces the amount in force for the same charge; the earlier one stays in the history and its occurrences are kept.'**
+  String get leaseTermHint;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero and the date it starts; name an other charge.'**
+  String get leaseTermInvalid;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Charge'**
+  String get leaseTermKind;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the charge'**
+  String get leaseTermLabel;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'{kind} · {amount} from {from}'**
+  String leaseTermLine(String kind, String amount, String from);
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'{kind} · {amount} from {from} to {to}'**
+  String leaseTermLineClosed(
+    String kind,
+    String amount,
+    String from,
+    String to,
+  );
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'It was not added. A new amount must start after the one in force and the lease must not be terminated.'**
+  String get leaseTermRefused;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get leaseTermSave;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'New amount'**
+  String get leaseTermTitle;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Rent and charges'**
+  String get leaseTermsHeading;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Premises lease'**
+  String get leaseTitle;
+
   /// Ledger entry category
   ///
   /// In en, this message translates to:
@@ -22225,6 +22608,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage integrations'**
   String get permManageIntegrations;
+
+  /// #2569 premises lease
+  ///
+  /// In en, this message translates to:
+  /// **'Record the premises lease'**
+  String get permManageLease;
 
   /// Permission label (#513)
   ///
