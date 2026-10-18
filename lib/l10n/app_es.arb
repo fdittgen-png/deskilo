@@ -11940,6 +11940,10 @@
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingGroupVat": "IVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
+  },
   "settingGuardrail": "Salvaguarda fija",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -12000,6 +12004,10 @@
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMcpNoticeReadRetentionDays": "Días que se conserva un aviso de operador leído antes de purgarlo. Los avisos no leídos, las autorizaciones, los consentimientos y la pista de auditoría nunca se purgan con este valor.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingHintMcpProbeFreshnessMinutes": "Minutos durante los que cuenta una comprobación correcta del punto de acceso del asistente antes de activar la interfaz. Solo se puede acortar.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -12047,6 +12055,10 @@
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingHistory": "Historial",
   "@settingHistory": {
@@ -12108,6 +12120,10 @@
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservación de avisos leídos",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingLabelMcpProbeFreshnessMinutes": "Vigencia de la comprobación del punto de acceso del asistente",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
@@ -12155,6 +12171,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Validez de una invitación",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingMaxOnly": "Como máximo {max} {unit}",
   "@settingMaxOnly": {
@@ -14039,6 +14059,32 @@
   "usageMember": "Miembro",
   "usageMemberAll": "Todos",
   "usageNoShow": "Nadie llegó: la reserva se factura entera",
+  "usagePrepareAction": "Registrar el uso de este mes",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepareBanner": "{count} reservas de este mes aún no están registradas, por lo que esta lista puede estar incompleta.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "No se registró. Inténtelo de nuevo o pida a quien gestiona el espacio.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Registrado: {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "usagePresent": "Presente",
   "usageReasonLabel": "Por qué (opcional)",
   "usageReportButton": "Informe de consumo del mes",

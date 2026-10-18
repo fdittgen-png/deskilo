@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -27,6 +28,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/usage_record.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
+import '../../providers/usage_read_providers.dart';
 
 /// One month of usage, newest first.
 class UsageFace extends ConsumerWidget {
@@ -38,12 +40,15 @@ class UsageFace extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final async = ref.watch(usageRecordsProvider(period));
+    final read = ref.watch(usageReadProvider(period));
+    final async = read.whenData((r) => r.records);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final me = ref.watch(myMemberProvider).value;
 
+    final unprepared = read.value?.unpreparedReservations ?? 0;
     return switch (async) {
-      AsyncData(value: final records) when records.isEmpty => Padding(
+      AsyncData(value: final records) when records.isEmpty && unprepared == 0 =>
+        Padding(
           padding: const EdgeInsets.all(AppSpacing.md),
           child: Text(
             l10n.usageEmpty,
@@ -55,6 +60,8 @@ class UsageFace extends ConsumerWidget {
       AsyncData(value: final records) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (unprepared > 0)
+              UsagePrepareBanner(period: period, count: unprepared),
             for (final record in records)
               UsageRecordCard(
                 record: record,
@@ -247,7 +254,7 @@ class UsageRecordCard extends ConsumerWidget {
       await ref
           .read(moneyRepositoryProvider)
           .requestUsageCorrection(record.id, reason: controller.text.trim());
-      ref.invalidate(usageRecordsProvider);
+      invalidateUsage(ref);
       invalidateBookingData(ref);
       if (!context.mounted) return;
       AppSnack.success(context,
@@ -265,7 +272,7 @@ class UsageRecordCard extends ConsumerWidget {
     final l10n = context.l10n;
     try {
       await ref.read(moneyRepositoryProvider).requestUsageRecordDelete(record.id);
-      ref.invalidate(usageRecordsProvider);
+      invalidateUsage(ref);
       if (!context.mounted) return;
       AppSnack.success(
           context, l10n.usageDeleteSubmitted);
@@ -276,5 +283,61 @@ class UsageRecordCard extends ConsumerWidget {
       AppSnack.error(
           context, l10n.workspaceGenericError);
     }
+  }
+}
+
+/// #2590 — a month with bookings nobody has recorded yet reads as incomplete,
+/// and recording it is the person's explicit action.
+class UsagePrepareBanner extends ConsumerWidget {
+  const UsagePrepareBanner({
+    super.key,
+    required this.period,
+    required this.count,
+  });
+
+  final String period;
+  final int count;
+
+  Future<void> _prepare(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    try {
+      final made = await ref
+          .read(usageCommandProvider)
+          .prepare(workspace.id, period, newRequestId());
+      invalidateUsage(ref);
+      if (!context.mounted || made == null) return;
+      AppSnack.success(context, l10n.usagePrepared(made));
+    } on Object catch (error, stack) {
+      TraceLogger.instance.error('money', 'usage preparation failed',
+          error: error, stackTrace: stack);
+      if (!context.mounted) return;
+      AppSnack.error(context, l10n.usagePrepareRefused);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return Card(
+      key: const ValueKey('usage-prepare-banner'),
+      margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.usagePrepareBanner(count)),
+            const SizedBox(height: AppSpacing.xs),
+            FilledButton.tonal(
+              key: const ValueKey('usage-prepare'),
+              onPressed: () => _prepare(context, ref),
+              child: Text(l10n.usagePrepareAction),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

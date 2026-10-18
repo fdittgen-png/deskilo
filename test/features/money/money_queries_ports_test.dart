@@ -108,6 +108,13 @@ class _AccountReads implements MemberAccountQueries {
     required String period,
     String? memberId,
   }) async => const [];
+
+  @override
+  Future<UsageRead> readUsageRecords({
+    required String workspaceId,
+    required String period,
+    String? memberId,
+  }) async => const UsageRead(records: []);
 }
 
 void main() {

@@ -29485,6 +29485,12 @@ abstract class AppLocalizations {
   /// **'Security and access limits'**
   String get settingGroupSecurity;
 
+  /// #2487 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get settingGroupVat;
+
   /// #2484 settings: Read-only guardrail.
   ///
   /// In en, this message translates to:
@@ -29575,6 +29581,12 @@ abstract class AppLocalizations {
   /// **'Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.'**
   String get settingHintMcpConfirmationExpiryMinutes;
 
+  /// #2487 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'Days a read operator notice is kept before it is purged. Unread notices, grants, consents and the audit trail are never purged by this value.'**
+  String get settingHintMcpNoticeReadRetentionDays;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -29646,6 +29658,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.'**
   String get settingHintSecurityInvitationExpiryDays;
+
+  /// #2487 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.'**
+  String get settingHintVatViesEvidenceDays;
 
   /// #2484 settings: History button.
   ///
@@ -29737,6 +29755,12 @@ abstract class AppLocalizations {
   /// **'Assistant action confirmation time'**
   String get settingLabelMcpConfirmationExpiryMinutes;
 
+  /// #2487 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'Read notice retention'**
+  String get settingLabelMcpNoticeReadRetentionDays;
+
   /// #2485 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -29808,6 +29832,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invitation validity'**
   String get settingLabelSecurityInvitationExpiryDays;
+
+  /// #2487 retention settings
+  ///
+  /// In en, this message translates to:
+  /// **'VAT-number check freshness'**
+  String get settingLabelVatViesEvidenceDays;
 
   /// #2484 settings: Upper bound.
   ///
@@ -35262,6 +35292,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nobody checked in — the booking bills in full'**
   String get usageNoShow;
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'Record this month\'s usage'**
+  String get usagePrepareAction;
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bookings of this month are not recorded yet, so this list may be incomplete.'**
+  String usagePrepareBanner(int count);
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'It was not recorded. Try again, or ask someone who manages the workspace.'**
+  String get usagePrepareRefused;
+
+  /// #2590 usage preparation
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded: {count}'**
+  String usagePrepared(int count);
 
   /// #833 - time actually checked in
   ///

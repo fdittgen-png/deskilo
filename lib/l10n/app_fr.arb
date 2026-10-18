@@ -11940,6 +11940,10 @@
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingGroupVat": "TVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
+  },
   "settingGuardrail": "Garde-fou fixe",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -12000,6 +12004,10 @@
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMcpNoticeReadRetentionDays": "Jours pendant lesquels une notice d’opérateur lue est conservée avant d’être purgée. Les notices non lues, les autorisations, les consentements et la piste d’audit ne sont jamais purgés par cette valeur.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingHintMcpProbeFreshnessMinutes": "Minutes pendant lesquelles un contrôle réussi du point d'accès de l'assistant compte avant d'activer l'interface. Peut seulement être raccourcie.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -12047,6 +12055,10 @@
   "settingHintSecurityInvitationExpiryDays": "Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingHistory": "Historique",
   "@settingHistory": {
@@ -12108,6 +12120,10 @@
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservation des notices lues",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingLabelMcpProbeFreshnessMinutes": "Fraîcheur du contrôle du point d'accès de l'assistant",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
@@ -12155,6 +12171,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Validité d'une invitation",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingMaxOnly": "Au plus {max} {unit}",
   "@settingMaxOnly": {
@@ -14039,6 +14059,32 @@
   "usageMember": "Membre",
   "usageMemberAll": "Tout le monde",
   "usageNoShow": "Personne n'est arrivé — la réservation est facturée en entier",
+  "usagePrepareAction": "Enregistrer l’usage de ce mois",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepareBanner": "{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "Non enregistré. Réessayez ou demandez à une personne qui gère l’espace.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Enregistré : {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "usagePresent": "Présent",
   "usageReasonLabel": "Pourquoi (facultatif)",
   "usageReportButton": "Rapport de consommation du mois",

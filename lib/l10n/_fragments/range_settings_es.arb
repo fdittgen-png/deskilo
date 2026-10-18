@@ -51,5 +51,25 @@
   "settingHintKpiFinanceRangeMonths": "Fijado por la plataforma: los meses posteriores al primero que puede abarcar un indicador financiero (23 significa 24 meses en total). Acota la consulta.",
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservación de avisos leídos",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintMcpNoticeReadRetentionDays": "Días que se conserva un aviso de operador leído antes de purgarlo. Los avisos no leídos, las autorizaciones, los consentimientos y la pista de auditoría nunca se purgan con este valor.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingGroupVat": "IVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
   }
 }

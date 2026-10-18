@@ -180,3 +180,91 @@ final class UsageRecordsFamily extends $Family
   @override
   String toString() => r'usageRecordsProvider';
 }
+
+/// #2590 — one month of usage as a PURE read, with how complete it is: it
+/// records nothing, and a month nobody has recorded reads as incomplete.
+
+@ProviderFor(usageRead)
+final usageReadProvider = UsageReadFamily._();
+
+/// #2590 — one month of usage as a PURE read, with how complete it is: it
+/// records nothing, and a month nobody has recorded reads as incomplete.
+
+final class UsageReadProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<UsageRead>,
+          UsageRead,
+          FutureOr<UsageRead>
+        >
+    with $FutureModifier<UsageRead>, $FutureProvider<UsageRead> {
+  /// #2590 — one month of usage as a PURE read, with how complete it is: it
+  /// records nothing, and a month nobody has recorded reads as incomplete.
+  UsageReadProvider._({
+    required UsageReadFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'usageReadProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$usageReadHash();
+
+  @override
+  String toString() {
+    return r'usageReadProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<UsageRead> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<UsageRead> create(Ref ref) {
+    final argument = this.argument as String;
+    return usageRead(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UsageReadProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$usageReadHash() => r'ee4491b9b3ddeb780151fcfe436f5efbe83dfe5c';
+
+/// #2590 — one month of usage as a PURE read, with how complete it is: it
+/// records nothing, and a month nobody has recorded reads as incomplete.
+
+final class UsageReadFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<UsageRead>, String> {
+  UsageReadFamily._()
+    : super(
+        retry: null,
+        name: r'usageReadProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #2590 — one month of usage as a PURE read, with how complete it is: it
+  /// records nothing, and a month nobody has recorded reads as incomplete.
+
+  UsageReadProvider call(String period) =>
+      UsageReadProvider._(argument: period, from: this);
+
+  @override
+  String toString() => r'usageReadProvider';
+}

@@ -1,46 +1,21 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
-# #2588 C1 — exposed SECURITY DEFINER functions that the scanner in
+# #2588 — exposed SECURITY DEFINER functions that the scanner in
 # test/lint/definer_scan.dart cannot show to check their caller (directly or
 # through one guarded helper). `name/parameters | status`.
 #
-# Nobody has read these yet: "unreviewed" is a work list, not a verdict, and
-# not a claim that any is exploitable. A review turns an entry into a guard
-# in the function (a new migration), a revoke from authenticated (when only
-# other functions call it), or — for a pure lookup that touches no tenant
-# data — a note here with its reason. The list only shrinks: the test fails
-# on an entry whose function is guarded, revoked or gone, and on any new
-# unguarded function.
-deployment_direction/2 | unreviewed
-eu_country_code/1 | unreviewed
-feature_operation_allowed/3 | unreviewed
-field_answer_problem/2 | unreviewed
-invoice_lines_for/3 | unreviewed
-is_eu_country/1 | unreviewed
-is_this_installation/1 | unreviewed
-issuing_gate_of/1 | unreviewed
-level_booking_enabled/1 | unreviewed
-level_has_conflict/3 | unreviewed
-mcp_own_reservation/4 | unreviewed
-mcp_runtime_epoch_mismatch/0 | unreviewed
-member_custom_permissions/1 | unreviewed
-message_body_workspaces/1 | unreviewed
-message_ref_workspace/2 | unreviewed
-message_refs_allowed/2 | unreviewed
-preview_invoice/3 | unreviewed
-public_person/1 | unreviewed
-reservation_site/1 | unreviewed
-role_holds/3 | unreviewed
-template_snapshot/2 | unreviewed
-validation_requires/3 | unreviewed
-vat_rate_family/1 | unreviewed
-vat_rate_id_by_label/2 | unreviewed
-vat_rate_percent_at/2 | unreviewed
-vat_tax_point_policy/1 | unreviewed
-workspace_charges_vat/1 | unreviewed
-workspace_default_vat_percent/1 | unreviewed
-workspace_default_vat_percent/2 | unreviewed
-workspace_default_vat_rate_id/1 | unreviewed
-workspace_tariff_vat_percent/1 | unreviewed
-workspace_tariff_vat_percent/2 | unreviewed
-workspace_twin_id/1 | unreviewed
+# The first version of this list held 33 names. Each was read against the live
+# schema: 25 were internal helpers only other definer functions call, and 0478
+# revoked them from authenticated. The nine left are reviewed below, each with
+# the reason it stays; a status that says "unreviewed" would be work still to
+# do. The list only shrinks: the test fails on an entry whose function is
+# guarded, revoked or gone, and on any new unguarded function.
+eu_country_code/1 | reviewed: a pure lookup of reference data; invoker functions (supply_vat_category, vies_vat_parts) need it callable
+feature_operation_allowed/3 | reviewed: answers whether a feature is on, as feature_effective does for any workspace id; the invoker function invoice_issuing_enabled needs it
+is_eu_country/1 | reviewed: a pure lookup of reference data; the invoker function supply_vat_category needs it
+is_this_installation/1 | reviewed: compares an id with this installation's; a row policy calls it, so it must stay callable
+mcp_own_reservation/4 | reviewed: not callable by authenticated on the live schema (pinned in pgTAP 221); the text scan cannot follow how it was revoked
+mcp_runtime_epoch_mismatch/0 | reviewed: the pre-request hook of the MCP facade compares two epochs and returns a boolean
+preview_invoice/3 | reviewed: guarded (own charges, or viewFinances / issueInvoices) by an anchored patch the text scan cannot see
+public_person/1 | reviewed: the one anonymous door of the public-profile tier (0389): the name, profession and bio of a person who published them, one refusal otherwise
+vat_tax_point_policy/1 | reviewed: a pure lookup of a reference row; the invoker function vat_tax_point_basis needs it

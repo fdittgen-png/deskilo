@@ -11940,6 +11940,10 @@
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingGroupVat": "IVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
+  },
   "settingGuardrail": "Protezione fissa",
   "@settingGuardrail": {
     "description": "#2484 settings: Read-only guardrail."
@@ -12000,6 +12004,10 @@
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintMcpNoticeReadRetentionDays": "Giorni in cui un avviso dell’operatore letto viene conservato prima di essere eliminato. Gli avvisi non letti, le autorizzazioni, i consensi e la traccia di audit non vengono mai eliminati con questo valore.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingHintMcpProbeFreshnessMinutes": "Minuti per cui un controllo riuscito dell'endpoint dell'assistente vale prima di attivare l'interfaccia. Può solo essere accorciata.",
   "@settingHintMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -12047,6 +12055,10 @@
   "settingHintSecurityInvitationExpiryDays": "Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
+  },
+  "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingHistory": "Cronologia",
   "@settingHistory": {
@@ -12108,6 +12120,10 @@
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservazione degli avvisi letti",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
   "settingLabelMcpProbeFreshnessMinutes": "Validità del controllo dell'endpoint dell'assistente",
   "@settingLabelMcpProbeFreshnessMinutes": {
     "description": "#2485 settings: Setting label."
@@ -12155,6 +12171,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Validità di un invito",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
   },
   "settingMaxOnly": "Al massimo {max} {unit}",
   "@settingMaxOnly": {
@@ -14039,6 +14059,32 @@
   "usageMember": "Membro",
   "usageMemberAll": "Tutti",
   "usageNoShow": "Non è venuto nessuno: la prenotazione è fatturata per intero",
+  "usagePrepareAction": "Registra l’uso di questo mese",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepareBanner": "{count} prenotazioni di questo mese non sono ancora registrate, quindi questo elenco può essere incompleto.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "Non registrato. Riprova o chiedi a chi gestisce lo spazio.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Registrato: {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "usagePresent": "Presente",
   "usageReasonLabel": "Perché (facoltativo)",
   "usageReportButton": "Report dei consumi del mese",

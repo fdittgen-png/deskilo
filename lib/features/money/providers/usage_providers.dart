@@ -45,3 +45,21 @@ Future<List<UsageRecord>> usageRecords(Ref ref, String period) async {
         ),
   );
 }
+
+/// #2590 — one month of usage as a PURE read, with how complete it is: it
+/// records nothing, and a month nobody has recorded reads as incomplete.
+@riverpod
+Future<UsageRead> usageRead(Ref ref, String period) async {
+  final memberId = ref.watch(usageFilterProvider).memberId;
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null || period.isEmpty) return const UsageRead(records: []);
+  return traced(
+    'money',
+    'usage read',
+    () => ref.read(memberAccountQueriesProvider).readUsageRecords(
+          workspaceId: workspace.id,
+          period: period,
+          memberId: memberId,
+        ),
+  );
+}

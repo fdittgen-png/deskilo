@@ -64,7 +64,8 @@ create or replace function pg_temp.st() returns jsonb language sql as $$
   select public.member_statement(current_setting('deskilo.pilot.m')::uuid, '2026-09');
 $$;
 create or replace function pg_temp.lines() returns jsonb language sql as $$
-  select public.invoice_lines_for(current_setting('deskilo.pilot.m')::uuid, '2026-09');
+  select public.preview_invoice(current_setting('deskilo.pilot.ws')::uuid,
+    current_setting('deskilo.pilot.m')::uuid, '2026-09') -> 'lines';
 $$;
 
 select is((pg_temp.st()->>'fee_cents')::int, 3500, 'the statement bills the subscription band');

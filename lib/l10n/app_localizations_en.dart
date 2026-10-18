@@ -17054,6 +17054,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupSecurity => 'Security and access limits';
 
   @override
+  String get settingGroupVat => 'VAT';
+
+  @override
   String get settingGuardrail => 'Fixed guardrail';
 
   @override
@@ -17113,6 +17116,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.';
 
   @override
+  String get settingHintMcpNoticeReadRetentionDays =>
+      'Days a read operator notice is kept before it is purged. Unread notices, grants, consents and the audit trail are never purged by this value.';
+
+  @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minutes a successful check of the assistant endpoint counts before the interface is turned on. Can only be shortened.';
 
@@ -17159,6 +17166,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.';
+
+  @override
+  String get settingHintVatViesEvidenceDays =>
+      'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
   @override
   String get settingHistory => 'History';
@@ -17213,6 +17224,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Assistant action confirmation time';
 
   @override
+  String get settingLabelMcpNoticeReadRetentionDays => 'Read notice retention';
+
+  @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Assistant endpoint check freshness';
 
@@ -17251,6 +17265,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelSecurityInvitationExpiryDays => 'Invitation validity';
+
+  @override
+  String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';
 
   @override
   String settingMaxOnly(String max, String unit) {
@@ -20395,6 +20412,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usageNoShow => 'Nobody checked in — the booking bills in full';
+
+  @override
+  String get usagePrepareAction => 'Record this month\'s usage';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count bookings of this month are not recorded yet, so this list may be incomplete.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'It was not recorded. Try again, or ask someone who manages the workspace.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Recorded: $count';
+  }
 
   @override
   String get usagePresent => 'Present';

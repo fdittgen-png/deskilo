@@ -51,5 +51,25 @@
   "settingHintKpiFinanceRangeMonths": "Fissato dalla piattaforma: i mesi oltre il primo che un indicatore finanziario può coprire (23 significa 24 mesi in tutto). Delimita la richiesta.",
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservazione degli avvisi letti",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintMcpNoticeReadRetentionDays": "Giorni in cui un avviso dell’operatore letto viene conservato prima di essere eliminato. Gli avvisi non letti, le autorizzazioni, i consensi e la traccia di audit non vengono mai eliminati con questo valore.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingGroupVat": "IVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
   }
 }

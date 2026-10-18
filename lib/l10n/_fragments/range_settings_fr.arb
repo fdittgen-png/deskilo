@@ -51,5 +51,25 @@
   "settingHintKpiFinanceRangeMonths": "Fixée par la plateforme : les mois au-delà du premier qu’un indicateur financier peut couvrir (23 signifie 24 mois en tout). Elle borne la requête.",
   "@settingHintKpiFinanceRangeMonths": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingLabelMcpNoticeReadRetentionDays": "Conservation des notices lues",
+  "@settingLabelMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintMcpNoticeReadRetentionDays": "Jours pendant lesquels une notice d’opérateur lue est conservée avant d’être purgée. Les notices non lues, les autorisations, les consentements et la piste d’audit ne sont jamais purgés par cette valeur.",
+  "@settingHintMcpNoticeReadRetentionDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
+  "@settingLabelVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
+  "@settingHintVatViesEvidenceDays": {
+    "description": "#2487 retention settings"
+  },
+  "settingGroupVat": "TVA",
+  "@settingGroupVat": {
+    "description": "#2487 retention settings"
   }
 }

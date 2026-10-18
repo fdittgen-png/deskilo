@@ -17,5 +17,31 @@
   "usageDelete": "Supprimer ce relevé",
   "usageDeleteSubmitted": "Suppression demandée.",
   "usageMember": "Membre",
-  "usageMemberAll": "Tout le monde"
+  "usageMemberAll": "Tout le monde",
+  "usagePrepareBanner": "{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareAction": "Enregistrer l’usage de ce mois",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Enregistré : {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "Non enregistré. Réessayez ou demandez à une personne qui gère l’espace.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  }
 }

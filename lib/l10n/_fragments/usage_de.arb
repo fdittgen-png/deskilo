@@ -17,5 +17,31 @@
   "usageDelete": "Diesen Satz entfernen",
   "usageDeleteSubmitted": "Entfernung angefragt.",
   "usageMember": "Mitglied",
-  "usageMemberAll": "Alle"
+  "usageMemberAll": "Alle",
+  "usagePrepareBanner": "{count} Buchungen dieses Monats sind noch nicht erfasst, diese Liste kann daher unvollständig sein.",
+  "@usagePrepareBanner": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareAction": "Nutzung dieses Monats erfassen",
+  "@usagePrepareAction": {
+    "description": "#2590 usage preparation"
+  },
+  "usagePrepared": "Erfasst: {count}",
+  "@usagePrepared": {
+    "description": "#2590 usage preparation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usagePrepareRefused": "Nicht erfasst. Versuchen Sie es erneut oder fragen Sie jemanden, der den Space verwaltet.",
+  "@usagePrepareRefused": {
+    "description": "#2590 usage preparation"
+  }
 }

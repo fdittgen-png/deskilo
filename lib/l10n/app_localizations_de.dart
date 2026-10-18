@@ -17223,6 +17223,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupSecurity => 'Sicherheits- und Zugriffsgrenzen';
 
   @override
+  String get settingGroupVat => 'Umsatzsteuer';
+
+  @override
   String get settingGuardrail => 'Feste Schutzgrenze';
 
   @override
@@ -17282,6 +17285,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.';
 
   @override
+  String get settingHintMcpNoticeReadRetentionDays =>
+      'Tage, die ein gelesener Betreiberhinweis aufbewahrt wird, bevor er gelöscht wird. Ungelesene Hinweise, Freigaben, Einwilligungen und das Prüfprotokoll werden durch diesen Wert nie gelöscht.';
+
+  @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minuten, die eine erfolgreiche Prüfung des Assistenten-Endpunkts gilt, bevor die Schnittstelle eingeschaltet wird. Kann nur verkürzt werden.';
 
@@ -17328,6 +17335,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.';
+
+  @override
+  String get settingHintVatViesEvidenceDays =>
+      'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
   @override
   String get settingHistory => 'Verlauf';
@@ -17384,6 +17395,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bestätigungszeit für Assistenten-Aktionen';
 
   @override
+  String get settingLabelMcpNoticeReadRetentionDays =>
+      'Aufbewahrung gelesener Hinweise';
+
+  @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Aktualität der Prüfung des Assistenten-Endpunkts';
 
@@ -17426,6 +17441,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Gültigkeit einer Einladung';
+
+  @override
+  String get settingLabelVatViesEvidenceDays =>
+      'Aktualität der USt-IdNr.-Prüfung';
 
   @override
   String settingMaxOnly(String max, String unit) {
@@ -20620,6 +20639,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get usageNoShow => 'Niemand kam — die Buchung wird voll berechnet';
+
+  @override
+  String get usagePrepareAction => 'Nutzung dieses Monats erfassen';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count Buchungen dieses Monats sind noch nicht erfasst, diese Liste kann daher unvollständig sein.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'Nicht erfasst. Versuchen Sie es erneut oder fragen Sie jemanden, der den Space verwaltet.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Erfasst: $count';
+  }
 
   @override
   String get usagePresent => 'Anwesend';

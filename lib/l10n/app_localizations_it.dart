@@ -17199,6 +17199,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupSecurity => 'Limiti di sicurezza e di accesso';
 
   @override
+  String get settingGroupVat => 'IVA';
+
+  @override
   String get settingGuardrail => 'Protezione fissa';
 
   @override
@@ -17258,6 +17261,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Minuti a disposizione della persona per confermare un\'azione richiesta da un assistente. Le richieste già fatte mantengono il loro tempo. Può solo essere accorciato.';
 
   @override
+  String get settingHintMcpNoticeReadRetentionDays =>
+      'Giorni in cui un avviso dell’operatore letto viene conservato prima di essere eliminato. Gli avvisi non letti, le autorizzazioni, i consensi e la traccia di audit non vengono mai eliminati con questo valore.';
+
+  @override
   String get settingHintMcpProbeFreshnessMinutes =>
       'Minuti per cui un controllo riuscito dell\'endpoint dell\'assistente vale prima di attivare l\'interfaccia. Può solo essere accorciata.';
 
@@ -17304,6 +17311,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.';
+
+  @override
+  String get settingHintVatViesEvidenceDays =>
+      'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
   @override
   String get settingHistory => 'Cronologia';
@@ -17363,6 +17374,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tempo di conferma di un\'azione dell\'assistente';
 
   @override
+  String get settingLabelMcpNoticeReadRetentionDays =>
+      'Conservazione degli avvisi letti';
+
+  @override
   String get settingLabelMcpProbeFreshnessMinutes =>
       'Validità del controllo dell\'endpoint dell\'assistente';
 
@@ -17408,6 +17423,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validità di un invito';
+
+  @override
+  String get settingLabelVatViesEvidenceDays =>
+      'Validità del controllo della partita IVA';
 
   @override
   String settingMaxOnly(String max, String unit) {
@@ -20592,6 +20611,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get usageNoShow =>
       'Non è venuto nessuno: la prenotazione è fatturata per intero';
+
+  @override
+  String get usagePrepareAction => 'Registra l’uso di questo mese';
+
+  @override
+  String usagePrepareBanner(int count) {
+    return '$count prenotazioni di questo mese non sono ancora registrate, quindi questo elenco può essere incompleto.';
+  }
+
+  @override
+  String get usagePrepareRefused =>
+      'Non registrato. Riprova o chiedi a chi gestisce lo spazio.';
+
+  @override
+  String usagePrepared(int count) {
+    return 'Registrato: $count';
+  }
 
   @override
   String get usagePresent => 'Presente';
