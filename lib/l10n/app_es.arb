@@ -1558,6 +1558,10 @@
   "@calendarKindInvoice": {
     "description": "#718/#719 - calendar hub"
   },
+  "calendarKindLease": "Fechas del contrato de alquiler",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
   "calendarKindMessage": "Mensajes",
   "@calendarKindMessage": {
     "description": "#718/#719 - calendar hub"
@@ -1576,6 +1580,24 @@
   },
   "calendarKindScheduled": "Gastos programados",
   "calendarKindValidation": "Validaciones",
+  "calendarLeaseEnd": "Alquiler · termina {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseNotice": "Alquiler · aviso antes de {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "calendarLevelCollapsed": "{level}, contraído",
   "calendarLevelExpanded": "{level}, expandido",
   "calendarListView": "Vista de lista",

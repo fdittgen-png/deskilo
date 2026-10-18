@@ -2496,6 +2496,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarKindInvoice => 'Rechnungen';
 
   @override
+  String get calendarKindLease => 'Mietvertragstermine';
+
+  @override
   String get calendarKindMessage => 'Nachrichten';
 
   @override
@@ -2512,6 +2515,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendarKindValidation => 'Freigaben';
+
+  @override
+  String calendarLeaseEnd(String name) {
+    return 'Mietvertrag · Ende $name';
+  }
+
+  @override
+  String calendarLeaseNotice(String name) {
+    return 'Mietvertrag · Kündigung bis $name';
+  }
 
   @override
   String calendarLevelCollapsed(String level) {

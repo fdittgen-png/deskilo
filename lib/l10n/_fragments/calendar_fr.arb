@@ -238,5 +238,27 @@
   "calendarValidationRefused": "Refusé : {what}",
   "calendarEventActionValidated": "validé",
   "calendarEventActionRefused": "refusé",
-  "calendarViewAlerts": "Alertes"
+  "calendarViewAlerts": "Alertes",
+  "calendarKindLease": "Échéances du bail",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
+  "calendarLeaseNotice": "Bail · préavis avant {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseEnd": "Bail · fin {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

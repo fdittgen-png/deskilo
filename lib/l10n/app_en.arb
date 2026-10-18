@@ -2909,6 +2909,10 @@
   "@calendarKindInvoice": {
     "description": "#718/#719 - calendar hub"
   },
+  "calendarKindLease": "Lease dates",
+  "@calendarKindLease": {
+    "description": "#2569 lease reminders"
+  },
   "calendarKindMessage": "Messages",
   "@calendarKindMessage": {
     "description": "#718/#719 - calendar hub"
@@ -2929,6 +2933,24 @@
   "calendarKindValidation": "Validations",
   "@calendarKindValidation": {
     "description": "#843 - calendar kind chip: decisions taken on events"
+  },
+  "calendarLeaseEnd": "Lease · ends {name}",
+  "@calendarLeaseEnd": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarLeaseNotice": "Lease · notice by {name}",
+  "@calendarLeaseNotice": {
+    "description": "#2569 lease reminders",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "calendarLevelCollapsed": "{level}, collapsed",
   "@calendarLevelCollapsed": {

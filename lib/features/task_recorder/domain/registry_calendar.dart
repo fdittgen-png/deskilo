@@ -27,6 +27,7 @@ const Set<String> calendarKindKeys = {
   'reminder',
   'due',
   'scheduled',
+  'lease',
   'validation',
 };
 

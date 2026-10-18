@@ -22,6 +22,10 @@ enum CalendarKind {
   /// #818 — a scheduled expense's occurrence falling due (#767).
   scheduled('scheduled'),
 
+  /// #2569 — the premises lease's notice deadline and end, for the member
+  /// responsible for it.
+  lease('lease'),
+
   /// #843 — somebody decided about an event: validated or refused. It
   /// sits at the moment of the DECISION, not of the event, because the
   /// two are often days apart and "when was this released" is the
@@ -48,7 +52,7 @@ enum CalendarKind {
         reservation || checkIn || checkOut || reminder =>
           CalendarGroup.bookings,
         event || message || validation => CalendarGroup.activity,
-        invoice || payment || consumption || due || scheduled =>
+        invoice || payment || consumption || due || scheduled || lease =>
           CalendarGroup.money,
       };
 }
