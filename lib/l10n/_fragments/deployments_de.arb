@@ -185,5 +185,17 @@
   "deployEntityCreditProducts": "Verkaufte Guthabenkarten",
   "@deployEntityCreditProducts": {
     "description": "#1271 T1: deployEntityCreditProducts"
+  },
+  "deploymentFeaturesNotApplicable": "In {country} nicht verfügbar, daher dort aus (Einstellung bleibt erhalten): {features}",
+  "@deploymentFeaturesNotApplicable": {
+    "description": "#2454 deployment preview: features the target's country does not offer",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
   }
 }

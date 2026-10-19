@@ -18,9 +18,11 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/deploy_configuration.dart';
 import '../../domain/deployment.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/deployment_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../feature_names.dart';
 
 /// #990 — the deployment between the two sides of a pair.
 ///
@@ -113,6 +115,12 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
       builder: (context) => _PreviewSheet(
         preview: previewed!.preview,
         target: to,
+        notApplicable: _selected.contains('features')
+            ? featuresLostInCountry(
+                resolveEnabledFeatures(from.featureFlags),
+                to.countryCode,
+              )
+            : const [],
       ),
     );
     if (confirmed != true || !mounted) return;
@@ -331,10 +339,18 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
 }
 
 class _PreviewSheet extends StatelessWidget {
-  const _PreviewSheet({required this.preview, required this.target});
+  const _PreviewSheet({
+    required this.preview,
+    required this.target,
+    this.notApplicable = const [],
+  });
 
   final DeploymentPreview preview;
   final Workspace target;
+
+  /// #2454 — features the deployment switches on that the target's country
+  /// does not offer: stored as set, not applicable there.
+  final List<WorkspaceFeature> notApplicable;
 
   @override
   Widget build(BuildContext context) {
@@ -366,6 +382,15 @@ class _PreviewSheet extends StatelessWidget {
                       subtitle: Text(e.isNoop
                           ? (l10n.deploymentNoChange)
                           : '+${e.added} · ~${e.changed} · −${e.removed}'),
+                    ),
+                  if (notApplicable.isNotEmpty)
+                    InlineBanner(
+                      key: const ValueKey('deploy-preview-not-applicable'),
+                      icon: Icons.public_off_outlined,
+                      text: l10n.deploymentFeaturesNotApplicable(
+                        target.countryCode,
+                        notApplicable.map((f) => featureName(l10n, f)).join(', '),
+                      ),
                     ),
                   if (preview.isNoop)
                     Padding(

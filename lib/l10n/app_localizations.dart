@@ -6523,6 +6523,12 @@ abstract class AppLocalizations {
   /// **'Deployed. The journal has it.'**
   String get deploymentDone;
 
+  /// #2454 deployment preview: features the target's country does not offer
+  ///
+  /// In en, this message translates to:
+  /// **'Not available in {country}, so they stay off there (kept as set): {features}'**
+  String deploymentFeaturesNotApplicable(String country, String features);
+
   /// #998 deployment pull: deploymentFlowFromDev
   ///
   /// In en, this message translates to:

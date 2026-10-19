@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +23,15 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   bool viewerOwner = true,
   Map<String, dynamic> flags = const {},
   List<Deployment> journal = const [],
+  String? targetCountry,
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
   final base = workspace.workspaces[0];
-  final dev = base.copyWith(pairId: 'pair-1', environment: 'dev');
+  final dev = base.copyWith(
+    pairId: 'pair-1',
+    environment: 'dev',
+    countryCode: targetCountry ?? base.countryCode,
+  );
   final prod = base.copyWith(id: 'ws-prod', pairId: 'pair-1', environment: 'prod');
   workspace.workspaces
     ..clear()
@@ -118,6 +124,40 @@ void main() {
     await tester.pumpAndSettle();
     expect(deployment.rolledBack, ['dep-1']);
     expect(find.byKey(const ValueKey('deploy-rollback-dep-1')), findsNothing);
+  });
+
+  testWidgets('a feature the target country does not offer is named in the '
+      'preview, and only when the features entity is deployed (#2454)',
+      (tester) async {
+    await _pump(
+      tester,
+      targetCountry: 'US',
+      flags: {WorkspaceFeature.recapitulativeStatement.name: true},
+    );
+    Future<void> preview() async {
+      await tester.ensureVisible(find.byKey(const ValueKey('deploy-preview')));
+      await tester.tap(find.byKey(const ValueKey('deploy-preview')));
+      await tester.pumpAndSettle();
+    }
+
+    await tester.tap(find.byKey(const ValueKey('deploy-entity-services')));
+    await tester.pumpAndSettle();
+    await preview();
+    expect(
+      find.byKey(const ValueKey('deploy-preview-not-applicable')),
+      findsNothing,
+    );
+    await tester.tap(find.byKey(const ValueKey('deployment-cancel')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('deploy-entity-features')));
+    await tester.pumpAndSettle();
+    await preview();
+    expect(
+      find.byKey(const ValueKey('deploy-preview-not-applicable')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('US'), findsWidgets);
   });
 
   testWidgets('an admin on the dev may pull the prod in (deployToDev)',

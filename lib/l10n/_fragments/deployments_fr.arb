@@ -185,5 +185,17 @@
   "deployEntityCreditProducts": "Les carnets prépayés en vente",
   "@deployEntityCreditProducts": {
     "description": "#1271 T1: deployEntityCreditProducts"
+  },
+  "deploymentFeaturesNotApplicable": "Non disponibles en {country}, donc inactives là-bas (réglage conservé) : {features}",
+  "@deploymentFeaturesNotApplicable": {
+    "description": "#2454 deployment preview: features the target's country does not offer",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
   }
 }
