@@ -1215,6 +1215,106 @@
   "bookFiscalStart": "El ejercicio empieza el",
   "bookIssuer": "Emisor",
   "bookMappingsTitle": "La cuenta de cada asiento",
+  "bookPeriodsClose": "Cerrar un periodo",
+  "@bookPeriodsClose": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsCloseBody": "Elija el primer y el último día. Un periodo que no ha terminado no se puede cerrar.",
+  "@bookPeriodsCloseBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedOwner": "Cerrado por un propietario",
+  "@bookPeriodsClosedOwner": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedVat": "Cerrado al presentar su declaración de IVA",
+  "@bookPeriodsClosedVat": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsEmpty": "Ningún periodo está cerrado.",
+  "@bookPeriodsEmpty": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportClosed": "periodo cerrado: siempre el mismo archivo",
+  "@bookPeriodsExportClosed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportLine": "{format}, {from} – {to}",
+  "@bookPeriodsExportLine": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsExports": "Exportaciones entregadas al contable",
+  "@bookPeriodsExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsFrom": "Primer día",
+  "@bookPeriodsFrom": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsIntro": "Un periodo cerrado es definitivo: no se puede anular ninguna factura emitida en él ni conciliar ningún cobro fechado en él. Las correcciones van al periodo abierto, por ejemplo una factura rectificativa. Cada exportación contable queda registrada abajo.",
+  "@bookPeriodsIntro": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsInvalid": "Elija los dos días e indique un motivo donde se pida.",
+  "@bookPeriodsInvalid": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsLoadFailed": "No se pudieron cargar los periodos.",
+  "@bookPeriodsLoadFailed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsNoExports": "Aún no hay exportaciones.",
+  "@bookPeriodsNoExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReason": "Por qué se reabre",
+  "@bookPeriodsReason": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsRefused": "El periodo no se modificó.",
+  "@bookPeriodsRefused": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopen": "Reabrir",
+  "@bookPeriodsReopen": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopenBody": "Reabrir permite de nuevo anular facturas de este periodo y conciliar cobros. El motivo queda con el periodo.",
+  "@bookPeriodsReopenBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopened": "Reabierto: {reason}",
+  "@bookPeriodsReopened": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsSaved": "Guardado",
+  "@bookPeriodsSaved": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTitle": "Periodos contables",
+  "@bookPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTo": "Último día",
+  "@bookPeriodsTo": {
+    "description": "#2365 accounting periods"
+  },
   "bookProblemCurrency": "Esta moneda no tiene un número de decimales verificado.",
   "bookProblemExternal": "Indique el sistema externo que lleva los libros oficiales.",
   "bookProblemFiscal": "Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).",
@@ -3955,6 +4055,14 @@
   "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.",
   "featureAccountingBookDesc": "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.",
   "featureAccountingBookTitle": "Libro contable",
+  "featureAccountingPeriodsDesc": "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran.",
+  "@featureAccountingPeriodsDesc": {
+    "description": "#2365 accounting periods"
+  },
+  "featureAccountingPeriodsTitle": "Periodos contables",
+  "@featureAccountingPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
   "featureAdminInvoicing": "Los admins emiten facturas",
   "featureAdminInvoicingDesc": "Los admins también emiten facturas. El propietario siempre puede.",
   "featureAdminLevelAssign": "Los admins pueden asignar plantas",

@@ -226,6 +226,7 @@ begin
       "premisesLease": false,
       "assetRegister": false,
       "externalRooms": false,
+      "accountingPeriods": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

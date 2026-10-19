@@ -43,6 +43,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.assetRegister,
   // #2568 — rented rooms are offered on purpose.
   WorkspaceFeature.externalRooms,
+  // #2365 — closing periods is a finance decision.
+  WorkspaceFeature.accountingPeriods,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -196,6 +198,7 @@ void main() {
       'premisesLease': true,
       'assetRegister': true,
       'externalRooms': true,
+      'accountingPeriods': true,
       'guestParticipation': true,
     });
 

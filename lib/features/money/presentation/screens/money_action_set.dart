@@ -17,6 +17,7 @@ import '../../domain/purchase.dart' show
         purchaseOffsetPermission,
         purchasePayPermission;
 import '../../domain/room_rental.dart' show roomRentalManagePermission;
+import '../widgets/book_periods_sheet.dart';
 import '../widgets/consumption_sheet.dart';
 import '../widgets/equipment_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
@@ -205,6 +206,13 @@ class MoneyActionSet {
         EquipmentButton(
           workspaceId: data.workspace!.id,
           held: {for (final p in ref.read(myPermissionsProvider)) p.wireName},
+        ),
+      // #2365 — the closed periods of the books and the export log, for the
+      // owner and those who read the finances or export.
+      if (data.accountingPeriodsOn && data.workspace != null)
+        BookPeriodsButton(
+          workspaceId: data.workspace!.id,
+          isOwner: data.member?.isOwner ?? false,
         ),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&

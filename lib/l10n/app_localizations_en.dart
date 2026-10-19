@@ -2070,6 +2070,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookMappingsTitle => 'Which account each entry books to';
 
   @override
+  String get bookPeriodsClose => 'Close a period';
+
+  @override
+  String get bookPeriodsCloseBody =>
+      'Choose the first and the last day. A period that has not ended cannot be closed.';
+
+  @override
+  String get bookPeriodsClosedOwner => 'Closed by an owner';
+
+  @override
+  String get bookPeriodsClosedVat => 'Closed when its VAT return was filed';
+
+  @override
+  String get bookPeriodsEmpty => 'No period is closed.';
+
+  @override
+  String get bookPeriodsExportClosed =>
+      'closed period: the same file every time';
+
+  @override
+  String bookPeriodsExportLine(String format, String from, String to) {
+    return '$format, $from – $to';
+  }
+
+  @override
+  String get bookPeriodsExports => 'Exports handed to the accountant';
+
+  @override
+  String get bookPeriodsFrom => 'First day';
+
+  @override
+  String get bookPeriodsIntro =>
+      'A closed period is final: no invoice issued inside it can be voided and no payment dated inside it can be matched. Corrections go to the open period, for example a credit note. Every accounting export is logged below.';
+
+  @override
+  String get bookPeriodsInvalid =>
+      'Choose both days, and give a reason where one is asked.';
+
+  @override
+  String get bookPeriodsLoadFailed => 'The periods could not be loaded.';
+
+  @override
+  String get bookPeriodsNoExports => 'No export yet.';
+
+  @override
+  String get bookPeriodsReason => 'Why it is reopened';
+
+  @override
+  String get bookPeriodsRefused => 'The period was not changed.';
+
+  @override
+  String get bookPeriodsReopen => 'Reopen';
+
+  @override
+  String get bookPeriodsReopenBody =>
+      'Reopening lets invoices of this period be voided and payments matched again. The reason stays with the period.';
+
+  @override
+  String bookPeriodsReopened(String reason) {
+    return 'Reopened: $reason';
+  }
+
+  @override
+  String get bookPeriodsSaved => 'Saved';
+
+  @override
+  String get bookPeriodsTitle => 'Accounting periods';
+
+  @override
+  String get bookPeriodsTo => 'Last day';
+
+  @override
   String get bookProblemCurrency =>
       'This currency has no reviewed number of decimals.';
 
@@ -5310,6 +5382,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Accounting book';
+
+  @override
+  String get featureAccountingPeriodsDesc =>
+      'Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged.';
+
+  @override
+  String get featureAccountingPeriodsTitle => 'Accounting periods';
 
   @override
   String get featureAdminInvoicing => 'Admins issue invoices';

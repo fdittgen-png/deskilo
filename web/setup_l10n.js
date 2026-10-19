@@ -1231,6 +1231,10 @@ window.SETUP_L10N={
    "externalRooms": [
     "Rented rooms",
     "A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes."
+   ],
+   "accountingPeriods": [
+    "Accounting periods",
+    "Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged."
    ]
   },
   "process": {
@@ -2684,6 +2688,10 @@ window.SETUP_L10N={
    "externalRooms": [
     "Salles louées",
     "Une salle que l'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l'espace et rien ne change."
+   ],
+   "accountingPeriods": [
+    "Périodes comptables",
+    "Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n'est verrouillé et les exports ne sont pas consignés."
    ]
   },
   "process": {
@@ -4137,6 +4145,10 @@ window.SETUP_L10N={
    "externalRooms": [
     "Gemietete Räume",
     "Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich."
+   ],
+   "accountingPeriods": [
+    "Buchungsperioden",
+    "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert."
    ]
   },
   "process": {
@@ -5590,6 +5602,10 @@ window.SETUP_L10N={
    "externalRooms": [
     "Salas alquiladas",
     "Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia."
+   ],
+   "accountingPeriods": [
+    "Periodos contables",
+    "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran."
    ]
   },
   "process": {
@@ -7043,6 +7059,10 @@ window.SETUP_L10N={
    "externalRooms": [
     "Sale in affitto",
     "Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia."
+   ],
+   "accountingPeriods": [
+    "Periodi contabili",
+    "Chiudere un periodo dei libri: nessuna fattura datata al suo interno può essere annullata, nessun incasso abbinato al suo interno, e ogni esportazione contabile viene registrata. Disattivato: nulla viene bloccato e le esportazioni non vengono registrate."
    ]
   },
   "process": {

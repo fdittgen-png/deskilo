@@ -148,4 +148,5 @@ const Set<String> workspaceFeatureKeys = {
   'premisesLease',
   'assetRegister',
   'externalRooms',
+  'accountingPeriods',
 };

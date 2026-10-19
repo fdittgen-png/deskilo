@@ -28,6 +28,7 @@ import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
+import '../providers/book_period_providers.dart';
 import '../providers/money_providers.dart';
 import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
@@ -142,10 +143,11 @@ Future<void> exportAccountingFile(
     final bytes = Uint8List.fromList(utf8.encode(content));
     if (!context.mounted) return;
     await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
+    await ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
+        year: year, content: content, documents: exported.length);
   }
 
-  String named(String stem) =>
-      '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
+  String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
   switch (format.id) {
     case 'fec':
