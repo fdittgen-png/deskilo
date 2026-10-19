@@ -4363,6 +4363,18 @@
   "@deploymentDone": {
     "description": "#988/#990 deployments: deploymentDone"
   },
+  "deploymentFeaturesNotApplicable": "Not available in {country}, so they stay off there (kept as set): {features}",
+  "@deploymentFeaturesNotApplicable": {
+    "description": "#2454 deployment preview: features the target's country does not offer",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
   "deploymentFlowFromDev": "From DEV",
   "@deploymentFlowFromDev": {
     "description": "#998 deployment pull: deploymentFlowFromDev"

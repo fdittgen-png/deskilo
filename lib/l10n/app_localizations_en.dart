@@ -3739,6 +3739,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deploymentDone => 'Deployed. The journal has it.';
 
   @override
+  String deploymentFeaturesNotApplicable(String country, String features) {
+    return 'Not available in $country, so they stay off there (kept as set): $features';
+  }
+
+  @override
   String get deploymentFlowFromDev => 'From DEV';
 
   @override
