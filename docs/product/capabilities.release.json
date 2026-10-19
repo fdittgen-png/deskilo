@@ -776,6 +776,12 @@
       "capabilities": []
     },
     {
+      "key": "biReportDesigner",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "bookForOthers",
       "maturity": "beta",
       "lifecycle": "active",

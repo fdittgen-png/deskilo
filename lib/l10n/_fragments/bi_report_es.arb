@@ -1,0 +1,70 @@
+{
+  "featureBiReportDesignerTitle": "Diseñador de informes (análisis)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerDesc": "Convierte un análisis guardado en un informe editable de páginas y tarjetas. Un informe guarda la pregunta, nunca las cifras: cada persona solo ve lo que permiten sus propios derechos. Desactivado: las vistas guardadas no cambian y los informes existentes siguen siendo legibles.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportDuplicate": "Duplicar como informe",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (informe)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportPageTitle": "Página 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Tarjetas del informe",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddCard": "Añadir una tarjeta",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "Quitar {card}",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "Subir {card}",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveDown": "Bajar {card}",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "Este informe aún no tiene tarjetas. Añada una.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biViewUnsupported": "Este informe no se puede guardar aquí: el diseñador de informes está desactivado, o una versión más antigua de la aplicación borraría lo que no sabe leer.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
+  }
+}

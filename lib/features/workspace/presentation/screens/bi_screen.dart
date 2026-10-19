@@ -24,6 +24,7 @@ import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/bi_export.dart';
 import '../widgets/bi_module_section.dart';
+import '../widgets/bi_report_section.dart';
 import '../widgets/bi_toolbar.dart';
 import '../widgets/bi_views_bar.dart';
 
@@ -129,25 +130,8 @@ class BiScreen extends ConsumerWidget {
         key: const ValueKey('bi-page'),
         children: [
           if (query == null)
-            Card(
-              key: const ValueKey('bi-invalid-address'),
-              margin: AppSpacing.mdAll,
-              child: Padding(
-                padding: AppSpacing.mdAll,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.biInvalidAddress,
-                    ),
-                    TextButton(
-                      key: const ValueKey('bi-reset'),
-                      onPressed: () => go(BiQueryContext.standard, 'standard'),
-                      child: Text(l10n.biReset),
-                    ),
-                  ],
-                ),
-              ),
+            _InvalidAddress(
+              onReset: () => go(BiQueryContext.standard, 'standard'),
             )
           else ...[
             if (workspaceId != null)
@@ -157,6 +141,14 @@ class BiScreen extends ConsumerWidget {
                 openId: saved,
                 visibleModules: visibleIds,
                 today: today,
+                onOpen: (view, q) => go(q, view?.id ?? 'standard'),
+              ),
+            if (workspaceId != null)
+              BiReportSection(
+                workspaceId: workspaceId,
+                query: query,
+                openId: saved,
+                visibleModules: visibleIds,
                 onOpen: (view, q) => go(q, view?.id ?? 'standard'),
               ),
             BiToolbar(
@@ -202,3 +194,33 @@ class BiScreen extends ConsumerWidget {
 /// A view id (uuid) or `standard`; anything else is a manipulated
 /// address.
 final _savedId = RegExp(r'^[A-Za-z0-9-]{1,64}$');
+
+/// An address that does not parse: refused, with the way back.
+class _InvalidAddress extends StatelessWidget {
+  const _InvalidAddress({required this.onReset});
+
+  final VoidCallback onReset;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Card(
+      key: const ValueKey('bi-invalid-address'),
+      margin: AppSpacing.mdAll,
+      child: Padding(
+        padding: AppSpacing.mdAll,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.biInvalidAddress),
+            TextButton(
+              key: const ValueKey('bi-reset'),
+              onPressed: onReset,
+              child: Text(l10n.biReset),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

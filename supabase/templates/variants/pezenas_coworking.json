@@ -92,6 +92,7 @@
         "assetRegister": false,
         "autoCheckInOut": false,
         "badgeSignIn": false,
+        "biReportDesigner": false,
         "bookForOthers": true,
         "bookingGate": true,
         "bookingPolicies": true,

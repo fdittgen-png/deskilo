@@ -931,6 +931,62 @@
   "biRefusedGrain": "Este análisis no se ofrece para esa duración de periodo.",
   "biRefusedGrouping": "Este análisis no se puede agrupar así.",
   "biRemainder": "Fuera de los grupos actuales",
+  "biReportAddCard": "Añadir una tarjeta",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (informe)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportDuplicate": "Duplicar como informe",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Tarjetas del informe",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportMoveDown": "Bajar {card}",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "Subir {card}",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "Este informe aún no tiene tarjetas. Añada una.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageTitle": "Página 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "Quitar {card}",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
   "biReset": "Mostrar la vista estándar",
   "biRunRate": "Al ritmo actual, este periodo terminaría en torno a {value}.",
   "@biRunRate": {
@@ -1022,6 +1078,10 @@
   "biViewStandard": "Vista estándar",
   "biViewTable": "Tabla",
   "biViewUnreadable": "Esta vista no se puede abrir aquí: se guardó en una forma que esta versión no lee, o ninguno de sus análisis está disponible para usted.",
+  "biViewUnsupported": "Este informe no se puede guardar aquí: el diseñador de informes está desactivado, o una versión más antigua de la aplicación borraría lo que no sabe leer.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
+  },
   "biViews": "Vistas",
   "biViewsMine": "Mis vistas",
   "biViewsTeam": "Vistas del equipo",
@@ -4146,6 +4206,14 @@
   "featureBadgeSignInTitle": "Iniciar sesión con credencial",
   "@featureBadgeSignInTitle": {
     "description": "#662 - feature registry entry"
+  },
+  "featureBiReportDesignerDesc": "Convierte un análisis guardado en un informe editable de páginas y tarjetas. Un informe guarda la pregunta, nunca las cifras: cada persona solo ve lo que permiten sus propios derechos. Desactivado: las vistas guardadas no cambian y los informes existentes siguen siendo legibles.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerTitle": "Diseñador de informes (análisis)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
   },
   "featureBookForOthers": "Reservar para otros",
   "featureBookForOthersDesc": "Los administradores y propietarios reservan sitios para otros miembros.",

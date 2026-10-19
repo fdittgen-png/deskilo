@@ -1,0 +1,70 @@
+{
+  "featureBiReportDesignerTitle": "Concepteur de rapports (analyses)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerDesc": "Transformez une analyse enregistrée en rapport modifiable, fait de pages et de cartes. Un rapport garde la question, jamais les chiffres : chacun ne voit que ce que ses propres droits permettent. Désactivé : les vues enregistrées restent telles quelles et les rapports existants restent lisibles.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportDuplicate": "Dupliquer en rapport",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (rapport)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportPageTitle": "Page 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Cartes du rapport",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddCard": "Ajouter une carte",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "Retirer {card}",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "Monter {card}",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveDown": "Descendre {card}",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "Ce rapport n'a pas encore de carte. Ajoutez-en une.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biViewUnsupported": "Ce rapport ne peut pas être enregistré ici : le concepteur de rapports est désactivé, ou une version plus ancienne de l'application effacerait ce qu'elle ne sait pas lire.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
+  }
+}

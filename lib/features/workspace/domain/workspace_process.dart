@@ -192,6 +192,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.reportLayouts,
       WorkspaceFeature.reportTexts,
       WorkspaceFeature.reportDesigner,
+      WorkspaceFeature.biReportDesigner,
       WorkspaceFeature.usageReport,
       WorkspaceFeature.vatReport,
     ]),

@@ -1661,11 +1661,13 @@ routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign 
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:72d7485dcf0b
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
-routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:268bdb68b7e1
+routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:eb7977fea8d1
 routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e9fae509a6c
+routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:ce62df941ea3
+routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:2bfaeb6fdbe7
 routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:7546fa7d352c
 routine public.bi_view_json(v bi_views) -> jsonb | function | invoker | stable | exec:service_role | body:e5541298b118
-routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c0e8bb1c103a
+routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e07a4f9c96a6
 routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c9bf955f2bd2
 routine public.bi_views_gate(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:e6858809d33b
 routine public.bi_views_list(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5197bc3183b
@@ -1791,7 +1793,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:da38772db367
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9a29a246c502
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -2458,7 +2460,7 @@ routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | fu
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:8b7096f94c87
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:24e3dcd1bb2d
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753

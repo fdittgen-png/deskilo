@@ -11,6 +11,7 @@
 library;
 
 import 'bi_query.dart';
+import 'bi_report_definition.dart';
 
 enum BiViewScope {
   private,
@@ -20,9 +21,26 @@ enum BiViewScope {
       values.where((s) => s.name == v).firstOrNull;
 }
 
-/// The stored definition: `{v: 1, query: {...}, cards: [...]}`.
+/// The stored definition: `{v: 1, query: {...}, cards: [...]}`, or a v2
+/// report (#2579, [report]) whose period and first page are also exposed as
+/// [query] and [cards], so every place that opens a view keeps working.
 class BiViewDefinition {
-  const BiViewDefinition({this.query = const {}, this.cards = const []});
+  const BiViewDefinition({
+    this.query = const {},
+    this.cards = const [],
+    this.report,
+  });
+
+  /// A v2 report as a definition.
+  factory BiViewDefinition.ofReport(BiReportDefinition report) =>
+      BiViewDefinition(
+        query: report.period.toQuery(),
+        cards: report.firstPageCards,
+        report: report,
+      );
+
+  /// Set for a v2 definition; null for v1.
+  final BiReportDefinition? report;
 
   /// The address parameters of the query (see [BiQueryContext.toQuery]).
   final Map<String, String> query;
@@ -43,16 +61,17 @@ class BiViewDefinition {
     cards: context.cards,
   );
 
-  Map<String, Object> toJson() => {
-    'v': version,
-    'query': query,
-    'cards': cards,
-  };
+  Map<String, Object> toJson() =>
+      report?.toJson() ?? {'v': version, 'query': query, 'cards': cards};
 
   /// Parses a stored definition; null when it is not one this client
   /// understands (another version, a malformed shape). Untrusted input:
   /// nothing is guessed.
   static BiViewDefinition? fromJson(Object? json) {
+    if (biReportReader(json)?.raw('v') == BiReportDefinition.version) {
+      final report = BiReportDefinition.fromJson(json);
+      return report == null ? null : BiViewDefinition.ofReport(report);
+    }
     if (json is! Map || json['v'] != version) return null;
     final query = json['query'] ?? const <String, Object?>{};
     final cards = json['cards'] ?? const <Object?>[];
@@ -72,6 +91,13 @@ class BiViewDefinition {
     return BiViewDefinition(query: q, cards: c);
   }
 }
+
+/// What saving [open] over itself writes: a report stays the report it is
+/// (its editor changes it); a v1 view takes the analysis on screen.
+BiViewDefinition biSavedDefinition(BiSavedView open, BiQueryContext query) =>
+    open.definition?.report != null
+    ? open.definition!
+    : BiViewDefinition.of(query);
 
 class BiSavedView {
   const BiSavedView({
@@ -185,6 +211,10 @@ enum BiViewFailure {
 
   /// A malformed name or definition.
   invalid,
+
+  /// A report (v2) this writer may not store: the report designer is off,
+  /// or the writer is an older client that would erase what it cannot read.
+  unsupported,
 }
 
 class BiViewRefused implements Exception {
@@ -220,10 +250,13 @@ abstract interface class BiViewRepository {
 
 /// The views in memory, under the server's rules (demonstration, tests).
 class InMemoryBiViewRepository implements BiViewRepository {
-  InMemoryBiViewRepository({this.canManage = true});
+  InMemoryBiViewRepository({this.canManage = true, this.reportsEnabled = true});
 
   /// Whether the reader holds workspaceSettings (team views).
   bool canManage;
+
+  /// Whether the report designer is on (the server's `biReportDesigner` gate).
+  bool reportsEnabled;
   final _views = <({String workspaceId, BiSavedView view})>[];
   var _next = 1;
 
@@ -258,6 +291,7 @@ class InMemoryBiViewRepository implements BiViewRepository {
     if (expectedRevision != (old?.revision ?? 0)) {
       throw const BiViewRefused(BiViewFailure.stale);
     }
+    _checkReport(old, definition);
     if (_views.any(
       (e) =>
           e.workspaceId == workspaceId &&
@@ -283,6 +317,15 @@ class InMemoryBiViewRepository implements BiViewRepository {
       _views[i] = entry;
     }
     return view;
+  }
+
+  /// A report is written only with the designer on, and a v1 writer never
+  /// overwrites a report: it would erase what it cannot read.
+  void _checkReport(BiSavedView? old, BiViewDefinition definition) {
+    if ((definition.report != null && !reportsEnabled) ||
+        (old?.definition?.report != null && definition.report == null)) {
+      throw const BiViewRefused(BiViewFailure.unsupported);
+    }
   }
 
   @override

@@ -22,6 +22,7 @@ class SupabaseBiViewRepository implements BiViewRepository {
         '42501' => BiViewFailure.forbidden,
         '23505' => BiViewFailure.nameTaken,
         '22023' => BiViewFailure.invalid,
+        '0A000' => BiViewFailure.unsupported,
         _ => null,
       };
       if (failure == null) rethrow;

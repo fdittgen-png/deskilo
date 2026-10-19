@@ -1623,6 +1623,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biRemainder => 'In keiner aktuellen Gruppe';
 
   @override
+  String get biReportAddCard => 'Karte hinzufügen';
+
+  @override
+  String biReportCopyName(String name) {
+    return '$name (Bericht)';
+  }
+
+  @override
+  String get biReportDuplicate => 'Als Bericht duplizieren';
+
+  @override
+  String get biReportEditorTitle => 'Karten des Berichts';
+
+  @override
+  String biReportMoveDown(String card) {
+    return '$card nach unten';
+  }
+
+  @override
+  String biReportMoveUp(String card) {
+    return '$card nach oben';
+  }
+
+  @override
+  String get biReportNoCards =>
+      'Dieser Bericht hat noch keine Karte. Fügen Sie eine hinzu.';
+
+  @override
+  String get biReportPageTitle => 'Seite 1';
+
+  @override
+  String biReportRemove(String card) {
+    return '$card entfernen';
+  }
+
+  @override
   String get biReset => 'Standardansicht zeigen';
 
   @override
@@ -1773,6 +1809,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biViewUnreadable =>
       'Diese Ansicht lässt sich hier nicht öffnen: Sie wurde in einer Form gespeichert, die diese Version nicht liest, oder keine ihrer Analysen ist für Sie verfügbar.';
+
+  @override
+  String get biViewUnsupported =>
+      'Dieser Bericht kann hier nicht gespeichert werden: Der Berichtsdesigner ist aus, oder eine ältere App-Version würde löschen, was sie nicht lesen kann.';
 
   @override
   String get biViews => 'Ansichten';
@@ -5515,6 +5555,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Anmeldung per Ausweis';
+
+  @override
+  String get featureBiReportDesignerDesc =>
+      'Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar.';
+
+  @override
+  String get featureBiReportDesignerTitle => 'Berichtsdesigner (Analysen)';
 
   @override
   String get featureBookForOthers => 'Für andere buchen';

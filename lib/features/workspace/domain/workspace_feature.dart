@@ -405,17 +405,15 @@ enum WorkspaceFeature {
   /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
   /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
   /// register (under purchases). Platform, OFF.
-  webMcp,
-  purchases,
-  premisesLease,
-  assetRegister,
+  webMcp, purchases, premisesLease, assetRegister,
 
   /// #2568 rooms the space rents (under levelBooking). Platform, OFF.
   externalRooms,
 
   /// #2365 closing a book period and the log of accounting exports (under
-  /// accountingBook). Platform, OFF.
-  accountingPeriods;
+  /// accountingBook); #2579 editable analytical reports, a root on purpose
+  /// (a capacity-only analyst edits one). Platform, OFF.
+  accountingPeriods, biReportDesigner;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
