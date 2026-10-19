@@ -29,7 +29,7 @@ Future<void> pickMemberCustomerCapacity(
   final ok = await showDialog<bool>(
     context: context,
     builder: (context) => StatefulBuilder(
-      builder: (context, setState) => AlertDialog(
+      builder: (context, setState) => AlertDialog(scrollable: true,
         title: Text(l10n.customerCapacityLabel),
         content: Column(
           mainAxisSize: MainAxisSize.min,

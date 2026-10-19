@@ -28,7 +28,7 @@ Future<void> pickMemberSubscription(
   final custom = TextEditingController();
   final pct = await showDialog<int>(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (context) => AlertDialog(scrollable: true,
       title: Text(l10n.memberSubscriptionLabel),
       content: Column(
         mainAxisSize: MainAxisSize.min,

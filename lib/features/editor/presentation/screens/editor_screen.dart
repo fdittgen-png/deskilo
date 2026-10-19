@@ -316,7 +316,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(widget.level.name),
       content: Column(
         mainAxisSize: MainAxisSize.min,

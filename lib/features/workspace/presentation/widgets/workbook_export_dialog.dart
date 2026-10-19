@@ -122,7 +122,7 @@ class _WorkbookExportDialogState extends State<_WorkbookExportDialog> {
     };
     return PopScope(
       canPop: false,
-      child: AlertDialog(
+      child: AlertDialog(scrollable: true,
         key: const ValueKey('workbook-export-dialog'),
         title: Text(l10n.workbookExportTitle),
         content: Column(

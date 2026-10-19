@@ -82,7 +82,7 @@ class _ReverseDialogState extends ConsumerState<_ReverseDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(l10n.purchasesReverseTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,

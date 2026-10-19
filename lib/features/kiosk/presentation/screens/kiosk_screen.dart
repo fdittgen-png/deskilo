@@ -606,7 +606,7 @@ class _KioskSuccessCardState extends State<_KioskSuccessCard> {
   @override
   Widget build(BuildContext context) {
     final rangeText = widget.rangeText;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       key: const ValueKey('kiosk-success-card'),
       icon: Icon(
         Icons.check_circle_outline,

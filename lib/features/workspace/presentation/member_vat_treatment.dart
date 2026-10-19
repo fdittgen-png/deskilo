@@ -37,7 +37,7 @@ Future<void> pickMemberVatTreatment(
   final ok = await showDialog<bool>(
     context: context,
     builder: (context) => StatefulBuilder(
-      builder: (context, setState) => AlertDialog(
+      builder: (context, setState) => AlertDialog(scrollable: true,
         title: HelpDotTitle(
           l10n.memberVatTreatmentLabel,
           l10n.helpTopicVat,

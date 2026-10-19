@@ -31,7 +31,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
     final theme = Theme.of(context);
     final matches = _controller.text.trim().toLowerCase() ==
         widget.phrase.toLowerCase();
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title:
           Text(l10n.workspaceResetDialogTitle),
       content: Column(

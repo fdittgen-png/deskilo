@@ -28,7 +28,7 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
     final l10n = context.l10n;
     final days = _days.round();
     final reason = _reason.text.trim();
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(
         l10n.instanceGrantTitle(widget.name),
       ),

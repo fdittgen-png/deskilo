@@ -369,7 +369,7 @@ Future<bool> requestBookingDeletion(
   final reasonController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
+    builder: (dialogContext) => AlertDialog(scrollable: true,
       title: Text(l10n.reservationDeleteRequestButton),
       content: Column(
         mainAxisSize: MainAxisSize.min,
