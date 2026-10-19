@@ -12260,6 +12260,171 @@
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
+  "roomRentAudienceAll": "Aperta a tutti i membri",
+  "@roomRentAudienceAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentAudienceNamed": "Aperta a {count} voci scelte",
+  "@roomRentAudienceNamed": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomRentAudienceNobody": "Nessuno può ancora prenotarla",
+  "@roomRentAudienceNobody": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentCostLine": "Costa allo spazio {amount} al mese",
+  "@roomRentCostLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentEdit": "Modificare la locazione",
+  "@roomRentEdit": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentEmpty": "Nessuna sala da affittare. Segnate un piano come in affitto e aggiungete le sue sale nella pianta.",
+  "@roomRentEmpty": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFeeLine": "I membri pagano {amount} per mezza giornata",
+  "@roomRentFeeLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentFieldAll": "Aperta a tutti i membri",
+  "@roomRentFieldAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldCost": "Costo mensile per lo spazio",
+  "@roomRentFieldCost": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFee": "Tariffa per mezza giornata per un membro (facoltativa)",
+  "@roomRentFieldFee": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFrom": "Primo giorno",
+  "@roomRentFieldFrom": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldLessor": "Locatore",
+  "@roomRentFieldLessor": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldStatus": "Stato",
+  "@roomRentFieldStatus": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldUntil": "Ultimo giorno (facoltativo)",
+  "@roomRentFieldUntil": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFormTitle": "Affittare {room}",
+  "@roomRentFormTitle": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentIntro": "Le sale che lo spazio prende in affitto da un locatore. Una sala in affitto si prenota solo nel periodo della locazione e solo dalle persone che scegliete; nessun altro la vede.",
+  "@roomRentIntro": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentInvalid": "Scegliete il locatore e il primo giorno e inserite gli importi come numeri.",
+  "@roomRentInvalid": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelExternal": "Piano in affitto: le sue sale si prenotano solo all'interno di una locazione",
+  "@roomRentLevelExternal": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelRefused": "Non è stato possibile modificare il piano.",
+  "@roomRentLevelRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevels": "Piani",
+  "@roomRentLevels": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLoadFailed": "Non è stato possibile caricare le sale in affitto.",
+  "@roomRentLoadFailed": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNeedSupplier": "Aggiungete prima il locatore come fornitore.",
+  "@roomRentNeedSupplier": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNotRented": "Non ancora in affitto",
+  "@roomRentNotRented": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRefused": "La locazione non è stata salvata.",
+  "@roomRentRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRent": "Affittare questa sala",
+  "@roomRentRent": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSave": "Salva",
+  "@roomRentSave": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSaved": "Locazione salvata",
+  "@roomRentSaved": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusActive": "Attivo: prenotabile",
+  "@roomRentStatusActive": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusDraft": "Bozza: non prenotabile",
+  "@roomRentStatusDraft": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusEnded": "Terminato",
+  "@roomRentStatusEnded": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentTitle": "Sale in affitto",
+  "@roomRentTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentWindow": "Dal {from} al {until}",
+  "@roomRentWindow": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentWindowOpen": "Dal {from}, senza data di fine",
+  "@roomRentWindowOpen": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
   "saftDocumentsOnly": "Solo documenti",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"

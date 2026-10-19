@@ -17239,6 +17239,124 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rolesYourRole => 'Votre rôle';
 
   @override
+  String get roomRentAudienceAll => 'Ouverte à tous les membres';
+
+  @override
+  String roomRentAudienceNamed(int count) {
+    return 'Ouverte à $count entrées choisies';
+  }
+
+  @override
+  String get roomRentAudienceNobody => 'Personne ne peut encore la réserver';
+
+  @override
+  String roomRentCostLine(String amount) {
+    return 'Coûte $amount par mois à l\'espace';
+  }
+
+  @override
+  String get roomRentEdit => 'Modifier la location';
+
+  @override
+  String get roomRentEmpty =>
+      'Aucune salle à louer pour l\'instant. Marquez un étage comme loué et ajoutez ses salles dans le plan.';
+
+  @override
+  String roomRentFeeLine(String amount) {
+    return 'Les membres paient $amount par demi-journée';
+  }
+
+  @override
+  String get roomRentFieldAll => 'Ouverte à tous les membres';
+
+  @override
+  String get roomRentFieldCost => 'Coût mensuel pour l\'espace';
+
+  @override
+  String get roomRentFieldFee =>
+      'Tarif par demi-journée pour un membre (facultatif)';
+
+  @override
+  String get roomRentFieldFrom => 'Premier jour';
+
+  @override
+  String get roomRentFieldLessor => 'Bailleur';
+
+  @override
+  String get roomRentFieldStatus => 'État';
+
+  @override
+  String get roomRentFieldUntil => 'Dernier jour (facultatif)';
+
+  @override
+  String roomRentFormTitle(String room) {
+    return 'Louer $room';
+  }
+
+  @override
+  String get roomRentIntro =>
+      'Les salles que l\'espace loue à un bailleur. Une salle louée ne se réserve que pendant la période de location et seulement par les personnes que vous choisissez ; personne d\'autre ne la voit.';
+
+  @override
+  String get roomRentInvalid =>
+      'Choisissez le bailleur et le premier jour, et saisissez les montants en chiffres.';
+
+  @override
+  String get roomRentLevelExternal =>
+      'Étage loué : ses salles ne se réservent que dans une location';
+
+  @override
+  String get roomRentLevelRefused => 'L\'étage n\'a pas pu être modifié.';
+
+  @override
+  String get roomRentLevels => 'Étages';
+
+  @override
+  String get roomRentLoadFailed =>
+      'Les salles louées n\'ont pas pu être chargées.';
+
+  @override
+  String get roomRentNeedSupplier =>
+      'Ajoutez d\'abord le bailleur comme fournisseur.';
+
+  @override
+  String get roomRentNotRented => 'Pas encore louée';
+
+  @override
+  String get roomRentRefused => 'La location n\'a pas été enregistrée.';
+
+  @override
+  String get roomRentRent => 'Louer cette salle';
+
+  @override
+  String get roomRentSave => 'Enregistrer';
+
+  @override
+  String get roomRentSaved => 'Location enregistrée';
+
+  @override
+  String get roomRentStatusActive => 'Active : réservable';
+
+  @override
+  String get roomRentStatusDraft => 'Brouillon : non réservable';
+
+  @override
+  String get roomRentStatusEnded => 'Terminée';
+
+  @override
+  String get roomRentTitle => 'Salles louées';
+
+  @override
+  String roomRentWindow(String from, String until) {
+    return 'Du $from au $until';
+  }
+
+  @override
+  String roomRentWindowOpen(String from) {
+    return 'À partir du $from, sans date de fin';
+  }
+
+  @override
   String get saftDocumentsOnly => 'Documents seuls';
 
   @override

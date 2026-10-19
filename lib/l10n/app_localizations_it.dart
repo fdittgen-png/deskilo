@@ -17201,6 +17201,125 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rolesYourRole => 'Il suo ruolo';
 
   @override
+  String get roomRentAudienceAll => 'Aperta a tutti i membri';
+
+  @override
+  String roomRentAudienceNamed(int count) {
+    return 'Aperta a $count voci scelte';
+  }
+
+  @override
+  String get roomRentAudienceNobody => 'Nessuno può ancora prenotarla';
+
+  @override
+  String roomRentCostLine(String amount) {
+    return 'Costa allo spazio $amount al mese';
+  }
+
+  @override
+  String get roomRentEdit => 'Modificare la locazione';
+
+  @override
+  String get roomRentEmpty =>
+      'Nessuna sala da affittare. Segnate un piano come in affitto e aggiungete le sue sale nella pianta.';
+
+  @override
+  String roomRentFeeLine(String amount) {
+    return 'I membri pagano $amount per mezza giornata';
+  }
+
+  @override
+  String get roomRentFieldAll => 'Aperta a tutti i membri';
+
+  @override
+  String get roomRentFieldCost => 'Costo mensile per lo spazio';
+
+  @override
+  String get roomRentFieldFee =>
+      'Tariffa per mezza giornata per un membro (facoltativa)';
+
+  @override
+  String get roomRentFieldFrom => 'Primo giorno';
+
+  @override
+  String get roomRentFieldLessor => 'Locatore';
+
+  @override
+  String get roomRentFieldStatus => 'Stato';
+
+  @override
+  String get roomRentFieldUntil => 'Ultimo giorno (facoltativo)';
+
+  @override
+  String roomRentFormTitle(String room) {
+    return 'Affittare $room';
+  }
+
+  @override
+  String get roomRentIntro =>
+      'Le sale che lo spazio prende in affitto da un locatore. Una sala in affitto si prenota solo nel periodo della locazione e solo dalle persone che scegliete; nessun altro la vede.';
+
+  @override
+  String get roomRentInvalid =>
+      'Scegliete il locatore e il primo giorno e inserite gli importi come numeri.';
+
+  @override
+  String get roomRentLevelExternal =>
+      'Piano in affitto: le sue sale si prenotano solo all\'interno di una locazione';
+
+  @override
+  String get roomRentLevelRefused =>
+      'Non è stato possibile modificare il piano.';
+
+  @override
+  String get roomRentLevels => 'Piani';
+
+  @override
+  String get roomRentLoadFailed =>
+      'Non è stato possibile caricare le sale in affitto.';
+
+  @override
+  String get roomRentNeedSupplier =>
+      'Aggiungete prima il locatore come fornitore.';
+
+  @override
+  String get roomRentNotRented => 'Non ancora in affitto';
+
+  @override
+  String get roomRentRefused => 'La locazione non è stata salvata.';
+
+  @override
+  String get roomRentRent => 'Affittare questa sala';
+
+  @override
+  String get roomRentSave => 'Salva';
+
+  @override
+  String get roomRentSaved => 'Locazione salvata';
+
+  @override
+  String get roomRentStatusActive => 'Attivo: prenotabile';
+
+  @override
+  String get roomRentStatusDraft => 'Bozza: non prenotabile';
+
+  @override
+  String get roomRentStatusEnded => 'Terminato';
+
+  @override
+  String get roomRentTitle => 'Sale in affitto';
+
+  @override
+  String roomRentWindow(String from, String until) {
+    return 'Dal $from al $until';
+  }
+
+  @override
+  String roomRentWindowOpen(String from) {
+    return 'Dal $from, senza data di fine';
+  }
+
+  @override
   String get saftDocumentsOnly => 'Solo documenti';
 
   @override

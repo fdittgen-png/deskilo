@@ -6,5 +6,170 @@
   "featureExternalRoomsDesc": "Une salle que l'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l'espace et rien ne change.",
   "@featureExternalRoomsDesc": {
     "description": "#2568 rented rooms"
+  },
+  "roomRentTitle": "Salles louées",
+  "@roomRentTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentIntro": "Les salles que l'espace loue à un bailleur. Une salle louée ne se réserve que pendant la période de location et seulement par les personnes que vous choisissez ; personne d'autre ne la voit.",
+  "@roomRentIntro": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevels": "Étages",
+  "@roomRentLevels": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelExternal": "Étage loué : ses salles ne se réservent que dans une location",
+  "@roomRentLevelExternal": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentEmpty": "Aucune salle à louer pour l'instant. Marquez un étage comme loué et ajoutez ses salles dans le plan.",
+  "@roomRentEmpty": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNotRented": "Pas encore louée",
+  "@roomRentNotRented": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRent": "Louer cette salle",
+  "@roomRentRent": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentEdit": "Modifier la location",
+  "@roomRentEdit": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentWindow": "Du {from} au {until}",
+  "@roomRentWindow": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentWindowOpen": "À partir du {from}, sans date de fin",
+  "@roomRentWindowOpen": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentCostLine": "Coûte {amount} par mois à l'espace",
+  "@roomRentCostLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentFeeLine": "Les membres paient {amount} par demi-journée",
+  "@roomRentFeeLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentAudienceAll": "Ouverte à tous les membres",
+  "@roomRentAudienceAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentAudienceNamed": "Ouverte à {count} entrées choisies",
+  "@roomRentAudienceNamed": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomRentAudienceNobody": "Personne ne peut encore la réserver",
+  "@roomRentAudienceNobody": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFormTitle": "Louer {room}",
+  "@roomRentFormTitle": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentFieldLessor": "Bailleur",
+  "@roomRentFieldLessor": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNeedSupplier": "Ajoutez d'abord le bailleur comme fournisseur.",
+  "@roomRentNeedSupplier": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFrom": "Premier jour",
+  "@roomRentFieldFrom": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldUntil": "Dernier jour (facultatif)",
+  "@roomRentFieldUntil": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldStatus": "État",
+  "@roomRentFieldStatus": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusDraft": "Brouillon : non réservable",
+  "@roomRentStatusDraft": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusActive": "Active : réservable",
+  "@roomRentStatusActive": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusEnded": "Terminée",
+  "@roomRentStatusEnded": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldCost": "Coût mensuel pour l'espace",
+  "@roomRentFieldCost": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFee": "Tarif par demi-journée pour un membre (facultatif)",
+  "@roomRentFieldFee": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldAll": "Ouverte à tous les membres",
+  "@roomRentFieldAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentInvalid": "Choisissez le bailleur et le premier jour, et saisissez les montants en chiffres.",
+  "@roomRentInvalid": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSave": "Enregistrer",
+  "@roomRentSave": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSaved": "Location enregistrée",
+  "@roomRentSaved": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRefused": "La location n'a pas été enregistrée.",
+  "@roomRentRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelRefused": "L'étage n'a pas pu être modifié.",
+  "@roomRentLevelRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLoadFailed": "Les salles louées n'ont pas pu être chargées.",
+  "@roomRentLoadFailed": {
+    "description": "#2568 rented rooms"
   }
 }

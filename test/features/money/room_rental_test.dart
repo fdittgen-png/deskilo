@@ -3,8 +3,8 @@
 // #2568 -- the rented-room wire models: a rental reads as the server writes
 // it, the window includes both of its days and names the cause of a refusal,
 // and the offer a member is shown carries the fee for them and nothing else.
-import 'package:deskilo/features/plan/domain/level_kind.dart';
-import 'package:deskilo/features/reservations/domain/room_rental.dart';
+import 'package:deskilo/features/money/domain/room_level_kind.dart';
+import 'package:deskilo/features/money/domain/room_rental.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, Object?> _rental({String status = 'active'}) => {
