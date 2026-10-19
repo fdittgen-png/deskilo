@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
@@ -340,11 +338,7 @@ class _BookingSheetState extends State<BookingSheet> {
               // The kiosk never opens this sheet (its wall flow is
               // SpaceActForm), and pure-widget tests pump it without a
               // ProviderScope: no scope, no dot.
-              if (_hasProviderScope(context))
-                HelpDot(
-                  l10n.helpHintReserveTip4Topic,
-                  anchor: HelpAnchor.reservationsBookingSheet,
-                ),
+              BookingSheetActions(helpDot: _hasProviderScope(context)),
             ]),
             if (offerModes) ...[
               const SizedBox(height: AppSpacing.sm),

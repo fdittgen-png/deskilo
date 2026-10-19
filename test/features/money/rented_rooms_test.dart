@@ -104,6 +104,7 @@ void main() {
       expect(find.text('Open to every member'), findsWidgets);
       expect(find.text('Not rented yet'), findsOneWidget);
 
+      await tester.ensureVisible(find.byKey(const ValueKey('room-edit-demo-room-loft')));
       await tester.tap(find.byKey(const ValueKey('room-edit-demo-room-loft')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('room-rent-save')));

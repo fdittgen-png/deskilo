@@ -3,6 +3,19 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_spacing.dart';
 
+/// The way out of a sheet: closes it without choosing anything, so nothing is
+/// saved, sent or changed.
+class SheetCloseButton extends StatelessWidget {
+  const SheetCloseButton({super.key});
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+    icon: const Icon(Icons.close),
+    tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+    onPressed: () => Navigator.of(context).maybePop(),
+  );
+}
+
 /// Body shell of a modal form sheet: the keyboard-aware xl padding and the
 /// stretched column with a titleMedium header — the scaffolding every
 /// money/quota sheet used to copy-paste around its fields.
@@ -38,7 +51,19 @@ class SheetShell extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          // A sheet that fills the screen has no scrim to tap and may have
+          // no drag handle: it always carries its own way out.
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              const SheetCloseButton(key: ValueKey('sheet-close')),
+            ],
+          ),
           ...children,
         ],
       ),
