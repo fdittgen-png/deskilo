@@ -5660,6 +5660,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine geführte Umlage: gemeinsame Kosten anteilig zum Abonnement vorgeschlagen, jeder Anteil anpassbar, die angepasste Regel für den nächsten Monat gemerkt. Aus: nur das Umlage-Formular für eine Ausgabe.';
 
   @override
+  String get featureExternalRoomsDesc =>
+      'Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich.';
+
+  @override
+  String get featureExternalRoomsTitle => 'Gemietete Räume';
+
+  @override
   String get featureFinanceFacesDesc =>
       'Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
 

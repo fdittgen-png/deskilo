@@ -4154,6 +4154,14 @@
   "@featureExpenseRepartitionWizardDesc": {
     "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
   },
+  "featureExternalRoomsDesc": "Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsTitle": "Sale in affitto",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
   "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featureFinanceFacesTitle": "Finanze in quattro viste",
   "featureFormHelpHintsDesc": "Un carosello di suggerimenti richiudibile su ogni schermata principale, e un piccolo ? accanto a ogni parametro e campo — un tocco apre la guida alla sezione giusta. Ripristinabile dalle impostazioni.",

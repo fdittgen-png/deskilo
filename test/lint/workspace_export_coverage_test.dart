@@ -312,6 +312,15 @@ const Map<String, String> _notExported = {
   'purchase_commitment_matches':
       '#2575 — the append-only link from a lease\'s expected rent to the bill '
           'lines that replaced it; it names rows of this server',
+  'room_rentals':
+      '#2568 — a room this server\'s space rents from its lessor, with the '
+          'cost to the space; a fresh space imports no rental it did not sign',
+  'room_rental_audience':
+      '#2568 — who may book a rented room; it names members and plans of this '
+          'server',
+  'room_rental_fees':
+      '#2568 — the fees of a rented room; it names members and plans of this '
+          'server',
   'workspace_assets':
       '#2576 — the equipment register: candidates that point at purchase lines '
           'of this server with a reviewer\'s decision; a fresh space imports '

@@ -54,6 +54,7 @@ public.deployments.deployments_select
 public.deployments.mcp_delegated_deny
 public.deskilo_schema_version.deskilo_schema_version_read
 public.deskilo_schema_version.mcp_delegated_deny
+public.desks.desks_external_hidden
 public.desks.desks_select
 public.desks.desks_write
 public.desks.desks_write_sites
@@ -109,6 +110,7 @@ public.lease_terms.lease_terms_select
 public.lease_terms.mcp_delegated_deny
 public.ledger_entries.ledger_select
 public.ledger_entries.mcp_delegated_deny
+public.levels.levels_external_hidden
 public.levels.levels_select
 public.levels.levels_write
 public.levels.levels_write_sites
@@ -154,6 +156,7 @@ public.message_stars.mcp_delegated_deny
 public.number_sequences.mcp_delegated_deny
 public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny
+public.offices.offices_external_hidden
 public.offices.offices_select
 public.offices.offices_write
 public.offices.offices_write_sites
@@ -232,11 +235,18 @@ public.resource_ratings.resource_ratings_own
 public.retired_invite_codes.mcp_delegated_deny
 public.rights_requests.mcp_delegated_deny
 public.rights_requests.rights_requests_select
+public.room_rental_audience.mcp_delegated_deny
+public.room_rental_audience.room_rental_audience_select
+public.room_rental_fees.mcp_delegated_deny
+public.room_rental_fees.room_rental_fees_select
+public.room_rentals.mcp_delegated_deny
+public.room_rentals.room_rentals_select
 public.seat_accessories.mcp_delegated_deny
 public.seat_accessories.seat_accessories_select
 public.seat_accessories.seat_accessories_write
 public.seat_history.mcp_delegated_deny
 public.seats.mcp_delegated_deny
+public.seats.seats_external_hidden
 public.seats.seats_select
 public.seats.seats_write
 public.seats.seats_write_sites

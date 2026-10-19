@@ -960,6 +960,12 @@
       "capabilities": []
     },
     {
+      "key": "externalRooms",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "financeFaces",
       "maturity": "beta",
       "lifecycle": "active",

@@ -4154,6 +4154,14 @@
   "@featureExpenseRepartitionWizardDesc": {
     "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
   },
+  "featureExternalRoomsDesc": "Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsTitle": "Gemietete Räume",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
   "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
   "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
   "featureFormHelpHintsDesc": "Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.",

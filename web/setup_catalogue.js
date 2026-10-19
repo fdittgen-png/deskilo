@@ -81,6 +81,7 @@ window.SETUP_PROCESSES=[
      "levelBooking",
      "meetingRooms",
      "parking",
+     "externalRooms",
      "adminLevelAssign",
      "bookingPolicies",
      "bookingGate",
