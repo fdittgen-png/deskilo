@@ -87,19 +87,15 @@ MigrationScope scan(String migration) {
   return MigrationScope(routines, tables, unsafe.toSet().toList()..sort());
 }
 
-/// The contract query of scripts/contract_check.sh, narrowed to [scope]
-/// and returned as ONE json array, in the file's order.
-String predictionSql(String contractCheckScript, MigrationScope scope) {
-  // #2584: the query is the CONTRACT_SQL variable of the script.
-  const marker = 'CONTRACT_SQL="';
-  final start = contractCheckScript.indexOf(marker);
-  final end = contractCheckScript.indexOf('order by 1"', start);
-  if (start < 0 || end < 0) {
-    throw const FormatException(
-      'contract query not found in contract_check.sh',
-    );
+/// The contract query (`scripts/contract_check.sh --print-sql`), narrowed to
+/// [scope] and returned as ONE json array, in the file's order.
+String predictionSql(String contractSql, MigrationScope scope) {
+  // The query ends `order by 1`; the wrapper below sorts by `collate "C"`.
+  final end = contractSql.lastIndexOf('order by 1');
+  if (end < 0 || !contractSql.contains('with r as')) {
+    throw const FormatException('contract query not found in --print-sql');
   }
-  final query = contractCheckScript.substring(start + marker.length, end);
+  final query = contractSql.substring(0, end);
   final patterns = [
     for (final r in scope.routines) "'routine public.$r(%'",
     for (final t in scope.tables) ...["'constraint $t.%'", "'trigger $t.%'"],

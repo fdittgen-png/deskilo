@@ -38,7 +38,12 @@ int run(List<String> args) {
     stderr.writeln('NOT PREDICTED: $u — its digest comes from the CI artifact');
   }
   if (args[0] == 'sql') {
-    final sql = predictionSql(File(_script).readAsStringSync(), scope);
+    final printed = Process.runSync('bash', [_script, '--print-sql']);
+    if (printed.exitCode != 0) {
+      stderr.writeln('$_script --print-sql failed: ${printed.stderr}');
+      return 1;
+    }
+    final sql = predictionSql(printed.stdout as String, scope);
     stdout.writeln(
       sql.isEmpty ? '-- nothing this migration defines whole' : sql,
     );
