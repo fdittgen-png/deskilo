@@ -20,6 +20,9 @@
 -- added meanwhile) the decision fails with the function's own reason and
 -- nothing is applied. A rejection applies nothing.
 --
+-- What marks a change as being applied is the confirmed event itself (never a bare
+-- setting): see lease_apply_actor.
+--
 -- The two functions are patched at asserted anchors (their live bodies are the
 -- replay's), each anchor occurring exactly once.
 
@@ -79,6 +82,30 @@ returns boolean language sql stable security definer set search_path = public as
 $fn$;
 revoke execute on function public.lease_notice_held(uuid) from public, anon, authenticated;
 
+-- Who an approved change is applied for, or null when no confirmed change is
+-- being applied. Only a trigger can be applying one (depth > 0), only the
+-- confirmed event of THIS workspace names it, and the requester must still be
+-- an active member: a session-set setting alone proves nothing.
+create or replace function public.lease_apply_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+declare v_event uuid;
+begin
+  if pg_trigger_depth() = 0 then return null; end if;
+  begin
+    v_event := nullif(current_setting('deskilo.lease_apply', true), '')::uuid;
+  exception when others then
+    return null;
+  end;
+  if v_event is null then return null; end if;
+  return (select e.actor_member_id from public.events e
+            join public.members m on m.id = e.actor_member_id and m.workspace_id = e.workspace_id
+                                 and m.status = 'active'
+           where e.id = v_event and e.type = 'lease_change' and e.status = 'confirmed'
+             and e.workspace_id = p_workspace_id);
+end;
+$fn$;
+revoke execute on function public.lease_apply_actor(uuid) from public, anon, authenticated;
+
 create or replace function pg_temp.patch_function(p_proc regprocedure, p_old text[], p_new text[])
 returns void language plpgsql as $f$
 declare
@@ -107,13 +134,14 @@ begin
     $a$    update public.lease_terms set effective_to = p_effective_from - 1 where id = v_prev.id;$a$],
   array[
     $a$  v_result jsonb;
-  v_apply boolean := coalesce(current_setting('deskilo.lease_apply', true), '') <> '';
+  v_applier uuid := public.lease_apply_actor(p_workspace_id);
+  v_apply boolean := v_applier is not null;
   v_event uuid;
 begin
   if auth.uid() is null then raise exception 'not signed in'; end if;
   -- Applying a confirmed change acts as the member who asked for it.
   if v_apply then
-    v_me := current_setting('deskilo.lease_apply_actor')::uuid;
+    v_me := v_applier;
   else
     v_me := public.lease_actor(p_workspace_id, true);
   end if;$a$,
@@ -144,12 +172,13 @@ begin
      set ends_on = least(coalesce(es.ends_on, p_effective_end), p_effective_end)$a$],
   array[
     $a$  v_result jsonb;
-  v_apply boolean := coalesce(current_setting('deskilo.lease_apply', true), '') <> '';
+  v_applier uuid := public.lease_apply_actor(p_workspace_id);
+  v_apply boolean := v_applier is not null;
   v_event uuid;
 begin
   if auth.uid() is null then raise exception 'not signed in'; end if;
   if v_apply then
-    v_me := current_setting('deskilo.lease_apply_actor')::uuid;
+    v_me := v_applier;
   else
     v_me := public.lease_actor(p_workspace_id, true);
   end if;$a$,
@@ -178,8 +207,7 @@ begin
   select revision into v_rev from public.premises_leases
    where id = (new.payload ->> 'lease_id')::uuid and workspace_id = new.workspace_id;
   if v_rev is null then raise exception 'the lease no longer exists'; end if;
-  perform set_config('deskilo.lease_apply', '1', true);
-  perform set_config('deskilo.lease_apply_actor', new.actor_member_id::text, true);
+  perform set_config('deskilo.lease_apply', new.id::text, true);
   if new.payload ->> 'fn' = 'add_term' then
     perform public.add_lease_term_v1(new.workspace_id, (new.payload ->> 'lease_id')::uuid, v_rev,
       new.payload ->> 'kind', new.payload ->> 'label', (new.payload ->> 'new_amount_cents')::int,
@@ -190,7 +218,6 @@ begin
       new.payload ->> 'reason', gen_random_uuid());
   end if;
   perform set_config('deskilo.lease_apply', '', true);
-  perform set_config('deskilo.lease_apply_actor', '', true);
   return new;
 end;
 $fn$;

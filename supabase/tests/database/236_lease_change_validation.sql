@@ -5,7 +5,7 @@
 -- minimum, without a policy, and for other charges nothing is held. Real
 -- roles; every refusal is followed by a readback.
 begin;
-select plan(22);
+select plan(23);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -121,6 +121,12 @@ select is((select status from public.premises_leases where id = current_setting(
 select is(pg_temp.decide(pg_temp.u(3), (current_setting('t.n1')::jsonb ->> 'event_id'), true) ->> 'error', null, 'H11 confirmed');
 select is((select status || ':' || effective_end::text from public.premises_leases where id = current_setting('t.id')::uuid),
   'notice_given:2027-03-31', 'H11b the lease ends on the day asked');
+
+-- a bare setting is no authority: only a trigger applying a confirmed event is
+select set_config('deskilo.lease_apply', (select id::text from public.events where type = 'lease_change' and status = 'confirmed' limit 1), true);
+select is(pg_temp.term(pg_temp.u(2), 'rent', 200000, '2027-01-01', 20) ->> 'error', 'you may not manage the lease',
+  'H13 naming a confirmed event in a session setting does not make a plain member the requester');
+select set_config('deskilo.lease_apply', '', true);
 
 select is((select count(*)::int from public.events where type = 'lease_change'), 3, 'H12 three held changes in all: nothing else was filed');
 
