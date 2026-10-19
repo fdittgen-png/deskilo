@@ -21579,6 +21579,56 @@ class AppLocalizationsEn extends AppLocalizations {
   String get valuationLoadFailed => 'The valuations could not be loaded.';
 
   @override
+  String get valuationManual => 'Type in one asset';
+
+  @override
+  String get valuationManualAdditions => 'Additions';
+
+  @override
+  String get valuationManualAmountsHint =>
+      'Amounts are whole minor units (cents); leave a figure blank when it is unknown.';
+
+  @override
+  String get valuationManualAsset => 'Asset number';
+
+  @override
+  String get valuationManualBasis => 'Basis';
+
+  @override
+  String get valuationManualClosing => 'Closing value';
+
+  @override
+  String get valuationManualCurrency => 'Currency (e.g. EUR)';
+
+  @override
+  String get valuationManualDepreciation => 'Depreciation';
+
+  @override
+  String get valuationManualDisposals => 'Disposals';
+
+  @override
+  String get valuationManualFrom => 'Period from (YYYY-MM-DD)';
+
+  @override
+  String get valuationManualImpairment => 'Impairment';
+
+  @override
+  String get valuationManualInvalid =>
+      'Check the asset number, the dates, the currency and the figures.';
+
+  @override
+  String get valuationManualOpening => 'Opening value';
+
+  @override
+  String get valuationManualReference => 'Your reference (optional)';
+
+  @override
+  String get valuationManualTo => 'Period to (YYYY-MM-DD)';
+
+  @override
+  String get valuationManualUse => 'Use this row';
+
+  @override
   String valuationMismatches(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

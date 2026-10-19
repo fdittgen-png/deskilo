@@ -15392,6 +15392,70 @@
   "@valuationLoadFailed": {
     "description": "#2576 accountant valuations"
   },
+  "valuationManual": "Inserire un bene",
+  "@valuationManual": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAdditions": "Incrementi",
+  "@valuationManualAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAmountsHint": "Gli importi sono unità minori intere (centesimi); lasci vuota una cifra sconosciuta.",
+  "@valuationManualAmountsHint": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAsset": "Numero del bene",
+  "@valuationManualAsset": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualBasis": "Base",
+  "@valuationManualBasis": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualClosing": "Valore di chiusura",
+  "@valuationManualClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualCurrency": "Valuta (es. EUR)",
+  "@valuationManualCurrency": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDepreciation": "Ammortamento",
+  "@valuationManualDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDisposals": "Dismissioni",
+  "@valuationManualDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualFrom": "Periodo dal (AAAA-MM-GG)",
+  "@valuationManualFrom": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualImpairment": "Svalutazione",
+  "@valuationManualImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualInvalid": "Controlli il numero del bene, le date, la valuta e le cifre.",
+  "@valuationManualInvalid": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualOpening": "Valore di apertura",
+  "@valuationManualOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualReference": "Il suo riferimento (facoltativo)",
+  "@valuationManualReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualTo": "Periodo al (AAAA-MM-GG)",
+  "@valuationManualTo": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualUse": "Usare questa riga",
+  "@valuationManualUse": {
+    "description": "#2576 accountant valuations"
+  },
   "valuationMismatches": "{count, plural, =1{1 riga non quadra} other{{count} righe non quadrano}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",

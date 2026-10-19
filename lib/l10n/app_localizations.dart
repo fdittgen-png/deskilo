@@ -37269,6 +37269,102 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
+  /// **'Type in one asset'**
+  String get valuationManual;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Additions'**
+  String get valuationManualAdditions;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts are whole minor units (cents); leave a figure blank when it is unknown.'**
+  String get valuationManualAmountsHint;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Asset number'**
+  String get valuationManualAsset;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Basis'**
+  String get valuationManualBasis;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Closing value'**
+  String get valuationManualClosing;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Currency (e.g. EUR)'**
+  String get valuationManualCurrency;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Depreciation'**
+  String get valuationManualDepreciation;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Disposals'**
+  String get valuationManualDisposals;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Period from (YYYY-MM-DD)'**
+  String get valuationManualFrom;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Impairment'**
+  String get valuationManualImpairment;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Check the asset number, the dates, the currency and the figures.'**
+  String get valuationManualInvalid;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Opening value'**
+  String get valuationManualOpening;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Your reference (optional)'**
+  String get valuationManualReference;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Period to (YYYY-MM-DD)'**
+  String get valuationManualTo;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Use this row'**
+  String get valuationManualUse;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
   /// **'{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}'**
   String valuationMismatches(int count);
 

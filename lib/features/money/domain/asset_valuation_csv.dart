@@ -27,6 +27,17 @@ const _columns = [
   'ExternalReference',
 ];
 
+/// The header line of the documented CSV.
+String get valuationHeaderLine => _columns.join(',');
+
+/// One cell of a CSV line written by the app: quoted when it must be.
+String valuationCsvCell(String cell) {
+  final text = cell.trim();
+  return text.contains(RegExp('[",\\n\\r]'))
+      ? '"${text.replaceAll('"', '""')}"'
+      : text;
+}
+
 /// The largest figure a row may state: what every platform keeps exactly.
 const _maxMinor = 9007199254740991;
 

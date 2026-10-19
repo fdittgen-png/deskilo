@@ -309,5 +309,69 @@
   "valuationReason": "Warum er ersetzt wird",
   "@valuationReason": {
     "description": "#2576 accountant valuations"
+  },
+  "valuationManual": "Einen Vermögenswert erfassen",
+  "@valuationManual": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAsset": "Anlagennummer",
+  "@valuationManualAsset": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualBasis": "Grundlage",
+  "@valuationManualBasis": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualFrom": "Zeitraum von (JJJJ-MM-TT)",
+  "@valuationManualFrom": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualTo": "Zeitraum bis (JJJJ-MM-TT)",
+  "@valuationManualTo": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualCurrency": "Währung (z. B. EUR)",
+  "@valuationManualCurrency": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAmountsHint": "Beträge sind ganze Untereinheiten (Cent); lassen Sie eine unbekannte Zahl leer.",
+  "@valuationManualAmountsHint": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualOpening": "Anfangswert",
+  "@valuationManualOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAdditions": "Zugänge",
+  "@valuationManualAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDisposals": "Abgänge",
+  "@valuationManualDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDepreciation": "Abschreibung",
+  "@valuationManualDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualImpairment": "Wertminderung",
+  "@valuationManualImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualClosing": "Endwert",
+  "@valuationManualClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualReference": "Ihre Referenz (optional)",
+  "@valuationManualReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualUse": "Diese Zeile verwenden",
+  "@valuationManualUse": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualInvalid": "Prüfen Sie Anlagennummer, Daten, Währung und Zahlen.",
+  "@valuationManualInvalid": {
+    "description": "#2576 accountant valuations"
   }
 }
