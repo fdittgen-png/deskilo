@@ -1,0 +1,313 @@
+{
+  "valuationTitle": "Accountant's valuations",
+  "@valuationTitle": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIntro": "What your accountant says the equipment is worth: book or tax values for a period, imported as evidence. Nothing is posted from them, and a blank figure stays unknown.",
+  "@valuationIntro": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImport": "Import a file",
+  "@valuationImport": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSample": "Share a sample file",
+  "@valuationSample": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationEmpty": "No valuations yet.",
+  "@valuationEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationLoadFailed": "The valuations could not be loaded.",
+  "@valuationLoadFailed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSaved": "Saved",
+  "@valuationSaved": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusStaged": "Waiting for your confirmation",
+  "@valuationStatusStaged": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusConfirmed": "Confirmed",
+  "@valuationStatusConfirmed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusSuperseded": "Replaced by a later batch",
+  "@valuationStatusSuperseded": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisBook": "Book values",
+  "@valuationBasisBook": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisTax": "Tax values",
+  "@valuationBasisTax": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationHeading": "{basis} from {source}",
+  "@valuationHeading": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationRows": "{count, plural, =1{1 asset} other{{count} assets}}",
+  "@valuationRows": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationMismatches": "{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}",
+  "@valuationMismatches": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationPartial": "Does not claim to cover every asset.",
+  "@valuationPartial": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationShowRows": "Show the figures",
+  "@valuationShowRows": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirm": "Confirm",
+  "@valuationConfirm": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationUnknown": "unknown",
+  "@valuationUnknown": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFigure": "{label}: {value}",
+  "@valuationFigure": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationOpening": "Opening value",
+  "@valuationOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationAdditions": "Additions",
+  "@valuationAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDisposals": "Disposals",
+  "@valuationDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDepreciation": "Depreciation",
+  "@valuationDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImpairment": "Impairment",
+  "@valuationImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationClosing": "Closing value",
+  "@valuationClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBridgeMismatch": "Opening plus additions less disposals, depreciation and impairment is not the closing value.",
+  "@valuationBridgeMismatch": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueEmpty": "The file has no rows.",
+  "@valuationIssueEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueTooMany": "The file has more rows than one batch holds (2000).",
+  "@valuationIssueTooMany": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueHeader": "The first line is not the documented header.",
+  "@valuationIssueHeader": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueColumns": "Line {line}: the number of columns is wrong.",
+  "@valuationIssueColumns": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueAsset": "Line {line}: the asset number is not a whole number from 1.",
+  "@valuationIssueAsset": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueBasis": "Line {line}: the basis is book or tax.",
+  "@valuationIssueBasis": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDate": "Line {line}: a date is not a real day written YYYY-MM-DD.",
+  "@valuationIssueDate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssuePeriod": "Line {line}: the period ends before it starts.",
+  "@valuationIssuePeriod": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueCurrency": "Line {line}: the currency is not a three-letter code.",
+  "@valuationIssueCurrency": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueMinor": "Line {line}: {column} is not a whole number of minor units.",
+  "@valuationIssueMinor": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationIssueMixed": "Line {line}: a batch has one basis, one period and one currency.",
+  "@valuationIssueMixed": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDuplicate": "Line {line}: this asset already appears in the file.",
+  "@valuationIssueDuplicate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFileTypeLabel": "CSV files",
+  "@valuationFileTypeLabel": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPick": "Choose the file",
+  "@valuationPick": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 asset} other{{count} assets}}",
+  "@valuationPreview": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFieldSource": "Who sent it (accountant or software)",
+  "@valuationFieldSource": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldReference": "Their reference (optional)",
+  "@valuationFieldReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldMovements": "The movements are",
+  "@valuationFieldMovements": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsPeriod": "for the period only",
+  "@valuationMovementsPeriod": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsYtd": "year to date",
+  "@valuationMovementsYtd": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldComplete": "The file covers every asset",
+  "@valuationFieldComplete": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationInvalid": "Choose a file without problems and say who sent it.",
+  "@valuationInvalid": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStage": "Import",
+  "@valuationStage": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationRefused": "The valuations were not saved.",
+  "@valuationRefused": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirmBody": "Once confirmed, these figures are the evidence for their period. A later correction keeps this batch and says why it was replaced.",
+  "@valuationConfirmBody": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplaces": "Replaces",
+  "@valuationReplaces": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplacesNone": "No earlier batch",
+  "@valuationReplacesNone": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReason": "Why it is replaced",
+  "@valuationReason": {
+    "description": "#2576 accountant valuations"
+  }
+}

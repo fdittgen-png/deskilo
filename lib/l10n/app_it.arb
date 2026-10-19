@@ -14990,6 +14990,317 @@
   "validationWorkflowMoneyStake": "Finché non è accettato, l'importo non conta su nessun estratto conto.",
   "validationWorkflowPeople": "Persone e ruoli",
   "validationWorkflowPeopleStake": "Finché non è accettato, la persona mantiene gli accessi che ha.",
+  "valuationAdditions": "Acquisizioni",
+  "@valuationAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisBook": "Valori contabili",
+  "@valuationBasisBook": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisTax": "Valori fiscali",
+  "@valuationBasisTax": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBridgeMismatch": "Apertura più acquisizioni meno cessioni, ammortamento e svalutazione non è il valore di chiusura.",
+  "@valuationBridgeMismatch": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationClosing": "Valore di chiusura",
+  "@valuationClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirm": "Conferma",
+  "@valuationConfirm": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirmBody": "Una volta confermate, queste cifre sono la prova del loro periodo. Una correzione successiva conserva questo lotto e indica perché è stato sostituito.",
+  "@valuationConfirmBody": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDepreciation": "Ammortamento",
+  "@valuationDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDisposals": "Cessioni",
+  "@valuationDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationEmpty": "Ancora nessuna valutazione.",
+  "@valuationEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldComplete": "Il file copre tutte le attrezzature",
+  "@valuationFieldComplete": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldMovements": "I movimenti sono",
+  "@valuationFieldMovements": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldReference": "Loro riferimento (facoltativo)",
+  "@valuationFieldReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldSource": "Chi lo invia (commercialista o software)",
+  "@valuationFieldSource": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFigure": "{label}: {value}",
+  "@valuationFigure": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationFileTypeLabel": "File CSV",
+  "@valuationFileTypeLabel": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationHeading": "{basis} da {source}",
+  "@valuationHeading": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationImpairment": "Svalutazione",
+  "@valuationImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImport": "Importare un file",
+  "@valuationImport": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIntro": "Ciò che il suo commercialista indica come valore delle attrezzature: valori contabili o fiscali di un periodo, importati come prova. Da essi non si registra nulla e una cifra vuota resta sconosciuta.",
+  "@valuationIntro": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationInvalid": "Scelga un file senza problemi e indichi chi lo invia.",
+  "@valuationInvalid": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueAsset": "Riga {line}: il numero di attrezzatura non è un intero da 1.",
+  "@valuationIssueAsset": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueBasis": "Riga {line}: la base è book o tax.",
+  "@valuationIssueBasis": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueColumns": "Riga {line}: il numero di colonne non è corretto.",
+  "@valuationIssueColumns": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueCurrency": "Riga {line}: la valuta non è un codice di tre lettere.",
+  "@valuationIssueCurrency": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDate": "Riga {line}: una data non è un giorno reale scritto AAAA-MM-GG.",
+  "@valuationIssueDate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDuplicate": "Riga {line}: questa attrezzatura compare già nel file.",
+  "@valuationIssueDuplicate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueEmpty": "Il file non ha righe.",
+  "@valuationIssueEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueHeader": "La prima riga non è l'intestazione documentata.",
+  "@valuationIssueHeader": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueMinor": "Riga {line}: {column} non è un numero intero di unità minori.",
+  "@valuationIssueMinor": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationIssueMixed": "Riga {line}: un lotto ha una base, un periodo e una valuta.",
+  "@valuationIssueMixed": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssuePeriod": "Riga {line}: il periodo termina prima di iniziare.",
+  "@valuationIssuePeriod": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueTooMany": "Il file ha più righe di quante ne contenga un lotto (2000).",
+  "@valuationIssueTooMany": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationLoadFailed": "Non è stato possibile caricare le valutazioni.",
+  "@valuationLoadFailed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMismatches": "{count, plural, =1{1 riga non quadra} other{{count} righe non quadrano}}",
+  "@valuationMismatches": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationMovementsPeriod": "solo del periodo",
+  "@valuationMovementsPeriod": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsYtd": "cumulati da inizio anno",
+  "@valuationMovementsYtd": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationOpening": "Valore di apertura",
+  "@valuationOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPartial": "Non pretende coprire tutte le attrezzature.",
+  "@valuationPartial": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPick": "Scegliere il file",
+  "@valuationPick": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 attrezzatura} other{{count} attrezzature}}",
+  "@valuationPreview": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationReason": "Perché viene sostituito",
+  "@valuationReason": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationRefused": "Le valutazioni non sono state salvate.",
+  "@valuationRefused": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplaces": "Sostituisce",
+  "@valuationReplaces": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplacesNone": "Nessun lotto precedente",
+  "@valuationReplacesNone": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationRows": "{count, plural, =1{1 attrezzatura} other{{count} attrezzature}}",
+  "@valuationRows": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationSample": "Condividere un file di esempio",
+  "@valuationSample": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSaved": "Salvato",
+  "@valuationSaved": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationShowRows": "Mostra le cifre",
+  "@valuationShowRows": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStage": "Importa",
+  "@valuationStage": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusConfirmed": "Confermata",
+  "@valuationStatusConfirmed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusStaged": "In attesa della sua conferma",
+  "@valuationStatusStaged": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusSuperseded": "Sostituita da un lotto successivo",
+  "@valuationStatusSuperseded": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationTitle": "Valutazioni del commercialista",
+  "@valuationTitle": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationUnknown": "sconosciuto",
+  "@valuationUnknown": {
+    "description": "#2576 accountant valuations"
+  },
   "vatAccountField": "Conto IVA",
   "vatAccountHint": "Conto su cui l'esportazione contabile registra l'IVA incassata. Vuoto = 445710.",
   "vatAddRate": "Aggiungi un'aliquota",

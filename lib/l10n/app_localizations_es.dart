@@ -21504,6 +21504,229 @@ class AppLocalizationsEs extends AppLocalizations {
       'Hasta que se acepte, la persona conserva los accesos que tiene.';
 
   @override
+  String get valuationAdditions => 'Altas';
+
+  @override
+  String get valuationBasisBook => 'Valores contables';
+
+  @override
+  String get valuationBasisTax => 'Valores fiscales';
+
+  @override
+  String get valuationBridgeMismatch =>
+      'La apertura más las altas menos las bajas, la amortización y el deterioro no es el valor de cierre.';
+
+  @override
+  String get valuationClosing => 'Valor de cierre';
+
+  @override
+  String get valuationConfirm => 'Confirmar';
+
+  @override
+  String get valuationConfirmBody =>
+      'Una vez confirmadas, estas cifras son el justificante de su periodo. Una corrección posterior conserva este lote e indica por qué se sustituyó.';
+
+  @override
+  String get valuationDepreciation => 'Amortización';
+
+  @override
+  String get valuationDisposals => 'Bajas';
+
+  @override
+  String get valuationEmpty => 'Aún no hay valoraciones.';
+
+  @override
+  String get valuationFieldComplete => 'El archivo cubre todos los equipos';
+
+  @override
+  String get valuationFieldMovements => 'Los movimientos son';
+
+  @override
+  String get valuationFieldReference => 'Su referencia (opcional)';
+
+  @override
+  String get valuationFieldSource => 'Quién lo envía (contable o programa)';
+
+  @override
+  String valuationFigure(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String get valuationFileTypeLabel => 'Archivos CSV';
+
+  @override
+  String valuationHeading(String basis, String source) {
+    return '$basis de $source';
+  }
+
+  @override
+  String get valuationImpairment => 'Deterioro';
+
+  @override
+  String get valuationImport => 'Importar un archivo';
+
+  @override
+  String get valuationIntro =>
+      'Lo que su contable indica como valor del equipo: valores contables o fiscales de un periodo, importados como justificante. No se contabiliza nada a partir de ellos y una cifra en blanco sigue siendo desconocida.';
+
+  @override
+  String get valuationInvalid =>
+      'Elija un archivo sin problemas e indique quién lo envía.';
+
+  @override
+  String valuationIssueAsset(int line) {
+    return 'Línea $line: el número de equipo no es un entero desde 1.';
+  }
+
+  @override
+  String valuationIssueBasis(int line) {
+    return 'Línea $line: la base es book o tax.';
+  }
+
+  @override
+  String valuationIssueColumns(int line) {
+    return 'Línea $line: el número de columnas es incorrecto.';
+  }
+
+  @override
+  String valuationIssueCurrency(int line) {
+    return 'Línea $line: la moneda no es un código de tres letras.';
+  }
+
+  @override
+  String valuationIssueDate(int line) {
+    return 'Línea $line: una fecha no es un día real escrito AAAA-MM-DD.';
+  }
+
+  @override
+  String valuationIssueDuplicate(int line) {
+    return 'Línea $line: este equipo ya aparece en el archivo.';
+  }
+
+  @override
+  String get valuationIssueEmpty => 'El archivo no tiene filas.';
+
+  @override
+  String get valuationIssueHeader =>
+      'La primera línea no es la cabecera documentada.';
+
+  @override
+  String valuationIssueMinor(int line, String column) {
+    return 'Línea $line: $column no es un número entero de unidades menores.';
+  }
+
+  @override
+  String valuationIssueMixed(int line) {
+    return 'Línea $line: un lote tiene una base, un periodo y una moneda.';
+  }
+
+  @override
+  String valuationIssuePeriod(int line) {
+    return 'Línea $line: el periodo termina antes de empezar.';
+  }
+
+  @override
+  String get valuationIssueTooMany =>
+      'El archivo tiene más filas de las que cabe en un lote (2000).';
+
+  @override
+  String get valuationLoadFailed => 'No se pudieron cargar las valoraciones.';
+
+  @override
+  String valuationMismatches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count filas no cuadran',
+      one: '1 fila no cuadra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationMovementsPeriod => 'solo del periodo';
+
+  @override
+  String get valuationMovementsYtd => 'acumulados en el año';
+
+  @override
+  String get valuationOpening => 'Valor de apertura';
+
+  @override
+  String get valuationPartial => 'No pretende cubrir todos los equipos.';
+
+  @override
+  String get valuationPick => 'Elegir el archivo';
+
+  @override
+  String valuationPreview(
+    String basis,
+    String from,
+    String to,
+    String currency,
+    int count,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count equipos',
+      one: '1 equipo',
+    );
+    return '$basis, $from – $to, $currency: $_temp0';
+  }
+
+  @override
+  String get valuationReason => 'Por qué se sustituye';
+
+  @override
+  String get valuationRefused => 'Las valoraciones no se guardaron.';
+
+  @override
+  String get valuationReplaces => 'Sustituye a';
+
+  @override
+  String get valuationReplacesNone => 'Ningún lote anterior';
+
+  @override
+  String valuationRows(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count equipos',
+      one: '1 equipo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationSample => 'Compartir un archivo de ejemplo';
+
+  @override
+  String get valuationSaved => 'Guardado';
+
+  @override
+  String get valuationShowRows => 'Ver las cifras';
+
+  @override
+  String get valuationStage => 'Importar';
+
+  @override
+  String get valuationStatusConfirmed => 'Confirmada';
+
+  @override
+  String get valuationStatusStaged => 'A la espera de su confirmación';
+
+  @override
+  String get valuationStatusSuperseded => 'Sustituida por un lote posterior';
+
+  @override
+  String get valuationTitle => 'Valoraciones del contable';
+
+  @override
+  String get valuationUnknown => 'desconocido';
+
+  @override
   String get vatAccountField => 'Cuenta de IVA';
 
   @override

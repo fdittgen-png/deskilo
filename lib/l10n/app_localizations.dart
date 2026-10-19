@@ -36847,6 +36847,342 @@ abstract class AppLocalizations {
   /// **'Until it is accepted, the person keeps the access they have now.'**
   String get validationWorkflowPeopleStake;
 
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Additions'**
+  String get valuationAdditions;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Book values'**
+  String get valuationBasisBook;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Tax values'**
+  String get valuationBasisTax;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Opening plus additions less disposals, depreciation and impairment is not the closing value.'**
+  String get valuationBridgeMismatch;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Closing value'**
+  String get valuationClosing;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get valuationConfirm;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Once confirmed, these figures are the evidence for their period. A later correction keeps this batch and says why it was replaced.'**
+  String get valuationConfirmBody;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Depreciation'**
+  String get valuationDepreciation;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Disposals'**
+  String get valuationDisposals;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'No valuations yet.'**
+  String get valuationEmpty;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The file covers every asset'**
+  String get valuationFieldComplete;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The movements are'**
+  String get valuationFieldMovements;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Their reference (optional)'**
+  String get valuationFieldReference;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Who sent it (accountant or software)'**
+  String get valuationFieldSource;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {value}'**
+  String valuationFigure(String label, String value);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'CSV files'**
+  String get valuationFileTypeLabel;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'{basis} from {source}'**
+  String valuationHeading(String basis, String source);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Impairment'**
+  String get valuationImpairment;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Import a file'**
+  String get valuationImport;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'What your accountant says the equipment is worth: book or tax values for a period, imported as evidence. Nothing is posted from them, and a blank figure stays unknown.'**
+  String get valuationIntro;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a file without problems and say who sent it.'**
+  String get valuationInvalid;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: the asset number is not a whole number from 1.'**
+  String valuationIssueAsset(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: the basis is book or tax.'**
+  String valuationIssueBasis(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: the number of columns is wrong.'**
+  String valuationIssueColumns(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: the currency is not a three-letter code.'**
+  String valuationIssueCurrency(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: a date is not a real day written YYYY-MM-DD.'**
+  String valuationIssueDate(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: this asset already appears in the file.'**
+  String valuationIssueDuplicate(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The file has no rows.'**
+  String get valuationIssueEmpty;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The first line is not the documented header.'**
+  String get valuationIssueHeader;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: {column} is not a whole number of minor units.'**
+  String valuationIssueMinor(int line, String column);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: a batch has one basis, one period and one currency.'**
+  String valuationIssueMixed(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Line {line}: the period ends before it starts.'**
+  String valuationIssuePeriod(int line);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The file has more rows than one batch holds (2000).'**
+  String get valuationIssueTooMany;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The valuations could not be loaded.'**
+  String get valuationLoadFailed;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}'**
+  String valuationMismatches(int count);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'for the period only'**
+  String get valuationMovementsPeriod;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'year to date'**
+  String get valuationMovementsYtd;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Opening value'**
+  String get valuationOpening;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Does not claim to cover every asset.'**
+  String get valuationPartial;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the file'**
+  String get valuationPick;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'{basis}, {from} – {to}, {currency}: {count, plural, =1{1 asset} other{{count} assets}}'**
+  String valuationPreview(
+    String basis,
+    String from,
+    String to,
+    String currency,
+    int count,
+  );
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is replaced'**
+  String get valuationReason;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'The valuations were not saved.'**
+  String get valuationRefused;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces'**
+  String get valuationReplaces;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'No earlier batch'**
+  String get valuationReplacesNone;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 asset} other{{count} assets}}'**
+  String valuationRows(int count);
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Share a sample file'**
+  String get valuationSample;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get valuationSaved;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Show the figures'**
+  String get valuationShowRows;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get valuationStage;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get valuationStatusConfirmed;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your confirmation'**
+  String get valuationStatusStaged;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced by a later batch'**
+  String get valuationStatusSuperseded;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'Accountant\'s valuations'**
+  String get valuationTitle;
+
+  /// #2576 accountant valuations
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get valuationUnknown;
+
   /// FEC account for collected VAT
   ///
   /// In en, this message translates to:

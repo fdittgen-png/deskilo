@@ -21554,6 +21554,231 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bis es angenommen ist, behält die Person ihre jetzigen Zugriffe.';
 
   @override
+  String get valuationAdditions => 'Zugänge';
+
+  @override
+  String get valuationBasisBook => 'Buchwerte';
+
+  @override
+  String get valuationBasisTax => 'Steuerwerte';
+
+  @override
+  String get valuationBridgeMismatch =>
+      'Anfangswert plus Zugänge abzüglich Abgänge, Abschreibung und Wertminderung ergibt nicht den Endwert.';
+
+  @override
+  String get valuationClosing => 'Endwert';
+
+  @override
+  String get valuationConfirm => 'Bestätigen';
+
+  @override
+  String get valuationConfirmBody =>
+      'Nach der Bestätigung sind diese Zahlen der Nachweis für ihre Periode. Eine spätere Korrektur behält diesen Stapel und nennt den Grund für die Ersetzung.';
+
+  @override
+  String get valuationDepreciation => 'Abschreibung';
+
+  @override
+  String get valuationDisposals => 'Abgänge';
+
+  @override
+  String get valuationEmpty => 'Noch keine Bewertungen.';
+
+  @override
+  String get valuationFieldComplete => 'Die Datei umfasst alle Anlagen';
+
+  @override
+  String get valuationFieldMovements => 'Die Bewegungen sind';
+
+  @override
+  String get valuationFieldReference => 'Deren Referenz (optional)';
+
+  @override
+  String get valuationFieldSource => 'Von wem (Steuerberater oder Software)';
+
+  @override
+  String valuationFigure(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String get valuationFileTypeLabel => 'CSV-Dateien';
+
+  @override
+  String valuationHeading(String basis, String source) {
+    return '$basis von $source';
+  }
+
+  @override
+  String get valuationImpairment => 'Wertminderung';
+
+  @override
+  String get valuationImport => 'Datei importieren';
+
+  @override
+  String get valuationIntro =>
+      'Was Ihr Steuerberater für den Wert der Ausstattung angibt: Buch- oder Steuerwerte einer Periode, als Nachweis importiert. Daraus wird nichts gebucht, und eine leere Zahl bleibt unbekannt.';
+
+  @override
+  String get valuationInvalid =>
+      'Wählen Sie eine Datei ohne Probleme und geben Sie an, von wem sie stammt.';
+
+  @override
+  String valuationIssueAsset(int line) {
+    return 'Zeile $line: Die Anlagennummer ist keine ganze Zahl ab 1.';
+  }
+
+  @override
+  String valuationIssueBasis(int line) {
+    return 'Zeile $line: Die Basis ist book oder tax.';
+  }
+
+  @override
+  String valuationIssueColumns(int line) {
+    return 'Zeile $line: Die Spaltenzahl stimmt nicht.';
+  }
+
+  @override
+  String valuationIssueCurrency(int line) {
+    return 'Zeile $line: Die Währung ist kein Code aus drei Buchstaben.';
+  }
+
+  @override
+  String valuationIssueDate(int line) {
+    return 'Zeile $line: Ein Datum ist kein echter Tag im Format JJJJ-MM-TT.';
+  }
+
+  @override
+  String valuationIssueDuplicate(int line) {
+    return 'Zeile $line: Diese Anlage kommt in der Datei schon vor.';
+  }
+
+  @override
+  String get valuationIssueEmpty => 'Die Datei hat keine Zeilen.';
+
+  @override
+  String get valuationIssueHeader =>
+      'Die erste Zeile ist nicht die dokumentierte Kopfzeile.';
+
+  @override
+  String valuationIssueMinor(int line, String column) {
+    return 'Zeile $line: $column ist keine ganze Zahl kleinster Einheiten.';
+  }
+
+  @override
+  String valuationIssueMixed(int line) {
+    return 'Zeile $line: Ein Stapel hat eine Basis, eine Periode und eine Währung.';
+  }
+
+  @override
+  String valuationIssuePeriod(int line) {
+    return 'Zeile $line: Die Periode endet vor ihrem Beginn.';
+  }
+
+  @override
+  String get valuationIssueTooMany =>
+      'Die Datei hat mehr Zeilen, als ein Stapel fasst (2000).';
+
+  @override
+  String get valuationLoadFailed =>
+      'Die Bewertungen konnten nicht geladen werden.';
+
+  @override
+  String valuationMismatches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Zeilen gehen nicht auf',
+      one: '1 Zeile geht nicht auf',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationMovementsPeriod => 'nur für die Periode';
+
+  @override
+  String get valuationMovementsYtd => 'seit Jahresbeginn kumuliert';
+
+  @override
+  String get valuationOpening => 'Anfangswert';
+
+  @override
+  String get valuationPartial =>
+      'Erhebt keinen Anspruch, alle Anlagen zu erfassen.';
+
+  @override
+  String get valuationPick => 'Datei wählen';
+
+  @override
+  String valuationPreview(
+    String basis,
+    String from,
+    String to,
+    String currency,
+    int count,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Anlagen',
+      one: '1 Anlage',
+    );
+    return '$basis, $from – $to, $currency: $_temp0';
+  }
+
+  @override
+  String get valuationReason => 'Warum er ersetzt wird';
+
+  @override
+  String get valuationRefused => 'Die Bewertungen wurden nicht gespeichert.';
+
+  @override
+  String get valuationReplaces => 'Ersetzt';
+
+  @override
+  String get valuationReplacesNone => 'Keinen früheren Stapel';
+
+  @override
+  String valuationRows(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Anlagen',
+      one: '1 Anlage',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationSample => 'Beispieldatei teilen';
+
+  @override
+  String get valuationSaved => 'Gespeichert';
+
+  @override
+  String get valuationShowRows => 'Zahlen anzeigen';
+
+  @override
+  String get valuationStage => 'Importieren';
+
+  @override
+  String get valuationStatusConfirmed => 'Bestätigt';
+
+  @override
+  String get valuationStatusStaged => 'Wartet auf Ihre Bestätigung';
+
+  @override
+  String get valuationStatusSuperseded => 'Durch einen späteren Stapel ersetzt';
+
+  @override
+  String get valuationTitle => 'Bewertungen des Steuerberaters';
+
+  @override
+  String get valuationUnknown => 'unbekannt';
+
+  @override
   String get vatAccountField => 'Steuerkonto';
 
   @override

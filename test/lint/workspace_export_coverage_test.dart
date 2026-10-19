@@ -321,6 +321,13 @@ const Map<String, String> _notExported = {
   'room_rental_fees':
       '#2568 — the fees of a rented room; it names members and plans of this '
           'server',
+  'asset_valuation_batches':
+      '#2576 — what an accountant sent for one period: evidence about assets '
+          'of this server, with the hash of the file; a fresh space imports '
+          'no valuation it did not receive',
+  'asset_valuation_rows':
+      '#2576 — the figures of one asset in one batch; they name assets of '
+          'this server',
   'workspace_assets':
       '#2576 — the equipment register: candidates that point at purchase lines '
           'of this server with a reviewer\'s decision; a fresh space imports '

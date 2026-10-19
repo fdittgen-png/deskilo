@@ -21531,6 +21531,230 @@ class AppLocalizationsIt extends AppLocalizations {
       'Finché non è accettato, la persona mantiene gli accessi che ha.';
 
   @override
+  String get valuationAdditions => 'Acquisizioni';
+
+  @override
+  String get valuationBasisBook => 'Valori contabili';
+
+  @override
+  String get valuationBasisTax => 'Valori fiscali';
+
+  @override
+  String get valuationBridgeMismatch =>
+      'Apertura più acquisizioni meno cessioni, ammortamento e svalutazione non è il valore di chiusura.';
+
+  @override
+  String get valuationClosing => 'Valore di chiusura';
+
+  @override
+  String get valuationConfirm => 'Conferma';
+
+  @override
+  String get valuationConfirmBody =>
+      'Una volta confermate, queste cifre sono la prova del loro periodo. Una correzione successiva conserva questo lotto e indica perché è stato sostituito.';
+
+  @override
+  String get valuationDepreciation => 'Ammortamento';
+
+  @override
+  String get valuationDisposals => 'Cessioni';
+
+  @override
+  String get valuationEmpty => 'Ancora nessuna valutazione.';
+
+  @override
+  String get valuationFieldComplete => 'Il file copre tutte le attrezzature';
+
+  @override
+  String get valuationFieldMovements => 'I movimenti sono';
+
+  @override
+  String get valuationFieldReference => 'Loro riferimento (facoltativo)';
+
+  @override
+  String get valuationFieldSource => 'Chi lo invia (commercialista o software)';
+
+  @override
+  String valuationFigure(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String get valuationFileTypeLabel => 'File CSV';
+
+  @override
+  String valuationHeading(String basis, String source) {
+    return '$basis da $source';
+  }
+
+  @override
+  String get valuationImpairment => 'Svalutazione';
+
+  @override
+  String get valuationImport => 'Importare un file';
+
+  @override
+  String get valuationIntro =>
+      'Ciò che il suo commercialista indica come valore delle attrezzature: valori contabili o fiscali di un periodo, importati come prova. Da essi non si registra nulla e una cifra vuota resta sconosciuta.';
+
+  @override
+  String get valuationInvalid =>
+      'Scelga un file senza problemi e indichi chi lo invia.';
+
+  @override
+  String valuationIssueAsset(int line) {
+    return 'Riga $line: il numero di attrezzatura non è un intero da 1.';
+  }
+
+  @override
+  String valuationIssueBasis(int line) {
+    return 'Riga $line: la base è book o tax.';
+  }
+
+  @override
+  String valuationIssueColumns(int line) {
+    return 'Riga $line: il numero di colonne non è corretto.';
+  }
+
+  @override
+  String valuationIssueCurrency(int line) {
+    return 'Riga $line: la valuta non è un codice di tre lettere.';
+  }
+
+  @override
+  String valuationIssueDate(int line) {
+    return 'Riga $line: una data non è un giorno reale scritto AAAA-MM-GG.';
+  }
+
+  @override
+  String valuationIssueDuplicate(int line) {
+    return 'Riga $line: questa attrezzatura compare già nel file.';
+  }
+
+  @override
+  String get valuationIssueEmpty => 'Il file non ha righe.';
+
+  @override
+  String get valuationIssueHeader =>
+      'La prima riga non è l\'intestazione documentata.';
+
+  @override
+  String valuationIssueMinor(int line, String column) {
+    return 'Riga $line: $column non è un numero intero di unità minori.';
+  }
+
+  @override
+  String valuationIssueMixed(int line) {
+    return 'Riga $line: un lotto ha una base, un periodo e una valuta.';
+  }
+
+  @override
+  String valuationIssuePeriod(int line) {
+    return 'Riga $line: il periodo termina prima di iniziare.';
+  }
+
+  @override
+  String get valuationIssueTooMany =>
+      'Il file ha più righe di quante ne contenga un lotto (2000).';
+
+  @override
+  String get valuationLoadFailed =>
+      'Non è stato possibile caricare le valutazioni.';
+
+  @override
+  String valuationMismatches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count righe non quadrano',
+      one: '1 riga non quadra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationMovementsPeriod => 'solo del periodo';
+
+  @override
+  String get valuationMovementsYtd => 'cumulati da inizio anno';
+
+  @override
+  String get valuationOpening => 'Valore di apertura';
+
+  @override
+  String get valuationPartial => 'Non pretende coprire tutte le attrezzature.';
+
+  @override
+  String get valuationPick => 'Scegliere il file';
+
+  @override
+  String valuationPreview(
+    String basis,
+    String from,
+    String to,
+    String currency,
+    int count,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attrezzature',
+      one: '1 attrezzatura',
+    );
+    return '$basis, $from – $to, $currency: $_temp0';
+  }
+
+  @override
+  String get valuationReason => 'Perché viene sostituito';
+
+  @override
+  String get valuationRefused => 'Le valutazioni non sono state salvate.';
+
+  @override
+  String get valuationReplaces => 'Sostituisce';
+
+  @override
+  String get valuationReplacesNone => 'Nessun lotto precedente';
+
+  @override
+  String valuationRows(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attrezzature',
+      one: '1 attrezzatura',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationSample => 'Condividere un file di esempio';
+
+  @override
+  String get valuationSaved => 'Salvato';
+
+  @override
+  String get valuationShowRows => 'Mostra le cifre';
+
+  @override
+  String get valuationStage => 'Importa';
+
+  @override
+  String get valuationStatusConfirmed => 'Confermata';
+
+  @override
+  String get valuationStatusStaged => 'In attesa della sua conferma';
+
+  @override
+  String get valuationStatusSuperseded => 'Sostituita da un lotto successivo';
+
+  @override
+  String get valuationTitle => 'Valutazioni del commercialista';
+
+  @override
+  String get valuationUnknown => 'sconosciuto';
+
+  @override
   String get vatAccountField => 'Conto IVA';
 
   @override

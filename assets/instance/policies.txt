@@ -26,6 +26,10 @@ public.account_groups.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
 public.account_public_profiles.mcp_delegated_deny
 public.analytics_history.mcp_delegated_deny
+public.asset_valuation_batches.asset_valuation_batches_select
+public.asset_valuation_batches.mcp_delegated_deny
+public.asset_valuation_rows.asset_valuation_rows_select
+public.asset_valuation_rows.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny
