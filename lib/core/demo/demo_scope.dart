@@ -49,6 +49,7 @@ import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
@@ -135,6 +136,7 @@ import 'demo_fixture.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+import 'seed/demo_room_seed.dart';
 
 /// #2631 — rooms, parking areas and chargers live in memory.
 List<Override> _resourceOverrides(DemoFixture fixture) => [
@@ -159,6 +161,10 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     // #2576 — the equipment the demo space bought.
     workspaceAssetRepositoryProvider.overrideWithValue(
       seedDemoAssets(fixture.seededAt),
+    ),
+    // #2568 — the rooms the demo space rents.
+    roomRentalRepositoryProvider.overrideWithValue(
+      seedDemoRooms(fixture.seededAt),
     ),
     leaseCommitmentRepositoryProvider.overrideWithValue(
       seedDemoCommitments(fixture.seededAt),

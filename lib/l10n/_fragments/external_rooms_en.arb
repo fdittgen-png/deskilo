@@ -6,5 +6,170 @@
   "featureExternalRoomsDesc": "A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes.",
   "@featureExternalRoomsDesc": {
     "description": "#2568 rented rooms"
+  },
+  "roomRentTitle": "Rented rooms",
+  "@roomRentTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentIntro": "Rooms the space rents from a lessor. A rented room can be booked only inside the rental period and only by the people you choose; nobody else sees it.",
+  "@roomRentIntro": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevels": "Floors",
+  "@roomRentLevels": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelExternal": "Rented floor: its rooms are booked only inside a rental",
+  "@roomRentLevelExternal": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentEmpty": "No room to rent yet. Mark a floor as rented and add its rooms in the floor plan.",
+  "@roomRentEmpty": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNotRented": "Not rented yet",
+  "@roomRentNotRented": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRent": "Rent this room",
+  "@roomRentRent": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentEdit": "Change the rental",
+  "@roomRentEdit": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentWindow": "{from} to {until}",
+  "@roomRentWindow": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentWindowOpen": "From {from}, no end date",
+  "@roomRentWindowOpen": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentCostLine": "Costs the space {amount} a month",
+  "@roomRentCostLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentFeeLine": "Members pay {amount} per half day",
+  "@roomRentFeeLine": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentAudienceAll": "Open to every member",
+  "@roomRentAudienceAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentAudienceNamed": "Open to {count} chosen entries",
+  "@roomRentAudienceNamed": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomRentAudienceNobody": "Nobody can book it yet",
+  "@roomRentAudienceNobody": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFormTitle": "Rent {room}",
+  "@roomRentFormTitle": {
+    "description": "#2568 rented rooms",
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "roomRentFieldLessor": "Lessor",
+  "@roomRentFieldLessor": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentNeedSupplier": "Add the lessor as a supplier first.",
+  "@roomRentNeedSupplier": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFrom": "First day",
+  "@roomRentFieldFrom": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldUntil": "Last day (optional)",
+  "@roomRentFieldUntil": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldStatus": "Status",
+  "@roomRentFieldStatus": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusDraft": "Draft: not bookable",
+  "@roomRentStatusDraft": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusActive": "Active: bookable",
+  "@roomRentStatusActive": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentStatusEnded": "Ended",
+  "@roomRentStatusEnded": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldCost": "Cost to the space per month",
+  "@roomRentFieldCost": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldFee": "Fee per half day for a member (optional)",
+  "@roomRentFieldFee": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentFieldAll": "Open to every member",
+  "@roomRentFieldAll": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentInvalid": "Choose the lessor and the first day, and enter amounts as numbers.",
+  "@roomRentInvalid": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSave": "Save",
+  "@roomRentSave": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentSaved": "Rental saved",
+  "@roomRentSaved": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentRefused": "The rental was not saved.",
+  "@roomRentRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLevelRefused": "The floor could not be changed.",
+  "@roomRentLevelRefused": {
+    "description": "#2568 rented rooms"
+  },
+  "roomRentLoadFailed": "The rented rooms could not be loaded.",
+  "@roomRentLoadFailed": {
+    "description": "#2568 rented rooms"
   }
 }

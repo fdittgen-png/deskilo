@@ -17225,6 +17225,124 @@ class AppLocalizationsDe extends AppLocalizations {
   String get rolesYourRole => 'Ihre Rolle';
 
   @override
+  String get roomRentAudienceAll => 'Für alle Mitglieder offen';
+
+  @override
+  String roomRentAudienceNamed(int count) {
+    return 'Für $count gewählte Einträge offen';
+  }
+
+  @override
+  String get roomRentAudienceNobody => 'Noch niemand kann sie buchen';
+
+  @override
+  String roomRentCostLine(String amount) {
+    return 'Kostet den Space $amount im Monat';
+  }
+
+  @override
+  String get roomRentEdit => 'Miete ändern';
+
+  @override
+  String get roomRentEmpty =>
+      'Noch kein Raum zu mieten. Markieren Sie eine Etage als gemietet und legen Sie ihre Räume im Plan an.';
+
+  @override
+  String roomRentFeeLine(String amount) {
+    return 'Mitglieder zahlen $amount pro Halbtag';
+  }
+
+  @override
+  String get roomRentFieldAll => 'Für alle Mitglieder offen';
+
+  @override
+  String get roomRentFieldCost => 'Monatliche Kosten für den Space';
+
+  @override
+  String get roomRentFieldFee =>
+      'Gebühr pro Halbtag für ein Mitglied (optional)';
+
+  @override
+  String get roomRentFieldFrom => 'Erster Tag';
+
+  @override
+  String get roomRentFieldLessor => 'Vermieter';
+
+  @override
+  String get roomRentFieldStatus => 'Status';
+
+  @override
+  String get roomRentFieldUntil => 'Letzter Tag (optional)';
+
+  @override
+  String roomRentFormTitle(String room) {
+    return '$room mieten';
+  }
+
+  @override
+  String get roomRentIntro =>
+      'Räume, die der Space von einem Vermieter mietet. Ein gemieteter Raum ist nur im Mietzeitraum und nur für die Personen buchbar, die Sie festlegen; alle anderen sehen ihn nicht.';
+
+  @override
+  String get roomRentInvalid =>
+      'Wählen Sie den Vermieter und den ersten Tag und geben Sie Beträge als Zahlen ein.';
+
+  @override
+  String get roomRentLevelExternal =>
+      'Gemietete Etage: Ihre Räume sind nur innerhalb einer Miete buchbar';
+
+  @override
+  String get roomRentLevelRefused => 'Die Etage konnte nicht geändert werden.';
+
+  @override
+  String get roomRentLevels => 'Etagen';
+
+  @override
+  String get roomRentLoadFailed =>
+      'Die gemieteten Räume konnten nicht geladen werden.';
+
+  @override
+  String get roomRentNeedSupplier =>
+      'Legen Sie den Vermieter zuerst als Lieferanten an.';
+
+  @override
+  String get roomRentNotRented => 'Noch nicht gemietet';
+
+  @override
+  String get roomRentRefused => 'Die Miete wurde nicht gespeichert.';
+
+  @override
+  String get roomRentRent => 'Diesen Raum mieten';
+
+  @override
+  String get roomRentSave => 'Speichern';
+
+  @override
+  String get roomRentSaved => 'Miete gespeichert';
+
+  @override
+  String get roomRentStatusActive => 'Aktiv: buchbar';
+
+  @override
+  String get roomRentStatusDraft => 'Entwurf: nicht buchbar';
+
+  @override
+  String get roomRentStatusEnded => 'Beendet';
+
+  @override
+  String get roomRentTitle => 'Gemietete Räume';
+
+  @override
+  String roomRentWindow(String from, String until) {
+    return 'Vom $from bis $until';
+  }
+
+  @override
+  String roomRentWindowOpen(String from) {
+    return 'Ab $from, ohne Enddatum';
+  }
+
+  @override
   String get saftDocumentsOnly => 'Nur Belege';
 
   @override

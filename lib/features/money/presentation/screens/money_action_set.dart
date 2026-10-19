@@ -16,6 +16,7 @@ import '../../domain/purchase.dart' show
         purchaseManagePermission,
         purchaseOffsetPermission,
         purchasePayPermission;
+import '../../domain/room_rental.dart' show roomRentalManagePermission;
 import '../widgets/consumption_sheet.dart';
 import '../widgets/equipment_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
@@ -23,6 +24,7 @@ import '../widgets/expense_sheet.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/premises_lease_sheet.dart';
 import '../widgets/purchases_sheet.dart';
+import '../widgets/rented_rooms_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
@@ -204,6 +206,13 @@ class MoneyActionSet {
           workspaceId: data.workspace!.id,
           held: {for (final p in ref.read(myPermissionsProvider)) p.wireName},
         ),
+      // #2568 — the rooms the space rents, for those who manage the plan.
+      if (data.externalRoomsOn &&
+          data.workspace != null &&
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == roomRentalManagePermission))
+        RentedRoomsButton(workspaceId: data.workspace!.id),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),
         onPressed: () => ops.sheets.requestQuota(ops.period),

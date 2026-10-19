@@ -4,7 +4,7 @@
 -- and the refusal wording of each cause. Real roles; every refusal is followed
 -- by a readback. Hand-written expectations: window 2027-03-01 .. 2027-08-31.
 begin;
-select plan(33);
+select plan(37);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -185,6 +185,21 @@ select is(pg_temp.book(pg_temp.ada(), 'office_id', '00000000-0000-4000-8000-0000
 -- another country
 select alike(pg_temp.as_json(pg_temp.u(1), format('select public.set_level_kind_v1(%L, %L, ''external'')', current_setting('t.a'), '00000000-0000-4000-8000-0000256800b3'))::text, '%"kind": "external"%', '30a the Berlin level can be external');
 select alike(pg_temp.save('draft', 0, '00000000-0000-4000-8000-0000256800c3')->>'error', '%another country%', '30 a room in another country is refused');
+
+-- the screen's lists (0497)
+select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.room_rentals_v1(%L)', current_setting('t.a')))->'levels'), 3,
+  '31 the owner reads every level with its kind');
+select is((select jsonb_agg(r->>'name' order by r->>'name') from jsonb_array_elements(pg_temp.as_json(pg_temp.u(1), format('select public.room_rentals_v1(%L)', current_setting('t.a')))->'rooms') r),
+  '["Berlin room", "Rented room"]'::jsonb, '32 the rooms are those of the external levels only');
+
+-- open to every member (0498)
+select is(pg_temp.as_json(pg_temp.u(1), format(
+  'select public.save_room_rental_v1(%L, %L, %L, ''2027-03-01'', ''2027-08-31'', ''fixed_per_period'', 40000, ''month'', ''active'', null, %s, true)',
+  current_setting('t.a'), '00000000-0000-4000-8000-0000256800c2', '00000000-0000-4000-8000-0000256800a1',
+  (select revision from public.room_rentals where office_id = '00000000-0000-4000-8000-0000256800c2')))->>'audience_all',
+  'true', '33 the owner opens the room to every member');
+select is(pg_temp.book(pg_temp.bruno(), 'office_id', '00000000-0000-4000-8000-0000256800c2', pg_temp.paris('2027-04-20 09:00'), pg_temp.paris('2027-04-20 13:00')),
+  '', '34 Bruno, in no named entry, now books');
 
 select * from finish();
 rollback;

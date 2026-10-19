@@ -29473,6 +29473,204 @@ abstract class AppLocalizations {
   /// **'Your role'**
   String get rolesYourRole;
 
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Open to every member'**
+  String get roomRentAudienceAll;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Open to {count} chosen entries'**
+  String roomRentAudienceNamed(int count);
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody can book it yet'**
+  String get roomRentAudienceNobody;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Costs the space {amount} a month'**
+  String roomRentCostLine(String amount);
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Change the rental'**
+  String get roomRentEdit;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'No room to rent yet. Mark a floor as rented and add its rooms in the floor plan.'**
+  String get roomRentEmpty;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Members pay {amount} per half day'**
+  String roomRentFeeLine(String amount);
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Open to every member'**
+  String get roomRentFieldAll;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Cost to the space per month'**
+  String get roomRentFieldCost;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Fee per half day for a member (optional)'**
+  String get roomRentFieldFee;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'First day'**
+  String get roomRentFieldFrom;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Lessor'**
+  String get roomRentFieldLessor;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get roomRentFieldStatus;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Last day (optional)'**
+  String get roomRentFieldUntil;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rent {room}'**
+  String roomRentFormTitle(String room);
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms the space rents from a lessor. A rented room can be booked only inside the rental period and only by the people you choose; nobody else sees it.'**
+  String get roomRentIntro;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the lessor and the first day, and enter amounts as numbers.'**
+  String get roomRentInvalid;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rented floor: its rooms are booked only inside a rental'**
+  String get roomRentLevelExternal;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'The floor could not be changed.'**
+  String get roomRentLevelRefused;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Floors'**
+  String get roomRentLevels;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'The rented rooms could not be loaded.'**
+  String get roomRentLoadFailed;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Add the lessor as a supplier first.'**
+  String get roomRentNeedSupplier;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Not rented yet'**
+  String get roomRentNotRented;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'The rental was not saved.'**
+  String get roomRentRefused;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rent this room'**
+  String get roomRentRent;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get roomRentSave;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rental saved'**
+  String get roomRentSaved;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Active: bookable'**
+  String get roomRentStatusActive;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Draft: not bookable'**
+  String get roomRentStatusDraft;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Ended'**
+  String get roomRentStatusEnded;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rented rooms'**
+  String get roomRentTitle;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'{from} to {until}'**
+  String roomRentWindow(String from, String until);
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'From {from}, no end date'**
+  String roomRentWindowOpen(String from);
+
   /// #669 - SAF-T derived postings
   ///
   /// In en, this message translates to:

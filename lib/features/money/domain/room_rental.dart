@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
+import 'room_level_kind.dart';
 
 /// #2568 — a room the space rents (`room_rentals`, 0496). The server owns
 /// every rule and refuses on every booking path; these are the shapes it
@@ -108,6 +109,7 @@ class RoomRental {
     this.costCents = 0,
     this.period = 'month',
     this.currency = '',
+    this.audienceAll = false,
     this.audience = const [],
     this.fees = const [],
   });
@@ -128,6 +130,7 @@ class RoomRental {
       costCents: r.intOrNull('cost_cents') ?? 0,
       period: r.stringOr('period', 'month'),
       currency: r.stringOr('currency'),
+      audienceAll: r.boolOr('audience_all', fallback: false),
       audience: [
         for (final a in r.list('audience')) RoomAudienceEntry.fromJson(a),
       ],
@@ -152,6 +155,9 @@ class RoomRental {
   final int costCents;
   final String period;
   final String currency;
+
+  /// Every active member may book the room, besides the named [audience].
+  final bool audienceAll;
   final List<RoomAudienceEntry> audience;
   final List<RoomFee> fees;
 
@@ -206,4 +212,114 @@ class RoomOffer {
     }
     return null;
   }
+}
+
+/// A level with its kind, as the rentals screen lists them.
+class RoomLevel {
+  const RoomLevel({required this.id, required this.name, required this.kind});
+
+  factory RoomLevel.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'room level');
+    return RoomLevel(
+      id: r.string('id'),
+      name: r.stringOr('name'),
+      kind: LevelKind.of(r.stringOrNull('kind')),
+    );
+  }
+
+  final String id;
+  final String name;
+  final LevelKind kind;
+}
+
+/// A room of an external level, with whether it already has a rental.
+class RentableRoom {
+  const RentableRoom({
+    required this.officeId,
+    required this.name,
+    required this.levelName,
+    required this.rented,
+  });
+
+  factory RentableRoom.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'rentable room');
+    return RentableRoom(
+      officeId: r.string('office_id'),
+      name: r.stringOr('name'),
+      levelName: r.stringOr('level_name'),
+      rented: r.boolOr('rented', fallback: false),
+    );
+  }
+
+  final String officeId;
+  final String name;
+  final String levelName;
+  final bool rented;
+}
+
+/// What the rentals screen reads in one answer.
+class RoomRentalsOverview {
+  const RoomRentalsOverview({
+    this.rentals = const [],
+    this.levels = const [],
+    this.rooms = const [],
+  });
+
+  factory RoomRentalsOverview.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'room rentals');
+    return RoomRentalsOverview(
+      rentals: [for (final x in r.list('rentals')) RoomRental.fromJson(x)],
+      levels: [for (final x in r.list('levels')) RoomLevel.fromJson(x)],
+      rooms: [for (final x in r.list('rooms')) RentableRoom.fromJson(x)],
+    );
+  }
+
+  final List<RoomRental> rentals;
+  final List<RoomLevel> levels;
+  final List<RentableRoom> rooms;
+}
+
+/// A rental to record or change; the audience and the fees follow it.
+class RoomRentalCommand {
+  const RoomRentalCommand({
+    required this.officeId,
+    required this.supplierId,
+    required this.availableFrom,
+    required this.status,
+    this.availableUntil,
+    this.costKind = 'fixed_per_period',
+    this.costCents = 0,
+    this.period = 'month',
+    this.revision = 0,
+    this.audienceAll = false,
+    this.audience = const [],
+    this.fees = const [],
+  });
+
+  final String officeId;
+  final String supplierId;
+  final DateTime availableFrom;
+  final DateTime? availableUntil;
+  final RoomRentalStatus status;
+  final String costKind;
+  final int costCents;
+  final String period;
+  final int revision;
+  final bool audienceAll;
+  final List<RoomAudienceEntry> audience;
+  final List<RoomFee> fees;
+}
+
+/// The rented rooms of one space; every write goes through an RPC.
+abstract class RoomRentalRepository {
+  Future<RoomRentalsOverview> fetchOverview(String workspaceId);
+
+  Future<void> setLevelKind(String workspaceId, String levelId, LevelKind kind);
+
+  /// Saves the rental, then its audience and fees; returns it as the server
+  /// now has it.
+  Future<RoomRental> saveRental(String workspaceId, RoomRentalCommand command);
+
+  /// What the signed-in member would pay for [officeId] and until when.
+  Future<RoomOffer> fetchOffer(String workspaceId, String officeId);
 }

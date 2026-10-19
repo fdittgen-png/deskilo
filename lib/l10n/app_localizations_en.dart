@@ -17056,6 +17056,121 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rolesYourRole => 'Your role';
 
   @override
+  String get roomRentAudienceAll => 'Open to every member';
+
+  @override
+  String roomRentAudienceNamed(int count) {
+    return 'Open to $count chosen entries';
+  }
+
+  @override
+  String get roomRentAudienceNobody => 'Nobody can book it yet';
+
+  @override
+  String roomRentCostLine(String amount) {
+    return 'Costs the space $amount a month';
+  }
+
+  @override
+  String get roomRentEdit => 'Change the rental';
+
+  @override
+  String get roomRentEmpty =>
+      'No room to rent yet. Mark a floor as rented and add its rooms in the floor plan.';
+
+  @override
+  String roomRentFeeLine(String amount) {
+    return 'Members pay $amount per half day';
+  }
+
+  @override
+  String get roomRentFieldAll => 'Open to every member';
+
+  @override
+  String get roomRentFieldCost => 'Cost to the space per month';
+
+  @override
+  String get roomRentFieldFee => 'Fee per half day for a member (optional)';
+
+  @override
+  String get roomRentFieldFrom => 'First day';
+
+  @override
+  String get roomRentFieldLessor => 'Lessor';
+
+  @override
+  String get roomRentFieldStatus => 'Status';
+
+  @override
+  String get roomRentFieldUntil => 'Last day (optional)';
+
+  @override
+  String roomRentFormTitle(String room) {
+    return 'Rent $room';
+  }
+
+  @override
+  String get roomRentIntro =>
+      'Rooms the space rents from a lessor. A rented room can be booked only inside the rental period and only by the people you choose; nobody else sees it.';
+
+  @override
+  String get roomRentInvalid =>
+      'Choose the lessor and the first day, and enter amounts as numbers.';
+
+  @override
+  String get roomRentLevelExternal =>
+      'Rented floor: its rooms are booked only inside a rental';
+
+  @override
+  String get roomRentLevelRefused => 'The floor could not be changed.';
+
+  @override
+  String get roomRentLevels => 'Floors';
+
+  @override
+  String get roomRentLoadFailed => 'The rented rooms could not be loaded.';
+
+  @override
+  String get roomRentNeedSupplier => 'Add the lessor as a supplier first.';
+
+  @override
+  String get roomRentNotRented => 'Not rented yet';
+
+  @override
+  String get roomRentRefused => 'The rental was not saved.';
+
+  @override
+  String get roomRentRent => 'Rent this room';
+
+  @override
+  String get roomRentSave => 'Save';
+
+  @override
+  String get roomRentSaved => 'Rental saved';
+
+  @override
+  String get roomRentStatusActive => 'Active: bookable';
+
+  @override
+  String get roomRentStatusDraft => 'Draft: not bookable';
+
+  @override
+  String get roomRentStatusEnded => 'Ended';
+
+  @override
+  String get roomRentTitle => 'Rented rooms';
+
+  @override
+  String roomRentWindow(String from, String until) {
+    return '$from to $until';
+  }
+
+  @override
+  String roomRentWindowOpen(String from) {
+    return 'From $from, no end date';
+  }
+
+  @override
   String get saftDocumentsOnly => 'Documents only';
 
   @override
