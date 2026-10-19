@@ -186,11 +186,12 @@ void main() {
 
   test('the finance evolution is one read of whole months; another currency leaves a gap, never a converted amount', () async {
     final reader = _Reader((r) {
-      if (r.key == '3')
+      if (r.key == '3') {
         return BiBatchEntry.finance(
           r.key,
           _fin(r.fromMonth!, r.toMonth!, currency: 'USD'),
         );
+      }
       if (r.key == '4') return BiBatchEntry.failed(r.key, code: '22023');
       return BiBatchEntry.finance(r.key, _fin(r.fromMonth!, r.toMonth!));
     });
