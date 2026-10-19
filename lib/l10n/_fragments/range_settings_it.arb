@@ -103,5 +103,17 @@
   "settingUnitCurrencyUnits": "unità monetarie",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelAssetsValuationMaxRows": "Righe di valutazione per lotto",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingHintAssetsValuationMaxRows": "Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingUnitRows": "righe",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   }
 }

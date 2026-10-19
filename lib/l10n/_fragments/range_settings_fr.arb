@@ -80,7 +80,7 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
-  "settingUnitYears": "ann\u00e9es",
+  "settingUnitYears": "années",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
   },
@@ -103,5 +103,17 @@
   "settingUnitCurrencyUnits": "unités monétaires",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelAssetsValuationMaxRows": "Lignes de valorisation par lot",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingHintAssetsValuationMaxRows": "Le plus grand nombre de lignes d'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l'import.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingUnitRows": "lignes",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   }
 }

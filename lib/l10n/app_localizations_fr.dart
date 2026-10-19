@@ -17875,6 +17875,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fixé par le logiciel ; affiché pour que vous sachiez qu\'il existe.';
 
   @override
+  String get settingHintAssetsValuationMaxRows =>
+      'Le plus grand nombre de lignes d\'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l\'import.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixe : l\'avance maximale, en jours, d\'une facture d\'abonnement avant le début du mois.';
 
@@ -18000,6 +18004,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Aucune version enregistrée : la valeur par défaut s\'applique.';
+
+  @override
+  String get settingLabelAssetsValuationMaxRows =>
+      'Lignes de valorisation par lot';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18193,6 +18201,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'par heure';
+
+  @override
+  String get settingUnitRows => 'lignes';
 
   @override
   String get settingUnitSeconds => 'secondes';
@@ -21828,8 +21839,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get valuationIssueTooMany =>
-      'Le fichier a plus de lignes qu\'un lot n\'en contient (2000).';
+  String valuationIssueTooMany(String limit) {
+    return 'Le fichier a plus de lignes qu\'un lot n\'en contient ($limit).';
+  }
 
   @override
   String get valuationLoadFailed =>

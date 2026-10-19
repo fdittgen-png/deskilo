@@ -80,7 +80,7 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
-  "settingUnitYears": "a\u00f1os",
+  "settingUnitYears": "años",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
   },
@@ -103,5 +103,17 @@
   "settingUnitCurrencyUnits": "unidades monetarias",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelAssetsValuationMaxRows": "Filas de valoración por lote",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingHintAssetsValuationMaxRows": "El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingUnitRows": "filas",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   }
 }

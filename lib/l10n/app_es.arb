@@ -12873,6 +12873,10 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAssetsValuationMaxRows": "El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13000,6 +13004,10 @@
   "settingHistoryEmpty": "Ninguna versión guardada: se aplica el valor por defecto.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAssetsValuationMaxRows": "Filas de valoración por lote",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Antelación de la factura de suscripción",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13243,6 +13251,10 @@
   "settingUnitPerHour": "por hora",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRows": "filas",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   },
   "settingUnitSeconds": "segundos",
   "@settingUnitSeconds": {
@@ -15396,9 +15408,14 @@
       }
     }
   },
-  "valuationIssueTooMany": "El archivo tiene más filas de las que cabe en un lote (2000).",
+  "valuationIssueTooMany": "El archivo tiene más filas de las que cabe en un lote ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationLoadFailed": "No se pudieron cargar las valoraciones.",
   "@valuationLoadFailed": {

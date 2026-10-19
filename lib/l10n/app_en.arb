@@ -20667,6 +20667,10 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAssetsValuationMaxRows": "The most rows one batch of the accountant's valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -20794,6 +20798,10 @@
   "settingHistoryEmpty": "No stored version: the default applies.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -21037,6 +21045,10 @@
   "settingUnitPerHour": "per hour",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRows": "rows",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   },
   "settingUnitSeconds": "seconds",
   "@settingUnitSeconds": {
@@ -25238,9 +25250,14 @@
       }
     }
   },
-  "valuationIssueTooMany": "The file has more rows than one batch holds (2000).",
+  "valuationIssueTooMany": "The file has more rows than one batch holds ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationLoadFailed": "The valuations could not be loaded.",
   "@valuationLoadFailed": {

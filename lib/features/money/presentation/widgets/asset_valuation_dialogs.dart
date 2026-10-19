@@ -20,7 +20,7 @@ import 'asset_valuation_manual.dart';
 String _issueText(AppLocalizations l10n, ValuationIssue i) =>
     switch (i.kind) {
       ValuationIssueKind.empty => l10n.valuationIssueEmpty,
-      ValuationIssueKind.tooManyRows => l10n.valuationIssueTooMany,
+      ValuationIssueKind.tooManyRows => l10n.valuationIssueTooMany(i.detail),
       ValuationIssueKind.header => l10n.valuationIssueHeader,
       ValuationIssueKind.columnCount => l10n.valuationIssueColumns(i.line),
       ValuationIssueKind.assetNumber => l10n.valuationIssueAsset(i.line),
@@ -85,7 +85,10 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
     // Explicit UTF-8: XFile.readAsString is not UTF-8-safe for data-backed files.
     final content = utf8.decode(await file.readAsBytes());
     _edit(() {
-      _file = readValuationCsv(content);
+      _file = readValuationCsv(
+        content,
+        maxRows: ref.read(valuationMaxRowsProvider),
+      );
       _invalid = false;
     });
   }
@@ -94,7 +97,10 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
     final csv = await showValuationManualDialog(context);
     if (csv == null) return;
     _edit(() {
-      _file = readValuationCsv(csv);
+      _file = readValuationCsv(
+        csv,
+        maxRows: ref.read(valuationMaxRowsProvider),
+      );
       _invalid = false;
     });
   }

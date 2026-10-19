@@ -137,9 +137,14 @@
   "@valuationIssueEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationIssueTooMany": "El archivo tiene más filas de las que cabe en un lote (2000).",
+  "valuationIssueTooMany": "El archivo tiene más filas de las que cabe en un lote ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationIssueHeader": "La primera línea no es la cabecera documentada.",
   "@valuationIssueHeader": {

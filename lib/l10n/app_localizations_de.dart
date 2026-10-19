@@ -17860,6 +17860,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Von der Software festgelegt; sie wird angezeigt, damit Sie wissen, dass es sie gibt.';
 
   @override
+  String get settingHintAssetsValuationMaxRows =>
+      'Die höchste Zeilenzahl eines Stapels der Bewertungen Ihres Steuerberaters, eine je Anlage. Eine größere Datei wird ganz abgelehnt; teilen Sie sie vor dem Import.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.';
 
@@ -17985,6 +17989,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Keine gespeicherte Version: Der Standardwert gilt.';
+
+  @override
+  String get settingLabelAssetsValuationMaxRows => 'Bewertungszeilen je Stapel';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Vorlauf der Abo-Rechnung';
@@ -18174,6 +18181,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'pro Stunde';
+
+  @override
+  String get settingUnitRows => 'Zeilen';
 
   @override
   String get settingUnitSeconds => 'Sekunden';
@@ -21814,8 +21824,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get valuationIssueTooMany =>
-      'Die Datei hat mehr Zeilen, als ein Stapel fasst (2000).';
+  String valuationIssueTooMany(String limit) {
+    return 'Die Datei hat mehr Zeilen, als ein Stapel fasst ($limit).';
+  }
 
   @override
   String get valuationLoadFailed =>

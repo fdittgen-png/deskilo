@@ -141,13 +141,12 @@ void main() {
 
   test('more rows than a batch holds are refused', () {
     final rows = [
-      for (var i = 1; i <= valuationMaxRows + 1; i++)
-        '$i,book,2026-01-01,2026-12-31,EUR,,,,,,,',
+      for (var i = 1; i <= 101; i++) '$i,book,2026-01-01,2026-12-31,EUR,,,,,,,',
     ];
-    expect(
-      readValuationCsv(_file(rows)).issues.single.kind,
-      ValuationIssueKind.tooManyRows,
-    );
+    final refused = readValuationCsv(_file(rows), maxRows: 100).issues.single;
+    expect(refused.kind, ValuationIssueKind.tooManyRows);
+    expect(refused.detail, '100', reason: 'the message names the limit in force');
+    expect(readValuationCsv(_file(rows), maxRows: 101).usable, isTrue);
   });
 
   test('a stored batch and row read as the server writes them', () {

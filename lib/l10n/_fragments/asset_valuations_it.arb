@@ -137,9 +137,14 @@
   "@valuationIssueEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationIssueTooMany": "Il file ha più righe di quante ne contenga un lotto (2000).",
+  "valuationIssueTooMany": "Il file ha più righe di quante ne contenga un lotto ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationIssueHeader": "La prima riga non è l'intestazione documentata.",
   "@valuationIssueHeader": {

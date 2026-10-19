@@ -12873,6 +12873,10 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAssetsValuationMaxRows": "Le plus grand nombre de lignes d'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l'import.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fixe : l'avance maximale, en jours, d'une facture d'abonnement avant le début du mois.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13000,6 +13004,10 @@
   "settingHistoryEmpty": "Aucune version enregistrée : la valeur par défaut s'applique.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAssetsValuationMaxRows": "Lignes de valorisation par lot",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Avance de la facture d'abonnement",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13243,6 +13251,10 @@
   "settingUnitPerHour": "par heure",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRows": "lignes",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   },
   "settingUnitSeconds": "secondes",
   "@settingUnitSeconds": {
@@ -15396,9 +15408,14 @@
       }
     }
   },
-  "valuationIssueTooMany": "Le fichier a plus de lignes qu'un lot n'en contient (2000).",
+  "valuationIssueTooMany": "Le fichier a plus de lignes qu'un lot n'en contient ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationLoadFailed": "Les valorisations n'ont pas pu être chargées.",
   "@valuationLoadFailed": {

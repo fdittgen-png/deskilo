@@ -30540,6 +30540,12 @@ abstract class AppLocalizations {
   /// **'Fixed by the software; it is shown so you know it exists.'**
   String get settingGuardrailFallback;
 
+  /// #2576 valuation settings
+  ///
+  /// In en, this message translates to:
+  /// **'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.'**
+  String get settingHintAssetsValuationMaxRows;
+
   /// #2486 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -30731,6 +30737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No stored version: the default applies.'**
   String get settingHistoryEmpty;
+
+  /// #2576 valuation settings
+  ///
+  /// In en, this message translates to:
+  /// **'Valuation rows per batch'**
+  String get settingLabelAssetsValuationMaxRows;
 
   /// #2486 settings: Setting label.
   ///
@@ -31055,6 +31067,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'per hour'**
   String get settingUnitPerHour;
+
+  /// #2576 valuation settings
+  ///
+  /// In en, this message translates to:
+  /// **'rows'**
+  String get settingUnitRows;
 
   /// #2484 settings: Unit.
   ///
@@ -37263,8 +37281,8 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
-  /// **'The file has more rows than one batch holds (2000).'**
-  String get valuationIssueTooMany;
+  /// **'The file has more rows than one batch holds ({limit}).'**
+  String valuationIssueTooMany(String limit);
 
   /// #2576 accountant valuations
   ///

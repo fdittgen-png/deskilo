@@ -12873,6 +12873,10 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAssetsValuationMaxRows": "Die höchste Zeilenzahl eines Stapels der Bewertungen Ihres Steuerberaters, eine je Anlage. Eine größere Datei wird ganz abgelehnt; teilen Sie sie vor dem Import.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13000,6 +13004,10 @@
   "settingHistoryEmpty": "Keine gespeicherte Version: Der Standardwert gilt.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAssetsValuationMaxRows": "Bewertungszeilen je Stapel",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Vorlauf der Abo-Rechnung",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13243,6 +13251,10 @@
   "settingUnitPerHour": "pro Stunde",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRows": "Zeilen",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   },
   "settingUnitSeconds": "Sekunden",
   "@settingUnitSeconds": {
@@ -15396,9 +15408,14 @@
       }
     }
   },
-  "valuationIssueTooMany": "Die Datei hat mehr Zeilen, als ein Stapel fasst (2000).",
+  "valuationIssueTooMany": "Die Datei hat mehr Zeilen, als ein Stapel fasst ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationLoadFailed": "Die Bewertungen konnten nicht geladen werden.",
   "@valuationLoadFailed": {
