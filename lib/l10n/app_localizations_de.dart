@@ -21817,6 +21817,56 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Bewertungen konnten nicht geladen werden.';
 
   @override
+  String get valuationManual => 'Einen Vermögenswert erfassen';
+
+  @override
+  String get valuationManualAdditions => 'Zugänge';
+
+  @override
+  String get valuationManualAmountsHint =>
+      'Beträge sind ganze Untereinheiten (Cent); lassen Sie eine unbekannte Zahl leer.';
+
+  @override
+  String get valuationManualAsset => 'Anlagennummer';
+
+  @override
+  String get valuationManualBasis => 'Grundlage';
+
+  @override
+  String get valuationManualClosing => 'Endwert';
+
+  @override
+  String get valuationManualCurrency => 'Währung (z. B. EUR)';
+
+  @override
+  String get valuationManualDepreciation => 'Abschreibung';
+
+  @override
+  String get valuationManualDisposals => 'Abgänge';
+
+  @override
+  String get valuationManualFrom => 'Zeitraum von (JJJJ-MM-TT)';
+
+  @override
+  String get valuationManualImpairment => 'Wertminderung';
+
+  @override
+  String get valuationManualInvalid =>
+      'Prüfen Sie Anlagennummer, Daten, Währung und Zahlen.';
+
+  @override
+  String get valuationManualOpening => 'Anfangswert';
+
+  @override
+  String get valuationManualReference => 'Ihre Referenz (optional)';
+
+  @override
+  String get valuationManualTo => 'Zeitraum bis (JJJJ-MM-TT)';
+
+  @override
+  String get valuationManualUse => 'Diese Zeile verwenden';
+
+  @override
   String valuationMismatches(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

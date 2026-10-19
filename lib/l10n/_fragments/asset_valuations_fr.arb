@@ -309,5 +309,69 @@
   "valuationReason": "Pourquoi il est remplacé",
   "@valuationReason": {
     "description": "#2576 accountant valuations"
+  },
+  "valuationManual": "Saisir un bien",
+  "@valuationManual": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAsset": "Numéro du bien",
+  "@valuationManualAsset": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualBasis": "Base",
+  "@valuationManualBasis": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualFrom": "Période du (AAAA-MM-JJ)",
+  "@valuationManualFrom": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualTo": "Période au (AAAA-MM-JJ)",
+  "@valuationManualTo": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualCurrency": "Devise (p. ex. EUR)",
+  "@valuationManualCurrency": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAmountsHint": "Les montants sont des unités mineures entières (centimes) ; laissez vide un chiffre inconnu.",
+  "@valuationManualAmountsHint": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualOpening": "Valeur d'ouverture",
+  "@valuationManualOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAdditions": "Acquisitions",
+  "@valuationManualAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDisposals": "Cessions",
+  "@valuationManualDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDepreciation": "Amortissement",
+  "@valuationManualDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualImpairment": "Dépréciation",
+  "@valuationManualImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualClosing": "Valeur de clôture",
+  "@valuationManualClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualReference": "Votre référence (facultatif)",
+  "@valuationManualReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualUse": "Utiliser cette ligne",
+  "@valuationManualUse": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualInvalid": "Vérifiez le numéro du bien, les dates, la devise et les chiffres.",
+  "@valuationManualInvalid": {
+    "description": "#2576 accountant valuations"
   }
 }

@@ -21831,6 +21831,56 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les valorisations n\'ont pas pu être chargées.';
 
   @override
+  String get valuationManual => 'Saisir un bien';
+
+  @override
+  String get valuationManualAdditions => 'Acquisitions';
+
+  @override
+  String get valuationManualAmountsHint =>
+      'Les montants sont des unités mineures entières (centimes) ; laissez vide un chiffre inconnu.';
+
+  @override
+  String get valuationManualAsset => 'Numéro du bien';
+
+  @override
+  String get valuationManualBasis => 'Base';
+
+  @override
+  String get valuationManualClosing => 'Valeur de clôture';
+
+  @override
+  String get valuationManualCurrency => 'Devise (p. ex. EUR)';
+
+  @override
+  String get valuationManualDepreciation => 'Amortissement';
+
+  @override
+  String get valuationManualDisposals => 'Cessions';
+
+  @override
+  String get valuationManualFrom => 'Période du (AAAA-MM-JJ)';
+
+  @override
+  String get valuationManualImpairment => 'Dépréciation';
+
+  @override
+  String get valuationManualInvalid =>
+      'Vérifiez le numéro du bien, les dates, la devise et les chiffres.';
+
+  @override
+  String get valuationManualOpening => 'Valeur d\'ouverture';
+
+  @override
+  String get valuationManualReference => 'Votre référence (facultatif)';
+
+  @override
+  String get valuationManualTo => 'Période au (AAAA-MM-JJ)';
+
+  @override
+  String get valuationManualUse => 'Utiliser cette ligne';
+
+  @override
   String valuationMismatches(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

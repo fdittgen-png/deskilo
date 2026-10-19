@@ -309,5 +309,69 @@
   "valuationReason": "Por qué se sustituye",
   "@valuationReason": {
     "description": "#2576 accountant valuations"
+  },
+  "valuationManual": "Introducir un bien",
+  "@valuationManual": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAsset": "Número del bien",
+  "@valuationManualAsset": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualBasis": "Base",
+  "@valuationManualBasis": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualFrom": "Periodo desde (AAAA-MM-DD)",
+  "@valuationManualFrom": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualTo": "Periodo hasta (AAAA-MM-DD)",
+  "@valuationManualTo": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualCurrency": "Moneda (p. ej. EUR)",
+  "@valuationManualCurrency": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAmountsHint": "Los importes son unidades menores enteras (céntimos); deje en blanco una cifra desconocida.",
+  "@valuationManualAmountsHint": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualOpening": "Valor de apertura",
+  "@valuationManualOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualAdditions": "Altas",
+  "@valuationManualAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDisposals": "Bajas",
+  "@valuationManualDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualDepreciation": "Amortización",
+  "@valuationManualDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualImpairment": "Deterioro",
+  "@valuationManualImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualClosing": "Valor de cierre",
+  "@valuationManualClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualReference": "Su referencia (opcional)",
+  "@valuationManualReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualUse": "Usar esta fila",
+  "@valuationManualUse": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationManualInvalid": "Revise el número del bien, las fechas, la moneda y las cifras.",
+  "@valuationManualInvalid": {
+    "description": "#2576 accountant valuations"
   }
 }

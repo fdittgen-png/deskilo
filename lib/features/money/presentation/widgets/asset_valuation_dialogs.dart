@@ -14,6 +14,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/asset_valuation.dart';
 import '../../providers/asset_valuation_providers.dart';
+import 'asset_valuation_manual.dart';
 
 /// The sentence for one problem of the file.
 String _issueText(AppLocalizations l10n, ValuationIssue i) =>
@@ -89,6 +90,15 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
     });
   }
 
+  Future<void> _type() async {
+    final csv = await showValuationManualDialog(context);
+    if (csv == null) return;
+    _edit(() {
+      _file = readValuationCsv(csv);
+      _invalid = false;
+    });
+  }
+
   Future<void> _save() async {
     final file = _file;
     final source = ValuationSource(
@@ -146,6 +156,12 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
               onPressed: _pick,
               icon: const Icon(Icons.folder_open_outlined),
               label: Text(l10n.valuationPick),
+            ),
+            TextButton.icon(
+              key: const ValueKey('valuation-type'),
+              onPressed: _type,
+              icon: const Icon(Icons.edit_outlined),
+              label: Text(l10n.valuationManual),
             ),
             if (file != null && file.issues.isEmpty && file.rows.isNotEmpty)
               Padding(
