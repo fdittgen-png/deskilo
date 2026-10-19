@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/cache/cache_store.dart';
@@ -18,7 +17,10 @@ part 'settings_providers.g.dart';
 /// #2484 -- the settings registry: read and written.
 @Riverpod(keepAlive: true)
 SettingsStore settingsRepository(Ref ref) =>
-    SupabaseSettingsRepository(Supabase.instance.client, ref.watch(cacheStoreProvider));
+    SupabaseSettingsRepository(
+      ref.watch(selectedWorkspaceClientProvider),
+      ref.watch(cacheStoreProvider),
+    );
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.

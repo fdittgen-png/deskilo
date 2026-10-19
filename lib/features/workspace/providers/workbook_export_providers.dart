@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/files/file_saver.dart';
 import '../application/template_workbook.dart';
 import '../data/supabase_workbook_origin_repository.dart';
@@ -11,7 +10,7 @@ part 'workbook_export_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 WorkbookOriginRepository workbookOriginRepository(Ref ref) =>
-    SupabaseWorkbookOriginRepository(Supabase.instance.client);
+    SupabaseWorkbookOriginRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// Keep an imperative export alive without widget listeners, but invalidate
 /// it permanently when its account or repository changes, including A→B→A.

@@ -53,7 +53,7 @@ final class SettingsRepositoryProvider
 }
 
 String _$settingsRepositoryHash() =>
-    r'5c2dd0364ee5cb317747f9de101f52b241bcd251';
+    r'74b8cc2ed29cab78d026ca676827f66671852690';
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.

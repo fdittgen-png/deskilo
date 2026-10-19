@@ -256,7 +256,7 @@ final class BiViewRepositoryProvider
   }
 }
 
-String _$biViewRepositoryHash() => r'46d52fab7110f761a6c7a74dd836ee34a9e01d78';
+String _$biViewRepositoryHash() => r'2864d593a22be3af134fe0fcff9aef64a87f6b37';
 
 /// The reader's private views and the workspace's team views.
 

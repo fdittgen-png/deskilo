@@ -24,8 +24,12 @@ import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/features/workspace/providers/connected_space_providers.dart';
+import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
+import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
+import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_fields_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -203,6 +207,14 @@ void main() {
           .previewMyErasure('ws-1'),
       () => container.read(eventRepositoryProvider).fetchEvents('ws-1'),
       () => container.read(workspaceFieldsRepositoryProvider).fetchFields('ws-1'),
+      // #2564 O2: settings, saved report views, deployment, local setup
+      // and the template search are the selected
+      // workspace's host's.
+      () => container.read(settingsRepositoryProvider).history('ws-1', 'k'),
+      () => container.read(biViewRepositoryProvider).list('ws-1'),
+      () => container.read(deploymentRepositoryProvider).entities(),
+      () => container.read(localSetupRepositoryProvider).readiness('ws-1'),
+      () => container.read(templateSearchRepositoryProvider).search(),
     ];
     for (final read in reads) {
       try {
@@ -237,6 +249,18 @@ void main() {
     expect(one.data, isNotEmpty);
     expect(root.data, isEmpty, reason: 'the root never serves workspace rows');
     expect(two.data, isEmpty);
+    // #2564 O2: each of these reached the host the space lives on (a read
+    // that named the process-wide client would be refused before any
+    // request, and show no path here).
+    for (final rpc in [
+      'setting_history',
+      'bi_views_list',
+      'deployable_entities',
+      'workspace_local_readiness',
+      'search_workspace_templates',
+    ]) {
+      expect(one.paths, contains('/rest/v1/rpc/$rpc'), reason: rpc);
+    }
   });
 
   test('the list half stays on the root session, whatever is selected',

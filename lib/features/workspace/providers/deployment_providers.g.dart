@@ -62,7 +62,7 @@ final class DeploymentRepositoryProvider
 }
 
 String _$deploymentRepositoryHash() =>
-    r'1481d14e5696b8eeeed8910ebf3e2b352261f087';
+    r'f009f28a670daa4551ec969bc477b8c980c04da3';
 
 /// #1449 — the deployment's own decisions: the closed selection, and a
 /// deploy that can only write what a preview described.
