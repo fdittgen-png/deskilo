@@ -4,7 +4,7 @@
 -- and the refusal wording of each cause. Real roles; every refusal is followed
 -- by a readback. Hand-written expectations: window 2027-03-01 .. 2027-08-31.
 begin;
-select plan(37);
+select plan(41);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -181,6 +181,25 @@ select is(pg_temp.as_json(pg_temp.u(4), format('select public.room_offer_v1(%L, 
 update public.members set plan_id = null where id = pg_temp.ada();
 select is(pg_temp.book(pg_temp.ada(), 'office_id', '00000000-0000-4000-8000-0000256800c2', pg_temp.paris('2027-05-03 09:00'), pg_temp.paris('2027-05-03 13:00')),
   'that room is not open to you', '29 once Ada leaves the plan, a later occurrence is refused');
+
+-- an assistant (MCP) does not see the room either (0499); Carol is in the audience, Bruno is not
+create function pg_temp.mcp_places(p_user uuid, p_op text, p_args jsonb) returns jsonb language plpgsql as $$
+declare v_member public.members; v jsonb;
+begin
+  select * into v_member from public.members where user_id = p_user and workspace_id = current_setting('t.a')::uuid;
+  return public.mcp_read_v1(current_setting('t.a')::uuid, v_member, p_op, p_args);
+end;
+$$;
+select is((select count(*)::int from jsonb_array_elements(pg_temp.mcp_places(pg_temp.u(3), 'get_availability',
+  jsonb_build_object('starts_at', '2027-04-12T08:00:00+02:00', 'ends_at', '2027-04-12T18:00:00+02:00', 'kind', 'office'))->'items') i
+  where i->>'office_id' = '00000000-0000-4000-8000-0000256800c2'), 0, '35 availability does not list the rented room to Bruno');
+select is((select count(*)::int from jsonb_array_elements(pg_temp.mcp_places(pg_temp.u(4), 'get_availability',
+  jsonb_build_object('starts_at', '2027-04-12T08:00:00+02:00', 'ends_at', '2027-04-12T18:00:00+02:00', 'kind', 'office'))->'items') i
+  where i->>'office_id' = '00000000-0000-4000-8000-0000256800c2'), 1, '36 it lists it to Carol');
+select is(pg_temp.mcp_places(pg_temp.u(3), 'get_place', jsonb_build_object('office_id', '00000000-0000-4000-8000-0000256800c2', '_ceiling', 'workspace'))->>'code',
+  'not_found', '37 get_place by id answers not found to Bruno');
+select isnt(pg_temp.mcp_places(pg_temp.u(4), 'get_place', jsonb_build_object('office_id', '00000000-0000-4000-8000-0000256800c2', '_ceiling', 'workspace'))->>'code',
+  'not_found', '38 get_place answers Carol');
 
 -- another country
 select alike(pg_temp.as_json(pg_temp.u(1), format('select public.set_level_kind_v1(%L, %L, ''external'')', current_setting('t.a'), '00000000-0000-4000-8000-0000256800b3'))::text, '%"kind": "external"%', '30a the Berlin level can be external');
