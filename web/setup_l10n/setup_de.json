@@ -666,5 +666,7 @@
  "webmcpArgValue": "Die Antwort: Boolean, Text, Zahl oder Liste, je nach Parametertyp.",
  "webmcpArgAnswers": "Ein Objekt, das Parameterschlüssel auf Antworten abbildet.",
  "webmcpArgFormat": "Das Exportformat; es gibt nur xml.",
- "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen."
+ "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
+ "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
+ "featuresAvailabilityEu": "den EU-Mitgliedstaaten"
 }

@@ -2159,6 +2159,26 @@
   "@conversationYou": {
     "description": "#687 - messaging centre"
   },
+  "countryChangeBody": "In {country} queste funzionalità non sono disponibili e smettono di funzionare: {features}. I loro interruttori vengono conservati: tornano se reimposta il paese.",
+  "@countryChangeBody": {
+    "description": "#2454 country change",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "countryChangeConfirm": "Cambia il paese",
+  "@countryChangeConfirm": {
+    "description": "#2454 country change"
+  },
+  "countryChangeTitle": "Cambiare il paese?",
+  "@countryChangeTitle": {
+    "description": "#2454 country change"
+  },
   "countryNameAT": "Austria",
   "countryNameAU": "Australia",
   "@countryNameAU": {

@@ -108,6 +108,26 @@ void main() {
           reason: 'REQUIRES in web/setup.html drifted from featureManifest');
     });
 
+    test('AVAILABLE_IN equals featureManifest.availableIn, entry for entry', () {
+      final start = html.indexOf('const AVAILABLE_IN={');
+      expect(start, isNot(-1));
+      final block = html.substring(start, html.indexOf('};', start));
+      final inHtml = {
+        for (final m in RegExp(r"([A-Za-z]+):\[([^\]]*)\]").allMatches(block))
+          m.group(1)!: {
+            for (final c in RegExp(r"'([^']+)'").allMatches(m.group(2)!))
+              c.group(1)!,
+          },
+      };
+      final inApp = {
+        for (final e in featureManifest.entries)
+          if (e.value.availableIn != null)
+            e.key.name: e.value.availableIn!.toSet(),
+      };
+      expect(inHtml, inApp,
+          reason: 'AVAILABLE_IN in web/setup.html drifted from featureManifest');
+    });
+
     test('processes are presentation only: the XML carries no process key',
         () {
       // The page groups by process (setup_catalogue.js) and the import

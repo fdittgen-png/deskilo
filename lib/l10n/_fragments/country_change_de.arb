@@ -1,0 +1,22 @@
+{
+  "countryChangeTitle": "Land ändern?",
+  "@countryChangeTitle": {
+    "description": "#2454 country change"
+  },
+  "countryChangeBody": "In {country} sind diese Funktionen nicht verfügbar und funktionieren nicht mehr: {features}. Ihre Schalter bleiben erhalten: Sie kehren zurück, wenn Sie das Land zurückändern.",
+  "@countryChangeBody": {
+    "description": "#2454 country change",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "countryChangeConfirm": "Land ändern",
+  "@countryChangeConfirm": {
+    "description": "#2454 country change"
+  }
+}

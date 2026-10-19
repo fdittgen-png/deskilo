@@ -3368,6 +3368,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get conversationYou => 'Lei';
 
   @override
+  String countryChangeBody(String country, String features) {
+    return 'In $country queste funzionalità non sono disponibili e smettono di funzionare: $features. I loro interruttori vengono conservati: tornano se reimposta il paese.';
+  }
+
+  @override
+  String get countryChangeConfirm => 'Cambia il paese';
+
+  @override
+  String get countryChangeTitle => 'Cambiare il paese?';
+
+  @override
   String get countryNameAT => 'Austria';
 
   @override

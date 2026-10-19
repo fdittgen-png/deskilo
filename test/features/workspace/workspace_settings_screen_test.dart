@@ -147,10 +147,7 @@ void main() {
     expect(find.text('Europe/Berlin'), findsOneWidget);
 
     // Picking Switzerland re-defaults currency + time zone (spec §3).
-    await tester.tap(find.byKey(const Key('workspaceSettingsCountry')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Switzerland').last);
-    await tester.pumpAndSettle();
+    await pickWorkspaceCountry(tester, 'Switzerland');
     expect(find.textContaining('CHF'), findsOneWidget);
     expect(find.text('Europe/Zurich'), findsOneWidget);
     await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
@@ -246,14 +243,26 @@ void main() {
   });
 
   testWidgets(
+      'a country that does not offer a feature that is on asks first; '
+      'declining leaves the country, the currency and the time zone (#2454)',
+      (tester) async {
+    final workspace = await pumpWorkspaceSettings(tester);
+
+    await pickWorkspaceCountry(tester, 'Switzerland', confirm: false);
+
+    expect(find.textContaining('CHF'), findsNothing);
+    expect(find.text('Europe/Berlin'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+    expect(workspace.lastLocaleUpdate?[1], isNot('CH'));
+  });
+
+  testWidgets(
       'a manual currency override typed after the country pick is saved '
       'verbatim (owner-overridable, spec §3)', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
 
-    await tester.tap(find.byKey(const Key('workspaceSettingsCountry')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Switzerland').last);
-    await tester.pumpAndSettle();
+    await pickWorkspaceCountry(tester, 'Switzerland');
 
     // Owner overrides the CHF default with EUR before saving.
     // #711 — a picker now: the override is a pick, not a keystroke.
@@ -592,12 +601,8 @@ void main() {
   });
 
   group('#1451 — one Save, one command, all or nothing', () {
-    Future<void> pickSwitzerland(WidgetTester tester) async {
-      await tester.tap(find.byKey(const Key('workspaceSettingsCountry')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Switzerland').last);
-      await tester.pumpAndSettle();
-    }
+    Future<void> pickSwitzerland(WidgetTester tester) =>
+        pickWorkspaceCountry(tester, 'Switzerland');
 
     Future<void> tapSave(WidgetTester tester) async {
       await tester.tap(find.byKey(const Key('workspaceSettingsSave')));

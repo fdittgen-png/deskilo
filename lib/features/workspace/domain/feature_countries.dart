@@ -5,6 +5,7 @@
 // matches again gets the feature back exactly as configured). SQL twin:
 // `feature_available_in` (0486), generated from the same manifest.
 import '../../../core/vat/tax_reference_active.dart';
+import 'workspace_feature.dart';
 
 /// A member of the list that stands for "every EU member state", resolved
 /// against the `eu_member` rows of the tax reference store: the list is data
@@ -22,3 +23,13 @@ bool featureAvailableIn(Set<String>? availableIn, String? country) {
       (availableIn.contains(featureCountriesEu) &&
           ActiveTaxReference.current.isEu(code));
 }
+
+/// The features among [enabled] that [country] does not offer: what switching
+/// to that country would turn off (the stored switches are kept).
+List<WorkspaceFeature> featuresLostInCountry(
+  Iterable<WorkspaceFeature> enabled,
+  String country,
+) => [
+  for (final f in enabled)
+    if (!featureAvailableIn(featureManifest[f]?.availableIn, country)) f,
+];

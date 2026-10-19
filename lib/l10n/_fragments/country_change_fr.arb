@@ -1,0 +1,22 @@
+{
+  "countryChangeTitle": "Changer de pays ?",
+  "@countryChangeTitle": {
+    "description": "#2454 country change"
+  },
+  "countryChangeBody": "En {country}, ces fonctionnalités ne sont pas disponibles et cessent de fonctionner : {features}. Leurs interrupteurs sont conservés : elles reviennent si vous remettez le pays d'origine.",
+  "@countryChangeBody": {
+    "description": "#2454 country change",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "countryChangeConfirm": "Changer de pays",
+  "@countryChangeConfirm": {
+    "description": "#2454 country change"
+  }
+}
