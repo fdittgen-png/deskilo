@@ -137,9 +137,14 @@
   "@valuationIssueEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationIssueTooMany": "The file has more rows than one batch holds (2000).",
+  "valuationIssueTooMany": "The file has more rows than one batch holds ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationIssueHeader": "The first line is not the documented header.",
   "@valuationIssueHeader": {

@@ -17684,6 +17684,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fixed by the software; it is shown so you know it exists.';
 
   @override
+  String get settingHintAssetsValuationMaxRows =>
+      'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixed: the longest lead, in days, of a subscription invoice before the month starts.';
 
@@ -17808,6 +17812,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHistoryEmpty => 'No stored version: the default applies.';
+
+  @override
+  String get settingLabelAssetsValuationMaxRows => 'Valuation rows per batch';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Subscription invoice lead';
@@ -17990,6 +17997,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'per hour';
+
+  @override
+  String get settingUnitRows => 'rows';
 
   @override
   String get settingUnitSeconds => 'seconds';
@@ -21577,8 +21587,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get valuationIssueTooMany =>
-      'The file has more rows than one batch holds (2000).';
+  String valuationIssueTooMany(String limit) {
+    return 'The file has more rows than one batch holds ($limit).';
+  }
 
   @override
   String get valuationLoadFailed => 'The valuations could not be loaded.';

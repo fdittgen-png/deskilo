@@ -12873,6 +12873,10 @@
   "@settingGuardrailFallback": {
     "description": "#2484 settings: Reason when a guardrail has no note."
   },
+  "settingHintAssetsValuationMaxRows": "Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fisso: l'anticipo massimo, in giorni, di una fattura d'abbonamento prima dell'inizio del mese.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13000,6 +13004,10 @@
   "settingHistoryEmpty": "Nessuna versione salvata: vale il predefinito.",
   "@settingHistoryEmpty": {
     "description": "#2484 settings: History empty."
+  },
+  "settingLabelAssetsValuationMaxRows": "Righe di valutazione per lotto",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Anticipo della fattura d'abbonamento",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13243,6 +13251,10 @@
   "settingUnitPerHour": "all'ora",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRows": "righe",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   },
   "settingUnitSeconds": "secondi",
   "@settingUnitSeconds": {
@@ -15396,9 +15408,14 @@
       }
     }
   },
-  "valuationIssueTooMany": "Il file ha più righe di quante ne contenga un lotto (2000).",
+  "valuationIssueTooMany": "Il file ha più righe di quante ne contenga un lotto ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationLoadFailed": "Non è stato possibile caricare le valutazioni.",
   "@valuationLoadFailed": {

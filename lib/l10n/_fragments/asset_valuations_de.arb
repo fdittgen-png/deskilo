@@ -137,9 +137,14 @@
   "@valuationIssueEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationIssueTooMany": "Die Datei hat mehr Zeilen, als ein Stapel fasst (2000).",
+  "valuationIssueTooMany": "Die Datei hat mehr Zeilen, als ein Stapel fasst ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationIssueHeader": "Die erste Zeile ist nicht die dokumentierte Kopfzeile.",
   "@valuationIssueHeader": {

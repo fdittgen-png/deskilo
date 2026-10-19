@@ -103,5 +103,17 @@
   "settingUnitCurrencyUnits": "currency units",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingHintAssetsValuationMaxRows": "The most rows one batch of the accountant's valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingUnitRows": "rows",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   }
 }

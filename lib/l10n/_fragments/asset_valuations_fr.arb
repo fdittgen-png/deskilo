@@ -137,9 +137,14 @@
   "@valuationIssueEmpty": {
     "description": "#2576 accountant valuations"
   },
-  "valuationIssueTooMany": "Le fichier a plus de lignes qu'un lot n'en contient (2000).",
+  "valuationIssueTooMany": "Le fichier a plus de lignes qu'un lot n'en contient ({limit}).",
   "@valuationIssueTooMany": {
-    "description": "#2576 accountant valuations"
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   },
   "valuationIssueHeader": "La première ligne n'est pas l'en-tête documenté.",
   "@valuationIssueHeader": {

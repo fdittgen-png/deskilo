@@ -17824,6 +17824,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Fijado por el software; se muestra para que sepa que existe.';
 
   @override
+  String get settingHintAssetsValuationMaxRows =>
+      'El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.';
 
@@ -17949,6 +17953,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Ninguna versión guardada: se aplica el valor por defecto.';
+
+  @override
+  String get settingLabelAssetsValuationMaxRows =>
+      'Filas de valoración por lote';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18143,6 +18151,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'por hora';
+
+  @override
+  String get settingUnitRows => 'filas';
 
   @override
   String get settingUnitSeconds => 'segundos';
@@ -21763,8 +21774,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get valuationIssueTooMany =>
-      'El archivo tiene más filas de las que cabe en un lote (2000).';
+  String valuationIssueTooMany(String limit) {
+    return 'El archivo tiene más filas de las que cabe en un lote ($limit).';
+  }
 
   @override
   String get valuationLoadFailed => 'No se pudieron cargar las valoraciones.';

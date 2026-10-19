@@ -103,5 +103,17 @@
   "settingUnitCurrencyUnits": "Währungseinheiten",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelAssetsValuationMaxRows": "Bewertungszeilen je Stapel",
+  "@settingLabelAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingHintAssetsValuationMaxRows": "Die höchste Zeilenzahl eines Stapels der Bewertungen Ihres Steuerberaters, eine je Anlage. Eine größere Datei wird ganz abgelehnt; teilen Sie sie vor dem Import.",
+  "@settingHintAssetsValuationMaxRows": {
+    "description": "#2576 valuation settings"
+  },
+  "settingUnitRows": "Zeilen",
+  "@settingUnitRows": {
+    "description": "#2576 valuation settings"
   }
 }

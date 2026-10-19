@@ -17836,6 +17836,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fissato dal software; è mostrato perché Lei sappia che esiste.';
 
   @override
+  String get settingHintAssetsValuationMaxRows =>
+      'Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fisso: l\'anticipo massimo, in giorni, di una fattura d\'abbonamento prima dell\'inizio del mese.';
 
@@ -17961,6 +17965,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingHistoryEmpty =>
       'Nessuna versione salvata: vale il predefinito.';
+
+  @override
+  String get settingLabelAssetsValuationMaxRows =>
+      'Righe di valutazione per lotto';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18156,6 +18164,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'all\'ora';
+
+  @override
+  String get settingUnitRows => 'righe';
 
   @override
   String get settingUnitSeconds => 'secondi';
@@ -21790,8 +21801,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get valuationIssueTooMany =>
-      'Il file ha più righe di quante ne contenga un lotto (2000).';
+  String valuationIssueTooMany(String limit) {
+    return 'Il file ha più righe di quante ne contenga un lotto ($limit).';
+  }
 
   @override
   String get valuationLoadFailed =>

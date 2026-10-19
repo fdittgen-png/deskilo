@@ -6,6 +6,8 @@
 // the registry's, read through `SettingsSet`.
 
 abstract final class SettingDefaults {
+  /// `assets.valuation_max_rows`
+  static const int assetsValuationMaxRows = 2000;
   /// `billing.max_advance_days`
   static const int billingMaxAdvanceDays = 28;
   /// `booking.check_in_leeway_minutes`

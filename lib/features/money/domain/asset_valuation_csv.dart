@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:meta/meta.dart';
 
+import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/date_text.dart';
 import 'asset_valuation_types.dart';
 
@@ -40,10 +40,6 @@ String valuationCsvCell(String cell) {
 
 /// The largest figure a row may state: what every platform keeps exactly.
 const _maxMinor = 9007199254740991;
-
-/// The most rows a batch carries (the server refuses more).
-@visibleForTesting
-const valuationMaxRows = 2000;
 
 /// What is wrong with a line of the CSV. The wording belongs to the screen.
 enum ValuationIssueKind {
@@ -271,7 +267,10 @@ ValuationCsv _refused(String hash, ValuationIssue issue) =>
 /// file with a problem is not usable. Blank figures are unknown, signed
 /// decimal integers are exact, anything else (a decimal point, an exponent, a
 /// formula) is refused.
-ValuationCsv readValuationCsv(String content) {
+ValuationCsv readValuationCsv(
+  String content, {
+  int maxRows = SettingDefaults.assetsValuationMaxRows,
+}) {
   final text = content.startsWith('\uFEFF') ? content.substring(1) : content;
   final hash = sha256.convert(utf8.encode(content)).toString();
   final cells = _CsvScanner(text).scan();
@@ -296,10 +295,10 @@ ValuationCsv readValuationCsv(String content) {
   if (data.isEmpty) {
     return _refused(hash, const ValuationIssue(0, ValuationIssueKind.empty));
   }
-  if (data.length > valuationMaxRows) {
+  if (data.length > maxRows) {
     return _refused(
       hash,
-      const ValuationIssue(0, ValuationIssueKind.tooManyRows),
+      ValuationIssue(0, ValuationIssueKind.tooManyRows, '$maxRows'),
     );
   }
   final reader = _RowReader();

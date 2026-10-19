@@ -603,6 +603,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'A payable of at least this amount, in whole currency units, is paid by someone other than the person who approved its bill; splitting it into small payments does not get round the limit. 0 switches the rule off.',
     ),
   ),
+  (
+    since: 'valuation_row_limit',
+    row: (
+      key: 'assets.valuation_max_rows',
+      type: 'int',
+      defaultValue: 2000,
+      min: 100,
+      max: 5000,
+      unit: 'rows',
+      group: 'billing',
+      scopes: ['workspace'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'stage_asset_valuations_v1 (0507)',
+      note: 'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is split by the person who imports it; the file is refused as a whole, never cut.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
