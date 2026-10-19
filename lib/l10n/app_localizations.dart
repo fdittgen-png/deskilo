@@ -29629,6 +29629,42 @@ abstract class AppLocalizations {
   /// **'Your role'**
   String get rolesYourRole;
 
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} per {unit}'**
+  String roomOfferFee(String amount, String unit);
+
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'Rented room, available with no end date'**
+  String get roomOfferOpen;
+
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get roomOfferUnitDay;
+
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'half day'**
+  String get roomOfferUnitHalfDay;
+
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'hour'**
+  String get roomOfferUnitHour;
+
+  /// #2575 rented room offer
+  ///
+  /// In en, this message translates to:
+  /// **'Rented room, available until {date}'**
+  String roomOfferUntil(String date);
+
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:

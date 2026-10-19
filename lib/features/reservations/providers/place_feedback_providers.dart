@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart' show FutureProvider, Provider;
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -8,7 +10,9 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_place_feedback_repository.dart';
+import '../data/supabase_room_offer_repository.dart';
 import '../domain/place_feedback.dart';
+import '../domain/room_offer.dart';
 
 part 'place_feedback_providers.g.dart';
 
@@ -103,3 +107,24 @@ Future<List<FavoritePlace>> myFavoritePlaces(Ref ref) async {
   if (workspace == null) return const [];
   return repository.favorites(workspace.id);
 }
+
+/// #2575 — what a rented room costs the member, read beside its booking
+/// sheet. The seam tests and the demo replace.
+@visibleForTesting
+final roomOfferRepositoryProvider = Provider<RoomOfferRepository>(
+  (ref) => SupabaseRoomOfferRepository(ref.watch(selectedWorkspaceClientProvider)),
+);
+
+/// The offer of one room for the signed-in member. An error — the room is not
+/// offered to them, or rented rooms are off — is shown as nothing at all.
+final roomOfferProvider = FutureProvider.autoDispose
+    .family<RoomOfferView, ({String workspaceId, String officeId})>((ref, key) {
+      if (!ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.externalRooms)) {
+        throw StateError('rented rooms are switched off');
+      }
+      return ref
+          .watch(roomOfferRepositoryProvider)
+          .fetch(key.workspaceId, key.officeId);
+    });
