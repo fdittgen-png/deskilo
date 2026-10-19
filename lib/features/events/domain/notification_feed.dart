@@ -149,7 +149,7 @@ NotificationCategory categoryOfEvent(WorkspaceEvent event) {
     // #982 — acts of record on money.
     case EventType.invoiceIssue:
     case EventType.invoiceVoid:
-    case EventType.refund:
+    case EventType.refund || EventType.leaseChange:
       return NotificationCategory.money;
     case EventType.roleChange:
     case EventType.memberJoin:

@@ -5073,6 +5073,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventLeaseNoticeLine(String actor, String premises, String date) {
+    return '$actor gives notice on $premises; the lease would end on $date';
+  }
+
+  @override
+  String eventLeaseRentLine(
+    String actor,
+    String premises,
+    String amount,
+    String date,
+  ) {
+    return '$actor asks to change the rent of $premises to $amount from $date';
+  }
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor recorded a payment of $amount';
   }
@@ -5185,6 +5200,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Outstanding write-off';
+
+  @override
+  String get eventTypeLeaseChange => 'Lease change';
 
   @override
   String get eventTypeMatrixChange => 'Permission matrix change';

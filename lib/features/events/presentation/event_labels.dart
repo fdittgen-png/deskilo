@@ -39,7 +39,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
       l10n.eventTypeMatrixChange,
     // #1088 — a type this build does not know still names itself as
     // something that happened, rather than emptying the feed.
-    EventType.unknown => l10n.eventTypeUnknown,
+    EventType.unknown || EventType.leaseChange => _specialLabel(l10n, type),
     EventType.invoiceWriteoff =>
       l10n.eventTypeInvoiceWriteoff,
     EventType.invoiceReminder =>
@@ -52,6 +52,13 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
       l10n.eventTypeExpenseRepartition,
   };
 }
+
+/// The two types whose name is not a plain table entry: the one this build
+/// does not know, and the lease change (#2569).
+String _specialLabel(AppLocalizations l10n, EventType type) =>
+    type == EventType.leaseChange
+    ? l10n.eventTypeLeaseChange
+    : l10n.eventTypeUnknown;
 
 /// The name of one notification category (#581/#598).
 ///

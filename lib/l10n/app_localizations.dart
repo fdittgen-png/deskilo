@@ -8850,6 +8850,23 @@ abstract class AppLocalizations {
   /// **'{actor} asks to cancel the remainder of {number} — {amount}'**
   String eventInvoiceWriteoffLine(String actor, String number, String amount);
 
+  /// #2569 lease change validation
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} gives notice on {premises}; the lease would end on {date}'**
+  String eventLeaseNoticeLine(String actor, String premises, String date);
+
+  /// #2569 lease change validation
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} asks to change the rent of {premises} to {amount} from {date}'**
+  String eventLeaseRentLine(
+    String actor,
+    String premises,
+    String amount,
+    String date,
+  );
+
   /// Feed line for payment events
   ///
   /// In en, this message translates to:
@@ -9017,6 +9034,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Outstanding write-off'**
   String get eventTypeInvoiceWriteoff;
+
+  /// #2569 lease change validation
+  ///
+  /// In en, this message translates to:
+  /// **'Lease change'**
+  String get eventTypeLeaseChange;
 
   /// #982 validation domains: eventTypeMatrixChange
   ///

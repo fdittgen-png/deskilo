@@ -3,10 +3,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/validation/pending_validation.dart';
 import '../domain/premises_lease.dart';
 
 /// The premises lease and its RPCs (0474). Reading is one RPC that checks the
 /// right; every write derives actor, status and schedules on the server.
+/// The lease an RPC answered, or [PendingValidationException] when the
+/// space's policy held the change for a second person (0506): nothing is
+/// applied until they confirm.
+PremisesLease _leaseOrPending(Object? answer) {
+  if (answer is Map && answer['pending'] == true) {
+    throw PendingValidationException('${answer['event_id']}');
+  }
+  return PremisesLease.fromJson(answer);
+}
+
 class SupabasePremisesLeaseRepository implements PremisesLeaseRepository {
   const SupabasePremisesLeaseRepository(this._client);
 
@@ -46,7 +57,7 @@ class SupabasePremisesLeaseRepository implements PremisesLeaseRepository {
   Future<PremisesLease> addTerm(
     String workspaceId,
     LeaseTermCommand command,
-  ) async => PremisesLease.fromJson(
+  ) async => _leaseOrPending(
     await _client.rpc<Object?>(
       'add_lease_term_v1',
       params: {
@@ -67,7 +78,7 @@ class SupabasePremisesLeaseRepository implements PremisesLeaseRepository {
   Future<PremisesLease> giveNotice(
     String workspaceId,
     LeaseNoticeCommand command,
-  ) async => PremisesLease.fromJson(
+  ) async => _leaseOrPending(
     await _client.rpc<Object?>(
       'give_lease_notice_v1',
       params: {

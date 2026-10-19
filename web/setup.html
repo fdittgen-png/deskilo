@@ -391,9 +391,9 @@ const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
 // The validation domains beside the default rule; names from the app's
 // eventType* strings. Each inherits from the default rule until a card is
 // edited, which is exactly what `on` models here.
-const DOMAINS=['payment','expense','service','quota','reservation_delete','role_change','member_join','reservation','space_reservation','invoice_payment','adjustment','invoice_writeoff','price_negotiation','expense_schedule','payment_terms_change','invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change'];
+const DOMAINS=['payment','expense','service','quota','reservation_delete','role_change','member_join','reservation','space_reservation','invoice_payment','adjustment','invoice_writeoff','price_negotiation','expense_schedule','payment_terms_change','invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change','lease_change'];
 // The feature a domain's card needs; without it the card is not offered.
-const DOMAIN_GATE={payment_terms_change:'memberPaymentTerms',expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
+const DOMAIN_GATE={lease_change:'premisesLease',payment_terms_change:'memberPaymentTerms',expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
 // #2331 — the page's domain keys that are not the event type the server
 // stores (validation_policies_event_type_check): 'service' is a service charge.
 const DOMAIN_EVENT_TYPE={service:'service_charge'};
