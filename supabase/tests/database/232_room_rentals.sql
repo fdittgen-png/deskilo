@@ -4,7 +4,7 @@
 -- and the refusal wording of each cause. Real roles; every refusal is followed
 -- by a readback. Hand-written expectations: window 2027-03-01 .. 2027-08-31.
 begin;
-select plan(41);
+select plan(44);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -167,6 +167,18 @@ select pg_temp.act_as(pg_temp.u(2));
 select is((select count(*)::int from public.offices where id = '00000000-0000-4000-8000-0000256800c2'), 1, '23 Ada sees the room');
 select is((select count(*)::int from public.levels where id = '00000000-0000-4000-8000-0000256800b2'), 1, '24 and its level');
 select is((select count(*)::int from public.room_rentals), 0, '25 but not the rental behind it');
+reset role;
+
+-- the bookings on the room are not readable by those who cannot book it (0501)
+select pg_temp.act_as(pg_temp.u(3));
+select is((select count(*)::int from public.reservations where office_id = '00000000-0000-4000-8000-0000256800c2'), 0,
+  '25b Bruno reads none of the bookings on the rented room');
+select is((select count(*)::int from public.reservations where office_id = '00000000-0000-4000-8000-0000256800c1'), 1,
+  '25c but his own booking, on an own room, is there');
+reset role;
+select pg_temp.act_as(pg_temp.u(2));
+select is((select count(*)::int from public.reservations where office_id = '00000000-0000-4000-8000-0000256800c2'), 3,
+  '25d Ada reads the three bookings on the room she may book');
 reset role;
 
 -- what Ada is shown, never the cost
