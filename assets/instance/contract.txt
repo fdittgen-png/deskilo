@@ -2235,10 +2235,10 @@ routine public.role_holds(ws uuid, p_role text, perm text) -> boolean | function
 routine public.role_permission_catalog() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:e293717ec78e
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.room_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:586b028bb1cc
-routine public.room_audience_has(p_rental uuid, p_member uuid) -> boolean | function | definer | stable | exec:service_role | body:1a66c14e5906
+routine public.room_audience_has(p_rental uuid, p_member uuid) -> boolean | function | definer | stable | exec:service_role | body:e7423e536921
 routine public.room_offer_v1(p_workspace_id uuid, p_office_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bde97755bd80
-routine public.room_rental_json(r room_rentals) -> jsonb | function | definer | stable | exec:service_role | body:3d0150983411
-routine public.room_rentals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c5f07cd91d0c
+routine public.room_rental_json(r room_rentals) -> jsonb | function | definer | stable | exec:service_role | body:74bff1feb673
+routine public.room_rentals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:94f61bb6ec11
 routine public.room_visible(p_office uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:99fe88eba5ff
 routine public.sales_tax_certificate_of(p_workspace_id uuid, p_member_id uuid, p_state text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:ce15de3fbda0
 routine public.sales_tax_invoice(p_workspace_id uuid, p_member_id uuid, p_postal text, p_lines jsonb, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:70826a03239e
@@ -2252,7 +2252,7 @@ routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_a
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:29680ce96d4a
-routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cef15560fd2e
+routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:fb9648b86402
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0729051c79e0
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
