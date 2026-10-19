@@ -5654,6 +5654,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una ripartizione guidata: una spesa comune proposta in base alla percentuale di abbonamento, ogni quota modificabile, e la regola modificata ricordata per il mese successivo. Disattivato: solo la scheda di ripartizione di una spesa.';
 
   @override
+  String get featureExternalRoomsDesc =>
+      'Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia.';
+
+  @override
+  String get featureExternalRoomsTitle => 'Sale in affitto';
+
+  @override
   String get featureFinanceFacesDesc =>
       'La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
 

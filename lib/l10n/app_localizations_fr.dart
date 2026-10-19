@@ -5667,6 +5667,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une répartition guidée : une dépense commune proposée au prorata de l\'abonnement, chaque part ajustable, et la règle ajustée mémorisée pour le mois suivant. Désactivé : seule la fiche de répartition d\'une dépense.';
 
   @override
+  String get featureExternalRoomsDesc =>
+      'Une salle que l\'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l\'espace et rien ne change.';
+
+  @override
+  String get featureExternalRoomsTitle => 'Salles louées';
+
+  @override
   String get featureFinanceFacesDesc =>
       'L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
 

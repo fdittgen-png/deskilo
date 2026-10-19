@@ -9750,6 +9750,18 @@ abstract class AppLocalizations {
   /// **'A guided repartition: a shared cost proposed over the members by subscription share, each share adjustable, and the adjusted rule remembered for next month. Off: the one-expense repartition sheet only.'**
   String get featureExpenseRepartitionWizardDesc;
 
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes.'**
+  String get featureExternalRoomsDesc;
+
+  /// #2568 rented rooms
+  ///
+  /// In en, this message translates to:
+  /// **'Rented rooms'**
+  String get featureExternalRoomsTitle;
+
   /// No description provided for @featureFinanceFacesDesc.
   ///
   /// In en, this message translates to:

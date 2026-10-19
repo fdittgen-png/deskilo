@@ -41,6 +41,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.premisesLease,
   // #2576 — equipment is registered on purpose.
   WorkspaceFeature.assetRegister,
+  // #2568 — rented rooms are offered on purpose.
+  WorkspaceFeature.externalRooms,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -193,6 +195,7 @@ void main() {
       'purchases': true,
       'premisesLease': true,
       'assetRegister': true,
+      'externalRooms': true,
       'guestParticipation': true,
     });
 

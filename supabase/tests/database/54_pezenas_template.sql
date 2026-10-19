@@ -225,6 +225,7 @@ begin
       "planObjectDelete": true,
       "premisesLease": false,
       "assetRegister": false,
+      "externalRooms": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

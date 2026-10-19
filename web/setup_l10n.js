@@ -1225,6 +1225,10 @@ window.SETUP_L10N={
    "assetRegister": [
     "Equipment register",
     "The long-lasting equipment the space buys, kept apart from day-to-day purchases: each acquisition is a candidate until someone who manages the accounting decides whether it is capitalised or expensed, and when it came into use. Off: purchases stay as they are and no equipment is registered."
+   ],
+   "externalRooms": [
+    "Rented rooms",
+    "A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes."
    ]
   },
   "process": {
@@ -2672,6 +2676,10 @@ window.SETUP_L10N={
    "assetRegister": [
     "Registre des équipements",
     "Les équipements durables que l'espace achète, tenus à part des achats courants : chaque acquisition est un candidat jusqu'à ce que la personne qui gère la comptabilité décide si elle est immobilisée ou passée en charge, et à quelle date elle est entrée en service. Désactivé : les achats restent tels quels et aucun équipement n'est enregistré."
+   ],
+   "externalRooms": [
+    "Salles louées",
+    "Une salle que l'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l'espace et rien ne change."
    ]
   },
   "process": {
@@ -4119,6 +4127,10 @@ window.SETUP_L10N={
    "assetRegister": [
     "Anlagenregister",
     "Die langlebige Ausstattung, die der Space kauft, getrennt von den laufenden Einkäufen: Jede Anschaffung ist ein Kandidat, bis jemand mit der Buchhaltungsverantwortung entscheidet, ob sie aktiviert oder als Aufwand gebucht wird, und wann sie in Gebrauch kam. Aus: Einkäufe bleiben wie sie sind, Ausstattung wird nicht erfasst."
+   ],
+   "externalRooms": [
+    "Gemietete Räume",
+    "Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich."
    ]
   },
   "process": {
@@ -5566,6 +5578,10 @@ window.SETUP_L10N={
    "assetRegister": [
     "Registro de equipos",
     "Los equipos duraderos que compra el espacio, separados de las compras corrientes: cada adquisición es un candidato hasta que quien gestiona la contabilidad decide si se capitaliza o se lleva a gasto, y cuándo entró en uso. Desactivado: las compras quedan como están y no se registra ningún equipo."
+   ],
+   "externalRooms": [
+    "Salas alquiladas",
+    "Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia."
    ]
   },
   "process": {
@@ -7013,6 +7029,10 @@ window.SETUP_L10N={
    "assetRegister": [
     "Registro delle attrezzature",
     "Le attrezzature durevoli che lo spazio acquista, tenute separate dagli acquisti correnti: ogni acquisizione è un candidato finché chi gestisce la contabilità decide se capitalizzarla o imputarla a costo, e quando è entrata in uso. Disattivato: gli acquisti restano come sono e nessuna attrezzatura viene registrata."
+   ],
+   "externalRooms": [
+    "Sale in affitto",
+    "Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia."
    ]
   },
   "process": {

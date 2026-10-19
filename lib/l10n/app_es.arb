@@ -4154,6 +4154,14 @@
   "@featureExpenseRepartitionWizardDesc": {
     "description": "#934 workspace status / repartition wizard: featureExpenseRepartitionWizardDesc"
   },
+  "featureExternalRoomsDesc": "Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsTitle": "Salas alquiladas",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
   "featureFinanceFacesDesc": "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featureFinanceFacesTitle": "Finanzas en cuatro vistas",
   "featureFormHelpHintsDesc": "Un carrusel de consejos descartable en cada pantalla principal, y un pequeño ? junto a cada parámetro y campo — un toque abre la guía en la sección correcta. Restaurable desde Ajustes.",

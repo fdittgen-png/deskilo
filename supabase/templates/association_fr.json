@@ -105,6 +105,7 @@
         "eventsTab": false,
         "expenseRepartition": false,
         "expenseRepartitionWizard": false,
+        "externalRooms": false,
         "financeFaces": true,
         "formHelpHints": true,
         "guestParticipation": false,

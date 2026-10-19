@@ -1,0 +1,10 @@
+{
+  "featureExternalRoomsTitle": "Salles louées",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsDesc": "Une salle que l'espace loue à un bailleur, réservable seulement pendant la période de la location et seulement par les personnes choisies par le propriétaire. Désactivé : toutes les salles appartiennent à l'espace et rien ne change.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  }
+}

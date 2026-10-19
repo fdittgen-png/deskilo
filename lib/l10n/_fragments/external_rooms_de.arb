@@ -1,0 +1,10 @@
+{
+  "featureExternalRoomsTitle": "Gemietete Räume",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsDesc": "Ein Raum, den der Space von einem Vermieter mietet, nur innerhalb des Mietzeitraums und nur von den Personen buchbar, die der Eigentümer festlegt. Aus: Alle Räume gehören dem Space und nichts ändert sich.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  }
+}

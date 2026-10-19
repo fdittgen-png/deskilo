@@ -295,4 +295,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.purchases,
     defaultOn: false,
   ),
+  // #2568 — a room the space rents from a lessor, bookable inside its window
+  // by the audience the owner chose.
+  WorkspaceFeature.externalRooms: FeatureManifestEntry(
+    feature: WorkspaceFeature.externalRooms,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.levelBooking,
+    defaultOn: false,
+  ),
 };

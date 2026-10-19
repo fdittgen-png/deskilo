@@ -1,0 +1,10 @@
+{
+  "featureExternalRoomsTitle": "Salas alquiladas",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsDesc": "Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  }
+}

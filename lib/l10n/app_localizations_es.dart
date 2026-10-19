@@ -5656,6 +5656,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un reparto guiado: un gasto común propuesto según el porcentaje de suscripción, cada parte ajustable, y la regla ajustada recordada para el mes siguiente. Desactivado: solo la ficha de reparto de un gasto.';
 
   @override
+  String get featureExternalRoomsDesc =>
+      'Una sala que el espacio alquila a un arrendador, reservable solo dentro del periodo del alquiler y solo por las personas que elija el propietario. Desactivado: todas las salas pertenecen al espacio y nada cambia.';
+
+  @override
+  String get featureExternalRoomsTitle => 'Salas alquiladas';
+
+  @override
   String get featureFinanceFacesDesc =>
       'La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
 

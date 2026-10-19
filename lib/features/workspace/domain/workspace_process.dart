@@ -84,6 +84,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.levelBooking,
       WorkspaceFeature.meetingRooms,
       WorkspaceFeature.parking,
+      WorkspaceFeature.externalRooms,
       WorkspaceFeature.adminLevelAssign,
       WorkspaceFeature.bookingPolicies,
       WorkspaceFeature.bookingGate,

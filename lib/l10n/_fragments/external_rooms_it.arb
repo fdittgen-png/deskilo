@@ -1,0 +1,10 @@
+{
+  "featureExternalRoomsTitle": "Sale in affitto",
+  "@featureExternalRoomsTitle": {
+    "description": "#2568 rented rooms"
+  },
+  "featureExternalRoomsDesc": "Una sala che lo spazio prende in affitto da un locatore, prenotabile solo nel periodo della locazione e solo dalle persone scelte dal proprietario. Disattivato: tutte le sale appartengono allo spazio e nulla cambia.",
+  "@featureExternalRoomsDesc": {
+    "description": "#2568 rented rooms"
+  }
+}

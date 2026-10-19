@@ -5614,6 +5614,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'A guided repartition: a shared cost proposed over the members by subscription share, each share adjustable, and the adjusted rule remembered for next month. Off: the one-expense repartition sheet only.';
 
   @override
+  String get featureExternalRoomsDesc =>
+      'A room the space rents from a lessor, bookable only inside the period of the rental and only by the people the owner chose. Off: every room belongs to the space and nothing changes.';
+
+  @override
+  String get featureExternalRoomsTitle => 'Rented rooms';
+
+  @override
   String get featureFinanceFacesDesc =>
       'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
 

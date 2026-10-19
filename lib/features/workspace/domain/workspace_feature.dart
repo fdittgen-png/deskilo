@@ -408,7 +408,10 @@ enum WorkspaceFeature {
   webMcp,
   purchases,
   premisesLease,
-  assetRegister;
+  assetRegister,
+
+  /// #2568 rooms the space rents (under levelBooking). Platform, OFF.
+  externalRooms;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
