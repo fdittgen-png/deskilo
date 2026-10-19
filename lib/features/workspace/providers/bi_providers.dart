@@ -104,6 +104,9 @@ Future<BiSeries> biModuleSeries(
   if (moduleId == 'capacity.seat_utilisation') {
     return _capacitySeries(ref, workspaceId, module, periods, now);
   }
+  if (moduleId == 'finance.invoiced' || moduleId == 'finance.collected') {
+    return _financeSeries(ref, workspaceId, module, periods, now);
+  }
   // All watched before the first await (provider_watch_before_await).
   final reads = [
     for (final p in periods)
@@ -156,6 +159,53 @@ Future<BiSeries> _capacitySeries(
     final k = e.seatCapacity;
     if (k == null) return BiSeriesPoint(period: p);
     final measure = _seatMeasure(k);
+    final over = !biInterval(p).to.isAfter(now);
+    final partial =
+        !over ||
+        measure.quality.contains(KpiQuality.partial) ||
+        measure.quality.contains(KpiQuality.stale);
+    return BiSeriesPoint(
+      period: p,
+      value: measure.value(module.aggregation),
+      partial: partial,
+    );
+  }
+
+  return BiSeries([
+    for (final (i, p) in periods.indexed) point(p, entries[i]),
+  ]);
+}
+
+/// The finance evolution in one read, the same way: a period the server
+/// could not answer is a gap, never a zero. A period in another currency than
+/// the newest one does not join the series (no amount, not a converted one).
+Future<BiSeries> _financeSeries(
+  Ref ref,
+  String workspaceId,
+  BiModule module,
+  List<BiPeriod> periods,
+  DateTime now,
+) async {
+  final entries = await ref.watch(biBatchReaderProvider).read(workspaceId, [
+    for (final (i, p) in periods.indexed)
+      BiBatchRequest.finance(
+        key: '$i',
+        metricId: module.id,
+        fromMonth: biMonths(p).from,
+        toMonth: biMonths(p).to,
+      ),
+  ]);
+  final currency = entries
+      .map((e) => e.financeSummary?.currency ?? '')
+      .lastWhere((c) => c.isNotEmpty, orElse: () => '');
+  BiSeriesPoint point(BiPeriod p, BiBatchEntry e) {
+    final k = e.financeSummary;
+    if (k == null) return BiSeriesPoint(period: p);
+    final measure = financeMeasure(
+      k,
+      module.id,
+      currencyCompatible: k.currency == currency,
+    );
     final over = !biInterval(p).to.isAfter(now);
     final partial =
         !over ||

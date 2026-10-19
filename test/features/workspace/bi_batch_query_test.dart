@@ -15,24 +15,47 @@ import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-SeatCapacityKpi _seat(num reserved, num offered, {List<String> quality = const []}) =>
-    seatCapacityFromJson({
-      'seats': 5,
-      'physical_seat_hours': 1000,
-      'offered_seat_hours': offered,
-      'reserved_seat_hours': reserved,
-      'reserved_outside_offered_seat_hours': 0,
-      'overlapping_seat_hours': 0,
-      'rooms_without_seats': 0,
-      'offered_room_hours': 0,
-      'reserved_room_hours': 0,
-      'from': '2026-01-01T00:00:00Z',
-      'to': '2026-02-01T00:00:00Z',
-      'quality': quality,
-      'reasons': const <String>[],
-      'history_since': '2026-01-01T00:00:00Z',
-      'computed_at': '2026-03-15T10:00:00Z',
-    });
+SeatCapacityKpi _seat(
+  num reserved,
+  num offered, {
+  List<String> quality = const [],
+}) => seatCapacityFromJson({
+  'seats': 5,
+  'physical_seat_hours': 1000,
+  'offered_seat_hours': offered,
+  'reserved_seat_hours': reserved,
+  'reserved_outside_offered_seat_hours': 0,
+  'overlapping_seat_hours': 0,
+  'rooms_without_seats': 0,
+  'offered_room_hours': 0,
+  'reserved_room_hours': 0,
+  'from': '2026-01-01T00:00:00Z',
+  'to': '2026-02-01T00:00:00Z',
+  'quality': quality,
+  'reasons': const <String>[],
+  'history_since': '2026-01-01T00:00:00Z',
+  'computed_at': '2026-03-15T10:00:00Z',
+});
+
+FinanceSummaryKpi _fin(
+  String from,
+  String to, {
+  String currency = 'EUR',
+  String invoiced = '100000',
+}) => financeSummaryFromJson({
+  'from': from,
+  'to': to,
+  'currency': currency,
+  'invoiced_minor': invoiced,
+  'credit_notes_minor': '0',
+  'collected_minor': '50000',
+  'invoices': 12,
+  'matches': 8,
+  'quality': const <String>[],
+  'reasons': const <String>[],
+  'last_change_at': '2026-03-14T09:00:00Z',
+  'computed_at': '2026-03-15T10:00:00Z',
+});
 
 class _Reader implements KpiBatchReader {
   _Reader(this.answer);
@@ -41,7 +64,10 @@ class _Reader implements KpiBatchReader {
   final calls = <List<BiBatchRequest>>[];
 
   @override
-  Future<List<BiBatchEntry>> read(String workspaceId, List<BiBatchRequest> requests) async {
+  Future<List<BiBatchEntry>> read(
+    String workspaceId,
+    List<BiBatchRequest> requests,
+  ) async {
     calls.add(requests);
     return [for (final r in requests) answer(r)];
   }
@@ -112,64 +138,126 @@ void main() {
     expect(series.points[12].value, closeTo(0.25, 1e-9));
   });
 
-  test('the module result asks once for the period and the compared period', () async {
-    final reader = _Reader((r) => BiBatchEntry.seat(r.key, _seat(r.key.startsWith('0') ? 30 : 20, 100)));
-    final container = _container(reader);
-    addTearDown(container.dispose);
-    final result = await container.read(
-      biModuleResultProvider(
-        'ws',
-        'capacity.seat_utilisation',
-        const BiQueryContext(comparison: BiComparison.previousPeriod),
-      ).future,
-    );
-    expect(reader.calls, hasLength(1));
-    expect(reader.calls.single.map((r) => r.key), ['0:0', '1:0']);
-    expect(result.total.current.numerator, 30);
-    expect(result.total.compared!.numerator, 20);
-  });
-
-  test('a failed request fails the module result with its reason, never a zero', () async {
-    final reader = _Reader((r) => BiBatchEntry.failed(r.key, code: '22023', message: 'too long'));
-    final container = _container(reader);
-    addTearDown(container.dispose);
-    await expectLater(
-      container.read(
+  test(
+    'the module result asks once for the period and the compared period',
+    () async {
+      final reader = _Reader(
+        (r) => BiBatchEntry.seat(
+          r.key,
+          _seat(r.key.startsWith('0') ? 30 : 20, 100),
+        ),
+      );
+      final container = _container(reader);
+      addTearDown(container.dispose);
+      final result = await container.read(
         biModuleResultProvider(
           'ws',
           'capacity.seat_utilisation',
-          const BiQueryContext(),
+          const BiQueryContext(comparison: BiComparison.previousPeriod),
         ).future,
-      ),
-      throwsA(isA<KpiUnavailable>()),
+      );
+      expect(reader.calls, hasLength(1));
+      expect(reader.calls.single.map((r) => r.key), ['0:0', '1:0']);
+      expect(result.total.current.numerator, 30);
+      expect(result.total.compared!.numerator, 20);
+    },
+  );
+
+  test(
+    'a failed request fails the module result with its reason, never a zero',
+    () async {
+      final reader = _Reader(
+        (r) => BiBatchEntry.failed(r.key, code: '22023', message: 'too long'),
+      );
+      final container = _container(reader);
+      addTearDown(container.dispose);
+      await expectLater(
+        container.read(
+          biModuleResultProvider(
+            'ws',
+            'capacity.seat_utilisation',
+            const BiQueryContext(),
+          ).future,
+        ),
+        throwsA(isA<KpiUnavailable>()),
+      );
+    },
+  );
+
+  test('the finance evolution is one read of whole months; another currency leaves a gap, never a converted amount', () async {
+    final reader = _Reader((r) {
+      if (r.key == '3') {
+        return BiBatchEntry.finance(
+          r.key,
+          _fin(r.fromMonth!, r.toMonth!, currency: 'USD'),
+        );
+      }
+      if (r.key == '4') return BiBatchEntry.failed(r.key, code: '22023');
+      return BiBatchEntry.finance(r.key, _fin(r.fromMonth!, r.toMonth!));
+    });
+    final container = _container(reader);
+    addTearDown(container.dispose);
+    final series = await container.read(
+      biModuleSeriesProvider(
+        'ws',
+        'finance.invoiced',
+        BiGrain.month,
+        const BiPeriod(BiGrain.month, 2026, 3),
+        13,
+      ).future,
     );
+    expect(reader.calls, hasLength(1));
+    expect(reader.calls.single.first.fromMonth, '2025-03');
+    expect(reader.calls.single.last.toMonth, '2026-03');
+    expect(series.points[2].value, isNotNull);
+    expect(
+      series.points[3].value,
+      isNull,
+      reason: 'USD beside EUR has no amount',
+    );
+    expect(series.points[4].value, isNull, reason: 'a failed period is a gap');
+    expect(series.points.last.partial, isTrue);
   });
 
-  test('the fan-out answers each request on its own and keeps the order', () async {
-    final reader = FanOutBatchReader(_Seats());
-    BiBatchRequest at(int month) => BiBatchRequest.capacity(
-      key: 'm$month',
-      from: DateTime.utc(2026, month),
-      to: DateTime.utc(2026, month + 1),
-    );
-    await expectLater(
-      reader.read('ws', [at(1), at(2)]).then(
-        (e) => [for (final x in e) '${x.key}:${x.ok}'],
-      ),
-      completion(['m1:true', 'm2:false']),
-    );
-  });
+  test(
+    'the fan-out answers each request on its own and keeps the order',
+    () async {
+      final reader = FanOutBatchReader(_Seats());
+      BiBatchRequest at(int month) => BiBatchRequest.capacity(
+        key: 'm$month',
+        from: DateTime.utc(2026, month),
+        to: DateTime.utc(2026, month + 1),
+      );
+      await expectLater(
+        reader
+            .read('ws', [at(1), at(2)])
+            .then((e) => [for (final x in e) '${x.key}:${x.ok}']),
+        completion(['m1:true', 'm2:false']),
+      );
+    },
+  );
 
-  test('a refusal of the reader refuses the whole fan-out, not one gap', () async {
-    final reader = FanOutBatchReader(_Seats());
-    await expectLater(
-      reader.read('ws', [
-        BiBatchRequest.capacity(key: 'a', from: DateTime.utc(2026), to: DateTime.utc(2026, 2)),
-        BiBatchRequest.capacity(key: 'm3', from: DateTime.utc(2026, 3), to: DateTime.utc(2026, 4)),
-      ]),
-      throwsA(isA<KpiForbidden>()),
-    );
-  });
+  test(
+    'a refusal of the reader refuses the whole fan-out, not one gap',
+    () async {
+      final reader = FanOutBatchReader(_Seats());
+      await expectLater(
+        reader.read('ws', [
+          BiBatchRequest.capacity(
+            key: 'a',
+            from: DateTime.utc(2026),
+            to: DateTime.utc(2026, 2),
+          ),
+          BiBatchRequest.capacity(
+            key: 'm3',
+            from: DateTime.utc(2026, 3),
+            to: DateTime.utc(2026, 4),
+          ),
+        ]),
+        throwsA(isA<KpiForbidden>()),
+      );
+    },
+  );
 
   test('a request names only what the server accepts', () {
     final capacity = BiBatchRequest.capacity(
@@ -178,7 +266,10 @@ void main() {
       to: DateTime.utc(2026, 10),
       levelId: 'l1',
     ).toJson();
-    expect(capacity.keys, containsAll(['request_key', 'metric_id', 'from', 'to', 'level_id']));
+    expect(
+      capacity.keys,
+      containsAll(['request_key', 'metric_id', 'from', 'to', 'level_id']),
+    );
     expect(capacity.containsKey('from_month'), isFalse);
     final finance = const BiBatchRequest.finance(
       key: 'f',

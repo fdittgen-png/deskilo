@@ -45,14 +45,14 @@ class FanOutBatchReader implements KpiBatchReader {
       return BiBatchEntry.finance(r.key, k);
     } on KpiForbidden {
       rethrow;
-    } on KpiUnavailable catch (e, st) {
+    } on Exception catch (e, st) {
       TraceLogger.instance.error(
         'workspace',
         'a KPI request of a batch failed',
         error: e,
         stackTrace: st,
       );
-      return BiBatchEntry.failed(r.key, message: e.reason);
+      return BiBatchEntry.failed(r.key, message: e is KpiUnavailable ? e.reason : '$e');
     }
   }
 }
