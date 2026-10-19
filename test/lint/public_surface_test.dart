@@ -17,6 +17,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/reservations/domain/room_rental.dart::RoomFeeUnit':
+      '#2575 — the rented-room screens read the fee unit',
+  'lib/features/reservations/domain/room_rental.dart::RoomWindowRefusal':
+      '#2575 — the booking sheet words the refusal from it',
   'lib/core/webmcp/webmcp_registry.dart::WebMcpConditions':
       '#2504 — the WorkspaceFeature.webMcp provider builds it',
   'lib/core/webmcp/webmcp_registry.dart::WebMcpToolRunner':

@@ -18,6 +18,16 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The rented-room wire models and the level kind: the owner and member
+  // screens that read them are #2575's C2.
+  'lib/features/plan/domain/level_kind.dart::LevelKind':
+      '#2575 — the rented-room screens read the level kind',
+  'lib/features/reservations/domain/room_rental.dart::roomRentalManagePermission':
+      '#2575 — the rented-room owner screen checks it',
+  'lib/features/reservations/domain/room_rental.dart::RoomRental':
+      '#2575 — the rented-room owner screen reads it',
+  'lib/features/reservations/domain/room_rental.dart::RoomOffer':
+      '#2575 — the booking sheet shows the fee from it',
   // WebMCP: the registry exists before the flag and the app wiring that
   // feed it conditions (the flag is a registry-lane change).
   'lib/core/webmcp/webmcp_registry.dart::WebMcpRegistry':

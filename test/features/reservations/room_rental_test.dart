@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2568 -- the rented-room wire models: a rental reads as the server writes
+// it, the window includes both of its days and names the cause of a refusal,
+// and the offer a member is shown carries the fee for them and nothing else.
 import 'package:deskilo/features/plan/domain/level_kind.dart';
 import 'package:deskilo/features/reservations/domain/room_rental.dart';
 import 'package:flutter_test/flutter_test.dart';
