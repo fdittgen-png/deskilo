@@ -22,3 +22,23 @@ Future<void> openWorkspaceSettingsGroups(WidgetTester tester, {List<String> ids 
   await tester.ensureVisible(find.byKey(const Key('workspaceSettingsCountry')));
   await tester.pump(kThemeAnimationDuration);
 }
+
+/// Picks [country] in the settings form. A country that does not offer a
+/// feature that is on asks first (#2454); [confirm] answers it.
+Future<void> pickWorkspaceCountry(
+  WidgetTester tester,
+  String country, {
+  bool confirm = true,
+}) async {
+  await tester.tap(find.byKey(const Key('workspaceSettingsCountry')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(country).last);
+  await tester.pumpAndSettle();
+  final dialog = find.byKey(
+    Key(confirm ? 'country-change-confirm' : 'country-change-cancel'),
+  );
+  if (dialog.evaluate().isNotEmpty) {
+    await tester.tap(dialog);
+    await tester.pumpAndSettle();
+  }
+}

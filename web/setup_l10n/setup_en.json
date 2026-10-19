@@ -666,5 +666,7 @@
  "webmcpArgValue": "The answer: a boolean, a string, a number or a list, as the parameter type says.",
  "webmcpArgAnswers": "An object mapping parameter keys to answers.",
  "webmcpArgFormat": "The export format; only xml exists.",
- "webmcpArgKeys": "Parameter keys to reset; omit to reset everything."
+ "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
+ "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
+ "featuresAvailabilityEu": "the EU member states"
 }

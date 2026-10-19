@@ -3378,6 +3378,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get conversationYou => 'Sie';
 
   @override
+  String countryChangeBody(String country, String features) {
+    return 'In $country sind diese Funktionen nicht verfügbar und funktionieren nicht mehr: $features. Ihre Schalter bleiben erhalten: Sie kehren zurück, wenn Sie das Land zurückändern.';
+  }
+
+  @override
+  String get countryChangeConfirm => 'Land ändern';
+
+  @override
+  String get countryChangeTitle => 'Land ändern?';
+
+  @override
   String get countryNameAT => 'Österreich';
 
   @override

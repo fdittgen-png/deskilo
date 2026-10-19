@@ -5791,6 +5791,24 @@ abstract class AppLocalizations {
   /// **'You'**
   String get conversationYou;
 
+  /// #2454 country change
+  ///
+  /// In en, this message translates to:
+  /// **'In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.'**
+  String countryChangeBody(String country, String features);
+
+  /// #2454 country change
+  ///
+  /// In en, this message translates to:
+  /// **'Change the country'**
+  String get countryChangeConfirm;
+
+  /// #2454 country change
+  ///
+  /// In en, this message translates to:
+  /// **'Change the country?'**
+  String get countryChangeTitle;
+
   /// No description provided for @countryNameAT.
   ///
   /// In en, this message translates to:

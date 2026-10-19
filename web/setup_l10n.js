@@ -671,7 +671,9 @@ window.SETUP_L10N={
    "webmcpArgValue": "The answer: a boolean, a string, a number or a list, as the parameter type says.",
    "webmcpArgAnswers": "An object mapping parameter keys to answers.",
    "webmcpArgFormat": "The export format; only xml exists.",
-   "webmcpArgKeys": "Parameter keys to reset; omit to reset everything."
+   "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
+   "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
+   "featuresAvailabilityEu": "the EU member states"
   },
   "feature": {
    "calendarTab": [
@@ -2122,7 +2124,9 @@ window.SETUP_L10N={
    "webmcpArgValue": "La réponse : booléen, texte, nombre ou liste, selon le type du paramètre.",
    "webmcpArgAnswers": "Un objet associant des clés de paramètres à des réponses.",
    "webmcpArgFormat": "Le format d’export ; seul xml existe.",
-   "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser."
+   "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser.",
+   "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
+   "featuresAvailabilityEu": "les États membres de l'UE"
   },
   "feature": {
    "calendarTab": [
@@ -3573,7 +3577,9 @@ window.SETUP_L10N={
    "webmcpArgValue": "Die Antwort: Boolean, Text, Zahl oder Liste, je nach Parametertyp.",
    "webmcpArgAnswers": "Ein Objekt, das Parameterschlüssel auf Antworten abbildet.",
    "webmcpArgFormat": "Das Exportformat; es gibt nur xml.",
-   "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen."
+   "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
+   "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
+   "featuresAvailabilityEu": "den EU-Mitgliedstaaten"
   },
   "feature": {
    "calendarTab": [
@@ -5024,7 +5030,9 @@ window.SETUP_L10N={
    "webmcpArgValue": "La respuesta: booleano, texto, número o lista, según el tipo del parámetro.",
    "webmcpArgAnswers": "Un objeto que asocia claves de parámetros con respuestas.",
    "webmcpArgFormat": "El formato de exportación; solo existe xml.",
-   "webmcpArgKeys": "Claves de parámetros a restablecer; omitir para restablecer todo."
+   "webmcpArgKeys": "Claves de parámetros a restablecer; omitir para restablecer todo.",
+   "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
+   "featuresAvailabilityEu": "los Estados miembros de la UE"
   },
   "feature": {
    "calendarTab": [
@@ -6475,7 +6483,9 @@ window.SETUP_L10N={
    "webmcpArgValue": "La risposta: booleano, testo, numero o elenco, secondo il tipo del parametro.",
    "webmcpArgAnswers": "Un oggetto che associa chiavi di parametri a risposte.",
    "webmcpArgFormat": "Il formato di esportazione; esiste solo xml.",
-   "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto."
+   "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
+   "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
+   "featuresAvailabilityEu": "gli Stati membri dell'UE"
   },
   "feature": {
    "calendarTab": [

@@ -7,6 +7,9 @@
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/workspace/domain/feature_registry_sql.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/presentation/country_change_confirm.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Set<WorkspaceFeature> _allOn() => resolveEnabledFeatures({
@@ -59,5 +62,44 @@ void main() {
         expect(c == featureCountriesEu || RegExp(r'^[A-Z]{2}$').hasMatch(c), isTrue, reason: '${e.feature.name}: $c');
       }
     }
+  });
+
+  test('moving to GB turns the EC Sales List off; moving within the Union does not', () {
+    final on = effectiveFeatures(_allOn(), country: 'FR');
+    expect(featuresLostInCountry(on, 'GB'), [WorkspaceFeature.recapitulativeStatement]);
+    expect(featuresLostInCountry(on, 'DE'), isEmpty);
+    expect(featuresLostInCountry(const [], 'GB'), isEmpty);
+  });
+
+  testWidgets('the owner is asked first, with the features named; cancel changes nothing', (tester) async {
+    bool? answer;
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(
+        builder: (context) => TextButton(
+          key: const ValueKey('go'),
+          onPressed: () async => answer = await confirmCountryChange(
+            context,
+            'GB',
+            [WorkspaceFeature.recapitulativeStatement],
+          ),
+          child: const Text('go'),
+        ),
+      ),
+    ));
+    await tester.tap(find.byKey(const ValueKey('go')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('country-change-body')), findsOneWidget);
+    expect(find.textContaining('United Kingdom'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('country-change-cancel')));
+    await tester.pumpAndSettle();
+    expect(answer, isFalse);
+
+    await tester.tap(find.byKey(const ValueKey('go')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('country-change-confirm')));
+    await tester.pumpAndSettle();
+    expect(answer, isTrue);
   });
 }

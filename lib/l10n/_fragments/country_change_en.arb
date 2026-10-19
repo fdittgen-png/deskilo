@@ -1,0 +1,22 @@
+{
+  "countryChangeTitle": "Change the country?",
+  "@countryChangeTitle": {
+    "description": "#2454 country change"
+  },
+  "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
+  "@countryChangeBody": {
+    "description": "#2454 country change",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "countryChangeConfirm": "Change the country",
+  "@countryChangeConfirm": {
+    "description": "#2454 country change"
+  }
+}

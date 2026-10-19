@@ -36,7 +36,7 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                                 localizedCountryName(l10n, country.code)),
                           ),
                       ],
-                      onChanged: _busy ? null : _onCountryPicked,
+                      onChanged: _busy ? null : _confirmCountryPick,
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspaceCountry,

@@ -666,5 +666,7 @@
  "webmcpArgValue": "La risposta: booleano, testo, numero o elenco, secondo il tipo del parametro.",
  "webmcpArgAnswers": "Un oggetto che associa chiavi di parametri a risposte.",
  "webmcpArgFormat": "Il formato di esportazione; esiste solo xml.",
- "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto."
+ "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
+ "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
+ "featuresAvailabilityEu": "gli Stati membri dell'UE"
 }

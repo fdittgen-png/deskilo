@@ -3890,6 +3890,26 @@
   "@conversationYou": {
     "description": "#687 - messaging centre"
   },
+  "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
+  "@countryChangeBody": {
+    "description": "#2454 country change",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "countryChangeConfirm": "Change the country",
+  "@countryChangeConfirm": {
+    "description": "#2454 country change"
+  },
+  "countryChangeTitle": "Change the country?",
+  "@countryChangeTitle": {
+    "description": "#2454 country change"
+  },
   "countryNameAT": "Austria",
   "countryNameAU": "Australia",
   "@countryNameAU": {

@@ -15,6 +15,20 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
     });
   }
 
+  /// #2454 — a country that does not offer a feature that is on names what
+  /// would switch off, and asks first (the stored switches are kept).
+  Future<void> _confirmCountryPick(String? code) async {
+    if (code == null) return;
+    final lost = featuresLostInCountry(
+      ref.read(enabledFeaturesSyncProvider),
+      code,
+    );
+    if (lost.isNotEmpty && !await confirmCountryChange(context, code, lost)) {
+      return;
+    }
+    _onCountryPicked(code);
+  }
+
   void _onCountryPicked(String? code) {
     if (code == null) return;
     final country = CountryCatalog.byCode(code);
