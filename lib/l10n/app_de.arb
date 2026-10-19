@@ -12877,6 +12877,10 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingHintBiBatchMaxRequests": "Die höchste Zahl von Kennzahlen, die eine Berichtsseite in einem Abruf anfordern darf. Braucht eine Seite mehr, wird sie auf mehrere Abrufe verteilt; ein größerer Stapel wird ganz abgelehnt.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13008,6 +13012,10 @@
   "settingLabelAssetsValuationMaxRows": "Bewertungszeilen je Stapel",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Kennzahlen je Berichtsabruf",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Vorlauf der Abo-Rechnung",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13251,6 +13259,10 @@
   "settingUnitPerHour": "pro Stunde",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRequests": "Anfragen",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   },
   "settingUnitRows": "Zeilen",
   "@settingUnitRows": {

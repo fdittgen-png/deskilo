@@ -115,5 +115,17 @@
   "settingUnitRows": "rows",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Figures per report read",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingHintBiBatchMaxRequests": "The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingUnitRequests": "requests",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   }
 }

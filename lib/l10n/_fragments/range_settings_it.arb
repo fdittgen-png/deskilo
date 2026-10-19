@@ -115,5 +115,17 @@
   "settingUnitRows": "righe",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Cifre per lettura di report",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingHintBiBatchMaxRequests": "Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingUnitRequests": "richieste",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   }
 }

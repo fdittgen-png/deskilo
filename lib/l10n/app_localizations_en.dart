@@ -17688,6 +17688,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.';
 
   @override
+  String get settingHintBiBatchMaxRequests =>
+      'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixed: the longest lead, in days, of a subscription invoice before the month starts.';
 
@@ -17815,6 +17819,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelAssetsValuationMaxRows => 'Valuation rows per batch';
+
+  @override
+  String get settingLabelBiBatchMaxRequests => 'Figures per report read';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Subscription invoice lead';
@@ -17997,6 +18004,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'per hour';
+
+  @override
+  String get settingUnitRequests => 'requests';
 
   @override
   String get settingUnitRows => 'rows';

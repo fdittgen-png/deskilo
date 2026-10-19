@@ -17828,6 +17828,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.';
 
   @override
+  String get settingHintBiBatchMaxRequests =>
+      'El mayor número de cifras que una página de informe puede pedir en una sola lectura. Una página que necesita más se divide en varias lecturas; un lote mayor se rechaza entero.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.';
 
@@ -17957,6 +17961,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelAssetsValuationMaxRows =>
       'Filas de valoración por lote';
+
+  @override
+  String get settingLabelBiBatchMaxRequests => 'Cifras por lectura de informe';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18151,6 +18158,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'por hora';
+
+  @override
+  String get settingUnitRequests => 'consultas';
 
   @override
   String get settingUnitRows => 'filas';

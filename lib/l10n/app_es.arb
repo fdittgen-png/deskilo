@@ -12877,6 +12877,10 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingHintBiBatchMaxRequests": "El mayor número de cifras que una página de informe puede pedir en una sola lectura. Una página que necesita más se divide en varias lecturas; un lote mayor se rechaza entero.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13008,6 +13012,10 @@
   "settingLabelAssetsValuationMaxRows": "Filas de valoración por lote",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Cifras por lectura de informe",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Antelación de la factura de suscripción",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13251,6 +13259,10 @@
   "settingUnitPerHour": "por hora",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRequests": "consultas",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   },
   "settingUnitRows": "filas",
   "@settingUnitRows": {

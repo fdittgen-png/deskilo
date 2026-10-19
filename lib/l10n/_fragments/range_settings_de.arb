@@ -115,5 +115,17 @@
   "settingUnitRows": "Zeilen",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Kennzahlen je Berichtsabruf",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingHintBiBatchMaxRequests": "Die höchste Zahl von Kennzahlen, die eine Berichtsseite in einem Abruf anfordern darf. Braucht eine Seite mehr, wird sie auf mehrere Abrufe verteilt; ein größerer Stapel wird ganz abgelehnt.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingUnitRequests": "Anfragen",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   }
 }

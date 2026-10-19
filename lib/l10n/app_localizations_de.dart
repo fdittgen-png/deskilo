@@ -17864,6 +17864,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die höchste Zeilenzahl eines Stapels der Bewertungen Ihres Steuerberaters, eine je Anlage. Eine größere Datei wird ganz abgelehnt; teilen Sie sie vor dem Import.';
 
   @override
+  String get settingHintBiBatchMaxRequests =>
+      'Die höchste Zahl von Kennzahlen, die eine Berichtsseite in einem Abruf anfordern darf. Braucht eine Seite mehr, wird sie auf mehrere Abrufe verteilt; ein größerer Stapel wird ganz abgelehnt.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.';
 
@@ -17992,6 +17996,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelAssetsValuationMaxRows => 'Bewertungszeilen je Stapel';
+
+  @override
+  String get settingLabelBiBatchMaxRequests => 'Kennzahlen je Berichtsabruf';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Vorlauf der Abo-Rechnung';
@@ -18181,6 +18188,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'pro Stunde';
+
+  @override
+  String get settingUnitRequests => 'Anfragen';
 
   @override
   String get settingUnitRows => 'Zeilen';

@@ -30546,6 +30546,12 @@ abstract class AppLocalizations {
   /// **'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.'**
   String get settingHintAssetsValuationMaxRows;
 
+  /// #2578 BI settings
+  ///
+  /// In en, this message translates to:
+  /// **'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.'**
+  String get settingHintBiBatchMaxRequests;
+
   /// #2486 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -30743,6 +30749,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Valuation rows per batch'**
   String get settingLabelAssetsValuationMaxRows;
+
+  /// #2578 BI settings
+  ///
+  /// In en, this message translates to:
+  /// **'Figures per report read'**
+  String get settingLabelBiBatchMaxRequests;
 
   /// #2486 settings: Setting label.
   ///
@@ -31067,6 +31079,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'per hour'**
   String get settingUnitPerHour;
+
+  /// #2578 BI settings
+  ///
+  /// In en, this message translates to:
+  /// **'requests'**
+  String get settingUnitRequests;
 
   /// #2576 valuation settings
   ///
