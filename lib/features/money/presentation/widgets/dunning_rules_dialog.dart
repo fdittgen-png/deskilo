@@ -107,7 +107,10 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
     const dayOptions = [3, 5, 7, 10, 14, 21, 30, 45, 60];
     return AlertDialog(
       title: Text(l10n.dunningSettingsTitle),
-      content: Column(
+      // The long automatic-reminder text must scroll, not spill over the
+      // buttons on a phone.
+      content: SingleChildScrollView(
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _countRow(
@@ -153,6 +156,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
                 setState(() => _rules = _rules.copyWith(automatic: v)),
           ),
         ],
+      ),
       ),
       actions: [
         TextButton(
