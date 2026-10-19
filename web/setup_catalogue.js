@@ -199,6 +199,7 @@ window.SETUP_PROCESSES=[
     "key": "tax",
     "features": [
      "accountingBook",
+     "accountingPeriods",
      "vatManagement",
      "vatDeclarations",
      "vatGroups",

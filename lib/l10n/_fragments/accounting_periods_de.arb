@@ -1,0 +1,110 @@
+{
+  "featureAccountingPeriodsTitle": "Buchungsperioden",
+  "@featureAccountingPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "featureAccountingPeriodsDesc": "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert.",
+  "@featureAccountingPeriodsDesc": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTitle": "Buchungsperioden",
+  "@bookPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsIntro": "Eine abgeschlossene Periode ist endgültig: Keine darin ausgestellte Rechnung kann storniert und keine darin datierte Zahlung zugeordnet werden. Korrekturen gehören in die offene Periode, zum Beispiel eine Gutschrift. Jeder Buchhaltungsexport wird unten protokolliert.",
+  "@bookPeriodsIntro": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClose": "Periode abschließen",
+  "@bookPeriodsClose": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsCloseBody": "Wählen Sie den ersten und den letzten Tag. Eine Periode, die noch nicht zu Ende ist, kann nicht abgeschlossen werden.",
+  "@bookPeriodsCloseBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsFrom": "Erster Tag",
+  "@bookPeriodsFrom": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTo": "Letzter Tag",
+  "@bookPeriodsTo": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsInvalid": "Wählen Sie beide Tage und nennen Sie einen Grund, wo einer verlangt wird.",
+  "@bookPeriodsInvalid": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsRefused": "Die Periode wurde nicht geändert.",
+  "@bookPeriodsRefused": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsSaved": "Gespeichert",
+  "@bookPeriodsSaved": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsLoadFailed": "Die Perioden konnten nicht geladen werden.",
+  "@bookPeriodsLoadFailed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsEmpty": "Keine Periode ist abgeschlossen.",
+  "@bookPeriodsEmpty": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedOwner": "Von einem Eigentümer abgeschlossen",
+  "@bookPeriodsClosedOwner": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedVat": "Mit Abgabe der Umsatzsteuererklärung abgeschlossen",
+  "@bookPeriodsClosedVat": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopened": "Wieder geöffnet: {reason}",
+  "@bookPeriodsReopened": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsReopen": "Wieder öffnen",
+  "@bookPeriodsReopen": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopenBody": "Das Wiederöffnen erlaubt wieder, Rechnungen dieser Periode zu stornieren und Zahlungen zuzuordnen. Der Grund bleibt bei der Periode.",
+  "@bookPeriodsReopenBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReason": "Warum sie wieder geöffnet wird",
+  "@bookPeriodsReason": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExports": "An den Steuerberater übergebene Exporte",
+  "@bookPeriodsExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsNoExports": "Noch kein Export.",
+  "@bookPeriodsNoExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportLine": "{format}, {from} – {to}",
+  "@bookPeriodsExportLine": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsExportClosed": "abgeschlossene Periode: immer dieselbe Datei",
+  "@bookPeriodsExportClosed": {
+    "description": "#2365 accounting periods"
+  }
+}

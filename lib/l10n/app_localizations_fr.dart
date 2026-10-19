@@ -2086,6 +2086,80 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookMappingsTitle => 'Le compte de chaque écriture';
 
   @override
+  String get bookPeriodsClose => 'Clôturer une période';
+
+  @override
+  String get bookPeriodsCloseBody =>
+      'Choisissez le premier et le dernier jour. Une période qui n\'est pas terminée ne peut pas être clôturée.';
+
+  @override
+  String get bookPeriodsClosedOwner => 'Clôturée par un propriétaire';
+
+  @override
+  String get bookPeriodsClosedVat =>
+      'Clôturée au dépôt de sa déclaration de TVA';
+
+  @override
+  String get bookPeriodsEmpty => 'Aucune période n\'est clôturée.';
+
+  @override
+  String get bookPeriodsExportClosed =>
+      'période clôturée : toujours le même fichier';
+
+  @override
+  String bookPeriodsExportLine(String format, String from, String to) {
+    return '$format, $from – $to';
+  }
+
+  @override
+  String get bookPeriodsExports => 'Exports remis à l\'expert-comptable';
+
+  @override
+  String get bookPeriodsFrom => 'Premier jour';
+
+  @override
+  String get bookPeriodsIntro =>
+      'Une période clôturée est définitive : aucune facture émise dans cette période ne peut être annulée et aucun règlement daté dans cette période ne peut être rapproché. Les corrections vont dans la période ouverte, par exemple un avoir. Chaque export comptable est consigné ci-dessous.';
+
+  @override
+  String get bookPeriodsInvalid =>
+      'Choisissez les deux jours et donnez une raison là où elle est demandée.';
+
+  @override
+  String get bookPeriodsLoadFailed =>
+      'Les périodes n\'ont pas pu être chargées.';
+
+  @override
+  String get bookPeriodsNoExports => 'Aucun export pour l\'instant.';
+
+  @override
+  String get bookPeriodsReason => 'Pourquoi elle est rouverte';
+
+  @override
+  String get bookPeriodsRefused => 'La période n\'a pas été modifiée.';
+
+  @override
+  String get bookPeriodsReopen => 'Rouvrir';
+
+  @override
+  String get bookPeriodsReopenBody =>
+      'La réouverture permet à nouveau d\'annuler les factures de cette période et de rapprocher des règlements. La raison reste attachée à la période.';
+
+  @override
+  String bookPeriodsReopened(String reason) {
+    return 'Rouverte : $reason';
+  }
+
+  @override
+  String get bookPeriodsSaved => 'Enregistré';
+
+  @override
+  String get bookPeriodsTitle => 'Périodes comptables';
+
+  @override
+  String get bookPeriodsTo => 'Dernier jour';
+
+  @override
   String get bookProblemCurrency =>
       'Cette devise n’a pas de nombre de décimales vérifié.';
 
@@ -5355,6 +5429,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Livre comptable';
+
+  @override
+  String get featureAccountingPeriodsDesc =>
+      'Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n\'est verrouillé et les exports ne sont pas consignés.';
+
+  @override
+  String get featureAccountingPeriodsTitle => 'Périodes comptables';
 
   @override
   String get featureAdminInvoicing => 'Les admins émettent des factures';

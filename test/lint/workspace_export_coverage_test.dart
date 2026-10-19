@@ -328,6 +328,12 @@ const Map<String, String> _notExported = {
   'asset_valuation_rows':
       '#2576 — the figures of one asset in one batch; they name assets of '
           'this server',
+  'book_periods':
+      '#2365 — the periods of this server\'s books that were closed, and by '
+          'whom; a fresh space starts with every period open',
+  'book_exports':
+      '#2365 — the log of the files this server handed out, with their '
+          'sha256; it describes exports of this server only',
   'workspace_assets':
       '#2576 — the equipment register: candidates that point at purchase lines '
           'of this server with a reviewer\'s decision; a fresh space imports '

@@ -411,7 +411,11 @@ enum WorkspaceFeature {
   assetRegister,
 
   /// #2568 rooms the space rents (under levelBooking). Platform, OFF.
-  externalRooms;
+  externalRooms,
+
+  /// #2365 closing a book period and the log of accounting exports (under
+  /// accountingBook). Platform, OFF.
+  accountingPeriods;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

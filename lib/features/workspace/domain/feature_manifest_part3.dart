@@ -304,4 +304,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.levelBooking,
     defaultOn: false,
   ),
+  // #2365 — a closed book period refuses voids and matches dated inside it,
+  // and every accounting export is logged.
+  WorkspaceFeature.accountingPeriods: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingPeriods,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.accountingBook,
+    defaultOn: false,
+  ),
 };

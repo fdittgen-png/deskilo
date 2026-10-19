@@ -2419,6 +2419,106 @@
   "@bookMappingsTitle": {
     "description": "#1869 B chart of accounts"
   },
+  "bookPeriodsClose": "Close a period",
+  "@bookPeriodsClose": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsCloseBody": "Choose the first and the last day. A period that has not ended cannot be closed.",
+  "@bookPeriodsCloseBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedOwner": "Closed by an owner",
+  "@bookPeriodsClosedOwner": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedVat": "Closed when its VAT return was filed",
+  "@bookPeriodsClosedVat": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsEmpty": "No period is closed.",
+  "@bookPeriodsEmpty": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportClosed": "closed period: the same file every time",
+  "@bookPeriodsExportClosed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportLine": "{format}, {from} – {to}",
+  "@bookPeriodsExportLine": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsExports": "Exports handed to the accountant",
+  "@bookPeriodsExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsFrom": "First day",
+  "@bookPeriodsFrom": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsIntro": "A closed period is final: no invoice issued inside it can be voided and no payment dated inside it can be matched. Corrections go to the open period, for example a credit note. Every accounting export is logged below.",
+  "@bookPeriodsIntro": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsInvalid": "Choose both days, and give a reason where one is asked.",
+  "@bookPeriodsInvalid": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsLoadFailed": "The periods could not be loaded.",
+  "@bookPeriodsLoadFailed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsNoExports": "No export yet.",
+  "@bookPeriodsNoExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReason": "Why it is reopened",
+  "@bookPeriodsReason": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsRefused": "The period was not changed.",
+  "@bookPeriodsRefused": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopen": "Reopen",
+  "@bookPeriodsReopen": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopenBody": "Reopening lets invoices of this period be voided and payments matched again. The reason stays with the period.",
+  "@bookPeriodsReopenBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopened": "Reopened: {reason}",
+  "@bookPeriodsReopened": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsSaved": "Saved",
+  "@bookPeriodsSaved": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTitle": "Accounting periods",
+  "@bookPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTo": "Last day",
+  "@bookPeriodsTo": {
+    "description": "#2365 accounting periods"
+  },
   "bookProblemCurrency": "This currency has no reviewed number of decimals.",
   "@bookProblemCurrency": {
     "description": "#1869 accounting book sheet"
@@ -6406,6 +6506,14 @@
   "featureAccountingBookTitle": "Accounting book",
   "@featureAccountingBookTitle": {
     "description": "#1869 feature name"
+  },
+  "featureAccountingPeriodsDesc": "Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged.",
+  "@featureAccountingPeriodsDesc": {
+    "description": "#2365 accounting periods"
+  },
+  "featureAccountingPeriodsTitle": "Accounting periods",
+  "@featureAccountingPeriodsTitle": {
+    "description": "#2365 accounting periods"
   },
   "featureAdminInvoicing": "Admins issue invoices",
   "@featureAdminInvoicing": {

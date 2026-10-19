@@ -3625,6 +3625,132 @@ abstract class AppLocalizations {
   /// **'Which account each entry books to'**
   String get bookMappingsTitle;
 
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Close a period'**
+  String get bookPeriodsClose;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the first and the last day. A period that has not ended cannot be closed.'**
+  String get bookPeriodsCloseBody;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Closed by an owner'**
+  String get bookPeriodsClosedOwner;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Closed when its VAT return was filed'**
+  String get bookPeriodsClosedVat;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'No period is closed.'**
+  String get bookPeriodsEmpty;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'closed period: the same file every time'**
+  String get bookPeriodsExportClosed;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'{format}, {from} – {to}'**
+  String bookPeriodsExportLine(String format, String from, String to);
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Exports handed to the accountant'**
+  String get bookPeriodsExports;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'First day'**
+  String get bookPeriodsFrom;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'A closed period is final: no invoice issued inside it can be voided and no payment dated inside it can be matched. Corrections go to the open period, for example a credit note. Every accounting export is logged below.'**
+  String get bookPeriodsIntro;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Choose both days, and give a reason where one is asked.'**
+  String get bookPeriodsInvalid;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'The periods could not be loaded.'**
+  String get bookPeriodsLoadFailed;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'No export yet.'**
+  String get bookPeriodsNoExports;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Why it is reopened'**
+  String get bookPeriodsReason;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'The period was not changed.'**
+  String get bookPeriodsRefused;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get bookPeriodsReopen;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Reopening lets invoices of this period be voided and payments matched again. The reason stays with the period.'**
+  String get bookPeriodsReopenBody;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Reopened: {reason}'**
+  String bookPeriodsReopened(String reason);
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get bookPeriodsSaved;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting periods'**
+  String get bookPeriodsTitle;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Last day'**
+  String get bookPeriodsTo;
+
   /// #1869 accounting book sheet
   ///
   /// In en, this message translates to:
@@ -9239,6 +9365,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounting book'**
   String get featureAccountingBookTitle;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged.'**
+  String get featureAccountingPeriodsDesc;
+
+  /// #2365 accounting periods
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting periods'**
+  String get featureAccountingPeriodsTitle;
 
   /// Delegation toggle: admins may issue invoices
   ///
