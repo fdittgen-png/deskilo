@@ -298,7 +298,7 @@ constraint events.events_reservation_id_fkey FOREIGN KEY (reservation_id) REFERE
 constraint events.events_status_check CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))
 constraint events.events_subject_member_id_fkey FOREIGN KEY (subject_member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint events.events_subject_member_id_same_workspace FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
-constraint events.events_type_check CHECK ((type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text])))
+constraint events.events_type_check CHECK ((type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text])))
 constraint events.events_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint events.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint events.system_company_present CHECK ((company_id IS NOT NULL))
@@ -1360,7 +1360,7 @@ constraint usage_records.usage_records_reservation_id_key UNIQUE (reservation_id
 constraint usage_records.usage_records_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint validation_policies.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint validation_policies.system_company_present CHECK ((company_id IS NOT NULL))
-constraint validation_policies.validation_policies_event_type_check CHECK (((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text]))))
+constraint validation_policies.validation_policies_event_type_check CHECK (((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text]))))
 constraint validation_policies.validation_policies_min_amount_check CHECK ((min_amount_cents >= 0))
 constraint validation_policies.validation_policies_pkey PRIMARY KEY (id)
 constraint validation_policies.validation_policies_required_count_check CHECK (((required_count >= 1) AND (required_count <= 10)))
@@ -1627,7 +1627,7 @@ routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text)
 routine public.activate_co_owner(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d5034f3958e
 routine public.add_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:510cf920691c
 routine public.add_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3d7e8f0c883d
-routine public.add_lease_term_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_kind text, p_label text, p_amount_cents integer, p_every_months integer, p_effective_from date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:76f6766cd813
+routine public.add_lease_term_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_kind text, p_label text, p_amount_cents integer, p_every_months integer, p_effective_from date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:84b7781a957e
 routine public.admin_create_reservation_for(p_workspace_id uuid, p_subject_member_id uuid, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1247ac71ec45
 routine public.administrator_role_names() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:56a5f2d35990
 routine public.analytics_hours_of(p_rules jsonb) -> TABLE(open_weekdays integer[], work_start_minutes integer, work_end_minutes integer) | function | invoker | immutable | exec:service_role | body:ea757b899ebc
@@ -1776,7 +1776,7 @@ routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integ
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
 routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:fdaaf680cd2d
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
-routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:014f4fa2fca2
+routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:a068ef024b67
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:6149227a9717
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:52cecf24fb2a
@@ -1807,7 +1807,7 @@ routine public.floor_plan_rows(p_tree jsonb) -> TABLE(key text, data jsonb) | fu
 routine public.forward_message(p_kind text, p_message_id uuid, p_target_kind text, p_target_id uuid, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c8d07684e4eb
 routine public.gen_invite_code() -> text | function | invoker | volatile | exec:service_role | body:250cc8705573
 routine public.generate_closure_days(p_workspace_id uuid, p_country text, p_year integer, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:880a7391ee48
-routine public.give_lease_notice_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_notice_given_on date, p_effective_end date, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:5097f702b52e
+routine public.give_lease_notice_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_notice_given_on date, p_effective_end date, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:dc904a69eea9
 routine public.grant_database_admin_internal(p_target uuid, p_can_provision boolean, p_granted_by text) -> jsonb | function | definer | volatile | exec:service_role | body:f424674c09a4
 routine public.grant_workspace_template(p_template_id uuid, p_email text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:234a872cde5d
 routine public.guard_oauth_client_purpose() -> trigger | function | invoker | volatile | exec: | body:a18b6684527b
@@ -1891,6 +1891,9 @@ routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:a
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d509da87d1b8
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97
+routine public.lease_apply_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:b19ccb1abbac
+routine public.lease_change_apply() -> trigger | function | definer | volatile | exec:service_role | body:052842acae0d
+routine public.lease_notice_held(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:1b2c22dfe859
 routine public.lease_settlements_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e867aaafd40c
 routine public.lease_terms_guard() -> trigger | function | invoker | volatile | exec:service_role | body:baa7e1bb94af
 routine public.leave_account_group(p_group uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ec452b395726
@@ -2614,6 +2617,7 @@ trigger events.events_apply_payment_terms CREATE TRIGGER events_apply_payment_te
 trigger events.events_apply_stock CREATE TRIGGER events_apply_stock AFTER UPDATE OF status ON public.events FOR EACH ROW EXECUTE FUNCTION apply_stock_on_confirm()
 trigger events.events_apply_usage CREATE TRIGGER events_apply_usage AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_usage_decision()
 trigger events.events_apply_validated_0181 CREATE TRIGGER events_apply_validated_0181 AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_validated_decision_0181()
+trigger events.events_lease_change_apply CREATE TRIGGER events_lease_change_apply AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION lease_change_apply()
 trigger events.events_notify_pending CREATE TRIGGER events_notify_pending AFTER INSERT OR UPDATE OF status, actor_member_id ON public.events FOR EACH ROW EXECUTE FUNCTION notify_pending_event()
 trigger events.expense_event_schedule_vat CREATE TRIGGER expense_event_schedule_vat BEFORE INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION expense_event_schedule_vat()
 trigger events.purchase_expense_event_bridge CREATE TRIGGER purchase_expense_event_bridge AFTER INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'expense'::text)) EXECUTE FUNCTION purchase_expense_event_bridge()
