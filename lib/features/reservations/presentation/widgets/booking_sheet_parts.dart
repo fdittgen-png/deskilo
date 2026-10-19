@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/form_sheet.dart';
 
 /// #2016 — Reserve (the default) or Check in now in the booking sheet: an
 /// explicit choice, never inferred from how the sheet was opened.
@@ -134,5 +137,29 @@ class BookingDateTile extends StatelessWidget {
       );
       if (picked != null) onPicked(picked);
     },
+  );
+}
+
+/// The end of the booking sheet's header: the help dot (when the sheet has a
+/// provider scope) and the way out. The sheet fills the screen, so it carries
+/// its own close; closing chooses nothing and books nothing.
+class BookingSheetActions extends StatelessWidget {
+  const BookingSheetActions({required this.helpDot, super.key});
+
+  /// Whether the help dot is shown: pure-widget tests pump the sheet without a
+  /// ProviderScope, and the dot needs one.
+  final bool helpDot;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      if (helpDot)
+        HelpDot(
+          context.l10n.helpHintReserveTip4Topic,
+          anchor: HelpAnchor.reservationsBookingSheet,
+        ),
+      const SheetCloseButton(key: ValueKey('booking-sheet-close')),
+    ],
   );
 }
