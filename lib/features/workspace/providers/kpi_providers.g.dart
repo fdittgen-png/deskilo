@@ -50,6 +50,58 @@ final class KpiRepositoryProvider
 
 String _$kpiRepositoryHash() => r'66194a70b45dfb89eb364e6f9b12da3c3d32e149';
 
+/// #2578 — many figures in one read. The server's batch when the KPI
+/// repository is the server's; otherwise (tests, the demonstration) each
+/// figure is asked of the repository on its own.
+
+@ProviderFor(biBatchReader)
+final biBatchReaderProvider = BiBatchReaderProvider._();
+
+/// #2578 — many figures in one read. The server's batch when the KPI
+/// repository is the server's; otherwise (tests, the demonstration) each
+/// figure is asked of the repository on its own.
+
+final class BiBatchReaderProvider
+    extends $FunctionalProvider<KpiBatchReader, KpiBatchReader, KpiBatchReader>
+    with $Provider<KpiBatchReader> {
+  /// #2578 — many figures in one read. The server's batch when the KPI
+  /// repository is the server's; otherwise (tests, the demonstration) each
+  /// figure is asked of the repository on its own.
+  BiBatchReaderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'biBatchReaderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$biBatchReaderHash();
+
+  @$internal
+  @override
+  $ProviderElement<KpiBatchReader> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  KpiBatchReader create(Ref ref) {
+    return biBatchReader(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(KpiBatchReader value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<KpiBatchReader>(value),
+    );
+  }
+}
+
+String _$biBatchReaderHash() => r'aa0d026e78acde90a57c66a2dfc55615ed163a86';
+
 /// #1924 — the finance KPIs.
 
 @ProviderFor(financeKpiRepository)

@@ -16,6 +16,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../data/supabase_bi_view_repository.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/bi_analysis.dart';
+import '../domain/bi_batch.dart';
 import '../domain/bi_modules.dart';
 import '../domain/bi_query.dart';
 import '../domain/bi_result.dart';
@@ -100,6 +101,9 @@ Future<BiSeries> biModuleSeries(
   final module = biModules.firstWhere((m) => m.id == moduleId);
   final now = ref.read(clockProvider).now();
   final periods = [for (var i = count - 1; i >= 0; i--) end.shift(-i)];
+  if (moduleId == 'capacity.seat_utilisation') {
+    return _capacitySeries(ref, workspaceId, module, periods, now);
+  }
   // All watched before the first await (provider_watch_before_await).
   final reads = [
     for (final p in periods)
@@ -128,6 +132,44 @@ Future<BiSeries> biModuleSeries(
 
   return BiSeries([
     for (final (i, p) in periods.indexed) point(p, results[i]),
+  ]);
+}
+
+/// The capacity evolution in one read: every period's total together, a
+/// period the server could not answer is a gap and never fails the others.
+Future<BiSeries> _capacitySeries(
+  Ref ref,
+  String workspaceId,
+  BiModule module,
+  List<BiPeriod> periods,
+  DateTime now,
+) async {
+  final entries = await ref.watch(biBatchReaderProvider).read(workspaceId, [
+    for (final (i, p) in periods.indexed)
+      BiBatchRequest.capacity(
+        key: '$i',
+        from: biInterval(p).from,
+        to: biInterval(p).to,
+      ),
+  ]);
+  BiSeriesPoint point(BiPeriod p, BiBatchEntry e) {
+    final k = e.seatCapacity;
+    if (k == null) return BiSeriesPoint(period: p);
+    final measure = _seatMeasure(k);
+    final over = !biInterval(p).to.isAfter(now);
+    final partial =
+        !over ||
+        measure.quality.contains(KpiQuality.partial) ||
+        measure.quality.contains(KpiQuality.stale);
+    return BiSeriesPoint(
+      period: p,
+      value: measure.value(module.aggregation),
+      partial: partial,
+    );
+  }
+
+  return BiSeries([
+    for (final (i, p) in periods.indexed) point(p, entries[i]),
   ]);
 }
 
@@ -208,6 +250,14 @@ BiMeasure _seatMeasure(SeatCapacityKpi k) => BiMeasure(
   detail: k,
 );
 
+/// The seat figure of [entry], or the failure the single read would have
+/// thrown: a figure never turns into a zero.
+BiMeasure _seatOf(BiBatchEntry entry) {
+  final k = entry.seatCapacity;
+  if (k == null) throw entry.toException();
+  return _seatMeasure(k);
+}
+
 Future<BiResult> _capacity(
   Ref ref,
   String workspaceId,
@@ -215,32 +265,29 @@ Future<BiResult> _capacity(
   BiPeriod period,
   BiPeriod? compared,
 ) async {
-  final kpis = ref.watch(kpiRepositoryProvider);
+  final batch = ref.watch(biBatchReaderProvider);
   final levelsFuture = context.groupBy == 'level'
       ? ref.watch(levelsProvider.future)
       : null;
-  Future<BiMeasure> read(BiPeriod p, String? levelId) async {
-    final i = biInterval(p);
-    return _seatMeasure(
-      await kpis.seatCapacity(
-        workspaceId,
-        from: i.from,
-        to: i.to,
-        levelId: levelId,
-      ),
-    );
-  }
-
   final levels = levelsFuture == null ? null : await levelsFuture;
   if (levels != null && levels.length > biGroupBudget) {
     throw const BiRefused({}, groupBudgetExceeded: true);
   }
   final periods = [period, ?compared];
   final keys = <String?>[null, ...?levels?.map((l) => l.id)];
-  final measures = await Future.wait([
-    for (final p in periods)
-      for (final k in keys) read(p, k),
+  // One read for the total, every group and the compared period: they come
+  // from one snapshot, so the groups cannot contradict their total.
+  final entries = await batch.read(workspaceId, [
+    for (final (pi, p) in periods.indexed)
+      for (final (ki, k) in keys.indexed)
+        BiBatchRequest.capacity(
+          key: '$pi:$ki',
+          from: biInterval(p).from,
+          to: biInterval(p).to,
+          levelId: k,
+        ),
   ]);
+  final measures = [for (final e in entries) _seatOf(e)];
   BiMeasure at(int p, int k) => measures[p * keys.length + k];
   BiRow row(int k, String key, String? label) => BiRow(
     key: key,
