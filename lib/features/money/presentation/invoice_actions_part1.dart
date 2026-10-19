@@ -14,7 +14,7 @@ Future<void> requestInvoiceWriteoffDialog(
   final reasonController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
+    builder: (dialogContext) => AlertDialog(scrollable: true,
       title: Text(l10n.invoiceWriteoffButton),
       content: Column(
         mainAxisSize: MainAxisSize.min,

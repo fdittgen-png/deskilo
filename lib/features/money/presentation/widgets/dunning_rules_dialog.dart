@@ -105,7 +105,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     const dayOptions = [3, 5, 7, 10, 14, 21, 30, 45, 60];
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(l10n.dunningSettingsTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,

@@ -548,7 +548,7 @@ class _MarkFiledDialogState extends State<_MarkFiledDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(l10n.vatDeclMarkFiled),
       content: Column(
         mainAxisSize: MainAxisSize.min,

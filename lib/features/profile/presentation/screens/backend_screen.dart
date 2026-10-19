@@ -148,7 +148,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
     final payload = BackendUriCodec.encode(endpoint);
     await showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => AlertDialog(scrollable: true,
         title: Text(l10n.backendShare),
         content: Column(
           mainAxisSize: MainAxisSize.min,

@@ -51,7 +51,7 @@ class _NfcTapDialogState extends State<NfcTapDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(l10n.badgeTapCardTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,

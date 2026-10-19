@@ -225,7 +225,7 @@ class PaymentDiagnosticsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final small = Theme.of(context).textTheme.bodySmall;
-    return AlertDialog(
+    return AlertDialog(scrollable: true,
       title: Text(
         l10n.payOnlineDiagTitle,
       ),

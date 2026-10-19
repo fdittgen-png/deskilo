@@ -214,7 +214,7 @@ class UsageRecordCard extends ConsumerWidget {
     final controller = TextEditingController();
     final asked = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(scrollable: true,
         title: Text(l10n.usageAsk),
         content: Column(
           mainAxisSize: MainAxisSize.min,

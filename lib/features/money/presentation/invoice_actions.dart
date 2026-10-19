@@ -85,7 +85,7 @@ Future<void> settleCreditInvoiceDialog(
   final noteController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
+    builder: (dialogContext) => AlertDialog(scrollable: true,
       title: Text(l10n.invoiceRefundButton),
       content: Column(
         mainAxisSize: MainAxisSize.min,

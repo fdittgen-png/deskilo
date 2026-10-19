@@ -9,7 +9,7 @@ Future<String?> showEditMessageDialog(BuildContext context, String initial) {
   final controller = TextEditingController(text: initial);
   return showDialog<String>(
     context: context,
-    builder: (dialog) => AlertDialog(
+    builder: (dialog) => AlertDialog(scrollable: true,
       title: Text(l10n.messengerEditTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,

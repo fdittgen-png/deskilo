@@ -309,7 +309,7 @@ Future<void> pickMemberReservationLimit(
   final custom = TextEditingController();
   final chosen = await showDialog<int>(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (context) => AlertDialog(scrollable: true,
       title: Text(
         l10n.memberReservationLimitLabel,
       ),
@@ -407,7 +407,7 @@ Future<void> pickMemberSimultaneousLimit(
   const defaultSentinel = -1;
   final chosen = await showDialog<int>(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (context) => AlertDialog(scrollable: true,
       title: HelpDotTitle(
         l10n.memberSimultaneousLimitLabel,
         l10n.helpHintMembersTopic,

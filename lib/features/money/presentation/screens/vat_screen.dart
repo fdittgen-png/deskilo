@@ -146,7 +146,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         text: planned?.from ?? DateTime(now.year, now.month + 1).toIso8601String().substring(0, 10));
     final ok = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => AlertDialog(scrollable: true,
         title: Text(l10n.vatChangeByLaw),
         content: Column(
           mainAxisSize: MainAxisSize.min,

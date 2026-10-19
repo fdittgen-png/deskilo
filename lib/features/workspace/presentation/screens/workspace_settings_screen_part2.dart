@@ -237,7 +237,7 @@ extension _WorkspaceSettingsScreenStatePart2 on _WorkspaceSettingsScreenState {
         context: context,
         builder: (dialogContext) {
           final theme = Theme.of(dialogContext);
-          return AlertDialog(
+          return AlertDialog(scrollable: true,
             title: Text(l10n.workspaceXmlImportPreviewTitle),
             content: Column(
               mainAxisSize: MainAxisSize.min,
