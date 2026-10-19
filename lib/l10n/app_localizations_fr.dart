@@ -17879,6 +17879,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand nombre de lignes d\'un lot de valorisations du comptable, une par bien. Un fichier plus grand est refusé en entier ; scindez-le avant l\'import.';
 
   @override
+  String get settingHintBiBatchMaxRequests =>
+      'Le plus grand nombre de chiffres qu\'une page de rapport peut demander en une seule lecture. Une page qui en demande plus est scindée en plusieurs lectures ; un lot au-delà est refusé en entier.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixe : l\'avance maximale, en jours, d\'une facture d\'abonnement avant le début du mois.';
 
@@ -18008,6 +18012,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelAssetsValuationMaxRows =>
       'Lignes de valorisation par lot';
+
+  @override
+  String get settingLabelBiBatchMaxRequests =>
+      'Chiffres par lecture de rapport';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18201,6 +18209,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'par heure';
+
+  @override
+  String get settingUnitRequests => 'requêtes';
 
   @override
   String get settingUnitRows => 'lignes';

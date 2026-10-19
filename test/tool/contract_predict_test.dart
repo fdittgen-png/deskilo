@@ -52,7 +52,10 @@ alter table public.reservations add constraint r_y check (true);
 
   test('the query is the contract query, narrowed to the owned entries', () {
     final sql = predictionSql(
-      File('scripts/contract_check.sh').readAsStringSync(),
+      Process.runSync('bash', [
+        'scripts/contract_check.sh',
+        '--print-sql',
+      ]).stdout as String,
       scan(migration('0330_')),
     );
     expect(sql, contains('json_agg(line order by line collate "C")'));

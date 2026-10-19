@@ -8,6 +8,8 @@
 abstract final class SettingDefaults {
   /// `assets.valuation_max_rows`
   static const int assetsValuationMaxRows = 2000;
+  /// `bi.batch_max_requests`
+  static const int biBatchMaxRequests = 60;
   /// `billing.max_advance_days`
   static const int billingMaxAdvanceDays = 28;
   /// `booking.check_in_leeway_minutes`
