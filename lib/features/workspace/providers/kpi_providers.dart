@@ -4,7 +4,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/time/workspace_time.dart';
+import '../data/fan_out_batch_reader.dart';
 import '../data/supabase_kpi_repository.dart';
+import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 import 'workspace_providers.dart';
 
@@ -13,6 +15,17 @@ part 'kpi_providers.g.dart';
 @Riverpod(keepAlive: true)
 KpiRepository kpiRepository(Ref ref) =>
     SupabaseKpiRepository(ref.watch(selectedWorkspaceClientProvider));
+
+/// #2578 — many figures in one read. The server's batch when the KPI
+/// repository is the server's; otherwise (tests, the demonstration) each
+/// figure is asked of the repository on its own.
+@Riverpod(keepAlive: true)
+KpiBatchReader biBatchReader(Ref ref) {
+  final kpis = ref.watch(kpiRepositoryProvider);
+  return kpis is SupabaseKpiRepository
+      ? SupabaseBiBatchReader(kpis.client)
+      : FanOutBatchReader(kpis, ref.watch(financeKpiRepositoryProvider));
+}
 
 /// #1924 — the finance KPIs.
 @Riverpod(keepAlive: true)

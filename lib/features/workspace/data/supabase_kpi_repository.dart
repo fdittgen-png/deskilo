@@ -4,12 +4,17 @@
 // permission and the flag; this class only asks.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
+import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 
 class SupabaseKpiRepository implements KpiRepository {
   SupabaseKpiRepository(this._client);
 
   final SupabaseClient _client;
+
+  /// The same client, for the batch read beside the single-figure ones.
+  SupabaseClient get client => _client;
 
   @override
   Future<SeatCapacityKpi> seatCapacity(
@@ -86,4 +91,56 @@ Duration? kpiRetry(int retryCount, Object error) {
     PostgrestException() => null,
     _ => Duration(milliseconds: 200 << retryCount),
   };
+}
+
+/// #2578 — many figures in one call (`bi_query_batch_v1`, 0505): one
+/// snapshot, each request answered on its own.
+class SupabaseBiBatchReader implements KpiBatchReader {
+  SupabaseBiBatchReader(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<List<BiBatchEntry>> read(
+    String workspaceId,
+    List<BiBatchRequest> requests,
+  ) async {
+    if (requests.isEmpty) return const [];
+    final Object? body;
+    try {
+      body = await _client.rpc<Object?>(
+        'bi_query_batch_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_requests': [for (final r in requests) r.toJson()],
+        },
+      );
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the card shows it.
+      if (e.code == '42501') {
+        Error.throwWithStackTrace(const KpiForbidden(), st);
+      }
+      rethrow;
+    }
+    final byKey = {
+      for (final raw in JsonReader.of(body, context: 'bi batch').list('results'))
+        JsonReader.of(raw).stringOr('request_key'): JsonReader.of(raw),
+    };
+    return [for (final r in requests) _entry(r, byKey[r.key])];
+  }
+
+  BiBatchEntry _entry(BiBatchRequest r, JsonReader? raw) {
+    if (raw == null) return BiBatchEntry.failed(r.key, message: 'no answer');
+    final result = raw.objectOrNull('result');
+    if (!raw.boolOr('ok', fallback: false) || result == null) {
+      return BiBatchEntry.failed(
+        r.key,
+        code: raw.stringOrNull('code'),
+        message: raw.stringOrNull('message'),
+      );
+    }
+    return r.metricId == 'capacity.seat_utilisation'
+        ? BiBatchEntry.seat(r.key, seatCapacityFromJson(result.json))
+        : BiBatchEntry.finance(r.key, financeSummaryFromJson(result.json));
+  }
 }
