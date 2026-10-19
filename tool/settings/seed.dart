@@ -622,6 +622,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is split by the person who imports it; the file is refused as a whole, never cut.',
     ),
   ),
+  (
+    since: 'bi_batch_limit',
+    row: (
+      key: 'bi.batch_max_requests',
+      type: 'int',
+      defaultValue: 60,
+      min: 10,
+      max: 200,
+      unit: 'requests',
+      group: 'kpi',
+      scopes: ['workspace'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'bi_query_batch_v1 (0508)',
+      note: 'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; the batch is refused whole, never cut.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

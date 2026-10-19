@@ -20671,6 +20671,10 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingHintBiBatchMaxRequests": "The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -20802,6 +20806,10 @@
   "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Figures per report read",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -21045,6 +21053,10 @@
   "settingUnitPerHour": "per hour",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRequests": "requests",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   },
   "settingUnitRows": "rows",
   "@settingUnitRows": {

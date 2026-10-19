@@ -17840,6 +17840,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.';
 
   @override
+  String get settingHintBiBatchMaxRequests =>
+      'Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fisso: l\'anticipo massimo, in giorni, di una fattura d\'abbonamento prima dell\'inizio del mese.';
 
@@ -17969,6 +17973,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelAssetsValuationMaxRows =>
       'Righe di valutazione per lotto';
+
+  @override
+  String get settingLabelBiBatchMaxRequests => 'Cifre per lettura di report';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -18164,6 +18171,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'all\'ora';
+
+  @override
+  String get settingUnitRequests => 'richieste';
 
   @override
   String get settingUnitRows => 'righe';

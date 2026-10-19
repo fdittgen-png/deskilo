@@ -115,5 +115,17 @@
   "settingUnitRows": "filas",
   "@settingUnitRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Cifras por lectura de informe",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingHintBiBatchMaxRequests": "El mayor número de cifras que una página de informe puede pedir en una sola lectura. Una página que necesita más se divide en varias lecturas; un lote mayor se rechaza entero.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
+  "settingUnitRequests": "consultas",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   }
 }

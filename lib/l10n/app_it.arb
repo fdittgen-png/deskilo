@@ -12877,6 +12877,10 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingHintBiBatchMaxRequests": "Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.",
+  "@settingHintBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
+  },
   "settingHintBillingMaxAdvanceDays": "Fisso: l'anticipo massimo, in giorni, di una fattura d'abbonamento prima dell'inizio del mese.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13008,6 +13012,10 @@
   "settingLabelAssetsValuationMaxRows": "Righe di valutazione per lotto",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBiBatchMaxRequests": "Cifre per lettura di report",
+  "@settingLabelBiBatchMaxRequests": {
+    "description": "#2578 BI settings"
   },
   "settingLabelBillingMaxAdvanceDays": "Anticipo della fattura d'abbonamento",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -13251,6 +13259,10 @@
   "settingUnitPerHour": "all'ora",
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitRequests": "richieste",
+  "@settingUnitRequests": {
+    "description": "#2578 BI settings"
   },
   "settingUnitRows": "righe",
   "@settingUnitRows": {
