@@ -131,6 +131,17 @@ constraint book_accounts.book_accounts_revision_check CHECK ((revision >= 1))
 constraint book_accounts.book_accounts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_accounts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_accounts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint book_exports.book_exports_byte_count_check CHECK ((byte_count >= 0))
+constraint book_exports.book_exports_check CHECK ((period_to >= period_from))
+constraint book_exports.book_exports_document_count_check CHECK ((document_count >= 0))
+constraint book_exports.book_exports_exported_by_member_id_fkey FOREIGN KEY (exported_by_member_id) REFERENCES members(id)
+constraint book_exports.book_exports_format_id_check CHECK (((char_length(format_id) >= 1) AND (char_length(format_id) <= 60)))
+constraint book_exports.book_exports_pkey PRIMARY KEY (id)
+constraint book_exports.book_exports_row_count_check CHECK ((row_count >= 0))
+constraint book_exports.book_exports_sha256_check CHECK ((sha256 ~ '^[0-9a-f]{64}$'::text))
+constraint book_exports.book_exports_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint book_exports.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint book_exports.system_company_present CHECK ((company_id IS NOT NULL))
 constraint book_mappings.book_mappings_account_id_fkey FOREIGN KEY (account_id) REFERENCES book_accounts(id) ON DELETE RESTRICT
 constraint book_mappings.book_mappings_issuer_role_version UNIQUE (issuer_site_id, role, effective_from)
 constraint book_mappings.book_mappings_issuer_site_id_fkey FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT
@@ -140,6 +151,17 @@ constraint book_mappings.book_mappings_role_check CHECK ((role = ANY (ARRAY['cus
 constraint book_mappings.book_mappings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_mappings.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_mappings.system_company_present CHECK ((company_id IS NOT NULL))
+constraint book_periods.book_periods_check CHECK ((period_to >= period_from))
+constraint book_periods.book_periods_check1 CHECK (((reopened_at IS NULL) = (reopened_by_member_id IS NULL)))
+constraint book_periods.book_periods_closed_by_member_id_fkey FOREIGN KEY (closed_by_member_id) REFERENCES members(id)
+constraint book_periods.book_periods_pkey PRIMARY KEY (id)
+constraint book_periods.book_periods_reason_check CHECK ((reason = ANY (ARRAY['owner'::text, 'vat_filed'::text])))
+constraint book_periods.book_periods_reopen_reason_check CHECK ((char_length(reopen_reason) <= 300))
+constraint book_periods.book_periods_reopened_by_member_id_fkey FOREIGN KEY (reopened_by_member_id) REFERENCES members(id)
+constraint book_periods.book_periods_workspace_id_daterange_excl EXCLUDE USING gist (workspace_id WITH =, daterange(period_from, period_to, '[]'::text) WITH &&) WHERE ((reopened_at IS NULL))
+constraint book_periods.book_periods_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint book_periods.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint book_periods.system_company_present CHECK ((company_id IS NOT NULL))
 constraint book_profiles.book_profiles_accounting_basis_check CHECK ((accounting_basis = ANY (ARRAY['accrual'::text, 'cash'::text])))
 constraint book_profiles.book_profiles_authority_mode_check CHECK ((authority_mode = ANY (ARRAY['pre_accounting'::text, 'local_book'::text, 'external_book'::text])))
 constraint book_profiles.book_profiles_external_named CHECK (((authority_mode <> 'external_book'::text) OR (btrim(external_system) <> ''::text)))
@@ -1646,7 +1668,15 @@ routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid)
 routine public.bi_views_gate(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:e6858809d33b
 routine public.bi_views_list(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5197bc3183b
 routine public.block_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:2c1298a0c4c0
+routine public.book_actor(p_workspace_id uuid, p_owner boolean) -> uuid | function | definer | stable | exec:service_role | body:dfbffead3f5e
 routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b41fc3441b69
+routine public.book_local_day(p_workspace_id uuid, p_at timestamp with time zone) -> date | function | definer | stable | exec:service_role | body:331853c631d1
+routine public.book_period_closed(p_workspace_id uuid, p_day date) -> boolean | function | definer | stable | exec:service_role | body:48ddadaf666d
+routine public.book_period_json(p book_periods) -> jsonb | function | definer | stable | exec:service_role | body:6e70242182da
+routine public.book_period_match_guard() -> trigger | function | definer | volatile | exec:service_role | body:39234ea98fd0
+routine public.book_period_vat_close() -> trigger | function | definer | volatile | exec:service_role | body:95211731251d
+routine public.book_period_void_guard() -> trigger | function | definer | volatile | exec:service_role | body:3433704ee819
+routine public.book_periods_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e4ac451a0495
 routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
@@ -1670,6 +1700,7 @@ routine public.clear_badge_pin() -> void | function | definer | volatile | exec:
 routine public.clear_einvoice_credentials(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:7cb2012a7bce
 routine public.clear_payment_provider(p_workspace_id uuid, p_provider text) -> void | function | definer | volatile | exec:authenticated,service_role | body:0814d0c800c5
 routine public.clear_readiness_acknowledgement(p_workspace_id uuid, p_section text) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:d3e2b466bbba
+routine public.close_book_period_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:bff981765f59
 routine public.close_space_inquiry(p_inquiry uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:847119f0bdef
 routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_refusal_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c774bc970470
@@ -1758,7 +1789,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:01f0079978b4
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:da38772db367
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -2174,6 +2205,7 @@ routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with ti
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:543a1c987f88
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
+routine public.record_book_export_v1(p_workspace_id uuid, p_format_id text, p_from date, p_to date, p_sha256 text, p_bytes bigint, p_rows integer, p_documents integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e580312e4045
 routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:909f1ddd4e67
 routine public.record_member_reimbursement_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6903fd94329d
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:e81915235895
@@ -2201,6 +2233,7 @@ routine public.remove_account_group_member(p_group uuid, p_user uuid) -> void | 
 routine public.remove_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:695b1773b84f
 routine public.remove_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:06705ab617d9
 routine public.rename_administrator_role(p_workspace_id uuid, p_names jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:43ea7b4c414c
+routine public.reopen_book_period_v1(p_workspace_id uuid, p_period_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:827c5e7a01c3
 routine public.reorder_levels(p_workspace_id uuid, p_level_ids uuid[], p_expected uuid[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:99f01185617c
 routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:b4a4812f9fc5
 routine public.report_image_names(p_workspace_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:0d0dafdd6573
@@ -2420,7 +2453,7 @@ routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | fu
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d52bd6263b2
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:8b7096f94c87
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9e1945110fb4
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -2545,7 +2578,9 @@ trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_co
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_views.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_views FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_accounts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_accounts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_exports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_mappings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()
 trigger charging_stations.charging_stations_guard CREATE TRIGGER charging_stations_guard BEFORE INSERT OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_guard()
@@ -2608,10 +2643,12 @@ trigger instance_owner_claims.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invitations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_matches.book_period_match_guard CREATE TRIGGER book_period_match_guard BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION book_period_match_guard()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoices.book_period_void_guard CREATE TRIGGER book_period_void_guard BEFORE UPDATE OF voided_at ON public.invoices FOR EACH ROW EXECUTE FUNCTION book_period_void_guard()
 trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
 trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_maturity_freeze()
 trigger invoices.invoices_no_mutation CREATE TRIGGER invoices_no_mutation BEFORE DELETE OR UPDATE ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoices_immutable()
@@ -2765,6 +2802,7 @@ trigger tax_exemption_certificates.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger tax_reference.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.tax_reference FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger vat_declarations.book_period_vat_close CREATE TRIGGER book_period_vat_close AFTER UPDATE OF status ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION book_period_vat_close()
 trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()
 trigger vat_declarations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
