@@ -254,7 +254,7 @@ BiMeasure _seatMeasure(SeatCapacityKpi k) => BiMeasure(
 /// thrown: a figure never turns into a zero.
 BiMeasure _seatOf(BiBatchEntry entry) {
   final k = entry.seatCapacity;
-  if (k == null) throw entry.toException();
+  if (k == null) throw entry.toError();
   return _seatMeasure(k);
 }
 

@@ -4,6 +4,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/time/workspace_time.dart';
+import '../data/fan_out_batch_reader.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';

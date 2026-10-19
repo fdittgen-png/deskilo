@@ -6,6 +6,7 @@
 // others; a refusal of the reader refuses everything; the fan-out for
 // single-figure repositories keeps the same contract.
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/workspace/data/fan_out_batch_reader.dart';
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';

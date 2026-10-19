@@ -4,6 +4,7 @@
 // permission and the flag; this class only asks.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
 
@@ -107,7 +108,7 @@ class SupabaseBiBatchReader implements KpiBatchReader {
     if (requests.isEmpty) return const [];
     final Object? body;
     try {
-      body = await _client.rpc<dynamic>(
+      body = await _client.rpc<Object?>(
         'bi_query_batch_v1',
         params: {
           'p_workspace_id': workspaceId,
@@ -121,30 +122,25 @@ class SupabaseBiBatchReader implements KpiBatchReader {
       }
       rethrow;
     }
-    final results = (body! as Map)['results'] as List;
     final byKey = {
-      for (final raw in results)
-        (raw as Map)['request_key'] as String: Map<String, dynamic>.from(raw),
+      for (final raw in JsonReader.of(body, context: 'bi batch').list('results'))
+        JsonReader.of(raw).stringOr('request_key'): JsonReader.of(raw),
     };
-    return [
-      for (final r in requests) _entry(r, byKey[r.key]),
-    ];
+    return [for (final r in requests) _entry(r, byKey[r.key])];
   }
 
-  BiBatchEntry _entry(BiBatchRequest r, Map<String, dynamic>? raw) {
-    if (raw == null) {
-      return BiBatchEntry.failed(r.key, message: 'no answer');
-    }
-    if (raw['ok'] != true) {
+  BiBatchEntry _entry(BiBatchRequest r, JsonReader? raw) {
+    if (raw == null) return BiBatchEntry.failed(r.key, message: 'no answer');
+    final result = raw.objectOrNull('result');
+    if (!raw.boolOr('ok', fallback: false) || result == null) {
       return BiBatchEntry.failed(
         r.key,
-        code: raw['code'] as String?,
-        message: raw['message'] as String?,
+        code: raw.stringOrNull('code'),
+        message: raw.stringOrNull('message'),
       );
     }
-    final result = Map<String, dynamic>.from(raw['result'] as Map);
     return r.metricId == 'capacity.seat_utilisation'
-        ? BiBatchEntry.seat(r.key, seatCapacityFromJson(result))
-        : BiBatchEntry.finance(r.key, financeSummaryFromJson(result));
+        ? BiBatchEntry.seat(r.key, seatCapacityFromJson(result.json))
+        : BiBatchEntry.finance(r.key, financeSummaryFromJson(result.json));
   }
 }
