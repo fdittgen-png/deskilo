@@ -12388,6 +12388,43 @@
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
+  "roomOfferFee": "{amount} per {unit}",
+  "@roomOfferFee": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "roomOfferOpen": "Sala in affitto, disponibile senza data di fine",
+  "@roomOfferOpen": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitDay": "giorno",
+  "@roomOfferUnitDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHalfDay": "mezza giornata",
+  "@roomOfferUnitHalfDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHour": "ora",
+  "@roomOfferUnitHour": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUntil": "Sala in affitto, disponibile fino al {date}",
+  "@roomOfferUntil": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "roomRentAudienceAll": "Aperta a tutti i membri",
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"

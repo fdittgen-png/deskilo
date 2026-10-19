@@ -17292,6 +17292,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rolesYourRole => 'Il suo ruolo';
 
   @override
+  String roomOfferFee(String amount, String unit) {
+    return '$amount per $unit';
+  }
+
+  @override
+  String get roomOfferOpen => 'Sala in affitto, disponibile senza data di fine';
+
+  @override
+  String get roomOfferUnitDay => 'giorno';
+
+  @override
+  String get roomOfferUnitHalfDay => 'mezza giornata';
+
+  @override
+  String get roomOfferUnitHour => 'ora';
+
+  @override
+  String roomOfferUntil(String date) {
+    return 'Sala in affitto, disponibile fino al $date';
+  }
+
+  @override
   String get roomRentAudienceAll => 'Aperta a tutti i membri';
 
   @override

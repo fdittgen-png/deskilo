@@ -42,6 +42,7 @@ import 'reference_open.dart';
 import 'series_result_dialog.dart';
 import 'space_act_sheet.dart';
 import 'space_conflict_actions.dart';
+import 'space_price_line.dart';
 import 'space_scan_sheet.dart';
 
 part 'space_scan_part1.dart';
@@ -222,16 +223,11 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
           bookingRangeText(context, appFormatOf(context), l10n, window.start, window.end),
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        if (priceLine != null) ...[
-          const SizedBox(height: 4),
-          Text(
-            priceLine,
-            // #638 — the converged sheet carries the level sheet's own
-            // price line; the key travelled with it.
-            key: const ValueKey('space-price-line'),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
+        SpacePriceLine(
+          workspaceId: workspace?.id,
+          priceLine: priceLine,
+          officeId: widget.kind == SpaceKind.office ? office?.id : null,
+        ),
         if (wholeTarget != null) ...[
           const SizedBox(height: 12),
           if (myWholeReservation != null) ...[

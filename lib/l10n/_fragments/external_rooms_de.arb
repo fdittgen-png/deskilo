@@ -171,5 +171,42 @@
   "roomRentLoadFailed": "Die gemieteten Räume konnten nicht geladen werden.",
   "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
+  },
+  "roomOfferUnitHalfDay": "Halbtag",
+  "@roomOfferUnitHalfDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHour": "Stunde",
+  "@roomOfferUnitHour": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitDay": "Tag",
+  "@roomOfferUnitDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferOpen": "Gemieteter Raum, ohne Enddatum verfügbar",
+  "@roomOfferOpen": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUntil": "Gemieteter Raum, verfügbar bis {date}",
+  "@roomOfferUntil": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "roomOfferFee": "{amount} pro {unit}",
+  "@roomOfferFee": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
   }
 }
