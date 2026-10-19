@@ -171,5 +171,42 @@
   "roomRentLoadFailed": "No se pudieron cargar las salas alquiladas.",
   "@roomRentLoadFailed": {
     "description": "#2568 rented rooms"
+  },
+  "roomOfferUnitHalfDay": "media jornada",
+  "@roomOfferUnitHalfDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHour": "hora",
+  "@roomOfferUnitHour": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitDay": "día",
+  "@roomOfferUnitDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferOpen": "Sala alquilada, disponible sin fecha de fin",
+  "@roomOfferOpen": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUntil": "Sala alquilada, disponible hasta el {date}",
+  "@roomOfferUntil": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "roomOfferFee": "{amount} por {unit}",
+  "@roomOfferFee": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
   }
 }

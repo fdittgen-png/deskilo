@@ -20096,6 +20096,43 @@
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
+  "roomOfferFee": "{amount} per {unit}",
+  "@roomOfferFee": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "roomOfferOpen": "Rented room, available with no end date",
+  "@roomOfferOpen": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitDay": "day",
+  "@roomOfferUnitDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHalfDay": "half day",
+  "@roomOfferUnitHalfDay": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUnitHour": "hour",
+  "@roomOfferUnitHour": {
+    "description": "#2575 rented room offer"
+  },
+  "roomOfferUntil": "Rented room, available until {date}",
+  "@roomOfferUntil": {
+    "description": "#2575 rented room offer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "roomRentAudienceAll": "Open to every member",
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
