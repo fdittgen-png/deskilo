@@ -2227,6 +2227,7 @@ routine public.request_usage_record_delete(p_record_id uuid, p_reason text) -> u
 routine public.require_database_reviewer(p_provision boolean) -> uuid | function | definer | stable | exec:service_role | body:5c81f19c2258
 routine public.reservation_counts_for_usage(r reservations, rules jsonb, tz text) -> boolean | function | definer | stable | exec:service_role | body:1f58b0c9fd6a
 routine public.reservation_hierarchy_guard() -> trigger | function | definer | volatile | exec:service_role | body:ef4c52c803fb
+routine public.reservation_place_visible(p_workspace uuid, p_member uuid, p_seat uuid, p_desk uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:63c62b70d2df
 routine public.reservation_rental_guard() -> trigger | function | definer | volatile | exec:service_role | body:329a5c31b214
 routine public.reservation_request_digest(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> text | function | invoker | immutable | exec:authenticated,service_role | body:b608096ed673
 routine public.reservation_request_outcome(p_workspace_id uuid, p_client_request_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:63e40a5f99f5
@@ -2496,6 +2497,7 @@ routine public.workspace_einvoice_address(p_workspace_id uuid) -> jsonb | functi
 routine public.workspace_feedback_check(p_workspace uuid) -> void | function | definer | stable | exec:service_role | body:b6aa505940fd
 routine public.workspace_feedback_of(p_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e3fe99d4d735
 routine public.workspace_feedback_summary(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:c00d4ff5c237
+routine public.workspace_has_external_level(p_workspace uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:208dc68c966d
 routine public.workspace_inquiries(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dc2127e3cd81
 routine public.workspace_licence_status(p_workspace uuid, p_on date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d59b9968d0d2
 routine public.workspace_local_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:73fd7536d369
