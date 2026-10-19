@@ -8,9 +8,9 @@ import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/presentation/widgets/dunning_rules_dialog.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/settings_editor.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
-import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,10 +43,10 @@ void main() {
           settingsRepositoryProvider.overrideWithValue(store),
           settingsBundleLoaderProvider.overrideWithValue(() async => [_long]),
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          locale: const Locale('fr'),
+          locale: Locale('fr'),
           home: Scaffold(
             body: SingleChildScrollView(
               child: SettingsEditor(
