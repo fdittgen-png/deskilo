@@ -2,7 +2,7 @@
 -- #2578 / 0508: the most figures one batched read may carry is the space's
 -- setting (default 60, what 0505 hard-coded). Real roles, readbacks.
 begin;
-select plan(6);
+select plan(7);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -86,6 +86,8 @@ select throws_ok(format('select public.set_setting(%L, ''bi.batch_max_requests''
   null, null, 'S5 below the registry floor of 10 is refused');
 select is(public.setting_value(current_setting('t.a')::uuid, 'bi.batch_max_requests') #>> '{}', '10',
   'S6 readback: the refused value changed nothing');
+select ok((pg_temp.batch(pg_temp.u(3), (select jsonb_agg(pg_temp.cap('k' || g, '2026-09-01T00:00:00+02', '2026-10-01T00:00:00+02')) from generate_series(1, 61) g))::text) like '%between 1 and 60 requests%',
+  'S7 a stranger is told the default limit (60), not the space''s own setting (10)');
 
 select * from finish();
 rollback;
