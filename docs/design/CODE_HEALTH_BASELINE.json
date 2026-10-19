@@ -1,8 +1,8 @@
 {
-  "recordedSha": "f52aa1a61283ce94e59aa9fc532cddd12dbe4160",
+  "recordedSha": "d061f50bbe6568abfb4f0f7fc86d68654d262497",
   "recordedDate": "2026-10-19",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1726,"functions":9449,"cyclomatic>=9":986,"cyclomatic>=25":128,"cognitive>=15":414,"cognitive>=30":118,"length>=150":94,"parameters>=5":446,"parameters>=7":142,"partOfFiles":75},
+  "totals": {"files":1726,"functions":9450,"cyclomatic>=9":987,"cyclomatic>=25":128,"cognitive>=15":414,"cognitive>=30":118,"length>=150":94,"parameters>=5":447,"parameters>=7":142,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2146,7 +2146,7 @@
     {"p":"lib/features/workspace/application/workspace_symbol.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":5,"len":24,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/connected_space_reader.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":3,"len":25,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/conversation_api.dart","loc":177,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":2,"cyc":3,"len":23,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/data/fan_out_batch_reader.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":37,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/data/fan_out_batch_reader.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":6,"len":37,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/nager_holiday_source.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/supabase_bi_view_repository.dart","loc":67,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":8,"len":23,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/supabase_deployment_repository.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":9,"len":26,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2420,7 +2420,7 @@
     {"p":"lib/features/workspace/presentation/workspace_pages.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":1,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/active_workspace_providers.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":5,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/attention_providers.dart","loc":119,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":33,"cyc":20,"len":127,"params":1,"nest":4,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/providers/bi_providers.dart","loc":328,"part":false,"setState":0,"repositoryReads":0,"fn":20,"cog":20,"cyc":19,"len":69,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/providers/bi_providers.dart","loc":373,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":20,"cyc":19,"len":69,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/connected_space_providers.dart","loc":27,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/conversation_providers.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":4,"cyc":3,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/deployment_providers.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
