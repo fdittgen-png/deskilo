@@ -108,30 +108,53 @@ class _SettingTile extends ConsumerWidget {
       settingOriginLabel(l10n, set.originOf(d.key)),
       if (!d.editable) '${l10n.settingGuardrail}: ${d.note.isEmpty ? l10n.settingGuardrailFallback : d.note}',
     ];
-    return ListTile(
+    final theme = Theme.of(context);
+    // The label and its text take the full width; the value and its buttons
+    // sit on a line of their own, so a long label never shrinks to a sliver.
+    return Padding(
       key: ValueKey('setting-${d.key}'),
-      contentPadding: EdgeInsets.zero,
-      title: Text(settingLabel(l10n, d.key)),
-      subtitle: Text(lines.join('\n')),
-      isThreeLine: lines.length > 1,
-      leading: d.editable ? null : const Icon(Icons.lock_outline),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.settingCurrentValue('$value', unit)),
-          IconButton(
-            key: ValueKey('setting-history-${d.key}'),
-            tooltip: l10n.settingHistory,
-            icon: const Icon(Icons.history),
-            onPressed: () => _showHistory(context, ref),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (!d.editable)
+                const Padding(
+                  padding: EdgeInsets.only(right: AppSpacing.sm),
+                  child: Icon(Icons.lock_outline),
+                ),
+              Expanded(
+                child: Text(
+                  settingLabel(l10n, d.key),
+                  style: theme.textTheme.titleMedium,
+                ),
+              ),
+            ],
           ),
-          if (canEdit)
-            IconButton(
-              key: ValueKey('setting-edit-${d.key}'),
-              tooltip: l10n.settingEdit,
-              icon: const Icon(Icons.edit_outlined),
-              onPressed: () => _edit(context, ref, value),
-            ),
+          if (lines.isNotEmpty)
+            Text(lines.join('\n'), style: theme.textTheme.bodySmall),
+          Row(
+            children: [
+              Expanded(
+                child: Text(l10n.settingCurrentValue('$value', unit)),
+              ),
+              IconButton(
+                key: ValueKey('setting-history-${d.key}'),
+                tooltip: l10n.settingHistory,
+                icon: const Icon(Icons.history),
+                onPressed: () => _showHistory(context, ref),
+              ),
+              if (canEdit)
+                IconButton(
+                  key: ValueKey('setting-edit-${d.key}'),
+                  tooltip: l10n.settingEdit,
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () => _edit(context, ref, value),
+                ),
+            ],
+          ),
         ],
       ),
     );
