@@ -3836,6 +3836,39 @@
       }
     }
   },
+  "eventLeaseNoticeLine": "{actor} donne congé pour {premises} ; le bail prendrait fin le {date}",
+  "@eventLeaseNoticeLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLeaseRentLine": "{actor} demande de porter le loyer de {premises} à {amount} à partir du {date}",
+  "@eventLeaseRentLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventPaymentTermsChangeLine": "{actor} demande de fixer les conditions de paiement : {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -3931,6 +3964,10 @@
   "eventTypeInvoiceWriteoff": "Annulation de solde",
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeLeaseChange": "Changement du bail",
+  "@eventTypeLeaseChange": {
+    "description": "#2569 lease change validation"
   },
   "eventTypeMatrixChange": "Changement de la matrice des permissions",
   "@eventTypeMatrixChange": {

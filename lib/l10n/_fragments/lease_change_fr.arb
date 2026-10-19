@@ -1,0 +1,39 @@
+{
+  "eventTypeLeaseChange": "Changement du bail",
+  "@eventTypeLeaseChange": {
+    "description": "#2569 lease change validation"
+  },
+  "eventLeaseNoticeLine": "{actor} donne congé pour {premises} ; le bail prendrait fin le {date}",
+  "@eventLeaseNoticeLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLeaseRentLine": "{actor} demande de porter le loyer de {premises} à {amount} à partir du {date}",
+  "@eventLeaseRentLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

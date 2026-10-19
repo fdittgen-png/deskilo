@@ -3836,6 +3836,39 @@
       }
     }
   },
+  "eventLeaseNoticeLine": "{actor} kündigt {premises}; der Mietvertrag würde am {date} enden",
+  "@eventLeaseNoticeLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLeaseRentLine": "{actor} beantragt, die Miete für {premises} ab {date} auf {amount} zu ändern",
+  "@eventLeaseRentLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -3931,6 +3964,10 @@
   "eventTypeInvoiceWriteoff": "Restbetrag-Stornierung",
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeLeaseChange": "Mietvertragsänderung",
+  "@eventTypeLeaseChange": {
+    "description": "#2569 lease change validation"
   },
   "eventTypeMatrixChange": "Änderung der Berechtigungsmatrix",
   "@eventTypeMatrixChange": {

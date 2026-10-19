@@ -23,7 +23,7 @@ void main() {
     final wires = EventType.values.map((t) => t.dbName).toSet();
     expect(wires, containsAll([
       'invoice_issue', 'invoice_void', 'refund', 'member_status_change',
-      'subscription_change', 'matrix_change',
+      'subscription_change', 'matrix_change', 'lease_change',
     ]));
   });
 

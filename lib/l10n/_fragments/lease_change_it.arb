@@ -1,0 +1,39 @@
+{
+  "eventTypeLeaseChange": "Modifica del contratto di locazione",
+  "@eventTypeLeaseChange": {
+    "description": "#2569 lease change validation"
+  },
+  "eventLeaseNoticeLine": "{actor} dà disdetta per {premises}; la locazione terminerebbe il {date}",
+  "@eventLeaseNoticeLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLeaseRentLine": "{actor} chiede di portare l'affitto di {premises} a {amount} dal {date}",
+  "@eventLeaseRentLine": {
+    "description": "#2569 lease change validation",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "premises": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

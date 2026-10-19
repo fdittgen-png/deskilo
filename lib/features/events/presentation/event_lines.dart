@@ -164,10 +164,8 @@ String eventLine(
                         as String? ??
                     ''),
           ),
-    (EventType.usageRecordDelete, _) => l10n.eventUsageRecordDeleteLine(
-          actor,
-          event.payload['space_label'] as String? ?? '',
-        ),
+    (EventType.usageRecordDelete || EventType.leaseChange, _) =>
+      _recordOrLeaseLine(l10n, event, actor, currency),
     _ => '${eventTypeLabel(l10n, event.type)} · ${event.action.name}',
   };
   // Service charges name no actor in the title, so always say whose bill
@@ -181,6 +179,31 @@ String eventLine(
     line = '$line ${l10n.eventForSubject(subject)}';
   }
   return line;
+}
+
+/// The line of the two types that need more than a one-liner: an admin
+/// clearing a usage record, and (#2569) a lease's notice or rent change, where
+/// validators decide on what the lease would become.
+String _recordOrLeaseLine(
+  AppLocalizations l10n,
+  WorkspaceEvent event,
+  String actor,
+  MoneyFormat currency,
+) {
+  final p = event.payload;
+  if (event.type == EventType.usageRecordDelete) {
+    return l10n.eventUsageRecordDeleteLine(actor, p['space_label'] as String? ?? '');
+  }
+  final premises = p['premises'] as String? ?? '';
+  if (p['fn'] == 'notice') {
+    return l10n.eventLeaseNoticeLine(actor, premises, p['effective_end'] as String? ?? '');
+  }
+  return l10n.eventLeaseRentLine(
+    actor,
+    premises,
+    currency.formatMinor((p['new_amount_cents'] as num?)?.toInt() ?? 0),
+    p['effective_from'] as String? ?? '',
+  );
 }
 
 /// Quorum progress for pending events whose policy wants more than one

@@ -5108,6 +5108,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventLeaseNoticeLine(String actor, String premises, String date) {
+    return '$actor da el preaviso de $premises; el contrato terminaría el $date';
+  }
+
+  @override
+  String eventLeaseRentLine(
+    String actor,
+    String premises,
+    String amount,
+    String date,
+  ) {
+    return '$actor pide cambiar el alquiler de $premises a $amount desde el $date';
+  }
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor registró un pago de $amount';
   }
@@ -5220,6 +5235,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Anulación de saldo';
+
+  @override
+  String get eventTypeLeaseChange => 'Cambio del contrato de alquiler';
 
   @override
   String get eventTypeMatrixChange => 'Cambio de la matriz de permisos';

@@ -75,7 +75,7 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.refund:
       case EventType.memberStatusChange:
       case EventType.subscriptionChange:
-      case EventType.matrixChange:
+      case EventType.matrixChange || EventType.leaseChange:
       case EventType.adjustment:
       // #1088 — never an open position; the fallback keeps it exhaustive.
       case EventType.unknown:

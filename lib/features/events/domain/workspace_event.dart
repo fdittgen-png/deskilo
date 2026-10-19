@@ -82,6 +82,10 @@ enum EventType {
   subscriptionChange('subscription_change'),
   matrixChange('matrix_change'),
 
+  /// #2569 — a premises lease's notice or a rent change above the policy's
+  /// minimum, held for a second person; confirmed → applied as asked.
+  leaseChange('lease_change'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still
