@@ -1,0 +1,313 @@
+{
+  "valuationTitle": "Valoraciones del contable",
+  "@valuationTitle": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIntro": "Lo que su contable indica como valor del equipo: valores contables o fiscales de un periodo, importados como justificante. No se contabiliza nada a partir de ellos y una cifra en blanco sigue siendo desconocida.",
+  "@valuationIntro": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImport": "Importar un archivo",
+  "@valuationImport": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSample": "Compartir un archivo de ejemplo",
+  "@valuationSample": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationEmpty": "Aún no hay valoraciones.",
+  "@valuationEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationLoadFailed": "No se pudieron cargar las valoraciones.",
+  "@valuationLoadFailed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSaved": "Guardado",
+  "@valuationSaved": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusStaged": "A la espera de su confirmación",
+  "@valuationStatusStaged": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusConfirmed": "Confirmada",
+  "@valuationStatusConfirmed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusSuperseded": "Sustituida por un lote posterior",
+  "@valuationStatusSuperseded": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisBook": "Valores contables",
+  "@valuationBasisBook": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisTax": "Valores fiscales",
+  "@valuationBasisTax": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationHeading": "{basis} de {source}",
+  "@valuationHeading": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationRows": "{count, plural, =1{1 equipo} other{{count} equipos}}",
+  "@valuationRows": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationMismatches": "{count, plural, =1{1 fila no cuadra} other{{count} filas no cuadran}}",
+  "@valuationMismatches": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationPartial": "No pretende cubrir todos los equipos.",
+  "@valuationPartial": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationShowRows": "Ver las cifras",
+  "@valuationShowRows": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirm": "Confirmar",
+  "@valuationConfirm": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationUnknown": "desconocido",
+  "@valuationUnknown": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFigure": "{label}: {value}",
+  "@valuationFigure": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationOpening": "Valor de apertura",
+  "@valuationOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationAdditions": "Altas",
+  "@valuationAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDisposals": "Bajas",
+  "@valuationDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDepreciation": "Amortización",
+  "@valuationDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImpairment": "Deterioro",
+  "@valuationImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationClosing": "Valor de cierre",
+  "@valuationClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBridgeMismatch": "La apertura más las altas menos las bajas, la amortización y el deterioro no es el valor de cierre.",
+  "@valuationBridgeMismatch": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueEmpty": "El archivo no tiene filas.",
+  "@valuationIssueEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueTooMany": "El archivo tiene más filas de las que cabe en un lote (2000).",
+  "@valuationIssueTooMany": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueHeader": "La primera línea no es la cabecera documentada.",
+  "@valuationIssueHeader": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueColumns": "Línea {line}: el número de columnas es incorrecto.",
+  "@valuationIssueColumns": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueAsset": "Línea {line}: el número de equipo no es un entero desde 1.",
+  "@valuationIssueAsset": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueBasis": "Línea {line}: la base es book o tax.",
+  "@valuationIssueBasis": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDate": "Línea {line}: una fecha no es un día real escrito AAAA-MM-DD.",
+  "@valuationIssueDate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssuePeriod": "Línea {line}: el periodo termina antes de empezar.",
+  "@valuationIssuePeriod": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueCurrency": "Línea {line}: la moneda no es un código de tres letras.",
+  "@valuationIssueCurrency": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueMinor": "Línea {line}: {column} no es un número entero de unidades menores.",
+  "@valuationIssueMinor": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationIssueMixed": "Línea {line}: un lote tiene una base, un periodo y una moneda.",
+  "@valuationIssueMixed": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDuplicate": "Línea {line}: este equipo ya aparece en el archivo.",
+  "@valuationIssueDuplicate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFileTypeLabel": "Archivos CSV",
+  "@valuationFileTypeLabel": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPick": "Elegir el archivo",
+  "@valuationPick": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 equipo} other{{count} equipos}}",
+  "@valuationPreview": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFieldSource": "Quién lo envía (contable o programa)",
+  "@valuationFieldSource": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldReference": "Su referencia (opcional)",
+  "@valuationFieldReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldMovements": "Los movimientos son",
+  "@valuationFieldMovements": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsPeriod": "solo del periodo",
+  "@valuationMovementsPeriod": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsYtd": "acumulados en el año",
+  "@valuationMovementsYtd": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldComplete": "El archivo cubre todos los equipos",
+  "@valuationFieldComplete": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationInvalid": "Elija un archivo sin problemas e indique quién lo envía.",
+  "@valuationInvalid": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStage": "Importar",
+  "@valuationStage": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationRefused": "Las valoraciones no se guardaron.",
+  "@valuationRefused": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirmBody": "Una vez confirmadas, estas cifras son el justificante de su periodo. Una corrección posterior conserva este lote e indica por qué se sustituyó.",
+  "@valuationConfirmBody": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplaces": "Sustituye a",
+  "@valuationReplaces": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplacesNone": "Ningún lote anterior",
+  "@valuationReplacesNone": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReason": "Por qué se sustituye",
+  "@valuationReason": {
+    "description": "#2576 accountant valuations"
+  }
+}

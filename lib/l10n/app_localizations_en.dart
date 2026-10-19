@@ -21319,6 +21319,229 @@ class AppLocalizationsEn extends AppLocalizations {
       'Until it is accepted, the person keeps the access they have now.';
 
   @override
+  String get valuationAdditions => 'Additions';
+
+  @override
+  String get valuationBasisBook => 'Book values';
+
+  @override
+  String get valuationBasisTax => 'Tax values';
+
+  @override
+  String get valuationBridgeMismatch =>
+      'Opening plus additions less disposals, depreciation and impairment is not the closing value.';
+
+  @override
+  String get valuationClosing => 'Closing value';
+
+  @override
+  String get valuationConfirm => 'Confirm';
+
+  @override
+  String get valuationConfirmBody =>
+      'Once confirmed, these figures are the evidence for their period. A later correction keeps this batch and says why it was replaced.';
+
+  @override
+  String get valuationDepreciation => 'Depreciation';
+
+  @override
+  String get valuationDisposals => 'Disposals';
+
+  @override
+  String get valuationEmpty => 'No valuations yet.';
+
+  @override
+  String get valuationFieldComplete => 'The file covers every asset';
+
+  @override
+  String get valuationFieldMovements => 'The movements are';
+
+  @override
+  String get valuationFieldReference => 'Their reference (optional)';
+
+  @override
+  String get valuationFieldSource => 'Who sent it (accountant or software)';
+
+  @override
+  String valuationFigure(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String get valuationFileTypeLabel => 'CSV files';
+
+  @override
+  String valuationHeading(String basis, String source) {
+    return '$basis from $source';
+  }
+
+  @override
+  String get valuationImpairment => 'Impairment';
+
+  @override
+  String get valuationImport => 'Import a file';
+
+  @override
+  String get valuationIntro =>
+      'What your accountant says the equipment is worth: book or tax values for a period, imported as evidence. Nothing is posted from them, and a blank figure stays unknown.';
+
+  @override
+  String get valuationInvalid =>
+      'Choose a file without problems and say who sent it.';
+
+  @override
+  String valuationIssueAsset(int line) {
+    return 'Line $line: the asset number is not a whole number from 1.';
+  }
+
+  @override
+  String valuationIssueBasis(int line) {
+    return 'Line $line: the basis is book or tax.';
+  }
+
+  @override
+  String valuationIssueColumns(int line) {
+    return 'Line $line: the number of columns is wrong.';
+  }
+
+  @override
+  String valuationIssueCurrency(int line) {
+    return 'Line $line: the currency is not a three-letter code.';
+  }
+
+  @override
+  String valuationIssueDate(int line) {
+    return 'Line $line: a date is not a real day written YYYY-MM-DD.';
+  }
+
+  @override
+  String valuationIssueDuplicate(int line) {
+    return 'Line $line: this asset already appears in the file.';
+  }
+
+  @override
+  String get valuationIssueEmpty => 'The file has no rows.';
+
+  @override
+  String get valuationIssueHeader =>
+      'The first line is not the documented header.';
+
+  @override
+  String valuationIssueMinor(int line, String column) {
+    return 'Line $line: $column is not a whole number of minor units.';
+  }
+
+  @override
+  String valuationIssueMixed(int line) {
+    return 'Line $line: a batch has one basis, one period and one currency.';
+  }
+
+  @override
+  String valuationIssuePeriod(int line) {
+    return 'Line $line: the period ends before it starts.';
+  }
+
+  @override
+  String get valuationIssueTooMany =>
+      'The file has more rows than one batch holds (2000).';
+
+  @override
+  String get valuationLoadFailed => 'The valuations could not be loaded.';
+
+  @override
+  String valuationMismatches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rows do not balance',
+      one: '1 row does not balance',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationMovementsPeriod => 'for the period only';
+
+  @override
+  String get valuationMovementsYtd => 'year to date';
+
+  @override
+  String get valuationOpening => 'Opening value';
+
+  @override
+  String get valuationPartial => 'Does not claim to cover every asset.';
+
+  @override
+  String get valuationPick => 'Choose the file';
+
+  @override
+  String valuationPreview(
+    String basis,
+    String from,
+    String to,
+    String currency,
+    int count,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count assets',
+      one: '1 asset',
+    );
+    return '$basis, $from – $to, $currency: $_temp0';
+  }
+
+  @override
+  String get valuationReason => 'Why it is replaced';
+
+  @override
+  String get valuationRefused => 'The valuations were not saved.';
+
+  @override
+  String get valuationReplaces => 'Replaces';
+
+  @override
+  String get valuationReplacesNone => 'No earlier batch';
+
+  @override
+  String valuationRows(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count assets',
+      one: '1 asset',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get valuationSample => 'Share a sample file';
+
+  @override
+  String get valuationSaved => 'Saved';
+
+  @override
+  String get valuationShowRows => 'Show the figures';
+
+  @override
+  String get valuationStage => 'Import';
+
+  @override
+  String get valuationStatusConfirmed => 'Confirmed';
+
+  @override
+  String get valuationStatusStaged => 'Waiting for your confirmation';
+
+  @override
+  String get valuationStatusSuperseded => 'Replaced by a later batch';
+
+  @override
+  String get valuationTitle => 'Accountant\'s valuations';
+
+  @override
+  String get valuationUnknown => 'unknown';
+
+  @override
   String get vatAccountField => 'VAT account';
 
   @override

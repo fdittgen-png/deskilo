@@ -12,6 +12,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_asset.dart';
 import '../../providers/asset_providers.dart';
+import 'asset_valuations_sheet.dart';
 import 'equipment_dialogs.dart';
 
 /// Opens the equipment register of [workspaceId]. The caller decides when to
@@ -102,6 +103,7 @@ class EquipmentView extends ConsumerWidget {
       title: l10n.equipmentTitle,
       children: [
         Text(l10n.equipmentIntro, style: Theme.of(context).textTheme.bodySmall),
+        if (canDecide) AssetValuationsButton(workspaceId: workspaceId),
         if (canRegister)
           Align(
             alignment: Alignment.centerLeft,

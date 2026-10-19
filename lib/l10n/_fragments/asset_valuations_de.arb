@@ -1,0 +1,313 @@
+{
+  "valuationTitle": "Bewertungen des Steuerberaters",
+  "@valuationTitle": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIntro": "Was Ihr Steuerberater für den Wert der Ausstattung angibt: Buch- oder Steuerwerte einer Periode, als Nachweis importiert. Daraus wird nichts gebucht, und eine leere Zahl bleibt unbekannt.",
+  "@valuationIntro": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImport": "Datei importieren",
+  "@valuationImport": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSample": "Beispieldatei teilen",
+  "@valuationSample": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationEmpty": "Noch keine Bewertungen.",
+  "@valuationEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationLoadFailed": "Die Bewertungen konnten nicht geladen werden.",
+  "@valuationLoadFailed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationSaved": "Gespeichert",
+  "@valuationSaved": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusStaged": "Wartet auf Ihre Bestätigung",
+  "@valuationStatusStaged": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusConfirmed": "Bestätigt",
+  "@valuationStatusConfirmed": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStatusSuperseded": "Durch einen späteren Stapel ersetzt",
+  "@valuationStatusSuperseded": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisBook": "Buchwerte",
+  "@valuationBasisBook": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBasisTax": "Steuerwerte",
+  "@valuationBasisTax": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationHeading": "{basis} von {source}",
+  "@valuationHeading": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationRows": "{count, plural, =1{1 Anlage} other{{count} Anlagen}}",
+  "@valuationRows": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationMismatches": "{count, plural, =1{1 Zeile geht nicht auf} other{{count} Zeilen gehen nicht auf}}",
+  "@valuationMismatches": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationPartial": "Erhebt keinen Anspruch, alle Anlagen zu erfassen.",
+  "@valuationPartial": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationShowRows": "Zahlen anzeigen",
+  "@valuationShowRows": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirm": "Bestätigen",
+  "@valuationConfirm": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationUnknown": "unbekannt",
+  "@valuationUnknown": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFigure": "{label}: {value}",
+  "@valuationFigure": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationOpening": "Anfangswert",
+  "@valuationOpening": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationAdditions": "Zugänge",
+  "@valuationAdditions": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDisposals": "Abgänge",
+  "@valuationDisposals": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationDepreciation": "Abschreibung",
+  "@valuationDepreciation": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationImpairment": "Wertminderung",
+  "@valuationImpairment": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationClosing": "Endwert",
+  "@valuationClosing": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationBridgeMismatch": "Anfangswert plus Zugänge abzüglich Abgänge, Abschreibung und Wertminderung ergibt nicht den Endwert.",
+  "@valuationBridgeMismatch": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueEmpty": "Die Datei hat keine Zeilen.",
+  "@valuationIssueEmpty": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueTooMany": "Die Datei hat mehr Zeilen, als ein Stapel fasst (2000).",
+  "@valuationIssueTooMany": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueHeader": "Die erste Zeile ist nicht die dokumentierte Kopfzeile.",
+  "@valuationIssueHeader": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationIssueColumns": "Zeile {line}: Die Spaltenzahl stimmt nicht.",
+  "@valuationIssueColumns": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueAsset": "Zeile {line}: Die Anlagennummer ist keine ganze Zahl ab 1.",
+  "@valuationIssueAsset": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueBasis": "Zeile {line}: Die Basis ist book oder tax.",
+  "@valuationIssueBasis": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDate": "Zeile {line}: Ein Datum ist kein echter Tag im Format JJJJ-MM-TT.",
+  "@valuationIssueDate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssuePeriod": "Zeile {line}: Die Periode endet vor ihrem Beginn.",
+  "@valuationIssuePeriod": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueCurrency": "Zeile {line}: Die Währung ist kein Code aus drei Buchstaben.",
+  "@valuationIssueCurrency": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueMinor": "Zeile {line}: {column} ist keine ganze Zahl kleinster Einheiten.",
+  "@valuationIssueMinor": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "valuationIssueMixed": "Zeile {line}: Ein Stapel hat eine Basis, eine Periode und eine Währung.",
+  "@valuationIssueMixed": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationIssueDuplicate": "Zeile {line}: Diese Anlage kommt in der Datei schon vor.",
+  "@valuationIssueDuplicate": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFileTypeLabel": "CSV-Dateien",
+  "@valuationFileTypeLabel": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPick": "Datei wählen",
+  "@valuationPick": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 Anlage} other{{count} Anlagen}}",
+  "@valuationPreview": {
+    "description": "#2576 accountant valuations",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "valuationFieldSource": "Von wem (Steuerberater oder Software)",
+  "@valuationFieldSource": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldReference": "Deren Referenz (optional)",
+  "@valuationFieldReference": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldMovements": "Die Bewegungen sind",
+  "@valuationFieldMovements": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsPeriod": "nur für die Periode",
+  "@valuationMovementsPeriod": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationMovementsYtd": "seit Jahresbeginn kumuliert",
+  "@valuationMovementsYtd": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationFieldComplete": "Die Datei umfasst alle Anlagen",
+  "@valuationFieldComplete": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationInvalid": "Wählen Sie eine Datei ohne Probleme und geben Sie an, von wem sie stammt.",
+  "@valuationInvalid": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationStage": "Importieren",
+  "@valuationStage": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationRefused": "Die Bewertungen wurden nicht gespeichert.",
+  "@valuationRefused": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationConfirmBody": "Nach der Bestätigung sind diese Zahlen der Nachweis für ihre Periode. Eine spätere Korrektur behält diesen Stapel und nennt den Grund für die Ersetzung.",
+  "@valuationConfirmBody": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplaces": "Ersetzt",
+  "@valuationReplaces": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReplacesNone": "Keinen früheren Stapel",
+  "@valuationReplacesNone": {
+    "description": "#2576 accountant valuations"
+  },
+  "valuationReason": "Warum er ersetzt wird",
+  "@valuationReason": {
+    "description": "#2576 accountant valuations"
+  }
+}
