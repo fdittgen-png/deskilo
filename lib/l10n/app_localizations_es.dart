@@ -2083,6 +2083,79 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookMappingsTitle => 'La cuenta de cada asiento';
 
   @override
+  String get bookPeriodsClose => 'Cerrar un periodo';
+
+  @override
+  String get bookPeriodsCloseBody =>
+      'Elija el primer y el último día. Un periodo que no ha terminado no se puede cerrar.';
+
+  @override
+  String get bookPeriodsClosedOwner => 'Cerrado por un propietario';
+
+  @override
+  String get bookPeriodsClosedVat =>
+      'Cerrado al presentar su declaración de IVA';
+
+  @override
+  String get bookPeriodsEmpty => 'Ningún periodo está cerrado.';
+
+  @override
+  String get bookPeriodsExportClosed =>
+      'periodo cerrado: siempre el mismo archivo';
+
+  @override
+  String bookPeriodsExportLine(String format, String from, String to) {
+    return '$format, $from – $to';
+  }
+
+  @override
+  String get bookPeriodsExports => 'Exportaciones entregadas al contable';
+
+  @override
+  String get bookPeriodsFrom => 'Primer día';
+
+  @override
+  String get bookPeriodsIntro =>
+      'Un periodo cerrado es definitivo: no se puede anular ninguna factura emitida en él ni conciliar ningún cobro fechado en él. Las correcciones van al periodo abierto, por ejemplo una factura rectificativa. Cada exportación contable queda registrada abajo.';
+
+  @override
+  String get bookPeriodsInvalid =>
+      'Elija los dos días e indique un motivo donde se pida.';
+
+  @override
+  String get bookPeriodsLoadFailed => 'No se pudieron cargar los periodos.';
+
+  @override
+  String get bookPeriodsNoExports => 'Aún no hay exportaciones.';
+
+  @override
+  String get bookPeriodsReason => 'Por qué se reabre';
+
+  @override
+  String get bookPeriodsRefused => 'El periodo no se modificó.';
+
+  @override
+  String get bookPeriodsReopen => 'Reabrir';
+
+  @override
+  String get bookPeriodsReopenBody =>
+      'Reabrir permite de nuevo anular facturas de este periodo y conciliar cobros. El motivo queda con el periodo.';
+
+  @override
+  String bookPeriodsReopened(String reason) {
+    return 'Reabierto: $reason';
+  }
+
+  @override
+  String get bookPeriodsSaved => 'Guardado';
+
+  @override
+  String get bookPeriodsTitle => 'Periodos contables';
+
+  @override
+  String get bookPeriodsTo => 'Último día';
+
+  @override
   String get bookProblemCurrency =>
       'Esta moneda no tiene un número de decimales verificado.';
 
@@ -5346,6 +5419,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Libro contable';
+
+  @override
+  String get featureAccountingPeriodsDesc =>
+      'Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran.';
+
+  @override
+  String get featureAccountingPeriodsTitle => 'Periodos contables';
 
   @override
   String get featureAdminInvoicing => 'Los admins emiten facturas';

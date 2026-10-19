@@ -1,0 +1,110 @@
+{
+  "featureAccountingPeriodsTitle": "Periodos contables",
+  "@featureAccountingPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "featureAccountingPeriodsDesc": "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran.",
+  "@featureAccountingPeriodsDesc": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTitle": "Periodos contables",
+  "@bookPeriodsTitle": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsIntro": "Un periodo cerrado es definitivo: no se puede anular ninguna factura emitida en él ni conciliar ningún cobro fechado en él. Las correcciones van al periodo abierto, por ejemplo una factura rectificativa. Cada exportación contable queda registrada abajo.",
+  "@bookPeriodsIntro": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClose": "Cerrar un periodo",
+  "@bookPeriodsClose": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsCloseBody": "Elija el primer y el último día. Un periodo que no ha terminado no se puede cerrar.",
+  "@bookPeriodsCloseBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsFrom": "Primer día",
+  "@bookPeriodsFrom": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsTo": "Último día",
+  "@bookPeriodsTo": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsInvalid": "Elija los dos días e indique un motivo donde se pida.",
+  "@bookPeriodsInvalid": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsRefused": "El periodo no se modificó.",
+  "@bookPeriodsRefused": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsSaved": "Guardado",
+  "@bookPeriodsSaved": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsLoadFailed": "No se pudieron cargar los periodos.",
+  "@bookPeriodsLoadFailed": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsEmpty": "Ningún periodo está cerrado.",
+  "@bookPeriodsEmpty": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedOwner": "Cerrado por un propietario",
+  "@bookPeriodsClosedOwner": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsClosedVat": "Cerrado al presentar su declaración de IVA",
+  "@bookPeriodsClosedVat": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopened": "Reabierto: {reason}",
+  "@bookPeriodsReopened": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsReopen": "Reabrir",
+  "@bookPeriodsReopen": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReopenBody": "Reabrir permite de nuevo anular facturas de este periodo y conciliar cobros. El motivo queda con el periodo.",
+  "@bookPeriodsReopenBody": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsReason": "Por qué se reabre",
+  "@bookPeriodsReason": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExports": "Exportaciones entregadas al contable",
+  "@bookPeriodsExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsNoExports": "Aún no hay exportaciones.",
+  "@bookPeriodsNoExports": {
+    "description": "#2365 accounting periods"
+  },
+  "bookPeriodsExportLine": "{format}, {from} – {to}",
+  "@bookPeriodsExportLine": {
+    "description": "#2365 accounting periods",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bookPeriodsExportClosed": "periodo cerrado: siempre el mismo archivo",
+  "@bookPeriodsExportClosed": {
+    "description": "#2365 accounting periods"
+  }
+}

@@ -732,6 +732,12 @@
       "capabilities": []
     },
     {
+      "key": "accountingPeriods",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "adminInvoicing",
       "maturity": "beta",
       "lifecycle": "active",

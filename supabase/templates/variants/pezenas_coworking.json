@@ -85,6 +85,7 @@
       "feature_flags": {
         "accessorySupplements": false,
         "accountingBook": false,
+        "accountingPeriods": false,
         "adminInvoicing": false,
         "adminLevelAssign": false,
         "adminSeatBlocking": false,

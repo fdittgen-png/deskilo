@@ -2089,6 +2089,80 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookMappingsTitle => 'Auf welches Konto jede Buchung geht';
 
   @override
+  String get bookPeriodsClose => 'Periode abschließen';
+
+  @override
+  String get bookPeriodsCloseBody =>
+      'Wählen Sie den ersten und den letzten Tag. Eine Periode, die noch nicht zu Ende ist, kann nicht abgeschlossen werden.';
+
+  @override
+  String get bookPeriodsClosedOwner => 'Von einem Eigentümer abgeschlossen';
+
+  @override
+  String get bookPeriodsClosedVat =>
+      'Mit Abgabe der Umsatzsteuererklärung abgeschlossen';
+
+  @override
+  String get bookPeriodsEmpty => 'Keine Periode ist abgeschlossen.';
+
+  @override
+  String get bookPeriodsExportClosed =>
+      'abgeschlossene Periode: immer dieselbe Datei';
+
+  @override
+  String bookPeriodsExportLine(String format, String from, String to) {
+    return '$format, $from – $to';
+  }
+
+  @override
+  String get bookPeriodsExports => 'An den Steuerberater übergebene Exporte';
+
+  @override
+  String get bookPeriodsFrom => 'Erster Tag';
+
+  @override
+  String get bookPeriodsIntro =>
+      'Eine abgeschlossene Periode ist endgültig: Keine darin ausgestellte Rechnung kann storniert und keine darin datierte Zahlung zugeordnet werden. Korrekturen gehören in die offene Periode, zum Beispiel eine Gutschrift. Jeder Buchhaltungsexport wird unten protokolliert.';
+
+  @override
+  String get bookPeriodsInvalid =>
+      'Wählen Sie beide Tage und nennen Sie einen Grund, wo einer verlangt wird.';
+
+  @override
+  String get bookPeriodsLoadFailed =>
+      'Die Perioden konnten nicht geladen werden.';
+
+  @override
+  String get bookPeriodsNoExports => 'Noch kein Export.';
+
+  @override
+  String get bookPeriodsReason => 'Warum sie wieder geöffnet wird';
+
+  @override
+  String get bookPeriodsRefused => 'Die Periode wurde nicht geändert.';
+
+  @override
+  String get bookPeriodsReopen => 'Wieder öffnen';
+
+  @override
+  String get bookPeriodsReopenBody =>
+      'Das Wiederöffnen erlaubt wieder, Rechnungen dieser Periode zu stornieren und Zahlungen zuzuordnen. Der Grund bleibt bei der Periode.';
+
+  @override
+  String bookPeriodsReopened(String reason) {
+    return 'Wieder geöffnet: $reason';
+  }
+
+  @override
+  String get bookPeriodsSaved => 'Gespeichert';
+
+  @override
+  String get bookPeriodsTitle => 'Buchungsperioden';
+
+  @override
+  String get bookPeriodsTo => 'Letzter Tag';
+
+  @override
   String get bookProblemCurrency =>
       'Für diese Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt.';
 
@@ -5354,6 +5428,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Buchführung';
+
+  @override
+  String get featureAccountingPeriodsDesc =>
+      'Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert.';
+
+  @override
+  String get featureAccountingPeriodsTitle => 'Buchungsperioden';
 
   @override
   String get featureAdminInvoicing => 'Admins stellen Rechnungen aus';
