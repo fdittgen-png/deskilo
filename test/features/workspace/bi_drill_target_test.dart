@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2578 — a drill-through carries the period of the figure it came from.
-import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'package:deskilo/features/money/presentation/screens/workspace_status_screen.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
