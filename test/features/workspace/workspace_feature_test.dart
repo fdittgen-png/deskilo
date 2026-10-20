@@ -45,6 +45,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.externalRooms,
   // #2365 — closing periods is a finance decision.
   WorkspaceFeature.accountingPeriods,
+  // #2579 — authoring reports is asked for, never assumed.
+  WorkspaceFeature.biReportDesigner,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -199,6 +201,7 @@ void main() {
       'assetRegister': true,
       'externalRooms': true,
       'accountingPeriods': true,
+      'biReportDesigner': true,
       'guestParticipation': true,
     });
 

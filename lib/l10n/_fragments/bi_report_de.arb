@@ -1,0 +1,70 @@
+{
+  "featureBiReportDesignerTitle": "Berichtsdesigner (Analysen)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerDesc": "Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportDuplicate": "Als Bericht duplizieren",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (Bericht)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportPageTitle": "Seite 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Karten des Berichts",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddCard": "Karte hinzufügen",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "{card} entfernen",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "{card} nach oben",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveDown": "{card} nach unten",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "Dieser Bericht hat noch keine Karte. Fügen Sie eine hinzu.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biViewUnsupported": "Dieser Bericht kann hier nicht gespeichert werden: Der Berichtsdesigner ist aus, oder eine ältere App-Version würde löschen, was sie nicht lesen kann.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
+  }
+}

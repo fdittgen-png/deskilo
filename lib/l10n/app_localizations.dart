@@ -2815,6 +2815,60 @@ abstract class AppLocalizations {
   /// **'Not in a current group'**
   String get biRemainder;
 
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Add a card'**
+  String get biReportAddCard;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (report)'**
+  String biReportCopyName(String name);
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate as report'**
+  String get biReportDuplicate;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Report cards'**
+  String get biReportEditorTitle;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Move {card} down'**
+  String biReportMoveDown(String card);
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Move {card} up'**
+  String biReportMoveUp(String card);
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'This report has no card yet. Add one.'**
+  String get biReportNoCards;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Page 1'**
+  String get biReportPageTitle;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {card}'**
+  String biReportRemove(String card);
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -3084,6 +3138,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.'**
   String get biViewUnreadable;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.'**
+  String get biViewUnsupported;
 
   /// #1923 C Web-BI saved views
   ///
@@ -9496,6 +9556,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in with a badge'**
   String get featureBadgeSignInTitle;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read.'**
+  String get featureBiReportDesignerDesc;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Report designer (analytics)'**
+  String get featureBiReportDesignerTitle;
 
   /// Feature switch: admins/owners booking for other members
   ///

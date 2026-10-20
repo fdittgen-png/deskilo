@@ -234,6 +234,7 @@ window.SETUP_PROCESSES=[
      "reportLayouts",
      "reportTexts",
      "reportDesigner",
+     "biReportDesigner",
      "usageReport",
      "vatReport"
     ]

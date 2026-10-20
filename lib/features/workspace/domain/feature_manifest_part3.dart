@@ -313,4 +313,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.accountingBook,
     defaultOn: false,
   ),
+  // #2579 — authoring analytical reports is cross-cutting (capacity, people,
+  // finance): a root on purpose, never a child of a finance feature.
+  WorkspaceFeature.biReportDesigner: FeatureManifestEntry(
+    feature: WorkspaceFeature.biReportDesigner,
+    surface: FeatureSurface.reports,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

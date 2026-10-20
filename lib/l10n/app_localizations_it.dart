@@ -1616,6 +1616,42 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biRemainder => 'Fuori dai gruppi attuali';
 
   @override
+  String get biReportAddCard => 'Aggiungi una scheda';
+
+  @override
+  String biReportCopyName(String name) {
+    return '$name (report)';
+  }
+
+  @override
+  String get biReportDuplicate => 'Duplica come report';
+
+  @override
+  String get biReportEditorTitle => 'Schede del report';
+
+  @override
+  String biReportMoveDown(String card) {
+    return 'Sposta $card giù';
+  }
+
+  @override
+  String biReportMoveUp(String card) {
+    return 'Sposta $card su';
+  }
+
+  @override
+  String get biReportNoCards =>
+      'Questo report non ha ancora schede. Aggiungine una.';
+
+  @override
+  String get biReportPageTitle => 'Pagina 1';
+
+  @override
+  String biReportRemove(String card) {
+    return 'Rimuovi $card';
+  }
+
+  @override
   String get biReset => 'Mostra la vista standard';
 
   @override
@@ -1765,6 +1801,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get biViewUnreadable =>
       'Questa vista non può essere aperta qui: è stata salvata in una forma che questa versione non legge, oppure nessuna delle sue analisi è disponibile per Lei.';
+
+  @override
+  String get biViewUnsupported =>
+      'Questo report non può essere salvato qui: l\'editor di report è disattivato, oppure una versione più vecchia dell\'app cancellerebbe ciò che non sa leggere.';
 
   @override
   String get biViews => 'Viste';
@@ -5505,6 +5545,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Accesso con badge';
+
+  @override
+  String get featureBiReportDesignerDesc =>
+      'Trasforma un\'analisi salvata in un report modificabile fatto di pagine e schede. Un report conserva la domanda, mai le cifre: ognuno vede solo ciò che i propri diritti consentono. Disattivato: le viste salvate restano invariate e i report esistenti restano leggibili.';
+
+  @override
+  String get featureBiReportDesignerTitle => 'Editor di report (analisi)';
 
   @override
   String get featureBookForOthers => 'Prenota per altri';

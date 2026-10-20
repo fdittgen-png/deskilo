@@ -414,8 +414,9 @@ enum WorkspaceFeature {
   externalRooms,
 
   /// #2365 closing a book period and the log of accounting exports (under
-  /// accountingBook). Platform, OFF.
-  accountingPeriods;
+  /// accountingBook); #2579 editable reports, a root. Platform, OFF.
+  accountingPeriods,
+  biReportDesigner;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -149,4 +149,5 @@ const Set<String> workspaceFeatureKeys = {
   'assetRegister',
   'externalRooms',
   'accountingPeriods',
+  'biReportDesigner',
 };
