@@ -318,6 +318,9 @@ const Map<String, String> _notExported = {
   'room_rental_audience':
       '#2568 — who may book a rented room; it names members and plans of this '
           'server',
+  'reservation_charges':
+      '#2575 — the quote behind a ledger charge for a rented room; it names '
+          'reservations and ledger rows of this server',
   'room_rental_fees':
       '#2568 — the fees of a rented room; it names members and plans of this '
           'server',
