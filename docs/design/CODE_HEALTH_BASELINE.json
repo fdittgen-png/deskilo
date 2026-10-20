@@ -1,8 +1,8 @@
 {
-  "recordedSha": "bc6ece5fb65a7ce6a474d66fd69b7bd1a3a2f664",
+  "recordedSha": "2d7d4e3fcb9304443cef81b35c80160acb51d0dd",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1742,"functions":9550,"cyclomatic>=9":1008,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":118,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
+  "totals": {"files":1743,"functions":9553,"cyclomatic>=9":1008,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":117,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -34,7 +34,7 @@
 
       "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 658,
 
-      "lib/features/calendar/presentation/screens/calendar_screen.dart": 726,
+      "lib/features/calendar/presentation/screens/calendar_screen.dart": 576,
 
       "lib/features/directory/data/supabase_messenger_repository.dart": 507,
 
@@ -582,7 +582,9 @@
       "lib/features/reservations/presentation/widgets/month_grid.dart": 1
     },
     "colorLiteral": {
-      "lib/features/calendar/presentation/screens/calendar_screen.dart": 8,
+      "lib/features/calendar/presentation/screens/calendar_screen.dart": 6,
+
+      "lib/features/calendar/presentation/widgets/month_day_picker.dart": 2,
 
       "lib/features/money/presentation/widgets/report_page_designer.dart": 1,
 
@@ -1139,7 +1141,7 @@
     {"p":"lib/features/calendar/presentation/calendar_view.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":5,"len":17,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/screens/calendar_branch.dart","loc":16,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart","loc":561,"part":false,"setState":15,"repositoryReads":0,"fn":23,"cog":29,"cyc":28,"len":153,"params":3,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/calendar/presentation/screens/calendar_screen.dart","loc":626,"part":false,"setState":4,"repositoryReads":1,"fn":13,"cog":48,"cyc":19,"len":265,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/features/calendar/presentation/screens/calendar_screen.dart","loc":487,"part":false,"setState":4,"repositoryReads":1,"fn":12,"cog":27,"cyc":19,"len":265,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/access_sheet.dart","loc":156,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":20,"len":141,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_booking_title.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":10,"len":33,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_feed.dart","loc":202,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":25,"cyc":25,"len":130,"params":3,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
@@ -1151,6 +1153,7 @@
     {"p":"lib/features/calendar/presentation/widgets/day_timeline.dart","loc":144,"part":false,"setState":1,"repositoryReads":0,"fn":10,"cog":8,"cyc":10,"len":59,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/day_timeline_part1.dart","loc":348,"part":true,"setState":1,"repositoryReads":0,"fn":11,"cog":45,"cyc":33,"len":199,"params":3,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/day_timeline_part2.dart","loc":174,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":10,"cyc":10,"len":85,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/month_day_picker.dart","loc":155,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":15,"cyc":12,"len":58,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/providers/calendar_providers.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":14,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/providers/calendar_view_request.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/providers/realtime_invalidations.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2513,7 +2516,6 @@
     {"id":"lib/features/auth/presentation/screens/auth_screen.dart#_AuthScreenState._form(AppLocalizations l10n)","cog":58,"cyc":40,"len":284,"params":1},
     {"id":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart#_CalendarHubScreenState.build(BuildContext context)","cog":29,"cyc":28,"len":153,"params":1},
     {"id":"lib/features/calendar/presentation/screens/calendar_screen.dart#_CalendarScreenState.build(BuildContext context)","cog":27,"cyc":19,"len":265,"params":1},
-    {"id":"lib/features/calendar/presentation/screens/calendar_screen.dart#_MonthGrid.build(BuildContext context)","cog":48,"cyc":17,"len":127,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/calendar_feed.dart#CalendarFeed.build(BuildContext context,WidgetRef ref)","cog":25,"cyc":25,"len":130,"params":2},
     {"id":"lib/features/calendar/presentation/widgets/calendar_week_strip.dart#CalendarWeekStrip.build(BuildContext context)","cog":33,"cyc":15,"len":95,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid(BuildContext context,List<(Level?, FloorPlan)> plans,Map<String, String> names)","cog":45,"cyc":33,"len":199,"params":3},
