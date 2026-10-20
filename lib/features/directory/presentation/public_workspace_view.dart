@@ -98,6 +98,126 @@ class PublicWorkspaceView extends ConsumerWidget {
         true;
   }
 
+  Widget _link(WidgetRef ref, PublicWorkspace workspace, String field, String label) =>
+      TextButton.icon(
+        key: ValueKey('public-workspace-view-open-$field'),
+        icon: const Icon(Icons.open_in_new),
+        label: Text(label),
+        onPressed: () {
+          final uri = Uri.tryParse(workspace.text(field));
+          if (uri != null && uri.scheme == 'https' && uri.userInfo.isEmpty) {
+            unawaited(ref.read(linkLauncherProvider)(uri));
+          }
+        },
+      );
+
+  Future<void> _chat(
+    BuildContext context,
+    WidgetRef ref,
+    PublicWorkspace workspace,
+    Map<String, Object?> contact,
+  ) async {
+            if (await _connected(
+                      context,
+                      ref,
+                      SecondaryConnectAction.contact,
+                    ) ==
+                    _Connection.none ||
+                !context.mounted) {
+              return;
+            }
+            await context.push(
+              Uri(
+                path: '/account-messages',
+                queryParameters: {
+                  'source': workspace.source,
+                  'recipient': contact['user_id'] as String,
+                  'name': contact['name'] as String? ?? '',
+                },
+              ).toString(),
+            );
+  }
+
+  Future<void> _writeToHosts(
+    BuildContext context,
+    WidgetRef ref,
+    PublicWorkspace workspace,
+  ) async {
+  if (await _connected(
+            context,
+            ref,
+            SecondaryConnectAction.inquiry,
+          ) ==
+          _Connection.none ||
+      !context.mounted) {
+    return;
+  }
+  await showInquirySheet(context, workspace);
+  }
+
+  Future<void> _apply(
+    BuildContext context,
+    WidgetRef ref,
+    PublicWorkspace workspace,
+  ) async {
+    final l = context.l10n;
+  final connection = await _connected(
+    context,
+    ref,
+    SecondaryConnectAction.apply,
+  );
+  if (connection == _Connection.none || !context.mounted) return;
+  if (connection == _Connection.now &&
+      !await _confirmApply(context)) {
+    return;
+  }
+  if (!context.mounted) return;
+  // #1847 B — an action this app could not negotiate with that
+  // server is refused before anything is sent; say so once.
+  PublicActionRefusal? refusal;
+  final ok = await runGuarded(
+    context,
+    domain: 'workspace',
+    message: 'request public workspace profile failed',
+    errorText:
+        l.portalActionFailed,
+    action: () async {
+      try {
+        await ref.read(directoryActionsProvider).apply(workspace);
+      } on PublicActionRefusal catch (r, st) {
+        if (r.reason == PublicRefusalReason.unreachable) Error.throwWithStackTrace(r, st);
+        refusal = r;
+      }
+    },
+  );
+  if (refusal != null) {
+    TraceLogger.instance.warn(
+      'workspace',
+      'request public workspace profile not negotiated: ${refusal!.reason.name}',
+    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          key: const ValueKey('action-not-negotiated'),
+          content: Text(
+            l.portalActionNotNegotiated,
+          ),
+        ),
+      );
+    }
+    return;
+  }
+  if (ok && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          l.portalRequestSent,
+        ),
+      ),
+    );
+  }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -116,17 +236,8 @@ class PublicWorkspaceView extends ConsumerWidget {
           );
     final withdrawn = live is AsyncData<PublicWorkspace?> && live.value == null;
     final workspace = live?.value ?? this.workspace;
-    Widget link(String field, String label) => TextButton.icon(
-      key: ValueKey('public-workspace-view-open-$field'),
-      icon: const Icon(Icons.open_in_new),
-      label: Text(label),
-      onPressed: () {
-        final uri = Uri.tryParse(workspace.text(field));
-        if (uri != null && uri.scheme == 'https' && uri.userInfo.isEmpty) {
-          unawaited(ref.read(linkLauncherProvider)(uri));
-        }
-      },
-    );
+    Widget link(String field, String label) =>
+        _link(ref, workspace, field, label);
     final image = Uri.tryParse(workspace.text('image_url'));
     return Scaffold(
       appBar: AppBar(
@@ -200,27 +311,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                       icon: const Icon(Icons.chat_outlined),
                       onPressed: preview
                           ? null
-                          : () async {
-                              if (await _connected(
-                                        context,
-                                        ref,
-                                        SecondaryConnectAction.contact,
-                                      ) ==
-                                      _Connection.none ||
-                                  !context.mounted) {
-                                return;
-                              }
-                              await context.push(
-                                Uri(
-                                  path: '/account-messages',
-                                  queryParameters: {
-                                    'source': workspace.source,
-                                    'recipient': contact['user_id'] as String,
-                                    'name': contact['name'] as String? ?? '',
-                                  },
-                                ).toString(),
-                              );
-                            },
+                          : () => _chat(context, ref, workspace, contact),
                     )
                   : null,
             ),
@@ -233,80 +324,13 @@ class PublicWorkspaceView extends ConsumerWidget {
               key: const ValueKey('write-to-hosts'),
               icon: const Icon(Icons.contact_support_outlined),
               label: Text(l.messengerWriteToHosts),
-              onPressed: () async {
-                if (await _connected(
-                          context,
-                          ref,
-                          SecondaryConnectAction.inquiry,
-                        ) ==
-                        _Connection.none ||
-                    !context.mounted) {
-                  return;
-                }
-                await showInquirySheet(context, workspace);
-              },
+              onPressed: () => _writeToHosts(context, ref, workspace),
             ),
           // #1823 — what the space offers: enter, request, copy the e-mail.
           if (!preview && !withdrawn)
             SpaceOffers(
               workspace: workspace,
-              onRequest: () async {
-                final connection = await _connected(
-                  context,
-                  ref,
-                  SecondaryConnectAction.apply,
-                );
-                if (connection == _Connection.none || !context.mounted) return;
-                if (connection == _Connection.now &&
-                    !await _confirmApply(context)) {
-                  return;
-                }
-                if (!context.mounted) return;
-                // #1847 B — an action this app could not negotiate with that
-                // server is refused before anything is sent; say so once.
-                PublicActionRefusal? refusal;
-                final ok = await runGuarded(
-                  context,
-                  domain: 'workspace',
-                  message: 'request public workspace profile failed',
-                  errorText:
-                      l.portalActionFailed,
-                  action: () async {
-                    try {
-                      await ref.read(directoryActionsProvider).apply(workspace);
-                    } on PublicActionRefusal catch (r, st) {
-                      if (r.reason == PublicRefusalReason.unreachable) Error.throwWithStackTrace(r, st);
-                      refusal = r;
-                    }
-                  },
-                );
-                if (refusal != null) {
-                  TraceLogger.instance.warn(
-                    'workspace',
-                    'request public workspace profile not negotiated: ${refusal!.reason.name}',
-                  );
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        key: const ValueKey('action-not-negotiated'),
-                        content: Text(
-                          l.portalActionNotNegotiated,
-                        ),
-                      ),
-                    );
-                  }
-                  return;
-                }
-                if (ok && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        l.portalRequestSent,
-                      ),
-                    ),
-                  );
-                }
-              },
+              onRequest: () => _apply(context, ref, workspace),
             ),
         ],
       ),
