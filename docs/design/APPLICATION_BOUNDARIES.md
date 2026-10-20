@@ -152,7 +152,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 
 - `lib/core/demo/data/reservation_repository.dart`
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
-- `lib/features/calendar/presentation/screens/calendar_screen.dart`
 - `lib/features/directory/presentation/messenger/context_thread_screen.dart`
 - `lib/features/members/presentation/widgets/member_page_cards.dart`
 - `lib/features/money/domain/invoice_pdf_part2.dart`
