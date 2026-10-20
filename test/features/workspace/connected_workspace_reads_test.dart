@@ -207,10 +207,9 @@ void main() {
           .previewMyErasure('ws-1'),
       () => container.read(eventRepositoryProvider).fetchEvents('ws-1'),
       () => container.read(workspaceFieldsRepositoryProvider).fetchFields('ws-1'),
-      // #2564 O2: settings, saved report views, deployment, local setup
-      // and the template search are the selected
-      // workspace's host's.
-      () => container.read(settingsRepositoryProvider).history('ws-1', 'k'),
+      // #2564 O2: saved report views, deployment, local setup and the
+      // template search are the selected workspace's host's. Settings are
+      // not: the workspace context captures them (see settingsRepository).
       () => container.read(biViewRepositoryProvider).list('ws-1'),
       () => container.read(deploymentRepositoryProvider).entities(),
       () => container.read(localSetupRepositoryProvider).readiness('ws-1'),
@@ -253,7 +252,6 @@ void main() {
     // that named the process-wide client would be refused before any
     // request, and show no path here).
     for (final rpc in [
-      'setting_history',
       'bi_views_list',
       'deployable_entities',
       'workspace_local_readiness',

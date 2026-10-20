@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/settings_bundle_asset.dart';
 import '../../../core/settings/active_settings.dart';
@@ -15,10 +16,16 @@ import 'workspace_providers.dart';
 part 'settings_providers.g.dart';
 
 /// #2484 -- the settings registry: read and written.
+///
+/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
+/// captures these settings (currentSettingsCapture), and the selected client
+/// is derived from that context, so watching it here closes a provider cycle
+/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
+/// pre-context client until the context's host binding no longer waits for
+/// its settings capture.
 @Riverpod(keepAlive: true)
-SettingsStore settingsRepository(Ref ref) =>
-    SupabaseSettingsRepository(
-      ref.watch(selectedWorkspaceClientProvider),
+SettingsStore settingsRepository(Ref ref) => SupabaseSettingsRepository(
+      ref.watch(contextClientsProvider).legacyActive,
       ref.watch(cacheStoreProvider),
     );
 

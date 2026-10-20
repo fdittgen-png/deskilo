@@ -71,8 +71,9 @@ const _clean = <String>[
   // activity and their visits), is the root session's.
   'lib/features/money/providers/account_activity_providers.dart',
   'lib/features/visits/providers/visits_providers.dart',
-  // #2564 O2: settings, saved report views, deployment, local setup, the
-  // workbook origin and the template search follow the selected workspace.
+  // #2564 O2: saved report views, deployment, local setup, the workbook
+  // origin and the template search follow the selected workspace; settings
+  // take the context clients' pre-context client (the context captures them).
   'lib/features/workspace/providers/settings_providers.dart',
   'lib/features/workspace/providers/bi_providers.dart',
   'lib/features/workspace/providers/deployment_providers.dart',
