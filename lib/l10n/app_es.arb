@@ -12605,6 +12605,10 @@
   "@roomRentFieldLessor": {
     "description": "#2568 rented rooms"
   },
+  "roomRentFieldRoles": "Abierta también a estos roles",
+  "@roomRentFieldRoles": {
+    "description": "#2575 rented rooms: the roles a room is open to"
+  },
   "roomRentFieldStatus": "Estado",
   "@roomRentFieldStatus": {
     "description": "#2568 rented rooms"

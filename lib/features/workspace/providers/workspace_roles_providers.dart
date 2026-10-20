@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/roles/audience_roles.dart';
 import '../data/supabase_workspace_roles.dart';
 import '../domain/role_assignment.dart';
 import '../domain/workspace_feature.dart';
@@ -88,3 +89,13 @@ Set<WorkspacePermission> myRolePermissions(Ref ref) {
       if (role.active) ...role.permissions,
   };
 }
+
+/// #2575 -- the roles other features may name as an audience: the space's
+/// active roles, as core states them. Put in the scope's overrides by the
+/// composition root.
+final audienceRolesFromWorkspace = audienceRolesProvider.overrideWith(
+  (ref) => [
+    for (final role in ref.watch(workspaceRolesProvider).value ?? const <WorkspaceRole>[])
+      if (role.active) AudienceRole(id: role.id, names: role.names),
+  ],
+);
