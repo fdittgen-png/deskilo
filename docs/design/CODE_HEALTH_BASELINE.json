@@ -1,8 +1,8 @@
 {
-  "recordedSha": "4edd0334667a89a3f3cbf11aa1a03fe2b1a53546",
+  "recordedSha": "a23c31311c57025db03833f3f80165aaa01792fa",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1740,"functions":9541,"cyclomatic>=9":1001,"cyclomatic>=25":128,"cognitive>=15":417,"cognitive>=30":118,"length>=150":93,"parameters>=5":448,"parameters>=7":143,"partOfFiles":75},
+  "totals": {"files":1741,"functions":9543,"cyclomatic>=9":1003,"cyclomatic>=25":129,"cognitive>=15":418,"cognitive>=30":118,"length>=150":93,"parameters>=5":449,"parameters>=7":144,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -102,7 +102,7 @@
 
       "lib/features/workspace/presentation/member_admin_actions.dart": 697,
 
-      "lib/features/workspace/presentation/screens/members_screen.dart": 559,
+      "lib/features/workspace/presentation/screens/members_screen.dart": 541,
 
       "lib/features/workspace/presentation/screens/onboarding_screen.dart": 637,
 
@@ -2222,6 +2222,7 @@
     {"p":"lib/features/workspace/domain/member_badge.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":3,"len":14,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/member_note.dart","loc":51,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":17,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/member_note_refs.dart","loc":165,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":10,"cyc":13,"len":39,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/member_sheet_actions.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":37,"cyc":65,"len":50,"params":1,"nest":1,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/membership_repository.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/new_member_defaults.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":5,"cyc":9,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/next_open_day.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":6,"len":40,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2305,7 +2306,7 @@
     {"p":"lib/features/workspace/presentation/screens/documents_screen.dart","loc":346,"part":false,"setState":3,"repositoryReads":1,"fn":7,"cog":35,"cyc":12,"len":177,"params":3,"nest":7,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/features_screen.dart","loc":135,"part":false,"setState":5,"repositoryReads":0,"fn":5,"cog":17,"cyc":13,"len":98,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/inbox_screen.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":5,"len":32,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/members_screen.dart","loc":472,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":67,"cyc":92,"len":301,"params":11,"nest":4,"over":{"cog":2,"cyc":2,"len":2,"params":1}},
+    {"p":"lib/features/workspace/presentation/screens/members_screen.dart","loc":450,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":53,"cyc":37,"len":184,"params":11,"nest":4,"over":{"cog":1,"cyc":2,"len":2,"params":2}},
     {"p":"lib/features/workspace/presentation/screens/message_search_screen.dart","loc":185,"part":false,"setState":2,"repositoryReads":1,"fn":7,"cog":41,"cyc":35,"len":126,"params":1,"nest":5,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/nfc_config_screen.dart","loc":117,"part":false,"setState":1,"repositoryReads":1,"fn":5,"cog":4,"cyc":8,"len":68,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/onboarding_screen.dart","loc":563,"part":false,"setState":16,"repositoryReads":0,"fn":28,"cog":30,"cyc":23,"len":84,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
@@ -2721,6 +2722,7 @@
     {"id":"lib/features/workspace/domain/booking_policies.dart#BookingPolicies.copyWith({bool? allowPastBookings,bool? adminCheckOut,OutsideHoursMode? outsideHoursMode,int? simultaneousReservations,int? advanceHorizonDays,int? minDurationMinutes,int? maxDurationMinutes,LegendProfile? legendProfile})","cog":0,"cyc":9,"len":21,"params":8},
     {"id":"lib/features/workspace/domain/feature_assessment_evidence.dart#validateAssessmentsAgainstLedger({required Map<WorkspaceFeature, FeatureAssessment> assessments,required List<LedgerCapability> ledger})","cog":36,"cyc":20,"len":53,"params":2},
     {"id":"lib/features/workspace/domain/feature_lifecycle.dart#validateFeatureAssessments({required Map<WorkspaceFeature, FeatureAssessment> assessments,required Map<String, FeatureAssessment> retired,required Set<String> evidenceIds})","cog":47,"cyc":29,"len":76,"params":3},
+    {"id":"lib/features/workspace/domain/member_sheet_actions.dart#memberSheetActions(MemberSheetFacts f)","cog":37,"cyc":65,"len":50,"params":1},
     {"id":"lib/features/workspace/domain/site.dart#Site.copyWith({String? name,String? street,String? postalCode,String? city,String? countryCode,String? legalId,String? vatId,String? taxExemptionReason,int? sortOrder})","cog":0,"cyc":10,"len":25,"params":9},
     {"id":"lib/features/workspace/domain/space_codes_pdf.dart#buildSpaceCodesPdf({required String workspaceName,required List<SpaceCodeEntry> entries,required pw.Font baseFont,required pw.Font boldFont,SpaceCardSize size,SpaceQrSize qrSize,List<pw.Widget> coverHeader,List<pw.Widget> coverBody,List<pw.Widget> coverFooter,List<pw.Widget> coverContinuation,String pageLabel})","cog":21,"cyc":11,"len":130,"params":11},
     {"id":"lib/features/workspace/domain/template_capabilities.dart#compareTemplates(List<TemplateInspection> inspections)","cog":30,"cyc":13,"len":49,"params":1},
@@ -2738,7 +2740,8 @@
     {"id":"lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build(BuildContext context)","cog":65,"cyc":33,"len":154,"params":1},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen._addDialog(BuildContext context,WidgetRef ref)","cog":12,"cyc":12,"len":177,"params":2},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen.build(BuildContext context,WidgetRef ref)","cog":35,"cyc":12,"len":89,"params":2},
-    {"id":"lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet(BuildContext context,WidgetRef ref,Member member,String name,{required Set<WorkspacePermission> perms,required bool isOwner,required bool isSelf,required bool servicesOn,required bool levelBookingOn,required bool kioskOn,required bool coOwnerOn})","cog":67,"cyc":92,"len":301,"params":11},
+    {"id":"lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet(BuildContext context,WidgetRef ref,Member member,String name,{required Set<WorkspacePermission> perms,required bool isOwner,required bool isSelf,required bool servicesOn,required bool levelBookingOn,required bool kioskOn,required bool coOwnerOn})","cog":5,"cyc":10,"len":89,"params":11},
+    {"id":"lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._actionTile(BuildContext context,WidgetRef ref,MemberSheetAction action,Member member,String name,{required bool isOwner,required bool negotiationVisible})","cog":23,"cyc":34,"len":184,"params":7},
     {"id":"lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen.build(BuildContext context,WidgetRef ref)","cog":53,"cyc":37,"len":181,"params":2},
     {"id":"lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build(BuildContext context)","cog":41,"cyc":35,"len":126,"params":1},
     {"id":"lib/features/workspace/presentation/screens/onboarding_screen.dart#_OnboardingScreenState.build(BuildContext context)","cog":30,"cyc":23,"len":84,"params":1},
