@@ -1,8 +1,8 @@
 {
-  "recordedSha": "2d7d4e3fcb9304443cef81b35c80160acb51d0dd",
+  "recordedSha": "42e08e96dae61e1f95fcc78a7bb9205072ca80cd",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1743,"functions":9553,"cyclomatic>=9":1008,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":117,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
+  "totals": {"files":1744,"functions":9555,"cyclomatic>=9":1009,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":117,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -30,7 +30,7 @@
 
       "lib/features/auth/data/supabase_auth_repository.dart": 581,
 
-      "lib/features/auth/presentation/screens/auth_screen.dart": 595,
+      "lib/features/auth/presentation/screens/auth_screen.dart": 531,
 
       "lib/features/calendar/presentation/screens/calendar_hub_screen.dart": 658,
 
@@ -1126,8 +1126,9 @@
     {"p":"lib/features/auth/domain/social_provider.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/auth/presentation/auth_outcome_text.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":14,"len":31,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/auth/presentation/oauth_consent_screen.dart","loc":152,"part":false,"setState":5,"repositoryReads":0,"fn":7,"cog":31,"cyc":14,"len":77,"params":3,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/auth/presentation/screens/auth_screen.dart","loc":468,"part":false,"setState":7,"repositoryReads":1,"fn":15,"cog":58,"cyc":40,"len":284,"params":1,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/auth/presentation/screens/auth_screen.dart","loc":405,"part":false,"setState":7,"repositoryReads":1,"fn":15,"cog":47,"cyc":30,"len":203,"params":1,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/auth/presentation/screens/linked_accounts_screen.dart","loc":179,"part":false,"setState":2,"repositoryReads":1,"fn":8,"cog":19,"cyc":13,"len":82,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/auth/presentation/widgets/auth_form_sections.dart","loc":122,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":9,"len":63,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/auth/presentation/widgets/badge_pin_tile.dart","loc":215,"part":false,"setState":7,"repositoryReads":1,"fn":10,"cog":7,"cyc":6,"len":61,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/auth/presentation/widgets/badge_sign_in_sheet.dart","loc":209,"part":false,"setState":6,"repositoryReads":1,"fn":11,"cog":5,"cyc":5,"len":38,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/auth/presentation/widgets/federation_handoff_panel.dart","loc":250,"part":false,"setState":1,"repositoryReads":0,"fn":11,"cog":15,"cyc":16,"len":75,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2513,7 +2514,7 @@
     {"id":"lib/core/ui/wizard_scaffold.dart#WizardScaffold.build(BuildContext context)","cog":43,"cyc":21,"len":118,"params":1},
     {"id":"lib/core/vat/place_of_supply.dart#supplyVatCategory({required VatTreatment treatment,required SupplyClass supply,required bool sellerVatRegistered,required String sellerCountry,required String buyerCountry,required String buyerCapacity,bool reverseChargeOn})","cog":10,"cyc":14,"len":45,"params":7},
     {"id":"lib/features/auth/presentation/oauth_consent_screen.dart#_OAuthConsentScreenState.build(BuildContext context)","cog":31,"cyc":14,"len":77,"params":1},
-    {"id":"lib/features/auth/presentation/screens/auth_screen.dart#_AuthScreenState._form(AppLocalizations l10n)","cog":58,"cyc":40,"len":284,"params":1},
+    {"id":"lib/features/auth/presentation/screens/auth_screen.dart#_AuthScreenState._form(AppLocalizations l10n)","cog":47,"cyc":30,"len":203,"params":1},
     {"id":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart#_CalendarHubScreenState.build(BuildContext context)","cog":29,"cyc":28,"len":153,"params":1},
     {"id":"lib/features/calendar/presentation/screens/calendar_screen.dart#_CalendarScreenState.build(BuildContext context)","cog":27,"cyc":19,"len":265,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/calendar_feed.dart#CalendarFeed.build(BuildContext context,WidgetRef ref)","cog":25,"cyc":25,"len":130,"params":2},

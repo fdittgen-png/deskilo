@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
-import '../../../../core/demo/presentation/welcome_link_button.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -16,13 +14,12 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../application/federation_handoff_controller.dart';
 import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
+import '../widgets/auth_form_sections.dart';
 import '../widgets/badge_sign_in_sheet.dart';
-import '../widgets/federation_handoff_panel.dart';
 import '../widgets/password_recovery_sheet.dart';
 import '../widgets/verification_pending_view.dart';
 
@@ -227,10 +224,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       );
 
   Widget _form(AppLocalizations l10n) {
-    final handoff = ref.watch(federationHandoffAvailableProvider);
-    final offersDeskilo = (ref.watch(availableSocialProvidersProvider).value ??
-            const <SocialProvider>[])
-        .contains(SocialProvider.deskilo);
     return Form(
       key: _formKey,
       child: AutofillGroup(
@@ -361,55 +354,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     ),
             ),
             const SizedBox(height: 12),
-            // Social sign-in (0051): browser-based Supabase OAuth —
-            // no vendor SDKs. The session lands via
-            // the deskilo:// callback; errors (provider not enabled
-            // on the server) surface as a snack.
-            Row(children: [
-              const Expanded(child: Divider()),
-              // #1205 — Flexible, not a bare Padding: at a large
-              // text scale "or continue with" is wider than the
-              // rules leave it, and a fixed child in a Row answers
-              // that by overflowing off the right of a phone.
-              // Flexible lets the sentence wrap to two lines
-              // instead, which is what the rest of this form does.
-              Flexible(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    l10n.authContinueWith,
-                    style: Theme.of(context).textTheme.bodySmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              const Expanded(child: Divider()),
-            ]),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              alignment: WrapAlignment.center,
-              children: [
-                for (final provider in ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[])
-                  if (provider != SocialProvider.deskilo || !handoff)
-                  OutlinedButton(
-                    key: ValueKey('auth-social-${provider.name}'),
-                    onPressed:
-                        _busy ? null : () => _social(provider),
-                    child: Text(provider.label),
-                  ),
-              ],
+            AuthSocialSection(
+              busy: _busy,
+              onProvider: _social,
+              onUseExistingAccount: _useExistingAccount,
             ),
-            // #1648 — one explicit Continue with Deskilo, its destination
-            // and its true stage; a failure names its own next action.
-            if (handoff && offersDeskilo) ...[
-              const SizedBox(height: 8),
-              FederationHandoffSection(
-                onUseExistingAccount: _useExistingAccount,
-              ),
-            ],
             // #662 — badge sign-in, offered only when this device
             // can actually read one, and never while creating an
             // account (a brand-new member holds no badge).
@@ -467,44 +416,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     : (l10n.authToggleToSignUp),
               ),
             ),
-            // #1650 — the two ways in that are not "I already have a
-            // space here", below the mode switch so nothing above it
-            // moves: an invitation, and the organisation's own server.
-            // The invitation itself is pasted AFTER sign-in, on the join
-            // form; what is kept now is only that joining is the errand.
-            TextButton.icon(
-              key: const ValueKey('auth-join'),
-              icon: const Icon(Icons.mail_outline),
-              label: Text(l10n.authJoinByInvitation),
-              onPressed: _busy ? null : _joinByInvitation,
+            AuthSecondaryLinks(
+              busy: _busy,
+              joining: _joining,
+              onJoin: _joinByInvitation,
             ),
-            if (_joining)
-              InlineBanner(
-                key: const ValueKey('auth-join-hint'),
-                icon: Icons.info_outline,
-                severity: InlineBannerSeverity.info,
-                text: l10n.authJoinHint,
-              ),
-            // The explicit secondary path. Reachable signed out, because
-            // choosing a server is what comes BEFORE an account on it;
-            // setting one up is the wizard on that screen.
-            TextButton(
-              key: const ValueKey('auth-server'),
-              onPressed: () => context.push('/server'),
-              child: Text(
-                l10n.authConnectServer,
-              ),
-            ),
-            // #2459 — beside Discover, in the same row where it fits.
-            Wrap(alignment: WrapAlignment.center, children: [
-              TextButton.icon(
-                key: const ValueKey('auth-discover'),
-                onPressed: () => context.push('/discover'),
-                icon: const Icon(Icons.public),
-                label: Text(l10n.portalDiscover),
-              ),
-              const WelcomeLinkButton(),
-            ]),
           ],
         ),
       ),
