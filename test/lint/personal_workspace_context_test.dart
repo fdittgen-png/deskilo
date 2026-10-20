@@ -43,6 +43,14 @@ const _clean = <String>[
   'lib/features/workspace/providers/workspace_application_providers.dart',
   'lib/features/reservations/providers/reservation_providers.dart',
   'lib/features/reservations/providers/place_feedback_providers.dart',
+  // #2564 O4: assistant confirmations and admin follow the selected
+  // workspace; the consent connection, the directory and the tax reference
+  // are the root session's, and so is the instance's own owner.
+  'lib/features/mcp/providers/mcp_providers.dart',
+  'lib/features/mcp/providers/assistant_setup_providers.dart',
+  'lib/features/directory/providers/directory_providers.dart',
+  'lib/features/money/providers/tax_reference_providers.dart',
+  'lib/features/workspace/providers/instance_providers.dart',
   // #2564 O3: the money sources of the selected workspace.
   'lib/features/money/providers/money_providers.dart',
   'lib/features/money/providers/money_queries_providers.dart',
@@ -84,7 +92,7 @@ const _clean = <String>[
 
 /// Hand-written lib files outside the allowlist that still name the
 /// singleton. RATCHET: this number only falls.
-const _budget = 7;
+const _budget = 2;
 
 bool _names(String line) => line.contains(_singleton);
 

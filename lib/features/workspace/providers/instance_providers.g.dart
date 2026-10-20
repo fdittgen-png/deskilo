@@ -59,7 +59,7 @@ final class InstanceRepositoryProvider
 }
 
 String _$instanceRepositoryHash() =>
-    r'f51cf25b7ed581904fce0c9af553e590c2a78e62';
+    r'056b5d885233816f01b7f54e227a501d5315b2e8';
 
 /// Who answers for this installation, as the server says now. Refreshed by
 /// invalidation after a delegation, a withdrawal or a claim.

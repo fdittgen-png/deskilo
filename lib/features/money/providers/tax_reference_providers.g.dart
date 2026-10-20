@@ -59,7 +59,7 @@ final class TaxReferenceRepositoryProvider
 }
 
 String _$taxReferenceRepositoryHash() =>
-    r'fdefc1c3fc8f1c3037195a8338a2e7dbc36face3';
+    r'ea32837b4647d70085b3807106b03d5073ce2a15';
 
 /// Creating a new version (the form's decision).
 

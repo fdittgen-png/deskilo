@@ -56,7 +56,7 @@ final class ActionConfirmationRepositoryProvider
 }
 
 String _$actionConfirmationRepositoryHash() =>
-    r'a8a9d46d88e5ca5c391da2845f4a314d14a8a98d';
+    r'd59840cddaeea797ef0076da85eb7071a1996bcb';
 
 /// #1625 — the active backend's own repositories, as one target bundle.
 
@@ -461,7 +461,7 @@ final class McpConnectionRepositoryProvider
 }
 
 String _$mcpConnectionRepositoryHash() =>
-    r'd09c38c6df5c2b23be52f316be15892822dc8464';
+    r'72a84f1ce7f1d052ff58e129b3b6ee1ed133f1d1';
 
 @ProviderFor(connectAssistant)
 final connectAssistantProvider = ConnectAssistantProvider._();
@@ -703,7 +703,7 @@ final class McpAdminRepositoryProvider
 }
 
 String _$mcpAdminRepositoryHash() =>
-    r'd78751f105599de23ce6bd057e3a900468df1ba5';
+    r'06d6295001f704a7847a0fd2cf5b13ebdef4bf27';
 
 /// The owner's policy for one workspace, as the server holds it now.
 /// #1625 — keyed by installation, account and workspace; an answer for

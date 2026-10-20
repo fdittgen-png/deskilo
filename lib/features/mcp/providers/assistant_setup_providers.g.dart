@@ -261,7 +261,7 @@ final class McpOnboardingRepositoryProvider
 }
 
 String _$mcpOnboardingRepositoryHash() =>
-    r'c277d66fd443dfda333a208bdd3c7deafaddd917';
+    r'402f22fe86445adeb80b4ba6e11f2cb622fa89e9';
 
 /// #2145 — the client, its approval and who decides, for one pending
 /// authorization; read BEFORE Auth is asked for the authorization itself.
