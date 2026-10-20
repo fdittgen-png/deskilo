@@ -1090,6 +1090,23 @@ constraint reminder_intents.reminder_intents_status_check CHECK ((status = ANY (
 constraint reminder_intents.reminder_intents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint reminder_intents.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint reminder_intents.system_company_present CHECK ((company_id IS NOT NULL))
+constraint reservation_charges.reservation_charges_amount_cents_check CHECK ((amount_cents > 0))
+constraint reservation_charges.reservation_charges_check CHECK ((amount_cents = (units * unit_fee_cents)))
+constraint reservation_charges.reservation_charges_check1 CHECK (((ledger_reversal_id IS NULL) = (reversed_at IS NULL)))
+constraint reservation_charges.reservation_charges_period_check CHECK ((period ~ '^[0-9]{4}-[0-9]{2}$'::text))
+constraint reservation_charges.reservation_charges_pkey PRIMARY KEY (id)
+constraint reservation_charges.reservation_charges_rental_id_fkey FOREIGN KEY (rental_id) REFERENCES room_rentals(id) ON DELETE SET NULL
+constraint reservation_charges.reservation_charges_reservation_id_fkey FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE SET NULL
+constraint reservation_charges.reservation_charges_unit_check CHECK ((unit = ANY (ARRAY['half_day'::text, 'hour'::text, 'day'::text])))
+constraint reservation_charges.reservation_charges_unit_fee_cents_check CHECK ((unit_fee_cents > 0))
+constraint reservation_charges.reservation_charges_units_check CHECK ((units >= 1))
+constraint reservation_charges.reservation_charges_vat_percent_check CHECK (((vat_percent >= (0)::numeric) AND (vat_percent < (100)::numeric)))
+constraint reservation_charges.reservation_charges_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint reservation_charges.reservation_charges_workspace_id_ledger_charge_id_fkey FOREIGN KEY (workspace_id, ledger_charge_id) REFERENCES ledger_entries(workspace_id, id)
+constraint reservation_charges.reservation_charges_workspace_id_ledger_reversal_id_fkey FOREIGN KEY (workspace_id, ledger_reversal_id) REFERENCES ledger_entries(workspace_id, id)
+constraint reservation_charges.reservation_charges_workspace_id_member_id_fkey FOREIGN KEY (workspace_id, member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
+constraint reservation_charges.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint reservation_charges.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reservation_origins.reservation_origins_channel_check CHECK ((channel = 'assistant'::text))
 constraint reservation_origins.reservation_origins_client_id_check CHECK (((char_length(client_id) >= 1) AND (char_length(client_id) <= 200)))
 constraint reservation_origins.reservation_origins_client_name_check CHECK (((char_length(client_name) >= 1) AND (char_length(client_name) <= 200)))
@@ -2265,12 +2282,15 @@ routine public.request_subscription_change(p_member_id uuid, p_pct integer) -> j
 routine public.request_usage_correction(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0c4a3e0488a4
 routine public.request_usage_record_delete(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:93def0b6dbab
 routine public.require_database_reviewer(p_provision boolean) -> uuid | function | definer | stable | exec:service_role | body:5c81f19c2258
+routine public.reservation_charge_reverse(p_charge uuid) -> void | function | definer | volatile | exec:service_role | body:6d762bafcd8f
 routine public.reservation_counts_for_usage(r reservations, rules jsonb, tz text) -> boolean | function | definer | stable | exec:service_role | body:1f58b0c9fd6a
 routine public.reservation_hierarchy_guard() -> trigger | function | definer | volatile | exec:service_role | body:ef4c52c803fb
 routine public.reservation_place_visible(p_workspace uuid, p_member uuid, p_seat uuid, p_desk uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:63c62b70d2df
 routine public.reservation_rental_guard() -> trigger | function | definer | volatile | exec:service_role | body:329a5c31b214
 routine public.reservation_request_digest(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> text | function | invoker | immutable | exec:authenticated,service_role | body:b608096ed673
 routine public.reservation_request_outcome(p_workspace_id uuid, p_client_request_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:63e40a5f99f5
+routine public.reservation_room_charge() -> trigger | function | definer | volatile | exec:service_role | body:dfd05752a520
+routine public.reservation_room_charge_drop() -> trigger | function | definer | volatile | exec:service_role | body:c08936c14f7a
 routine public.reservation_site(r reservations) -> sites | function | definer | stable | exec:service_role | body:de2e85b69935
 routine public.reservation_uses_seat_quota(r reservations) -> boolean | function | definer | stable | exec:service_role | body:146d5dfa2c7c
 routine public.reservations_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:a2ecbd8ded62
@@ -2309,9 +2329,11 @@ routine public.role_permission_catalog() -> text[] | function | invoker | immuta
 routine public.rollback_deployment(p_deployment_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c05549d60433
 routine public.room_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:586b028bb1cc
 routine public.room_audience_has(p_rental uuid, p_member uuid) -> boolean | function | definer | stable | exec:service_role | body:e7423e536921
+routine public.room_fees_for(p_rental uuid, p_member uuid) -> TABLE(unit text, fee_cents bigint) | function | definer | stable | exec:service_role | body:11043055e262
 routine public.room_offer_v1(p_workspace_id uuid, p_office_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bde97755bd80
 routine public.room_rental_json(r room_rentals) -> jsonb | function | definer | stable | exec:service_role | body:74bff1feb673
 routine public.room_rentals_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:94f61bb6ec11
+routine public.room_use_units(p_unit text, p_start timestamp with time zone, p_end timestamp with time zone, p_tz text, p_bound integer, p_gran text, p_half_minutes numeric) -> integer | function | invoker | stable | exec:service_role | body:8b71a4076198
 routine public.room_visible(p_office uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:99fe88eba5ff
 routine public.sales_tax_certificate_of(p_workspace_id uuid, p_member_id uuid, p_state text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:ce15de3fbda0
 routine public.sales_tax_invoice(p_workspace_id uuid, p_member_id uuid, p_postal text, p_lines jsonb, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:70826a03239e
@@ -2767,6 +2789,7 @@ trigger readiness_acknowledgements.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_attempts_append_only BEFORE DELETE OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION reminder_attempts_append_only()
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger reservation_charges.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_charges FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_origins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_origins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_target_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_target_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -2775,6 +2798,8 @@ trigger reservations.enforce_reservation_limit CREATE TRIGGER enforce_reservatio
 trigger reservations.reservation_hierarchy_guard CREATE TRIGGER reservation_hierarchy_guard BEFORE INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_hierarchy_guard()
 trigger reservations.reservation_hierarchy_guard_update CREATE TRIGGER reservation_hierarchy_guard_update BEFORE UPDATE OF starts_at, ends_at, seat_id, desk_id, office_id, level_id, member_id, status ON public.reservations FOR EACH ROW WHEN (((new.status = ANY (ARRAY['reserved'::text, 'checked_in'::text])) AND ((((((((old.starts_at IS DISTINCT FROM new.starts_at) OR (old.ends_at IS DISTINCT FROM new.ends_at)) OR (old.seat_id IS DISTINCT FROM new.seat_id)) OR (old.desk_id IS DISTINCT FROM new.desk_id)) OR (old.office_id IS DISTINCT FROM new.office_id)) OR (old.level_id IS DISTINCT FROM new.level_id)) OR (old.member_id IS DISTINCT FROM new.member_id)) OR (old.status IS DISTINCT FROM new.status)))) EXECUTE FUNCTION reservation_hierarchy_guard()
 trigger reservations.reservation_rental_guard CREATE TRIGGER reservation_rental_guard BEFORE INSERT OR UPDATE OF starts_at, ends_at, status, seat_id, desk_id, office_id, level_id, member_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_rental_guard()
+trigger reservations.reservation_room_charge CREATE TRIGGER reservation_room_charge AFTER INSERT OR UPDATE OF starts_at, ends_at, status, seat_id, desk_id, office_id, level_id, member_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_room_charge()
+trigger reservations.reservation_room_charge_drop CREATE TRIGGER reservation_room_charge_drop BEFORE DELETE ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservation_room_charge_drop()
 trigger reservations.reservations_log_event CREATE TRIGGER reservations_log_event AFTER INSERT OR UPDATE ON public.reservations FOR EACH ROW EXECUTE FUNCTION log_reservation_event()
 trigger reservations.reservations_one_place CREATE TRIGGER reservations_one_place BEFORE INSERT ON public.reservations FOR EACH ROW EXECUTE FUNCTION enforce_one_place()
 trigger reservations.reservations_rebalance_credits CREATE TRIGGER reservations_rebalance_credits AFTER INSERT OR DELETE OR UPDATE OF status, starts_at, ends_at, member_id ON public.reservations FOR EACH ROW EXECUTE FUNCTION reservations_rebalance_credits()
