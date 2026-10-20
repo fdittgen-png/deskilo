@@ -56,6 +56,10 @@ const Map<String, String> _notExported = {
   'room_rental_audience':
       '#2568 — who may book a rented room: a configuration of the room, '
           'not a record about the member; it changes nothing the member owns',
+  'reservation_charges':
+      '#2575 — the frozen quote behind a ledger charge for a use of a rented '
+          'room (unit, units, fee, VAT); what the member was charged is the '
+          'ledger row, exported with the ledger',
   'room_rental_fees':
       '#2568 — what a use of a rented room costs one audience entry: a price '
           'list of the room; what a member is charged is a ledger row, exported '

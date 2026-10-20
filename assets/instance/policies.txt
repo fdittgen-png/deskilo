@@ -234,6 +234,8 @@ public.reservation_origins.mcp_delegated_deny
 public.reservation_origins.reservation_origins_select
 public.reservation_requests.mcp_delegated_deny
 public.reservation_target_history.mcp_delegated_deny
+public.reservation_charges.mcp_delegated_deny
+public.reservation_charges.reservation_charges_select
 public.reservations.mcp_delegated_deny
 public.reservations.reservations_hidden_rooms
 public.reservations.reservations_select
