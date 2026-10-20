@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/tax_reference_bundle_asset.dart';
 import '../../../core/vat/tax_reference.dart';
@@ -16,7 +16,7 @@ part 'tax_reference_providers.g.dart';
 @Riverpod(keepAlive: true)
 TaxReferenceStore taxReferenceRepository(Ref ref) =>
     SupabaseTaxReferenceRepository(
-      Supabase.instance.client,
+      ref.watch(personalClientProvider),
       ref.watch(cacheStoreProvider),
     );
 

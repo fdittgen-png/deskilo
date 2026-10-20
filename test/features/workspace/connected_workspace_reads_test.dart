@@ -17,6 +17,8 @@ import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
+import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
+import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/plan/providers/accessory_providers.dart';
@@ -214,6 +216,11 @@ void main() {
       () => container.read(deploymentRepositoryProvider).entities(),
       () => container.read(localSetupRepositoryProvider).readiness('ws-1'),
       () => container.read(templateSearchRepositoryProvider).search(),
+      // #2564 O4: an assistant's confirmation, the owner's policy and the
+      // consent onboarding are the selected workspace's host's.
+      () => container.read(actionConfirmationRepositoryProvider).get('c-1'),
+      () => container.read(mcpAdminRepositoryProvider).policy('ws-1'),
+      () => container.read(mcpOnboardingRepositoryProvider).consentStatus('a-1'),
     ];
     for (final read in reads) {
       try {
@@ -256,6 +263,9 @@ void main() {
       'deployable_entities',
       'workspace_local_readiness',
       'search_workspace_templates',
+      'mcp_get_action_confirmation',
+      'mcp_policy_status',
+      'mcp_consent_options',
     ]) {
       expect(one.paths, contains('/rest/v1/rpc/$rpc'), reason: rpc);
     }

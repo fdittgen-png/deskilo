@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/directory_actions.dart';
 import '../data/supabase_account_contact_repository.dart';
@@ -37,7 +37,7 @@ AccountContactActions accountContactActions(Ref ref, {String source = ''}) =>
 /// beside it when it is another one.
 @riverpod
 PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) {
-  final client = Supabase.instance.client;
+  final client = ref.watch(personalClientProvider);
   final own = Uri.parse(client.rest.url).origin;
   return SupabasePublicDiscoveryRepository(
     origin: globalDirectoryEndpoint.url,
@@ -51,13 +51,13 @@ PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) {
 @riverpod
 PublicationRepository publicationRepository(Ref ref) {
   ref.watch(authStateProvider);
-  return SupabasePublicationRepository(Supabase.instance.client);
+  return SupabasePublicationRepository(ref.watch(personalClientProvider));
 }
 
 @riverpod
 DirectoryParticipantRepository directoryParticipantRepository(Ref ref) =>
     SupabaseDirectoryParticipantRepository(
-      Supabase.instance.client,
+      ref.watch(personalClientProvider),
       ref.watch(authStateProvider).value == null
           ? null
           : ref.watch(connectedInstallationsProvider),
@@ -90,7 +90,7 @@ AccountContactRepository accountContactRepository(
 }) {
   ref.watch(authStateProvider);
   return SupabaseAccountContactRepository(
-    Supabase.instance.client,
+    ref.watch(personalClientProvider),
     ref.watch(connectedInstallationsProvider),
     source,
   );

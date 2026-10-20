@@ -2,10 +2,10 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -33,7 +33,7 @@ part 'mcp_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 ActionConfirmationRepository actionConfirmationRepository(Ref ref) =>
-    SupabaseActionConfirmationRepository(Supabase.instance.client);
+    SupabaseActionConfirmationRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// #1625 — the active backend's own repositories, as one target bundle.
 @Riverpod(keepAlive: true)
@@ -158,7 +158,7 @@ Future<ActionConfirmation> actionConfirmation(Ref ref, String id) async {
 /// #1615 — the consent RPCs and Auth's OAuth consent API.
 @Riverpod(keepAlive: true)
 McpConnectionRepository mcpConnectionRepository(Ref ref) =>
-    SupabaseMcpConnectionRepository(Supabase.instance.client);
+    SupabaseMcpConnectionRepository(ref.watch(personalClientProvider));
 
 @riverpod
 ConnectAssistant connectAssistant(Ref ref) {
@@ -204,7 +204,7 @@ Future<List<McpConnectionInfo>> myMcpConnections(Ref ref) async {
 /// #1626/#1627 — owner policy and database eligibility review.
 @Riverpod(keepAlive: true)
 McpAdminRepository mcpAdminRepository(Ref ref) =>
-    SupabaseMcpAdminRepository(Supabase.instance.client);
+    SupabaseMcpAdminRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// The owner's policy for one workspace, as the server holds it now.
 /// #1625 — keyed by installation, account and workspace; an answer for

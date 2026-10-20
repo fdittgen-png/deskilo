@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/mcp/mcp_endpoint.dart';
@@ -78,7 +77,7 @@ Future<ConsentOptions> myMcpConsentOptions(Ref ref) async {
 /// installation notices.
 @Riverpod(keepAlive: true)
 McpOnboardingRepository mcpOnboardingRepository(Ref ref) =>
-    SupabaseMcpOnboardingRepository(Supabase.instance.client);
+    SupabaseMcpOnboardingRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// #2145 — the client, its approval and who decides, for one pending
 /// authorization; read BEFORE Auth is asked for the authorization itself.
