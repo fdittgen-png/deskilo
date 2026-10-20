@@ -25,6 +25,7 @@ import '../widgets/address_window_field.dart';
 import '../widgets/book_profile_sheet.dart';
 import '../widgets/canada_tax_fields.dart';
 import '../widgets/einvoice_identity_fields.dart';
+import '../widgets/legal_identity_sections.dart';
 import '../widgets/swiss_letting_fields.dart';
 import '../widgets/uk_land_taxation_fields.dart';
 import '../widgets/vat_declaration_period_field.dart';
@@ -55,16 +56,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   final _postalCode = TextEditingController();
   final _vatAccount = TextEditingController();
   // #480 — the legal invoice mentions, one controller per printed line.
-  final _legalForm = TextEditingController();
-  final _registration = TextEditingController();
-  final _paymentTerms = TextEditingController();
-  final _latePenalty = TextEditingController();
-  final _recovery = TextEditingController();
-  final _escompte = TextEditingController();
-  final _insurance = TextEditingController();
+  final _mentions = LegalMentionControllers();
   final _einvoice = EInvoiceIdentityForm(); // #2358
   final _landTax = UkLandTaxationForm(); // #2359
-  final _special = TextEditingController();
   // #484 — '' = company/business, 'association' = non-profit.
   String _sellerKind = '';
   String _customerCapacity = '';
@@ -94,16 +88,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     _city.dispose();
     _postalCode.dispose();
     _vatAccount.dispose();
-    _legalForm.dispose();
-    _registration.dispose();
-    _paymentTerms.dispose();
-    _latePenalty.dispose();
-    _recovery.dispose();
-    _escompte.dispose();
-    _insurance.dispose();
+    _mentions.dispose();
     _einvoice.dispose();
     _landTax.dispose();
-    _special.dispose();
     super.dispose();
   }
 
@@ -134,14 +121,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               invoiceLegal: _landTax.applyTo(_einvoice.applyTo(InvoiceLegal(
                 sellerKind: _sellerKind,
                 customerCapacity: _customerCapacity,
-                legalForm: _legalForm.text,
-                registration: _registration.text,
-                paymentTerms: _paymentTerms.text,
-                latePenalty: _latePenalty.text,
-                recoveryIndemnity: _recovery.text,
-                escompte: _escompte.text,
-                insurance: _insurance.text,
-                specialMentions: _special.text,
+                legalForm: _mentions.legalForm.text,
+                registration: _mentions.registration.text,
+                paymentTerms: _mentions.paymentTerms.text,
+                latePenalty: _mentions.latePenalty.text,
+                recoveryIndemnity: _mentions.recovery.text,
+                escompte: _mentions.escompte.text,
+                insurance: _mentions.insurance.text,
+                specialMentions: _mentions.special.text,
                 reverseChargeOptIn: _reverseCharge,
                 vatTaxPoint: _taxPoint,
                 declarationPeriod: _declarationPeriod,
@@ -160,39 +147,6 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     AppSnack.success(
       context,
       l10n.legalIdentitySaved,
-    );
-  }
-
-  /// One mention line: capped, with the statutory default (or an
-  /// example) as the helper so the owner sees what an empty field
-  /// prints.
-  Widget _mentionField(
-    String key,
-    TextEditingController controller,
-    String label, {
-    required String anchor,
-    String? hint,
-  }) {
-    final l10n = context.l10n;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: TextField(
-        key: ValueKey(key),
-        controller: controller,
-        maxLength: InvoiceLegal.maxFieldLength,
-        maxLines: 2,
-        minLines: 1,
-        decoration: InputDecoration(
-          labelText: label,
-          helperText: hint,
-          helperMaxLines: 3,
-          counterText: '',
-          suffixIcon: HelpDot(
-            l10n.helpTopicLegalIdentity,
-            anchor: anchor,
-          ),
-        ),
-      ),
     );
   }
 
@@ -231,14 +185,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _taxPoint = vatTaxPointPolicy(workspace.countryCode)
           .effective(legal.vatTaxPoint);
       _declarationPeriod = legal.declarationPeriod;
-      _legalForm.text = legal.legalForm;
-      _registration.text = legal.registration;
-      _paymentTerms.text = legal.paymentTerms;
-      _latePenalty.text = legal.latePenalty;
-      _recovery.text = legal.recoveryIndemnity;
-      _escompte.text = legal.escompte;
-      _insurance.text = legal.insurance;
-      _special.text = legal.specialMentions;
+      _mentions.load(legal);
       _einvoice.load(legal);
       _landTax.load(legal);
     }
@@ -441,49 +388,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          TextField(
-            key: const ValueKey('legal-identity-street'),
-            controller: _street,
-            decoration: InputDecoration(
-              labelText: l10n.legalIdentityStreet,
-              suffixIcon:
-                  HelpDot(
-                    l10n.helpTopicLegalIdentity,
-                    anchor: HelpAnchor.legalAddress,
-                  ),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(children: [
-            SizedBox(
-              width: 120,
-              child: TextField(
-                key: const ValueKey('legal-identity-postal-code'),
-                controller: _postalCode,
-                decoration: InputDecoration(
-                  labelText: l10n.legalIdentityPostalCode,
-                  suffixIcon: HelpDot(
-                    l10n.helpTopicLegalIdentity,
-                    anchor: HelpAnchor.legalAddress,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: TextField(
-                key: const ValueKey('legal-identity-city'),
-                controller: _city,
-                decoration: InputDecoration(
-                  labelText: l10n.legalIdentityCity,
-                  suffixIcon: HelpDot(
-                    l10n.helpTopicLegalIdentity,
-                    anchor: HelpAnchor.legalAddress,
-                  ),
-                ),
-              ),
-            ),
-          ]),
+          LegalAddressFields(street: _street, postalCode: _postalCode, city: _city),
           const SizedBox(height: AppSpacing.md),
           // The other half of the same question: who receives the file.
           ListTile(
@@ -566,64 +471,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
           ),
           const SizedBox(height: AppSpacing.md),
-          _mentionField(
-            'legal-identity-legal-form',
-            _legalForm,
-            l10n.invoiceLegalFormField,
-            hint: _sellerKind == 'association'
-                ? (l10n.invoiceLegalFormHintAssociation)
-                : l10n.invoiceLegalFormHint,
-            anchor: HelpAnchor.legalForm,
-          ),
-          _mentionField(
-            'legal-identity-registration',
-            _registration,
-            l10n.invoiceLegalRegistrationField,
-            hint: _sellerKind == 'association'
-                ? (l10n.invoiceLegalRegistrationHintAssociation)
-                : l10n.invoiceLegalRegistrationHint,
-            anchor: HelpAnchor.legalRegistration,
-          ),
-          _mentionField(
-            'legal-identity-payment-terms',
-            _paymentTerms,
-            l10n.invoiceLegalPaymentTermsField,
-            hint: l10n.invoiceLegalPaymentTermsDefault,
-            anchor: HelpAnchor.legalPaymentTerms,
-          ),
-          _mentionField(
-            'legal-identity-late-penalty',
-            _latePenalty,
-            l10n.invoiceLegalLatePenaltyField,
-            hint: l10n.invoiceLegalLatePenaltyDefault,
-            anchor: HelpAnchor.legalLatePenalty,
-          ),
-          _mentionField(
-            'legal-identity-recovery',
-            _recovery,
-            l10n.invoiceLegalRecoveryField,
-            hint: l10n.invoiceLegalRecoveryDefault,
-            anchor: HelpAnchor.legalRecovery,
-          ),
-          _mentionField(
-            'legal-identity-escompte',
-            _escompte,
-            l10n.invoiceLegalEscompteField,
-            hint: l10n.invoiceLegalEscompteDefault,
-            anchor: HelpAnchor.legalEscompte,
-          ),
-          _mentionField(
-            'legal-identity-insurance',
-            _insurance,
-            l10n.invoiceLegalInsuranceField,
-            anchor: HelpAnchor.legalInsurance,
-          ),
-          _mentionField(
-            'legal-identity-special',
-            _special,
-            l10n.invoiceLegalSpecialField,
-            anchor: HelpAnchor.legalSpecialMentions,
-          ),
+          LegalMentionFields(controllers: _mentions, sellerKind: _sellerKind),
           // #2359 — the UK treats land as exempt unless the owner opted to tax.
           if (_regime == VatRegime.vatRegistered &&
               ref.watch(currentWorkspaceProvider).value?.countryCode == 'GB')
