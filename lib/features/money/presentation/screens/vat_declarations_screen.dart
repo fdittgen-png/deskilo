@@ -19,7 +19,6 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -41,6 +40,7 @@ import '../vat_filing_file_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
 import '../widgets/vat_declaration_period_field.dart';
+import '../widgets/vat_mark_filed_dialog.dart';
 import '../widgets/vat_tax_point_notice.dart';
 
 /// Preparation of the VAT return (#534/0107, #2357/0402): the owner
@@ -190,7 +190,7 @@ class _VatDeclarationsScreenState
     // #2357 — filed with the authority's receipt reference, or not at all.
     final receipt = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => _MarkFiledDialog(l10n: l10n),
+      builder: (dialogContext) => VatMarkFiledDialog(l10n: l10n),
     );
     if (receipt == null || receipt.trim().isEmpty || !mounted) return;
     await runGuarded(
@@ -205,10 +205,267 @@ class _VatDeclarationsScreenState
     ref.invalidate(vatDeclarationsProvider);
   }
 
+  Widget _periodRow(
+    AppLocalizations l10n,
+    List<VatFilingPeriod> periods,
+    VatFilingPeriod period,
+  ) {
+    // New declaration: period + generate.
+    return Row(
+    children: [
+      Expanded(
+        child: DropdownButtonFormField<int>(
+          key: const ValueKey('vat-decl-period'),
+          initialValue: _periodIndex,
+          decoration: InputDecoration(
+            labelText: l10n.vatDeclPeriod,
+            border: const OutlineInputBorder(),
+          ),
+          items: [
+            for (final (index, p) in periods.indexed)
+              DropdownMenuItem(
+                value: index,
+                child: Text(vatFilingPeriodLabel(l10n, p)),
+              ),
+          ],
+          onChanged: (value) => setState(
+              () => _periodIndex = value ?? 0),
+        ),
+      ),
+      HelpDot(l10n.helpTopicVat,
+        anchor: HelpAnchor.moneyVatDeclaration,
+      ),
+      const SizedBox(width: AppSpacing.sm),
+      FilledButton.icon(
+        key: const ValueKey('vat-decl-generate'),
+        onPressed: () => _generate(period),
+        icon: const Icon(Icons.calculate_outlined),
+        label: Text(
+            l10n.vatDeclGenerate),
+      ),
+    ],
+  );
+  }
+
+  /// The period's side exports, each behind its own feature.
+  List<Widget> _exportButtons(BuildContext context, VatFilingPeriod period) {
+    final l10n = context.l10n;
+    final enabled = ref.watch(enabledFeaturesSyncProvider);
+    return [
+    // #878 — the period's positions for the accountant, as
+    // the letter and as a CSV, beside the declaration.
+    if (enabled.contains(WorkspaceFeature.vatReport)) ...[
+      const SizedBox(height: AppSpacing.sm),
+      Wrap(
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.sm,
+        children: [
+          OutlinedButton.icon(
+            key: const ValueKey('vat-report-pdf'),
+            onPressed: () => showVatReport(context, ref,
+                start: period.start, end: period.end),
+            icon: const Icon(Icons.summarize_outlined),
+            label: Text(l10n.vatReportPdf),
+          ),
+          OutlinedButton.icon(
+            key: const ValueKey('vat-report-csv'),
+            onPressed: () => saveVatReportCsv(context, ref,
+                start: period.start, end: period.end),
+            icon: const Icon(Icons.table_view_outlined),
+            label: Text(l10n.vatReportCsv),
+          ),
+        ],
+      ),
+    ],
+    // #2354 — the EU sales list (DES, ZM, 349) of the period.
+    if (enabled.contains(WorkspaceFeature.recapitulativeStatement))
+      Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.sm),
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: OutlinedButton.icon(
+            key: const ValueKey('vat-recap-csv'),
+            onPressed: () => saveRecapitulativeCsv(context, ref,
+                start: period.start,
+                // the period's last day, included
+                end: addCalendarDays(period.end, 1),
+                currency: ref.read(currentWorkspaceProvider).value
+                        ?.currencyCode ??
+                    'EUR'),
+            icon: const Icon(Icons.public_outlined),
+            label: Text(l10n
+                .recapCsv),
+          ),
+        ),
+      ),
+    ];
+  }
+
+  Widget _declarationActions(BuildContext context, VatDeclaration declaration) {
+    final l10n = context.l10n;
+    return Wrap(
+  spacing: 8,
+  runSpacing: 4,
+  children: [
+    OutlinedButton.icon(
+      key: ValueKey(
+          'vat-decl-pdf-${declaration.id}'),
+      icon: const Icon(
+          Icons.picture_as_pdf_outlined,
+          size: 18),
+      label: Text(
+          l10n.vatDeclPdf),
+      onPressed: () async {
+        await warmLetterDocProviders(ref, 'vat_declaration');
+        if (!context.mounted) return;
+        await runReportActions(
+        context,
+        ref,
+        keyPrefix: 'vat-decl',
+        render: () => renderLetterDoc(context, ref,
+            docId: 'vat_declaration', data: _reportData(declaration)),
+        logMessage:
+            'vat declaration pdf failed',
+        buildPdf: () =>
+            _buildPdf(declaration),
+        );
+      },
+    ),
+    OutlinedButton.icon(
+      key: ValueKey(
+          'vat-decl-xml-${declaration.id}'),
+      icon: const Icon(
+          Icons.code_outlined,
+          size: 18),
+      label: Text(l10n.vatDeclXml),
+      onPressed: () =>
+          _exportXml(declaration),
+    ),
+    // #2357 — the file the channel files.
+    if (vatFilingFileLabel(l10n, ref.watch(saveVatFilingFileProvider).country) case final label?)
+      OutlinedButton.icon(
+        key: ValueKey('vat-decl-filing-${declaration.id}'),
+        icon: const Icon(Icons.upload_file_outlined, size: 18),
+        label: Text(label),
+        onPressed: () => exportVatFilingFile(context, ref.read(saveVatFilingFileProvider), declaration),
+      ),
+    if (declaration.isPrepared)
+      OutlinedButton.icon(
+        key: ValueKey(
+            'vat-decl-filed-${declaration.id}'),
+        icon: const Icon(
+            Icons.task_alt_outlined,
+            size: 18),
+        label: Text(
+            l10n.vatDeclMarkFiled),
+        onPressed: () =>
+            _markFiled(declaration),
+      ),
+  ],
+);
+  }
+
+  Widget _declarationCard(BuildContext context, VatDeclaration declaration) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final dateFormat = DateFormat.yMMMd();
+    return Card(
+  key: ValueKey(
+      'vat-decl-${declaration.id}'),
+  child: Padding(
+    padding: AppSpacing.lgAll,
+    child: Column(
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${dateFormat.format(declaration.periodStart)}'
+                ' – '
+                '${dateFormat.format(declaration.periodEnd)}',
+                style: theme
+                    .textTheme.titleMedium,
+              ),
+            ),
+            Chip(
+              key: ValueKey(
+                  'vat-decl-status-${declaration.id}'),
+              label: Text(
+                _statusLabel(l10n, declaration),
+              ),
+              visualDensity:
+                  VisualDensity.compact,
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        for (final line in declaration.lines)
+          Text(
+            key: line.isCorrection
+                ? ValueKey(
+                    'vat-decl-correction-${declaration.id}-${line.corrects}')
+                : null,
+            '${line.isCorrection || line.isInput ? '${_lineNote(l10n, line)} · ' : ''}'
+            '${_pctLabel(line.percent)}'
+            '${line.category.isEmpty ? '' : ' ${line.category}'} · '
+            '${l10n.vatDeclNet} '
+            '${centsToMajor(line.netCents)} ${declaration.currency} · '
+            '${l10n.vatDeclVat} '
+            '${centsToMajor(line.vatCents)} ${declaration.currency}',
+            style:
+                theme.textTheme.bodySmall,
+          ),
+        if (declaration.lines
+            .any((l) => l.isCorrection))
+          Text(
+            vatWords(l10n).vatDeclCorrectionsNote,
+            style: theme.textTheme.bodySmall,
+          ),
+        const SizedBox(height: 4),
+        Text(
+          '${l10n.vatDeclTotals}: '
+          '${centsToMajor(declaration.totalNetCents)} ${declaration.currency} · '
+          '${l10n.vatDeclVat} '
+          '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
+          '${declaration.invoiceCount} '
+          '${l10n.vatDeclInvoices}',
+          style: theme.textTheme.bodyMedium
+              ?.copyWith(
+                  fontWeight:
+                      FontWeight.w600),
+        ),
+        // #2357 — with deductible VAT, what is
+        // left to pay, or to claim back.
+        if (declaration.lines.any((l) => l.isInput))
+          Text(
+            key: ValueKey(
+                'vat-decl-balance-${declaration.id}'),
+            '${declaration.totalVatCents >= 0 ? vatWords(l10n).vatDeclPayable : vatWords(l10n).vatDeclCredit}: '
+            '${centsToMajor(declaration.totalVatCents.abs())} ${declaration.currency}',
+            style: theme.textTheme.bodyMedium,
+          ),
+        if (declaration.isFiled)
+          Text(
+            '${declaration.number.isEmpty ? '' : '${declaration.number} · '}'
+            '${declaration.submittedChannel}'
+            '${declaration.submittedReceipt.isEmpty ? '' : ' · ${declaration.submittedReceipt}'}',
+            style: theme.textTheme.bodySmall,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        const SizedBox(height: AppSpacing.sm),
+        _declarationActions(context, declaration),
+      ],
+    ),
+  ),
+);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final regime = vatRegimeFromWire(workspace?.vatRegime ?? '');
     final declarationsAsync = ref.watch(vatDeclarationsProvider);
@@ -219,7 +476,6 @@ class _VatDeclarationsScreenState
         .filingPeriod;
     final periods = vatFilingPeriodsOf(now, filing);
     final period = periods[_periodIndex.clamp(0, periods.length - 1)];
-    final dateFormat = DateFormat.yMMMd();
 
     return Scaffold(
       appBar: AppBar(
@@ -261,90 +517,8 @@ class _VatDeclarationsScreenState
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 // New declaration: period + generate.
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButtonFormField<int>(
-                        key: const ValueKey('vat-decl-period'),
-                        initialValue: _periodIndex,
-                        decoration: InputDecoration(
-                          labelText: l10n.vatDeclPeriod,
-                          border: const OutlineInputBorder(),
-                        ),
-                        items: [
-                          for (final (index, p) in periods.indexed)
-                            DropdownMenuItem(
-                              value: index,
-                              child: Text(vatFilingPeriodLabel(l10n, p)),
-                            ),
-                        ],
-                        onChanged: (value) => setState(
-                            () => _periodIndex = value ?? 0),
-                      ),
-                    ),
-                    HelpDot(l10n.helpTopicVat,
-                      anchor: HelpAnchor.moneyVatDeclaration,
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    FilledButton.icon(
-                      key: const ValueKey('vat-decl-generate'),
-                      onPressed: () => _generate(period),
-                      icon: const Icon(Icons.calculate_outlined),
-                      label: Text(
-                          l10n.vatDeclGenerate),
-                    ),
-                  ],
-                ),
-                // #878 — the period's positions for the accountant, as
-                // the letter and as a CSV, beside the declaration.
-                if (ref
-                    .watch(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.vatReport)) ...[
-                  const SizedBox(height: AppSpacing.sm),
-                  Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
-                    children: [
-                      OutlinedButton.icon(
-                        key: const ValueKey('vat-report-pdf'),
-                        onPressed: () => showVatReport(context, ref,
-                            start: period.start, end: period.end),
-                        icon: const Icon(Icons.summarize_outlined),
-                        label: Text(l10n.vatReportPdf),
-                      ),
-                      OutlinedButton.icon(
-                        key: const ValueKey('vat-report-csv'),
-                        onPressed: () => saveVatReportCsv(context, ref,
-                            start: period.start, end: period.end),
-                        icon: const Icon(Icons.table_view_outlined),
-                        label: Text(l10n.vatReportCsv),
-                      ),
-                    ],
-                  ),
-                ],
-                // #2354 — the EU sales list (DES, ZM, 349) of the period.
-                if (ref
-                    .watch(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.recapitulativeStatement))
-                  Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.sm),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: OutlinedButton.icon(
-                        key: const ValueKey('vat-recap-csv'),
-                        onPressed: () => saveRecapitulativeCsv(context, ref,
-                            start: period.start,
-                            // the period's last day, included
-                            end: addCalendarDays(period.end, 1),
-                            currency: ref.read(currentWorkspaceProvider).value
-                                    ?.currencyCode ??
-                                'EUR'),
-                        icon: const Icon(Icons.public_outlined),
-                        label: Text(l10n
-                            .recapCsv),
-                      ),
-                    ),
-                  ),
+                _periodRow(l10n, periods, period),
+                ..._exportButtons(context, period),
                 SalesTaxWorksheetButton(start: period.start, end: period.end),
                 const SizedBox(height: AppSpacing.lg),
                 switch (declarationsAsync) {
@@ -357,157 +531,7 @@ class _VatDeclarationsScreenState
                   AsyncData(value: final declarations) => Column(
                       children: [
                         for (final declaration in declarations)
-                          Card(
-                            key: ValueKey(
-                                'vat-decl-${declaration.id}'),
-                            child: Padding(
-                              padding: AppSpacing.lgAll,
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '${dateFormat.format(declaration.periodStart)}'
-                                          ' – '
-                                          '${dateFormat.format(declaration.periodEnd)}',
-                                          style: theme
-                                              .textTheme.titleMedium,
-                                        ),
-                                      ),
-                                      Chip(
-                                        key: ValueKey(
-                                            'vat-decl-status-${declaration.id}'),
-                                        label: Text(
-                                          _statusLabel(l10n, declaration),
-                                        ),
-                                        visualDensity:
-                                            VisualDensity.compact,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 4),
-                                  for (final line in declaration.lines)
-                                    Text(
-                                      key: line.isCorrection
-                                          ? ValueKey(
-                                              'vat-decl-correction-${declaration.id}-${line.corrects}')
-                                          : null,
-                                      '${line.isCorrection || line.isInput ? '${_lineNote(l10n, line)} · ' : ''}'
-                                      '${_pctLabel(line.percent)}'
-                                      '${line.category.isEmpty ? '' : ' ${line.category}'} · '
-                                      '${l10n.vatDeclNet} '
-                                      '${centsToMajor(line.netCents)} ${declaration.currency} · '
-                                      '${l10n.vatDeclVat} '
-                                      '${centsToMajor(line.vatCents)} ${declaration.currency}',
-                                      style:
-                                          theme.textTheme.bodySmall,
-                                    ),
-                                  if (declaration.lines
-                                      .any((l) => l.isCorrection))
-                                    Text(
-                                      vatWords(l10n).vatDeclCorrectionsNote,
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${l10n.vatDeclTotals}: '
-                                    '${centsToMajor(declaration.totalNetCents)} ${declaration.currency} · '
-                                    '${l10n.vatDeclVat} '
-                                    '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
-                                    '${declaration.invoiceCount} '
-                                    '${l10n.vatDeclInvoices}',
-                                    style: theme.textTheme.bodyMedium
-                                        ?.copyWith(
-                                            fontWeight:
-                                                FontWeight.w600),
-                                  ),
-                                  // #2357 — with deductible VAT, what is
-                                  // left to pay, or to claim back.
-                                  if (declaration.lines.any((l) => l.isInput))
-                                    Text(
-                                      key: ValueKey(
-                                          'vat-decl-balance-${declaration.id}'),
-                                      '${declaration.totalVatCents >= 0 ? vatWords(l10n).vatDeclPayable : vatWords(l10n).vatDeclCredit}: '
-                                      '${centsToMajor(declaration.totalVatCents.abs())} ${declaration.currency}',
-                                      style: theme.textTheme.bodyMedium,
-                                    ),
-                                  if (declaration.isFiled)
-                                    Text(
-                                      '${declaration.number.isEmpty ? '' : '${declaration.number} · '}'
-                                      '${declaration.submittedChannel}'
-                                      '${declaration.submittedReceipt.isEmpty ? '' : ' · ${declaration.submittedReceipt}'}',
-                                      style: theme.textTheme.bodySmall,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  const SizedBox(height: AppSpacing.sm),
-                                  Wrap(
-                                    spacing: 8,
-                                    runSpacing: 4,
-                                    children: [
-                                      OutlinedButton.icon(
-                                        key: ValueKey(
-                                            'vat-decl-pdf-${declaration.id}'),
-                                        icon: const Icon(
-                                            Icons.picture_as_pdf_outlined,
-                                            size: 18),
-                                        label: Text(
-                                            l10n.vatDeclPdf),
-                                        onPressed: () async {
-                                          await warmLetterDocProviders(ref, 'vat_declaration');
-                                          if (!context.mounted) return;
-                                          await runReportActions(
-                                          context,
-                                          ref,
-                                          keyPrefix: 'vat-decl',
-                                          render: () => renderLetterDoc(context, ref,
-                                              docId: 'vat_declaration', data: _reportData(declaration)),
-                                          logMessage:
-                                              'vat declaration pdf failed',
-                                          buildPdf: () =>
-                                              _buildPdf(declaration),
-                                          );
-                                        },
-                                      ),
-                                      OutlinedButton.icon(
-                                        key: ValueKey(
-                                            'vat-decl-xml-${declaration.id}'),
-                                        icon: const Icon(
-                                            Icons.code_outlined,
-                                            size: 18),
-                                        label: Text(l10n.vatDeclXml),
-                                        onPressed: () =>
-                                            _exportXml(declaration),
-                                      ),
-                                      // #2357 — the file the channel files.
-                                      if (vatFilingFileLabel(l10n, ref.watch(saveVatFilingFileProvider).country) case final label?)
-                                        OutlinedButton.icon(
-                                          key: ValueKey('vat-decl-filing-${declaration.id}'),
-                                          icon: const Icon(Icons.upload_file_outlined, size: 18),
-                                          label: Text(label),
-                                          onPressed: () => exportVatFilingFile(context, ref.read(saveVatFilingFileProvider), declaration),
-                                        ),
-                                      if (declaration.isPrepared)
-                                        OutlinedButton.icon(
-                                          key: ValueKey(
-                                              'vat-decl-filed-${declaration.id}'),
-                                          icon: const Icon(
-                                              Icons.task_alt_outlined,
-                                              size: 18),
-                                          label: Text(
-                                              l10n.vatDeclMarkFiled),
-                                          onPressed: () =>
-                                              _markFiled(declaration),
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          _declarationCard(context, declaration),
                       ],
                     ),
                   AsyncError() => Text(
@@ -524,61 +548,3 @@ class _VatDeclarationsScreenState
 String _pctLabel(double percent) => percent == percent.roundToDouble()
     ? '${percent.toStringAsFixed(0)} %'
     : '$percent %';
-
-/// #2357 — the mark-as-filed dialog: the owner confirms and types the
-/// receipt reference the authority gave; the button waits for it.
-class _MarkFiledDialog extends StatefulWidget {
-  const _MarkFiledDialog({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  @override
-  State<_MarkFiledDialog> createState() => _MarkFiledDialogState();
-}
-
-class _MarkFiledDialogState extends State<_MarkFiledDialog> {
-  final _receipt = TextEditingController();
-
-  @override
-  void dispose() {
-    _receipt.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    return AlertDialog(scrollable: true,
-      title: Text(l10n.vatDeclMarkFiled),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.vatDeclMarkFiledConfirm),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            key: const ValueKey('vat-decl-receipt'),
-            controller: _receipt,
-            autofocus: true,
-            label: l10n.vatDeclReceipt,
-            onChanged: (_) => setState(() {}),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('vat-declarations-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.commonCancel),
-        ),
-        FilledButton(
-          key: const ValueKey('vat-decl-filed-confirm'),
-          onPressed: _receipt.text.trim().isEmpty
-              ? null
-              : () => Navigator.of(context).pop(_receipt.text.trim()),
-          child: Text(l10n.vatDeclMarkFiled),
-        ),
-      ],
-    );
-  }
-}
