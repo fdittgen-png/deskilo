@@ -30,6 +30,7 @@ import '../../domain/workspace_feature.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
+import 'conversation_header.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
 import 'message_reach_sheet.dart';
@@ -258,21 +259,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // A message arriving brings the reactions with it.
-    ref.listen(conversationMessagesProvider(widget.conversationId), (_, _) {
-      ref.invalidate(messageMarksProvider(_marksKey));
-    });
-    final conversationId = widget.conversationId;
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final me = ref.watch(myMemberProvider).value;
-    final names = ref.watch(memberNamesProvider).value ?? const {};
-    final newest =
-        ref.watch(conversationMessagesProvider(conversationId)).value ??
-            const <MemberNote>[];
-    final hub = _hub;
+  void _markReadAsMessagesLand(String conversationId) {
     // #821 — a message that lands while the thread is OPEN is read as it
     // lands: the watermark moves again, so the badge behind never counts
     // what is on screen.
@@ -290,6 +277,102 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         }));
       }
     });
+  }
+
+  /// What the header does on a tap: a group opens its roster, a direct
+  /// conversation opens the other member's profile.
+  VoidCallback? _openFromHeader(Conversation? conversation) {
+    if (conversation == null) return null;
+    if (conversation.isGroup) {
+      return () =>
+          showGroupInfoSheet(context, ref, conversation: conversation);
+    }
+    final other = conversation.otherMemberId;
+    if (other == null) return null;
+    return () => openMemberProfile(context, ref, memberId: other);
+  }
+
+  Widget _earlierRow(List<MemberNote> newest) {
+    return Center(
+                  child: _loadingEarlier
+                      ? const Padding(
+                          padding: EdgeInsets.all(AppSpacing.sm),
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        )
+                      : TextButton.icon(
+                          key: const ValueKey('conversation-load-earlier'),
+                          onPressed: () => _loadEarlier(newest),
+                          icon: const Icon(Icons.history, size: 18),
+                          label: Text(context.l10n.conversationLoadEarlier),
+                        ),
+                );
+  }
+
+  Widget _composer({
+    required bool postingClosed,
+    required List<({String id, String name})> mentionNames,
+  }) {
+    final conversationId = widget.conversationId;
+    final hub = _hub;
+    return postingClosed
+        ? Padding(
+            padding: AppSpacing.lgAll,
+            child: Text(
+              context.l10n.groupPostingClosed,
+              key: const ValueKey('group-posting-closed'),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          )
+        : Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        0,
+        AppSpacing.lg,
+        AppSpacing.lg,
+      ),
+      child: MemberNoteComposer(
+        key: const ValueKey('conversation-thread-member-note-composer'),
+        autofocus: false,
+        seedBody: hub
+            ? (ref.read(conversationDraftsProvider)[conversationId] ??
+                widget.seedBody)
+            : widget.seedBody,
+        onChanged: hub
+            ? (text) => ref
+                .read(conversationDraftsProvider.notifier)
+                .set(conversationId, text)
+            : null,
+        compact: hub,
+        mentionCandidates: mentionNames,
+        mentionTokens: ref.watch(messageMentionsOnProvider),
+        quoted: _quoted,
+        onCancelQuote: () => setState(() => _quoted = null),
+        onSend: (body) => _send(context, ref, body),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // A message arriving brings the reactions with it.
+    ref.listen(conversationMessagesProvider(widget.conversationId), (_, _) {
+      ref.invalidate(messageMarksProvider(_marksKey));
+    });
+    final conversationId = widget.conversationId;
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final me = ref.watch(myMemberProvider).value;
+    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final newest =
+        ref.watch(conversationMessagesProvider(conversationId)).value ??
+            const <MemberNote>[];
+    final hub = _hub;
+    _markReadAsMessagesLand(conversationId);
     final conversation = (ref.watch(conversationsProvider).value ?? const [])
         .where((c) => c.id == conversationId)
         .firstOrNull;
@@ -306,91 +389,11 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         newest.length >= 200 - 1 &&
         !_loadingEarlier;
 
-    final header = Padding(
-      padding: EdgeInsets.fromLTRB(
-        widget.asPage ? AppSpacing.xs : AppSpacing.xl,
-        widget.asPage ? AppSpacing.xs : AppSpacing.lg,
-        AppSpacing.xl,
-        AppSpacing.xs,
-      ),
-      child: Row(children: [
-        if (widget.asPage)
-          IconButton(
-            key: const ValueKey('conversation-back'),
-            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => context.pop(),
-          ),
-        Expanded(
-          // The HEADER is the way into the roster — WhatsApp's idiom, and
-          // the one place people look for "who is in this".
-          child: InkWell(
-            key: const ValueKey('conversation-header'),
-            onTap: conversation == null
-                ? null
-                : conversation.isGroup
-                    ? () => showGroupInfoSheet(
-                          context,
-                          ref,
-                          conversation: conversation,
-                        )
-                    : (conversation.otherMemberId == null
-                        ? null
-                        : () => openMemberProfile(
-                              context,
-                              ref,
-                              memberId: conversation.otherMemberId!,
-                            )),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(children: [
-                  Flexible(
-                    child: Text(
-                      title,
-                      style: theme.textTheme.titleMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  if (conversation?.muted ?? false) ...[
-                    const SizedBox(width: AppSpacing.xs),
-                    Icon(Icons.notifications_off_outlined,
-                        size: 16, color: theme.colorScheme.onSurfaceVariant),
-                  ],
-                ]),
-                if (!(conversation?.isGroup ?? true))
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    Text(
-                      l10n.conversationSeeProfile,
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    Icon(Icons.chevron_right,
-                        size: 16, color: theme.textTheme.bodySmall?.color),
-                  ]),
-                if (conversation?.isGroup ?? false)
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    Text(
-                      l10n.conversationMemberCount(
-                            conversation!.participantCount,
-                          ),
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    Icon(Icons.chevron_right,
-                        size: 16, color: theme.textTheme.bodySmall?.color),
-                  ]),
-              ],
-            ),
-          ),
-        ),
-        if (!widget.asPage)
-          IconButton(
-            key: const ValueKey('conversation-thread-close'),
-            tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-      ]),
+    final header = ConversationHeader(
+      title: title,
+      conversation: conversation,
+      asPage: widget.asPage,
+      onOpen: _openFromHeader(conversation),
     );
 
     final list = messages.isEmpty
@@ -411,23 +414,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
             itemCount: messages.length + (canLoadEarlier || _loadingEarlier ? 1 : 0),
             itemBuilder: (context, index) {
               if (index == messages.length) {
-                return Center(
-                  child: _loadingEarlier
-                      ? const Padding(
-                          padding: EdgeInsets.all(AppSpacing.sm),
-                          child: SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                        )
-                      : TextButton.icon(
-                          key: const ValueKey('conversation-load-earlier'),
-                          onPressed: () => _loadEarlier(newest),
-                          icon: const Icon(Icons.history, size: 18),
-                          label: Text(l10n.conversationLoadEarlier),
-                        ),
-                );
+                return _earlierRow(newest);
               }
               final i = messages.length - 1 - index;
               final note = messages[i];
@@ -509,42 +496,9 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           (id: p.memberId, name: names[p.memberId]!),
     ];
 
-    final composer = postingClosed
-        ? Padding(
-            padding: AppSpacing.lgAll,
-            child: Text(
-              context.l10n.groupPostingClosed,
-              key: const ValueKey('group-posting-closed'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        : Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.lg,
-        0,
-        AppSpacing.lg,
-        AppSpacing.lg,
-      ),
-      child: MemberNoteComposer(
-        key: const ValueKey('conversation-thread-member-note-composer'),
-        autofocus: false,
-        seedBody: hub
-            ? (ref.read(conversationDraftsProvider)[conversationId] ??
-                widget.seedBody)
-            : widget.seedBody,
-        onChanged: hub
-            ? (text) => ref
-                .read(conversationDraftsProvider.notifier)
-                .set(conversationId, text)
-            : null,
-        compact: hub,
-        mentionCandidates: mentionNames,
-        mentionTokens: ref.watch(messageMentionsOnProvider),
-        quoted: _quoted,
-        onCancelQuote: () => setState(() => _quoted = null),
-        onSend: (body) => _send(context, ref, body),
-      ),
+    final composer = _composer(
+      postingClosed: postingClosed,
+      mentionNames: mentionNames,
     );
 
     // #1824 — the thread is capture-protected while it is on screen,
