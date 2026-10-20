@@ -1,8 +1,8 @@
 {
-  "recordedSha": "08445d536686ce55754c1906dd61fb712a7ee56f",
+  "recordedSha": "bc6ece5fb65a7ce6a474d66fd69b7bd1a3a2f664",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1741,"functions":9548,"cyclomatic>=9":1007,"cyclomatic>=25":130,"cognitive>=15":420,"cognitive>=30":119,"length>=150":94,"parameters>=5":449,"parameters>=7":144,"partOfFiles":75},
+  "totals": {"files":1742,"functions":9550,"cyclomatic>=9":1008,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":118,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -42,7 +42,7 @@
 
       "lib/features/directory/presentation/messenger/context_thread_screen.dart": 631,
 
-      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 658,
+      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 609,
 
       "lib/features/members/presentation/widgets/member_page_cards.dart": 863,
 
@@ -1260,8 +1260,9 @@
     {"p":"lib/features/help/providers/help_providers.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/device_pin.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":9,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/presentation/screens/kiosk_gate_screen.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":66,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":533,"part":false,"setState":2,"repositoryReads":1,"fn":13,"cog":33,"cyc":29,"len":239,"params":4,"nest":6,"over":{"cog":2,"cyc":2,"len":2,"params":0}},
+    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":481,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart","loc":308,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":10,"cyc":16,"len":101,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/kiosk/presentation/widgets/kiosk_success_card.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":45,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/providers/kiosk_mode.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/application/active_target_client.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":3,"len":9,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/application/answer_confirmation.dart","loc":29,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2537,7 +2538,6 @@
     {"id":"lib/features/events/presentation/screens/validation_settings_screen.dart#ValidationSettingsScreen._edit(BuildContext context,WidgetRef ref,{required String? eventType,required String label})","cog":18,"cyc":26,"len":91,"params":4},
     {"id":"lib/features/events/presentation/widgets/policy_editor_sheet.dart#PolicyEditorSheetState.build(BuildContext context)","cog":28,"cyc":17,"len":269,"params":1},
     {"id":"lib/features/events/providers/attention_providers.dart#workspaceAttention(Ref ref)","cog":23,"cyc":25,"len":32,"params":1},
-    {"id":"lib/features/kiosk/presentation/screens/kiosk_screen.dart#_KioskScreenState._act({required String title,String? seatId,String? levelId})","cog":31,"cyc":29,"len":156,"params":3},
     {"id":"lib/features/kiosk/presentation/screens/kiosk_screen.dart#_KioskScreenState.build(BuildContext context)","cog":33,"cyc":27,"len":239,"params":1},
     {"id":"lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart#showKioskActSheet(BuildContext context,{required String targetName,required BookingGranularity granularity,required DateTime now,required NfcUidReader reader,required bool nfcEnabled,QrScanWidgetBuilder? scanBuilder,BookingRefusal? Function(SpaceActChoice choice)? refusalOf,String Function(BookingRefusal refusal)? refusalTextOf,bool explainNoCamera})","cog":0,"cyc":1,"len":40,"params":10},
     {"id":"lib/features/mcp/application/assistant_setup.dart#AssistantSetup.new.derive({required String workspaceId,required IdentityBindingStatus? identity,required DatabaseCapabilities? capabilities,required McpPolicy? policy,required List<McpConnectionInfo>? connections,required bool featureOn,required bool canConfigure,required bool canManageIntegrations})","cog":32,"cyc":28,"len":104,"params":8},

@@ -34,7 +34,6 @@ import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
-import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart'
@@ -50,6 +49,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../device_pin.dart';
 import '../widgets/kiosk_act_sheet.dart';
+import '../widgets/kiosk_success_card.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
@@ -155,11 +155,62 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       );
       return;
     }
+    final request = await _askForBadge(title);
+    if (request == null || !mounted) return;
+    // The sheet's dispose stopped BOTH readers (NFC session + camera).
+
+    final done = await _perform(
+      workspace.id,
+      request,
+      title: title,
+      seatId: seatId,
+      levelId: levelId,
+    );
+    if (done == null) return;
+    final (effective, identity) = done;
+    final booksWindow = request.action != KioskAction.checkOut;
+    if (!mounted) return;
+    invalidateBookingData(ref);
+
+    // The receipt: who, what, where, until when — self-dismissing, so
+    // the next member finds a clean wall.
+    final actionLabel = request.action == KioskAction.reserve &&
+            effective == KioskAction.checkIn
+        ? (l10n.kioskReserveAndCheckIn)
+        : switch (request.action) {
+            KioskAction.checkIn => l10n.kioskCheckIn,
+            KioskAction.reserve => l10n.kioskReserve,
+            KioskAction.checkOut => l10n.kioskCheckOut,
+          };
+    // #616 — the member's own photo on the receipt: the visual
+    // wrong-badge check, behind its own kiosk-family toggle.
+    final showPhoto = ref
+        .read(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.kioskMemberPhotos);
+    unawaited(showDialog<void>(
+      context: context,
+      builder: (_) => KioskSuccessCard(
+        actionLabel: actionLabel,
+        memberName: identity.name,
+        avatarUserId: showPhoto ? identity.userId : null,
+        hasAvatar: identity.hasAvatar,
+        targetName: title,
+        rangeText: booksWindow
+            ? bookingRangeText(context, appFormatOf(context), l10n, request.start, request.end)
+            : null,
+      ),
+    ));
+  }
+
+  /// The one sheet of the flow: action, window and badge (#814 -- the gate
+  /// the app's surfaces ask, asked at the wall too).
+  Future<KioskActRequest?> _askForBadge(String title) async {
+    final l10n = context.l10n;
     // #814 — the gate the app's surfaces ask, asked at the wall too.
     final gate = bookingGateOf(ref);
     final granularity = ref.read(bookingGranularityProvider).value ??
         BookingGranularity.flexible;
-    final request = await showKioskActSheet(
+    return showKioskActSheet(
       context,
       targetName: title,
       granularity: granularity,
@@ -191,9 +242,18 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 stepMinutes: granularity.stepMinutes,
               ),
     );
-    if (request == null || !mounted) return;
-    // The sheet's dispose stopped BOTH readers (NFC session + camera).
+  }
 
+  /// Identifies the badge and acts in one go; the effective action and who
+  /// acted, or null once the refusal has been told on the wall.
+  Future<(KioskAction, KioskIdentity)?> _perform(
+    String workspaceId,
+    KioskActRequest request, {
+    required String title,
+    String? seatId,
+    String? levelId,
+  }) async {
+    final l10n = context.l10n;
     // A reservation made standing at the kiosk can start checked in —
     // one badge presentation covers both.
     final effective =
@@ -209,12 +269,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     try {
       identity =
           await ref.read(reservationRepositoryProvider).kioskIdentify(
-                workspaceId: workspace.id,
+                workspaceId: workspaceId,
                 badgeToken: request.badgeToken,
               );
       // #970 — demo mode blurs the name the badge resolved to.
       await ref.read(reservationRepositoryProvider).kioskAct(
-            workspaceId: workspace.id,
+            workspaceId: workspaceId,
             badgeToken: request.badgeToken,
             action: effective.wireName,
             seatId: seatId,
@@ -226,7 +286,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       debugPrint('kiosk act failed: $e\n$st');
       TraceLogger.instance
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
-      if (!mounted) return;
+      if (!mounted) return null;
       // #430: bookingErrorText is THE mapper; kiosk cases stay.
       var message = switch (e) {
         PostgrestException(:final message)
@@ -257,39 +317,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         }
       }
       AppSnack.error(context, message, replace: true);
-      return;
+      return null;
     }
-    if (!mounted) return;
-    invalidateBookingData(ref);
-
-    // The receipt: who, what, where, until when — self-dismissing, so
-    // the next member finds a clean wall.
-    final actionLabel = request.action == KioskAction.reserve &&
-            effective == KioskAction.checkIn
-        ? (l10n.kioskReserveAndCheckIn)
-        : switch (request.action) {
-            KioskAction.checkIn => l10n.kioskCheckIn,
-            KioskAction.reserve => l10n.kioskReserve,
-            KioskAction.checkOut => l10n.kioskCheckOut,
-          };
-    // #616 — the member's own photo on the receipt: the visual
-    // wrong-badge check, behind its own kiosk-family toggle.
-    final showPhoto = ref
-        .read(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.kioskMemberPhotos);
-    unawaited(showDialog<void>(
-      context: context,
-      builder: (_) => _KioskSuccessCard(
-        actionLabel: actionLabel,
-        memberName: identity.name,
-        avatarUserId: showPhoto ? identity.userId : null,
-        hasAvatar: identity.hasAvatar,
-        targetName: title,
-        rangeText: booksWindow
-            ? bookingRangeText(context, appFormatOf(context), l10n, request.start, request.end)
-            : null,
-      ),
-    ));
+    return (effective, identity);
   }
 
   /// The member whose reservation blocks the requested window on the
@@ -553,98 +583,6 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// The self-dismissing receipt: who, what, where, until when — big
-/// enough to verify the badge resolved to the right person, gone in a
-/// few seconds so the next member finds a clean wall. Tap anywhere to
-/// dismiss sooner.
-class _KioskSuccessCard extends StatefulWidget {
-  const _KioskSuccessCard({
-    required this.actionLabel,
-    required this.memberName,
-    required this.avatarUserId,
-    required this.hasAvatar,
-    required this.targetName,
-    required this.rangeText,
-  });
-
-  final String actionLabel;
-  final String memberName;
-
-  /// The subject's auth user id for their profile photo (#616) — null
-  /// hides the avatar entirely (feature off or unknown user).
-  final String? avatarUserId;
-  final bool hasAvatar;
-  final String targetName;
-  final String? rangeText;
-
-  @override
-  State<_KioskSuccessCard> createState() => _KioskSuccessCardState();
-}
-
-class _KioskSuccessCardState extends State<_KioskSuccessCard> {
-  Timer? _dismiss;
-
-  @override
-  void initState() {
-    super.initState();
-    _dismiss = Timer(const Duration(seconds: 4), () {
-      if (mounted) Navigator.of(context).pop();
-    });
-  }
-
-  @override
-  void dispose() {
-    _dismiss?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final rangeText = widget.rangeText;
-    return AlertDialog(scrollable: true,
-      key: const ValueKey('kiosk-success-card'),
-      icon: Icon(
-        Icons.check_circle_outline,
-        size: 44,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      title: Text(widget.actionLabel),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // #616 — the badge's face: the member's photo when they set
-          // one, their initial otherwise.
-          if (widget.avatarUserId case final userId?
-              when userId.isNotEmpty) ...[
-            MemberAvatar(
-              key: const ValueKey('kiosk-summary-avatar'),
-              userId: userId,
-              name: widget.memberName,
-              hasAvatar: widget.hasAvatar,
-              radius: 32,
-            ),
-            const SizedBox(height: 8),
-          ],
-          Text(
-            widget.memberName,
-            key: const ValueKey('kiosk-summary-name'),
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 4),
-          Text(widget.targetName),
-          if (rangeText != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              rangeText,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
-        ],
       ),
     );
   }
