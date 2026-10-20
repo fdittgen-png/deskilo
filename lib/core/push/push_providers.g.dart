@@ -50,8 +50,16 @@ final class PushConnectorProvider
 
 String _$pushConnectorHash() => r'49654a606b6ef052fe395bcbb64b33074469a68e';
 
+/// #2564 O5 -- a push endpoint is registered for a member, and a member lives
+/// on the selected workspace's installation: that host's client, not the
+/// root session's.
+
 @ProviderFor(pushEndpointRepository)
 final pushEndpointRepositoryProvider = PushEndpointRepositoryProvider._();
+
+/// #2564 O5 -- a push endpoint is registered for a member, and a member lives
+/// on the selected workspace's installation: that host's client, not the
+/// root session's.
 
 final class PushEndpointRepositoryProvider
     extends
@@ -61,6 +69,9 @@ final class PushEndpointRepositoryProvider
           PushEndpointRepository
         >
     with $Provider<PushEndpointRepository> {
+  /// #2564 O5 -- a push endpoint is registered for a member, and a member lives
+  /// on the selected workspace's installation: that host's client, not the
+  /// root session's.
   PushEndpointRepositoryProvider._()
     : super(
         from: null,
@@ -96,7 +107,7 @@ final class PushEndpointRepositoryProvider
 }
 
 String _$pushEndpointRepositoryHash() =>
-    r'374d9c98e39e72e19b16aafcfab4526ee97fe635';
+    r'1dea25857c72247d5648e0a6970605d6a58732b3';
 
 /// Starts the push pipeline once per app run (#72/#428). Watched from
 /// the shell; a missing distributor or platform just means local-only.

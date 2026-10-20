@@ -5,8 +5,9 @@
 // lib/app/realtime_invalidations.dart). Unwired, nothing is invalidated:
 // there is no workspace and no map.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show Supabase, SupabaseClient;
+import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
+import '../backend/context_client_providers.dart';
 import 'invalidation_map.dart';
 import 'invalidation_registry.dart';
 
@@ -17,9 +18,9 @@ final invalidationLookupProvider = Provider<InvalidationLookup>(
 
 /// #2564 O5 — the client of the selected workspace's installation: its
 /// change feed is the workspace target's. Overridden by the app with
-/// `selectedWorkspaceClientProvider`; the default is the one process client.
+/// `selectedWorkspaceClientProvider`; the default is the personal home's.
 final realtimeWorkspaceClientProvider = Provider<SupabaseClient>(
-  (ref) => Supabase.instance.client,
+  (ref) => ref.watch(personalClientProvider),
 );
 
 /// The active workspace's id (null: none); the channel follows it.

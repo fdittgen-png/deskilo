@@ -51,6 +51,10 @@ const _clean = <String>[
   'lib/features/directory/providers/directory_providers.dart',
   'lib/features/money/providers/tax_reference_providers.dart',
   'lib/features/workspace/providers/instance_providers.dart',
+  // #2564 O5: the change feed defaults to the personal home's client, the
+  // push endpoints follow the selected workspace's.
+  'lib/core/realtime/realtime_wiring.dart',
+  'lib/core/push/push_providers.dart',
   // #2564 O3: the money sources of the selected workspace.
   'lib/features/money/providers/money_providers.dart',
   'lib/features/money/providers/money_queries_providers.dart',
@@ -92,7 +96,7 @@ const _clean = <String>[
 
 /// Hand-written lib files outside the allowlist that still name the
 /// singleton. RATCHET: this number only falls.
-const _budget = 2;
+const _budget = 0;
 
 bool _names(String line) => line.contains(_singleton);
 
