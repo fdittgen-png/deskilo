@@ -1,8 +1,8 @@
 {
-  "recordedSha": "ec685f513f5e9f19d466ab7aa1fc5a8cfae7fead",
+  "recordedSha": "e8bbcc17b91fd97db10d2d55a879658215473e4a",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1745,"functions":9566,"cyclomatic>=9":1013,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1746,"functions":9571,"cyclomatic>=9":1014,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -114,7 +114,7 @@
 
       "lib/features/workspace/presentation/widgets/bi_views_bar.dart": 514,
 
-      "lib/features/workspace/presentation/widgets/conversation_thread.dart": 653,
+      "lib/features/workspace/presentation/widgets/conversation_thread.dart": 623,
 
       "lib/features/workspace/presentation/widgets/member_note_composer.dart": 598,
 
@@ -2362,7 +2362,8 @@
     {"p":"lib/features/workspace/presentation/widgets/configuration_transfer_prompt.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":3,"len":43,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/conversation_avatar.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":6,"len":29,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/conversation_bubble.dart","loc":289,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":30,"cyc":19,"len":142,"params":4,"nest":4,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/conversation_thread.dart","loc":563,"part":false,"setState":6,"repositoryReads":1,"fn":16,"cog":83,"cyc":69,"len":321,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/conversation_header.dart","loc":110,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":11,"len":94,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/conversation_thread.dart","loc":513,"part":false,"setState":6,"repositoryReads":1,"fn":20,"cog":58,"cyc":47,"len":176,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/emblem_editor.dart","loc":124,"part":false,"setState":4,"repositoryReads":0,"fn":5,"cog":6,"cyc":10,"len":42,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/environment_tile.dart","loc":129,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":14,"cyc":11,"len":50,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/feature_capability_list.dart","loc":72,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":7,"len":36,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2767,7 +2768,7 @@
     {"id":"lib/features/workspace/presentation/widgets/bi_toolbar.dart#BiToolbar.build(BuildContext context)","cog":63,"cyc":37,"len":233,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/bi_views_bar.dart#BiViewsBar.build(BuildContext context,WidgetRef ref)","cog":55,"cyc":35,"len":266,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/conversation_bubble.dart#ConversationBubble._bubble(BuildContext context,WidgetRef ref,ThemeData theme)","cog":30,"cyc":19,"len":142,"params":3},
-    {"id":"lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build(BuildContext context)","cog":83,"cyc":69,"len":321,"params":1},
+    {"id":"lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build(BuildContext context)","cog":58,"cyc":47,"len":176,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/feature_switch_flow.dart#switchWorkspaceFeature(BuildContext context,WidgetRef ref,{required Workspace workspace,required Set<WorkspaceFeature> enabled,required WorkspaceFeature feature,required bool value,required Map<WorkspaceFeature, FeatureAssessment> assessments})","cog":22,"cyc":19,"len":131,"params":7},
     {"id":"lib/features/workspace/presentation/widgets/group_info_sheet.dart#_GroupInfoSheet.build(BuildContext context,WidgetRef ref)","cog":34,"cyc":33,"len":185,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/invite_sheet.dart#buildInvitationMessage({required Workspace workspace,required String code,required InviteRole role,required String languageCode,String firstName,String lastName,String phone,bool monospaceCode,BackendEndpoint? target})","cog":6,"cyc":7,"len":54,"params":9},

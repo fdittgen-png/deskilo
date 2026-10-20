@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ec685f513f5e9f19d466ab7aa1fc5a8cfae7fead` on 2026-10-20.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `e8bbcc17b91fd97db10d2d55a879658215473e4a` on 2026-10-20.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,9 +10,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1745 |
-| functions | 9566 |
-| cyclomatic>=9 | 1013 |
+| files | 1746 |
+| functions | 9571 |
+| cyclomatic>=9 | 1014 |
 | cyclomatic>=25 | 128 |
 | cognitive>=15 | 420 |
 | cognitive>=30 | 117 |
@@ -28,7 +28,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 215 | 50 | 393 | 10 | `lib/features/money/domain/saf_t.dart#buildSafTFile` |
 | 109 | 56 | 480 | 16 | `lib/features/money/domain/fec.dart#buildFecFile` |
 | 94 | 54 | 460 | 4 | `lib/features/money/presentation/accounting_export.dart#exportAccountingFile` |
-| 83 | 69 | 321 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 82 | 21 | 143 | 7 | `lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml` |
 | 74 | 59 | 307 | 1 | `lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build` |
 | 73 | 29 | 314 | 1 | `lib/features/money/presentation/screens/vat_declarations_screen.dart#_VatDeclarationsScreenState.build` |
@@ -49,5 +48,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 61 | 43 | 185 | 2 | `lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView.build` |
 | 59 | 32 | 255 | 1 | `lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState.build` |
 | 58 | 53 | 174 | 3 | `lib/features/task_recorder/package/task_package.dart#_readManifest` |
+| 58 | 47 | 176 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 56 | 46 | 238 | 4 | `lib/features/workspace/application/template_workbook.dart#templateWorkbook` |
 

@@ -244,9 +244,11 @@ void main() {
     test('the group header opens the roster, with a chevron to say so', () {
       // A tappable subtitle that looks like plain text is a control
       // nobody finds.
-      final thread = File('lib/features/workspace/presentation/widgets/'
-              'conversation_thread.dart')
-          .readAsStringSync();
+      // The header widget and the thread that decides where a tap goes.
+      const widgets = 'lib/features/workspace/presentation/widgets/';
+      final thread = File('${widgets}conversation_thread.dart')
+              .readAsStringSync() +
+          File('${widgets}conversation_header.dart').readAsStringSync();
       expect(thread, contains("ValueKey('conversation-header')"));
       expect(thread, contains('showGroupInfoSheet'));
       expect(thread, contains('Icons.chevron_right'));
