@@ -22,7 +22,12 @@ import '../report_layout_actions.dart';
 import '../status_report_data.dart';
 
 class WorkspaceStatusScreen extends ConsumerStatefulWidget {
-  const WorkspaceStatusScreen({super.key});
+  const WorkspaceStatusScreen({super.key, this.from, this.to});
+
+  /// The months a drill-through opens on (`YYYY-MM`, #2578); a month outside
+  /// the 24 offered, or a pair that does not read, falls back to the default.
+  final String? from;
+  final String? to;
   @override
   ConsumerState<WorkspaceStatusScreen> createState() => _State();
 }
@@ -44,6 +49,12 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
     ];
     _to = _months.first;
     _from = _months[2];
+    final f = widget.from, t = widget.to;
+    if (f != null && t != null && _months.contains(f) && _months.contains(t)) {
+      // Months are `YYYY-MM`: string order is date order.
+      _from = f.compareTo(t) <= 0 ? f : t;
+      _to = f.compareTo(t) <= 0 ? t : f;
+    }
   }
 
   Future<void> _print(WorkspaceStatus status) async {

@@ -145,7 +145,10 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
           to: '/money',
         ),
       ),
-      builder: (context, state) => const WorkspaceStatusScreen(),
+      builder: (context, state) => WorkspaceStatusScreen(
+        from: state.uri.queryParameters['from'],
+        to: state.uri.queryParameters['to'],
+      ),
     ),
     GoRoute(
       path: '/money/repartition-wizard',
