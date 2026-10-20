@@ -10,9 +10,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/controls_feed_body.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -32,6 +30,7 @@ import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
 import '../feed_notes.dart';
+import '../widgets/events_filter_bar.dart';
 import '../widgets/note_row.dart';
 import '../widgets/pending_decisions_section.dart';
 import '../widgets/validation_trail.dart';
@@ -114,26 +113,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   ) =>
       eventLine(l10n, event, names, targets, currency);
 
-  /// #598 — the symbol of a grouping axis; it fronts both the chip and
-  /// every group header (where tapping it ungroups).
-  IconData _groupingIcon(FeedGrouping grouping) {
-    return switch (grouping) {
-      FeedGrouping.type => Icons.category_outlined,
-      FeedGrouping.date => Icons.today_outlined,
-      FeedGrouping.user => Icons.person_outline,
-      FeedGrouping.none => Icons.notes,
-    };
-  }
-
-  String _groupingLabel(AppLocalizations l10n, FeedGrouping grouping) {
-    return switch (grouping) {
-      FeedGrouping.type => l10n.notifGroupByType,
-      FeedGrouping.date => l10n.notifGroupByDate,
-      FeedGrouping.user => l10n.notifGroupByUser,
-      FeedGrouping.none => '',
-    };
-  }
-
   String _groupTitle(
     AppLocalizations l10n,
     FeedGrouping grouping,
@@ -174,7 +153,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             onPressed: () => ref
                 .read(notificationFilterProvider.notifier)
                 .setGrouping(FeedGrouping.none),
-            icon: Icon(_groupingIcon(grouping), size: 20),
+            icon: Icon(feedGroupingIcon(grouping), size: 20),
           ),
           Expanded(
             child: Text(
@@ -251,6 +230,71 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
 
   String _when(WorkspaceEvent event) =>
       eventWhen(event, ref.watch(appFormatProvider));
+
+  Widget _eventTile(
+    BuildContext context,
+    AppLocalizations l10n,
+    WorkspaceEvent event, {
+    required bool unread,
+    required Map<String, String> names,
+    required Map<String, String> targets,
+    required MoneyFormat currency,
+    required List<EventDecision> decisions,
+    required List<ValidationPolicy> policies,
+  }) =>
+      ListTile(
+                        leading: Icon(_icon(event)),
+                        title: Text(
+                          _line(l10n, event, names, targets, currency),
+                          style: unread
+                              ? const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                )
+                              : null,
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // #636 — the same `· suffix` idiom the
+                            // pending card uses for quorum progress:
+                            // present only when the server flagged the
+                            // event as self-settled.
+                            Text(
+                              switch (_autoValidatedNote(l10n, event)) {
+                                final note? => '${_when(event)} · $note',
+                                null => _when(event),
+                              },
+                            ),
+                            // #154 — how the money moved; absent /
+                            // pre-#154 payloads render no method line.
+                            if (_methodLine(l10n, event)
+                                case final method?)
+                              Text(method),
+                            ValidationTrail(
+                              decisions: decisions,
+                              names: names,
+                              sequential:
+                                  policyFor(event.type.dbName, policies)
+                                      .sequential,
+                            ),
+                            // Quorum progress stays neutral: it only
+                            // renders while the event is pending, i.e.
+                            // before the quorum is satisfied (#196).
+                            if (_quorumProgress(
+                              l10n,
+                              event,
+                              decisions,
+                              policies,
+                            ) case final progress?)
+                              Text(progress),
+                          ],
+                        ),
+                        // #196 — semantic outcome trailing: pending
+                        // waits, applied/confirmed succeeded (green),
+                        // rejected failed (red). Expired events carry no
+                        // outcome mark.
+                        trailing: eventOutcomeMark(context, event.status),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -351,148 +395,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   PendingDecisionsSection(pending: matchingPending),
                   const Divider(),
                 ],
-                // #581 — ONE filter line: categories × read state, all
-                // persisted. Empty category selection = everything.
-                EdgeFadeScroll(
-                  padding: AppSpacing.mdH,
-                  child: Row(
-                    children: [
-                      FilterChip(
-                        key: const ValueKey('events-filter-all'),
-                        label: Text(l10n.eventsFilterAll),
-                        selected: filter.categories.isEmpty,
-                        visualDensity: VisualDensity.compact,
-                        onSelected: (_) => ref
-                            .read(notificationFilterProvider.notifier)
-                            .clearCategories(),
-                      ),
-                      for (final category
-                          in NotificationCategory.values) ...[
-                        const SizedBox(width: 8),
-                        FilterChip(
-                          key: ValueKey('notif-cat-${category.wire}'),
-                          label: Text(notificationCategoryLabel(l10n, category)),
-                          selected:
-                              filter.categories.contains(category),
-                          visualDensity: VisualDensity.compact,
-                          onSelected: (_) => ref
-                              .read(notificationFilterProvider.notifier)
-                              .toggleCategory(category),
-                        ),
-                      ],
-                    ],
-                  ),
+                EventsFilterBar(
+                  filter: filter,
+                  unreadCount: unreadIds.length,
+                  groupingOn: groupingOn,
                 ),
-                // Read-state line, kept OFF the category line so both
-                // stay reachable without scrolling (#539/#546 — the
-                // keys predate the mixed feed).
-                Padding(
-                  padding: AppSpacing.mdH,
-                  child: Row(
-                    children: [
-                      // #1184 — the same overflow strategy as the
-                      // category line above: the chips scroll and say
-                      // so, while the sort button keeps its place at
-                      // the end. As a plain Row this line ran off the
-                      // right of a narrow phone at a large text scale,
-                      // and a four-digit unread count did it at any
-                      // scale.
-                      Expanded(
-                        child: EdgeFadeScroll(
-                          child: Row(
-                            children: [
-                      FilterChip(
-                        key: const ValueKey('notes-filter-unread'),
-                        label: Text(
-                          '${l10n.notesFilterUnread}'
-                          '${unreadIds.isEmpty ? '' : ' (${unreadIds.length})'}',
-                        ),
-                        selected: unreadOnly,
-                        visualDensity: VisualDensity.compact,
-                        onSelected: (value) => ref
-                            .read(notificationFilterProvider.notifier)
-                            .setRead(
-                              value ? ReadFilter.unread : ReadFilter.all,
-                            ),
-                      ),
-                      const SizedBox(width: 8),
-                      FilterChip(
-                        key: const ValueKey('notes-filter-read'),
-                        label:
-                            Text(l10n.notesFilterRead),
-                        selected: filter.read == ReadFilter.read,
-                        visualDensity: VisualDensity.compact,
-                        onSelected: (value) => ref
-                            .read(notificationFilterProvider.notifier)
-                            .setRead(
-                              value ? ReadFilter.read : ReadFilter.all,
-                            ),
-                      ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // #581 — flip the date sort; the choice persists
-                      // like the rest of the filter. It sat in an app
-                      // bar this screen no longer has (#702), and it
-                      // reads better here anyway: every other control
-                      // that shapes the list is on these two lines.
-                      IconButton(
-                        key: const ValueKey('events-sort-toggle'),
-                        tooltip: l10n.notifSortByDate,
-                        onPressed: () => ref
-                            .read(notificationFilterProvider.notifier)
-                            .toggleSort(),
-                        icon: Icon(
-                          filter.sort == FeedSort.newestFirst
-                              ? Icons.arrow_downward
-                              : Icons.arrow_upward,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // #598 — the regrouping line: fold the feed by type,
-                // day or member. Tapping the selected chip — or the
-                // symbol on any group header — returns to flat.
-                if (groupingOn)
-                  EdgeFadeScroll(
-                    padding: AppSpacing.mdH,
-                    child: Row(
-                      children: [
-                        Text(
-                          l10n.notifGroupBy,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        for (final axis in const [
-                          FeedGrouping.type,
-                          FeedGrouping.date,
-                          FeedGrouping.user,
-                        ]) ...[
-                          const SizedBox(width: 8),
-                          FilterChip(
-                            key: ValueKey('notif-group-${axis.name}'),
-                            // #1191 — a selected chip draws its OWN
-                            // tick, and it lands on the avatar: the
-                            // group-by glyph under a checkmark reads
-                            // as a dark smudge. The avatar IS the
-                            // state here.
-                            showCheckmark: false,
-                            avatar: Icon(_groupingIcon(axis), size: 18),
-                            label: Text(_groupingLabel(l10n, axis)),
-                            selected: filter.grouping == axis,
-                            visualDensity: VisualDensity.compact,
-                            onSelected: (value) => ref
-                                .read(
-                                    notificationFilterProvider.notifier)
-                                .setGrouping(
-                                  value ? axis : FeedGrouping.none,
-                                ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
                 // The MIXED feed (#581): notes and events interleaved,
                 // date-sorted under the user's direction of choice —
                 // optionally folded into groups (#598).
@@ -509,81 +416,16 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         unread: unread,
                       ),
                     EventFeedItem(:final event, :final unread) =>
-                      ListTile(
-                        leading: Icon(_icon(event)),
-                        title: Text(
-                          _line(l10n, event, names, targets, currency),
-                          style: unread
-                              ? const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                )
-                              : null,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // #636 — the same `· suffix` idiom the
-                            // pending card uses for quorum progress:
-                            // present only when the server flagged the
-                            // event as self-settled.
-                            Text(
-                              switch (_autoValidatedNote(l10n, event)) {
-                                final note? => '${_when(event)} · $note',
-                                null => _when(event),
-                              },
-                            ),
-                            // #154 — how the money moved; absent /
-                            // pre-#154 payloads render no method line.
-                            if (_methodLine(l10n, event)
-                                case final method?)
-                              Text(method),
-                            ValidationTrail(
-                              decisions: decisions[event.id] ?? const [],
-                              names: names,
-                              sequential:
-                                  policyFor(event.type.dbName, policies)
-                                      .sequential,
-                            ),
-                            // Quorum progress stays neutral: it only
-                            // renders while the event is pending, i.e.
-                            // before the quorum is satisfied (#196).
-                            if (_quorumProgress(
-                              l10n,
-                              event,
-                              decisions[event.id] ?? const [],
-                              policies,
-                            ) case final progress?)
-                              Text(progress),
-                          ],
-                        ),
-                        // #196 — semantic outcome trailing: pending
-                        // waits, applied/confirmed succeeded (green),
-                        // rejected failed (red). Expired events carry no
-                        // outcome mark.
-                        trailing: switch (event.status) {
-                          EventStatus.pending =>
-                            const Icon(Icons.hourglass_top, size: 18),
-                          EventStatus.applied ||
-                          EventStatus.confirmed =>
-                            Icon(
-                              Icons.check_circle_outline,
-                              size: 18,
-                              color: AppStatusColors.successOf(
-                                Theme.of(context).brightness,
-                              ),
-                            ),
-                          EventStatus.rejected => Icon(
-                              Icons.cancel_outlined,
-                              size: 18,
-                              color:
-                                  Theme.of(context).colorScheme.error,
-                            ),
-                          // #1088 — an unknown status carries no
-                          // outcome claim, like an expired one.
-                          EventStatus.expired ||
-                          EventStatus.unknown =>
-                            null,
-                        },
+                      _eventTile(
+                        context,
+                        l10n,
+                        event,
+                        unread: unread,
+                        names: names,
+                        targets: targets,
+                        currency: currency,
+                        decisions: decisions[event.id] ?? const [],
+                        policies: policies,
                       ),
                   },
                 ],

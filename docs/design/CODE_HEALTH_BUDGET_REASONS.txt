@@ -23,7 +23,6 @@ fileLength lib/features/calendar/presentation/screens/calendar_screen.dart // #2
 fileLength lib/features/directory/data/supabase_messenger_repository.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/directory/domain/messenger.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/directory/presentation/messenger/context_thread_screen.dart // #2313 every control keyed for the task recorder
-fileLength lib/features/events/presentation/screens/events_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/kiosk/presentation/screens/kiosk_screen.dart // #1289 the kiosk plan paints the workspace's own room colours
 fileLength lib/features/members/presentation/screens/member_page.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/domain/fec.dart // 590→555
