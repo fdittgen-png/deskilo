@@ -40,6 +40,17 @@ class BiBatchRequest {
   final String? fromMonth;
   final String? toMonth;
 
+  /// What is asked, without the caller's handle: two requests with the same
+  /// identity are the same figure (#2578 coordinator).
+  String get identity => [
+    metricId,
+    from?.toUtc().toIso8601String(),
+    to?.toUtc().toIso8601String(),
+    levelId,
+    fromMonth,
+    toMonth,
+  ].join('|');
+
   Map<String, Object?> toJson() => {
     'request_key': key,
     'metric_id': metricId,
@@ -67,6 +78,14 @@ class BiBatchEntry {
     : seatCapacity = null,
       financeSummary = null;
 
+  const BiBatchEntry._(
+    this.key,
+    this.seatCapacity,
+    this.financeSummary,
+    this.code,
+    this.message,
+  );
+
   final String key;
   final SeatCapacityKpi? seatCapacity;
   final FinanceSummaryKpi? financeSummary;
@@ -76,6 +95,15 @@ class BiBatchEntry {
   final String? message;
 
   bool get ok => seatCapacity != null || financeSummary != null;
+
+  /// The same answer under another caller's handle.
+  BiBatchEntry withKey(String other) => BiBatchEntry._(
+    other,
+    seatCapacity,
+    financeSummary,
+    code,
+    message,
+  );
 
   /// The failure the single-figure read would have thrown.
   KpiUnavailable toError() => KpiUnavailable(message ?? code ?? 'unavailable');
