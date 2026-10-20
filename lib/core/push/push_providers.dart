@@ -2,7 +2,6 @@
 import 'package:deskilo_push/deskilo_push.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -27,9 +26,12 @@ PushConnector pushConnector(Ref ref) => createPushConnector(
           .warn('push', message, error: error, stackTrace: stackTrace),
     );
 
+/// #2564 O5 -- a push endpoint is registered for a member, and a member lives
+/// on the selected workspace's installation: that host's client, not the
+/// root session's.
 @Riverpod(keepAlive: true)
 PushEndpointRepository pushEndpointRepository(Ref ref) =>
-    SupabasePushEndpointRepository(Supabase.instance.client);
+    SupabasePushEndpointRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// Starts the push pipeline once per app run (#72/#428). Watched from
 /// the shell; a missing distributor or platform just means local-only.

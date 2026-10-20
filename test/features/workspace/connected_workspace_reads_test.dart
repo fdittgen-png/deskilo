@@ -12,6 +12,7 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/push/push_providers.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
@@ -221,6 +222,10 @@ void main() {
       () => container.read(actionConfirmationRepositoryProvider).get('c-1'),
       () => container.read(mcpAdminRepositoryProvider).policy('ws-1'),
       () => container.read(mcpOnboardingRepositoryProvider).consentStatus('a-1'),
+      // #2564 O5: a push endpoint is registered at the member's host.
+      () => container
+          .read(pushEndpointRepositoryProvider)
+          .saveEndpoint(memberIds: ['m-1'], endpoint: 'e-1'),
     ];
     for (final read in reads) {
       try {
@@ -269,6 +274,7 @@ void main() {
     ]) {
       expect(one.paths, contains('/rest/v1/rpc/$rpc'), reason: rpc);
     }
+    expect(one.paths, contains('/rest/v1/push_endpoints'), reason: 'push');
   });
 
   test('the list half stays on the root session, whatever is selected',
