@@ -29838,6 +29838,12 @@ abstract class AppLocalizations {
   /// **'Lessor'**
   String get roomRentFieldLessor;
 
+  /// #2575 rented rooms: the roles a room is open to
+  ///
+  /// In en, this message translates to:
+  /// **'Also open to these roles'**
+  String get roomRentFieldRoles;
+
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:

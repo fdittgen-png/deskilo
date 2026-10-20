@@ -23,6 +23,7 @@ import 'features/auth/providers/auth_providers.dart';
 import 'features/profile/providers/profile_providers.dart';
 import 'features/workspace/providers/settings_providers.dart';
 import 'features/workspace/providers/workspace_providers.dart';
+import 'features/workspace/providers/workspace_roles_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,6 +109,7 @@ Future<void> main() async {
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495
         activeSettingsFromWorkspace, // #2486
+        audienceRolesFromWorkspace, // #2575
         ...realtimeWiringFromApp, // #2495
       ],
       child: const DeskiloRoot(),

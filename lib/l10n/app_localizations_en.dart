@@ -17280,6 +17280,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roomRentFieldLessor => 'Lessor';
 
   @override
+  String get roomRentFieldRoles => 'Also open to these roles';
+
+  @override
   String get roomRentFieldStatus => 'Status';
 
   @override

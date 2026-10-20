@@ -17453,6 +17453,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get roomRentFieldLessor => 'Vermieter';
 
   @override
+  String get roomRentFieldRoles => 'Zusätzlich offen für diese Rollen';
+
+  @override
   String get roomRentFieldStatus => 'Status';
 
   @override

@@ -148,6 +148,10 @@
   "@roomRentFieldAll": {
     "description": "#2568 rented rooms"
   },
+  "roomRentFieldRoles": "Aperta anche a questi ruoli",
+  "@roomRentFieldRoles": {
+    "description": "#2575 rented rooms: the roles a room is open to"
+  },
   "roomRentInvalid": "Scegliete il locatore e il primo giorno e inserite gli importi come numeri.",
   "@roomRentInvalid": {
     "description": "#2568 rented rooms"
