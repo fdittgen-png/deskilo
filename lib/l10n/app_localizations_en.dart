@@ -1608,6 +1608,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biRemainder => 'Not in a current group';
 
   @override
+  String get biReportAddCard => 'Add a card';
+
+  @override
+  String biReportCopyName(String name) {
+    return '$name (report)';
+  }
+
+  @override
+  String get biReportDuplicate => 'Duplicate as report';
+
+  @override
+  String get biReportEditorTitle => 'Report cards';
+
+  @override
+  String biReportMoveDown(String card) {
+    return 'Move $card down';
+  }
+
+  @override
+  String biReportMoveUp(String card) {
+    return 'Move $card up';
+  }
+
+  @override
+  String get biReportNoCards => 'This report has no card yet. Add one.';
+
+  @override
+  String get biReportPageTitle => 'Page 1';
+
+  @override
+  String biReportRemove(String card) {
+    return 'Remove $card';
+  }
+
+  @override
   String get biReset => 'Show the standard view';
 
   @override
@@ -1756,6 +1791,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biViewUnreadable =>
       'This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.';
+
+  @override
+  String get biViewUnsupported =>
+      'This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.';
 
   @override
   String get biViews => 'Views';
@@ -5469,6 +5508,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Sign in with a badge';
+
+  @override
+  String get featureBiReportDesignerDesc =>
+      'Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read.';
+
+  @override
+  String get featureBiReportDesignerTitle => 'Report designer (analytics)';
 
   @override
   String get featureBookForOthers => 'Book for others';

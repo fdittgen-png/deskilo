@@ -13,29 +13,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_toolbar.dart';
+import 'bi_view_failure_text.dart';
 
 /// Opens [view] (its id goes into the address as `saved`) or, with
 /// null, the product standard.
 typedef BiOpenView = void Function(BiSavedView? view, BiQueryContext query);
-
-String _biViewFailureText(AppLocalizations l10n, BiViewFailure f) =>
-    switch (f) {
-      BiViewFailure.stale =>
-        l10n.biViewStale,
-      BiViewFailure.nameTaken =>
-        l10n.biViewNameTaken,
-      BiViewFailure.forbidden =>
-        l10n.biViewForbidden,
-      BiViewFailure.invalid =>
-        l10n.biViewInvalid,
-    };
 
 class BiViewsBar extends ConsumerWidget {
   const BiViewsBar({
@@ -92,7 +80,7 @@ class BiViewsBar extends ConsumerWidget {
           stackTrace: st,
         );
         messenger.showSnackBar(
-          SnackBar(content: Text(_biViewFailureText(l10n, e.failure))),
+          SnackBar(content: Text(biViewFailureText(l10n, e.failure))),
         );
       }
     }
@@ -147,7 +135,7 @@ class BiViewsBar extends ConsumerWidget {
               over: open,
               scope: open.scope,
               name: open.name,
-              definition: BiViewDefinition.of(query),
+              definition: biSavedDefinition(open, query),
             );
             onOpen(saved, query);
           }),

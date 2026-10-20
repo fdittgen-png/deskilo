@@ -1235,6 +1235,10 @@ window.SETUP_L10N={
    "accountingPeriods": [
     "Accounting periods",
     "Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged."
+   ],
+   "biReportDesigner": [
+    "Report designer (analytics)",
+    "Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read."
    ]
   },
   "process": {
@@ -2693,6 +2697,10 @@ window.SETUP_L10N={
    "accountingPeriods": [
     "Périodes comptables",
     "Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n'est verrouillé et les exports ne sont pas consignés."
+   ],
+   "biReportDesigner": [
+    "Concepteur de rapports (analyses)",
+    "Transformez une analyse enregistrée en rapport modifiable, fait de pages et de cartes. Un rapport garde la question, jamais les chiffres : chacun ne voit que ce que ses propres droits permettent. Désactivé : les vues enregistrées restent telles quelles et les rapports existants restent lisibles."
    ]
   },
   "process": {
@@ -4151,6 +4159,10 @@ window.SETUP_L10N={
    "accountingPeriods": [
     "Buchungsperioden",
     "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert."
+   ],
+   "biReportDesigner": [
+    "Berichtsdesigner (Analysen)",
+    "Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar."
    ]
   },
   "process": {
@@ -5609,6 +5621,10 @@ window.SETUP_L10N={
    "accountingPeriods": [
     "Periodos contables",
     "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran."
+   ],
+   "biReportDesigner": [
+    "Diseñador de informes (análisis)",
+    "Convierte un análisis guardado en un informe editable de páginas y tarjetas. Un informe guarda la pregunta, nunca las cifras: cada persona solo ve lo que permiten sus propios derechos. Desactivado: las vistas guardadas no cambian y los informes existentes siguen siendo legibles."
    ]
   },
   "process": {
@@ -7067,6 +7083,10 @@ window.SETUP_L10N={
    "accountingPeriods": [
     "Periodi contabili",
     "Chiudere un periodo dei libri: nessuna fattura datata al suo interno può essere annullata, nessun incasso abbinato al suo interno, e ogni esportazione contabile viene registrata. Disattivato: nulla viene bloccato e le esportazioni non vengono registrate."
+   ],
+   "biReportDesigner": [
+    "Editor di report (analisi)",
+    "Trasforma un'analisi salvata in un report modificabile fatto di pagine e schede. Un report conserva la domanda, mai le cifre: ognuno vede solo ciò che i propri diritti consentono. Disattivato: le viste salvate restano invariate e i report esistenti restano leggibili."
    ]
   },
   "process": {

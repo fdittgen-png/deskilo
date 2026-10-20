@@ -1794,6 +1794,62 @@
   "@biRemainder": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biReportAddCard": "Add a card",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (report)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportDuplicate": "Duplicate as report",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Report cards",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportMoveDown": "Move {card} down",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "Move {card} up",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "This report has no card yet. Add one.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageTitle": "Page 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "Remove {card}",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
   "biReset": "Show the standard view",
   "@biReset": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -2001,6 +2057,10 @@
   "biViewUnreadable": "This view cannot be opened here: it was saved in a form this version does not read, or none of its analyses is available to you.",
   "@biViewUnreadable": {
     "description": "#1923 C Web-BI saved views"
+  },
+  "biViewUnsupported": "This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
   },
   "biViews": "Views",
   "@biViews": {
@@ -6632,6 +6692,14 @@
   "featureBadgeSignInTitle": "Sign in with a badge",
   "@featureBadgeSignInTitle": {
     "description": "#662 - feature registry entry"
+  },
+  "featureBiReportDesignerDesc": "Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerTitle": "Report designer (analytics)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
   },
   "featureBookForOthers": "Book for others",
   "@featureBookForOthers": {

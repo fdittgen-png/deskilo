@@ -227,6 +227,7 @@ begin
       "assetRegister": false,
       "externalRooms": false,
       "accountingPeriods": false,
+      "biReportDesigner": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

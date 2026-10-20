@@ -931,6 +931,62 @@
   "biRefusedGrain": "Diese Analyse wird für diese Zeitraumlänge nicht angeboten.",
   "biRefusedGrouping": "Diese Analyse lässt sich so nicht gruppieren.",
   "biRemainder": "In keiner aktuellen Gruppe",
+  "biReportAddCard": "Karte hinzufügen",
+  "@biReportAddCard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportCopyName": "{name} (Bericht)",
+  "@biReportCopyName": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportDuplicate": "Als Bericht duplizieren",
+  "@biReportDuplicate": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportEditorTitle": "Karten des Berichts",
+  "@biReportEditorTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportMoveDown": "{card} nach unten",
+  "@biReportMoveDown": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportMoveUp": "{card} nach oben",
+  "@biReportMoveUp": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
+  "biReportNoCards": "Dieser Bericht hat noch keine Karte. Fügen Sie eine hinzu.",
+  "@biReportNoCards": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageTitle": "Seite 1",
+  "@biReportPageTitle": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRemove": "{card} entfernen",
+  "@biReportRemove": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "card": {
+        "type": "String"
+      }
+    }
+  },
   "biReset": "Standardansicht zeigen",
   "biRunRate": "Im bisherigen Tempo würde diese Periode bei etwa {value} enden.",
   "@biRunRate": {
@@ -1022,6 +1078,10 @@
   "biViewStandard": "Standardansicht",
   "biViewTable": "Tabelle",
   "biViewUnreadable": "Diese Ansicht lässt sich hier nicht öffnen: Sie wurde in einer Form gespeichert, die diese Version nicht liest, oder keine ihrer Analysen ist für Sie verfügbar.",
+  "biViewUnsupported": "Dieser Bericht kann hier nicht gespeichert werden: Der Berichtsdesigner ist aus, oder eine ältere App-Version würde löschen, was sie nicht lesen kann.",
+  "@biViewUnsupported": {
+    "description": "#2579 analytical reports"
+  },
   "biViews": "Ansichten",
   "biViewsMine": "Meine Ansichten",
   "biViewsTeam": "Team-Ansichten",
@@ -4146,6 +4206,14 @@
   "featureBadgeSignInTitle": "Anmeldung per Ausweis",
   "@featureBadgeSignInTitle": {
     "description": "#662 - feature registry entry"
+  },
+  "featureBiReportDesignerDesc": "Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar.",
+  "@featureBiReportDesignerDesc": {
+    "description": "#2579 analytical reports"
+  },
+  "featureBiReportDesignerTitle": "Berichtsdesigner (Analysen)",
+  "@featureBiReportDesignerTitle": {
+    "description": "#2579 analytical reports"
   },
   "featureBookForOthers": "Für andere buchen",
   "featureBookForOthersDesc": "Admins und Inhaber buchen Plätze für andere Mitglieder.",
