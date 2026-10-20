@@ -1,8 +1,8 @@
 {
-  "recordedSha": "1761e2d803a7d208b8aed9dd95662b1d7bc91a15",
+  "recordedSha": "0d03638a66901d1ac33bffcbe8ccc4fdd5e0e59b",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1746,"functions":9580,"cyclomatic>=9":1015,"cyclomatic>=25":127,"cognitive>=15":420,"cognitive>=30":117,"length>=150":91,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1747,"functions":9584,"cyclomatic>=9":1016,"cyclomatic>=25":126,"cognitive>=15":420,"cognitive>=30":116,"length>=150":90,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -66,7 +66,7 @@
 
       "lib/features/money/presentation/screens/my_finances_screen.dart": 574,
 
-      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 587,
+      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 570,
 
       "lib/features/money/presentation/screens/vat_screen.dart": 572,
 
@@ -1668,7 +1668,7 @@
     {"p":"lib/features/money/presentation/screens/report_editor_screen.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":23,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/services_screen.dart","loc":293,"part":false,"setState":3,"repositoryReads":0,"fn":7,"cog":28,"cyc":15,"len":86,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/tax_reference_screen.dart","loc":150,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":21,"cyc":10,"len":82,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/screens/vat_declarations_screen.dart","loc":532,"part":false,"setState":2,"repositoryReads":0,"fn":14,"cog":73,"cyc":29,"len":314,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/screens/vat_declarations_screen.dart","loc":500,"part":false,"setState":1,"repositoryReads":0,"fn":15,"cog":17,"cyc":12,"len":97,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/vat_screen.dart","loc":509,"part":false,"setState":7,"repositoryReads":1,"fn":12,"cog":52,"cyc":32,"len":261,"params":2,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/screens/workspace_status_screen.dart","loc":221,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":10,"cyc":11,"len":77,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/status_report_data.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":7,"len":64,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1809,6 +1809,7 @@
     {"p":"lib/features/money/presentation/widgets/uk_land_taxation_fields.dart","loc":96,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":5,"len":50,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/usage_face.dart","loc":305,"part":false,"setState":0,"repositoryReads":1,"fn":6,"cog":10,"cyc":14,"len":108,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_declaration_period_field.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/vat_mark_filed_dialog.dart","loc":55,"part":false,"setState":1,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":37,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_rate_field.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":7,"len":41,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_tax_point_field.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":26,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_tax_point_notice.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":4,"len":24,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2630,7 +2631,6 @@
     {"id":"lib/features/money/presentation/screens/legal_identity_screen.dart#_LegalIdentityScreenState.build(BuildContext context)","cog":34,"cyc":34,"len":364,"params":1},
     {"id":"lib/features/money/presentation/screens/number_sequences_screen.dart#_SequenceCardState.build(BuildContext context)","cog":19,"cyc":23,"len":208,"params":1},
     {"id":"lib/features/money/presentation/screens/repartition_wizard_screen.dart#_State.build(BuildContext context)","cog":30,"cyc":27,"len":168,"params":1},
-    {"id":"lib/features/money/presentation/screens/vat_declarations_screen.dart#_VatDeclarationsScreenState.build(BuildContext context)","cog":73,"cyc":29,"len":314,"params":1},
     {"id":"lib/features/money/presentation/screens/vat_screen.dart#_VatScreenState.build(BuildContext context)","cog":52,"cyc":32,"len":261,"params":1},
     {"id":"lib/features/money/presentation/usage_report_data.dart#usageReportData(BuildContext context,WidgetRef ref,{required String period,required String memberId,required String memberName,AppLocalizations? l10nOverride,String? localeName})","cog":6,"cyc":26,"len":97,"params":7},
     {"id":"lib/features/money/presentation/widgets/bill_view_part2.dart#_OpenPositionsCard._label(AppLocalizations l10n,WorkspaceEvent event)","cog":1,"cyc":29,"len":39,"params":2},
