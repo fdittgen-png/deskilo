@@ -33,10 +33,152 @@ import '../widgets/workspace_owners_sheet.dart';
 class ProfilesScreen extends ConsumerWidget {
   const ProfilesScreen({super.key});
 
+  Widget _workspaceCard(
+    BuildContext context,
+    WidgetRef ref,
+    Workspace workspace,
+    List<Member> memberships,
+    String? activeId,
+    String? defaultId,
+  ) {
+    final l10n = context.l10n;
+    final labels = l10n;
+        final member = memberships
+            .where((m) => m.workspaceId == workspace.id)
+            .firstOrNull;
+        final isActive = workspace.id == activeId;
+        return Card(
+          margin: const EdgeInsets.only(bottom: AppSpacing.md),
+          color: isActive ? Theme.of(context).colorScheme.surfaceContainer : null,
+          child: ListTile(
+            key: ValueKey('profiles-environment-dev-${workspace.id}'),
+            contentPadding: AppSpacing.lgAll,
+            // #917 — the environment, at a glance and before
+            // the tap: green is a real workspace, orange one to
+            // try things out in. Colour alone never carries a
+            // state (spec §11), so the tooltip names it too.
+            leading: Tooltip(
+              message: workspace.isDevelopment
+                  ? (l10n.environmentDev)
+                  : (l10n.environmentProd),
+              child: CircleAvatar(
+                key: ValueKey('profile-env-${workspace.id}'),
+                backgroundColor: workspace.isDevelopment
+                    ? AppEnvironmentColors.developmentOf(
+                        Theme.of(context).brightness)
+                    : AppEnvironmentColors.productionOf(
+                        Theme.of(context).brightness),
+                foregroundColor: Colors.white,
+                child: Text(
+                  workspace.name.isEmpty
+                      ? '?'
+                      : workspace.name.substring(0, 1).toUpperCase(),
+                ),
+              ),
+            ),
+            title: Text(workspace.name, style: Theme.of(context).textTheme.primaryValue?.strong),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (member != null)
+                  Text(memberRoleLabel(l10n, member),
+                      style: Theme.of(context).textTheme.metadata),
+                Text(workspace.isDevelopment
+                    ? labels.environmentDev : labels.environmentProd),
+                // #974 — the home site, and a tap to change it,
+                // once the workspace has more than one.
+                if (member != null &&
+                    effectiveFeatures(resolveEnabledFeatures(
+                            workspace.featureFlags))
+                        .contains(WorkspaceFeature.multiSite))
+                  _HomeSiteLine(member: member),
+              ],
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Default-at-startup star (#322): radio
+                // semantics — checking one replaces the
+                // previous; tapping the checked star clears it
+                // (last-active behavior returns).
+                IconButton(
+                  key: ValueKey('profile-default-${workspace.id}'),
+                  tooltip: workspace.id == defaultId
+                      ? (l10n.profilesDefault)
+                      : (l10n.profilesMakeDefault),
+                  icon: Icon(
+                    workspace.id == defaultId
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: workspace.id == defaultId
+                        ? Theme.of(context).colorScheme.primary
+                        : null,
+                  ),
+                  onPressed: () => ref
+                      .read(defaultWorkspaceIdProvider.notifier)
+                      .toggle(workspace.id),
+                ),
+                if (isActive)
+                  Icon(
+                    Icons.check_circle,
+                    color: Theme.of(context).colorScheme.primary,
+                    semanticLabel:
+                        l10n.profilesActive,
+                  ),
+              ],
+            ),
+            onTap: isActive
+                ? null
+                : () async {
+                    await ref
+                        .read(activeWorkspaceIdProvider.notifier)
+                        .select(workspace.id);
+                  },
+          ),
+        );
+  }
+
+  Widget _platformSection(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return Card(child: ExpansionTile(
+    key: const ValueKey('profiles-platform-section'),
+    shape: const Border(), collapsedShape: const Border(),
+    leading: const Icon(Icons.admin_panel_settings_outlined),
+    title: Text(l10n.profilesAllWorkspaces),
+    children: [const PlatformToolsEntries(),
+  // #987 — a twin pair is ONE space with two sides, and the
+  // list above has rendered it as one row since that issue.
+  // This list used to emit a card per workspace row, so the
+  // same space appeared twice, once "Development" and once
+  // "Production", as though they were unrelated and belonged
+  // to different people.
+  for (final group in groupedOverviews(
+    (ref.watch(allWorkspacesProvider).value ??
+            const <WorkspaceOverview>[])
+        .where((w) => !w.isMember)
+        .toList(),
+  ))
+        ListTile(
+          key: ValueKey('platform-workspace-${group.first.id}'),
+          leading: const Icon(Icons.lock_outline),
+          title: Text(group.first.name),
+          subtitle: Text(
+            '${_environmentsLabel(l10n, group)}'
+            ' · ${l10n.profilesNotMember(group.first.memberCount)}',
+          ),
+          // The sheet is about who to write to, and a pair has
+          // one set of owners — the dev side is the one that
+          // always exists (prod ⊆ dev, 0185).
+          onTap: () =>
+              showWorkspaceOwnersSheet(context, ref, group.first),
+        ),
+    ],
+  ));
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final labels = l10n;
     final workspacesAsync = ref.watch(myWorkspacesProvider);
     final workspaces = workspacesAsync.value ?? const <Workspace>[];
     // #1650 — a list that could not be fetched is not an empty list: the
@@ -112,142 +254,12 @@ class ProfilesScreen extends ConsumerWidget {
               else
                 const SizedBox.shrink()
             else
-            Builder(
-              builder: (context) {
-                final member = memberships
-                    .where((m) => m.workspaceId == workspace.id)
-                    .firstOrNull;
-                final isActive = workspace.id == active?.id;
-                return Card(
-                  margin: const EdgeInsets.only(bottom: AppSpacing.md),
-                  color: isActive ? Theme.of(context).colorScheme.surfaceContainer : null,
-                  child: ListTile(
-                    key: ValueKey('profiles-environment-dev-${workspace.id}'),
-                    contentPadding: AppSpacing.lgAll,
-                    // #917 — the environment, at a glance and before
-                    // the tap: green is a real workspace, orange one to
-                    // try things out in. Colour alone never carries a
-                    // state (spec §11), so the tooltip names it too.
-                    leading: Tooltip(
-                      message: workspace.isDevelopment
-                          ? (l10n.environmentDev)
-                          : (l10n.environmentProd),
-                      child: CircleAvatar(
-                        key: ValueKey('profile-env-${workspace.id}'),
-                        backgroundColor: workspace.isDevelopment
-                            ? AppEnvironmentColors.developmentOf(
-                                Theme.of(context).brightness)
-                            : AppEnvironmentColors.productionOf(
-                                Theme.of(context).brightness),
-                        foregroundColor: Colors.white,
-                        child: Text(
-                          workspace.name.isEmpty
-                              ? '?'
-                              : workspace.name.substring(0, 1).toUpperCase(),
-                        ),
-                      ),
-                    ),
-                    title: Text(workspace.name, style: Theme.of(context).textTheme.primaryValue?.strong),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (member != null)
-                          Text(memberRoleLabel(l10n, member),
-                              style: Theme.of(context).textTheme.metadata),
-                        Text(workspace.isDevelopment
-                            ? labels.environmentDev : labels.environmentProd),
-                        // #974 — the home site, and a tap to change it,
-                        // once the workspace has more than one.
-                        if (member != null &&
-                            effectiveFeatures(resolveEnabledFeatures(
-                                    workspace.featureFlags))
-                                .contains(WorkspaceFeature.multiSite))
-                          _HomeSiteLine(member: member),
-                      ],
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Default-at-startup star (#322): radio
-                        // semantics — checking one replaces the
-                        // previous; tapping the checked star clears it
-                        // (last-active behavior returns).
-                        IconButton(
-                          key: ValueKey('profile-default-${workspace.id}'),
-                          tooltip: workspace.id == defaultId
-                              ? (l10n.profilesDefault)
-                              : (l10n.profilesMakeDefault),
-                          icon: Icon(
-                            workspace.id == defaultId
-                                ? Icons.star
-                                : Icons.star_border,
-                            color: workspace.id == defaultId
-                                ? Theme.of(context).colorScheme.primary
-                                : null,
-                          ),
-                          onPressed: () => ref
-                              .read(defaultWorkspaceIdProvider.notifier)
-                              .toggle(workspace.id),
-                        ),
-                        if (isActive)
-                          Icon(
-                            Icons.check_circle,
-                            color: Theme.of(context).colorScheme.primary,
-                            semanticLabel:
-                                l10n.profilesActive,
-                          ),
-                      ],
-                    ),
-                    onTap: isActive
-                        ? null
-                        : () async {
-                            await ref
-                                .read(activeWorkspaceIdProvider.notifier)
-                                .select(workspace.id);
-                          },
-                  ),
-                );
-              },
-            ),
+              _workspaceCard(context, ref, workspace, memberships, active?.id, defaultId),
           // #937 — the platform owner sees every other workspace in the
           // database, greyed out: not theirs to enter, but theirs to
           // know about. Tapping one names its owners.
-          if (ref.watch(isPlatformOwnerProvider).value ?? false) ...[
-            Card(child: ExpansionTile(
-              key: const ValueKey('profiles-platform-section'),
-              shape: const Border(), collapsedShape: const Border(),
-              leading: const Icon(Icons.admin_panel_settings_outlined),
-              title: Text(l10n.profilesAllWorkspaces),
-              children: [const PlatformToolsEntries(),
-            // #987 — a twin pair is ONE space with two sides, and the
-            // list above has rendered it as one row since that issue.
-            // This list used to emit a card per workspace row, so the
-            // same space appeared twice, once "Development" and once
-            // "Production", as though they were unrelated and belonged
-            // to different people.
-            for (final group in groupedOverviews(
-              (ref.watch(allWorkspacesProvider).value ??
-                      const <WorkspaceOverview>[])
-                  .where((w) => !w.isMember)
-                  .toList(),
-            ))
-                  ListTile(
-                    key: ValueKey('platform-workspace-${group.first.id}'),
-                    leading: const Icon(Icons.lock_outline),
-                    title: Text(group.first.name),
-                    subtitle: Text(
-                      '${_environmentsLabel(l10n, group)}'
-                      ' · ${l10n.profilesNotMember(group.first.memberCount)}',
-                    ),
-                    // The sheet is about who to write to, and a pair has
-                    // one set of owners — the dev side is the one that
-                    // always exists (prod ⊆ dev, 0185).
-                    onTap: () =>
-                        showWorkspaceOwnersSheet(context, ref, group.first),
-                  ),
-              ],
-            )),
-          ],
+          if (ref.watch(isPlatformOwnerProvider).value ?? false)
+            _platformSection(context, ref),
         ],
       ),
     );
