@@ -1,8 +1,8 @@
 {
-  "recordedSha": "0d03638a66901d1ac33bffcbe8ccc4fdd5e0e59b",
+  "recordedSha": "d9a05c4b4f614cd54baba3cb8d9b75b1aba28f1e",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1747,"functions":9584,"cyclomatic>=9":1016,"cyclomatic>=25":126,"cognitive>=15":420,"cognitive>=30":116,"length>=150":90,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1747,"functions":9588,"cyclomatic>=9":1017,"cyclomatic>=25":126,"cognitive>=15":421,"cognitive>=30":115,"length>=150":89,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1212,7 +1212,7 @@
     {"p":"lib/features/directory/presentation/messenger/starred_messages_screen.dart","loc":66,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":9,"cyc":8,"len":54,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/unified_inbox_view.dart","loc":377,"part":false,"setState":5,"repositoryReads":0,"fn":6,"cog":35,"cyc":25,"len":133,"params":4,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/public_page_editor.dart","loc":368,"part":false,"setState":9,"repositoryReads":0,"fn":10,"cog":49,"cyc":27,"len":129,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/features/directory/presentation/public_workspace_view.dart","loc":294,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":71,"cyc":47,"len":214,"params":3,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/directory/presentation/public_workspace_view.dart","loc":314,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":26,"cyc":28,"len":118,"params":4,"nest":4,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/space_offers.dart","loc":70,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":7,"len":51,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/workspace_feedback.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":10,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/providers/blocks_providers.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2533,7 +2533,7 @@
     {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":69,"cyc":46,"len":234,"params":7},
     {"id":"lib/features/directory/presentation/messenger/unified_inbox_view.dart#_UnifiedInboxState._list(BuildContext context,UnifiedInbox inbox,Map<String, String> servers,AppLocalizations l10n)","cog":35,"cyc":25,"len":133,"params":4},
     {"id":"lib/features/directory/presentation/public_page_editor.dart#_EditorState.build(BuildContext context)","cog":49,"cyc":27,"len":129,"params":1},
-    {"id":"lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build(BuildContext context,WidgetRef ref)","cog":71,"cyc":47,"len":214,"params":2},
+    {"id":"lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":28,"len":118,"params":2},
     {"id":"lib/features/editor/presentation/screens/editor_screen.dart#_LevelList.build(BuildContext context,WidgetRef ref)","cog":20,"cyc":10,"len":150,"params":2},
     {"id":"lib/features/editor/presentation/widgets/seat_properties_sheet.dart#showSeatPropertiesSheet(BuildContext context,WidgetRef ref,{required String levelId,required FloorPlan plan,required Seat seat})","cog":46,"cyc":21,"len":246,"params":5},
     {"id":"lib/features/editor/presentation/widgets/space_properties_sheet.dart#showSpacePropertiesSheet(BuildContext context,{required String title,required String nameLabel,required String name,required bool bookable,required int priceCents,required String keyPrefix})","cog":6,"cyc":6,"len":103,"params":7},
