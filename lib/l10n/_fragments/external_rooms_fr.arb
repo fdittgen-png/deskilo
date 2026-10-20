@@ -152,6 +152,18 @@
   "@roomRentFieldRoles": {
     "description": "#2575 rented rooms: the roles a room is open to"
   },
+  "roomRentFieldPlans": "Aussi ouverte à ces formules",
+  "@roomRentFieldPlans": {
+    "description": "#2575 rented rooms: the plans a room is open to"
+  },
+  "roomRentFieldMembers": "Aussi ouverte à ces membres",
+  "@roomRentFieldMembers": {
+    "description": "#2575 rented rooms: the members a room is open to"
+  },
+  "roomRentAddMember": "Ajouter un membre",
+  "@roomRentAddMember": {
+    "description": "#2575 rented rooms: picks a member for the audience"
+  },
   "roomRentInvalid": "Choisissez le bailleur et le premier jour, et saisissez les montants en chiffres.",
   "@roomRentInvalid": {
     "description": "#2568 rented rooms"

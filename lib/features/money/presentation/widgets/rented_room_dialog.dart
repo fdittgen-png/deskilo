@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/roles/audience_roles.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -15,6 +14,7 @@ import '../../domain/supplier.dart';
 import '../../providers/room_rental_providers.dart';
 import '../../providers/supplier_providers.dart';
 import 'premises_lease_dialogs.dart';
+import 'room_audience_pickers.dart';
 
 /// The word for a rental's status.
 String roomRentalStatusLabel(AppLocalizations l10n, RoomRentalStatus s) =>
@@ -77,6 +77,14 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
     for (final e in widget.rental?.audience ?? const <RoomAudienceEntry>[])
       if (e.roleId != null) e.roleId!,
   };
+  late final Set<String> _planIds = {
+    for (final e in widget.rental?.audience ?? const <RoomAudienceEntry>[])
+      if (e.planId != null) e.planId!,
+  };
+  late final Set<String> _memberIds = {
+    for (final e in widget.rental?.audience ?? const <RoomAudienceEntry>[])
+      if (e.memberId != null) e.memberId!,
+  };
   var _invalid = false;
 
   static int? _generalFee(RoomRental? r) {
@@ -121,11 +129,12 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
       costCents: cost,
       revision: r?.revision ?? 0,
       audienceAll: _all,
-      // The roles are the picker's; plan and member entries are kept as they
-      // are, and so are the fees for one audience entry.
+      // The roles, plans and members are the pickers'; the fees for one
+      // audience entry are kept as they are.
       audience: [
-        ...?r?.audience.where((e) => e.roleId == null),
         for (final id in _roleIds) RoomAudienceEntry(roleId: id),
+        for (final id in _planIds) RoomAudienceEntry(planId: id),
+        for (final id in _memberIds) RoomAudienceEntry(memberId: id),
       ],
       fees: [
         ...?r?.fees.where(
@@ -173,8 +182,6 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final suppliers = ref.watch(suppliersProvider(widget.workspaceId));
-    final roles = ref.watch(audienceRolesProvider);
-    final language = Localizations.localeOf(context).languageCode;
     final now = ref.read(clockProvider).now();
     return AlertDialog(
       title: Text(l10n.roomRentFormTitle(widget.roomName)),
@@ -252,26 +259,14 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
               value: _all,
               onChanged: (v) => _edit(() => _all = v),
             ),
-            if (!_all && roles.isNotEmpty) ...[
-              Text(
-                l10n.roomRentFieldRoles,
-                style: Theme.of(context).textTheme.labelLarge,
+            if (!_all)
+              RoomAudiencePickers(
+                workspaceId: widget.workspaceId,
+                roleIds: _roleIds,
+                planIds: _planIds,
+                memberIds: _memberIds,
+                onEdited: () => _edit(() {}),
               ),
-              Wrap(
-                spacing: AppSpacing.sm,
-                children: [
-                  for (final role in roles)
-                    FilterChip(
-                      key: ValueKey('room-rent-role-${role.id}'),
-                      label: Text(role.nameIn(language)),
-                      selected: _roleIds.contains(role.id),
-                      onSelected: (on) => _edit(
-                        () => on ? _roleIds.add(role.id) : _roleIds.remove(role.id),
-                      ),
-                    ),
-                ],
-              ),
-            ],
             if (_invalid)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),

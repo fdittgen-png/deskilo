@@ -11,14 +11,20 @@ class FakeRoomRentalRepository implements RoomRentalRepository {
     Iterable<RentableRoom> rooms = const [],
     Iterable<RoomRental> rentals = const [],
     this.supplierName = 'Landlord',
-  }) : levels = [...levels],
+    Iterable<RoomPlan> plans = const [],
+  }) : plans = [...plans],
+       levels = [...levels],
        rooms = [...rooms],
        rentals = [...rentals];
 
   final List<RoomLevel> levels;
   final List<RentableRoom> rooms;
   final List<RoomRental> rentals;
+  final List<RoomPlan> plans;
   final String supplierName;
+
+  @override
+  Future<List<RoomPlan>> fetchPlans(String workspaceId) async => [...plans];
 
   @override
   Future<RoomRentalsOverview> fetchOverview(String workspaceId) async =>

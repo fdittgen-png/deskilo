@@ -12542,6 +12542,10 @@
       }
     }
   },
+  "roomRentAddMember": "Añadir un miembro",
+  "@roomRentAddMember": {
+    "description": "#2575 rented rooms: picks a member for the audience"
+  },
   "roomRentAudienceAll": "Abierta a todos los miembros",
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
@@ -12604,6 +12608,14 @@
   "roomRentFieldLessor": "Arrendador",
   "@roomRentFieldLessor": {
     "description": "#2568 rented rooms"
+  },
+  "roomRentFieldMembers": "Abierta también a estos miembros",
+  "@roomRentFieldMembers": {
+    "description": "#2575 rented rooms: the members a room is open to"
+  },
+  "roomRentFieldPlans": "Abierta también a estos planes",
+  "@roomRentFieldPlans": {
+    "description": "#2575 rented rooms: the plans a room is open to"
   },
   "roomRentFieldRoles": "Abierta también a estos roles",
   "@roomRentFieldRoles": {

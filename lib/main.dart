@@ -21,6 +21,8 @@ import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
 import 'features/auth/providers/auth_providers.dart';
 import 'features/profile/providers/profile_providers.dart';
+import 'features/reservations/providers/reservation_providers.dart'
+    show audienceMembersFromReservations;
 import 'features/workspace/providers/settings_providers.dart';
 import 'features/workspace/providers/workspace_providers.dart';
 import 'features/workspace/providers/workspace_roles_providers.dart';
@@ -110,6 +112,7 @@ Future<void> main() async {
         enabledFeatureKeysFromWorkspace, // #2495
         activeSettingsFromWorkspace, // #2486
         audienceRolesFromWorkspace, // #2575
+        audienceMembersFromReservations, // #2575
         ...realtimeWiringFromApp, // #2495
       ],
       child: const DeskiloRoot(),

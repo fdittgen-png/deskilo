@@ -29766,6 +29766,12 @@ abstract class AppLocalizations {
   /// **'Rented room, available until {date}'**
   String roomOfferUntil(String date);
 
+  /// #2575 rented rooms: picks a member for the audience
+  ///
+  /// In en, this message translates to:
+  /// **'Add a member'**
+  String get roomRentAddMember;
+
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:
@@ -29837,6 +29843,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lessor'**
   String get roomRentFieldLessor;
+
+  /// #2575 rented rooms: the members a room is open to
+  ///
+  /// In en, this message translates to:
+  /// **'Also open to these members'**
+  String get roomRentFieldMembers;
+
+  /// #2575 rented rooms: the plans a room is open to
+  ///
+  /// In en, this message translates to:
+  /// **'Also open to these plans'**
+  String get roomRentFieldPlans;
 
   /// #2575 rented rooms: the roles a room is open to
   ///

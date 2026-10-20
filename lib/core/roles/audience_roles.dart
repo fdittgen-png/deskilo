@@ -17,5 +17,12 @@ class AudienceRole {
       names[locale] ?? names['en'] ?? names.values.firstOrNull ?? id;
 }
 
+/// The members of the workspace by id, with their display names: a rented
+/// room may be opened to chosen members. Empty until the composition root
+/// wires it.
+final audienceMembersProvider = Provider<Map<String, String>>(
+  (ref) => const {},
+);
+
 /// The roles a workspace may be addressed by; empty until wired.
 final audienceRolesProvider = Provider<List<AudienceRole>>((ref) => const []);
