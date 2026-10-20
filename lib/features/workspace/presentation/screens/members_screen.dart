@@ -19,6 +19,7 @@ import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
+import '../../domain/member_sheet_actions.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
@@ -47,8 +48,6 @@ class MembersScreen extends ConsumerWidget {
     required bool coOwnerOn,
   }) async {
     final l10n = context.l10n;
-    final active = member.status == MemberStatus.active;
-    final pending = member.status == MemberStatus.pending;
     // #763 — one guide topic for the management rows.
     final membersTopic = l10n.helpHintMembersTopic;
     // #763 — mirrors MemberNegotiationTile's own gate (#739/#749): the
@@ -62,245 +61,35 @@ class MembersScreen extends ConsumerWidget {
         (isOwner ||
             perms.contains(WorkspacePermission.manageNegotiations) ||
             perms.contains(WorkspacePermission.viewNegotiations));
-    final notesOn = ref
-        .read(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.memberNotifications);
-    final reportsOn = ref
-        .read(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.memberReports);
-    final rolesOn = ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.roleAssignment);
-    final staff = (ref.read(myMemberProvider).value?.canAdminister ?? false) || perms.contains(WorkspacePermission.manageReservations); // #2137 — the allowances (0364)
+    final enabled = ref.read(enabledFeaturesSyncProvider);
+    final me = ref.read(myMemberProvider).value;
+    final facts = MemberSheetFacts(
+      member: member,
+      isOwner: isOwner,
+      isSelf: isSelf,
+      notesOn: enabled.contains(WorkspaceFeature.memberNotifications),
+      reportsOn: enabled.contains(WorkspaceFeature.memberReports),
+      rolesOn: enabled.contains(WorkspaceFeature.roleAssignment),
+      // #2137 — the allowances (0364)
+      staff: (me?.canAdminister ?? false) ||
+          perms.contains(WorkspacePermission.manageReservations),
+      canGiveRoles: canGiveRoles(me, perms),
+      mayOperateKiosk: perms.contains(WorkspacePermission.operateKiosk),
+      servicesOn: servicesOn,
+      levelBookingOn: levelBookingOn,
+      kioskOn: kioskOn,
+      coOwnerOn: coOwnerOn,
+    );
     final actions = <Widget>[
-      if(isOwner||isSelf)MemberEmploymentTile(member:member.id,editable:isOwner),
-      // #494 — the standing financial agreement, sent by owner/admin.
-      if (reportsOn && !member.isKiosk && active)
-        _sheetAction(
+      for (final action in memberSheetActions(facts))
+        _actionTile(
           context,
-          key: const ValueKey('members-action-send-agreement'),
-          icon: Icons.handshake_outlined,
-          label: l10n.memberSendAgreement,
-          onTap: () => sendMemberAgreement(context, ref, member, name),
-        ),
-      // Messaging (#456, refactor): the member's CONVERSATION — read
-      // the whole exchange and send from the same thread every other
-      // surface opens.
-      // #887 — nobody reads a message to a managed member.
-      if (notesOn &&
-          !isSelf &&
-          !member.isKiosk &&
-          !member.isManaged &&
-          active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-messages-action'),
-          icon: Icons.chat_outlined,
-          label: l10n.memberMessagesAction,
-          onTap: () => openDirectConversation(
-            context,
-            ref,
-            memberId: member.id,
-          ),
-        ),
-      // New-member validation (0052): a pending membership offers the
-      // decision first — approve activates, reject exits. The quorum
-      // path on the events feed stays available in parallel.
-      if (pending && !isSelf)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-approve'),
-          icon: Icons.how_to_reg_outlined,
-          label: l10n.memberApprove,
-          onTap: () => decideMemberJoin(context, ref, member, approve: true),
-        ),
-      if (pending && !isSelf)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-reject-join'),
-          icon: Icons.person_off_outlined,
-          label: l10n.memberRejectJoin,
-          onTap: () => decideMemberJoin(context, ref, member, approve: false),
-        ),
-      if (servicesOn && !member.isKiosk && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-consumption-add-for-member'),
-          icon: Icons.room_service_outlined,
-          label: l10n.consumptionAddForMember(name),
-          onTap: () => showConsumptionSheet(
-            context,
-            ref,
-            subjectMemberId: member.id,
-            subjectName: name,
-          ),
-        ),
-      if (isOwner && !member.isKiosk)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-subscription-label'),
-          icon: Icons.percent,
-          label: l10n.memberSubscriptionLabel,
-          onTap: () => pickMemberSubscription(context, ref, member),
-        ),
-      if (!member.isKiosk && active)
-        Row(children: [
-          Expanded(
-            child: MemberNegotiationTile(
-                memberId: member.id, memberName: name, isOwner: isOwner),
-          ),
-          if (negotiationVisible)
-            HelpDot(l10n.helpHintMembersTipNegotiationTopic,
-              anchor: HelpAnchor.membersNegotiation,
-            ),
-        ]),
-      if (isOwner && !member.isKiosk && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-overage-policy-label'),
-          icon: member.overagePolicy == OveragePolicy.blocked
-              ? Icons.speed_outlined
-              : Icons.speed,
-          label: l10n.memberOveragePolicyLabel,
-          onTap: () => pickMemberOveragePolicy(context, ref, member),
-        ),
-      if (staff && !isSelf && !member.isKiosk && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-reservation-limit-label'),
-          icon: Icons.stacked_bar_chart_outlined,
-          label: l10n.memberReservationLimitLabel,
-          onTap: () => pickMemberReservationLimit(context, ref, member),
-        ),
-      // #628 — the explicit permission to hold OVERLAPPING bookings;
-      // same authorization as the cap above, never for themselves.
-      if (staff && !isSelf && !member.isKiosk && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-simultaneous-limit-label'),
-          icon: Icons.splitscreen_outlined,
-          label: l10n.memberSimultaneousLimitLabel,
-          onTap: () => pickMemberSimultaneousLimit(context, ref, member),
-        ),
-      // Whole-level reservations (0050): grant/revoke — owner or admin,
-      // never self (the reservation-limit rule), feature-gated.
-      if (staff && levelBookingOn && !isSelf && !member.isKiosk && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-level-permission-allowed'),
-          icon: member.canReserveLevel
-              ? Icons.layers
-              : Icons.layers_outlined,
-          label: member.canReserveLevel
-              ? (l10n.levelPermissionAllowed)
-              : (l10n.levelPermissionDenied),
-          onTap: () => toggleMemberLevelPermission(context, ref, member),
-        ),
-      if (!member.isKiosk && !member.isOwner && active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-badges-tooltip'),
-          icon: Icons.qr_code_2_outlined,
-          label: l10n.memberBadgesTooltip,
-          onTap: () => showMemberBadgesDialog(context, ref, member, name),
-        ),
-      // #2085 — with roleAssignment, "Add a role" offers the
-      // Administrator role and the space's own, each with its rule.
-      if (rolesOn &&
-          !isSelf &&
-          !member.isKiosk &&
-          active &&
-          canGiveRoles(ref.read(myMemberProvider).value, perms))
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-roles-add'),
-          icon: Icons.badge_outlined,
-          label: l10n.memberRolesAdd,
-          onTap: () => showRoleAssignSheet(context, ref, member, name),
-        ),
-      if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-make-member'),
-          icon: member.isAdmin
-              ? Icons.remove_moderator_outlined
-              : Icons.add_moderator_outlined,
-          label: member.isAdmin
-              ? (l10n.memberMakeMember)
-              : (l10n.memberMakeAdmin),
-          onTap: () => requestMemberRoleChange(context, ref, member),
-        ),
-      // Co-ownership (0058): owner-level callers appoint active/passive
-      // co-owners; a co-owner can be promoted to FULL owner on the
-      // spot. The server-side succession runs regardless of the flag.
-      if (isOwner &&
-          coOwnerOn &&
-          !member.isOwner &&
-          !member.isKiosk &&
-          !isSelf &&
-          active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-co-owner-action'),
-          icon: switch (member.coOwner) {
-            CoOwnerStatus.active => Icons.workspace_premium,
-            CoOwnerStatus.passive => Icons.workspace_premium_outlined,
-            CoOwnerStatus.none => Icons.badge_outlined,
-          },
-          label: l10n.coOwnerAction,
-          onTap: () => pickMemberCoOwner(context, ref, member),
-        ),
-      if (isOwner &&
-          coOwnerOn &&
-          member.coOwner != CoOwnerStatus.none &&
-          active)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-co-owner-activate'),
-          icon: Icons.military_tech_outlined,
-          label: l10n.coOwnerActivate,
-          onTap: () => activateMemberCoOwner(context, ref, member),
-        ),
-      // #982 — the kiosk is operateKiosk's; a kiosk viewing ITSELF keeps
-      // the one self-revert action below, not this one as well.
-      if (perms.contains(WorkspacePermission.operateKiosk) &&
-          !isSelf &&
-          !member.isOwner &&
-          active &&
-          (member.isKiosk || kioskOn))
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-unmake-kiosk'),
-          icon: member.isKiosk
-              ? Icons.tablet_mac
-              : Icons.tablet_mac_outlined,
-          label: member.isKiosk
-              ? (l10n.memberUnmakeKiosk)
-              : (l10n.memberMakeKiosk),
-          onTap: () => toggleMemberKiosk(context, ref, member),
-        ),
-      // Kiosk self-revert (0056): the kiosk account manages its OWN row
-      // here too, not only in Settings — without this, an admin kiosk
-      // viewing itself had zero actions (field report: "nothing opens").
-      if (isSelf && member.isKiosk)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-unmake-kiosk-2'),
-          icon: Icons.tablet_mac,
-          label: l10n.memberUnmakeKiosk,
-          onTap: () => revertMyKiosk(context, ref, member),
-        ),
-      // Pause/reactivate was a hidden long-press before — now a visible,
-      // named action.
-      if (isOwner && member.status != MemberStatus.exited)
-        _sheetAction(
-          context,
-          key: const ValueKey('members-action-reactivate'),
-          icon: member.status == MemberStatus.paused
-              ? Icons.play_circle_outline
-              : Icons.pause_circle_outline,
-          label: member.status == MemberStatus.paused
-              ? (l10n.memberReactivate)
-              : (l10n.memberPause),
-          onTap: () => toggleMemberPaused(context, ref, member),
+          ref,
+          action,
+          member,
+          name,
+          isOwner: isOwner,
+          negotiationVisible: negotiationVisible,
         ),
     ];
     // NEVER a silent no-op (field report: tapping the kiosk row as a
@@ -333,6 +122,191 @@ class MembersScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// The tile of one sheet action (what is offered is decided by
+  /// [memberSheetActions]).
+  Widget _actionTile(
+    BuildContext context,
+    WidgetRef ref,
+    MemberSheetAction action,
+    Member member,
+    String name, {
+    required bool isOwner,
+    required bool negotiationVisible,
+  }) {
+    final l10n = context.l10n;
+    Widget tile(String key, IconData icon, String label, VoidCallback onTap) =>
+        _sheetAction(
+          context,
+          key: ValueKey(key),
+          icon: icon,
+          label: label,
+          onTap: onTap,
+        );
+    return switch (action) {
+      MemberSheetAction.employment =>
+        MemberEmploymentTile(member: member.id, editable: isOwner),
+      // #494 — the standing financial agreement, sent by owner/admin.
+      MemberSheetAction.sendAgreement => tile(
+        'members-action-send-agreement',
+        Icons.handshake_outlined,
+        l10n.memberSendAgreement,
+        () => sendMemberAgreement(context, ref, member, name),
+      ),
+      // Messaging (#456, refactor): the member's CONVERSATION — read the
+      // whole exchange and send from the same thread every other surface
+      // opens.
+      MemberSheetAction.messages => tile(
+        'members-action-messages-action',
+        Icons.chat_outlined,
+        l10n.memberMessagesAction,
+        () => openDirectConversation(context, ref, memberId: member.id),
+      ),
+      // New-member validation (0052): a pending membership offers the
+      // decision first — approve activates, reject exits. The quorum path
+      // on the events feed stays available in parallel.
+      MemberSheetAction.approveJoin => tile(
+        'members-action-approve',
+        Icons.how_to_reg_outlined,
+        l10n.memberApprove,
+        () => decideMemberJoin(context, ref, member, approve: true),
+      ),
+      MemberSheetAction.rejectJoin => tile(
+        'members-action-reject-join',
+        Icons.person_off_outlined,
+        l10n.memberRejectJoin,
+        () => decideMemberJoin(context, ref, member, approve: false),
+      ),
+      MemberSheetAction.addConsumption => tile(
+        'members-action-consumption-add-for-member',
+        Icons.room_service_outlined,
+        l10n.consumptionAddForMember(name),
+        () => showConsumptionSheet(
+          context,
+          ref,
+          subjectMemberId: member.id,
+          subjectName: name,
+        ),
+      ),
+      MemberSheetAction.subscription => tile(
+        'members-action-subscription-label',
+        Icons.percent,
+        l10n.memberSubscriptionLabel,
+        () => pickMemberSubscription(context, ref, member),
+      ),
+      MemberSheetAction.negotiation => Row(
+        children: [
+          Expanded(
+            child: MemberNegotiationTile(
+              memberId: member.id,
+              memberName: name,
+              isOwner: isOwner,
+            ),
+          ),
+          if (negotiationVisible)
+            HelpDot(
+              l10n.helpHintMembersTipNegotiationTopic,
+              anchor: HelpAnchor.membersNegotiation,
+            ),
+        ],
+      ),
+      MemberSheetAction.overagePolicy => tile(
+        'members-action-overage-policy-label',
+        member.overagePolicy == OveragePolicy.blocked
+            ? Icons.speed_outlined
+            : Icons.speed,
+        l10n.memberOveragePolicyLabel,
+        () => pickMemberOveragePolicy(context, ref, member),
+      ),
+      MemberSheetAction.reservationLimit => tile(
+        'members-action-reservation-limit-label',
+        Icons.stacked_bar_chart_outlined,
+        l10n.memberReservationLimitLabel,
+        () => pickMemberReservationLimit(context, ref, member),
+      ),
+      MemberSheetAction.simultaneousLimit => tile(
+        'members-action-simultaneous-limit-label',
+        Icons.splitscreen_outlined,
+        l10n.memberSimultaneousLimitLabel,
+        () => pickMemberSimultaneousLimit(context, ref, member),
+      ),
+      // Whole-level reservations (0050): grant/revoke.
+      MemberSheetAction.levelPermission => tile(
+        'members-action-level-permission-allowed',
+        member.canReserveLevel ? Icons.layers : Icons.layers_outlined,
+        member.canReserveLevel
+            ? l10n.levelPermissionAllowed
+            : l10n.levelPermissionDenied,
+        () => toggleMemberLevelPermission(context, ref, member),
+      ),
+      MemberSheetAction.badges => tile(
+        'members-action-badges-tooltip',
+        Icons.qr_code_2_outlined,
+        l10n.memberBadgesTooltip,
+        () => showMemberBadgesDialog(context, ref, member, name),
+      ),
+      // #2085 — with roleAssignment, "Add a role" offers the Administrator
+      // role and the space's own, each with its rule.
+      MemberSheetAction.addRole => tile(
+        'members-action-roles-add',
+        Icons.badge_outlined,
+        l10n.memberRolesAdd,
+        () => showRoleAssignSheet(context, ref, member, name),
+      ),
+      MemberSheetAction.makeAdminOrMember => tile(
+        'members-action-make-member',
+        member.isAdmin
+            ? Icons.remove_moderator_outlined
+            : Icons.add_moderator_outlined,
+        member.isAdmin ? l10n.memberMakeMember : l10n.memberMakeAdmin,
+        () => requestMemberRoleChange(context, ref, member),
+      ),
+      // Co-ownership (0058): owner-level callers appoint active/passive
+      // co-owners; a co-owner can be promoted to FULL owner on the spot.
+      MemberSheetAction.coOwnerAppoint => tile(
+        'members-action-co-owner-action',
+        switch (member.coOwner) {
+          CoOwnerStatus.active => Icons.workspace_premium,
+          CoOwnerStatus.passive => Icons.workspace_premium_outlined,
+          CoOwnerStatus.none => Icons.badge_outlined,
+        },
+        l10n.coOwnerAction,
+        () => pickMemberCoOwner(context, ref, member),
+      ),
+      MemberSheetAction.coOwnerActivate => tile(
+        'members-action-co-owner-activate',
+        Icons.military_tech_outlined,
+        l10n.coOwnerActivate,
+        () => activateMemberCoOwner(context, ref, member),
+      ),
+      MemberSheetAction.kioskToggle => tile(
+        'members-action-unmake-kiosk',
+        member.isKiosk ? Icons.tablet_mac : Icons.tablet_mac_outlined,
+        member.isKiosk ? l10n.memberUnmakeKiosk : l10n.memberMakeKiosk,
+        () => toggleMemberKiosk(context, ref, member),
+      ),
+      // Kiosk self-revert (0056): the kiosk account manages its OWN row
+      // here too, not only in Settings.
+      MemberSheetAction.kioskSelfRevert => tile(
+        'members-action-unmake-kiosk-2',
+        Icons.tablet_mac,
+        l10n.memberUnmakeKiosk,
+        () => revertMyKiosk(context, ref, member),
+      ),
+      // Pause/reactivate was a hidden long-press before — now a visible,
+      // named action.
+      MemberSheetAction.pauseOrReactivate => tile(
+        'members-action-reactivate',
+        member.status == MemberStatus.paused
+            ? Icons.play_circle_outline
+            : Icons.pause_circle_outline,
+        member.status == MemberStatus.paused
+            ? l10n.memberReactivate
+            : l10n.memberPause,
+        () => toggleMemberPaused(context, ref, member),
+      ),
+    };
   }
 
   /// One labeled sheet action: closes the sheet, then runs [onTap] with
