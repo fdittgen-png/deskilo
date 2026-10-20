@@ -100,7 +100,7 @@ final class BiBatchReaderProvider
   }
 }
 
-String _$biBatchReaderHash() => r'aa0d026e78acde90a57c66a2dfc55615ed163a86';
+String _$biBatchReaderHash() => r'21596baee147a1f1533ebbb8ab4757feb719762c';
 
 /// #1924 — the finance KPIs.
 

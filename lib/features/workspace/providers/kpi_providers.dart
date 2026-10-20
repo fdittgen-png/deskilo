@@ -4,6 +4,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/time/workspace_time.dart';
+import '../data/bi_query_coordinator.dart';
 import '../data/fan_out_batch_reader.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/bi_batch.dart';
@@ -22,9 +23,11 @@ KpiRepository kpiRepository(Ref ref) =>
 @Riverpod(keepAlive: true)
 KpiBatchReader biBatchReader(Ref ref) {
   final kpis = ref.watch(kpiRepositoryProvider);
-  return kpis is SupabaseKpiRepository
-      ? SupabaseBiBatchReader(kpis.client)
-      : FanOutBatchReader(kpis, ref.watch(financeKpiRepositoryProvider));
+  return BiQueryCoordinator(
+    kpis is SupabaseKpiRepository
+        ? SupabaseBiBatchReader(kpis.client)
+        : FanOutBatchReader(kpis, ref.watch(financeKpiRepositoryProvider)),
+  );
 }
 
 /// #1924 — the finance KPIs.
