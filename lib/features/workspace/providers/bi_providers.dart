@@ -8,7 +8,6 @@
 // grouping is refused with its reason rather than fanned out.
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
@@ -23,6 +22,7 @@ import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
 import 'kpi_providers.dart';
+import 'operation_context_providers.dart';
 
 part 'bi_providers.g.dart';
 
@@ -381,7 +381,7 @@ Future<BiResult> _capacity(
 /// #1923 C — the saved views, through their definer RPCs.
 @Riverpod(keepAlive: true)
 BiViewRepository biViewRepository(Ref ref) =>
-    SupabaseBiViewRepository(Supabase.instance.client);
+    SupabaseBiViewRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// The reader's private views and the workspace's team views.
 @riverpod

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../application/deploy_configuration.dart';
 import '../data/supabase_deployment_repository.dart';
 import '../domain/deployment.dart';
+import 'operation_context_providers.dart';
 
 part 'deployment_providers.g.dart';
 
@@ -12,7 +12,7 @@ part 'deployment_providers.g.dart';
 /// never contend on workspace_providers.dart.
 @Riverpod(keepAlive: true)
 DeploymentRepository deploymentRepository(Ref ref) =>
-    SupabaseDeploymentRepository(Supabase.instance.client);
+    SupabaseDeploymentRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// #1449 — the deployment's own decisions: the closed selection, and a
 /// deploy that can only write what a preview described.

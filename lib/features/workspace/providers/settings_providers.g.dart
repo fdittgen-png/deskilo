@@ -9,16 +9,37 @@ part of 'settings_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 /// #2484 -- the settings registry: read and written.
+///
+/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
+/// captures these settings (currentSettingsCapture), and the selected client
+/// is derived from that context, so watching it here closes a provider cycle
+/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
+/// pre-context client until the context's host binding no longer waits for
+/// its settings capture.
 
 @ProviderFor(settingsRepository)
 final settingsRepositoryProvider = SettingsRepositoryProvider._();
 
 /// #2484 -- the settings registry: read and written.
+///
+/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
+/// captures these settings (currentSettingsCapture), and the selected client
+/// is derived from that context, so watching it here closes a provider cycle
+/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
+/// pre-context client until the context's host binding no longer waits for
+/// its settings capture.
 
 final class SettingsRepositoryProvider
     extends $FunctionalProvider<SettingsStore, SettingsStore, SettingsStore>
     with $Provider<SettingsStore> {
   /// #2484 -- the settings registry: read and written.
+  ///
+  /// #2564 O2 -- NOT on the selected workspace's client: the workspace context
+  /// captures these settings (currentSettingsCapture), and the selected client
+  /// is derived from that context, so watching it here closes a provider cycle
+  /// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
+  /// pre-context client until the context's host binding no longer waits for
+  /// its settings capture.
   SettingsRepositoryProvider._()
     : super(
         from: null,
@@ -53,7 +74,7 @@ final class SettingsRepositoryProvider
 }
 
 String _$settingsRepositoryHash() =>
-    r'5c2dd0364ee5cb317747f9de101f52b241bcd251';
+    r'398ffcf9e82a21970855c9d19fda634328850bc2';
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.

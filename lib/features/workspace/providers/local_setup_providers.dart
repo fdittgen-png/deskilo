@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/supabase_local_setup_repository.dart';
 import '../domain/local_setup.dart';
 import '../domain/workspace_readiness.dart';
+import 'operation_context_providers.dart';
 
 part 'local_setup_providers.g.dart';
 
 /// #1656 group 5 — the local setup a template needs and a space lacks.
 @Riverpod(keepAlive: true)
 LocalSetupRepository localSetupRepository(Ref ref) =>
-    SupabaseLocalSetupRepository(Supabase.instance.client);
+    SupabaseLocalSetupRepository(ref.watch(selectedWorkspaceClientProvider));
 
 @riverpod
 Future<List<LocalSlot>> templateLocalNeeds(Ref ref, String templateId) =>

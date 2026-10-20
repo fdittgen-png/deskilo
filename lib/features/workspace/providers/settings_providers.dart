@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/settings_bundle_asset.dart';
 import '../../../core/settings/active_settings.dart';
@@ -16,9 +16,18 @@ import 'workspace_providers.dart';
 part 'settings_providers.g.dart';
 
 /// #2484 -- the settings registry: read and written.
+///
+/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
+/// captures these settings (currentSettingsCapture), and the selected client
+/// is derived from that context, so watching it here closes a provider cycle
+/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
+/// pre-context client until the context's host binding no longer waits for
+/// its settings capture.
 @Riverpod(keepAlive: true)
-SettingsStore settingsRepository(Ref ref) =>
-    SupabaseSettingsRepository(Supabase.instance.client, ref.watch(cacheStoreProvider));
+SettingsStore settingsRepository(Ref ref) => SupabaseSettingsRepository(
+      ref.watch(contextClientsProvider).legacyActive,
+      ref.watch(cacheStoreProvider),
+    );
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.

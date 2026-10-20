@@ -59,7 +59,7 @@ final class LocalSetupRepositoryProvider
 }
 
 String _$localSetupRepositoryHash() =>
-    r'9c50d47d975baf0b6b8bfd1a262e44cb225c8685';
+    r'66aa49b3fe11427456dc257ee750642fc6aeeb7c';
 
 @ProviderFor(templateLocalNeeds)
 final templateLocalNeedsProvider = TemplateLocalNeedsFamily._();

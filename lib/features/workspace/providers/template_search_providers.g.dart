@@ -59,4 +59,4 @@ final class TemplateSearchRepositoryProvider
 }
 
 String _$templateSearchRepositoryHash() =>
-    r'7f5c7e498cba598df99d35aac57df1efcf736489';
+    r'c7698456cb7fe3b8b960e7e0a37eac6761c59c9e';

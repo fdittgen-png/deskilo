@@ -55,7 +55,7 @@ final class WorkbookOriginRepositoryProvider
 }
 
 String _$workbookOriginRepositoryHash() =>
-    r'b8aa93c48babf1101f86fd02567f9f9eec7d349f';
+    r'411ac026e5bd1acaccefa5dff85997c4aa873d59';
 
 /// Keep an imperative export alive without widget listeners, but invalidate
 /// it permanently when its account or repository changes, including A→B→A.
