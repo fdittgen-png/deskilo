@@ -20250,6 +20250,10 @@
       }
     }
   },
+  "roomRentAddMember": "Add a member",
+  "@roomRentAddMember": {
+    "description": "#2575 rented rooms: picks a member for the audience"
+  },
   "roomRentAudienceAll": "Open to every member",
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
@@ -20312,6 +20316,14 @@
   "roomRentFieldLessor": "Lessor",
   "@roomRentFieldLessor": {
     "description": "#2568 rented rooms"
+  },
+  "roomRentFieldMembers": "Also open to these members",
+  "@roomRentFieldMembers": {
+    "description": "#2575 rented rooms: the members a room is open to"
+  },
+  "roomRentFieldPlans": "Also open to these plans",
+  "@roomRentFieldPlans": {
+    "description": "#2575 rented rooms: the plans a room is open to"
   },
   "roomRentFieldRoles": "Also open to these roles",
   "@roomRentFieldRoles": {

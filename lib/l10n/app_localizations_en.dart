@@ -17237,6 +17237,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get roomRentAddMember => 'Add a member';
+
+  @override
   String get roomRentAudienceAll => 'Open to every member';
 
   @override
@@ -17278,6 +17281,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roomRentFieldLessor => 'Lessor';
+
+  @override
+  String get roomRentFieldMembers => 'Also open to these members';
+
+  @override
+  String get roomRentFieldPlans => 'Also open to these plans';
 
   @override
   String get roomRentFieldRoles => 'Also open to these roles';

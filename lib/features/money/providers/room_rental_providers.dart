@@ -23,3 +23,10 @@ final roomRentalsProvider = FutureProvider.autoDispose
       (ref, workspaceId) =>
           ref.watch(roomRentalRepositoryProvider).fetchOverview(workspaceId),
     );
+
+/// The plans a room can be opened to.
+final roomPlansProvider = FutureProvider.autoDispose
+    .family<List<RoomPlan>, String>(
+      (ref, workspaceId) =>
+          ref.watch(roomRentalRepositoryProvider).fetchPlans(workspaceId),
+    );

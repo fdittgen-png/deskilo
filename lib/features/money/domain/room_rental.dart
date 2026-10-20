@@ -311,8 +311,19 @@ class RoomRentalCommand {
 }
 
 /// The rented rooms of one space; every write goes through an RPC.
+/// A plan of the space a room may be opened to.
+class RoomPlan {
+  const RoomPlan({required this.id, required this.name});
+
+  final String id;
+  final String name;
+}
+
 abstract class RoomRentalRepository {
   Future<RoomRentalsOverview> fetchOverview(String workspaceId);
+
+  /// The active plans a room can be opened to, by name.
+  Future<List<RoomPlan>> fetchPlans(String workspaceId);
 
   Future<void> setLevelKind(String workspaceId, String levelId, LevelKind kind);
 

@@ -17424,6 +17424,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get roomRentAddMember => 'Ajouter un membre';
+
+  @override
   String get roomRentAudienceAll => 'Ouverte à tous les membres';
 
   @override
@@ -17466,6 +17469,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roomRentFieldLessor => 'Bailleur';
+
+  @override
+  String get roomRentFieldMembers => 'Aussi ouverte à ces membres';
+
+  @override
+  String get roomRentFieldPlans => 'Aussi ouverte à ces formules';
 
   @override
   String get roomRentFieldRoles => 'Aussi ouverte à ces rôles';

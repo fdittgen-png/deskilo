@@ -152,6 +152,18 @@
   "@roomRentFieldRoles": {
     "description": "#2575 rented rooms: the roles a room is open to"
   },
+  "roomRentFieldPlans": "Zusätzlich offen für diese Tarife",
+  "@roomRentFieldPlans": {
+    "description": "#2575 rented rooms: the plans a room is open to"
+  },
+  "roomRentFieldMembers": "Zusätzlich offen für diese Mitglieder",
+  "@roomRentFieldMembers": {
+    "description": "#2575 rented rooms: the members a room is open to"
+  },
+  "roomRentAddMember": "Mitglied hinzufügen",
+  "@roomRentAddMember": {
+    "description": "#2575 rented rooms: picks a member for the audience"
+  },
   "roomRentInvalid": "Wählen Sie den Vermieter und den ersten Tag und geben Sie Beträge als Zahlen ein.",
   "@roomRentInvalid": {
     "description": "#2568 rented rooms"

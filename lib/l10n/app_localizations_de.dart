@@ -17409,6 +17409,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get roomRentAddMember => 'Mitglied hinzufügen';
+
+  @override
   String get roomRentAudienceAll => 'Für alle Mitglieder offen';
 
   @override
@@ -17451,6 +17454,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get roomRentFieldLessor => 'Vermieter';
+
+  @override
+  String get roomRentFieldMembers => 'Zusätzlich offen für diese Mitglieder';
+
+  @override
+  String get roomRentFieldPlans => 'Zusätzlich offen für diese Tarife';
 
   @override
   String get roomRentFieldRoles => 'Zusätzlich offen für diese Rollen';

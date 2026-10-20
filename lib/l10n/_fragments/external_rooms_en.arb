@@ -152,6 +152,18 @@
   "@roomRentFieldRoles": {
     "description": "#2575 rented rooms: the roles a room is open to"
   },
+  "roomRentFieldPlans": "Also open to these plans",
+  "@roomRentFieldPlans": {
+    "description": "#2575 rented rooms: the plans a room is open to"
+  },
+  "roomRentFieldMembers": "Also open to these members",
+  "@roomRentFieldMembers": {
+    "description": "#2575 rented rooms: the members a room is open to"
+  },
+  "roomRentAddMember": "Add a member",
+  "@roomRentAddMember": {
+    "description": "#2575 rented rooms: picks a member for the audience"
+  },
   "roomRentInvalid": "Choose the lessor and the first day, and enter amounts as numbers.",
   "@roomRentInvalid": {
     "description": "#2568 rented rooms"

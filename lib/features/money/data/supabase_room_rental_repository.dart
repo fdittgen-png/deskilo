@@ -22,6 +22,20 @@ class SupabaseRoomRentalRepository implements RoomRentalRepository {
       );
 
   @override
+  Future<List<RoomPlan>> fetchPlans(String workspaceId) async {
+    final rows = await _client
+        .from('plans')
+        .select('id, name')
+        .eq('workspace_id', workspaceId)
+        .eq('active', true)
+        .order('name');
+    return [
+      for (final r in rows)
+        RoomPlan(id: r['id'] as String, name: r['name'] as String),
+    ];
+  }
+
+  @override
   Future<void> setLevelKind(
     String workspaceId,
     String levelId,

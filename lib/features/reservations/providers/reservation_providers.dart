@@ -10,6 +10,7 @@ import '../../../core/files/file_saver.dart';
 import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
+import '../../../core/roles/audience_roles.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
@@ -236,3 +237,10 @@ Future<CalendarFiles> calendarFiles(Ref ref) async {
     write: write,
   );
 }
+
+/// #2575 -- the members another feature may name as an audience: the
+/// workspace's member names. Put in the scope's overrides by the composition
+/// root.
+final audienceMembersFromReservations = audienceMembersProvider.overrideWith(
+  (ref) => ref.watch(memberNamesProvider).value ?? const {},
+);
