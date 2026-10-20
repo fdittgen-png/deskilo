@@ -154,7 +154,6 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/calendar/presentation/screens/calendar_screen.dart`
 - `lib/features/directory/presentation/messenger/context_thread_screen.dart`
-- `lib/features/events/presentation/screens/events_screen.dart`
 - `lib/features/kiosk/presentation/screens/kiosk_screen.dart`
 - `lib/features/members/presentation/screens/member_page.dart`
 - `lib/features/money/domain/invoice_pdf_part2.dart`
