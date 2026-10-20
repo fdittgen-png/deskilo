@@ -1,8 +1,8 @@
 {
-  "recordedSha": "e8bbcc17b91fd97db10d2d55a879658215473e4a",
+  "recordedSha": "ae5b67cc65f5f04748ef4077adb88fbe5a0ebda4",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1746,"functions":9571,"cyclomatic>=9":1014,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1746,"functions":9575,"cyclomatic>=9":1014,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -193,7 +193,7 @@
 
       "lib/features/reservations/presentation/screens/reserve_screen.dart": 10,
 
-      "lib/features/reservations/presentation/widgets/booking_sheet.dart": 10,
+      "lib/features/reservations/presentation/widgets/booking_sheet.dart": 9,
 
       "lib/features/reservations/presentation/widgets/space_act_form.dart": 6,
 
@@ -2005,7 +2005,7 @@
     {"p":"lib/features/reservations/presentation/widgets/booking_range_text.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":8,"len":35,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_recovery_sheet.dart","loc":214,"part":false,"setState":5,"repositoryReads":0,"fn":13,"cog":13,"cyc":11,"len":76,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_review_summary.dart","loc":116,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":4,"len":34,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/booking_sheet.dart","loc":492,"part":false,"setState":10,"repositoryReads":0,"fn":16,"cog":74,"cyc":59,"len":307,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/booking_sheet.dart","loc":479,"part":false,"setState":9,"repositoryReads":0,"fn":20,"cog":49,"cyc":48,"len":203,"params":2,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_sheet_parts.dart","loc":135,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":2,"len":30,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_window_summary.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":11,"len":53,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/calendar_file_button.dart","loc":205,"part":false,"setState":3,"repositoryReads":0,"fn":6,"cog":5,"cyc":7,"len":76,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2685,7 +2685,7 @@
     {"id":"lib/features/reservations/presentation/booking_trace_points.dart#traceBookingFailed({required Object error,required StackTrace stackTrace,required Seat seat,required DateTime start,required DateTime end,required bool checkIn,required bool series,required String? member})","cog":0,"cyc":1,"len":28,"params":8},
     {"id":"lib/features/reservations/presentation/others_booking_tap.dart#_openOthersBooking(BuildContext context,WidgetRef ref,{required Seat seat,required Reservation other,required SeatState state,required bool isLive,required bool canCheckInForOthers,required BookingGranularity granularity})","cog":7,"cyc":13,"len":78,"params":8},
     {"id":"lib/features/reservations/presentation/reserve_seat_actions.dart#ReserveSeatActions.bookingSheet(Seat seat,List<Reservation> reservations,HalfDayWindow window,{FloorPlan? plan,bool walkUp,bool offerWalkUp})","cog":51,"cyc":50,"len":341,"params":6},
-    {"id":"lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build(BuildContext context)","cog":74,"cyc":59,"len":307,"params":1},
+    {"id":"lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build(BuildContext context)","cog":49,"cyc":48,"len":203,"params":1},
     {"id":"lib/features/reservations/presentation/widgets/getting_started_card.dart#GettingStartedCard.build(BuildContext context,WidgetRef ref)","cog":10,"cyc":14,"len":157,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/message_reserver.dart#showBlockedSpaceSheet(BuildContext context,WidgetRef ref,{required String title,required String infoLine,required Reservation blocking,required String name,required String spaceName})","cog":6,"cyc":5,"len":44,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build(BuildContext context,WidgetRef ref)","cog":38,"cyc":26,"len":123,"params":2},

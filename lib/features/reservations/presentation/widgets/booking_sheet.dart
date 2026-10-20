@@ -368,36 +368,8 @@ class _BookingSheetState extends State<BookingSheet> {
               _periodChips(l10n),
             ],
             if (showTimePickers) ...[
-              BookingTimeTile(
-                key: const ValueKey('booking-from-tile'),
-                label: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
-                value: _start,
-                onPicked: (t) {
-                  final start = _snap(pickedInstantAt(_day, t.hour, t.minute));
-                  var end = _end;
-                  if (!end.isAfter(start)) end = start.add(_slot);
-                  setState(() {
-                    _start = start;
-                    _end = end;
-                  });
-                  widget.onFieldCommitted?.call('time');
-                },
-              ),
-              BookingTimeTile(
-                key: const ValueKey('booking-until-tile'),
-                label: l10n.planUntilLabel,
-                value: _end,
-                onPicked: (t) {
-                  var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
-                  if (!end.isAfter(_start)) {
-                    end = end.add(const Duration(days: 1));
-                  }
-                  final cap = _cap;
-                  if (cap != null && end.isAfter(cap)) end = cap;
-                  setState(() => _end = end);
-                  widget.onFieldCommitted?.call('time');
-                },
-              ),
+              _fromTile(l10n),
+              _untilTile(l10n),
             ],
             if (showDurationSlider) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -432,22 +404,7 @@ class _BookingSheetState extends State<BookingSheet> {
             // #446 hours walk-up: the check-in creates the reservation
             // implicitly — the start is "now", the end is the user's to
             // fill (prefilled with the end of the working day).
-            if (hoursWalkUp)
-              BookingTimeTile(
-                key: const ValueKey('booking-until-tile'),
-                label: l10n.planUntilLabel,
-                value: _end,
-                onPicked: (t) {
-                  var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
-                  if (!end.isAfter(_start)) {
-                    end = end.add(const Duration(days: 1));
-                  }
-                  final cap = _cap;
-                  if (cap != null && end.isAfter(cap)) end = cap;
-                  setState(() => _end = end);
-                  widget.onFieldCommitted?.call('time');
-                },
-              ),
+            if (hoursWalkUp) _untilTile(l10n),
 
             // Shown whenever there is a real choice OR the only subject
             // is not me — the actor must always SEE who it lands on
@@ -482,8 +439,65 @@ class _BookingSheetState extends State<BookingSheet> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             if (overlap) const BookingOverlapNotice(),
-            if (refusal != null)
-              Padding(
+            if (refusal != null) _refusalRow(refusal, l10n),
+            if (showRepeat) _moreOptions(l10n),
+            if (_liveWindow)
+              SwitchListTile(
+                key: const ValueKey('booking-check-in-now'),
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                    l10n.kioskCheckInRightAway),
+                subtitle: Text(words.uxBookingCheckInHelp),
+                value: _checkInNow,
+                onChanged: (v) {
+                  setState(() => _checkInNow = v);
+                  widget.onFieldCommitted?.call('check_in');
+                },
+              ),
+            if (widget.seatId != null) ...[
+              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
+            ],
+            if (widget.allowBlocking)
+              BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
+                BookingChoice(_start, _end, null, null, null, block: true))),
+      ],
+    );
+  }
+
+  /// The "until" tile (#446: also the one input of an hours walk-up).
+  Widget _untilTile(AppLocalizations l10n) => BookingTimeTile(
+                key: const ValueKey('booking-until-tile'),
+                label: l10n.planUntilLabel,
+                value: _end,
+                onPicked: (t) {
+                  var end = _snap(pickedInstantAt(_day, t.hour, t.minute));
+                  if (!end.isAfter(_start)) {
+                    end = end.add(const Duration(days: 1));
+                  }
+                  final cap = _cap;
+                  if (cap != null && end.isAfter(cap)) end = cap;
+                  setState(() => _end = end);
+                  widget.onFieldCommitted?.call('time');
+                },
+              );
+
+  Widget _fromTile(AppLocalizations l10n) => BookingTimeTile(
+                key: const ValueKey('booking-from-tile'),
+                label: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
+                value: _start,
+                onPicked: (t) {
+                  final start = _snap(pickedInstantAt(_day, t.hour, t.minute));
+                  var end = _end;
+                  if (!end.isAfter(start)) end = start.add(_slot);
+                  setState(() {
+                    _start = start;
+                    _end = end;
+                  });
+                  widget.onFieldCommitted?.call('time');
+                },
+              );
+
+  Widget _refusalRow(BookingRefusal refusal, AppLocalizations l10n) => Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Row(
                   key: const ValueKey('booking-gate-refusal'),
@@ -503,9 +517,9 @@ class _BookingSheetState extends State<BookingSheet> {
                     ),
                   ],
                 ),
-              ),
-            if (showRepeat)
-              ExpansionTile(
+              );
+
+  Widget _moreOptions(AppLocalizations l10n) => ExpansionTile(
                 key: const ValueKey('booking-more-options'),
                 tilePadding: EdgeInsets.zero,
                 childrenPadding: EdgeInsets.zero,
@@ -513,7 +527,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 title: Text(l10n.bookingMoreOptions),
                 children: [
                   // ── repeat (spec §5.2) — available whenever booking for self ──
-                  if (showRepeat) ...[
+                  ...[
                     DropdownButtonFormField<SeriesPattern?>(
                       key: const ValueKey('booking-repeat'),
                       initialValue: _pattern,
@@ -544,29 +558,7 @@ class _BookingSheetState extends State<BookingSheet> {
                       ),
                   ],
                 ],
-              ),
-            if (_liveWindow)
-              SwitchListTile(
-                key: const ValueKey('booking-check-in-now'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                    l10n.kioskCheckInRightAway),
-                subtitle: Text(words.uxBookingCheckInHelp),
-                value: _checkInNow,
-                onChanged: (v) {
-                  setState(() => _checkInNow = v);
-                  widget.onFieldCommitted?.call('check_in');
-                },
-              ),
-            if (widget.seatId != null) ...[
-              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
-            ],
-            if (widget.allowBlocking)
-              BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
-                BookingChoice(_start, _end, null, null, null, block: true))),
-      ],
-    );
-  }
+              );
 
   /// Whether a Riverpod scope is above this sheet (#763): the scope's
   /// inherited widget is private, so probing means asking for the
