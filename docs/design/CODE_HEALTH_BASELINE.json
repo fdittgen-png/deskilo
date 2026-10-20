@@ -1,8 +1,8 @@
 {
-  "recordedSha": "03f4f28796f338ca0cd3eb0cbb8611e4e29044b4",
+  "recordedSha": "ec685f513f5e9f19d466ab7aa1fc5a8cfae7fead",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1745,"functions":9559,"cyclomatic>=9":1009,"cyclomatic>=25":129,"cognitive>=15":419,"cognitive>=30":117,"length>=150":93,"parameters>=5":450,"parameters>=7":144,"partOfFiles":75},
+  "totals": {"files":1745,"functions":9566,"cyclomatic>=9":1013,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -83,6 +83,8 @@
       "lib/features/reservations/presentation/reserve_seat_actions.dart": 834,
 
       "lib/features/reservations/presentation/widgets/booking_sheet.dart": 644,
+
+      "lib/features/reservations/presentation/widgets/space_scan.dart": 550,
 
       "lib/features/task_recorder/application/recorder_controller.dart": 548,
 
@@ -2030,7 +2032,7 @@
     {"p":"lib/features/reservations/presentation/widgets/space_act_sheet.dart","loc":301,"part":false,"setState":4,"repositoryReads":1,"fn":10,"cog":12,"cyc":14,"len":111,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_conflict_actions.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":7,"len":41,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_price_line.dart","loc":69,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":8,"len":47,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":335,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":128,"cyc":85,"len":309,"params":2,"nest":7,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":439,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":68,"cyc":21,"len":136,"params":13,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":2}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_part1.dart","loc":254,"part":true,"setState":8,"repositoryReads":1,"fn":8,"cog":11,"cyc":13,"len":108,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_part2.dart","loc":117,"part":true,"setState":0,"repositoryReads":1,"fn":3,"cog":18,"cyc":15,"len":93,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_sheet.dart","loc":155,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":6,"cyc":7,"len":79,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2692,7 +2694,8 @@
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView.build(BuildContext context,WidgetRef ref)","cog":61,"cyc":43,"len":185,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._seatRow(BuildContext context,WidgetRef ref,Seat seat,double indent,String place)","cog":20,"cyc":29,"len":147,"params":5},
     {"id":"lib/features/reservations/presentation/widgets/space_act_form.dart#SpaceActFormState.build(BuildContext context)","cog":20,"cyc":12,"len":159,"params":1},
-    {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState.build(BuildContext context)","cog":128,"cyc":85,"len":309,"params":1},
+    {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState._wholeSection(BuildContext context,{required ({bool bookable, int priceCents}) target,required String title,required String? priceLine,required String? myId,required Reservation? myWholeReservation,required bool allowed,required bool granted,required bool featureOn,required Reservation? blocking,required Desk? desk,required Office? office,required Level? level})","cog":68,"cyc":21,"len":136,"params":13},
+    {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_myLiveWholeReservation(SpaceKind kind,List<Reservation> reservations,String myMemberId,({DateTime start, DateTime end}) window,{String? deskId,String? officeId,String? levelId})","cog":4,"cyc":9,"len":28,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/space_scan_part1.dart#_SpaceSheetStatePart1._create({String? seatId,String? deskId,String? officeId,String? levelId,required bool checkIn,DateTime? startsAt,DateTime? endsAt})","cog":6,"cyc":8,"len":54,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/space_scan_part2.dart#showSpaceSheet(BuildContext context,{required SpaceKind kind,Level? level,Office? office,Desk? desk,Seat? seat,FloorPlan? plan,({DateTime start, DateTime end})? initialWindow,List<({String id, String name})> members})","cog":0,"cyc":1,"len":32,"params":9},
     {"id":"lib/features/task_recorder/data/recorder_store.dart#recoverRecordingLog(String id,String text,{RecordingLimits limits})","cog":48,"cyc":40,"len":134,"params":3},

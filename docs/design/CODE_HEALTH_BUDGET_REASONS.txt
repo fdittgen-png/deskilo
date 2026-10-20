@@ -101,3 +101,4 @@ pairBudget workspace -> profile // #1652 the invitation review names who is join
 pairBudget workspace -> reservations // #2383 the legacy new-conversation sheet left lib/
 pairBudget workspace -> task_recorder // #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
 fileLength lib/features/members/presentation/widgets/member_page_cards.dart // #2494 the member page's tile groups moved here from build (cognitive 116 to the groups); the part file goes when the cards become widgets
+fileLength lib/features/reservations/presentation/widgets/space_scan.dart // #2494 the sheet's sections moved out of build (cognitive 128 to 101, still over); the length returns when the part files and the whole-space section become widgets
