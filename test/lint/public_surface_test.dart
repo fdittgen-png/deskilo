@@ -21,8 +21,6 @@ const Map<String, String> _allowed = {
       '#2504 — the WorkspaceFeature.webMcp provider builds it',
   'lib/core/webmcp/webmcp_registry.dart::WebMcpToolRunner':
       '#2504 — the read and write runners implement it',
-  'lib/features/money/presentation/widgets/invoice_form_sheet.dart::invoiceMissingLabel':
-      '#2384 — on an open VAT branch, after it merges',
 };
 
 void main() {
