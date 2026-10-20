@@ -1,8 +1,8 @@
 {
-  "recordedSha": "d9a05c4b4f614cd54baba3cb8d9b75b1aba28f1e",
-  "recordedDate": "2026-10-20",
+  "recordedSha": "659c10ed3062dcdb9bc59912f4e7fb54d378457f",
+  "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1747,"functions":9588,"cyclomatic>=9":1017,"cyclomatic>=25":126,"cognitive>=15":421,"cognitive>=30":115,"length>=150":89,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1747,"functions":9590,"cyclomatic>=9":1018,"cyclomatic>=25":125,"cognitive>=15":421,"cognitive>=30":114,"length>=150":88,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1915,7 +1915,7 @@
     {"p":"lib/features/profile/presentation/screens/new_instance_screen.dart","loc":445,"part":false,"setState":22,"repositoryReads":0,"fn":19,"cog":14,"cyc":14,"len":66,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/personal_info_screen.dart","loc":129,"part":false,"setState":2,"repositoryReads":1,"fn":5,"cog":12,"cyc":11,"len":50,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/privacy_screen.dart","loc":199,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":9,"cyc":9,"len":94,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/profile/presentation/screens/profiles_screen.dart","loc":280,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":68,"cyc":29,"len":219,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/profile/presentation/screens/profiles_screen.dart","loc":290,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":17,"cyc":14,"len":104,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/schema_update_screen.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":49,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/server_choice_screen.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":85,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/settings_screen.dart","loc":400,"part":false,"setState":3,"repositoryReads":1,"fn":9,"cog":18,"cyc":22,"len":173,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -2666,7 +2666,6 @@
     {"id":"lib/features/profile/domain/personal_info.dart#PersonalInfo.copyWith({Courtesy? courtesy,String? firstName,String? lastName,String? company,String? street,String? postalCode,String? city,String? countryCode,String? phone,String? email,String? vatId,String? legalId})","cog":0,"cyc":13,"len":27,"params":12},
     {"id":"lib/features/profile/domain/personal_info.dart#_postalBlock({required String company,required String person,required String street,required String postalCode,required String city,required String countryCode,required String workspaceCountry})","cog":2,"cyc":4,"len":25,"params":7},
     {"id":"lib/features/profile/domain/profile.dart#Profile.copyWith({String? displayName,String? whatsapp,String? statusText,String? address,String? countryCode,String? vatId,DateTime? lastSeenAt,String? avatarPath,String? preferredLocale,FormatPrefs? formatPrefs,String? privacyAcceptedVersion,DateTime? privacyAcceptedAt,PersonalInfo? identity})","cog":0,"cyc":14,"len":34,"params":13},
-    {"id":"lib/features/profile/presentation/screens/profiles_screen.dart#ProfilesScreen.build(BuildContext context,WidgetRef ref)","cog":68,"cyc":29,"len":219,"params":2},
     {"id":"lib/features/profile/presentation/screens/settings_screen.dart#_SettingsScreenState._membershipTiles(BuildContext context,WidgetRef ref,{required AppLocalizations l10n,required Profile? myProfile,required Member? myMember,required Set<WorkspaceFeature> features})","cog":18,"cyc":22,"len":173,"params":6},
     {"id":"lib/features/profile/presentation/widgets/account_settings_tiles.dart#accountSettingsTiles(BuildContext context,WidgetRef ref,{AccountTileGroup? only})","cog":29,"cyc":28,"len":135,"params":3},
     {"id":"lib/features/profile/presentation/widgets/backend_candidate_form.dart#_BackendCandidateFormState._field({required Key key,required TextEditingController controller,required String label,required String hint,required ValueChanged<String> onChanged,TextInputType? keyboard,String? errorText})","cog":3,"cyc":3,"len":41,"params":7},
