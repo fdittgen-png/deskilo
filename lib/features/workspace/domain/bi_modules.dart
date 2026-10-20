@@ -83,11 +83,33 @@ enum BiUnsupported { grain, comparison, grouping }
 /// A drill-through to the existing screen the figure is made from. The
 /// target screen applies its own rights; [permission] decides whether
 /// the link is offered or explained as restricted.
+///
+/// A drill that [carriesPeriod] opens the screen on the months of the
+/// figure it was taken from (`?from=2026-07&to=2026-09`), so Back and a
+/// reload keep the context and the reader sees the rows that make the
+/// number, not the screen's default window (#2578).
 class BiDrill {
-  const BiDrill({required this.route, required this.permission});
+  const BiDrill({
+    required this.route,
+    required this.permission,
+    this.carriesPeriod = false,
+  });
 
   final String route;
   final WorkspacePermission permission;
+  final bool carriesPeriod;
+
+  /// The address to open for a figure of [period]. Only months and the
+  /// ids a screen already knows travel; nothing private rides in a URL.
+  String target(BiPeriod period) {
+    if (!carriesPeriod) return route;
+    final first = BiPeriod(BiGrain.month, period.year, period.startMonth);
+    final last = first.shift(period.grain.months - 1);
+    return Uri(
+      path: route,
+      queryParameters: {'from': first.wire, 'to': last.wire},
+    ).toString();
+  }
 }
 
 /// The registered modules. A new dashboard adds itself here.
@@ -120,6 +142,7 @@ const biModules = <BiModule>[
     drill: BiDrill(
       route: '/money/status',
       permission: WorkspacePermission.viewFinances,
+      carriesPeriod: true,
     ),
   ),
   BiModule(
@@ -134,6 +157,7 @@ const biModules = <BiModule>[
     drill: BiDrill(
       route: '/money/status',
       permission: WorkspacePermission.viewFinances,
+      carriesPeriod: true,
     ),
   ),
 ];

@@ -412,7 +412,7 @@ class _Result extends ConsumerWidget {
                   icon: const Icon(Icons.open_in_new),
                   label: Text(l10n.biOpenSource),
                   // push: Back returns to this page and its address.
-                  onPressed: () => context.push(drill.route),
+                  onPressed: () => context.push(drill.target(result.period)),
                 ) else Text(
                   l10n.biSourceRestricted,
                   key: const ValueKey('bi-drill-restricted'),
