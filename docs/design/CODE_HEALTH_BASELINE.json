@@ -1,8 +1,8 @@
 {
-  "recordedSha": "ae5b67cc65f5f04748ef4077adb88fbe5a0ebda4",
+  "recordedSha": "1761e2d803a7d208b8aed9dd95662b1d7bc91a15",
   "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1746,"functions":9575,"cyclomatic>=9":1014,"cyclomatic>=25":128,"cognitive>=15":420,"cognitive>=30":117,"length>=150":92,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1746,"functions":9580,"cyclomatic>=9":1015,"cyclomatic>=25":127,"cognitive>=15":420,"cognitive>=30":117,"length>=150":91,"parameters>=5":453,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1719,11 +1719,11 @@
     {"p":"lib/features/money/presentation/widgets/invoice_archive_tab.dart","loc":394,"part":false,"setState":5,"repositoryReads":0,"fn":8,"cog":40,"cyc":38,"len":143,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":440,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":66,"cyc":64,"len":382,"params":12,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":469,"part":false,"setState":7,"repositoryReads":0,"fn":9,"cog":59,"cyc":32,"len":255,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":463,"part":false,"setState":7,"repositoryReads":0,"fn":13,"cog":31,"cyc":14,"len":104,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_journey_view.dart","loc":312,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":21,"cyc":22,"len":58,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoice_missing_sales_tax.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":5,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_missing_sales_tax.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":24,"len":34,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_overview.dart","loc":192,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":14,"cyc":9,"len":79,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_process_sheet.dart","loc":147,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":101,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_receipt_action_runner.dart","loc":55,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":12,"cyc":11,"len":53,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2648,7 +2648,7 @@
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._row(BuildContext context,AppLocalizations l10n,Invoice invoice,{required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required String replacedByNumber,required DateFormat dateFormat})","cog":5,"cyc":6,"len":62,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart#showInvoiceDetailSheet(BuildContext context,{required WidgetRef ref,required Invoice invoice,required InvoiceMatch? match,required bool canIssue,required bool isEu,({int count, DateTime last})? reminder,String replacedByNumber,bool showMemberName,InvoiceTransmission? transmission,InvoiceJourney? journey,String settledByNumber})","cog":2,"cyc":4,"len":64,"params":12},
     {"id":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build(BuildContext context,WidgetRef ref)","cog":66,"cyc":64,"len":382,"params":2},
-    {"id":"lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState.build(BuildContext context)","cog":59,"cyc":32,"len":255,"params":1},
+    {"id":"lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState._previewBody(BuildContext context,({List<InvoiceLine> lines, int totalCents})? preview,List<InvoiceLine> lines)","cog":31,"cyc":10,"len":96,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_sheet_actions.dart#InvoiceSheetActions._button(BuildContext context,{required String key,required IconData icon,required String label,required InvoiceAction action,bool primary,bool danger})","cog":5,"cyc":6,"len":46,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_template_sheet_part2.dart#_ReportTemplateEditorStatePart2._buildImpl(BuildContext context)","cog":26,"cyc":21,"len":196,"params":1},
     {"id":"lib/features/money/presentation/widgets/invoicing_dashboard_part3.dart#OpenInvoicesTab.build(BuildContext context,WidgetRef ref)","cog":49,"cyc":28,"len":298,"params":2},

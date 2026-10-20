@@ -252,90 +252,38 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     unawaited(_load());
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    final replacesNumber = widget.replacesNumber;
-    final replacesBanner = replacesNumber == null
-        ? null
-        : '${l10n.invoicePdfReplaces} $replacesNumber';
-    final monthLabel = DateFormat.yMMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(_month);
-    final now = widget.now;
-    final atCurrent = _month.year == now.year && _month.month == now.month;
-    final preview = _preview;
-    final lines = preview?.lines ?? const <InvoiceLine>[];
-
-    return SheetShell(
-      title: l10n.invoiceCreate,
-      children: [
-        if (replacesBanner != null) ...[
-          const SizedBox(height: 8),
-          InlineBanner(
-            key: const ValueKey('invoice-replaces-banner'),
-            icon: Icons.published_with_changes_outlined,
-            text: replacesBanner,
-            severity: InlineBannerSeverity.info,
-          ),
-        ],
-        const SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          key: const ValueKey('invoice-member-dropdown'),
-          initialValue: _memberId,
-          items: [
-            for (final member in widget.members)
-              DropdownMenuItem(
-                value: member.id,
-                child: Text(member.name),
-              ),
-          ],
-          onChanged: (value) {
-            setState(() {
-              _memberId = value;
-              _preview = null;
-              _missing = const [];
-            });
-            unawaited(_load());
-          },
-          decoration: InputDecoration(
-            labelText: l10n.invoiceMemberLabel,
-          ),
-        ),
-        const SizedBox(height: 8),
+  Widget _periodRow(BuildContext context, String monthLabel, bool atCurrent) =>
         Row(children: [
-          IconButton(
-            tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
-            key: const ValueKey('invoice-period-prev'),
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () => _shiftMonth(-1),
-          ),
-          Expanded(
-            child: Text(
-              monthLabel,
-              key: const ValueKey('invoice-period-label'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-          IconButton(
-            tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
-            key: const ValueKey('invoice-period-next'),
-            icon: const Icon(Icons.chevron_right),
-            onPressed: atCurrent ? null : () => _shiftMonth(1),
-          ),
-        ]),
-        // 0067 — a month can be invoiced ONCE; invoicing the running one
-        // freezes numbers that are still moving.
-        if (atCurrent)
-          InlineBanner(
-            key: const ValueKey('invoice-running-month-banner'),
-            icon: Icons.hourglass_bottom_outlined,
-            text: l10n.invoiceRunningMonth,
-            severity: InlineBannerSeverity.info,
-          ),
-        const SizedBox(height: 8),
-        // The derived positions — read-only by design (0062).
+      IconButton(
+        tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
+        key: const ValueKey('invoice-period-prev'),
+        icon: const Icon(Icons.chevron_left),
+        onPressed: () => _shiftMonth(-1),
+      ),
+      Expanded(
+        child: Text(
+          monthLabel,
+          key: const ValueKey('invoice-period-label'),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      IconButton(
+        tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
+        key: const ValueKey('invoice-period-next'),
+        icon: const Icon(Icons.chevron_right),
+        onPressed: atCurrent ? null : () => _shiftMonth(1),
+      ),
+    ]);
+
+  /// The derived positions — read-only by design (0062).
+  List<Widget> _previewBody(
+    BuildContext context,
+    ({List<InvoiceLine> lines, int totalCents})? preview,
+    List<InvoiceLine> lines,
+  ) {
+    final l10n = widget.l10n;
+    return [
         if (_memberId == null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -422,6 +370,129 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             ],
           ),
         ],
+    ];
+  }
+
+  List<Widget> _publicBuyerFields() {
+    final l10n = widget.l10n;
+    return [
+        TextField(
+          key: const ValueKey('invoice-form-purchase-order'),
+          controller: _purchaseOrder,
+          decoration: InputDecoration(
+            labelText: l10n.invoicePurchaseOrder,
+            helperText: l10n.invoicePurchaseOrderHint,
+            helperMaxLines: 2,
+          ),
+        ),
+        TextField(
+          key: const ValueKey('invoice-form-buyer-reference'),
+          controller: _buyerReference,
+          decoration: InputDecoration(
+            labelText: l10n.invoiceBuyerReference,
+            helperText: l10n.invoiceBuyerReferenceHint,
+            helperMaxLines: 2,
+          ),
+        ),
+    ];
+  }
+
+  Widget _missingBanner() {
+    final l10n = widget.l10n;
+    return InlineBanner(
+            key: const ValueKey('invoice-missing-essentials'),
+            icon: Icons.rule_folder_outlined,
+            text: '${_missing.contains('invoice_feature_disabled')
+                ? l10n.invoiceIssuingUnavailable
+                : _missing.contains('vat_treatment_unreviewed')
+                ? l10n.invoiceExternalIssuingTitle
+                : l10n.invoiceMissingTitle}:\n'
+                '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
+          );
+  }
+
+  Widget _submitButton(BuildContext context, List<InvoiceLine> lines) {
+    return FilledButton(
+          key: const ValueKey('invoice-submit'),
+          onPressed: _memberId == null || lines.isEmpty || _missing.isNotEmpty
+              ? null
+              : () => Navigator.of(context).pop((
+                    memberId: _memberId!,
+                    period: _period,
+                    detailed: _detailed,
+                    buyerReference:
+                        _publicBuyer ? _buyerReference.text.trim() : '',
+                    purchaseOrder:
+                        _publicBuyer ? _purchaseOrder.text.trim() : '',
+                    correctionReason: _correctionReason,
+                  )),
+          child: Text(widget.l10n.invoiceIssue),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final replacesNumber = widget.replacesNumber;
+    final replacesBanner = replacesNumber == null
+        ? null
+        : '${l10n.invoicePdfReplaces} $replacesNumber';
+    final monthLabel = DateFormat.yMMMM(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    ).format(_month);
+    final now = widget.now;
+    final atCurrent = _month.year == now.year && _month.month == now.month;
+    final preview = _preview;
+    final lines = preview?.lines ?? const <InvoiceLine>[];
+
+    return SheetShell(
+      title: l10n.invoiceCreate,
+      children: [
+        if (replacesBanner != null) ...[
+          const SizedBox(height: 8),
+          InlineBanner(
+            key: const ValueKey('invoice-replaces-banner'),
+            icon: Icons.published_with_changes_outlined,
+            text: replacesBanner,
+            severity: InlineBannerSeverity.info,
+          ),
+        ],
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          key: const ValueKey('invoice-member-dropdown'),
+          initialValue: _memberId,
+          items: [
+            for (final member in widget.members)
+              DropdownMenuItem(
+                value: member.id,
+                child: Text(member.name),
+              ),
+          ],
+          onChanged: (value) {
+            setState(() {
+              _memberId = value;
+              _preview = null;
+              _missing = const [];
+            });
+            unawaited(_load());
+          },
+          decoration: InputDecoration(
+            labelText: l10n.invoiceMemberLabel,
+          ),
+        ),
+        const SizedBox(height: 8),
+        _periodRow(context, monthLabel, atCurrent),
+        // 0067 — a month can be invoiced ONCE; invoicing the running one
+        // freezes numbers that are still moving.
+        if (atCurrent)
+          InlineBanner(
+            key: const ValueKey('invoice-running-month-banner'),
+            icon: Icons.hourglass_bottom_outlined,
+            text: l10n.invoiceRunningMonth,
+            severity: InlineBannerSeverity.info,
+          ),
+        const SizedBox(height: 8),
+        ..._previewBody(context, preview, lines),
         const SizedBox(height: 4),
         // 0064 — snapshot the annex (check-ins, bookings, payments) into
         // the immutable document.
@@ -448,26 +519,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
-        if (_publicBuyer)
-        TextField(
-          key: const ValueKey('invoice-form-purchase-order'),
-          controller: _purchaseOrder,
-          decoration: InputDecoration(
-            labelText: l10n.invoicePurchaseOrder,
-            helperText: l10n.invoicePurchaseOrderHint,
-            helperMaxLines: 2,
-          ),
-        ),
-        if (_publicBuyer)
-        TextField(
-          key: const ValueKey('invoice-form-buyer-reference'),
-          controller: _buyerReference,
-          decoration: InputDecoration(
-            labelText: l10n.invoiceBuyerReference,
-            helperText: l10n.invoiceBuyerReferenceHint,
-            helperMaxLines: 2,
-          ),
-        ),
+        if (_publicBuyer) ..._publicBuyerFields(),
         if (lines.isNotEmpty &&
             (_missing.contains('correction_reason') ||
                 _correctionReason.isNotEmpty))
@@ -476,70 +528,10 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             value: _correctionReason,
             onChanged: _setCorrectionReason,
           ),
-        if (_missing.isNotEmpty && lines.isNotEmpty)
-          InlineBanner(
-            key: const ValueKey('invoice-missing-essentials'),
-            icon: Icons.rule_folder_outlined,
-            text: '${_missing.contains('invoice_feature_disabled')
-                ? l10n.invoiceIssuingUnavailable
-                : _missing.contains('vat_treatment_unreviewed')
-                ? l10n.invoiceExternalIssuingTitle
-                : l10n.invoiceMissingTitle}:\n'
-                '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
-          ),
+        if (_missing.isNotEmpty && lines.isNotEmpty) _missingBanner(),
         const SizedBox(height: 4),
-        FilledButton(
-          key: const ValueKey('invoice-submit'),
-          onPressed: _memberId == null || lines.isEmpty || _missing.isNotEmpty
-              ? null
-              : () => Navigator.of(context).pop((
-                    memberId: _memberId!,
-                    period: _period,
-                    detailed: _detailed,
-                    buyerReference:
-                        _publicBuyer ? _buyerReference.text.trim() : '',
-                    purchaseOrder:
-                        _publicBuyer ? _purchaseOrder.text.trim() : '',
-                    correctionReason: _correctionReason,
-                  )),
-          child: Text(l10n.invoiceIssue),
-        ),
+        _submitButton(context, lines),
       ],
     );
   }
 }
-
-/// #1916 — the words for one missing essential (stable server keys, 0365).
-String invoiceMissingLabel(AppLocalizations l10n, String key) => switch (key) {
-      'invoice_feature_disabled' => l10n.invoiceFeatureDisabled,
-      'seller_address' => l10n.invoiceMissingSellerAddress,
-      'seller_vat_id' => l10n.invoiceMissingSellerVatId,
-      'exemption_reason' => l10n.invoiceMissingExemptionReason,
-      'buyer_name' => l10n.invoiceMissingBuyerName,
-      'buyer_address' => l10n.invoiceMissingBuyerAddress,
-      'buyer_vat_id' => l10n.invoiceMissingBuyerVatId,
-      'seller_country_unsupported' => l10n.invoiceMissingSellerCountry,
-      // #2356 — § 14 UStG / NIF, the customer's identifier, art. 230.
-      'seller_tax_number' => l10n.invoiceMissingSellerTaxNumber,
-      'buyer_tax_id' => l10n.invoiceMissingBuyerTaxId,
-      'vat_national_currency' => l10n.invoiceMissingNationalCurrency,
-      // #2359 — HMRC's VAT registration number format.
-      'seller_vat_id_format' => l10n.invoiceMissingSellerVatIdFormat,
-      // #2360 — the Swiss UID with its MWST suffix.
-      'seller_uid_format' => l10n.invoiceMissingSellerUidFormat,
-      'seller_bn_format' => l10n.invoiceMissingSellerBnFormat,
-      'seller_qst_number' => l10n.invoiceMissingSellerQstNumber,
-      // #2440 — RD 1619/2012 art. 15.
-      'correction_reason' => l10n.invoiceMissingCorrectionReason,
-      'vat_rate_unresolved' => l10n.invoiceMissingVatRate,
-      'vat_line_zero_unexplained' => l10n.invoiceMissingVatZeroLine,
-      'vat_charged_not_registered' => l10n.invoiceMissingVatNotRegistered,
-      'vat_treatment_unreviewed' => l10n.invoiceMissingVatTreatment,
-      // #2354 — a general service to a customer abroad: business or not.
-      'vies_unverified' =>
-        l10n.invoiceMissingVies,
-      'buyer_capacity_unknown' =>
-        l10n
-            .invoiceMissingBuyerCapacity,
-      _ => salesTaxMissingLabel(l10n, key),
-    };

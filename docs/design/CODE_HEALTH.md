@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ae5b67cc65f5f04748ef4077adb88fbe5a0ebda4` on 2026-10-20.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `1761e2d803a7d208b8aed9dd95662b1d7bc91a15` on 2026-10-20.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -11,12 +11,12 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | measure | count |
 |---|---|
 | files | 1746 |
-| functions | 9575 |
-| cyclomatic>=9 | 1014 |
-| cyclomatic>=25 | 128 |
+| functions | 9580 |
+| cyclomatic>=9 | 1015 |
+| cyclomatic>=25 | 127 |
 | cognitive>=15 | 420 |
 | cognitive>=30 | 117 |
-| length>=150 | 92 |
+| length>=150 | 91 |
 | parameters>=5 | 453 |
 | parameters>=7 | 146 |
 | partOfFiles | 75 |
@@ -45,9 +45,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 64 | 45 | 229 | 10 | `lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent` |
 | 63 | 37 | 233 | 1 | `lib/features/workspace/presentation/widgets/bi_toolbar.dart#BiToolbar.build` |
 | 61 | 43 | 185 | 2 | `lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView.build` |
-| 59 | 32 | 255 | 1 | `lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState.build` |
 | 58 | 53 | 174 | 3 | `lib/features/task_recorder/package/task_package.dart#_readManifest` |
 | 58 | 47 | 176 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 56 | 46 | 238 | 4 | `lib/features/workspace/application/template_workbook.dart#templateWorkbook` |
 | 55 | 14 | 88 | 4 | `lib/features/money/domain/vat_declaration.dart#vatDeclarationXml` |
+| 55 | 35 | 266 | 2 | `lib/features/workspace/presentation/widgets/bi_views_bar.dart#BiViewsBar.build` |
 
