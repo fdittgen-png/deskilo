@@ -281,51 +281,13 @@ String vatDeclarationXml({
     builder.element('currency', nest: declaration.currency);
     builder.element('rates', nest: () {
       for (final line in declaration.lines) {
-        builder.element('rate', nest: () {
-          builder.attribute('percent', line.percent.toString());
-          if (line.category.isNotEmpty) {
-            builder.attribute('category', line.category);
-          }
-          if (line.isInput) builder.attribute('direction', 'input');
-          if (line.isCorrection) {
-            builder
-              ..attribute('correction', 'true')
-              ..attribute('corrects', line.corrects);
-            if (_day(line.correctsStart) case final start?) {
-              builder.attribute('corrects-start', start);
-            }
-            if (_day(line.correctsEnd) case final end?) {
-              builder.attribute('corrects-end', end);
-            }
-          }
-          builder
-            ..element('net-cents', nest: line.netCents.toString())
-            ..element('vat-cents', nest: line.vatCents.toString())
-            ..element('invoice-count',
-              nest: line.invoiceCount.toString());
-        });
+        _rateXml(builder, line);
       }
     });
     builder.element('boxes', nest: () {
       for (final box in vatFormBoxes(countryCode, declaration.lines,
           periodEnd: declaration.periodEnd)) {
-        builder.element('box', nest: () {
-          builder
-            ..attribute('code', box.code)
-            ..attribute('label', box.label);
-          if (box.hasBase && box.baseKey.isNotEmpty) {
-            builder.attribute('base-key', box.baseKey);
-          }
-          if (box.hasTax && box.taxKey.isNotEmpty) {
-            builder.attribute('tax-key', box.taxKey);
-          }
-          if (box.hasBase) {
-            builder.element('net-cents', nest: box.netCents.toString());
-          }
-          if (box.hasTax) {
-            builder.element('vat-cents', nest: box.vatCents.toString());
-          }
-        });
+        _boxXml(builder, box);
       }
     });
     builder.element('totals', nest: () {
@@ -337,4 +299,49 @@ String vatDeclarationXml({
     });
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+}
+
+void _rateXml(XmlBuilder builder, VatDeclarationLine line) {
+  builder.element('rate', nest: () {
+    builder.attribute('percent', line.percent.toString());
+    if (line.category.isNotEmpty) {
+      builder.attribute('category', line.category);
+    }
+    if (line.isInput) builder.attribute('direction', 'input');
+    if (line.isCorrection) {
+      builder
+        ..attribute('correction', 'true')
+        ..attribute('corrects', line.corrects);
+      if (_day(line.correctsStart) case final start?) {
+        builder.attribute('corrects-start', start);
+      }
+      if (_day(line.correctsEnd) case final end?) {
+        builder.attribute('corrects-end', end);
+      }
+    }
+    builder
+      ..element('net-cents', nest: line.netCents.toString())
+      ..element('vat-cents', nest: line.vatCents.toString())
+      ..element('invoice-count', nest: line.invoiceCount.toString());
+  });
+}
+
+void _boxXml(XmlBuilder builder, VatFormBox box) {
+  builder.element('box', nest: () {
+    builder
+      ..attribute('code', box.code)
+      ..attribute('label', box.label);
+    if (box.hasBase && box.baseKey.isNotEmpty) {
+      builder.attribute('base-key', box.baseKey);
+    }
+    if (box.hasTax && box.taxKey.isNotEmpty) {
+      builder.attribute('tax-key', box.taxKey);
+    }
+    if (box.hasBase) {
+      builder.element('net-cents', nest: box.netCents.toString());
+    }
+    if (box.hasTax) {
+      builder.element('vat-cents', nest: box.vatCents.toString());
+    }
+  });
 }

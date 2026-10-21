@@ -1,8 +1,8 @@
 {
-  "recordedSha": "831a040bcfbe5d631a3808a7144912cfb49e2f49",
+  "recordedSha": "956b56e97eb09d46496b84d9b2b13fbf805e5460",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9694,"cyclomatic>=9":1031,"cyclomatic>=25":113,"cognitive>=15":426,"cognitive>=30":103,"length>=150":77,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
+  "totals": {"files":1751,"functions":9696,"cyclomatic>=9":1030,"cyclomatic>=25":113,"cognitive>=15":425,"cognitive>=30":102,"length>=150":77,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1579,7 +1579,7 @@
     {"p":"lib/features/money/domain/vat_catalogue.dart","loc":130,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":11,"cyc":11,"len":33,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_compliance.dart","loc":166,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":18,"cyc":20,"len":51,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/vat_components.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":4,"cyc":7,"len":30,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/vat_declaration.dart","loc":265,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":55,"cyc":14,"len":88,"params":4,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/vat_declaration.dart","loc":270,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":12,"cyc":10,"len":50,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_declaration_period.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":7,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/vat_declaration_report.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":11,"cyc":9,"len":51,"params":10,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/vat_filing_ca.dart","loc":60,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":14,"cyc":7,"len":56,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2610,7 +2610,6 @@
     {"id":"lib/features/money/domain/swiss_qr_bill.dart#SwissQrBill._make(String account,String type,String reference,SwissQrAddress creditor,SwissQrAddress? debtor,int totalCents,String currency,String info)","cog":0,"cyc":1,"len":19,"params":8},
     {"id":"lib/features/money/domain/swiss_qr_bill_pdf.dart#swissQrBillPage({required SwissQrBill bill,required SwissQrBillStrings strings,required pw.Font baseFont,required pw.Font boldFont})","cog":12,"cyc":8,"len":274,"params":4},
     {"id":"lib/features/money/domain/vat_compliance.dart#nationalInvoiceMentions({required String sellerCountry,required VatRegime regime,required String currency,required int untaxedCents,required bool correction,String rectifies,String correctionReason,String sellerVatId,String sellerLegalId,bool qstCharged})","cog":18,"cyc":20,"len":51,"params":10},
-    {"id":"lib/features/money/domain/vat_declaration.dart#vatDeclarationXml({required VatDeclaration declaration,required String workspaceName,required String vatId,required String countryCode})","cog":55,"cyc":14,"len":88,"params":4},
     {"id":"lib/features/money/domain/vat_declaration_report.dart#vatDeclarationReportData({required VatDeclaration declaration,required String workspaceName,required String vatId,required String countryCode,required String disclaimer,required String statusLabel,required String Function(double) rate,String Function(VatDeclarationLine line)? lineNote,required String Function(int) money,required String Function(DateTime) date})","cog":11,"cyc":9,"len":51,"params":10},
     {"id":"lib/features/money/domain/vat_filing_files.dart#elsterUstvaXml({required VatDeclaration declaration,required String taxNumber,required String name,required String street,required String postalCode,required String city,required DateTime createdOn})","cog":16,"cyc":8,"len":116,"params":7},
     {"id":"lib/features/money/domain/vat_filing_files.dart#ediTvaCa3({required VatDeclaration declaration,required String siren,required String vatId,required String name,required String street,required String postalCode,required String city,required DateTime createdAt})","cog":11,"cyc":8,"len":71,"params":8},
