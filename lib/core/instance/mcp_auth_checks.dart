@@ -230,134 +230,154 @@ List<ReadinessCheck> _emailChecks(Map<String, Object?> auth) {
   return checks;
 }
 
+const _federationArea = ReadinessArea.canonicalFederation;
+
+ReadinessCheck _check(String code, CheckOutcome o, [String d = '']) =>
+    ReadinessCheck(_federationArea, code, o, d);
+
 List<ReadinessCheck> federationChecks(
   McpTargetEvidence e,
   Map<String, Object?>? federation,
 ) {
-  const area = ReadinessArea.canonicalFederation;
-  ReadinessCheck check(String code, CheckOutcome o, [String d = '']) =>
-      ReadinessCheck(area, code, o, d);
-  final checks = <ReadinessCheck>[];
   final kind = federation?['authority_kind'];
   final issuer = federation?['issuer'];
+  final authUrl = e.authUrl?.toString();
+  final discovered = e.authDiscovery?['issuer'];
+  final auth = e.authConfig;
+  return [
+    _authorityCheck(federation, kind, issuer),
+    _authUrlCheck(e, authUrl, discovered),
+    _pkceCheck(e),
+    if (kind == 'native') _nativeIssuerCheck(discovered, issuer),
+    if (kind == 'oidc') ..._oidcChecks(e, issuer, authUrl),
+    ..._hookChecks(federation, auth),
+    _jwksCheck(e),
+    ..._siteChecks(auth, authUrl),
+  ];
+}
 
-  checks.add(
+ReadinessCheck _authorityCheck(
+  Map<String, Object?>? federation,
+  Object? kind,
+  Object? issuer,
+) =>
     federation == null
-        ? check(
+        ? _check(
             'identity_authority',
             CheckOutcome.unknown,
             'the database readiness read failed',
           )
         : kind is String
-        ? check('identity_authority', CheckOutcome.pass, '$kind: $issuer')
-        : check(
+        ? _check('identity_authority', CheckOutcome.pass, '$kind: $issuer')
+        : _check(
             'identity_authority',
             CheckOutcome.fail,
             'no canonical identity authority: the operator states it before anyone links',
-          ),
-  );
+          );
 
-  final authUrl = e.authUrl?.toString();
-  final discovered = e.authDiscovery?['issuer'];
-  checks.add(
+ReadinessCheck _authUrlCheck(
+  McpTargetEvidence e,
+  String? authUrl,
+  Object? discovered,
+) =>
     authUrl == null || e.authDiscovery == null
-        ? check(
+        ? _check(
             'auth_url_confirmed',
             CheckOutcome.unknown,
             'Auth discovery was not reachable at ${authUrl ?? 'an unknown URL'}',
           )
         : discovered == authUrl
-        ? check('auth_url_confirmed', CheckOutcome.pass, authUrl)
-        : check(
+        ? _check('auth_url_confirmed', CheckOutcome.pass, authUrl)
+        : _check(
             'auth_url_confirmed',
             CheckOutcome.fail,
             'auth_url_mismatch: Auth at $authUrl answers as issuer $discovered',
-          ),
-  );
+          );
 
-  // #2393 — an MCP client refuses an authorization server that does not
-  // advertise S256 PKCE; registration is dynamic when the server offers
-  // it, else clients are registered by hand (OPERATIONS.md).
+// #2393 — an MCP client refuses an authorization server that does not
+// advertise S256 PKCE; registration is dynamic when the server offers
+// it, else clients are registered by hand (OPERATIONS.md).
+ReadinessCheck _pkceCheck(McpTargetEvidence e) {
   final pkce = e.authDiscovery?['code_challenge_methods_supported'];
-  checks.add(
-    e.authDiscovery == null
-        ? check(
+  return e.authDiscovery == null
+        ? _check(
             'authorization_server_pkce',
             CheckOutcome.unknown,
             'Auth discovery was not read',
           )
         : pkce is List && pkce.contains('S256')
-        ? check(
+        ? _check(
             'authorization_server_pkce',
             CheckOutcome.pass,
             e.authDiscovery?['registration_endpoint'] is String
                 ? 'S256; dynamic client registration'
                 : 'S256; clients are registered by hand',
           )
-        : check(
+        : _check(
             'authorization_server_pkce',
             CheckOutcome.fail,
             'the authorization server does not advertise S256 PKCE: MCP clients refuse it',
-          ),
-  );
+          );
+}
 
-  if (kind == 'native') {
-    checks.add(
-      discovered is! String
-          ? check(
+ReadinessCheck _nativeIssuerCheck(Object? discovered, Object? issuer) =>
+    discovered is! String
+          ? _check(
               'canonical_issuer',
               CheckOutcome.unknown,
               'the Auth issuer was not discovered',
             )
           : discovered == issuer
-          ? check(
+          ? _check(
               'canonical_issuer',
               CheckOutcome.pass,
               'this project is its own authority',
             )
-          : check(
+          : _check(
               'canonical_issuer',
               CheckOutcome.fail,
               'the stated issuer $issuer is not this Auth ($discovered)',
-            ),
-    );
-  } else if (kind == 'oidc') {
-    final canonical = e.canonicalDiscovery?['issuer'];
-    checks.add(
-      canonical == null
-          ? check(
+            );
+
+List<ReadinessCheck> _oidcChecks(
+  McpTargetEvidence e,
+  Object? issuer,
+  String? authUrl,
+) {
+  final canonical = e.canonicalDiscovery?['issuer'];
+  final provider = e.federationProvider;
+  final client = e.canonicalClient;
+  final issuerCheck =
+    canonical == null
+          ? _check(
               'canonical_issuer',
               CheckOutcome.unknown,
               'the canonical issuer\'s discovery was not read',
             )
-          : check(
+          : _check(
               'canonical_issuer',
               canonical == issuer ? CheckOutcome.pass : CheckOutcome.fail,
               canonical == issuer
                   ? ''
                   : 'the canonical issuer answers as $canonical, not $issuer',
-            ),
-    );
-    final provider = e.federationProvider;
-    checks.add(
-      provider == null
-          ? check(
+            );
+  final providerCheck =
+    provider == null
+          ? _check(
               'federation_provider',
               CheckOutcome.unknown,
               'the federation provider was not read back (needs DESKILO_TARGET_AUTH_ADMIN_KEY)',
             )
           : provider['enabled'] == true && provider['issuer'] == issuer
-          ? check('federation_provider', CheckOutcome.pass)
-          : check(
+          ? _check('federation_provider', CheckOutcome.pass)
+          : _check(
               'federation_provider',
               CheckOutcome.fail,
               'the provider is disabled or names another issuer',
-            ),
-    );
-    final client = e.canonicalClient;
-    checks.add(
-      client == null
-          ? check(
+            );
+  final callbackCheck =
+    client == null
+          ? _check(
               'federation_callback',
               CheckOutcome.unknown,
               'the canonical project\'s client for this target was not read (--canonical-ref)',
@@ -366,72 +386,74 @@ List<ReadinessCheck> federationChecks(
                     e.database?['installation_id'] &&
                 client['target_auth_url'] == authUrl &&
                 client['enabled'] == true
-          ? check(
+          ? _check(
               'federation_callback',
               CheckOutcome.pass,
               'returns to $authUrl/callback',
             )
-          : check(
+          : _check(
               'federation_callback',
               CheckOutcome.fail,
               'federation_callback_mismatch: the canonical client names another installation, '
                   'Auth URL, or is disabled',
-            ),
-    );
-  }
+            );
+  return [issuerCheck, providerCheck, callbackCheck];
+}
 
-  // Only a project other installations federate FROM runs the hook.
+// Only a project other installations federate FROM runs the hook.
+List<ReadinessCheck> _hookChecks(
+  Map<String, Object?>? federation,
+  Map<String, Object?>? auth,
+) {
   final canonicalFor = federation?['federation_clients'];
-  final auth = e.authConfig;
-  if (canonicalFor is int && canonicalFor > 0) {
-    checks.add(
-      auth == null
-          ? check(
+  if (canonicalFor is! int || canonicalFor <= 0) return const [];
+  final check =
+    auth == null
+          ? _check(
               'identity_hook',
               CheckOutcome.unknown,
               'the Auth configuration could not be read',
             )
           : auth['hook_custom_access_token_enabled'] == true &&
                 auth['hook_custom_access_token_uri'] == canonicalIdentityHookUri
-          ? check('identity_hook', CheckOutcome.pass)
-          : check(
+          ? _check('identity_hook', CheckOutcome.pass)
+          : _check(
               'identity_hook',
               CheckOutcome.fail,
               'the identity token hook is not installed: dart run tool/instance.dart federation-hook --ref <ref>',
-            ),
-    );
-  }
+            );
+  return [check];
+}
 
+ReadinessCheck _jwksCheck(McpTargetEvidence e) {
   final keys = e.jwks?['keys'];
-  checks.add(
-    keys is! List
-        ? check(
+  return keys is! List
+        ? _check(
             'jwks_asymmetric',
             CheckOutcome.unknown,
             'the signing keys were not published or read',
           )
         : keys.any((k) => k is Map && {'RSA', 'EC', 'OKP'}.contains(k['kty']))
-        ? check('jwks_asymmetric', CheckOutcome.pass)
-        : check(
+        ? _check('jwks_asymmetric', CheckOutcome.pass)
+        : _check(
             'jwks_asymmetric',
             CheckOutcome.fail,
             'jwks_no_asymmetric_key: tokens cannot be verified by anyone but Auth',
-          ),
-  );
+          );
+}
 
+List<ReadinessCheck> _siteChecks(Map<String, Object?>? auth, String? authUrl) {
   final site = auth?['site_url'];
-  if (authUrl != null && site is String) {
-    final clash =
-        site == authUrl || site == '$authUrl/' || site == '$authUrl/callback';
-    checks.add(
-      check(
-        'site_url_distinct',
-        clash ? CheckOutcome.fail : CheckOutcome.pass,
-        clash
-            ? 'the Site URL is the Auth URL or its callback; it must be the app'
-            : '',
-      ),
-    );
-  }
-  return checks;
+  if (authUrl == null || site is! String) return const [];
+  final clash =
+      site == authUrl || site == '$authUrl/' || site == '$authUrl/callback';
+  return [
+    _check(
+      'site_url_distinct',
+      clash ? CheckOutcome.fail : CheckOutcome.pass,
+      clash
+          ? 'the Site URL is the Auth URL or its callback; it must be the app'
+          : '',
+    ),
+  ];
 }
