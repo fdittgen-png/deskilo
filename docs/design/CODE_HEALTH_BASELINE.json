@@ -1,8 +1,8 @@
 {
-  "recordedSha": "cff0f87d5d2ac7e4f5df99b6d38cc20f50e0c1e7",
+  "recordedSha": "380177b7b6aba57c36ac194ae15aeec956b7127c",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1752,"functions":9706,"cyclomatic>=9":1031,"cyclomatic>=25":112,"cognitive>=15":424,"cognitive>=30":101,"length>=150":76,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
+  "totals": {"files":1753,"functions":9714,"cyclomatic>=9":1033,"cyclomatic>=25":111,"cognitive>=15":423,"cognitive>=30":100,"length>=150":75,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2090,7 +2090,8 @@
     {"p":"lib/features/task_recorder/offline/offline_tool_web.dart","loc":115,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":9,"cyc":8,"len":22,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/package/storyboard_review.dart","loc":191,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":21,"cyc":32,"len":86,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/package/task_output.dart","loc":73,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":1,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/package/task_package.dart","loc":482,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":58,"cyc":53,"len":174,"params":5,"nest":3,"over":{"cog":2,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/task_recorder/package/task_package.dart","loc":463,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":32,"cyc":20,"len":95,"params":5,"nest":3,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/package/task_package_inflate.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":5,"cyc":4,"len":16,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_attention.dart","loc":132,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":4,"cyc":9,"len":56,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_bubble.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":59,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_bubble_menu.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":65,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2710,7 +2711,6 @@
     {"id":"lib/features/task_recorder/guide/guide_compiler.dart#compileGuide(TaskRecording recording,{ActionRegistry registry})","cog":36,"cyc":26,"len":110,"params":2},
     {"id":"lib/features/task_recorder/package/storyboard_review.dart#StoryboardReview.parse(String text,{StoryboardLimits limits})","cog":21,"cyc":32,"len":86,"params":2},
     {"id":"lib/features/task_recorder/package/task_package.dart#readTaskPackage(Uint8List bytes,{TaskPackageLimits limits,RecordingLimits recordingLimits})","cog":32,"cyc":20,"len":95,"params":3},
-    {"id":"lib/features/task_recorder/package/task_package.dart#_readManifest(Map<String, Uint8List> files,TaskPackageLimits limits,RecordingLimits recordingLimits)","cog":58,"cyc":53,"len":174,"params":3},
     {"id":"lib/features/task_recorder/presentation/recorder_labels.dart#actionLabel(AppLocalizations l10n,String? action)","cog":1,"cyc":39,"len":75,"params":2},
     {"id":"lib/features/task_recorder/presentation/recorder_labels.dart#_valueLabel(AppLocalizations l10n,String value)","cog":1,"cyc":57,"len":61,"params":2},
     {"id":"lib/features/task_recorder/presentation/widgets/recording_indicator.dart#_LiveIndicatorState._onRoute()","cog":26,"cyc":27,"len":70,"params":0},

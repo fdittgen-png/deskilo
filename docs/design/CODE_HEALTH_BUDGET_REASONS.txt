@@ -43,7 +43,6 @@ fileLength lib/features/reservations/presentation/reserve_seat_actions.dart // #
 fileLength lib/features/reservations/presentation/widgets/booking_sheet.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
 fileLength lib/features/task_recorder/application/recorder_controller.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/task_recorder/export/docx/docx_writer.dart // #2384 @visibleForTesting on the declarations only tests read, and its import
-fileLength lib/features/task_recorder/package/task_package.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/task_recorder/presentation/screens/task_wizard_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/task_recorder/presentation/ui_capture.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/workspace/domain/feature_lifecycle.dart // master's two newest features join the owner-beta map

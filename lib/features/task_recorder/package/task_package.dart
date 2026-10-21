@@ -42,6 +42,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'storyboard_review.dart';
+import 'task_package_inflate.dart';
 
 const String _taskPackageFormat = 'deskilo.task-package';
 
@@ -308,13 +309,13 @@ TaskPackageReadResult readTaskPackage(
     }
     final Uint8List content;
     try {
-      content = _inflate(
+      content = inflateCapped(
         zf.getRawContent(),
         method,
         cap: cap,
         remaining: limits.maxExpandedBytes - expanded,
       );
-    } on _CapExceeded catch (e, st) {
+    } on CapExceeded catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'package refused: entry over its cap',
@@ -367,18 +368,36 @@ TaskPackageReadResult _readManifest(
   TaskPackageLimits limits,
   RecordingLimits recordingLimits,
 ) {
-  TaskPackageReadResult refuse(TaskPackageIssueCode code) =>
-      TaskPackageReadResult(null, [code]);
-
-  final raw = files[_manifestPath];
-  if (raw == null) return refuse(TaskPackageIssueCode.missingManifest);
-  final Object? json;
   try {
-    json = jsonDecode(utf8.decode(raw));
-  } on FormatException {
-    return refuse(TaskPackageIssueCode.badManifest);
+    return _ManifestReader(files, limits, recordingLimits).read();
+  } on _Refused catch (r, st) {
+    TraceLogger.instance.warn(
+      'recorder',
+      'package refused: ${r.code.name}',
+      stackTrace: st,
+    );
+    return TaskPackageReadResult(null, [r.code]);
   }
-  const rootKeys = {
+}
+
+/// A check of the manifest failed: the whole package is refused with [code].
+class _Refused implements Exception {
+  const _Refused(this.code);
+  final TaskPackageIssueCode code;
+}
+
+/// Reads one package's manifest: each section is checked by its own
+/// method, the first failure refuses the package.
+class _ManifestReader {
+  _ManifestReader(this.files, this.limits, this.recordingLimits);
+
+  final Map<String, Uint8List> files;
+  final TaskPackageLimits limits;
+  final RecordingLimits recordingLimits;
+  final Set<String> listed = {_manifestPath};
+  late final int version;
+
+  static const _rootKeys = {
     'format',
     'package_version',
     'product',
@@ -388,205 +407,167 @@ TaskPackageReadResult _readManifest(
     'assets',
     'claims',
   };
-  if (json is! Map || !json.keys.every(rootKeys.contains)) {
-    return refuse(TaskPackageIssueCode.badManifest);
-  }
-  if (json['format'] != _taskPackageFormat) {
-    return refuse(TaskPackageIssueCode.badManifest);
-  }
-  final version = json['package_version'];
-  if (version is! int || version < 1 || version > _taskPackageVersion) {
-    return refuse(TaskPackageIssueCode.unsupportedVersion);
+
+  TaskPackageReadResult read() {
+    final json = _root();
+    final recordingEntry = json['recording'];
+    _check(recordingEntry, const {
+      'schema_version',
+      'action_contract_version',
+      'kind',
+      'completeness',
+    }, path: _recordingPath);
+    final transcript = _transcript(json);
+    final storyboard = _storyboard(json);
+    final assets = _assets(json['assets']);
+    if (files.keys.any((name) => !listed.contains(name))) {
+      throw const _Refused(TaskPackageIssueCode.unlistedFile);
+    }
+    final claims = _claims(json['claims']);
+
+    final decoded = decodeRecordingText(
+      _text(_recordingPath),
+      limits: recordingLimits,
+    );
+    if (!decoded.accepted) {
+      return TaskPackageReadResult(null, const [
+        TaskPackageIssueCode.badRecording,
+      ], recordingIssues: decoded.issues);
+    }
+    final recording = decoded.recording!;
+    final summary = recordingEntry as Map;
+    if (summary['schema_version'] != schemaVersionOf(recording) ||
+        summary['action_contract_version'] != recording.actionContractVersion ||
+        summary['kind'] != recording.kind.wire ||
+        summary['completeness'] != recording.completeness.wire) {
+      throw const _Refused(TaskPackageIssueCode.inconsistent);
+    }
+    return TaskPackageReadResult(
+      TaskPackage(
+        recording: recording,
+        runnable: decoded.runnable,
+        transcript: transcript,
+        assets: assets,
+        claims: claims,
+        storyboard: storyboard,
+      ),
+      const [],
+      recordingIssues: decoded.issues,
+    );
   }
 
-  final listed = <String>{_manifestPath};
-  // Checks one listed file: present, the declared size, the checksum.
-  TaskPackageIssueCode? check(
+  /// The manifest object, its format and its version.
+  Map<Object?, Object?> _root() {
+    final raw = files[_manifestPath];
+    if (raw == null) throw const _Refused(TaskPackageIssueCode.missingManifest);
+    final Object? json;
+    try {
+      json = jsonDecode(utf8.decode(raw));
+    } on FormatException {
+      throw const _Refused(TaskPackageIssueCode.badManifest);
+    }
+    if (json is! Map ||
+        !json.keys.every(_rootKeys.contains) ||
+        json['format'] != _taskPackageFormat) {
+      throw const _Refused(TaskPackageIssueCode.badManifest);
+    }
+    final v = json['package_version'];
+    if (v is! int || v < 1 || v > _taskPackageVersion) {
+      throw const _Refused(TaskPackageIssueCode.unsupportedVersion);
+    }
+    version = v;
+    return json;
+  }
+
+  /// Checks one listed file: present, the declared size, the checksum.
+  void _check(
     Object? entry,
     Set<String> extraKeys, {
     String? path,
     bool media = false,
   }) {
-    if (entry is! Map) return TaskPackageIssueCode.badManifest;
+    if (entry is! Map) throw const _Refused(TaskPackageIssueCode.badManifest);
     const keys = {'path', 'sha256', 'bytes'};
     if (!entry.keys.every((k) => keys.contains(k) || extraKeys.contains(k))) {
-      return TaskPackageIssueCode.badManifest;
+      throw const _Refused(TaskPackageIssueCode.badManifest);
     }
     final p = entry['path'];
     if (p is! String ||
         (path != null && p != path) ||
         (media && !_mediaPath.hasMatch(p))) {
-      return TaskPackageIssueCode.badManifest;
+      throw const _Refused(TaskPackageIssueCode.badManifest);
     }
-    if (!listed.add(p)) return TaskPackageIssueCode.duplicateEntry;
+    if (!listed.add(p)) {
+      throw const _Refused(TaskPackageIssueCode.duplicateEntry);
+    }
     final content = files[p];
-    if (content == null) return TaskPackageIssueCode.missingFile;
+    if (content == null) throw const _Refused(TaskPackageIssueCode.missingFile);
     if (entry['bytes'] != content.length ||
         entry['sha256'] != _sha256(content)) {
-      return TaskPackageIssueCode.checksumMismatch;
+      throw const _Refused(TaskPackageIssueCode.checksumMismatch);
     }
-    return null;
   }
 
-  final recordingEntry = json['recording'];
-  final recordingIssue = check(recordingEntry, const {
-    'schema_version',
-    'action_contract_version',
-    'kind',
-    'completeness',
-  }, path: _recordingPath);
-  if (recordingIssue != null) return refuse(recordingIssue);
-
-  String? transcript;
-  if (json['transcript'] != null) {
-    final issue = check(json['transcript'], const {}, path: _transcriptPath);
-    if (issue != null) return refuse(issue);
+  String _text(String path) {
     try {
-      transcript = utf8.decode(files[_transcriptPath]!);
+      return utf8.decode(files[path]!);
     } on FormatException {
-      return refuse(TaskPackageIssueCode.badText);
+      throw const _Refused(TaskPackageIssueCode.badText);
     }
   }
 
-  StoryboardReview? storyboard;
-  if (json['storyboard'] != null) {
+  String? _transcript(Map<Object?, Object?> json) {
+    if (json['transcript'] == null) return null;
+    _check(json['transcript'], const {}, path: _transcriptPath);
+    return _text(_transcriptPath);
+  }
+
+  StoryboardReview? _storyboard(Map<Object?, Object?> json) {
+    if (json['storyboard'] == null) return null;
     // A storyboard needs version 2; a version-1 package never has one.
-    if (version < 2) return refuse(TaskPackageIssueCode.badManifest);
-    final issue = check(json['storyboard'], const {}, path: _storyboardPath);
-    if (issue != null) return refuse(issue);
-    final String text;
-    try {
-      text = utf8.decode(files[_storyboardPath]!);
-    } on FormatException {
-      return refuse(TaskPackageIssueCode.badText);
+    if (version < 2) throw const _Refused(TaskPackageIssueCode.badManifest);
+    _check(json['storyboard'], const {}, path: _storyboardPath);
+    return StoryboardReview.parse(_text(_storyboardPath)) ??
+        (throw const _Refused(TaskPackageIssueCode.badManifest));
+  }
+
+  List<TaskPackageAsset> _assets(Object? assetList) {
+    if (assetList != null && assetList is! List) {
+      throw const _Refused(TaskPackageIssueCode.badManifest);
     }
-    storyboard = StoryboardReview.parse(text);
-    if (storyboard == null) return refuse(TaskPackageIssueCode.badManifest);
-  }
-
-  final assets = <TaskPackageAsset>[];
-  final assetList = json['assets'];
-  if (assetList != null && assetList is! List) {
-    return refuse(TaskPackageIssueCode.badManifest);
-  }
-  for (final a in (assetList as List?) ?? const <Object?>[]) {
-    final issue = check(a, const {'media_type'}, media: true);
-    if (issue != null) return refuse(issue);
-    final asset = TaskPackageAsset(
-      (a as Map)['path'] as String,
-      files[a['path']]!,
-    );
-    if (a['media_type'] != asset.mediaType) {
-      return refuse(TaskPackageIssueCode.badManifest);
+    final assets = <TaskPackageAsset>[];
+    for (final a in (assetList as List?) ?? const <Object?>[]) {
+      _check(a, const {'media_type'}, media: true);
+      final asset = TaskPackageAsset(
+        (a as Map)['path'] as String,
+        files[a['path']]!,
+      );
+      if (a['media_type'] != asset.mediaType) {
+        throw const _Refused(TaskPackageIssueCode.badManifest);
+      }
+      assets.add(asset);
     }
-    assets.add(asset);
-  }
-  if (files.keys.any((name) => !listed.contains(name))) {
-    return refuse(TaskPackageIssueCode.unlistedFile);
+    return assets;
   }
 
-  final claimsRaw = json['claims'] ?? const <String, Object?>{};
-  if (claimsRaw is! Map || claimsRaw.length > limits.maxClaims) {
-    return refuse(TaskPackageIssueCode.badManifest);
-  }
-  final claims = <String, String>{};
-  for (final c in claimsRaw.entries) {
-    final k = c.key;
-    final v = c.value;
-    if (k is! String ||
-        v is! String ||
-        !RegExp(r'^[a-z][a-z0-9_]{0,31}$').hasMatch(k) ||
-        v.length > limits.maxClaimLength ||
-        v.runes.any((r) => r < 0x20 || r == 0x7f)) {
-      return refuse(TaskPackageIssueCode.badManifest);
+  Map<String, String> _claims(Object? raw) {
+    final claimsRaw = raw ?? const <String, Object?>{};
+    if (claimsRaw is! Map || claimsRaw.length > limits.maxClaims) {
+      throw const _Refused(TaskPackageIssueCode.badManifest);
     }
-    claims[k] = v;
-  }
-
-  final String recordingText;
-  try {
-    recordingText = utf8.decode(files[_recordingPath]!);
-  } on FormatException {
-    return refuse(TaskPackageIssueCode.badText);
-  }
-  final decoded = decodeRecordingText(recordingText, limits: recordingLimits);
-  if (!decoded.accepted) {
-    return TaskPackageReadResult(null, const [
-      TaskPackageIssueCode.badRecording,
-    ], recordingIssues: decoded.issues);
-  }
-  final recording = decoded.recording!;
-  final summary = recordingEntry as Map;
-  if (summary['schema_version'] != schemaVersionOf(recording) ||
-      summary['action_contract_version'] != recording.actionContractVersion ||
-      summary['kind'] != recording.kind.wire ||
-      summary['completeness'] != recording.completeness.wire) {
-    return refuse(TaskPackageIssueCode.inconsistent);
-  }
-  return TaskPackageReadResult(
-    TaskPackage(
-      recording: recording,
-      runnable: decoded.runnable,
-      transcript: transcript,
-      assets: assets,
-      claims: claims,
-      storyboard: storyboard,
-    ),
-    const [],
-    recordingIssues: decoded.issues,
-  );
-}
-
-class _CapExceeded implements Exception {
-  const _CapExceeded({required this.total});
-  final bool total;
-}
-
-/// Inflates [raw] while counting: the cap is enforced as bytes come out.
-Uint8List _inflate(
-  Uint8List raw,
-  int method, {
-  required int cap,
-  required int remaining,
-}) {
-  if (method == ZipFile.zipCompressionStore) {
-    if (raw.length > cap) throw const _CapExceeded(total: false);
-    if (raw.length > remaining) throw const _CapExceeded(total: true);
-    return raw;
-  }
-  final out = _CappedOutput(cap: cap, remaining: remaining);
-  Inflate.stream(InputMemoryStream(raw), output: out);
-  return out.getBytes();
-}
-
-class _CappedOutput extends OutputMemoryStream {
-  _CappedOutput({required this.cap, required this.remaining});
-
-  final int cap;
-  final int remaining;
-  int _written = 0;
-
-  void _count(int n) {
-    _written += n;
-    if (_written > cap) throw const _CapExceeded(total: false);
-    if (_written > remaining) throw const _CapExceeded(total: true);
-  }
-
-  @override
-  void writeByte(int value) {
-    _count(1);
-    super.writeByte(value);
-  }
-
-  @override
-  void writeBytes(List<int> bytes, {int? length}) {
-    _count(length ?? bytes.length);
-    super.writeBytes(bytes, length: length);
-  }
-
-  @override
-  void writeStream(InputStream stream) {
-    _count(stream.length);
-    super.writeStream(stream);
+    final claims = <String, String>{};
+    for (final c in claimsRaw.entries) {
+      final k = c.key;
+      final v = c.value;
+      if (k is! String ||
+          v is! String ||
+          !RegExp(r'^[a-z][a-z0-9_]{0,31}$').hasMatch(k) ||
+          v.length > limits.maxClaimLength ||
+          v.runes.any((r) => r < 0x20 || r == 0x7f)) {
+        throw const _Refused(TaskPackageIssueCode.badManifest);
+      }
+      claims[k] = v;
+    }
+    return claims;
   }
 }
