@@ -12597,6 +12597,7 @@
   "@roomRentFieldCost": {
     "description": "#2568 rented rooms"
   },
+  "roomRentFieldEntryFee": "Tarifa por media jornada para {name} (vacío: la tarifa general)",
   "roomRentFieldFee": "Tarifa por media jornada para un miembro (opcional)",
   "@roomRentFieldFee": {
     "description": "#2568 rented rooms"

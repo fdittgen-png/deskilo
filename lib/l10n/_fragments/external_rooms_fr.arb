@@ -224,5 +224,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "roomRentFieldEntryFee": "Tarif par demi-journée pour {name} (vide : le tarif général)"
 }

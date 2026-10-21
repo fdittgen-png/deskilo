@@ -7,7 +7,8 @@
 import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/core/roles/audience_roles.dart';
-import 'package:deskilo/features/money/domain/room_rental.dart' show RoomPlan;
+import 'package:deskilo/features/money/domain/room_rental.dart'
+    show RoomFeeUnit, RoomPlan;
 import 'package:deskilo/features/money/domain/supplier.dart';
 import 'package:deskilo/features/money/presentation/widgets/rented_rooms_sheet.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
@@ -136,5 +137,32 @@ void main() {
       findsNothing,
     );
     expect(find.byKey(const ValueKey('room-rent-member-add')), findsNothing);
+  });
+
+  testWidgets('a picked member gets a fee of their own', (tester) async {
+    final repo = await _open(tester);
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('room-rent-member-add')),
+    );
+    await tester.tap(find.byKey(const ValueKey('room-rent-member-add')));
+    await _settle(tester);
+    await tester.tap(find.text('Ada Lovelace').last);
+    await _settle(tester);
+    const fee = ValueKey('room-rent-fee-member:m-ada');
+    await tester.ensureVisible(find.byKey(fee));
+    expect(find.textContaining('for Ada Lovelace'), findsOneWidget);
+    await tester.enterText(find.byKey(fee), 'twelve');
+    await tester.tap(find.byKey(const ValueKey('room-rent-save')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('room-rent-invalid')), findsOneWidget);
+
+    await tester.enterText(find.byKey(fee), '12.50');
+    await tester.tap(find.byKey(const ValueKey('room-rent-save')));
+    await _settle(tester);
+    final loft = (await repo.fetchOverview('ws')).rentals.last;
+    final own = loft.fees.where((f) => f.audience.memberId == 'm-ada');
+    expect(own.map((f) => (f.unit, f.feeCents)), [
+      (RoomFeeUnit.halfDay, 1250),
+    ]);
   });
 }

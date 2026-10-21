@@ -17446,6 +17446,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get roomRentFieldCost => 'Monatliche Kosten für den Space';
 
   @override
+  String roomRentFieldEntryFee(String name) {
+    return 'Gebühr pro Halbtag für $name (leer: die allgemeine Gebühr)';
+  }
+
+  @override
   String get roomRentFieldFee =>
       'Gebühr pro Halbtag für ein Mitglied (optional)';
 
