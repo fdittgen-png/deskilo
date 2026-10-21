@@ -1,8 +1,8 @@
 {
-  "recordedSha": "1815e9a3e0555889fba87652d545f012ef64837c",
+  "recordedSha": "accb002ef529deb2d1e512e0d66aa2ce3cd0bc61",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1748,"functions":9603,"cyclomatic>=9":1021,"cyclomatic>=25":124,"cognitive>=15":421,"cognitive>=30":112,"length>=150":87,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1749,"functions":9609,"cyclomatic>=9":1022,"cyclomatic>=25":123,"cognitive>=15":420,"cognitive>=30":111,"length>=150":86,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2418,7 +2418,8 @@
     {"p":"lib/features/workspace/presentation/widgets/template_apply_sheet.dart","loc":342,"part":false,"setState":3,"repositoryReads":0,"fn":8,"cog":51,"cyc":19,"len":111,"params":4,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_capability_browser.dart","loc":84,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":5,"len":79,"params":1,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_card.dart","loc":109,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":18,"len":85,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/template_gallery.dart","loc":471,"part":false,"setState":9,"repositoryReads":0,"fn":17,"cog":65,"cyc":39,"len":207,"params":3,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/template_empty_space.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/template_gallery.dart","loc":464,"part":false,"setState":9,"repositoryReads":0,"fn":22,"cog":15,"cyc":14,"len":79,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_group_label.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":11,"len":21,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_picker.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":42,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_publish_summary.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":4,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2779,7 +2780,6 @@
     {"id":"lib/features/workspace/presentation/widgets/ref_picker_sheet.dart#_RefPickerSheetState.build(BuildContext context)","cog":38,"cyc":23,"len":199,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/save_template_sheet.dart#_SaveTemplateSheetState.build(BuildContext context)","cog":43,"cyc":26,"len":161,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build(BuildContext context)","cog":51,"cyc":19,"len":111,"params":1},
-    {"id":"lib/features/workspace/presentation/widgets/template_gallery.dart#_TemplateGalleryState.build(BuildContext context)","cog":65,"cyc":39,"len":207,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/workspace_fields_section.dart#_WorkspaceFieldsSectionState._control(WorkspaceField field,FieldProblem? problem,AppLocalizations l10n,ThemeData theme)","cog":31,"cyc":26,"len":127,"params":4},
     {"id":"lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build(BuildContext context,WidgetRef ref)","cog":43,"cyc":33,"len":159,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/workspace_reports.dart#WorkspaceReports.build(BuildContext context,WidgetRef ref)","cog":24,"cyc":27,"len":50,"params":2},
