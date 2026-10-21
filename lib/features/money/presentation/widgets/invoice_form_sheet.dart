@@ -20,6 +20,7 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
 import '../../domain/invoice.dart';
+import '../../domain/invoice_issue_readiness.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
@@ -397,16 +398,24 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     ];
   }
 
-  Widget _missingBanner() {
+  InvoiceIssueReadiness _readiness(List<InvoiceLine> lines) =>
+      InvoiceIssueReadiness(
+        memberId: _memberId,
+        lineCount: lines.length,
+        missing: _missing,
+        correctionReason: _correctionReason,
+      );
+
+  Widget _missingBanner(InvoiceIssueBlock block) {
     final l10n = widget.l10n;
     return InlineBanner(
             key: const ValueKey('invoice-missing-essentials'),
             icon: Icons.rule_folder_outlined,
-            text: '${_missing.contains('invoice_feature_disabled')
-                ? l10n.invoiceIssuingUnavailable
-                : _missing.contains('vat_treatment_unreviewed')
-                ? l10n.invoiceExternalIssuingTitle
-                : l10n.invoiceMissingTitle}:\n'
+            text: '${switch (block) {
+              InvoiceIssueBlock.disabled => l10n.invoiceIssuingUnavailable,
+              InvoiceIssueBlock.external => l10n.invoiceExternalIssuingTitle,
+              _ => l10n.invoiceMissingTitle,
+            }}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
           );
   }
@@ -414,7 +423,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   Widget _submitButton(BuildContext context, List<InvoiceLine> lines) {
     return FilledButton(
           key: const ValueKey('invoice-submit'),
-          onPressed: _memberId == null || lines.isEmpty || _missing.isNotEmpty
+          onPressed: !_readiness(lines).canIssue
               ? null
               : () => Navigator.of(context).pop((
                     memberId: _memberId!,
@@ -520,15 +529,14 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           ),
         ),
         if (_publicBuyer) ..._publicBuyerFields(),
-        if (lines.isNotEmpty &&
-            (_missing.contains('correction_reason') ||
-                _correctionReason.isNotEmpty))
+        if (_readiness(lines).asksCorrectionReason)
           InvoiceCorrectionReasonField(
             key: const ValueKey('invoice-correction-reason-field'),
             value: _correctionReason,
             onChanged: _setCorrectionReason,
           ),
-        if (_missing.isNotEmpty && lines.isNotEmpty) _missingBanner(),
+        if (_readiness(lines).block != InvoiceIssueBlock.none)
+          _missingBanner(_readiness(lines).block),
         const SizedBox(height: 4),
         _submitButton(context, lines),
       ],

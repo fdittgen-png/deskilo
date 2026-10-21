@@ -86,27 +86,9 @@ void main() {
     );
     expect(money.invoices, isEmpty);
 
-    // #1917: an unsupported treatment has an actionable explanation,
-    // while the preview stays visible and issuing remains unavailable.
-    money.invoiceMissing = ['vat_treatment_unreviewed'];
-    await tester.tap(find.byKey(const ValueKey('invoice-period-prev')));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('issued outside the app with your accountant'),
-        findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
-    await tester.pumpAndSettle();
-    expect(money.invoices, isEmpty);
-    expect(banner, findsOneWidget);
-
-    money.invoiceMissing = ['invoice_feature_disabled'];
-    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('disabled in this workspace'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
-    await tester.pumpAndSettle();
-    expect(money.invoices, isEmpty);
-
     // Complete → the same form issues, once.
+    // Which explanation and when submit is offered: the table in
+    // invoice_issue_readiness_test (#2603).
     money.invoiceMissing = const [];
     await tester.tap(find.byKey(const ValueKey('invoice-period-prev')));
     await tester.pumpAndSettle();
