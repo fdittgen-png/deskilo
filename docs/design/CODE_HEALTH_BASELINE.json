@@ -1,8 +1,8 @@
 {
-  "recordedSha": "97d8054b865fafaf0369b601a72ca7137e87ea09",
+  "recordedSha": "4bc4f0994828d15ef4467e7f6330d95813d52eb8",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1749,"functions":9628,"cyclomatic>=9":1029,"cyclomatic>=25":118,"cognitive>=15":425,"cognitive>=30":106,"length>=150":81,"parameters>=5":460,"parameters>=7":149,"partOfFiles":75},
+  "totals": {"files":1750,"functions":9639,"cyclomatic>=9":1031,"cyclomatic>=25":117,"cognitive>=15":428,"cognitive>=30":108,"length>=150":80,"parameters>=5":460,"parameters>=7":149,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1557,8 +1557,9 @@
     {"p":"lib/features/money/domain/report_template_repository.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/room_level_kind.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":2,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/room_rental.dart","loc":258,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":4,"cyc":5,"len":23,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/saf_t.dart","loc":331,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":215,"cyc":50,"len":393,"params":10,"nest":10,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
+    {"p":"lib/features/money/domain/saf_t.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":65,"params":10,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/saf_t_ledger.dart","loc":178,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":15,"cyc":6,"len":46,"params":2,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/saf_t_writer.dart","loc":357,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":59,"cyc":15,"len":108,"params":2,"nest":9,"over":{"cog":3,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/sage.dart","loc":193,"part":false,"setState":0,"repositoryReads":0,"fn":20,"cog":23,"cyc":12,"len":119,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/sales_tax_repository.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/sales_tax_return.dart","loc":81,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":6,"len":30,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2598,7 +2599,10 @@
     {"id":"lib/features/money/domain/report_flow_page.dart#reportFlowPage({required pw.PageTheme pageTheme,required String documentTitle,required String pageLabel,required pw.BuildListCallback body,required pw.BuildListCallback firstHeader,required pw.BuildListCallback footer,pw.BuildListCallback? continuation})","cog":2,"cyc":3,"len":27,"params":7},
     {"id":"lib/features/money/domain/report_layout/layout_render.dart#buildLayoutPdf({required LayoutDocument document,required Map<String, Object?> data,required String documentTitle,required String pageLabel,required pw.Font baseFont,required pw.Font boldFont,Map<String, Uint8List> images,String watermark,String signatureLabel,String signature,List<pw.Widget> additionalBody,pw.Page? lastPage})","cog":0,"cyc":4,"len":38,"params":12},
     {"id":"lib/features/money/domain/report_letter_layouts.dart#defaultLetterLayoutXml(String kindId,LetterStrings s,{AddressWindow window})","cog":4,"cyc":21,"len":220,"params":3},
-    {"id":"lib/features/money/domain/saf_t.dart#buildSafTFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required InvoiceParty company,required String currency,required String softwareVersion,required DateTime createdAt,required String Function(InvoiceLine line) lineText,String fallbackDescription,SafTProfile profile,SafTLedgerAccounts? ledgerAccounts})","cog":215,"cyc":50,"len":393,"params":10},
+    {"id":"lib/features/money/domain/saf_t.dart#buildSafTFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required InvoiceParty company,required String currency,required String softwareVersion,required DateTime createdAt,required String Function(InvoiceLine line) lineText,String fallbackDescription,SafTProfile profile,SafTLedgerAccounts? ledgerAccounts})","cog":0,"cyc":1,"len":65,"params":10},
+    {"id":"lib/features/money/domain/saf_t_writer.dart#SafTWriter.masterFiles()","cog":33,"cyc":11,"len":49,"params":0},
+    {"id":"lib/features/money/domain/saf_t_writer.dart#SafTWriter.generalLedger()","cog":39,"cyc":7,"len":59,"params":0},
+    {"id":"lib/features/money/domain/saf_t_writer.dart#SafTWriter.sourceDocuments()","cog":59,"cyc":15,"len":108,"params":0},
     {"id":"lib/features/money/domain/swiss_kmu.dart#buildSwissKmuFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required SwissKmuAccounts accounts,required String Function(Invoice invoice) customerRef})","cog":30,"cyc":15,"len":102,"params":4},
     {"id":"lib/features/money/domain/swiss_qr_bill.dart#SwissQrBill.forInvoice({required String iban,required String qrIban,required SwissQrAddress creditor,required SwissQrAddress? debtor,required int totalCents,required String currency,required String invoiceNumber,String additionalInfo})","cog":12,"cyc":11,"len":60,"params":8},
     {"id":"lib/features/money/domain/swiss_qr_bill.dart#SwissQrBill._make(String account,String type,String reference,SwissQrAddress creditor,SwissQrAddress? debtor,int totalCents,String currency,String info)","cog":0,"cyc":1,"len":19,"params":8},
