@@ -12597,6 +12597,7 @@
   "@roomRentFieldCost": {
     "description": "#2568 rented rooms"
   },
+  "roomRentFieldEntryFee": "Gebühr pro Halbtag für {name} (leer: die allgemeine Gebühr)",
   "roomRentFieldFee": "Gebühr pro Halbtag für ein Mitglied (optional)",
   "@roomRentFieldFee": {
     "description": "#2568 rented rooms"

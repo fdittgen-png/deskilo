@@ -224,5 +224,14 @@
         "type": "String"
       }
     }
+  },
+  "roomRentFieldEntryFee": "Fee per half day for {name} (empty: the general fee)",
+  "@roomRentFieldEntryFee": {
+    "description": "Rented room form (#2575): a fee for one role, plan or member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

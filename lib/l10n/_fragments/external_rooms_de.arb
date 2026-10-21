@@ -224,5 +224,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "roomRentFieldEntryFee": "Gebühr pro Halbtag für {name} (leer: die allgemeine Gebühr)"
 }

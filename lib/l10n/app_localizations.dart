@@ -29826,6 +29826,12 @@ abstract class AppLocalizations {
   /// **'Cost to the space per month'**
   String get roomRentFieldCost;
 
+  /// Rented room form (#2575): a fee for one role, plan or member
+  ///
+  /// In en, this message translates to:
+  /// **'Fee per half day for {name} (empty: the general fee)'**
+  String roomRentFieldEntryFee(String name);
+
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:
