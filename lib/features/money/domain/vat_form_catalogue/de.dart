@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
-final _ustva = VatFormSpec(
+final deUstvaSpec = VatFormSpec(
   country: 'DE',
   name: 'UStVA',
   validFrom: DateTime(2024),
@@ -10,70 +11,70 @@ final _ustva = VatFormSpec(
       'Kz 81',
       '',
       formBox: 'ustva/Kz 81',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: 'Kz81',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 86',
       '',
       formBox: 'ustva/Kz 86',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: 'Kz86',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 35/36',
       '',
       formBox: 'ustva/Kz 35/36',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: 'Kz35',
       taxKey: 'Kz36',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 21',
       'Nicht steuerbare sonstige Leistungen (Leistungsort nicht im Inland)',
       base: [
-        _sales(categories: {'AE'}),
+        vatSales(categories: {'AE'}),
       ],
       baseKey: 'Kz21',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 45',
       'Übrige nicht steuerbare Umsätze (Leistungsort nicht im Inland)',
       base: [
-        _sales(categories: {'G', 'O'}),
+        vatSales(categories: {'G', 'O'}),
       ],
       baseKey: 'Kz45',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 43',
       'Weitere steuerfreie Umsätze mit Vorsteuerabzug',
       base: [
-        _sales(categories: {'Z'}),
+        vatSales(categories: {'Z'}),
       ],
       baseKey: 'Kz43',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 48',
       'Steuerfreie Umsätze ohne Vorsteuerabzug',
       base: [
-        _sales(categories: {'E'}),
+        vatSales(categories: {'E'}),
       ],
       baseKey: 'Kz48',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
     ),
     VatBoxSpec(
       'Kz 66',
       'Vorsteuerbeträge aus Rechnungen von anderen Unternehmern',
-      tax: [_input()],
+      tax: [vatInput()],
       taxKey: 'Kz66',
     ),
     const VatBoxSpec(

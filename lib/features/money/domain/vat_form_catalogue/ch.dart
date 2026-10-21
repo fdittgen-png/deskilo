@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
 // #2360 — the effective method, from the 2024 rates. Every amount to the
 // centime: eCH-0217 (the ESTV's upload standard) has amounts with two
@@ -14,7 +15,7 @@ part of '../vat_form_catalogue.dart';
 // tax: a space buying services from abroad adds the line itself), 410
 // (Einlageentsteuerung), 415/420 (corrections and reductions of input
 // tax). The net-tax-rate method (Saldosteuersatz) is another form.
-final _mwst = VatFormSpec(
+final chMwstSpec = VatFormSpec(
   country: 'CH',
   name: 'MWST-Abrechnung (effektive Methode)',
   validFrom: DateTime(2024),
@@ -22,7 +23,7 @@ final _mwst = VatFormSpec(
     VatBoxSpec(
       '200',
       'Total der vereinbarten bzw. vereinnahmten Entgelte',
-      base: [_sales(categories: null)],
+      base: [vatSales(categories: null)],
       baseKey: '200',
       always: true,
     ),
@@ -30,7 +31,7 @@ final _mwst = VatFormSpec(
       '220',
       'Von der Steuer befreite Leistungen (Exporte)',
       base: [
-        _sales(categories: {'Z', 'G'}),
+        vatSales(categories: {'Z', 'G'}),
       ],
       baseKey: '220',
     ),
@@ -38,7 +39,7 @@ final _mwst = VatFormSpec(
       '221',
       'Leistungen im Ausland (Ort der Leistung im Ausland)',
       base: [
-        _sales(categories: {'AE', 'O'}),
+        vatSales(categories: {'AE', 'O'}),
       ],
       baseKey: '221',
     ),
@@ -46,7 +47,7 @@ final _mwst = VatFormSpec(
       '230',
       'Von der Steuer ausgenommene Leistungen',
       base: [
-        _sales(categories: {'E'}),
+        vatSales(categories: {'E'}),
       ],
       baseKey: '230',
     ),
@@ -67,8 +68,8 @@ final _mwst = VatFormSpec(
       '303',
       '',
       formBox: 'mwst/303',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '303',
       taxKey: '303',
     ),
@@ -76,8 +77,8 @@ final _mwst = VatFormSpec(
       '313',
       '',
       formBox: 'mwst/313',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '313',
       taxKey: '313',
     ),
@@ -85,28 +86,28 @@ final _mwst = VatFormSpec(
       '343',
       '',
       formBox: 'mwst/343',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '343',
       taxKey: '343',
     ),
     VatBoxSpec(
       '399',
       'Total geschuldete Steuer',
-      tax: [_sales()],
+      tax: [vatSales()],
       taxKey: '399',
       always: true,
     ),
     VatBoxSpec(
       '400',
       'Vorsteuer auf Material- und Dienstleistungsaufwand',
-      tax: [_input(categories: _taxable)],
+      tax: [vatInput(categories: vatTaxable)],
       taxKey: '400',
     ),
     VatBoxSpec(
       '405',
       'Vorsteuer auf Investitionen und übrigem Betriebsaufwand',
-      tax: [_input(categories: _asset)],
+      tax: [vatInput(categories: vatAsset)],
       taxKey: '405',
     ),
     const VatBoxSpec(

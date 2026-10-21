@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
 /// The period's own sales plus the corrections in the Treasury's favour (FR:
 /// they add to their rate line). A rated box names its `form_box` row, which
 /// says which fiscal groups the line takes.
 List<VatTerm> _frRate() => [
-  _sales(correction: false),
-  _sales(correction: true, vatSign: 1),
+  vatSales(correction: false),
+  vatSales(correction: true, vatSign: 1),
 ];
 
-final _ca3 = VatFormSpec(
+final frCa3Spec = VatFormSpec(
   country: 'FR',
   name: 'CA3 (3310-CA3-SD)',
   validFrom: DateTime(2024),
@@ -19,25 +20,25 @@ final _ca3 = VatFormSpec(
       'Ventes, prestations de services',
       base: [..._frRate()],
       baseKey: '0979',
-      baseRounding: _w,
+      baseRounding: vatWhole,
     ),
     VatBoxSpec(
       'E1',
       'Exportations hors UE',
       base: [
-        _sales(categories: {'G'}),
+        vatSales(categories: {'G'}),
       ],
       baseKey: '0032',
-      baseRounding: _w,
+      baseRounding: vatWhole,
     ),
     VatBoxSpec(
       'E2',
       'Autres opérations non imposables',
       base: [
-        _sales(categories: {'AE', 'E', 'Z', 'O'}),
+        vatSales(categories: {'AE', 'E', 'Z', 'O'}),
       ],
       baseKey: '0033',
-      baseRounding: _w,
+      baseRounding: vatWhole,
     ),
     VatBoxSpec(
       '08',
@@ -47,8 +48,8 @@ final _ca3 = VatFormSpec(
       tax: _frRate(),
       baseKey: '0207',
       taxKey: '0207',
-      baseRounding: _w,
-      taxRounding: _w,
+      baseRounding: vatWhole,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '09',
@@ -58,8 +59,8 @@ final _ca3 = VatFormSpec(
       tax: _frRate(),
       baseKey: '0105',
       taxKey: '0105',
-      baseRounding: _w,
-      taxRounding: _w,
+      baseRounding: vatWhole,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '9B',
@@ -69,8 +70,8 @@ final _ca3 = VatFormSpec(
       tax: _frRate(),
       baseKey: '0151',
       taxKey: '0151',
-      baseRounding: _w,
-      taxRounding: _w,
+      baseRounding: vatWhole,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '11',
@@ -80,8 +81,8 @@ final _ca3 = VatFormSpec(
       tax: _frRate(),
       baseKey: '0100',
       taxKey: '0100',
-      baseRounding: _w,
-      taxRounding: _w,
+      baseRounding: vatWhole,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '14',
@@ -91,15 +92,15 @@ final _ca3 = VatFormSpec(
       tax: _frRate(),
       baseKey: '0950',
       taxKey: '0950',
-      baseRounding: _w,
-      taxRounding: _w,
+      baseRounding: vatWhole,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '15',
       'TVA antérieurement déduite à reverser',
-      tax: [_input(correction: true, vatSign: -1, factor: -1)],
+      tax: [vatInput(correction: true, vatSign: -1, factor: -1)],
       taxKey: '0600',
-      taxRounding: _w,
+      taxRounding: vatWhole,
     ),
     const VatBoxSpec(
       '16',
@@ -118,30 +119,30 @@ final _ca3 = VatFormSpec(
       '19',
       'Biens constituant des immobilisations',
       tax: [
-        _input(categories: _asset, correction: false),
-        _input(categories: _asset, correction: true, vatSign: 1),
+        vatInput(categories: vatAsset, correction: false),
+        vatInput(categories: vatAsset, correction: true, vatSign: 1),
       ],
       taxKey: '0703',
-      taxRounding: _w,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '20',
       'Autres biens et services',
       tax: [
-        _input(categories: _taxable, correction: false),
-        _input(categories: _taxable, correction: true, vatSign: 1),
+        vatInput(categories: vatTaxable, correction: false),
+        vatInput(categories: vatTaxable, correction: true, vatSign: 1),
       ],
       taxKey: '0702',
-      taxRounding: _w,
+      taxRounding: vatWhole,
     ),
     VatBoxSpec(
       '21',
       'Autre TVA à déduire',
       tax: [
-        _sales(categories: null, correction: true, vatSign: -1, factor: -1),
+        vatSales(categories: null, correction: true, vatSign: -1, factor: -1),
       ],
       taxKey: '0059',
-      taxRounding: _w,
+      taxRounding: vatWhole,
     ),
     const VatBoxSpec(
       '23',
