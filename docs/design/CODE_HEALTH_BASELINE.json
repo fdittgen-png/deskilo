@@ -1,8 +1,8 @@
 {
-  "recordedSha": "acf1db17590996d43d1dac338112619e23b7a177",
+  "recordedSha": "8c2d48907c08f92e5b6f58e56aabbaadf668977f",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1758,"functions":9836,"cyclomatic>=9":1042,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":468,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1759,"functions":9840,"cyclomatic>=9":1043,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":468,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1780,7 +1780,7 @@
     {"p":"lib/features/money/presentation/widgets/recapitulative_notice.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/register_payment_sheet.dart","loc":191,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":7,"cyc":13,"len":105,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/reminder_evidence_list.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":8,"len":44,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/rented_room_dialog.dart","loc":277,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":10,"cyc":16,"len":116,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/rented_room_dialog.dart","loc":302,"part":false,"setState":1,"repositoryReads":0,"fn":11,"cog":13,"cyc":15,"len":122,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/rented_rooms_sheet.dart","loc":237,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":19,"cyc":16,"len":75,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_editor_dialogs.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":2,"len":29,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_field_picker.dart","loc":337,"part":false,"setState":1,"repositoryReads":0,"fn":7,"cog":9,"cyc":91,"len":98,"params":2,"nest":4,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
@@ -1800,6 +1800,7 @@
     {"p":"lib/features/money/presentation/widgets/report_visual_editor_part1.dart","loc":340,"part":true,"setState":4,"repositoryReads":0,"fn":21,"cog":19,"cyc":17,"len":112,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/report_visual_line.dart","loc":140,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":12,"cyc":13,"len":42,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/retention_clocks_tile.dart","loc":72,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":10,"cyc":6,"len":54,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/room_audience_fees.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":11,"len":33,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/room_audience_pickers.dart","loc":104,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":12,"len":75,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/settlement_sheet.dart","loc":238,"part":false,"setState":7,"repositoryReads":0,"fn":6,"cog":34,"cyc":23,"len":116,"params":3,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/small_business_notice.dart","loc":62,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":10,"len":42,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

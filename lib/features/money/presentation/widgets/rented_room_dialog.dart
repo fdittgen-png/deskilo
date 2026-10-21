@@ -14,6 +14,7 @@ import '../../domain/supplier.dart';
 import '../../providers/room_rental_providers.dart';
 import '../../providers/supplier_providers.dart';
 import 'premises_lease_dialogs.dart';
+import 'room_audience_fees.dart';
 import 'room_audience_pickers.dart';
 
 /// The word for a rental's status.
@@ -87,6 +88,24 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
   };
   var _invalid = false;
 
+  /// A half-day fee for one audience entry, by [roomAudienceFeeKey].
+  late final Map<String, TextEditingController> _entryFees = {
+    for (final f in widget.rental?.fees ?? const <RoomFee>[])
+      if (f.unit == RoomFeeUnit.halfDay && f.audience.toJson().isNotEmpty)
+        roomAudienceFeeKey(f.audience): TextEditingController(
+          text: centsToMajor(f.feeCents),
+        ),
+  };
+
+  TextEditingController _entryFee(String key) =>
+      _entryFees.putIfAbsent(key, TextEditingController.new);
+
+  List<RoomAudienceEntry> get _entries => [
+    for (final id in _roleIds) RoomAudienceEntry(roleId: id),
+    for (final id in _planIds) RoomAudienceEntry(planId: id),
+    for (final id in _memberIds) RoomAudienceEntry(memberId: id),
+  ];
+
   static int? _generalFee(RoomRental? r) {
     for (final f in r?.fees ?? const <RoomFee>[]) {
       if (f.unit == RoomFeeUnit.halfDay &&
@@ -105,6 +124,9 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
   void dispose() {
     _cost.dispose();
     _fee.dispose();
+    for (final c in _entryFees.values) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -113,6 +135,16 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
     final fee = _fee.text.trim().isEmpty ? null : parseCentsInput(_fee.text);
     final supplier = _supplierId;
     final from = _from;
+    final entryFees = <RoomFee>[];
+    for (final e in _all ? const <RoomAudienceEntry>[] : _entries) {
+      final text = _entryFees[roomAudienceFeeKey(e)]?.text.trim() ?? '';
+      if (text.isEmpty) continue;
+      final cents = parseCentsInput(text);
+      if (cents == null) return null;
+      entryFees.add(
+        RoomFee(unit: RoomFeeUnit.halfDay, feeCents: cents, audience: e),
+      );
+    }
     if (cost == null ||
         (_fee.text.trim().isNotEmpty && fee == null) ||
         supplier == null ||
@@ -129,22 +161,13 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
       costCents: cost,
       revision: r?.revision ?? 0,
       audienceAll: _all,
-      // The roles, plans and members are the pickers'; the fees for one
-      // audience entry are kept as they are.
-      audience: [
-        for (final id in _roleIds) RoomAudienceEntry(roleId: id),
-        for (final id in _planIds) RoomAudienceEntry(planId: id),
-        for (final id in _memberIds) RoomAudienceEntry(memberId: id),
-      ],
+      // The roles, plans and members are the pickers'; a half-day fee for
+      // one of them is its field's; other units are kept as they are.
+      audience: _entries,
       fees: [
-        ...?r?.fees.where(
-          (f) =>
-              f.unit != RoomFeeUnit.halfDay ||
-              f.audience.roleId != null ||
-              f.audience.planId != null ||
-              f.audience.memberId != null,
-        ),
+        ...?r?.fees.where((f) => f.unit != RoomFeeUnit.halfDay),
         if (fee != null) RoomFee(unit: RoomFeeUnit.halfDay, feeCents: fee),
+        ...entryFees,
       ],
     );
   }
@@ -266,6 +289,12 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
                 planIds: _planIds,
                 memberIds: _memberIds,
                 onEdited: () => _edit(() {}),
+              ),
+            if (!_all)
+              RoomAudienceFees(
+                workspaceId: widget.workspaceId,
+                entries: _entries,
+                controllerFor: _entryFee,
               ),
             if (_invalid)
               Padding(

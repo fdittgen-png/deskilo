@@ -12597,6 +12597,7 @@
   "@roomRentFieldCost": {
     "description": "#2568 rented rooms"
   },
+  "roomRentFieldEntryFee": "Tarif par demi-journée pour {name} (vide : le tarif général)",
   "roomRentFieldFee": "Tarif par demi-journée pour un membre (facultatif)",
   "@roomRentFieldFee": {
     "description": "#2568 rented rooms"

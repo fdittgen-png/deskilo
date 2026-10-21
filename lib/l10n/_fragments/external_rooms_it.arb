@@ -224,5 +224,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "roomRentFieldEntryFee": "Tariffa per mezza giornata per {name} (vuoto: la tariffa generale)"
 }
