@@ -37,7 +37,6 @@ fileLength lib/features/money/presentation/screens/my_finances_screen.dart // #2
 fileLength lib/features/money/presentation/screens/vat_declarations_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/screens/vat_screen.dart // #2360: a decided change of rate comes prefilled in Change by law.
 fileLength lib/features/money/presentation/widgets/expense_schedule_sheet.dart // #2357 the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet).
-fileLength lib/features/money/presentation/widgets/invoice_detail_sheet.dart // #1922 the reminder history line and its import; the list lives in reminder_evidence_list.dart.
 fileLength lib/features/money/presentation/widgets/invoice_form_sheet.dart // #2361: the Canadian BN and QST number refusals have their messages.
 fileLength lib/features/money/providers/money_providers.dart // #2484 the dunning rules provider reads the workspace's settings snapshot for the first reminder's delay (a setting now).
 fileLength lib/features/plan/data/supabase_floor_plan_repository.dart // #2011 +3: fetchTargetNames pages its three tables through one local helper
