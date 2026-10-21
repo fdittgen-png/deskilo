@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -13,15 +12,13 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
-import '../../domain/invoice_line_text.dart';
 import '../../providers/money_providers.dart';
 import '../dunning_hold_actions.dart';
 import '../invoice_actions.dart';
 import '../invoice_journey.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
-import '../report_strings_l10n.dart';
-import 'einvoice_receipt_line.dart';
+import 'invoice_detail_sections.dart';
 import 'invoice_journey_view.dart';
 import 'invoice_sheet_actions.dart';
 import 'reminder_evidence_list.dart';
@@ -143,6 +140,33 @@ class _InvoiceDetailBody extends ConsumerWidget {
   /// the process view is off.
   final InvoiceJourney? journey;
 
+  /// Every permitted action; the one the journey expects comes first.
+  List<Widget> _actions(
+    BuildContext context,
+    InvoiceLifecycle status,
+    InvoiceAction expected,
+    String? heldReason,
+  ) {
+    final l10n = context.l10n;
+          final actions = InvoiceSheetActions(
+            invoice: invoice,
+            heldReason: heldReason,
+            canIssue: canIssue,
+            isEu: isEu,
+            replacedByNumber: replacedByNumber,
+            onAction: (InvoiceAction a) =>
+                Navigator.of(context).pop(a),
+          );
+          final all = actions.build(context, l10n, status, expected);
+          return [
+            // The expected next move first, the rest after it.
+            for (final e in all)
+              if (e.$1 == expected && actions.allowed(e.$1)) e.$2,
+            for (final e in all)
+              if (e.$1 != expected && actions.allowed(e.$1)) e.$2,
+          ];
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(sellerIsAssociationProvider);
@@ -152,24 +176,11 @@ class _InvoiceDetailBody extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    final currency = moneyFormat(invoice.currency);
     final dateFormat = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
     final status = invoiceLifecycleOf(invoice, match);
     final standingMatch = match != null && !match!.pending ? match : null;
-    final sent = transmission;
-    // The platform's answer, in the reader's language.
-    final sentStatus = switch (sent?.status) {
-      EInvoiceSubmissionStatus.accepted =>
-        l10n.invoiceSendStatusAccepted,
-      EInvoiceSubmissionStatus.rejected =>
-        l10n.invoiceSendStatusRejected,
-      EInvoiceSubmissionStatus.failed =>
-        l10n.invoiceSendStatusFailed,
-      null => '',
-    };
-
     // #812 — the action the journey expects from an issuer, if any.
     final expected = !canIssue
         ? InvoiceAction.downloadPdf
@@ -190,6 +201,15 @@ class _InvoiceDetailBody extends ConsumerWidget {
           )),
         );
 
+    final sections = InvoiceDetailSections(
+      invoice: invoice,
+      canIssue: canIssue,
+      isEu: isEu,
+      reminder: reminder,
+      replacedByNumber: replacedByNumber,
+      transmission: transmission,
+      journey: journey,
+    );
     return SafeArea(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -224,31 +244,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // dated before the month it charges looks like a mistake
               // unless it says so; a settlement is meaningless without
               // the list of what it replaced.
-              if (invoice.kind != InvoiceKind.full)
-                Padding(
-                  key: const ValueKey('invoice-detail-kind'),
-                  padding: const EdgeInsets.only(top: AppSpacing.xs),
-                  child: Row(children: [
-                    Icon(
-                      switch (invoice.kind) {
-                        InvoiceKind.subscription => Icons.event_repeat_outlined,
-                        InvoiceKind.usage => Icons.receipt_long_outlined,
-                        InvoiceKind.settlement => Icons.merge_outlined,
-                        InvoiceKind.full => Icons.description_outlined,
-                      },
-                      size: 16,
-                      color: theme.colorScheme.primary,
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        invoiceKindLabel(l10n, invoice.kind),
-                        style: theme.textTheme.labelLarge
-                            ?.copyWith(color: theme.colorScheme.primary),
-                      ),
-                    ),
-                  ]),
-                ),
+              if (invoice.kind != InvoiceKind.full) sections.kindRow(context),
               line([
                 invoicePeriodLabel(context, invoice),
                 if (showMemberName && invoice.clientName.isNotEmpty)
@@ -294,115 +290,14 @@ class _InvoiceDetailBody extends ConsumerWidget {
               const Divider(height: AppSpacing.xl),
 
               ReminderEvidenceList(invoiceId: invoice.id),
-              // The positions, exactly as the PDF prints them.
-              for (final (i, position) in invoice.lines.indexed)
-                Padding(
-                  key: ValueKey('invoice-detail-line-$i'),
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(children: [
-                    Expanded(
-                        child: Text(invoiceLineText(reportStringsOf(l10n), position,
-                            association: association,
-                            period: invoice.period))),
-                    const SizedBox(width: AppSpacing.sm),
-                    Text(currency.formatMinor(position.amountCents)),
-                  ]),
-                ),
-              const Divider(),
-              // What of the charges is tax (0072). Shown as an explanation
-              // of the amount, never as an addition to it: the prices the
-              // member agreed to already include it.
-              for (final total in invoice.vatTotals)
-                if (total.vatCents > 0)
-                  Padding(
-                    key: ValueKey('invoice-detail-vat-${total.percent}'),
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: Row(children: [
-                      Expanded(
-                        child: Text(
-                          '${l10n.vatPdfVat} '
-                          '${_percentLabel(total.percent)}',
-                          style: TextStyle(color: theme.hintColor),
-                        ),
-                      ),
-                      Text(
-                        currency.formatMinor(total.vatCents),
-                        style: TextStyle(color: theme.hintColor),
-                      ),
-                    ]),
-                  ),
-              Row(children: [
-                Expanded(
-                  child: Text(
-                    l10n.invoiceBalance,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text(
-                  currency.formatMinor(invoice.totalCents),
-                  key: const ValueKey('invoice-detail-total'),
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ]),
+              ...sections.amounts(context, association: association),
 
               // #804 — the trail, both directions. A settlement names
               // every invoice inside it AND their positions; a settled
               // invoice names the document that now carries its balance,
               // because otherwise it just looks unpaid and unchased.
-              if (invoice.settles.isNotEmpty) ...[
-                const Divider(height: AppSpacing.xl),
-                Text(
-                  l10n.settlementRegroups,
-                  style: theme.textTheme.titleSmall,
-                ),
-                for (final source in invoice.settles)
-                  Padding(
-                    key: ValueKey('settlement-source-${source.invoiceId}'),
-                    padding: const EdgeInsets.only(top: AppSpacing.xs),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(children: [
-                          Expanded(
-                            child: Text(
-                              [
-                                source.number,
-                                if (source.period != null) source.period!,
-                                invoiceKindLabel(l10n, source.kind),
-                              ].join(' · '),
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                          ),
-                          Text(currency.formatMinor(source.totalCents)),
-                        ]),
-                        // The positions of the ORIGINAL, so the trail
-                        // does not stop at a number.
-                        for (final position in source.lines)
-                          Padding(
-                            padding: const EdgeInsets.only(left: AppSpacing.md),
-                            child: Row(children: [
-                              Expanded(
-                                child: Text(
-                                  invoiceLineText(reportStringsOf(l10n), position,
-                                      association: association,
-                                      period: source.period),
-                                  style: theme.textTheme.bodySmall
-                                      ?.copyWith(color: muted),
-                                ),
-                              ),
-                              Text(
-                                currency.formatMinor(position.amountCents),
-                                style: theme.textTheme.bodySmall
-                                    ?.copyWith(color: muted),
-                              ),
-                            ]),
-                          ),
-                      ],
-                    ),
-                  ),
-                line(l10n.settlementVatNote),
-              ],
+              if (invoice.settles.isNotEmpty)
+                ...sections.settlementTrail(context, association: association),
               if (invoice.settledByInvoiceId != null)
                 Container(
                   key: const ValueKey('invoice-detail-folded'),
@@ -424,71 +319,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
                   ),
                 ),
 
-              // Lifecycle facts: the correction chain, the payment that
-              // closed it, the reminders sent, the annex it carries.
-              if (journey != null &&
-                  (invoice.replacesNumber.isNotEmpty ||
-                      replacedByNumber.isNotEmpty ||
-                      standingMatch != null ||
-                      reminder != null ||
-                      sent != null))
-                Padding(
-                  key: const ValueKey('invoice-detail-timeline'),
-                  padding: const EdgeInsets.only(top: AppSpacing.md),
-                  child: Text(
-                    l10n.journeyTimelineTitle,
-                    style: theme.textTheme.titleSmall,
-                  ),
-                ),
-              if (invoice.replacesNumber.isNotEmpty)
-                line('${l10n.invoicePdfReplaces} '
-                    '${invoice.replacesNumber}'),
-              if (replacedByNumber.isNotEmpty)
-                line(l10n.invoiceReplacedBy(replacedByNumber)),
-              if (standingMatch != null)
-                line(l10n.invoiceMatchSummary(
-                      currency.formatMinor(standingMatch.paidCents),
-                      dateFormat.format(standingMatch.matchedAt),
-                    )),
-              if (standingMatch != null && standingMatch.note.isNotEmpty)
-                line(standingMatch.note),
-              if (reminder != null)
-                line('${l10n.invoiceRemindedBadge(reminder!.count)} · '
-                    '${l10n.invoiceRemindedLast(
-                          dateFormat.format(reminder!.last),
-                        )}'),
-              // Did it LEAVE, and what came back (0073). A rehearsal
-              // names its environment so it never reads as the real
-              // submission (#393).
-              if (sent != null)
-                line('${l10n.invoiceSentOn(
-                      dateFormat.format(sent.sentAt),
-                      sentStatus,
-                    )}${sent.isTestSend ? ' · '
-                        '${sent.environment.toUpperCase()} '
-                        '(${l10n.invoiceSentTestChip})' : ''}'),
-              if (sent != null && sent.externalId.isNotEmpty)
-                line(sent.externalId),
-              // #2358 — what the national channel said afterwards.
-              if (sent != null)
-                EInvoiceReceiptLine(
-                  key: const ValueKey('invoice-detail-einvoice-receipt'),
-                  transmission: sent,
-                  workspaceId: invoice.workspaceId,
-                  canAsk: canIssue,
-                ),
-              if (invoice.detailed)
-                line(l10n.invoiceAnnexSummary(
-                      invoice.detailLedger.length,
-                      invoice.attendance.length,
-                    )),
-              line('${l10n.invoicePdfSignature} '
-                  '${invoice.signature.substring(
-                    0,
-                    invoice.signature.length < 12
-                        ? invoice.signature.length
-                        : 12,
-                  )}…'),
+              ...sections.timeline(context, standingMatch),
               // #841 — who released this document, in what order, and
               // when. Silent when no rule ever governed the match.
               if (match?.eventId case final eventId?)
@@ -498,27 +329,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // Every permitted action, spelled out. #812 — the one the
               // journey expects from the issuer comes FIRST and filled;
               // otherwise the PDF keeps its historical place.
-              ...[
-                ...() {
-                  final actions = InvoiceSheetActions(
-                    invoice: invoice,
-                    heldReason: heldReason,
-                    canIssue: canIssue,
-                    isEu: isEu,
-                    replacedByNumber: replacedByNumber,
-                    onAction: (InvoiceAction a) =>
-                        Navigator.of(context).pop(a),
-                  );
-                  final all = actions.build(context, l10n, status, expected);
-                  return [
-                    // The expected next move first, the rest after it.
-                    for (final e in all)
-                      if (e.$1 == expected && actions.allowed(e.$1)) e.$2,
-                    for (final e in all)
-                      if (e.$1 != expected && actions.allowed(e.$1)) e.$2,
-                  ];
-                }(),
-              ],
+              ..._actions(context, status, expected, heldReason),
             ],
           ),
         ),
@@ -527,7 +338,3 @@ class _InvoiceDetailBody extends ConsumerWidget {
   }
 
 }
-
-/// '20 %', '5.5 %' — a rate beside its caption.
-String _percentLabel(double percent) =>
-    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
