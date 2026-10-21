@@ -1,8 +1,8 @@
 {
-  "recordedSha": "4ecf781d006f8fa62025fd4a7310271237f93d76",
+  "recordedSha": "98f858186a4f81421b2d38ca5089e64f508634d8",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1749,"functions":9616,"cyclomatic>=9":1027,"cyclomatic>=25":120,"cognitive>=15":424,"cognitive>=30":108,"length>=150":83,"parameters>=5":456,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1749,"functions":9623,"cyclomatic>=9":1028,"cyclomatic>=25":119,"cognitive>=15":424,"cognitive>=30":107,"length>=150":82,"parameters>=5":459,"parameters>=7":149,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2026,7 +2026,7 @@
     {"p":"lib/features/reservations/presentation/widgets/resource_row_info.dart","loc":55,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":11,"cyc":9,"len":19,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/seat_day_sheet.dart","loc":158,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":16,"cyc":10,"len":84,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/seat_legend.dart","loc":148,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":7,"cyc":8,"len":66,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/seat_list_view.dart","loc":345,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":61,"cyc":43,"len":185,"params":5,"nest":4,"over":{"cog":1,"cyc":2,"len":1,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/seat_list_view.dart","loc":395,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":20,"cyc":29,"len":147,"params":8,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":3}},
     {"p":"lib/features/reservations/presentation/widgets/series_result_dialog.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":3,"len":38,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_act_form.dart","loc":326,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":20,"cyc":12,"len":159,"params":2,"nest":6,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_act_sheet.dart","loc":301,"part":false,"setState":4,"repositoryReads":1,"fn":10,"cog":12,"cyc":14,"len":111,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2690,7 +2690,9 @@
     {"id":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart#ReservationDetailSheet.build(BuildContext context,WidgetRef ref)","cog":40,"cyc":39,"len":235,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/reserve_canvas.dart#ReserveCanvas.build(BuildContext context,WidgetRef ref)","cog":33,"cyc":21,"len":146,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/seat_day_sheet.dart#showSeatDaySheet(BuildContext context,{required Seat seat,required List<SeatDaySegment> segments,required Map<String, String> names,required DateTime dayStart,required DateTime dayEnd,required DateTime now})","cog":0,"cyc":1,"len":23,"params":7},
-    {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView.build(BuildContext context,WidgetRef ref)","cog":61,"cyc":43,"len":185,"params":2},
+    {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._header(BuildContext context,IconData icon,String name,double indent,{required String key,VoidCallback? onTap,String? subtitle})","cog":4,"cyc":5,"len":27,"params":7},
+    {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._wholeLine(BuildContext context,String currency,{required bool offered,required Reservation? taken,int tables,required int seats,required int priceCents})","cog":5,"cyc":7,"len":21,"params":7},
+    {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._officeRows(BuildContext context,WidgetRef ref,String officeId,{required String? levelName,required bool byLevel,required String? wholeLevelName,required String currency,required Set<String> placed})","cog":19,"cyc":15,"len":79,"params":8},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._seatRow(BuildContext context,WidgetRef ref,Seat seat,double indent,String place)","cog":20,"cyc":29,"len":147,"params":5},
     {"id":"lib/features/reservations/presentation/widgets/space_act_form.dart#SpaceActFormState.build(BuildContext context)","cog":20,"cyc":12,"len":159,"params":1},
     {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState._wholeSection(BuildContext context,{required ({bool bookable, int priceCents}) target,required String title,required String? priceLine,required String? myId,required Reservation? myWholeReservation,required bool allowed,required bool granted,required bool featureOn,required Reservation? blocking,required Desk? desk,required Office? office,required Level? level})","cog":68,"cyc":21,"len":136,"params":13},
