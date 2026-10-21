@@ -339,108 +339,120 @@ class SafTWriter {
   void sourceDocuments() {
     // ── Source documents: the invoices, and what settled them ──────────
     builder.element('SourceDocuments', nest: () {
-      builder.element('SalesInvoices', nest: () {
-        tag('NumberOfEntries', '${ordered.length}');
-        tag('TotalDebit', '0.00');
-        tag('TotalCredit', amount(invoiceTotal));
-        for (final invoice in ordered) {
-          builder.element('Invoice', nest: () {
-            tag('InvoiceNo', invoice.number);
-            builder.element('DocumentStatus', nest: () {
-              // N = normal, A = annulled. An erroneous invoice is not
-              // deleted from an audit file; it is marked.
-              tag('InvoiceStatus', invoice.isVoided ? 'A' : 'N');
-              tag(
-                'InvoiceStatusDate',
-                day(invoice.voidedAt ?? invoice.issuedAt),
-              );
-              tag(
-                'SourceID',
-                invoice.isVoided && invoice.voidedByName.isNotEmpty
-                    ? invoice.voidedByName
-                    : invoice.issuerName,
-              );
-            });
-            tag('InvoiceDate', day(invoice.issuedAt));
-            tag('InvoiceType', 'FT');
-            tag('CustomerID', invoice.memberId);
-            if (invoice.period != null) tag('Period', invoice.period!);
-            final charges = invoice.lines
-                .where((l) => l.amountCents > 0)
-                .toList(growable: false);
-            final breakdown =
-                invoice.vatBreakdown(zeroCategory: zeroCategory);
-            final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
-            final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
-            for (final (i, line) in charges.indexed) {
-              final split = vatSplit(line.amountCents, line.vatPercent);
-              // #1091 — the UnitPrice below is the NET per unit, so the
-              // quantity must divide the NET. See invoice_ubl.dart.
-              final quantity =
-                  line.quantity > 1 && split.netCents % line.quantity == 0
-                      ? line.quantity
-                      : 1;
-              builder.element('Line', nest: () {
-                tag('LineNumber', '${i + 1}');
-                final text = lineText(line);
-                tag('Description', text.isEmpty ? fallbackDescription : text);
-                tag('Quantity', '$quantity');
-                tag('UnitOfMeasure', 'UN');
-                tag('UnitPrice', amount(split.netCents ~/ quantity));
-                tag('CreditAmount', amount(split.netCents));
-                builder.element('TaxInformation', nest: () {
-                  tag('TaxType', 'VAT');
-                  tag('TaxCode', taxCode(line.vatPercent));
-                  tag('TaxPercentage', percentage(line.vatPercent));
-                  if (split.vatCents > 0) {
-                    tag('TaxAmount', amount(split.vatCents));
-                  }
-                });
-                if (line.vatPercent == 0 &&
-                    company.taxExemptionReason.isNotEmpty) {
-                  tag('TaxExemptionReason', company.taxExemptionReason);
-                }
-              });
-            }
-            builder.element('DocumentTotals', nest: () {
-              tag('TaxPayable', amount(taxCents));
-              tag('NetTotal', amount(netCents));
-              // The solde: charges minus what the month already paid.
-              tag('GrossTotal', amount(invoice.totalCents));
-            });
-          });
+      salesInvoices();
+      payments();
+    });
+  }
+
+  void salesInvoices() {
+    builder.element('SalesInvoices', nest: () {
+      tag('NumberOfEntries', '${ordered.length}');
+      tag('TotalDebit', '0.00');
+      tag('TotalCredit', amount(invoiceTotal));
+      ordered.forEach(salesInvoice);
+    });
+  }
+
+  void salesInvoice(Invoice invoice) {
+    builder.element('Invoice', nest: () {
+      tag('InvoiceNo', invoice.number);
+      builder.element('DocumentStatus', nest: () {
+        // N = normal, A = annulled. An erroneous invoice is not
+        // deleted from an audit file; it is marked.
+        tag('InvoiceStatus', invoice.isVoided ? 'A' : 'N');
+        tag(
+          'InvoiceStatusDate',
+          day(invoice.voidedAt ?? invoice.issuedAt),
+        );
+        tag(
+          'SourceID',
+          invoice.isVoided && invoice.voidedByName.isNotEmpty
+              ? invoice.voidedByName
+              : invoice.issuerName,
+        );
+      });
+      tag('InvoiceDate', day(invoice.issuedAt));
+      tag('InvoiceType', 'FT');
+      tag('CustomerID', invoice.memberId);
+      if (invoice.period != null) tag('Period', invoice.period!);
+      final charges = invoice.lines
+          .where((l) => l.amountCents > 0)
+          .toList(growable: false);
+      final breakdown = invoice.vatBreakdown(zeroCategory: zeroCategory);
+      final netCents = breakdown.fold(0, (sum, t) => sum + t.netCents);
+      final taxCents = breakdown.fold(0, (sum, t) => sum + t.vatCents);
+      for (final (i, line) in charges.indexed) {
+        invoiceLine(i, line);
+      }
+      builder.element('DocumentTotals', nest: () {
+        tag('TaxPayable', amount(taxCents));
+        tag('NetTotal', amount(netCents));
+        // The solde: charges minus what the month already paid.
+        tag('GrossTotal', amount(invoice.totalCents));
+      });
+    });
+  }
+
+  void invoiceLine(int i, InvoiceLine line) {
+    final split = vatSplit(line.amountCents, line.vatPercent);
+    // #1091 — the UnitPrice below is the NET per unit, so the
+    // quantity must divide the NET. See invoice_ubl.dart.
+    final quantity = line.quantity > 1 && split.netCents % line.quantity == 0
+        ? line.quantity
+        : 1;
+    builder.element('Line', nest: () {
+      tag('LineNumber', '${i + 1}');
+      final text = lineText(line);
+      tag('Description', text.isEmpty ? fallbackDescription : text);
+      tag('Quantity', '$quantity');
+      tag('UnitOfMeasure', 'UN');
+      tag('UnitPrice', amount(split.netCents ~/ quantity));
+      tag('CreditAmount', amount(split.netCents));
+      builder.element('TaxInformation', nest: () {
+        tag('TaxType', 'VAT');
+        tag('TaxCode', taxCode(line.vatPercent));
+        tag('TaxPercentage', percentage(line.vatPercent));
+        if (split.vatCents > 0) {
+          tag('TaxAmount', amount(split.vatCents));
         }
       });
+      if (line.vatPercent == 0 && company.taxExemptionReason.isNotEmpty) {
+        tag('TaxExemptionReason', company.taxExemptionReason);
+      }
+    });
+  }
 
-      builder.element('Payments', nest: () {
-        tag('NumberOfEntries', '${settled.length}');
-        tag('TotalDebit', amount(paidTotal));
-        tag('TotalCredit', '0.00');
-        for (final entry in settled) {
-          builder.element('Payment', nest: () {
-            tag('PaymentRefNo', entry.invoice.number);
-            tag('TransactionDate', day(entry.match.matchedAt));
-            tag('CustomerID', entry.invoice.memberId);
-            builder.element('DocumentStatus', nest: () {
-              tag('PaymentStatus', 'N');
-              tag('PaymentStatusDate', day(entry.match.matchedAt));
-              tag('SourceID', entry.match.byName);
-            });
-            builder.element('Line', nest: () {
-              tag('LineNumber', '1');
-              builder.element('SourceDocumentID', nest: () {
-                tag('OriginatingON', entry.invoice.number);
-                tag('InvoiceDate', day(entry.invoice.issuedAt));
-              });
-              tag('DebitAmount', amount(entry.match.paidCents));
-            });
-            builder.element('DocumentTotals', nest: () {
-              tag('TaxPayable', '0.00');
-              tag('NetTotal', amount(entry.match.paidCents));
-              tag('GrossTotal', amount(entry.match.paidCents));
-            });
-          });
-        }
+  void payments() {
+    builder.element('Payments', nest: () {
+      tag('NumberOfEntries', '${settled.length}');
+      tag('TotalDebit', amount(paidTotal));
+      tag('TotalCredit', '0.00');
+      settled.forEach(payment);
+    });
+  }
+
+  void payment(({Invoice invoice, InvoiceMatch match}) entry) {
+    builder.element('Payment', nest: () {
+      tag('PaymentRefNo', entry.invoice.number);
+      tag('TransactionDate', day(entry.match.matchedAt));
+      tag('CustomerID', entry.invoice.memberId);
+      builder.element('DocumentStatus', nest: () {
+        tag('PaymentStatus', 'N');
+        tag('PaymentStatusDate', day(entry.match.matchedAt));
+        tag('SourceID', entry.match.byName);
+      });
+      builder.element('Line', nest: () {
+        tag('LineNumber', '1');
+        builder.element('SourceDocumentID', nest: () {
+          tag('OriginatingON', entry.invoice.number);
+          tag('InvoiceDate', day(entry.invoice.issuedAt));
+        });
+        tag('DebitAmount', amount(entry.match.paidCents));
+      });
+      builder.element('DocumentTotals', nest: () {
+        tag('TaxPayable', '0.00');
+        tag('NetTotal', amount(entry.match.paidCents));
+        tag('GrossTotal', amount(entry.match.paidCents));
       });
     });
   }
