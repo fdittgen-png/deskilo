@@ -22632,6 +22632,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get visitStatusRequested => 'Demandée';
 
   @override
+  String get webMcpDeviceSwitch =>
+      'Autoriser les assistants de ce navigateur à utiliser l\'application';
+
+  @override
+  String get webMcpDeviceSwitchHint =>
+      'Désactivé par défaut. Activé, un assistant IA intégré à ce navigateur peut lire vos réservations, vos factures et vos demandes en attente dans cet espace tant que la page est ouverte. Le choix reste sur cet appareil.';
+
+  @override
   String get welcomeLinkAction => 'Qu’est-ce que DesKilo ?';
 
   @override

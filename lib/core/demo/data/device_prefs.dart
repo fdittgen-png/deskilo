@@ -37,6 +37,7 @@ import 'package:deskilo/features/reservations/providers/default_period_controlle
 
 import '../../../features/workspace/application/creation_intent.dart';
 import '../../push/push_opt_out.dart';
+import '../../webmcp/webmcp_device_switch.dart';
 import 'default_level_store.dart';
 import 'stores.dart';
 
@@ -106,6 +107,17 @@ class InMemoryPushOptOutStore implements PushOptOutStore {
   Future<void> write({required bool optedOut}) async => this.optedOut = optedOut;
 }
 
+/// In-memory [WebMcpSwitchStore] (#2504).
+class InMemoryWebMcpSwitchStore implements WebMcpSwitchStore {
+  bool on = false;
+
+  @override
+  Future<bool> read() async => on;
+
+  @override
+  Future<void> write({required bool on}) async => this.on = on;
+}
+
 /// The set is not a judgement call: `demo_scope_test` reads the app's
 /// own source for providers built on a `Prefs…Store` and fails until
 /// each one is here and in `demoOverrides`, so a NEW preference cannot
@@ -123,6 +135,9 @@ class DemoDevicePrefs {
 
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();
+
+  /// #2504 — the WebMCP device switch, off and kept in memory.
+  final InMemoryWebMcpSwitchStore webMcpSwitch = InMemoryWebMcpSwitchStore();
 
   final InMemoryFrontCameraStore frontCamera = InMemoryFrontCameraStore();
   final InMemoryActiveWorkspaceStore activeWorkspace =

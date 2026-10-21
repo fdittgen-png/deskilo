@@ -18,10 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // WebMCP: the registry exists before the flag and the app wiring that
-  // feed it conditions (the flag is a registry-lane change).
-  'lib/core/webmcp/webmcp_registry.dart::WebMcpRegistry':
-      '#2504 — the WorkspaceFeature.webMcp provider wires it',
   // The countries the store holds rates for: the unchanged vat_versions_test
   // walks them (it did before the move, over the constant it replaced).
   'lib/features/money/domain/vat_catalogue.dart::vatCatalogueCountries':

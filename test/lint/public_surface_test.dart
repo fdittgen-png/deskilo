@@ -17,10 +17,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/core/webmcp/webmcp_registry.dart::WebMcpConditions':
-      '#2504 — the WorkspaceFeature.webMcp provider builds it',
-  'lib/core/webmcp/webmcp_registry.dart::WebMcpToolRunner':
-      '#2504 — the read and write runners implement it',
 };
 
 void main() {

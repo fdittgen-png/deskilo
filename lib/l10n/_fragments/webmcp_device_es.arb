@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "webMcpDeviceSwitch": "Permitir que los asistentes de este navegador usen la aplicación",
+  "webMcpDeviceSwitchHint": "Desactivado por defecto. Activado, un asistente de IA integrado en este navegador puede leer sus reservas, facturas y solicitudes pendientes en este espacio mientras la página está abierta. La elección se guarda solo en este dispositivo."
+}

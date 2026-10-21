@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,6 +50,7 @@ import '../widgets/settings_about_section.dart';
 import '../widgets/settings_advanced_section.dart';
 import '../widgets/settings_task_section.dart';
 import '../widgets/settings_workspace_sections.dart';
+import '../widgets/webmcp_device_switch_tile.dart';
 import '../widgets/whatsapp_dialog.dart';
 
 part '../widgets/account_settings_dialogs.dart';

@@ -379,6 +379,7 @@ const Set<String> demoOverriddenProviders = {
   'shellBarHiddenStoreProvider',
   'shellSwipeCoachStoreProvider',
   'pushOptOutStoreProvider',
+  'webMcpSwitchStoreProvider', // #2504
   'frontCameraStoreProvider',
   'activeWorkspaceStoreProvider',
   'defaultWorkspaceStoreProvider',
