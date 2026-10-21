@@ -1,8 +1,8 @@
 {
-  "recordedSha": "da9753325569488ff4bba7e013f35bad4abf4922",
+  "recordedSha": "9a325f09d313ef7e116d0e5820befbb2fce87544",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1753,"functions":9827,"cyclomatic>=9":1041,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":468,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1754,"functions":9831,"cyclomatic>=9":1041,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":468,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1505,6 +1505,7 @@
     {"p":"lib/features/money/domain/invoice_clauses.dart","loc":296,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":10,"cyc":17,"len":88,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_commands.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_fatturapa.dart","loc":365,"part":false,"setState":0,"repositoryReads":0,"fn":34,"cog":10,"cyc":9,"len":42,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/invoice_issue_readiness.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":8,"params":0,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_ksef_fa3.dart","loc":389,"part":false,"setState":0,"repositoryReads":0,"fn":29,"cog":13,"cyc":13,"len":41,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_legal.dart","loc":240,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":7,"cyc":25,"len":40,"params":6,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_line_cash.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":6,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1727,7 +1728,7 @@
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sections.dart","loc":285,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":18,"cyc":24,"len":88,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":261,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":25,"len":169,"params":12,"nest":2,"over":{"cog":0,"cyc":1,"len":1,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":463,"part":false,"setState":7,"repositoryReads":0,"fn":13,"cog":31,"cyc":14,"len":104,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":470,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_journey_view.dart","loc":312,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":21,"cyc":22,"len":58,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
