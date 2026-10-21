@@ -123,8 +123,8 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
 
   /// Groups the flat line list into render segments; a `:::` fence
   /// opens a column group, `|||` starts the next column.
-  List<_Segment> _segments() {
-    final segments = <_Segment>[];
+  List<ReportSegment> _segments() {
+    final segments = <ReportSegment>[];
     var i = 0;
     while (i < _lines.length) {
       if (_lines[i].kind == ReportLineKind.columnsFence) {
@@ -143,10 +143,10 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
             columns.last.add(j);
           }
         }
-        segments.add(_GroupSegment(open, columns, close));
+        segments.add(ReportGroupSegment(open, columns, close));
         i = close == null ? _lines.length : close + 1;
       } else {
-        segments.add(_LineSegment(i));
+        segments.add(ReportLineSegment(i));
         i++;
       }
     }
@@ -287,7 +287,7 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
       case ReportLineKind.columnsSplit:
         // Boundaries render as part of the group chrome; standalone
         // (orphaned) markers show as their name.
-        return Text(_reportLineName(line.kind, context.l10n),
+        return Text(reportLineName(line.kind, context.l10n),
             style: const TextStyle(
                 fontSize: 10, color: ReportPage.chrome));
     }
@@ -376,10 +376,10 @@ extension _ReportVisualEditorStatePart1 on ReportVisualEditorState {
             key: ValueKey('${(key as ValueKey).value}-${kind.name}'),
             value: kind,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(_reportLineIcon(kind), size: 18),
+              Icon(reportLineIcon(kind), size: 18),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(_reportLineName(kind, l10n),
+                child: Text(reportLineName(kind, l10n),
                     overflow: TextOverflow.ellipsis),
               ),
             ]),

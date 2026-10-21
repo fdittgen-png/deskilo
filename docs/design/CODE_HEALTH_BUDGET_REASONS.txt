@@ -100,3 +100,6 @@ fileLength lib/features/reservations/presentation/widgets/space_scan.dart // #24
 fileLength lib/features/money/domain/fec_writer.dart // #2494 buildFecFile (cognitive 109, 480 lines) became FecWriter, moved whole from fec.dart (547 lines there); the length falls when the invoice, expense and repartition books split into their own files
 fileLength lib/features/money/presentation/accounting_export_run.dart // #2494 exportAccountingFile (cognitive 94) became AccountingExportRun, one method per format, moved whole from accounting_export.dart (505 lines there); the length falls when the bundle and SAF-T methods get their own files
 fontWeight lib/features/money/presentation/widgets/open_invoice_subtitle.dart // #2494 the open-invoice subtitle moved whole from invoicing_dashboard_part1.dart; the weight goes with the line it styles
+fontSize lib/features/money/presentation/widgets/report_visual_line.dart // #2494 the report line styles moved whole from report_visual_editor_part3.dart
+fontWeight lib/features/money/presentation/widgets/invoicing_summary_bar.dart // #2494 moved whole from invoicing_dashboard_part2.dart
+fontWeight lib/features/money/presentation/widgets/open_invoices_tab.dart // #2494 moved whole from invoicing_dashboard_part3.dart

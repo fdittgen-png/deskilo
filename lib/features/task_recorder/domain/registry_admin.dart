@@ -11,7 +11,9 @@
 // it), a member, an approver, a count or a rule's contents. Each command
 // is an attempt before it runs and its real result after: saved, sent
 // for validation, refused, or unknown; a held act is never "saved".
-part of 'action_registry.dart';
+import 'package:meta/meta.dart';
+
+import 'action_registry.dart';
 
 /// The permission keys (WorkspacePermission.wireName), pinned to the enum
 /// by test/features/task_recorder/admin_journey_test.dart.
@@ -96,7 +98,7 @@ const Set<String> _settingOutcomes = {
   RecorderOutcomes.settingUnknown,
 };
 
-const List<ActionSpec> _adminActions = [
+const List<ActionSpec> adminActionSpecs = [
   ActionSpec(
     RecorderActions.togglePermission,
     surface: RecorderSurfaces.roles,
@@ -138,6 +140,6 @@ const List<ActionSpec> _adminActions = [
   ),
 ];
 
-const List<OutcomeSpec> _adminOutcomes = [
+const List<OutcomeSpec> adminOutcomeSpecs = [
   OutcomeSpec(RecorderOutcomes.settingPending, state: ObservationState.pending),
 ];

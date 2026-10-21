@@ -32,12 +32,12 @@ extension _ReportVisualEditorStatePart2 on ReportVisualEditorState {
               maxLines: null,
               onChanged: (_) => _commitEditing(),
               // #822 — edited in the element's OWN typography.
-              style: _reportLineEditStyle(line.kind),
+              style: reportLineEditStyle(line.kind),
               decoration: const InputDecoration(
                   isDense: true, border: InputBorder.none),
             )
           else
-            Text(_reportLineName(line.kind, l10n),
+            Text(reportLineName(line.kind, l10n),
                 style: const TextStyle(
                     fontSize: 11, color: ReportPage.chrome)),
           // A Wrap, not a Row: inside a column the toolbar is narrower
@@ -45,9 +45,9 @@ extension _ReportVisualEditorStatePart2 on ReportVisualEditorState {
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
             _kindMenu(
               key: ValueKey('${widget.bandKey}-type-$index'),
-              tooltip: _reportLineName(line.kind, l10n),
+              tooltip: reportLineName(line.kind, l10n),
               onSelected: (kind) => _mutate(() => line.kind = kind),
-              child: Icon(_reportLineIcon(line.kind),
+              child: Icon(reportLineIcon(line.kind),
                   size: 20, color: theme.colorScheme.primary),
             ),
             IconButton(
@@ -272,8 +272,8 @@ extension _ReportVisualEditorStatePart2 on ReportVisualEditorState {
           ),
         for (final segment in segments)
           switch (segment) {
-            _LineSegment(:final index) => _lineWidget(index),
-            _GroupSegment(
+            ReportLineSegment(:final index) => _lineWidget(index),
+            ReportGroupSegment(
               :final openIndex,
               :final columns,
               :final closeIndex,

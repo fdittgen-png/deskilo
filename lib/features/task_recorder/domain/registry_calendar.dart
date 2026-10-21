@@ -10,7 +10,9 @@
 // a member, an entry, a name or a date. Opening a reservation is not a
 // calendar step: the reservation's own sheet records it (one action, one
 // step, wherever it was opened from).
-part of 'action_registry.dart';
+import 'package:meta/meta.dart';
+
+import 'action_registry.dart';
 
 /// The calendar's entry kinds, by their wire names (CalendarKind.wire);
 /// pinned to the enum by test/features/task_recorder/calendar_journey_test.
@@ -34,7 +36,7 @@ const Set<String> calendarKindKeys = {
 /// The filter's own target for "every kind".
 const String calendarAllKinds = 'all';
 
-const List<ActionSpec> _calendarActions = [
+const List<ActionSpec> calendarActionSpecs = [
   ActionSpec(
     RecorderActions.calendarSwitchView,
     surface: RecorderSurfaces.calendar,
@@ -95,7 +97,7 @@ const List<ActionSpec> _calendarActions = [
   ),
 ];
 
-const List<OutcomeSpec> _calendarOutcomes = [
+const List<OutcomeSpec> calendarOutcomeSpecs = [
   OutcomeSpec(RecorderOutcomes.eventDecided, state: ObservationState.confirmed),
   // The decide path reports a failure as text only, so the recorder
   // cannot tell a refusal from a lost answer: it claims neither.

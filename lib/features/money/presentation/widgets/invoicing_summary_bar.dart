@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'invoicing_dashboard.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../providers/money_providers.dart';
+import '../period_label.dart';
+import 'open_invoice_subtitle.dart';
+import 'wizard_context.dart';
 
 /// The issuer's invoicing summary strip (field request: "everything an
 /// invoicing tool would need"): how many months wait to be invoiced and
