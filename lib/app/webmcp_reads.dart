@@ -143,7 +143,7 @@ Future<Map<String, Object?>> _listMyReservations(
   final me = await ref.read(myMemberProvider.future);
   if (workspace == null || me == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }
@@ -178,7 +178,7 @@ Future<Map<String, Object?>> _listMyInvoices(
   final me = await ref.read(myMemberProvider.future);
   if (me == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }
@@ -209,7 +209,7 @@ Future<Map<String, Object?>> _listPendingValidations(
   final me = await ref.read(myMemberProvider.future);
   if (me == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }
@@ -268,7 +268,7 @@ Future<Map<String, Object?>> _getMyStatement(
   final statement = await ref.read(myStatementProvider(period).future);
   if (workspace == null || statement == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }
@@ -353,14 +353,14 @@ Future<Map<String, Object?>> _getMemberStatement(
       .read(myPermissionsProvider)
       .contains(WorkspacePermission.viewFinances)) {
     throw const WebMcpRefused(
-      'forbidden',
+      'denied',
       "This person's role does not allow reading another member's statement.",
     );
   }
   final workspace = await ref.read(currentWorkspaceProvider.future);
   if (workspace == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }
@@ -382,7 +382,7 @@ Future<Map<String, Object?>> _getCapabilities(
   final workspace = await ref.read(currentWorkspaceProvider.future);
   if (workspace == null) {
     throw const WebMcpRefused(
-      'not_a_member',
+      'denied',
       'This person is not a member of this workspace.',
     );
   }

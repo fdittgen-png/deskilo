@@ -81,7 +81,7 @@ class WebMcpConfirmations extends Notifier<WebMcpConfirmationRequest?> {
     }
     if (entry.accepted == false) {
       throw const WebMcpRefused(
-        'declined',
+        'denied',
         'The person declined this request.',
       );
     }

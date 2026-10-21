@@ -102,7 +102,7 @@ Future<Object?> _run(
   final confirmed = webMcpConfirmedWrites[tool.id];
   final write = webMcpWriteRunners[tool.id] ?? confirmed?.write;
   if (read == null && write == null) {
-    return _refusal('unavailable', 'This tool is not offered here.');
+    return _refusal('not_found', 'This tool is not offered here.');
   }
   try {
     final Map<String, Object?> output;
