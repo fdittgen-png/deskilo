@@ -84,221 +84,270 @@ Future<void> showMessageActions(
   VoidCallback? onChanged,
   VoidCallback? onInfo,
 }) async {
-  final l10n = context.l10n;
   final picked = await showAppSheet<Object>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    builder: (sheet) => SafeArea(
-      key: const ValueKey('message-actions-sheet'),
-      child: SingleChildScrollView(
-        child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (!message.isNotice)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (final emoji in kQuickReactions)
-                    InkResponse(
-                      key: ValueKey('message-react-$emoji'),
-                      radius: 24,
-                      onTap: () => Navigator.of(sheet).pop((emoji: emoji)),
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: message.myReaction == emoji
-                              ? Theme.of(sheet).colorScheme.secondaryContainer
-                              : null,
-                        ),
-                        child: Text(emoji, style: Theme.of(sheet).textTheme.headlineSmall),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          if (!message.isNotice)
-            ListTile(
-              key: const ValueKey('message-action-star'),
-              leading: Icon(message.starred ? Icons.star : Icons.star_outline),
-              title: Text(message.starred
-                  ? (l10n.messengerUnstar)
-                  : (l10n.messengerStar)),
-              onTap: () => Navigator.of(sheet).pop(_Action.star),
-            ),
-          if (onInfo != null)
-            ListTile(
-              key: const ValueKey('message-action-info'),
-              leading: const Icon(Icons.done_all),
-              title: Text(l10n.messageInfo),
-              onTap: () => Navigator.of(sheet).pop(_Action.info),
-            ),
-          if (message.body.isNotEmpty && !message.isNotice)
-            ListTile(
-              key: const ValueKey('message-action-copy'),
-              leading: const Icon(Icons.copy_outlined),
-              title: Text(l10n.messengerCopy),
-              onTap: () => Navigator.of(sheet).pop(_Action.copy),
-            ),
-          if (message.editableAt(ref.read(clockProvider).now(), _editWindow(ref, message.kind)))
-            ListTile(
-              key: const ValueKey('message-action-edit'),
-              leading: const Icon(Icons.edit_outlined),
-              title: Text(l10n.messengerEdit),
-              onTap: () => Navigator.of(sheet).pop(_Action.edit),
-            ),
-          if (forwarding && !message.noForward)
-            ListTile(
-              key: const ValueKey('message-action-forward'),
-              leading: const Icon(Icons.shortcut),
-              title: Text(l10n.messengerForward),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(sheet).pop(_Action.forward),
-            ),
-          if (forwarding && message.noForward && !message.mine)
-            ListTile(
-              key: const ValueKey('message-action-locked'),
-              leading: const Icon(Icons.lock_outline),
-              title: Text(
-                l10n.messengerForwardLocked,
-              ),
-            ),
-          if (forwarding && message.mine)
-            ListTile(
-              key: const ValueKey('message-action-lock'),
-              leading: Icon(
-                message.noForward
-                    ? Icons.lock_open_outlined
-                    : Icons.lock_outline,
-              ),
-              title: Text(
-                message.noForward
-                    ? (l10n.messengerUnlock)
-                    : (l10n.messengerLock),
-              ),
-              onTap: () => Navigator.of(sheet).pop(_Action.lock),
-            ),
-          ListTile(
-            key: const ValueKey('message-action-history'),
-            leading: const Icon(Icons.history),
-            title: Text(l10n.messengerHistory),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(sheet).pop(_Action.history),
-          ),
-          if (onDelete != null)
-            ListTile(
-              key: const ValueKey('message-action-delete'),
-              leading: const Icon(Icons.delete_outline),
-              title: Text(l10n.messengerDelete),
-              onTap: () => Navigator.of(sheet).pop(_Action.delete),
-            ),
-        ],
-        ),
-      ),
+    builder: (sheet) => _actionsBody(
+      sheet,
+      ref,
+      message,
+      forwarding: forwarding,
+      hasInfo: onInfo != null,
+      hasDelete: onDelete != null,
     ),
   );
   if (picked == null || !context.mounted) return;
-  final actions = ref.read(messengerActionsProvider(source: message.source));
-  if (picked is ({String emoji})) {
-    final ok = await runMessenger(
-      context,
-      message: 'react to message failed',
-      errorText: l10n.portalActionFailed,
-      action: () => actions.react(
-        message.kind,
-        message.messageId,
-        picked.emoji == message.myReaction ? null : picked.emoji,
+  await _MessageActionRun(
+    context,
+    ref,
+    message,
+    onDelete: onDelete,
+    whenChanged: onChanged,
+    onInfo: onInfo,
+  ).run(picked);
+}
+
+Widget _actionsBody(
+  BuildContext sheet,
+  WidgetRef ref,
+  MessageRef message, {
+  required bool forwarding,
+  required bool hasInfo,
+  required bool hasDelete,
+}) {
+  final l10n = sheet.l10n;
+  return SafeArea(
+    key: const ValueKey('message-actions-sheet'),
+    child: SingleChildScrollView(
+      child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (!message.isNotice)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (final emoji in kQuickReactions)
+                  InkResponse(
+                    key: ValueKey('message-react-$emoji'),
+                    radius: 24,
+                    onTap: () => Navigator.of(sheet).pop((emoji: emoji)),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: message.myReaction == emoji
+                            ? Theme.of(sheet).colorScheme.secondaryContainer
+                            : null,
+                      ),
+                      child: Text(emoji, style: Theme.of(sheet).textTheme.headlineSmall),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        if (!message.isNotice)
+          ListTile(
+            key: const ValueKey('message-action-star'),
+            leading: Icon(message.starred ? Icons.star : Icons.star_outline),
+            title: Text(message.starred
+                ? (l10n.messengerUnstar)
+                : (l10n.messengerStar)),
+            onTap: () => Navigator.of(sheet).pop(_Action.star),
+          ),
+        if (hasInfo)
+          ListTile(
+            key: const ValueKey('message-action-info'),
+            leading: const Icon(Icons.done_all),
+            title: Text(l10n.messageInfo),
+            onTap: () => Navigator.of(sheet).pop(_Action.info),
+          ),
+        if (message.body.isNotEmpty && !message.isNotice)
+          ListTile(
+            key: const ValueKey('message-action-copy'),
+            leading: const Icon(Icons.copy_outlined),
+            title: Text(l10n.messengerCopy),
+            onTap: () => Navigator.of(sheet).pop(_Action.copy),
+          ),
+        if (message.editableAt(ref.read(clockProvider).now(), _editWindow(ref, message.kind)))
+          ListTile(
+            key: const ValueKey('message-action-edit'),
+            leading: const Icon(Icons.edit_outlined),
+            title: Text(l10n.messengerEdit),
+            onTap: () => Navigator.of(sheet).pop(_Action.edit),
+          ),
+        if (forwarding && !message.noForward)
+          ListTile(
+            key: const ValueKey('message-action-forward'),
+            leading: const Icon(Icons.shortcut),
+            title: Text(l10n.messengerForward),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(sheet).pop(_Action.forward),
+          ),
+        if (forwarding && message.noForward && !message.mine)
+          ListTile(
+            key: const ValueKey('message-action-locked'),
+            leading: const Icon(Icons.lock_outline),
+            title: Text(
+              l10n.messengerForwardLocked,
+            ),
+          ),
+        if (forwarding && message.mine)
+          ListTile(
+            key: const ValueKey('message-action-lock'),
+            leading: Icon(
+              message.noForward
+                  ? Icons.lock_open_outlined
+                  : Icons.lock_outline,
+            ),
+            title: Text(
+              message.noForward
+                  ? (l10n.messengerUnlock)
+                  : (l10n.messengerLock),
+            ),
+            onTap: () => Navigator.of(sheet).pop(_Action.lock),
+          ),
+        ListTile(
+          key: const ValueKey('message-action-history'),
+          leading: const Icon(Icons.history),
+          title: Text(l10n.messengerHistory),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => Navigator.of(sheet).pop(_Action.history),
+        ),
+        if (hasDelete)
+          ListTile(
+            key: const ValueKey('message-action-delete'),
+            leading: const Icon(Icons.delete_outline),
+            title: Text(l10n.messengerDelete),
+            onTap: () => Navigator.of(sheet).pop(_Action.delete),
+          ),
+      ],
       ),
-    );
-    if (ok) onChanged?.call();
-    return;
-  }
-  final action = picked as _Action;
-  final failed =
-      l10n.portalActionFailed;
-  switch (action) {
-    case _Action.forward:
-      final target = await pickForwardTarget(
-        context,
-        source: message.source,
-        fromKind: message.contextKind,
-        fromContextId: message.contextId,
-      );
-      if (target == null || !context.mounted) return;
+    ),
+);
+}
+
+/// What the picked row does once the sheet has closed.
+class _MessageActionRun {
+  const _MessageActionRun(
+    this.context,
+    this.ref,
+    this.message, {
+    this.onDelete,
+    this.whenChanged,
+    this.onInfo,
+  });
+
+  final BuildContext context;
+  final WidgetRef ref;
+  final MessageRef message;
+  final Future<void> Function()? onDelete;
+  final VoidCallback? whenChanged;
+  final VoidCallback? onInfo;
+
+  Future<void> run(Object picked) async {
+    final l10n = context.l10n;
+    final actions = ref.read(messengerActionsProvider(source: message.source));
+    if (picked is ({String emoji})) {
       final ok = await runMessenger(
         context,
-        message: 'forward message failed',
-        errorText: failed,
-        action: () => actions.forwardById(
-          kind: message.kind,
-          messageId: message.messageId,
-          target: target,
-          locked: message.noForward,
-        ),
-      );
-      if (!ok || !context.mounted) return;
-      ref.invalidate(unifiedInboxProvider);
-      onChanged?.call();
-      AppSnack.success(
-        context,
-        l10n.messengerForwarded(target.title),
-        replace: true,
-      );
-    case _Action.lock:
-      final ok = await runGuarded(
-        context,
-        domain: 'messages',
-        message: 'forward lock failed',
-        errorText: failed,
-        action: () => actions.setForwardLock(
+        message: 'react to message failed',
+        errorText: l10n.portalActionFailed,
+        action: () => actions.react(
           message.kind,
           message.messageId,
-          locked: !message.noForward,
+          picked.emoji == message.myReaction ? null : picked.emoji,
         ),
       );
-      if (ok) onChanged?.call();
-    case _Action.history:
-      await showMessageHistory(
-        context,
-        kind: message.kind,
-        messageId: message.messageId,
-        source: message.source,
-      );
-    case _Action.delete:
-      await onDelete?.call();
-    case _Action.star:
-      final ok = await runMessenger(
-        context,
-        message: 'star message failed',
-        errorText: failed,
-        action: () =>
-            actions.toggleStar(message.kind, message.messageId),
-      );
-      if (ok) onChanged?.call();
-    case _Action.info:
-      onInfo?.call();
-    case _Action.copy:
-      await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
-      if (context.mounted) {
-        AppSnack.success(context, l10n.messengerCopied,
-            replace: true);
-      }
-    case _Action.edit:
-      final text = await showEditMessageDialog(context, message.body);
-      if (text == null || text.trim().isEmpty || text.trim() == message.body) {
-        return;
-      }
-      if (!context.mounted) return;
-      final ok = await runMessenger(
-        context,
-        message: 'edit message failed',
-        errorText: l10n.messengerEditFailed,
-        action: () =>
-            actions.edit(message.kind, message.messageId, text.trim()),
-      );
-      if (ok) onChanged?.call();
+      if (ok) whenChanged?.call();
+      return;
+    }
+    final action = picked as _Action;
+    final failed =
+        l10n.portalActionFailed;
+    switch (action) {
+      case _Action.forward:
+        final target = await pickForwardTarget(
+          context,
+          source: message.source,
+          fromKind: message.contextKind,
+          fromContextId: message.contextId,
+        );
+        if (target == null || !context.mounted) return;
+        final ok = await runMessenger(
+          context,
+          message: 'forward message failed',
+          errorText: failed,
+          action: () => actions.forwardById(
+            kind: message.kind,
+            messageId: message.messageId,
+            target: target,
+            locked: message.noForward,
+          ),
+        );
+        if (!ok || !context.mounted) return;
+        ref.invalidate(unifiedInboxProvider);
+        whenChanged?.call();
+        AppSnack.success(
+          context,
+          l10n.messengerForwarded(target.title),
+          replace: true,
+        );
+      case _Action.lock:
+        final ok = await runGuarded(
+          context,
+          domain: 'messages',
+          message: 'forward lock failed',
+          errorText: failed,
+          action: () => actions.setForwardLock(
+            message.kind,
+            message.messageId,
+            locked: !message.noForward,
+          ),
+        );
+        if (ok) whenChanged?.call();
+      case _Action.history:
+        await showMessageHistory(
+          context,
+          kind: message.kind,
+          messageId: message.messageId,
+          source: message.source,
+        );
+      case _Action.delete:
+        await onDelete?.call();
+      case _Action.star:
+        final ok = await runMessenger(
+          context,
+          message: 'star message failed',
+          errorText: failed,
+          action: () =>
+              actions.toggleStar(message.kind, message.messageId),
+        );
+        if (ok) whenChanged?.call();
+      case _Action.info:
+        onInfo?.call();
+      case _Action.copy:
+        await Clipboard.setData(ClipboardData(text: notePlainText(message.body)));
+        if (context.mounted) {
+          AppSnack.success(context, l10n.messengerCopied,
+              replace: true);
+        }
+      case _Action.edit:
+        final text = await showEditMessageDialog(context, message.body);
+        if (text == null || text.trim().isEmpty || text.trim() == message.body) {
+          return;
+        }
+        if (!context.mounted) return;
+        final ok = await runMessenger(
+          context,
+          message: 'edit message failed',
+          errorText: l10n.messengerEditFailed,
+          action: () =>
+              actions.edit(message.kind, message.messageId, text.trim()),
+        );
+        if (ok) whenChanged?.call();
+    }
   }
 }

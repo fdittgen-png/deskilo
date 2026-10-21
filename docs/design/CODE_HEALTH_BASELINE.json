@@ -1,8 +1,8 @@
 {
-  "recordedSha": "b157f8214aca620962c1cb043e03e6db2d684d50",
+  "recordedSha": "6a27f8467c5aab01ede27997a5a91fdac6dcf669",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1749,"functions":9611,"cyclomatic>=9":1024,"cyclomatic>=25":122,"cognitive>=15":422,"cognitive>=30":110,"length>=150":85,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1749,"functions":9613,"cyclomatic>=9":1025,"cyclomatic>=25":121,"cognitive>=15":423,"cognitive>=30":109,"length>=150":84,"parameters>=5":455,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1199,7 +1199,7 @@
     {"p":"lib/features/directory/presentation/messenger/environment_pill.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":7,"len":37,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/forward_target_sheet.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":7,"len":79,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/inquiry_sheet.dart","loc":175,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":9,"cyc":10,"len":101,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/directory/presentation/messenger/message_actions_sheet.dart","loc":282,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":69,"cyc":46,"len":234,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
+    {"p":"lib/features/directory/presentation/messenger/message_actions_sheet.dart","loc":326,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":26,"cyc":24,"len":120,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/directory/presentation/messenger/message_history_sheet.dart","loc":115,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":9,"len":59,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/message_marks.dart","loc":88,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":4,"len":38,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/message_requests_card.dart","loc":89,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":9,"len":81,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2529,7 +2529,7 @@
     {"id":"lib/features/directory/presentation/messenger/account_group_sheet.dart#_GroupSheet.build(BuildContext context,WidgetRef ref)","cog":37,"cyc":31,"len":164,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_bubble.dart#ContextBubble.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":22,"len":151,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_thread_screen.dart#_ContextThreadState._composer(AppLocalizations l10n)","cog":34,"cyc":30,"len":111,"params":1},
-    {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":69,"cyc":46,"len":234,"params":7},
+    {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":2,"cyc":3,"len":39,"params":7},
     {"id":"lib/features/directory/presentation/messenger/unified_inbox_view.dart#_UnifiedInboxState._list(BuildContext context,UnifiedInbox inbox,Map<String, String> servers,AppLocalizations l10n)","cog":35,"cyc":25,"len":133,"params":4},
     {"id":"lib/features/directory/presentation/public_page_editor.dart#_EditorState.build(BuildContext context)","cog":49,"cyc":27,"len":129,"params":1},
     {"id":"lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":28,"len":118,"params":2},
