@@ -56,72 +56,82 @@ final _url = RegExp(r'^https?://\S+$');
 /// [answer] is the shape the wire carries: a `String`, a `num`, a `bool`,
 /// a `List<String>` of choice keys, or null for "not answered".
 FieldProblem? fieldProblem(WorkspaceField field, Object? answer) {
-  final rules = field.validation;
-
   if (answer == null) return field.required ? FieldProblem.required : null;
 
-  switch (field.type) {
-    case WorkspaceFieldType.text:
-    case WorkspaceFieldType.longText:
-      if (answer is! String) return FieldProblem.required;
-      final text = answer.trim();
-      if (text.isEmpty) return field.required ? FieldProblem.required : null;
-      final min = _int(rules['min_length']);
-      if (min != null && text.length < min) return FieldProblem.tooShort;
-      final max = _int(rules['max_length']);
-      if (max != null && text.length > max) return FieldProblem.tooLong;
-      switch (rules['named']) {
-        case 'email':
-          if (!_email.hasMatch(text)) return FieldProblem.notAnEmail;
-        case 'phone':
-          if (!_phone.hasMatch(text)) return FieldProblem.notAPhone;
-        case 'url':
-          if (!_url.hasMatch(text)) return FieldProblem.notAUrl;
-      }
-      return null;
+  return switch (field.type) {
+    WorkspaceFieldType.text ||
+    WorkspaceFieldType.longText => _textProblem(field, answer),
+    WorkspaceFieldType.integer ||
+    WorkspaceFieldType.decimal => _numberProblem(field, answer),
+    WorkspaceFieldType.date => _dateProblem(field, answer),
+    WorkspaceFieldType.boolean => answer is bool ? null : FieldProblem.required,
+    WorkspaceFieldType.singleChoice => _singleChoiceProblem(field, answer),
+    WorkspaceFieldType.multiChoice => _multiChoiceProblem(field, answer),
+  };
+}
 
-    case WorkspaceFieldType.integer:
-    case WorkspaceFieldType.decimal:
-      final value = _num(answer);
-      if (value == null) return FieldProblem.notANumber;
-      if (field.type == WorkspaceFieldType.integer &&
-          value != value.truncate()) {
-        return FieldProblem.notWhole;
-      }
-      final min = _num(rules['min']);
-      if (min != null && value < min) return FieldProblem.tooSmall;
-      final max = _num(rules['max']);
-      if (max != null && value > max) return FieldProblem.tooLarge;
-      return null;
-
-    case WorkspaceFieldType.date:
-      final value = _date(answer);
-      if (value == null) return FieldProblem.notADate;
-      final min = _date(rules['min_date']);
-      if (min != null && value.isBefore(min)) return FieldProblem.tooEarly;
-      final max = _date(rules['max_date']);
-      if (max != null && value.isAfter(max)) return FieldProblem.tooLate;
-      return null;
-
-    case WorkspaceFieldType.boolean:
-      return answer is bool ? null : FieldProblem.required;
-
-    case WorkspaceFieldType.singleChoice:
-      if (answer is! String) return FieldProblem.notAChoice;
-      final keys = {for (final o in field.liveOptions) o.key};
-      return keys.contains(answer) ? null : FieldProblem.notAChoice;
-
-    case WorkspaceFieldType.multiChoice:
-      if (answer is! List) return FieldProblem.notAChoice;
-      if (answer.isEmpty) {
-        return field.required ? FieldProblem.required : null;
-      }
-      final keys = {for (final o in field.liveOptions) o.key};
-      for (final chosen in answer) {
-        if (!keys.contains(chosen)) return FieldProblem.notAChoice;
-      }
-      return null;
+FieldProblem? _textProblem(WorkspaceField field, Object answer) {
+  final rules = field.validation;
+  if (answer is! String) return FieldProblem.required;
+  final text = answer.trim();
+  if (text.isEmpty) return field.required ? FieldProblem.required : null;
+  final min = _int(rules['min_length']);
+  if (min != null && text.length < min) return FieldProblem.tooShort;
+  final max = _int(rules['max_length']);
+  if (max != null && text.length > max) return FieldProblem.tooLong;
+  switch (rules['named']) {
+    case 'email':
+      if (!_email.hasMatch(text)) return FieldProblem.notAnEmail;
+    case 'phone':
+      if (!_phone.hasMatch(text)) return FieldProblem.notAPhone;
+    case 'url':
+      if (!_url.hasMatch(text)) return FieldProblem.notAUrl;
   }
+  return null;
+}
+
+FieldProblem? _numberProblem(WorkspaceField field, Object answer) {
+  final rules = field.validation;
+  final value = _num(answer);
+  if (value == null) return FieldProblem.notANumber;
+  if (field.type == WorkspaceFieldType.integer &&
+      value != value.truncate()) {
+    return FieldProblem.notWhole;
+  }
+  final min = _num(rules['min']);
+  if (min != null && value < min) return FieldProblem.tooSmall;
+  final max = _num(rules['max']);
+  if (max != null && value > max) return FieldProblem.tooLarge;
+  return null;
+}
+
+FieldProblem? _dateProblem(WorkspaceField field, Object answer) {
+  final rules = field.validation;
+  final value = _date(answer);
+  if (value == null) return FieldProblem.notADate;
+  final min = _date(rules['min_date']);
+  if (min != null && value.isBefore(min)) return FieldProblem.tooEarly;
+  final max = _date(rules['max_date']);
+  if (max != null && value.isAfter(max)) return FieldProblem.tooLate;
+  return null;
+}
+
+FieldProblem? _singleChoiceProblem(WorkspaceField field, Object answer) {
+  if (answer is! String) return FieldProblem.notAChoice;
+  final keys = {for (final o in field.liveOptions) o.key};
+  return keys.contains(answer) ? null : FieldProblem.notAChoice;
+}
+
+FieldProblem? _multiChoiceProblem(WorkspaceField field, Object answer) {
+  if (answer is! List) return FieldProblem.notAChoice;
+  if (answer.isEmpty) {
+    return field.required ? FieldProblem.required : null;
+  }
+  final keys = {for (final o in field.liveOptions) o.key};
+  for (final chosen in answer) {
+    if (!keys.contains(chosen)) return FieldProblem.notAChoice;
+  }
+  return null;
 }
 
 /// Every problem in [answers], by field key — what a Save must fix before
