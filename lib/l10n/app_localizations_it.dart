@@ -22593,6 +22593,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visitStatusRequested => 'Richiesta';
 
   @override
+  String webMcpActed(String action) {
+    return 'Un assistente di questo browser: $action';
+  }
+
+  @override
   String get webMcpDeviceSwitch =>
       'Consenti agli assistenti di questo browser di usare l\'app';
 

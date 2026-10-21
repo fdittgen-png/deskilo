@@ -26,7 +26,9 @@ import '../../core/time/clock.dart';
 import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_time.dart';
 import '../../core/trace/trace_logger.dart';
+import '../../core/ui/app_snack.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/mcp/presentation/mcp_operation_labels.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
@@ -48,6 +50,19 @@ void watchShellEffects(WidgetRef ref, AppLocalizations l10n) {
   _syncUnreadBadge(ref);
   _installWorkspaceAmbients(ref);
   _scheduleCheckInReminders(ref, l10n);
+  _announceWebMcpActions(ref, l10n);
+}
+
+/// #2504 — an assistant in this browser acted through the page: say what,
+/// unobtrusively, so the page and the agent stay in step.
+void _announceWebMcpActions(WidgetRef ref, AppLocalizations l10n) {
+  ref.listen(webMcpActivityProvider, (_, operation) {
+    if (operation == null || !ref.context.mounted) return;
+    AppSnack.info(
+      ref.context,
+      l10n.webMcpActed(mcpOperationLabel(l10n, operation)),
+    );
+  });
 }
 
 /// #821 — the conversations I muted; empty when the list cannot be

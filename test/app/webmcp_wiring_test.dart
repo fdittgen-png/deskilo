@@ -8,6 +8,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/app/webmcp_reads.dart';
 import 'package:deskilo/app/webmcp_wiring.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/webmcp/webmcp_device_switch.dart';
@@ -53,6 +54,24 @@ class _Context implements WebMcpContext {
     live[name] = execute;
     return _Registration(() => live.remove(name));
   }
+}
+
+class _Feedback implements PlaceFeedbackRepository {
+  int favoriteWrites = 0;
+
+  @override
+  Future<PlaceFeedback> setFavorite(
+    String workspaceId,
+    PlaceKind kind,
+    String id, {
+    required bool on,
+  }) async {
+    favoriteWrites++;
+    return PlaceFeedback(favorite: on, count: 1, average: 4);
+  }
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _Switch implements WebMcpSwitchStore {
@@ -173,6 +192,7 @@ void main() {
   late _Switch deviceSwitch;
   late FakeReservationRepository reservations;
   late Set<WorkspaceFeature> features;
+  late _Feedback feedback;
   var permissions = <WorkspacePermission>{};
 
   ProviderContainer container() {
@@ -211,6 +231,7 @@ void main() {
         myPendingEventsProvider.overrideWith((ref) async => [_pending]),
         myPermissionsProvider.overrideWith((ref) => permissions),
         memberAccountQueriesProvider.overrideWithValue(_Accounts()),
+        placeFeedbackRepositoryProvider.overrideWithValue(feedback),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -221,6 +242,7 @@ void main() {
 
   setUp(() {
     permissions = {WorkspacePermission.viewFinances};
+    feedback = _Feedback();
     context = _Context();
     deviceSwitch = _Switch(on: true);
     reservations = FakeReservationRepository()
@@ -265,6 +287,11 @@ void main() {
         'deskilo_get_validation',
         'deskilo_get_member_statement',
         'deskilo_get_capabilities',
+        'deskilo_set_favorite',
+        'deskilo_rate_place',
+        'deskilo_check_in',
+        'deskilo_check_out',
+        'deskilo_cancel_reservation',
       });
     },
   );
@@ -401,6 +428,88 @@ void main() {
       'period': '2026-09',
     });
     expect(answer['ok'], isFalse);
+  });
+
+  test(
+    'a write runs once per request_id; other arguments under it are refused',
+    () async {
+      final c = await armed();
+      final first = await call('deskilo_set_favorite', {
+        'request_id': 'req-1',
+        'workspace_id': 'ws-1',
+        'kind': 'seat',
+        'resource_id': 'seat-1',
+        'favorite': true,
+      });
+      expect(first['ok'], isTrue, reason: '$first');
+      final again = await call('deskilo_set_favorite', {
+        'request_id': 'req-1',
+        'workspace_id': 'ws-1',
+        'kind': 'seat',
+        'resource_id': 'seat-1',
+        'favorite': true,
+      });
+      expect(again['output'], first['output']);
+      expect(feedback.favoriteWrites, 1);
+      final changed = await call('deskilo_set_favorite', {
+        'request_id': 'req-1',
+        'workspace_id': 'ws-1',
+        'kind': 'seat',
+        'resource_id': 'seat-1',
+        'favorite': false,
+      });
+      expect(changed['ok'], isFalse);
+      final missing = await call('deskilo_set_favorite', {
+        'workspace_id': 'ws-1',
+        'kind': 'seat',
+        'resource_id': 'seat-1',
+        'favorite': true,
+      });
+      expect(missing['ok'], isFalse);
+      expect(feedback.favoriteWrites, 1);
+      expect(c.read(webMcpActivityProvider), 'set_favorite');
+      final outputs = _outputs();
+      expect(
+        _keys(first['output']).difference(outputs['set_favorite']!),
+        isEmpty,
+      );
+    },
+  );
+
+  test("a booking write acts on the person's own booking only, on its current state", () async {
+    await armed();
+    final mine = await call('deskilo_cancel_reservation', {
+      'request_id': 'req-2',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r1',
+    });
+    expect(mine['ok'], isTrue, reason: '$mine');
+    final view = mine['output']! as Map<String, Object?>;
+    expect(view['status'], 'cancelled');
+    expect(_keys(view).difference(_outputs()['cancel_reservation']!), isEmpty);
+
+    final theirs = await call('deskilo_cancel_reservation', {
+      'request_id': 'req-3',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r2',
+    });
+    expect((theirs['error']! as Map)['code'], 'not_found');
+    expect(
+      reservations.reservations.singleWhere((r) => r.id == 'r2').status,
+      ReservationStatus.reserved,
+    );
+
+    final stale = await call('deskilo_cancel_reservation', {
+      'request_id': 'req-4',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r3',
+      'expected_state': 'not-the-state',
+    });
+    expect((stale['error']! as Map)['code'], 'conflict');
+    expect(
+      reservations.reservations.singleWhere((r) => r.id == 'r3').status,
+      ReservationStatus.reserved,
+    );
   });
 
   test('a window longer than 31 days is refused', () async {

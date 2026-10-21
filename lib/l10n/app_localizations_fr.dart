@@ -22632,6 +22632,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get visitStatusRequested => 'Demandée';
 
   @override
+  String webMcpActed(String action) {
+    return 'Un assistant de ce navigateur : $action';
+  }
+
+  @override
   String get webMcpDeviceSwitch =>
       'Autoriser les assistants de ce navigateur à utiliser l\'application';
 

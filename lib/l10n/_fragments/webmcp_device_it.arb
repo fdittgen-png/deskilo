@@ -1,5 +1,6 @@
 {
   "@@locale": "it",
   "webMcpDeviceSwitch": "Consenti agli assistenti di questo browser di usare l'app",
-  "webMcpDeviceSwitchHint": "Disattivato per impostazione predefinita. Attivato, un assistente IA integrato in questo browser può leggere le sue prenotazioni, fatture e richieste in sospeso in questo spazio mentre la pagina è aperta. La scelta resta solo su questo dispositivo."
+  "webMcpDeviceSwitchHint": "Disattivato per impostazione predefinita. Attivato, un assistente IA integrato in questo browser può leggere le sue prenotazioni, fatture e richieste in sospeso in questo spazio mentre la pagina è aperta. La scelta resta solo su questo dispositivo.",
+  "webMcpActed": "Un assistente di questo browser: {action}"
 }
