@@ -1,8 +1,8 @@
 {
-  "recordedSha": "accb002ef529deb2d1e512e0d66aa2ce3cd0bc61",
+  "recordedSha": "b157f8214aca620962c1cb043e03e6db2d684d50",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1749,"functions":9609,"cyclomatic>=9":1022,"cyclomatic>=25":123,"cognitive>=15":420,"cognitive>=30":111,"length>=150":86,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1749,"functions":9611,"cyclomatic>=9":1024,"cyclomatic>=25":122,"cognitive>=15":422,"cognitive>=30":110,"length>=150":85,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2310,7 +2310,7 @@
     {"p":"lib/features/workspace/presentation/screens/availability_sections.dart","loc":287,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":6,"len":80,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/bi_screen.dart","loc":196,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":39,"cyc":32,"len":147,"params":2,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/colours_screen.dart","loc":381,"part":false,"setState":11,"repositoryReads":0,"fn":9,"cog":19,"cyc":19,"len":132,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/deployment_screen.dart","loc":423,"part":false,"setState":6,"repositoryReads":0,"fn":9,"cog":65,"cyc":33,"len":154,"params":2,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/deployment_screen.dart","loc":440,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":20,"cyc":24,"len":98,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/documents_screen.dart","loc":346,"part":false,"setState":3,"repositoryReads":1,"fn":7,"cog":35,"cyc":12,"len":177,"params":3,"nest":7,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/features_screen.dart","loc":135,"part":false,"setState":5,"repositoryReads":0,"fn":5,"cog":17,"cyc":13,"len":98,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/inbox_screen.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":5,"len":32,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2745,7 +2745,6 @@
     {"id":"lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction({required BuildContext context,required WidgetRef ref,required Future<String?> Function() action,WizardNavigationController? navigation})","cog":43,"cyc":31,"len":68,"params":4},
     {"id":"lib/features/workspace/presentation/process_names.dart#processCopy(AppLocalizations l10n,String key)","cog":1,"cyc":33,"len":66,"params":2},
     {"id":"lib/features/workspace/presentation/screens/bi_screen.dart#BiScreen.build(BuildContext context,WidgetRef ref)","cog":39,"cyc":32,"len":147,"params":2},
-    {"id":"lib/features/workspace/presentation/screens/deployment_screen.dart#_DeploymentScreenState.build(BuildContext context)","cog":65,"cyc":33,"len":154,"params":1},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen._addDialog(BuildContext context,WidgetRef ref)","cog":12,"cyc":12,"len":177,"params":2},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen.build(BuildContext context,WidgetRef ref)","cog":35,"cyc":12,"len":89,"params":2},
     {"id":"lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen._memberSheet(BuildContext context,WidgetRef ref,Member member,String name,{required Set<WorkspacePermission> perms,required bool isOwner,required bool isSelf,required bool servicesOn,required bool levelBookingOn,required bool kioskOn,required bool coOwnerOn})","cog":5,"cyc":10,"len":89,"params":11},

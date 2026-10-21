@@ -182,6 +182,81 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     await _load(from);
   }
 
+  /// #998 — grouped: configuration, master data, reports.
+  List<Widget> _entityGroups(
+    List<DeployableEntity> registry, {
+    required Workspace? twin,
+    required bool allowed,
+  }) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    return [
+    for (final (kind, label) in [
+      ('configuration',
+          l10n.deploymentKindConfiguration),
+      ('master_data',
+          l10n.deploymentKindMasterData),
+      ('reports', l10n.deploymentKindReports),
+    ])
+      if (registry.any((e) => e.kind == kind)) ...[
+        Padding(
+          key: ValueKey('deploy-group-$kind'),
+          padding: const EdgeInsets.only(top: AppSpacing.md),
+          child: Text(label, style: theme.textTheme.titleSmall),
+        ),
+        for (final entity in registry.where((e) => e.kind == kind))
+          CheckboxListTile(
+            key: ValueKey('deploy-entity-${entity.key}'),
+            value: _selected.contains(entity.key),
+            title: Text(_deploymentEntityName(l10n, entity.key)),
+            subtitle: entity.requires.isEmpty
+                ? null
+                : Text(
+                    '${l10n.deploymentRequires} '
+                    '${entity.requires.map((r) => _deploymentEntityName(l10n, r)).join(', ')}'),
+            onChanged: _busy || twin == null || !allowed
+                ? null
+                : (v) => _toggle(entity.key, v ?? false),
+          ),
+      ],
+    ];
+  }
+
+  List<Widget> _journalTiles(Workspace workspace, {required bool allowed}) {
+    final l10n = context.l10n;
+    return [
+    for (final (index, d) in _journal.indexed)
+      ListTile(
+        key: ValueKey('deploy-journal-${d.id}'),
+        leading: Icon(d.direction == DeploymentDirection.devToProd
+            ? Icons.arrow_upward
+            : Icons.arrow_downward),
+        title: Text(
+          '${d.direction == DeploymentDirection.devToProd ? (l10n.deploymentDirectionToProd) : (l10n.deploymentDirectionToDev)}'
+          ' · ${d.entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
+        ),
+        subtitle: Text([
+          if (d.actorName.isNotEmpty) d.actorName,
+          if (d.createdAt != null)
+            // #2352 — the reader's clock, never the raw UTC instant.
+            appFormatOf(context).dateTime(d.createdAt!),
+          if (d.isRolledBack)
+            l10n.deploymentRolledBackLabel,
+        ].join(' · ')),
+        trailing: index == 0 && !d.isRolledBack && allowed
+            ? TextButton(
+                key: ValueKey('deploy-rollback-${d.id}'),
+                onPressed: _busy
+                    ? null
+                    : () => _rollback(workspace, d),
+                child: Text(
+                    l10n.deploymentRollback),
+              )
+            : null,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -247,35 +322,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                         ? (l10n.deploymentNeedsProdPermission)
                         : (l10n.deploymentNeedsDevPermission),
                   ),
-                // #998 — grouped: configuration, master data, reports.
-                for (final (kind, label) in [
-                  ('configuration',
-                      l10n.deploymentKindConfiguration),
-                  ('master_data',
-                      l10n.deploymentKindMasterData),
-                  ('reports', l10n.deploymentKindReports),
-                ])
-                  if (registry.any((e) => e.kind == kind)) ...[
-                    Padding(
-                      key: ValueKey('deploy-group-$kind'),
-                      padding: const EdgeInsets.only(top: AppSpacing.md),
-                      child: Text(label, style: theme.textTheme.titleSmall),
-                    ),
-                    for (final entity in registry.where((e) => e.kind == kind))
-                      CheckboxListTile(
-                        key: ValueKey('deploy-entity-${entity.key}'),
-                        value: _selected.contains(entity.key),
-                        title: Text(_deploymentEntityName(l10n, entity.key)),
-                        subtitle: entity.requires.isEmpty
-                            ? null
-                            : Text(
-                                '${l10n.deploymentRequires} '
-                                '${entity.requires.map((r) => _deploymentEntityName(l10n, r)).join(', ')}'),
-                        onChanged: _busy || twin == null || !allowed
-                            ? null
-                            : (v) => _toggle(entity.key, v ?? false),
-                      ),
-                  ],
+                ..._entityGroups(registry, twin: twin, allowed: allowed),
                 const SizedBox(height: AppSpacing.md),
                 FilledButton.icon(
                   key: const ValueKey('deploy-preview'),
@@ -303,35 +350,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                       key: const ValueKey('deploy-journal-empty'),
                     ),
                   ),
-                for (final (index, d) in _journal.indexed)
-                  ListTile(
-                    key: ValueKey('deploy-journal-${d.id}'),
-                    leading: Icon(d.direction == DeploymentDirection.devToProd
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward),
-                    title: Text(
-                      '${d.direction == DeploymentDirection.devToProd ? (l10n.deploymentDirectionToProd) : (l10n.deploymentDirectionToDev)}'
-                      ' · ${d.entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
-                    ),
-                    subtitle: Text([
-                      if (d.actorName.isNotEmpty) d.actorName,
-                      if (d.createdAt != null)
-                        // #2352 — the reader's clock, never the raw UTC instant.
-                        appFormatOf(context).dateTime(d.createdAt!),
-                      if (d.isRolledBack)
-                        l10n.deploymentRolledBackLabel,
-                    ].join(' · ')),
-                    trailing: index == 0 && !d.isRolledBack && allowed
-                        ? TextButton(
-                            key: ValueKey('deploy-rollback-${d.id}'),
-                            onPressed: _busy
-                                ? null
-                                : () => _rollback(workspace, d),
-                            child: Text(
-                                l10n.deploymentRollback),
-                          )
-                        : null,
-                  ),
+                ..._journalTiles(workspace, allowed: allowed),
               ],
             ),
     );
