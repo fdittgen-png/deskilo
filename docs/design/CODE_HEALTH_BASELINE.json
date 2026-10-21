@@ -1,8 +1,8 @@
 {
-  "recordedSha": "659c10ed3062dcdb9bc59912f4e7fb54d378457f",
+  "recordedSha": "d143695f8c4bd1214acf2b29b19f3575d11c333c",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1747,"functions":9590,"cyclomatic>=9":1018,"cyclomatic>=25":125,"cognitive>=15":421,"cognitive>=30":114,"length>=150":88,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
+  "totals": {"files":1747,"functions":9597,"cyclomatic>=9":1020,"cyclomatic>=25":124,"cognitive>=15":420,"cognitive>=30":113,"length>=150":87,"parameters>=5":454,"parameters>=7":146,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -1188,7 +1188,7 @@
     {"p":"lib/features/directory/presentation/directory_link_dialog.dart","loc":200,"part":false,"setState":6,"repositoryReads":0,"fn":10,"cog":12,"cyc":9,"len":73,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/directory_map.dart","loc":320,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":33,"cyc":25,"len":120,"params":4,"nest":3,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/directory_pages.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":1,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/directory/presentation/directory_screen.dart","loc":352,"part":false,"setState":11,"repositoryReads":0,"fn":3,"cog":67,"cyc":31,"len":326,"params":1,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/directory/presentation/directory_screen.dart","loc":358,"part":false,"setState":11,"repositoryReads":0,"fn":10,"cog":14,"cyc":11,"len":96,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/member_employment_tile.dart","loc":51,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":7,"len":37,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/account_group_reach_sheet.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":8,"len":45,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/presentation/messenger/account_group_sheet.dart","loc":313,"part":false,"setState":2,"repositoryReads":0,"fn":9,"cog":37,"cyc":31,"len":164,"params":6,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
@@ -2526,7 +2526,6 @@
     {"id":"lib/features/calendar/presentation/widgets/calendar_week_strip.dart#CalendarWeekStrip.build(BuildContext context)","cog":33,"cyc":15,"len":95,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid(BuildContext context,List<(Level?, FloorPlan)> plans,Map<String, String> names)","cog":45,"cyc":33,"len":199,"params":3},
     {"id":"lib/features/directory/presentation/directory_map.dart#_DirectoryMapState.build(BuildContext context)","cog":33,"cyc":25,"len":120,"params":1},
-    {"id":"lib/features/directory/presentation/directory_screen.dart#_DirectoryState.build(BuildContext context)","cog":67,"cyc":31,"len":326,"params":1},
     {"id":"lib/features/directory/presentation/messenger/account_group_sheet.dart#_GroupSheet.build(BuildContext context,WidgetRef ref)","cog":37,"cyc":31,"len":164,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_bubble.dart#ContextBubble.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":22,"len":151,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_thread_screen.dart#_ContextThreadState._composer(AppLocalizations l10n)","cog":34,"cyc":30,"len":111,"params":1},
