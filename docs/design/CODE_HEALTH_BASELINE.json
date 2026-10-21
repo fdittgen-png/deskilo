@@ -1,8 +1,8 @@
 {
-  "recordedSha": "956b56e97eb09d46496b84d9b2b13fbf805e5460",
+  "recordedSha": "cff0f87d5d2ac7e4f5df99b6d38cc20f50e0c1e7",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9696,"cyclomatic>=9":1030,"cyclomatic>=25":113,"cognitive>=15":425,"cognitive>=30":102,"length>=150":77,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
+  "totals": {"files":1752,"functions":9706,"cyclomatic>=9":1031,"cyclomatic>=25":112,"cognitive>=15":424,"cognitive>=30":101,"length>=150":76,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -109,8 +109,6 @@
       "lib/features/workspace/presentation/widgets/badge_manager_dialog.dart": 565,
 
       "lib/features/workspace/presentation/widgets/bi_charts.dart": 509,
-
-      "lib/features/workspace/presentation/widgets/bi_views_bar.dart": 514,
 
       "lib/features/workspace/presentation/widgets/conversation_thread.dart": 623,
 
@@ -2356,8 +2354,9 @@
     {"p":"lib/features/workspace/presentation/widgets/bi_result_views.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":20,"cyc":12,"len":63,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_share_chart.dart","loc":153,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":7,"cyc":6,"len":86,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_toolbar.dart","loc":368,"part":false,"setState":2,"repositoryReads":0,"fn":11,"cog":20,"cyc":23,"len":124,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/bi_view_dialogs.dart","loc":175,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":6,"cyc":6,"len":95,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_view_failure_text.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":6,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/bi_views_bar.dart","loc":464,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":55,"cyc":35,"len":266,"params":2,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/bi_views_bar.dart","loc":315,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":11,"cyc":12,"len":63,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/brand_swatch.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":17,"cyc":13,"len":53,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/capacity_evidence.dart","loc":102,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":12,"cyc":9,"len":74,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/capacity_kpi_card.dart","loc":249,"part":false,"setState":1,"repositoryReads":0,"fn":10,"cog":12,"cyc":10,"len":67,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2768,7 +2767,6 @@
     {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent({required BiModule module,required BiModuleView view,required BiResult result,required BiSeries series,required BiDashboardExtras extras,required AppLocalizations l10n,required String locale,required DateTime from,required DateTime to,required DateTime now})","cog":0,"cyc":1,"len":24,"params":10},
     {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#_DashboardBuilder.new({required this.module,required this.view,required this.result,required this.series,required this.extras,required this.l10n,required this.locale,required this.from,required this.to,required this.now})","cog":4,"cyc":4,"len":24,"params":10},
     {"id":"lib/features/workspace/presentation/widgets/bi_export.dart#exportBiPdf(BuildContext context,WidgetRef ref,{required String workspaceId,required String workspaceName,required List<BiModule> modules,required BiQueryContext query})","cog":26,"cyc":20,"len":151,"params":6},
-    {"id":"lib/features/workspace/presentation/widgets/bi_views_bar.dart#BiViewsBar.build(BuildContext context,WidgetRef ref)","cog":55,"cyc":35,"len":266,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/conversation_bubble.dart#ConversationBubble._bubble(BuildContext context,WidgetRef ref,ThemeData theme)","cog":30,"cyc":19,"len":142,"params":3},
     {"id":"lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build(BuildContext context)","cog":58,"cyc":47,"len":176,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/feature_switch_flow.dart#switchWorkspaceFeature(BuildContext context,WidgetRef ref,{required Workspace workspace,required Set<WorkspaceFeature> enabled,required WorkspaceFeature feature,required bool value,required Map<WorkspaceFeature, FeatureAssessment> assessments})","cog":22,"cyc":19,"len":131,"params":7},

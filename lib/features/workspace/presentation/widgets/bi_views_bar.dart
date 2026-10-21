@@ -13,12 +13,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
-import 'bi_toolbar.dart';
+import 'bi_view_dialogs.dart';
 import 'bi_view_failure_text.dart';
 
 /// Opens [view] (its id goes into the address as `saved`) or, with
@@ -59,223 +60,20 @@ class BiViewsBar extends ConsumerWidget {
         ? null
         : checkView(open.definition, visibleModules).query;
     final modified = open != null && opened != query;
-    bool editable(BiSavedView v) =>
-        v.scope == BiViewScope.private ? v.mine : canManage;
-    final myDefault = views.any(
-      (v) => v.scope == BiViewScope.private && v.mine && v.isDefault,
+    final menu = _ViewsMenu(
+      context: context,
+      l10n: l10n,
+      workspaceId: workspaceId,
+      query: query,
+      today: today,
+      visibleModules: visibleModules,
+      onOpen: onOpen,
+      views: views,
+      open: open,
+      canManage: canManage,
+      actions: ref.read(biViewActionsProvider),
     );
-    final teamDefault = views.any(
-      (v) => v.scope == BiViewScope.workspace && v.isDefault,
-    );
-
-    Future<void> run(Future<void> Function() write) async {
-      final messenger = ScaffoldMessenger.of(context);
-      try {
-        await write();
-      } on BiViewRefused catch (e, st) {
-        TraceLogger.instance.warn(
-          'bi',
-          'saved view write refused: ${e.failure.name}',
-          error: e,
-          stackTrace: st,
-        );
-        messenger.showSnackBar(
-          SnackBar(content: Text(biViewFailureText(l10n, e.failure))),
-        );
-      }
-    }
-
-    final actions = ref.read(biViewActionsProvider);
-    String label(BiSavedView v) => '${v.name}${v.isDefault ? ' ★' : ''}';
-
-    final items = <PopupMenuEntry<void Function()>>[
-      PopupMenuItem(
-        key: const ValueKey('bi-views-standard'),
-        value: () => onOpen(null, BiQueryContext.standard),
-        child: Text(l10n.biViewStandard),
-      ),
-      for (final scope in BiViewScope.values)
-        if (views.any((v) => v.scope == scope)) ...[
-          const PopupMenuDivider(),
-          PopupMenuItem(
-            enabled: false,
-            child: Text(
-              scope == BiViewScope.private
-                  ? l10n.biViewsMine
-                  : l10n.biViewsTeam,
-            ),
-          ),
-          for (final v in views.where((v) => v.scope == scope))
-            PopupMenuItem(
-              key: ValueKey('bi-views-open-${v.id}'),
-              value: () {
-                final check = checkView(v.definition, visibleModules);
-                if (check.query == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        l10n.biViewUnreadable,
-                      ),
-                    ),
-                  );
-                  return;
-                }
-                onOpen(v, check.query!);
-              },
-              child: Text(label(v)),
-            ),
-        ],
-      const PopupMenuDivider(),
-      if (open != null && editable(open))
-        PopupMenuItem(
-          key: const ValueKey('bi-views-save'),
-          value: () => run(() async {
-            final saved = await actions.save(
-              workspaceId,
-              over: open,
-              scope: open.scope,
-              name: open.name,
-              definition: biSavedDefinition(open, query),
-            );
-            onOpen(saved, query);
-          }),
-          child: Text(l10n.biViewSave),
-        ),
-      PopupMenuItem(
-        key: const ValueKey('bi-views-save-as'),
-        value: () => run(() async {
-          final answer = await showDialog<_SaveAnswer>(
-            context: context,
-            builder: (_) => _SaveDialog(
-              query: query,
-              today: today,
-              canShare: canManage,
-              initialName: '',
-            ),
-          );
-          if (answer == null) return;
-          final saved = await actions.save(
-            workspaceId,
-            scope: answer.scope,
-            name: answer.name,
-            definition: BiViewDefinition.of(answer.query),
-          );
-          onOpen(saved, answer.query);
-        }),
-        child: Text(l10n.biViewSaveAs),
-      ),
-      if (open != null) ...[
-        if (editable(open))
-          PopupMenuItem(
-            key: const ValueKey('bi-views-rename'),
-            value: () => run(() async {
-              final name = await showDialog<String>(
-                context: context,
-                builder: (_) => _NameDialog(initial: open.name),
-              );
-              if (name == null) return;
-              await actions.save(
-                workspaceId,
-                over: open,
-                scope: open.scope,
-                name: name,
-                definition: open.definition ?? BiViewDefinition.of(query),
-              );
-            }),
-            child: Text(l10n.biViewRename),
-          ),
-        PopupMenuItem(
-          key: const ValueKey('bi-views-duplicate'),
-          value: () => run(() async {
-            final copy = await actions.save(
-              workspaceId,
-              scope: BiViewScope.private,
-              name: l10n.biViewCopyName(open.name),
-              definition: BiViewDefinition.of(query),
-            );
-            onOpen(copy, query);
-          }),
-          child: Text(l10n.biViewDuplicate),
-        ),
-        if (open.scope == BiViewScope.private && open.mine && !open.isDefault)
-          PopupMenuItem(
-            key: const ValueKey('bi-views-my-default'),
-            value: () => run(
-              () =>
-                  actions.setDefault(workspaceId, BiViewScope.private, open.id),
-            ),
-            child: Text(
-              l10n.biViewMakeMyDefault,
-            ),
-          ),
-        if (open.scope == BiViewScope.workspace && canManage && !open.isDefault)
-          PopupMenuItem(
-            key: const ValueKey('bi-views-team-default'),
-            value: () => run(
-              () => actions.setDefault(
-                workspaceId,
-                BiViewScope.workspace,
-                open.id,
-              ),
-            ),
-            child: Text(
-              l10n.biViewMakeTeamDefault,
-            ),
-          ),
-        if (editable(open))
-          PopupMenuItem(
-            key: const ValueKey('bi-views-delete'),
-            value: () => run(() async {
-              final yes = await showDialog<bool>(
-                context: context,
-                builder: (dialog) => AlertDialog(
-                  content: Text(
-                    l10n.biViewDeleteConfirm(open.name),
-                  ),
-                  actions: [
-                    TextButton(
-                      key: const ValueKey('bi-view-delete-cancel'),
-                      onPressed: () => Navigator.of(dialog).pop(false),
-                      child: Text(
-                        MaterialLocalizations.of(dialog).cancelButtonLabel,
-                      ),
-                    ),
-                    TextButton(
-                      key: const ValueKey('bi-views-delete-confirm'),
-                      onPressed: () => Navigator.of(dialog).pop(true),
-                      child: Text(l10n.biViewDelete),
-                    ),
-                  ],
-                ),
-              );
-              if (yes != true) return;
-              await actions.delete(workspaceId, open);
-              onOpen(null, query);
-            }),
-            child: Text(l10n.biViewDelete),
-          ),
-      ],
-      if (myDefault)
-        PopupMenuItem(
-          key: const ValueKey('bi-views-clear-my-default'),
-          value: () => run(
-            () => actions.setDefault(workspaceId, BiViewScope.private, null),
-          ),
-          child: Text(
-            l10n.biViewClearMyDefault,
-          ),
-        ),
-      if (teamDefault && canManage)
-        PopupMenuItem(
-          key: const ValueKey('bi-views-clear-team-default'),
-          value: () => run(
-            () => actions.setDefault(workspaceId, BiViewScope.workspace, null),
-          ),
-          child: Text(
-            l10n.biViewClearTeamDefault,
-          ),
-        ),
-    ];
+    final items = menu.items();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
@@ -296,7 +94,7 @@ class BiViewsBar extends ConsumerWidget {
                 Text(
                   open == null
                       ? l10n.biViewStandard
-                      : label(open),
+                      : menu.label(open),
                   key: const ValueKey('bi-views-current'),
                 ),
                 const Icon(Icons.arrow_drop_down),
@@ -315,188 +113,238 @@ class BiViewsBar extends ConsumerWidget {
   }
 }
 
-class _SaveAnswer {
-  const _SaveAnswer(this.name, this.scope, this.query);
-
-  final String name;
-  final BiViewScope scope;
-  final BiQueryContext query;
-}
-
-class _NameDialog extends StatefulWidget {
-  const _NameDialog({required this.initial});
-
-  final String initial;
-
-  @override
-  State<_NameDialog> createState() => _NameDialogState();
-}
-
-class _NameDialogState extends State<_NameDialog> {
-  late final _name = TextEditingController(text: widget.initial);
-
-  @override
-  void dispose() {
-    _name.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
-    return AlertDialog(
-      content: TextField(
-        key: const ValueKey('bi-views-name'),
-        controller: _name,
-        autofocus: true,
-        maxLength: 80,
-        decoration: InputDecoration(labelText: l10n.biViewName),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('bi-view-save-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(material.cancelButtonLabel),
-        ),
-        TextButton(
-          key: const ValueKey('bi-views-name-ok'),
-          onPressed: () {
-            final name = _name.text.trim();
-            if (name.isNotEmpty) Navigator.of(context).pop(name);
-          },
-          child: Text(material.okButtonLabel),
-        ),
-      ],
-    );
-  }
-}
-
-class _SaveDialog extends StatefulWidget {
-  const _SaveDialog({
+/// The entries of the views menu: what each one does, written once and
+/// built from the reads [BiViewsBar] already made.
+class _ViewsMenu {
+  _ViewsMenu({
+    required this.context,
+    required this.l10n,
+    required this.workspaceId,
     required this.query,
     required this.today,
-    required this.canShare,
-    required this.initialName,
+    required this.visibleModules,
+    required this.onOpen,
+    required this.views,
+    required this.open,
+    required this.canManage,
+    required this.actions,
   });
 
+  final BuildContext context;
+  final AppLocalizations l10n;
+  final String workspaceId;
   final BiQueryContext query;
   final DateTime today;
-  final bool canShare;
-  final String initialName;
+  final Set<String> visibleModules;
+  final BiOpenView onOpen;
+  final List<BiSavedView> views;
+  final BiSavedView? open;
+  final bool canManage;
+  final BiViewActions actions;
 
-  @override
-  State<_SaveDialog> createState() => _SaveDialogState();
-}
+  bool editable(BiSavedView v) =>
+      v.scope == BiViewScope.private ? v.mine : canManage;
 
-class _SaveDialogState extends State<_SaveDialog> {
-  late final _name = TextEditingController(text: widget.initialName);
-  var _scope = BiViewScope.private;
-  var _fixed = false;
+  String label(BiSavedView v) => '${v.name}${v.isDefault ? ' ★' : ''}';
 
-  @override
-  void dispose() {
-    _name.dispose();
-    super.dispose();
+  Future<void> run(Future<void> Function() write) async {
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await write();
+    } on BiViewRefused catch (e, st) {
+      TraceLogger.instance.warn(
+        'bi',
+        'saved view write refused: ${e.failure.name}',
+        error: e,
+        stackTrace: st,
+      );
+      messenger.showSnackBar(
+        SnackBar(content: Text(biViewFailureText(l10n, e.failure))),
+      );
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
-    final locale = Localizations.localeOf(context).toString();
-    final relative = widget.query.period.isRelative;
-    final current = widget.query.current(widget.today);
-    return AlertDialog(
-      title: Text(l10n.biViewSaveAs),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              key: const ValueKey('bi-views-name'),
-              controller: _name,
-              autofocus: true,
-              maxLength: 80,
-              decoration: InputDecoration(
-                labelText: l10n.biViewName,
-              ),
+  List<PopupMenuEntry<void Function()>> items() {
+    final view = open;
+    final myDefault = views.any(
+      (v) => v.scope == BiViewScope.private && v.mine && v.isDefault,
+    );
+    final teamDefault = views.any(
+      (v) => v.scope == BiViewScope.workspace && v.isDefault,
+    );
+    return [
+      PopupMenuItem(
+        key: const ValueKey('bi-views-standard'),
+        value: () => onOpen(null, BiQueryContext.standard),
+        child: Text(l10n.biViewStandard),
+      ),
+      for (final scope in BiViewScope.values)
+        if (views.any((v) => v.scope == scope)) ..._scopeEntries(scope),
+      const PopupMenuDivider(),
+      if (view != null && editable(view)) _save(view),
+      _saveAs(),
+      if (view != null) ..._openViewEntries(view),
+      if (myDefault)
+        PopupMenuItem(
+          key: const ValueKey('bi-views-clear-my-default'),
+          value: () => run(
+            () => actions.setDefault(workspaceId, BiViewScope.private, null),
+          ),
+          child: Text(l10n.biViewClearMyDefault),
+        ),
+      if (teamDefault && canManage)
+        PopupMenuItem(
+          key: const ValueKey('bi-views-clear-team-default'),
+          value: () => run(
+            () => actions.setDefault(workspaceId, BiViewScope.workspace, null),
+          ),
+          child: Text(l10n.biViewClearTeamDefault),
+        ),
+    ];
+  }
+
+  List<PopupMenuEntry<void Function()>> _scopeEntries(BiViewScope scope) => [
+    const PopupMenuDivider(),
+    PopupMenuItem(
+      enabled: false,
+      child: Text(
+        scope == BiViewScope.private ? l10n.biViewsMine : l10n.biViewsTeam,
+      ),
+    ),
+    for (final v in views.where((v) => v.scope == scope))
+      PopupMenuItem(
+        key: ValueKey('bi-views-open-${v.id}'),
+        value: () {
+          final check = checkView(v.definition, visibleModules);
+          if (check.query == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(l10n.biViewUnreadable)),
+            );
+            return;
+          }
+          onOpen(v, check.query!);
+        },
+        child: Text(label(v)),
+      ),
+  ];
+
+  PopupMenuEntry<void Function()> _save(BiSavedView view) => PopupMenuItem(
+    key: const ValueKey('bi-views-save'),
+    value: () => run(() async {
+      final saved = await actions.save(
+        workspaceId,
+        over: view,
+        scope: view.scope,
+        name: view.name,
+        definition: biSavedDefinition(view, query),
+      );
+      onOpen(saved, query);
+    }),
+    child: Text(l10n.biViewSave),
+  );
+
+  PopupMenuEntry<void Function()> _saveAs() => PopupMenuItem(
+    key: const ValueKey('bi-views-save-as'),
+    value: () => run(() async {
+      final answer = await showDialog<BiSaveAnswer>(
+        context: context,
+        builder: (_) => BiSaveDialog(
+          query: query,
+          today: today,
+          canShare: canManage,
+          initialName: '',
+        ),
+      );
+      if (answer == null) return;
+      final saved = await actions.save(
+        workspaceId,
+        scope: answer.scope,
+        name: answer.name,
+        definition: BiViewDefinition.of(answer.query),
+      );
+      onOpen(saved, answer.query);
+    }),
+    child: Text(l10n.biViewSaveAs),
+  );
+
+  List<PopupMenuEntry<void Function()>> _openViewEntries(BiSavedView open) => [
+    if (editable(open)) _rename(open),
+    PopupMenuItem(
+      key: const ValueKey('bi-views-duplicate'),
+      value: () => run(() async {
+        final copy = await actions.save(
+          workspaceId,
+          scope: BiViewScope.private,
+          name: l10n.biViewCopyName(open.name),
+          definition: BiViewDefinition.of(query),
+        );
+        onOpen(copy, query);
+      }),
+      child: Text(l10n.biViewDuplicate),
+    ),
+    if (open.scope == BiViewScope.private && open.mine && !open.isDefault)
+      PopupMenuItem(
+        key: const ValueKey('bi-views-my-default'),
+        value: () => run(
+          () => actions.setDefault(workspaceId, BiViewScope.private, open.id),
+        ),
+        child: Text(l10n.biViewMakeMyDefault),
+      ),
+    if (open.scope == BiViewScope.workspace && canManage && !open.isDefault)
+      PopupMenuItem(
+        key: const ValueKey('bi-views-team-default'),
+        value: () => run(
+          () => actions.setDefault(workspaceId, BiViewScope.workspace, open.id),
+        ),
+        child: Text(l10n.biViewMakeTeamDefault),
+      ),
+    if (editable(open)) _delete(open),
+  ];
+
+  PopupMenuEntry<void Function()> _rename(BiSavedView open) => PopupMenuItem(
+    key: const ValueKey('bi-views-rename'),
+    value: () => run(() async {
+      final name = await showDialog<String>(
+        context: context,
+        builder: (_) => BiNameDialog(initial: open.name),
+      );
+      if (name == null) return;
+      await actions.save(
+        workspaceId,
+        over: open,
+        scope: open.scope,
+        name: name,
+        definition: open.definition ?? BiViewDefinition.of(query),
+      );
+    }),
+    child: Text(l10n.biViewRename),
+  );
+
+  PopupMenuEntry<void Function()> _delete(BiSavedView open) => PopupMenuItem(
+    key: const ValueKey('bi-views-delete'),
+    value: () => run(() async {
+      final yes = await showDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          content: Text(l10n.biViewDeleteConfirm(open.name)),
+          actions: [
+            TextButton(
+              key: const ValueKey('bi-view-delete-cancel'),
+              onPressed: () => Navigator.of(dialog).pop(false),
+              child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
             ),
-            if (widget.canShare)
-              SegmentedButton<BiViewScope>(
-                key: const ValueKey('bi-views-scope'),
-                segments: [
-                  ButtonSegment(
-                    value: BiViewScope.private,
-                    label: Text(l10n.biViewScopePrivate),
-                  ),
-                  ButtonSegment(
-                    value: BiViewScope.workspace,
-                    label: Text(l10n.biViewScopeTeam),
-                  ),
-                ],
-                selected: {_scope},
-                onSelectionChanged: (s) => setState(() => _scope = s.first),
-              ),
-            if (relative) ...[
-              const SizedBox(height: AppSpacing.sm),
-              RadioGroup<bool>(
-                key: const ValueKey('bi-view-relative-fixed'),
-                groupValue: _fixed,
-                onChanged: (v) => setState(() => _fixed = v ?? false),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    RadioListTile<bool>(
-                      key: const ValueKey('bi-views-period-moves'),
-                      value: false,
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        l10n.biViewPeriodMoves,
-                      ),
-                    ),
-                    RadioListTile<bool>(
-                      key: const ValueKey('bi-views-period-fixed'),
-                      value: true,
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        l10n.biViewPeriodFixed(
-                              biPeriodLabel(current, l10n, locale),
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            TextButton(
+              key: const ValueKey('bi-views-delete-confirm'),
+              onPressed: () => Navigator.of(dialog).pop(true),
+              child: Text(l10n.biViewDelete),
+            ),
           ],
         ),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('bi-view-share-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(material.cancelButtonLabel),
-        ),
-        TextButton(
-          key: const ValueKey('bi-views-save-ok'),
-          onPressed: () {
-            final name = _name.text.trim();
-            if (name.isEmpty) return;
-            Navigator.of(context).pop(
-              _SaveAnswer(
-                name,
-                _scope,
-                _fixed
-                    ? widget.query.copyWith(period: BiPeriodRef.fixed(current))
-                    : widget.query,
-              ),
-            );
-          },
-          child: Text(material.saveButtonLabel),
-        ),
-      ],
-    );
-  }
+      );
+      if (yes != true) return;
+      await actions.delete(workspaceId, open);
+      onOpen(null, query);
+    }),
+    child: Text(l10n.biViewDelete),
+  );
 }
