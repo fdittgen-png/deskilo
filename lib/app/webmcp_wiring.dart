@@ -109,7 +109,8 @@ Future<Object?> _run(
     if (write != null) ref.read(webMcpActivityProvider.notifier).acted(tool.id);
     return {
       'ok': true,
-      'status': 'completed',
+      // A request is submitted, not done: its validators decide.
+      'status': tool.mutation == 'request' ? 'pending_validation' : 'completed',
       'operation': tool.id,
       if (tool.scope != 'discovery') 'workspace_id': conditions.workspaceId,
       if (write != null) 'request_id': input['request_id'],

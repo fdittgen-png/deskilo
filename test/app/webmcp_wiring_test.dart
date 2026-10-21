@@ -10,6 +10,7 @@ import 'dart:io';
 
 import 'package:deskilo/app/webmcp_reads.dart';
 import 'package:deskilo/app/webmcp_wiring.dart';
+import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/webmcp/webmcp_device_switch.dart';
 import 'package:deskilo/core/webmcp/webmcp_registry.dart';
@@ -232,6 +233,7 @@ void main() {
         myPermissionsProvider.overrideWith((ref) => permissions),
         memberAccountQueriesProvider.overrideWithValue(_Accounts()),
         placeFeedbackRepositoryProvider.overrideWithValue(feedback),
+        eventRepositoryProvider.overrideWithValue(FakeEventRepository()),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -293,6 +295,7 @@ void main() {
         'deskilo_check_out',
         'deskilo_cancel_reservation',
         'deskilo_create_reservation',
+        'deskilo_request_reservation_deletion',
       });
     },
   );
@@ -539,6 +542,30 @@ void main() {
       'desk_id': 'desk-1',
     });
     expect((two['error']! as Map)['code'], 'validation_error');
+  });
+
+  test('a deletion request on an own booking is pending, never done', () async {
+    await armed();
+    final asked = await call('deskilo_request_reservation_deletion', {
+      'request_id': 'req-del-1',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r3',
+      'reason': 'travelling',
+    });
+    expect(asked['ok'], isTrue, reason: '$asked');
+    expect(asked['status'], 'pending_validation');
+    final out = asked['output']! as Map<String, Object?>;
+    expect(out['event_id'], isNotNull);
+    expect(
+      _keys(out).difference(_outputs()['request_reservation_deletion']!),
+      isEmpty,
+    );
+    final theirs = await call('deskilo_request_reservation_deletion', {
+      'request_id': 'req-del-2',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r2',
+    });
+    expect((theirs['error']! as Map)['code'], 'not_found');
   });
 
   test('a window longer than 31 days is refused', () async {

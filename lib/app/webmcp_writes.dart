@@ -16,6 +16,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/events/providers/event_providers.dart';
 import '../features/plan/domain/half_day_windows.dart';
 import '../features/reservations/domain/place_feedback.dart';
 import '../features/reservations/domain/reservation.dart';
@@ -45,6 +46,7 @@ final Map<String, WebMcpWrite> webMcpWriteRunners = {
   'check_out': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.checkOut(id)),
   'create_reservation': _createReservation,
+  'request_reservation_deletion': _requestDeletion,
   'cancel_reservation': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.cancel(id)),
 };
@@ -208,11 +210,9 @@ Map<String, Object?> _view(Reservation r) => {
   'state_digest': _digest(r),
 };
 
-Future<Map<String, Object?>> _onOwnBooking(
-  Ref ref,
-  Map<String, Object?> input,
-  Future<void> Function(ReservationRepository repo, String id) act,
-) async {
+/// The person's own booking named by the input, as it is now; refused
+/// when it is not theirs here or moved since the agent read it.
+Future<Reservation> _ownBooking(Ref ref, Map<String, Object?> input) async {
   final id = input['reservation_id'];
   if (id is! String || id.isEmpty) {
     throw const WebMcpRefused(
@@ -222,26 +222,55 @@ Future<Map<String, Object?>> _onOwnBooking(
   }
   final workspaceId = await _workspaceId(ref);
   final me = await ref.read(myMemberProvider.future);
-  final repo = ref.read(reservationRepositoryProvider);
-  final before = await repo.fetchById(id);
+  final booking = await ref.read(reservationRepositoryProvider).fetchById(id);
   // Only the person's own booking in this workspace: an administrator's
   // wider rights are not the assistant's.
-  if (before == null ||
+  if (booking == null ||
       me == null ||
-      before.memberId != me.id ||
-      before.workspaceId != workspaceId) {
+      booking.memberId != me.id ||
+      booking.workspaceId != workspaceId) {
     throw const WebMcpRefused('not_found', 'No such booking of yours here.');
   }
   final expected = input['expected_state'];
-  if (expected != null && expected != _digest(before)) {
+  if (expected != null && expected != _digest(booking)) {
     throw const WebMcpRefused(
       'conflict',
       'The booking changed since you read it: read it again first.',
     );
   }
-  await act(repo, id);
-  final after = await repo.fetchById(id);
+  return booking;
+}
+
+Future<Map<String, Object?>> _onOwnBooking(
+  Ref ref,
+  Map<String, Object?> input,
+  Future<void> Function(ReservationRepository repo, String id) act,
+) async {
+  final before = await _ownBooking(ref, input);
+  final repo = ref.read(reservationRepositoryProvider);
+  await act(repo, before.id);
+  final after = await repo.fetchById(before.id);
   return _view(after ?? before);
+}
+
+/// Asks the validators to delete one of the person's own bookings: the
+/// same request the booking sheet sends. It is pending until they decide.
+Future<Map<String, Object?>> _requestDeletion(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  final reason = input['reason'] ?? '';
+  if (reason is! String || reason.length > 500) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'reason is text of at most 500 characters.',
+    );
+  }
+  final booking = await _ownBooking(ref, input);
+  final eventId = await ref
+      .read(eventRepositoryProvider)
+      .requestReservationDeletion(booking.id, reason: reason);
+  return {'event_id': eventId, ..._view(booking)};
 }
 
 final _uuid = RegExp(
