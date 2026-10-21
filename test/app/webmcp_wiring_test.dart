@@ -16,6 +16,7 @@ import 'package:deskilo/core/webmcp/webmcp_tools.g.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
@@ -25,6 +26,7 @@ import 'package:deskilo/features/reservations/providers/reservation_providers.da
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,6 +62,28 @@ class _Switch implements WebMcpSwitchStore {
   Future<bool> read() async => on;
   @override
   Future<void> write({required bool on}) async => this.on = on;
+}
+
+const _september = Statement(
+  period: '2026-09',
+  subscriptionPct: 100,
+  feeCents: 30000,
+  includedHalfDays: 40,
+  openDays: 22,
+  usedHalfDays: 12,
+  extraHalfDays: 0,
+  overageCents: 0,
+  creditsCents: 0,
+  balanceCents: -30000,
+);
+
+class _Accounts implements MemberAccountQueries {
+  @override
+  Future<Statement> fetchStatement(String memberId, String period) async =>
+      _september;
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 const _ws = Workspace(
@@ -149,6 +173,7 @@ void main() {
   late _Switch deviceSwitch;
   late FakeReservationRepository reservations;
   late Set<WorkspaceFeature> features;
+  var permissions = <WorkspacePermission>{};
 
   ProviderContainer container() {
     final c = ProviderContainer(
@@ -182,21 +207,10 @@ void main() {
             ),
           ],
         ),
-        myStatementProvider('2026-09').overrideWith(
-          (ref) async => const Statement(
-            period: '2026-09',
-            subscriptionPct: 100,
-            feeCents: 30000,
-            includedHalfDays: 40,
-            openDays: 22,
-            usedHalfDays: 12,
-            extraHalfDays: 0,
-            overageCents: 0,
-            creditsCents: 0,
-            balanceCents: -30000,
-          ),
-        ),
+        myStatementProvider('2026-09').overrideWith((ref) async => _september),
         myPendingEventsProvider.overrideWith((ref) async => [_pending]),
+        myPermissionsProvider.overrideWith((ref) => permissions),
+        memberAccountQueriesProvider.overrideWithValue(_Accounts()),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -206,6 +220,7 @@ void main() {
   }
 
   setUp(() {
+    permissions = {WorkspacePermission.viewFinances};
     context = _Context();
     deviceSwitch = _Switch(on: true);
     reservations = FakeReservationRepository()
@@ -248,6 +263,8 @@ void main() {
         'deskilo_list_my_favorites',
         'deskilo_get_my_statement',
         'deskilo_get_validation',
+        'deskilo_get_member_statement',
+        'deskilo_get_capabilities',
       });
     },
   );
@@ -298,6 +315,14 @@ void main() {
       'get_validation': await call('deskilo_get_validation', {
         'workspace_id': 'ws-1',
         'event_id': 'e1',
+      }),
+      'get_capabilities': await call('deskilo_get_capabilities', {
+        'workspace_id': 'ws-1',
+      }),
+      'get_member_statement': await call('deskilo_get_member_statement', {
+        'workspace_id': 'ws-1',
+        'member_id': 'member-2',
+        'period': '2026-09',
       }),
       'get_my_statement': await call('deskilo_get_my_statement', {
         'workspace_id': 'ws-1',
@@ -366,6 +391,17 @@ void main() {
       expect(forged['ok'], isFalse);
     },
   );
+
+  test("another member's statement needs viewFinances", () async {
+    permissions = {};
+    await armed();
+    final answer = await call('deskilo_get_member_statement', {
+      'workspace_id': 'ws-1',
+      'member_id': 'member-2',
+      'period': '2026-09',
+    });
+    expect(answer['ok'], isFalse);
+  });
 
   test('a window longer than 31 days is refused', () async {
     await armed();

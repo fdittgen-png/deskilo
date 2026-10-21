@@ -22,11 +22,13 @@ import '../core/webmcp/webmcp_tool_spec.dart';
 import '../core/webmcp/webmcp_tools.g.dart';
 import '../features/events/domain/workspace_event.dart';
 import '../features/events/providers/event_providers.dart';
+import '../features/money/domain/statement.dart';
 import '../features/money/providers/money_providers.dart';
 import '../features/reservations/domain/reservation.dart';
 import '../features/reservations/providers/place_feedback_providers.dart';
 import '../features/reservations/providers/reservation_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 
 /// What decides whether the page offers tools, as the app knows it now.
@@ -93,6 +95,8 @@ final Map<String, WebMcpRead> webMcpReadRunners = {
   'list_my_favorites': _listMyFavorites,
   'get_my_statement': _getMyStatement,
   'get_validation': _getValidation,
+  'get_member_statement': _getMemberStatement,
+  'get_capabilities': _getCapabilities,
 };
 
 /// Runs [tool] and wraps its answer as the MCP facade does: a status, the
@@ -372,25 +376,7 @@ Future<Map<String, Object?>> _getMyStatement(
       'This person is not a member of this workspace.',
     );
   }
-  return {
-    'period': statement.period,
-    'subscription_pct': statement.subscriptionPct,
-    'fee_cents': statement.feeCents,
-    'included_half_days': statement.includedHalfDays,
-    'granted_half_days': statement.grantedHalfDays,
-    'open_days': statement.openDays,
-    'used_half_days': statement.usedHalfDays,
-    'extra_half_days': statement.extraHalfDays,
-    'overage_rate_cents': statement.overageRateCents,
-    'overage_cents': statement.overageCents,
-    'credits_cents': statement.creditsCents,
-    'balance_cents': statement.balanceCents,
-    'desk_supplement_cents': statement.deskSupplementCents,
-    'office_supplement_cents': statement.officeSupplementCents,
-    'level_supplement_cents': statement.levelSupplementCents,
-    'accessory_supplement_cents': statement.accessorySupplementCents,
-    'currency': workspace.currencyCode,
-  };
+  return _statementOutput(statement, workspace.currencyCode);
 }
 
 Future<Map<String, Object?>> _getValidation(
@@ -406,7 +392,10 @@ Future<Map<String, Object?>> _getValidation(
   final trail = await ref.read(eventTrailProvider(eventId).future);
   final event = trail.event;
   if (event == null || event.workspaceId != conditions.workspaceId) {
-    throw const _Refused('not_found', 'No such validation request in this workspace.');
+    throw const _Refused(
+      'not_found',
+      'No such validation request in this workspace.',
+    );
   }
   final pendingMine = await ref.read(myPendingEventsProvider.future);
   final canRespond = pendingMine.any((e) => e.id == event.id);
@@ -422,5 +411,88 @@ Future<Map<String, Object?>> _getValidation(
         : event.status == EventStatus.pending
         ? 'not_a_decider'
         : 'not_pending',
+  };
+}
+
+Map<String, Object?> _statementOutput(Statement statement, String currency) => {
+  'period': statement.period,
+  'subscription_pct': statement.subscriptionPct,
+  'fee_cents': statement.feeCents,
+  'included_half_days': statement.includedHalfDays,
+  'granted_half_days': statement.grantedHalfDays,
+  'open_days': statement.openDays,
+  'used_half_days': statement.usedHalfDays,
+  'extra_half_days': statement.extraHalfDays,
+  'overage_rate_cents': statement.overageRateCents,
+  'overage_cents': statement.overageCents,
+  'credits_cents': statement.creditsCents,
+  'balance_cents': statement.balanceCents,
+  'desk_supplement_cents': statement.deskSupplementCents,
+  'office_supplement_cents': statement.officeSupplementCents,
+  'level_supplement_cents': statement.levelSupplementCents,
+  'accessory_supplement_cents': statement.accessorySupplementCents,
+  'currency': currency,
+};
+
+Future<Map<String, Object?>> _getMemberStatement(
+  Ref ref,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+  List<String> Function() offered,
+) async {
+  final memberId = input['member_id'];
+  final period = input['period'];
+  if (memberId is! String || memberId.isEmpty) {
+    throw const _Refused('validation_error', 'member_id is required.');
+  }
+  if (period is! String || !_month.hasMatch(period)) {
+    throw const _Refused(
+      'validation_error',
+      'period must be a month, YYYY-MM.',
+    );
+  }
+  // The same right the finances screen needs; the server's own policies
+  // still decide what the read returns.
+  if (!ref
+      .read(myPermissionsProvider)
+      .contains(WorkspacePermission.viewFinances)) {
+    throw const _Refused(
+      'forbidden',
+      "This person's role does not allow reading another member's statement.",
+    );
+  }
+  final workspace = await ref.read(currentWorkspaceProvider.future);
+  if (workspace == null) {
+    throw const _Refused(
+      'not_a_member',
+      'This person is not a member of this workspace.',
+    );
+  }
+  final statement = await ref
+      .read(memberAccountQueriesProvider)
+      .fetchStatement(memberId, period);
+  return {
+    'member_id': memberId,
+    ..._statementOutput(statement, workspace.currencyCode),
+  };
+}
+
+Future<Map<String, Object?>> _getCapabilities(
+  Ref ref,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+  List<String> Function() offered,
+) async {
+  final workspace = await ref.read(currentWorkspaceProvider.future);
+  if (workspace == null) {
+    throw const _Refused(
+      'not_a_member',
+      'This person is not a member of this workspace.',
+    );
+  }
+  return {
+    'operations': offered(),
+    'time_zone': workspace.timezone,
+    'currency': workspace.currencyCode,
   };
 }
