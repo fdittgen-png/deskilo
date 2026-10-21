@@ -101,7 +101,13 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     } else if (granularity == BookingGranularity.fullDay) {
       window = HalfDayWindows.fullDay(day);
     } else {
-      window = await pickReservationTimes(context, l10n, reservation, granularity);
+      window = await pickReservationTimes(
+        context,
+        l10n,
+        reservation,
+        snap: granularity.stepMinutes ?? 15,
+        snapMinutesOfDay: granularity.snapMinutesOfDay,
+      );
     }
     if (window == null || !context.mounted) return;
 

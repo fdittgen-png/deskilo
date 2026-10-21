@@ -26,24 +26,25 @@ Widget openInvoiceSubtitle(
   final days = now.difference(entry.invoice.issuedAt).inDays;
   final reminder = reminders[entry.invoice.id];
   return Text.rich(
-    TextSpan(style: muted, children: [
-      TextSpan(text: dateFormat.format(entry.invoice.issuedAt)),
-      const TextSpan(text: ' · '),
-      TextSpan(
-        text: l10n.invoiceOpenAge(days),
-        style: days >= openInvoiceOverdueDays
-            ? muted?.copyWith(
-                color: theme.colorScheme.error,
-                fontWeight: FontWeight.bold,
-              )
-            : null,
-      ),
-      if (reminder != null) ...[
+    TextSpan(
+      style: muted,
+      children: [
+        TextSpan(text: dateFormat.format(entry.invoice.issuedAt)),
         const TextSpan(text: ' · '),
         TextSpan(
-          text: l10n.invoiceRemindedBadge(reminder.count),
+          text: l10n.invoiceOpenAge(days),
+          style: days >= openInvoiceOverdueDays
+              ? muted?.copyWith(
+                  color: theme.colorScheme.error,
+                  fontWeight: FontWeight.bold,
+                )
+              : null,
         ),
+        if (reminder != null) ...[
+          const TextSpan(text: ' · '),
+          TextSpan(text: l10n.invoiceRemindedBadge(reminder.count)),
+        ],
       ],
-    ]),
+    ),
   );
 }

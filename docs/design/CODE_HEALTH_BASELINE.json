@@ -1,10 +1,10 @@
 {
-  "recordedSha": "7866d9903affbfb21d53635926d89e17cedf2b59",
+  "recordedSha": "21fed201e65076607993b7d738e2a5de14aa5677",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1757,"functions":9757,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":96,"length>=150":72,"parameters>=5":464,"parameters>=7":151,"partOfFiles":68},
+  "totals": {"files":1758,"functions":9757,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":96,"length>=150":72,"parameters>=5":465,"parameters>=7":151,"partOfFiles":65},
   "budgets": {
-    "partOfFiles": 68,
+    "partOfFiles": 65,
     "fileLength": {
       "lib/core/backend/backend_settings.dart": 572,
 
@@ -621,13 +621,15 @@
 
       "lib/features/money/presentation/widgets/invoice_stage_strip.dart": 2,
 
-      "lib/features/money/presentation/widgets/invoicing_dashboard.dart": 3,
+      "lib/features/money/presentation/widgets/invoicing_dashboard.dart": 2,
 
       "lib/features/money/presentation/widgets/money_faces_view.dart": 1,
 
       "lib/features/money/presentation/widgets/my_invoices_list.dart": 1,
 
       "lib/features/money/presentation/widgets/open_invoice_card.dart": 1,
+
+      "lib/features/money/presentation/widgets/open_invoice_subtitle.dart": 1,
 
       "lib/features/money/presentation/widgets/report_layout_preview.dart": 1,
 
@@ -1735,9 +1737,8 @@
     {"p":"lib/features/money/presentation/widgets/invoice_template_sheet_part2.dart","loc":176,"part":true,"setState":2,"repositoryReads":0,"fn":1,"cog":26,"cyc":21,"len":196,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_template_sheet_part3.dart","loc":35,"part":true,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":34,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_unknown_outcome_dialog.dart","loc":70,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":5,"len":34,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoicing_dashboard.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part1.dart","loc":39,"part":true,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":39,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part2.dart","loc":195,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":10,"len":73,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoicing_dashboard.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part2.dart","loc":194,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":10,"len":73,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part3.dart","loc":317,"part":true,"setState":0,"repositoryReads":0,"fn":2,"cog":49,"cyc":28,"len":298,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoicing_dashboard_part4.dart","loc":157,"part":true,"setState":3,"repositoryReads":0,"fn":4,"cog":11,"cyc":10,"len":119,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/lease_commitments_sheet.dart","loc":251,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":5,"cyc":6,"len":41,"params":5,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1754,6 +1755,7 @@
     {"p":"lib/features/money/presentation/widgets/negotiation_card.dart","loc":471,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":47,"cyc":33,"len":238,"params":6,"nest":5,"over":{"cog":1,"cyc":1,"len":2,"params":0}},
     {"p":"lib/features/money/presentation/widgets/online_payment_status_card.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":30,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/open_invoice_card.dart","loc":417,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":28,"cyc":32,"len":253,"params":2,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/open_invoice_subtitle.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":40,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/payment_terms_card.dart","loc":251,"part":false,"setState":2,"repositoryReads":1,"fn":8,"cog":9,"cyc":11,"len":87,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/personal_payment_provider.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":5,"len":46,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/premises_lease_dialogs.dart","loc":253,"part":false,"setState":4,"repositoryReads":0,"fn":7,"cog":9,"cyc":12,"len":101,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2018,10 +2020,10 @@
     {"p":"lib/features/reservations/presentation/widgets/pending_booking_banner.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/place_feedback_bar.dart","loc":172,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":15,"cyc":12,"len":91,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reference_open.dart","loc":119,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":13,"cyc":13,"len":55,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart","loc":347,"part":false,"setState":0,"repositoryReads":1,"fn":4,"cog":40,"cyc":39,"len":235,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet_part1.dart","loc":346,"part":true,"setState":0,"repositoryReads":1,"fn":11,"cog":15,"cyc":15,"len":92,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet_part2.dart","loc":33,"part":true,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":6,"len":38,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart","loc":346,"part":false,"setState":0,"repositoryReads":1,"fn":4,"cog":40,"cyc":39,"len":235,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet_part1.dart","loc":352,"part":true,"setState":0,"repositoryReads":1,"fn":11,"cog":15,"cyc":16,"len":98,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_status_note.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reservation_time_picker.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":42,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_canvas.dart","loc":178,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":33,"cyc":21,"len":146,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_hub_layout.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_view_menu.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":12,"cyc":10,"len":82,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2100,6 +2102,7 @@
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_host.dart","loc":369,"part":false,"setState":9,"repositoryReads":0,"fn":10,"cog":27,"cyc":23,"len":136,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_pane.dart","loc":357,"part":true,"setState":0,"repositoryReads":0,"fn":6,"cog":26,"cyc":24,"len":116,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_step_text.dart","loc":135,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":17,"len":37,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/presentation/guided_command.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recorder_labels.dart","loc":365,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":15,"cyc":57,"len":75,"params":3,"nest":3,"over":{"cog":0,"cyc":2,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recorder_pages.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":1,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recorder_seam.dart","loc":132,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":36,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2111,8 +2114,8 @@
     {"p":"lib/features/task_recorder/presentation/screens/task_wizard_screen.dart","loc":520,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":14,"cyc":13,"len":83,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/screens/task_workbench_screen.dart","loc":357,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":10,"cyc":10,"len":87,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/toggle_capture.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":13,"cyc":11,"len":31,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/presentation/ui_capture.dart","loc":477,"part":false,"setState":0,"repositoryReads":0,"fn":28,"cog":26,"cyc":18,"len":63,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/presentation/ui_capture_observer.dart","loc":17,"part":true,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":4,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/presentation/ui_capture.dart","loc":478,"part":false,"setState":0,"repositoryReads":0,"fn":28,"cog":26,"cyc":18,"len":63,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/presentation/ui_capture_observer.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":4,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/widgets/recording_indicator.dart","loc":306,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":26,"cyc":27,"len":75,"params":2,"nest":4,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/widgets/recording_steps_view.dart","loc":161,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":11,"len":69,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/widgets/task_outputs_section.dart","loc":126,"part":false,"setState":2,"repositoryReads":0,"fn":5,"cog":12,"cyc":8,"len":40,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
