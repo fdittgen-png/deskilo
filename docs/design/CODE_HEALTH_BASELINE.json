@@ -1,8 +1,8 @@
 {
-  "recordedSha": "98f858186a4f81421b2d38ca5089e64f508634d8",
+  "recordedSha": "97d8054b865fafaf0369b601a72ca7137e87ea09",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1749,"functions":9623,"cyclomatic>=9":1028,"cyclomatic>=25":119,"cognitive>=15":424,"cognitive>=30":107,"length>=150":82,"parameters>=5":459,"parameters>=7":149,"partOfFiles":75},
+  "totals": {"files":1749,"functions":9628,"cyclomatic>=9":1029,"cyclomatic>=25":118,"cognitive>=15":425,"cognitive>=30":106,"length>=150":81,"parameters>=5":460,"parameters>=7":149,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2353,7 +2353,7 @@
     {"p":"lib/features/workspace/presentation/widgets/bi_report_section.dart","loc":114,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":12,"cyc":10,"len":47,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_result_views.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":20,"cyc":12,"len":63,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_share_chart.dart","loc":153,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":7,"cyc":6,"len":86,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/bi_toolbar.dart","loc":348,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":63,"cyc":37,"len":233,"params":3,"nest":7,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/bi_toolbar.dart","loc":368,"part":false,"setState":2,"repositoryReads":0,"fn":11,"cog":20,"cyc":23,"len":124,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_view_failure_text.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":6,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_views_bar.dart","loc":464,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":55,"cyc":35,"len":266,"params":2,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/brand_swatch.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":17,"cyc":13,"len":53,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2763,7 +2763,6 @@
     {"id":"lib/features/workspace/presentation/widgets/bi_charts.dart#_EvolutionPainter.paint(Canvas canvas,Size size)","cog":48,"cyc":32,"len":136,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent({required BiModule module,required BiModuleView view,required BiResult result,required BiSeries series,required BiDashboardExtras extras,required AppLocalizations l10n,required String locale,required DateTime from,required DateTime to,required DateTime now})","cog":64,"cyc":45,"len":229,"params":10},
     {"id":"lib/features/workspace/presentation/widgets/bi_export.dart#exportBiPdf(BuildContext context,WidgetRef ref,{required String workspaceId,required String workspaceName,required List<BiModule> modules,required BiQueryContext query})","cog":26,"cyc":20,"len":151,"params":6},
-    {"id":"lib/features/workspace/presentation/widgets/bi_toolbar.dart#BiToolbar.build(BuildContext context)","cog":63,"cyc":37,"len":233,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/bi_views_bar.dart#BiViewsBar.build(BuildContext context,WidgetRef ref)","cog":55,"cyc":35,"len":266,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/conversation_bubble.dart#ConversationBubble._bubble(BuildContext context,WidgetRef ref,ThemeData theme)","cog":30,"cyc":19,"len":142,"params":3},
     {"id":"lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build(BuildContext context)","cog":58,"cyc":47,"len":176,"params":1},
