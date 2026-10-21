@@ -52,58 +52,68 @@ class BiToolbar extends StatelessWidget {
   /// A module's display name, for the analyses dialog.
   final String Function(String moduleId)? cardTitle;
 
-  @override
-  Widget build(BuildContext context) {
+  DropdownMenuItem<T> _item<T>(
+    BuildContext context,
+    T value,
+    String label, {
+    required bool supported,
+  }) =>
+      DropdownMenuItem<T>(
+        value: value,
+        enabled: supported,
+        child: Text(
+          supported ? label : '$label — ${context.l10n.biNotOffered}',
+        ),
+      );
+
+  Widget _field<T>({
+    required String fieldKey,
+    required String label,
+    required T value,
+    required List<DropdownMenuItem<T>> items,
+    required ValueChanged<T> onSelected,
+    bool enabled = true,
+  }) =>
+      SizedBox(
+
+    width: 200,
+    // A stateless dropdown: the value is the address's, so Back and a
+    // reload show what is asked, never a field's stale selection.
+    child: InputDecorator(
+      decoration: InputDecoration(
+        labelText: label,
+        border: const OutlineInputBorder(),
+        isDense: true,
+        enabled: enabled,
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          key: ValueKey('bi-$fieldKey'),
+          value: value,
+          isExpanded: true,
+          isDense: true,
+          items: items,
+          onChanged: enabled
+              ? (v) {
+                  if (v != null && v != value) onSelected(v);
+                }
+              : null,
+        ),
+      ),
+    ),
+  );
+
+  Widget _stepper(
+    BuildContext context,
+    String keyName,
+    BiPeriod p,
+    ValueChanged<int> shift,
+  ) {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final material = MaterialLocalizations.of(context);
-    final notOffered =
-        l10n.biNotOffered;
-    final current = query.current(today);
+    return Row(
 
-    DropdownMenuItem<T> item<T>(T value, String label, {required bool supported}) =>
-        DropdownMenuItem<T>(
-          value: value,
-          enabled: supported,
-          child: Text(supported ? label : '$label — $notOffered'),
-        );
-
-    Widget field<T>({
-      required String fieldKey,
-      required String label,
-      required T value,
-      required List<DropdownMenuItem<T>> items,
-      required ValueChanged<T> onSelected,
-      bool enabled = true,
-    }) => SizedBox(
-      width: 200,
-      // A stateless dropdown: the value is the address's, so Back and a
-      // reload show what is asked, never a field's stale selection.
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-          isDense: true,
-          enabled: enabled,
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<T>(
-            key: ValueKey('bi-$fieldKey'),
-            value: value,
-            isExpanded: true,
-            isDense: true,
-            items: items,
-            onChanged: enabled
-                ? (v) {
-                    if (v != null && v != value) onSelected(v);
-                  }
-                : null,
-          ),
-        ),
-      ),
-    );
-
-    Widget stepper(String keyName, BiPeriod p, ValueChanged<int> shift) => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
@@ -124,6 +134,61 @@ class BiToolbar extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _chooseCards(BuildContext context) async {
+        final chosen = await showDialog<List<String>>(
+          context: context,
+          builder: (_) => _CardsDialog(
+            modules: modules,
+            shown: query.cards.isEmpty
+                ? [for (final m in modules) m.id]
+                : [
+                    for (final c in query.cards)
+                      if (modules.any((m) => m.id == c)) c,
+                  ],
+            title: cardTitle,
+          ),
+        );
+        if (chosen == null || chosen.isEmpty) return;
+        final all = [for (final m in modules) m.id];
+        // Every analysis in the standard order is the standard.
+        final standard =
+            chosen.length == all.length &&
+            [for (var i = 0; i < all.length; i++) all[i] == chosen[i]]
+                .every((same) => same);
+        onChanged(query.copyWith(cards: standard ? const [] : chosen));
+  }
+
+  Widget _viewSwitch(AppLocalizations l10n) {
+    return SegmentedButton<BiView>(
+  key: const ValueKey('bi-view'),
+  segments: [
+    ButtonSegment(
+      value: BiView.dashboard,
+      icon: const Icon(Icons.space_dashboard_outlined),
+      label: Text(l10n.biViewDashboard),
+    ),
+    ButtonSegment(
+      value: BiView.table,
+      icon: const Icon(Icons.table_rows_outlined),
+      label: Text(l10n.biViewTable),
+    ),
+    ButtonSegment(
+      value: BiView.chart,
+      icon: const Icon(Icons.bar_chart),
+      label: Text(l10n.biViewChart),
+    ),
+  ],
+  selected: {query.view},
+  onSelectionChanged: (v) => onChanged(query.copyWith(view: v.first)),
+);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final current = query.current(today);
 
     final grouped = query.groupBy != null;
     final compared = query.compared(today);
@@ -135,13 +200,13 @@ class BiToolbar extends StatelessWidget {
         runSpacing: AppSpacing.sm,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          field<BiGrain>(
+          _field<BiGrain>(
             fieldKey: 'grain',
             label: l10n.biGrain,
             value: query.grain,
             items: [
               for (final g in BiGrain.values)
-                item(g, switch (g) {
+                _item(context, g, switch (g) {
                   BiGrain.month => l10n.biGrainMonth,
                   BiGrain.quarter => l10n.biGrainQuarter,
                   BiGrain.year => l10n.biGrainYear,
@@ -149,7 +214,8 @@ class BiToolbar extends StatelessWidget {
             ],
             onSelected: (g) => onChanged(query.copyWith(grain: g)),
           ),
-          stepper(
+          _stepper(
+            context,
             'period',
             current,
             (by) => onChanged(
@@ -160,13 +226,13 @@ class BiToolbar extends StatelessWidget {
               ),
             ),
           ),
-          field<BiComparison>(
+          _field<BiComparison>(
             fieldKey: 'comparison',
             label: l10n.biCompare,
             value: query.comparison,
             items: [
               for (final c in BiComparison.values)
-                item(c, switch (c) {
+                _item(context, c, switch (c) {
                   BiComparison.none => l10n.biCompareNone,
                   BiComparison.previousPeriod =>
                     l10n.biComparePrevious,
@@ -186,20 +252,21 @@ class BiToolbar extends StatelessWidget {
             ),
           ),
           if (query.comparison == BiComparison.custom && compared != null)
-            stepper(
+            _stepper(
+              context,
               'compared',
               compared,
               (by) =>
                   onChanged(query.copyWith(comparedWith: compared.shift(by))),
             ),
-          field<String>(
+          _field<String>(
             fieldKey: 'group',
             label: l10n.biGroupBy,
             value: query.groupBy ?? '',
             items: [
-              item('', l10n.biGroupNone, supported: true),
+              _item(context, '', l10n.biGroupNone, supported: true),
               for (final d in biDimensions)
-                item(
+                _item(context, 
                   d,
                   biDimensionName(l10n, d),
                   supported: modules.any((m) => m.groupings.contains(d)),
@@ -211,7 +278,7 @@ class BiToolbar extends StatelessWidget {
                   : query.copyWith(groupBy: d),
             ),
           ),
-          field<BiSort>(
+          _field<BiSort>(
             fieldKey: 'sort',
             label: grouped
                 ? l10n.biSort
@@ -220,7 +287,7 @@ class BiToolbar extends StatelessWidget {
             enabled: grouped,
             items: [
               for (final s in BiSort.values)
-                item(s, switch (s) {
+                _item(context, s, switch (s) {
                   BiSort.natural => l10n.biSortNatural,
                   BiSort.valueDescending =>
                     l10n.biSortDescending,
@@ -235,52 +302,9 @@ class BiToolbar extends StatelessWidget {
               key: const ValueKey('bi-cards'),
               icon: const Icon(Icons.view_agenda_outlined),
               label: Text(l10n.biCards),
-              onPressed: () async {
-                final chosen = await showDialog<List<String>>(
-                  context: context,
-                  builder: (_) => _CardsDialog(
-                    modules: modules,
-                    shown: query.cards.isEmpty
-                        ? [for (final m in modules) m.id]
-                        : [
-                            for (final c in query.cards)
-                              if (modules.any((m) => m.id == c)) c,
-                          ],
-                    title: cardTitle,
-                  ),
-                );
-                if (chosen == null || chosen.isEmpty) return;
-                final all = [for (final m in modules) m.id];
-                // Every analysis in the standard order is the standard.
-                final standard =
-                    chosen.length == all.length &&
-                    [for (var i = 0; i < all.length; i++) all[i] == chosen[i]]
-                        .every((same) => same);
-                onChanged(query.copyWith(cards: standard ? const [] : chosen));
-              },
+              onPressed: () => _chooseCards(context),
             ),
-          SegmentedButton<BiView>(
-            key: const ValueKey('bi-view'),
-            segments: [
-              ButtonSegment(
-                value: BiView.dashboard,
-                icon: const Icon(Icons.space_dashboard_outlined),
-                label: Text(l10n.biViewDashboard),
-              ),
-              ButtonSegment(
-                value: BiView.table,
-                icon: const Icon(Icons.table_rows_outlined),
-                label: Text(l10n.biViewTable),
-              ),
-              ButtonSegment(
-                value: BiView.chart,
-                icon: const Icon(Icons.bar_chart),
-                label: Text(l10n.biViewChart),
-              ),
-            ],
-            selected: {query.view},
-            onSelectionChanged: (v) => onChanged(query.copyWith(view: v.first)),
-          ),
+          _viewSwitch(l10n),
         ],
       ),
     );
