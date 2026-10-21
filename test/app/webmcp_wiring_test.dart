@@ -292,6 +292,7 @@ void main() {
         'deskilo_check_in',
         'deskilo_check_out',
         'deskilo_cancel_reservation',
+        'deskilo_create_reservation',
       });
     },
   );
@@ -510,6 +511,34 @@ void main() {
       reservations.reservations.singleWhere((r) => r.id == 'r3').status,
       ReservationStatus.reserved,
     );
+  });
+
+  test('a booking is made once per request_id, on the named place', () async {
+    await armed();
+    final input = {
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e01',
+      'workspace_id': 'ws-1',
+      'seat_id': 'seat-9',
+      'starts_at': '2027-01-05T09:00:00+01:00',
+      'ends_at': '2027-01-05T12:00:00+01:00',
+    };
+    final before = reservations.reservations.length;
+    final made = await call('deskilo_create_reservation', input);
+    expect(made['ok'], isTrue, reason: '$made');
+    expect((made['output']! as Map)['seat_id'], 'seat-9');
+    expect(
+      _keys(made['output']).difference(_outputs()['create_reservation']!),
+      isEmpty,
+    );
+    await call('deskilo_create_reservation', input);
+    expect(reservations.reservations.length, before + 1);
+
+    final two = await call('deskilo_create_reservation', {
+      ...input,
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e02',
+      'desk_id': 'desk-1',
+    });
+    expect((two['error']! as Map)['code'], 'validation_error');
   });
 
   test('a window longer than 31 days is refused', () async {

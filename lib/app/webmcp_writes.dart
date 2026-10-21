@@ -16,6 +16,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/plan/domain/half_day_windows.dart';
 import '../features/reservations/domain/place_feedback.dart';
 import '../features/reservations/domain/reservation.dart';
 import '../features/reservations/domain/reservation_repository.dart';
@@ -43,6 +44,7 @@ final Map<String, WebMcpWrite> webMcpWriteRunners = {
       _onOwnBooking(ref, input, (repo, id) => repo.checkIn(id)),
   'check_out': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.checkOut(id)),
+  'create_reservation': _createReservation,
   'cancel_reservation': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.cancel(id)),
 };
@@ -240,4 +242,93 @@ Future<Map<String, Object?>> _onOwnBooking(
   await act(repo, id);
   final after = await repo.fetchById(id);
   return _view(after ?? before);
+}
+
+final _uuid = RegExp(
+  r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+  caseSensitive: false,
+);
+final _date = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$');
+
+/// The booking's window: its explicit times, or a day and one of the
+/// workspace's own periods (the hours the screens book with).
+({DateTime start, DateTime end}) _window(Map<String, Object?> input) {
+  final date = input['date'];
+  final period = input['period'];
+  if (date != null || period != null) {
+    final match = date is String ? _date.firstMatch(date) : null;
+    if (match == null) {
+      throw const WebMcpRefused('validation_error', 'date must be YYYY-MM-DD.');
+    }
+    final day = DateTime(
+      int.parse(match[1]!),
+      int.parse(match[2]!),
+      int.parse(match[3]!),
+    );
+    return switch (period) {
+      'morning' => HalfDayWindows.morning(day),
+      'afternoon' => HalfDayWindows.afternoon(day),
+      'full_day' => HalfDayWindows.fullDay(day),
+      _ => throw const WebMcpRefused(
+        'validation_error',
+        'period must be morning, afternoon or full_day.',
+      ),
+    };
+  }
+  final from = input['starts_at'];
+  final to = input['ends_at'];
+  final start = from is String ? DateTime.tryParse(from) : null;
+  final end = to is String ? DateTime.tryParse(to) : null;
+  if (start == null || end == null || !end.isAfter(start)) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'Give date and period, or starts_at and ends_at (ISO 8601, end after start).',
+    );
+  }
+  return (start: start, end: end);
+}
+
+Future<Map<String, Object?>> _createReservation(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  final requestId = input['request_id'];
+  if (requestId is! String || !_uuid.hasMatch(requestId)) {
+    throw const WebMcpRefused('validation_error', 'request_id must be a UUID.');
+  }
+  final targets = {
+    for (final key in const ['seat_id', 'desk_id', 'office_id', 'level_id'])
+      if (input[key] is String && (input[key]! as String).isNotEmpty)
+        key: input[key]! as String,
+  };
+  if (targets.length != 1) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'Name exactly one place: seat_id, desk_id, office_id or level_id.',
+    );
+  }
+  final window = _window(input);
+  final workspaceId = await _workspaceId(ref);
+  final repo = ref.read(reservationRepositoryProvider);
+  // The server claims the request id before it books (#1241): a replay of
+  // this intent, even from another tab, is the same booking.
+  final id = await repo.create(
+    workspaceId: workspaceId,
+    seatId: targets['seat_id'],
+    deskId: targets['desk_id'],
+    officeId: targets['office_id'],
+    levelId: targets['level_id'],
+    startsAt: window.start,
+    endsAt: window.end,
+    checkIn: input['check_in'] == true,
+    requestId: requestId,
+  );
+  final booked = await repo.fetchById(id);
+  if (booked == null) {
+    throw const WebMcpRefused(
+      'unavailable',
+      'The booking could not be read back.',
+    );
+  }
+  return _view(booked);
 }
