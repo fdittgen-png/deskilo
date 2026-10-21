@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
-final _vat100 = VatFormSpec(
+final gbVat100Spec = VatFormSpec(
   country: 'GB',
   name: 'VAT100 (MTD)',
   validFrom: DateTime(2024),
@@ -9,14 +10,14 @@ final _vat100 = VatFormSpec(
     VatBoxSpec(
       'Box 1',
       'VAT due on sales and other outputs',
-      tax: [_sales(categories: null)],
+      tax: [vatSales(categories: null)],
       taxKey: 'vatDueSales',
       always: true,
     ),
     const VatBoxSpec(
       'Box 2',
       'VAT due on acquisitions from EU member states',
-      tax: [_nothing],
+      tax: [vatNothing],
       taxKey: 'vatDueAcquisitions',
       always: true,
     ),
@@ -30,7 +31,7 @@ final _vat100 = VatFormSpec(
     VatBoxSpec(
       'Box 4',
       'VAT reclaimed on purchases and other inputs',
-      tax: [_input()],
+      tax: [vatInput()],
       taxKey: 'vatReclaimedCurrPeriod',
       always: true,
     ),
@@ -48,30 +49,30 @@ final _vat100 = VatFormSpec(
     VatBoxSpec(
       'Box 6',
       'Total value of sales and all other outputs excluding VAT',
-      base: [_sales(categories: null)],
+      base: [vatSales(categories: null)],
       baseKey: 'totalValueSalesExVAT',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
       always: true,
     ),
     VatBoxSpec(
       'Box 7',
       'Total value of purchases and all other inputs excluding VAT',
-      base: [_input()],
+      base: [vatInput()],
       baseKey: 'totalValuePurchasesExVAT',
-      baseRounding: _wd,
+      baseRounding: vatWholeDown,
       always: true,
     ),
     const VatBoxSpec(
       'Box 8',
       'Total value of supplies of goods to EU member states',
-      base: [_nothing],
+      base: [vatNothing],
       baseKey: 'totalValueGoodsSuppliedExVAT',
       always: true,
     ),
     const VatBoxSpec(
       'Box 9',
       'Total value of acquisitions of goods from EU member states',
-      base: [_nothing],
+      base: [vatNothing],
       baseKey: 'totalAcquisitionsExVAT',
       always: true,
     ),

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
-final _lipe = VatFormSpec(
+final itLipeSpec = VatFormSpec(
   country: 'IT',
   name: 'Liquidazione periodica IVA (quadro VP)',
   validFrom: DateTime(2024),
@@ -9,28 +10,28 @@ final _lipe = VatFormSpec(
     VatBoxSpec(
       'VP2',
       'Totale operazioni attive (al netto dell\'IVA)',
-      base: [_sales(categories: null)],
+      base: [vatSales(categories: null)],
       baseKey: 'VP2',
       always: true,
     ),
     VatBoxSpec(
       'VP3',
       'Totale operazioni passive (al netto dell\'IVA)',
-      base: [_input()],
+      base: [vatInput()],
       baseKey: 'VP3',
       always: true,
     ),
     VatBoxSpec(
       'VP4',
       'IVA esigibile',
-      tax: [_sales()],
+      tax: [vatSales()],
       taxKey: 'VP4',
       always: true,
     ),
     VatBoxSpec(
       'VP5',
       'IVA detratta',
-      tax: [_input()],
+      tax: [vatInput()],
       taxKey: 'VP5',
       always: true,
     ),

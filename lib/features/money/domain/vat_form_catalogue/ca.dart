@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
 /// #2361 — the federal taxes of a line (the QST is Revenu Québec's).
 const _federal = {'GST', 'HST'};
 const _qst = {'QST'};
 
-final _gst34 = VatFormSpec(
+final caGst34Spec = VatFormSpec(
   country: 'CA',
   name: 'GST/HST return (GST34)',
   validFrom: DateTime(2024),
@@ -13,22 +14,22 @@ final _gst34 = VatFormSpec(
     VatBoxSpec(
       '101',
       'Sales and other revenue',
-      base: [_sales(categories: null)],
+      base: [vatSales(categories: null)],
       baseKey: '101',
-      baseRounding: _w,
+      baseRounding: vatWhole,
       always: true,
     ),
     VatBoxSpec(
       '103',
       'GST/HST collected or collectible',
-      tax: [_sales(correction: false, schemes: _federal)],
+      tax: [vatSales(correction: false, schemes: _federal)],
       taxKey: '103',
       always: true,
     ),
     VatBoxSpec(
       '104',
       'Adjustments to be added to the net tax',
-      tax: [_sales(correction: true, vatSign: 1, schemes: _federal)],
+      tax: [vatSales(correction: true, vatSign: 1, schemes: _federal)],
       taxKey: '104',
     ),
     const VatBoxSpec(
@@ -41,13 +42,13 @@ final _gst34 = VatFormSpec(
     VatBoxSpec(
       '106',
       'Input tax credits (ITCs) for the current period',
-      tax: [_input(schemes: _federal)],
+      tax: [vatInput(schemes: _federal)],
       taxKey: '106',
     ),
     VatBoxSpec(
       '107',
       'Adjustments to be deducted when determining the net tax',
-      tax: [_sales(correction: true, vatSign: -1, factor: -1, schemes: _federal)],
+      tax: [vatSales(correction: true, vatSign: -1, factor: -1, schemes: _federal)],
       taxKey: '107',
     ),
     const VatBoxSpec(
@@ -71,12 +72,12 @@ final _gst34 = VatFormSpec(
 );
 
 /// #2361 — the QST part of Revenu Québec's FPZ-500 (the GST/HST part is the
-/// same figures as [_gst34], lines 101–109): 203 QST collected, 204
+/// same figures as [caGst34Spec], lines 101–109): 203 QST collected, 204
 /// adjustments added, 205 their total, 206 input tax refunds, 207
 /// adjustments deducted, 208 their total, 209 net QST. Numbered as the GST
 /// lines are, 100 higher; checked against the guides' wording, not against
 /// the current form — filing is the owner's.
-final _fpz500Qst = VatFormSpec(
+final caFpz500QstSpec = VatFormSpec(
   country: 'CA-QC',
   name: 'FPZ-500 (QST)',
   validFrom: DateTime(2024),
@@ -84,14 +85,14 @@ final _fpz500Qst = VatFormSpec(
     VatBoxSpec(
       '203',
       'QST collected or collectible',
-      tax: [_sales(correction: false, schemes: _qst)],
+      tax: [vatSales(correction: false, schemes: _qst)],
       taxKey: '203',
       always: true,
     ),
     VatBoxSpec(
       '204',
       'Adjustments to be added to the net QST',
-      tax: [_sales(correction: true, vatSign: 1, schemes: _qst)],
+      tax: [vatSales(correction: true, vatSign: 1, schemes: _qst)],
       taxKey: '204',
     ),
     const VatBoxSpec(
@@ -104,13 +105,13 @@ final _fpz500Qst = VatFormSpec(
     VatBoxSpec(
       '206',
       'Input tax refunds (ITRs) for the current period',
-      tax: [_input(schemes: _qst)],
+      tax: [vatInput(schemes: _qst)],
       taxKey: '206',
     ),
     VatBoxSpec(
       '207',
       'Adjustments to be deducted when determining the net QST',
-      tax: [_sales(correction: true, vatSign: -1, factor: -1, schemes: _qst)],
+      tax: [vatSales(correction: true, vatSign: -1, factor: -1, schemes: _qst)],
       taxKey: '207',
     ),
     const VatBoxSpec(

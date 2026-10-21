@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../vat_form_catalogue.dart';
+import '../vat_form_terms.dart';
+import '../vat_forms.dart';
 
-final _modelo303 = VatFormSpec(
+final esModelo303Spec = VatFormSpec(
   country: 'ES',
   name: 'Modelo 303',
   validFrom: DateTime(2024),
@@ -10,8 +11,8 @@ final _modelo303 = VatFormSpec(
       '01/03',
       '',
       formBox: 'modelo303/01/03',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '01',
       taxKey: '03',
     ),
@@ -19,8 +20,8 @@ final _modelo303 = VatFormSpec(
       '04/06',
       '',
       formBox: 'modelo303/04/06',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '04',
       taxKey: '06',
     ),
@@ -28,8 +29,8 @@ final _modelo303 = VatFormSpec(
       '07/09',
       '',
       formBox: 'modelo303/07/09',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
       baseKey: '07',
       taxKey: '09',
     ),
@@ -37,29 +38,29 @@ final _modelo303 = VatFormSpec(
       'Otros',
       '',
       formBox: 'modelo303/Otros',
-      base: [_sales()],
-      tax: [_sales()],
+      base: [vatSales()],
+      tax: [vatSales()],
     ),
     VatBoxSpec(
       '27',
       'Total cuota devengada',
-      tax: [_sales()],
+      tax: [vatSales()],
       taxKey: '27',
       always: true,
     ),
     VatBoxSpec(
       '28/29',
       'Por cuotas soportadas en operaciones interiores corrientes',
-      base: [_input(categories: _taxable)],
-      tax: [_input(categories: _taxable)],
+      base: [vatInput(categories: vatTaxable)],
+      tax: [vatInput(categories: vatTaxable)],
       baseKey: '28',
       taxKey: '29',
     ),
     VatBoxSpec(
       '30/31',
       'Por cuotas soportadas en operaciones interiores con bienes de inversión',
-      base: [_input(categories: _asset)],
-      tax: [_input(categories: _asset)],
+      base: [vatInput(categories: vatAsset)],
+      tax: [vatInput(categories: vatAsset)],
       baseKey: '30',
       taxKey: '31',
     ),
@@ -84,7 +85,7 @@ final _modelo303 = VatFormSpec(
       '59',
       'Entregas intracomunitarias de bienes y servicios',
       base: [
-        _sales(categories: {'AE'}),
+        vatSales(categories: {'AE'}),
       ],
       baseKey: '59',
     ),
@@ -92,7 +93,7 @@ final _modelo303 = VatFormSpec(
       '60',
       'Exportaciones y operaciones asimiladas',
       base: [
-        _sales(categories: {'Z'}),
+        vatSales(categories: {'Z'}),
       ],
       baseKey: '60',
     ),
@@ -100,7 +101,7 @@ final _modelo303 = VatFormSpec(
       '120',
       'Operaciones no sujetas por reglas de localización',
       base: [
-        _sales(categories: {'G', 'O'}),
+        vatSales(categories: {'G', 'O'}),
       ],
       baseKey: '120',
     ),

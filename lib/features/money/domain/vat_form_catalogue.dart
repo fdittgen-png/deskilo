@@ -36,73 +36,27 @@ import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'vat_declaration.dart';
 import 'vat_form_boxes.dart';
+import 'vat_form_catalogue/ca.dart';
+import 'vat_form_catalogue/ch.dart';
+import 'vat_form_catalogue/de.dart';
+import 'vat_form_catalogue/es.dart';
+import 'vat_form_catalogue/fr.dart';
+import 'vat_form_catalogue/gb.dart';
+import 'vat_form_catalogue/it.dart';
+import 'vat_form_terms.dart';
 import 'vat_forms.dart';
-
-part 'vat_form_catalogue/ca.dart';
-part 'vat_form_catalogue/ch.dart';
-part 'vat_form_catalogue/de.dart';
-part 'vat_form_catalogue/es.dart';
-part 'vat_form_catalogue/fr.dart';
-part 'vat_form_catalogue/gb.dart';
-part 'vat_form_catalogue/it.dart';
-
-const _taxable = {'S'};
-const _asset = {'asset'};
-
-VatTerm _sales({
-  Set<double>? rates,
-  Set<String>? categories = _taxable,
-  bool? correction,
-  int vatSign = 0,
-  int factor = 1,
-  Set<String>? schemes,
-}) => VatTerm.lines(
-  VatLineSelector(
-    rates: rates,
-    categories: categories,
-    correction: correction,
-    vatSign: vatSign,
-    schemes: schemes,
-  ),
-  factor: factor,
-);
-
-VatTerm _input({
-  Set<String>? categories,
-  bool? correction,
-  int vatSign = 0,
-  int factor = 1,
-  Set<String>? schemes,
-}) => VatTerm.lines(
-  VatLineSelector(
-    input: true,
-    categories: categories,
-    correction: correction,
-    vatSign: vatSign,
-    schemes: schemes,
-  ),
-  factor: factor,
-);
-
-const _w = VatRounding.wholeHalfUp;
-
-/// A cell a coworking space always files as zero (UK boxes 2, 8 and 9:
-/// goods moved to or from the EU).
-const _nothing = VatTerm.lines(VatLineSelector(categories: <String>{}));
-
-const _wd = VatRounding.wholeDown;
 
 /// Every form's structure: its boxes, how they total, how they round. The
 /// rated boxes name their `form_box` row (label and fiscal groups); read the
 /// forms through [vatFormCatalogue] or [vatFormSpecFor], which resolve them.
 final List<VatFormSpec> _vatFormTemplates = [
-  _ca3,
-  _ustva,
-  _vat100,
-  _mwst,
-  _gst34,
-  _modelo303,
-  _lipe,
+  frCa3Spec,
+  deUstvaSpec,
+  gbVat100Spec,
+  chMwstSpec,
+  caGst34Spec,
+  esModelo303Spec,
+  itLipeSpec,
 ];
 
 /// Every form the app fills, oldest layout first per country, as the
@@ -114,7 +68,7 @@ List<VatFormSpec> get vatFormCatalogue => [
 ];
 
 /// #2361 — Revenu Québec's FPZ-500, QST part.
-VatFormSpec get qstFormSpec => _fpz500Qst;
+VatFormSpec get qstFormSpec => caFpz500QstSpec;
 
 /// The form [country] files for a period ending on [periodEnd]: the
 /// latest layout already in force, the earliest one for an older period;
@@ -160,13 +114,13 @@ VatFormSpec genericVatForm(List<VatDeclarationLine> lines) {
           _pct(r),
           r == 0 ? '0 % / out of scope' : 'Rate ${_pct(r)}',
           base: [
-            _sales(rates: {r}, categories: null),
+            vatSales(rates: {r}, categories: null),
           ],
           tax: [
-            _sales(rates: {r}, categories: null),
+            vatSales(rates: {r}, categories: null),
           ],
         ),
-      VatBoxSpec('Input', 'Input VAT', base: [_input()], tax: [_input()]),
+      VatBoxSpec('Input', 'Input VAT', base: [vatInput()], tax: [vatInput()]),
     ],
   );
 }
