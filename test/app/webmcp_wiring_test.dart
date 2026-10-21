@@ -26,6 +26,13 @@ import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/plan/domain/desk.dart';
+import 'package:deskilo/features/plan/domain/floor_plan.dart';
+import 'package:deskilo/features/plan/domain/grid_geometry.dart';
+import 'package:deskilo/features/plan/domain/level.dart';
+import 'package:deskilo/features/plan/domain/office.dart';
+import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
@@ -64,6 +71,15 @@ class _Context implements WebMcpContext {
 
 class _Feedback implements PlaceFeedbackRepository {
   int favoriteWrites = 0;
+
+  @override
+  Future<Map<String, PlaceFeedback>> fetchMany(
+    String workspaceId,
+    PlaceKind kind,
+    List<String> ids,
+  ) async => {
+    for (final id in ids) id: const PlaceFeedback(favorite: true, count: 1),
+  };
 
   @override
   Future<PlaceFeedback> setFavorite(
@@ -111,6 +127,39 @@ class _Switch implements WebMcpSwitchStore {
   @override
   Future<void> write({required bool on}) async => this.on = on;
 }
+
+const _rect = GridRect(x: 0, y: 0, w: 2, h: 1);
+
+Seat _seat(String id, int x, {String name = 'Anna'}) => Seat(
+  id: id,
+  workspaceId: 'ws-1',
+  deskId: 'desk-1',
+  name: name,
+  x: x,
+  y: 0,
+  orientation: SeatOrientation.n,
+  chair: '',
+  amenities: const ['screen'],
+);
+
+final _plan = FloorPlan(
+  levelId: 'level-1',
+  offices: const [
+    Office(
+      id: 'office-1',
+      workspaceId: 'ws-1',
+      levelId: 'level-1',
+      name: 'Open space',
+      color: 0,
+      bookableAsWhole: true,
+      rect: _rect,
+    ),
+  ],
+  desks: const [
+    Desk(id: 'desk-1', workspaceId: 'ws-1', officeId: 'office-1', name: '', rect: _rect),
+  ],
+  seats: [_seat('seat-a', 0), _seat('seat-b', 1, name: 'Window')],
+);
 
 const _september = Statement(
   period: '2026-09',
@@ -268,6 +317,12 @@ void main() {
         invoiceQueriesProvider.overrideWithValue(_Unused()),
         invoiceActionCommandsProvider.overrideWithValue(_Unused()),
         workspaceMembersProvider.overrideWith((ref) async => const [_me]),
+        levelsProvider.overrideWith(
+          (ref) async => const [
+            Level(id: 'level-1', workspaceId: 'ws-1', name: 'Level 2', sortOrder: 0),
+          ],
+        ),
+        floorPlanProvider('level-1').overrideWith((ref) async => _plan),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -342,6 +397,7 @@ void main() {
         'deskilo_request_subscription_change',
         'deskilo_update_reservation',
         'deskilo_request_invoice_issue',
+        'deskilo_get_place',
       });
     },
   );
@@ -765,6 +821,37 @@ void main() {
       'period': '2026-13',
     });
     expect((bad['error']! as Map)['code'], 'validation_error');
+  });
+
+  test('a place is described as the facade does, never by a seat name', () async {
+    await armed();
+    final seat = await call('deskilo_get_place', {
+      'workspace_id': 'ws-1',
+      'seat_id': 'seat-b',
+    });
+    expect(seat['ok'], isTrue, reason: '$seat');
+    final out = seat['output']! as Map<String, Object?>;
+    expect(out['label'], 'Level 2 · Open space · Desk 1 · Seat B');
+    expect(out['kind'], 'seat');
+    expect(out['seats'], 1);
+    expect(out['image_available'], isTrue);
+    expect(_keys(out).difference(_outputs()['get_place']!), isEmpty);
+
+    final office = (await call('deskilo_get_place', {
+      'workspace_id': 'ws-1',
+      'office_id': 'office-1',
+      'include_image': true,
+    }))['output']! as Map<String, Object?>;
+    expect(office['seats'], 2);
+    expect(office['bookable_as_whole'], isTrue);
+    expect(office['amenities'], ['screen']);
+    expect(office['image_available'], isFalse);
+
+    final none = await call('deskilo_get_place', {
+      'workspace_id': 'ws-1',
+      'seat_id': 'seat-x',
+    });
+    expect((none['error']! as Map)['code'], 'not_found');
   });
 
   test('a window longer than 31 days is refused', () async {

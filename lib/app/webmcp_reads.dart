@@ -17,6 +17,7 @@ import '../features/reservations/providers/place_feedback_providers.dart';
 import '../features/reservations/providers/reservation_providers.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/providers/workspace_providers.dart';
+import 'webmcp_place.dart';
 import 'webmcp_writes.dart';
 
 typedef WebMcpRead = Future<Map<String, Object?>> Function(
@@ -31,6 +32,7 @@ final Map<String, WebMcpRead> webMcpReadRunners = {
   'list_workspaces': _listWorkspaces,
   'list_my_reservations': _listMyReservations,
   'list_my_invoices': _listMyInvoices,
+  'get_place': (ref, input, _, _) => webMcpPlace(ref, input),
   'list_pending_validations': _listPendingValidations,
   'list_my_favorites': _listMyFavorites,
   'get_my_statement': _getMyStatement,
