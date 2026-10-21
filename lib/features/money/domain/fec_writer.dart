@@ -158,84 +158,95 @@ class FecWriter {
 
   /// The sales and bank journals, document by document.
   void bookInvoices() {
-  for (final invoice in ordered) {
-    // #936 — a credit note is a sale reversed, and it was absent: its
-    // lines are negative, so the "charges" below were zero and the
-    // invoice was skipped. Booked as revenue debited / customer credited,
-    // lettered with the invoice it corrects when it names one.
-    if (invoice.isCreditNote) {
-      final entry = '$_salesJournal-${invoice.number}';
-      final label = 'Avoir ${invoice.number}'
-          '${invoice.replacesNumber.isEmpty ? '' : ' sur ${invoice.replacesNumber}'}';
-      final letter = invoice.replacesNumber.isEmpty
-          ? invoice.number
-          : invoice.replacesNumber;
-      final total = -invoice.totalCents;
-      final zeroCategory =
-          vatRegimeFromWire(invoice.sellerParty?.vatRegime ?? company.vatRegime)
-              .taxCategoryCode;
-      // The breakdown is built from what an invoice CHARGES; a credit note
-      // charges nothing, so it comes back empty and the whole note is one
-      // revenue reversal. When it does carry slices (mixed documents),
-      // each slice is reversed on its own.
-      final slices = invoice.vatBreakdown(zeroCategory: zeroCategory)
-          .where((s) => s.netCents != 0 || s.vatCents != 0)
-          .toList();
-      final pending = deferred(invoice, [
-        for (final s in slices)
-          if (s.vatCents < 0) s.vatCents,
-      ].fold(0, (a, b) => a + b));
-      if (slices.isEmpty) {
-        write(
-          journal: _salesJournal, journalLabel: _salesJournalLabel,
-          number: entry, date: invoice.issuedAt,
-          account: accounts.revenue, accountLabel: revenueLabel,
-          auxNumber: '', auxLabel: '',
-          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-          label: label, debitCents: total, creditCents: 0,
-          letter: letter, validDate: invoice.issuedAt,
-        );
+    for (final invoice in ordered) {
+      if (invoice.isCreditNote) {
+        bookCreditNote(invoice);
+      } else {
+        bookSale(invoice);
       }
-      for (final slice in slices) {
-        write(
-          journal: _salesJournal, journalLabel: _salesJournalLabel,
-          number: entry, date: invoice.issuedAt,
-          account: accounts.revenue, accountLabel: revenueLabel,
-          auxNumber: '', auxLabel: '',
-          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-          label: label, debitCents: -slice.netCents, creditCents: 0,
-          letter: letter, validDate: invoice.issuedAt,
-        );
-        if (slice.vatCents < 0) {
-          write(
-            journal: _salesJournal, journalLabel: _salesJournalLabel,
-            number: entry, date: invoice.issuedAt,
-            account: pending ? accounts.vatPending : accounts.vat,
-            accountLabel: pending ? vatPendingLabel : vatLabel,
-            auxNumber: '', auxLabel: '',
-            pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-            label: label, debitCents: -slice.vatCents, creditCents: 0,
-            letter: letter, validDate: invoice.issuedAt,
-          );
-        }
-      }
+    }
+  }
+
+  /// #936 — a credit note is a sale reversed, and it was absent: its
+  /// lines are negative, so the "charges" in [bookSale] were zero and the
+  /// invoice was skipped. Booked as revenue debited / customer credited,
+  /// lettered with the invoice it corrects when it names one.
+  void bookCreditNote(Invoice invoice) {
+    final entry = '$_salesJournal-${invoice.number}';
+    final label = 'Avoir ${invoice.number}'
+        '${invoice.replacesNumber.isEmpty ? '' : ' sur ${invoice.replacesNumber}'}';
+    final letter = invoice.replacesNumber.isEmpty
+        ? invoice.number
+        : invoice.replacesNumber;
+    final total = -invoice.totalCents;
+    final zeroCategory =
+        vatRegimeFromWire(invoice.sellerParty?.vatRegime ?? company.vatRegime)
+            .taxCategoryCode;
+    // The breakdown is built from what an invoice CHARGES; a credit note
+    // charges nothing, so it comes back empty and the whole note is one
+    // revenue reversal. When it does carry slices (mixed documents),
+    // each slice is reversed on its own.
+    final slices = invoice.vatBreakdown(zeroCategory: zeroCategory)
+        .where((s) => s.netCents != 0 || s.vatCents != 0)
+        .toList();
+    final pending = deferred(invoice, [
+      for (final s in slices)
+        if (s.vatCents < 0) s.vatCents,
+    ].fold(0, (a, b) => a + b));
+    if (slices.isEmpty) {
       write(
         journal: _salesJournal, journalLabel: _salesJournalLabel,
         number: entry, date: invoice.issuedAt,
-        account: accounts.customers, accountLabel: customersLabel,
-        auxNumber: invoice.memberId, auxLabel: invoice.memberName,
+        account: accounts.revenue, accountLabel: revenueLabel,
+        auxNumber: '', auxLabel: '',
         pieceRef: invoice.number, pieceDate: invoice.issuedAt,
-        label: label, debitCents: 0, creditCents: total,
+        label: label, debitCents: total, creditCents: 0,
         letter: letter, validDate: invoice.issuedAt,
       );
-      if (pending) releaseVat(invoice, label);
-      bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel);
-      continue;
     }
+    for (final slice in slices) {
+      write(
+        journal: _salesJournal, journalLabel: _salesJournalLabel,
+        number: entry, date: invoice.issuedAt,
+        account: accounts.revenue, accountLabel: revenueLabel,
+        auxNumber: '', auxLabel: '',
+        pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+        label: label, debitCents: -slice.netCents, creditCents: 0,
+        letter: letter, validDate: invoice.issuedAt,
+      );
+      if (slice.vatCents < 0) {
+        write(
+          journal: _salesJournal, journalLabel: _salesJournalLabel,
+          number: entry, date: invoice.issuedAt,
+          account: pending ? accounts.vatPending : accounts.vat,
+          accountLabel: pending ? vatPendingLabel : vatLabel,
+          auxNumber: '', auxLabel: '',
+          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+          label: label, debitCents: -slice.vatCents, creditCents: 0,
+          letter: letter, validDate: invoice.issuedAt,
+        );
+      }
+    }
+    write(
+      journal: _salesJournal, journalLabel: _salesJournalLabel,
+      number: entry, date: invoice.issuedAt,
+      account: accounts.customers, accountLabel: customersLabel,
+      auxNumber: invoice.memberId, auxLabel: invoice.memberName,
+      pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+      label: label, debitCents: 0, creditCents: total,
+      letter: letter, validDate: invoice.issuedAt,
+    );
+    if (pending) releaseVat(invoice, label);
+    bookFecRefund(write, invoice, matches[invoice.id], accounts, customersLabel, bankLabel);
+  }
+
+  /// An invoice: the receivable, its revenue and VAT rate by rate, the
+  /// credits it netted and the payment that settled the rest.
+  void bookSale(Invoice invoice) {
     final charges = invoice.lines
         .where((line) => line.amountCents > 0)
         .fold(0, (sum, line) => sum + line.amountCents);
-    if (charges == 0) continue;
+    if (charges == 0) return;
     final entry = '$_salesJournal-${invoice.number}';
     final label = 'Facture ${invoice.number}'
         '${invoice.period == null ? '' : ' ${invoice.period}'}';
@@ -315,6 +326,13 @@ class FecWriter {
 
     if (pending) releaseVat(invoice, label);
 
+    bookCredits(invoice);
+    final match = matches[invoice.id];
+    bookSettlement(invoice, match);
+    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
+  }
+
+  void bookCredits(Invoice invoice) {
     // The credits the invoice netted: money that had already arrived.
     var creditOrdinal = 0;
     for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
@@ -359,9 +377,11 @@ class FecWriter {
       );
     }
 
+  }
+
+  void bookSettlement(Invoice invoice, InvoiceMatch? match) {
     // The payment that settled what was left. Only when something WAS
     // left: a solde of zero was already covered by the credits above.
-    final match = matches[invoice.id];
     if (match != null && !match.pending && invoice.totalCents > 0) {
       // One settling match per invoice (0067): the suffix is enough.
       final cashEntry = '$_bankJournal-${invoice.number}-P';
@@ -401,8 +421,6 @@ class FecWriter {
         validDate: match.matchedAt,
       );
     }
-    bookFecWriteOff(write, invoice, match, accounts, customersLabel, dayOf);
-  }
   }
 
   /// The purchases journal: reimbursed expenses.
