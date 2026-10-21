@@ -16,6 +16,8 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/events/providers/event_providers.dart';
+import '../features/plan/domain/half_day_windows.dart';
 import '../features/reservations/domain/place_feedback.dart';
 import '../features/reservations/domain/reservation.dart';
 import '../features/reservations/domain/reservation_repository.dart';
@@ -43,6 +45,8 @@ final Map<String, WebMcpWrite> webMcpWriteRunners = {
       _onOwnBooking(ref, input, (repo, id) => repo.checkIn(id)),
   'check_out': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.checkOut(id)),
+  'create_reservation': _createReservation,
+  'request_reservation_deletion': _requestDeletion,
   'cancel_reservation': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.cancel(id)),
 };
@@ -206,11 +210,9 @@ Map<String, Object?> _view(Reservation r) => {
   'state_digest': _digest(r),
 };
 
-Future<Map<String, Object?>> _onOwnBooking(
-  Ref ref,
-  Map<String, Object?> input,
-  Future<void> Function(ReservationRepository repo, String id) act,
-) async {
+/// The person's own booking named by the input, as it is now; refused
+/// when it is not theirs here or moved since the agent read it.
+Future<Reservation> _ownBooking(Ref ref, Map<String, Object?> input) async {
   final id = input['reservation_id'];
   if (id is! String || id.isEmpty) {
     throw const WebMcpRefused(
@@ -220,24 +222,195 @@ Future<Map<String, Object?>> _onOwnBooking(
   }
   final workspaceId = await _workspaceId(ref);
   final me = await ref.read(myMemberProvider.future);
-  final repo = ref.read(reservationRepositoryProvider);
-  final before = await repo.fetchById(id);
+  final booking = await ref.read(reservationRepositoryProvider).fetchById(id);
   // Only the person's own booking in this workspace: an administrator's
   // wider rights are not the assistant's.
-  if (before == null ||
+  if (booking == null ||
       me == null ||
-      before.memberId != me.id ||
-      before.workspaceId != workspaceId) {
+      booking.memberId != me.id ||
+      booking.workspaceId != workspaceId) {
     throw const WebMcpRefused('not_found', 'No such booking of yours here.');
   }
   final expected = input['expected_state'];
-  if (expected != null && expected != _digest(before)) {
+  if (expected != null && expected != _digest(booking)) {
     throw const WebMcpRefused(
       'conflict',
       'The booking changed since you read it: read it again first.',
     );
   }
-  await act(repo, id);
-  final after = await repo.fetchById(id);
+  return booking;
+}
+
+Future<Map<String, Object?>> _onOwnBooking(
+  Ref ref,
+  Map<String, Object?> input,
+  Future<void> Function(ReservationRepository repo, String id) act,
+) async {
+  final before = await _ownBooking(ref, input);
+  final repo = ref.read(reservationRepositoryProvider);
+  await act(repo, before.id);
+  final after = await repo.fetchById(before.id);
   return _view(after ?? before);
+}
+
+/// Asks the validators to delete one of the person's own bookings: the
+/// same request the booking sheet sends. It is pending until they decide.
+Future<Map<String, Object?>> _requestDeletion(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  final reason = input['reason'] ?? '';
+  if (reason is! String || reason.length > 500) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'reason is text of at most 500 characters.',
+    );
+  }
+  final booking = await _ownBooking(ref, input);
+  final eventId = await ref
+      .read(eventRepositoryProvider)
+      .requestReservationDeletion(booking.id, reason: reason);
+  return {'event_id': eventId, ..._view(booking)};
+}
+
+final _uuid = RegExp(
+  r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+  caseSensitive: false,
+);
+final _date = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$');
+
+/// The booking's window: its explicit times, or a day and one of the
+/// workspace's own periods (the hours the screens book with).
+({DateTime start, DateTime end}) _window(Map<String, Object?> input) {
+  final date = input['date'];
+  final period = input['period'];
+  if (date != null || period != null) {
+    final match = date is String ? _date.firstMatch(date) : null;
+    if (match == null) {
+      throw const WebMcpRefused('validation_error', 'date must be YYYY-MM-DD.');
+    }
+    final day = DateTime(
+      int.parse(match[1]!),
+      int.parse(match[2]!),
+      int.parse(match[3]!),
+    );
+    return switch (period) {
+      'morning' => HalfDayWindows.morning(day),
+      'afternoon' => HalfDayWindows.afternoon(day),
+      'full_day' => HalfDayWindows.fullDay(day),
+      _ => throw const WebMcpRefused(
+        'validation_error',
+        'period must be morning, afternoon or full_day.',
+      ),
+    };
+  }
+  final from = input['starts_at'];
+  final to = input['ends_at'];
+  final start = from is String ? DateTime.tryParse(from) : null;
+  final end = to is String ? DateTime.tryParse(to) : null;
+  if (start == null || end == null || !end.isAfter(start)) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'Give date and period, or starts_at and ends_at (ISO 8601, end after start).',
+    );
+  }
+  return (start: start, end: end);
+}
+
+Future<Map<String, Object?>> _createReservation(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  final requestId = input['request_id'];
+  if (requestId is! String || !_uuid.hasMatch(requestId)) {
+    throw const WebMcpRefused('validation_error', 'request_id must be a UUID.');
+  }
+  final targets = {
+    for (final key in const ['seat_id', 'desk_id', 'office_id', 'level_id'])
+      if (input[key] is String && (input[key]! as String).isNotEmpty)
+        key: input[key]! as String,
+  };
+  if (targets.length != 1) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'Name exactly one place: seat_id, desk_id, office_id or level_id.',
+    );
+  }
+  final window = _window(input);
+  final workspaceId = await _workspaceId(ref);
+  final repo = ref.read(reservationRepositoryProvider);
+  // The server claims the request id before it books (#1241): a replay of
+  // this intent, even from another tab, is the same booking.
+  final id = await repo.create(
+    workspaceId: workspaceId,
+    seatId: targets['seat_id'],
+    deskId: targets['desk_id'],
+    officeId: targets['office_id'],
+    levelId: targets['level_id'],
+    startsAt: window.start,
+    endsAt: window.end,
+    checkIn: input['check_in'] == true,
+    requestId: requestId,
+  );
+  final booked = await repo.fetchById(id);
+  if (booked == null) {
+    throw const WebMcpRefused(
+      'unavailable',
+      'The booking could not be read back.',
+    );
+  }
+  return _view(booked);
+}
+
+/// The writes that run only after the person confirms them in the page
+/// (`confirmation: native`), each with the check that decides whether the
+/// person is asked at all.
+final Map<String, ({WebMcpWrite check, WebMcpWrite write})>
+webMcpConfirmedWrites = {
+  'respond_to_validation': (check: _canRespond, write: _respond),
+};
+
+Future<Map<String, Object?>> _canRespond(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  final eventId = input['event_id'];
+  final accept = input['accept'];
+  if (eventId is! String || eventId.isEmpty || accept is! bool) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'event_id and accept (true or false) are required.',
+    );
+  }
+  // The same rule as the person's pending list: only a request this person
+  // decides, still pending, is offered for an answer.
+  final pending = await ref.read(myPendingEventsProvider.future);
+  if (!pending.any((e) => e.id == eventId)) {
+    throw const WebMcpRefused(
+      'not_found',
+      'No pending request here that this person decides.',
+    );
+  }
+  return const {};
+}
+
+Future<Map<String, Object?>> _respond(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  await _canRespond(ref, input);
+  final eventId = input['event_id']! as String;
+  final events = ref.read(eventRepositoryProvider);
+  await events.respond(eventId, accept: input['accept']! as bool);
+  ref
+    ..invalidate(myPendingEventsProvider)
+    ..invalidate(eventsProvider);
+  final after = await events.fetchEvent(eventId);
+  final status = after?.status.name;
+  return {
+    'event_id': eventId,
+    'decision_recorded': true,
+    'event_status': status,
+    'effect_applied': status == 'applied' || status == 'confirmed',
+  };
 }

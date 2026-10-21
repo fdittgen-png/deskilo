@@ -37,6 +37,8 @@ import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../webmcp_confirmation_sheet.dart';
+import '../webmcp_confirmations.dart';
 import '../webmcp_wiring.dart';
 import 'shell_session.dart';
 
@@ -51,6 +53,23 @@ void watchShellEffects(WidgetRef ref, AppLocalizations l10n) {
   _installWorkspaceAmbients(ref);
   _scheduleCheckInReminders(ref, l10n);
   _announceWebMcpActions(ref, l10n);
+  _askWebMcpConfirmations(ref);
+}
+
+/// #2504 — an assistant's request that needs the person: the sheet opens,
+/// and their answer (or none, if they close it) goes back to the page.
+void _askWebMcpConfirmations(WidgetRef ref) {
+  ref.listen(webMcpConfirmationsProvider, (_, request) async {
+    if (request == null || !ref.context.mounted) return;
+    final workspace = ref.read(currentWorkspaceProvider).value?.name ?? '';
+    final accept = await showWebMcpConfirmationSheet(
+      ref.context,
+      request,
+      workspaceName: workspace,
+    );
+    if (accept == null) return;
+    ref.read(webMcpConfirmationsProvider.notifier).decide(request.key, accept: accept);
+  });
 }
 
 /// #2504 — an assistant in this browser acted through the page: say what,
