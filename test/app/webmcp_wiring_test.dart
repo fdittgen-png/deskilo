@@ -661,7 +661,8 @@ void main() {
         .read(webMcpConfirmationsProvider.notifier)
         .decide(request.key, accept: false);
     final answer = await call('deskilo_respond_to_validation', input);
-    expect((answer['error']! as Map)['code'], 'denied');
+    expect((answer['error']! as Map)['code'], 'declined');
+    expect(answer['status'], 'denied');
     expect(events.events.single.status, EventStatus.pending);
   });
 
@@ -674,7 +675,8 @@ void main() {
       'invoice_id': 'i2',
     };
     final refused = await call('deskilo_request_invoice_void', input);
-    expect((refused['error']! as Map)['code'], 'denied');
+    expect((refused['error']! as Map)['code'], 'forbidden');
+    expect(refused['status'], 'denied');
     expect(c.read(webMcpConfirmationsProvider), isNull);
     expect(invoiceCommands.voided, isEmpty);
   });
@@ -788,11 +790,11 @@ void main() {
       for (final file in Directory('lib/app').listSync().whereType<File>())
         if (file.path.contains('webmcp'))
           for (final m in RegExp(
-            r"(?:WebMcpRefused\(|_refusal\(|'status': )\s*'([a-z_]+)'",
+            r"'status': '([a-z_]+)'|=> '([a-z_]+)'",
           ).allMatches(file.readAsStringSync()))
-            m[1]!,
+            (m[1] ?? m[2])!,
     };
-    expect(used, isNotEmpty);
+    expect(used, containsAll(['requires_confirmation', 'denied']));
     expect(used.difference(statuses), isEmpty);
   });
 

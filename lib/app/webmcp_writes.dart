@@ -134,7 +134,7 @@ Future<String> _workspaceId(Ref ref) async {
   final workspace = await ref.read(currentWorkspaceProvider.future);
   if (workspace == null) {
     throw const WebMcpRefused(
-      'denied',
+      'not_a_member',
       'This person is not a member of this workspace.',
     );
   }
@@ -364,7 +364,7 @@ Future<Map<String, Object?>> _createReservation(
   final booked = await repo.fetchById(id);
   if (booked == null) {
     throw const WebMcpRefused(
-      'not_found',
+      'unavailable',
       'The booking could not be read back.',
     );
   }

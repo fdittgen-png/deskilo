@@ -25,7 +25,7 @@ path or a second session in the page.
    app UI's refusal for the same action.
 3. **Consent is the person's, in the app.** A write that needs a decision
    opens the existing in-app confirmation and answers the agent
-   `pending_confirmation` until the person decides. A recording or a tool call
+   `requires_confirmation` (the contract's status) until the person decides. A recording or a tool call
    is never a permission.
 4. **Registered only while all hold:** a web build with a `modelContext`, a
    signed-in person, `WorkspaceFeature.webMcp` effective for the workspace and

@@ -102,7 +102,7 @@ Future<Object?> _run(
   final confirmed = webMcpConfirmedWrites[tool.id];
   final write = webMcpWriteRunners[tool.id] ?? confirmed?.write;
   if (read == null && write == null) {
-    return _refusal('not_found', 'This tool is not offered here.');
+    return _refusal('unavailable', 'This tool is not offered here.');
   }
   try {
     final Map<String, Object?> output;
@@ -160,7 +160,15 @@ Map<String, Object?> _pending(
   'request_id': input['request_id'],
 };
 
+/// The contract status a refusal reports, as the facade's envelope does:
+/// the code says why, the status what kind of refusal it is.
+String _statusOf(String code) => switch (code) {
+  'validation_error' || 'not_found' || 'conflict' || 'rate_limited' => code,
+  _ => 'denied',
+};
+
 Map<String, Object?> _refusal(String code, String message) => {
   'ok': false,
+  'status': _statusOf(code),
   'error': {'code': code, 'message': message},
 };

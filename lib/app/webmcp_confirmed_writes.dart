@@ -99,7 +99,7 @@ Future<Map<String, Object?>> _respond(
 void _need(Ref ref, WorkspacePermission permission) {
   if (!ref.read(myPermissionsProvider).contains(permission)) {
     throw const WebMcpRefused(
-      'denied',
+      'forbidden',
       "This person's role does not allow this request.",
     );
   }
