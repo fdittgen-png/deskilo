@@ -709,7 +709,11 @@ jobs:
         continue-on-error: true
         env:
           DB_URL: ${{ steps.migrations.outputs.db-url }}
-        run: bash scripts/concurrency_check.sh "$DB_URL"
+        run: |
+          bash scripts/concurrency_check.sh "$DB_URL"
+          # #2587 C2 — the fiscal source is one snapshot under concurrent
+          # writers, uncommitted work and a revocation.
+          bash scripts/snapshot_concurrency_check.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
