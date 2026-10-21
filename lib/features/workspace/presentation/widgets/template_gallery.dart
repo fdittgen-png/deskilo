@@ -26,6 +26,7 @@ import '../workbook_labels.dart';
 import '../workspace_pages.dart';
 import 'template_capability_browser.dart';
 import 'template_card.dart';
+import 'template_empty_space.dart';
 import 'template_requirements.dart';
 import 'workbook_export_dialog.dart';
 
@@ -217,6 +218,9 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
     });
   }
 
+  void _toggleTag(String tag, {required bool on}) =>
+      setState(() => on ? _tags.add(tag) : _tags.remove(tag));
+
   void _setRequired(void Function() change) {
     setState(change);
     unawaited(_searchCapabilities(_search.text));
@@ -287,60 +291,12 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
     }.toList()
       ..sort();
 
-    // Flattened rows: a header per non-empty section, then its cards.
-    final rows = <Object>[];
-    final shownAll = <WorkspaceTemplate>[];
-    var anyTemplate = false;
-    for (final section in widget.sections) {
-      final shown = [
-        for (final t in TemplateGallery.ordered(section.templates))
-          if (_shows(t)) t,
-      ];
-      // #1660 — a capability search lists its matches in the order it
-      // ranked them: preferred capabilities first, then the words.
-      final ranked = _capability?.matched;
-      if (ranked != null) {
-        int rank(WorkspaceTemplate t) =>
-            ranked.indexWhere((m) => m.inspection.templateId == t.id);
-        shown.sort((a, b) => rank(a).compareTo(rank(b)));
-      }
-      if (widget.sections.length > 1) rows.add(section);
-      for (final t in shown) {
-        rows.add((template: t, section: section));
-      }
-      shownAll.addAll(shown);
-      anyTemplate = anyTemplate || shown.isNotEmpty;
-    }
-    if (widget.offerEmpty) rows.add(const _EmptySpace());
+    final (:rows, :shownAll, :anyTemplate) = _rows();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
-          key: const ValueKey('template-search'),
-          controller: _search,
-          onChanged: _onQuery,
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search),
-            // #1660 — every capability, by process, for whoever does not
-            // know the word to type.
-            suffixIcon: IconButton(
-              key: const ValueKey('template-browse-capabilities'),
-              tooltip: l10n.capabilityBrowserTitle,
-              icon: const Icon(Icons.account_tree_outlined),
-              onPressed: () async {
-                final choice = await showCapabilityBrowser(context);
-                if (choice == null || !mounted) return;
-                _setRequired(() {
-                  _required.remove(choice.id);
-                  _preferred.remove(choice.id);
-                  (choice.required ? _required : _preferred).add(choice.id);
-                });
-              },
-            ),
-            hintText: l10n.librarySearchHint,
-          ),
-        ),
+        _searchField(l10n),
         ..._capabilityStatus(l10n),
         TemplateRequirementChips(
           offered: _offered,
@@ -357,22 +313,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           preferred: _preferred,
           onPrefer: (id) => _setRequired(() => _preferred.add(id)),
         ),
-        if (allTags.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.sm),
-          EdgeFadeScroll(
-            child: Row(children: [
-              for (final tag in allTags)
-                Padding(padding: const EdgeInsets.only(right: AppSpacing.sm),
-                  child: FilterChip(
-                  key: ValueKey('template-tag-$tag'),
-                  label: Text(tag),
-                  selected: _tags.contains(tag),
-                  onSelected: (on) => setState(
-                      () => on ? _tags.add(tag) : _tags.remove(tag)),
-                )),
-            ]),
-          ),
-        ],
+        if (allTags.isNotEmpty) ..._tagRow(allTags),
         // #1660 — a narrowed list says how many it shows, and a screen
         // reader hears the count change; focus stays where it was.
         if (_narrowed && !_checking)
@@ -415,108 +356,161 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           ),
         ],
         const SizedBox(height: AppSpacing.sm),
-        Expanded(
-          child: !anyTemplate && !widget.offerEmpty && _narrowed && !_checking
-              // #1660 — the library HAS templates; this search just
-              // matches none of them. Never "nothing here yet".
-              ? Column(key: const ValueKey('template-no-match'), children: [
-                  Expanded(child: EmptyState(
-                    icon: Icons.search_off,
-                    title: l10n.templateNoMatch,
-                  )),
-                  TextButton(
-                    key: const ValueKey('template-clear-filters'),
-                    onPressed: _clearAll,
-                    child: Text(l10n.templateClearFilters),
-                  ),
-                ])
-              : !anyTemplate && !widget.offerEmpty
-              ? EmptyState(
-                  key: const ValueKey('template-gallery-empty'),
-                  icon: Icons.grid_view_outlined,
-                  title: l10n.libraryEmpty,
-                )
-              : ListView.builder(
-                  key: const ValueKey('template-gallery'),
-                  padding: widget.padding,
-                  itemCount: rows.length,
-                  itemBuilder: (context, i) => switch (rows[i]) {
-                    final TemplateGallerySection s => Padding(
-                        padding: const EdgeInsets.only(
-                            top: AppSpacing.md, bottom: AppSpacing.sm),
-                        child: Text(s.title, style: theme.textTheme.titleMedium),
-                      ),
-                    (
-                      template: final WorkspaceTemplate t,
-                      section: final TemplateGallerySection s
-                    ) =>
-                      TemplateCard(
-                        key: ValueKey('template-gallery-template-card-$i'),
-                        template: t,
-                        selected: widget.onSelected == null
-                            ? null
-                            : t.id == widget.selectedId,
-                        onTap: widget.onSelected == null
-                            ? null
-                            : () => widget.onSelected!(t.id),
-                        trailing: s.trailingFor?.call(t),
-                        shortlisted: _shortlist.any((x) => x.id == t.id),
-                        evidence: _capability?.matched
-                            .where((m) => m.inspection.templateId == t.id)
-                            .firstOrNull
-                            ?.evidence,
-                        onShortlist: () => _toggleShortlist(t),
-                        onDetails: widget.onSelected != null
-                            ? null
-                            : () => templateDetailPage.open<void>(
-                                context,
-                                TemplateDetailScreen(template: t),
-                              ),
-                      ),
-                    _ => _EmptySpaceCard(
-                        key: ValueKey('template-gallery-empty-space-card-$i'),
-                        selected: widget.selectedId == null,
-                        onTap: () => widget.onSelected?.call(null),
-                      ),
-                  },
-                ),
-        ),
+        Expanded(child: _results(rows, anyTemplate)),
       ],
     );
   }
 }
 
-class _EmptySpace {
-  const _EmptySpace();
-}
-
-/// One template, as the gallery shows it: what it is for and what it gives.
-class _EmptySpaceCard extends StatelessWidget {
-  const _EmptySpaceCard({super.key, required this.selected, required this.onTap});
-
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Card(
-      key: const ValueKey('template-empty'),
-      color:
-          selected ? Theme.of(context).colorScheme.secondaryContainer : null,
-      child: ListTile(
-        key: const ValueKey('template-gallery-onboarding-start-empty'),
-        leading: Icon(selected ? Icons.check : Icons.crop_square_outlined),
-        title: Text(l10n.onboardingStartEmpty),
-        subtitle: Text(l10n.onboardingStartEmptyDesc),
-        selected: selected,
-        onTap: onTap,
-      ),
-    );
-  }
-}
-
 extension on _TemplateGalleryState {
+  /// Flattened rows: a header per non-empty section, then its cards.
+  ({List<Object> rows, List<WorkspaceTemplate> shownAll, bool anyTemplate}) _rows() {
+    final rows = <Object>[];
+    final shownAll = <WorkspaceTemplate>[];
+    var anyTemplate = false;
+    for (final section in widget.sections) {
+      final shown = [
+        for (final t in TemplateGallery.ordered(section.templates))
+          if (_shows(t)) t,
+      ];
+      // #1660 — a capability search lists its matches in the order it
+      // ranked them: preferred capabilities first, then the words.
+      final ranked = _capability?.matched;
+      if (ranked != null) {
+        int rank(WorkspaceTemplate t) =>
+            ranked.indexWhere((m) => m.inspection.templateId == t.id);
+        shown.sort((a, b) => rank(a).compareTo(rank(b)));
+      }
+      if (widget.sections.length > 1) rows.add(section);
+      for (final t in shown) {
+        rows.add((template: t, section: section));
+      }
+      shownAll.addAll(shown);
+      anyTemplate = anyTemplate || shown.isNotEmpty;
+    }
+    if (widget.offerEmpty) rows.add(const TemplateEmptySpace());
+    return (rows: rows, shownAll: shownAll, anyTemplate: anyTemplate);
+  }
+
+  Widget _searchField(AppLocalizations l10n) {
+    return TextField(
+  key: const ValueKey('template-search'),
+  controller: _search,
+  onChanged: _onQuery,
+  decoration: InputDecoration(
+    prefixIcon: const Icon(Icons.search),
+    // #1660 — every capability, by process, for whoever does not
+    // know the word to type.
+    suffixIcon: IconButton(
+      key: const ValueKey('template-browse-capabilities'),
+      tooltip: l10n.capabilityBrowserTitle,
+      icon: const Icon(Icons.account_tree_outlined),
+      onPressed: () async {
+        final choice = await showCapabilityBrowser(context);
+        if (choice == null || !mounted) return;
+        _setRequired(() {
+          _required.remove(choice.id);
+          _preferred.remove(choice.id);
+          (choice.required ? _required : _preferred).add(choice.id);
+        });
+      },
+    ),
+    hintText: l10n.librarySearchHint,
+  ),
+);
+  }
+
+  List<Widget> _tagRow(List<String> allTags) {
+    return [
+        const SizedBox(height: AppSpacing.sm),
+        EdgeFadeScroll(
+          child: Row(children: [
+            for (final tag in allTags)
+              Padding(padding: const EdgeInsets.only(right: AppSpacing.sm),
+                child: FilterChip(
+                key: ValueKey('template-tag-$tag'),
+                label: Text(tag),
+                selected: _tags.contains(tag),
+                onSelected: (on) => _toggleTag(tag, on: on),
+              )),
+          ]),
+        ),
+    ];
+  }
+
+  Widget _results(List<Object> rows, bool anyTemplate) {
+    final l10n = context.l10n;
+    return !anyTemplate && !widget.offerEmpty && _narrowed && !_checking
+    // #1660 — the library HAS templates; this search just
+    // matches none of them. Never "nothing here yet".
+    ? Column(key: const ValueKey('template-no-match'), children: [
+        Expanded(child: EmptyState(
+          icon: Icons.search_off,
+          title: l10n.templateNoMatch,
+        )),
+        TextButton(
+          key: const ValueKey('template-clear-filters'),
+          onPressed: _clearAll,
+          child: Text(l10n.templateClearFilters),
+        ),
+      ])
+    : !anyTemplate && !widget.offerEmpty
+    ? EmptyState(
+        key: const ValueKey('template-gallery-empty'),
+        icon: Icons.grid_view_outlined,
+        title: l10n.libraryEmpty,
+      )
+    : ListView.builder(
+        key: const ValueKey('template-gallery'),
+        padding: widget.padding,
+        itemCount: rows.length,
+        itemBuilder: (context, i) => _rowAt(context, rows, i),
+      );
+  }
+
+  Widget _rowAt(BuildContext context, List<Object> rows, int i) {
+    final theme = Theme.of(context);
+    return switch (rows[i]) {
+          final TemplateGallerySection s => Padding(
+              padding: const EdgeInsets.only(
+                  top: AppSpacing.md, bottom: AppSpacing.sm),
+              child: Text(s.title, style: theme.textTheme.titleMedium),
+            ),
+          (
+            template: final WorkspaceTemplate t,
+            section: final TemplateGallerySection s
+          ) =>
+            TemplateCard(
+              key: ValueKey('template-gallery-template-card-$i'),
+              template: t,
+              selected: widget.onSelected == null
+                  ? null
+                  : t.id == widget.selectedId,
+              onTap: widget.onSelected == null
+                  ? null
+                  : () => widget.onSelected!(t.id),
+              trailing: s.trailingFor?.call(t),
+              shortlisted: _shortlist.any((x) => x.id == t.id),
+              evidence: _capability?.matched
+                  .where((m) => m.inspection.templateId == t.id)
+                  .firstOrNull
+                  ?.evidence,
+              onShortlist: () => _toggleShortlist(t),
+              onDetails: widget.onSelected != null
+                  ? null
+                  : () => templateDetailPage.open<void>(
+                      context,
+                      TemplateDetailScreen(template: t),
+                    ),
+            ),
+          _ => TemplateEmptySpaceCard(
+              key: ValueKey('template-gallery-empty-space-card-$i'),
+              selected: widget.selectedId == null,
+              onTap: () => widget.onSelected?.call(null),
+            ),
+    };
+  }
+
   /// What the search understood, or why it could not answer.
   List<Widget> _capabilityStatus(AppLocalizations l10n) {
     final capability = _capability;
