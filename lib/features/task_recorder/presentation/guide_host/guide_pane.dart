@@ -27,27 +27,16 @@ class _Pane extends ConsumerWidget {
   final bool canOpenPage;
   final VoidCallback onMinimize;
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  List<Widget> _notices(
+    BuildContext context,
+    GuideStep? step, {
+    required bool ended,
+    required bool waiting,
+  }) {
     final l10n = context.l10n;
-    final text = Theme.of(context).textTheme;
-    final notifier = ref.read(guideSessionProvider.notifier);
-    final guide = run.guide;
-    final steps = guide.steps;
-    final step = run.current;
-    final mainIndex = step == null
-        ? steps.length
-        : steps.indexWhere(
-            (s) => s.id == step.id || s.recovery.any((r) => r.id == step.id),
-          );
-    final ended =
-        run.state == GuideRunState.completed ||
-        run.state == GuideRunState.stopped;
-    final waiting =
-        step != null && run.statusOf(step.id) == GuideStepStatus.waiting;
+    final steps = run.guide.steps;
     final inRecovery = step != null && step.id.contains('r');
-
-    final notices = <Widget>[
+    return [
       if (ended)
         _Notice(
           'guide-host-${run.state.name}',
@@ -80,6 +69,125 @@ class _Pane extends ConsumerWidget {
           _Notice('guide-host-not-on-screen', l10n.guideHostNotOnScreen),
       ],
     ];
+  }
+
+  Widget _header(
+    BuildContext context,
+    TextTheme text,
+    GuideSession notifier, {
+    required bool ended,
+  }) {
+    final l10n = context.l10n;
+    final guide = run.guide;
+    return Row(
+    children: [
+      Expanded(
+        child: Semantics(
+          header: true,
+          child: Text(
+            guide.title ?? (l10n.guideHostTitle),
+            style: text.titleSmall,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+      if (!ended)
+        IconButton(
+          key: const ValueKey('guide-host-minimize'),
+          tooltip: l10n.guideHostMinimize,
+          icon: const Icon(Icons.minimize_rounded),
+          onPressed: onMinimize,
+        ),
+      if (ended)
+        IconButton(
+          key: const ValueKey('guide-host-close'),
+          tooltip: l10n.guideHostClose,
+          icon: const Icon(Icons.close),
+          onPressed: notifier.close,
+        )
+      else
+        IconButton(
+          key: const ValueKey('guide-host-stop'),
+          tooltip: l10n.guideHostStop,
+          icon: const Icon(Icons.stop_circle_outlined),
+          onPressed: notifier.stop,
+        ),
+    ],
+  );
+  }
+
+  Widget _actionRow(
+    BuildContext context,
+    GuideSession notifier,
+    GuideStep? step, {
+    required int mainIndex,
+    required bool waiting,
+  }) {
+    final l10n = context.l10n;
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.xs,
+      alignment: WrapAlignment.end,
+      children: [
+        if (run.state == GuideRunState.paused)
+          FilledButton(
+            key: const ValueKey('guide-host-resume'),
+            onPressed: notifier.resume,
+            child: Text(l10n.guideHostResume),
+          )
+        else ...[
+          TextButton(
+            key: const ValueKey('guide-host-back'),
+            onPressed: mainIndex > 0 && !waiting
+                ? notifier.back
+                : null,
+            child: Text(l10n.guideHostBack),
+          ),
+          if (step != null && !waiting)
+            TextButton(
+              key: const ValueKey('guide-host-skip'),
+              onPressed: notifier.skip,
+              child: Text(l10n.guideHostSkip),
+            ),
+          if (!blocked)
+            FilledButton.icon(
+              key: const ValueKey('guide-host-show-me'),
+              onPressed: onShowMe,
+              icon: const Icon(Icons.near_me_outlined),
+              label: Text(l10n.guideHostShowMe),
+            ),
+          if (step != null && step.kind != GuideStepKind.perform)
+            FilledButton(
+              key: const ValueKey('guide-host-done'),
+              onPressed: notifier.acknowledge,
+              child: Text(l10n.guideHostDone),
+            ),
+        ],
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final text = Theme.of(context).textTheme;
+    final notifier = ref.read(guideSessionProvider.notifier);
+    final guide = run.guide;
+    final steps = guide.steps;
+    final step = run.current;
+    final mainIndex = step == null
+        ? steps.length
+        : steps.indexWhere(
+            (s) => s.id == step.id || s.recovery.any((r) => r.id == step.id),
+          );
+    final ended =
+        run.state == GuideRunState.completed ||
+        run.state == GuideRunState.stopped;
+    final waiting =
+        step != null && run.statusOf(step.id) == GuideStepStatus.waiting;
+
+    final notices = _notices(context, step, ended: ended, waiting: waiting);
 
     return Material(
       key: const ValueKey('guide-host'),
@@ -92,42 +200,7 @@ class _Pane extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Semantics(
-                    header: true,
-                    child: Text(
-                      guide.title ?? (l10n.guideHostTitle),
-                      style: text.titleSmall,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                if (!ended)
-                  IconButton(
-                    key: const ValueKey('guide-host-minimize'),
-                    tooltip: l10n.guideHostMinimize,
-                    icon: const Icon(Icons.minimize_rounded),
-                    onPressed: onMinimize,
-                  ),
-                if (ended)
-                  IconButton(
-                    key: const ValueKey('guide-host-close'),
-                    tooltip: l10n.guideHostClose,
-                    icon: const Icon(Icons.close),
-                    onPressed: notifier.close,
-                  )
-                else
-                  IconButton(
-                    key: const ValueKey('guide-host-stop'),
-                    tooltip: l10n.guideHostStop,
-                    icon: const Icon(Icons.stop_circle_outlined),
-                    onPressed: notifier.stop,
-                  ),
-              ],
-            ),
+            _header(context, text, notifier, ended: ended),
             Row(
               children: [
                 if (!ended)
@@ -204,47 +277,7 @@ class _Pane extends ConsumerWidget {
               ),
             if (!ended) ...[
               const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.xs,
-                alignment: WrapAlignment.end,
-                children: [
-                  if (run.state == GuideRunState.paused)
-                    FilledButton(
-                      key: const ValueKey('guide-host-resume'),
-                      onPressed: notifier.resume,
-                      child: Text(l10n.guideHostResume),
-                    )
-                  else ...[
-                    TextButton(
-                      key: const ValueKey('guide-host-back'),
-                      onPressed: mainIndex > 0 && !waiting
-                          ? notifier.back
-                          : null,
-                      child: Text(l10n.guideHostBack),
-                    ),
-                    if (step != null && !waiting)
-                      TextButton(
-                        key: const ValueKey('guide-host-skip'),
-                        onPressed: notifier.skip,
-                        child: Text(l10n.guideHostSkip),
-                      ),
-                    if (!blocked)
-                      FilledButton.icon(
-                        key: const ValueKey('guide-host-show-me'),
-                        onPressed: onShowMe,
-                        icon: const Icon(Icons.near_me_outlined),
-                        label: Text(l10n.guideHostShowMe),
-                      ),
-                    if (step != null && step.kind != GuideStepKind.perform)
-                      FilledButton(
-                        key: const ValueKey('guide-host-done'),
-                        onPressed: notifier.acknowledge,
-                        child: Text(l10n.guideHostDone),
-                      ),
-                  ],
-                ],
-              ),
+              _actionRow(context, notifier, step, mainIndex: mainIndex, waiting: waiting),
             ],
           ],
         ),
