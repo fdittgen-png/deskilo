@@ -1,8 +1,8 @@
 {
-  "recordedSha": "4ffa08b3067a26d36ab371cdb87dd9d5abd456f4",
+  "recordedSha": "831a040bcfbe5d631a3808a7144912cfb49e2f49",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9679,"cyclomatic>=9":1031,"cyclomatic>=25":114,"cognitive>=15":426,"cognitive>=30":104,"length>=150":78,"parameters>=5":463,"parameters>=7":150,"partOfFiles":75},
+  "totals": {"files":1751,"functions":9694,"cyclomatic>=9":1031,"cyclomatic>=25":113,"cognitive>=15":426,"cognitive>=30":103,"length>=150":77,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2348,7 +2348,7 @@
     {"p":"lib/features/workspace/presentation/widgets/badge_manager_dialog.dart","loc":455,"part":false,"setState":6,"repositoryReads":1,"fn":14,"cog":13,"cyc":9,"len":80,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_charts.dart","loc":446,"part":false,"setState":1,"repositoryReads":0,"fn":10,"cog":48,"cyc":32,"len":136,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_dashboard.dart","loc":240,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":11,"cyc":10,"len":111,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart","loc":241,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":64,"cyc":45,"len":229,"params":10,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
+    {"p":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart","loc":281,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":16,"cyc":9,"len":44,"params":10,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":2}},
     {"p":"lib/features/workspace/presentation/widgets/bi_export.dart","loc":174,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":26,"cyc":20,"len":151,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_module_section.dart","loc":379,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":29,"cyc":23,"len":118,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/bi_report_panel.dart","loc":217,"part":false,"setState":3,"repositoryReads":0,"fn":9,"cog":21,"cyc":18,"len":116,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2766,7 +2766,8 @@
     {"id":"lib/features/workspace/presentation/screens/workspace_settings_screen_part2.dart#_WorkspaceSettingsScreenStatePart2._importXml(Workspace workspace)","cog":52,"cyc":40,"len":264,"params":1},
     {"id":"lib/features/workspace/presentation/screens/workspace_settings_screen_part3.dart#_WorkspaceSettingsScreenStatePart3._parametersTiles(BuildContext context,{required AppLocalizations l10n,required Workspace workspace,required String helpTopic})","cog":17,"cyc":14,"len":298,"params":4},
     {"id":"lib/features/workspace/presentation/widgets/bi_charts.dart#_EvolutionPainter.paint(Canvas canvas,Size size)","cog":48,"cyc":32,"len":136,"params":2},
-    {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent({required BiModule module,required BiModuleView view,required BiResult result,required BiSeries series,required BiDashboardExtras extras,required AppLocalizations l10n,required String locale,required DateTime from,required DateTime to,required DateTime now})","cog":64,"cyc":45,"len":229,"params":10},
+    {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent({required BiModule module,required BiModuleView view,required BiResult result,required BiSeries series,required BiDashboardExtras extras,required AppLocalizations l10n,required String locale,required DateTime from,required DateTime to,required DateTime now})","cog":0,"cyc":1,"len":24,"params":10},
+    {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#_DashboardBuilder.new({required this.module,required this.view,required this.result,required this.series,required this.extras,required this.l10n,required this.locale,required this.from,required this.to,required this.now})","cog":4,"cyc":4,"len":24,"params":10},
     {"id":"lib/features/workspace/presentation/widgets/bi_export.dart#exportBiPdf(BuildContext context,WidgetRef ref,{required String workspaceId,required String workspaceName,required List<BiModule> modules,required BiQueryContext query})","cog":26,"cyc":20,"len":151,"params":6},
     {"id":"lib/features/workspace/presentation/widgets/bi_views_bar.dart#BiViewsBar.build(BuildContext context,WidgetRef ref)","cog":55,"cyc":35,"len":266,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/conversation_bubble.dart#ConversationBubble._bubble(BuildContext context,WidgetRef ref,ThemeData theme)","cog":30,"cyc":19,"len":142,"params":3},
