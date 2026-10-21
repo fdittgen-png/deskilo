@@ -109,6 +109,18 @@ Reservation _booking(String id, String memberId, DateTime start) => Reservation(
   status: ReservationStatus.reserved,
 );
 
+final _pending = WorkspaceEvent(
+  id: 'e1',
+  workspaceId: 'ws-1',
+  type: EventType.reservation,
+  action: EventAction.created,
+  actorMemberId: 'member-2',
+  subjectMemberId: 'member-2',
+  payload: const {'note': 'free text the agent must not get'},
+  status: EventStatus.pending,
+  createdAt: DateTime.utc(2026, 10),
+);
+
 /// The contract's `output` list per operation.
 Map<String, Set<String>> _outputs() {
   final contract = jsonDecode(
@@ -184,21 +196,9 @@ void main() {
             balanceCents: -30000,
           ),
         ),
-        myPendingEventsProvider.overrideWith(
-          (ref) async => [
-            WorkspaceEvent(
-              id: 'e1',
-              workspaceId: 'ws-1',
-              type: EventType.reservation,
-              action: EventAction.created,
-              actorMemberId: 'member-2',
-              subjectMemberId: 'member-2',
-              payload: const {'note': 'free text the agent must not get'},
-              status: EventStatus.pending,
-              createdAt: DateTime.utc(2026, 10),
-            ),
-          ],
-        ),
+        myPendingEventsProvider.overrideWith((ref) async => [_pending]),
+        eventTrailProvider('e1')
+            .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
     );
     addTearDown(c.dispose);
@@ -247,6 +247,7 @@ void main() {
         'deskilo_list_pending_validations',
         'deskilo_list_my_favorites',
         'deskilo_get_my_statement',
+        'deskilo_get_validation',
       });
     },
   );
@@ -293,6 +294,10 @@ void main() {
       ),
       'list_my_favorites': await call('deskilo_list_my_favorites', {
         'workspace_id': 'ws-1',
+      }),
+      'get_validation': await call('deskilo_get_validation', {
+        'workspace_id': 'ws-1',
+        'event_id': 'e1',
       }),
       'get_my_statement': await call('deskilo_get_my_statement', {
         'workspace_id': 'ws-1',

@@ -20,6 +20,7 @@ import '../core/webmcp/webmcp_device_switch.dart';
 import '../core/webmcp/webmcp_registry.dart';
 import '../core/webmcp/webmcp_tool_spec.dart';
 import '../core/webmcp/webmcp_tools.g.dart';
+import '../features/events/domain/workspace_event.dart';
 import '../features/events/providers/event_providers.dart';
 import '../features/money/providers/money_providers.dart';
 import '../features/reservations/domain/reservation.dart';
@@ -91,6 +92,7 @@ final Map<String, WebMcpRead> webMcpReadRunners = {
   'list_pending_validations': _listPendingValidations,
   'list_my_favorites': _listMyFavorites,
   'get_my_statement': _getMyStatement,
+  'get_validation': _getValidation,
 };
 
 /// Runs [tool] and wraps its answer as the MCP facade does: a status, the
@@ -388,5 +390,37 @@ Future<Map<String, Object?>> _getMyStatement(
     'level_supplement_cents': statement.levelSupplementCents,
     'accessory_supplement_cents': statement.accessorySupplementCents,
     'currency': workspace.currencyCode,
+  };
+}
+
+Future<Map<String, Object?>> _getValidation(
+  Ref ref,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+  List<String> Function() offered,
+) async {
+  final eventId = input['event_id'];
+  if (eventId is! String || eventId.isEmpty) {
+    throw const _Refused('validation_error', 'event_id is required.');
+  }
+  final trail = await ref.read(eventTrailProvider(eventId).future);
+  final event = trail.event;
+  if (event == null || event.workspaceId != conditions.workspaceId) {
+    throw const _Refused('not_found', 'No such validation request in this workspace.');
+  }
+  final pendingMine = await ref.read(myPendingEventsProvider.future);
+  final canRespond = pendingMine.any((e) => e.id == event.id);
+  return {
+    'event_id': event.id,
+    'type': event.type.dbName,
+    'status': event.status.name,
+    'requested_at': event.createdAt.toUtc().toIso8601String(),
+    'decisions': trail.decisions.length,
+    'can_respond': canRespond,
+    'reason': canRespond
+        ? null
+        : event.status == EventStatus.pending
+        ? 'not_a_decider'
+        : 'not_pending',
   };
 }
