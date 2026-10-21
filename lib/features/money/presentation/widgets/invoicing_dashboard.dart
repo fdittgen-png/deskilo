@@ -10,7 +10,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -20,9 +19,9 @@ import '../../domain/ledger_entry.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'open_invoice_card.dart';
+import 'open_invoice_subtitle.dart';
 import 'wizard_context.dart';
 
-part 'invoicing_dashboard_part1.dart';
 
 part 'invoicing_dashboard_part2.dart';
 part 'invoicing_dashboard_part3.dart';

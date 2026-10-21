@@ -2,15 +2,12 @@
 part of 'invoicing_dashboard.dart';
 
 
-/// How old an open invoice has to be before the hub starts pointing at it.
-const _overdueDays = 30;
-
 /// The issuer's invoicing summary strip (field request: "everything an
 /// invoicing tool would need"): how many months wait to be invoiced and
 /// how much is outstanding, at a glance.
 ///
 /// Two pills rather than one grey sentence — and the money turns red once
-/// something has been waiting longer than [_overdueDays].
+/// something has been waiting longer than [openInvoiceOverdueDays].
 class InvoicingSummaryBar extends ConsumerWidget {
   const InvoicingSummaryBar({super.key, required this.currency});
 
@@ -47,7 +44,7 @@ class InvoicingSummaryBar extends ConsumerWidget {
         refundable.fold(0, (sum, e) => sum - e.invoice.totalCents);
     final now = ref.read(clockProvider).now();
     final overdue = collectable.any(
-      (e) => now.difference(e.invoice.issuedAt).inDays >= _overdueDays,
+      (e) => now.difference(e.invoice.issuedAt).inDays >= openInvoiceOverdueDays,
     );
     return Padding(
       key: const ValueKey('invoicing-summary'),

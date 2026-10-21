@@ -40,7 +40,8 @@ import '../guide/guide_session.dart';
 import 'toggle_capture.dart';
 import 'ui_labels.g.dart';
 
-part 'ui_capture_observer.dart';
+export 'ui_capture_observer.dart' show RecorderWindowObserver;
+
 
 /// The live capture, while the recorder's indicator is mounted.
 class UiCapture implements GuardedCommandWatcher {
@@ -589,4 +590,13 @@ class UiCapture implements GuardedCommandWatcher {
       TraceLogger.instance.warn('recorder', 'result not noted', stackTrace: st);
     }
   }
+}
+
+/// A guarded command a guide saw: the guide to tell its result, and the
+/// recording's own token when one was live.
+class _GuidedCommand {
+  const _GuidedCommand(this.guide, this.token, this.guideToken);
+  final GuideEventSink guide;
+  final OperationToken? token;
+  final Object? guideToken;
 }

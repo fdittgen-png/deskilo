@@ -146,7 +146,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  _openSubtitle(
+                  openInvoiceSubtitle(
                       context, l10n, entry, reminders, dateFormat, now),
                   if (dueLevels[entry.invoice.id]
                       case final int dueLevel)

@@ -33,17 +33,16 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/change_reservation.dart';
 import '../../domain/booking_error_text.dart';
 import '../../domain/own_booking_removal.dart';
-import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
 import 'calendar_file_button.dart';
 import 'reservation_status_note.dart';
+import 'reservation_time_picker.dart';
 import 'series_result_dialog.dart';
 
 part 'reservation_detail_sheet_part1.dart';
-part 'reservation_detail_sheet_part2.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
