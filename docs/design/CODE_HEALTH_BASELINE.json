@@ -1,8 +1,8 @@
 {
-  "recordedSha": "f014d46a916e3aa613dccff9faf917668ca038c2",
+  "recordedSha": "2010def91e5710cf81d60e996b29d79c7f387670",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1746,"functions":9777,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":97,"length>=150":72,"parameters>=5":466,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1746,"functions":9781,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":97,"length>=150":72,"parameters>=5":466,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -778,7 +778,7 @@
     {"p":"lib/app/shell/space_entry.dart","loc":178,"part":false,"setState":1,"repositoryReads":0,"fn":6,"cog":4,"cyc":6,"len":82,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/shell/workspace_scoped.dart","loc":4,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/theme.dart","loc":219,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":5,"cyc":6,"len":129,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/app/webmcp_wiring.dart","loc":344,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":8,"cyc":8,"len":43,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/webmcp_wiring.dart","loc":444,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":8,"cyc":8,"len":43,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/app_info.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/auth_callback_dispatch.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":6,"len":20,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/auth_callback_guard.dart","loc":151,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":8,"cyc":18,"len":32,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
