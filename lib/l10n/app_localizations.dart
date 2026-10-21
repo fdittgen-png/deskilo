@@ -38616,6 +38616,18 @@ abstract class AppLocalizations {
   /// **'Requested'**
   String get visitStatusRequested;
 
+  /// #2504 Me > Account: the per-device switch for in-browser assistants (WebMCP)
+  ///
+  /// In en, this message translates to:
+  /// **'Let assistants in this browser use the app'**
+  String get webMcpDeviceSwitch;
+
+  /// #2504 Me > Account: what the WebMCP device switch does
+  ///
+  /// In en, this message translates to:
+  /// **'Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.'**
+  String get webMcpDeviceSwitchHint;
+
   /// #2459 sign-in form: opens the public welcome page, beside the demo link
   ///
   /// In en, this message translates to:

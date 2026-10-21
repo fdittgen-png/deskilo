@@ -120,6 +120,7 @@ import '../storage/notification_filter_store.dart';
 import '../storage/space_prefs_store.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
+import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
@@ -346,6 +347,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       shellSwipeCoachStoreProvider
           .overrideWithValue(fixture.prefs.shellSwipeCoach),
       pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
+      webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
       activeWorkspaceStoreProvider
           .overrideWithValue(fixture.prefs.activeWorkspace),

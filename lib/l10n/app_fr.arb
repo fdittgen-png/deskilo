@@ -16235,6 +16235,8 @@
   "@visitStatusRequested": {
     "description": "#1835 visit status"
   },
+  "webMcpDeviceSwitch": "Autoriser les assistants de ce navigateur à utiliser l'application",
+  "webMcpDeviceSwitchHint": "Désactivé par défaut. Activé, un assistant IA intégré à ce navigateur peut lire vos réservations, vos factures et vos demandes en attente dans cet espace tant que la page est ouverte. Le choix reste sur cet appareil.",
   "welcomeLinkAction": "Qu’est-ce que DesKilo ?",
   "@welcomeLinkAction": {
     "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"

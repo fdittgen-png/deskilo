@@ -216,6 +216,10 @@ List<Widget> accountSettingsTiles(
     // In-app language (#147) and theme (#160) overrides: the defaults.
     if (account) _languageTile(context, ref, defaultsOnly: true),
     if (account) _themeTile(context, ref, defaultsOnly: true),
+    // #2504 — an assistant built into this browser may use the page's
+    // tools only when the person turns this on, here, on this device.
+    if (account && kIsWeb && features.contains(WorkspaceFeature.webMcp))
+      const WebMcpDeviceSwitchTile(),
     // #711 — Region & formats, behind the regionalFormats feature.
     if (account && inSpace && features.contains(WorkspaceFeature.regionalFormats))
       const RegionalFormatsSection(),

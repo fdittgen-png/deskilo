@@ -121,9 +121,8 @@ void main() {
         'deadFlags': const <String>[],
       }, baseline);
       // Every dead flag in the baseline is gone from this tree: one line each.
-      expect(drift, hasLength(2));
+      expect(drift, hasLength(1));
       expect(drift.join('\n'), contains('GONE siteDocuments'));
-      expect(drift.join('\n'), contains('GONE webMcp'));
     });
   });
 }

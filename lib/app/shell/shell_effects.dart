@@ -35,6 +35,7 @@ import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../webmcp_wiring.dart';
 import 'shell_session.dart';
 
 /// Starts every shell-wide effect. Called from the shell's build; the
@@ -82,7 +83,10 @@ void _watchAmbientProviders(WidgetRef ref) {
     // providers on every device, this one included — no restarts, no
     // manual refresh.
     ..watch(realtimeInvalidatorProvider(RealtimeTarget.workspace))
-    ..watch(realtimeInvalidatorProvider(RealtimeTarget.account));
+    ..watch(realtimeInvalidatorProvider(RealtimeTarget.account))
+    // #2504 — the page's tools for an in-browser assistant; it offers
+    // nothing unless every condition holds (web, feature, device switch).
+    ..watch(webMcpRegistryProvider);
 }
 
 void _mirrorPendingEvents(WidgetRef ref, AppLocalizations l10n) {

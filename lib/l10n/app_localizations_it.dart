@@ -22593,6 +22593,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visitStatusRequested => 'Richiesta';
 
   @override
+  String get webMcpDeviceSwitch =>
+      'Consenti agli assistenti di questo browser di usare l\'app';
+
+  @override
+  String get webMcpDeviceSwitchHint =>
+      'Disattivato per impostazione predefinita. Attivato, un assistente IA integrato in questo browser può leggere le sue prenotazioni, fatture e richieste in sospeso in questo spazio mentre la pagina è aperta. La scelta resta solo su questo dispositivo.';
+
+  @override
   String get welcomeLinkAction => 'Che cos’è DesKilo?';
 
   @override

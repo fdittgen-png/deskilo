@@ -22369,6 +22369,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visitStatusRequested => 'Requested';
 
   @override
+  String get webMcpDeviceSwitch => 'Let assistants in this browser use the app';
+
+  @override
+  String get webMcpDeviceSwitchHint =>
+      'Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.';
+
+  @override
   String get welcomeLinkAction => 'What is DesKilo?';
 
   @override
