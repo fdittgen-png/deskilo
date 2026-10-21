@@ -22,6 +22,7 @@ import '../core/webmcp/webmcp_tools.g.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'webmcp_confirmations.dart';
+import 'webmcp_confirmed_writes.dart';
 import 'webmcp_reads.dart';
 import 'webmcp_writes.dart';
 

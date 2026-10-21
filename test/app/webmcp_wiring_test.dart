@@ -19,6 +19,7 @@ import 'package:deskilo/core/webmcp/webmcp_tools.g.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -71,6 +72,16 @@ class _Feedback implements PlaceFeedbackRepository {
     favoriteWrites++;
     return PlaceFeedback(favorite: on, count: 1, average: 4);
   }
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Invoices implements InvoiceCommands {
+  final voided = <String>[];
+
+  @override
+  Future<void> voidInvoice(String invoiceId) async => voided.add(invoiceId);
 
   @override
   Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -196,6 +207,7 @@ void main() {
   late Set<WorkspaceFeature> features;
   late _Feedback feedback;
   late FakeEventRepository events;
+  late _Invoices invoiceCommands;
   var permissions = <WorkspacePermission>{};
 
   ProviderContainer container() {
@@ -236,6 +248,7 @@ void main() {
         memberAccountQueriesProvider.overrideWithValue(_Accounts()),
         placeFeedbackRepositoryProvider.overrideWithValue(feedback),
         eventRepositoryProvider.overrideWithValue(events),
+        invoiceCommandsProvider.overrideWithValue(invoiceCommands),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -245,9 +258,13 @@ void main() {
   }
 
   setUp(() {
-    permissions = {WorkspacePermission.viewFinances};
+    permissions = {
+      WorkspacePermission.viewFinances,
+      WorkspacePermission.issueInvoices,
+    };
     feedback = _Feedback();
     events = FakeEventRepository()..events.add(_pending);
+    invoiceCommands = _Invoices();
     context = _Context();
     deviceSwitch = _Switch(on: true);
     reservations = FakeReservationRepository()
@@ -300,6 +317,10 @@ void main() {
         'deskilo_create_reservation',
         'deskilo_request_reservation_deletion',
         'deskilo_respond_to_validation',
+        'deskilo_request_invoice_void',
+        'deskilo_request_refund',
+        'deskilo_request_member_status_change',
+        'deskilo_request_subscription_change',
       });
     },
   );
@@ -621,6 +642,46 @@ void main() {
     final answer = await call('deskilo_respond_to_validation', input);
     expect((answer['error']! as Map)['code'], 'declined');
     expect(events.events.single.status, EventStatus.pending);
+  });
+
+  test('voiding an invoice needs the right first, then the person', () async {
+    permissions = {};
+    final c = await armed();
+    final input = {
+      'request_id': 'req-void-1',
+      'workspace_id': 'ws-1',
+      'invoice_id': 'i2',
+    };
+    final refused = await call('deskilo_request_invoice_void', input);
+    expect((refused['error']! as Map)['code'], 'forbidden');
+    expect(c.read(webMcpConfirmationsProvider), isNull);
+    expect(invoiceCommands.voided, isEmpty);
+  });
+
+  test('a confirmed void runs the invoice screen call once', () async {
+    final c = await armed();
+    final input = {
+      'request_id': 'req-void-2',
+      'workspace_id': 'ws-1',
+      'invoice_id': 'i2',
+    };
+    expect(
+      (await call('deskilo_request_invoice_void', input))['status'],
+      'pending_confirmation',
+    );
+    expect(invoiceCommands.voided, isEmpty);
+    final request = c.read(webMcpConfirmationsProvider)!;
+    c
+        .read(webMcpConfirmationsProvider.notifier)
+        .decide(request.key, accept: true);
+    final done = await call('deskilo_request_invoice_void', input);
+    expect(done['ok'], isTrue, reason: '$done');
+    await call('deskilo_request_invoice_void', input);
+    expect(invoiceCommands.voided, ['i2']);
+    expect(
+      _keys(done['output']).difference(_outputs()['request_invoice_void']!),
+      isEmpty,
+    );
   });
 
   test('a window longer than 31 days is refused', () async {
