@@ -1,8 +1,8 @@
 {
-  "recordedSha": "6aafba215f57d19617044228e5e8b4ae0fa6182e",
+  "recordedSha": "b130feb12215a28fe3d48cd7d6339a8e6e300407",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1755,"functions":9754,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":96,"length>=150":72,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
+  "totals": {"files":1756,"functions":9757,"cyclomatic>=9":1034,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":96,"length>=150":72,"parameters>=5":464,"parameters>=7":151,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2164,6 +2164,7 @@
     {"p":"lib/features/workspace/data/connected_space_reader.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":3,"len":25,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/conversation_api.dart","loc":177,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":2,"cyc":3,"len":23,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/fan_out_batch_reader.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":6,"len":37,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/data/host_bound_settings_store.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":15,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/nager_holiday_source.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/supabase_bi_view_repository.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":9,"len":23,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/data/supabase_deployment_repository.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":9,"len":26,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2457,7 +2458,7 @@
     {"p":"lib/features/workspace/providers/local_setup_providers.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":8,"cyc":6,"len":11,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/operation_context_providers.dart","loc":102,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":9,"cyc":7,"len":54,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/realtime_invalidations.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/providers/settings_providers.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":1,"cyc":2,"len":23,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/providers/settings_providers.dart","loc":74,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":4,"len":32,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/template_search_providers.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workbook_export_providers.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":13,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workspace_application_providers.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":11,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

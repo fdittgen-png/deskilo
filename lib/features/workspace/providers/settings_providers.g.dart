@@ -10,36 +10,48 @@ part of 'settings_providers.dart';
 // ignore_for_file: type=lint, type=warning
 /// #2484 -- the settings registry: read and written.
 ///
-/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
-/// captures these settings (currentSettingsCapture), and the selected client
-/// is derived from that context, so watching it here closes a provider cycle
-/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
-/// pre-context client until the context's host binding no longer waits for
-/// its settings capture.
+/// #2564 -- on the host the workspace lives on, when it lives on a connected
+/// installation. That host is found by the resolver, which depends on the
+/// selection only, at each call and with the pin given back afterwards
+/// (`ref.read` inside the scope, not a watch): this provider and the context
+/// that captures the settings stay two nodes with no edge between them, so
+/// the cycle that once rebuilt without end (selectedWorkspaceClient ->
+/// workspaceContext -> currentSettingsCapture -> settingsSource ->
+/// settingsRepository) cannot form. The platform's own view, a workspace other
+/// than the selected connected one, and the combined deployment stay on the
+/// installation the app is signed in to.
 
 @ProviderFor(settingsRepository)
 final settingsRepositoryProvider = SettingsRepositoryProvider._();
 
 /// #2484 -- the settings registry: read and written.
 ///
-/// #2564 O2 -- NOT on the selected workspace's client: the workspace context
-/// captures these settings (currentSettingsCapture), and the selected client
-/// is derived from that context, so watching it here closes a provider cycle
-/// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
-/// pre-context client until the context's host binding no longer waits for
-/// its settings capture.
+/// #2564 -- on the host the workspace lives on, when it lives on a connected
+/// installation. That host is found by the resolver, which depends on the
+/// selection only, at each call and with the pin given back afterwards
+/// (`ref.read` inside the scope, not a watch): this provider and the context
+/// that captures the settings stay two nodes with no edge between them, so
+/// the cycle that once rebuilt without end (selectedWorkspaceClient ->
+/// workspaceContext -> currentSettingsCapture -> settingsSource ->
+/// settingsRepository) cannot form. The platform's own view, a workspace other
+/// than the selected connected one, and the combined deployment stay on the
+/// installation the app is signed in to.
 
 final class SettingsRepositoryProvider
     extends $FunctionalProvider<SettingsStore, SettingsStore, SettingsStore>
     with $Provider<SettingsStore> {
   /// #2484 -- the settings registry: read and written.
   ///
-  /// #2564 O2 -- NOT on the selected workspace's client: the workspace context
-  /// captures these settings (currentSettingsCapture), and the selected client
-  /// is derived from that context, so watching it here closes a provider cycle
-  /// that rebuilds without end (one tester grew to 25 GB). Settings stay on the
-  /// pre-context client until the context's host binding no longer waits for
-  /// its settings capture.
+  /// #2564 -- on the host the workspace lives on, when it lives on a connected
+  /// installation. That host is found by the resolver, which depends on the
+  /// selection only, at each call and with the pin given back afterwards
+  /// (`ref.read` inside the scope, not a watch): this provider and the context
+  /// that captures the settings stay two nodes with no edge between them, so
+  /// the cycle that once rebuilt without end (selectedWorkspaceClient ->
+  /// workspaceContext -> currentSettingsCapture -> settingsSource ->
+  /// settingsRepository) cannot form. The platform's own view, a workspace other
+  /// than the selected connected one, and the combined deployment stay on the
+  /// installation the app is signed in to.
   SettingsRepositoryProvider._()
     : super(
         from: null,
@@ -74,7 +86,7 @@ final class SettingsRepositoryProvider
 }
 
 String _$settingsRepositoryHash() =>
-    r'398ffcf9e82a21970855c9d19fda634328850bc2';
+    r'cfd04d50655e12bdf8626e8912159f6f6774721c';
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.

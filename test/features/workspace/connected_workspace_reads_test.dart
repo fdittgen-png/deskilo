@@ -211,8 +211,10 @@ void main() {
       () => container.read(eventRepositoryProvider).fetchEvents('ws-1'),
       () => container.read(workspaceFieldsRepositoryProvider).fetchFields('ws-1'),
       // #2564 O2: saved report views, deployment, local setup and the
-      // template search are the selected workspace's host's. Settings are
-      // not: the workspace context captures them (see settingsRepository).
+      // template search are the selected workspace's host's; the settings
+      // registry is too (read through the resolver, not the context that
+      // captures them).
+      () => container.read(settingsRepositoryProvider).load('ws-1'),
       () => container.read(biViewRepositoryProvider).list('ws-1'),
       () => container.read(deploymentRepositoryProvider).entities(),
       () => container.read(localSetupRepositoryProvider).readiness('ws-1'),
@@ -364,6 +366,39 @@ void main() {
     expect(two.data, isNotEmpty);
     expect(one.data, isEmpty);
     expect(root.data, isEmpty);
+  });
+
+  test('the settings of a connected workspace are read on its host; the '
+      "platform's own view stays on the root", () async {
+    await enter(one);
+    await container.read(workspaceContextProvider.future);
+    forget();
+    final store = container.read(settingsRepositoryProvider);
+    try {
+      await store.load('ws-1');
+    } on Object {
+      // answered, but not with a shape the empty fake parses
+    }
+    expect(
+      one.data.any((p) => p.endsWith('/rpc/my_settings')),
+      isTrue,
+      reason: 'the registry is the selected host\'s',
+    );
+    expect(root.data.any((p) => p.endsWith('/rpc/my_settings')), isFalse);
+    expect(two.data, isEmpty);
+
+    forget();
+    try {
+      await store.load(null);
+    } on Object {
+      // as above
+    }
+    expect(
+      root.data.any((p) => p.endsWith('/rpc/my_settings')),
+      isTrue,
+      reason: "the platform's own view is the root installation's",
+    );
+    expect(one.data.any((p) => p.endsWith('/rpc/my_settings')), isFalse);
   });
 
   test('the lease ends: a typed ConnectionFailure, never the root; a new '
