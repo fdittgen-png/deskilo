@@ -47,107 +47,134 @@ String buildWorkspaceXml({
   builder.element(WorkspaceXmlSchema.rootElement, nest: () {
     builder.attribute(
         WorkspaceXmlSchema.versionAttr, '${WorkspaceXmlSchema.version}');
-    builder.element(WorkspaceXmlSchema.settingsElement, nest: () {
-      builder
-        ..attribute(WorkspaceXmlSchema.nameAttr, workspace.name)
-        ..attribute(
-          WorkspaceXmlSchema.countryAttr, workspace.countryCode)
-        ..attribute(
-          WorkspaceXmlSchema.currencyAttr, workspace.currencyCode)
-        ..attribute(WorkspaceXmlSchema.timezoneAttr, workspace.timezone);
-      // #1289 — the brand seed, when the space chose one.
-      if (WorkspaceBranding.fromJson(workspace.branding).seedArgb
-          case final argb?) {
-        builder.attribute(
-            WorkspaceXmlSchema.brandColorAttr, hexOfColor(argb));
-      }
-      for (final key in flagKeys) {
-        final value = workspace.featureFlags[key];
-        if (value is! bool) continue; // defensive: only bools are flags
-        builder.element(WorkspaceXmlSchema.featureElement, nest: () {
-          builder
-            ..attribute(WorkspaceXmlSchema.keyAttr, key)
-            ..attribute(WorkspaceXmlSchema.enabledAttr, '$value');
-        });
-      }
-      for (final key in paymentKeys) {
-        final value = workspace.paymentInstructions[key];
-        if (value is! String || value.trim().isEmpty) continue;
-        builder.element(WorkspaceXmlSchema.paymentInstructionElement,
-            nest: () {
-          builder
-            ..attribute(WorkspaceXmlSchema.keyAttr, key)
-            ..attribute(WorkspaceXmlSchema.valueAttr, value);
-        });
-      }
-    });
-    builder.element(WorkspaceXmlSchema.accessoriesElement, nest: () {
-      for (final accessory in sortedAccessories) {
-        builder.element(WorkspaceXmlSchema.accessoryElement, nest: () {
-          builder
-            ..attribute(WorkspaceXmlSchema.nameAttr, accessory.name)
-            ..attribute(WorkspaceXmlSchema.supplementCentsAttr,
-              '${accessory.supplementCents}')
-            ..attribute(
-              WorkspaceXmlSchema.activeAttr, '${accessory.active}')
-            ..attribute(
-              WorkspaceXmlSchema.sortOrderAttr, '${accessory.sortOrder}');
-          final vatRate = vatRateLabels[accessory.vatRateId];
-          if (vatRate != null && vatRate.isNotEmpty) {
-            builder.attribute(WorkspaceXmlSchema.vatRateAttr, vatRate);
-          }
-        });
-      }
-    });
+    _settingsXml(builder, workspace, flagKeys, paymentKeys);
+    _accessoriesXml(builder, sortedAccessories, vatRateLabels);
     builder.element(WorkspaceXmlSchema.floorPlanElement, nest: () {
       for (final entry in sortedLevels) {
-        builder.element(WorkspaceXmlSchema.levelElement, nest: () {
-          builder
-            ..attribute(WorkspaceXmlSchema.nameAttr, entry.level.name)
-            ..attribute(
-              WorkspaceXmlSchema.sortOrderAttr, '${entry.level.sortOrder}');
-          _priceAttributes(builder, entry.level.priceCents,
-              bookableAsWhole: entry.level.bookableAsWhole);
-          final site = siteNames[entry.level.siteId];
-          if (site != null && site.isNotEmpty) {
-            builder.attribute(WorkspaceXmlSchema.siteAttr, site);
-          }
-          for (final office in entry.plan.offices) {
-            builder.element(WorkspaceXmlSchema.officeElement, nest: () {
-              builder
-                ..attribute(WorkspaceXmlSchema.nameAttr, office.name)
-                ..attribute(
-                  WorkspaceXmlSchema.colorAttr, '${office.color}')
-                ..attribute(WorkspaceXmlSchema.bookableAsWholeAttr,
-                  '${office.bookableAsWhole}');
-              _rectAttributes(builder, office.rect);
-              _priceAttributes(builder, office.priceCents);
-              for (final desk in entry.plan.desksOf(office.id)) {
-                builder.element(WorkspaceXmlSchema.deskElement, nest: () {
-                  builder.attribute(WorkspaceXmlSchema.nameAttr, desk.name);
-                  _rectAttributes(builder, desk.rect);
-                  _priceAttributes(builder, desk.priceCents,
-                      bookableAsWhole: desk.bookableAsWhole);
-                  for (final seat in entry.plan.seatsOf(desk.id)) {
-                    // Assigned catalog entries, referenced by NAME in
-                    // catalog order — ids never enter the document.
-                    final assignedIds =
-                        seatAccessories[seat.id] ?? const <String>{};
-                    _seatElement(builder, seat, [
-                      for (final accessory in sortedAccessories)
-                        if (assignedIds.contains(accessory.id)) accessory.name,
-                    ]);
-                  }
-                });
-              }
-            });
-          }
-        });
+        _levelXml(builder, entry, siteNames, seatAccessories,
+            sortedAccessories);
       }
     });
     if (configuration != null) writeConfigurationXml(builder, configuration);
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
+}
+
+void _settingsXml(XmlBuilder builder, Workspace workspace,
+    List<String> flagKeys, List<String> paymentKeys) {
+  builder.element(WorkspaceXmlSchema.settingsElement, nest: () {
+    builder
+      ..attribute(WorkspaceXmlSchema.nameAttr, workspace.name)
+      ..attribute(
+        WorkspaceXmlSchema.countryAttr, workspace.countryCode)
+      ..attribute(
+        WorkspaceXmlSchema.currencyAttr, workspace.currencyCode)
+      ..attribute(WorkspaceXmlSchema.timezoneAttr, workspace.timezone);
+    // #1289 — the brand seed, when the space chose one.
+    if (WorkspaceBranding.fromJson(workspace.branding).seedArgb
+        case final argb?) {
+      builder.attribute(
+          WorkspaceXmlSchema.brandColorAttr, hexOfColor(argb));
+    }
+    for (final key in flagKeys) {
+      final value = workspace.featureFlags[key];
+      if (value is! bool) continue; // defensive: only bools are flags
+      builder.element(WorkspaceXmlSchema.featureElement, nest: () {
+        builder
+          ..attribute(WorkspaceXmlSchema.keyAttr, key)
+          ..attribute(WorkspaceXmlSchema.enabledAttr, '$value');
+      });
+    }
+    for (final key in paymentKeys) {
+      final value = workspace.paymentInstructions[key];
+      if (value is! String || value.trim().isEmpty) continue;
+      builder.element(WorkspaceXmlSchema.paymentInstructionElement,
+          nest: () {
+        builder
+          ..attribute(WorkspaceXmlSchema.keyAttr, key)
+          ..attribute(WorkspaceXmlSchema.valueAttr, value);
+      });
+    }
+  });
+}
+
+void _accessoriesXml(XmlBuilder builder, List<Accessory> sortedAccessories,
+    Map<String, String> vatRateLabels) {
+  builder.element(WorkspaceXmlSchema.accessoriesElement, nest: () {
+    for (final accessory in sortedAccessories) {
+      builder.element(WorkspaceXmlSchema.accessoryElement, nest: () {
+        builder
+          ..attribute(WorkspaceXmlSchema.nameAttr, accessory.name)
+          ..attribute(WorkspaceXmlSchema.supplementCentsAttr,
+            '${accessory.supplementCents}')
+          ..attribute(
+            WorkspaceXmlSchema.activeAttr, '${accessory.active}')
+          ..attribute(
+            WorkspaceXmlSchema.sortOrderAttr, '${accessory.sortOrder}');
+        final vatRate = vatRateLabels[accessory.vatRateId];
+        if (vatRate != null && vatRate.isNotEmpty) {
+          builder.attribute(WorkspaceXmlSchema.vatRateAttr, vatRate);
+        }
+      });
+    }
+  });
+}
+
+void _levelXml(
+    XmlBuilder builder,
+    ({Level level, FloorPlan plan}) entry,
+    Map<String, String> siteNames,
+    Map<String, Set<String>> seatAccessories,
+    List<Accessory> sortedAccessories) {
+  builder.element(WorkspaceXmlSchema.levelElement, nest: () {
+    builder
+      ..attribute(WorkspaceXmlSchema.nameAttr, entry.level.name)
+      ..attribute(
+        WorkspaceXmlSchema.sortOrderAttr, '${entry.level.sortOrder}');
+    _priceAttributes(builder, entry.level.priceCents,
+        bookableAsWhole: entry.level.bookableAsWhole);
+    final site = siteNames[entry.level.siteId];
+    if (site != null && site.isNotEmpty) {
+      builder.attribute(WorkspaceXmlSchema.siteAttr, site);
+    }
+    final plan = entry.plan;
+    for (final office in plan.offices) {
+      builder.element(WorkspaceXmlSchema.officeElement, nest: () {
+        builder
+          ..attribute(WorkspaceXmlSchema.nameAttr, office.name)
+          ..attribute(
+            WorkspaceXmlSchema.colorAttr, '${office.color}')
+          ..attribute(WorkspaceXmlSchema.bookableAsWholeAttr,
+            '${office.bookableAsWhole}');
+        _rectAttributes(builder, office.rect);
+        _priceAttributes(builder, office.priceCents);
+        for (final desk in plan.desksOf(office.id)) {
+          builder.element(WorkspaceXmlSchema.deskElement, nest: () {
+            builder.attribute(WorkspaceXmlSchema.nameAttr, desk.name);
+            _rectAttributes(builder, desk.rect);
+            _priceAttributes(builder, desk.priceCents,
+                bookableAsWhole: desk.bookableAsWhole);
+            _seatsXml(builder, plan, desk.id, seatAccessories,
+                sortedAccessories);
+          });
+        }
+      });
+    }
+  });
+}
+
+void _seatsXml(XmlBuilder builder, FloorPlan plan, String deskId,
+    Map<String, Set<String>> seatAccessories,
+    List<Accessory> sortedAccessories) {
+  for (final seat in plan.seatsOf(deskId)) {
+    // Assigned catalog entries, referenced by NAME in
+    // catalog order — ids never enter the document.
+    final assignedIds = seatAccessories[seat.id] ?? const <String>{};
+    _seatElement(builder, seat, [
+      for (final accessory in sortedAccessories)
+        if (assignedIds.contains(accessory.id)) accessory.name,
+    ]);
+  }
 }
 
 /// v3 plan attributes, written only when they say something: a v3 file
