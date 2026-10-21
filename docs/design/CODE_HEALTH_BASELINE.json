@@ -1,8 +1,8 @@
 {
-  "recordedSha": "9a98a95f970a65dc9b67782f81a6c00ea5501089",
+  "recordedSha": "d9276fd66c05ae0896e1f4acf5b70139de1eaa45",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9652,"cyclomatic>=9":1032,"cyclomatic>=25":116,"cognitive>=15":428,"cognitive>=30":107,"length>=150":80,"parameters>=5":461,"parameters>=7":150,"partOfFiles":75},
+  "totals": {"files":1751,"functions":9661,"cyclomatic>=9":1032,"cyclomatic>=25":115,"cognitive>=15":427,"cognitive>=30":106,"length>=150":79,"parameters>=5":461,"parameters>=7":150,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -965,7 +965,7 @@
     {"p":"lib/core/instance/instance_readiness.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":12,"cyc":14,"len":58,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/instance/instance_security_checks.dart","loc":199,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":9,"cyc":10,"len":72,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/instance/management_api.dart","loc":176,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":6,"cyc":9,"len":25,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/instance/mcp_auth_checks.dart","loc":393,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":67,"cyc":39,"len":205,"params":2,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/core/instance/mcp_auth_checks.dart","loc":412,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":28,"cyc":21,"len":120,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/instance/mcp_pilot.dart","loc":146,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":37,"cyc":26,"len":140,"params":4,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/core/instance/mcp_readiness.dart","loc":116,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":8,"cyc":8,"len":16,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/instance/mcp_readiness_checks.dart","loc":484,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":28,"cyc":25,"len":226,"params":5,"nest":3,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
@@ -2509,7 +2509,6 @@
     {"id":"lib/core/help/help_tips.dart#helpHintTips(AppLocalizations l10n,HelpHintId id)","cog":1,"cyc":19,"len":200,"params":2},
     {"id":"lib/core/i18n/country_names.dart#localizedCountryName(AppLocalizations l10n,String code)","cog":1,"cyc":37,"len":43,"params":2},
     {"id":"lib/core/instance/instance_builder.dart#InstanceBuilder.createProject({required String organizationId,required String name,required String region,required String databasePassword,Duration poll,int maxPolls,void Function(String status)? onStatus})","cog":0,"cyc":1,"len":20,"params":7},
-    {"id":"lib/core/instance/mcp_auth_checks.dart#federationChecks(McpTargetEvidence e,Map<String, Object?>? federation)","cog":67,"cyc":39,"len":205,"params":2},
     {"id":"lib/core/instance/mcp_pilot.dart#evaluateMcpPilot({required Map<String, Object?> catalogue,required String workspaceId,required Object? toolsList,required Object? call})","cog":37,"cyc":26,"len":140,"params":4},
     {"id":"lib/core/instance/mcp_readiness_checks.dart#_runtime(McpTargetEvidence e,McpReleaseExpectation release,Map<String, Object?>? db,Map<String, Object?>? runtime)","cog":28,"cyc":25,"len":226,"params":4},
     {"id":"lib/core/l10n/lexicon_defaults.dart#lexiconDefault(AppLocalizations l10n,String key)","cog":1,"cyc":36,"len":50,"params":2},
