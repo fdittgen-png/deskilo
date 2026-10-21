@@ -85,7 +85,7 @@ void main() {
     // repeat: a domain file compiles and its tests pass whether or not
     // anything invokes it.
     final export =
-        File('lib/features/money/presentation/accounting_export.dart')
+        File('lib/features/money/presentation/accounting_export_run.dart')
             .readAsStringSync();
 
     test('the export switch handles every registry format', () {
@@ -523,7 +523,7 @@ void main() {
       // the declaration at all, so adding them would break the very
       // thing that makes that file valid.
       final export =
-          File('lib/features/money/presentation/accounting_export.dart')
+          File('lib/features/money/presentation/accounting_export_run.dart')
               .readAsStringSync();
       expect(export, contains('if (!portugal)'));
     });
