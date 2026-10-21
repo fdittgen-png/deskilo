@@ -4,12 +4,15 @@
 // rental with its window and what a member pays; marking a floor external is
 // refused while it holds a rental; renting a room needs a lessor and a first
 // day, and a saved rental is what the server would hold.
+import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/features/money/application/room_rental_commands.dart';
 import 'package:deskilo/features/money/domain/room_level_kind.dart';
 import 'package:deskilo/features/money/domain/room_rental.dart';
 import 'package:deskilo/features/money/domain/supplier.dart';
+import 'package:deskilo/features/money/presentation/widgets/lease_commitments_sheet.dart';
 import 'package:deskilo/features/money/presentation/widgets/rented_rooms_sheet.dart';
+import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -135,4 +138,37 @@ void main() {
       expect(find.byKey(const ValueKey('room-rent-save')), findsNothing);
     },
   );
+
+  testWidgets('a fixed-cost room opens its commitments; a room not rented has none', (
+    tester,
+  ) async {
+    final repo = seedDemoRooms(_today);
+    final studio = (await repo.fetchOverview('ws')).rentals.singleWhere(
+      (r) => r.officeId == 'demo-room-studio',
+    );
+    await tester.pumpWidget(
+      _app(const RentedRoomsView(workspaceId: 'ws', canMatch: true), [
+        roomRentalRepositoryProvider.overrideWithValue(repo),
+        leaseCommitmentRepositoryProvider.overrideWithValue(
+          FakeLeaseCommitmentRepository(),
+        ),
+      ]),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+      find.byKey(const ValueKey('room-commitments-demo-room-loft')),
+      findsNothing,
+    );
+    const open = ValueKey('room-commitments-demo-room-studio');
+    await tester.ensureVisible(find.byKey(open));
+    await tester.tap(find.byKey(open));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    final view = tester.widget<LeaseCommitmentsView>(
+      find.byType(LeaseCommitmentsView),
+    );
+    expect(view.leaseId, studio.id);
+    expect(view.canMatch, isTrue);
+  });
 }

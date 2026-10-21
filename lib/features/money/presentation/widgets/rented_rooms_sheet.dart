@@ -13,27 +13,40 @@ import '../../../../core/ui/loading_view.dart';
 import '../../domain/room_level_kind.dart';
 import '../../domain/room_rental.dart';
 import '../../providers/room_rental_providers.dart';
+import 'lease_commitments_sheet.dart';
 import 'rented_room_dialog.dart';
 
-Future<void> _showRentedRoomsSheet(BuildContext context, String workspaceId) =>
-    showAppSheet<void>(
+Future<void> _showRentedRoomsSheet(
+  BuildContext context,
+  String workspaceId, {
+  required bool canMatch,
+}) => showAppSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => RentedRoomsView(workspaceId: workspaceId),
+      builder: (_) =>
+          RentedRoomsView(workspaceId: workspaceId, canMatch: canMatch),
     );
 
 /// The Money door to the rented rooms. The caller offers it to those who may
 /// manage the plan; the server decides again on every read and write.
 class RentedRoomsButton extends StatelessWidget {
-  const RentedRoomsButton({required this.workspaceId, super.key});
+  const RentedRoomsButton({
+    required this.workspaceId,
+    this.canMatch = false,
+    super.key,
+  });
 
   final String workspaceId;
+
+  /// Whether the person may match the lessor's bills to a room's rent.
+  final bool canMatch;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
       key: const ValueKey('rented-rooms-button'),
-      onPressed: () => _showRentedRoomsSheet(context, workspaceId),
+      onPressed: () =>
+          _showRentedRoomsSheet(context, workspaceId, canMatch: canMatch),
       icon: const Icon(Icons.meeting_room_outlined),
       label: Text(context.l10n.roomRentTitle),
     );
@@ -44,9 +57,14 @@ class RentedRoomsButton extends StatelessWidget {
 /// with its window, its cost and what a member pays.
 @visibleForTesting
 class RentedRoomsView extends ConsumerWidget {
-  const RentedRoomsView({required this.workspaceId, super.key});
+  const RentedRoomsView({
+    required this.workspaceId,
+    this.canMatch = false,
+    super.key,
+  });
 
   final String workspaceId;
+  final bool canMatch;
 
   Future<void> _edit(
     BuildContext context,
@@ -130,6 +148,15 @@ class RentedRoomsView extends ConsumerWidget {
                       .firstOrNull,
                   material: material,
                   onEdit: (rental) => _edit(context, ref, room, rental),
+                  // #2575 -- the rent a fixed-cost room expects, and the
+                  // lessor's bills matched to it, as for the lease.
+                  onCommitments: (rental) => showLeaseCommitmentsSheet(
+                    context,
+                    workspaceId,
+                    rental.id,
+                    currencyCode: rental.currency,
+                    canMatch: canMatch,
+                  ),
                 ),
             ],
           ),
@@ -145,12 +172,14 @@ class _RoomCard extends StatelessWidget {
     required this.rental,
     required this.material,
     required this.onEdit,
+    required this.onCommitments,
   });
 
   final RentableRoom room;
   final RoomRental? rental;
   final MaterialLocalizations material;
   final ValueChanged<RoomRental?> onEdit;
+  final ValueChanged<RoomRental> onCommitments;
 
   @override
   Widget build(BuildContext context) {
@@ -202,13 +231,25 @@ class _RoomCard extends StatelessWidget {
                     : l10n.roomRentAudienceNobody,
               ),
             ],
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                key: ValueKey('room-edit-${room.officeId}'),
-                onPressed: () => onEdit(r),
-                child: Text(r == null ? l10n.roomRentRent : l10n.roomRentEdit),
-              ),
+            Wrap(
+              spacing: AppSpacing.sm,
+              children: [
+                TextButton(
+                  key: ValueKey('room-edit-${room.officeId}'),
+                  onPressed: () => onEdit(r),
+                  child: Text(
+                    r == null ? l10n.roomRentRent : l10n.roomRentEdit,
+                  ),
+                ),
+                if (r != null &&
+                    r.costKind == 'fixed_per_period' &&
+                    r.costCents > 0)
+                  TextButton(
+                    key: ValueKey('room-commitments-${room.officeId}'),
+                    onPressed: () => onCommitments(r),
+                    child: Text(l10n.leaseCommitments),
+                  ),
+              ],
             ),
           ],
         ),

@@ -220,7 +220,12 @@ class MoneyActionSet {
           ref
               .read(myPermissionsProvider)
               .any((p) => p.wireName == roomRentalManagePermission))
-        RentedRoomsButton(workspaceId: data.workspace!.id),
+        RentedRoomsButton(
+          workspaceId: data.workspace!.id,
+          canMatch: ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == purchaseManagePermission),
+        ),
       OutlinedButton.icon(
         key: const ValueKey('quota-request-button'),
         onPressed: () => ops.sheets.requestQuota(ops.period),
