@@ -1,16 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'invoicing_dashboard.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-/// How old an open invoice has to be before the hub starts pointing at it.
-const _overdueDays = 30;
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../providers/money_providers.dart';
+import '../period_label.dart';
+import 'open_invoice_subtitle.dart';
+import 'wizard_context.dart';
 
 /// The issuer's invoicing summary strip (field request: "everything an
 /// invoicing tool would need"): how many months wait to be invoiced and
 /// how much is outstanding, at a glance.
 ///
 /// Two pills rather than one grey sentence — and the money turns red once
-/// something has been waiting longer than [_overdueDays].
+/// something has been waiting longer than [openInvoiceOverdueDays].
 class InvoicingSummaryBar extends ConsumerWidget {
   const InvoicingSummaryBar({super.key, required this.currency});
 
@@ -47,7 +56,7 @@ class InvoicingSummaryBar extends ConsumerWidget {
         refundable.fold(0, (sum, e) => sum - e.invoice.totalCents);
     final now = ref.read(clockProvider).now();
     final overdue = collectable.any(
-      (e) => now.difference(e.invoice.issuedAt).inDays >= _overdueDays,
+      (e) => now.difference(e.invoice.issuedAt).inDays >= openInvoiceOverdueDays,
     );
     return Padding(
       key: const ValueKey('invoicing-summary'),

@@ -22,20 +22,21 @@
 // rather than copying them.
 
 import 'package:deskilo_task_recording/action_catalogue.dart';
-import 'package:meta/meta.dart';
 
 import 'recording_reference.dart';
+import 'registry_admin.dart';
+import 'registry_calendar.dart';
+import 'registry_ui.dart';
 import 'safe_payload.dart';
-import 'ui_vocabulary.g.dart';
 import 'workspace_feature_keys.dart';
 
 export 'package:deskilo_task_recording/action_catalogue.dart';
+export 'registry_admin.dart' hide adminActionSpecs, adminOutcomeSpecs;
+export 'registry_calendar.dart' hide calendarActionSpecs, calendarOutcomeSpecs;
+export 'registry_ui.dart' hide uiActionSpecs, uiOutcomeSpecs;
 export 'ui_vocabulary.g.dart';
 export 'workspace_feature_keys.dart';
 
-part 'registry_admin.dart';
-part 'registry_calendar.dart';
-part 'registry_ui.dart';
 
 /// The surfaces of the first instrumented task: booking a place.
 abstract final class RecorderSurfaces {
@@ -292,9 +293,9 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       surface: RecorderSurfaces.workspaceFeatures,
       kind: ActionKind.cancel,
     ),
-    ..._calendarActions,
-    ..._uiActions,
-    ..._adminActions,
+    ...calendarActionSpecs,
+    ...uiActionSpecs,
+    ...adminActionSpecs,
     ActionSpec(
       RecorderActions.recorderControl,
       surface: RecorderSurfaces.recorderControls,
@@ -350,9 +351,9 @@ const ActionRegistry recorderRegistry = ActionRegistry(
       RecorderOutcomes.settingUnknown,
       state: ObservationState.outcomeUnknown,
     ),
-    ..._calendarOutcomes,
-    ..._uiOutcomes,
-    ..._adminOutcomes,
+    ...calendarOutcomeSpecs,
+    ...uiOutcomeSpecs,
+    ...adminOutcomeSpecs,
   ],
   prerequisites: [
     PrerequisiteSpec('signed_in'),

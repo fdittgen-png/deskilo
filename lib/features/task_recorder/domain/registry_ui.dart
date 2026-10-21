@@ -19,12 +19,13 @@
 // Anything outside it is a visible gap ("an unnamed control"), never raw
 // text; and an older reader drops a name it does not know rather than
 // refusing the file (soft targets and values).
-part of 'action_registry.dart';
+
+import 'action_registry.dart';
 
 /// A tapped control with no listed key.
 const String uiUnkeyed = 'unkeyed';
 
-const List<ActionSpec> _uiActions = [
+const List<ActionSpec> uiActionSpecs = [
   ActionSpec(
     RecorderActions.uiOpenScreen,
     surface: RecorderSurfaces.anyScreen,
@@ -74,7 +75,7 @@ const List<ActionSpec> _uiActions = [
   ),
 ];
 
-const List<OutcomeSpec> _uiOutcomes = [
+const List<OutcomeSpec> uiOutcomeSpecs = [
   OutcomeSpec(RecorderOutcomes.commandDone, state: ObservationState.confirmed),
   OutcomeSpec(RecorderOutcomes.commandPending, state: ObservationState.pending),
   OutcomeSpec(

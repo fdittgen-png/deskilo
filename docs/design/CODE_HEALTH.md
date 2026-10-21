@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7866d9903affbfb21d53635926d89e17cedf2b59` on 2026-10-21.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `a6b2bfbc4de630d390ff2405218787b1e8083fce` on 2026-10-21.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,16 +10,16 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1757 |
+| files | 1751 |
 | functions | 9757 |
 | cyclomatic>=9 | 1034 |
 | cyclomatic>=25 | 108 |
 | cognitive>=15 | 423 |
 | cognitive>=30 | 96 |
 | length>=150 | 72 |
-| parameters>=5 | 464 |
+| parameters>=5 | 465 |
 | parameters>=7 | 151 |
-| partOfFiles | 68 |
+| partOfFiles | 51 |
 
 ## Worst functions by cognitive complexity (baseline)
 
@@ -35,7 +35,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 51 | 26 | 130 | 1 | `lib/features/workspace/domain/bi_report_pdf.dart#_evolution` |
 | 51 | 19 | 111 | 1 | `lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build` |
 | 49 | 27 | 129 | 1 | `lib/features/directory/presentation/public_page_editor.dart#_EditorState.build` |
-| 49 | 28 | 298 | 2 | `lib/features/money/presentation/widgets/invoicing_dashboard_part3.dart#OpenInvoicesTab.build` |
+| 49 | 28 | 298 | 2 | `lib/features/money/presentation/widgets/open_invoices_tab.dart#OpenInvoicesTab.build` |
 | 49 | 48 | 203 | 1 | `lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build` |
 | 48 | 40 | 134 | 3 | `lib/features/task_recorder/data/recorder_store.dart#recoverRecordingLog` |
 | 48 | 32 | 136 | 2 | `lib/features/workspace/presentation/widgets/bi_charts.dart#_EvolutionPainter.paint` |

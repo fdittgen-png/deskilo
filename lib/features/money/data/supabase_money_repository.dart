@@ -50,9 +50,7 @@ import 'supabase_report_template_repository.dart';
 import 'supabase_tax_reporting_repository.dart';
 
 part 'supabase_money_repository_part1.dart';
-part 'supabase_money_repository_part2.dart';
 part 'supabase_money_repository_part3.dart';
-part 'supabase_money_repository_part4.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
 
@@ -186,4 +184,179 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => _setPaymentCredentialsImpl(workspaceId, provider, config);
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _clearPaymentProviderImpl(workspaceId, provider);
 
+  Future<Map<String, String>> _fetchDunningHoldsImpl(String workspaceId) async {
+    final rows = await _client
+        .from('invoice_dunning_holds')
+        .select('invoice_id, reason')
+        .eq('workspace_id', workspaceId)
+        .isFilter('released_at', null);
+    return {
+      for (final row in rows)
+        row['invoice_id'] as String: row['reason'] as String,
+    };
+  }
+
+  Future<void> _placeDunningHoldImpl(
+    String invoiceId, {
+    required String reason,
+    String note = '',
+  }) =>
+      _client.rpc<void>('place_dunning_hold', params: {
+        'p_invoice_id': invoiceId,
+        'p_reason': reason,
+        'p_note': note,
+      });
+
+  Future<void> _releaseDunningHoldImpl(String invoiceId) => _client.rpc<void>(
+      'release_dunning_hold', params: {'p_invoice_id': invoiceId});
+
+  Future<List<PaymentIntent>> _fetchPaymentIntentsImpl(String workspaceId) async {
+    // #1310 S2 — paged.
+    final rows = await fetchAllPages(
+      table: 'payment_intents',
+      build: () => _client
+          .from('payment_intents')
+          .select()
+          .eq('workspace_id', workspaceId)
+          .order('created_at', ascending: false)
+          .order('id', ascending: true),
+    );
+    return rows
+        .map((row) => PaymentIntent.fromRow(Map<String, dynamic>.from(row)))
+        .toList();
+  }
+
+  Future<String> _recordPaymentImpl({
+    required String workspaceId,
+    required String memberId,
+    required int amountCents,
+    String note = '',
+    PaymentMethod? method,
+    DateTime? paidOn,
+    String? period,
+  }) async {
+    final result = await _client.rpc<dynamic>('record_payment', params: {
+      'p_workspace_id': workspaceId,
+      'p_member_id': memberId,
+      'p_amount_cents': amountCents,
+      'p_note': note,
+      'p_method': method?.wireName ?? '',
+      // 0070 — a date, not a timestamp: what matters is the DAY the money
+      // moved, in the payer's own calendar.
+      'p_paid_on': paidOn == null
+          ? null
+          : isoDay(paidOn),
+      'p_period': period,
+    });
+    return result as String;
+  }
+
+  Future<void> _recordServiceChargeImpl({
+    required String workspaceId,
+    required String subjectMemberId,
+    required String serviceId,
+    required int quantity,
+    String? period,
+  }) async {
+    await _client.rpc<dynamic>('record_service_charge', params: {
+      'p_workspace_id': workspaceId,
+      'p_subject_member_id': subjectMemberId,
+      'p_service_id': serviceId,
+      'p_quantity': quantity,
+      'p_period': ?period,
+    });
+  }
+
+  Future<PaymentOrderStart> _createPaymentOrderImpl({
+    required PaymentProvider provider,
+    required String workspaceId,
+    required String memberId,
+    required int amountCents,
+    required String currencyCode,
+    required String period,
+    String? requestId,
+  }) async {
+    final data = await _invokePayments({
+      'provider': provider.wireName,
+      'workspace_id': workspaceId,
+      'member_id': memberId,
+      'amount_cents': amountCents,
+      'currency': currencyCode,
+      'period': period,
+      'request_id': ?requestId,
+    });
+    if (data == null) {
+      return const PaymentOrderStart(
+        missing: ['create-payment-order (not deployed)'],
+      );
+    }
+    if (data['status'] == 'not_configured') {
+      return PaymentOrderStart(
+        missing: [
+          for (final v in (data['missing'] as List? ?? const [])) v as String,
+        ],
+      );
+    }
+    if (data['status'] == 'paid') {
+      return PaymentOrderStart(
+        alreadyPaid: true,
+        orderId: data['order_id'] as String?,
+      );
+    }
+    final approveUrl = data['approve_url'];
+    if (approveUrl is! String || approveUrl.isEmpty) {
+      throw PaymentGatewayException(500, 'no approve_url in $data');
+    }
+    return PaymentOrderStart(
+      approveUrl: Uri.parse(approveUrl),
+      orderId: data['order_id'] as String?,
+    );
+  }
+
+  Future<Map<PaymentProvider, PaymentProviderStatus>>
+      _fetchPaymentGatewayStatusImpl(String workspaceId) async {
+    final result = await _client.rpc<dynamic>(
+      'payment_credentials_status',
+      params: {'p_workspace_id': workspaceId},
+    ) as Map<String, dynamic>;
+    final out = <PaymentProvider, PaymentProviderStatus>{};
+    for (final entry in result.entries) {
+      final provider = PaymentProvider.fromWire(entry.key);
+      if (provider == null) continue;
+      final v = entry.value as Map<String, dynamic>;
+      out[provider] = PaymentProviderStatus(
+        configured: v['configured'] as bool? ?? false,
+        publicFields: {
+          for (final e in (v['public'] as Map? ?? const {}).entries)
+            e.key as String: e.value as String,
+        },
+        secretKeysSet: {
+          for (final k in (v['secret_keys'] as List? ?? const [])) k as String,
+        },
+      );
+    }
+    return out;
+  }
+
+  Future<void> _setPaymentCredentialsImpl(
+    String workspaceId,
+    PaymentProvider provider,
+    Map<String, String> config,
+  ) async {
+    await _client.rpc<dynamic>('set_payment_credentials', params: {
+      'p_workspace_id': workspaceId,
+      'p_provider': provider.wireName,
+      'p_config': config,
+    });
+  }
+
+  Future<void> _clearPaymentProviderImpl(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async {
+    await _client.rpc<dynamic>('clear_payment_provider', params: {
+      'p_workspace_id': workspaceId,
+      'p_provider': provider.wireName,
+    });
+  }
 }

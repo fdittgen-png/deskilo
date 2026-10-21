@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'report_visual_editor.dart';
+import 'package:flutter/material.dart';
 
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/invoice_report.dart';
+import 'report_page_style.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
 /// visual editor is WYSIWYG over the SAME markup the text mode edits:
@@ -100,7 +103,7 @@ class ReportVisualLine {
   ReportImage get image => ReportImage.parse(content);
 }
 
-IconData _reportLineIcon(ReportLineKind kind) => switch (kind) {
+IconData reportLineIcon(ReportLineKind kind) => switch (kind) {
       ReportLineKind.title => Icons.title,
       ReportLineKind.section => Icons.short_text,
       ReportLineKind.text => Icons.notes,
@@ -115,7 +118,7 @@ IconData _reportLineIcon(ReportLineKind kind) => switch (kind) {
       ReportLineKind.logic => Icons.code,
     };
 
-String _reportLineName(ReportLineKind kind, AppLocalizations l10n) =>
+String reportLineName(ReportLineKind kind, AppLocalizations l10n) =>
     switch (kind) {
       ReportLineKind.title => l10n.reportLineTitle,
       ReportLineKind.section => l10n.reportLineSection,
@@ -136,7 +139,7 @@ String _reportLineName(ReportLineKind kind, AppLocalizations l10n) =>
 /// #822 — the text style an element is EDITED in: the same one it
 /// prints in, so the in-place field is the element, not a form about
 /// it. Logic keeps the designer's monospace — it never prints.
-TextStyle _reportLineEditStyle(ReportLineKind kind) => switch (kind) {
+TextStyle reportLineEditStyle(ReportLineKind kind) => switch (kind) {
       ReportLineKind.title => ReportPage.heading,
       ReportLineKind.section => ReportPage.subheading,
       ReportLineKind.small => ReportPage.small,
@@ -148,17 +151,17 @@ TextStyle _reportLineEditStyle(ReportLineKind kind) => switch (kind) {
     };
 
 /// One render segment: a plain line, or a `:::` column group.
-sealed class _Segment {
-  const _Segment();
+sealed class ReportSegment {
+  const ReportSegment();
 }
 
-class _LineSegment extends _Segment {
-  const _LineSegment(this.index);
+class ReportLineSegment extends ReportSegment {
+  const ReportLineSegment(this.index);
   final int index;
 }
 
-class _GroupSegment extends _Segment {
-  const _GroupSegment(this.openIndex, this.columns, this.closeIndex);
+class ReportGroupSegment extends ReportSegment {
+  const ReportGroupSegment(this.openIndex, this.columns, this.closeIndex);
 
   final int openIndex;
 

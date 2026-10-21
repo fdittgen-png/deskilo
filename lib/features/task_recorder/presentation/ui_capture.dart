@@ -37,10 +37,10 @@ import '../application/recorder_controller.dart';
 import '../domain/action_registry.dart';
 import '../domain/step_values.dart';
 import '../guide/guide_session.dart';
+import 'guided_command.dart';
 import 'toggle_capture.dart';
 import 'ui_labels.g.dart';
-
-part 'ui_capture_observer.dart';
+export 'ui_capture_observer.dart' show RecorderWindowObserver;
 
 /// The live capture, while the recorder's indicator is mounted.
 class UiCapture implements GuardedCommandWatcher {
@@ -535,7 +535,7 @@ class UiCapture implements GuardedCommandWatcher {
           ? null
           : c.attempt(RecorderActions.uiCommand, target: target);
       if (guide == null) return token;
-      return _GuidedCommand(guide, token, guideToken);
+      return GuidedCommand(guide, token, guideToken);
     } on Object catch (err, st) {
       TraceLogger.instance.warn(
         'recorder',
@@ -553,7 +553,7 @@ class UiCapture implements GuardedCommandWatcher {
       GuideEventSink? guide;
       Object? guideToken;
       switch (token) {
-        case _GuidedCommand(
+        case GuidedCommand(
           guide: final g,
           token: final t,
           guideToken: final gt,

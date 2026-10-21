@@ -5,18 +5,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import 'report_field_picker.dart';
 import 'report_image_notice.dart';
 import 'report_page_style.dart';
+import 'report_visual_line.dart';
+
+export 'report_visual_line.dart' show ReportLineKind, ReportVisualLine;
 
 part 'report_visual_editor_part1.dart';
 part 'report_visual_editor_part2.dart';
-
-part 'report_visual_editor_part3.dart';
 
 
 /// The DESIGN band editor (#498) — a real WYSIWYG surface in the

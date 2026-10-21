@@ -1,6 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'invoicing_dashboard.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../../events/domain/workspace_event.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/dunning.dart';
+import '../../providers/money_providers.dart';
+import 'open_invoice_card.dart';
+import 'open_invoice_subtitle.dart';
 
 /// OPEN: issued invoices whose month still carries a positive LIVE
 /// solde — with age, reminder history and a direct Remind button.
@@ -146,7 +163,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                     ),
                   ]),
                   const SizedBox(height: 2),
-                  _openSubtitle(
+                  openInvoiceSubtitle(
                       context, l10n, entry, reminders, dateFormat, now),
                   if (dueLevels[entry.invoice.id]
                       case final int dueLevel)
@@ -346,36 +363,4 @@ class OpenInvoicesTab extends ConsumerWidget {
     );
   }
 
-}
-
-/// What the match dialog returns (0068): the selected REGISTERED
-/// payment plus the resolution its amount demands.
-typedef MatchChoice = ({
-  String paymentLedgerId,
-  String resolution,
-  String note,
-});
-
-/// The payment-match dialog (0068): the user MAPS the invoice to one
-/// of the member's registered payments — confirmed ledger payment
-/// credits, which is also where online payments land — never a typed
-/// amount. The selected payment's amount drives the resolution: exact,
-/// overpaid (forced with a mandatory note OR a credit note over the
-/// excess), underpaid accepted with a mandatory note.
-class MatchInvoiceDialog extends StatefulWidget {
-  const MatchInvoiceDialog({
-    super.key,
-    required this.dueCents,
-    required this.currency,
-    required this.payments,
-  });
-
-  final int dueCents;
-  final MoneyFormat currency;
-
-  /// The member's not-yet-consumed registered payments.
-  final List<LedgerEntry> payments;
-
-  @override
-  State<MatchInvoiceDialog> createState() => _MatchInvoiceDialogState();
 }
