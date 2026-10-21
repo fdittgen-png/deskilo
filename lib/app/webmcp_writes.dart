@@ -46,6 +46,15 @@ final Map<String, WebMcpWrite> webMcpWriteRunners = {
   'check_out': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.checkOut(id)),
   'create_reservation': _createReservation,
+  'update_reservation': (ref, input) {
+    final window = _window(input);
+    return _onOwnBooking(
+      ref,
+      input,
+      (repo, id) =>
+          repo.updateTimes(id, startsAt: window.start, endsAt: window.end),
+    );
+  },
   'request_reservation_deletion': _requestDeletion,
   'cancel_reservation': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.cancel(id)),
@@ -360,57 +369,4 @@ Future<Map<String, Object?>> _createReservation(
     );
   }
   return _view(booked);
-}
-
-/// The writes that run only after the person confirms them in the page
-/// (`confirmation: native`), each with the check that decides whether the
-/// person is asked at all.
-final Map<String, ({WebMcpWrite check, WebMcpWrite write})>
-webMcpConfirmedWrites = {
-  'respond_to_validation': (check: _canRespond, write: _respond),
-};
-
-Future<Map<String, Object?>> _canRespond(
-  Ref ref,
-  Map<String, Object?> input,
-) async {
-  final eventId = input['event_id'];
-  final accept = input['accept'];
-  if (eventId is! String || eventId.isEmpty || accept is! bool) {
-    throw const WebMcpRefused(
-      'validation_error',
-      'event_id and accept (true or false) are required.',
-    );
-  }
-  // The same rule as the person's pending list: only a request this person
-  // decides, still pending, is offered for an answer.
-  final pending = await ref.read(myPendingEventsProvider.future);
-  if (!pending.any((e) => e.id == eventId)) {
-    throw const WebMcpRefused(
-      'not_found',
-      'No pending request here that this person decides.',
-    );
-  }
-  return const {};
-}
-
-Future<Map<String, Object?>> _respond(
-  Ref ref,
-  Map<String, Object?> input,
-) async {
-  await _canRespond(ref, input);
-  final eventId = input['event_id']! as String;
-  final events = ref.read(eventRepositoryProvider);
-  await events.respond(eventId, accept: input['accept']! as bool);
-  ref
-    ..invalidate(myPendingEventsProvider)
-    ..invalidate(eventsProvider);
-  final after = await events.fetchEvent(eventId);
-  final status = after?.status.name;
-  return {
-    'event_id': eventId,
-    'decision_recorded': true,
-    'event_status': status,
-    'effect_applied': status == 'applied' || status == 'confirmed',
-  };
 }

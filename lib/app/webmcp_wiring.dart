@@ -22,6 +22,7 @@ import '../core/webmcp/webmcp_tools.g.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'webmcp_confirmations.dart';
+import 'webmcp_confirmed_writes.dart';
 import 'webmcp_reads.dart';
 import 'webmcp_writes.dart';
 
@@ -153,13 +154,21 @@ Map<String, Object?> _pending(
   WebMcpConditions conditions,
 ) => {
   'ok': true,
-  'status': 'pending_confirmation',
+  'status': 'requires_confirmation',
   'operation': tool.id,
   'workspace_id': conditions.workspaceId,
   'request_id': input['request_id'],
 };
 
+/// The contract status a refusal reports, as the facade's envelope does:
+/// the code says why, the status what kind of refusal it is.
+String _statusOf(String code) => switch (code) {
+  'validation_error' || 'not_found' || 'conflict' || 'rate_limited' => code,
+  _ => 'denied',
+};
+
 Map<String, Object?> _refusal(String code, String message) => {
   'ok': false,
+  'status': _statusOf(code),
   'error': {'code': code, 'message': message},
 };

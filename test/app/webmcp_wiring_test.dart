@@ -18,7 +18,11 @@ import 'package:deskilo/core/webmcp/webmcp_registry.dart';
 import 'package:deskilo/core/webmcp/webmcp_tools.g.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
+import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_action_commands.dart';
+import 'package:deskilo/features/money/domain/invoice_commands.dart';
+import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -72,6 +76,29 @@ class _Feedback implements PlaceFeedbackRepository {
     return PlaceFeedback(favorite: on, count: 1, average: 4);
   }
 
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Invoices implements InvoiceCommands {
+  final voided = <String>[];
+
+  final issued = <InvoiceIssueCommand>[];
+
+  @override
+  Future<void> voidInvoice(String invoiceId) async => voided.add(invoiceId);
+
+  @override
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command) async {
+    issued.add(command);
+    return 'i9';
+  }
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Unused implements InvoiceQueries, InvoiceActionCommands {
   @override
   Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -196,6 +223,7 @@ void main() {
   late Set<WorkspaceFeature> features;
   late _Feedback feedback;
   late FakeEventRepository events;
+  late _Invoices invoiceCommands;
   var permissions = <WorkspacePermission>{};
 
   ProviderContainer container() {
@@ -236,6 +264,10 @@ void main() {
         memberAccountQueriesProvider.overrideWithValue(_Accounts()),
         placeFeedbackRepositoryProvider.overrideWithValue(feedback),
         eventRepositoryProvider.overrideWithValue(events),
+        invoiceCommandsProvider.overrideWithValue(invoiceCommands),
+        invoiceQueriesProvider.overrideWithValue(_Unused()),
+        invoiceActionCommandsProvider.overrideWithValue(_Unused()),
+        workspaceMembersProvider.overrideWith((ref) async => const [_me]),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -245,9 +277,13 @@ void main() {
   }
 
   setUp(() {
-    permissions = {WorkspacePermission.viewFinances};
+    permissions = {
+      WorkspacePermission.viewFinances,
+      WorkspacePermission.issueInvoices,
+    };
     feedback = _Feedback();
     events = FakeEventRepository()..events.add(_pending);
+    invoiceCommands = _Invoices();
     context = _Context();
     deviceSwitch = _Switch(on: true);
     reservations = FakeReservationRepository()
@@ -300,6 +336,12 @@ void main() {
         'deskilo_create_reservation',
         'deskilo_request_reservation_deletion',
         'deskilo_respond_to_validation',
+        'deskilo_request_invoice_void',
+        'deskilo_request_refund',
+        'deskilo_request_member_status_change',
+        'deskilo_request_subscription_change',
+        'deskilo_update_reservation',
+        'deskilo_request_invoice_issue',
       });
     },
   );
@@ -583,12 +625,12 @@ void main() {
         'accept': true,
       };
       final asked = await call('deskilo_respond_to_validation', input);
-      expect(asked['status'], 'pending_confirmation');
+      expect(asked['status'], 'requires_confirmation');
       final request = c.read(webMcpConfirmationsProvider);
       expect(request?.operation, 'respond_to_validation');
       expect(
         (await call('deskilo_respond_to_validation', input))['status'],
-        'pending_confirmation',
+        'requires_confirmation',
       );
       expect(events.events.single.status, EventStatus.pending);
 
@@ -620,7 +662,109 @@ void main() {
         .decide(request.key, accept: false);
     final answer = await call('deskilo_respond_to_validation', input);
     expect((answer['error']! as Map)['code'], 'declined');
+    expect(answer['status'], 'denied');
     expect(events.events.single.status, EventStatus.pending);
+  });
+
+  test('voiding an invoice needs the right first, then the person', () async {
+    permissions = {};
+    final c = await armed();
+    final input = {
+      'request_id': 'req-void-1',
+      'workspace_id': 'ws-1',
+      'invoice_id': 'i2',
+    };
+    final refused = await call('deskilo_request_invoice_void', input);
+    expect((refused['error']! as Map)['code'], 'forbidden');
+    expect(refused['status'], 'denied');
+    expect(c.read(webMcpConfirmationsProvider), isNull);
+    expect(invoiceCommands.voided, isEmpty);
+  });
+
+  test('a confirmed void runs the invoice screen call once', () async {
+    final c = await armed();
+    final input = {
+      'request_id': 'req-void-2',
+      'workspace_id': 'ws-1',
+      'invoice_id': 'i2',
+    };
+    expect(
+      (await call('deskilo_request_invoice_void', input))['status'],
+      'requires_confirmation',
+    );
+    expect(invoiceCommands.voided, isEmpty);
+    final request = c.read(webMcpConfirmationsProvider)!;
+    c
+        .read(webMcpConfirmationsProvider.notifier)
+        .decide(request.key, accept: true);
+    final done = await call('deskilo_request_invoice_void', input);
+    expect(done['ok'], isTrue, reason: '$done');
+    await call('deskilo_request_invoice_void', input);
+    expect(invoiceCommands.voided, ['i2']);
+    expect(
+      _keys(done['output']).difference(_outputs()['request_invoice_void']!),
+      isEmpty,
+    );
+  });
+
+  test('a booking moves to a day and period, only when it is own', () async {
+    await armed();
+    final moved = await call('deskilo_update_reservation', {
+      'request_id': 'req-move-1',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r1',
+      'date': '2026-10-08',
+      'period': 'morning',
+    });
+    expect(moved['ok'], isTrue, reason: '$moved');
+    expect(
+      _keys(moved['output']).difference(_outputs()['update_reservation']!),
+      isEmpty,
+    );
+    final r1 = reservations.reservations.singleWhere((r) => r.id == 'r1');
+    expect(r1.startsAt.toLocal().day, 8);
+
+    final theirs = await call('deskilo_update_reservation', {
+      'request_id': 'req-move-2',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r2',
+      'date': '2026-10-08',
+      'period': 'morning',
+    });
+    expect((theirs['error']! as Map)['code'], 'not_found');
+  });
+
+  test('an invoice is issued once, under the request_id, after Confirm', () async {
+    final c = await armed();
+    final input = {
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e09',
+      'workspace_id': 'ws-1',
+      'member_id': 'member-1',
+      'period': '2026-09',
+      'kind': 'full',
+    };
+    final asked = await call('deskilo_request_invoice_issue', input);
+    expect(asked['status'], 'requires_confirmation');
+    expect(invoiceCommands.issued, isEmpty);
+    c
+        .read(webMcpConfirmationsProvider.notifier)
+        .decide(c.read(webMcpConfirmationsProvider)!.key, accept: true);
+    final done = await call('deskilo_request_invoice_issue', input);
+    expect(done['ok'], isTrue, reason: '$done');
+    expect(done['status'], 'pending_validation');
+    await call('deskilo_request_invoice_issue', input);
+    expect(invoiceCommands.issued.single.requestId, input['request_id']);
+    expect(
+      _keys(done['output']).difference(_outputs()['request_invoice_issue']!),
+      isEmpty,
+    );
+
+    final bad = await call('deskilo_request_invoice_issue', {
+      ...input,
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e10',
+      'period': '2026-13',
+    });
+    expect((bad['error']! as Map)['code'], 'validation_error');
   });
 
   test('a window longer than 31 days is refused', () async {
@@ -631,6 +775,27 @@ void main() {
       'to': '2026-12-01T00:00:00+01:00',
     });
     expect(answer['ok'], isFalse);
+  });
+
+  test('every refusal and status the page answers is a contract status', () {
+    final statuses = {
+      ...((jsonDecode(
+                File('contracts/mcp/operations.json').readAsStringSync(),
+              )
+              as Map)['statuses']!
+          as List)
+          .cast<String>(),
+    };
+    final used = {
+      for (final file in Directory('lib/app').listSync().whereType<File>())
+        if (file.path.contains('webmcp'))
+          for (final m in RegExp(
+            r"'status': '([a-z_]+)'|=> '([a-z_]+)'",
+          ).allMatches(file.readAsStringSync()))
+            (m[1] ?? m[2])!,
+    };
+    expect(used, containsAll(['requires_confirmation', 'denied']));
+    expect(used.difference(statuses), isEmpty);
   });
 
   test('only tools with a runner are generated into the page', () {
