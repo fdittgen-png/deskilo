@@ -50,8 +50,64 @@ BiDashboardContent biDashboardContent({
   required DateTime from,
   required DateTime to,
   required DateTime now,
-}) {
-  final agg = module.aggregation;
+}) => _DashboardBuilder(
+  module: module,
+  view: view,
+  result: result,
+  series: series,
+  extras: extras,
+  l10n: l10n,
+  locale: locale,
+  from: from,
+  to: to,
+  now: now,
+).build();
+
+/// One dashboard's build: the shared reads (run rate, the basis the
+/// present is judged by) once, then one method per block of content.
+class _DashboardBuilder {
+  _DashboardBuilder({
+    required this.module,
+    required this.view,
+    required this.result,
+    required this.series,
+    required this.extras,
+    required this.l10n,
+    required this.locale,
+    required this.from,
+    required this.to,
+    required this.now,
+  }) : agg = module.aggregation {
+    final current = series.current;
+    rate = runRateOf(current, from: from, to: to, now: now, aggregation: agg);
+    // What the present is judged by: a finished figure, or — for a running
+    // period — its pace (additive) or its figure so far (a ratio), which is
+    // marked provisional wherever it is used.
+    basis = !current.partial
+        ? current.value
+        : agg == KpiAggregation.sum
+        ? rate?.projected
+        : current.value;
+    provisional = current.partial && basis != null;
+  }
+
+  static const _need = 4;
+
+  final BiModule module;
+  final BiModuleView view;
+  final BiResult result;
+  final BiSeries series;
+  final BiDashboardExtras extras;
+  final AppLocalizations l10n;
+  final String locale;
+  final DateTime from;
+  final DateTime to;
+  final DateTime now;
+  final KpiAggregation agg;
+  late final BiRunRate? rate;
+  late final num? basis;
+  late final bool provisional;
+
   String format(num v) => view.value(v, locale, result.currency);
   String periodLabel(BiPeriod p) => biPeriodLabel(p, l10n, locale);
   String changeText(BiChange c) =>
@@ -62,29 +118,20 @@ BiDashboardContent biDashboardContent({
     BiBarKind.yearAgo => l10n.biKindYearAgo,
   };
 
-  final current = series.current;
-  final rate = runRateOf(
-    current,
-    from: from,
-    to: to,
-    now: now,
-    aggregation: agg,
-  );
-  // What the present is judged by: a finished figure, or — for a running
-  // period — its pace (additive) or its figure so far (a ratio), which is
-  // marked provisional wherever it is used.
-  final num? basis = !current.partial
-      ? current.value
-      : agg == KpiAggregation.sum
-      ? rate?.projected
-      : current.value;
-  final provisional = current.partial && basis != null;
   BiChange against(BiSeriesPoint? past) =>
       past == null || !past.complete
       ? const BiChange()
       : changeBetween(basis, past.value, agg);
 
-  final chips = <BiChipContent>[
+  late final percent = NumberFormat.decimalPercentPattern(
+    locale: locale,
+    decimalDigits: 1,
+  );
+  String share(double s) => percent.format(s);
+  String hours(num v) =>
+      '${NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: 1).format(v)} h';
+
+  List<BiChipContent> chips() => [
     for (final (kind, past) in [
       (BiBarKind.previous, series.previous),
       (BiBarKind.yearAgo, series.yearAgo),
@@ -98,32 +145,27 @@ BiDashboardContent biDashboardContent({
               '${kind == BiBarKind.previous ? (l10n.biVsPrevious) : (l10n.biVsYearAgo)}',
         ),
   ];
-  final lead = [
-    for (final (kind, past) in [
-      (BiBarKind.previous, series.previous),
-      (BiBarKind.yearAgo, series.yearAgo),
-    ])
-      if (past != null && past.complete && !against(past).undefined)
-        (kind, against(past)),
-  ].firstOrNull;
-  String? narrative;
-  if (lead != null) {
+
+  String? narrative() {
+    final lead = [
+      for (final (kind, past) in [
+        (BiBarKind.previous, series.previous),
+        (BiBarKind.yearAgo, series.yearAgo),
+      ])
+        if (past != null && past.complete && !against(past).undefined)
+          (kind, against(past)),
+    ].firstOrNull;
+    if (lead == null) return null;
     final label = kindLabel(lead.$1).toLowerCase();
     final words = changeText(lead.$2);
-    narrative = switch (directionOf(lead.$2)) {
-      BiDirection.up =>
-        l10n.biNarrativeUp(label, words),
-      BiDirection.down =>
-        l10n.biNarrativeDown(label, words),
+    return switch (directionOf(lead.$2)) {
+      BiDirection.up => l10n.biNarrativeUp(label, words),
+      BiDirection.down => l10n.biNarrativeDown(label, words),
       _ => l10n.biNarrativeFlat(label),
     };
   }
 
-  final forecast = forecastOf(series, aggregation: agg);
-  const need = 4;
-  final next = forecast?.points.first;
-
-  final bars = [
+  List<BiBarContent> bars() => [
     for (final bar in comparisonBars(series))
       BiBarContent(
         bar: bar,
@@ -145,17 +187,20 @@ BiDashboardContent biDashboardContent({
       ),
   ];
 
-  final percent = NumberFormat.decimalPercentPattern(
-    locale: locale,
-    decimalDigits: 1,
-  );
-  String share(double s) => percent.format(s);
-  String hours(num v) =>
-      '${NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: 1).format(v)} h';
-  final compositions = <BiCompositionContent>[];
-  final detail = result.total.current.detail;
-  final compositionTitle = l10n.biCompositionTitle;
-  if (detail is SeatCapacityKpi) {
+  List<BiCompositionContent> compositions() {
+    final detail = result.total.current.detail;
+    if (detail is SeatCapacityKpi) return _seatCompositions(detail);
+    if (module.id == 'finance.collected') {
+      final inv = extras.invoiced?.total.current.detail;
+      if (inv is FinanceSummaryKpi && detail is FinanceSummaryKpi) {
+        return [_collectionComposition(inv, detail)];
+      }
+    }
+    return const [];
+  }
+
+  List<BiCompositionContent> _seatCompositions(SeatCapacityKpi detail) {
+    final out = <BiCompositionContent>[];
     final labels = SeatTimeLabels(
       reserved: l10n.biSeatReserved,
       free: l10n.biSeatFree,
@@ -164,15 +209,14 @@ BiDashboardContent biDashboardContent({
     final parts = seatTimeComposition(detail, labels);
     if (parts != null) {
       final reserved = parts.where((p) => p.key == 'reserved').firstOrNull;
-      compositions.add(
+      out.add(
         BiCompositionContent(
-          title: compositionTitle,
+          title: l10n.biCompositionTitle,
           shares: parts,
           formatValue: hours,
           formatShare: share,
           centreValue: share(reserved?.share ?? 0),
-          centreLabel:
-              '${labels.reserved} · ${l10n.biSeatCentre}',
+          centreLabel: '${labels.reserved} · ${l10n.biSeatCentre}',
         ),
       );
     }
@@ -185,7 +229,7 @@ BiDashboardContent biDashboardContent({
             otherLabel: l10n.biRemainder,
           );
     if (byLevel != null) {
-      compositions.add(
+      out.add(
         BiCompositionContent(
           title: l10n.biShareByLevel,
           shares: byLevel,
@@ -196,74 +240,79 @@ BiDashboardContent biDashboardContent({
         ),
       );
     }
-  } else if (module.id == 'finance.collected') {
-    final inv = extras.invoiced?.total.current.detail;
-    if (inv is FinanceSummaryKpi && detail is FinanceSummaryKpi) {
-      final parts = collectionComposition(
-        invoiced: inv.invoicedMinor,
-        collected: detail.collectedMinor,
-        collectedLabel: l10n.biCollectionCollected,
-        outstandingLabel: l10n.biCollectionOutstanding,
-      );
-      if (parts == null) {
-        compositions.add(
-          BiCompositionContent(
-            title: compositionTitle,
-            none:
-                l10n.biCollectionNoComposition,
-          ),
-        );
-      } else {
-        final collected = parts.where((p) => p.key == 'collected').firstOrNull;
-        compositions.add(
-          BiCompositionContent(
-            title: compositionTitle,
-            shares: parts,
-            formatValue: format,
-            formatShare: share,
-            centreValue: share(collected?.share ?? 0),
-            centreLabel:
-                '${l10n.biCollectionCollected} · ${l10n.biCollectionCentre}',
-          ),
-        );
-      }
-    }
+    return out;
   }
 
-  return BiDashboardContent(
-    title: view.title(l10n),
-    period: periodLabel(result.period),
-    figure: view.value(result.total.current.value(agg), locale, result.currency),
-    basis: view.basis(result.total.current, l10n, locale),
-    series: series,
-    forecast: forecast,
-    chips: chips,
-    bars: bars,
-    compositions: compositions,
-    notes: view.notes(result.total.current, l10n, locale),
-    narrative: narrative,
-    provisionalNote: chips.isNotEmpty && provisional
-        ? l10n.biProvisionalNote
-        : null,
-    runRate: rate == null
-        ? null
-        : l10n.biRunRate(format(rate.projected)),
-    projectionBasis: forecast != null
-        ? (l10n.biProjectionBasis(forecast.basis))
-        : (l10n.biProjectionNotEnough(series.history.length, need)),
-    projectionNext: next == null
-        ? null
-        : '${periodLabel(next.period)}: ${format(next.value)} '
-              '(${format(next.low)} – ${format(next.high)}) · ${l10n.biProjectionLabel}',
-    format: format,
-    periodLabel: periodLabel,
-    shortLabel: (p) => _biShortPeriodLabel(p, locale),
-    kindLabel: kindLabel,
-    projectedLabel: l10n.biProjectionLabel,
-    noDataLabel: l10n.biNoDataLabel,
-    partialLabel: l10n.biRunningLabel,
-    noComparisonLabel: l10n.biDeltaNone,
-    evolutionTitle: l10n.biEvolutionTitle,
-    compareTitle: l10n.biCompareTitle,
-  );
+  BiCompositionContent _collectionComposition(
+    FinanceSummaryKpi inv,
+    FinanceSummaryKpi detail,
+  ) {
+    final parts = collectionComposition(
+      invoiced: inv.invoicedMinor,
+      collected: detail.collectedMinor,
+      collectedLabel: l10n.biCollectionCollected,
+      outstandingLabel: l10n.biCollectionOutstanding,
+    );
+    if (parts == null) {
+      return BiCompositionContent(
+        title: l10n.biCompositionTitle,
+        none: l10n.biCollectionNoComposition,
+      );
+    }
+    final collected = parts.where((p) => p.key == 'collected').firstOrNull;
+    return BiCompositionContent(
+      title: l10n.biCompositionTitle,
+      shares: parts,
+      formatValue: format,
+      formatShare: share,
+      centreValue: share(collected?.share ?? 0),
+      centreLabel:
+          '${l10n.biCollectionCollected} · ${l10n.biCollectionCentre}',
+    );
+  }
+
+  BiDashboardContent build() {
+    final chipList = chips();
+    final forecast = forecastOf(series, aggregation: agg);
+    final next = forecast?.points.first;
+    final rate = this.rate;
+    return BiDashboardContent(
+      title: view.title(l10n),
+      period: periodLabel(result.period),
+      figure: view.value(
+        result.total.current.value(agg),
+        locale,
+        result.currency,
+      ),
+      basis: view.basis(result.total.current, l10n, locale),
+      series: series,
+      forecast: forecast,
+      chips: chipList,
+      bars: bars(),
+      compositions: compositions(),
+      notes: view.notes(result.total.current, l10n, locale),
+      narrative: narrative(),
+      provisionalNote: chipList.isNotEmpty && provisional
+          ? l10n.biProvisionalNote
+          : null,
+      runRate: rate == null ? null : l10n.biRunRate(format(rate.projected)),
+      projectionBasis: forecast != null
+          ? (l10n.biProjectionBasis(forecast.basis))
+          : (l10n.biProjectionNotEnough(series.history.length, _need)),
+      projectionNext: next == null
+          ? null
+          : '${periodLabel(next.period)}: ${format(next.value)} '
+                '(${format(next.low)} – ${format(next.high)}) · ${l10n.biProjectionLabel}',
+      format: format,
+      periodLabel: periodLabel,
+      shortLabel: (p) => _biShortPeriodLabel(p, locale),
+      kindLabel: kindLabel,
+      projectedLabel: l10n.biProjectionLabel,
+      noDataLabel: l10n.biNoDataLabel,
+      partialLabel: l10n.biRunningLabel,
+      noComparisonLabel: l10n.biDeltaNone,
+      evolutionTitle: l10n.biEvolutionTitle,
+      compareTitle: l10n.biCompareTitle,
+    );
+  }
 }
