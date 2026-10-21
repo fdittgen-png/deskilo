@@ -8,6 +8,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/app/webmcp_confirmations.dart';
 import 'package:deskilo/app/webmcp_reads.dart';
 import 'package:deskilo/app/webmcp_wiring.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
@@ -194,6 +195,7 @@ void main() {
   late FakeReservationRepository reservations;
   late Set<WorkspaceFeature> features;
   late _Feedback feedback;
+  late FakeEventRepository events;
   var permissions = <WorkspacePermission>{};
 
   ProviderContainer container() {
@@ -233,7 +235,7 @@ void main() {
         myPermissionsProvider.overrideWith((ref) => permissions),
         memberAccountQueriesProvider.overrideWithValue(_Accounts()),
         placeFeedbackRepositoryProvider.overrideWithValue(feedback),
-        eventRepositoryProvider.overrideWithValue(FakeEventRepository()),
+        eventRepositoryProvider.overrideWithValue(events),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -245,6 +247,7 @@ void main() {
   setUp(() {
     permissions = {WorkspacePermission.viewFinances};
     feedback = _Feedback();
+    events = FakeEventRepository()..events.add(_pending);
     context = _Context();
     deviceSwitch = _Switch(on: true);
     reservations = FakeReservationRepository()
@@ -296,6 +299,7 @@ void main() {
         'deskilo_cancel_reservation',
         'deskilo_create_reservation',
         'deskilo_request_reservation_deletion',
+        'deskilo_respond_to_validation',
       });
     },
   );
@@ -566,6 +570,57 @@ void main() {
       'reservation_id': 'r2',
     });
     expect((theirs['error']! as Map)['code'], 'not_found');
+  });
+
+  test(
+    'an answer to a validation waits for the person; Confirm lets it run once',
+    () async {
+      final c = await armed();
+      final input = {
+        'request_id': 'req-val-1',
+        'workspace_id': 'ws-1',
+        'event_id': 'e1',
+        'accept': true,
+      };
+      final asked = await call('deskilo_respond_to_validation', input);
+      expect(asked['status'], 'pending_confirmation');
+      final request = c.read(webMcpConfirmationsProvider);
+      expect(request?.operation, 'respond_to_validation');
+      expect(
+        (await call('deskilo_respond_to_validation', input))['status'],
+        'pending_confirmation',
+      );
+      expect(events.events.single.status, EventStatus.pending);
+
+      c
+          .read(webMcpConfirmationsProvider.notifier)
+          .decide(request!.key, accept: true);
+      final done = await call('deskilo_respond_to_validation', input);
+      expect(done['ok'], isTrue, reason: '$done');
+      expect(done['status'], 'completed');
+      expect(
+        _keys(done['output']).difference(_outputs()['respond_to_validation']!),
+        isEmpty,
+      );
+    },
+  );
+
+  test('a declined request is refused and nothing runs', () async {
+    final c = await armed();
+    final input = {
+      'request_id': 'req-val-2',
+      'workspace_id': 'ws-1',
+      'event_id': 'e1',
+      'accept': false,
+    };
+    await call('deskilo_respond_to_validation', input);
+    final request = c.read(webMcpConfirmationsProvider)!;
+    c
+        .read(webMcpConfirmationsProvider.notifier)
+        .decide(request.key, accept: false);
+    final answer = await call('deskilo_respond_to_validation', input);
+    expect((answer['error']! as Map)['code'], 'declined');
+    expect(events.events.single.status, EventStatus.pending);
   });
 
   test('a window longer than 31 days is refused', () async {

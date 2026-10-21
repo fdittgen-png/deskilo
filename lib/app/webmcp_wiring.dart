@@ -21,6 +21,7 @@ import '../core/webmcp/webmcp_tool_spec.dart';
 import '../core/webmcp/webmcp_tools.g.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
+import 'webmcp_confirmations.dart';
 import 'webmcp_reads.dart';
 import 'webmcp_writes.dart';
 
@@ -59,7 +60,8 @@ final webMcpRegistryProvider = Provider<WebMcpRegistry>((ref) {
     tools: [
       for (final tool in webMcpTools)
         if (webMcpReadRunners.containsKey(tool.id) ||
-            webMcpWriteRunners.containsKey(tool.id))
+            webMcpWriteRunners.containsKey(tool.id) ||
+            webMcpConfirmedWrites.containsKey(tool.id))
           tool,
     ],
   );
@@ -96,16 +98,33 @@ Future<Object?> _run(
   required List<String> Function() offered,
 }) async {
   final read = webMcpReadRunners[tool.id];
-  final write = webMcpWriteRunners[tool.id];
+  final confirmed = webMcpConfirmedWrites[tool.id];
+  final write = webMcpWriteRunners[tool.id] ?? confirmed?.write;
   if (read == null && write == null) {
     return _refusal('unavailable', 'This tool is not offered here.');
   }
   try {
-    final output = read != null
-        ? await read(ref, input, conditions, offered)
-        : await ref
-              .read(webMcpIntentsProvider)
-              .once(conditions.scopeKey, input, () => write!(ref, input));
+    final Map<String, Object?> output;
+    if (read != null) {
+      output = await read(ref, input, conditions, offered);
+    } else if (confirmed != null) {
+      await confirmed.check(ref, input);
+      final outcome = ref
+          .read(webMcpConfirmationsProvider.notifier)
+          .outcome(
+            scope: conditions.scopeKey,
+            operation: tool.id,
+            input: input,
+            write: () => confirmed.write(ref, input),
+          );
+      // Nothing ran: the person has not confirmed (yet).
+      if (outcome == null) return _pending(tool, input, conditions);
+      output = await outcome;
+    } else {
+      output = await ref
+          .read(webMcpIntentsProvider)
+          .once(conditions.scopeKey, input, () => write!(ref, input));
+    }
     if (write != null) ref.read(webMcpActivityProvider.notifier).acted(tool.id);
     return {
       'ok': true,
@@ -125,6 +144,20 @@ Future<Object?> _run(
     return _refusal(r.code, r.message);
   }
 }
+
+/// The answer while the person has not confirmed: call again with the
+/// same request_id and arguments once they have.
+Map<String, Object?> _pending(
+  WebMcpToolSpec tool,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+) => {
+  'ok': true,
+  'status': 'pending_confirmation',
+  'operation': tool.id,
+  'workspace_id': conditions.workspaceId,
+  'request_id': input['request_id'],
+};
 
 Map<String, Object?> _refusal(String code, String message) => {
   'ok': false,
