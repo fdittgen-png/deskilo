@@ -23,6 +23,7 @@ import '../core/webmcp/webmcp_tools.g.dart';
 import '../features/events/providers/event_providers.dart';
 import '../features/money/providers/money_providers.dart';
 import '../features/reservations/domain/reservation.dart';
+import '../features/reservations/providers/place_feedback_providers.dart';
 import '../features/reservations/providers/reservation_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
@@ -88,6 +89,8 @@ final Map<String, WebMcpRead> webMcpReadRunners = {
   'list_my_reservations': _listMyReservations,
   'list_my_invoices': _listMyInvoices,
   'list_pending_validations': _listPendingValidations,
+  'list_my_favorites': _listMyFavorites,
+  'get_my_statement': _getMyStatement,
 };
 
 /// Runs [tool] and wraps its answer as the MCP facade does: a status, the
@@ -319,4 +322,71 @@ Future<Map<String, Object?>> _listPendingValidations(
         'mine': e.actorMemberId == me.id || e.subjectMemberId == me.id,
       },
   ], input);
+}
+
+Future<Map<String, Object?>> _listMyFavorites(
+  Ref ref,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+  List<String> Function() offered,
+) async {
+  final favorites = await ref.read(myFavoritePlacesProvider.future);
+  return {
+    'items': [
+      for (final f in favorites)
+        {
+          'kind': f.kind.name,
+          'resource_id': f.id,
+          'label': f.label,
+          'favorite': f.feedback.favorite,
+          'average': f.feedback.average,
+          'count': f.feedback.count,
+          'mine': f.feedback.mine,
+        },
+    ],
+  };
+}
+
+final _month = RegExp(r'^\d{4}-(0[1-9]|1[0-2])$');
+
+Future<Map<String, Object?>> _getMyStatement(
+  Ref ref,
+  Map<String, Object?> input,
+  WebMcpConditions conditions,
+  List<String> Function() offered,
+) async {
+  final period = input['period'];
+  if (period is! String || !_month.hasMatch(period)) {
+    throw const _Refused(
+      'validation_error',
+      'period must be a month, YYYY-MM.',
+    );
+  }
+  final workspace = await ref.read(currentWorkspaceProvider.future);
+  final statement = await ref.read(myStatementProvider(period).future);
+  if (workspace == null || statement == null) {
+    throw const _Refused(
+      'not_a_member',
+      'This person is not a member of this workspace.',
+    );
+  }
+  return {
+    'period': statement.period,
+    'subscription_pct': statement.subscriptionPct,
+    'fee_cents': statement.feeCents,
+    'included_half_days': statement.includedHalfDays,
+    'granted_half_days': statement.grantedHalfDays,
+    'open_days': statement.openDays,
+    'used_half_days': statement.usedHalfDays,
+    'extra_half_days': statement.extraHalfDays,
+    'overage_rate_cents': statement.overageRateCents,
+    'overage_cents': statement.overageCents,
+    'credits_cents': statement.creditsCents,
+    'balance_cents': statement.balanceCents,
+    'desk_supplement_cents': statement.deskSupplementCents,
+    'office_supplement_cents': statement.officeSupplementCents,
+    'level_supplement_cents': statement.levelSupplementCents,
+    'accessory_supplement_cents': statement.accessorySupplementCents,
+    'currency': workspace.currencyCode,
+  };
 }

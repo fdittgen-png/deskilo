@@ -16,8 +16,11 @@ import 'package:deskilo/core/webmcp/webmcp_tools.g.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -152,6 +155,35 @@ void main() {
             _invoice('i3', 'member-1', DateTime.utc(2026, 8, 31)),
           ],
         ),
+        myFavoritePlacesProvider.overrideWith(
+          (ref) async => const [
+            FavoritePlace(
+              kind: PlaceKind.seat,
+              id: 'seat-1',
+              label: 'Window',
+              feedback: PlaceFeedback(
+                favorite: true,
+                average: 4.5,
+                count: 2,
+                mine: 5,
+              ),
+            ),
+          ],
+        ),
+        myStatementProvider('2026-09').overrideWith(
+          (ref) async => const Statement(
+            period: '2026-09',
+            subscriptionPct: 100,
+            feeCents: 30000,
+            includedHalfDays: 40,
+            openDays: 22,
+            usedHalfDays: 12,
+            extraHalfDays: 0,
+            overageCents: 0,
+            creditsCents: 0,
+            balanceCents: -30000,
+          ),
+        ),
         myPendingEventsProvider.overrideWith(
           (ref) async => [
             WorkspaceEvent(
@@ -187,6 +219,7 @@ void main() {
       WorkspaceFeature.webMcp,
       WorkspaceFeature.invoicing,
       WorkspaceFeature.moneyTab,
+      WorkspaceFeature.placeFeedback,
     };
   });
 
@@ -204,7 +237,7 @@ void main() {
   ) async => (await context.live[tool]!(input))! as Map<String, Object?>;
 
   test(
-    'all conditions hold: the four answered reads are offered, nothing else',
+    'all conditions hold: the answered reads are offered, nothing else',
     () async {
       await armed();
       expect(context.live.keys.toSet(), {
@@ -212,6 +245,8 @@ void main() {
         'deskilo_list_my_reservations',
         'deskilo_list_my_invoices',
         'deskilo_list_pending_validations',
+        'deskilo_list_my_favorites',
+        'deskilo_get_my_statement',
       });
     },
   );
@@ -256,6 +291,13 @@ void main() {
         'deskilo_list_pending_validations',
         {'workspace_id': 'ws-1'},
       ),
+      'list_my_favorites': await call('deskilo_list_my_favorites', {
+        'workspace_id': 'ws-1',
+      }),
+      'get_my_statement': await call('deskilo_get_my_statement', {
+        'workspace_id': 'ws-1',
+        'period': '2026-09',
+      }),
     };
     for (final MapEntry(key: id, value: answer) in answers.entries) {
       expect(answer['ok'], isTrue, reason: '$id: $answer');
