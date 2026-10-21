@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
   "webMcpDeviceSwitch": "Assistenten in diesem Browser die App nutzen lassen",
-  "webMcpDeviceSwitchHint": "Standardmäßig aus. Eingeschaltet kann ein in diesen Browser eingebauter KI-Assistent Ihre Buchungen, Rechnungen und offenen Anfragen in diesem Bereich lesen, solange die Seite geöffnet ist. Die Wahl bleibt auf diesem Gerät."
+  "webMcpDeviceSwitchHint": "Standardmäßig aus. Eingeschaltet kann ein in diesen Browser eingebauter KI-Assistent Ihre Buchungen, Rechnungen und offenen Anfragen in diesem Bereich lesen, solange die Seite geöffnet ist. Die Wahl bleibt auf diesem Gerät.",
+  "webMcpActed": "Ein Assistent in diesem Browser: {action}"
 }

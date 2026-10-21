@@ -7,5 +7,14 @@
   "webMcpDeviceSwitchHint": "Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.",
   "@webMcpDeviceSwitchHint": {
     "description": "#2504 Me > Account: what the WebMCP device switch does"
+  },
+  "webMcpActed": "An assistant in this browser: {action}",
+  "@webMcpActed": {
+    "description": "#2504 the notice the page shows when an in-browser assistant acted through a tool; action is the operation's label",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
   }
 }

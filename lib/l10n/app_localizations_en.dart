@@ -22369,6 +22369,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visitStatusRequested => 'Requested';
 
   @override
+  String webMcpActed(String action) {
+    return 'An assistant in this browser: $action';
+  }
+
+  @override
   String get webMcpDeviceSwitch => 'Let assistants in this browser use the app';
 
   @override

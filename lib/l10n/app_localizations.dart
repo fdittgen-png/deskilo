@@ -38616,6 +38616,12 @@ abstract class AppLocalizations {
   /// **'Requested'**
   String get visitStatusRequested;
 
+  /// #2504 the notice the page shows when an in-browser assistant acted through a tool; action is the operation's label
+  ///
+  /// In en, this message translates to:
+  /// **'An assistant in this browser: {action}'**
+  String webMcpActed(String action);
+
   /// #2504 Me > Account: the per-device switch for in-browser assistants (WebMCP)
   ///
   /// In en, this message translates to:

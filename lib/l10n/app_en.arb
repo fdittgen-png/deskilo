@@ -26257,6 +26257,15 @@
   "@visitStatusRequested": {
     "description": "#1835 visit status"
   },
+  "webMcpActed": "An assistant in this browser: {action}",
+  "@webMcpActed": {
+    "description": "#2504 the notice the page shows when an in-browser assistant acted through a tool; action is the operation's label",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "webMcpDeviceSwitch": "Let assistants in this browser use the app",
   "@webMcpDeviceSwitch": {
     "description": "#2504 Me > Account: the per-device switch for in-browser assistants (WebMCP)"
