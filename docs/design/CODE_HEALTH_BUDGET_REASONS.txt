@@ -24,7 +24,6 @@ fileLength lib/features/directory/data/supabase_messenger_repository.dart // #23
 fileLength lib/features/directory/domain/messenger.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/directory/presentation/messenger/context_thread_screen.dart // #2313 every control keyed for the task recorder
 fileLength lib/features/kiosk/presentation/screens/kiosk_screen.dart // #1289 the kiosk plan paints the workspace's own room colours
-fileLength lib/features/money/domain/fec.dart // 590→555
 fileLength lib/features/money/domain/invoice.dart // #2440: the Spanish correction reason (R1-R5) frozen in the parties.
 fileLength lib/features/money/domain/invoice_pdf_part2.dart // 801→772
 fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within the former 600-line budget; split when next changed
@@ -101,3 +100,4 @@ pairBudget workspace -> reservations // #2383 the legacy new-conversation sheet 
 pairBudget workspace -> task_recorder // #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
 fileLength lib/features/members/presentation/widgets/member_page_cards.dart // #2494 the member page's tile groups moved here from build (cognitive 116 to the groups); the part file goes when the cards become widgets
 fileLength lib/features/reservations/presentation/widgets/space_scan.dart // #2494 the sheet's sections moved out of build (cognitive 128 to 101, still over); the length returns when the part files and the whole-space section become widgets
+fileLength lib/features/money/domain/fec_writer.dart // #2494 buildFecFile (cognitive 109, 480 lines) became FecWriter, moved whole from fec.dart (547 lines there); the length falls when the invoice, expense and repartition books split into their own files

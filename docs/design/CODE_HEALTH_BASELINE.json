@@ -1,8 +1,8 @@
 {
-  "recordedSha": "4bc4f0994828d15ef4467e7f6330d95813d52eb8",
-  "recordedDate": "2026-10-21",
+  "recordedSha": "48465711ae26d412c8d7d9cdcd7b5a594840069a",
+  "recordedDate": "2026-10-20",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1750,"functions":9639,"cyclomatic>=9":1031,"cyclomatic>=25":117,"cognitive>=15":428,"cognitive>=30":108,"length>=150":80,"parameters>=5":460,"parameters>=7":149,"partOfFiles":75},
+  "totals": {"files":1751,"functions":9647,"cyclomatic>=9":1031,"cyclomatic>=25":117,"cognitive>=15":428,"cognitive>=30":108,"length>=150":80,"parameters>=5":461,"parameters>=7":150,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -46,7 +46,7 @@
 
       "lib/features/members/presentation/widgets/member_page_cards.dart": 863,
 
-      "lib/features/money/domain/fec.dart": 555,
+      "lib/features/money/domain/fec_writer.dart": 529,
 
       "lib/features/money/domain/invoice.dart": 518,
 
@@ -1482,9 +1482,10 @@
     {"p":"lib/features/money/domain/expense_repository.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/expense_schedule.dart","loc":131,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":10,"len":21,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/export_year.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":9,"cyc":8,"len":19,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/fec.dart","loc":427,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":109,"cyc":56,"len":480,"params":16,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
+    {"p":"lib/features/money/domain/fec.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":76,"params":16,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/fec_accounts.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":0,"cyc":2,"len":4,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/fec_lettering.dart","loc":107,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":12,"cyc":10,"len":47,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/fec_writer.dart","loc":428,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":73,"cyc":31,"len":248,"params":15,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":1}},
     {"p":"lib/features/money/domain/fee_band.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/finance_overview.dart","loc":137,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":7,"cyc":6,"len":17,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/fr_ereporting.dart","loc":269,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":27,"cyc":22,"len":120,"params":7,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -2584,7 +2585,9 @@
     {"id":"lib/features/money/domain/bill_pdf.dart#_openPositionLabel(BillPdfStrings strings,WorkspaceEvent event)","cog":1,"cyc":29,"len":39,"params":2},
     {"id":"lib/features/money/domain/datev.dart#buildDatevFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required DatevAccounts accounts,required DateTime from,required DateTime to,required DateTime generatedAt,required String consultantNumber,required String clientNumber,String currency,String batchName,int accountLength,List<LedgerEntry> ledger,List<ExpenseRepartition> repartitions,bool development,List<VatTaxPointAmount>? taxPoints,DateTime Function(DateTime instant) dayOf})","cog":45,"cyc":32,"len":242,"params":16},
     {"id":"lib/features/money/domain/einvoice_channel_check.dart#channelGaps(EInvoiceFormat format,{required InvoiceParty seller,required InvoiceParty buyer,String iban})","cog":35,"cyc":28,"len":41,"params":4},
-    {"id":"lib/features/money/domain/fec.dart#buildFecFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required InvoiceParty company,required FecAccounts accounts,required String Function(InvoiceLine line) lineText,String customersLabel,String revenueLabel,String bankLabel,String vatLabel,List<LedgerEntry> ledger,Map<String, String> memberNames,List<ExpenseRepartition> repartitions,String expensesLabel,List<VatTaxPointAmount>? taxPoints,String vatPendingLabel,DateTime Function(DateTime instant) dayOf})","cog":109,"cyc":56,"len":480,"params":16},
+    {"id":"lib/features/money/domain/fec.dart#buildFecFile({required List<Invoice> invoices,required Map<String, InvoiceMatch> matches,required InvoiceParty company,required FecAccounts accounts,required String Function(InvoiceLine line) lineText,String customersLabel,String revenueLabel,String bankLabel,String vatLabel,List<LedgerEntry> ledger,Map<String, String> memberNames,List<ExpenseRepartition> repartitions,String expensesLabel,List<VatTaxPointAmount>? taxPoints,String vatPendingLabel,DateTime Function(DateTime instant) dayOf})","cog":0,"cyc":1,"len":76,"params":16},
+    {"id":"lib/features/money/domain/fec_writer.dart#FecWriter.write({required String journal,required String journalLabel,required String number,required DateTime date,required String account,required String accountLabel,required String auxNumber,required String auxLabel,required String pieceRef,required DateTime pieceDate,required String label,required int debitCents,required int creditCents,required String letter,required DateTime validDate})","cog":0,"cyc":1,"len":39,"params":15},
+    {"id":"lib/features/money/domain/fec_writer.dart#FecWriter.bookInvoices()","cog":73,"cyc":31,"len":248,"params":0},
     {"id":"lib/features/money/domain/fr_ereporting.dart#frEReport(Iterable<Invoice> invoices,{required DateTime start,required DateTime end,Map<String, InvoiceMatch> matches,Map<String, List<TaxPointPayment>> instalments,bool onReceipts,String currency})","cog":23,"cyc":22,"len":120,"params":7},
     {"id":"lib/features/money/domain/invoice.dart#Invoice.new.fromRow(Map<String, dynamic> row)","cog":9,"cyc":35,"len":76,"params":1},
     {"id":"lib/features/money/domain/invoice_legal.dart#InvoiceLegal.==(Object other)","cog":1,"cyc":25,"len":27,"params":1},

@@ -59,7 +59,7 @@ const _tracked = <_Tracked>[
    pattern: r"'[a-z]{2}' => '[A-Z]{2}'", ceiling: 7, movesIn: 'never (allowed)'),
   (what: 'export format currency of the Sage file', file: 'lib/features/money/domain/sage.dart',
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
-  (what: 'export format currency of the FEC file', file: 'lib/features/money/domain/fec.dart',
+  (what: 'export format currency of the FEC file', file: 'lib/features/money/domain/fec_writer.dart',
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
   (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev.dart',
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
@@ -101,7 +101,7 @@ const _allowed = <String, String>{
       'a guess from the device language for the first screen, not a choice anybody makes; nothing legal derives from it',
   'lib/features/money/domain/sage.dart::export format currency of the Sage file':
       'the Sage import format fixes the currency code it writes',
-  'lib/features/money/domain/fec.dart::export format currency of the FEC file':
+  'lib/features/money/domain/fec_writer.dart::export format currency of the FEC file':
       'the FEC format fixes the currency code it writes',
   'lib/features/money/domain/datev.dart::export format currency of the DATEV file':
       'the DATEV format fixes the currency code it writes',
