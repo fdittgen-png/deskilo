@@ -2,9 +2,9 @@
 //
 // #2504 PR 2 — the requests the contract runs only after the person
 // confirms them (`confirmation: native`). The first call shows the person
-// what the assistant asks and answers the agent `pending_confirmation`;
+// what the assistant asks and answers the agent `requires_confirmation`;
 // the agent calls again with the same request_id and arguments and gets
-// `pending_confirmation` until the person decides, then the outcome (or
+// `requires_confirmation` until the person decides, then the outcome (or
 // `declined`). Consent is the person's, in the app (ADR 0042): a call is
 // never a permission, and nothing runs before Confirm.
 import 'dart:async';

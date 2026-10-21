@@ -154,7 +154,7 @@ Map<String, Object?> _pending(
   WebMcpConditions conditions,
 ) => {
   'ok': true,
-  'status': 'pending_confirmation',
+  'status': 'requires_confirmation',
   'operation': tool.id,
   'workspace_id': conditions.workspaceId,
   'request_id': input['request_id'],

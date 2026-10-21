@@ -46,6 +46,15 @@ final Map<String, WebMcpWrite> webMcpWriteRunners = {
   'check_out': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.checkOut(id)),
   'create_reservation': _createReservation,
+  'update_reservation': (ref, input) {
+    final window = _window(input);
+    return _onOwnBooking(
+      ref,
+      input,
+      (repo, id) =>
+          repo.updateTimes(id, startsAt: window.start, endsAt: window.end),
+    );
+  },
   'request_reservation_deletion': _requestDeletion,
   'cancel_reservation': (ref, input) =>
       _onOwnBooking(ref, input, (repo, id) => repo.cancel(id)),

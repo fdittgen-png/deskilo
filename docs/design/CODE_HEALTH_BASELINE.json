@@ -1,8 +1,8 @@
 {
-  "recordedSha": "4db3616118b74ecc7c3d2f7fa066306cc5a7154e",
+  "recordedSha": "bc69bfde9cd83bfb46f4e427a79cbff042693370",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9816,"cyclomatic>=9":1038,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":97,"length>=150":72,"parameters>=5":466,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1751,"functions":9818,"cyclomatic>=9":1038,"cyclomatic>=25":108,"cognitive>=15":423,"cognitive>=30":97,"length>=150":72,"parameters>=5":466,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -780,10 +780,10 @@
     {"p":"lib/app/theme.dart","loc":219,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":5,"cyc":6,"len":129,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/webmcp_confirmation_sheet.dart","loc":62,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":3,"len":58,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/webmcp_confirmations.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":9,"cyc":10,"len":46,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/app/webmcp_confirmed_writes.dart","loc":228,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":5,"cyc":7,"len":34,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/webmcp_confirmed_writes.dart","loc":296,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":5,"cyc":7,"len":47,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/webmcp_reads.dart","loc":360,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":8,"cyc":8,"len":43,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/webmcp_wiring.dart","loc":131,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":13,"cyc":12,"len":56,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/app/webmcp_writes.dart","loc":309,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":12,"cyc":14,"len":44,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/webmcp_writes.dart","loc":318,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":12,"cyc":14,"len":44,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/app_info.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/auth_callback_dispatch.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":6,"len":20,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/backend/auth_callback_guard.dart","loc":151,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":8,"cyc":18,"len":32,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

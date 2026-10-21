@@ -13,6 +13,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/trace/trace_logger.dart';
 import '../core/validation/pending_validation.dart';
 import '../features/events/providers/event_providers.dart';
+import '../features/money/application/issue_invoice.dart';
+import '../features/money/domain/billing_rules.dart';
 import '../features/money/domain/invoice.dart';
 import '../features/money/domain/invoice_commands.dart';
 import '../features/money/providers/money_providers.dart';
@@ -44,6 +46,7 @@ webMcpConfirmedWrites = {
       ),
     ),
   ),
+  'request_invoice_issue': (check: _issueCheck, write: _issue),
   'request_member_status_change': (check: _memberCheck, write: _memberStatus),
   'request_subscription_change': (check: _memberCheck, write: _memberShare),
 };
@@ -258,4 +261,74 @@ Future<Map<String, Object?>> _memberShare(
       );
     }
   });
+}
+
+final _month = RegExp(r'^\d{4}-(0[1-9]|1[0-2])$');
+
+Future<Map<String, Object?>> _issueCheck(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  _need(ref, WorkspacePermission.issueInvoices);
+  await _member(ref, input);
+  final period = input['period'];
+  if (period is! String || !_month.hasMatch(period)) {
+    throw const WebMcpRefused('validation_error', 'period must be YYYY-MM.');
+  }
+  final kind = input['kind'];
+  if (!InvoiceKind.values.any((k) => k.name == kind)) {
+    throw const WebMcpRefused(
+      'validation_error',
+      'kind must be full, subscription or usage.',
+    );
+  }
+  return const {};
+}
+
+/// Issues the invoice as the invoice form does: once, under the agent's
+/// request_id, and an answer that never came back is looked up, not resent.
+Future<Map<String, Object?>> _issue(
+  Ref ref,
+  Map<String, Object?> input,
+) async {
+  await _issueCheck(ref, input);
+  final workspace = await ref.read(currentWorkspaceProvider.future);
+  final period = input['period']! as String;
+  final issuance = InvoiceIssuance(
+    ref.read(invoiceCommandsProvider),
+    ref.read(invoiceQueriesProvider),
+    ref.read(invoiceActionCommandsProvider),
+  );
+  var outcome = await issuance.issue(
+    InvoiceIssueAttempt(
+      workspaceId: workspace!.id,
+      memberId: input['member_id']! as String,
+      period: period,
+      kind: InvoiceKind.values.byName(input['kind']! as String),
+      requestId: input['request_id']! as String,
+    ),
+  );
+  if (outcome is InvoiceIssueUnknown) outcome = await issuance.look(outcome);
+  ref.invalidate(invoicesProvider);
+  switch (outcome) {
+    case InvoiceIssued(:final invoiceId):
+      final invoice = (await ref.read(invoicesProvider.future))
+          .where((i) => i.id == invoiceId)
+          .firstOrNull;
+      return invoice == null
+          ? {'invoice_id': invoiceId, 'period': period}
+          : _invoiceView(invoice);
+    case InvoiceIssueHeld(:final eventId):
+      return {'event_id': eventId, 'period': period};
+    case InvoiceIssueRefused():
+      throw const WebMcpRefused(
+        'denied',
+        'The workspace refused to issue this invoice.',
+      );
+    case InvoiceIssueUnknown():
+      throw const WebMcpRefused(
+        'conflict',
+        'The answer did not come back: read the invoices before asking again.',
+      );
+  }
 }

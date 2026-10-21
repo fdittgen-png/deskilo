@@ -18,8 +18,11 @@ import 'package:deskilo/core/webmcp/webmcp_registry.dart';
 import 'package:deskilo/core/webmcp/webmcp_tools.g.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
+import 'package:deskilo/features/money/domain/command_receipt.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_action_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
+import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -80,9 +83,22 @@ class _Feedback implements PlaceFeedbackRepository {
 class _Invoices implements InvoiceCommands {
   final voided = <String>[];
 
+  final issued = <InvoiceIssueCommand>[];
+
   @override
   Future<void> voidInvoice(String invoiceId) async => voided.add(invoiceId);
 
+  @override
+  Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand command) async {
+    issued.add(command);
+    return 'i9';
+  }
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Unused implements InvoiceQueries, InvoiceActionCommands {
   @override
   Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -249,6 +265,9 @@ void main() {
         placeFeedbackRepositoryProvider.overrideWithValue(feedback),
         eventRepositoryProvider.overrideWithValue(events),
         invoiceCommandsProvider.overrideWithValue(invoiceCommands),
+        invoiceQueriesProvider.overrideWithValue(_Unused()),
+        invoiceActionCommandsProvider.overrideWithValue(_Unused()),
+        workspaceMembersProvider.overrideWith((ref) async => const [_me]),
         eventTrailProvider('e1')
             .overrideWith((ref) async => EventTrail(event: _pending)),
       ],
@@ -321,6 +340,8 @@ void main() {
         'deskilo_request_refund',
         'deskilo_request_member_status_change',
         'deskilo_request_subscription_change',
+        'deskilo_update_reservation',
+        'deskilo_request_invoice_issue',
       });
     },
   );
@@ -604,12 +625,12 @@ void main() {
         'accept': true,
       };
       final asked = await call('deskilo_respond_to_validation', input);
-      expect(asked['status'], 'pending_confirmation');
+      expect(asked['status'], 'requires_confirmation');
       final request = c.read(webMcpConfirmationsProvider);
       expect(request?.operation, 'respond_to_validation');
       expect(
         (await call('deskilo_respond_to_validation', input))['status'],
-        'pending_confirmation',
+        'requires_confirmation',
       );
       expect(events.events.single.status, EventStatus.pending);
 
@@ -667,7 +688,7 @@ void main() {
     };
     expect(
       (await call('deskilo_request_invoice_void', input))['status'],
-      'pending_confirmation',
+      'requires_confirmation',
     );
     expect(invoiceCommands.voided, isEmpty);
     final request = c.read(webMcpConfirmationsProvider)!;
@@ -682,6 +703,66 @@ void main() {
       _keys(done['output']).difference(_outputs()['request_invoice_void']!),
       isEmpty,
     );
+  });
+
+  test('a booking moves to a day and period, only when it is own', () async {
+    await armed();
+    final moved = await call('deskilo_update_reservation', {
+      'request_id': 'req-move-1',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r1',
+      'date': '2026-10-08',
+      'period': 'morning',
+    });
+    expect(moved['ok'], isTrue, reason: '$moved');
+    expect(
+      _keys(moved['output']).difference(_outputs()['update_reservation']!),
+      isEmpty,
+    );
+    final r1 = reservations.reservations.singleWhere((r) => r.id == 'r1');
+    expect(r1.startsAt.toLocal().day, 8);
+
+    final theirs = await call('deskilo_update_reservation', {
+      'request_id': 'req-move-2',
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r2',
+      'date': '2026-10-08',
+      'period': 'morning',
+    });
+    expect((theirs['error']! as Map)['code'], 'not_found');
+  });
+
+  test('an invoice is issued once, under the request_id, after Confirm', () async {
+    final c = await armed();
+    final input = {
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e09',
+      'workspace_id': 'ws-1',
+      'member_id': 'member-1',
+      'period': '2026-09',
+      'kind': 'full',
+    };
+    final asked = await call('deskilo_request_invoice_issue', input);
+    expect(asked['status'], 'requires_confirmation');
+    expect(invoiceCommands.issued, isEmpty);
+    c
+        .read(webMcpConfirmationsProvider.notifier)
+        .decide(c.read(webMcpConfirmationsProvider)!.key, accept: true);
+    final done = await call('deskilo_request_invoice_issue', input);
+    expect(done['ok'], isTrue, reason: '$done');
+    expect(done['status'], 'pending_validation');
+    await call('deskilo_request_invoice_issue', input);
+    expect(invoiceCommands.issued.single.requestId, input['request_id']);
+    expect(
+      _keys(done['output']).difference(_outputs()['request_invoice_issue']!),
+      isEmpty,
+    );
+
+    final bad = await call('deskilo_request_invoice_issue', {
+      ...input,
+      'request_id': '6f1c6c1e-3b8a-4c55-9d4e-2f8b2a7c9e10',
+      'period': '2026-13',
+    });
+    expect((bad['error']! as Map)['code'], 'validation_error');
   });
 
   test('a window longer than 31 days is refused', () async {
