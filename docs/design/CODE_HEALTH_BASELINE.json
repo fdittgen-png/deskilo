@@ -1,8 +1,8 @@
 {
-  "recordedSha": "d9276fd66c05ae0896e1f4acf5b70139de1eaa45",
+  "recordedSha": "f80fb820c9c46270f57d97e60e765083e16e8ec9",
   "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1751,"functions":9661,"cyclomatic>=9":1032,"cyclomatic>=25":115,"cognitive>=15":427,"cognitive>=30":106,"length>=150":79,"parameters>=5":461,"parameters>=7":150,"partOfFiles":75},
+  "totals": {"files":1751,"functions":9665,"cyclomatic>=9":1031,"cyclomatic>=25":115,"cognitive>=15":426,"cognitive>=30":105,"length>=150":79,"parameters>=5":463,"parameters>=7":150,"partOfFiles":75},
   "budgets": {
     "partOfFiles": 75,
     "fileLength": {
@@ -2285,7 +2285,7 @@
     {"p":"lib/features/workspace/domain/workspace_xml.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_xml_configuration.dart","loc":159,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":10,"cyc":15,"len":45,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_xml_part1.dart","loc":216,"part":true,"setState":0,"repositoryReads":0,"fn":15,"cog":1,"cyc":11,"len":13,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_xml_part2.dart","loc":337,"part":true,"setState":0,"repositoryReads":0,"fn":12,"cog":82,"cyc":21,"len":143,"params":7,"nest":11,"over":{"cog":1,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/workspace/domain/workspace_xml_part2.dart","loc":360,"part":true,"setState":0,"repositoryReads":0,"fn":16,"cog":24,"cyc":10,"len":68,"params":7,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/domain/workspace_xml_part3.dart","loc":126,"part":true,"setState":0,"repositoryReads":0,"fn":13,"cog":19,"cyc":12,"len":34,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/application_status_label.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":6,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/capability_labels.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":11,"len":24,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2745,7 +2745,7 @@
     {"id":"lib/features/workspace/domain/template_field_registry.dart#_row(String table,String entity,String key,Map<String, TemplateFieldType> columns,{Map<String, TemplatePortability> portability,Map<String, String> reasons,Map<String, String> refs,Map<String, List<String>> values})","cog":5,"cyc":6,"len":13,"params":8},
     {"id":"lib/features/workspace/domain/workspace_excel.dart#buildWorkspaceExcelExport({required Workspace workspace,required Set<String> enabledFeatures,required List<Level> levels,required Map<String, FloorPlan> plansByLevel,required List<Member> members,required Map<String, Profile> profilesByUserId,required List<Reservation> reservations,required List<LedgerEntry> ledger,required List<WorkspaceEvent> pendingEvents,required List<PaymentIntent> paymentIntents,required List<ServiceItem> services,required List<Invoice> invoices,required Map<String, DateTime> transmissionsByInvoice})","cog":65,"cyc":36,"len":229,"params":13},
     {"id":"lib/features/workspace/domain/workspace_process.dart#validateProcessRegistry(List<WorkspaceProcess> processes,{Map<WorkspaceFeature, String> internal})","cog":34,"cyc":18,"len":42,"params":2},
-    {"id":"lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml({required Workspace workspace,required List<({Level level, FloorPlan plan})> levels,List<Accessory> accessories,Map<String, Set<String>> seatAccessories,Map<String, Object?>? configuration,Map<String, String> siteNames,Map<String, String> vatRateLabels})","cog":82,"cyc":21,"len":143,"params":7},
+    {"id":"lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml({required Workspace workspace,required List<({Level level, FloorPlan plan})> levels,List<Accessory> accessories,Map<String, Set<String>> seatAccessories,Map<String, Object?>? configuration,Map<String, String> siteNames,Map<String, String> vatRateLabels})","cog":7,"cyc":4,"len":53,"params":7},
     {"id":"lib/features/workspace/presentation/feature_copy.dart#featureDescription(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":125,"len":242,"params":2},
     {"id":"lib/features/workspace/presentation/feature_names.dart#featureName(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":125,"len":250,"params":2},
     {"id":"lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction({required BuildContext context,required WidgetRef ref,required Future<String?> Function() action,WizardNavigationController? navigation})","cog":43,"cyc":31,"len":68,"params":4},
