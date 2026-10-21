@@ -1,0 +1,5 @@
+{
+  "seriesPreviewFailing": "Ces dates ne peuvent pas être réservées :",
+  "seriesPreviewBookOthers": "{count, plural, =1{Réserver l'autre date} other{Réserver les {count} autres dates}}",
+  "seriesPreviewNone": "Aucune de ces dates ne peut être réservée."
+}

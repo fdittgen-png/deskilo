@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider, WidgetRef;
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,9 +19,11 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';
 import '../application/save_calendar_file.dart';
 import '../data/context_reservation_repository.dart';
+import '../data/supabase_series_previewer.dart';
 import '../domain/booking_intent.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import '../domain/series_preview.dart';
 
 part 'reservation_providers.g.dart';
 
@@ -35,6 +37,12 @@ ReservationRepository reservationRepository(Ref ref) =>
       context: () => ref.read(workspaceContextProvider.future),
       clientFor: (id) => ref.read(workspaceClientProvider(id)),
     );
+
+/// #2575 — which dates of a series would book, asked on the selected
+/// workspace's own server before the person submits. Demo overrides it.
+final seriesPreviewerProvider = Provider<SeriesPreviewer>(
+  (ref) => SupabaseSeriesPreviewer(ref.watch(selectedWorkspaceClientProvider)),
+);
 
 /// #1855 — where a booking intent is valid: this account on this server.
 /// Read at use, never captured: a later login or server switch reads its

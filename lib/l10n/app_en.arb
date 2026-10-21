@@ -20603,6 +20603,19 @@
       }
     }
   },
+  "seriesPreviewBookOthers": "{count, plural, =1{Book the other date} other{Book the other {count} dates}}",
+  "@seriesPreviewBookOthers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "seriesPreviewFailing": "These dates cannot be booked:",
+  "@seriesPreviewFailing": {
+    "description": "Series preview (#2575): heading above the dates that would fail"
+  },
+  "seriesPreviewNone": "None of these dates can be booked.",
   "seriesSkippedTitle": "Skipped (already taken):",
   "@seriesSkippedTitle": {
     "description": "Heading above the list of conflicted series instances"

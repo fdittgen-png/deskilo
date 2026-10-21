@@ -17598,6 +17598,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String seriesPreviewBookOthers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Book the other $count dates',
+      one: 'Book the other date',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seriesPreviewFailing => 'These dates cannot be booked:';
+
+  @override
+  String get seriesPreviewNone => 'None of these dates can be booked.';
+
+  @override
   String get seriesSkippedTitle => 'Skipped (already taken):';
 
   @override

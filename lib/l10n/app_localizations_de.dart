@@ -17773,6 +17773,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String seriesPreviewBookOthers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Die anderen $count Termine buchen',
+      one: 'Den anderen Termin buchen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get seriesPreviewFailing =>
+      'Diese Termine können nicht gebucht werden:';
+
+  @override
+  String get seriesPreviewNone => 'Keiner dieser Termine kann gebucht werden.';
+
+  @override
   String get seriesSkippedTitle => 'Übersprungen (bereits belegt):';
 
   @override
