@@ -5,6 +5,7 @@ import '../../workspace/domain/booking_granularity.dart';
 import '../domain/booking_gate.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
+import 'widgets/booking_sheet.dart';
 
 /// #791 — the points in the map's tap flow that write down what the app
 /// DECIDED, so a report of "check-in failed from the map" is answerable.
@@ -131,12 +132,29 @@ void traceMySeatAction({
       'windowOpen': windowOpen,
     });
 
+/// The reserve-without-check-in trace, only for a live single booking of
+/// one's own that neither walked up nor checked in.
+void traceIfReservedWithoutCheckIn(
+  BookingChoice choice,
+  Seat seat,
+  String? myMemberId, {
+  required bool liveWindow,
+}) {
+  if (choice.pattern == null &&
+      (choice.forMemberId == null || choice.forMemberId == myMemberId) &&
+      !choice.walkUp &&
+      !choice.checkInNow &&
+      liveWindow) {
+    _traceReserveWithoutCheckIn(seat: seat, start: choice.start, end: choice.end);
+  }
+}
+
 /// The #772 shape, made visible: a tap on a free seat while the browsed
 /// window contains NOW produces a plain reservation unless the walk-up
 /// path or the "check in right away" switch asked for the check-in. To
 /// the member that reads as "the map would not check me in", and it left
 /// a trace only of the booking that DID happen.
-void traceReserveWithoutCheckIn({
+void _traceReserveWithoutCheckIn({
   required Seat seat,
   required DateTime start,
   required DateTime end,

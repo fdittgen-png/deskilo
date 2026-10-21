@@ -12850,6 +12850,9 @@
     }
   },
   "seriesBookedCount": "{count, plural, =1{1 réservation créée} other{{count} réservations créées}}",
+  "seriesPreviewBookOthers": "{count, plural, =1{Réserver l'autre date} other{Réserver les {count} autres dates}}",
+  "seriesPreviewFailing": "Ces dates ne peuvent pas être réservées :",
+  "seriesPreviewNone": "Aucune de ces dates ne peut être réservée.",
   "seriesSkippedTitle": "Ignorées (déjà prises) :",
   "serverChoiceExistingTitle": "Un serveur qui existe déjà",
   "serverChoiceIntro": "Cette version de DesKilo est livrée sans serveur. Choisissez où vivent vos espaces. Vous pourrez le changer plus tard dans Paramètres → Avancé → Serveur.",

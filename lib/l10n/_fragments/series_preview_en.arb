@@ -1,0 +1,15 @@
+{
+  "seriesPreviewFailing": "These dates cannot be booked:",
+  "seriesPreviewBookOthers": "{count, plural, =1{Book the other date} other{Book the other {count} dates}}",
+  "seriesPreviewNone": "None of these dates can be booked.",
+  "@seriesPreviewBookOthers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@seriesPreviewFailing": {
+    "description": "Series preview (#2575): heading above the dates that would fail"
+  }
+}

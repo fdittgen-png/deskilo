@@ -37,6 +37,7 @@ import '../domain/booking_error_text.dart';
 import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
+import '../domain/series_preview.dart';
 import '../providers/default_period_controller.dart';
 import '../providers/reservation_providers.dart';
 import 'booking_feedback.dart';
@@ -50,6 +51,7 @@ import 'widgets/reference_open.dart';
 import 'widgets/reservation_detail_sheet.dart'
     show ownBookingRemovalOf, requestBookingDeletion;
 import 'widgets/seat_day_sheet.dart';
+import 'widgets/series_preview_dialog.dart';
 import 'widgets/series_result_dialog.dart';
 
 part 'others_booking_tap.dart';
@@ -635,6 +637,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       return;
     }
 
+    // #2575 — a series names the dates that would fail before it books.
+    final ask = ownSeriesAsk(choice, workspace.id, seat.id, myMemberId);
+    SeriesPreviewer previewer() => ref.read(seriesPreviewerProvider);
+    if (!await confirmSeriesPreview(context, previewer, ask) || !mounted) {
+      return;
+    }
+
     // #1865 — the task recorder notes the attempt BEFORE the command and
     // what the command actually answered; it never changes either.
     final recorded = recordTaskAttempt(ref, RecorderActions.confirmBooking,
@@ -655,14 +664,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // `application/book_seat.dart`, where a test can reach it without
       // pumping a screen. This method's job is what the member asked
       // for, and what to say once it happened.
-      if (choice.pattern == null &&
-          (choice.forMemberId == null || choice.forMemberId == myMemberId) &&
-          !choice.walkUp &&
-          !choice.checkInNow &&
-          liveWindow) {
-        traceReserveWithoutCheckIn(
-            seat: seat, start: choice.start, end: choice.end);
-      }
+      traceIfReservedWithoutCheckIn(choice, seat, myMemberId,
+          liveWindow: liveWindow);
 
       final outcome = await bookSeat(
         ref.read(reservationRepositoryProvider),

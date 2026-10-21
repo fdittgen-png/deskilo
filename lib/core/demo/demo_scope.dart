@@ -10,6 +10,7 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
+import 'package:deskilo/core/demo/data/series_previewer.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
@@ -236,7 +237,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
       ..._resourceOverrides(fixture),
-      reservationRepositoryProvider.overrideWithValue(fixture.reservations),
+      reservationRepositoryProvider.overrideWithValue(fixture.reservations), seriesPreviewerProvider.overrideWithValue(FakeSeriesPreviewer(fixture.reservations)), // #2575
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),

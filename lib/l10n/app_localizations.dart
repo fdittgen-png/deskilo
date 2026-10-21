@@ -30378,6 +30378,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 booking created} other{{count} bookings created}}'**
   String seriesBookedCount(int count);
 
+  /// No description provided for @seriesPreviewBookOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Book the other date} other{Book the other {count} dates}}'**
+  String seriesPreviewBookOthers(int count);
+
+  /// Series preview (#2575): heading above the dates that would fail
+  ///
+  /// In en, this message translates to:
+  /// **'These dates cannot be booked:'**
+  String get seriesPreviewFailing;
+
+  /// No description provided for @seriesPreviewNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None of these dates can be booked.'**
+  String get seriesPreviewNone;
+
   /// Heading above the list of conflicted series instances
   ///
   /// In en, this message translates to:

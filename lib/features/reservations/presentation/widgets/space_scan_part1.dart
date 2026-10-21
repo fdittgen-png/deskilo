@@ -252,6 +252,22 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       );
       return;
     }
+    // #2575 — the dates that would fail are named before anything books.
+    final book = await confirmSeriesPreview(
+      context,
+      () => ref.read(seriesPreviewerProvider),
+      SeriesAsk(
+        workspaceId: workspace.id,
+        deskId: deskId,
+        officeId: officeId,
+        levelId: levelId,
+        firstStart: choice.start,
+        firstEnd: choice.end,
+        pattern: choice.pattern!,
+        until: choice.until!,
+      ),
+    );
+    if (!book || !mounted) return;
     _update(() => _busy = true);
     final SeriesResult result;
     try {
