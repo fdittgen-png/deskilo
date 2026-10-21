@@ -50,6 +50,7 @@ import '../../../workspace/presentation/widgets/member_roles_card.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
+import '../../domain/member_page_sections.dart';
 import '../../providers/directory_providers.dart';
 import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
@@ -134,22 +135,35 @@ class _MemberPageBody extends ConsumerWidget {
     final isOwner = me?.actsAsOwner ?? false;
     final whatsappOn = features.contains(WorkspaceFeature.whatsappIntegration);
     final whatsappUri = whatsappOn ? profile?.whatsappUri : null;
-    final notesOn = features.contains(WorkspaceFeature.memberNotifications);
-    // #887 — nobody reads a message sent to a managed member.
-    final canMessage =
-        notesOn && !isSelf && !member.isKiosk && !member.isManaged && active;
+    final sections = memberPageSections(
+      MemberPageFacts(
+        isSelf: isSelf,
+        viewerIsMember: me != null,
+        memberActive: active,
+        memberIsKiosk: member.isKiosk,
+        memberIsManaged: member.isManaged,
+        isOwner: isOwner,
+        canAdmin: canAdmin,
+        canGiveRoles: perms.contains(WorkspacePermission.manageRoles),
+        seesNegotiations:
+            perms.contains(WorkspacePermission.manageNegotiations) ||
+            perms.contains(WorkspacePermission.viewNegotiations),
+        notesOn: features.contains(WorkspaceFeature.memberNotifications),
+        negotiationsOn: features.contains(WorkspaceFeature.priceNegotiations),
+        rolesOn: features.contains(WorkspaceFeature.roleAssignment),
+        paymentTermsOn: features.contains(WorkspaceFeature.memberPaymentTerms),
+      ),
+    );
+    final canMessage = sections.contains(MemberPageSection.message);
     final servicesOn = features.contains(WorkspaceFeature.services);
     final reportsOn = features.contains(WorkspaceFeature.memberReports);
     final kioskOn = features.contains(WorkspaceFeature.kioskMode);
     final coOwnerOn = features.contains(WorkspaceFeature.coOwner);
     final levelOn = features.contains(WorkspaceFeature.levelBooking);
     final rolesOn = features.contains(WorkspaceFeature.roleAssignment);
-    final negotiationVisible = !isSelf &&
-        me != null &&
-        features.contains(WorkspaceFeature.priceNegotiations) &&
-        (isOwner ||
-            perms.contains(WorkspacePermission.manageNegotiations) ||
-            perms.contains(WorkspacePermission.viewNegotiations));
+    final negotiationVisible = sections.contains(
+      MemberPageSection.negotiation,
+    );
 
     final c = _PageCtx(
       context: context,
@@ -264,11 +278,7 @@ class _MemberPageBody extends ConsumerWidget {
             ],
           ),
           // #2085 — the one place a member is given a role.
-          if (rolesOn &&
-              !member.isKiosk &&
-              (isSelf ||
-                  canAdmin ||
-                  perms.contains(WorkspacePermission.manageRoles)))
+          if (sections.contains(MemberPageSection.roles))
             _MemberSection('roles', l10n.memberRolesTitle, [
               MemberRolesCard(member: member, name: name),
             ], showHeading: false),
@@ -303,8 +313,7 @@ class _MemberPageBody extends ConsumerWidget {
                   ),
               ],
             ),
-          if (features.contains(WorkspaceFeature.memberPaymentTerms) &&
-              (isSelf || canAdmin))
+          if (sections.contains(MemberPageSection.paymentTerms))
             _MemberSection(
               'payment-terms',
               l10n.paymentTermsTitle,
