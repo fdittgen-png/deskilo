@@ -119,6 +119,11 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     state: QualificationState.implemented,
     obligations: {},
   ),
+  'generic_journal_csv': AccountingCapability(
+    formatId: 'generic_journal_csv',
+    state: QualificationState.implemented,
+    obligations: {},
+  ),
   'audit_trail': AccountingCapability(
     formatId: 'audit_trail',
     state: QualificationState.implemented,

@@ -14891,6 +14891,12 @@ abstract class AppLocalizations {
   /// **'France e-reporting (B2C, international, payments)'**
   String get invoiceExportFrEReporting;
 
+  /// No description provided for @invoiceExportGenericJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal (CSV, for any accounting system)'**
+  String get invoiceExportGenericJournal;
+
   /// Export chooser: the OECD audit file (0074)
   ///
   /// In en, this message translates to:
@@ -16330,6 +16336,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoicing tools'**
   String get invoicingTools;
+
+  /// Journal export (#2370): roles the posting engine could not resolve
+  ///
+  /// In en, this message translates to:
+  /// **'Map these roles in the book chart first: {roles}'**
+  String journalBlocked(String roles);
+
+  /// No description provided for @journalNeedsLocalBook.
+  ///
+  /// In en, this message translates to:
+  /// **'The journal is posted from a local book: set up the issuer\'s book chart first.'**
+  String get journalNeedsLocalBook;
 
   /// No description provided for @journeyClosedPaid.
   ///

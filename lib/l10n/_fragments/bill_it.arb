@@ -184,5 +184,8 @@
   "saftWithPostings": "Con le scritture",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
-  }
+  },
+  "invoiceExportGenericJournal": "Giornale (CSV, per qualsiasi software contabile)",
+  "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
+  "journalBlocked": "Associa prima questi ruoli nel piano dei conti: {roles}"
 }

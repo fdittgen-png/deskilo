@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/generic_journal_export.dart';
 import '../application/save_book_profile.dart';
 import '../data/supabase_book_profile_repository.dart';
 import '../domain/book_chart.dart';
@@ -44,3 +46,8 @@ Future<({List<BookAccount> accounts, List<BookMapping> mappings})> bookChart(
   }
   return repository.fetchBookChart(workspace.id);
 }
+
+/// #2370 / #2365 — the generic journal of a year, from the posting engine.
+final genericJournalExportProvider = Provider<GenericJournalExport>(
+  (ref) => GenericJournalExport(ref.watch(bookProfileRepositoryProvider)),
+);

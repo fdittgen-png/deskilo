@@ -6109,6 +6109,7 @@
   },
   "invoiceExportFec": "FEC (Frankreich, im Prüfungsfall verlangt)",
   "invoiceExportFrEReporting": "E-Reporting Frankreich (B2C, International, Zahlungen)",
+  "invoiceExportGenericJournal": "Journal (CSV, für jede Buchhaltungssoftware)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
@@ -6789,6 +6790,8 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
+  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
+  "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {

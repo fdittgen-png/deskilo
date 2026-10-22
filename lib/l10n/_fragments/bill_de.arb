@@ -184,5 +184,8 @@
   "saftWithPostings": "Mit Buchungen",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
-  }
+  },
+  "invoiceExportGenericJournal": "Journal (CSV, für jede Buchhaltungssoftware)",
+  "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
+  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}"
 }

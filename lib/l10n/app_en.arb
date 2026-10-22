@@ -10124,6 +10124,7 @@
   "@invoiceExportFrEReporting": {
     "description": "#2358 - France e-reporting export"
   },
+  "invoiceExportGenericJournal": "Journal (CSV, for any accounting system)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
@@ -11179,6 +11180,16 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
+  "journalBlocked": "Map these roles in the book chart first: {roles}",
+  "@journalBlocked": {
+    "description": "Journal export (#2370): roles the posting engine could not resolve",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  },
+  "journalNeedsLocalBook": "The journal is posted from a local book: set up the issuer's book chart first.",
   "journeyClosedPaid": "Paid on {date} — closed",
   "@journeyClosedPaid": {
     "placeholders": {
