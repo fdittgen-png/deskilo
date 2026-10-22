@@ -64,5 +64,59 @@
   "biCashNotBankBalance": "Pagos registrados, no un saldo bancario conciliado.",
   "@biCashNotBankBalance": {
     "description": "#2582 purchase analytics"
+  },
+  "biCostsOperatingTitle": "Gastos de explotación (registrados)",
+  "@biCostsOperatingTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingDefinition": "Las líneas de compra aprobadas clasificadas como gastos corrientes, por la fecha del documento: la base más el impuesto no deducible. Un abono de proveedor se resta. El equipamiento, las existencias, los anticipos, las fianzas y los propios pagos no son gastos.",
+  "@biCostsOperatingDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsTitle": "Equipamiento adquirido (activado)",
+  "@biAssetsAcquisitionsTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsDefinition": "El equipamiento cuyo tratamiento se decidió como activado, a su coste (la base más el impuesto no deducible), por la fecha del documento.",
+  "@biAssetsAcquisitionsDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsNotCost": "Un alta de inmovilizado: ni un gasto ni una amortización.",
+  "@biAssetsNotCost": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsRegisterOff": "El registro de equipamiento está desactivado: no se conoce ningún alta de inmovilizado.",
+  "@biAssetsRegisterOff": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionTitle": "Facturado menos gastos de explotación registrados",
+  "@biContributionTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionDefinition": "Las ventas facturadas de los meses, sin impuestos (los abonos se restan), menos los gastos de explotación registrados de los mismos meses.",
+  "@biContributionDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionNotProfit": "No es un beneficio: no incluye amortizaciones, nóminas ni gastos bancarios.",
+  "@biContributionNotProfit": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsUnresolved": "Se excluyen {count} líneas que nadie clasificó.",
+  "@biCostsUnresolved": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCostsUnqualified": "{count} líneas cuyo impuesto deducible no está calificado cuentan por su importe bruto.",
+  "@biCostsUnqualified": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

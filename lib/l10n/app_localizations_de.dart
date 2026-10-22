@@ -1298,6 +1298,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biAreaTreasury => 'Liquidität';
 
   @override
+  String get biAssetsAcquisitionsDefinition =>
+      'Die Ausstattung, deren Behandlung als aktiviert entschieden wurde, zu ihren Kosten (Netto plus nicht abziehbare Steuer), nach Belegdatum.';
+
+  @override
+  String get biAssetsAcquisitionsTitle =>
+      'Angeschaffte Ausstattung (aktiviert)';
+
+  @override
+  String get biAssetsNotCost =>
+      'Ein Anlagenzugang: weder Aufwand noch Abschreibung.';
+
+  @override
+  String get biAssetsRegisterOff =>
+      'Das Ausstattungsregister ist aus: Kein Anlagenzugang ist bekannt.';
+
+  @override
   String get biBookingBasis =>
       'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
 
@@ -1398,6 +1414,35 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String biComputedWorkspaceTime(String date) {
     return 'Berechnet am $date · Ortszeit des Workspace';
+  }
+
+  @override
+  String get biContributionDefinition =>
+      'Die fakturierten Verkäufe der Monate, netto (Gutschriften werden abgezogen), abzüglich des erfassten Betriebsaufwands derselben Monate.';
+
+  @override
+  String get biContributionNotProfit =>
+      'Kein Gewinn: Abschreibungen, Löhne und Bankgebühren sind nicht enthalten.';
+
+  @override
+  String get biContributionTitle =>
+      'Fakturiert abzüglich erfasstem Betriebsaufwand';
+
+  @override
+  String get biCostsOperatingDefinition =>
+      'Die genehmigten Einkaufspositionen, die als laufender Aufwand eingestuft sind, nach Belegdatum: der Nettobetrag plus die nicht abziehbare Steuer. Eine Lieferantengutschrift wird abgezogen. Ausstattung, Vorräte, Anzahlungen, Kautionen und die Zahlungen selbst sind kein Aufwand.';
+
+  @override
+  String get biCostsOperatingTitle => 'Betriebsaufwand (erfasst)';
+
+  @override
+  String biCostsUnqualified(String count) {
+    return '$count Positionen ohne eingestufte abziehbare Steuer zählen mit ihrem Bruttobetrag.';
+  }
+
+  @override
+  String biCostsUnresolved(String count) {
+    return '$count nicht eingestufte Positionen bleiben außen vor.';
   }
 
   @override

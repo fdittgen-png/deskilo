@@ -1297,6 +1297,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biAreaTreasury => 'Tesorería';
 
   @override
+  String get biAssetsAcquisitionsDefinition =>
+      'El equipamiento cuyo tratamiento se decidió como activado, a su coste (la base más el impuesto no deducible), por la fecha del documento.';
+
+  @override
+  String get biAssetsAcquisitionsTitle => 'Equipamiento adquirido (activado)';
+
+  @override
+  String get biAssetsNotCost =>
+      'Un alta de inmovilizado: ni un gasto ni una amortización.';
+
+  @override
+  String get biAssetsRegisterOff =>
+      'El registro de equipamiento está desactivado: no se conoce ningún alta de inmovilizado.';
+
+  @override
   String get biBookingBasis =>
       'La capacidad reservada mide reservas, no la asistencia real.';
 
@@ -1397,6 +1412,35 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String biComputedWorkspaceTime(String date) {
     return 'Calculado el $date · hora del espacio';
+  }
+
+  @override
+  String get biContributionDefinition =>
+      'Las ventas facturadas de los meses, sin impuestos (los abonos se restan), menos los gastos de explotación registrados de los mismos meses.';
+
+  @override
+  String get biContributionNotProfit =>
+      'No es un beneficio: no incluye amortizaciones, nóminas ni gastos bancarios.';
+
+  @override
+  String get biContributionTitle =>
+      'Facturado menos gastos de explotación registrados';
+
+  @override
+  String get biCostsOperatingDefinition =>
+      'Las líneas de compra aprobadas clasificadas como gastos corrientes, por la fecha del documento: la base más el impuesto no deducible. Un abono de proveedor se resta. El equipamiento, las existencias, los anticipos, las fianzas y los propios pagos no son gastos.';
+
+  @override
+  String get biCostsOperatingTitle => 'Gastos de explotación (registrados)';
+
+  @override
+  String biCostsUnqualified(String count) {
+    return '$count líneas cuyo impuesto deducible no está calificado cuentan por su importe bruto.';
+  }
+
+  @override
+  String biCostsUnresolved(String count) {
+    return 'Se excluyen $count líneas que nadie clasificó.';
   }
 
   @override

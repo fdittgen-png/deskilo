@@ -202,6 +202,38 @@ const biModules = <BiModule>[
     },
     aggregation: KpiAggregation.sum,
   ),
+  // #2582 C2 — the cost side: costs, capital additions, and invoiced less
+  // recorded operating costs (never a profit).
+  BiModule(
+    id: 'purchases.operating_costs',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
+  BiModule(
+    id: 'assets.acquisitions',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
+  BiModule(
+    id: 'finance.recorded_contribution',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

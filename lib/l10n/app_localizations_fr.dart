@@ -1299,6 +1299,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biAreaTreasury => 'Trésorerie';
 
   @override
+  String get biAssetsAcquisitionsDefinition =>
+      'L\'équipement dont le traitement a été décidé en immobilisation, à son coût (le hors-taxe plus la taxe non récupérable), à la date du document.';
+
+  @override
+  String get biAssetsAcquisitionsTitle => 'Équipement acquis (immobilisé)';
+
+  @override
+  String get biAssetsNotCost =>
+      'Une immobilisation : ni une charge, ni un amortissement.';
+
+  @override
+  String get biAssetsRegisterOff =>
+      'Le registre des équipements est désactivé : aucune immobilisation n\'est connue.';
+
+  @override
   String get biBookingBasis =>
       'La capacité réservée mesure les réservations, pas la présence réelle.';
 
@@ -1399,6 +1414,35 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String biComputedWorkspaceTime(String date) {
     return 'Calculé le $date · heure de l’espace';
+  }
+
+  @override
+  String get biContributionDefinition =>
+      'Les ventes facturées des mois, hors taxe (les avoirs se déduisent), moins les charges d\'exploitation enregistrées des mêmes mois.';
+
+  @override
+  String get biContributionNotProfit =>
+      'Pas un bénéfice : ni amortissements, ni salaires, ni frais bancaires n\'y figurent.';
+
+  @override
+  String get biContributionTitle =>
+      'Facturé moins charges d\'exploitation enregistrées';
+
+  @override
+  String get biCostsOperatingDefinition =>
+      'Les lignes d\'achat approuvées classées en charges courantes, à la date du document : le hors-taxe plus la taxe non récupérable. Un avoir fournisseur se déduit. L\'équipement, le stock, les acomptes, les dépôts et les paiements eux-mêmes ne sont pas des charges.';
+
+  @override
+  String get biCostsOperatingTitle => 'Charges d\'exploitation (enregistrées)';
+
+  @override
+  String biCostsUnqualified(String count) {
+    return '$count lignes dont la taxe récupérable n\'est pas qualifiée comptent pour leur montant TTC.';
+  }
+
+  @override
+  String biCostsUnresolved(String count) {
+    return '$count lignes que personne n\'a classées sont exclues.';
   }
 
   @override

@@ -90,12 +90,73 @@ const _recordedOutflowsKpi = KpiDefinition(
   minCohort: null,
 );
 
-/// The four, in catalogue order.
+const _operatingCostsKpi = KpiDefinition(
+  id: 'purchases.operating_costs',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the document\'s date, whole months [from, to] on the workspace '
+      'calendar: approved purchase lines classified operating, net plus the '
+      'tax that cannot be recovered; a supplier credit note subtracts',
+  dimensions: [],
+  numerator: 'operating_costs_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['purchases', 'line classification', 'the workspace currency'],
+  minCohort: null,
+);
+
+const _acquisitionsKpi = KpiDefinition(
+  id: 'assets.acquisitions',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the document\'s date, whole months [from, to]: the equipment decided '
+      'capitalise, at its cost; never a cost, never a depreciation',
+  dimensions: [],
+  numerator: 'acquisitions_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: [
+    'purchases',
+    'the equipment register',
+    'the workspace currency',
+  ],
+  minCohort: null,
+);
+
+const _contributionKpi = KpiDefinition(
+  id: 'finance.recorded_contribution',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the invoices\' months [from, to], net of their tax, less the operating '
+      'costs of the same months: invoiced less recorded operating costs, '
+      'never a profit',
+  dimensions: [],
+  numerator: 'contribution_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['invoicing', 'purchases', 'the workspace currency'],
+  minCohort: null,
+);
+
+/// The purchase figures, in catalogue order.
 const purchaseKpis = <KpiDefinition>[
   _apOutstandingKpi,
   _memberReimbursementsDueKpi,
   _pendingReviewsKpi,
   _recordedOutflowsKpi,
+  // #2582 C2 — the cost side (`kpi_costs_summary`, 0529).
+  _operatingCostsKpi,
+  _acquisitionsKpi,
+  _contributionKpi,
 ];
 
 /// What `kpi_purchases_summary` returned for the whole months
@@ -181,6 +242,94 @@ PurchaseSummaryKpi purchaseSummaryFromJson(Map<String, Object?> json) {
 abstract interface class PurchaseKpiRepository {
   /// The figures of the whole months [fromMonth, toMonth] (`YYYY-MM`).
   Future<PurchaseSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  });
+}
+
+/// #2582 C2 — what `kpi_costs_summary` returned for the whole months
+/// [fromMonth, toMonth], typed. A missing amount is null, never 0.
+class CostSummaryKpi {
+  const CostSummaryKpi({
+    required this.fromMonth,
+    required this.toMonth,
+    required this.currency,
+    required this.operatingCostsMinor,
+    required this.acquisitionsMinor,
+    required this.netSalesMinor,
+    required this.contributionMinor,
+    required this.unresolvedLines,
+    required this.unqualifiedLines,
+    required this.quality,
+    required this.reasons,
+    required this.computedAt,
+  });
+
+  final String fromMonth;
+  final String toMonth;
+  final String currency;
+  final int? operatingCostsMinor;
+
+  /// Null while the equipment register is off: unavailable, never 0.
+  final int? acquisitionsMinor;
+  final int? netSalesMinor;
+  final int? contributionMinor;
+
+  /// Lines nobody classified (left out), and operating lines whose
+  /// recoverable share is not qualified (counted at their gross).
+  final int unresolvedLines;
+  final int unqualifiedLines;
+  final Set<KpiQuality> quality;
+  final List<String> reasons;
+  final DateTime computedAt;
+
+  /// The figure [moduleId] shows, in minor units.
+  int? figure(String moduleId) => switch (moduleId) {
+    'purchases.operating_costs' => operatingCostsMinor,
+    'assets.acquisitions' => acquisitionsMinor,
+    _ => contributionMinor,
+  };
+}
+
+/// Parses `kpi_costs_summary`'s jsonb; an inexact amount is unknown.
+CostSummaryKpi costSummaryFromJson(Map<String, Object?> json) {
+  final r = JsonReader(json, context: 'kpi_costs_summary');
+  final costs = exactMinor(r.raw('operating_costs_minor'));
+  final sales = exactMinor(r.raw('net_sales_minor'));
+  final contribution = exactMinor(r.raw('contribution_minor'));
+  final assetsRaw = r.raw('acquisitions_minor');
+  final assets = exactMinor(assetsRaw);
+  final inexact =
+      costs == null ||
+      sales == null ||
+      contribution == null ||
+      (assetsRaw != null && assets == null);
+  final currency = r.stringOr('currency');
+  return CostSummaryKpi(
+    fromMonth: r.stringOr('from'),
+    toMonth: r.stringOr('to'),
+    currency: currency,
+    operatingCostsMinor: costs,
+    acquisitionsMinor: assets,
+    netSalesMinor: sales,
+    contributionMinor: contribution,
+    unresolvedLines: r.integer('unresolved_lines'),
+    unqualifiedLines: r.integer('unqualified_lines'),
+    quality: {
+      for (final q in r.strings('quality'))
+        kpiQualityOf(q) ?? KpiQuality.unavailable,
+      if (inexact || currency.isEmpty) KpiQuality.unavailable,
+    },
+    reasons: [...r.strings('reasons'), if (inexact) 'amount_not_exact'],
+    computedAt: r.dateTime('computed_at'),
+  );
+}
+
+/// Reads the cost figures (#2582 C2). Every call is authorized there.
+abstract interface class CostKpiRepository {
+  /// The figures of the whole months [fromMonth, toMonth] (`YYYY-MM`).
+  Future<CostSummaryKpi> summary(
     String workspaceId, {
     required String fromMonth,
     required String toMonth,

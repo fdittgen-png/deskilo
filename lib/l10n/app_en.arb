@@ -1367,6 +1367,22 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biAssetsAcquisitionsDefinition": "The equipment whose treatment was decided as capitalised, at its cost (the net plus the tax that cannot be recovered), by the document's date.",
+  "@biAssetsAcquisitionsDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsTitle": "Equipment bought (capitalised)",
+  "@biAssetsAcquisitionsTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsNotCost": "A capital addition: neither a cost nor a depreciation.",
+  "@biAssetsNotCost": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsRegisterOff": "The equipment register is off: no capital addition is known.",
+  "@biAssetsRegisterOff": {
+    "description": "#2582 cost figures"
+  },
   "biBookingBasis": "Reserved capacity measures bookings, not actual attendance.",
   "biCardDown": "Move down",
   "@biCardDown": {
@@ -1512,6 +1528,44 @@
   "@biComputedWorkspaceTime": {
     "placeholders": {
       "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biContributionDefinition": "The invoiced sales of the months, net of their tax (credit notes subtract), less the recorded operating costs of the same months.",
+  "@biContributionDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionNotProfit": "Not a profit: no depreciation, payroll or bank charges are in it.",
+  "@biContributionNotProfit": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionTitle": "Invoiced less recorded operating costs",
+  "@biContributionTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingDefinition": "The approved purchase lines classified as day-to-day costs, by the document's date: the net plus the tax that cannot be recovered. A supplier's credit note subtracts. Equipment, stock, prepayments, deposits and the payments themselves are not costs.",
+  "@biCostsOperatingDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingTitle": "Operating costs (recorded)",
+  "@biCostsOperatingTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsUnqualified": "{count} lines whose recoverable tax is not qualified count at their gross.",
+  "@biCostsUnqualified": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCostsUnresolved": "{count} lines nobody classified are left out.",
+  "@biCostsUnresolved": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
         "type": "String"
       }
     }

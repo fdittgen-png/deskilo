@@ -400,6 +400,152 @@ final class PurchaseSummaryFamily extends $Family
   String toString() => r'purchaseSummaryProvider';
 }
 
+/// #2582 C2 — the cost figures.
+
+@ProviderFor(costKpiRepository)
+final costKpiRepositoryProvider = CostKpiRepositoryProvider._();
+
+/// #2582 C2 — the cost figures.
+
+final class CostKpiRepositoryProvider
+    extends
+        $FunctionalProvider<
+          CostKpiRepository,
+          CostKpiRepository,
+          CostKpiRepository
+        >
+    with $Provider<CostKpiRepository> {
+  /// #2582 C2 — the cost figures.
+  CostKpiRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'costKpiRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$costKpiRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<CostKpiRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CostKpiRepository create(Ref ref) {
+    return costKpiRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CostKpiRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CostKpiRepository>(value),
+    );
+  }
+}
+
+String _$costKpiRepositoryHash() => r'95ea707ebc9f5e2a165b4d1c9dbf0d0b1755de7c';
+
+/// One read per workspace and months, shared by every cost card.
+
+@ProviderFor(costSummary)
+final costSummaryProvider = CostSummaryFamily._();
+
+/// One read per workspace and months, shared by every cost card.
+
+final class CostSummaryProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<CostSummaryKpi>,
+          CostSummaryKpi,
+          FutureOr<CostSummaryKpi>
+        >
+    with $FutureModifier<CostSummaryKpi>, $FutureProvider<CostSummaryKpi> {
+  /// One read per workspace and months, shared by every cost card.
+  CostSummaryProvider._({
+    required CostSummaryFamily super.from,
+    required (String, String, String) super.argument,
+  }) : super(
+         retry: kpiRetry,
+         name: r'costSummaryProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$costSummaryHash();
+
+  @override
+  String toString() {
+    return r'costSummaryProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<CostSummaryKpi> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<CostSummaryKpi> create(Ref ref) {
+    final argument = this.argument as (String, String, String);
+    return costSummary(ref, argument.$1, argument.$2, argument.$3);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CostSummaryProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$costSummaryHash() => r'6fd008ebcbf6e1141e3a02252c8f58a33569e59e';
+
+/// One read per workspace and months, shared by every cost card.
+
+final class CostSummaryFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<CostSummaryKpi>,
+          (String, String, String)
+        > {
+  CostSummaryFamily._()
+    : super(
+        retry: kpiRetry,
+        name: r'costSummaryProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// One read per workspace and months, shared by every cost card.
+
+  CostSummaryProvider call(
+    String workspaceId,
+    String fromMonth,
+    String toMonth,
+  ) => CostSummaryProvider._(
+    argument: (workspaceId, fromMonth, toMonth),
+    from: this,
+  );
+
+  @override
+  String toString() => r'costSummaryProvider';
+}
+
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
 

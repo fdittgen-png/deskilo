@@ -4,7 +4,8 @@
 // workspace and months from `kpi_purchases_summary`, exact to the minor unit,
 // a missing amount never read as 0, the payable a stock (compared, never
 // summed), the review queue a count that survives a currency mix, every
-// card behind the purchaseAnalytics flag and the finance right.
+// card behind the purchaseAnalytics flag and the finance right; and (C2)
+// the costs, the capital additions and invoiced less operating costs.
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
@@ -24,6 +25,9 @@ const _ids = [
   'purchases.member_reimbursements_due',
   'purchases.pending_reviews',
   'cash.recorded_outflows',
+  'purchases.operating_costs',
+  'assets.acquisitions',
+  'finance.recorded_contribution',
 ];
 
 Map<String, dynamic> _row({
@@ -165,4 +169,58 @@ void main() {
       ('2026-03', '2026-03'),
     }, reason: 'one summary per month, shared by the four cards');
   });
+
+  test('C2: invoiced less operating costs, and the capital additions never '
+      'a cost; a register switched off is unknown, never 0', () async {
+    final costs = _Costs();
+    final container = ProviderContainer(
+      overrides: [
+        costKpiRepositoryProvider.overrideWithValue(costs),
+        clockProvider.overrideWithValue(FixedClock(DateTime(2026, 5, 2))),
+      ],
+    );
+    addTearDown(container.dispose);
+    const context = BiQueryContext(
+      period: BiPeriodRef.fixed(BiPeriod(BiGrain.month, 2026, 3)),
+    );
+    Future<num?> value(String id) async {
+      final provider = biModuleResultProvider('ws-1', id, context);
+      final sub = container.listen(provider, (_, _) {});
+      addTearDown(sub.close);
+      final r = await container.read(provider.future);
+      return r.total.current.value(KpiAggregation.sum);
+    }
+
+    expect(await value('purchases.operating_costs'), 1100);
+    expect(await value('finance.recorded_contribution'), 900);
+    expect(await value('assets.acquisitions'), 1200);
+    final off = costSummaryFromJson(_costRow(acquisitions: null));
+    expect(costMeasure(off, 'assets.acquisitions').unknown, isTrue);
+    expect(costMeasure(off, 'purchases.operating_costs').unknown, isFalse);
+  });
+}
+
+Map<String, Object?> _costRow({Object? acquisitions = '1200'}) => {
+  'from': '2026-03',
+  'to': '2026-03',
+  'currency': 'EUR',
+  'operating_costs_minor': '1100',
+  'acquisitions_minor': acquisitions,
+  'net_sales_minor': '2000',
+  'contribution_minor': '900',
+  'unresolved_lines': 1,
+  'unqualified_lines': 0,
+  'quality': const <String>[],
+  'reasons': const ['unresolved_lines'],
+  'computed_at': '2026-05-02T10:00:00Z',
+};
+
+/// March 2026 as pgTAP 244 reads it.
+class _Costs implements CostKpiRepository {
+  @override
+  Future<CostSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => costSummaryFromJson(_costRow());
 }

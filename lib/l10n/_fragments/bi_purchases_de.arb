@@ -64,5 +64,59 @@
   "biCashNotBankBalance": "Erfasste Zahlungen, kein abgestimmter Kontostand.",
   "@biCashNotBankBalance": {
     "description": "#2582 purchase analytics"
+  },
+  "biCostsOperatingTitle": "Betriebsaufwand (erfasst)",
+  "@biCostsOperatingTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingDefinition": "Die genehmigten Einkaufspositionen, die als laufender Aufwand eingestuft sind, nach Belegdatum: der Nettobetrag plus die nicht abziehbare Steuer. Eine Lieferantengutschrift wird abgezogen. Ausstattung, Vorräte, Anzahlungen, Kautionen und die Zahlungen selbst sind kein Aufwand.",
+  "@biCostsOperatingDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsTitle": "Angeschaffte Ausstattung (aktiviert)",
+  "@biAssetsAcquisitionsTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsDefinition": "Die Ausstattung, deren Behandlung als aktiviert entschieden wurde, zu ihren Kosten (Netto plus nicht abziehbare Steuer), nach Belegdatum.",
+  "@biAssetsAcquisitionsDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsNotCost": "Ein Anlagenzugang: weder Aufwand noch Abschreibung.",
+  "@biAssetsNotCost": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsRegisterOff": "Das Ausstattungsregister ist aus: Kein Anlagenzugang ist bekannt.",
+  "@biAssetsRegisterOff": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionTitle": "Fakturiert abzüglich erfasstem Betriebsaufwand",
+  "@biContributionTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionDefinition": "Die fakturierten Verkäufe der Monate, netto (Gutschriften werden abgezogen), abzüglich des erfassten Betriebsaufwands derselben Monate.",
+  "@biContributionDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionNotProfit": "Kein Gewinn: Abschreibungen, Löhne und Bankgebühren sind nicht enthalten.",
+  "@biContributionNotProfit": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsUnresolved": "{count} nicht eingestufte Positionen bleiben außen vor.",
+  "@biCostsUnresolved": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCostsUnqualified": "{count} Positionen ohne eingestufte abziehbare Steuer zählen mit ihrem Bruttobetrag.",
+  "@biCostsUnqualified": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }
