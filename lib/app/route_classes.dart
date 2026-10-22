@@ -151,6 +151,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/payment-terms', RouteClass.workspace),
   RouteRule('/settings/sites', RouteClass.workspace),
   RouteRule('/money/status', RouteClass.workspace),
+  RouteRule('/money/purchases', RouteClass.workspace),
+  RouteRule('/money/sales', RouteClass.workspace),
   RouteRule('/money/repartition-wizard', RouteClass.workspace),
   RouteRule('/settings/wording', RouteClass.workspace),
   RouteRule('/settings/colours', RouteClass.workspace),

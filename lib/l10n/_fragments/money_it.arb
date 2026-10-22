@@ -375,5 +375,9 @@
   "scheduleUnitMonths": "mesi",
   "scheduleUnitYears": "anni",
   "moneyFaceUsage": "Utilizzo",
-  "moneySectionPurchases": "Acquisti e contabilità"
+  "moneySectionPurchases": "Acquisti e contabilità",
+  "hubPurchasesTitle": "Acquisti",
+  "hubPurchasesSubtitle": "Ciò che lo spazio acquista e deve: spese, fatture fornitori, fornitori, locazione, attrezzature",
+  "hubSalesTitle": "Vendite",
+  "hubSalesSubtitle": "Ciò che lo spazio vende e fattura: servizi, fatture, fatturazione"
 }

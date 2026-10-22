@@ -171,6 +171,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.lastAtCutoff,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   BiModule(
     id: 'purchases.member_reimbursements_due',
@@ -181,6 +186,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.lastAtCutoff,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   BiModule(
     id: 'purchases.pending_reviews',
@@ -191,6 +201,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.lastAtCutoff,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   BiModule(
     id: 'cash.recorded_outflows',
@@ -201,6 +216,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.sum,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   // #2582 C2 — the cost side: costs, capital additions, and invoiced less
   // recorded operating costs (never a profit).
@@ -213,6 +233,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.sum,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   BiModule(
     id: 'assets.acquisitions',
@@ -223,6 +248,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.sum,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   BiModule(
     id: 'finance.recorded_contribution',
@@ -265,6 +295,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.sum,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   // #2582 C2 — what the space expects to pay: owed plus still expected.
   BiModule(
@@ -276,6 +311,11 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
     aggregation: KpiAggregation.lastAtCutoff,
+    // #2577 — the purchases page: the documents behind the figure.
+    drill: BiDrill(
+      route: '/money/purchases',
+      permission: WorkspacePermission.viewFinances,
+    ),
   ),
   // #2582 C2 — the shared costs spread over the resources, by rule.
   BiModule(

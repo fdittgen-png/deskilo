@@ -7922,6 +7922,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get hubPurchasesSubtitle =>
+      'What the space buys and owes: expenses, supplier bills, suppliers, the lease, equipment';
+
+  @override
+  String get hubPurchasesTitle => 'Purchases';
+
+  @override
+  String get hubSalesSubtitle =>
+      'What the space sells and invoices: services, invoices, billing';
+
+  @override
+  String get hubSalesTitle => 'Sales';
+
+  @override
   String get identityConnectBrowser => 'The browser could not be opened.';
 
   @override
