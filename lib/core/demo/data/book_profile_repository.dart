@@ -4,17 +4,22 @@ import '../../../features/money/domain/book_profile.dart';
 import '../../../features/money/domain/book_profile_repository.dart';
 import '../../../features/money/domain/posting.dart';
 import '../../../features/money/domain/posting_rules.dart';
+import '../../../features/money/domain/posting_rules_purchases.dart';
+import '../../../features/money/domain/purchase.dart';
 import '../../vat/tax_reference_active.dart';
 import 'money_repository.dart';
 
 /// #1869 — book profiles in memory, with the server's revision rule:
 /// a save names the revision it read (0 for a new version).
 class FakeBookProfileRepository implements BookProfileRepository {
-  FakeBookProfileRepository({this.money, this.country = 'FR'});
+  FakeBookProfileRepository({this.money, this.purchases, this.country = 'FR'});
 
   /// #2365 — the demo's invoices and matches the books are posted from; none
   /// in tests that only read profiles and charts.
   final FakeMoneyRepository? money;
+
+  /// The demo's supplier bills and what was paid on them (0519).
+  final PurchaseRepository? purchases;
 
   /// The issuer's country, whose rate rows name the groups.
   final String country;
@@ -135,8 +140,8 @@ class FakeBookProfileRepository implements BookProfileRepository {
     return saved;
   }
 
-  /// #2365 — the same rules as the server (`posting_rules.dart`), over the
-  /// demo's invoices of the period.
+  /// #2365 — the same rules as the server (`posting_rules.dart`,
+  /// `posting_rules_purchases.dart`), over the demo's documents of the period.
   @override
   Future<PostingSet> fetchPostings(
     String workspaceId,
@@ -147,19 +152,43 @@ class FakeBookProfileRepository implements BookProfileRepository {
     final m = money;
     if (m == null) return const PostingSet([], []);
     final chart = await fetchBookChart(workspaceId);
-    return postingsOf(
+    final book = PostingBook(
+      accounts: chart.accounts,
+      mappings: chart.mappings,
+      issuerSiteId: issuerSiteId,
+    );
+    bool inPeriod(DateTime day) => !day.isBefore(from) && !day.isAfter(to);
+    final p = purchases;
+    final bought = p == null
+        ? const <Posting>[]
+        : [
+            for (final x in purchasePostingsOf(
+              purchases: [
+                for (final s in await p.fetchPurchases(workspaceId))
+                  await p.fetchDetail(workspaceId, s.id),
+              ],
+              book: book,
+              groupOf: (percent) => ActiveTaxReference.current.groupOfRate(
+                country,
+                percent,
+                'S',
+              ),
+            ))
+              if (inPeriod(x.date)) x,
+          ];
+    final sold = postingsOf(
       invoices: [
         for (final i in await m.fetchInvoices(workspaceId))
-          if (!i.issuedAt.isBefore(from) && !i.issuedAt.isAfter(to)) i,
+          if (inPeriod(i.issuedAt)) i,
       ],
       matches: await m.fetchInvoiceMatches(workspaceId),
-      book: PostingBook(
-        accounts: chart.accounts,
-        mappings: chart.mappings,
-        issuerSiteId: issuerSiteId,
-      ),
+      book: book,
       groupOf: (t) =>
           ActiveTaxReference.current.groupOfRate(country, t.percent, t.category),
+    );
+    return PostingSet(
+      [...sold.postings, ...bought]..sort(comparePostings),
+      book.blockers,
     );
   }
 }

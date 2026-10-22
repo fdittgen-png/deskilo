@@ -107,11 +107,12 @@ PostingSet postingsOf({
       ..._settled(invoice, view.matches[invoice.id], book, groupOf),
     ]);
   }
-  postings.sort(_order);
+  postings.sort(comparePostings);
   return PostingSet(postings, book.blockers);
 }
 
-int _order(Posting a, Posting b) {
+/// The books' order: by date, then journal, then document number.
+int comparePostings(Posting a, Posting b) {
   final byDate = a.date.compareTo(b.date);
   if (byDate != 0) return byDate;
   final byJournal = a.journal.index.compareTo(b.journal.index);
@@ -122,9 +123,10 @@ int _order(Posting a, Posting b) {
 AccountingAmount _amount(Invoice i, int minor) =>
     AccountingAmount(i.currency, minor);
 
-/// A line for [minor] on [role]: positive to [debitSide], negative mirrored,
-/// zero dropped.
-PostingLine? _line(
+/// A line of [amount] on [role]: positive to [debitSide], negative
+/// mirrored, zero dropped. The purchase rules (posting_rules_purchases.dart)
+/// build theirs with it too.
+PostingLine? postingLine(
   BookRole role,
   String? code,
   AccountingAmount amount, {
@@ -197,8 +199,8 @@ List<Posting> _document(
     documentId: i.id,
     documentNumber: i.number,
     lines: [
-      ?_line(role, book.code(role, day), _amount(i, cents), debitSide: true),
-      ?_line(
+      ?postingLine(role, book.code(role, day), _amount(i, cents), debitSide: true),
+      ?postingLine(
         BookRole.customers,
         book.code(BookRole.customers, day),
         _amount(i, cents),
@@ -207,14 +209,14 @@ List<Posting> _document(
     ],
   );
   final lines = <PostingLine>[
-    ?_line(
+    ?postingLine(
       BookRole.customers,
       book.code(BookRole.customers, day),
       _amount(i, gross),
       debitSide: true,
     ),
     for (final p in parts) ...[
-      ?_line(
+      ?postingLine(
         BookRole.revenue,
         book.code(BookRole.revenue, day, qualifier: p.group),
         _amount(i, p.net),
@@ -222,7 +224,7 @@ List<Posting> _document(
         qualifier: p.group,
       ),
       if (p.vat != 0)
-        ?_line(
+        ?postingLine(
           BookRole.vatOutput,
           book.code(BookRole.vatOutput, day, qualifier: p.group),
           _amount(i, p.vat),
@@ -271,13 +273,13 @@ List<Posting> _settled(
         documentId: i.id,
         documentNumber: i.number,
         lines: [
-          ?_line(
+          ?postingLine(
             BookRole.bank,
             book.code(BookRole.bank, m.matchedAt),
             _amount(i, m.paidCents),
             debitSide: true,
           ),
-          ?_line(
+          ?postingLine(
             BookRole.customers,
             book.code(BookRole.customers, m.matchedAt),
             _amount(i, m.paidCents),
@@ -312,13 +314,13 @@ Posting _writeOff(
     left -= part;
     final tax = t.gross == 0 ? 0 : part * t.vat ~/ t.gross;
     lines.addAll([
-      ?_line(
+      ?postingLine(
         BookRole.writeOff,
         book.code(BookRole.writeOff, day),
         _amount(i, part - tax),
         debitSide: true,
       ),
-      ?_line(
+      ?postingLine(
         BookRole.vatOutput,
         book.code(BookRole.vatOutput, day, qualifier: t.group),
         _amount(i, tax),
@@ -327,7 +329,7 @@ Posting _writeOff(
       ),
     ]);
   }
-  final customers = _line(
+  final customers = postingLine(
     BookRole.customers,
     book.code(BookRole.customers, day),
     _amount(i, rest),

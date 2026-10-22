@@ -121,6 +121,7 @@ class PurchaseSummary {
     required this.currency,
     this.grossCents = 0,
     this.receivedOn,
+    this.originalDate,
     this.legacy = false,
   });
 
@@ -146,6 +147,7 @@ class PurchaseSummary {
       reference: r.stringOr('original_reference'),
       currency: r.stringOr('currency'),
       receivedOn: DateTime.tryParse(r.stringOr('received_on')),
+      originalDate: DateTime.tryParse(r.stringOr('original_date')),
       legacy: r.stringOr('legacy_qualification', 'none') != 'none',
     );
   }
@@ -160,6 +162,10 @@ class PurchaseSummary {
   /// The sum of the lines' gross amounts.
   final int grossCents;
   final DateTime? receivedOn;
+
+  /// #2365 — the date the supplier put on the document: the day its entry
+  /// is booked.
+  final DateTime? originalDate;
 
   /// Filed before the purchase document existed: its supplier, date and
   /// classification are not verified.

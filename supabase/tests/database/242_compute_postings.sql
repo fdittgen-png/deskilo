@@ -8,21 +8,25 @@
 -- an issuer with no chart is blocked with the role named; a plain member
 -- reads nothing.
 begin;
-select plan(13);
+select plan(17);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002365'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
  'authenticated','authenticated',suffix||'@postings.test','',now(),now(),now()
-  from unnest(array['a1','a2']) suffix;
+  from unnest(array['a1','a2','a3']) suffix;
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags) values
  ('00000000-0000-4000-8000-0000002365b1','Postings','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000002365a1','dev',
-  '{"moneyTab":true,"invoicing":true,"accountingBook":true}');
+  '{"moneyTab":true,"invoicing":true,"accountingBook":true,"purchases":true,"supplyExpenses":true,
+    "scheduledExpenses":true,"inputVat":true,"vatManagement":true}');
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
  ('00000000-0000-4000-8000-0000002365c1','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a1',true,true,'active'),
- ('00000000-0000-4000-8000-0000002365c2','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a2',false,false,'active');
-insert into public.sites(id,workspace_id,name,legal_id,country_code) values
- ('00000000-0000-4000-8000-0000002365d1','00000000-0000-4000-8000-0000002365b1','Atelier','111','FR'),
- ('00000000-0000-4000-8000-0000002365d2','00000000-0000-4000-8000-0000002365b1','Annexe','222','FR');
+ ('00000000-0000-4000-8000-0000002365c2','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a2',false,false,'active'),
+ ('00000000-0000-4000-8000-0000002365c3','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a3',false,true,'active');
+insert into public.sites(id,workspace_id,name,legal_id,country_code,is_default) values
+ ('00000000-0000-4000-8000-0000002365d1','00000000-0000-4000-8000-0000002365b1','Atelier','111','FR',true),
+ ('00000000-0000-4000-8000-0000002365d2','00000000-0000-4000-8000-0000002365b1','Annexe','222','FR',false);
+insert into public.suppliers (id, workspace_id, supplier_number, name, status) values
+ ('00000000-0000-4000-8000-0000002365f1','00000000-0000-4000-8000-0000002365b1','1','Fournitures SA','active');
 
 create function pg_temp.vt(p numeric, g int, n int, v int) returns jsonb language sql as $$
   select jsonb_build_object('percent', p, 'category', 'S', 'gross_cents', g, 'net_cents', n, 'vat_cents', v);
@@ -77,6 +81,15 @@ create function pg_temp.lines(p_number text, p_kind text, p_date text default nu
      and (p_date is null or p ->> 'date' = p_date);
 $$;
 
+create function pg_temp.call(p_user uuid, p_sql text) returns jsonb language plpgsql as $$
+declare v jsonb;
+begin
+  perform set_config('request.jwt.claims', jsonb_build_object('sub', p_user, 'role', 'authenticated')::text, true);
+  execute p_sql into v;
+  return v;
+end;
+$$;
+
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002365a1","role":"authenticated"}',true);
 set local role authenticated;
 select pg_temp.map('customers','411','asset');
@@ -88,10 +101,44 @@ select pg_temp.map('vat_output:reduced','445712','liability');
 select pg_temp.map('expenses','625','expense');
 select pg_temp.map('write_off','654','expense');
 
+select pg_temp.map('suppliers','401','liability');
+select pg_temp.map('vat_input','44566','asset');
+
+-- 0519: a supplier bill of 180.00 dated 10 March, decided by a second admin,
+-- paid 180.00 on 2 April; a second bill left in draft posts nothing.
+select set_config('t.bill', pg_temp.call('00000000-0000-4000-8000-0000002365a1',
+  format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', '00000000-0000-4000-8000-0000002365b1',
+    gen_random_uuid(), jsonb_build_object('kind', 'bill', 'supplier_id', '00000000-0000-4000-8000-0000002365f1',
+      'original_reference', 'F-77', 'original_date', '2026-03-10', 'due_on', '2026-04-30', 'payer_kind', 'unpaid',
+      'lines', jsonb_build_array(
+        jsonb_build_object('description', 'Paper', 'gross_cents', 12000, 'net_cents', 10000, 'tax_cents', 2000,
+                           'tax_rate_percent', 20, 'recoverable_tax_cents', 2000, 'nonrecoverable_tax_cents', 0),
+        jsonb_build_object('description', 'Ink', 'gross_cents', 6000, 'net_cents', 5000, 'tax_cents', 1000,
+                           'tax_rate_percent', 20, 'recoverable_tax_cents', 500, 'nonrecoverable_tax_cents', 500)))::text))
+  ->> 'purchase_id', true);
+select pg_temp.call('00000000-0000-4000-8000-0000002365a1',
+  format('select public.submit_purchase_v1(%L, %L, 1, %L)', '00000000-0000-4000-8000-0000002365b1', current_setting('t.bill'), gen_random_uuid()));
+select pg_temp.call('00000000-0000-4000-8000-0000002365a3',
+  format('select public.decide_purchase_v1(%L, %L, %s, true, %L, %L)', '00000000-0000-4000-8000-0000002365b1',
+    current_setting('t.bill'), (select revision from public.purchase_documents where id = current_setting('t.bill')::uuid), '', gen_random_uuid()));
+select pg_temp.call('00000000-0000-4000-8000-0000002365a1',
+  format('select public.record_supplier_payment_v1(%L, %L, 18000, %s, %L, %L, ''bank_transfer'', ''wire'')',
+    '00000000-0000-4000-8000-0000002365b1',
+    (select id from public.purchase_obligations where purchase_id = current_setting('t.bill')::uuid),
+    (select revision from public.purchase_obligations where purchase_id = current_setting('t.bill')::uuid),
+    gen_random_uuid(), '2026-04-02'));
+select pg_temp.call('00000000-0000-4000-8000-0000002365a1',
+  format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', '00000000-0000-4000-8000-0000002365b1',
+    gen_random_uuid(), jsonb_build_object('kind', 'bill', 'supplier_id', '00000000-0000-4000-8000-0000002365f1',
+      'original_reference', 'F-DRAFT', 'original_date', '2026-03-11', 'payer_kind', 'unpaid',
+      'lines', jsonb_build_array(jsonb_build_object('description', 'x', 'gross_cents', 120, 'net_cents', 100,
+        'tax_cents', 20, 'tax_rate_percent', 20)))::text));
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002365a1","role":"authenticated"}',true);
+
 select set_config('t.r', public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-01-01', '2026-12-31')::text, true);
 
-select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 10, 'the year is ten entries');
+select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 12, 'the year is twelve entries');
 select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'blockers'), 0, 'with the full chart nothing blocks');
 select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l ->> 'credit_cents')::bigint)
                               from jsonb_array_elements(p -> 'lines') l))
@@ -105,8 +152,15 @@ select is(pg_temp.lines('INV-3','write_off'), '654:D3334,44571:D666,411:C4000', 
 select is(pg_temp.lines('CN-1','credit_note'), '411:C5000,706:D4167,44571:D833', 'CN-1 mirrors an invoice');
 
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
-  '00000000-0000-4000-8000-0000002365d1', '2026-04-01', '2026-04-30') -> 'postings'), 2,
-  'April keeps only its own events: INV-2 and its receipt');
+  '00000000-0000-4000-8000-0000002365d1', '2026-04-01', '2026-04-30') -> 'postings'), 3,
+  'April keeps only its own events: INV-2, its receipt and the supplier payment');
+select is(pg_temp.lines('F-77','supplier_bill'), '625:D10000,44566:D2000,625:D5500,44566:D500,401:C18000',
+  'the supplier bill: the cost with what cannot be recovered, the recoverable tax apart, the supplier owed the gross');
+select is(pg_temp.lines('F-77','supplier_payment'), '401:D18000,512:C18000', 'the supplier is paid on the day it was paid');
+select is(pg_temp.lines('F-DRAFT','supplier_bill'), null, 'a draft bill posts nothing');
+select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
+  '00000000-0000-4000-8000-0000002365d2', '2026-03-01', '2026-03-31') -> 'postings'), 1,
+  'another issuer than the default one books no purchase');
 select is((public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d2', '2026-01-01', '2026-12-31') -> 'blockers' -> 0 ->> 'block'), 'unmappedRole',
   'an issuer with no chart is blocked, the role named');

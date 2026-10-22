@@ -160,6 +160,13 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
+    // #1869 in memory; #2365 posts the demo money and its supplier bills.
+    bookProfileRepositoryProvider.overrideWithValue(
+      FakeBookProfileRepository(
+        money: fixture.money,
+        purchases: purchasing.purchases,
+      ),
+    ),
     // #2569 — the lease the demo space holds as tenant.
     premisesLeaseRepositoryProvider.overrideWithValue(
       seedDemoLease(fixture.seededAt),
@@ -253,7 +260,6 @@ List<Override> demoOverrides(DemoFixture fixture) {
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       ..._purchasingOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
-      bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository(money: fixture.money)), // #1869 in memory; #2365 posts the demo money
       creditRepositoryProvider.overrideWithValue(fixture.credits),
       accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
