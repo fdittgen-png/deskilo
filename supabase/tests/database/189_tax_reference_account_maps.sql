@@ -7,8 +7,8 @@
 begin;
 select plan(9);
 
-select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 81,
-          'eleven charts, the FEC rows and the Sage rows are seeded');
+select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 95,
+          'eleven charts, the FEC rows and the Sage rows are seeded, and the posting roles of 0520');
 select is((select value ->> 'account' from public.tax_reference
             where domain = 'account_map' and country = 'FR' and key = 'coa/04-vat'), '445710',
           'the French chart books the collected VAT on 445710');
