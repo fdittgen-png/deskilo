@@ -1,0 +1,165 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2365 — the posting rules over the seeded year every exporter is driven
+// over. Expected entries are worked by hand: INV-1 at 20 % and 5.5 % with a
+// netted payment (40.00) and a netted expense (30.00) then paid 155.50;
+// INV-2 part-paid; INV-3 paid 60.00 and the rest written off; CN-1 a credit
+// note of 50.00. Every entry balances; a qualified role is used where it is
+// mapped and its base elsewhere; a missing base blocks with its name.
+import 'package:deskilo/features/money/domain/book_chart.dart';
+import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo/features/money/domain/posting_rules.dart';
+import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'support/seeded_export_year.dart';
+
+BookAccount _account(String code, AccountType type) => BookAccount(
+  id: 'acc-$code',
+  workspaceId: 'ws',
+  issuerSiteId: 'site',
+  code: code,
+  name: code,
+  type: type,
+  isPosting: true,
+  origin: AccountOrigin.manual,
+  revision: 1,
+);
+
+BookMapping _map(BookRole role, String code, {String? qualifier}) =>
+    BookMapping(
+      id: '${role.wire}:$qualifier',
+      workspaceId: 'ws',
+      issuerSiteId: 'site',
+      role: role,
+      qualifier: qualifier,
+      accountId: 'acc-$code',
+      effectiveFrom: DateTime(2020),
+      revision: 1,
+    );
+
+final _accounts = [
+  _account('411', AccountType.asset),
+  _account('512', AccountType.asset),
+  _account('706', AccountType.income),
+  _account('7061', AccountType.income),
+  _account('44571', AccountType.liability),
+  _account('445712', AccountType.liability),
+  _account('625', AccountType.expense),
+  _account('654', AccountType.expense),
+];
+
+List<BookMapping> _chart({bool writeOff = true}) => [
+  _map(BookRole.customers, '411'),
+  _map(BookRole.bank, '512'),
+  _map(BookRole.revenue, '706'),
+  _map(BookRole.revenue, '7061', qualifier: 'reduced'),
+  _map(BookRole.vatOutput, '44571'),
+  _map(BookRole.vatOutput, '445712', qualifier: 'reduced'),
+  _map(BookRole.expenses, '625'),
+  if (writeOff) _map(BookRole.writeOff, '654'),
+];
+
+String _group(InvoiceVatTotal t) => t.percent >= 20 ? 'standard' : 'reduced';
+
+PostingSet _post({bool writeOff = true}) => postingsOf(
+  invoices: SeededExportYear.invoices,
+  matches: SeededExportYear.matches,
+  book: PostingBook(
+    accounts: _accounts,
+    mappings: _chart(writeOff: writeOff),
+    issuerSiteId: 'site',
+  ),
+  groupOf: _group,
+);
+
+/// "account:D1234" / "account:C1234" for each line, in order.
+List<String> _lines(Posting p) => [
+  for (final l in p.lines)
+    '${l.accountCode}:${l.debit.minor != 0 ? 'D${l.debit.minor}' : 'C${l.credit.minor}'}',
+];
+
+void main() {
+  final set = _post();
+  Posting entry(String number, PostingKind kind, [DateTime? on]) =>
+      set.postings.singleWhere(
+        (p) =>
+            p.documentNumber == number &&
+            p.kind == kind &&
+            (on == null || p.date == on),
+      );
+
+  test(
+    'the full chart books the year without a blocker, every entry balanced',
+    () {
+      expect(set.blockers, isEmpty);
+      expect(set.postings, hasLength(10));
+      expect(set.postings.every((p) => p.balanced), isTrue);
+    },
+  );
+
+  final table = <String, (String, PostingKind, PostingJournal, List<String>)>{
+    'INV-1 per rate group; the reduced rate on its qualified accounts': (
+      'INV-1',
+      PostingKind.invoice,
+      PostingJournal.sales,
+      ['411:D22550', '706:C10000', '44571:C2000', '7061:C10000', '445712:C550'],
+    ),
+    'its netted payment is money in on the invoice day': (
+      'INV-1@0305',
+      PostingKind.receipt,
+      PostingJournal.bank,
+      ['512:D4000', '411:C4000'],
+    ),
+    'its netted expense is one purchase entry, never the bank (#2542)': (
+      'INV-1',
+      PostingKind.expense,
+      PostingJournal.purchases,
+      ['625:D3000', '411:C3000'],
+    ),
+    'INV-3 written off: 40.00 left, 6.66 of output tax regularised': (
+      'INV-3',
+      PostingKind.writeOff,
+      PostingJournal.other,
+      ['654:D3334', '44571:D666', '411:C4000'],
+    ),
+    'CN-1 mirrors an invoice': (
+      'CN-1',
+      PostingKind.creditNote,
+      PostingJournal.sales,
+      ['411:C5000', '706:D4167', '44571:D833'],
+    ),
+  };
+  for (final MapEntry(key: name, value: (number, kind, journal, lines))
+      in table.entries) {
+    test(name, () {
+      final p = number.endsWith('@0305')
+          ? entry('INV-1', kind, DateTime(2026, 3, 5))
+          : entry(number, kind);
+      expect(p.journal, journal);
+      expect(_lines(p), lines);
+    });
+  }
+
+  test('the receipts are dated on their match, INV-2 stays open for 80.00', () {
+    expect(_lines(entry('INV-1', PostingKind.receipt, DateTime(2026, 3, 20))), [
+      '512:D15550',
+      '411:C15550',
+    ]);
+    final inv2 = set.postings.where((p) => p.documentNumber == 'INV-2');
+    var owed = 0;
+    for (final p in inv2) {
+      for (final l in p.lines.where((l) => l.accountCode == '411')) {
+        owed += l.debit.minor - l.credit.minor;
+      }
+    }
+    expect(owed, 8000);
+  });
+
+  test('a missing base blocks with its name and posts nothing for it', () {
+    final blocked = _post(writeOff: false);
+    expect(blocked.blockers.map((b) => (b.block, b.subject)), [
+      (PostingBlock.unmappedRole, 'write_off'),
+    ]);
+  });
+}

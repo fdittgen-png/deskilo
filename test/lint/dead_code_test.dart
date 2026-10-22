@@ -57,6 +57,8 @@ const Map<String, String> _allowed = {
       '#2365 — the server-side posting engine',
   'lib/features/money/domain/posting_preview.dart::previewPaymentPosting':
       '#2365 — the server-side posting engine',
+  'lib/features/money/domain/posting_rules.dart::postingsOf':
+      '#2365 — the engine\'s demo twin and the exporters read the postings',
   'lib/features/money/application/declare_vat.dart::vatDeclarationDraft':
       '#2357 — the Dart side of the VAT return',
   'lib/features/money/domain/vat_declaration.dart::computeVatDeclarationLines':
