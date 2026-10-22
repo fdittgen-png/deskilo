@@ -12,5 +12,10 @@
   "overviewAllIndicators": "Alle Kennzahlen",
   "overviewActiveMemberships": "Aktive Mitgliedschaften",
   "overviewThisMonth": "Dieser Monat",
-  "overviewUnavailable": "Nicht verfügbar"
+  "overviewUnavailable": "Nicht verfügbar",
+  "overviewOverdueTitle": "Überfällige Forderungen",
+  "overviewOverdueBasis": "{count} Rechnungen überfällig; {unknown} ohne belegte Fälligkeit und {held} angehalten, gesondert",
+  "overviewOverdueDefinition": "Was Mitglieder auf ausgestellte Rechnungen nach ihrer belegten Fälligkeit noch schulden, nach Gutschriften, Teilzahlungen und Abschreibungen, nach den Mahnregeln. Eine Rechnung ohne belegte Fälligkeit oder mit Mahnsperre wird gesondert gezählt und ist nicht im Betrag.",
+  "overviewMembershipsDefinition": "Die heute aktiven Mitgliedschaften des Raums, alle Rollen eingeschlossen: Mitgliedschaften, nicht einzelne Personen.",
+  "overviewCurrentState": "Heutiger Wert: für einen vergangenen Zeitraum wird kein Verlauf gespeichert."
 }

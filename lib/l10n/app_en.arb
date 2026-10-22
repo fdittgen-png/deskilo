@@ -16134,6 +16134,10 @@
   "@overviewAllIndicators": {
     "description": "#2583 the workspace overview"
   },
+  "overviewCurrentState": "Today's figure: no history of it is kept for a past period.",
+  "@overviewCurrentState": {
+    "description": "#2583 the overview's own figures"
+  },
   "overviewGroupCapacity": "Capacity",
   "@overviewGroupCapacity": {
     "description": "#2583 the workspace overview"
@@ -16158,9 +16162,36 @@
   "@overviewIndicators": {
     "description": "#2583 the workspace overview"
   },
+  "overviewMembershipsDefinition": "The memberships of the space that are active today, each role included: memberships, not distinct people.",
+  "@overviewMembershipsDefinition": {
+    "description": "#2583 the overview's own figures"
+  },
   "overviewNeedsAttention": "Needs attention",
   "@overviewNeedsAttention": {
     "description": "#2583 the workspace overview"
+  },
+  "overviewOverdueBasis": "{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart",
+  "@overviewOverdueBasis": {
+    "description": "#2583 the overview's own figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "unknown": {
+        "type": "String"
+      },
+      "held": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewOverdueDefinition": "What members still owe on issued invoices past their proven due date, after credit notes, part payments and write-offs, by the reminder rules. An invoice with no proven due date, or on hold, is counted apart and is not in the amount.",
+  "@overviewOverdueDefinition": {
+    "description": "#2583 the overview's own figures"
+  },
+  "overviewOverdueTitle": "Overdue receivables",
+  "@overviewOverdueTitle": {
+    "description": "#2583 the overview's own figures"
   },
   "overviewThisMonth": "This month",
   "@overviewThisMonth": {

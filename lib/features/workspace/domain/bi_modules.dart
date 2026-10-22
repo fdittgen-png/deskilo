@@ -328,6 +328,25 @@ const biModules = <BiModule>[
     },
     aggregation: KpiAggregation.sum,
   ),
+  // #2583 — the overview's own figures: today's memberships and what is
+  // overdue, read now (0536).
+  BiModule(
+    id: 'people.active_memberships_current',
+    area: BiArea.people,
+    feature: WorkspaceFeature.workspaceOverview,
+    permissions: {WorkspacePermission.viewAnalytics},
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
+  BiModule(
+    id: 'sales.overdue_receivables',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.workspaceOverview,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

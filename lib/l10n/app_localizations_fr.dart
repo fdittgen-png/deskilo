@@ -13759,6 +13759,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewAllIndicators => 'Tous les indicateurs';
 
   @override
+  String get overviewCurrentState =>
+      'Chiffre du jour : aucun historique n\'en est gardé pour une période passée.';
+
+  @override
   String get overviewGroupCapacity => 'Capacité';
 
   @override
@@ -13777,7 +13781,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewIndicators => 'Indicateurs clés';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Les adhésions de l\'espace actives aujourd\'hui, tous rôles compris : des adhésions, pas des personnes distinctes.';
+
+  @override
   String get overviewNeedsAttention => 'À traiter';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count factures échues ; $unknown sans échéance prouvée et $held suspendues, à part';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Ce que les membres doivent encore sur les factures émises dont l\'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n\'entre pas dans le montant.';
+
+  @override
+  String get overviewOverdueTitle => 'Créances échues';
 
   @override
   String get overviewThisMonth => 'Ce mois-ci';

@@ -112,9 +112,11 @@ Future<bool> _drawerHas(WidgetTester tester, String key) async {
 void main() {
   test('only the modules the reader may see, and the web only', () {
     final all = WorkspaceFeature.values.toSet();
+    // The operational figures only: capacity and (#2583) the memberships;
+    // every money figure also asks viewFinances.
     expect(
-      visibleBiModules(all, {WorkspacePermission.viewAnalytics}),
-      hasLength(1),
+      visibleBiModules(all, {WorkspacePermission.viewAnalytics}).map((m) => m.id),
+      {'capacity.seat_utilisation', 'people.active_memberships_current'},
     );
     expect(visibleBiModules(all, const {}), isEmpty);
     expect(

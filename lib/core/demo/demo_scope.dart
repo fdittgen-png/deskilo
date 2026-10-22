@@ -76,6 +76,7 @@ import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
+import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
@@ -83,6 +84,7 @@ import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/instance_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
+import '../../features/workspace/providers/overview_kpi_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
@@ -289,6 +291,10 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ),
       costAllocationRepositoryProvider.overrideWithValue(
         const UnavailableCostAllocationRepository(),
+      ),
+      // #2583 — the overview's own figures need the server.
+      overviewKpiRepositoryProvider.overrideWithValue(
+        const UnavailableOverviewKpiRepository(),
       ),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
