@@ -23934,6 +23934,30 @@ abstract class AppLocalizations {
   /// **'{value}%'**
   String percentValue(int value);
 
+  /// #2578 the bookings behind the capacity figure
+  ///
+  /// In en, this message translates to:
+  /// **'No booking in these months.'**
+  String get periodReservationsEmpty;
+
+  /// #2578 the bookings behind the capacity figure
+  ///
+  /// In en, this message translates to:
+  /// **'The bookings could not be read.'**
+  String get periodReservationsFailed;
+
+  /// #2578 the bookings behind the capacity figure
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings of {period}'**
+  String periodReservationsTitle(String period);
+
+  /// #2578 the bookings behind the capacity figure
+  ///
+  /// In en, this message translates to:
+  /// **'(unnamed place)'**
+  String get periodReservationsUnnamed;
+
   /// #987/#989 environment pairs: permAccessProd
   ///
   /// In en, this message translates to:

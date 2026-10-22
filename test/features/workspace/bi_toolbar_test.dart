@@ -15,9 +15,9 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
+import 'package:deskilo/features/reservations/presentation/screens/period_reservations_screen.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
-import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
@@ -242,19 +242,20 @@ void main() {
     expect(_text(tester, 'bi-period-label'), '2026');
     await tester.tap(find.byKey(const ValueKey('bi-drill')));
     await tester.pumpAndSettle();
-    expect(find.byType(AvailabilityScreen), findsOneWidget);
+    // #2578 — the bookings behind the figure, for its months.
+    expect(find.byType(PeriodReservationsScreen), findsOneWidget);
     _router(tester).pop();
     await tester.pumpAndSettle();
     expect(_uri(tester).queryParameters, {'grain': 'year', 'cmp': 'previous', 'view': 'table'});
     expect(_text(tester, 'bi-period-label'), '2026');
   });
 
-  testWidgets('a reader without the source right gets the explanation, '
-      'not the link', (tester) async {
+  testWidgets('whoever may read the figure may open the bookings behind '
+      'it (#2578): no settings right is asked for', (tester) async {
     await _pump(tester, permissions: {WorkspacePermission.viewAnalytics});
     await _open(tester, '/bi');
-    expect(find.byKey(const ValueKey('bi-drill')), findsNothing);
-    expect(find.byKey(const ValueKey('bi-drill-restricted')), findsOneWidget);
+    expect(find.byKey(const ValueKey('bi-drill')), findsOneWidget);
+    expect(find.byKey(const ValueKey('bi-drill-restricted')), findsNothing);
   });
 }
 

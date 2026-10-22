@@ -70,6 +70,7 @@ signed-out on  /profiles -> /auth
 signed-out on  /report-editor -> /auth
 signed-out on  /reports -> /auth
 signed-out on  /res/:id -> /auth
+signed-out on  /reservations/period -> /auth
 signed-out on  /reserve -> /auth
 signed-out on  /roles -> /auth
 signed-out on  /scan-join -> /auth
@@ -178,6 +179,7 @@ signed-out off /profiles -> /auth
 signed-out off /report-editor -> /auth
 signed-out off /reports -> /auth
 signed-out off /res/:id -> /auth
+signed-out off /reservations/period -> /auth
 signed-out off /reserve -> /auth
 signed-out off /roles -> /auth
 signed-out off /scan-join -> /auth
@@ -286,6 +288,7 @@ no-space on  /profiles -> (open)
 no-space on  /report-editor -> /me
 no-space on  /reports -> /me
 no-space on  /res/:id -> /me
+no-space on  /reservations/period -> /me
 no-space on  /reserve -> /me
 no-space on  /roles -> /me
 no-space on  /scan-join -> (open)
@@ -394,6 +397,7 @@ no-space off /profiles -> (open)
 no-space off /report-editor -> /me
 no-space off /reports -> /me
 no-space off /res/:id -> /me
+no-space off /reservations/period -> /me
 no-space off /reserve -> /me
 no-space off /roles -> /me
 no-space off /scan-join -> (open)
@@ -502,6 +506,7 @@ member on  /profiles -> (open)
 member on  /report-editor -> /calendar
 member on  /reports -> /settings
 member on  /res/:id -> (open)
+member on  /reservations/period -> /calendar
 member on  /reserve -> (open)
 member on  /roles -> /calendar
 member on  /scan-join -> (open)
@@ -610,6 +615,7 @@ member off /profiles -> (open)
 member off /report-editor -> /messages
 member off /reports -> /settings
 member off /res/:id -> /messages
+member off /reservations/period -> /messages
 member off /reserve -> (open)
 member off /roles -> /messages
 member off /scan-join -> (open)
@@ -718,6 +724,7 @@ admin on  /profiles -> (open)
 admin on  /report-editor -> (open)
 admin on  /reports -> (open)
 admin on  /res/:id -> (open)
+admin on  /reservations/period -> /calendar
 admin on  /reserve -> (open)
 admin on  /roles -> /calendar
 admin on  /scan-join -> (open)
@@ -826,6 +833,7 @@ admin off /profiles -> (open)
 admin off /report-editor -> /messages
 admin off /reports -> /settings
 admin off /res/:id -> /messages
+admin off /reservations/period -> /messages
 admin off /reserve -> (open)
 admin off /roles -> /messages
 admin off /scan-join -> (open)
@@ -934,6 +942,7 @@ owner on  /profiles -> (open)
 owner on  /report-editor -> (open)
 owner on  /reports -> (open)
 owner on  /res/:id -> (open)
+owner on  /reservations/period -> /calendar
 owner on  /reserve -> (open)
 owner on  /roles -> (open)
 owner on  /scan-join -> (open)
@@ -1042,6 +1051,7 @@ owner off /profiles -> (open)
 owner off /report-editor -> /messages
 owner off /reports -> (open)
 owner off /res/:id -> /messages
+owner off /reservations/period -> /messages
 owner off /reserve -> (open)
 owner off /roles -> /messages
 owner off /scan-join -> (open)

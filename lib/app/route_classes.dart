@@ -161,6 +161,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/what-you-can-do', RouteClass.workspace),
   RouteRule('/settings/questions', RouteClass.workspace),
   RouteRule('/attention', RouteClass.workspace),
+  RouteRule('/reservations/period', RouteClass.workspace),
   RouteRule('/workspace-overview', RouteClass.workspace),
   RouteRule('/settings/number-sequences', RouteClass.workspace),
   RouteRule('/members/managed', RouteClass.workspace),
