@@ -1275,6 +1275,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get baseRoleUser => 'Utilisateur';
 
   @override
+  String get biAfterDepreciationDefinition =>
+      'Le facturé moins les charges d\'exploitation enregistrées, moins les amortissements comptables des mêmes mois. Affiché seulement quand ces amortissements sont connus.';
+
+  @override
+  String get biAfterDepreciationTitle =>
+      'Facturé moins charges d\'exploitation et amortissements';
+
+  @override
   String get biAreaCapacity => 'Espaces et capacité';
 
   @override
@@ -1372,6 +1380,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biColumnValue => 'Valeur';
 
   @override
+  String biCommitmentsBasis(String overdue, String upcoming) {
+    return '$overdue échus, $upcoming à échoir';
+  }
+
+  @override
+  String get biCommitmentsDefinition =>
+      'Ce que les baux et les salles louées prévoient sur les mois, moins les factures fournisseurs déjà rapprochées. Les échéances pas encore générées sont tirées de leur calendrier.';
+
+  @override
+  String get biCommitmentsNoContracts =>
+      'Ni bail ni salle louée n\'est activé : rien n\'est attendu.';
+
+  @override
+  String get biCommitmentsNotForecast =>
+      'Une attente tirée des contrats, pas une prévision garantie.';
+
+  @override
+  String get biCommitmentsTitle => 'Reste à facturer (contrats)';
+
+  @override
   String get biCompare => 'Comparer avec';
 
   @override
@@ -1466,6 +1494,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biDeltaNone => 'Pas encore de comparaison';
+
+  @override
+  String get biDepreciationDefinition =>
+      'Les amortissements des valeurs comptables confirmées dont les périodes couvrent exactement les mois choisis. Des valeurs fiscales seules, partielles ou qui se chevauchent ne donnent aucun chiffre.';
+
+  @override
+  String get biDepreciationIncomplete =>
+      'Aucune valeur comptable confirmée ne couvre exactement ces mois : l\'amortissement est inconnu, jamais 0.';
+
+  @override
+  String get biDepreciationNoCash =>
+      'Un amortissement ne déplace pas d\'argent.';
+
+  @override
+  String get biDepreciationTitle => 'Amortissements comptables (enregistrés)';
 
   @override
   String get biDimensionLevel => 'Niveau';

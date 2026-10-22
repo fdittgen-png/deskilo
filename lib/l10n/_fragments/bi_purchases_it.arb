@@ -118,5 +118,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "biDepreciationTitle": "Ammortamenti contabili (registrati)",
+  "biDepreciationDefinition": "Gli ammortamenti dei valori contabili confermati i cui periodi coprono esattamente i mesi scelti. Valori solo fiscali, parziali o sovrapposti non danno alcuna cifra.",
+  "biDepreciationNoCash": "Un ammortamento non muove denaro.",
+  "biDepreciationIncomplete": "Nessun valore contabile confermato copre esattamente questi mesi: l'ammortamento è sconosciuto, mai 0.",
+  "biAfterDepreciationTitle": "Fatturato meno costi operativi e ammortamenti",
+  "biAfterDepreciationDefinition": "Il fatturato meno i costi operativi registrati, meno gli ammortamenti contabili degli stessi mesi. Mostrato solo quando quegli ammortamenti sono noti.",
+  "biCommitmentsTitle": "Ancora da fatturare (contratti)",
+  "biCommitmentsDefinition": "Ciò che le locazioni e le sale prese in affitto prevedono nei mesi, meno le fatture fornitore già abbinate. Le scadenze non ancora generate sono prese dal loro calendario.",
+  "biCommitmentsBasis": "{overdue} scaduto, {upcoming} non ancora scaduto",
+  "biCommitmentsNotForecast": "Un'attesa dai contratti, non una previsione garantita.",
+  "biCommitmentsNoContracts": "Né locazioni né sale prese in affitto sono attive: nulla è atteso."
 }

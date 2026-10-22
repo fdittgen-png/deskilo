@@ -147,6 +147,68 @@ const _contributionKpi = KpiDefinition(
   minCohort: null,
 );
 
+const _bookDepreciationKpi = KpiDefinition(
+  id: 'assets.book_depreciation',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the confirmed book values (#2576) whose periods tile [from, to] '
+      'exactly, complete and in the workspace currency; tax-only, partial or '
+      'overlapping values are unknown, never 0',
+  dimensions: [],
+  numerator: 'book_depreciation_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: [
+    'the equipment register',
+    'confirmed book values',
+    'the workspace currency',
+  ],
+  minCohort: null,
+);
+
+const _afterDepreciationKpi = KpiDefinition(
+  id: 'finance.contribution_after_depreciation',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'invoiced less recorded operating costs of [from, to], less the book '
+      'depreciation of the same months; unknown while that depreciation is',
+  dimensions: [],
+  numerator: 'after_depreciation_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: [
+    'invoicing',
+    'purchases',
+    'confirmed book values',
+    'the workspace currency',
+  ],
+  minCohort: null,
+);
+
+const _unbilledCommitmentsKpi = KpiDefinition(
+  id: 'purchases.unbilled_commitments',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the contract occurrences due in [from, to] (#2575), those not yet '
+      'generated projected from their schedule, less the bills matched to '
+      'them; overdue and not yet due apart',
+  dimensions: [],
+  numerator: 'unbilled_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['a lease or a rented room', 'the workspace currency'],
+  minCohort: null,
+);
+
 /// The purchase figures, in catalogue order.
 const purchaseKpis = <KpiDefinition>[
   _apOutstandingKpi,
@@ -157,6 +219,11 @@ const purchaseKpis = <KpiDefinition>[
   _operatingCostsKpi,
   _acquisitionsKpi,
   _contributionKpi,
+  // #2582 C2 — book depreciation (#2576) and unbilled commitments (#2575),
+  // 0530.
+  _bookDepreciationKpi,
+  _afterDepreciationKpi,
+  _unbilledCommitmentsKpi,
 ];
 
 /// What `kpi_purchases_summary` returned for the whole months
@@ -261,6 +328,11 @@ class CostSummaryKpi {
     required this.contributionMinor,
     required this.unresolvedLines,
     required this.unqualifiedLines,
+    required this.bookDepreciationMinor,
+    required this.afterDepreciationMinor,
+    required this.unbilledMinor,
+    required this.unbilledOverdueMinor,
+    required this.unbilledUpcomingMinor,
     required this.quality,
     required this.reasons,
     required this.computedAt,
@@ -280,6 +352,16 @@ class CostSummaryKpi {
   /// recoverable share is not qualified (counted at their gross).
   final int unresolvedLines;
   final int unqualifiedLines;
+
+  /// Null unless confirmed book values cover the months exactly.
+  final int? bookDepreciationMinor;
+  final int? afterDepreciationMinor;
+
+  /// What the contracts still expect in the months; null without a lease
+  /// or a rented room. Overdue (due before today) and upcoming apart.
+  final int? unbilledMinor;
+  final int? unbilledOverdueMinor;
+  final int? unbilledUpcomingMinor;
   final Set<KpiQuality> quality;
   final List<String> reasons;
   final DateTime computedAt;
@@ -288,6 +370,9 @@ class CostSummaryKpi {
   int? figure(String moduleId) => switch (moduleId) {
     'purchases.operating_costs' => operatingCostsMinor,
     'assets.acquisitions' => acquisitionsMinor,
+    'assets.book_depreciation' => bookDepreciationMinor,
+    'finance.contribution_after_depreciation' => afterDepreciationMinor,
+    'purchases.unbilled_commitments' => unbilledMinor,
     _ => contributionMinor,
   };
 }
@@ -298,24 +383,41 @@ CostSummaryKpi costSummaryFromJson(Map<String, Object?> json) {
   final costs = exactMinor(r.raw('operating_costs_minor'));
   final sales = exactMinor(r.raw('net_sales_minor'));
   final contribution = exactMinor(r.raw('contribution_minor'));
-  final assetsRaw = r.raw('acquisitions_minor');
-  final assets = exactMinor(assetsRaw);
+  // Each of these may be null on purpose (unknown); only a present value
+  // that cannot travel exactly is inexact.
+  final optional = {
+    for (final key in const [
+      'acquisitions_minor',
+      'book_depreciation_minor',
+      'after_depreciation_minor',
+      'unbilled_minor',
+      'unbilled_overdue_minor',
+      'unbilled_upcoming_minor',
+    ])
+      key: r.raw(key),
+  };
+  int? opt(String key) => exactMinor(optional[key]);
   final inexact =
       costs == null ||
       sales == null ||
       contribution == null ||
-      (assetsRaw != null && assets == null);
+      optional.entries.any((e) => e.value != null && opt(e.key) == null);
   final currency = r.stringOr('currency');
   return CostSummaryKpi(
     fromMonth: r.stringOr('from'),
     toMonth: r.stringOr('to'),
     currency: currency,
     operatingCostsMinor: costs,
-    acquisitionsMinor: assets,
+    acquisitionsMinor: opt('acquisitions_minor'),
     netSalesMinor: sales,
     contributionMinor: contribution,
     unresolvedLines: r.integer('unresolved_lines'),
     unqualifiedLines: r.integer('unqualified_lines'),
+    bookDepreciationMinor: opt('book_depreciation_minor'),
+    afterDepreciationMinor: opt('after_depreciation_minor'),
+    unbilledMinor: opt('unbilled_minor'),
+    unbilledOverdueMinor: opt('unbilled_overdue_minor'),
+    unbilledUpcomingMinor: opt('unbilled_upcoming_minor'),
     quality: {
       for (final q in r.strings('quality'))
         kpiQualityOf(q) ?? KpiQuality.unavailable,
