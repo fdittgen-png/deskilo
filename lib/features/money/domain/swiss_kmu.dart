@@ -23,7 +23,7 @@ import 'vat_rate.dart';
 ///
 /// The accounts are ASKED FOR at export time and shown before the file is
 /// written, like every file of this kind; the defaults are the suggestions
-/// of the KMU chart (`coaChartFor('CH')`).
+/// of the KMU chart (`ActiveTaxReference.chartOf('CH')`).
 class SwissKmuAccounts {
   const SwissKmuAccounts({
     this.debtors = '1100',

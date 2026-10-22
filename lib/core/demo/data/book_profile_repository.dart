@@ -114,11 +114,13 @@ class FakeBookProfileRepository implements BookProfileRepository {
     required String accountId,
     required DateTime effectiveFrom,
     required int expectedRevision,
+    String? qualifier,
   }) async {
     final i = mappings.indexWhere(
       (m) =>
           m.issuerSiteId == issuerSiteId &&
           m.role == role &&
+          m.qualifier == qualifier &&
           m.effectiveFrom == effectiveFrom,
     );
     final current = i < 0 ? 0 : mappings[i].revision;
@@ -128,6 +130,7 @@ class FakeBookProfileRepository implements BookProfileRepository {
       workspaceId: workspaceId,
       issuerSiteId: issuerSiteId,
       role: role,
+      qualifier: qualifier,
       accountId: accountId,
       effectiveFrom: effectiveFrom,
       revision: current + 1,

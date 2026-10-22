@@ -19,7 +19,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
 
-Future<FakeBookProfileRepository> _pump(WidgetTester tester) async {
+Future<FakeBookProfileRepository> _pump(
+  WidgetTester tester, {
+  List<(String, String, AccountType)> accounts = const [],
+}) async {
   final workspace = FakeWorkspaceRepository.withWorkspace(
     featureFlags: const {
       'moneyTab': true,
@@ -38,7 +41,21 @@ Future<FakeBookProfileRepository> _pump(WidgetTester tester) async {
       isDefault: true,
     ),
   );
-  final books = FakeBookProfileRepository();
+  final books = FakeBookProfileRepository()
+    ..accounts.addAll([
+      for (final (code, name, type) in accounts)
+        BookAccount(
+          id: 'acc-$code',
+          workspaceId: ws,
+          issuerSiteId: 's1',
+          code: code,
+          name: name,
+          type: type,
+          isPosting: true,
+          origin: AccountOrigin.manual,
+          revision: 1,
+        ),
+    ]);
   await tester.binding.setSurfaceSize(const Size(800, 3000));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
@@ -78,46 +95,68 @@ Future<void> _choose(WidgetTester tester, BookRole role, String label) async {
 }
 
 void main() {
-  testWidgets('suggested drafts, typed roles, mappings from today', (
-    tester,
-  ) async {
+  testWidgets('the suggested chart is taken mapped; a role re-points from '
+      'today (#2365)', (tester) async {
     final books = await _pump(tester);
     await _tapKey(tester, 'book-chart-s1');
     await _tapKey(tester, 'book-chart-suggest');
-    // FR, no VAT charged: four accounts, no output VAT.
+    // FR, no VAT charged: no tax account.
     expect(books.accounts.map((a) => a.code), [
       '411000',
       '706000',
       '512000',
       '606000',
+      '401000',
+      '654000',
     ]);
     expect(
       books.accounts.every((a) => a.origin == AccountOrigin.suggested),
       isTrue,
     );
+    String codeOf(BookRole role) => books.accounts
+        .firstWhere(
+          (a) => a.id == books.mappings.firstWhere((m) => m.role == role).accountId,
+        )
+        .code;
+    expect(
+      {for (final m in books.mappings) m.role: codeOf(m.role)},
+      {
+        BookRole.customers: '411000',
+        BookRole.revenue: '706000',
+        BookRole.bank: '512000',
+        BookRole.expenses: '606000',
+        BookRole.suppliers: '401000',
+        BookRole.writeOff: '654000',
+      },
+    );
 
     await _tapKey(tester, 'book-role-revenue');
-    expect(find.text('706000 · Prestations de services'), findsWidgets);
     expect(
       find.text('411000 · Clients'),
-      findsOneWidget,
-      reason: 'only the chart lists it: revenue offers income accounts',
+      findsNWidgets(2),
+      reason: 'the chart and the customers role show it: revenue offers '
+          'income accounts only',
     );
     await tester.tap(find.text('706000 · Prestations de services').last);
     await tester.pumpAndSettle();
-    expect(books.mappings.single.role, BookRole.revenue);
     expect(
-      books.mappings.single.accountId,
-      books.accounts.firstWhere((a) => a.code == '706000').id,
+      books.mappings.where((m) => m.role == BookRole.revenue).single.revision,
+      2,
+      reason: 'the same day corrects its version, never a second one',
     );
   });
 
   testWidgets('a local book waits for customers, revenue and bank', (
     tester,
   ) async {
-    final books = await _pump(tester);
+    final books = await _pump(
+      tester,
+      accounts: [
+        ('411000', 'Clients', AccountType.asset),
+        ('706000', 'Prestations de services', AccountType.income),
+      ],
+    );
     await _tapKey(tester, 'book-chart-s1');
-    await _tapKey(tester, 'book-chart-suggest');
     await _choose(tester, BookRole.customers, '411000 · Clients');
     await _choose(tester, BookRole.revenue, '706000 · Prestations de services');
     // Close the chart sheet.

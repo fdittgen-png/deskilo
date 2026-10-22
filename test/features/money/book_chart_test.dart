@@ -191,36 +191,52 @@ void main() {
     });
   });
 
-  test('the suggested chart is a set of drafts to review, not a guess '
-      'written into the book', () {
+  test('the suggested chart is a set of drafts to review, each proposed '
+      'for the role the engine books (#2365)', () {
     final drafts = suggestedAccounts(
       workspaceId: 'ws',
       issuerSiteId: 's1',
       countryCode: 'FR',
       regime: VatRegime.vatRegistered,
     );
-    expect(drafts.map((a) => (a.code, a.type)), [
-      ('411000', AccountType.asset),
-      ('706000', AccountType.income),
-      ('512000', AccountType.asset),
-      ('445710', AccountType.liability),
-      ('606000', AccountType.expense),
-    ]);
-    expect(drafts.every((a) => a.origin == AccountOrigin.suggested), isTrue);
     expect(
-      drafts.every((a) => a.revision == 0),
-      isTrue,
-      reason: 'nothing saved until someone reviews it',
+      drafts.map(
+        (d) => (d.account.code, d.account.type, d.role, d.qualifier),
+      ),
+      [
+        ('411000', AccountType.asset, BookRole.customers, null),
+        ('706000', AccountType.income, BookRole.revenue, null),
+        ('512000', AccountType.asset, BookRole.bank, null),
+        ('445710', AccountType.liability, BookRole.vatOutput, null),
+        ('606000', AccountType.expense, BookRole.expenses, null),
+        ('401000', AccountType.liability, BookRole.suppliers, null),
+        ('445660', AccountType.asset, BookRole.vatInput, null),
+        ('654000', AccountType.expense, BookRole.writeOff, null),
+        ('445712', AccountType.liability, BookRole.vatOutput, 'intermediate'),
+        ('445713', AccountType.liability, BookRole.vatOutput, 'reduced'),
+      ],
     );
     expect(
-      suggestedAccounts(
-        workspaceId: 'ws',
-        issuerSiteId: 's1',
-        countryCode: 'FR',
-        regime: VatRegime.notSubject,
-      ).map((a) => a.code),
-      isNot(contains('445710')),
-      reason: 'no output-VAT account where no VAT is charged',
+      drafts.every((d) => d.account.origin == AccountOrigin.suggested),
+      isTrue,
+    );
+    expect(
+      drafts.every((d) => d.account.revision == 0),
+      isTrue,
+      reason: 'nothing saved until someone asks for it',
+    );
+    expect(
+      [
+        for (final d in suggestedAccounts(
+          workspaceId: 'ws',
+          issuerSiteId: 's1',
+          countryCode: 'DE',
+          regime: VatRegime.notSubject,
+        ))
+          d.account.code,
+      ],
+      ['10000', '8400', '1200', '4900', '70000', '2400', '8300'],
+      reason: 'no tax account where no VAT is charged',
     );
   });
 }

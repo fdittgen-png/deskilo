@@ -106,6 +106,7 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
     required String accountId,
     required DateTime effectiveFrom,
     required int expectedRevision,
+    String? qualifier,
   }) async {
     try {
       final row = await _client.rpc<dynamic>(
@@ -113,7 +114,7 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
         params: {
           'p_workspace_id': workspaceId,
           'p_issuer_site_id': issuerSiteId,
-          'p_role': role.wire,
+          'p_role': qualifier == null ? role.wire : '${role.wire}:$qualifier',
           'p_account_id': accountId,
           'p_effective_from': bookDate(effectiveFrom),
           'p_expected_revision': expectedRevision,
