@@ -1,8 +1,8 @@
 {
-  "recordedSha": "c2bd42dfc8e3e87df908287b543a75e01a403668",
+  "recordedSha": "e75bfce502a621a31d4677e4cf915f03a72e779e",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1767,"functions":9898,"cyclomatic>=9":1051,"cyclomatic>=25":107,"cognitive>=15":426,"cognitive>=30":97,"length>=150":73,"parameters>=5":479,"parameters>=7":153,"partOfFiles":43},
+  "totals": {"files":1769,"functions":9902,"cyclomatic>=9":1051,"cyclomatic>=25":107,"cognitive>=15":426,"cognitive>=30":97,"length>=150":73,"parameters>=5":479,"parameters>=7":153,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1451,10 +1451,12 @@
     {"p":"lib/features/money/domain/accountant_csv.dart","loc":119,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":24,"cyc":13,"len":96,"params":5,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/accountant_handoff.dart","loc":302,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":35,"cyc":20,"len":125,"params":4,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/accounting_amount.dart","loc":293,"part":false,"setState":0,"repositoryReads":0,"fn":30,"cog":11,"cyc":10,"len":38,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/accounting_capability.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":2,"len":8,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/accounting_format.dart","loc":120,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":5,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/accounting_capability.dart","loc":104,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":2,"len":8,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/accounting_coverage.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":4,"len":16,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/accounting_format.dart","loc":234,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":6,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/accounting_source_queries.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/accounting_source_snapshot.dart","loc":168,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":18,"cyc":17,"len":101,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/accounting_target.dart","loc":62,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":9,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/accounting_tax.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":9,"cyc":9,"len":53,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/domain/accounting_view.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":14,"cyc":8,"len":36,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/address_window.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":15,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

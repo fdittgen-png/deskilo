@@ -47,7 +47,7 @@ void main() {
   });
 
   test('the bundle is an export format offered everywhere', () {
-    expect(accountingFormats.map((f) => f.id), contains('bundle'));
+    expect(accountingTargets.map((t) => t.format).nonNulls.map((f) => f.id), contains('bundle'));
     for (final c in ['FR', 'DE', 'ES', 'PT', 'XX']) {
       expect(formatsFor(c).map((f) => f.id), contains('bundle'), reason: c);
     }
