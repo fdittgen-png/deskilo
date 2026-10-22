@@ -857,6 +857,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) async => (await w.f.workspaces.fetchWorkspaceTemplates()).isNotEmpty,
   ),
   WorkspaceFeature.instanceWizard: _toggle('the instance wizard'),
+  // #2869 — the guide's demo setup states come with #2872.
+  WorkspaceFeature.setupGuide: _toggle('the setup guide'),
   WorkspaceFeature.decisionSurface: _state(
     _admin,
     'what needs a person, '

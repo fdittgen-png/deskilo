@@ -7150,7 +7150,7 @@ window.SETUP_L10N={
    ],
    "setupGuide": [
     "Guida alla configurazione",
-    "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che scegli per ogni parte dello spazio."
+    "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che sceglie per ogni parte dello spazio."
    ]
   },
   "process": {

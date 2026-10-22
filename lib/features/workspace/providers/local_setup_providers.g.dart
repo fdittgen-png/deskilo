@@ -312,6 +312,91 @@ final class WorkspaceLocalSlotsFamily extends $Family
   String toString() => r'workspaceLocalSlotsProvider';
 }
 
+/// #2869 — the setup guide's status: every step and the four milestones.
+
+@ProviderFor(workspaceSetupStatus)
+final workspaceSetupStatusProvider = WorkspaceSetupStatusFamily._();
+
+/// #2869 — the setup guide's status: every step and the four milestones.
+
+final class WorkspaceSetupStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SetupStatus>,
+          SetupStatus,
+          FutureOr<SetupStatus>
+        >
+    with $FutureModifier<SetupStatus>, $FutureProvider<SetupStatus> {
+  /// #2869 — the setup guide's status: every step and the four milestones.
+  WorkspaceSetupStatusProvider._({
+    required WorkspaceSetupStatusFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'workspaceSetupStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceSetupStatusHash();
+
+  @override
+  String toString() {
+    return r'workspaceSetupStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<SetupStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<SetupStatus> create(Ref ref) {
+    final argument = this.argument as String;
+    return workspaceSetupStatus(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WorkspaceSetupStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$workspaceSetupStatusHash() =>
+    r'dee7cd39d0f2c4e8d1b12728cb62a47cbb177a72';
+
+/// #2869 — the setup guide's status: every step and the four milestones.
+
+final class WorkspaceSetupStatusFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<SetupStatus>, String> {
+  WorkspaceSetupStatusFamily._()
+    : super(
+        retry: null,
+        name: r'workspaceSetupStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #2869 — the setup guide's status: every step and the four milestones.
+
+  WorkspaceSetupStatusProvider call(String workspaceId) =>
+      WorkspaceSetupStatusProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'workspaceSetupStatusProvider';
+}
+
 /// #1636 — every setup section of the space, in the server's order.
 
 @ProviderFor(workspaceReadiness)

@@ -21968,6 +21968,134 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
+  "setupGuideAllDone": "Your space has everything you chose.",
+  "@setupGuideAllDone": {
+    "description": "#2869 setup guide: setupGuideAllDone"
+  },
+  "setupGuideBanner": "{milestone}: {ready} of {required} done · Next: {step}",
+  "@setupGuideBanner": {
+    "description": "#2869 setup guide: setupGuideBanner",
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      },
+      "ready": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      },
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGuideDeferred": "Set aside",
+  "@setupGuideDeferred": {
+    "description": "#2869 setup guide: setupGuideDeferred"
+  },
+  "setupGuideDone": "Done",
+  "@setupGuideDone": {
+    "description": "#2869 setup guide: setupGuideDone"
+  },
+  "setupGuideEstimate": "about {minutes} min",
+  "@setupGuideEstimate": {
+    "description": "#2869 setup guide: setupGuideEstimate",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "setupGuideLater": "For a later milestone",
+  "@setupGuideLater": {
+    "description": "#2869 setup guide: setupGuideLater"
+  },
+  "setupGuideNext": "Next",
+  "@setupGuideNext": {
+    "description": "#2869 setup guide: setupGuideNext"
+  },
+  "setupGuideOptional": "More for your space",
+  "@setupGuideOptional": {
+    "description": "#2869 setup guide: setupGuideOptional"
+  },
+  "setupGuideProgress": "{ready} of {required} done",
+  "@setupGuideProgress": {
+    "description": "#2869 setup guide: setupGuideProgress",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "setupGuideResume": "Resume",
+  "@setupGuideResume": {
+    "description": "#2869 setup guide: setupGuideResume"
+  },
+  "setupGuideTitle": "Setup guide",
+  "@setupGuideTitle": {
+    "description": "#2869 setup guide: setupGuideTitle"
+  },
+  "setupGuideToDo": "What it still needs",
+  "@setupGuideToDo": {
+    "description": "#2869 setup guide: setupGuideToDo"
+  },
+  "setupGuideUnavailable": "The setup status could not be read. Try again in a moment.",
+  "@setupGuideUnavailable": {
+    "description": "#2869 setup guide: setupGuideUnavailable"
+  },
+  "setupGuideWaiting": "Waiting",
+  "@setupGuideWaiting": {
+    "description": "#2869 setup guide: setupGuideWaiting"
+  },
+  "setupGuideWaitsFor": "Waits for: {steps}",
+  "@setupGuideWaitsFor": {
+    "description": "#2869 setup guide: setupGuideWaitsFor",
+    "placeholders": {
+      "steps": {
+        "type": "String"
+      }
+    }
+  },
+  "setupMilestoneName": "{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}",
+  "@setupMilestoneName": {
+    "description": "#2869 setup guide: setupMilestoneName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupStateName": "{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}",
+  "@setupStateName": {
+    "description": "#2869 setup guide: setupStateName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupStepHint": "{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space's code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space's colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space's data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}",
+  "@setupStepHint": {
+    "description": "#2869 setup guide: setupStepHint",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupStepTitle": "{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}",
+  "@setupStepTitle": {
+    "description": "#2869 setup guide: setupStepTitle",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
   "shellBarHiddenAnnounce": "Navigation bar hidden",
   "@shellBarHiddenAnnounce": {
     "description": "Screen-reader announcement when the bar is swiped away (#1173)"

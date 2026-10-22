@@ -9,7 +9,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
 import '../../domain/local_setup.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
+import '../../providers/workspace_providers.dart';
+import 'setup_resume_banner.dart';
 import 'workspace_readiness_card.dart';
 
 /// #1657 — a validation event type, as its label, from its stored word.
@@ -126,8 +129,25 @@ class LocalReadinessCard extends ConsumerWidget {
 }
 
 /// #1636 #1656 — the top of the space's settings: how far it is from a
-/// first booking, then what its features still lack locally.
+/// first booking, then what its features still lack locally. #2869 — with
+/// the setup guide on, its resume banner instead (ADR 0047 §6).
 List<Widget> setupReadinessCards(String workspaceId) => [
-  WorkspaceReadinessCard(workspaceId: workspaceId),
-  LocalReadinessCard(workspaceId: workspaceId),
+  _SetupEntry(workspaceId: workspaceId),
 ];
+
+class _SetupEntry extends ConsumerWidget {
+  const _SetupEntry({required this.workspaceId});
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) =>
+      ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.setupGuide)
+          ? SetupResumeBanner(workspaceId: workspaceId)
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                WorkspaceReadinessCard(workspaceId: workspaceId),
+                LocalReadinessCard(workspaceId: workspaceId),
+              ],
+            );
+}

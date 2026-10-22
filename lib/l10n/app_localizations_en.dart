@@ -18727,6 +18727,165 @@ class AppLocalizationsEn extends AppLocalizations {
       'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.';
 
   @override
+  String get setupGuideAllDone => 'Your space has everything you chose.';
+
+  @override
+  String setupGuideBanner(
+    String milestone,
+    int ready,
+    int required,
+    String step,
+  ) {
+    return '$milestone: $ready of $required done · Next: $step';
+  }
+
+  @override
+  String get setupGuideDeferred => 'Set aside';
+
+  @override
+  String get setupGuideDone => 'Done';
+
+  @override
+  String setupGuideEstimate(int minutes) {
+    return 'about $minutes min';
+  }
+
+  @override
+  String get setupGuideLater => 'For a later milestone';
+
+  @override
+  String get setupGuideNext => 'Next';
+
+  @override
+  String get setupGuideOptional => 'More for your space';
+
+  @override
+  String setupGuideProgress(int ready, int required) {
+    return '$ready of $required done';
+  }
+
+  @override
+  String get setupGuideResume => 'Resume';
+
+  @override
+  String get setupGuideTitle => 'Setup guide';
+
+  @override
+  String get setupGuideToDo => 'What it still needs';
+
+  @override
+  String get setupGuideUnavailable =>
+      'The setup status could not be read. Try again in a moment.';
+
+  @override
+  String get setupGuideWaiting => 'Waiting';
+
+  @override
+  String setupGuideWaitsFor(String steps) {
+    return 'Waits for: $steps';
+  }
+
+  @override
+  String setupMilestoneName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookable': 'Take bookings',
+      'money': 'Ready for money',
+      'invoice': 'Ready to invoice',
+      'live': 'Live',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStateName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'ready': 'Done',
+      'needsConfiguration': 'To do',
+      'blocked': 'Waits for another step',
+      'needsOperator': 'Your operator acts',
+      'notApplicable': 'Not used',
+      'deferred': 'Set aside',
+      'unknown': 'Unknown',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStepHint(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'basics': 'What the space is called and where it is: dates, money and holidays follow from it.',
+      'hours': 'When members can book: days, hours and closures.',
+      'places': 'Draw the rooms, desks and seats members book.',
+      'member_rights':
+          'Let members book, see the calendar and their own account.',
+      'invite': 'Share the space\'s code or send invitations.',
+      'pricing': 'What a place, a membership or a day costs.',
+      'services': 'Coffee, printing, lockers: what members can add.',
+      'payment_methods': 'Your bank details and payment instructions.',
+      'online_payments':
+          'Card payments through a provider your operator connects.',
+      'approvals': 'Who validates requests, and how many people must agree.',
+      'new_members': 'What a new member starts with.',
+      'kiosk': 'A tablet at the door and member badges.',
+      'purchases': 'What the space buys, and from whom.',
+      'lease': 'The rent and charges the space pays.',
+      'assets': 'What the space owns and how it loses value.',
+      'look': 'The space\'s colours and its own words.',
+      'public_page': 'What people outside the space can see.',
+      'legal_identity': 'The details every invoice must carry.',
+      'vat': 'The rates you charge and your VAT returns.',
+      'numbering': 'How invoice numbers are built.',
+      'documents': 'Your letterhead on invoices and letters.',
+      'einvoicing': 'Sending invoices through the e-invoicing platform.',
+      'accounting':
+          'The chart of accounts and the exports for your accountant.',
+      'reminders': 'When and how unpaid invoices are reminded.',
+      'first_booking': 'Book a place the way a member would.',
+      'recovery': 'Export the space\'s data once.',
+      'assistant': 'Let an AI assistant help, always with your confirmation.',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStepTitle(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'basics': 'Name, country and time zone',
+      'hours': 'Opening hours',
+      'places': 'Places on the plan',
+      'member_rights': 'What members may do',
+      'invite': 'Invite members',
+      'pricing': 'Prices and plans',
+      'services': 'Services',
+      'payment_methods': 'How members pay',
+      'online_payments': 'Online payments',
+      'approvals': 'Approvals',
+      'new_members': 'New members',
+      'kiosk': 'Kiosk and badges',
+      'purchases': 'Suppliers and purchases',
+      'lease': 'Your lease',
+      'assets': 'Equipment',
+      'look': 'Colours and wording',
+      'public_page': 'Public page',
+      'legal_identity': 'Legal identity',
+      'vat': 'VAT',
+      'numbering': 'Invoice numbering',
+      'documents': 'Invoice look',
+      'einvoicing': 'E-invoicing',
+      'accounting': 'Accounting',
+      'reminders': 'Payment reminders',
+      'first_booking': 'A first booking',
+      'recovery': 'A copy of your data',
+      'assistant': 'Assistant',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get shellBarHiddenAnnounce => 'Navigation bar hidden';
 
   @override

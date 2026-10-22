@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/workspace/domain/local_setup.dart';
+import '../../../features/workspace/domain/setup_status.dart';
 import '../../../features/workspace/domain/workspace_readiness.dart';
 
 /// #1656 — local needs for tests and Demo (where nothing is missing).
@@ -8,12 +9,19 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
     this.needs = const {},
     this.missing = const [],
     this.readinessSections = const [],
+    this.status = const SetupStatus(),
   });
   final Map<String, List<LocalSlot>> needs;
   List<LocalSlot> missing;
 
   /// #1636 — what [sections] answers; empty in Demo (nothing to report).
   List<ReadinessSection> readinessSections;
+
+  /// #2869 — what [setupStatus] answers.
+  SetupStatus status;
+
+  @override
+  Future<SetupStatus> setupStatus(String workspaceId) async => status;
 
   @override
   Future<List<LocalSlot>> templateNeeds(String templateId) async =>

@@ -91,6 +91,7 @@ signed-out on  /settings/roles-of-this-space -> /auth
 signed-out on  /settings/sites -> /auth
 signed-out on  /settings/what-you-can-do -> /auth
 signed-out on  /settings/wording -> /auth
+signed-out on  /setup -> /auth
 signed-out on  /space/:kind/:id -> /auth
 signed-out on  /task-recorder -> /auth
 signed-out on  /task-recorder/guide -> /auth
@@ -199,6 +200,7 @@ signed-out off /settings/roles-of-this-space -> /auth
 signed-out off /settings/sites -> /auth
 signed-out off /settings/what-you-can-do -> /auth
 signed-out off /settings/wording -> /auth
+signed-out off /setup -> /auth
 signed-out off /space/:kind/:id -> /auth
 signed-out off /task-recorder -> /auth
 signed-out off /task-recorder/guide -> /auth
@@ -307,6 +309,7 @@ no-space on  /settings/roles-of-this-space -> /me
 no-space on  /settings/sites -> /me
 no-space on  /settings/what-you-can-do -> /me
 no-space on  /settings/wording -> /me
+no-space on  /setup -> /me
 no-space on  /space/:kind/:id -> /me
 no-space on  /task-recorder -> (open)
 no-space on  /task-recorder/guide -> /task-recorder
@@ -415,6 +418,7 @@ no-space off /settings/roles-of-this-space -> /me
 no-space off /settings/sites -> /me
 no-space off /settings/what-you-can-do -> /me
 no-space off /settings/wording -> /me
+no-space off /setup -> /me
 no-space off /space/:kind/:id -> /me
 no-space off /task-recorder -> (open)
 no-space off /task-recorder/guide -> /task-recorder
@@ -523,6 +527,7 @@ member on  /settings/roles-of-this-space -> /calendar
 member on  /settings/sites -> /calendar
 member on  /settings/what-you-can-do -> (open)
 member on  /settings/wording -> /calendar
+member on  /setup -> /calendar
 member on  /space/:kind/:id -> (open)
 member on  /task-recorder -> (open)
 member on  /task-recorder/guide -> /task-recorder
@@ -631,6 +636,7 @@ member off /settings/roles-of-this-space -> /messages
 member off /settings/sites -> /messages
 member off /settings/what-you-can-do -> /settings
 member off /settings/wording -> /messages
+member off /setup -> /messages
 member off /space/:kind/:id -> /messages
 member off /task-recorder -> (open)
 member off /task-recorder/guide -> /task-recorder
@@ -739,6 +745,7 @@ admin on  /settings/roles-of-this-space -> /calendar
 admin on  /settings/sites -> /settings
 admin on  /settings/what-you-can-do -> (open)
 admin on  /settings/wording -> /calendar
+admin on  /setup -> /calendar
 admin on  /space/:kind/:id -> (open)
 admin on  /task-recorder -> (open)
 admin on  /task-recorder/guide -> /task-recorder
@@ -847,6 +854,7 @@ admin off /settings/roles-of-this-space -> /messages
 admin off /settings/sites -> /settings
 admin off /settings/what-you-can-do -> /settings
 admin off /settings/wording -> /messages
+admin off /setup -> /messages
 admin off /space/:kind/:id -> /messages
 admin off /task-recorder -> (open)
 admin off /task-recorder/guide -> /task-recorder
@@ -955,6 +963,7 @@ owner on  /settings/roles-of-this-space -> /settings
 owner on  /settings/sites -> /settings
 owner on  /settings/what-you-can-do -> (open)
 owner on  /settings/wording -> /settings
+owner on  /setup -> (open)
 owner on  /space/:kind/:id -> (open)
 owner on  /task-recorder -> (open)
 owner on  /task-recorder/guide -> /task-recorder
@@ -1063,6 +1072,7 @@ owner off /settings/roles-of-this-space -> /settings
 owner off /settings/sites -> /settings
 owner off /settings/what-you-can-do -> /settings
 owner off /settings/wording -> /settings
+owner off /setup -> /workspace-settings
 owner off /space/:kind/:id -> /messages
 owner off /task-recorder -> (open)
 owner off /task-recorder/guide -> /task-recorder

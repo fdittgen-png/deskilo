@@ -45,6 +45,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/developer': {_P.manageConfiguration, _P.deployToDev, _P.deployToProd},
   '/deployment': {_P.manageConfiguration, _P.deployToDev, _P.deployToProd},
   '/workspace-code': {_P.manageConfiguration, _P.manageMembers},
+  '/setup': {_P.manageConfiguration},
   '/features': {_P.manageConfiguration},
   '/workspace-settings': {_P.workspaceSettings},
   '/availability': {_P.workspaceSettings},
