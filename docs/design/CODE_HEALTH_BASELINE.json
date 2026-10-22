@@ -1,8 +1,8 @@
 {
-  "recordedSha": "ffcc8cda9471b4708490bac7cb856d2eeb90ee68",
+  "recordedSha": "b07c92f950e99b39f3d03defb4987ce16f8c89e4",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1769,"functions":9900,"cyclomatic>=9":1049,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":96,"length>=150":73,"parameters>=5":478,"parameters>=7":153,"partOfFiles":43},
+  "totals": {"files":1769,"functions":9900,"cyclomatic>=9":1049,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":96,"length>=150":73,"parameters>=5":479,"parameters>=7":153,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1544,7 +1544,7 @@
     {"p":"lib/features/money/domain/period_label.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":6,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/posting.dart","loc":141,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":3,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/posting_preview.dart","loc":141,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":13,"cyc":9,"len":58,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/posting_rules.dart","loc":354,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":9,"cyc":8,"len":69,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/posting_rules.dart","loc":377,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":9,"cyc":8,"len":69,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/posting_rules_purchases.dart","loc":121,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":14,"cyc":17,"len":64,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/premises_lease.dart","loc":270,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":2,"cyc":7,"len":28,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/price_negotiation.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":5,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
