@@ -48,26 +48,9 @@ import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../device_pin.dart';
+import '../../domain/kiosk_act.dart';
 import '../widgets/kiosk_act_sheet.dart';
 import '../widgets/kiosk_success_card.dart';
-
-/// Server error substring when a presented badge is unknown/revoked
-/// (kiosk_act, migration 0043) — pinned by test like the other guards.
-abstract final class _KioskBadgeError {
-  static const String serverSubstring = 'badge not recognized';
-}
-
-/// The three actions a member can perform through the kiosk.
-enum KioskAction {
-  checkIn('check_in'),
-  reserve('reserve'),
-  checkOut('check_out');
-
-  const KioskAction(this.wireName);
-
-  /// The kiosk_act RPC's action parameter.
-  final String wireName;
-}
 
 /// Wall-mounted tablet mode (migration 0043): the ONLY screen a kiosk
 /// account ever sees (the router locks it here). Shows the live floor
@@ -256,11 +239,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final l10n = context.l10n;
     // A reservation made standing at the kiosk can start checked in —
     // one badge presentation covers both.
-    final effective =
-        request.action == KioskAction.reserve && request.checkInNow
-            ? KioskAction.checkIn
-            : request.action;
-    final booksWindow = request.action != KioskAction.checkOut;
+    final plan = kioskActPlan(request.action, checkInNow: request.checkInNow);
+    final effective = plan.action;
+    final booksWindow = plan.booksWindow;
 
     // Identify + act in one go: the badge IS the confirmation. The
     // success card below names WHO acted — the wrong-badge guard
@@ -288,14 +269,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
       if (!mounted) return null;
       // #430: bookingErrorText is THE mapper; kiosk cases stay.
-      var message = switch (e) {
-        PostgrestException(:final message)
-            when message.contains(_KioskBadgeError.serverSubstring) =>
-          l10n.kioskBadgeRejected,
-        PostgrestException(:final message)
-            when message.contains('not checked in') =>
-          l10n.kioskNotCheckedIn,
-        _ => bookingErrorText(
+      var message = switch (e is PostgrestException
+          ? kioskRefusalOf(e.message)
+          : KioskRefusal.other) {
+        KioskRefusal.badgeRejected => l10n.kioskBadgeRejected,
+        KioskRefusal.notCheckedIn => l10n.kioskNotCheckedIn,
+        KioskRefusal.other => bookingErrorText(
             l10n,
             e,
             l10n.workspaceGenericError,
@@ -335,12 +314,13 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final reservations =
         ref.read(reservationsForDayProvider(dayKeyOf(now))).value ??
             const <Reservation>[];
-    final blocking = reservations
-        .where((r) =>
-            ((seatId != null && r.seatId == seatId) ||
-                (levelId != null && r.levelId == levelId)) &&
-            r.coversRange(start, end))
-        .firstOrNull;
+    final blocking = blockingReservation(
+      reservations,
+      seatId: seatId,
+      levelId: levelId,
+      start: start,
+      end: end,
+    );
     if (blocking == null) return null;
     final names = ref.read(memberNamesProvider).value ?? const {};
     final name = names[blocking.memberId] ?? '';

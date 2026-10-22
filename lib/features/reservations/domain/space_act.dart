@@ -21,6 +21,23 @@
 import '../../workspace/domain/booking_granularity.dart';
 import 'reservation.dart';
 
+/// #622 / #2603 — the booking of [day] that blocks [start]–[end] on the
+/// tapped seat or level, if any: the kiosk names its holder.
+Reservation? blockingReservation(
+  Iterable<Reservation> day, {
+  String? seatId,
+  String? levelId,
+  required DateTime start,
+  required DateTime end,
+}) => day
+    .where(
+      (r) =>
+          ((seatId != null && r.seatId == seatId) ||
+              (levelId != null && r.levelId == levelId)) &&
+          r.coversRange(start, end),
+    )
+    .firstOrNull;
+
 /// What a space act does — the three operations the kiosk one-sheet
 /// offers (#529) and, since #622, the app's scan flow too.
 enum SpaceAction { checkIn, reserve, checkOut }
