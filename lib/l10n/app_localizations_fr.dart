@@ -2220,19 +2220,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookRoleBank => 'Banque';
 
   @override
+  String get bookRoleCashDiscount => 'Escomptes accordés';
+
+  @override
+  String get bookRoleClearing => 'Prestataire de paiement (en transit)';
+
+  @override
   String get bookRoleCustomers => 'Clients (créances)';
 
   @override
   String get bookRoleExpenses => 'Charges';
 
   @override
+  String get bookRoleFees => 'Frais du prestataire de paiement';
+
+  @override
   String get bookRoleRevenue => 'Produits';
+
+  @override
+  String get bookRoleSuppliers => 'Fournisseurs';
 
   @override
   String get bookRoleVatInput => 'TVA déductible';
 
   @override
   String get bookRoleVatOutput => 'TVA collectée';
+
+  @override
+  String get bookRoleVatPending => 'TVA collectée non exigible';
+
+  @override
+  String get bookRoleWriteOff => 'Pertes sur créances irrécouvrables';
 
   @override
   String get bookSaveFailed =>

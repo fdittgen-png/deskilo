@@ -36,5 +36,11 @@
   "bookAccountName": "Kontobezeichnung",
   "bookAccountPosting": "Bebuchbar",
   "bookMappingsTitle": "Auf welches Konto jede Buchung geht",
-  "bookProblemUnmapped": "Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: {roles}."
+  "bookProblemUnmapped": "Ordnen Sie diese Konten zu, bevor eine lokale Buchführung beginnt: {roles}.",
+  "bookRoleSuppliers": "Lieferanten",
+  "bookRoleVatPending": "Noch nicht fällige Umsatzsteuer",
+  "bookRoleWriteOff": "Forderungsverluste",
+  "bookRoleCashDiscount": "Gewährte Skonti",
+  "bookRoleClearing": "Zahlungsdienst (unterwegs)",
+  "bookRoleFees": "Gebühren des Zahlungsdienstes"
 }

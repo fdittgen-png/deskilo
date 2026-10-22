@@ -33,7 +33,18 @@ enum BookRole {
 
   /// #2357 — deductible VAT on expenses (FR 44566, DE 1576/1406).
   vatInput('vat_input', AccountType.asset),
-  expenses('expenses', AccountType.expense);
+  expenses('expenses', AccountType.expense),
+
+  /// #2365 (0517) — the bases the posting contract adds: what the space
+  /// owes its suppliers, output tax not yet due, the written-off rest of a
+  /// receivable, a discount granted, money in transit at a payment provider
+  /// and that provider's fees.
+  suppliers('suppliers', AccountType.liability),
+  vatPending('vat_pending', AccountType.liability),
+  writeOff('write_off', AccountType.expense),
+  cashDiscount('cash_discount', AccountType.expense),
+  clearing('clearing', AccountType.asset),
+  fees('fees', AccountType.expense);
 
   const BookRole(this.wire, this.type);
   final String wire;
@@ -120,16 +131,21 @@ class BookMapping {
     required this.accountId,
     required this.effectiveFrom,
     required this.revision,
+    this.qualifier,
   });
 
   /// #2387 — read through [JsonReader].
   factory BookMapping.fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'book_mappings');
+    // #2365 (0517) — `revenue:standard` is the base and its qualifier.
+    final wire = r.stringOrNull('role');
+    final colon = wire?.indexOf(':') ?? -1;
     return BookMapping(
       id: r.stringOr('id'),
       workspaceId: r.string('workspace_id'),
       issuerSiteId: r.string('issuer_site_id'),
-      role: BookRole.fromWire(r.stringOrNull('role')),
+      role: BookRole.fromWire(colon < 0 ? wire : wire!.substring(0, colon)),
+      qualifier: colon < 0 ? null : wire!.substring(colon + 1),
       accountId: r.string('account_id'),
       effectiveFrom: r.dateTime('effective_from'),
       revision: r.integer('revision'),
@@ -140,6 +156,10 @@ class BookMapping {
   final String workspaceId;
   final String issuerSiteId;
   final BookRole role;
+
+  /// The rate group or provider a qualified mapping is for (`revenue:<group>`,
+  /// `clearing:<provider>`), or null for the base itself.
+  final String? qualifier;
   final String accountId;
   final DateTime effectiveFrom;
   final int revision;
@@ -182,6 +202,8 @@ BookMapping? mappingOn(
   BookMapping? best;
   for (final m in versions) {
     if (m.issuerSiteId != issuerSiteId || m.role != role) continue;
+    // A qualified mapping answers for its qualifier only (#2365).
+    if (m.qualifier != null) continue;
     if (_day(m.effectiveFrom).isAfter(_day(day))) continue;
     if (best == null ||
         _day(m.effectiveFrom).isAfter(_day(best.effectiveFrom))) {

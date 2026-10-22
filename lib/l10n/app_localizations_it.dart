@@ -2214,19 +2214,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleBank => 'Banca';
 
   @override
+  String get bookRoleCashDiscount => 'Sconti concessi';
+
+  @override
+  String get bookRoleClearing => 'Fornitore di pagamenti (in transito)';
+
+  @override
   String get bookRoleCustomers => 'Clienti (crediti)';
 
   @override
   String get bookRoleExpenses => 'Costi';
 
   @override
+  String get bookRoleFees => 'Commissioni del fornitore di pagamenti';
+
+  @override
   String get bookRoleRevenue => 'Ricavi';
+
+  @override
+  String get bookRoleSuppliers => 'Fornitori';
 
   @override
   String get bookRoleVatInput => 'IVA a credito';
 
   @override
   String get bookRoleVatOutput => 'IVA a debito';
+
+  @override
+  String get bookRoleVatPending => 'IVA a debito non ancora esigibile';
+
+  @override
+  String get bookRoleWriteOff => 'Perdite su crediti';
 
   @override
   String get bookSaveFailed =>

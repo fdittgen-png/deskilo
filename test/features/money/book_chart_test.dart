@@ -78,6 +78,41 @@ void main() {
   });
 
   group('mappings', () {
+    test('a qualified role is its base and its qualifier, and answers only '
+        'for that qualifier (#2365, 0517)', () {
+      final qualified = BookMapping.fromJson(const {
+        'id': 'q',
+        'workspace_id': 'ws',
+        'issuer_site_id': 'site',
+        'role': 'revenue:standard',
+        'account_id': 'acc-706',
+        'effective_from': '2026-01-01',
+        'revision': 1,
+      });
+      expect(qualified.role, BookRole.revenue);
+      expect(qualified.qualifier, 'standard');
+      final base = BookMapping.fromJson(const {
+        'id': 'b',
+        'workspace_id': 'ws',
+        'issuer_site_id': 'site',
+        'role': 'write_off',
+        'account_id': 'acc-654',
+        'effective_from': '2026-01-01',
+        'revision': 1,
+      });
+      expect(base.role, BookRole.writeOff);
+      expect(base.qualifier, isNull);
+      expect(
+        mappingOn([qualified], 'site', BookRole.revenue, DateTime(2026, 6)),
+        isNull,
+        reason: 'the bare revenue role is not mapped by revenue:standard',
+      );
+      expect(
+        mappingOn([base], 'site', BookRole.writeOff, DateTime(2026, 6))?.id,
+        'b',
+      );
+    });
+
     final accounts = [
       account('cust', '411000', AccountType.asset),
       account('rev', '706000', AccountType.income),

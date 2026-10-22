@@ -36,5 +36,11 @@
   "bookAccountName": "Intitulé du compte",
   "bookAccountPosting": "Reçoit des écritures",
   "bookMappingsTitle": "Le compte de chaque écriture",
-  "bookProblemUnmapped": "Associez ces comptes avant de démarrer un livre local : {roles}."
+  "bookProblemUnmapped": "Associez ces comptes avant de démarrer un livre local : {roles}.",
+  "bookRoleSuppliers": "Fournisseurs",
+  "bookRoleVatPending": "TVA collectée non exigible",
+  "bookRoleWriteOff": "Pertes sur créances irrécouvrables",
+  "bookRoleCashDiscount": "Escomptes accordés",
+  "bookRoleClearing": "Prestataire de paiement (en transit)",
+  "bookRoleFees": "Frais du prestataire de paiement"
 }

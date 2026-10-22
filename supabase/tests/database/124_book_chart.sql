@@ -8,7 +8,7 @@
 -- table reads get nothing; with the flag off nothing new is written and
 -- the chart stays readable.
 begin;
-select plan(28);
+select plan(32);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001870'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -86,6 +86,16 @@ select is((select count(*) from jsonb_array_elements(public.book_chart('00000000
   where m->>'role'='customers'),2::bigint,'and the earlier one stays as it was');
 select throws_ok(format($$select public.save_book_mapping('00000000-0000-4000-8000-0000001870b1','00000000-0000-4000-8000-0000001870d1',
   'customers',%L,'2026-01-01',0)$$, current_setting('t.cust')),'40001',null,'a stale mapping save writes nothing');
+
+-- 0517 (#2365): a role is a base and an optional qualifier
+select lives_ok(format($$select public.save_book_mapping('00000000-0000-4000-8000-0000001870b1','00000000-0000-4000-8000-0000001870d1',
+  'revenue:standard',%L,'2026-01-01',0)$$, current_setting('t.rev')),'a qualified role maps like its base');
+select throws_ok(format($$select public.save_book_mapping('00000000-0000-4000-8000-0000001870b1','00000000-0000-4000-8000-0000001870d1',
+  'revenue:reduced',%L,'2026-01-01',0)$$, current_setting('t.cust')),'22023',null,'and books to the type of its base');
+select throws_ok(format($$select public.save_book_mapping('00000000-0000-4000-8000-0000001870b1','00000000-0000-4000-8000-0000001870d1',
+  'bogus',%L,'2026-01-01',0)$$, current_setting('t.rev')),'22023',null,'an unknown base is refused');
+select throws_ok(format($$select public.save_book_mapping('00000000-0000-4000-8000-0000001870b1','00000000-0000-4000-8000-0000001870d1',
+  'revenue:',%L,'2026-01-01',0)$$, current_setting('t.rev')),'22023',null,'an empty qualifier is refused');
 
 select throws_ok($$select public.save_book_account('00000000-0000-4000-8000-0000001870b2','00000000-0000-4000-8000-0000001870d3',
   null,'411000','Clients','asset',true,'manual',0)$$,'42501',null,'an owner of W1 writes nothing in W2');

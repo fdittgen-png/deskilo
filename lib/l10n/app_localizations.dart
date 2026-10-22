@@ -3841,6 +3841,18 @@ abstract class AppLocalizations {
   /// **'Bank'**
   String get bookRoleBank;
 
+  /// No description provided for @bookRoleCashDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discounts granted'**
+  String get bookRoleCashDiscount;
+
+  /// No description provided for @bookRoleClearing.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment provider (in transit)'**
+  String get bookRoleClearing;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -3853,11 +3865,23 @@ abstract class AppLocalizations {
   /// **'Expenses'**
   String get bookRoleExpenses;
 
+  /// No description provided for @bookRoleFees.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment provider fees'**
+  String get bookRoleFees;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
   /// **'Revenue'**
   String get bookRoleRevenue;
+
+  /// No description provided for @bookRoleSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get bookRoleSuppliers;
 
   /// #2357 input VAT: bookRoleVatInput
   ///
@@ -3870,6 +3894,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Output VAT'**
   String get bookRoleVatOutput;
+
+  /// No description provided for @bookRoleVatPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Output tax not yet due'**
+  String get bookRoleVatPending;
+
+  /// No description provided for @bookRoleWriteOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad debts written off'**
+  String get bookRoleWriteOff;
 
   /// #1869 the save failed (connection or server)
   ///

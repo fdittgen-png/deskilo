@@ -1,8 +1,8 @@
 {
-  "recordedSha": "a0ea570606d664618dc9da309ff52b01aec7b14d",
-  "recordedDate": "2026-10-21",
+  "recordedSha": "85d8d07ad541804d8125605cdaffba097632d647",
+  "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1759,"functions":9844,"cyclomatic>=9":1045,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":471,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1759,"functions":9844,"cyclomatic>=9":1046,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":471,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1465,7 +1465,7 @@
     {"p":"lib/features/money/domain/bill_pdf.dart","loc":245,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":6,"cyc":29,"len":41,"params":5,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/money/domain/bill_sections.dart","loc":74,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":20,"cyc":22,"len":66,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/billing_rules.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":1,"cyc":5,"len":17,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/book_chart.dart","loc":178,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":9,"cyc":7,"len":34,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/book_chart.dart","loc":190,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":11,"cyc":8,"len":34,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/book_period.dart","loc":123,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":3,"len":15,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/book_profile.dart","loc":147,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":8,"cyc":8,"len":25,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/book_profile_repository.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1699,7 +1699,7 @@
     {"p":"lib/features/money/presentation/widgets/bill_view.dart","loc":382,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":27,"cyc":29,"len":66,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/bill_view_part1.dart","loc":361,"part":true,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":11,"len":99,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/billing_rules_dialog.dart","loc":183,"part":false,"setState":6,"repositoryReads":1,"fn":5,"cog":7,"cyc":7,"len":112,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/book_chart_sheet.dart","loc":279,"part":false,"setState":8,"repositoryReads":0,"fn":11,"cog":34,"cyc":18,"len":144,"params":2,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/book_chart_sheet.dart","loc":285,"part":false,"setState":8,"repositoryReads":0,"fn":11,"cog":34,"cyc":18,"len":144,"params":2,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/book_periods_sheet.dart","loc":335,"part":false,"setState":2,"repositoryReads":0,"fn":14,"cog":23,"cyc":11,"len":92,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/book_profile_sheet.dart","loc":400,"part":false,"setState":10,"repositoryReads":0,"fn":10,"cog":24,"cyc":28,"len":209,"params":3,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/canada_tax_fields.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":36,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
