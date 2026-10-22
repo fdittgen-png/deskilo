@@ -1427,7 +1427,8 @@ window.SETUP_L10N={
    "member_status_change": "Membership change",
    "subscription_change": "Subscription change",
    "matrix_change": "Permission matrix change",
-   "lease_change": "Lease change"
+   "lease_change": "Lease change",
+   "commitment_variance": "Rent difference"
   },
   "country": {
    "AT": "Austria",
@@ -2889,7 +2890,8 @@ window.SETUP_L10N={
    "member_status_change": "Changement d'adhésion",
    "subscription_change": "Changement d'abonnement",
    "matrix_change": "Changement de la matrice des permissions",
-   "lease_change": "Changement du bail"
+   "lease_change": "Changement du bail",
+   "commitment_variance": "Écart de loyer"
   },
   "country": {
    "AT": "Autriche",
@@ -4351,7 +4353,8 @@ window.SETUP_L10N={
    "member_status_change": "Mitgliedschaftsänderung",
    "subscription_change": "Abonnementänderung",
    "matrix_change": "Änderung der Berechtigungsmatrix",
-   "lease_change": "Mietvertragsänderung"
+   "lease_change": "Mietvertragsänderung",
+   "commitment_variance": "Mietabweichung"
   },
   "country": {
    "AT": "Österreich",
@@ -5813,7 +5816,8 @@ window.SETUP_L10N={
    "member_status_change": "Cambio de membresía",
    "subscription_change": "Cambio de suscripción",
    "matrix_change": "Cambio de la matriz de permisos",
-   "lease_change": "Cambio del contrato de alquiler"
+   "lease_change": "Cambio del contrato de alquiler",
+   "commitment_variance": "Diferencia de alquiler"
   },
   "country": {
    "AT": "Austria",
@@ -7275,7 +7279,8 @@ window.SETUP_L10N={
    "member_status_change": "Cambio di adesione",
    "subscription_change": "Cambio di abbonamento",
    "matrix_change": "Modifica della matrice dei permessi",
-   "lease_change": "Modifica del contratto di locazione"
+   "lease_change": "Modifica del contratto di locazione",
+   "commitment_variance": "Differenza di affitto"
   },
   "country": {
    "AT": "Austria",

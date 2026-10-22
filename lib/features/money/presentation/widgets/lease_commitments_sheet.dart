@@ -104,16 +104,67 @@ class LeaseCommitmentsView extends ConsumerWidget {
     }
   }
 
-  Future<String?> _askReason(BuildContext context) {
+  /// #2575 — accepts what is left of [match]'s line on a fully matched
+  /// month, with the reason the validators read.
+  Future<void> _acceptVariance(
+    BuildContext context,
+    WidgetRef ref,
+    CommitmentOccurrence occurrence,
+    CommitmentMatch match,
+  ) async {
+    final l10n = context.l10n;
+    final reason = await _askReason(
+      context,
+      title: l10n.leaseVarianceTitle(
+        moneyFormat(currencyCode).formatMinor(match.lineUnallocatedCents),
+      ),
+      label: l10n.leaseVarianceReason,
+      action: l10n.leaseVarianceAccept,
+    );
+    if (reason == null || reason.trim().isEmpty || !context.mounted) return;
+    ({bool held})? sent;
+    final ok = await runGuarded(
+      context,
+      domain: 'money',
+      message: 'commitment variance failed',
+      errorText: l10n.leaseMatchRefused,
+      action: () async {
+        sent = await ref
+            .read(commitmentCommandProvider)
+            .acceptVariance(
+              workspaceId,
+              occurrenceId: occurrence.id,
+              match: match,
+              reason: reason,
+              requestId: newRequestId(),
+            );
+      },
+    );
+    ref.invalidate(leaseCommitmentsProvider(_key));
+    final outcome = sent;
+    if (ok && outcome != null && context.mounted) {
+      AppSnack.success(
+        context,
+        outcome.held ? l10n.leaseVarianceSent : l10n.leaseVarianceDone,
+      );
+    }
+  }
+
+  Future<String?> _askReason(
+    BuildContext context, {
+    String? title,
+    String? label,
+    String? action,
+  }) {
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: Text(dialog.l10n.leaseMatchReverseTitle),
+        title: Text(title ?? dialog.l10n.leaseMatchReverseTitle),
         content: AppTextField(
           key: const ValueKey('match-reverse-reason'),
           controller: controller,
-          label: dialog.l10n.leaseMatchReverseReason,
+          label: label ?? dialog.l10n.leaseMatchReverseReason,
           maxLength: 300,
         ),
         actions: [
@@ -125,7 +176,7 @@ class LeaseCommitmentsView extends ConsumerWidget {
           FilledButton(
             key: const ValueKey('match-reverse-confirm'),
             onPressed: () => Navigator.of(dialog).pop(controller.text),
-            child: Text(dialog.l10n.leaseMatchReverseAction),
+            child: Text(action ?? dialog.l10n.leaseMatchReverseAction),
           ),
         ],
       ),
@@ -161,6 +212,8 @@ class LeaseCommitmentsView extends ConsumerWidget {
                         canMatch: canMatch,
                         onMatch: () => _match(context, ref, o),
                         onReverse: (m) => _reverse(context, ref, m),
+                        onAcceptVariance: (m) =>
+                            _acceptVariance(context, ref, o, m),
                       ),
                   ],
                 ),
@@ -177,6 +230,7 @@ class _OccurrenceCard extends StatelessWidget {
     required this.canMatch,
     required this.onMatch,
     required this.onReverse,
+    required this.onAcceptVariance,
   });
 
   final CommitmentOccurrence occurrence;
@@ -184,6 +238,7 @@ class _OccurrenceCard extends StatelessWidget {
   final bool canMatch;
   final VoidCallback onMatch;
   final ValueChanged<CommitmentMatch> onReverse;
+  final ValueChanged<CommitmentMatch> onAcceptVariance;
 
   @override
   Widget build(BuildContext context) {
@@ -208,13 +263,26 @@ class _OccurrenceCard extends StatelessWidget {
                 money.formatMinor(o.matchedCents),
               ),
             ),
-            for (final m in o.matches)
+            for (final m in o.matches) ...[
               _MatchTile(
                 match: m,
                 money: money,
                 canReverse: canMatch && !m.reversed,
                 onReverse: () => onReverse(m),
               ),
+              // #2575 — the bill is above a month matched in full: the
+              // difference is a decision, never absorbed in silence.
+              if (canMatch &&
+                  !m.isVariance &&
+                  !m.reversed &&
+                  m.lineUnallocatedCents > 0 &&
+                  o.remainingCents <= 0)
+                TextButton(
+                  key: ValueKey('commitment-variance-${m.id}'),
+                  onPressed: () => onAcceptVariance(m),
+                  child: Text(l10n.leaseVarianceAccept),
+                ),
+            ],
             if (canMatch && o.remainingCents > 0)
               TextButton(
                 key: ValueKey('commitment-match-add-${o.id}'),
@@ -250,10 +318,20 @@ class _MatchTile extends StatelessWidget {
       dense: true,
       contentPadding: EdgeInsets.zero,
       title: Text(
-        l10n.leaseMatchLineText(m.reference, money.formatMinor(m.allocatedCents)),
+        m.isVariance
+            ? l10n.leaseVarianceLineText(
+                m.reference,
+                money.formatMinor(m.allocatedCents),
+              )
+            : l10n.leaseMatchLineText(
+                m.reference,
+                money.formatMinor(m.allocatedCents),
+              ),
       ),
       subtitle: m.reversed
           ? Text(l10n.leaseMatchWasReversed)
+          : m.isVariance
+          ? Text(m.reason)
           : m.lineUnallocatedCents > 0
           ? Text(l10n.leaseMatchVariance(money.formatMinor(m.lineUnallocatedCents)))
           : null,

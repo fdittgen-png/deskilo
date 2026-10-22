@@ -3860,6 +3860,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventCommitmentVarianceLine": "{actor} akzeptiert eine Abweichung von {amount} auf {reference} (fällig {date}): {reason}",
   "eventExpenseDeviation": "validiert {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder",
   "@eventExpenseRepartitionLine": {
@@ -4020,6 +4021,7 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
+  "eventTypeCommitmentVariance": "Mietabweichung",
   "eventTypeExpense": "Ausgabe",
   "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
@@ -7675,6 +7677,12 @@
   "@leaseTitle": {
     "description": "#2569 premises lease"
   },
+  "leaseVarianceAccept": "Abweichung akzeptieren",
+  "leaseVarianceDone": "Die Abweichung ist akzeptiert",
+  "leaseVarianceLineText": "{reference}: akzeptierte Abweichung {amount}",
+  "leaseVarianceReason": "Warum die Rechnung abweicht",
+  "leaseVarianceSent": "An die Prüfer gesendet: bis zu ihrer Entscheidung ändert sich nichts",
+  "leaseVarianceTitle": "Eine Abweichung von {amount} akzeptieren",
   "ledgerCategoryAdjustment": "Korrektur",
   "ledgerCategoryExpense": "Auslagenerstattung",
   "ledgerCategoryOverage": "Mehrnutzung",

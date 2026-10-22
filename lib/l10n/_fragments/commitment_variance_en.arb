@@ -1,0 +1,50 @@
+{
+  "eventTypeCommitmentVariance": "Rent difference",
+  "@eventTypeCommitmentVariance": {
+    "description": "Validation domain (#2575): a bill above the rent a contract expects"
+  },
+  "eventCommitmentVarianceLine": "{actor} accepts a difference of {amount} on {reference} (due {date}): {reason}",
+  "@eventCommitmentVarianceLine": {
+    "description": "Events feed (#2575): what the validators decide on",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseVarianceAccept": "Accept the difference",
+  "leaseVarianceTitle": "Accept a difference of {amount}",
+  "leaseVarianceReason": "Why the bill differs",
+  "leaseVarianceDone": "The difference is accepted",
+  "leaseVarianceSent": "Sent to the validators: nothing changes until they decide",
+  "leaseVarianceLineText": "{reference}: accepted difference {amount}",
+  "@leaseVarianceTitle": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@leaseVarianceLineText": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}

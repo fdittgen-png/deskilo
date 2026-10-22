@@ -86,6 +86,10 @@ enum EventType {
   /// minimum, held for a second person; confirmed → applied as asked.
   leaseChange('lease_change'),
 
+  /// #2575 — a supplier bill above the rent a contract expects: the
+  /// accepted difference, held for a second person when a policy exists.
+  commitmentVariance('commitment_variance'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

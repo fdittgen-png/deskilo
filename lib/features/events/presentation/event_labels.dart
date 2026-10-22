@@ -39,7 +39,9 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
       l10n.eventTypeMatrixChange,
     // #1088 — a type this build does not know still names itself as
     // something that happened, rather than emptying the feed.
-    EventType.unknown || EventType.leaseChange => _specialLabel(l10n, type),
+    EventType.unknown ||
+    EventType.leaseChange ||
+    EventType.commitmentVariance => _specialLabel(l10n, type),
     EventType.invoiceWriteoff =>
       l10n.eventTypeInvoiceWriteoff,
     EventType.invoiceReminder =>
@@ -53,12 +55,13 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
   };
 }
 
-/// The two types whose name is not a plain table entry: the one this build
-/// does not know, and the lease change (#2569).
-String _specialLabel(AppLocalizations l10n, EventType type) =>
-    type == EventType.leaseChange
-    ? l10n.eventTypeLeaseChange
-    : l10n.eventTypeUnknown;
+/// The types whose name is not a plain table entry: the one this build does
+/// not know, the lease change (#2569) and the rent difference (#2575).
+String _specialLabel(AppLocalizations l10n, EventType type) => switch (type) {
+  EventType.leaseChange => l10n.eventTypeLeaseChange,
+  EventType.commitmentVariance => l10n.eventTypeCommitmentVariance,
+  _ => l10n.eventTypeUnknown,
+};
 
 /// The name of one notification category (#581/#598).
 ///

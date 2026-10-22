@@ -188,7 +188,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.expenseRepartition => Icons.call_split,
     EventType.usageCorrection => Icons.timelapse_outlined,
     EventType.usageRecordDelete => Icons.playlist_remove_outlined,
-    EventType.paymentTermsChange || EventType.leaseChange => Icons.request_quote_outlined,
+    EventType.paymentTermsChange ||
+    EventType.leaseChange ||
+    EventType.commitmentVariance => Icons.request_quote_outlined,
     EventType.invoiceIssue => Icons.receipt_long_outlined,
     EventType.invoiceVoid => Icons.cancel_presentation_outlined,
     EventType.refund => Icons.undo_outlined,
