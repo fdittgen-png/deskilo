@@ -4100,6 +4100,7 @@
       }
     }
   },
+  "eventOpenSource": "Einkaufsbeleg öffnen",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -4177,6 +4178,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
   "eventTypeCommitmentVariance": "Mietabweichung",
@@ -10311,6 +10313,14 @@
   "publicProfilePublishBody": "Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.",
   "publicProfilePublishTitle": "Öffentliches Profil veröffentlichen?",
   "publicProfileTitle": "Öffentliches Profil",
+  "purchaseNeedsReview": "Zu prüfen",
+  "purchaseQualified": "Buchhaltung qualifiziert",
+  "purchaseSettlementNothingOwed": "Nichts geschuldet",
+  "purchaseSettlementPartly": "Teilweise beglichen",
+  "purchaseSettlementSettled": "Beglichen",
+  "purchaseSettlementUnpaid": "Unbezahlt",
+  "purchaseTaxNotQualified": "Steuer nicht qualifiziert",
+  "purchaseUnverified": "Ungeprüft (vor dem Einkauf abgelegt)",
   "purchasesAddBill": "Lieferantenrechnung hinzufügen",
   "@purchasesAddBill": {
     "description": "#2573 purchases"

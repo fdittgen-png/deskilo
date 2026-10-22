@@ -286,6 +286,15 @@ abstract interface class PurchaseRepository {
 
   Future<PurchaseDetail> fetchDetail(String workspaceId, String purchaseId);
 
+  /// #2573 — the document a source was filed as (an expense request's
+  /// event is filed as a member receipt), or null when there is none the
+  /// reader may see.
+  Future<String?> purchaseFiledFrom(
+    String workspaceId, {
+    required String sourceKind,
+    required String sourceId,
+  });
+
   /// What the space owes for approved purchases, newest first: a member sees
   /// their own claims, a manager all. [kind] narrows to members or suppliers.
   Future<List<PayableRow>> fetchPayables(

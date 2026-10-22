@@ -9359,6 +9359,12 @@ abstract class AppLocalizations {
     String date,
   );
 
+  /// #2573 open the purchase an expense request was filed as
+  ///
+  /// In en, this message translates to:
+  /// **'Open the purchase document'**
+  String get eventOpenSource;
+
   /// Feed line for payment events
   ///
   /// In en, this message translates to:
@@ -9466,6 +9472,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
+
+  /// #2573 open the purchase an expense request was filed as
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase document was filed for this request, or you may not see it.'**
+  String get eventSourceNotFound;
 
   /// Validator name shown when the timeout sweep decided, not a member
   ///
@@ -26021,6 +26033,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public profile'**
   String get publicProfileTitle;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Needs review'**
+  String get purchaseNeedsReview;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting qualified'**
+  String get purchaseQualified;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing owed'**
+  String get purchaseSettlementNothingOwed;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Partly settled'**
+  String get purchaseSettlementPartly;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get purchaseSettlementSettled;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get purchaseSettlementUnpaid;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Tax not qualified'**
+  String get purchaseTaxNotQualified;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified (filed before purchases)'**
+  String get purchaseUnverified;
 
   /// #2573 purchases
   ///
