@@ -58,13 +58,18 @@ void main() {
       isNotEmpty,
       reason: 'the member has invoices on the workspace Money page',
     );
-    final mine = journey.fixture.money.invoices.where(
-      (i) =>
-          i.memberId == journey.fixture.actor.memberId &&
-          i.voidedAt == null &&
-          i.kind != InvoiceKind.settlement &&
-          i.totalCents > 0,
-    );
+    // Me spans every space the person is in: the main one and Leipzig.
+    final mine =
+        [
+          ...journey.fixture.money.invoices,
+          ...journey.fixture.secondSpace.money.invoices,
+        ].where(
+          (i) =>
+              i.memberId == journey.fixture.actor.memberId &&
+              i.voidedAt == null &&
+              i.kind != InvoiceKind.settlement &&
+              i.totalCents > 0,
+        );
     expect(
       overview.invoices.map((i) => i.id).toSet(),
       mine.map((i) => i.id).toSet(),

@@ -72,6 +72,19 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
       reservationId: 'demo-past',
       hoursAgo: 8,
     ),
+    // Bruno's whole meeting room, held until a validator decides.
+    event(
+      'demo-room-request-event',
+      EventType.spaceReservation,
+      'member-2',
+      {
+        'office_id': 'demo-office-meeting',
+        'starts_at': now.add(const Duration(days: 6)).toIso8601String(),
+      },
+      action: EventAction.created,
+      reservationId: 'demo-room-request',
+      hoursAgo: 6,
+    ),
     // Settled: what the history and the audit show.
     event(
       'demo-quota-done',
@@ -115,8 +128,18 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
     decision('demo-decision-3', 'demo-negotiation', 'member-3', 29, ok: true),
   ]);
 
-  // The rules: expenses need one admin, a negotiation two validations.
+  // The rules: expenses and whole rooms need one admin, a negotiation two
+  // validations.
   events.policies.addAll(const [
+    ValidationPolicy(
+      id: 'demo-policy-space',
+      workspaceId: 'ws-1',
+      eventType: 'space_reservation',
+      requiredCount: 1,
+      adminsMayValidate: true,
+      eligibleAdminIds: [],
+      ownerRequired: false,
+    ),
     ValidationPolicy(
       id: 'demo-policy-expense',
       workspaceId: 'ws-1',

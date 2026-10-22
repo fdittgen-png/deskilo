@@ -320,19 +320,6 @@ abstract interface class CostKpiRepository {
   });
 }
 
-/// No server to read the purchases from (the demonstration): the cards say
-/// so instead of showing 0.
-class UnavailablePurchaseKpiRepository implements PurchaseKpiRepository {
-  const UnavailablePurchaseKpiRepository();
-
-  @override
-  Future<PurchaseSummaryKpi> summary(
-    String workspaceId, {
-    required String fromMonth,
-    required String toMonth,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}
-
 /// No server to read the costs from (the demonstration).
 class UnavailableCostKpiRepository implements CostKpiRepository {
   const UnavailableCostKpiRepository();
