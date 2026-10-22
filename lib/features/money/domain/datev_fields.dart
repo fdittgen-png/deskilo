@@ -49,15 +49,31 @@ DateTime? datevProfileFiscalStart(
   return starts.length == 1 ? starts.single : null;
 }
 
-/// One booking line of the Buchungsstapel, as the builder writes it.
-typedef DatevBook = void Function({
-  required int cents,
-  required String debit,
-  required String credit,
-  required DateTime date,
-  required String documentRef,
-  required String text,
-});
+/// One booking line of the Buchungsstapel: amount (always positive), the
+/// debit and credit accounts, the document date and reference, a text and,
+/// when it differs from the Belegdatum's, the tax period's date (#2355).
+class DatevBooking {
+  const DatevBooking({
+    required this.cents,
+    required this.debit,
+    required this.credit,
+    required this.date,
+    required this.documentRef,
+    required this.text,
+    this.taxPeriodDate,
+  });
+
+  final int cents;
+  final String debit;
+  final String credit;
+  final DateTime date;
+  final String documentRef;
+  final String text;
+  final DateTime? taxPeriodDate;
+}
+
+/// Where the builder's bookings go.
+typedef DatevBook = void Function(DatevBooking booking);
 
 /// #2365 — the rest of [invoice] the owner gave up leaves the receivable for
 /// the loss account, on the write-off day, at the gross amount; the VAT
@@ -72,8 +88,8 @@ void bookDatevWriteOff(
   final owed = invoice.totalCents - match.paidCents;
   final day = match.writeoffAt;
   if (day == null || owed <= 0) return;
-  book(
+  book(DatevBooking(
     cents: owed, debit: lossAccount, credit: customersAccount, date: day,
     documentRef: invoice.number, text: 'Forderungsverlust ${invoice.number}',
-  );
+  ));
 }
