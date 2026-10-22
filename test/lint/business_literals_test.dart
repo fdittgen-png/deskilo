@@ -62,7 +62,9 @@ const _tracked = <_Tracked>[
   (what: 'export format currency of the FEC file', file: 'lib/features/money/domain/fec_writer.dart',
    pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
   (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev.dart',
-   pattern: r"'EUR'", ceiling: 2, movesIn: 'never (allowed)'),
+   pattern: r"'EUR'", ceiling: 1, movesIn: 'never (allowed)'),
+  (what: 'export format currency of the DATEV file', file: 'lib/features/money/domain/datev_writer.dart',
+   pattern: r"'EUR'", ceiling: 1, movesIn: 'never (allowed)'),
   // The column defaults of 0051 (invitation, 14 days) and 0272 (confirmation, 5
   // minutes) left the ratchet with 0451 (S2): create_invitation now states
   // expires_at from the setting, and the confirmation default calls
@@ -104,6 +106,8 @@ const _allowed = <String, String>{
   'lib/features/money/domain/fec_writer.dart::export format currency of the FEC file':
       'the FEC format fixes the currency code it writes',
   'lib/features/money/domain/datev.dart::export format currency of the DATEV file':
+      'the DATEV format fixes the currency code it writes',
+  'lib/features/money/domain/datev_writer.dart::export format currency of the DATEV file':
       'the DATEV format fixes the currency code it writes',
 };
 
