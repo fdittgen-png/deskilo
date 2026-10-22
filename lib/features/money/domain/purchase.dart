@@ -286,7 +286,6 @@ abstract interface class PurchaseRepository {
 
   Future<PurchaseDetail> fetchDetail(String workspaceId, String purchaseId);
 
-<<<<<<< HEAD
   /// #2573 — links a received supplier invoice of the e-invoice inbox to
   /// [purchaseId] as its evidence; a stale [revision] is refused.
   Future<void> linkInboxDocument(
@@ -297,8 +296,6 @@ abstract interface class PurchaseRepository {
     required String requestId,
   });
 
-=======
->>>>>>> origin/master
   /// #2573 — the document a source was filed as (an expense request's
   /// event is filed as a member receipt), or null when there is none the
   /// reader may see.

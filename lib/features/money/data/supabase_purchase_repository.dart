@@ -42,7 +42,6 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   }
 
   @override
-<<<<<<< HEAD
   Future<void> linkInboxDocument(
     String workspaceId,
     String purchaseId, {
@@ -62,8 +61,6 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   );
 
   @override
-=======
->>>>>>> origin/master
   Future<String?> purchaseFiledFrom(
     String workspaceId, {
     required String sourceKind,

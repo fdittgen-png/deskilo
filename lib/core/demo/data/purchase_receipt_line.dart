@@ -24,12 +24,8 @@ PurchaseLine claimReceiptLine(PayableRow row, double? rate) {
   );
 }
 
-<<<<<<< HEAD
 /// #2573 — the demonstration files no expense request as a document and
 /// links no received invoice.
-=======
-/// #2573 — the demonstration files no expense request as a document.
->>>>>>> origin/master
 mixin NoFiledPurchases implements PurchaseRepository {
   @override
   Future<String?> purchaseFiledFrom(
@@ -37,7 +33,6 @@ mixin NoFiledPurchases implements PurchaseRepository {
     required String sourceKind,
     required String sourceId,
   }) async => null;
-<<<<<<< HEAD
 
   /// Received invoices are not linked in the demonstration: refused, so
   /// the sheet says so instead of pretending.
@@ -49,6 +44,4 @@ mixin NoFiledPurchases implements PurchaseRepository {
     required String documentId,
     required String requestId,
   }) async => throw UnsupportedError('no inbox linking in the demonstration');
-=======
->>>>>>> origin/master
 }
