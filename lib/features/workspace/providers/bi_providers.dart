@@ -85,7 +85,10 @@ Future<BiResult> biModuleResult(
     ),
     'purchases.operating_costs' ||
     'assets.acquisitions' ||
-    'finance.recorded_contribution' => biCostResult(
+    'finance.recorded_contribution' ||
+    'assets.book_depreciation' ||
+    'finance.contribution_after_depreciation' ||
+    'purchases.unbilled_commitments' => biCostResult(
       ref,
       workspaceId,
       moduleId,

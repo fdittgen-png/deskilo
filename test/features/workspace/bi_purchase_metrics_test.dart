@@ -5,7 +5,8 @@
 // a missing amount never read as 0, the payable a stock (compared, never
 // summed), the review queue a count that survives a currency mix, every
 // card behind the purchaseAnalytics flag and the finance right; and (C2)
-// the costs, the capital additions and invoiced less operating costs.
+// the costs, the capital additions and invoiced less operating costs, the
+// book depreciation and what the contracts still expect to be billed.
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
@@ -28,6 +29,9 @@ const _ids = [
   'purchases.operating_costs',
   'assets.acquisitions',
   'finance.recorded_contribution',
+  'assets.book_depreciation',
+  'finance.contribution_after_depreciation',
+  'purchases.unbilled_commitments',
 ];
 
 Map<String, dynamic> _row({
@@ -198,9 +202,49 @@ void main() {
     expect(costMeasure(off, 'assets.acquisitions').unknown, isTrue);
     expect(costMeasure(off, 'purchases.operating_costs').unknown, isFalse);
   });
+
+  test('C2: after book depreciation only when the depreciation is known; '
+      'the contracts still to be billed, overdue and upcoming apart', () {
+    final known = costSummaryFromJson(_costRow());
+    expect(costMeasure(known, 'assets.book_depreciation').numerator, 20);
+    expect(
+      costMeasure(known, 'finance.contribution_after_depreciation').numerator,
+      880,
+    );
+    expect(
+      costMeasure(known, 'purchases.unbilled_commitments').numerator,
+      2400,
+    );
+    expect(known.unbilledOverdueMinor, 1400);
+    expect(known.unbilledUpcomingMinor, 1000);
+
+    final missing = costSummaryFromJson(
+      _costRow(depreciation: null, after: null, unbilled: null),
+    );
+    for (final id in const [
+      'assets.book_depreciation',
+      'finance.contribution_after_depreciation',
+      'purchases.unbilled_commitments',
+    ]) {
+      expect(costMeasure(missing, id).unknown, isTrue, reason: id);
+    }
+    expect(
+      costMeasure(missing, 'finance.recorded_contribution').numerator,
+      900,
+      reason: 'the figure without depreciation keeps its own name',
+    );
+    final inexact = costSummaryFromJson(_costRow(depreciation: '2.5'));
+    expect(inexact.bookDepreciationMinor, isNull);
+    expect(inexact.reasons, contains('amount_not_exact'));
+  });
 }
 
-Map<String, Object?> _costRow({Object? acquisitions = '1200'}) => {
+Map<String, Object?> _costRow({
+  Object? acquisitions = '1200',
+  Object? depreciation = '20',
+  Object? after = '880',
+  Object? unbilled = '2400',
+}) => {
   'from': '2026-03',
   'to': '2026-03',
   'currency': 'EUR',
@@ -210,6 +254,11 @@ Map<String, Object?> _costRow({Object? acquisitions = '1200'}) => {
   'contribution_minor': '900',
   'unresolved_lines': 1,
   'unqualified_lines': 0,
+  'book_depreciation_minor': depreciation,
+  'after_depreciation_minor': after,
+  'unbilled_minor': unbilled,
+  'unbilled_overdue_minor': unbilled == null ? null : '1400',
+  'unbilled_upcoming_minor': unbilled == null ? null : '1000',
   'quality': const <String>[],
   'reasons': const ['unresolved_lines'],
   'computed_at': '2026-05-02T10:00:00Z',

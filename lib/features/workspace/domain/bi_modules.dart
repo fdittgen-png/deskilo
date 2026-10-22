@@ -234,6 +234,38 @@ const biModules = <BiModule>[
     },
     aggregation: KpiAggregation.sum,
   ),
+  // #2582 C2 — book depreciation (unknown unless confirmed book values cover
+  // the period) and what the contracts still expect to be billed.
+  BiModule(
+    id: 'assets.book_depreciation',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
+  BiModule(
+    id: 'finance.contribution_after_depreciation',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
+  BiModule(
+    id: 'purchases.unbilled_commitments',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

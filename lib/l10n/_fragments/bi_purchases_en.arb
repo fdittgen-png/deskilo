@@ -118,5 +118,57 @@
         "type": "String"
       }
     }
+  },
+  "biDepreciationTitle": "Book depreciation (recorded)",
+  "@biDepreciationTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biDepreciationDefinition": "The depreciation of the confirmed book values whose periods cover the selected months exactly. Tax-only, partial or overlapping values give no figure.",
+  "@biDepreciationDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biDepreciationNoCash": "Depreciation moves no money.",
+  "@biDepreciationNoCash": {
+    "description": "#2582 purchase analytics"
+  },
+  "biDepreciationIncomplete": "No confirmed book values cover exactly these months: the depreciation is unknown, never 0.",
+  "@biDepreciationIncomplete": {
+    "description": "#2582 purchase analytics"
+  },
+  "biAfterDepreciationTitle": "Invoiced less operating costs and depreciation",
+  "@biAfterDepreciationTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biAfterDepreciationDefinition": "Invoiced less recorded operating costs, less the book depreciation of the same months. Shown only when that depreciation is known.",
+  "@biAfterDepreciationDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCommitmentsTitle": "Still to be billed (contracts)",
+  "@biCommitmentsTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCommitmentsDefinition": "What the leases and rented rooms expect in the months, less the supplier bills already matched to it. Occurrences not generated yet are taken from their schedule.",
+  "@biCommitmentsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCommitmentsBasis": "{overdue} overdue, {upcoming} not yet due",
+  "@biCommitmentsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "overdue": {
+        "type": "String"
+      },
+      "upcoming": {
+        "type": "String"
+      }
+    }
+  },
+  "biCommitmentsNotForecast": "An expectation from the contracts, not a guaranteed forecast.",
+  "@biCommitmentsNotForecast": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCommitmentsNoContracts": "Neither leases nor rented rooms are on: nothing is expected.",
+  "@biCommitmentsNoContracts": {
+    "description": "#2582 purchase analytics"
   }
 }

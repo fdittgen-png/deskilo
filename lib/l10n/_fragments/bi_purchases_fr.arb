@@ -118,5 +118,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "biDepreciationTitle": "Amortissements comptables (enregistrés)",
+  "biDepreciationDefinition": "Les amortissements des valeurs comptables confirmées dont les périodes couvrent exactement les mois choisis. Des valeurs fiscales seules, partielles ou qui se chevauchent ne donnent aucun chiffre.",
+  "biDepreciationNoCash": "Un amortissement ne déplace pas d'argent.",
+  "biDepreciationIncomplete": "Aucune valeur comptable confirmée ne couvre exactement ces mois : l'amortissement est inconnu, jamais 0.",
+  "biAfterDepreciationTitle": "Facturé moins charges d'exploitation et amortissements",
+  "biAfterDepreciationDefinition": "Le facturé moins les charges d'exploitation enregistrées, moins les amortissements comptables des mêmes mois. Affiché seulement quand ces amortissements sont connus.",
+  "biCommitmentsTitle": "Reste à facturer (contrats)",
+  "biCommitmentsDefinition": "Ce que les baux et les salles louées prévoient sur les mois, moins les factures fournisseurs déjà rapprochées. Les échéances pas encore générées sont tirées de leur calendrier.",
+  "biCommitmentsBasis": "{overdue} échus, {upcoming} à échoir",
+  "biCommitmentsNotForecast": "Une attente tirée des contrats, pas une prévision garantie.",
+  "biCommitmentsNoContracts": "Ni bail ni salle louée n'est activé : rien n'est attendu."
 }

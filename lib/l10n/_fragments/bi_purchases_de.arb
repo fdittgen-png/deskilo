@@ -118,5 +118,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "biDepreciationTitle": "Bilanzielle Abschreibungen (erfasst)",
+  "biDepreciationDefinition": "Die Abschreibungen der bestätigten Buchwerte, deren Zeiträume die gewählten Monate genau abdecken. Rein steuerliche, unvollständige oder sich überschneidende Werte ergeben keine Zahl.",
+  "biDepreciationNoCash": "Eine Abschreibung bewegt kein Geld.",
+  "biDepreciationIncomplete": "Keine bestätigten Buchwerte decken genau diese Monate ab: die Abschreibung ist unbekannt, nie 0.",
+  "biAfterDepreciationTitle": "Fakturiert abzüglich Betriebskosten und Abschreibungen",
+  "biAfterDepreciationDefinition": "Fakturiert abzüglich erfasster Betriebskosten, abzüglich der bilanziellen Abschreibungen derselben Monate. Nur angezeigt, wenn diese Abschreibungen bekannt sind.",
+  "biCommitmentsTitle": "Noch abzurechnen (Verträge)",
+  "biCommitmentsDefinition": "Was Mietverträge und angemietete Räume in den Monaten erwarten, abzüglich bereits zugeordneter Lieferantenrechnungen. Noch nicht erzeugte Fälligkeiten werden aus ihrem Plan genommen.",
+  "biCommitmentsBasis": "{overdue} überfällig, {upcoming} noch nicht fällig",
+  "biCommitmentsNotForecast": "Eine Erwartung aus den Verträgen, keine garantierte Prognose.",
+  "biCommitmentsNoContracts": "Weder Mietverträge noch angemietete Räume sind aktiv: nichts wird erwartet."
 }

@@ -686,6 +686,8 @@
   "@baseRoleUser": {
     "description": "the mandatory base role"
   },
+  "biAfterDepreciationDefinition": "Le facturé moins les charges d'exploitation enregistrées, moins les amortissements comptables des mêmes mois. Affiché seulement quand ces amortissements sont connus.",
+  "biAfterDepreciationTitle": "Facturé moins charges d'exploitation et amortissements",
   "biAreaCapacity": "Espaces et capacité",
   "@biAreaCapacity": {
     "description": "#1923 Web-BI area"
@@ -779,6 +781,11 @@
   },
   "biColumnChange": "Écart",
   "biColumnValue": "Valeur",
+  "biCommitmentsBasis": "{overdue} échus, {upcoming} à échoir",
+  "biCommitmentsDefinition": "Ce que les baux et les salles louées prévoient sur les mois, moins les factures fournisseurs déjà rapprochées. Les échéances pas encore générées sont tirées de leur calendrier.",
+  "biCommitmentsNoContracts": "Ni bail ni salle louée n'est activé : rien n'est attendu.",
+  "biCommitmentsNotForecast": "Une attente tirée des contrats, pas une prévision garantie.",
+  "biCommitmentsTitle": "Reste à facturer (contrats)",
   "biCompare": "Comparer avec",
   "biCompareCustom": "Une période que je choisis",
   "biCompareNone": "Rien",
@@ -852,6 +859,10 @@
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
   },
+  "biDepreciationDefinition": "Les amortissements des valeurs comptables confirmées dont les périodes couvrent exactement les mois choisis. Des valeurs fiscales seules, partielles ou qui se chevauchent ne donnent aucun chiffre.",
+  "biDepreciationIncomplete": "Aucune valeur comptable confirmée ne couvre exactement ces mois : l'amortissement est inconnu, jamais 0.",
+  "biDepreciationNoCash": "Un amortissement ne déplace pas d'argent.",
+  "biDepreciationTitle": "Amortissements comptables (enregistrés)",
   "biDimensionLevel": "Niveau",
   "biEvolutionTitle": "Évolution",
   "@biEvolutionTitle": {

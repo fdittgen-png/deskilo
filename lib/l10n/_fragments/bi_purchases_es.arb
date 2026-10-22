@@ -118,5 +118,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "biDepreciationTitle": "Amortización contable (registrada)",
+  "biDepreciationDefinition": "La amortización de los valores contables confirmados cuyos periodos cubren exactamente los meses elegidos. Valores solo fiscales, parciales o que se solapan no dan cifra.",
+  "biDepreciationNoCash": "Una amortización no mueve dinero.",
+  "biDepreciationIncomplete": "Ningún valor contable confirmado cubre exactamente estos meses: la amortización es desconocida, nunca 0.",
+  "biAfterDepreciationTitle": "Facturado menos gastos de explotación y amortización",
+  "biAfterDepreciationDefinition": "Lo facturado menos los gastos de explotación registrados, menos la amortización contable de los mismos meses. Solo se muestra cuando esa amortización es conocida.",
+  "biCommitmentsTitle": "Pendiente de facturar (contratos)",
+  "biCommitmentsDefinition": "Lo que los arrendamientos y las salas alquiladas prevén en los meses, menos las facturas de proveedor ya conciliadas. Los vencimientos aún no generados se toman de su calendario.",
+  "biCommitmentsBasis": "{overdue} vencido, {upcoming} por vencer",
+  "biCommitmentsNotForecast": "Una expectativa según los contratos, no una previsión garantizada.",
+  "biCommitmentsNoContracts": "No hay arrendamientos ni salas alquiladas activos: no se espera nada."
 }

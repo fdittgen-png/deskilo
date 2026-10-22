@@ -1274,6 +1274,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get baseRoleUser => 'Benutzer';
 
   @override
+  String get biAfterDepreciationDefinition =>
+      'Fakturiert abzüglich erfasster Betriebskosten, abzüglich der bilanziellen Abschreibungen derselben Monate. Nur angezeigt, wenn diese Abschreibungen bekannt sind.';
+
+  @override
+  String get biAfterDepreciationTitle =>
+      'Fakturiert abzüglich Betriebskosten und Abschreibungen';
+
+  @override
   String get biAreaCapacity => 'Flächen und Kapazität';
 
   @override
@@ -1372,6 +1380,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biColumnValue => 'Wert';
 
   @override
+  String biCommitmentsBasis(String overdue, String upcoming) {
+    return '$overdue überfällig, $upcoming noch nicht fällig';
+  }
+
+  @override
+  String get biCommitmentsDefinition =>
+      'Was Mietverträge und angemietete Räume in den Monaten erwarten, abzüglich bereits zugeordneter Lieferantenrechnungen. Noch nicht erzeugte Fälligkeiten werden aus ihrem Plan genommen.';
+
+  @override
+  String get biCommitmentsNoContracts =>
+      'Weder Mietverträge noch angemietete Räume sind aktiv: nichts wird erwartet.';
+
+  @override
+  String get biCommitmentsNotForecast =>
+      'Eine Erwartung aus den Verträgen, keine garantierte Prognose.';
+
+  @override
+  String get biCommitmentsTitle => 'Noch abzurechnen (Verträge)';
+
+  @override
   String get biCompare => 'Vergleichen mit';
 
   @override
@@ -1466,6 +1494,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biDeltaNone => 'Noch kein Vergleich';
+
+  @override
+  String get biDepreciationDefinition =>
+      'Die Abschreibungen der bestätigten Buchwerte, deren Zeiträume die gewählten Monate genau abdecken. Rein steuerliche, unvollständige oder sich überschneidende Werte ergeben keine Zahl.';
+
+  @override
+  String get biDepreciationIncomplete =>
+      'Keine bestätigten Buchwerte decken genau diese Monate ab: die Abschreibung ist unbekannt, nie 0.';
+
+  @override
+  String get biDepreciationNoCash => 'Eine Abschreibung bewegt kein Geld.';
+
+  @override
+  String get biDepreciationTitle => 'Bilanzielle Abschreibungen (erfasst)';
 
   @override
   String get biDimensionLevel => 'Ebene';

@@ -1269,6 +1269,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get baseRoleUser => 'Utente';
 
   @override
+  String get biAfterDepreciationDefinition =>
+      'Il fatturato meno i costi operativi registrati, meno gli ammortamenti contabili degli stessi mesi. Mostrato solo quando quegli ammortamenti sono noti.';
+
+  @override
+  String get biAfterDepreciationTitle =>
+      'Fatturato meno costi operativi e ammortamenti';
+
+  @override
   String get biAreaCapacity => 'Spazi e capacità';
 
   @override
@@ -1367,6 +1375,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biColumnValue => 'Valore';
 
   @override
+  String biCommitmentsBasis(String overdue, String upcoming) {
+    return '$overdue scaduto, $upcoming non ancora scaduto';
+  }
+
+  @override
+  String get biCommitmentsDefinition =>
+      'Ciò che le locazioni e le sale prese in affitto prevedono nei mesi, meno le fatture fornitore già abbinate. Le scadenze non ancora generate sono prese dal loro calendario.';
+
+  @override
+  String get biCommitmentsNoContracts =>
+      'Né locazioni né sale prese in affitto sono attive: nulla è atteso.';
+
+  @override
+  String get biCommitmentsNotForecast =>
+      'Un\'attesa dai contratti, non una previsione garantita.';
+
+  @override
+  String get biCommitmentsTitle => 'Ancora da fatturare (contratti)';
+
+  @override
   String get biCompare => 'Confronta con';
 
   @override
@@ -1460,6 +1488,20 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biDeltaNone => 'Nessun confronto per ora';
+
+  @override
+  String get biDepreciationDefinition =>
+      'Gli ammortamenti dei valori contabili confermati i cui periodi coprono esattamente i mesi scelti. Valori solo fiscali, parziali o sovrapposti non danno alcuna cifra.';
+
+  @override
+  String get biDepreciationIncomplete =>
+      'Nessun valore contabile confermato copre esattamente questi mesi: l\'ammortamento è sconosciuto, mai 0.';
+
+  @override
+  String get biDepreciationNoCash => 'Un ammortamento non muove denaro.';
+
+  @override
+  String get biDepreciationTitle => 'Ammortamenti contabili (registrati)';
 
   @override
   String get biDimensionLevel => 'Piano';

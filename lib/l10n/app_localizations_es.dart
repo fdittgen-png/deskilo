@@ -1273,6 +1273,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get baseRoleUser => 'Usuario';
 
   @override
+  String get biAfterDepreciationDefinition =>
+      'Lo facturado menos los gastos de explotación registrados, menos la amortización contable de los mismos meses. Solo se muestra cuando esa amortización es conocida.';
+
+  @override
+  String get biAfterDepreciationTitle =>
+      'Facturado menos gastos de explotación y amortización';
+
+  @override
   String get biAreaCapacity => 'Espacios y capacidad';
 
   @override
@@ -1370,6 +1378,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biColumnValue => 'Valor';
 
   @override
+  String biCommitmentsBasis(String overdue, String upcoming) {
+    return '$overdue vencido, $upcoming por vencer';
+  }
+
+  @override
+  String get biCommitmentsDefinition =>
+      'Lo que los arrendamientos y las salas alquiladas prevén en los meses, menos las facturas de proveedor ya conciliadas. Los vencimientos aún no generados se toman de su calendario.';
+
+  @override
+  String get biCommitmentsNoContracts =>
+      'No hay arrendamientos ni salas alquiladas activos: no se espera nada.';
+
+  @override
+  String get biCommitmentsNotForecast =>
+      'Una expectativa según los contratos, no una previsión garantizada.';
+
+  @override
+  String get biCommitmentsTitle => 'Pendiente de facturar (contratos)';
+
+  @override
   String get biCompare => 'Comparar con';
 
   @override
@@ -1464,6 +1492,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biDeltaNone => 'Aún sin comparación';
+
+  @override
+  String get biDepreciationDefinition =>
+      'La amortización de los valores contables confirmados cuyos periodos cubren exactamente los meses elegidos. Valores solo fiscales, parciales o que se solapan no dan cifra.';
+
+  @override
+  String get biDepreciationIncomplete =>
+      'Ningún valor contable confirmado cubre exactamente estos meses: la amortización es desconocida, nunca 0.';
+
+  @override
+  String get biDepreciationNoCash => 'Una amortización no mueve dinero.';
+
+  @override
+  String get biDepreciationTitle => 'Amortización contable (registrada)';
 
   @override
   String get biDimensionLevel => 'Planta';

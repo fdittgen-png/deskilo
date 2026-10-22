@@ -686,6 +686,8 @@
   "@baseRoleUser": {
     "description": "the mandatory base role"
   },
+  "biAfterDepreciationDefinition": "Lo facturado menos los gastos de explotación registrados, menos la amortización contable de los mismos meses. Solo se muestra cuando esa amortización es conocida.",
+  "biAfterDepreciationTitle": "Facturado menos gastos de explotación y amortización",
   "biAreaCapacity": "Espacios y capacidad",
   "@biAreaCapacity": {
     "description": "#1923 Web-BI area"
@@ -779,6 +781,11 @@
   },
   "biColumnChange": "Variación",
   "biColumnValue": "Valor",
+  "biCommitmentsBasis": "{overdue} vencido, {upcoming} por vencer",
+  "biCommitmentsDefinition": "Lo que los arrendamientos y las salas alquiladas prevén en los meses, menos las facturas de proveedor ya conciliadas. Los vencimientos aún no generados se toman de su calendario.",
+  "biCommitmentsNoContracts": "No hay arrendamientos ni salas alquiladas activos: no se espera nada.",
+  "biCommitmentsNotForecast": "Una expectativa según los contratos, no una previsión garantizada.",
+  "biCommitmentsTitle": "Pendiente de facturar (contratos)",
   "biCompare": "Comparar con",
   "biCompareCustom": "Un periodo que elijo",
   "biCompareNone": "Nada",
@@ -852,6 +859,10 @@
   "@biDeltaNone": {
     "description": "Business analytics dashboard: biDeltaNone"
   },
+  "biDepreciationDefinition": "La amortización de los valores contables confirmados cuyos periodos cubren exactamente los meses elegidos. Valores solo fiscales, parciales o que se solapan no dan cifra.",
+  "biDepreciationIncomplete": "Ningún valor contable confirmado cubre exactamente estos meses: la amortización es desconocida, nunca 0.",
+  "biDepreciationNoCash": "Una amortización no mueve dinero.",
+  "biDepreciationTitle": "Amortización contable (registrada)",
   "biDimensionLevel": "Planta",
   "biEvolutionTitle": "Evolución",
   "@biEvolutionTitle": {

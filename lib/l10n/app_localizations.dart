@@ -2233,6 +2233,18 @@ abstract class AppLocalizations {
   /// **'User'**
   String get baseRoleUser;
 
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced less recorded operating costs, less the book depreciation of the same months. Shown only when that depreciation is known.'**
+  String get biAfterDepreciationDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced less operating costs and depreciation'**
+  String get biAfterDepreciationTitle;
+
   /// #1923 Web-BI area
   ///
   /// In en, this message translates to:
@@ -2401,6 +2413,36 @@ abstract class AppLocalizations {
   /// **'Value'**
   String get biColumnValue;
 
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{overdue} overdue, {upcoming} not yet due'**
+  String biCommitmentsBasis(String overdue, String upcoming);
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the leases and rented rooms expect in the months, less the supplier bills already matched to it. Occurrences not generated yet are taken from their schedule.'**
+  String get biCommitmentsDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Neither leases nor rented rooms are on: nothing is expected.'**
+  String get biCommitmentsNoContracts;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'An expectation from the contracts, not a guaranteed forecast.'**
+  String get biCommitmentsNotForecast;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Still to be billed (contracts)'**
+  String get biCommitmentsTitle;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2556,6 +2598,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No comparison yet'**
   String get biDeltaNone;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The depreciation of the confirmed book values whose periods cover the selected months exactly. Tax-only, partial or overlapping values give no figure.'**
+  String get biDepreciationDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed book values cover exactly these months: the depreciation is unknown, never 0.'**
+  String get biDepreciationIncomplete;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Depreciation moves no money.'**
+  String get biDepreciationNoCash;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Book depreciation (recorded)'**
+  String get biDepreciationTitle;
 
   /// #1923 B Web-BI toolbar and module section
   ///

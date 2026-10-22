@@ -1262,6 +1262,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get baseRoleUser => 'User';
 
   @override
+  String get biAfterDepreciationDefinition =>
+      'Invoiced less recorded operating costs, less the book depreciation of the same months. Shown only when that depreciation is known.';
+
+  @override
+  String get biAfterDepreciationTitle =>
+      'Invoiced less operating costs and depreciation';
+
+  @override
   String get biAreaCapacity => 'Space and capacity';
 
   @override
@@ -1359,6 +1367,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biColumnValue => 'Value';
 
   @override
+  String biCommitmentsBasis(String overdue, String upcoming) {
+    return '$overdue overdue, $upcoming not yet due';
+  }
+
+  @override
+  String get biCommitmentsDefinition =>
+      'What the leases and rented rooms expect in the months, less the supplier bills already matched to it. Occurrences not generated yet are taken from their schedule.';
+
+  @override
+  String get biCommitmentsNoContracts =>
+      'Neither leases nor rented rooms are on: nothing is expected.';
+
+  @override
+  String get biCommitmentsNotForecast =>
+      'An expectation from the contracts, not a guaranteed forecast.';
+
+  @override
+  String get biCommitmentsTitle => 'Still to be billed (contracts)';
+
+  @override
   String get biCompare => 'Compare with';
 
   @override
@@ -1452,6 +1480,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biDeltaNone => 'No comparison yet';
+
+  @override
+  String get biDepreciationDefinition =>
+      'The depreciation of the confirmed book values whose periods cover the selected months exactly. Tax-only, partial or overlapping values give no figure.';
+
+  @override
+  String get biDepreciationIncomplete =>
+      'No confirmed book values cover exactly these months: the depreciation is unknown, never 0.';
+
+  @override
+  String get biDepreciationNoCash => 'Depreciation moves no money.';
+
+  @override
+  String get biDepreciationTitle => 'Book depreciation (recorded)';
 
   @override
   String get biDimensionLevel => 'Level';

@@ -57,10 +57,15 @@ BiModuleView _costView(
   String Function(AppLocalizations l10n) title,
   String Function(AppLocalizations l10n) definition, {
   String Function(AppLocalizations l10n)? always,
+  String Function(CostSummaryKpi k, AppLocalizations l10n, String locale)?
+  basis,
 }) => BiModuleView(
   title: title,
   value: biMoneyCell,
-  basis: (m, l10n, locale) => '',
+  basis: (m, l10n, locale) => switch (_cost(m)) {
+    final k? when basis != null => basis(k, l10n, locale),
+    _ => '',
+  },
   notes: (m, l10n, locale) => [
     if (m.reasons.contains('currency_mix')) l10n.biFinanceCurrencyMix,
     if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
@@ -71,6 +76,10 @@ BiModuleView _costView(
       l10n.biCostsUnqualified('${k.unqualifiedLines}'),
     if (m.unknown && m.reasons.contains('asset_register_off'))
       l10n.biAssetsRegisterOff,
+    if (m.unknown && m.reasons.contains('book_coverage_incomplete'))
+      l10n.biDepreciationIncomplete,
+    if (m.unknown && m.reasons.contains('no_contracts'))
+      l10n.biCommitmentsNoContracts,
     if (always != null) always(l10n),
   ],
   details: (m, l10n, locale) => [
@@ -119,5 +128,24 @@ final purchaseModuleViews = <String, BiModuleView>{
     (l10n) => l10n.biContributionTitle,
     (l10n) => l10n.biContributionDefinition,
     always: (l10n) => l10n.biContributionNotProfit,
+  ),
+  'assets.book_depreciation': _costView(
+    (l10n) => l10n.biDepreciationTitle,
+    (l10n) => l10n.biDepreciationDefinition,
+    always: (l10n) => l10n.biDepreciationNoCash,
+  ),
+  'finance.contribution_after_depreciation': _costView(
+    (l10n) => l10n.biAfterDepreciationTitle,
+    (l10n) => l10n.biAfterDepreciationDefinition,
+    always: (l10n) => l10n.biContributionNotProfit,
+  ),
+  'purchases.unbilled_commitments': _costView(
+    (l10n) => l10n.biCommitmentsTitle,
+    (l10n) => l10n.biCommitmentsDefinition,
+    basis: (k, l10n, locale) => l10n.biCommitmentsBasis(
+      biMoneyCell(k.unbilledOverdueMinor, locale, k.currency),
+      biMoneyCell(k.unbilledUpcomingMinor, locale, k.currency),
+    ),
+    always: (l10n) => l10n.biCommitmentsNotForecast,
   ),
 };
