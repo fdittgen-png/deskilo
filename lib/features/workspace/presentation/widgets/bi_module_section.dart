@@ -20,10 +20,10 @@ import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
-import '../../domain/kpi_purchases.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_dashboard.dart';
+import 'bi_purchase_views.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
 import 'capacity_evidence.dart';
@@ -80,7 +80,7 @@ FinanceSummaryKpi? _finance(BiMeasure m) => m.detail as FinanceSummaryKpi?;
 
 /// An amount in [currency]; a dash when it is unknown or has no
 /// currency — never a default euro (#1924).
-String _moneyCell(num? v, String locale, String? currency) =>
+String biMoneyCell(num? v, String locale, String? currency) =>
     v == null || currency == null || currency.isEmpty
     ? '—'
     : MoneyFormat(currency, locale: locale).formatMinor(v.toInt());
@@ -122,45 +122,6 @@ List<String> _financeDetails(
   ];
 }
 
-// #2582 — a count of documents, in no currency.
-String _countCell(num? v, String locale, String? currency) =>
-    v == null ? '—' : NumberFormat.decimalPattern(locale).format(v);
-
-PurchaseSummaryKpi? _purchase(BiMeasure m) => m.detail as PurchaseSummaryKpi?;
-
-/// #2582 — a purchase card: its figure, what it cannot know, and how it is
-/// computed.
-BiModuleView _purchaseView(
-  String Function(AppLocalizations l10n) title,
-  String Function(AppLocalizations l10n) definition, {
-  bool count = false,
-  String Function(PurchaseSummaryKpi k, AppLocalizations l10n, String locale)?
-  basis,
-  String Function(AppLocalizations l10n)? always,
-}) => BiModuleView(
-  title: title,
-  value: count ? _countCell : _moneyCell,
-  basis: (m, l10n, locale) => switch (_purchase(m)) {
-    final k? when basis != null && !m.unknown => basis(k, l10n, locale),
-    _ => '',
-  },
-  notes: (m, l10n, locale) => [
-    if (m.reasons.contains('currency_mix') && !count) l10n.biFinanceCurrencyMix,
-    if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
-    if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
-    if (count && m.reasons.contains('current_queue'))
-      l10n.biPurchasesCurrentQueue,
-    if (always != null) always(l10n),
-  ],
-  details: (m, l10n, locale) => [
-    definition(l10n),
-    if (_purchase(m) case final k?)
-      l10n.biFinanceComputed(
-        DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
-      ),
-  ],
-);
-
 /// The views of the registered modules (conformance-tested).
 final biModuleViews = <String, BiModuleView>{
   'capacity.seat_utilisation': BiModuleView(
@@ -181,12 +142,12 @@ final biModuleViews = <String, BiModuleView>{
   ),
   'finance.invoiced': BiModuleView(
     title: (l10n) => l10n.biFinanceInvoiced,
-    value: _moneyCell,
+    value: biMoneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n.biFinanceInvoicedBasis(
               '${k.invoices}',
-              _moneyCell(k.creditNotesMinor, locale, k.currency),
+              biMoneyCell(k.creditNotesMinor, locale, k.currency),
             ),
       null => '',
     },
@@ -195,7 +156,7 @@ final biModuleViews = <String, BiModuleView>{
   ),
   'finance.collected': BiModuleView(
     title: (l10n) => l10n.biFinanceCollected,
-    value: _moneyCell,
+    value: biMoneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n.biFinanceCollectedBasis('${k.matches}'),
@@ -204,27 +165,7 @@ final biModuleViews = <String, BiModuleView>{
     notes: (m, l10n, locale) => _financeNotes(m, l10n, false),
     details: (m, l10n, locale) => _financeDetails(m, l10n, locale, false),
   ),
-  'purchases.ap_outstanding': _purchaseView(
-    (l10n) => l10n.biPurchasesApTitle,
-    (l10n) => l10n.biPurchasesApDefinition,
-  ),
-  'purchases.member_reimbursements_due': _purchaseView(
-    (l10n) => l10n.biPurchasesMemberDueTitle,
-    (l10n) => l10n.biPurchasesMemberDueDefinition,
-  ),
-  'purchases.pending_reviews': _purchaseView(
-    (l10n) => l10n.biPurchasesPendingTitle,
-    (l10n) => l10n.biPurchasesPendingDefinition,
-    count: true,
-    basis: (k, l10n, locale) =>
-        l10n.biPurchasesPendingBasis(_moneyCell(k.pendingMinor, locale, k.currency)),
-  ),
-  'cash.recorded_outflows': _purchaseView(
-    (l10n) => l10n.biCashOutflowsTitle,
-    (l10n) => l10n.biCashOutflowsDefinition,
-    basis: (k, l10n, locale) => l10n.biCashOutflowsBasis('${k.outflows}'),
-    always: (l10n) => l10n.biCashNotBankBalance,
-  ),
+  ...purchaseModuleViews,
 };
 
 /// The change, worded: "+3.2 pp" for a ratio; for an amount the

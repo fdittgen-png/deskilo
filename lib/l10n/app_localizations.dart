@@ -2281,6 +2281,30 @@ abstract class AppLocalizations {
   /// **'Treasury'**
   String get biAreaTreasury;
 
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'The equipment whose treatment was decided as capitalised, at its cost (the net plus the tax that cannot be recovered), by the document\'s date.'**
+  String get biAssetsAcquisitionsDefinition;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment bought (capitalised)'**
+  String get biAssetsAcquisitionsTitle;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'A capital addition: neither a cost nor a depreciation.'**
+  String get biAssetsNotCost;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'The equipment register is off: no capital addition is known.'**
+  String get biAssetsRegisterOff;
+
   /// No description provided for @biBookingBasis.
   ///
   /// In en, this message translates to:
@@ -2448,6 +2472,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Computed {date} · workspace time'**
   String biComputedWorkspaceTime(String date);
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'The invoiced sales of the months, net of their tax (credit notes subtract), less the recorded operating costs of the same months.'**
+  String get biContributionDefinition;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'Not a profit: no depreciation, payroll or bank charges are in it.'**
+  String get biContributionNotProfit;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced less recorded operating costs'**
+  String get biContributionTitle;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'The approved purchase lines classified as day-to-day costs, by the document\'s date: the net plus the tax that cannot be recovered. A supplier\'s credit note subtracts. Equipment, stock, prepayments, deposits and the payments themselves are not costs.'**
+  String get biCostsOperatingDefinition;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'Operating costs (recorded)'**
+  String get biCostsOperatingTitle;
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lines whose recoverable tax is not qualified count at their gross.'**
+  String biCostsUnqualified(String count);
+
+  /// #2582 cost figures
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lines nobody classified are left out.'**
+  String biCostsUnresolved(String count);
 
   /// No description provided for @biCurrentBasis.
   ///

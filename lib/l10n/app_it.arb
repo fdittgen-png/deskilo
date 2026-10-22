@@ -718,6 +718,22 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biAssetsAcquisitionsDefinition": "Le attrezzature il cui trattamento è stato deciso come capitalizzazione, al loro costo (imponibile più imposta non detraibile), per data del documento.",
+  "@biAssetsAcquisitionsDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsTitle": "Attrezzature acquistate (capitalizzate)",
+  "@biAssetsAcquisitionsTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsNotCost": "Un'immobilizzazione: né un costo né un ammortamento.",
+  "@biAssetsNotCost": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsRegisterOff": "Il registro delle attrezzature è disattivato: nessuna immobilizzazione è nota.",
+  "@biAssetsRegisterOff": {
+    "description": "#2582 cost figures"
+  },
   "biBookingBasis": "La capacità prenotata misura le prenotazioni, non la presenza effettiva.",
   "biCardDown": "Sposta giù",
   "biCardUp": "Sposta su",
@@ -784,6 +800,44 @@
   "@biComputedWorkspaceTime": {
     "placeholders": {
       "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biContributionDefinition": "Le vendite fatturate dei mesi, al netto delle imposte (le note di credito si sottraggono), meno i costi operativi registrati degli stessi mesi.",
+  "@biContributionDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionNotProfit": "Non è un utile: non comprende ammortamenti, stipendi né spese bancarie.",
+  "@biContributionNotProfit": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionTitle": "Fatturato meno costi operativi registrati",
+  "@biContributionTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingDefinition": "Le righe d'acquisto approvate classificate come costi correnti, per data del documento: l'imponibile più l'imposta non detraibile. Una nota di credito del fornitore si sottrae. Attrezzature, scorte, acconti, depositi e i pagamenti stessi non sono costi.",
+  "@biCostsOperatingDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingTitle": "Costi operativi (registrati)",
+  "@biCostsOperatingTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsUnqualified": "{count} righe la cui imposta detraibile non è qualificata contano per l'importo lordo.",
+  "@biCostsUnqualified": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCostsUnresolved": "{count} righe non classificate sono escluse.",
+  "@biCostsUnresolved": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
         "type": "String"
       }
     }

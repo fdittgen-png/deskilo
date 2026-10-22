@@ -178,3 +178,36 @@ class SupabasePurchaseKpiRepository implements PurchaseKpiRepository {
     return purchaseSummaryFromJson(Map<String, Object?>.from(row as Map));
   }
 }
+
+/// #2582 C2 — the cost figures (`kpi_costs_summary`, 0529).
+class SupabaseCostKpiRepository implements CostKpiRepository {
+  SupabaseCostKpiRepository(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<CostSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async {
+    final Object? row;
+    try {
+      row = await _client.rpc<Object?>(
+        'kpi_costs_summary',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_from': fromMonth,
+          'p_to': toMonth,
+        },
+      );
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the card shows it.
+      if (e.code == '42501') {
+        Error.throwWithStackTrace(const KpiForbidden(), st);
+      }
+      rethrow;
+    }
+    return costSummaryFromJson(Map<String, Object?>.from(row! as Map));
+  }
+}

@@ -63,6 +63,22 @@ Future<PurchaseSummaryKpi> purchaseSummary(
     .watch(purchaseKpiRepositoryProvider)
     .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
 
+/// #2582 C2 — the cost figures.
+@Riverpod(keepAlive: true)
+CostKpiRepository costKpiRepository(Ref ref) =>
+    SupabaseCostKpiRepository(ref.watch(selectedWorkspaceClientProvider));
+
+/// One read per workspace and months, shared by every cost card.
+@Riverpod(retry: kpiRetry)
+Future<CostSummaryKpi> costSummary(
+  Ref ref,
+  String workspaceId,
+  String fromMonth,
+  String toMonth,
+) => ref
+    .watch(costKpiRepositoryProvider)
+    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
 @Riverpod(retry: kpiRetry)

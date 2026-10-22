@@ -83,6 +83,15 @@ Future<BiResult> biModuleResult(
       period,
       compared,
     ),
+    'purchases.operating_costs' ||
+    'assets.acquisitions' ||
+    'finance.recorded_contribution' => biCostResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
     _ => throw KpiUnavailable('no reader for $moduleId'),
   };
 }

@@ -301,6 +301,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       purchaseKpiRepositoryProvider.overrideWithValue(
         const UnavailablePurchaseKpiRepository(),
       ),
+      costKpiRepositoryProvider.overrideWithValue(
+        const UnavailableCostKpiRepository(),
+      ),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
       // #1924 — the finance cards sum the demo's own invoices and

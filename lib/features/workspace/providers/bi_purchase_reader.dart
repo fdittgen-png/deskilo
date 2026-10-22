@@ -85,3 +85,61 @@ Future<BiResult> biPurchaseResult(
         : current.currency,
   );
 }
+
+/// #2582 C2 — one cost figure of [k]; a missing amount (an equipment
+/// register switched off, an inexact amount) is unknown, never 0.
+@visibleForTesting
+BiMeasure costMeasure(
+  CostSummaryKpi k,
+  String moduleId, {
+  bool currencyCompatible = true,
+}) {
+  final figure = k.figure(moduleId);
+  final quality = {
+    ...k.quality,
+    if (figure == null || !currencyCompatible) KpiQuality.unavailable,
+  };
+  final unknown = quality.contains(KpiQuality.unavailable);
+  return BiMeasure(
+    numerator: figure ?? 0,
+    quality: {...quality, if (!unknown && figure == 0) KpiQuality.knownZero},
+    reasons: [...k.reasons, if (!currencyCompatible) 'currency_mix'],
+    detail: k,
+  );
+}
+
+/// The cost module [moduleId] over [period], against [compared].
+Future<BiResult> biCostResult(
+  Ref ref,
+  String workspaceId,
+  String moduleId,
+  BiPeriod period,
+  BiPeriod? compared,
+) async {
+  Future<CostSummaryKpi> watch(BiPeriod p) {
+    final m = biMonths(p);
+    return ref.watch(costSummaryProvider(workspaceId, m.from, m.to).future);
+  }
+
+  // Both watched before the first await (provider_watch_before_await).
+  final now = watch(period);
+  final then = compared == null ? null : watch(compared);
+  final current = await now;
+  final before = then == null ? null : await then;
+  final currencies = {current.currency, ?before?.currency};
+  final compatible = currencies.length == 1 && current.currency.isNotEmpty;
+  return BiResult(
+    period: period,
+    comparedPeriod: compared,
+    total: BiRow(
+      key: BiRow.totalKey,
+      label: null,
+      current: costMeasure(current, moduleId, currencyCompatible: compatible),
+      compared: before == null
+          ? null
+          : costMeasure(before, moduleId, currencyCompatible: compatible),
+    ),
+    computedAt: current.computedAt,
+    currency: compatible ? current.currency : null,
+  );
+}

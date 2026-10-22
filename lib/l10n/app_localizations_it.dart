@@ -1293,6 +1293,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biAreaTreasury => 'Tesoreria';
 
   @override
+  String get biAssetsAcquisitionsDefinition =>
+      'Le attrezzature il cui trattamento è stato deciso come capitalizzazione, al loro costo (imponibile più imposta non detraibile), per data del documento.';
+
+  @override
+  String get biAssetsAcquisitionsTitle =>
+      'Attrezzature acquistate (capitalizzate)';
+
+  @override
+  String get biAssetsNotCost =>
+      'Un\'immobilizzazione: né un costo né un ammortamento.';
+
+  @override
+  String get biAssetsRegisterOff =>
+      'Il registro delle attrezzature è disattivato: nessuna immobilizzazione è nota.';
+
+  @override
   String get biBookingBasis =>
       'La capacità prenotata misura le prenotazioni, non la presenza effettiva.';
 
@@ -1393,6 +1409,34 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String biComputedWorkspaceTime(String date) {
     return 'Calcolato il $date · ora dello spazio';
+  }
+
+  @override
+  String get biContributionDefinition =>
+      'Le vendite fatturate dei mesi, al netto delle imposte (le note di credito si sottraggono), meno i costi operativi registrati degli stessi mesi.';
+
+  @override
+  String get biContributionNotProfit =>
+      'Non è un utile: non comprende ammortamenti, stipendi né spese bancarie.';
+
+  @override
+  String get biContributionTitle => 'Fatturato meno costi operativi registrati';
+
+  @override
+  String get biCostsOperatingDefinition =>
+      'Le righe d\'acquisto approvate classificate come costi correnti, per data del documento: l\'imponibile più l\'imposta non detraibile. Una nota di credito del fornitore si sottrae. Attrezzature, scorte, acconti, depositi e i pagamenti stessi non sono costi.';
+
+  @override
+  String get biCostsOperatingTitle => 'Costi operativi (registrati)';
+
+  @override
+  String biCostsUnqualified(String count) {
+    return '$count righe la cui imposta detraibile non è qualificata contano per l\'importo lordo.';
+  }
+
+  @override
+  String biCostsUnresolved(String count) {
+    return '$count righe non classificate sono escluse.';
   }
 
   @override

@@ -1286,6 +1286,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biAreaTreasury => 'Treasury';
 
   @override
+  String get biAssetsAcquisitionsDefinition =>
+      'The equipment whose treatment was decided as capitalised, at its cost (the net plus the tax that cannot be recovered), by the document\'s date.';
+
+  @override
+  String get biAssetsAcquisitionsTitle => 'Equipment bought (capitalised)';
+
+  @override
+  String get biAssetsNotCost =>
+      'A capital addition: neither a cost nor a depreciation.';
+
+  @override
+  String get biAssetsRegisterOff =>
+      'The equipment register is off: no capital addition is known.';
+
+  @override
   String get biBookingBasis =>
       'Reserved capacity measures bookings, not actual attendance.';
 
@@ -1386,6 +1401,34 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String biComputedWorkspaceTime(String date) {
     return 'Computed $date · workspace time';
+  }
+
+  @override
+  String get biContributionDefinition =>
+      'The invoiced sales of the months, net of their tax (credit notes subtract), less the recorded operating costs of the same months.';
+
+  @override
+  String get biContributionNotProfit =>
+      'Not a profit: no depreciation, payroll or bank charges are in it.';
+
+  @override
+  String get biContributionTitle => 'Invoiced less recorded operating costs';
+
+  @override
+  String get biCostsOperatingDefinition =>
+      'The approved purchase lines classified as day-to-day costs, by the document\'s date: the net plus the tax that cannot be recovered. A supplier\'s credit note subtracts. Equipment, stock, prepayments, deposits and the payments themselves are not costs.';
+
+  @override
+  String get biCostsOperatingTitle => 'Operating costs (recorded)';
+
+  @override
+  String biCostsUnqualified(String count) {
+    return '$count lines whose recoverable tax is not qualified count at their gross.';
+  }
+
+  @override
+  String biCostsUnresolved(String count) {
+    return '$count lines nobody classified are left out.';
   }
 
   @override

@@ -718,6 +718,22 @@
   "@biAreaTreasury": {
     "description": "#1923 Web-BI area"
   },
+  "biAssetsAcquisitionsDefinition": "L'équipement dont le traitement a été décidé en immobilisation, à son coût (le hors-taxe plus la taxe non récupérable), à la date du document.",
+  "@biAssetsAcquisitionsDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsAcquisitionsTitle": "Équipement acquis (immobilisé)",
+  "@biAssetsAcquisitionsTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsNotCost": "Une immobilisation : ni une charge, ni un amortissement.",
+  "@biAssetsNotCost": {
+    "description": "#2582 cost figures"
+  },
+  "biAssetsRegisterOff": "Le registre des équipements est désactivé : aucune immobilisation n'est connue.",
+  "@biAssetsRegisterOff": {
+    "description": "#2582 cost figures"
+  },
   "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
   "biCardDown": "Descendre",
   "biCardUp": "Monter",
@@ -784,6 +800,44 @@
   "@biComputedWorkspaceTime": {
     "placeholders": {
       "date": {
+        "type": "String"
+      }
+    }
+  },
+  "biContributionDefinition": "Les ventes facturées des mois, hors taxe (les avoirs se déduisent), moins les charges d'exploitation enregistrées des mêmes mois.",
+  "@biContributionDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionNotProfit": "Pas un bénéfice : ni amortissements, ni salaires, ni frais bancaires n'y figurent.",
+  "@biContributionNotProfit": {
+    "description": "#2582 cost figures"
+  },
+  "biContributionTitle": "Facturé moins charges d'exploitation enregistrées",
+  "@biContributionTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingDefinition": "Les lignes d'achat approuvées classées en charges courantes, à la date du document : le hors-taxe plus la taxe non récupérable. Un avoir fournisseur se déduit. L'équipement, le stock, les acomptes, les dépôts et les paiements eux-mêmes ne sont pas des charges.",
+  "@biCostsOperatingDefinition": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsOperatingTitle": "Charges d'exploitation (enregistrées)",
+  "@biCostsOperatingTitle": {
+    "description": "#2582 cost figures"
+  },
+  "biCostsUnqualified": "{count} lignes dont la taxe récupérable n'est pas qualifiée comptent pour leur montant TTC.",
+  "@biCostsUnqualified": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCostsUnresolved": "{count} lignes que personne n'a classées sont exclues.",
+  "@biCostsUnresolved": {
+    "description": "#2582 cost figures",
+    "placeholders": {
+      "count": {
         "type": "String"
       }
     }

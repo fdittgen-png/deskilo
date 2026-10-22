@@ -645,7 +645,14 @@ void main() {
         write(plan, s);
       }
       final r = rows(plan);
-      final psv = File('${dir.path}/tests.psv').readAsStringSync();
+      final out = File('${dir.path}/tests.psv');
+      expect(
+        out.existsSync(),
+        isTrue,
+        reason: 'the rows CLI wrote nothing: exit ${r.exitCode}\n'
+            '${r.stdout}\n${r.stderr}',
+      );
+      final psv = out.readAsStringSync();
       expect(psv, startsWith('Tests|success|5 tests in 5 files'));
       expect(psv, contains('gate: ok'));
       // The repository manifest names disciplines these fixtures do not
