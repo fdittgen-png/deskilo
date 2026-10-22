@@ -5761,6 +5761,10 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",
+  "hubPurchasesTitle": "Einkauf",
+  "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung",
+  "hubSalesTitle": "Verkauf",
   "identityConnectBrowser": "Der Browser konnte nicht geöffnet werden.",
   "identityConnectConfirmApply": "Ihre Mitgliedsanfrage an {name} senden?",
   "identityConnectConfirmApplyBody": "Sie sind jetzt verbunden. Der Space prüft Ihre Anfrage; sonst wird nichts geteilt.",

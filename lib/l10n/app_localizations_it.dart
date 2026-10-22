@@ -7985,6 +7985,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get holidayWhitMonday => 'Lunedì di Pentecoste';
 
   @override
+  String get hubPurchasesSubtitle =>
+      'Ciò che lo spazio acquista e deve: spese, fatture fornitori, fornitori, locazione, attrezzature';
+
+  @override
+  String get hubPurchasesTitle => 'Acquisti';
+
+  @override
+  String get hubSalesSubtitle =>
+      'Ciò che lo spazio vende e fattura: servizi, fatture, fatturazione';
+
+  @override
+  String get hubSalesTitle => 'Vendite';
+
+  @override
   String get identityConnectBrowser => 'Impossibile aprire il browser.';
 
   @override

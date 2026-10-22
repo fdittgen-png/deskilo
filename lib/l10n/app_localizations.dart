@@ -13649,6 +13649,30 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #2577 the sales and purchases pages
+  ///
+  /// In en, this message translates to:
+  /// **'What the space buys and owes: expenses, supplier bills, suppliers, the lease, equipment'**
+  String get hubPurchasesSubtitle;
+
+  /// #2577 the sales and purchases pages
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get hubPurchasesTitle;
+
+  /// #2577 the sales and purchases pages
+  ///
+  /// In en, this message translates to:
+  /// **'What the space sells and invoices: services, invoices, billing'**
+  String get hubSalesSubtitle;
+
+  /// #2577 the sales and purchases pages
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get hubSalesTitle;
+
   /// #1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched.
   ///
   /// In en, this message translates to:

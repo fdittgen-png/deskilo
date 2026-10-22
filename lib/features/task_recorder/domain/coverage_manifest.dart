@@ -335,6 +335,9 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
+  // #2577 — the purchase and sales pages: doors to recorded screens.
+  RouteCoverage('/money/purchases', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/sales', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/money/repartition-wizard',
     CoverageStatus.excluded,

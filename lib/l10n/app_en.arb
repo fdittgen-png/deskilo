@@ -9308,6 +9308,22 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubPurchasesSubtitle": "What the space buys and owes: expenses, supplier bills, suppliers, the lease, equipment",
+  "@hubPurchasesSubtitle": {
+    "description": "#2577 the sales and purchases pages"
+  },
+  "hubPurchasesTitle": "Purchases",
+  "@hubPurchasesTitle": {
+    "description": "#2577 the sales and purchases pages"
+  },
+  "hubSalesSubtitle": "What the space sells and invoices: services, invoices, billing",
+  "@hubSalesSubtitle": {
+    "description": "#2577 the sales and purchases pages"
+  },
+  "hubSalesTitle": "Sales",
+  "@hubSalesTitle": {
+    "description": "#2577 the sales and purchases pages"
+  },
   "identityConnectBrowser": "The browser could not be opened.",
   "@identityConnectBrowser": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched."

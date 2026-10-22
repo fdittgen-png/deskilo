@@ -7995,6 +7995,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get holidayWhitMonday => 'Pfingstmontag';
 
   @override
+  String get hubPurchasesSubtitle =>
+      'Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung';
+
+  @override
+  String get hubPurchasesTitle => 'Einkauf';
+
+  @override
+  String get hubSalesSubtitle =>
+      'Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung';
+
+  @override
+  String get hubSalesTitle => 'Verkauf';
+
+  @override
   String get identityConnectBrowser =>
       'Der Browser konnte nicht geöffnet werden.';
 
