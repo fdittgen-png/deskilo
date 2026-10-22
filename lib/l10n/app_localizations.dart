@@ -2311,6 +2311,30 @@ abstract class AppLocalizations {
   /// **'{count} analyses of this view are not available to you and are left out.'**
   String biCardsUnavailable(String count);
 
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded payments, not a reconciled bank balance.'**
+  String get biCashNotBankBalance;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'{count} payments'**
+  String biCashOutflowsBasis(String count);
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The payments to suppliers and members reported paid in the period, by the day they were paid. Reversed and prepared payments are left out.'**
+  String get biCashOutflowsDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Paid out (recorded)'**
+  String get biCashOutflowsTitle;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -2754,6 +2778,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Provisional: the period is not over, so this change is an estimate.'**
   String get biProvisionalNote;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The approved supplier bills dated by the end of the period, less what was paid, credited or offset by then. A stock read at that day, never a sum of months.'**
+  String get biPurchasesApDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to suppliers'**
+  String get biPurchasesApTitle;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The queue is today\'s: no history of it is kept for a past period.'**
+  String get biPurchasesCurrentQueue;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The members\' approved expense claims dated by the end of the period, less what was paid back or offset by then. A claim an invoice netted by then is settled by it, never counted twice.'**
+  String get biPurchasesMemberDueDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'To reimburse to members'**
+  String get biPurchasesMemberDueTitle;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'worth {amount}'**
+  String biPurchasesPendingBasis(String amount);
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase documents waiting for a decision today. A waiting document is neither a cost nor a debt yet.'**
+  String get biPurchasesPendingDefinition;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases to review'**
+  String get biPurchasesPendingTitle;
 
   /// #1923 B Web-BI toolbar and module section
   ///

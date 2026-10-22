@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/data/json_reader.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
+import '../domain/kpi_purchases.dart';
 
 class SupabaseKpiRepository implements KpiRepository {
   SupabaseKpiRepository(this._client);
@@ -142,5 +143,38 @@ class SupabaseBiBatchReader implements KpiBatchReader {
     return r.metricId == 'capacity.seat_utilisation'
         ? BiBatchEntry.seat(r.key, seatCapacityFromJson(result.json))
         : BiBatchEntry.finance(r.key, financeSummaryFromJson(result.json));
+  }
+}
+
+/// #2582 — the purchase figures (`kpi_purchases_summary`, 0527).
+class SupabasePurchaseKpiRepository implements PurchaseKpiRepository {
+  SupabasePurchaseKpiRepository(this._client);
+
+  final SupabaseClient _client;
+
+  @override
+  Future<PurchaseSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async {
+    final Object? row;
+    try {
+      row = await _client.rpc<Object?>(
+        'kpi_purchases_summary',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_from': fromMonth,
+          'p_to': toMonth,
+        },
+      );
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the card shows it.
+      if (e.code == '42501') {
+        Error.throwWithStackTrace(const KpiForbidden(), st);
+      }
+      rethrow;
+    }
+    return purchaseSummaryFromJson(Map<String, Object?>.from(row as Map));
   }
 }

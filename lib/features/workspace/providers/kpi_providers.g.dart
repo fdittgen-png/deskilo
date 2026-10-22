@@ -251,6 +251,155 @@ final class FinanceSummaryFamily extends $Family
   String toString() => r'financeSummaryProvider';
 }
 
+/// #2582 — the purchase figures.
+
+@ProviderFor(purchaseKpiRepository)
+final purchaseKpiRepositoryProvider = PurchaseKpiRepositoryProvider._();
+
+/// #2582 — the purchase figures.
+
+final class PurchaseKpiRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PurchaseKpiRepository,
+          PurchaseKpiRepository,
+          PurchaseKpiRepository
+        >
+    with $Provider<PurchaseKpiRepository> {
+  /// #2582 — the purchase figures.
+  PurchaseKpiRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'purchaseKpiRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$purchaseKpiRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PurchaseKpiRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PurchaseKpiRepository create(Ref ref) {
+    return purchaseKpiRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PurchaseKpiRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PurchaseKpiRepository>(value),
+    );
+  }
+}
+
+String _$purchaseKpiRepositoryHash() =>
+    r'3e67a26c4af123239e3e20b1742f87156fbadf66';
+
+/// One read per workspace and months, shared by every purchase card.
+
+@ProviderFor(purchaseSummary)
+final purchaseSummaryProvider = PurchaseSummaryFamily._();
+
+/// One read per workspace and months, shared by every purchase card.
+
+final class PurchaseSummaryProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PurchaseSummaryKpi>,
+          PurchaseSummaryKpi,
+          FutureOr<PurchaseSummaryKpi>
+        >
+    with
+        $FutureModifier<PurchaseSummaryKpi>,
+        $FutureProvider<PurchaseSummaryKpi> {
+  /// One read per workspace and months, shared by every purchase card.
+  PurchaseSummaryProvider._({
+    required PurchaseSummaryFamily super.from,
+    required (String, String, String) super.argument,
+  }) : super(
+         retry: kpiRetry,
+         name: r'purchaseSummaryProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$purchaseSummaryHash();
+
+  @override
+  String toString() {
+    return r'purchaseSummaryProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<PurchaseSummaryKpi> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PurchaseSummaryKpi> create(Ref ref) {
+    final argument = this.argument as (String, String, String);
+    return purchaseSummary(ref, argument.$1, argument.$2, argument.$3);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PurchaseSummaryProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$purchaseSummaryHash() => r'9e0fc33f1d262908973cf1edc962f5bb3746c93a';
+
+/// One read per workspace and months, shared by every purchase card.
+
+final class PurchaseSummaryFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<PurchaseSummaryKpi>,
+          (String, String, String)
+        > {
+  PurchaseSummaryFamily._()
+    : super(
+        retry: kpiRetry,
+        name: r'purchaseSummaryProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// One read per workspace and months, shared by every purchase card.
+
+  PurchaseSummaryProvider call(
+    String workspaceId,
+    String fromMonth,
+    String toMonth,
+  ) => PurchaseSummaryProvider._(
+    argument: (workspaceId, fromMonth, toMonth),
+    from: this,
+  );
+
+  @override
+  String toString() => r'purchaseSummaryProvider';
+}
+
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
 

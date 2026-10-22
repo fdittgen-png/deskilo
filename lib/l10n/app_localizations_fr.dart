@@ -1317,6 +1317,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get biCashNotBankBalance =>
+      'Des paiements enregistrés, pas un solde bancaire rapproché.';
+
+  @override
+  String biCashOutflowsBasis(String count) {
+    return '$count paiements';
+  }
+
+  @override
+  String get biCashOutflowsDefinition =>
+      'Les paiements aux fournisseurs et aux membres déclarés payés pendant la période, au jour où ils ont été payés. Les paiements annulés et préparés sont exclus.';
+
+  @override
+  String get biCashOutflowsTitle => 'Payé (enregistré)';
+
+  @override
   String biChangePoints(String value) {
     return '$value pts';
   }
@@ -1584,6 +1600,36 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biProvisionalNote =>
       'Provisoire : la période n\'est pas terminée, cette variation est une estimation.';
+
+  @override
+  String get biPurchasesApDefinition =>
+      'Les factures fournisseurs approuvées datées au plus tard de la fin de la période, moins ce qui a été payé, crédité ou compensé à cette date. Un solde lu ce jour-là, jamais une somme de mois.';
+
+  @override
+  String get biPurchasesApTitle => 'Dû aux fournisseurs';
+
+  @override
+  String get biPurchasesCurrentQueue =>
+      'La file est celle d\'aujourd\'hui : aucun historique n\'en est gardé pour une période passée.';
+
+  @override
+  String get biPurchasesMemberDueDefinition =>
+      'Les notes de frais approuvées des membres datées au plus tard de la fin de la période, moins ce qui a été remboursé ou compensé à cette date. Une note déduite d\'une facture à cette date est soldée par elle, jamais comptée deux fois.';
+
+  @override
+  String get biPurchasesMemberDueTitle => 'À rembourser aux membres';
+
+  @override
+  String biPurchasesPendingBasis(String amount) {
+    return 'pour $amount';
+  }
+
+  @override
+  String get biPurchasesPendingDefinition =>
+      'Les documents d\'achat en attente de décision aujourd\'hui. Un document en attente n\'est encore ni une charge ni une dette.';
+
+  @override
+  String get biPurchasesPendingTitle => 'Achats à examiner';
 
   @override
   String biQuarter(String quarter, String year) {

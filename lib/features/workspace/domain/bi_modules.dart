@@ -160,6 +160,48 @@ const biModules = <BiModule>[
       carriesPeriod: true,
     ),
   ),
+  // #2582 C1 — what the space owes, has to reimburse and still has to
+  // review (stocks at the end of the period), and what it paid out.
+  BiModule(
+    id: 'purchases.ap_outstanding',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
+  BiModule(
+    id: 'purchases.member_reimbursements_due',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
+  BiModule(
+    id: 'purchases.pending_reviews',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
+  BiModule(
+    id: 'cash.recorded_outflows',
+    area: BiArea.treasury,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

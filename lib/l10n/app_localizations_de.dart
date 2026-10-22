@@ -1316,6 +1316,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get biCashNotBankBalance =>
+      'Erfasste Zahlungen, kein abgestimmter Kontostand.';
+
+  @override
+  String biCashOutflowsBasis(String count) {
+    return '$count Zahlungen';
+  }
+
+  @override
+  String get biCashOutflowsDefinition =>
+      'Die Zahlungen an Lieferanten und Mitglieder, die im Zeitraum als bezahlt gemeldet wurden, nach dem Tag der Zahlung. Stornierte und vorbereitete Zahlungen bleiben außen vor.';
+
+  @override
+  String get biCashOutflowsTitle => 'Ausgezahlt (erfasst)';
+
+  @override
   String biChangePoints(String value) {
     return '$value Pp.';
   }
@@ -1583,6 +1599,36 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biProvisionalNote =>
       'Vorläufig: Die Periode ist noch nicht vorbei, diese Veränderung ist eine Schätzung.';
+
+  @override
+  String get biPurchasesApDefinition =>
+      'Die genehmigten Lieferantenrechnungen mit Datum bis zum Ende des Zeitraums, abzüglich dessen, was bis dahin bezahlt, gutgeschrieben oder verrechnet wurde. Ein Bestand an diesem Tag, nie eine Summe von Monaten.';
+
+  @override
+  String get biPurchasesApTitle => 'Offen bei Lieferanten';
+
+  @override
+  String get biPurchasesCurrentQueue =>
+      'Die Warteschlange ist die von heute: Für einen vergangenen Zeitraum wird keine Historie geführt.';
+
+  @override
+  String get biPurchasesMemberDueDefinition =>
+      'Die genehmigten Auslagen der Mitglieder mit Datum bis zum Ende des Zeitraums, abzüglich dessen, was bis dahin erstattet oder verrechnet wurde. Eine bis dahin mit einer Rechnung verrechnete Auslage ist damit beglichen, nie doppelt gezählt.';
+
+  @override
+  String get biPurchasesMemberDueTitle => 'An Mitglieder zu erstatten';
+
+  @override
+  String biPurchasesPendingBasis(String amount) {
+    return 'im Wert von $amount';
+  }
+
+  @override
+  String get biPurchasesPendingDefinition =>
+      'Die Einkaufsbelege, die heute auf eine Entscheidung warten. Ein wartender Beleg ist noch weder Aufwand noch Schuld.';
+
+  @override
+  String get biPurchasesPendingTitle => 'Zu prüfende Einkäufe';
 
   @override
   String biQuarter(String quarter, String year) {

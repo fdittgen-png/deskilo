@@ -723,6 +723,27 @@
   "biCardUp": "Sposta su",
   "biCards": "Analisi mostrate",
   "biCardsUnavailable": "{count} analisi di questa vista non sono disponibili per Lei e vengono omesse.",
+  "biCashNotBankBalance": "Pagamenti registrati, non un saldo bancario riconciliato.",
+  "@biCashNotBankBalance": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsBasis": "{count} pagamenti",
+  "@biCashOutflowsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCashOutflowsDefinition": "I pagamenti a fornitori e membri dichiarati pagati nel periodo, per il giorno in cui sono stati pagati. Sono esclusi i pagamenti annullati e preparati.",
+  "@biCashOutflowsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsTitle": "Pagato (registrato)",
+  "@biCashOutflowsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "biChangePoints": "{value} p.p.",
   "biCollectionCentre": "del fatturato",
   "@biCollectionCentre": {
@@ -920,6 +941,43 @@
   "biProvisionalNote": "Provvisorio: il periodo non è finito, questa variazione è una stima.",
   "@biProvisionalNote": {
     "description": "Business analytics dashboard: biProvisionalNote"
+  },
+  "biPurchasesApDefinition": "Le fatture dei fornitori approvate datate entro la fine del periodo, meno quanto pagato, accreditato o compensato fino ad allora. Un saldo letto quel giorno, mai una somma di mesi.",
+  "@biPurchasesApDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApTitle": "Dovuto ai fornitori",
+  "@biPurchasesApTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesCurrentQueue": "La coda è quella di oggi: non se ne conserva lo storico per un periodo passato.",
+  "@biPurchasesCurrentQueue": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueDefinition": "Le note spese approvate dei membri datate entro la fine del periodo, meno quanto rimborsato o compensato fino ad allora. Una nota detratta da una fattura entro quella data è saldata da essa, mai contata due volte.",
+  "@biPurchasesMemberDueDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueTitle": "Da rimborsare ai membri",
+  "@biPurchasesMemberDueTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingBasis": "per {amount}",
+  "@biPurchasesPendingBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biPurchasesPendingDefinition": "I documenti di acquisto in attesa di una decisione oggi. Un documento in attesa non è ancora né un costo né un debito.",
+  "@biPurchasesPendingDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingTitle": "Acquisti da esaminare",
+  "@biPurchasesPendingTitle": {
+    "description": "#2582 purchase analytics"
   },
   "biQuarter": "T{quarter} {year}",
   "biRecordedFuture": "Periodo futuro · prenotazioni registrate",

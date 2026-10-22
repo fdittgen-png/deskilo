@@ -1304,6 +1304,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get biCashNotBankBalance =>
+      'Recorded payments, not a reconciled bank balance.';
+
+  @override
+  String biCashOutflowsBasis(String count) {
+    return '$count payments';
+  }
+
+  @override
+  String get biCashOutflowsDefinition =>
+      'The payments to suppliers and members reported paid in the period, by the day they were paid. Reversed and prepared payments are left out.';
+
+  @override
+  String get biCashOutflowsTitle => 'Paid out (recorded)';
+
+  @override
   String biChangePoints(String value) {
     return '$value pp';
   }
@@ -1570,6 +1586,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biProvisionalNote =>
       'Provisional: the period is not over, so this change is an estimate.';
+
+  @override
+  String get biPurchasesApDefinition =>
+      'The approved supplier bills dated by the end of the period, less what was paid, credited or offset by then. A stock read at that day, never a sum of months.';
+
+  @override
+  String get biPurchasesApTitle => 'Owed to suppliers';
+
+  @override
+  String get biPurchasesCurrentQueue =>
+      'The queue is today\'s: no history of it is kept for a past period.';
+
+  @override
+  String get biPurchasesMemberDueDefinition =>
+      'The members\' approved expense claims dated by the end of the period, less what was paid back or offset by then. A claim an invoice netted by then is settled by it, never counted twice.';
+
+  @override
+  String get biPurchasesMemberDueTitle => 'To reimburse to members';
+
+  @override
+  String biPurchasesPendingBasis(String amount) {
+    return 'worth $amount';
+  }
+
+  @override
+  String get biPurchasesPendingDefinition =>
+      'The purchase documents waiting for a decision today. A waiting document is neither a cost nor a debt yet.';
+
+  @override
+  String get biPurchasesPendingTitle => 'Purchases to review';
 
   @override
   String biQuarter(String quarter, String year) {

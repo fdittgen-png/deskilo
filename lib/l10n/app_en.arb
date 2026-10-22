@@ -1389,6 +1389,27 @@
       }
     }
   },
+  "biCashNotBankBalance": "Recorded payments, not a reconciled bank balance.",
+  "@biCashNotBankBalance": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsBasis": "{count} payments",
+  "@biCashOutflowsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCashOutflowsDefinition": "The payments to suppliers and members reported paid in the period, by the day they were paid. Reversed and prepared payments are left out.",
+  "@biCashOutflowsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsTitle": "Paid out (recorded)",
+  "@biCashOutflowsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "biChangePoints": "{value} pp",
   "@biChangePoints": {
     "description": "#1923 B Web-BI toolbar and module section",
@@ -1752,6 +1773,43 @@
   "biProvisionalNote": "Provisional: the period is not over, so this change is an estimate.",
   "@biProvisionalNote": {
     "description": "Business analytics dashboard: biProvisionalNote"
+  },
+  "biPurchasesApDefinition": "The approved supplier bills dated by the end of the period, less what was paid, credited or offset by then. A stock read at that day, never a sum of months.",
+  "@biPurchasesApDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApTitle": "Owed to suppliers",
+  "@biPurchasesApTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesCurrentQueue": "The queue is today's: no history of it is kept for a past period.",
+  "@biPurchasesCurrentQueue": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueDefinition": "The members' approved expense claims dated by the end of the period, less what was paid back or offset by then. A claim an invoice netted by then is settled by it, never counted twice.",
+  "@biPurchasesMemberDueDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueTitle": "To reimburse to members",
+  "@biPurchasesMemberDueTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingBasis": "worth {amount}",
+  "@biPurchasesPendingBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biPurchasesPendingDefinition": "The purchase documents waiting for a decision today. A waiting document is neither a cost nor a debt yet.",
+  "@biPurchasesPendingDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingTitle": "Purchases to review",
+  "@biPurchasesPendingTitle": {
+    "description": "#2582 purchase analytics"
   },
   "biQuarter": "Q{quarter} {year}",
   "@biQuarter": {

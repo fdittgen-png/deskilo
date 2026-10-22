@@ -86,6 +86,7 @@ import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/kpi_contract.dart';
+import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/instance_providers.dart';
@@ -296,6 +297,10 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
       // #1918 — no server to compute capacity on: the tile says so.
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
+      // #2582 — nor the purchase figures.
+      purchaseKpiRepositoryProvider.overrideWithValue(
+        const UnavailablePurchaseKpiRepository(),
+      ),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
       // #1924 — the finance cards sum the demo's own invoices and

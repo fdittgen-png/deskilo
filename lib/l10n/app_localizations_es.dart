@@ -1315,6 +1315,22 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get biCashNotBankBalance =>
+      'Pagos registrados, no un saldo bancario conciliado.';
+
+  @override
+  String biCashOutflowsBasis(String count) {
+    return '$count pagos';
+  }
+
+  @override
+  String get biCashOutflowsDefinition =>
+      'Los pagos a proveedores y miembros declarados pagados en el período, por el día en que se pagaron. Se excluyen los pagos anulados y preparados.';
+
+  @override
+  String get biCashOutflowsTitle => 'Pagado (registrado)';
+
+  @override
   String biChangePoints(String value) {
     return '$value p. p.';
   }
@@ -1581,6 +1597,36 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biProvisionalNote =>
       'Provisional: el periodo no ha terminado, este cambio es una estimación.';
+
+  @override
+  String get biPurchasesApDefinition =>
+      'Las facturas de proveedores aprobadas con fecha hasta el final del período, menos lo pagado, abonado o compensado hasta entonces. Un saldo leído ese día, nunca una suma de meses.';
+
+  @override
+  String get biPurchasesApTitle => 'Adeudado a proveedores';
+
+  @override
+  String get biPurchasesCurrentQueue =>
+      'La cola es la de hoy: no se guarda historial de ella para un período pasado.';
+
+  @override
+  String get biPurchasesMemberDueDefinition =>
+      'Los gastos aprobados de los miembros con fecha hasta el final del período, menos lo reembolsado o compensado hasta entonces. Un gasto descontado en una factura hasta entonces queda saldado por ella, nunca contado dos veces.';
+
+  @override
+  String get biPurchasesMemberDueTitle => 'A reembolsar a los miembros';
+
+  @override
+  String biPurchasesPendingBasis(String amount) {
+    return 'por $amount';
+  }
+
+  @override
+  String get biPurchasesPendingDefinition =>
+      'Los documentos de compra que esperan una decisión hoy. Un documento en espera aún no es ni un gasto ni una deuda.';
+
+  @override
+  String get biPurchasesPendingTitle => 'Compras por revisar';
 
   @override
   String biQuarter(String quarter, String year) {

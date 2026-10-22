@@ -197,7 +197,7 @@ enum KpiQuality {
   forbidden,
 }
 
-KpiQuality? _quality(String wire) => switch (wire) {
+KpiQuality? kpiQualityOf(String wire) => switch (wire) {
   'known_zero' => KpiQuality.knownZero,
   'not_recorded' => KpiQuality.notRecorded,
   'not_applicable' => KpiQuality.notApplicable,
@@ -324,7 +324,7 @@ SeatCapacityKpi seatCapacityFromJson(Map<String, dynamic> json) {
     offeredRoomHours: _num(json['offered_room_hours']),
     reservedRoomHours: _num(json['reserved_room_hours']),
     quality: {
-      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
+      for (final q in quality) kpiQualityOf('$q') ?? KpiQuality.unavailable,
     },
     reasons: [
       for (final r in reasons) '$r',
@@ -390,7 +390,6 @@ class FinanceSummaryKpi {
 
 /// An exact minor-unit amount from a decimal string (or an integer),
 /// or null when it is malformed or beyond [_maxExactMinor].
-@visibleForTesting
 int? exactMinor(Object? v) {
   final big = switch (v) {
     final String s when RegExp(r'^-?[0-9]{1,30}$').hasMatch(s) => BigInt.parse(
@@ -426,7 +425,7 @@ FinanceSummaryKpi financeSummaryFromJson(Map<String, dynamic> json) {
     invoices: _count(json['invoices']),
     matches: _count(json['matches']),
     quality: {
-      for (final q in quality) _quality('$q') ?? KpiQuality.unavailable,
+      for (final q in quality) kpiQualityOf('$q') ?? KpiQuality.unavailable,
       if (inexact || currency is! String || currency.isEmpty)
         KpiQuality.unavailable,
     },
