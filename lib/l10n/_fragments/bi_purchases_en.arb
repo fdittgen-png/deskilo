@@ -331,5 +331,13 @@
   "allocationRuleSaveFailed": "The rule was not saved. It may have changed meanwhile: reopen it and try again.",
   "@allocationRuleSaveFailed": {
     "description": "#2582 cost allocation"
+  },
+  "biForecastTitle": "Expected to pay (owed + contracts)",
+  "biForecastDefinition": "What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.",
+  "@biForecastTitle": {
+    "description": "#2582 forecast ladder"
+  },
+  "@biForecastDefinition": {
+    "description": "#2582 forecast ladder"
   }
 }

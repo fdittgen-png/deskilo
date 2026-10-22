@@ -916,6 +916,8 @@
   "biFinancePartial": "La période n’est pas terminée : ces chiffres vont encore changer.",
   "biFinanceSameAsReport": "Les mêmes règles que le rapport d’état de l’espace, calculées une fois sur le serveur.",
   "biForbidden": "Vous ne pouvez pas lire cette analyse dans cet espace.",
+  "biForecastDefinition": "Ce qui est dû aux fournisseurs à la fin des mois, plus ce que les baux et les salles louées prévoient encore sur ces mois. Une facture déjà rapprochée d'un contrat compte une seule fois : dans le dû.",
+  "biForecastTitle": "À payer attendu (dû + contrats)",
   "biFutureBasis": "Réservations existantes et horaires actuels ; ni prévision de demande ni utilisation garantie.",
   "biGrain": "Durée de la période",
   "biGrainMonth": "Mois",

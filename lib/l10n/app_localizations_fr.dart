@@ -1691,6 +1691,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous ne pouvez pas lire cette analyse dans cet espace.';
 
   @override
+  String get biForecastDefinition =>
+      'Ce qui est dû aux fournisseurs à la fin des mois, plus ce que les baux et les salles louées prévoient encore sur ces mois. Une facture déjà rapprochée d\'un contrat compte une seule fois : dans le dû.';
+
+  @override
+  String get biForecastTitle => 'À payer attendu (dû + contrats)';
+
+  @override
   String get biFutureBasis =>
       'Réservations existantes et horaires actuels ; ni prévision de demande ni utilisation garantie.';
 

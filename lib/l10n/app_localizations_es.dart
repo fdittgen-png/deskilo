@@ -1687,6 +1687,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biForbidden => 'No puede leer este análisis en este espacio.';
 
   @override
+  String get biForecastDefinition =>
+      'Lo que se debe a los proveedores al final de los meses, más lo que los arrendamientos y las salas alquiladas aún prevén en ellos. Una factura ya conciliada con un contrato cuenta una sola vez: en lo debido.';
+
+  @override
+  String get biForecastTitle => 'Previsto a pagar (debido + contratos)';
+
+  @override
   String get biFutureBasis =>
       'Reservas existentes y horarios actuales; no es una previsión de demanda ni un uso garantizado.';
 

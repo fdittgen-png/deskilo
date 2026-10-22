@@ -1675,6 +1675,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biForbidden => 'You may not read this analysis in this workspace.';
 
   @override
+  String get biForecastDefinition =>
+      'What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.';
+
+  @override
+  String get biForecastTitle => 'Expected to pay (owed + contracts)';
+
+  @override
   String get biFutureBasis =>
       'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.';
 
