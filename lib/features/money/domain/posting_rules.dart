@@ -17,6 +17,9 @@
 //   * write-off (`writeoffAt`): Dr `write_off` the net and Dr
 //     `vat_output:<group>` the tax regularised of the open rest, split over
 //     the rate groups by their gross; Cr customers that rest.
+//   * tax point (0521): an invoice whose output tax is not exactly due on
+//     its issue day credits it to `vat_pending`; each tax point releases
+//     its share, Dr `vat_pending` / Cr `vat_output:<group>`.
 //
 // A qualified role resolves first and falls back to its base; a base with
 // no mapping blocks with the role named. Nothing is guessed.
@@ -27,6 +30,7 @@ import 'book_chart.dart';
 import 'invoice.dart';
 import 'posting.dart';
 import 'vat_rate.dart';
+import 'vat_tax_point.dart';
 
 /// The issuer's chart a posting resolves on.
 class PostingBook {
@@ -86,11 +90,13 @@ class PostingBook {
 
 /// The postings of [invoices] and their [matches], on [book]. [groupOf]
 /// names the rate group of a VAT total (the tax reference's `rate` rows).
+/// With [taxPoints], tax not due on the issue day waits on `vat_pending`.
 PostingSet postingsOf({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   required PostingBook book,
   required String Function(InvoiceVatTotal total) groupOf,
+  VatTaxPointIndex? taxPoints,
 }) {
   final view = accountingView(invoices, matches);
   final postings = <Posting>[];
@@ -102,9 +108,11 @@ PostingSet postingsOf({
       book.block(PostingBlock.unsupportedCurrency, invoice.currency);
       continue;
     }
+    final deferred = _deferred(invoice, taxPoints);
     postings.addAll([
-      ..._document(invoice, book, groupOf),
+      ..._document(invoice, book, groupOf, deferred: deferred),
       ..._settled(invoice, view.matches[invoice.id], book, groupOf),
+      if (deferred) ..._released(invoice, taxPoints!, book, groupOf),
     ]);
   }
   postings.sort(comparePostings);
@@ -176,8 +184,9 @@ int _gross(List<_Part> parts) => parts.fold<int>(0, (s, p) => s + p.gross);
 List<Posting> _document(
   Invoice i,
   PostingBook book,
-  String Function(InvoiceVatTotal) groupOf,
-) {
+  String Function(InvoiceVatTotal) groupOf, {
+  bool deferred = false,
+}) {
   final day = i.issuedAt;
   final parts = _parts(i, groupOf);
   final gross = _gross(parts);
@@ -223,14 +232,7 @@ List<Posting> _document(
         debitSide: false,
         qualifier: p.group,
       ),
-      if (p.vat != 0)
-        ?postingLine(
-          BookRole.vatOutput,
-          book.code(BookRole.vatOutput, day, qualifier: p.group),
-          _amount(i, p.vat),
-          debitSide: false,
-          qualifier: p.group,
-        ),
+      if (p.vat != 0) ?_outputTax(i, p, book, day, deferred: deferred),
     ],
   ];
   return [
@@ -253,6 +255,91 @@ List<Posting> _document(
         BookRole.expenses,
         spent,
       ),
+  ];
+}
+
+/// The output tax of part [p]: due now on `vat_output:<group>`, or waiting
+/// on `vat_pending` for its tax point.
+PostingLine? _outputTax(
+  Invoice i,
+  _Part p,
+  PostingBook book,
+  DateTime day, {
+  required bool deferred,
+}) => deferred
+    ? postingLine(
+        BookRole.vatPending,
+        book.code(BookRole.vatPending, day),
+        _amount(i, p.vat),
+        debitSide: false,
+      )
+    : postingLine(
+        BookRole.vatOutput,
+        book.code(BookRole.vatOutput, day, qualifier: p.group),
+        _amount(i, p.vat),
+        debitSide: false,
+        qualifier: p.group,
+      );
+
+/// Whether [i]'s output tax is not exactly due on its issue day.
+bool _deferred(Invoice i, VatTaxPointIndex? taxPoints) {
+  final vat = i.vatTotals.fold<int>(0, (s, t) => s + t.vatCents);
+  final issued = DateTime(i.issuedAt.year, i.issuedAt.month, i.issuedAt.day);
+  return taxPoints != null &&
+      vat != 0 &&
+      taxPoints.vatAwayFrom(i.id, issued, vat);
+}
+
+/// The tax of [i] released on each tax point, one entry per day and rate
+/// group (as `compute_postings` groups them).
+List<Posting> _released(
+  Invoice i,
+  VatTaxPointIndex taxPoints,
+  PostingBook book,
+  String Function(InvoiceVatTotal) groupOf,
+) {
+  final byDay = <DateTime, Map<String?, int>>{};
+  for (final a in taxPoints.amountsOf(i.id)) {
+    final group = groupOf(
+      InvoiceVatTotal(
+        percent: a.percent,
+        category: 'S',
+        grossCents: a.grossCents,
+        netCents: a.netCents,
+        vatCents: a.vatCents,
+      ),
+    );
+    final day = byDay.putIfAbsent(a.on, () => {});
+    final key = group.isEmpty ? null : group;
+    day[key] = (day[key] ?? 0) + a.vatCents;
+  }
+  final days = byDay.keys.toList()..sort();
+  return [
+    for (final on in days)
+      for (final MapEntry(key: group, value: vat) in byDay[on]!.entries)
+        if (vat != 0)
+          Posting(
+            journal: PostingJournal.other,
+            date: on,
+            kind: PostingKind.vatRelease,
+            documentId: i.id,
+            documentNumber: i.number,
+            lines: [
+              ?postingLine(
+                BookRole.vatPending,
+                book.code(BookRole.vatPending, on),
+                _amount(i, vat),
+                debitSide: true,
+              ),
+              ?postingLine(
+                BookRole.vatOutput,
+                book.code(BookRole.vatOutput, on, qualifier: group),
+                _amount(i, vat),
+                debitSide: false,
+                qualifier: group,
+              ),
+            ],
+          ),
   ];
 }
 
