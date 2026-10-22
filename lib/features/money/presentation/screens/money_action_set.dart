@@ -38,6 +38,7 @@ class MoneyActionSet {
     required this.recordPayment,
     required this.buyPackage,
     required this.requestButtons,
+    required this.purchaseButtons,
     required this.invoices,
     required this.status,
     required this.wizard,
@@ -62,6 +63,7 @@ class MoneyActionSet {
       ),
       buyPackage: data.onPackagePlan ? _buyPackage(l10n, ops, currency) : null,
       requestButtons: _requestButtons(context, ref, l10n, ops, data),
+      purchaseButtons: _purchaseButtons(context, ref, l10n, data),
       invoices: _managementTile(
         on: data.invoicingOn,
         key: 'invoices-button',
@@ -97,6 +99,11 @@ class MoneyActionSet {
 
   /// What asks: expense, scheduled expenses, quota, consumption.
   final List<Widget> requestButtons;
+
+  /// #2577 — what the space buys and owes, apart from what a member asks:
+  /// suppliers, purchases, the lease, equipment, rented rooms and the
+  /// periods of the books. Empty for whoever manages none of them.
+  final List<Widget> purchaseButtons;
 
   /// #871 — the hand-off to invoice MANAGEMENT reads like every other
   /// management access in the app (the Settings tiles): a row with the
@@ -150,6 +157,36 @@ class MoneyActionSet {
           icon: const Icon(Icons.event_repeat_outlined),
           label: fitted(l10n.scheduledExpensesTitle),
         ),
+      OutlinedButton.icon(
+        key: const ValueKey('quota-request-button'),
+        onPressed: () => ops.sheets.requestQuota(ops.period),
+        icon: const Icon(Icons.hourglass_top_outlined),
+        label: fitted(l10n.quotaRequestButton),
+      ),
+      // Consumption follows the services feature (#146).
+      if (data.servicesOn)
+        OutlinedButton.icon(
+          key: const ValueKey('money-consumption-add'),
+          onPressed: () {
+            final me = ref.read(myMemberProvider).value;
+            if (me == null) return;
+            unawaited(
+                showConsumptionSheet(context, ref, subjectMemberId: me.id));
+          },
+          icon: const Icon(Icons.room_service_outlined),
+          label: fitted(l10n.consumptionAdd),
+        ),
+    ];
+  }
+
+  static List<Widget> _purchaseButtons(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+    MoneyViewData data,
+  ) {
+    Widget fitted(String text) => fittedLabel(text);
+    return [
       // #2567 — the payees of the purchase side, for those who manage the
       // money.
       if (data.suppliersOn && data.workspace != null)
@@ -225,25 +262,6 @@ class MoneyActionSet {
           canMatch: ref
               .read(myPermissionsProvider)
               .any((p) => p.wireName == purchaseManagePermission),
-        ),
-      OutlinedButton.icon(
-        key: const ValueKey('quota-request-button'),
-        onPressed: () => ops.sheets.requestQuota(ops.period),
-        icon: const Icon(Icons.hourglass_top_outlined),
-        label: fitted(l10n.quotaRequestButton),
-      ),
-      // Consumption follows the services feature (#146).
-      if (data.servicesOn)
-        OutlinedButton.icon(
-          key: const ValueKey('money-consumption-add'),
-          onPressed: () {
-            final me = ref.read(myMemberProvider).value;
-            if (me == null) return;
-            unawaited(
-                showConsumptionSheet(context, ref, subjectMemberId: me.id));
-          },
-          icon: const Icon(Icons.room_service_outlined),
-          label: fitted(l10n.consumptionAdd),
         ),
     ];
   }

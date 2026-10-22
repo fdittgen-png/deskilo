@@ -15130,6 +15130,10 @@
   "@moneySectionPay": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "moneySectionPurchases": "Purchases and books",
+  "@moneySectionPurchases": {
+    "description": "Money tab (#2577): what the space buys and owes, apart from a member's own requests"
+  },
   "moneySectionRequests": "Requests",
   "@moneySectionRequests": {
     "description": "Finance/settings UX + workspace language (#486)"
