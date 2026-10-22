@@ -123,9 +123,12 @@ const biModules = <BiModule>[
     groupings: {'level'},
     // Offered seat time is made of the opening hours and closures set
     // there; that screen is where the denominator comes from.
+    // #2578 — the bookings that make the figure, for its months; changing
+    // the opening hours stays the availability screen's own action.
     drill: BiDrill(
-      route: '/availability',
-      permission: WorkspacePermission.workspaceSettings,
+      route: '/reservations/period',
+      permission: WorkspacePermission.viewAnalytics,
+      carriesPeriod: true,
     ),
   ),
   // #1924 — the treasurer's two figures, from the money report's own

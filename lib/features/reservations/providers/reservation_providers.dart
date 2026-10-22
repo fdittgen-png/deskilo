@@ -252,3 +252,43 @@ Future<CalendarFiles> calendarFiles(Ref ref) async {
 final audienceMembersFromReservations = audienceMembersProvider.overrideWith(
   (ref) => ref.watch(memberNamesProvider).value ?? const {},
 );
+
+/// #2578 — the place names a list of bookings shows (seat, office, level by
+/// id), read from the plan once for the active workspace.
+@riverpod
+Future<Map<String, String>> bookingTargetNames(Ref ref) =>
+    ref.watch(targetNamesProvider.future);
+
+// #2578 — the reservations behind a capacity figure: every booking of the
+// active workspace in the whole months [fromMonth, toMonth] on the local
+// calendar, as the row policies let the reader see them.
+/// The first day of `YYYY-MM`, or null when [month] is not one.
+DateTime? _monthStart(String month) {
+  final m = RegExp(r'^(\d{4})-(0[1-9]|1[0-2])$').firstMatch(month);
+  return m == null
+      ? null
+      : DateTime(int.parse(m.group(1)!), int.parse(m.group(2)!));
+}
+
+/// The bookings of the months, earliest first; empty for a malformed
+/// period or a [toMonth] before [fromMonth].
+@riverpod
+Future<List<Reservation>> periodReservations(
+  Ref ref,
+  String fromMonth,
+  String toMonth,
+) async {
+  final repository = ref.watch(reservationRepositoryProvider);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  final from = _monthStart(fromMonth);
+  final last = _monthStart(toMonth);
+  if (workspace == null ||
+      from == null ||
+      last == null ||
+      last.isBefore(from)) {
+    return const [];
+  }
+  final to = DateTime(last.year, last.month + 1);
+  final rows = await repository.fetchWindow(workspace.id, from: from, to: to);
+  return [...rows]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+}
