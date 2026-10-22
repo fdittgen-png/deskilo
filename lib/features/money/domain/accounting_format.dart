@@ -229,7 +229,6 @@ List<AccountingFormat> formatsFor(String countryCode) => [
 /// then the generic fallbacks. Someone under audit is looking for one
 /// specific file and should not have to read past three alternatives to
 /// find it.
-@visibleForTesting
 const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'fec',
@@ -295,9 +294,9 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'ch_kmu',
-    vendor: 'KMU',
-    product: 'Swiss KMU journal',
-    edition: 'CSV',
+    vendor: 'KMU-Kontenrahmen',
+    product: 'Swiss booking journal',
+    edition: 'CSV, Ziffer per row',
     countries: {'CH'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
