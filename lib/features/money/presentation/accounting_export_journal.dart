@@ -9,15 +9,14 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
-import '../domain/book_profile.dart';
 
-/// Builds the journal of [year] through [export] and hands it to [save].
+export '../application/generic_journal_export.dart' show localBookOf;
+
+/// Builds a posted file through [build] (the generic journal, or #2365 the
+/// FEC of a local book) and hands it to [save].
 Future<void> exportGenericJournal(
   BuildContext context,
-  GenericJournalExport export, {
-  required String workspaceId,
-  required List<BookProfile> profiles,
-  required int year,
+  Future<GenericJournal> Function() build, {
   required Future<void> Function(String content) save,
 }) async {
   GenericJournal? journal;
@@ -25,7 +24,7 @@ Future<void> exportGenericJournal(
     context,
     domain: 'money',
     message: 'journal postings failed',
-    action: () async => journal = await export.of(workspaceId, profiles, year),
+    action: () async => journal = await build(),
   );
   if (!read || !context.mounted) return;
   final l10n = context.l10n;
