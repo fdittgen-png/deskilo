@@ -7994,6 +7994,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get holidayWhitMonday => 'Lundi de Pentecôte';
 
   @override
+  String get hubPurchasesSubtitle =>
+      'Ce que l\'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements';
+
+  @override
+  String get hubPurchasesTitle => 'Achats';
+
+  @override
+  String get hubSalesSubtitle =>
+      'Ce que l\'espace vend et facture : services, factures, facturation';
+
+  @override
+  String get hubSalesTitle => 'Ventes';
+
+  @override
   String get identityConnectBrowser => 'Le navigateur n\'a pas pu être ouvert.';
 
   @override

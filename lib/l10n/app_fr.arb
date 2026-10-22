@@ -5757,6 +5757,10 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",
+  "hubPurchasesTitle": "Achats",
+  "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation",
+  "hubSalesTitle": "Ventes",
   "identityConnectBrowser": "Le navigateur n'a pas pu être ouvert.",
   "identityConnectConfirmApply": "Envoyer votre demande d'adhésion à {name} ?",
   "identityConnectConfirmApplyBody": "Vous êtes maintenant connecté. L'espace examine votre demande ; rien d'autre n'est partagé.",
