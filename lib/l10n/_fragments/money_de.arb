@@ -379,5 +379,9 @@
   "hubPurchasesTitle": "Einkauf",
   "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",
   "hubSalesTitle": "Verkauf",
-  "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung"
+  "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung",
+  "hubCashTitle": "Geld",
+  "hubCashSubtitle": "Erfasste Ein- und Ausgänge und was noch zu zahlen ist",
+  "cashHubInOut": "Ein- und Ausgänge nach Monat",
+  "cashHubToPay": "Zu zahlen"
 }

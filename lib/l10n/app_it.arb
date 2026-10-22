@@ -2139,6 +2139,8 @@
   "carnetValidity": "Validità (mesi, vuoto = non scade mai)",
   "carnetsEmpty": "Nessun carnet per ora.",
   "carnetsTitle": "Carnet",
+  "cashHubInOut": "Entrate e uscite per mese",
+  "cashHubToPay": "Da pagare",
   "chBareLetting": "Affittiamo solo locali nudi",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -5761,6 +5763,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubCashSubtitle": "Entrate e uscite registrate, e ciò che resta da pagare",
+  "hubCashTitle": "Cassa",
   "hubPurchasesSubtitle": "Ciò che lo spazio acquista e deve: spese, fatture fornitori, fornitori, locazione, attrezzature",
   "hubPurchasesTitle": "Acquisti",
   "hubSalesSubtitle": "Ciò che lo spazio vende e fattura: servizi, fatture, fatturazione",

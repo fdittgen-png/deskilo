@@ -3193,6 +3193,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get carnetsTitle => 'Mehrfachkarten';
 
   @override
+  String get cashHubInOut => 'Ein- und Ausgänge nach Monat';
+
+  @override
+  String get cashHubToPay => 'Zu zahlen';
+
+  @override
   String get chBareLetting => 'Wir vermieten nur Räume';
 
   @override
@@ -7993,6 +7999,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Pfingstmontag';
+
+  @override
+  String get hubCashSubtitle =>
+      'Erfasste Ein- und Ausgänge und was noch zu zahlen ist';
+
+  @override
+  String get hubCashTitle => 'Geld';
 
   @override
   String get hubPurchasesSubtitle =>

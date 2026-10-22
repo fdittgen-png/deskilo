@@ -44,6 +44,7 @@ class MoneyActionSet {
     required this.wizard,
     required this.purchasesHub,
     required this.salesHub,
+    required this.cashHub,
   });
 
   /// Reads the member, the enabled features and the sheets' wiring of
@@ -90,6 +91,15 @@ class MoneyActionSet {
         title: l10n.hubPurchasesTitle,
         subtitle: l10n.hubPurchasesSubtitle,
         onTap: () => context.push('/money/purchases'),
+      ),
+      cashHub: _managementTile(
+        on: (data.statusToolOn || data.purchasesOn) &&
+            (data.member?.isAdmin ?? false),
+        key: 'cash-hub-button',
+        icon: Icons.account_balance_wallet_outlined,
+        title: l10n.hubCashTitle,
+        subtitle: l10n.hubCashSubtitle,
+        onTap: () => context.push('/money/cash'),
       ),
       salesHub: _managementTile(
         on: data.invoicingOn && (data.member?.isAdmin ?? false),
@@ -139,10 +149,11 @@ class MoneyActionSet {
   /// #2577 — the purchase and sales pages, for those who manage the money.
   final Widget? purchasesHub;
   final Widget? salesHub;
+  final Widget? cashHub;
 
   /// The workspace tools in their order.
   List<Widget> get workspaceTools =>
-      [?invoices, ?status, ?wizard, ?salesHub, ?purchasesHub];
+      [?invoices, ?status, ?wizard, ?salesHub, ?purchasesHub, ?cashHub];
 
   bool get hasWorkspaceTools => workspaceTools.isNotEmpty;
 
@@ -153,6 +164,41 @@ class MoneyActionSet {
       ref
           .watch(myPermissionsProvider)
           .any((p) => p.wireName == purchaseManagePermission);
+
+  /// #2577 — the cash side's doors: recorded money, never a bank balance.
+  static List<Widget> cashDoors(
+    BuildContext context,
+    WidgetRef ref,
+    MoneyViewData data,
+  ) {
+    final l10n = context.l10n;
+    final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
+    final workspace = data.workspace;
+    Widget door(String key, IconData icon, String title, VoidCallback onTap) =>
+        ListTile(
+          key: ValueKey(key),
+          leading: Icon(icon),
+          title: Text(title),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          onTap: onTap,
+        );
+    return [
+      if (data.statusToolOn)
+        door('cash-hub-in-out', Icons.account_balance_outlined,
+            l10n.cashHubInOut, () => context.push('/money/status')),
+      if (data.purchasesOn && workspace != null)
+        door('cash-hub-to-pay', Icons.outbox_outlined, l10n.cashHubToPay,
+            () => showPurchasesSheet(
+                  context,
+                  workspace.id,
+                  canCapture: held.contains(purchaseManagePermission),
+                  canPay: held.contains(purchasePayPermission),
+                  canDecide: held.contains(purchaseDecidePermission),
+                  canOffset: held.contains(purchaseOffsetPermission),
+                  toPay: true,
+                )),
+    ];
+  }
 
   /// #2577 — the purchase side's doors, for the purchases page.
   static List<Widget> purchaseDoors(
