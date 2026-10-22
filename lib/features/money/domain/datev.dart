@@ -93,8 +93,13 @@ class DatevAccounts {
   final String? _givenChart;
   final String? _givenExpenses;
 
+  TaxReferenceSet get _ref => reference ?? ActiveTaxReference.current;
+
+  /// #2365 — the SKR04 plan's own row when the chart given is SKR04
+  /// ([datevChartAccount]), the German chart's otherwise.
   String _default(String role) =>
-      (reference ?? ActiveTaxReference.current).accountOf('coa', role, 'DE');
+      (_givenChart == null ? null : datevChartAccount(_ref, _givenChart, role)) ??
+      _ref.accountOf('coa', role, 'DE');
 
   /// SKR03 debtor range starts at 10000. A real chart numbers each
   /// customer; one collective account keeps the export honest about
@@ -123,15 +128,13 @@ class DatevAccounts {
   /// #2365 — SKR03 2400, Forderungsverluste: what the owner gave up of an
   /// invoice, booked at the gross amount it was still owed.
   String get writeOff =>
-      (reference ?? ActiveTaxReference.current).accountOf('datev', 'write_off', 'DE');
+      datevChartAccount(_ref, chart, 'write_off') ??
+      _ref.accountOf('datev', 'write_off', 'DE');
 
   /// #2365 — the automatic revenue account of the rate [percent]
   /// ([datevRevenueAt]).
-  String revenueAt(double percent) => datevRevenueAt(
-    reference ?? ActiveTaxReference.current,
-    percent,
-    revenue,
-  );
+  String revenueAt(double percent) =>
+      datevRevenueAt(_ref, percent, revenue, chart: chart);
 
   /// #2365 — header field 27, the Standardkontenrahmen as DATEV writes it:
   /// the digits of the chart's name ('03' for SKR03), empty when it has

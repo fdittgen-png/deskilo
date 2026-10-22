@@ -12,11 +12,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support/seeded_export_year.dart';
 
 /// (amount, Konto, Gegenkonto) of every booking row of [invoices].
-List<(String, String, String)> _rows(List<Invoice> invoices) => [
+List<(String, String, String)> _rows(
+  List<Invoice> invoices, {
+  DatevAccounts accounts = const DatevAccounts(),
+}) => [
   for (final r in buildDatevFile(
     invoices: invoices,
     matches: const {},
-    accounts: const DatevAccounts(),
+    accounts: accounts,
     from: DateTime(2026),
     to: DateTime(2026, 12, 31),
     generatedAt: DateTime(2027, 1, 5),
@@ -63,5 +66,25 @@ void main() {
       totalCents: 17850,
     );
     expect(_rows([single]), [('178,50', '10000', '8400')]);
+  });
+
+  test('under an SKR04 header the defaults are the SKR04 plan (0523)', () {
+    const skr04 = DatevAccounts(chart: 'SKR04');
+    expect(
+      (skr04.customers, skr04.revenue, skr04.bank, skr04.vat),
+      ('10000', '4400', '1800', '3806'),
+    );
+    expect((skr04.expenses, skr04.writeOff), ('6300', '6936'));
+    final mixed = base.copyWith(
+      lines: const [
+        InvoiceLine(label: 'Desk', amountCents: 11900, vatPercent: 19),
+        InvoiceLine(label: 'Books', amountCents: 10700, vatPercent: 7),
+      ],
+      totalCents: 22600,
+    );
+    expect(_rows([mixed], accounts: skr04), [
+      ('119,00', '10000', '4400'),
+      ('107,00', '10000', '4300'),
+    ]);
   });
 }

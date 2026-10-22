@@ -2,21 +2,42 @@
 //
 // #2365 (DATEV 3b) — DATEV derives the tax from the revenue account, so each
 // rate books to its own automatic account (SKR03 8400 for 19 %, 8300 for
-// 7 %), never the gross of two rates on one.
+// 7 %; SKR04 4400 and 4300), never the gross of two rates on one. The
+// SKR04 plan's defaults are rows of their own (`datev/<role>@SKR04`).
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'invoice.dart';
 
 /// The automatic revenue account of the rate [percent] in [reference]'s
-/// German chart: [base] for the standard rate and wherever the chart names
+/// German [chart]: [base] for the standard rate and wherever the chart names
 /// no account for the rate's group.
-String datevRevenueAt(TaxReferenceSet reference, double percent, String base) {
+String datevRevenueAt(
+  TaxReferenceSet reference,
+  double percent,
+  String base, {
+  String chart = 'SKR03',
+}) {
   final group = reference.groupOfRate('DE', percent, 'S');
   if (group.isEmpty || group == 'standard') return base;
+  return datevChartAccount(reference, chart, 'revenue:$group') ?? base;
+}
+
+/// The DATEV row of [role] in [chart]: `datev/<role>@SKR04` in the SKR04
+/// plan, `datev/<role>` in SKR03; null where the reference has none.
+String? datevChartAccount(
+  TaxReferenceSet reference,
+  String chart,
+  String role,
+) {
+  final skr04 = chart.trim().toUpperCase() == 'SKR04';
   final row = reference
       .resolved(null)
-      .lookup(TaxDomain.accountMap, 'DE', 'datev/revenue:$group');
-  return (row?.value as AccountMapValue?)?.account ?? base;
+      .lookup(
+        TaxDomain.accountMap,
+        'DE',
+        skr04 ? 'datev/$role@SKR04' : 'datev/$role',
+      );
+  return (row?.value as AccountMapValue?)?.account;
 }
 
 /// #2365 — [cents] of [invoice] per automatic revenue account of its rates:
