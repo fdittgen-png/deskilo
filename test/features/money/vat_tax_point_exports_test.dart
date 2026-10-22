@@ -91,14 +91,14 @@ void main() {
     basis: basis,
   );
 
-  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(
+  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(
     invoices: [invoice],
     matches: matches,
     company: _company,
     accounts: const FecAccounts(),
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
     taxPoints: taxPoints,
-  );
+  ));
 
   group('the FEC', () {
     test('books the VAT pending at issue and releases each part on its '

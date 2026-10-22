@@ -230,7 +230,7 @@ class AccountingExportRun {
       message: 'FEC export failed',
       errorText: l10n.workspaceGenericError,
       action: () => save(
-        buildFecFile(
+        buildFecFile(FecRequest(
           invoices: exported,
           matches: matches,
           company: company,
@@ -247,7 +247,7 @@ class AccountingExportRun {
           expensesLabel: l10n.fecAccountExpenses,
           taxPoints: taxPoints,
           vatPendingLabel: vatWords(l10n).fecAccountVatPending,
-        ),
+        )),
         fecFileName(company.legalId, DateTime(year, 12, 31),
             development: development),
       ),
@@ -344,13 +344,13 @@ class AccountingExportRun {
     // ledger sections are not part of the declaration at all, so
     // adding them would break the very thing that makes that file
     // valid.
-    String file({SafTLedgerAccounts? accounts, List<Posting>? posted}) => buildSafTFile(
+    String file({SafTLedgerAccounts? accounts, List<Posting>? posted}) => buildSafTFile(SafTRequest(
           invoices: exported, matches: matches, company: company, currency: workspace.currencyCode,
           softwareVersion: safTSoftwareVersion, createdAt: now,
           lineText: (line) => invoiceLineText(words, line, association: association),
           fallbackDescription: l10n.invoicesTitle,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
-          ledgerAccounts: accounts, bookPostings: posted);
+          ledgerAccounts: accounts, bookPostings: posted));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
     if (!portugal && localBookOf(bookProfiles, year) != null) {
       final books = ref.read(genericJournalExportProvider);
@@ -495,7 +495,7 @@ class AccountingExportRun {
           generatedAt: now,
           workspaceName: workspace.name,
         ));
-        addArchiveFec(files, country, buildFecFile(
+        addArchiveFec(files, country, buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,
           company: company,
@@ -507,7 +507,7 @@ class AccountingExportRun {
           memberNames: memberNames,
           repartitions: repartitions,
           taxPoints: taxPoints,
-        ));
+        )));
         if (!context.mounted) return;
         await savePdfToDownloads(
           context,

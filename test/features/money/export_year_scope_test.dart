@@ -60,7 +60,7 @@ void main() {
       ledger: SeededExportYear.ledger,
       repartitions: SeededExportYear.repartitions,
     );
-    final file = buildFecFile(
+    final file = buildFecFile(FecRequest(
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
@@ -68,7 +68,7 @@ void main() {
       lineText: (l) => l.label,
       ledger: scope.ledger,
       repartitions: scope.repartitions,
-    );
+    ));
     expect(file, isNot(contains('L-exp-2024')));
     expect(file, isNot(contains('R-2025')));
     expect(file, contains('L-exp-2026'));

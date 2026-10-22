@@ -13,14 +13,14 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 void main() {
   test('FEC: the netted expense never reaches the bank, the payment does', () {
-    final file = buildFecFile(
+    final file = buildFecFile(FecRequest(
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger,
-    );
+    ));
     final lines = file.split('\r\n');
     final head = lines.first.split('\t');
     final rows = [

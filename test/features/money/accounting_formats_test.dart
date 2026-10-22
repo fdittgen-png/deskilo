@@ -473,7 +473,7 @@ void main() {
       vat: '445710',
     );
 
-    String build({SafTLedgerAccounts? ledger}) => buildSafTFile(
+    String build({SafTLedgerAccounts? ledger}) => buildSafTFile(SafTRequest(
           invoices: [inv(vat: _vat20)],
           matches: {'i1': match()},
           company: const InvoiceParty(name: 'Pézenas', country: 'FR'),
@@ -482,7 +482,7 @@ void main() {
           createdAt: DateTime(2026, 5),
           lineText: (line) => line.label,
           ledgerAccounts: ledger,
-        );
+        ));
 
     test('no mapping means NO section — never invented numbers', () {
       // The ELEMENT, not the word: the header comment names it precisely

@@ -186,13 +186,13 @@ Map<String, InvoiceMatch> _matches() => {
       ),
     };
 
-String _fec({List<Invoice>? invoices}) => buildFecFile(
+String _fec({List<Invoice>? invoices}) => buildFecFile(FecRequest(
       invoices: invoices ?? _aRealYear(),
       matches: _matches(),
       company: _company,
       accounts: const FecAccounts(),
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    );
+    ));
 
 List<Map<String, String>> _fecRows([String? file]) {
   final lines = (file ?? _fec()).split('\r\n').where((l) => l.isNotEmpty);

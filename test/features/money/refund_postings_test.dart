@@ -27,14 +27,14 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 void main() {
   test('FEC: the refund is customers debited, bank credited, lettered', () {
-    final lines = buildFecFile(
+    final lines = buildFecFile(FecRequest(
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger,
-    ).split('\r\n');
+    )).split('\r\n');
     final head = lines.first.split('\t');
     final rows = [
       for (final l in lines.skip(1)) Map.fromIterables(head, l.split('\t')),
@@ -52,14 +52,14 @@ void main() {
   });
 
   test('FEC: no refund row without a refunded match', () {
-    final file = buildFecFile(
+    final file = buildFecFile(FecRequest(
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger,
-    );
+    ));
     expect(file, isNot(contains('BQ-CN-1-R')));
   });
 
@@ -115,7 +115,7 @@ void main() {
   });
 
   test('SAF-T ledger: the refund clears the receivable against the bank', () {
-    final xml = buildSafTFile(
+    final xml = buildSafTFile(SafTRequest(
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       company: seededCompany,
@@ -129,7 +129,7 @@ void main() {
         bank: '512',
         vat: '4457',
       ),
-    );
+    ));
     final start = xml.indexOf('<TransactionID>CN-1-P</TransactionID>');
     expect(start, greaterThan(0));
     final t = xml.substring(start, xml.indexOf('</Transaction>', start));

@@ -17,14 +17,14 @@ import 'support/seeded_export_year.dart';
 int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 List<Map<String, String>> _fec({Map<String, InvoiceMatch>? matches}) {
-  final file = buildFecFile(
+  final file = buildFecFile(FecRequest(
     invoices: SeededExportYear.invoices,
     matches: matches ?? SeededExportYear.matches,
     company: seededCompany,
     accounts: const FecAccounts(),
     lineText: (l) => l.label,
     ledger: SeededExportYear.ledger,
-  );
+  ));
   final lines = file.split('\r\n');
   final head = lines.first.split('\t');
   return [
@@ -161,7 +161,7 @@ void main() {
   });
 
   group('SAF-T', () {
-    String saft({String writeOff = '654', Map<String, InvoiceMatch>? matches}) => buildSafTFile(
+    String saft({String writeOff = '654', Map<String, InvoiceMatch>? matches}) => buildSafTFile(SafTRequest(
       invoices: SeededExportYear.invoices,
       matches: matches ?? SeededExportYear.matches,
       company: seededCompany,
@@ -176,7 +176,7 @@ void main() {
         vat: '4457',
         writeOff: writeOff,
       ),
-    );
+    ));
 
     test('the written-off rest is a balanced transaction in the sales journal', () {
       final xml = saft();

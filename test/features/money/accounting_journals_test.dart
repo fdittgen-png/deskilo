@@ -52,11 +52,11 @@ void main() {
   group('FEC', () {
     test('a credit note is booked as a sale reversed, lettered with the '
         'invoice it corrects — it used to be absent', () {
-      final file = buildFecFile(
+      final file = buildFecFile(FecRequest(
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -25000, replaces: 'INV-2026-0001')],
         matches: const {}, company: _company, accounts: const FecAccounts(),
         lineText: (line) => invoiceLineText(const ReportStrings(), line),
-      );
+      ));
       final cn = _rows(file).where((r) => r['PieceRef'] == 'CN-2026-0001').toList();
       num money(String? s) => num.parse((s ?? '0').replaceAll(',', '.'));
       final revenueDebit = cn.where((r) => r['CompteNum'] == '706000').fold<num>(0, (t, r) => t + money(r['Debit']));
@@ -70,11 +70,11 @@ void main() {
 
     test('a reimbursed expense lands in the purchases journal, balanced, '
         'expenses against the member\'s customer account', () {
-      final file = buildFecFile(
+      final file = buildFecFile(FecRequest(
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         ledger: [_reimbursement], memberNames: const {'member-1': 'Ana Martin'},
-      );
+      ));
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
       expect(ha, hasLength(2));
       expect(ha.map((r) => r['EcritureNum']).toSet(), {'HA-le-1'});
@@ -84,22 +84,22 @@ void main() {
     });
 
     test('a shared cost the workspace paid is the expense itself, from the bank', () {
-      final file = buildFecFile(
+      final file = buildFecFile(FecRequest(
         invoices: [_invoice()], matches: const {}, company: _company,
         accounts: const FecAccounts(), lineText: (line) => invoiceLineText(const ReportStrings(), line),
         repartitions: [_rent],
-      );
+      ));
       final ha = _rows(file).where((r) => r['JournalCode'] == 'HA').toList();
       expect(ha.singleWhere((r) => r['CompteNum'] == '606000')['Debit'], '600,00');
       expect(ha.singleWhere((r) => r['CompteNum'] == '512000')['Credit'], '600,00');
     });
 
     test('an association that does not charge VAT books no VAT row', () {
-      final file = buildFecFile(
+      final file = buildFecFile(FecRequest(
         invoices: [_invoice(), _invoice(number: 'CN-2026-0001', total: -1000)],
         matches: const {}, company: _company, accounts: const FecAccounts(),
         lineText: (line) => invoiceLineText(const ReportStrings(), line),
-      );
+      ));
       expect(_rows(file).where((r) => r['CompteNum'] == '445710'), isEmpty);
     });
 
