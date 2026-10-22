@@ -723,6 +723,27 @@
   "biCardUp": "Monter",
   "biCards": "Analyses affichées",
   "biCardsUnavailable": "{count} analyses de cette vue ne vous sont pas accessibles et sont omises.",
+  "biCashNotBankBalance": "Des paiements enregistrés, pas un solde bancaire rapproché.",
+  "@biCashNotBankBalance": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsBasis": "{count} paiements",
+  "@biCashOutflowsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCashOutflowsDefinition": "Les paiements aux fournisseurs et aux membres déclarés payés pendant la période, au jour où ils ont été payés. Les paiements annulés et préparés sont exclus.",
+  "@biCashOutflowsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsTitle": "Payé (enregistré)",
+  "@biCashOutflowsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "biChangePoints": "{value} pts",
   "biCollectionCentre": "de ce qui a été facturé",
   "@biCollectionCentre": {
@@ -920,6 +941,43 @@
   "biProvisionalNote": "Provisoire : la période n'est pas terminée, cette variation est une estimation.",
   "@biProvisionalNote": {
     "description": "Business analytics dashboard: biProvisionalNote"
+  },
+  "biPurchasesApDefinition": "Les factures fournisseurs approuvées datées au plus tard de la fin de la période, moins ce qui a été payé, crédité ou compensé à cette date. Un solde lu ce jour-là, jamais une somme de mois.",
+  "@biPurchasesApDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApTitle": "Dû aux fournisseurs",
+  "@biPurchasesApTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesCurrentQueue": "La file est celle d'aujourd'hui : aucun historique n'en est gardé pour une période passée.",
+  "@biPurchasesCurrentQueue": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueDefinition": "Les notes de frais approuvées des membres datées au plus tard de la fin de la période, moins ce qui a été remboursé ou compensé à cette date. Une note déduite d'une facture à cette date est soldée par elle, jamais comptée deux fois.",
+  "@biPurchasesMemberDueDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueTitle": "À rembourser aux membres",
+  "@biPurchasesMemberDueTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingBasis": "pour {amount}",
+  "@biPurchasesPendingBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biPurchasesPendingDefinition": "Les documents d'achat en attente de décision aujourd'hui. Un document en attente n'est encore ni une charge ni une dette.",
+  "@biPurchasesPendingDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingTitle": "Achats à examiner",
+  "@biPurchasesPendingTitle": {
+    "description": "#2582 purchase analytics"
   },
   "biQuarter": "T{quarter} {year}",
   "biRecordedFuture": "Période future · réservations enregistrées",

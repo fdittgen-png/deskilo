@@ -21,6 +21,7 @@ import '../domain/bi_query.dart';
 import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
+import 'bi_purchase_reader.dart';
 import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
 
@@ -66,6 +67,16 @@ Future<BiResult> biModuleResult(
       compared,
     ),
     'finance.invoiced' || 'finance.collected' => _finance(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'purchases.ap_outstanding' ||
+    'purchases.member_reimbursements_due' ||
+    'purchases.pending_reviews' ||
+    'cash.recorded_outflows' => biPurchaseResult(
       ref,
       workspaceId,
       moduleId,
@@ -224,7 +235,6 @@ Future<BiSeries> _financeSeries(
 }
 
 /// The whole months of [p], `YYYY-MM` first and last (#1924).
-@visibleForTesting
 ({String from, String to}) biMonths(BiPeriod p) {
   String m(int month) => '${p.year}-${month.toString().padLeft(2, '0')}';
   return (from: m(p.startMonth), to: m(p.startMonth + p.grain.months - 1));

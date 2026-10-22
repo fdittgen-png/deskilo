@@ -723,6 +723,27 @@
   "biCardUp": "Subir",
   "biCards": "Análisis mostrados",
   "biCardsUnavailable": "{count} análisis de esta vista no están disponibles para usted y se omiten.",
+  "biCashNotBankBalance": "Pagos registrados, no un saldo bancario conciliado.",
+  "@biCashNotBankBalance": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsBasis": "{count} pagos",
+  "@biCashOutflowsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCashOutflowsDefinition": "Los pagos a proveedores y miembros declarados pagados en el período, por el día en que se pagaron. Se excluyen los pagos anulados y preparados.",
+  "@biCashOutflowsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsTitle": "Pagado (registrado)",
+  "@biCashOutflowsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "biChangePoints": "{value} p. p.",
   "biCollectionCentre": "de lo facturado",
   "@biCollectionCentre": {
@@ -920,6 +941,43 @@
   "biProvisionalNote": "Provisional: el periodo no ha terminado, este cambio es una estimación.",
   "@biProvisionalNote": {
     "description": "Business analytics dashboard: biProvisionalNote"
+  },
+  "biPurchasesApDefinition": "Las facturas de proveedores aprobadas con fecha hasta el final del período, menos lo pagado, abonado o compensado hasta entonces. Un saldo leído ese día, nunca una suma de meses.",
+  "@biPurchasesApDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApTitle": "Adeudado a proveedores",
+  "@biPurchasesApTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesCurrentQueue": "La cola es la de hoy: no se guarda historial de ella para un período pasado.",
+  "@biPurchasesCurrentQueue": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueDefinition": "Los gastos aprobados de los miembros con fecha hasta el final del período, menos lo reembolsado o compensado hasta entonces. Un gasto descontado en una factura hasta entonces queda saldado por ella, nunca contado dos veces.",
+  "@biPurchasesMemberDueDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueTitle": "A reembolsar a los miembros",
+  "@biPurchasesMemberDueTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingBasis": "por {amount}",
+  "@biPurchasesPendingBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biPurchasesPendingDefinition": "Los documentos de compra que esperan una decisión hoy. Un documento en espera aún no es ni un gasto ni una deuda.",
+  "@biPurchasesPendingDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingTitle": "Compras por revisar",
+  "@biPurchasesPendingTitle": {
+    "description": "#2582 purchase analytics"
   },
   "biQuarter": "T{quarter} {year}",
   "biRecordedFuture": "Periodo futuro · reservas registradas",

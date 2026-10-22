@@ -17,6 +17,7 @@
 // Pure Dart: no Flutter, no l10n.
 library;
 
+import '../../../core/data/json_reader.dart';
 import 'kpi_contract.dart';
 
 const _apOutstandingKpi = KpiDefinition(
@@ -96,3 +97,92 @@ const purchaseKpis = <KpiDefinition>[
   _pendingReviewsKpi,
   _recordedOutflowsKpi,
 ];
+
+/// What `kpi_purchases_summary` returned for the whole months
+/// [fromMonth, toMonth], typed. A missing amount is null, never 0.
+class PurchaseSummaryKpi {
+  const PurchaseSummaryKpi({
+    required this.fromMonth,
+    required this.toMonth,
+    required this.currency,
+    required this.apOutstandingMinor,
+    required this.memberDueMinor,
+    required this.pendingCount,
+    required this.pendingMinor,
+    required this.outflowsMinor,
+    required this.outflows,
+    required this.quality,
+    required this.reasons,
+    required this.computedAt,
+  });
+
+  final String fromMonth;
+  final String toMonth;
+  final String currency;
+  final int? apOutstandingMinor;
+  final int? memberDueMinor;
+  final int pendingCount;
+  final int? pendingMinor;
+  final int? outflowsMinor;
+
+  /// How many payments out the outflows are made of.
+  final int outflows;
+  final Set<KpiQuality> quality;
+  final List<String> reasons;
+  final DateTime computedAt;
+
+  /// The figure [moduleId] shows (minor units, or a count).
+  int? figure(String moduleId) => switch (moduleId) {
+    'purchases.ap_outstanding' => apOutstandingMinor,
+    'purchases.member_reimbursements_due' => memberDueMinor,
+    'purchases.pending_reviews' => pendingCount,
+    _ => outflowsMinor,
+  };
+}
+
+/// Parses the RPC's jsonb. An amount that cannot travel exactly makes the
+/// figures unavailable (`amount_not_exact`), never a rounded number.
+PurchaseSummaryKpi purchaseSummaryFromJson(Map<String, Object?> json) {
+  final r = JsonReader(json, context: 'kpi_purchases_summary');
+  final quality = r.strings('quality');
+  final reasons = r.strings('reasons');
+  final ap = exactMinor(r.raw('ap_outstanding_minor'));
+  final member = exactMinor(r.raw('member_due_minor'));
+  final pending = exactMinor(r.raw('pending_minor'));
+  final out = exactMinor(r.raw('outflows_minor'));
+  final inexact =
+      ap == null || member == null || pending == null || out == null;
+  final currency = r.stringOr('currency');
+  final pendingCount = r.integer('pending_count');
+  final outflows = r.integer('outflows');
+  if (pendingCount < 0 || outflows < 0) {
+    throw const FormatException('Invalid purchase count');
+  }
+  return PurchaseSummaryKpi(
+    fromMonth: r.stringOr('from'),
+    toMonth: r.stringOr('to'),
+    currency: currency,
+    apOutstandingMinor: ap,
+    memberDueMinor: member,
+    pendingCount: pendingCount,
+    pendingMinor: pending,
+    outflowsMinor: out,
+    outflows: outflows,
+    quality: {
+      for (final q in quality) kpiQualityOf(q) ?? KpiQuality.unavailable,
+      if (inexact || currency.isEmpty) KpiQuality.unavailable,
+    },
+    reasons: [...reasons, if (inexact) 'amount_not_exact'],
+    computedAt: r.dateTime('computed_at'),
+  );
+}
+
+/// Reads the purchase figures (#2582). Every call is authorized there.
+abstract interface class PurchaseKpiRepository {
+  /// The figures of the whole months [fromMonth, toMonth] (`YYYY-MM`).
+  Future<PurchaseSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  });
+}

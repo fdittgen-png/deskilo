@@ -6,5 +6,63 @@
   "featurePurchaseAnalyticsDesc": "Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl.",
   "@featurePurchaseAnalyticsDesc": {
     "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApTitle": "Offen bei Lieferanten",
+  "@biPurchasesApTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesApDefinition": "Die genehmigten Lieferantenrechnungen mit Datum bis zum Ende des Zeitraums, abzüglich dessen, was bis dahin bezahlt, gutgeschrieben oder verrechnet wurde. Ein Bestand an diesem Tag, nie eine Summe von Monaten.",
+  "@biPurchasesApDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueTitle": "An Mitglieder zu erstatten",
+  "@biPurchasesMemberDueTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesMemberDueDefinition": "Die genehmigten Auslagen der Mitglieder mit Datum bis zum Ende des Zeitraums, abzüglich dessen, was bis dahin erstattet oder verrechnet wurde. Eine bis dahin mit einer Rechnung verrechnete Auslage ist damit beglichen, nie doppelt gezählt.",
+  "@biPurchasesMemberDueDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingTitle": "Zu prüfende Einkäufe",
+  "@biPurchasesPendingTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingDefinition": "Die Einkaufsbelege, die heute auf eine Entscheidung warten. Ein wartender Beleg ist noch weder Aufwand noch Schuld.",
+  "@biPurchasesPendingDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biPurchasesPendingBasis": "im Wert von {amount}",
+  "@biPurchasesPendingBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biPurchasesCurrentQueue": "Die Warteschlange ist die von heute: Für einen vergangenen Zeitraum wird keine Historie geführt.",
+  "@biPurchasesCurrentQueue": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsTitle": "Ausgezahlt (erfasst)",
+  "@biCashOutflowsTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsDefinition": "Die Zahlungen an Lieferanten und Mitglieder, die im Zeitraum als bezahlt gemeldet wurden, nach dem Tag der Zahlung. Stornierte und vorbereitete Zahlungen bleiben außen vor.",
+  "@biCashOutflowsDefinition": {
+    "description": "#2582 purchase analytics"
+  },
+  "biCashOutflowsBasis": "{count} Zahlungen",
+  "@biCashOutflowsBasis": {
+    "description": "#2582 purchase analytics",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biCashNotBankBalance": "Erfasste Zahlungen, kein abgestimmter Kontostand.",
+  "@biCashNotBankBalance": {
+    "description": "#2582 purchase analytics"
   }
 }

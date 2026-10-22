@@ -9,6 +9,7 @@ import '../data/fan_out_batch_reader.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/bi_batch.dart';
 import '../domain/kpi_contract.dart';
+import '../domain/kpi_purchases.dart';
 import 'workspace_providers.dart';
 
 part 'kpi_providers.g.dart';
@@ -44,6 +45,22 @@ Future<FinanceSummaryKpi> financeSummary(
   String toMonth,
 ) => ref
     .watch(financeKpiRepositoryProvider)
+    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+
+/// #2582 — the purchase figures.
+@Riverpod(keepAlive: true)
+PurchaseKpiRepository purchaseKpiRepository(Ref ref) =>
+    SupabasePurchaseKpiRepository(ref.watch(selectedWorkspaceClientProvider));
+
+/// One read per workspace and months, shared by every purchase card.
+@Riverpod(retry: kpiRetry)
+Future<PurchaseSummaryKpi> purchaseSummary(
+  Ref ref,
+  String workspaceId,
+  String fromMonth,
+  String toMonth,
+) => ref
+    .watch(purchaseKpiRepositoryProvider)
     .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
 
 /// Seat utilisation of one calendar month, on the workspace clock: the

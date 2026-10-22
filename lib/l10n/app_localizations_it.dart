@@ -1311,6 +1311,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get biCashNotBankBalance =>
+      'Pagamenti registrati, non un saldo bancario riconciliato.';
+
+  @override
+  String biCashOutflowsBasis(String count) {
+    return '$count pagamenti';
+  }
+
+  @override
+  String get biCashOutflowsDefinition =>
+      'I pagamenti a fornitori e membri dichiarati pagati nel periodo, per il giorno in cui sono stati pagati. Sono esclusi i pagamenti annullati e preparati.';
+
+  @override
+  String get biCashOutflowsTitle => 'Pagato (registrato)';
+
+  @override
   String biChangePoints(String value) {
     return '$value p.p.';
   }
@@ -1577,6 +1593,36 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get biProvisionalNote =>
       'Provvisorio: il periodo non è finito, questa variazione è una stima.';
+
+  @override
+  String get biPurchasesApDefinition =>
+      'Le fatture dei fornitori approvate datate entro la fine del periodo, meno quanto pagato, accreditato o compensato fino ad allora. Un saldo letto quel giorno, mai una somma di mesi.';
+
+  @override
+  String get biPurchasesApTitle => 'Dovuto ai fornitori';
+
+  @override
+  String get biPurchasesCurrentQueue =>
+      'La coda è quella di oggi: non se ne conserva lo storico per un periodo passato.';
+
+  @override
+  String get biPurchasesMemberDueDefinition =>
+      'Le note spese approvate dei membri datate entro la fine del periodo, meno quanto rimborsato o compensato fino ad allora. Una nota detratta da una fattura entro quella data è saldata da essa, mai contata due volte.';
+
+  @override
+  String get biPurchasesMemberDueTitle => 'Da rimborsare ai membri';
+
+  @override
+  String biPurchasesPendingBasis(String amount) {
+    return 'per $amount';
+  }
+
+  @override
+  String get biPurchasesPendingDefinition =>
+      'I documenti di acquisto in attesa di una decisione oggi. Un documento in attesa non è ancora né un costo né un debito.';
+
+  @override
+  String get biPurchasesPendingTitle => 'Acquisti da esaminare';
 
   @override
   String biQuarter(String quarter, String year) {

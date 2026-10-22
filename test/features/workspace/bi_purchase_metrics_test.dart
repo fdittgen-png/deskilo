@@ -1,0 +1,168 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2582 C1 — the purchase figures on the analytics page: read once per
+// workspace and months from `kpi_purchases_summary`, exact to the minor unit,
+// a missing amount never read as 0, the payable a stock (compared, never
+// summed), the review queue a count that survives a currency mix, every
+// card behind the purchaseAnalytics flag and the finance right.
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/workspace/domain/bi_modules.dart';
+import 'package:deskilo/features/workspace/domain/bi_query.dart';
+import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/bi_module_section.dart';
+import 'package:deskilo/features/workspace/providers/bi_providers.dart';
+import 'package:deskilo/features/workspace/providers/bi_purchase_reader.dart';
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+const _ids = [
+  'purchases.ap_outstanding',
+  'purchases.member_reimbursements_due',
+  'purchases.pending_reviews',
+  'cash.recorded_outflows',
+];
+
+Map<String, dynamic> _row({
+  String from = '2026-04',
+  String to = '2026-04',
+  Object? ap = '400',
+  Object? member = '70',
+  Object? out = '600',
+  String currency = 'EUR',
+  List<String> quality = const [],
+  List<String> reasons = const [],
+}) => {
+  'from': from,
+  'to': to,
+  'currency': currency,
+  'ap_outstanding_minor': ap,
+  'member_due_minor': member,
+  'pending_count': 1,
+  'pending_minor': '500',
+  'outflows_minor': out,
+  'outflows': 1,
+  'quality': quality,
+  'reasons': reasons,
+  'computed_at': '2026-05-02T10:00:00Z',
+};
+
+/// April 2026 as pgTAP 243 reads it; March 1 000 owed, 50 paid out.
+class _Purchases implements PurchaseKpiRepository {
+  final calls = <(String, String)>[];
+
+  @override
+  Future<PurchaseSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async {
+    calls.add((fromMonth, toMonth));
+    return purchaseSummaryFromJson(
+      fromMonth == '2026-03'
+          ? _row(from: fromMonth, to: toMonth, ap: '1000', out: '50')
+          : _row(from: fromMonth, to: toMonth),
+    );
+  }
+}
+
+void main() {
+  test('the four cards exist only with the flag and the finance right', () {
+    const rights = {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    };
+    final shown = visibleBiModules({
+      WorkspaceFeature.purchaseAnalytics,
+    }, rights).map((m) => m.id);
+    expect(shown, containsAll(_ids));
+    expect(
+      visibleBiModules(const {}, rights).map((m) => m.id),
+      isNot(contains('purchases.ap_outstanding')),
+    );
+    expect(
+      visibleBiModules(
+        {WorkspaceFeature.purchaseAnalytics},
+        {WorkspacePermission.viewAnalytics},
+      ).map((m) => m.id),
+      isNot(contains('purchases.ap_outstanding')),
+    );
+    for (final id in _ids) {
+      expect(biModuleViews.containsKey(id), isTrue, reason: id);
+    }
+  });
+
+  test('an amount that cannot travel exactly is unknown, never 0', () {
+    final k = purchaseSummaryFromJson(_row(ap: '12.5'));
+    expect(k.apOutstandingMinor, isNull);
+    expect(k.quality, contains(KpiQuality.unavailable));
+    expect(k.reasons, contains('amount_not_exact'));
+  });
+
+  test('the review queue is a count a currency mix leaves exact', () {
+    final mixed = purchaseSummaryFromJson(
+      _row(quality: ['unavailable'], reasons: ['currency_mix']),
+    );
+    expect(
+      purchaseMeasure(mixed, 'purchases.pending_reviews').unknown,
+      isFalse,
+    );
+    expect(purchaseMeasure(mixed, 'purchases.pending_reviews').numerator, 1);
+    expect(
+      purchaseMeasure(mixed, 'purchases.ap_outstanding').unknown,
+      isTrue,
+      reason: 'the amounts are not summed across currencies',
+    );
+  });
+
+  test('April against March: the payable compared as a stock, one read per '
+      'month', () async {
+    final purchases = _Purchases();
+    final container = ProviderContainer(
+      overrides: [
+        purchaseKpiRepositoryProvider.overrideWithValue(purchases),
+        clockProvider.overrideWithValue(FixedClock(DateTime(2026, 5, 2))),
+      ],
+    );
+    addTearDown(container.dispose);
+    const context = BiQueryContext(
+      period: BiPeriodRef.fixed(BiPeriod(BiGrain.month, 2026, 4)),
+      comparison: BiComparison.previousPeriod,
+    );
+    for (final id in _ids) {
+      final provider = biModuleResultProvider('ws-1', id, context);
+      final sub = container.listen(provider, (_, _) {});
+      addTearDown(sub.close);
+    }
+    final ap = await container.read(
+      biModuleResultProvider(
+        'ws-1',
+        'purchases.ap_outstanding',
+        context,
+      ).future,
+    );
+    expect(ap.total.current.value(KpiAggregation.lastAtCutoff), 400);
+    expect(ap.total.compared?.value(KpiAggregation.lastAtCutoff), 1000);
+    expect(ap.currency, 'EUR');
+    final out = await container.read(
+      biModuleResultProvider('ws-1', 'cash.recorded_outflows', context).future,
+    );
+    expect(out.total.current.value(KpiAggregation.sum), 600);
+    final pending = await container.read(
+      biModuleResultProvider(
+        'ws-1',
+        'purchases.pending_reviews',
+        context,
+      ).future,
+    );
+    expect(pending.total.current.numerator, 1);
+    expect(pending.currency, isNull, reason: 'a count has no currency');
+    expect(purchases.calls.toSet(), {
+      ('2026-04', '2026-04'),
+      ('2026-03', '2026-03'),
+    }, reason: 'one summary per month, shared by the four cards');
+  });
+}
