@@ -1,0 +1,10 @@
+{
+  "featurePurchaseAnalyticsTitle": "Indicatori degli acquisti (analisi)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsDesc": "Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  }
+}

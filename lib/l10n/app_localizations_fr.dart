@@ -6320,6 +6320,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Publiez les informations et plans choisis, avec les propriétaires visibles et les administrateurs volontaires.';
 
   @override
+  String get featurePurchaseAnalyticsDesc =>
+      'Ce que l\'espace doit à ses fournisseurs, doit rembourser à ses membres, a encore à examiner et a payé, sur la page d\'analyses, à partir des achats eux-mêmes. Désactivé : les achats restent tels quels et la page d\'analyses n\'affiche aucun indicateur d\'achats.';
+
+  @override
+  String get featurePurchaseAnalyticsTitle =>
+      'Indicateurs d\'achats (analyses)';
+
+  @override
   String get featurePurchasesDesc =>
       'Un seul document pour ce que l\'espace achète : les factures fournisseur sont saisies et rattachées à leurs justificatifs, et chaque reçu de membre est déjà le document de sa note de frais. Désactivé : les accès Achats disparaissent ; les documents enregistrés restent intacts.';
 

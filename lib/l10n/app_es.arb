@@ -4703,6 +4703,14 @@
   },
   "featurePublicListings": "Anuncio público del espacio",
   "featurePublicListingsDesc": "Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.",
+  "featurePurchaseAnalyticsDesc": "Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsTitle": "Indicadores de compras (análisis)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "featurePurchasesDesc": "Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"

@@ -228,6 +228,7 @@ begin
       "externalRooms": false,
       "accountingPeriods": false,
       "biReportDesigner": false,
+      "purchaseAnalytics": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

@@ -17,6 +17,8 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import 'kpi_purchases.dart';
+
 /// How a KPI may be combined across a dimension or across time.
 enum KpiAggregation {
   /// sum(numerator) / sum(denominator) over the whole scope.
@@ -24,10 +26,13 @@ enum KpiAggregation {
 
   /// Additive over disjoint intervals and resources.
   sum,
+
+  /// #2582 — a stock read at the end of the period (what is owed then):
+  /// never summed over months; a longer period is its last month's value.
+  lastAtCutoff,
 }
 
 /// #1921 — what a KPI discloses, and so who may read it.
-@visibleForTesting
 enum KpiDisclosure {
   /// Counts and hours over places and time; no person, no money.
   aggregateOperational,
@@ -52,8 +57,8 @@ enum KpiDisclosure {
 }
 
 /// One registered KPI definition.
-class _KpiDefinition {
-  const _KpiDefinition({
+class KpiDefinition {
+  const KpiDefinition({
     required this.id,
     required this.version,
     required this.unit,
@@ -96,7 +101,7 @@ class _KpiDefinition {
 
 /// Seat utilisation: reserved seat-hours over offered seat-hours.
 @visibleForTesting
-const seatUtilisationKpi = _KpiDefinition(
+const seatUtilisationKpi = KpiDefinition(
   id: 'capacity.seat_utilisation',
   version: 1,
   unit: 'percent',
@@ -122,7 +127,7 @@ const seatUtilisationKpi = _KpiDefinition(
 /// already counted), positive totals. Credit notes are named beside it,
 /// never netted silently. Not a profit: no cost is in it.
 @visibleForTesting
-const invoicedKpi = _KpiDefinition(
+const invoicedKpi = KpiDefinition(
   id: 'finance.invoiced',
   version: 1,
   unit: 'currency_minor',
@@ -142,7 +147,7 @@ const invoicedKpi = _KpiDefinition(
 /// #1924 — what was collected: payments matched to invoices, by the month
 /// of the match on the workspace clock (the money report's "matched").
 @visibleForTesting
-const collectedKpi = _KpiDefinition(
+const collectedKpi = KpiDefinition(
   id: 'finance.collected',
   version: 1,
   unit: 'currency_minor',
@@ -161,10 +166,11 @@ const collectedKpi = _KpiDefinition(
 
 /// Every KPI the app knows. One list; the server registers the same ids.
 @visibleForTesting
-const kpiCatalogue = <_KpiDefinition>[
+const kpiCatalogue = <KpiDefinition>[
   seatUtilisationKpi,
   invoicedKpi,
   collectedKpi,
+  ...purchaseKpis,
 ];
 
 /// Why a value is what it is. Several can hold at once.

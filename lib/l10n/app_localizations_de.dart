@@ -6312,6 +6312,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Veröffentlichen Sie ausgewählte Informationen und Pläne mit sichtbaren Eigentümern und freiwilligen Administratorkontakten.';
 
   @override
+  String get featurePurchaseAnalyticsDesc =>
+      'Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl.';
+
+  @override
+  String get featurePurchaseAnalyticsTitle => 'Einkaufskennzahlen (Analysen)';
+
+  @override
   String get featurePurchasesDesc =>
       'Ein Beleg für alles, was der Raum einkauft: Lieferantenrechnungen werden erfasst und mit ihren Nachweisen verknüpft, und jeder Mitgliedsbeleg ist bereits der Beleg seiner Auslage. Aus: Die Einstiege zu Einkäufen verschwinden; gespeicherte Belege bleiben unverändert.';
 

@@ -4703,6 +4703,14 @@
   },
   "featurePublicListings": "Scheda pubblica dello spazio",
   "featurePublicListingsDesc": "Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.",
+  "featurePurchaseAnalyticsDesc": "Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsTitle": "Indicatori degli acquisti (analisi)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "featurePurchasesDesc": "Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"

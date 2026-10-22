@@ -54,7 +54,7 @@ class BiMeasure {
   num? value(KpiAggregation aggregation) {
     if (unknown || !numerator.isFinite) return null;
     return switch (aggregation) {
-      KpiAggregation.sum => numerator,
+      KpiAggregation.sum || KpiAggregation.lastAtCutoff => numerator,
       KpiAggregation.ratioOfSums => ratioOfSums([
         (numerator: numerator, denominator: denominator ?? 0),
       ]),
@@ -143,7 +143,7 @@ BiChange changeOf(BiRow row, KpiAggregation aggregation) {
   if (now == null || then == null) return const BiChange();
   return switch (aggregation) {
     KpiAggregation.ratioOfSums => BiChange(points: (now - then) * 100),
-    KpiAggregation.sum => BiChange(
+    KpiAggregation.sum || KpiAggregation.lastAtCutoff => BiChange(
       absolute: now - then,
       relative: then == 0 ? null : (now - then) / then.abs(),
     ),

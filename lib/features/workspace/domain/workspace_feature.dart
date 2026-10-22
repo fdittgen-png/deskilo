@@ -345,12 +345,10 @@ enum WorkspaceFeature {
   /// Under roleManagement; Core, default ON.
   roleAssignment,
 
-  /// #1865 — "Record this task": a person records, on this device and
-  /// for themselves, the semantic steps of a task on the workspace's
-  /// screens, reviews them and exports a minimized file. Nothing is
-  /// uploaded. Gates recording on workspace screens only; the local
-  /// workbench and its outputs are not workspace features. Platform,
-  /// default OFF.
+  /// #1865 — "Record this task": a person records, on this device and for
+  /// themselves, the semantic steps of a task on the workspace's screens,
+  /// reviews them and exports a minimized file; nothing is uploaded. Only
+  /// workspace screens are gated. Platform, default OFF.
   taskRecorder,
 
   /// #1835 — guest participation: a person who is NOT a member asks to
@@ -414,9 +412,11 @@ enum WorkspaceFeature {
   externalRooms,
 
   /// #2365 closing a book period and the log of accounting exports (under
-  /// accountingBook); #2579 editable reports, a root. Platform, OFF.
+  /// accountingBook); #2579 editable reports, a root; #2582 the purchase
+  /// figures of the analytics page (under purchases). Platform, OFF.
   accountingPeriods,
-  biReportDesigner;
+  biReportDesigner,
+  purchaseAnalytics;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
