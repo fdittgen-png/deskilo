@@ -76,7 +76,7 @@ XmlDocument _file({
   List<Invoice>? invoices,
   Map<String, InvoiceMatch> matches = const {},
 }) =>
-    XmlDocument.parse(buildSafTFile(
+    XmlDocument.parse(buildSafTFile(SafTRequest(
       invoices: invoices ??
           [
             _invoice(number: 'INV-2026-0001', issuedAt: DateTime(2026, 6, 3)),
@@ -91,7 +91,7 @@ XmlDocument _file({
       softwareVersion: safTSoftwareVersion,
       createdAt: DateTime(2026, 7, 27),
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    ));
+    )));
 
 String _text(XmlElement parent, String name) =>
     parent.findElements(name).single.innerText;

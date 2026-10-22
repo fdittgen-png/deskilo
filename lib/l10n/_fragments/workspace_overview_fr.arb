@@ -12,5 +12,10 @@
   "overviewAllIndicators": "Tous les indicateurs",
   "overviewActiveMemberships": "Adhésions actives",
   "overviewThisMonth": "Ce mois-ci",
-  "overviewUnavailable": "Non disponible"
+  "overviewUnavailable": "Non disponible",
+  "overviewOverdueTitle": "Créances échues",
+  "overviewOverdueBasis": "{count} factures échues ; {unknown} sans échéance prouvée et {held} suspendues, à part",
+  "overviewOverdueDefinition": "Ce que les membres doivent encore sur les factures émises dont l'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n'entre pas dans le montant.",
+  "overviewMembershipsDefinition": "Les adhésions de l'espace actives aujourd'hui, tous rôles compris : des adhésions, pas des personnes distinctes.",
+  "overviewCurrentState": "Chiffre du jour : aucun historique n'en est gardé pour une période passée."
 }
