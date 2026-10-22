@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'invoice.dart';
+import 'posting.dart';
 import 'saf_t_ledger.dart';
 import 'saf_t_writer.dart';
 
@@ -62,6 +63,9 @@ String buildSafTFile({
   /// Null omits the section entirely, which is the honest default —
   /// there is no account mapping to invent one from.
   SafTLedgerAccounts? ledgerAccounts,
+  /// #2365 — a local book's postings: the ledger section is the book's own
+  /// entries, every journal, and [ledgerAccounts] is not asked for.
+  List<Posting>? bookPostings,
 }) {
   final doc = SafTWriter(
     invoices: invoices,
@@ -74,6 +78,7 @@ String buildSafTFile({
     fallbackDescription: fallbackDescription,
     profile: profile,
     ledgerAccounts: ledgerAccounts,
+    bookPostings: bookPostings,
   );
   return doc.write();
 }

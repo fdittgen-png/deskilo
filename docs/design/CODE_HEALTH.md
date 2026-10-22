@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `391bea85111ec6b7917cfab1eaeba817f47c749c` on 2026-10-22.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `c2bd42dfc8e3e87df908287b543a75e01a403668` on 2026-10-22.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -11,11 +11,11 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | measure | count |
 |---|---|
 | files | 1767 |
-| functions | 9896 |
-| cyclomatic>=9 | 1049 |
+| functions | 9898 |
+| cyclomatic>=9 | 1051 |
 | cyclomatic>=25 | 107 |
-| cognitive>=15 | 425 |
-| cognitive>=30 | 96 |
+| cognitive>=15 | 426 |
+| cognitive>=30 | 97 |
 | length>=150 | 73 |
 | parameters>=5 | 479 |
 | parameters>=7 | 153 |
@@ -47,7 +47,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 46 | 20 | 87 | 2 | `lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen.build` |
 | 45 | 33 | 199 | 3 | `lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid` |
 | 45 | 39 | 198 | 6 | `lib/features/mcp/application/connect_checklist.dart#ConnectChecklist.new.derive` |
+| 45 | 12 | 70 | 0 | `lib/features/money/domain/saf_t_writer.dart#SafTWriter.generalLedger` |
 | 44 | 50 | 140 | 3 | `lib/features/task_recorder/guide/guide_codec.dart#_GuideDecoder._step` |
 | 43 | 21 | 118 | 1 | `lib/core/ui/wizard_scaffold.dart#WizardScaffold.build` |
-| 43 | 18 | 60 | 1 | `lib/features/money/domain/invoice_report.dart#_parseLines` |
 

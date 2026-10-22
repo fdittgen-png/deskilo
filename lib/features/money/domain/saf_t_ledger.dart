@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
+import 'posting.dart';
 
 /// The four accounts the derived postings book to (#669).
 ///
@@ -216,3 +217,49 @@ List<SafTLedgerTransaction> safTWriteOffs(
           ],
         ),
 ];
+
+const _postedJournalNames = {
+  PostingJournal.sales: 'Sales',
+  PostingJournal.bank: 'Bank',
+  PostingJournal.purchases: 'Purchases',
+  PostingJournal.other: 'Other operations',
+};
+
+/// #2365 — a local book's postings (`compute_postings`) as SAF-T journals,
+/// in the engine's order: every journal it booked, one transaction per
+/// posting, its lines on the book's own accounts. A transaction is named by
+/// the document it books, `-2`, `-3`... for a second one in the journal.
+List<(String id, String name, List<SafTLedgerTransaction> transactions)>
+safTPostedJournals(List<Posting> postings) {
+  final seen = <String, int>{};
+  return [
+    for (final journal in PostingJournal.values)
+      if (postings.any((p) => p.journal == journal))
+        (
+          journal.code,
+          _postedJournalNames[journal]!,
+          [
+            for (final p in postings)
+              if (p.journal == journal)
+                SafTLedgerTransaction(
+                  id: () {
+                    final base = '${journal.code}-${p.documentNumber}';
+                    final n = seen[base] = (seen[base] ?? 0) + 1;
+                    return n == 1 ? base : '$base-$n';
+                  }(),
+                  date: p.date,
+                  description: '${p.kind.wire} ${p.documentNumber}',
+                  lines: [
+                    for (final l in p.lines)
+                      SafTLedgerLine(
+                        l.accountCode,
+                        l.debit.minor,
+                        l.credit.minor,
+                        l.role.wire,
+                      ),
+                  ],
+                ),
+          ],
+        ),
+  ];
+}
