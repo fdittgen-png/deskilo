@@ -10,6 +10,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
+import 'package:deskilo/features/workspace/domain/workspace_export_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
@@ -53,6 +54,18 @@ void main() {
           category: LedgerCategory.payment,
           amountCents: 4250,
           description: 'bank transfer',
+          period: kTestPeriod,
+          createdAt: kTestNow,
+        ),
+        // A subscription charge: the workbook does not write charges yet
+        // (#2860), which is why ledger_entries is declared partial.
+        LedgerEntry(
+          id: 'led-2',
+          memberId: 'member-1',
+          kind: LedgerKind.charge,
+          category: LedgerCategory.subscription,
+          amountCents: 20000,
+          description: 'subscription',
           period: kTestPeriod,
           createdAt: kTestNow,
         ),
@@ -101,5 +114,39 @@ void main() {
 
     // The workspace row names its enabled features.
     expect(row('Workspace', 1)['enabled_features'], 'dataExport, moneyTab');
+
+    // #2859 — a source the workbook declares whole writes every row it
+    // was given; dropping rows from the builder fails here, not silently.
+    int rowsOf(String tab, [bool Function(List<Object?> row)? where]) =>
+        sheets
+            .singleWhere((s) => s.name == tab)
+            .rows
+            .skip(1)
+            .where(where ?? (_) => true)
+            .length;
+    final written = <String, (int, int)>{
+      'workspaces': (rowsOf('Workspace'), 1),
+      'levels': (rowsOf('Levels'), levels.length),
+      'desks': (rowsOf('Desks'), plan.desks.length),
+      'seats': (rowsOf('Seats'), plan.seats.length),
+      'members': (rowsOf('Users'), 1),
+      'reservations': (rowsOf('Reservations'), 1),
+      'payment_intents':
+          (rowsOf('Payments', (r) => '${r.first}'.startsWith('online')), 1),
+      'ledger_entries': (
+        rowsOf('Payments', (r) => r.first == 'confirmed') +
+            rowsOf('Services', (r) => r.first == 'confirmed'),
+        2,
+      ),
+      'services': (rowsOf('Service catalog'), 0),
+      'invoices': (rowsOf('Invoices'), 0),
+    };
+    for (final source in workspaceExportSources) {
+      if (source.partial != null) continue;
+      expect(written, contains(source.table),
+          reason: '${source.table} is declared whole: count its rows here');
+      final (actual, given) = written[source.table]!;
+      expect(actual, given, reason: '${source.table} lost rows');
+    }
   });
 }
