@@ -71,6 +71,12 @@ void main() {
     // An unknown country is unqualified for any national file but keeps the
     // generic route.
     final unknown = formatsFor('ZZ').map((f) => f.id).toSet();
-    expect(unknown, {'saft', 'accountant_csv', 'audit_trail', 'bundle'});
+    expect(unknown, {
+      'saft',
+      'accountant_csv',
+      'generic_journal_csv',
+      'audit_trail',
+      'bundle',
+    });
   });
 }

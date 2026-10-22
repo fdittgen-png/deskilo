@@ -8674,6 +8674,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'France e-reporting (B2C, international, payments)';
 
   @override
+  String get invoiceExportGenericJournal =>
+      'Journal (CSV, for any accounting system)';
+
+  @override
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
@@ -9500,6 +9504,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicingTools => 'Invoicing tools';
+
+  @override
+  String journalBlocked(String roles) {
+    return 'Map these roles in the book chart first: $roles';
+  }
+
+  @override
+  String get journalNeedsLocalBook =>
+      'The journal is posted from a local book: set up the issuer\'s book chart first.';
 
   @override
   String journeyClosedPaid(String date) {

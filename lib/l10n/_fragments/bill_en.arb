@@ -125,41 +125,41 @@
   },
   "payOnlinePendingTitle": "Online payment pending",
   "@payOnlinePendingTitle": {
-      "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"
+    "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"
   },
   "payOnlineFailedTitle": "Online payment failed",
   "@payOnlineFailedTitle": {
-      "description": "#1637 card title on the bill: an online payment the provider refused or let expire"
+    "description": "#1637 card title on the bill: an online payment the provider refused or let expire"
   },
   "payOnlinePendingDetail": "Payment {reference} ({amount} via {provider}) has not been confirmed by the provider yet, so the balance still shows what is owed. Quote this reference if it does not settle.",
   "@payOnlinePendingDetail": {
-      "description": "#1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label",
-      "placeholders": {
-          "reference": {
-              "type": "String"
-          },
-          "amount": {
-              "type": "String"
-          },
-          "provider": {
-              "type": "String"
-          }
+    "description": "#1637 pending line: reference is the PAY-… number, amount pre-formatted, provider the localized provider label",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
       }
+    }
   },
   "payOnlineFailedDetail": "Payment {reference} ({amount} via {provider}) was not completed — nothing was credited; the balance is still owed.",
   "@payOnlineFailedDetail": {
-      "description": "#1637 failed line: same placeholders as payOnlinePendingDetail",
-      "placeholders": {
-          "reference": {
-              "type": "String"
-          },
-          "amount": {
-              "type": "String"
-          },
-          "provider": {
-              "type": "String"
-          }
+    "description": "#1637 failed line: same placeholders as payOnlinePendingDetail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
       }
+    }
   },
   "payOnlineChooseTitle": "Pay online",
   "@payOnlineChooseTitle": {
@@ -338,5 +338,16 @@
   "saftWithPostings": "With postings",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
+  },
+  "invoiceExportGenericJournal": "Journal (CSV, for any accounting system)",
+  "journalNeedsLocalBook": "The journal is posted from a local book: set up the issuer's book chart first.",
+  "journalBlocked": "Map these roles in the book chart first: {roles}",
+  "@journalBlocked": {
+    "description": "Journal export (#2370): roles the posting engine could not resolve",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
   }
 }
