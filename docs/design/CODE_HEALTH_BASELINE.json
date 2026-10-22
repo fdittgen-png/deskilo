@@ -1,8 +1,8 @@
 {
-  "recordedSha": "af42026872c0c33c89317dd8bece5c757bbd741d",
+  "recordedSha": "a59b2e0559da457490673a2530b3225fba52af95",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1803,"functions":10071,"cyclomatic>=9":1066,"cyclomatic>=25":106,"cognitive>=15":430,"cognitive>=30":94,"length>=150":73,"parameters>=5":488,"parameters>=7":150,"partOfFiles":42},
+  "totals": {"files":1804,"functions":10075,"cyclomatic>=9":1067,"cyclomatic>=25":106,"cognitive>=15":431,"cognitive>=30":94,"length>=150":73,"parameters>=5":488,"parameters>=7":150,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -2286,6 +2286,7 @@
     {"p":"lib/features/workspace/domain/public_holidays.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":12,"len":28,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/role_assignment.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":8,"cyc":10,"len":29,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/role_permission_repository.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/setup_levels.dart","loc":433,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":18,"cyc":20,"len":57,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/setup_steps.dart","loc":301,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":12,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/site.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":12,"len":25,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/domain/site_repository.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

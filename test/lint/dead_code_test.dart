@@ -18,6 +18,16 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The setup levels (ADR 0047 §3): pinned by setup_levels_test now, read
+  // by the setup hub and its level cards next.
+  'lib/features/workspace/domain/setup_levels.dart::setupPresets':
+      '#2869 — the hub offers the presets',
+  'lib/features/workspace/domain/setup_levels.dart::setupFeatureDelta':
+      '#2869 — the hub previews a level change through it',
+  'lib/features/workspace/domain/setup_levels.dart::setupVectorGaps':
+      '#2869 — the hub refuses a vector with a gap',
+  'lib/features/workspace/domain/setup_levels.dart::recommendSetupLevels':
+      '#2869 — the hub recommends levels from the answers',
   // The countries the store holds rates for: the unchanged vat_versions_test
   // walks them (it did before the move, over the constant it replaced).
   'lib/features/money/domain/vat_catalogue.dart::vatCatalogueCountries':
