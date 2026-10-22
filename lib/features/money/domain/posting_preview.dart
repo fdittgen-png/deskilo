@@ -13,55 +13,9 @@ import 'package:meta/meta.dart';
 import 'accounting_amount.dart';
 import 'accounting_tax.dart';
 import 'book_chart.dart';
+import 'posting.dart';
 
-@visibleForTesting
-enum PostingBlock {
-  /// The currency has no reviewed exponent.
-  unsupportedCurrency,
-
-  /// A role the posting needs has no mapping for the document's day.
-  unmappedRole,
-
-  /// The mapped account is gone, not a posting account, or of a type
-  /// that does not fit the role.
-  badAccount,
-
-  /// A tax component nobody classified.
-  unclassifiedTax,
-
-  /// Amounts in more than one currency met in one document.
-  currencyMismatch,
-
-  /// A sum past ±(2^53 − 1) minor units.
-  outOfRange,
-}
-
-class PostingBlocker {
-  const PostingBlocker(this.block, this.subject);
-  final PostingBlock block;
-
-  /// The role, currency or tax the block is about.
-  final String subject;
-
-  @override
-  String toString() => 'PostingBlocker(${block.name}: $subject)';
-}
-
-class PostingLine {
-  const PostingLine({
-    required this.role,
-    required this.accountCode,
-    required this.debit,
-    required this.credit,
-  });
-
-  final BookRole role;
-  final String accountCode;
-
-  /// Exactly one of the two is non-zero.
-  final AccountingAmount debit;
-  final AccountingAmount credit;
-}
+export 'posting.dart' show PostingBlock, PostingBlocker, PostingLine;
 
 @visibleForTesting
 class PostingPreview {

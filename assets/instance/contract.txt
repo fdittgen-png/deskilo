@@ -1729,6 +1729,7 @@ routine public.commitment_variance_apply() -> trigger | function | definer | vol
 routine public.commitment_variance_write(p_workspace_id uuid, p_occurrence_id uuid, p_purchase_id uuid, p_line_no integer, p_amount_cents bigint, p_reason text, p_request_id uuid, p_actor uuid) -> uuid | function | definer | volatile | exec:service_role | body:ff4fa1be3993
 routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_refusal_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c774bc970470
+routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:412fb42aaa8d
 routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) -> TABLE(direction text, percent numeric, category text, tax_point date, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint, vat_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:aa24ffac9871
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
@@ -2176,6 +2177,10 @@ routine public.place_rating_summary(p_workspace uuid, p_kind text, p_resource uu
 routine public.place_visible_to(p_member uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:service_role | body:dd4853bb9952
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
+routine public.posting_account(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date) -> TABLE(code text, problem text) | function | definer | stable | exec:service_role | body:5adcca634cb9
+routine public.posting_entry(p_journal text, p_kind text, p_day date, p_document_id uuid, p_number text, p_currency text, p_lines jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8e672093efdd
+routine public.posting_line(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date, p_amount bigint, p_debit_side boolean) -> jsonb | function | definer | stable | exec:service_role | body:71003e824439
+routine public.posting_rate_group(p_country text, p_percent numeric, p_category text, p_day date) -> text | function | definer | stable | exec:service_role | body:851fb12021ea
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:4ceaa1e215ca
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
 routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
