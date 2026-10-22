@@ -15,7 +15,7 @@
 // (0338).
 
 import '../../../core/data/json_reader.dart';
-import 'coa_preview.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import 'vat_regime.dart';
 
 enum AccountType { asset, liability, equity, income, expense }
@@ -223,37 +223,57 @@ List<BookRole> missingForLocalBook(
     if (mappingOn(mappings, issuerSiteId, role, day) == null) role,
 ];
 
-/// The country's suggested accounts (#671's preview) as unsaved drafts
-/// for one issuer: reviewed and saved one by one, never written for the
-/// owner.
-List<BookAccount> suggestedAccounts({
+/// #2365 — one account of the country's suggested chart, with the role
+/// (and rate group) it is proposed for.
+typedef SuggestedAccount = ({
+  BookAccount account,
+  BookRole role,
+  String? qualifier,
+});
+
+const _taxRoles = {BookRole.vatOutput, BookRole.vatInput, BookRole.vatPending};
+
+/// The country's suggested chart (the tax reference's `coa` rows, #671) as
+/// unsaved drafts for one issuer, each with the role it is proposed for:
+/// saved only when someone asks for it, then reviewed and re-pointed like
+/// any other. No tax account where no VAT is charged.
+List<SuggestedAccount> suggestedAccounts({
   required String workspaceId,
   required String issuerSiteId,
   required String countryCode,
   required VatRegime regime,
 }) {
-  final chart = coaChartFor(
-    countryCode: countryCode,
-    regime: regime,
-    noteFor: (_) => '',
-  );
+  final charging = regime == VatRegime.vatRegistered;
   return [
-    for (final a in chart.accounts)
-      BookAccount(
-        id: '',
-        workspaceId: workspaceId,
-        issuerSiteId: issuerSiteId,
-        code: a.number,
-        name: a.label,
-        type: switch (a.role) {
-          CoaAccountRole.customers || CoaAccountRole.bank => AccountType.asset,
-          CoaAccountRole.revenue => AccountType.income,
-          CoaAccountRole.vat => AccountType.liability,
-          CoaAccountRole.expenses => AccountType.expense,
-        },
-        isPosting: true,
-        origin: AccountOrigin.suggested,
-        revision: 0,
-      ),
+    for (final r in ActiveTaxReference.current.chartOf(countryCode))
+      if (_suggestedRole(r.role) case (final role, final qualifier)
+          when charging || !_taxRoles.contains(role))
+        (
+          account: BookAccount(
+            id: '',
+            workspaceId: workspaceId,
+            issuerSiteId: issuerSiteId,
+            code: r.account,
+            name: r.label,
+            type: role.type,
+            isPosting: true,
+            origin: AccountOrigin.suggested,
+            revision: 0,
+          ),
+          role: role,
+          qualifier: qualifier,
+        ),
   ];
+}
+
+/// The role a chart row is proposed for: a base with an optional rate
+/// group (`vat_output:reduced`); the rows name output tax `vat` (#671).
+/// Null for the chart's own row.
+(BookRole, String?)? _suggestedRole(String wire) {
+  final colon = wire.indexOf(':');
+  final base = colon < 0 ? wire : wire.substring(0, colon);
+  final role = BookRole.values
+      .where((v) => v.wire == (base == 'vat' ? 'vat_output' : base))
+      .firstOrNull;
+  return role == null ? null : (role, colon < 0 ? null : wire.substring(colon + 1));
 }

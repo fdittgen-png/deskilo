@@ -3,12 +3,13 @@
 // #2360 — the Swiss booking journal: the KMU accounts, one row per rate,
 // the Ziffer of the MWST return on each row, a credit note swapped and
 // positive, a receipt without VAT, a BOM, CRLF.
-import 'package:deskilo/features/money/domain/coa_preview.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/swiss_kmu.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/coa_preview.dart';
 
 Invoice _invoice(
   String id,

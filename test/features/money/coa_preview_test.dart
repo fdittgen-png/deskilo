@@ -12,9 +12,10 @@
 // be shown a VAT account it does not owe, an unknown country must not be
 // handed France's chart wearing a national label, and the printable must
 // carry its disclaimer.
-import 'package:deskilo/features/money/domain/coa_preview.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/coa_preview.dart';
 
 CoaChart chart(String country, VatRegime regime) => coaChartFor(
       countryCode: country,

@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
-import 'vat_regime.dart';
+import 'package:deskilo/core/vat/tax_reference.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/domain/vat_regime.dart';
 
+/// #2365 — moved here when the book chart started reading the rows itself:
+/// the per-country goldens still read the charts through it.
+///
 /// A **preview** of the chart of accounts a bookkeeper would likely use
 /// for this workspace (#671). Explicitly NOT an accounting solution, and
 /// the app does not keep a ledger — this exists so that:

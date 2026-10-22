@@ -22,8 +22,9 @@ abstract class BookProfileRepository {
   /// one). Null when stale.
   Future<BookAccount?> saveBookAccount(BookAccount account);
 
-  /// Saves the mapping of [role] for [issuerSiteId] from [effectiveFrom]
-  /// against [expectedRevision] (0 for a new version). Null when stale.
+  /// Saves the mapping of [role] (for the rate group [qualifier], #2365)
+  /// for [issuerSiteId] from [effectiveFrom] against [expectedRevision] (0
+  /// for a new version). Null when stale.
   Future<BookMapping?> saveBookMapping({
     required String workspaceId,
     required String issuerSiteId,
@@ -31,6 +32,7 @@ abstract class BookProfileRepository {
     required String accountId,
     required DateTime effectiveFrom,
     required int expectedRevision,
+    String? qualifier,
   });
 
   /// #2365 — the entries the books receive for [issuerSiteId] from [from] to

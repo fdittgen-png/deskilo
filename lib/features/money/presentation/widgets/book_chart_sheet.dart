@@ -41,9 +41,11 @@ String _accountTypeLabel(AppLocalizations l10n, AccountType t) => switch (t) {
 };
 
 /// #1869 B — one issuer's chart of accounts and the account each posting
-/// role books to. The suggested national accounts are offered as drafts
-/// to save one by one; a role lists only the posting accounts of the type
-/// that fits it; choosing one saves a mapping version from today.
+/// role books to. The suggested national chart is taken on request, each
+/// account mapped to the role it is proposed for (#2365), then reviewed
+/// here; a role lists only the posting accounts of the type that fits it;
+/// choosing one saves a mapping version from today. A rate group's own
+/// account is listed under its role.
 Future<void> showBookChartSheet(BuildContext context, Site issuer) =>
     showAppSheet<void>(
       context: context,
@@ -162,20 +164,20 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                 key: const ValueKey('book-chart-suggest'),
                 onPressed: _busy
                     ? null
-                    : () => _run(() async {
-                        var last = BookSaveOutcome.saved;
-                        for (final a in suggestedAccounts(
-                          workspaceId: workspace.id,
-                          issuerSiteId: widget.issuer.id,
-                          countryCode: widget.issuer.countryCode.isEmpty
-                              ? workspace.countryCode
-                              : widget.issuer.countryCode,
-                          regime: vatRegimeFromWire(workspace.vatRegime),
-                        )) {
-                          last = await commands.saveAccount(a);
-                        }
-                        return last;
-                      }),
+                    : () => _run(
+                        () => commands.adoptSuggested(
+                          suggestedAccounts(
+                            workspaceId: workspace.id,
+                            issuerSiteId: widget.issuer.id,
+                            countryCode: widget.issuer.countryCode.isEmpty
+                                ? workspace.countryCode
+                                : widget.issuer.countryCode,
+                            regime: vatRegimeFromWire(workspace.vatRegime),
+                          ),
+                          effectiveFrom: today,
+                          current: chart.mappings,
+                        ),
+                      ),
                 child: Text(
                   l10n.bookChartSuggest,
                 ),
@@ -266,11 +268,42 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                         ),
                       ),
               ),
+            for (final m in _qualified(chart.mappings, accounts, today))
+              ListTile(
+                key: ValueKey('book-role-${m.role.wire}:${m.qualifier}'),
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                title: Text('${bookRoleLabel(l10n, m.role)} · ${m.qualifier}'),
+                subtitle: Text(
+                  '${accounts.where((a) => a.id == m.accountId).firstOrNull?.code}',
+                ),
+              ),
           ],
         ),
       ),
     );
   }
+}
+
+/// The rate-group mappings of [accounts]' issuer in force on [day], the
+/// latest version of each.
+List<BookMapping> _qualified(
+  List<BookMapping> mappings,
+  List<BookAccount> accounts,
+  DateTime day,
+) {
+  final latest = <String, BookMapping>{};
+  for (final m in mappings) {
+    if (m.qualifier == null ||
+        m.effectiveFrom.isAfter(day) ||
+        !accounts.any((a) => a.id == m.accountId)) {
+      continue;
+    }
+    final key = '${m.role.wire}:${m.qualifier}';
+    if (latest[key]?.effectiveFrom.isAfter(m.effectiveFrom) ?? false) continue;
+    latest[key] = m;
+  }
+  return latest.values.toList();
 }
 
 class _RoleRow extends StatelessWidget {
