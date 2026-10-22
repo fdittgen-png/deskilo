@@ -6,8 +6,10 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/reservations/domain/space_code.dart';
+import '../../features/reservations/presentation/screens/period_reservations_screen.dart';
 import '../../features/reservations/presentation/screens/reference_link_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 
@@ -38,5 +40,19 @@ List<RouteBase> reservationsRoutes(RouteEnv env) {
         id: state.pathParameters['id'] ?? '',
       ),
     ),
-  ];
+      // #2578 — the bookings behind the capacity figure, for its months.
+    GoRoute(
+      path: '/reservations/period',
+      redirect: env.guard(
+        const RouteAccess(
+          permission: WorkspacePermission.viewAnalytics,
+          features: [WorkspaceFeature.capacityKpi],
+        ),
+      ),
+      builder: (context, state) => PeriodReservationsScreen(
+        fromMonth: state.uri.queryParameters['from'] ?? '',
+        toMonth: state.uri.queryParameters['to'] ?? '',
+      ),
+    ),
+];
 }

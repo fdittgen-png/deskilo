@@ -1,0 +1,6 @@
+{
+  "periodReservationsTitle": "Réservations de {period}",
+  "periodReservationsEmpty": "Aucune réservation ces mois-ci.",
+  "periodReservationsFailed": "Les réservations n'ont pas pu être lues.",
+  "periodReservationsUnnamed": "(lieu sans nom)"
+}
