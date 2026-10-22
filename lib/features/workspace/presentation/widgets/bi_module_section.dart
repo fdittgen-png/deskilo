@@ -37,6 +37,7 @@ class BiModuleView {
     required this.basis,
     required this.notes,
     required this.details,
+    this.action,
   });
 
   final String Function(AppLocalizations l10n) title;
@@ -63,6 +64,9 @@ class BiModuleView {
     String locale,
   )
   details;
+
+  /// #2582 — what the card offers beyond reading it (the allocation rules).
+  final Widget Function(BuildContext context)? action;
 }
 
 // The BI table's column renderers: locale-aware (NumberFormat,
@@ -420,6 +424,7 @@ class _Result extends ConsumerWidget {
                   key: const ValueKey('bi-drill-restricted'),
                   style: small,
                 ),
+        if (view.action case final action?) action(context),
       ],
     );
   }

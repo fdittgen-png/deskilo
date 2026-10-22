@@ -170,5 +170,174 @@
   "biCommitmentsNoContracts": "Neither leases nor rented rooms are on: nothing is expected.",
   "@biCommitmentsNoContracts": {
     "description": "#2582 purchase analytics"
+  },
+  "biAllocationTitle": "Shared costs by resource",
+  "@biAllocationTitle": {
+    "description": "#2582 cost allocation"
+  },
+  "biAllocationDefinition": "The operating costs of the months, spread over levels and offices by the allocation rule in force on each document's date, by largest remainder to the cent. Direct, shared and unallocated always add up to the operating costs.",
+  "@biAllocationDefinition": {
+    "description": "#2582 cost allocation"
+  },
+  "biAllocationBasis": "{direct} direct, {shared} shared, {unallocated} unallocated",
+  "@biAllocationBasis": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "direct": {
+        "type": "String"
+      },
+      "shared": {
+        "type": "String"
+      },
+      "unallocated": {
+        "type": "String"
+      }
+    }
+  },
+  "biAllocationUnallocated": "{amount} is spread by no rule: it stays unallocated, never split evenly.",
+  "@biAllocationUnallocated": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "biAllocationConflicts": "{count} lines are claimed by two rules and stay unallocated until one of them goes.",
+  "@biAllocationConflicts": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biAllocationNotBilled": "An analysis: no member is billed and no document or posting changes.",
+  "@biAllocationNotBilled": {
+    "description": "#2582 cost allocation"
+  },
+  "biAllocationRevisions": "Spread by: {rules}",
+  "@biAllocationRevisions": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "rules": {
+        "type": "String"
+      }
+    }
+  },
+  "biAllocationRevision": "{basis} (revision {revision})",
+  "@biAllocationRevision": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationRulesButton": "Allocation rules",
+  "@allocationRulesButton": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRulesTitle": "Allocation rules",
+  "@allocationRulesTitle": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRulesEmpty": "No rule yet: every operating cost stays unallocated.",
+  "@allocationRulesEmpty": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleNew": "New rule",
+  "@allocationRuleNew": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleEdit": "Change the rule",
+  "@allocationRuleEdit": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleRetire": "Stop the rule",
+  "@allocationRuleRetire": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleRetireBody": "From this month on, the rule spreads nothing. Earlier months keep it.",
+  "@allocationRuleRetireBody": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleRetired": "stopped",
+  "@allocationRuleRetired": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleOneLine": "One purchase line",
+  "@allocationRuleOneLine": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleSummary": "{basis} · from {from} · revision {revision}",
+  "@allocationRuleSummary": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationRuleCategory": "Purchase category",
+  "@allocationRuleCategory": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleBasis": "Basis (why these weights)",
+  "@allocationRuleBasis": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleFrom": "In force from",
+  "@allocationRuleFrom": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleWeights": "Weights (whole numbers; empty or 0 is no share)",
+  "@allocationRuleWeights": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRulePreview": "{amount} would be spread: {shares}",
+  "@allocationRulePreview": {
+    "description": "#2582 cost allocation",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "shares": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationRuleNeedsCategory": "Name the purchase category the rule spreads.",
+  "@allocationRuleNeedsCategory": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleNeedsBasis": "Say why these weights.",
+  "@allocationRuleNeedsBasis": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleNeedsWeight": "Give at least one level or office a weight.",
+  "@allocationRuleNeedsWeight": {
+    "description": "#2582 cost allocation"
+  },
+  "allocationRuleSaveFailed": "The rule was not saved. It may have changed meanwhile: reopen it and try again.",
+  "@allocationRuleSaveFailed": {
+    "description": "#2582 cost allocation"
+  },
+  "biForecastTitle": "Expected to pay (owed + contracts)",
+  "biForecastDefinition": "What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.",
+  "@biForecastTitle": {
+    "description": "#2582 forecast ladder"
+  },
+  "@biForecastDefinition": {
+    "description": "#2582 forecast ladder"
   }
 }

@@ -275,6 +275,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agreementExtraHalfDay => 'Extra half-day';
 
   @override
+  String get allocationRuleBasis => 'Basis (why these weights)';
+
+  @override
+  String get allocationRuleCategory => 'Purchase category';
+
+  @override
+  String get allocationRuleEdit => 'Change the rule';
+
+  @override
+  String get allocationRuleFrom => 'In force from';
+
+  @override
+  String get allocationRuleNeedsBasis => 'Say why these weights.';
+
+  @override
+  String get allocationRuleNeedsCategory =>
+      'Name the purchase category the rule spreads.';
+
+  @override
+  String get allocationRuleNeedsWeight =>
+      'Give at least one level or office a weight.';
+
+  @override
+  String get allocationRuleNew => 'New rule';
+
+  @override
+  String get allocationRuleOneLine => 'One purchase line';
+
+  @override
+  String allocationRulePreview(String amount, String shares) {
+    return '$amount would be spread: $shares';
+  }
+
+  @override
+  String get allocationRuleRetire => 'Stop the rule';
+
+  @override
+  String get allocationRuleRetireBody =>
+      'From this month on, the rule spreads nothing. Earlier months keep it.';
+
+  @override
+  String get allocationRuleRetired => 'stopped';
+
+  @override
+  String get allocationRuleSaveFailed =>
+      'The rule was not saved. It may have changed meanwhile: reopen it and try again.';
+
+  @override
+  String allocationRuleSummary(String basis, String from, String revision) {
+    return '$basis · from $from · revision $revision';
+  }
+
+  @override
+  String get allocationRuleWeights =>
+      'Weights (whole numbers; empty or 0 is no share)';
+
+  @override
+  String get allocationRulesButton => 'Allocation rules';
+
+  @override
+  String get allocationRulesEmpty =>
+      'No rule yet: every operating cost stays unallocated.';
+
+  @override
+  String get allocationRulesTitle => 'Allocation rules';
+
+  @override
   String get amenityDock => 'Docking station';
 
   @override
@@ -1270,6 +1337,42 @@ class AppLocalizationsEn extends AppLocalizations {
       'Invoiced less operating costs and depreciation';
 
   @override
+  String biAllocationBasis(String direct, String shared, String unallocated) {
+    return '$direct direct, $shared shared, $unallocated unallocated';
+  }
+
+  @override
+  String biAllocationConflicts(String count) {
+    return '$count lines are claimed by two rules and stay unallocated until one of them goes.';
+  }
+
+  @override
+  String get biAllocationDefinition =>
+      'The operating costs of the months, spread over levels and offices by the allocation rule in force on each document\'s date, by largest remainder to the cent. Direct, shared and unallocated always add up to the operating costs.';
+
+  @override
+  String get biAllocationNotBilled =>
+      'An analysis: no member is billed and no document or posting changes.';
+
+  @override
+  String biAllocationRevision(String basis, String revision) {
+    return '$basis (revision $revision)';
+  }
+
+  @override
+  String biAllocationRevisions(String rules) {
+    return 'Spread by: $rules';
+  }
+
+  @override
+  String get biAllocationTitle => 'Shared costs by resource';
+
+  @override
+  String biAllocationUnallocated(String amount) {
+    return '$amount is spread by no rule: it stays unallocated, never split evenly.';
+  }
+
+  @override
   String get biAreaCapacity => 'Space and capacity';
 
   @override
@@ -1570,6 +1673,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biForbidden => 'You may not read this analysis in this workspace.';
+
+  @override
+  String get biForecastDefinition =>
+      'What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.';
+
+  @override
+  String get biForecastTitle => 'Expected to pay (owed + contracts)';
 
   @override
   String get biFutureBasis =>

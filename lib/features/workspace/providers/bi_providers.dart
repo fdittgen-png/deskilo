@@ -6,6 +6,7 @@
 // question lands in a provider nobody watches any more and is never
 // shown under the new one. Groups are bounded; past the budget the
 // grouping is refused with its reason rather than fanned out.
+import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,6 +22,7 @@ import '../domain/bi_query.dart';
 import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
+import 'bi_cost_allocation_reader.dart';
 import 'bi_purchase_reader.dart';
 import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
@@ -88,10 +90,17 @@ Future<BiResult> biModuleResult(
     'finance.recorded_contribution' ||
     'assets.book_depreciation' ||
     'finance.contribution_after_depreciation' ||
-    'purchases.unbilled_commitments' => biCostResult(
+    'purchases.unbilled_commitments' ||
+    'purchases.forecast_outflows' => biCostResult(
       ref,
       workspaceId,
       moduleId,
+      period,
+      compared,
+    ),
+    'finance.cost_allocation' => biCostAllocationResult(
+      ref,
+      workspaceId,
       period,
       compared,
     ),
@@ -463,3 +472,17 @@ class BiViewActions {
 
 @Riverpod(keepAlive: true)
 BiViewActions biViewActions(Ref ref) => BiViewActions(ref);
+
+/// #2582 — the levels, each followed by its offices, that a shared cost can
+/// be spread over, as (kind, id, name); what has not loaded yet is absent.
+List<(String, String, String)> allocationResourcesOf(WidgetRef ref) => [
+  for (final level in [...?ref.watch(levelsProvider).value])
+    for (final r in [
+      ('level', level.id, level.name),
+      for (final office in [
+        ...?ref.watch(floorPlanProvider(level.id)).value?.offices,
+      ])
+        ('office', office.id, office.name),
+    ])
+      r,
+];

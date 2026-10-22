@@ -276,6 +276,73 @@ class AppLocalizationsDe extends AppLocalizations {
   String get agreementExtraHalfDay => 'Zusätzlicher halber Tag';
 
   @override
+  String get allocationRuleBasis => 'Grundlage (warum diese Gewichte)';
+
+  @override
+  String get allocationRuleCategory => 'Einkaufskategorie';
+
+  @override
+  String get allocationRuleEdit => 'Regel ändern';
+
+  @override
+  String get allocationRuleFrom => 'Gültig ab';
+
+  @override
+  String get allocationRuleNeedsBasis => 'Begründen Sie die Gewichte.';
+
+  @override
+  String get allocationRuleNeedsCategory =>
+      'Nennen Sie die Einkaufskategorie, die die Regel verteilt.';
+
+  @override
+  String get allocationRuleNeedsWeight =>
+      'Geben Sie mindestens einer Ebene oder einem Büro ein Gewicht.';
+
+  @override
+  String get allocationRuleNew => 'Neue Regel';
+
+  @override
+  String get allocationRuleOneLine => 'Eine Einkaufszeile';
+
+  @override
+  String allocationRulePreview(String amount, String shares) {
+    return '$amount würde verteilt: $shares';
+  }
+
+  @override
+  String get allocationRuleRetire => 'Regel beenden';
+
+  @override
+  String get allocationRuleRetireBody =>
+      'Ab diesem Monat verteilt die Regel nichts mehr. Frühere Monate behalten sie.';
+
+  @override
+  String get allocationRuleRetired => 'beendet';
+
+  @override
+  String get allocationRuleSaveFailed =>
+      'Die Regel wurde nicht gespeichert. Vielleicht wurde sie inzwischen geändert: öffnen Sie sie erneut und versuchen Sie es noch einmal.';
+
+  @override
+  String allocationRuleSummary(String basis, String from, String revision) {
+    return '$basis · ab $from · Fassung $revision';
+  }
+
+  @override
+  String get allocationRuleWeights =>
+      'Gewichte (ganze Zahlen; leer oder 0: kein Anteil)';
+
+  @override
+  String get allocationRulesButton => 'Verteilungsregeln';
+
+  @override
+  String get allocationRulesEmpty =>
+      'Noch keine Regel: alle Betriebskosten bleiben nicht verteilt.';
+
+  @override
+  String get allocationRulesTitle => 'Verteilungsregeln';
+
+  @override
   String get amenityDock => 'Dockingstation';
 
   @override
@@ -1282,6 +1349,42 @@ class AppLocalizationsDe extends AppLocalizations {
       'Fakturiert abzüglich Betriebskosten und Abschreibungen';
 
   @override
+  String biAllocationBasis(String direct, String shared, String unallocated) {
+    return '$direct direkt, $shared geteilt, $unallocated nicht verteilt';
+  }
+
+  @override
+  String biAllocationConflicts(String count) {
+    return '$count Zeilen beanspruchen zwei Regeln; sie bleiben nicht verteilt, bis eine davon endet.';
+  }
+
+  @override
+  String get biAllocationDefinition =>
+      'Die Betriebskosten der Monate, auf Ebenen und Büros verteilt nach der Regel, die am Datum jedes Belegs galt, nach größtem Rest auf den Cent genau. Direkt, geteilt und nicht verteilt ergeben immer die Betriebskosten.';
+
+  @override
+  String get biAllocationNotBilled =>
+      'Eine Auswertung: kein Mitglied wird belastet, kein Beleg und keine Buchung ändert sich.';
+
+  @override
+  String biAllocationRevision(String basis, String revision) {
+    return '$basis (Fassung $revision)';
+  }
+
+  @override
+  String biAllocationRevisions(String rules) {
+    return 'Verteilt durch: $rules';
+  }
+
+  @override
+  String get biAllocationTitle => 'Geteilte Kosten nach Ressource';
+
+  @override
+  String biAllocationUnallocated(String amount) {
+    return '$amount verteilt keine Regel: bleibt nicht verteilt, nie gleichmäßig aufgeteilt.';
+  }
+
+  @override
   String get biAreaCapacity => 'Flächen und Kapazität';
 
   @override
@@ -1585,6 +1688,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biForbidden =>
       'Sie dürfen diese Analyse in diesem Arbeitsbereich nicht lesen.';
+
+  @override
+  String get biForecastDefinition =>
+      'Was am Ende der Monate Lieferanten geschuldet wird, zuzüglich dessen, was Mietverträge und angemietete Räume in diesen Monaten noch erwarten. Eine einem Vertrag schon zugeordnete Rechnung zählt einmal: bei den offenen Posten.';
+
+  @override
+  String get biForecastTitle => 'Voraussichtlich zu zahlen (offen + Verträge)';
 
   @override
   String get biFutureBasis =>

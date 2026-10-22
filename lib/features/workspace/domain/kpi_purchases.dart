@@ -19,6 +19,7 @@ library;
 
 import '../../../core/data/json_reader.dart';
 import 'kpi_contract.dart';
+import 'kpi_costs.dart';
 
 const _apOutstandingKpi = KpiDefinition(
   id: 'purchases.ap_outstanding',
@@ -90,140 +91,13 @@ const _recordedOutflowsKpi = KpiDefinition(
   minCohort: null,
 );
 
-const _operatingCostsKpi = KpiDefinition(
-  id: 'purchases.operating_costs',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'the document\'s date, whole months [from, to] on the workspace '
-      'calendar: approved purchase lines classified operating, net plus the '
-      'tax that cannot be recovered; a supplier credit note subtracts',
-  dimensions: [],
-  numerator: 'operating_costs_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: ['purchases', 'line classification', 'the workspace currency'],
-  minCohort: null,
-);
-
-const _acquisitionsKpi = KpiDefinition(
-  id: 'assets.acquisitions',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'the document\'s date, whole months [from, to]: the equipment decided '
-      'capitalise, at its cost; never a cost, never a depreciation',
-  dimensions: [],
-  numerator: 'acquisitions_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: [
-    'purchases',
-    'the equipment register',
-    'the workspace currency',
-  ],
-  minCohort: null,
-);
-
-const _contributionKpi = KpiDefinition(
-  id: 'finance.recorded_contribution',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'the invoices\' months [from, to], net of their tax, less the operating '
-      'costs of the same months: invoiced less recorded operating costs, '
-      'never a profit',
-  dimensions: [],
-  numerator: 'contribution_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: ['invoicing', 'purchases', 'the workspace currency'],
-  minCohort: null,
-);
-
-const _bookDepreciationKpi = KpiDefinition(
-  id: 'assets.book_depreciation',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'the confirmed book values (#2576) whose periods tile [from, to] '
-      'exactly, complete and in the workspace currency; tax-only, partial or '
-      'overlapping values are unknown, never 0',
-  dimensions: [],
-  numerator: 'book_depreciation_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: [
-    'the equipment register',
-    'confirmed book values',
-    'the workspace currency',
-  ],
-  minCohort: null,
-);
-
-const _afterDepreciationKpi = KpiDefinition(
-  id: 'finance.contribution_after_depreciation',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'invoiced less recorded operating costs of [from, to], less the book '
-      'depreciation of the same months; unknown while that depreciation is',
-  dimensions: [],
-  numerator: 'after_depreciation_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: [
-    'invoicing',
-    'purchases',
-    'confirmed book values',
-    'the workspace currency',
-  ],
-  minCohort: null,
-);
-
-const _unbilledCommitmentsKpi = KpiDefinition(
-  id: 'purchases.unbilled_commitments',
-  version: 1,
-  unit: 'currency_minor',
-  timeBasis:
-      'the contract occurrences due in [from, to] (#2575), those not yet '
-      'generated projected from their schedule, less the bills matched to '
-      'them; overdue and not yet due apart',
-  dimensions: [],
-  numerator: 'unbilled_minor',
-  denominator: '',
-  aggregation: KpiAggregation.sum,
-  permissions: ['viewAnalytics', 'viewFinances'],
-  disclosure: KpiDisclosure.financial,
-  prerequisites: ['a lease or a rented room', 'the workspace currency'],
-  minCohort: null,
-);
-
 /// The purchase figures, in catalogue order.
 const purchaseKpis = <KpiDefinition>[
   _apOutstandingKpi,
   _memberReimbursementsDueKpi,
   _pendingReviewsKpi,
   _recordedOutflowsKpi,
-  // #2582 C2 — the cost side (`kpi_costs_summary`, 0529).
-  _operatingCostsKpi,
-  _acquisitionsKpi,
-  _contributionKpi,
-  // #2582 C2 — book depreciation (#2576) and unbilled commitments (#2575),
-  // 0530.
-  _bookDepreciationKpi,
-  _afterDepreciationKpi,
-  _unbilledCommitmentsKpi,
+  ...costKpis,
 ];
 
 /// What `kpi_purchases_summary` returned for the whole months
@@ -333,6 +207,7 @@ class CostSummaryKpi {
     required this.unbilledMinor,
     required this.unbilledOverdueMinor,
     required this.unbilledUpcomingMinor,
+    required this.forecastMinor,
     required this.quality,
     required this.reasons,
     required this.computedAt,
@@ -362,6 +237,10 @@ class CostSummaryKpi {
   final int? unbilledMinor;
   final int? unbilledOverdueMinor;
   final int? unbilledUpcomingMinor;
+
+  /// Owed to suppliers at the end of the months plus what the contracts
+  /// still expect in them; null without a lease or a rented room.
+  final int? forecastMinor;
   final Set<KpiQuality> quality;
   final List<String> reasons;
   final DateTime computedAt;
@@ -373,6 +252,7 @@ class CostSummaryKpi {
     'assets.book_depreciation' => bookDepreciationMinor,
     'finance.contribution_after_depreciation' => afterDepreciationMinor,
     'purchases.unbilled_commitments' => unbilledMinor,
+    'purchases.forecast_outflows' => forecastMinor,
     _ => contributionMinor,
   };
 }
@@ -393,6 +273,7 @@ CostSummaryKpi costSummaryFromJson(Map<String, Object?> json) {
       'unbilled_minor',
       'unbilled_overdue_minor',
       'unbilled_upcoming_minor',
+      'forecast_minor',
     ])
       key: r.raw(key),
   };
@@ -418,6 +299,7 @@ CostSummaryKpi costSummaryFromJson(Map<String, Object?> json) {
     unbilledMinor: opt('unbilled_minor'),
     unbilledOverdueMinor: opt('unbilled_overdue_minor'),
     unbilledUpcomingMinor: opt('unbilled_upcoming_minor'),
+    forecastMinor: opt('forecast_minor'),
     quality: {
       for (final q in r.strings('quality'))
         kpiQualityOf(q) ?? KpiQuality.unavailable,

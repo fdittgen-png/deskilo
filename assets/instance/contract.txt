@@ -111,6 +111,20 @@ constraint asset_valuation_rows.system_columns_order CHECK ((modified_datetime >
 constraint asset_valuation_rows.system_company_present CHECK ((company_id IS NOT NULL))
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_basis_check CHECK (((char_length(btrim(basis)) >= 1) AND (char_length(btrim(basis)) <= 300)))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_category_check CHECK ((char_length(category) <= 80))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_check CHECK (((purchase_line_id IS NULL) <> (category = ''::text)))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_check1 CHECK (((effective_to IS NULL) OR (effective_to >= effective_from)))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_pkey PRIMARY KEY (id)
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_purchase_line_id_fkey FOREIGN KEY (purchase_line_id) REFERENCES purchase_lines(id)
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_revision_check CHECK ((revision >= 1))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_rule_id_revision_key UNIQUE (rule_id, revision)
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_weights_check CHECK ((jsonb_typeof(weights) = 'array'::text))
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_workspace_id_author_member_id_fkey FOREIGN KEY (workspace_id, author_member_id) REFERENCES members(workspace_id, id)
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bi_cost_allocation_rules.bi_cost_allocation_rules_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
+constraint bi_cost_allocation_rules.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bi_cost_allocation_rules.system_company_present CHECK ((company_id IS NOT NULL))
 constraint bi_views.bi_views_definition_check CHECK (bi_definition_valid(definition))
 constraint bi_views.bi_views_name_check CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 80)))
 constraint bi_views.bi_views_pkey PRIMARY KEY (id)
@@ -1679,6 +1693,7 @@ routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign 
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:72d7485dcf0b
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
+routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
 routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:eb7977fea8d1
 routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e9fae509a6c
 routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:ce62df941ea3
@@ -1738,6 +1753,8 @@ routine public.confirm_expense_occurrence(p_occurrence_id uuid, p_amount_cents i
 routine public.confirm_tax_reference(p_id uuid, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c66188a7e04a
 routine public.conversation_details(p_conversation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b69531430df5
 routine public.convert_to_series(p_reservation_id uuid, p_pattern text, p_until timestamp with time zone, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1bc75036b58
+routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:622f770f2792
+routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
 routine public.create_expense_schedule(p_workspace_id uuid, p_title text, p_amount_cents integer, p_starts_on date, p_unit text, p_every integer, p_repeat_count integer, p_ends_on date, p_description text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:140ce7958d50
@@ -1909,12 +1926,13 @@ routine public.join_workspace(p_invite_code text) -> uuid | function | definer |
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
 routine public.kiosk_act(p_workspace_id uuid, p_badge_token text, p_action text, p_seat_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:089076dec259
 routine public.kiosk_identify(p_workspace_id uuid, p_badge_token text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1bd2bf1f2625
-routine public.kpi_costs_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dcaa04745e29
+routine public.kpi_cost_allocation(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:09a90f083fef
+routine public.kpi_costs_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9e908ea258a8
 routine public.kpi_finance_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12fbe5b2f263
 routine public.kpi_multirange_hours(p tstzmultirange) -> numeric | function | invoker | immutable | exec:authenticated,service_role | body:6e8c7b7e8ade
 routine public.kpi_purchases_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64d46e663c59
 routine public.kpi_readable(p_workspace_id uuid, p_kpi text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f8729471516e
-routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:8be0b41c72b2
+routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:a82c9ca4386f
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d509da87d1b8
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97
@@ -2358,6 +2376,7 @@ routine public.sales_tax_zip_rate(p_postal text, p_on date) -> jsonb | function 
 routine public.save_book_account(p_workspace_id uuid, p_issuer_site_id uuid, p_id uuid, p_code text, p_name text, p_account_type text, p_is_posting boolean, p_origin text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2c67bbfdc2b4
 routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_role text, p_account_id uuid, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:870ab38fe6fa
 routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a8c6b0169bf2
+routine public.save_cost_allocation_rule_v1(p_workspace_id uuid, p_rule_id uuid, p_expected_revision integer, p_rule jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9938c7e70922
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:29680ce96d4a
@@ -2619,6 +2638,8 @@ trigger analytics_history.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger asset_valuation_batches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_batches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_rows FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bi_cost_allocation_rules.bi_cost_allocation_rules_guard CREATE TRIGGER bi_cost_allocation_rules_guard BEFORE UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION bi_cost_allocation_rules_guard()
+trigger bi_cost_allocation_rules.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_views.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_views FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_accounts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_accounts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_exports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

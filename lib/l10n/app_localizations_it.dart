@@ -275,6 +275,73 @@ class AppLocalizationsIt extends AppLocalizations {
   String get agreementExtraHalfDay => 'Mezza giornata extra';
 
   @override
+  String get allocationRuleBasis => 'Base (perché questi pesi)';
+
+  @override
+  String get allocationRuleCategory => 'Categoria di acquisto';
+
+  @override
+  String get allocationRuleEdit => 'Modifica la regola';
+
+  @override
+  String get allocationRuleFrom => 'In vigore dal';
+
+  @override
+  String get allocationRuleNeedsBasis => 'Spieghi questi pesi.';
+
+  @override
+  String get allocationRuleNeedsCategory =>
+      'Indichi la categoria di acquisto che la regola ripartisce.';
+
+  @override
+  String get allocationRuleNeedsWeight =>
+      'Dia un peso ad almeno un piano o un ufficio.';
+
+  @override
+  String get allocationRuleNew => 'Nuova regola';
+
+  @override
+  String get allocationRuleOneLine => 'Una riga di acquisto';
+
+  @override
+  String allocationRulePreview(String amount, String shares) {
+    return '$amount sarebbe ripartito: $shares';
+  }
+
+  @override
+  String get allocationRuleRetire => 'Ferma la regola';
+
+  @override
+  String get allocationRuleRetireBody =>
+      'Da questo mese la regola non ripartisce più nulla. I mesi precedenti la conservano.';
+
+  @override
+  String get allocationRuleRetired => 'fermata';
+
+  @override
+  String get allocationRuleSaveFailed =>
+      'La regola non è stata salvata. Potrebbe essere cambiata nel frattempo: la riapra e riprovi.';
+
+  @override
+  String allocationRuleSummary(String basis, String from, String revision) {
+    return '$basis · dal $from · revisione $revision';
+  }
+
+  @override
+  String get allocationRuleWeights =>
+      'Pesi (numeri interi; vuoto o 0: nessuna quota)';
+
+  @override
+  String get allocationRulesButton => 'Regole di ripartizione';
+
+  @override
+  String get allocationRulesEmpty =>
+      'Ancora nessuna regola: tutti i costi operativi restano non ripartiti.';
+
+  @override
+  String get allocationRulesTitle => 'Regole di ripartizione';
+
+  @override
   String get amenityDock => 'Docking station';
 
   @override
@@ -1277,6 +1344,42 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fatturato meno costi operativi e ammortamenti';
 
   @override
+  String biAllocationBasis(String direct, String shared, String unallocated) {
+    return '$direct diretto, $shared condiviso, $unallocated non ripartito';
+  }
+
+  @override
+  String biAllocationConflicts(String count) {
+    return '$count righe sono rivendicate da due regole e restano non ripartite finché restano entrambe.';
+  }
+
+  @override
+  String get biAllocationDefinition =>
+      'I costi operativi dei mesi, ripartiti tra piani e uffici secondo la regola in vigore alla data di ciascun documento, con il metodo del resto maggiore al centesimo. Diretto, condiviso e non ripartito danno sempre i costi operativi.';
+
+  @override
+  String get biAllocationNotBilled =>
+      'Un\'analisi: nessun membro viene addebitato e nessun documento o registrazione cambia.';
+
+  @override
+  String biAllocationRevision(String basis, String revision) {
+    return '$basis (revisione $revision)';
+  }
+
+  @override
+  String biAllocationRevisions(String rules) {
+    return 'Ripartito da: $rules';
+  }
+
+  @override
+  String get biAllocationTitle => 'Costi condivisi per risorsa';
+
+  @override
+  String biAllocationUnallocated(String amount) {
+    return '$amount non è ripartito da alcuna regola: resta non ripartito, mai diviso in parti uguali.';
+  }
+
+  @override
   String get biAreaCapacity => 'Spazi e capacità';
 
   @override
@@ -1578,6 +1681,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biForbidden => 'Non può leggere questa analisi in questo spazio.';
+
+  @override
+  String get biForecastDefinition =>
+      'Ciò che è dovuto ai fornitori alla fine dei mesi, più ciò che le locazioni e le sale prese in affitto prevedono ancora in quei mesi. Una fattura già abbinata a un contratto conta una volta sola: nel dovuto.';
+
+  @override
+  String get biForecastTitle => 'Previsto da pagare (dovuto + contratti)';
 
   @override
   String get biFutureBasis =>

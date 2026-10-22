@@ -266,6 +266,28 @@ const biModules = <BiModule>[
     },
     aggregation: KpiAggregation.sum,
   ),
+  // #2582 C2 — what the space expects to pay: owed plus still expected.
+  BiModule(
+    id: 'purchases.forecast_outflows',
+    area: BiArea.treasury,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.lastAtCutoff,
+  ),
+  // #2582 C2 — the shared costs spread over the resources, by rule.
+  BiModule(
+    id: 'finance.cost_allocation',
+    area: BiArea.finance,
+    feature: WorkspaceFeature.purchaseAnalytics,
+    permissions: {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    },
+    aggregation: KpiAggregation.sum,
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

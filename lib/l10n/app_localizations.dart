@@ -578,6 +578,120 @@ abstract class AppLocalizations {
   /// **'Extra half-day'**
   String get agreementExtraHalfDay;
 
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Basis (why these weights)'**
+  String get allocationRuleBasis;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase category'**
+  String get allocationRuleCategory;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Change the rule'**
+  String get allocationRuleEdit;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'In force from'**
+  String get allocationRuleFrom;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Say why these weights.'**
+  String get allocationRuleNeedsBasis;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Name the purchase category the rule spreads.'**
+  String get allocationRuleNeedsCategory;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Give at least one level or office a weight.'**
+  String get allocationRuleNeedsWeight;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'New rule'**
+  String get allocationRuleNew;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'One purchase line'**
+  String get allocationRuleOneLine;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} would be spread: {shares}'**
+  String allocationRulePreview(String amount, String shares);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the rule'**
+  String get allocationRuleRetire;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'From this month on, the rule spreads nothing. Earlier months keep it.'**
+  String get allocationRuleRetireBody;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'stopped'**
+  String get allocationRuleRetired;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'The rule was not saved. It may have changed meanwhile: reopen it and try again.'**
+  String get allocationRuleSaveFailed;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{basis} · from {from} · revision {revision}'**
+  String allocationRuleSummary(String basis, String from, String revision);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Weights (whole numbers; empty or 0 is no share)'**
+  String get allocationRuleWeights;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Allocation rules'**
+  String get allocationRulesButton;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'No rule yet: every operating cost stays unallocated.'**
+  String get allocationRulesEmpty;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Allocation rules'**
+  String get allocationRulesTitle;
+
   /// Seat amenity chip
   ///
   /// In en, this message translates to:
@@ -2245,6 +2359,54 @@ abstract class AppLocalizations {
   /// **'Invoiced less operating costs and depreciation'**
   String get biAfterDepreciationTitle;
 
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{direct} direct, {shared} shared, {unallocated} unallocated'**
+  String biAllocationBasis(String direct, String shared, String unallocated);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lines are claimed by two rules and stay unallocated until one of them goes.'**
+  String biAllocationConflicts(String count);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'The operating costs of the months, spread over levels and offices by the allocation rule in force on each document\'s date, by largest remainder to the cent. Direct, shared and unallocated always add up to the operating costs.'**
+  String get biAllocationDefinition;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'An analysis: no member is billed and no document or posting changes.'**
+  String get biAllocationNotBilled;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{basis} (revision {revision})'**
+  String biAllocationRevision(String basis, String revision);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Spread by: {rules}'**
+  String biAllocationRevisions(String rules);
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Shared costs by resource'**
+  String get biAllocationTitle;
+
+  /// #2582 cost allocation
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} is spread by no rule: it stays unallocated, never split evenly.'**
+  String biAllocationUnallocated(String amount);
+
   /// #1923 Web-BI area
   ///
   /// In en, this message translates to:
@@ -2742,6 +2904,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You may not read this analysis in this workspace.'**
   String get biForbidden;
+
+  /// #2582 forecast ladder
+  ///
+  /// In en, this message translates to:
+  /// **'What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.'**
+  String get biForecastDefinition;
+
+  /// #2582 forecast ladder
+  ///
+  /// In en, this message translates to:
+  /// **'Expected to pay (owed + contracts)'**
+  String get biForecastTitle;
 
   /// No description provided for @biFutureBasis.
   ///

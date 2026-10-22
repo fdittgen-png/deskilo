@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_result.dart';
+import '../../domain/cost_allocation_rules.dart';
 import '../../domain/kpi_purchases.dart';
 import 'bi_module_section.dart';
+import 'cost_allocation_editor.dart';
 
 // #2582 — a count of documents, in no currency.
 String _countCell(num? v, String locale, String? currency) =>
@@ -91,6 +93,52 @@ BiModuleView _costView(
   ],
 );
 
+CostAllocationKpi? _allocation(BiMeasure m) =>
+    m.detail as CostAllocationKpi?;
+
+/// #2582 C2 — the shared costs spread over the resources: what went where,
+/// what no rule spreads, and the rule revisions behind it. An analysis:
+/// nobody is billed by it.
+final _allocationView = BiModuleView(
+  title: (l10n) => l10n.biAllocationTitle,
+  value: biMoneyCell,
+  basis: (m, l10n, locale) => switch (_allocation(m)) {
+    final k? => l10n.biAllocationBasis(
+      biMoneyCell(k.directMinor, locale, k.currency),
+      biMoneyCell(k.sharedMinor, locale, k.currency),
+      biMoneyCell(k.unallocatedMinor, locale, k.currency),
+    ),
+    _ => '',
+  },
+  notes: (m, l10n, locale) => [
+    if (m.reasons.contains('currency_mix')) l10n.biFinanceCurrencyMix,
+    if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
+    if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
+    if (_allocation(m) case final k? when (k.unallocatedMinor ?? 0) != 0)
+      l10n.biAllocationUnallocated(
+        biMoneyCell(k.unallocatedMinor, locale, k.currency),
+      ),
+    if (_allocation(m) case final k? when k.conflictingLines > 0)
+      l10n.biAllocationConflicts('${k.conflictingLines}'),
+    l10n.biAllocationNotBilled,
+  ],
+  details: (m, l10n, locale) => [
+    l10n.biAllocationDefinition,
+    if (_allocation(m) case final k? when k.rulesUsed.isNotEmpty)
+      l10n.biAllocationRevisions(
+        [
+          for (final (basis, revision) in k.rulesUsed)
+            l10n.biAllocationRevision(basis, '$revision'),
+        ].join('; '),
+      ),
+    if (_allocation(m) case final k?)
+      l10n.biFinanceComputed(
+        DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
+      ),
+  ],
+  action: (context) => const CostAllocationRulesButton(),
+);
+
 /// The purchase and cost modules' views (#2582).
 final purchaseModuleViews = <String, BiModuleView>{
   'purchases.ap_outstanding': _purchaseView(
@@ -142,6 +190,16 @@ final purchaseModuleViews = <String, BiModuleView>{
   'purchases.unbilled_commitments': _costView(
     (l10n) => l10n.biCommitmentsTitle,
     (l10n) => l10n.biCommitmentsDefinition,
+    basis: (k, l10n, locale) => l10n.biCommitmentsBasis(
+      biMoneyCell(k.unbilledOverdueMinor, locale, k.currency),
+      biMoneyCell(k.unbilledUpcomingMinor, locale, k.currency),
+    ),
+    always: (l10n) => l10n.biCommitmentsNotForecast,
+  ),
+  'finance.cost_allocation': _allocationView,
+  'purchases.forecast_outflows': _costView(
+    (l10n) => l10n.biForecastTitle,
+    (l10n) => l10n.biForecastDefinition,
     basis: (k, l10n, locale) => l10n.biCommitmentsBasis(
       biMoneyCell(k.unbilledOverdueMinor, locale, k.currency),
       biMoneyCell(k.unbilledUpcomingMinor, locale, k.currency),
