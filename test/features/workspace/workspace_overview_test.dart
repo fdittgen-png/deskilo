@@ -7,6 +7,7 @@
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
+import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -14,6 +15,7 @@ import 'package:deskilo/features/workspace/presentation/screens/workspace_overvi
 import 'package:deskilo/features/workspace/providers/attention_providers.dart';
 import 'package:deskilo/features/workspace/providers/cost_allocation_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
+import 'package:deskilo/features/workspace/providers/overview_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -44,6 +46,27 @@ class _Purchases implements PurchaseKpiRepository {
   });
 }
 
+/// Today: five active memberships; 12.00 overdue over two invoices, one
+/// without a proven due date apart.
+class _Overview implements OverviewKpiRepository {
+  @override
+  Future<OverviewFigure> figure(
+    String workspaceId,
+    String kpiId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => overviewFigureFromJson({
+    'value': kpiId == 'sales.overdue_receivables' ? '1200' : 5,
+    'count': kpiId == 'sales.overdue_receivables' ? 2 : 5,
+    'currency': kpiId == 'sales.overdue_receivables' ? 'EUR' : '',
+    'unknown_due_count': 1,
+    'held_count': 0,
+    'quality': const <String>[],
+    'reasons': const <String>[],
+    'computed_at': '2026-05-02T10:00:00Z',
+  });
+}
+
 List<Override> _overrides({
   required Set<WorkspaceFeature> features,
   required Set<WorkspacePermission> rights,
@@ -54,6 +77,7 @@ List<Override> _overrides({
   myPermissionsProvider.overrideWithValue(rights),
   attentionProvider.overrideWith((ref) async => attention),
   purchaseKpiRepositoryProvider.overrideWithValue(_Purchases()),
+  overviewKpiRepositoryProvider.overrideWithValue(_Overview()),
   costKpiRepositoryProvider.overrideWithValue(
     const UnavailableCostKpiRepository(),
   ),
@@ -65,6 +89,20 @@ List<Override> _overrides({
 void main() {
   test('every module has a group, the sales and cash ones where they '
       'belong', () {
+    expect(
+      overviewGroupOf(
+        biModules.firstWhere((m) => m.id == 'sales.overdue_receivables'),
+      ),
+      OverviewGroup.sales,
+    );
+    expect(
+      overviewGroupOf(
+        biModules.firstWhere(
+          (m) => m.id == 'people.active_memberships_current',
+        ),
+      ),
+      OverviewGroup.people,
+    );
     BiModule byId(String id) => biModules.firstWhere((m) => m.id == id);
     expect(overviewGroupOf(byId('finance.invoiced')), OverviewGroup.sales);
     expect(overviewGroupOf(byId('cash.recorded_outflows')), OverviewGroup.cash);
@@ -91,7 +129,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('overview-indicators')), findsNothing);
-    expect(find.byKey(const ValueKey('overview-people')), findsNothing);
+    expect(find.byKey(const ValueKey('overview-group-people')), findsNothing);
   });
 
   testWidgets('a finance reader sees the purchase figures grouped, the '
@@ -103,11 +141,13 @@ void main() {
       const WorkspaceOverviewScreen(),
       size: const Size(1200, 3000),
       overrides: _overrides(
-        features: {WorkspaceFeature.purchaseAnalytics},
+        features: {
+          WorkspaceFeature.purchaseAnalytics,
+          WorkspaceFeature.workspaceOverview,
+        },
         rights: {
           WorkspacePermission.viewAnalytics,
           WorkspacePermission.viewFinances,
-          WorkspacePermission.manageMembers,
         },
       ),
     );
@@ -135,6 +175,37 @@ void main() {
       findsOneWidget,
       reason: 'a cost the server cannot give is unavailable, never 0',
     );
-    expect(find.byKey(const ValueKey('overview-people')), findsOne);
+    // #2583 — the overview's own figures, from the server (0536).
+    expect(find.byKey(const ValueKey('overview-group-people')), findsOne);
+    expect(
+      tester
+          .widget<Text>(
+            find.byKey(
+              const ValueKey(
+                'overview-value-people.active_memberships_current',
+              ),
+            ),
+          )
+          .data,
+      '5',
+    );
+    expect(find.byKey(const ValueKey('overview-group-sales')), findsOne);
+    expect(
+      find.byKey(const ValueKey('overview-tile-sales.overdue_receivables')),
+      findsOne,
+    );
+  });
+
+  test('an overdue amount that cannot travel exactly is unknown, never 0', () {
+    final f = overviewFigureFromJson({
+      'value': '12.5',
+      'count': 1,
+      'currency': 'EUR',
+      'quality': const <String>[],
+      'reasons': const <String>[],
+      'computed_at': '2026-05-02T10:00:00Z',
+    });
+    expect(f.value, isNull);
+    expect(f.reasons, contains('amount_not_exact'));
   });
 }

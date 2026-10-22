@@ -25,7 +25,6 @@ fileLength lib/features/directory/domain/messenger.dart // #2386 within the form
 fileLength lib/features/directory/presentation/messenger/context_thread_screen.dart // #2313 every control keyed for the task recorder
 fileLength lib/features/kiosk/presentation/screens/kiosk_screen.dart // #1289 the kiosk plan paints the workspace's own room colours
 fileLength lib/features/money/domain/invoice.dart // #2440: the Spanish correction reason (R1-R5) frozen in the parties.
-fileLength lib/features/money/domain/invoice_pdf_part2.dart // 801→772
 fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/invoice_documents.dart // 628→607
 fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.

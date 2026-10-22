@@ -35,17 +35,48 @@ const String safTSoftwareVersion = '1.0.3';
 /// Line amounts are tax-EXCLUSIVE, as SAF-T defines them — with DesKilo's
 /// VAT-inclusive prices that means the extracted net, and the tax sits
 /// beside it in `TaxInformation` (0072).
-String buildSafTFile({
-  required List<Invoice> invoices,
-  required Map<String, InvoiceMatch> matches,
-  required InvoiceParty company,
-  required String currency,
-  required String softwareVersion,
-  required DateTime createdAt,
-  required String Function(InvoiceLine line) lineText,
+String buildSafTFile(SafTRequest request) => SafTWriter(
+  invoices: request.invoices,
+  matches: request.matches,
+  company: request.company,
+  currency: request.currency,
+  softwareVersion: request.softwareVersion,
+  createdAt: request.createdAt,
+  lineText: request.lineText,
+  fallbackDescription: request.fallbackDescription,
+  profile: request.profile,
+  ledgerAccounts: request.ledgerAccounts,
+  bookPostings: request.bookPostings,
+).write();
+
+/// #2492 — what one SAF-T file is built from.
+class SafTRequest {
+  const SafTRequest({
+    required this.invoices,
+    required this.matches,
+    required this.company,
+    required this.currency,
+    required this.softwareVersion,
+    required this.createdAt,
+    required this.lineText,
+    this.fallbackDescription = 'Coworking',
+    this.profile = SafTProfile.generic,
+    this.ledgerAccounts,
+    this.bookPostings,
+  });
+
+  final List<Invoice> invoices;
+  final Map<String, InvoiceMatch> matches;
+  final InvoiceParty company;
+  final String currency;
+  final String softwareVersion;
+  final DateTime createdAt;
+  final String Function(InvoiceLine line) lineText;
+
   /// The word for a position with no better description.
-  String fallbackDescription = 'Coworking',
-  SafTProfile profile = SafTProfile.generic,
+  final String fallbackDescription;
+  final SafTProfile profile;
+
   /// #669 — when given, the file carries `GeneralLedgerEntries` derived
   /// from the same postings the FEC has produced since 0074: invoice ->
   /// debit customers / credit revenue + VAT, settlement -> debit bank /
@@ -62,23 +93,9 @@ String buildSafTFile({
   ///
   /// Null omits the section entirely, which is the honest default —
   /// there is no account mapping to invent one from.
-  SafTLedgerAccounts? ledgerAccounts,
+  final SafTLedgerAccounts? ledgerAccounts;
+
   /// #2365 — a local book's postings: the ledger section is the book's own
   /// entries, every journal, and [ledgerAccounts] is not asked for.
-  List<Posting>? bookPostings,
-}) {
-  final doc = SafTWriter(
-    invoices: invoices,
-    matches: matches,
-    company: company,
-    currency: currency,
-    softwareVersion: softwareVersion,
-    createdAt: createdAt,
-    lineText: lineText,
-    fallbackDescription: fallbackDescription,
-    profile: profile,
-    ledgerAccounts: ledgerAccounts,
-    bookPostings: bookPostings,
-  );
-  return doc.write();
+  final List<Posting>? bookPostings;
 }

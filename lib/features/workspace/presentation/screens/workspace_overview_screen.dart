@@ -10,7 +10,7 @@
 //     Sales / Purchases / Cash, each the module's own current-month result
 //     in its own words; a figure that is unknown says so, never 0. A tile
 //     opens the analytics page; it never decides, pays or sends anything.
-//   * People: the active memberships, for those who manage the members.
+//   * People: the active memberships (0536), a module like the others.
 //
 // No customising here yet (#2579/#2580 own saved layouts): a fixed,
 // registry-defined layout, no dead button.
@@ -25,8 +25,6 @@ import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/kpi_contract.dart';
-import '../../domain/member.dart';
-import '../../domain/workspace_permission.dart';
 import '../../providers/attention_providers.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -34,19 +32,22 @@ import '../widgets/bi_module_section.dart';
 import 'attention_screen.dart';
 
 /// The groups of the key indicators, in their order.
-enum OverviewGroup { capacity, sales, purchases, cash }
+enum OverviewGroup { people, capacity, sales, purchases, cash }
 
 /// The group [module] is shown in.
 @visibleForTesting
 OverviewGroup overviewGroupOf(BiModule module) => switch (module) {
+  BiModule(area: BiArea.people) => OverviewGroup.people,
   BiModule(area: BiArea.capacity) => OverviewGroup.capacity,
   BiModule(area: BiArea.treasury) => OverviewGroup.cash,
   BiModule(id: 'finance.invoiced' || 'finance.collected') =>
     OverviewGroup.sales,
+  BiModule(:final id) when id.startsWith('sales.') => OverviewGroup.sales,
   _ => OverviewGroup.purchases,
 };
 
 String _groupLabel(AppLocalizations l10n, OverviewGroup g) => switch (g) {
+  OverviewGroup.people => l10n.overviewGroupPeople,
   OverviewGroup.capacity => l10n.overviewGroupCapacity,
   OverviewGroup.sales => l10n.overviewGroupSales,
   OverviewGroup.purchases => l10n.overviewGroupPurchases,
@@ -121,10 +122,6 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
               ),
             ),
           ],
-          if (rights.contains(WorkspacePermission.manageMembers)) ...[
-            heading(l10n.overviewGroupPeople, 'overview-people'),
-            const _MembershipsTile(),
-          ],
         ],
       ),
     );
@@ -191,32 +188,6 @@ class _IndicatorTile extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-/// The active memberships of the space: each role included, memberships,
-/// not distinct people across the network.
-class _MembershipsTile extends ConsumerWidget {
-  const _MembershipsTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    final members = ref.watch(workspaceMembersProvider);
-    final count = switch (members) {
-      AsyncData(:final value) =>
-        '${value.where((m) => m.status == MemberStatus.active).length}',
-      AsyncError() => l10n.overviewUnavailable,
-      _ => '…',
-    };
-    return ListTile(
-      key: const ValueKey('overview-memberships'),
-      contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.people_outline),
-      title: Text(l10n.overviewActiveMemberships),
-      trailing: Text(count, style: Theme.of(context).textTheme.titleLarge),
-      onTap: () => context.push('/members'),
     );
   }
 }

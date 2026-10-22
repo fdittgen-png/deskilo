@@ -17,6 +17,7 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import 'kpi_overview.dart';
 import 'kpi_purchases.dart';
 
 /// How a KPI may be combined across a dimension or across time.
@@ -171,6 +172,7 @@ const kpiCatalogue = <KpiDefinition>[
   invoicedKpi,
   collectedKpi,
   ...purchaseKpis,
+  ...overviewKpis,
 ];
 
 /// Why a value is what it is. Several can hold at once.

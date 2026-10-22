@@ -466,7 +466,7 @@ void main() {
   });
 
   group('SAF-T', () {
-    XmlDocument file({Invoice? invoice}) => XmlDocument.parse(buildSafTFile(
+    XmlDocument file({Invoice? invoice}) => XmlDocument.parse(buildSafTFile(SafTRequest(
           invoices: [invoice ?? _invoice()],
           matches: const {},
           company: _seller,
@@ -474,7 +474,7 @@ void main() {
           softwareVersion: safTSoftwareVersion,
           createdAt: DateTime(2026, 7, 27),
           lineText: _lineText,
-        ));
+        )));
 
     test('the tax table declares the rates the file actually uses', () {
       final entries = file().findAllElements('TaxTableEntry').toList();
@@ -513,13 +513,13 @@ void main() {
       Invoice? invoice,
       FecAccounts accounts = const FecAccounts(),
     }) {
-      final file = buildFecFile(
+      final file = buildFecFile(FecRequest(
         invoices: [invoice ?? _invoice()],
         matches: const {},
         company: _seller,
         accounts: accounts,
         lineText: _lineText,
-      );
+      ));
       final lines = file.split('\r\n');
       final header = lines.first.split('\t');
       return [
