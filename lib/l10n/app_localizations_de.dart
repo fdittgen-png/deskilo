@@ -5742,6 +5742,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get expenseVatRate => 'Umsatzsteuer auf diese Ausgabe';
 
   @override
+  String get exportAboutContents => 'Was diese Datei enthält';
+
+  @override
+  String get exportAboutCurrency => 'Beträge in';
+
+  @override
+  String get exportAboutGeneratedOn => 'Erstellt am';
+
+  @override
+  String get exportAboutMachineCopy =>
+      'Der Ordner data/ im ZIP enthält dieselben Tabellen als CSV-Dateien mit festen Spaltennamen, für Formeln und andere Programme.';
+
+  @override
+  String get exportAboutRows => 'Zeilen';
+
+  @override
+  String get exportAboutSchema => 'Datenbankversion';
+
+  @override
+  String get exportAboutSheet => 'Blatt';
+
+  @override
+  String get exportAboutTimeZone => 'Zeiten in der Zeitzone';
+
+  @override
+  String get exportAboutTitle => 'Über diesen Export';
+
+  @override
+  String get exportAboutWorkspace => 'Arbeitsbereich';
+
+  @override
   String get exportClaimExchange =>
       'Für Ihre Steuerberatung zum Importieren und Prüfen — keine Meldung an eine Behörde.';
 
@@ -5753,8 +5784,201 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nur Rechnungen und Zahlungen, kein Hauptbuch. Die Datei sagt das in ihrem Kopf.';
 
   @override
+  String exportColumnName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'action': 'Aktion',
+      'active': 'Aktiv',
+      'actor': 'Ausgeführt von',
+      'address': 'Adresse',
+      'admin': 'Administrator',
+      'amenities': 'Ausstattung',
+      'amount': 'Betrag',
+      'area_kind': 'Bereichsart',
+      'blocked_from': 'Gesperrt ab',
+      'blocked_to': 'Gesperrt bis',
+      'bookable_as_whole': 'Als Ganzes buchbar',
+      'by_system': 'Automatisch',
+      'capacity': 'Kapazität',
+      'category': 'Kategorie',
+      'chair': 'Stuhl',
+      'checked_in_at': 'Eingecheckt',
+      'checked_out_at': 'Ausgecheckt',
+      'city': 'Ort',
+      'co_owner': 'Miteigentümer',
+      'color': 'Farbe',
+      'company': 'Firma',
+      'country': 'Land',
+      'created_at': 'Erfasst am',
+      'currency': 'Währung',
+      'decided_at': 'Entschieden am',
+      'decided_by': 'Entschieden von',
+      'decision': 'Entscheidung',
+      'decisions': 'Entscheidungen',
+      'description': 'Beschreibung',
+      'desk': 'Tisch',
+      'detailed': 'Detailliert',
+      'details': 'Details',
+      'due_on': 'Fällig am',
+      'email': 'E-Mail',
+      'enabled_features': 'Aktive Funktionen',
+      'ends_at': 'Ende',
+      'event_id': 'Antrag',
+      'event_type': 'Antragsart',
+      'first_name': 'Vorname',
+      'height': 'Höhe',
+      'id': 'ID',
+      'invoice': 'Rechnung',
+      'issued_at': 'Ausgestellt am',
+      'issued_by': 'Ausgestellt von',
+      'joined_at': 'Mitglied seit',
+      'kind': 'Art',
+      'kiosk': 'Kiosk',
+      'label': 'Bezeichnung',
+      'last_name': 'Nachname',
+      'last_seen': 'Zuletzt gesehen',
+      'last_sent_at': 'Zuletzt gesendet',
+      'legal_id': 'Registernummer',
+      'level': 'Etage',
+      'line': 'Zeile',
+      'member': 'Mitglied',
+      'member_id': 'Mitglieds-ID',
+      'member_number': 'Mitgliedsnummer',
+      'minutes_present': 'Anwesende Minuten',
+      'name': 'Name',
+      'net': 'Netto',
+      'number': 'Nummer',
+      'occurred_on': 'Datum',
+      'office': 'Raum',
+      'order_id': 'Bestellung',
+      'orientation': 'Ausrichtung',
+      'overage_policy': 'Bei Überschreitung',
+      'owner': 'Eigentümer',
+      'parking_kind': 'Stellplatzart',
+      'payment_terms': 'Zahlungsbedingungen',
+      'period': 'Zeitraum',
+      'phone': 'Telefon',
+      'postal_code': 'PLZ',
+      'price': 'Preis',
+      'provider': 'Anbieter',
+      'quantity': 'Menge',
+      'recorded_at': 'Erfasst am',
+      'replaces': 'Ersetzt',
+      'reservation_id': 'Buchung',
+      'resource_kind': 'Platzart',
+      'series_id': 'Serie',
+      'series_pattern': 'Wiederholung',
+      'signed_amount': 'Saldowirkung',
+      'slot_minutes': 'Zeitfenster (Minuten)',
+      'sort_order': 'Reihenfolge',
+      'source_invoice': 'Ursprungsrechnung',
+      'space': 'Platz',
+      'starts_at': 'Beginn',
+      'state': 'Stand',
+      'status': 'Status',
+      'street': 'Straße',
+      'subject': 'Betrifft',
+      'subscription_pct': 'Abo (%)',
+      'timezone': 'Zeitzone',
+      'title': 'Titel',
+      'total': 'Gesamt',
+      'type': 'Art',
+      'vat': 'USt.',
+      'vat_by_rate': 'USt. je Satz',
+      'vat_category': 'USt.-Kategorie',
+      'vat_id': 'USt-IdNr.',
+      'vat_percent': 'USt. %',
+      'vat_regime': 'Umsatzsteuerregelung',
+      'vat_treatment': 'USt.-Behandlung',
+      'voided_at': 'Storniert am',
+      'whatsapp': 'WhatsApp',
+      'width': 'Breite',
+      'workspace_code': 'Bereichscode',
+      'x': 'X',
+      'y': 'Y',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get exportNoCompleteBooks =>
       'Aus Rechnungen und Zahlungen rekonstruiert — DesKilo führt keine doppelte Buchführung, dies sind also nicht Ihre vollständigen Bücher. Ihre Steuerberatung ergänzt sie.';
+
+  @override
+  String exportSheetName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'about': 'Über diesen Export',
+      'workspace': 'Arbeitsbereich',
+      'levels': 'Etagen',
+      'desks': 'Tische',
+      'seats': 'Plätze',
+      'users': 'Mitglieder',
+      'reservations': 'Buchungen',
+      'check_ins': 'Anwesenheit',
+      'payments': 'Zahlungen',
+      'services': 'Genutzte Leistungen',
+      'service_catalog': 'Leistungspreise',
+      'invoices': 'Rechnungen',
+      'offices': 'Räume',
+      'ledger': 'Mitgliederkonten',
+      'events': 'Anträge',
+      'decisions': 'Entscheidungen',
+      'invoice_lines': 'Rechnungszeilen',
+      'sites': 'Standorte',
+      'plans': 'Tarife',
+      'fee_bands': 'Preisstufen',
+      'packages': 'Pakete',
+      'credit_products': 'Kontingentarten',
+      'vat_rates': 'USt.-Sätze',
+      'accessories': 'Zubehör',
+      'seat_accessories': 'Platz-Zubehör',
+      'closure_days': 'Schließtage',
+      'validation_policies': 'Freigaberegeln',
+      'workspace_roles': 'Rollen',
+      'workspace_role_members': 'Rolleninhaber',
+      'workspace_field_definitions': 'Fragen',
+      'workspace_field_values': 'Antworten',
+      'number_sequences': 'Nummernkreise',
+      'charging_stations': 'Ladestationen',
+      'plan_images': 'Planbilder',
+      'setting_values': 'Einstellungen',
+      'member_credits': 'Kontingente',
+      'member_credit_uses': 'Kontingentnutzung',
+      'price_negotiations': 'Preisverhandlungen',
+      'quota_extensions': 'Kontingenterweiterungen',
+      'usage_records': 'Nutzung',
+      'invoice_matches': 'Rechnungsausgleich',
+      'invoice_reminders': 'Mahnungen',
+      'invoice_dunning_holds': 'Mahnsperren',
+      'tax_exemption_certificates': 'Freistellungsbescheinigungen',
+      'suppliers': 'Lieferanten',
+      'purchase_documents': 'Einkaufsbelege',
+      'purchase_lines': 'Einkaufszeilen',
+      'purchase_obligations': 'Zu zahlende Beträge',
+      'outgoing_payments': 'Ausgehende Zahlungen',
+      'expense_schedules': 'Geplante Ausgaben',
+      'expense_occurrences': 'Ausgabentermine',
+      'expense_repartitions': 'Geteilte Kosten',
+      'premises_leases': 'Mietverträge',
+      'lease_terms': 'Mietbedingungen',
+      'lease_settlements': 'Mietabrechnungen',
+      'room_rentals': 'Raumanmietungen',
+      'room_rental_fees': 'Mietgebühren',
+      'workspace_assets': 'Anlagegüter',
+      'asset_valuation_batches': 'Anlagenbewertungen',
+      'asset_valuation_rows': 'Bewertungszeilen',
+      'book_profiles': 'Buchhaltungsprofile',
+      'book_accounts': 'Kontenrahmen',
+      'book_mappings': 'Kontenzuordnungen',
+      'book_periods': 'Buchungsperioden',
+      'vat_declarations': 'USt.-Voranmeldungen',
+      'einvoice_inbox': 'Empfangene E-Rechnungen',
+      'guest_participations': 'Gästebesuche',
+      'rights_requests': 'Datenschutzanfragen',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get exportUncertifiedSoftware =>

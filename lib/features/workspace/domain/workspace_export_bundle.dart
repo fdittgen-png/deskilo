@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import '../../../core/files/xlsx.dart';
 import '../../../core/i18n/currencies.dart';
 import '../../../core/time/workspace_time.dart';
+import 'workspace_export_labels.dart';
 
 /// #1310 S2 — the workspace export describes itself.
 ///
@@ -86,17 +87,24 @@ Uint8List buildWorkspaceExportZip({
   required DateTime createdAt,
   required List<XlsxSheet> sheets,
   List<ExportedFile> files = const [],
+  List<XlsxSheet> dataSheets = const [],
 }) {
   final archive = Archive();
   void add(String path, List<int> bytes) =>
       archive.addFile(ArchiveFile(path, bytes.length, bytes));
 
   add('workspace.xlsx', buildXlsx(sheets));
+  // #2861 — the machine copy: one CSV per sheet under its stable key, the
+  // same in every language, for formulas and importers.
+  for (final sheet in dataSheets) {
+    add('data/${exportKeyOf(sheet.name)}.csv',
+        utf8.encode(exportSheetCsv(sheet)));
+  }
   final manifest = _workspaceExportManifest(
     workspaceId: workspaceId,
     schemaVersion: schemaVersion,
     createdAt: createdAt,
-    sheets: sheets,
+    sheets: dataSheets.isEmpty ? sheets : dataSheets,
     files: files,
   );
   add('manifest.json',

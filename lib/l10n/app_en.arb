@@ -6952,6 +6952,46 @@
   "@expenseVatRate": {
     "description": "#2357 input VAT: expenseVatRate"
   },
+  "exportAboutContents": "What this file holds",
+  "@exportAboutContents": {
+    "description": "#2861 workspace export: exportAboutContents"
+  },
+  "exportAboutCurrency": "Amounts are in",
+  "@exportAboutCurrency": {
+    "description": "#2861 workspace export: exportAboutCurrency"
+  },
+  "exportAboutGeneratedOn": "Generated on",
+  "@exportAboutGeneratedOn": {
+    "description": "#2861 workspace export: exportAboutGeneratedOn"
+  },
+  "exportAboutMachineCopy": "The data/ folder of the ZIP holds the same tables as CSV files with stable column names, for formulas and other software.",
+  "@exportAboutMachineCopy": {
+    "description": "#2861 workspace export: exportAboutMachineCopy"
+  },
+  "exportAboutRows": "Rows",
+  "@exportAboutRows": {
+    "description": "#2861 workspace export: exportAboutRows"
+  },
+  "exportAboutSchema": "Database version",
+  "@exportAboutSchema": {
+    "description": "#2861 workspace export: exportAboutSchema"
+  },
+  "exportAboutSheet": "Sheet",
+  "@exportAboutSheet": {
+    "description": "#2861 workspace export: exportAboutSheet"
+  },
+  "exportAboutTimeZone": "Times are in the time zone",
+  "@exportAboutTimeZone": {
+    "description": "#2861 workspace export: exportAboutTimeZone"
+  },
+  "exportAboutTitle": "About this export",
+  "@exportAboutTitle": {
+    "description": "#2861 workspace export: exportAboutTitle"
+  },
+  "exportAboutWorkspace": "Workspace",
+  "@exportAboutWorkspace": {
+    "description": "#2861 workspace export: exportAboutWorkspace"
+  },
   "exportClaimExchange": "For your accountant to import and review — not a filing.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -6964,9 +7004,27 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
+  "exportColumnName": "{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} other{{key}}}",
+  "@exportColumnName": {
+    "description": "#2861 workspace export: exportColumnName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
   "exportNoCompleteBooks": "Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.",
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
+  },
+  "exportSheetName": "{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} other{{key}}}",
+  "@exportSheetName": {
+    "description": "#2861 workspace export: exportSheetName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
   },
   "exportUncertifiedSoftware": "Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.",
   "@exportUncertifiedSoftware": {
