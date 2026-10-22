@@ -628,10 +628,13 @@ void main() {
           .writeAsStringSync(jsonEncode(_envelope(plan, spec, body).toJson()));
     }
 
+    // `dart <file>`, not `dart run`: the latter first runs the package's
+    // build hooks, which failed in CI beside other suites ("File not
+    // formatted as yaml", exit 254) and left this test without output.
     ProcessResult rows(ShardPlan plan) {
       File('${dir.path}/plan.json').writeAsStringSync(jsonEncode(plan.toJson()));
       return Process.runSync('dart', [
-        'run', 'tool/quality_rows.dart',
+        'tool/quality_rows.dart',
         '--plan', '${dir.path}/plan.json',
         '--shards', dir.path,
         '--manifest', '.github/quality-manifest.psv',
@@ -727,7 +730,7 @@ void main() {
     test('an unreadable plan exits 1 with a red Tests row', () {
       File('${dir.path}/plan.json').writeAsStringSync('{');
       final r = Process.runSync('dart', [
-        'run', 'tool/quality_rows.dart',
+        'tool/quality_rows.dart',
         '--plan', '${dir.path}/plan.json',
         '--shards', dir.path,
         '--manifest', '.github/quality-manifest.psv',
