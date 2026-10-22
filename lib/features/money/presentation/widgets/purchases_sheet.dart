@@ -15,6 +15,7 @@ import 'purchase_claims.dart';
 import 'purchase_decision_bar.dart';
 import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
+import 'purchase_link_inbox.dart';
 import 'purchase_payables.dart';
 import 'purchase_status_chips.dart';
 
@@ -291,6 +292,20 @@ class _PurchaseDetailView extends ConsumerWidget {
             workspaceId: workspaceId,
             claims: detail.obligations,
             canPay: canPay,
+          ),
+        // #2573 — a received supplier invoice as its evidence.
+        if (canCapture &&
+            s.state != PurchaseState.rejected &&
+            s.state != PurchaseState.cancelled)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton.icon(
+              key: const ValueKey('purchase-link-inbox'),
+              onPressed: () =>
+                  showLinkInboxDialog(context, workspaceId, detail),
+              icon: const Icon(Icons.link),
+              label: Text(l10n.purchaseLinkInbox),
+            ),
           ),
         if (detail.sources.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.lg),

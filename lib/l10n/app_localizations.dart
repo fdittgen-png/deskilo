@@ -26010,6 +26010,30 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// #2573 link a received e-invoice to a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Link a received invoice'**
+  String get purchaseLinkInbox;
+
+  /// #2573 link a received e-invoice to a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'No received invoice to link.'**
+  String get purchaseLinkInboxEmpty;
+
+  /// #2573 link a received e-invoice to a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice was not linked. It may have changed meanwhile: reopen the document and try again.'**
+  String get purchaseLinkInboxFailed;
+
+  /// #2573 link a received e-invoice to a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Received invoices'**
+  String get purchaseLinkInboxTitle;
+
   /// #2577 the three status chips of a purchase document
   ///
   /// In en, this message translates to:

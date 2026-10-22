@@ -24,6 +24,22 @@ class PurchaseCommands {
     return _repository.saveDraft(workspaceId, requestId, draft);
   }
 
+  /// #2573 — links the received invoice [documentId] to [purchase] as its
+  /// evidence. A refusal (stale revision, a rejected invoice, no right)
+  /// propagates.
+  Future<void> linkInboxDocument(
+    String workspaceId,
+    PurchaseDetail purchase,
+    String documentId,
+    String requestId,
+  ) => _repository.linkInboxDocument(
+    workspaceId,
+    purchase.summary.id,
+    revision: purchase.revision,
+    documentId: documentId,
+    requestId: requestId,
+  );
+
   /// Records cash paid against [claim]. Null, nothing sent, when the amount
   /// is not positive or exceeds what remains; the server decides the rest
   /// (permission, revision, an invoice that applied the claim).

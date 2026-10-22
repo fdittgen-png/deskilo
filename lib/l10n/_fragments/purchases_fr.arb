@@ -169,5 +169,9 @@
   "purchaseQualified": "Comptabilité qualifiée",
   "purchaseNeedsReview": "À revoir",
   "purchaseTaxNotQualified": "TVA non qualifiée",
-  "purchaseUnverified": "Non vérifié (classé avant les achats)"
+  "purchaseUnverified": "Non vérifié (classé avant les achats)",
+  "purchaseLinkInbox": "Lier une facture reçue",
+  "purchaseLinkInboxTitle": "Factures reçues",
+  "purchaseLinkInboxEmpty": "Aucune facture reçue à lier.",
+  "purchaseLinkInboxFailed": "La facture n'a pas été liée. Le document a peut-être changé entre-temps : rouvrez-le et réessayez."
 }

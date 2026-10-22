@@ -169,5 +169,9 @@
   "purchaseQualified": "Contabilità qualificata",
   "purchaseNeedsReview": "Da rivedere",
   "purchaseTaxNotQualified": "Imposta non qualificata",
-  "purchaseUnverified": "Non verificato (archiviato prima degli acquisti)"
+  "purchaseUnverified": "Non verificato (archiviato prima degli acquisti)",
+  "purchaseLinkInbox": "Collega una fattura ricevuta",
+  "purchaseLinkInboxTitle": "Fatture ricevute",
+  "purchaseLinkInboxEmpty": "Nessuna fattura ricevuta da collegare.",
+  "purchaseLinkInboxFailed": "La fattura non è stata collegata. Il documento potrebbe essere cambiato nel frattempo: lo riapra e riprovi."
 }
