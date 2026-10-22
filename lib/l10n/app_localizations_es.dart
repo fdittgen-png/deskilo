@@ -15290,6 +15290,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get publicProfileTitle => 'Perfil público';
 
   @override
+  String get purchaseNeedsReview => 'Por revisar';
+
+  @override
+  String get purchaseQualified => 'Contabilidad cualificada';
+
+  @override
+  String get purchaseSettlementNothingOwed => 'Nada adeudado';
+
+  @override
+  String get purchaseSettlementPartly => 'Saldado en parte';
+
+  @override
+  String get purchaseSettlementSettled => 'Saldado';
+
+  @override
+  String get purchaseSettlementUnpaid => 'Sin pagar';
+
+  @override
+  String get purchaseTaxNotQualified => 'Impuesto no cualificado';
+
+  @override
+  String get purchaseUnverified =>
+      'Sin verificar (archivado antes de las compras)';
+
+  @override
   String get purchasesAddBill => 'Añadir factura de proveedor';
 
   @override

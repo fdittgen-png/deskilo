@@ -1,8 +1,8 @@
 {
-  "recordedSha": "188a3a14100f58557bc10cdca40a8c398d81f114",
+  "recordedSha": "0c267810cc5d6006cd8bdcf74b2634bb256665e1",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1780,"functions":9966,"cyclomatic>=9":1061,"cyclomatic>=25":107,"cognitive>=15":430,"cognitive>=30":98,"length>=150":73,"parameters>=5":484,"parameters>=7":153,"partOfFiles":43},
+  "totals": {"files":1782,"functions":9970,"cyclomatic>=9":1062,"cyclomatic>=25":107,"cognitive>=15":431,"cognitive>=30":98,"length>=150":73,"parameters>=5":484,"parameters>=7":153,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1550,6 +1550,7 @@
     {"p":"lib/features/money/domain/price_negotiation.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":5,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/purchase.dart","loc":257,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":3,"cyc":4,"len":26,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/purchase_obligation.dart","loc":214,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":7,"len":26,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/purchase_status.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":18,"cyc":17,"len":38,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/quota_rules.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/recapitulative_statement.dart","loc":107,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":18,"cyc":15,"len":48,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/reminder_evidence.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":14,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1786,7 +1787,8 @@
     {"p":"lib/features/money/presentation/widgets/purchase_payables.dart","loc":152,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":23,"cyc":18,"len":94,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/purchase_payment_dialogs.dart","loc":198,"part":false,"setState":4,"repositoryReads":0,"fn":8,"cog":5,"cyc":7,"len":90,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/purchase_reverse_dialog.dart","loc":108,"part":false,"setState":2,"repositoryReads":0,"fn":5,"cog":4,"cyc":5,"len":37,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/purchases_sheet.dart","loc":266,"part":false,"setState":1,"repositoryReads":0,"fn":8,"cog":19,"cyc":16,"len":95,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/purchase_status_chips.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":5,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/purchases_sheet.dart","loc":263,"part":false,"setState":1,"repositoryReads":0,"fn":8,"cog":19,"cyc":16,"len":92,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/recapitulative_notice.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/register_payment_sheet.dart","loc":191,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":7,"cyc":13,"len":105,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/reminder_evidence_list.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":8,"len":44,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

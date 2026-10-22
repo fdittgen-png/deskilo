@@ -25998,6 +25998,54 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Needs review'**
+  String get purchaseNeedsReview;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting qualified'**
+  String get purchaseQualified;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing owed'**
+  String get purchaseSettlementNothingOwed;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Partly settled'**
+  String get purchaseSettlementPartly;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Settled'**
+  String get purchaseSettlementSettled;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get purchaseSettlementUnpaid;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Tax not qualified'**
+  String get purchaseTaxNotQualified;
+
+  /// #2577 the three status chips of a purchase document
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified (filed before purchases)'**
+  String get purchaseUnverified;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
