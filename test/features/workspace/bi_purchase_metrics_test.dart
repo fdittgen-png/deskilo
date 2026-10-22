@@ -32,6 +32,7 @@ const _ids = [
   'assets.book_depreciation',
   'finance.contribution_after_depreciation',
   'purchases.unbilled_commitments',
+  'purchases.forecast_outflows',
 ];
 
 Map<String, dynamic> _row({
@@ -217,6 +218,11 @@ void main() {
     );
     expect(known.unbilledOverdueMinor, 1400);
     expect(known.unbilledUpcomingMinor, 1000);
+    expect(
+      costMeasure(known, 'purchases.forecast_outflows').numerator,
+      5010,
+      reason: 'owed plus still expected, from the server',
+    );
 
     final missing = costSummaryFromJson(
       _costRow(depreciation: null, after: null, unbilled: null),
@@ -225,6 +231,7 @@ void main() {
       'assets.book_depreciation',
       'finance.contribution_after_depreciation',
       'purchases.unbilled_commitments',
+      'purchases.forecast_outflows',
     ]) {
       expect(costMeasure(missing, id).unknown, isTrue, reason: id);
     }
@@ -259,6 +266,7 @@ Map<String, Object?> _costRow({
   'unbilled_minor': unbilled,
   'unbilled_overdue_minor': unbilled == null ? null : '1400',
   'unbilled_upcoming_minor': unbilled == null ? null : '1000',
+  'forecast_minor': unbilled == null ? null : '5010',
   'quality': const <String>[],
   'reasons': const ['unresolved_lines'],
   'computed_at': '2026-05-02T10:00:00Z',

@@ -156,5 +156,7 @@
   "allocationRuleNeedsCategory": "Nennen Sie die Einkaufskategorie, die die Regel verteilt.",
   "allocationRuleNeedsBasis": "Begründen Sie die Gewichte.",
   "allocationRuleNeedsWeight": "Geben Sie mindestens einer Ebene oder einem Büro ein Gewicht.",
-  "allocationRuleSaveFailed": "Die Regel wurde nicht gespeichert. Vielleicht wurde sie inzwischen geändert: öffnen Sie sie erneut und versuchen Sie es noch einmal."
+  "allocationRuleSaveFailed": "Die Regel wurde nicht gespeichert. Vielleicht wurde sie inzwischen geändert: öffnen Sie sie erneut und versuchen Sie es noch einmal.",
+  "biForecastTitle": "Voraussichtlich zu zahlen (offen + Verträge)",
+  "biForecastDefinition": "Was am Ende der Monate Lieferanten geschuldet wird, zuzüglich dessen, was Mietverträge und angemietete Räume in diesen Monaten noch erwarten. Eine einem Vertrag schon zugeordnete Rechnung zählt einmal: bei den offenen Posten."
 }

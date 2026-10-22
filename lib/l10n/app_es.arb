@@ -916,6 +916,8 @@
   "biFinancePartial": "El periodo no ha terminado: estas cifras aún cambiarán.",
   "biFinanceSameAsReport": "Las mismas reglas que el informe de estado del espacio, calculadas una vez en el servidor.",
   "biForbidden": "No puede leer este análisis en este espacio.",
+  "biForecastDefinition": "Lo que se debe a los proveedores al final de los meses, más lo que los arrendamientos y las salas alquiladas aún prevén en ellos. Una factura ya conciliada con un contrato cuenta una sola vez: en lo debido.",
+  "biForecastTitle": "Previsto a pagar (debido + contratos)",
   "biFutureBasis": "Reservas existentes y horarios actuales; no es una previsión de demanda ni un uso garantizado.",
   "biGrain": "Duración del periodo",
   "biGrainMonth": "Mes",

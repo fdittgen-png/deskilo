@@ -1690,6 +1690,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie dürfen diese Analyse in diesem Arbeitsbereich nicht lesen.';
 
   @override
+  String get biForecastDefinition =>
+      'Was am Ende der Monate Lieferanten geschuldet wird, zuzüglich dessen, was Mietverträge und angemietete Räume in diesen Monaten noch erwarten. Eine einem Vertrag schon zugeordnete Rechnung zählt einmal: bei den offenen Posten.';
+
+  @override
+  String get biForecastTitle => 'Voraussichtlich zu zahlen (offen + Verträge)';
+
+  @override
   String get biFutureBasis =>
       'Vorhandene Buchungen und aktuelle Öffnungszeiten; keine Nachfrageprognose oder garantierte Nutzung.';
 

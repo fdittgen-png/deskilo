@@ -156,5 +156,7 @@
   "allocationRuleNeedsCategory": "Indique la categoría de compra que reparte la regla.",
   "allocationRuleNeedsBasis": "Explique estos pesos.",
   "allocationRuleNeedsWeight": "Dé un peso al menos a una planta u oficina.",
-  "allocationRuleSaveFailed": "La regla no se guardó. Puede que haya cambiado entretanto: vuelva a abrirla e inténtelo de nuevo."
+  "allocationRuleSaveFailed": "La regla no se guardó. Puede que haya cambiado entretanto: vuelva a abrirla e inténtelo de nuevo.",
+  "biForecastTitle": "Previsto a pagar (debido + contratos)",
+  "biForecastDefinition": "Lo que se debe a los proveedores al final de los meses, más lo que los arrendamientos y las salas alquiladas aún prevén en ellos. Una factura ya conciliada con un contrato cuenta una sola vez: en lo debido."
 }
