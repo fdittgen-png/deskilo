@@ -97,7 +97,7 @@ void main() {
     final xml = utf8.decode(saved.single.$2);
     expect(xml, isNot(contains('GOODCODE22')));
     // v2 is what the app exports now (#180).
-    expect(xml, contains('<deskilo-workspace version="3">'));
+    expect(xml, contains('<deskilo-workspace version="4">'));
     final parsed = parseWorkspaceXml(xml);
     expect(parsed.settings.name, 'Test Space');
     expect(parsed.settings.countryCode, 'DE');
