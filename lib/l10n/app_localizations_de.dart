@@ -14070,6 +14070,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get periodReservationsEmpty => 'Keine Buchung in diesen Monaten.';
+
+  @override
+  String get periodReservationsFailed =>
+      'Die Buchungen konnten nicht gelesen werden.';
+
+  @override
+  String periodReservationsTitle(String period) {
+    return 'Buchungen von $period';
+  }
+
+  @override
+  String get periodReservationsUnnamed => '(Platz ohne Namen)';
+
+  @override
   String get permAccessProd => 'Den Produktionsraum betreten';
 
   @override
