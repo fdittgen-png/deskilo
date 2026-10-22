@@ -13733,6 +13733,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get overviewAllIndicators => 'Tutti gli indicatori';
 
   @override
+  String get overviewCurrentState =>
+      'Cifra di oggi: per un periodo passato non ne è conservata la storia.';
+
+  @override
   String get overviewGroupCapacity => 'Capacità';
 
   @override
@@ -13751,7 +13755,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get overviewIndicators => 'Indicatori chiave';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Le iscrizioni dello spazio attive oggi, tutti i ruoli inclusi: iscrizioni, non persone distinte.';
+
+  @override
   String get overviewNeedsAttention => 'Da fare';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count fatture scadute; $unknown senza scadenza provata e $held sospese, a parte';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Ciò che i membri devono ancora su fatture emesse oltre la scadenza provata, dopo note di credito, pagamenti parziali e perdite, secondo le regole di sollecito. Una fattura senza scadenza provata, o sospesa, è contata a parte e non rientra nell\'importo.';
+
+  @override
+  String get overviewOverdueTitle => 'Crediti scaduti';
 
   @override
   String get overviewThisMonth => 'Questo mese';
