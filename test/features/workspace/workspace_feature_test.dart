@@ -49,6 +49,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.biReportDesigner,
   // #2582 — the purchase figures are shown on purpose.
   WorkspaceFeature.purchaseAnalytics,
+  // #2583 — the overview is asked for, never assumed.
+  WorkspaceFeature.workspaceOverview,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -205,6 +207,7 @@ void main() {
       'accountingPeriods': true,
       'biReportDesigner': true,
       'purchaseAnalytics': true,
+      'workspaceOverview': true,
       'guestParticipation': true,
     });
 

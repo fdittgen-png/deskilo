@@ -86,6 +86,9 @@ class WorkspaceReports extends ConsumerWidget {
     final templates = on(WorkspaceFeature.invoicePdfTemplate) &&
       (may(WorkspacePermission.designDocuments) || may(WorkspacePermission.manageDocuments));
     final sections = <(String, String, List<Widget>)>[
+      // #2583 — the overview: what needs the person, then the figures.
+      if (on(WorkspaceFeature.workspaceOverview))
+        ('overview', l.overviewTitle, [link('reports-overview', Icons.dashboard_outlined, l.overviewTitle, '/workspace-overview')]),
       if (finance.isNotEmpty) ('finance', l.uxReportsFinance, finance),
       if (documents.isNotEmpty) ('documents', l.uxReportsWorkspace, documents),
       if (biAvailable(features: features, permissions: permissions))

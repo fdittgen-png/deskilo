@@ -1243,6 +1243,10 @@ window.SETUP_L10N={
    "purchaseAnalytics": [
     "Purchase figures (analytics)",
     "What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure."
+   ],
+   "workspaceOverview": [
+    "Workspace overview",
+    "One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are."
    ]
   },
   "process": {
@@ -2710,6 +2714,10 @@ window.SETUP_L10N={
    "purchaseAnalytics": [
     "Indicateurs d'achats (analyses)",
     "Ce que l'espace doit à ses fournisseurs, doit rembourser à ses membres, a encore à examiner et a payé, sur la page d'analyses, à partir des achats eux-mêmes. Désactivé : les achats restent tels quels et la page d'analyses n'affiche aucun indicateur d'achats."
+   ],
+   "workspaceOverview": [
+    "Vue d'ensemble de l'espace",
+    "Une page avec ce qui attend la personne et les indicateurs qu'elle peut lire — capacité, ventes, achats et trésorerie — chacun ouvrant sa source. Désactivé : la liste d'attention et la page d'analyses restent inchangées."
    ]
   },
   "process": {
@@ -4177,6 +4185,10 @@ window.SETUP_L10N={
    "purchaseAnalytics": [
     "Einkaufskennzahlen (Analysen)",
     "Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl."
+   ],
+   "workspaceOverview": [
+    "Überblick über den Raum",
+    "Eine Seite mit dem, was die Person erwartet, und den Kennzahlen, die sie lesen darf — Kapazität, Verkauf, Einkauf und Geld — jede öffnet ihre Quelle. Aus: Die Liste der offenen Punkte und die Analyseseite bleiben, wie sie sind."
    ]
   },
   "process": {
@@ -5644,6 +5656,10 @@ window.SETUP_L10N={
    "purchaseAnalytics": [
     "Indicadores de compras (análisis)",
     "Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras."
+   ],
+   "workspaceOverview": [
+    "Resumen del espacio",
+    "Una página con lo que espera a la persona y las cifras que puede leer — capacidad, ventas, compras y tesorería — cada una abriendo su origen. Desactivado: la lista de pendientes y la página de análisis quedan como están."
    ]
   },
   "process": {
@@ -7111,6 +7127,10 @@ window.SETUP_L10N={
    "purchaseAnalytics": [
     "Indicatori degli acquisti (analisi)",
     "Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti."
+   ],
+   "workspaceOverview": [
+    "Panoramica dello spazio",
+    "Una pagina con ciò che attende la persona e le cifre che può leggere — capacità, vendite, acquisti e cassa — ciascuna apre la sua fonte. Disattivato: l'elenco delle attività e la pagina delle analisi restano come sono."
    ]
   },
   "process": {

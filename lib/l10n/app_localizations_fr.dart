@@ -6971,6 +6971,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureWorkspaceLibraryTitle => 'Bibliothèque d\'espaces';
 
   @override
+  String get featureWorkspaceOverviewDesc =>
+      'Une page avec ce qui attend la personne et les indicateurs qu\'elle peut lire — capacité, ventes, achats et trésorerie — chacun ouvrant sa source. Désactivé : la liste d\'attention et la page d\'analyses restent inchangées.';
+
+  @override
+  String get featureWorkspaceOverviewTitle => 'Vue d\'ensemble de l\'espace';
+
+  @override
   String get featureWorkspaceStatus => 'Situation de l\'espace';
 
   @override
@@ -13730,6 +13737,42 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get overagePolicyPayg => 'Facturer le dépassement (à l\'usage)';
+
+  @override
+  String get overviewActiveMemberships => 'Adhésions actives';
+
+  @override
+  String get overviewAllIndicators => 'Tous les indicateurs';
+
+  @override
+  String get overviewGroupCapacity => 'Capacité';
+
+  @override
+  String get overviewGroupCash => 'Trésorerie';
+
+  @override
+  String get overviewGroupPeople => 'Personnes';
+
+  @override
+  String get overviewGroupPurchases => 'Achats';
+
+  @override
+  String get overviewGroupSales => 'Ventes';
+
+  @override
+  String get overviewIndicators => 'Indicateurs clés';
+
+  @override
+  String get overviewNeedsAttention => 'À traiter';
+
+  @override
+  String get overviewThisMonth => 'Ce mois-ci';
+
+  @override
+  String get overviewTitle => 'Vue d\'ensemble';
+
+  @override
+  String get overviewUnavailable => 'Non disponible';
 
   @override
   String get payConfigConfigured => 'Configuré';

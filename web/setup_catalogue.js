@@ -270,6 +270,7 @@ window.SETUP_PROCESSES=[
     "key": "experience",
     "features": [
      "decisionSurface",
+     "workspaceOverview",
      "formHelpHints",
      "memberGettingStarted",
      "placeFeedback",

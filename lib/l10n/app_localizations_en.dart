@@ -6901,6 +6901,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureWorkspaceLibraryTitle => 'Workspace library';
 
   @override
+  String get featureWorkspaceOverviewDesc =>
+      'One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are.';
+
+  @override
+  String get featureWorkspaceOverviewTitle => 'Workspace overview';
+
+  @override
   String get featureWorkspaceStatus => 'Workspace status';
 
   @override
@@ -13596,6 +13603,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get overagePolicyPayg => 'Charge overage (pay-as-you-go)';
+
+  @override
+  String get overviewActiveMemberships => 'Active memberships';
+
+  @override
+  String get overviewAllIndicators => 'All indicators';
+
+  @override
+  String get overviewGroupCapacity => 'Capacity';
+
+  @override
+  String get overviewGroupCash => 'Cash';
+
+  @override
+  String get overviewGroupPeople => 'People';
+
+  @override
+  String get overviewGroupPurchases => 'Purchases';
+
+  @override
+  String get overviewGroupSales => 'Sales';
+
+  @override
+  String get overviewIndicators => 'Key indicators';
+
+  @override
+  String get overviewNeedsAttention => 'Needs attention';
+
+  @override
+  String get overviewThisMonth => 'This month';
+
+  @override
+  String get overviewTitle => 'Overview';
+
+  @override
+  String get overviewUnavailable => 'Not available';
 
   @override
   String get payConfigConfigured => 'Configured';
