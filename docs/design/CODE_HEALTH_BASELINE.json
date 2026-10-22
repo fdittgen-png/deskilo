@@ -1,8 +1,8 @@
 {
-  "recordedSha": "904441587dfbc676e7d74ba7798def8367c9cac2",
+  "recordedSha": "7bc7597191bc50a32866549dafe34827117d91ff",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1766,"functions":9887,"cyclomatic>=9":1048,"cyclomatic>=25":107,"cognitive>=15":424,"cognitive>=30":96,"length>=150":73,"parameters>=5":478,"parameters>=7":153,"partOfFiles":43},
+  "totals": {"files":1766,"functions":9888,"cyclomatic>=9":1048,"cyclomatic>=25":107,"cognitive>=15":424,"cognitive>=30":96,"length>=150":73,"parameters>=5":479,"parameters>=7":153,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1539,10 +1539,10 @@
     {"p":"lib/features/money/domain/payment_request_ids.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":3,"cyc":4,"len":20,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/payment_terms.dart","loc":83,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":9,"cyc":6,"len":17,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/period_label.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":6,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/posting.dart","loc":121,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":3,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/posting.dart","loc":123,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":3,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/posting_preview.dart","loc":141,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":13,"cyc":9,"len":58,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/posting_rules.dart","loc":361,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":9,"cyc":8,"len":76,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/posting_rules_purchases.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":11,"cyc":15,"len":58,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/posting_rules.dart","loc":354,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":9,"cyc":8,"len":69,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/posting_rules_purchases.dart","loc":121,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":14,"cyc":17,"len":64,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/premises_lease.dart","loc":270,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":2,"cyc":7,"len":28,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/price_negotiation.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":5,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/purchase.dart","loc":257,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":3,"cyc":4,"len":26,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

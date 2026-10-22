@@ -91,7 +91,12 @@ enum PostingKind {
   supplierPayment('supplier_payment'),
 
   /// #2365 (0521) — output tax leaving `vat_pending` on its tax point.
-  vatRelease('vat_release');
+  vatRelease('vat_release'),
+
+  /// #2365 (0524) — a member's approved receipt, credited to the member's
+  /// account, and the money paid back to them.
+  memberReceipt('member_receipt'),
+  reimbursement('reimbursement');
 
   const PostingKind(this.wire);
   final String wire;

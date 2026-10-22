@@ -6,9 +6,10 @@
 //
 //   * invoice: Dr customers the gross; Cr `revenue:<group>` the net and Cr
 //     `vat_output:<group>` the tax, per rate group. A credit note is the
-//     same entry mirrored. A credit netted on it (#2542) is its own entry
-//     on the invoice day: a payment Dr bank / Cr customers, an expense the
-//     one purchase entry Dr expenses / Cr customers, never a bank movement.
+//     same entry mirrored. A payment netted on it (#2542) is its own entry
+//     on the invoice day, Dr bank / Cr customers. A netted expense credit
+//     books nothing (0524): the member's receipt booked the expense against
+//     the member's account (posting_rules_purchases.dart).
 //     A voided invoice and a settlement book nothing:
 //     the settlement's payment is allocated to its sources
 //     ([accountingView]).
@@ -244,17 +245,10 @@ List<Posting> _document(
       documentNumber: i.number,
       lines: lines,
     ),
-    // A netted payment is money in on the bank; a netted expense is the
-    // one purchase entry, never a bank movement (#2542).
+    // A netted payment is money in on the bank (#2542); a netted expense
+    // only settles the member's account its receipt credited (0524).
     if (paid != 0)
       netted(PostingJournal.bank, PostingKind.receipt, BookRole.bank, paid),
-    if (spent != 0)
-      netted(
-        PostingJournal.purchases,
-        PostingKind.expense,
-        BookRole.expenses,
-        spent,
-      ),
   ];
 }
 
