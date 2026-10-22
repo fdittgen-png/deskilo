@@ -23,6 +23,7 @@ import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
 import 'bi_cost_allocation_reader.dart';
+import 'bi_overview_reader.dart';
 import 'bi_purchase_reader.dart';
 import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
@@ -92,6 +93,14 @@ Future<BiResult> biModuleResult(
     'finance.contribution_after_depreciation' ||
     'purchases.unbilled_commitments' ||
     'purchases.forecast_outflows' => biCostResult(
+      ref,
+      workspaceId,
+      moduleId,
+      period,
+      compared,
+    ),
+    'people.active_memberships_current' ||
+    'sales.overdue_receivables' => biOverviewResult(
       ref,
       workspaceId,
       moduleId,

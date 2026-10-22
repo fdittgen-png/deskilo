@@ -13730,6 +13730,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get overviewAllIndicators => 'Todos los indicadores';
 
   @override
+  String get overviewCurrentState =>
+      'Cifra de hoy: no se guarda historial para un periodo pasado.';
+
+  @override
   String get overviewGroupCapacity => 'Capacidad';
 
   @override
@@ -13748,7 +13752,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get overviewIndicators => 'Indicadores clave';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.';
+
+  @override
   String get overviewNeedsAttention => 'Pendiente';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count facturas vencidas; $unknown sin vencimiento probado y $held en suspenso, aparte';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.';
+
+  @override
+  String get overviewOverdueTitle => 'Cobros vencidos';
 
   @override
   String get overviewThisMonth => 'Este mes';
