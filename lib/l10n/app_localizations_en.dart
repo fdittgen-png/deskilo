@@ -15938,6 +15938,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readinessFirstBookingReady => 'Ready for a first booking';
 
   @override
+  String get readinessGrantMembers => 'Let members book';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Members can now book, see the calendar, write to each other and see their own account.';
+
+  @override
   String get readinessLater => 'Needed later';
 
   @override

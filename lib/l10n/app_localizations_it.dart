@@ -16068,6 +16068,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessFirstBookingReady => 'Pronto per una prima prenotazione';
 
   @override
+  String get readinessGrantMembers => 'Consenti ai membri di prenotare';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'I membri ora possono prenotare, vedere il calendario, scriversi e vedere il proprio conto.';
+
+  @override
   String get readinessLater => 'Necessario più avanti';
 
   @override

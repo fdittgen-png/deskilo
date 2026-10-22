@@ -66,5 +66,7 @@
   "readinessSetAsideAction": "Más tarde",
   "readinessSetAside": "Dejado para más tarde",
   "readinessSetAsideUndo": "Deshacer",
-  "readinessSetAsideFailed": "No se pudo guardar. Inténtelo de nuevo."
+  "readinessSetAsideFailed": "No se pudo guardar. Inténtelo de nuevo.",
+  "readinessGrantMembers": "Permitir que los miembros reserven",
+  "readinessGrantMembersDone": "Los miembros ya pueden reservar, ver el calendario, escribirse y ver su propia cuenta."
 }

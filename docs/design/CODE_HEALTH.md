@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `d69b9d34df430249b3a22c7cce64b79383769c84` on 2026-10-22.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `9f515afea43e8f306720b637150ced8c9ec78a25` on 2026-10-22.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,9 +10,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1794 |
-| functions | 10021 |
-| cyclomatic>=9 | 1067 |
+| files | 1795 |
+| functions | 10024 |
+| cyclomatic>=9 | 1068 |
 | cyclomatic>=25 | 107 |
 | cognitive>=15 | 434 |
 | cognitive>=30 | 98 |
@@ -48,6 +48,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 45 | 33 | 199 | 3 | `lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid` |
 | 45 | 39 | 198 | 6 | `lib/features/mcp/application/connect_checklist.dart#ConnectChecklist.new.derive` |
 | 45 | 12 | 70 | 0 | `lib/features/money/domain/saf_t_writer.dart#SafTWriter.generalLedger` |
+| 45 | 36 | 170 | 2 | `lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build` |
 | 44 | 50 | 140 | 3 | `lib/features/task_recorder/guide/guide_codec.dart#_GuideDecoder._step` |
-| 43 | 21 | 118 | 1 | `lib/core/ui/wizard_scaffold.dart#WizardScaffold.build` |
 

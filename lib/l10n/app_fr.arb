@@ -11065,6 +11065,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Prêt pour une première réservation",
+  "readinessGrantMembers": "Permettre aux membres de réserver",
+  "readinessGrantMembersDone": "Les membres peuvent maintenant réserver, voir le calendrier, s’écrire et voir leur compte.",
   "readinessLater": "Nécessaire plus tard",
   "readinessNeededFirst": "Nécessaire pour une première réservation",
   "readinessNeededInvoicing": "Nécessaire avant de facturer",

@@ -27372,6 +27372,18 @@ abstract class AppLocalizations {
   /// **'Ready for a first booking'**
   String get readinessFirstBookingReady;
 
+  /// #2865 — one-tap button on the setup card granting the members role the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book'**
+  String get readinessGrantMembers;
+
+  /// #2865 — confirmation after the members role got the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Members can now book, see the calendar, write to each other and see their own account.'**
+  String get readinessGrantMembersDone;
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:

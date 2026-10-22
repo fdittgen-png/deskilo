@@ -6,6 +6,8 @@
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
+import 'package:deskilo/features/workspace/application/grant_member_essentials.dart';
+import 'package:deskilo/features/workspace/domain/role_permission_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_readiness_card.dart';
@@ -13,6 +15,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,6 +53,7 @@ Future<List<String>> _pump(
   FakeLocalSetupRepository repo, {
   Set<WorkspaceFeature>? features,
   int? serverSchema,
+  List<Override> extra = const [],
 }) async {
   final pushed = <String>[];
   GoRoute recorder(String path) => GoRoute(
@@ -85,6 +89,7 @@ Future<List<String>> _pump(
         ),
         if (features != null)
           enabledFeaturesSyncProvider.overrideWithValue(features),
+        ...extra,
       ],
       child: MaterialApp.router(
         routerConfig: router,
@@ -570,4 +575,58 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('Book and use reservations'), findsOneWidget);
   });
+
+  testWidgets('one tap lets members book: the everyday rights, one by one '
+      '(#2865)', (tester) async {
+    final granted = _RecordingRoles();
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(readinessSections: [
+        const ReadinessSection(
+          area: ReadinessArea.memberPermissions,
+          state: ReadinessState.needsConfiguration,
+          required: true,
+          reason: 'members_cannot_book',
+          route: '/roles',
+        ),
+      ]),
+      extra: [
+        memberEssentialsGrantProvider
+            .overrideWithValue(MemberEssentialsGrant(granted)),
+      ],
+    );
+    await tester.tap(
+        find.byKey(const ValueKey('workspace-readiness-grant-members')));
+    await tester.pump();
+    expect(granted.calls, [
+      for (final p in memberEssentials) 'ws member ${p.wireName} true',
+    ]);
+  });
+
+  testWidgets('no grant button once members can book', (tester) async {
+    await _pump(tester, FakeLocalSetupRepository(readinessSections: _sections()));
+    expect(find.byKey(const ValueKey('workspace-readiness-grant-members')),
+        findsNothing);
+  });
+}
+
+class _RecordingRoles implements RolePermissionRepository {
+  final calls = <String>[];
+
+  @override
+  Future<void> setRolePermission(
+    String workspaceId,
+    String role,
+    String permission, {
+    required bool enabled,
+  }) async =>
+      calls.add('$workspaceId $role $permission $enabled');
+
+  @override
+  Future<void> setRolePermissions(
+    String workspaceId,
+    String role,
+    List<String> permissions,
+  ) =>
+      throw StateError('a screen grants one permission at a time (#1089)');
 }
