@@ -6,8 +6,10 @@
 --   machine net 1 200.00 + VAT 240.00, fully recoverable   -> cost 1 200.00
 --   machine net 1 200.00 + VAT 240.00, 120.00 recoverable  -> cost 1 320.00
 --   machine whose deductible share is not qualified        -> cost unknown
+--   a legacy expense the member marked as equipment          -> a candidate,
+--     with its own amount and evidence, never a complete asset
 begin;
-select plan(25);
+select plan(26);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -198,6 +200,16 @@ select set_config('t.a5', pg_temp.as_json(pg_temp.u(1), format('select public.re
 select is(current_setting('t.a5')::jsonb ->> 'description', 'Second machine', 'a line is registered by its purchase and number too, with the name given');
 select is(jsonb_array_length(pg_temp.as_json(pg_temp.u(1), format('select public.asset_candidate_lines_v1(%L)', current_setting('t.a'))) -> 'lines'), 0,
   'and once all are registered nothing is offered');
+-- A legacy expense the member marked as equipment (vat.asset): the bridge
+-- files its receipt and the line is a candidate like any other.
+insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status, decided_at)
+values (pg_temp.ev(901), current_setting('t.a')::uuid, 'expense', 'submitted', pg_temp.mem(2, 't.a'), pg_temp.mem(2, 't.a'),
+  '{"amount_cents": 60000, "category": "equipment", "note": "Projector", "vat": {"percent": 20, "deductible_pct": 100, "asset": true}}',
+  'confirmed', now());
+select is((select string_agg((x ->> 'description') || ':' || (x ->> 'gross_cents') || ':' || (x ->> 'recoverable_tax_cents'), ',')
+             from jsonb_array_elements(pg_temp.as_json(pg_temp.u(1), format('select public.asset_candidate_lines_v1(%L)',
+                    current_setting('t.a'))) -> 'lines') x),
+          'Projector:60000:10000', 'a legacy expense marked as equipment is offered as a candidate, with its own amount');
 
 -- ── deciding ───────────────────────────────────────────────────────────
 select ok((pg_temp.decide(pg_temp.u(4), current_setting('t.a1')::jsonb ->> 'id', 1, 'capitalise', 'IAS 16', date '2026-03-01', 209)::text) like '%may not decide%', 'an admin without manageBilling decides nothing');
