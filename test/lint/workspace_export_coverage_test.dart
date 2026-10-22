@@ -16,7 +16,13 @@
 // The same shape as `gdpr_export_coverage_test` (#1238), which asks the
 // same question of the member's subject-access export.
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:deskilo/features/workspace/domain/workspace_export_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'export_schema.dart';
 import 'lint_sources.dart';
 
 /// Every `public.<table>` in the migrations that carries a
@@ -56,23 +62,10 @@ Set<String> _workspaceScopedTables() {
   return scoped.difference(dropped);
 }
 
-/// The tables the workbook writes, tab by tab. `buildWorkspaceExcelExport`
-/// is a pure function over already-fetched lists, so this names the
-/// SOURCE of each argument it takes rather than the tab titles.
-const Set<String> _exported = {
-  'workspaces', // Workspace tab (the row itself)
-  'levels', // Levels
-  'offices', // Desks tab — offices and desks are one plan tree
-  'desks', // Desks
-  'seats', // Seats
-  'members', // Users
-  'reservations', // Reservations + Check-ins
-  'ledger_entries', // Payments
-  'payment_intents', // Payments
-  'events', // pending events, on the Reservations side
-  'services', // Services + Service catalog
-  'invoices', // Invoices
-  'invoice_transmissions', // Invoices (the e-invoice column)
+/// The tables the workbook writes — read from the workbook's own
+/// declaration (#2859), so the lint and the builder cannot disagree.
+final Set<String> _exported = {
+  for (final s in workspaceExportSources) s.table,
 };
 
 /// Workspace-scoped tables the export does NOT carry, and why each is
@@ -420,4 +413,102 @@ void main() {
         reason: 'a table cannot be both in the export and exempt from '
             'it — one of the two lists is wrong:\n${both.join('\n')}');
   });
+
+  // #2859 — the table list above says which tables are decided. These
+  // measure what the decisions leave open, in a baseline that may only
+  // fall: the columns of an exported table that reach no sheet, the
+  // sources that write only some of their rows, the tables with no
+  // workspace_id that hang off a workspace table and were never decided,
+  // and the exemptions that argue about importing into a fresh space —
+  // which says nothing about the operator's copy of their own data.
+  test('what the export leaves open only shrinks (#2859)', () {
+    final actual = _openItems();
+    final file = File(_baselinePath);
+    if (Platform.environment['UPDATE_EXPORT_COVERAGE'] == '1') {
+      file.writeAsStringSync(
+          '${const JsonEncoder.withIndent('  ').convert(actual)}\n');
+    }
+    final baseline = (jsonDecode(file.readAsStringSync()) as Map)
+        .map((k, v) => MapEntry(k as String,
+            (v as List).map((e) => e as String).toSet()));
+    final added = <String>[];
+    final gone = <String>[];
+    for (final key in {...actual.keys, ...baseline.keys}) {
+      final now = actual[key]?.toSet() ?? const <String>{};
+      final then = baseline[key] ?? const <String>{};
+      added.addAll(now.difference(then).map((e) => '$key: $e'));
+      gone.addAll(then.difference(now).map((e) => '$key: $e'));
+    }
+    expect(added, isEmpty,
+        reason: 'new open items — export them (declare them in '
+            'workspace_export_sources.dart) or give a reason:\n'
+            '${added.join('\n')}');
+    expect(gone, isEmpty,
+        reason: 'these are decided now — lower $_baselinePath by running '
+            'this test with UPDATE_EXPORT_COVERAGE=1:\n${gone.join('\n')}');
+  });
+
+  test('the column replay sees what the export needs (#2859)', () {
+    final schema = replaySchema();
+    for (final source in workspaceExportSources) {
+      final table = schema[source.table];
+      expect(table, isNotNull, reason: '${source.table} is not a table');
+      final unknown = source.columns.difference(table!.columns);
+      expect(unknown, isEmpty,
+          reason: '${source.table} declares columns it does not have');
+    }
+    expect(schema['seats']!.columns, contains('parking_kind'));
+    expect(schema['event_decisions']!.references, contains('events'));
+  });
 }
+
+const _baselinePath = 'docs/design/EXPORT_COVERAGE_BASELINE.json';
+
+/// An exemption whose reason is about importing into another space: right
+/// for the configuration transfer, no argument against the operator's own
+/// copy. A reason that is truly transfer-only says `[transfer-only]`.
+final _importArgument =
+    RegExp(r'\bimport|fresh space', caseSensitive: false);
+
+Map<String, List<String>> _openItems() {
+  final schema = replaySchema();
+  final scoped = _workspaceScopedTables();
+  final decided = {..._exported, ..._notExported.keys};
+  List<String> sorted(Iterable<String> it) => it.toList()..sort();
+  return {
+    for (final source in workspaceExportSources)
+      if (schema[source.table] case final table?)
+        'columns.${source.table}': sorted(table.columns
+            .difference(source.columns)
+            .difference(systemColumns)
+            // The export is of one workspace: its id is the whole file's.
+            .difference(const {'workspace_id'})
+            .difference(_notExportedColumns[source.table] ?? const {})),
+    'partialSources': sorted([
+      for (final s in workspaceExportSources)
+        if (s.partial != null) s.table,
+    ]),
+    'undecidedChildTables': sorted([
+      for (final t in schema.values)
+        if (!t.columns.contains('workspace_id') &&
+            !decided.contains(t.name) &&
+            t.references.any(scoped.contains))
+          t.name,
+    ]),
+    'importArguedExemptions': sorted([
+      for (final MapEntry(:key, :value) in _notExported.entries)
+        if (_importArgument.hasMatch(value) &&
+            !value.startsWith('[transfer-only]'))
+          key,
+    ]),
+  };
+}
+
+/// Columns of an exported table left out on purpose, and why.
+const Map<String, Set<String>> _notExportedColumns = {
+  'profiles': {
+    // The hash of a person's badge PIN (#662): a credential, never in a
+    // workbook that is shared on.
+    'pin_hash',
+  },
+};
