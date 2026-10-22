@@ -21,8 +21,6 @@
 // A qualified role resolves first and falls back to its base; a base with
 // no mapping blocks with the role named. Nothing is guessed.
 
-import 'package:meta/meta.dart';
-
 import 'accounting_amount.dart';
 import 'accounting_view.dart';
 import 'book_chart.dart';
@@ -30,9 +28,7 @@ import 'invoice.dart';
 import 'posting.dart';
 import 'vat_rate.dart';
 
-/// The issuer's chart a posting resolves on. Read by the tests until the
-/// engine's demo twin (#2365) resolves on it.
-@visibleForTesting
+/// The issuer's chart a posting resolves on.
 class PostingBook {
   PostingBook({
     required this.accounts,

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'book_chart.dart';
 import 'book_profile.dart';
+import 'posting.dart';
 
 /// #1869 — where book profiles are read and saved: `book_profiles` and
 /// `save_book_profile` (0335) on a server, a map in the demo and tests.
@@ -31,4 +32,13 @@ abstract class BookProfileRepository {
     required DateTime effectiveFrom,
     required int expectedRevision,
   });
+
+  /// #2365 — the entries the books receive for [issuerSiteId] from [from] to
+  /// [to] (`compute_postings`, 0518), with what blocks them.
+  Future<PostingSet> fetchPostings(
+    String workspaceId,
+    String issuerSiteId,
+    DateTime from,
+    DateTime to,
+  );
 }

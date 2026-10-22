@@ -2,10 +2,23 @@
 import '../../../features/money/domain/book_chart.dart';
 import '../../../features/money/domain/book_profile.dart';
 import '../../../features/money/domain/book_profile_repository.dart';
+import '../../../features/money/domain/posting.dart';
+import '../../../features/money/domain/posting_rules.dart';
+import '../../vat/tax_reference_active.dart';
+import 'money_repository.dart';
 
 /// #1869 — book profiles in memory, with the server's revision rule:
 /// a save names the revision it read (0 for a new version).
 class FakeBookProfileRepository implements BookProfileRepository {
+  FakeBookProfileRepository({this.money, this.country = 'FR'});
+
+  /// #2365 — the demo's invoices and matches the books are posted from; none
+  /// in tests that only read profiles and charts.
+  final FakeMoneyRepository? money;
+
+  /// The issuer's country, whose rate rows name the groups.
+  final String country;
+
   final List<BookProfile> profiles = [];
 
   /// Every profile handed to [saveBookProfile], in order.
@@ -120,5 +133,33 @@ class FakeBookProfileRepository implements BookProfileRepository {
       mappings[i] = saved;
     }
     return saved;
+  }
+
+  /// #2365 — the same rules as the server (`posting_rules.dart`), over the
+  /// demo's invoices of the period.
+  @override
+  Future<PostingSet> fetchPostings(
+    String workspaceId,
+    String issuerSiteId,
+    DateTime from,
+    DateTime to,
+  ) async {
+    final m = money;
+    if (m == null) return const PostingSet([], []);
+    final chart = await fetchBookChart(workspaceId);
+    return postingsOf(
+      invoices: [
+        for (final i in await m.fetchInvoices(workspaceId))
+          if (!i.issuedAt.isBefore(from) && !i.issuedAt.isAfter(to)) i,
+      ],
+      matches: await m.fetchInvoiceMatches(workspaceId),
+      book: PostingBook(
+        accounts: chart.accounts,
+        mappings: chart.mappings,
+        issuerSiteId: issuerSiteId,
+      ),
+      groupOf: (t) =>
+          ActiveTaxReference.current.groupOfRate(country, t.percent, t.category),
+    );
   }
 }

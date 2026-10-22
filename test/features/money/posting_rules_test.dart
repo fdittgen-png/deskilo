@@ -162,4 +162,53 @@ void main() {
       (PostingBlock.unmappedRole, 'write_off'),
     ]);
   });
+
+  test('the server answer reads as the same postings (0518)', () {
+    final parsed = PostingSet.fromJson(const {
+      'period': {'from': '2026-01-01', 'to': '2026-12-31'},
+      'postings': [
+        {
+          'journal': 'other',
+          'kind': 'write_off',
+          'date': '2026-05-25',
+          'document_id': 'id-INV-3',
+          'document_number': 'INV-3',
+          'currency': 'EUR',
+          'lines': [
+            {
+              'role': 'write_off',
+              'qualifier': null,
+              'account_code': '654',
+              'debit_cents': 3334,
+              'credit_cents': 0,
+            },
+            {
+              'role': 'vat_output',
+              'qualifier': 'standard',
+              'account_code': '44571',
+              'debit_cents': 666,
+              'credit_cents': 0,
+            },
+            {
+              'role': 'customers',
+              'qualifier': null,
+              'account_code': '411',
+              'debit_cents': 0,
+              'credit_cents': 4000,
+            },
+          ],
+        },
+      ],
+      'blockers': [
+        {'block': 'unmappedRole', 'subject': 'fees'},
+      ],
+    });
+    final p = parsed.postings.single;
+    expect(p.kind, PostingKind.writeOff);
+    expect(p.journal, PostingJournal.other);
+    expect(_lines(p), _lines(entry('INV-3', PostingKind.writeOff)));
+    expect(p.lines[1].qualifier, 'standard');
+    expect(p.balanced, isTrue);
+    expect(parsed.blockers.single.block, PostingBlock.unmappedRole);
+  });
 }

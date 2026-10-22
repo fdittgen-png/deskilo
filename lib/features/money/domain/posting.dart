@@ -7,6 +7,7 @@
 //
 // Pure Dart; every amount is an [AccountingAmount], never a double.
 
+import '../../../core/data/json_reader.dart';
 import 'accounting_amount.dart';
 import 'book_chart.dart';
 
@@ -78,7 +79,17 @@ enum PostingJournal {
 }
 
 /// The event of a document a posting books.
-enum PostingKind { invoice, creditNote, receipt, refund, writeOff, expense }
+enum PostingKind {
+  invoice('invoice'),
+  creditNote('credit_note'),
+  receipt('receipt'),
+  refund('refund'),
+  writeOff('write_off'),
+  expense('expense');
+
+  const PostingKind(this.wire);
+  final String wire;
+}
 
 /// One entry of the books.
 class Posting {
@@ -114,6 +125,47 @@ class Posting {
 class PostingSet {
   const PostingSet(this.postings, this.blockers);
 
+  /// The server's answer (`compute_postings`, 0518).
+  factory PostingSet.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'compute_postings');
+    return PostingSet(
+      [for (final p in r.list('postings')) _postingFromJson(p)],
+      [
+        for (final b in r.list('blockers'))
+          _blockerFromJson(JsonReader.of(b, context: 'posting blocker')),
+      ],
+    );
+  }
+
   final List<Posting> postings;
   final List<PostingBlocker> blockers;
 }
+
+PostingBlocker _blockerFromJson(JsonReader r) => PostingBlocker(
+  PostingBlock.values.byName(r.string('block')),
+  r.string('subject'),
+);
+
+Posting _postingFromJson(Object? raw) {
+  final r = JsonReader.of(raw, context: 'posting');
+  final currency = r.string('currency');
+  return Posting(
+    journal: PostingJournal.values.byName(r.string('journal')),
+    date: r.dateTime('date'),
+    kind: PostingKind.values.firstWhere((k) => k.wire == r.string('kind')),
+    documentId: r.string('document_id'),
+    documentNumber: r.string('document_number'),
+    lines: [
+      for (final l in r.list('lines'))
+        _lineFromJson(JsonReader.of(l, context: 'posting line'), currency),
+    ],
+  );
+}
+
+PostingLine _lineFromJson(JsonReader r, String currency) => PostingLine(
+  role: BookRole.fromWire(r.string('role')),
+  qualifier: r.stringOrNull('qualifier'),
+  accountCode: r.string('account_code'),
+  debit: AccountingAmount(currency, r.integer('debit_cents')),
+  credit: AccountingAmount(currency, r.integer('credit_cents')),
+);
