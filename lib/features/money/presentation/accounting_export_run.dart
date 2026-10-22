@@ -40,7 +40,9 @@ import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/book_period_providers.dart';
+import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
+import 'accounting_export_journal.dart';
 import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
@@ -188,6 +190,10 @@ class AccountingExportRun {
         await _frEReporting();
       case 'audit_trail':
         await _auditTrail();
+      case 'generic_journal_csv':
+        await exportGenericJournal(context, ref.read(genericJournalExportProvider), workspaceId: workspace.id,
+            profiles: bookProfiles, year: year,
+            save: (content) => save(content, named('journal')));
     }
   }
 

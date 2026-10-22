@@ -6109,6 +6109,7 @@
   },
   "invoiceExportFec": "FEC (France, exigé en cas de contrôle)",
   "invoiceExportFrEReporting": "E-reporting (ventes aux particuliers, international, encaissements)",
+  "invoiceExportGenericJournal": "Journal (CSV, pour tout logiciel comptable)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
@@ -6789,6 +6790,8 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
+  "journalBlocked": "Associez d'abord ces rôles dans le plan de comptes : {roles}",
+  "journalNeedsLocalBook": "Le journal est tiré d'une comptabilité tenue ici : configurez d'abord le plan de comptes de l'émetteur.",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {

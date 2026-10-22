@@ -184,5 +184,8 @@
   "saftWithPostings": "Con asientos",
   "@saftWithPostings": {
     "description": "#669 - SAF-T derived postings"
-  }
+  },
+  "invoiceExportGenericJournal": "Diario (CSV, para cualquier programa contable)",
+  "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
+  "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}"
 }

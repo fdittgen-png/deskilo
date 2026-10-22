@@ -8734,6 +8734,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'E-reporting Francia (B2C, internazionale, pagamenti)';
 
   @override
+  String get invoiceExportGenericJournal =>
+      'Giornale (CSV, per qualsiasi software contabile)';
+
+  @override
   String get invoiceExportSafT => 'SAF-T (XML, internazionale)';
 
   @override
@@ -9571,6 +9575,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicingTools => 'Strumenti di fatturazione';
+
+  @override
+  String journalBlocked(String roles) {
+    return 'Associa prima questi ruoli nel piano dei conti: $roles';
+  }
+
+  @override
+  String get journalNeedsLocalBook =>
+      'Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell\'emittente.';
 
   @override
   String journeyClosedPaid(String date) {

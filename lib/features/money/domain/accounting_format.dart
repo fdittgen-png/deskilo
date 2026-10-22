@@ -186,6 +186,16 @@ const _accountantCsvFormat = AccountingFormat(
   extension: 'csv',
 );
 
+/// #2370 / #2365 — the generic journal: the posting engine's entries, one
+/// row per line, for any accounting system without a national format.
+/// Offered everywhere; it claims to be an exchange file and nothing more.
+const _genericJournalFormat = AccountingFormat(
+  id: 'generic_journal_csv',
+  claim: FormatClaim.exchange,
+  countries: {},
+  extension: 'csv',
+);
+
 /// The complete audit TRAIL — every invoice, payment, credit note and
 /// write-off with who did what and when.
 ///
@@ -240,6 +250,7 @@ const List<AccountingFormat> accountingFormats = [
   _swissKmuFormat,
   safTFormat,
   _accountantCsvFormat,
+  _genericJournalFormat,
   auditTrailFormat,
   archiveBundleFormat,
 ];

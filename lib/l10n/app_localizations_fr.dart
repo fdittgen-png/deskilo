@@ -8758,6 +8758,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'E-reporting (ventes aux particuliers, international, encaissements)';
 
   @override
+  String get invoiceExportGenericJournal =>
+      'Journal (CSV, pour tout logiciel comptable)';
+
+  @override
   String get invoiceExportSafT => 'SAF-T (XML, international)';
 
   @override
@@ -9592,6 +9596,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoicingTools => 'Outils de facturation';
+
+  @override
+  String journalBlocked(String roles) {
+    return 'Associez d\'abord ces rôles dans le plan de comptes : $roles';
+  }
+
+  @override
+  String get journalNeedsLocalBook =>
+      'Le journal est tiré d\'une comptabilité tenue ici : configurez d\'abord le plan de comptes de l\'émetteur.';
 
   @override
   String journeyClosedPaid(String date) {
