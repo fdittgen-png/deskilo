@@ -284,5 +284,6 @@ String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.accountingPeriods => l10n.featureAccountingPeriodsTitle,
       WorkspaceFeature.biReportDesigner => l10n.featureBiReportDesignerTitle,
       WorkspaceFeature.purchaseAnalytics => l10n.featurePurchaseAnalyticsTitle,
+      WorkspaceFeature.workspaceOverview => l10n.featureWorkspaceOverviewTitle,
       _ => feature.name,
     };

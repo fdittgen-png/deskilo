@@ -1,0 +1,58 @@
+{
+  "featureWorkspaceOverviewTitle": "Workspace overview",
+  "@featureWorkspaceOverviewTitle": {
+    "description": "#2583 the workspace overview"
+  },
+  "featureWorkspaceOverviewDesc": "One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are.",
+  "@featureWorkspaceOverviewDesc": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewTitle": "Overview",
+  "@overviewTitle": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewNeedsAttention": "Needs attention",
+  "@overviewNeedsAttention": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewIndicators": "Key indicators",
+  "@overviewIndicators": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewGroupCapacity": "Capacity",
+  "@overviewGroupCapacity": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewGroupSales": "Sales",
+  "@overviewGroupSales": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewGroupPurchases": "Purchases",
+  "@overviewGroupPurchases": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewGroupCash": "Cash",
+  "@overviewGroupCash": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewGroupPeople": "People",
+  "@overviewGroupPeople": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewAllIndicators": "All indicators",
+  "@overviewAllIndicators": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewActiveMemberships": "Active memberships",
+  "@overviewActiveMemberships": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewThisMonth": "This month",
+  "@overviewThisMonth": {
+    "description": "#2583 the workspace overview"
+  },
+  "overviewUnavailable": "Not available",
+  "@overviewUnavailable": {
+    "description": "#2583 the workspace overview"
+  }
+}

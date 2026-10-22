@@ -1600,6 +1600,12 @@
       "capabilities": []
     },
     {
+      "key": "workspaceOverview",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "workspaceStatus",
       "maturity": "beta",
       "lifecycle": "active",

@@ -68,7 +68,8 @@ void main() {
     // guests deliberately.
     // #2579 — biReportDesigner: authoring reports is asked for.
     // #2582 — purchaseAnalytics: the purchase figures are asked for.
-    expect(onCount, featureManifest.length - 46);
+    // #2583 — workspaceOverview: the overview is asked for.
+    expect(onCount, featureManifest.length - 47);
   });
 
   testWidgets(
