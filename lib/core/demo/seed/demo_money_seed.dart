@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2313 — the money a visitor can walk through: a paid invoice, an
-// overdue one with its reminder, an older month, a credit note, the
+// overdue one with its reminder and a part payment waiting to be matched, an older month, a credit note, the
 // payments behind them, VAT rates, a recurring expense with its due
 // occurrence and the usage the bookings counted. Every date follows the
 // seeded instant.
@@ -39,6 +39,21 @@ void seedDemoMoneyStory(
     money.invoiceReminders['demo-invoice-bruno'] = [
       lastMonth.add(const Duration(days: 12)),
     ];
+    // Half of it arrived by transfer yesterday and waits to be matched.
+    final yesterday = now.subtract(const Duration(days: 1));
+    money.ledger.add(
+      LedgerEntry(
+        id: 'demo-payment-bruno-unmatched',
+        memberId: 'member-2',
+        kind: LedgerKind.credit,
+        category: LedgerCategory.payment,
+        amountCents: money.invoices[i].totalCents ~/ 2,
+        description: 'Bank transfer',
+        period: _period(lastMonth),
+        createdAt: yesterday,
+        occurredOn: yesterday,
+      ),
+    );
   }
 
   Invoice invoice(
@@ -165,6 +180,28 @@ void seedDemoMoneyStory(
         description: 'Subscription',
         period: last,
         createdAt: lastMonth,
+      ),
+    );
+  }
+
+  // This month's subscriptions, booked on the first and billed on the
+  // 28th: until then the invoicing wizard has them to issue.
+  final thisMonth = DateTime(now.year, now.month);
+  for (final (member, base) in [
+    ('member-1', 18000),
+    ('member-2', 9000),
+    ('member-3', 18000),
+  ]) {
+    money.ledger.add(
+      LedgerEntry(
+        id: 'demo-sub-$member-${_period(thisMonth)}',
+        memberId: member,
+        kind: LedgerKind.charge,
+        category: LedgerCategory.subscription,
+        amountCents: demoMonthlyCents(base, now.year, now),
+        description: 'Subscription',
+        period: _period(thisMonth),
+        createdAt: thisMonth,
       ),
     );
   }

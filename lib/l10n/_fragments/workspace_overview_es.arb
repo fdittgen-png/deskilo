@@ -1,0 +1,16 @@
+{
+  "featureWorkspaceOverviewTitle": "Resumen del espacio",
+  "featureWorkspaceOverviewDesc": "Una página con lo que espera a la persona y las cifras que puede leer — capacidad, ventas, compras y tesorería — cada una abriendo su origen. Desactivado: la lista de pendientes y la página de análisis quedan como están.",
+  "overviewTitle": "Resumen",
+  "overviewNeedsAttention": "Pendiente",
+  "overviewIndicators": "Indicadores clave",
+  "overviewGroupCapacity": "Capacidad",
+  "overviewGroupSales": "Ventas",
+  "overviewGroupPurchases": "Compras",
+  "overviewGroupCash": "Tesorería",
+  "overviewGroupPeople": "Personas",
+  "overviewAllIndicators": "Todos los indicadores",
+  "overviewActiveMemberships": "Membresías activas",
+  "overviewThisMonth": "Este mes",
+  "overviewUnavailable": "No disponible"
+}

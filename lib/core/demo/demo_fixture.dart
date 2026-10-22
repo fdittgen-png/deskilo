@@ -13,6 +13,7 @@
 //     any real person reaches this file, and none ever may;
 //   * **it is a production-looking workspace**, because a visitor should
 //     see what the product looks like in use, not a development strip.
+import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/bi_saved_view.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
@@ -39,6 +40,7 @@ import 'demo_clock.dart';
 import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
+import 'demo_second_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_commerce_seed.dart';
@@ -49,6 +51,8 @@ import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_resource_seed.dart';
+import 'seed/demo_room_seed.dart';
+import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_year_seed.dart';
@@ -99,6 +103,7 @@ class DemoFixture {
     required this.badge,
     required this.outward,
     required this.seededAt,
+    required this.secondSpace,
   });
 
   /// Seeds the session. [now] is the instant the demo believes it is,
@@ -140,6 +145,7 @@ class DemoFixture {
     seedDemoHolidays(workspaces, today);
     seedDemoHistoryBookings(reservations, floorPlan, workspaces, today);
     seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
+    seedDemoAnnex(floorPlan, reservations, today); // #2568
     seedDemoMoney(money, today);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
@@ -169,16 +175,30 @@ class DemoFixture {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
+    // The second space, in Leipzig: Ada and Bruno are members there too.
+    final secondSpace = DemoSecondSpaceData.build(
+      home: workspaces,
+      actor: () => actor.memberId,
+      now: today,
+    )..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
       ..kioskName = demoCast[1].name;
-    final problems = validateDemoFixture(
-      workspaces: workspaces,
-      plan: floorPlan,
-      reservations: reservations,
-      money: money,
-    );
+    final problems = [
+      ...validateDemoFixture(
+        workspaces: workspaces,
+        plan: floorPlan,
+        reservations: reservations,
+        money: money,
+      ),
+      ...validateDemoFixture(
+        workspaces: secondSpace.workspaces,
+        plan: secondSpace.floorPlan,
+        reservations: secondSpace.reservations,
+        money: secondSpace.money,
+      ),
+    ];
     if (problems.isNotEmpty) {
       // Fails closed, and says what is wrong: a session that points at a
       // member or a seat that does not exist looks fine until a screen
@@ -199,7 +219,12 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: demoProfiles(),
+      profiles: demoProfiles()
+        ..profiles.addAll([
+          for (final p in demoSecondCast)
+            if (p.userId.startsWith('user-de-'))
+              Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
+        ]),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -214,6 +239,7 @@ class DemoFixture {
       badge: FakeAppBadge(),
       outward: DemoOutwardEdges(),
       seededAt: today,
+      secondSpace: secondSpace,
     );
   }
 
@@ -263,6 +289,9 @@ class DemoFixture {
   /// The instant this session believes it is.
   final DateTime seededAt;
 
+  /// The second space (Leipzig), with repositories of its own.
+  final DemoSecondSpaceData secondSpace;
+
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
 
@@ -283,6 +312,7 @@ class DemoFixture {
   void becomePersona(DemoPersona persona) {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
+    secondSpace.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
     // instead of the first member's (#1514).

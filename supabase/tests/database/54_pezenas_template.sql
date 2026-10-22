@@ -229,6 +229,7 @@ begin
       "accountingPeriods": false,
       "biReportDesigner": false,
       "purchaseAnalytics": false,
+      "workspaceOverview": false,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

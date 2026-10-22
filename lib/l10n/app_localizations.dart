@@ -11885,6 +11885,18 @@ abstract class AppLocalizations {
   /// **'Workspace library'**
   String get featureWorkspaceLibraryTitle;
 
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are.'**
+  String get featureWorkspaceOverviewDesc;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace overview'**
+  String get featureWorkspaceOverviewTitle;
+
   /// #934 workspace status / repartition wizard: featureWorkspaceStatus
   ///
   /// In en, this message translates to:
@@ -23295,6 +23307,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Charge overage (pay-as-you-go)'**
   String get overagePolicyPayg;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Active memberships'**
+  String get overviewActiveMemberships;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'All indicators'**
+  String get overviewAllIndicators;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity'**
+  String get overviewGroupCapacity;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get overviewGroupCash;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get overviewGroupPeople;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get overviewGroupPurchases;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get overviewGroupSales;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Key indicators'**
+  String get overviewIndicators;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get overviewNeedsAttention;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get overviewThisMonth;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overviewTitle;
+
+  /// #2583 the workspace overview
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get overviewUnavailable;
 
   /// Chip: provider is configured
   ///

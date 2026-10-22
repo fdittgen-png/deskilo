@@ -6953,6 +6953,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureWorkspaceLibraryTitle => 'Biblioteca degli spazi';
 
   @override
+  String get featureWorkspaceOverviewDesc =>
+      'Una pagina con ciò che attende la persona e le cifre che può leggere — capacità, vendite, acquisti e cassa — ciascuna apre la sua fonte. Disattivato: l\'elenco delle attività e la pagina delle analisi restano come sono.';
+
+  @override
+  String get featureWorkspaceOverviewTitle => 'Panoramica dello spazio';
+
+  @override
   String get featureWorkspaceStatus => 'Situazione dello spazio';
 
   @override
@@ -13718,6 +13725,42 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get overagePolicyPayg => 'Addebita l\'extra (a consumo)';
+
+  @override
+  String get overviewActiveMemberships => 'Iscrizioni attive';
+
+  @override
+  String get overviewAllIndicators => 'Tutti gli indicatori';
+
+  @override
+  String get overviewGroupCapacity => 'Capacità';
+
+  @override
+  String get overviewGroupCash => 'Cassa';
+
+  @override
+  String get overviewGroupPeople => 'Persone';
+
+  @override
+  String get overviewGroupPurchases => 'Acquisti';
+
+  @override
+  String get overviewGroupSales => 'Vendite';
+
+  @override
+  String get overviewIndicators => 'Indicatori chiave';
+
+  @override
+  String get overviewNeedsAttention => 'Da fare';
+
+  @override
+  String get overviewThisMonth => 'Questo mese';
+
+  @override
+  String get overviewTitle => 'Panoramica';
+
+  @override
+  String get overviewUnavailable => 'Non disponibile';
 
   @override
   String get payConfigConfigured => 'Configurato';
