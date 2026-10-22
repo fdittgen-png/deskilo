@@ -10,9 +10,10 @@
 -- receipts »: its tax waits on 44574 and half of it is released when half
 -- is paid. 0524: the member's receipt of 60.00 (20 %, fully recoverable)
 -- books its expense against the member's account on its day, and is paid
--- back on 20 August; INV-1's netted expense books nothing.
+-- back on 20 August; INV-1's netted expense books nothing. 0526: INV-4's
+-- open half is written off on 25 July and its tax leaves 44574.
 begin;
-select plan(22);
+select plan(23);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002365'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -72,7 +73,7 @@ insert into public.invoices (id, workspace_id, member_id, issuer_member_id, numb
   12000,'EUR','Ana','w','Flo','sig','2026-07-05 10:00+00','00000000-0000-4000-8000-0000002365d1',
   jsonb_build_array(pg_temp.vt(20,12000,10000,2000)));
 insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at, writeoff_at) values
- ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e6',6000,'under_accepted','2026-07-20 10:00+00',null),
+ ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e6',6000,'under_accepted','2026-07-20 10:00+00','2026-07-25 10:00+00'),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e1',15550,'exact','2026-03-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e2',12000,'under_accepted','2026-04-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e3',6000,'under_accepted','2026-05-20 10:00+00','2026-05-25 10:00+00');
@@ -171,7 +172,7 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000023
 select set_config('t.r', public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-01-01', '2026-12-31')::text, true);
 
-select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 16, 'the year is sixteen entries');
+select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 17, 'the year is seventeen entries');
 select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'blockers'), 0, 'with the full chart nothing blocks');
 select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l ->> 'credit_cents')::bigint)
                               from jsonb_array_elements(p -> 'lines') l))
@@ -188,8 +189,10 @@ select is(pg_temp.lines('INV-4','invoice'), '411:D12000,706:C10000,44574:C2000',
 select is(pg_temp.lines('INV-4','vat_release'), '44574:D1000,44571:C1000',
   'half of it is due when half is paid, on the day of the payment');
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
-  '00000000-0000-4000-8000-0000002365d1', '2026-07-01', '2026-07-31') -> 'postings'), 3,
-  'July: INV-4, its receipt and the tax it released');
+  '00000000-0000-4000-8000-0000002365d1', '2026-07-01', '2026-07-31') -> 'postings'), 4,
+  'July: INV-4, its receipt, the tax it released and its write-off');
+select is(pg_temp.lines('INV-4','write_off'), '654:D5000,44574:D1000,411:C6000',
+  'INV-4 written off: the open half''s tax leaves the pending account (0526)');
 
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-04-01', '2026-04-30') -> 'postings'), 3,

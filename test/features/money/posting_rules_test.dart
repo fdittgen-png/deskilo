@@ -210,6 +210,29 @@ void main() {
     );
   });
 
+  test('a deferred invoice written off clears its unpaid tax from '
+      'vat_pending, never from the tax already due (0526)', () {
+    final inv3 = SeededExportYear.invoices.singleWhere(
+      (i) => i.number == 'INV-3',
+    );
+    final deferred = _post(
+      taxPoints: VatTaxPointIndex([
+        VatTaxPointAmount(
+          invoiceId: inv3.id,
+          on: DateTime(2026, 5, 20),
+          percent: 20,
+          grossCents: 6000,
+          netCents: 5000,
+          vatCents: 1000,
+        ),
+      ]),
+    );
+    final writeOff = deferred.postings.singleWhere(
+      (p) => p.documentNumber == 'INV-3' && p.kind == PostingKind.writeOff,
+    );
+    expect(_lines(writeOff), ['654:D3334', '44574:D666', '411:C4000']);
+  });
+
   test('a missing base blocks with its name and posts nothing for it', () {
     final blocked = _post(writeOff: false);
     expect(blocked.blockers.map((b) => (b.block, b.subject)), [
