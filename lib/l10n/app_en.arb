@@ -6481,6 +6481,10 @@
       }
     }
   },
+  "eventOpenSource": "Open the purchase document",
+  "@eventOpenSource": {
+    "description": "#2573 open the purchase an expense request was filed as"
+  },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
@@ -6679,6 +6683,10 @@
         "type": "String"
       }
     }
+  },
+  "eventSourceNotFound": "No purchase document was filed for this request, or you may not see it.",
+  "@eventSourceNotFound": {
+    "description": "#2573 open the purchase an expense request was filed as"
   },
   "eventSystemDecider": "System",
   "@eventSystemDecider": {

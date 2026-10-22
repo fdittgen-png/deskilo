@@ -4098,6 +4098,7 @@
       }
     }
   },
+  "eventOpenSource": "Ouvrir le document d'achat",
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventPaymentTermsChangeLine": "{actor} demande de fixer les conditions de paiement : {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -4175,6 +4176,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir.",
   "eventSystemDecider": "Système",
   "eventTypeAdjustment": "Ajustement",
   "eventTypeCommitmentVariance": "Écart de loyer",

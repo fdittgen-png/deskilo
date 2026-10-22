@@ -107,6 +107,7 @@ import '../cache/cache_store.dart';
 import '../files/file_saver.dart';
 import '../links/link_launcher.dart';
 import '../locale/locale_controller.dart';
+import '../navigation/event_sources.dart';
 import '../navigation/navigation_style.dart';
 import '../notifications/notification_providers.dart';
 import '../push/push_opt_out.dart';
@@ -299,6 +300,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
       // #1918 — no server to compute capacity on: the tile says so.
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
+      // #2573 — the demo files no expense request as a purchase document,
+      // and the app's opener reads the server: none here.
+      eventSourceOpenersProvider.overrideWithValue(const {}),
       // #2582 — nor the purchase figures.
       purchaseKpiRepositoryProvider.overrideWithValue(
         const UnavailablePurchaseKpiRepository(),

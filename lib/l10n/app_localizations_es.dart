@@ -5432,6 +5432,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventOpenSource => 'Abrir el documento de compra';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor registró un pago de $amount';
   }
@@ -5514,6 +5517,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String eventServiceChargeTitle(String name, int quantity, String amount) {
     return '$name ×$quantity — $amount';
   }
+
+  @override
+  String get eventSourceNotFound =>
+      'No se archivó ningún documento de compra para esta solicitud, o no puede verlo.';
 
   @override
   String get eventSystemDecider => 'Sistema';

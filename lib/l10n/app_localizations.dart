@@ -9347,6 +9347,12 @@ abstract class AppLocalizations {
     String date,
   );
 
+  /// #2573 open the purchase an expense request was filed as
+  ///
+  /// In en, this message translates to:
+  /// **'Open the purchase document'**
+  String get eventOpenSource;
+
   /// Feed line for payment events
   ///
   /// In en, this message translates to:
@@ -9454,6 +9460,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
+
+  /// #2573 open the purchase an expense request was filed as
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase document was filed for this request, or you may not see it.'**
+  String get eventSourceNotFound;
 
   /// Validator name shown when the timeout sweep decided, not a member
   ///

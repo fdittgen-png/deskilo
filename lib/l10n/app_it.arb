@@ -4098,6 +4098,7 @@
       }
     }
   },
+  "eventOpenSource": "Apri il documento di acquisto",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventPaymentTermsChangeLine": "{actor} chiede di fissare le condizioni di pagamento: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -4175,6 +4176,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Rettifica",
   "eventTypeCommitmentVariance": "Differenza di affitto",
