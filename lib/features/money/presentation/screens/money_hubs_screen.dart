@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../widgets/expense_sheet.dart';
+import '../widgets/add_purchase_button.dart';
 import 'money_action_set.dart';
 import 'money_view_data.dart';
 
@@ -32,11 +32,12 @@ class PurchasesHubScreen extends ConsumerWidget {
         padding: AppSpacing.mdAll,
         children: [
           // A member's own outlay, whatever else they may manage.
-          OutlinedButton.icon(
+          // #2577 C2 — one way in: who paid decides the form.
+          AddPurchaseButton(
             key: const ValueKey('purchases-hub-own-expense'),
-            onPressed: () => showExpenseSheet(context, ref, data.currency),
-            icon: const Icon(Icons.receipt_long_outlined),
-            label: Text(l10n.moneySubmitExpense),
+            currency: data.currency,
+            workspaceId: data.workspace?.id,
+            bills: MoneyActionSet.canCaptureBills(ref, data),
           ),
           for (final door in doors) ...[
             const SizedBox(height: AppSpacing.sm),

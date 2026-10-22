@@ -173,5 +173,13 @@
   "purchaseLinkInbox": "Lier une facture reçue",
   "purchaseLinkInboxTitle": "Factures reçues",
   "purchaseLinkInboxEmpty": "Aucune facture reçue à lier.",
-  "purchaseLinkInboxFailed": "La facture n'a pas été liée. Le document a peut-être changé entre-temps : rouvrez-le et réessayez."
+  "purchaseLinkInboxFailed": "La facture n'a pas été liée. Le document a peut-être changé entre-temps : rouvrez-le et réessayez.",
+  "purchaseEntryAdd": "Ajouter un achat / une dépense",
+  "purchaseEntryWhoPaid": "Qui a payé ?",
+  "purchaseEntryMe": "J'ai payé moi-même",
+  "purchaseEntryMeHint": "Déclarez-la comme votre dépense : une fois validée, l'espace vous la doit.",
+  "purchaseEntryUnpaid": "Pas encore payé",
+  "purchaseEntryUnpaidHint": "Une facture fournisseur que l'espace doit encore régler.",
+  "purchaseEntryPaid": "L'espace a déjà payé",
+  "purchaseEntryPaidHint": "Saisissez la facture ; une fois validée, enregistrez son paiement depuis « À payer »."
 }

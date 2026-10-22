@@ -15245,6 +15245,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get publicProfileTitle => 'Public profile';
 
   @override
+  String get purchaseEntryAdd => 'Add purchase / expense';
+
+  @override
+  String get purchaseEntryMe => 'I paid personally';
+
+  @override
+  String get purchaseEntryMeHint =>
+      'Submit it as your expense: once approved, the space owes it to you.';
+
+  @override
+  String get purchaseEntryPaid => 'The space already paid';
+
+  @override
+  String get purchaseEntryPaidHint =>
+      'Capture the bill; once it is approved, record its payment from To pay.';
+
+  @override
+  String get purchaseEntryUnpaid => 'Not paid yet';
+
+  @override
+  String get purchaseEntryUnpaidHint =>
+      'A supplier bill the space still has to pay.';
+
+  @override
+  String get purchaseEntryWhoPaid => 'Who paid?';
+
+  @override
   String get purchaseLinkInbox => 'Link a received invoice';
 
   @override

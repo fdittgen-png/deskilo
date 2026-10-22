@@ -17940,6 +17940,38 @@
   "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
   "publicProfilePublishTitle": "Publish a public profile?",
   "publicProfileTitle": "Public profile",
+  "purchaseEntryAdd": "Add purchase / expense",
+  "@purchaseEntryAdd": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryMe": "I paid personally",
+  "@purchaseEntryMe": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryMeHint": "Submit it as your expense: once approved, the space owes it to you.",
+  "@purchaseEntryMeHint": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryPaid": "The space already paid",
+  "@purchaseEntryPaid": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryPaidHint": "Capture the bill; once it is approved, record its payment from To pay.",
+  "@purchaseEntryPaidHint": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryUnpaid": "Not paid yet",
+  "@purchaseEntryUnpaid": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryUnpaidHint": "A supplier bill the space still has to pay.",
+  "@purchaseEntryUnpaidHint": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchaseEntryWhoPaid": "Who paid?",
+  "@purchaseEntryWhoPaid": {
+    "description": "#2577 the guided purchase / expense entry"
+  },
   "purchaseLinkInbox": "Link a received invoice",
   "@purchaseLinkInbox": {
     "description": "#2573 link a received e-invoice to a purchase document"

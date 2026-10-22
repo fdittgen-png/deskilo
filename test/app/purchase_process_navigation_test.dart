@@ -73,4 +73,33 @@ void main() {
     expect(find.byKey(const ValueKey('sales-hub-billing')), findsOneWidget);
     expect(find.byKey(const ValueKey('sales-hub-services')), findsOneWidget);
   });
+
+  testWidgets('add purchase / expense: a member goes straight to their own '
+      'expense', (tester) async {
+    await _pump(tester, const PurchasesHubScreen());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchases-hub-own-expense')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('add-purchase-me')), findsNothing);
+    expect(find.byKey(const ValueKey('expense-submit')), findsOneWidget);
+  });
+
+  testWidgets('add purchase / expense for a purchase manager: who paid, then '
+      'the bill form', (tester) async {
+    await _pump(
+      tester,
+      const PurchasesHubScreen(),
+      features: {WorkspaceFeature.purchases},
+      rights: {WorkspacePermission.managePurchases},
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('purchases-hub-own-expense')));
+    await tester.pumpAndSettle();
+    for (final answer in ['me', 'unpaid', 'space']) {
+      expect(find.byKey(ValueKey('add-purchase-$answer')), findsOneWidget);
+    }
+    await tester.tap(find.byKey(const ValueKey('add-purchase-unpaid')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('purchase-supplier')), findsOneWidget);
+  });
 }
