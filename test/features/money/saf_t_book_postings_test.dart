@@ -59,7 +59,7 @@ void main() {
     groupOf: (InvoiceVatTotal _) => '',
   ).postings;
   final doc = XmlDocument.parse(
-    buildSafTFile(
+    buildSafTFile(SafTRequest(
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
@@ -68,7 +68,7 @@ void main() {
       createdAt: DateTime(2027, 1, 5),
       lineText: (l) => l.label,
       bookPostings: postings,
-    ),
+    )),
   );
   final ledger = doc.findAllElements('GeneralLedgerEntries').single;
   int cents(XmlElement e, String tag) =>

@@ -146,161 +146,156 @@ class SafTWriter {
     // mandatory that the generic tree does not carry, and
     // TaxAccountingBasis is the field that says what kind of file this
     // is at all. So it is built separately rather than patched.
-    if (profile == SafTProfile.portugal) {
-      builder.element('Header', nest: () {
-        tag('AuditFileVersion', '1.04_01');
-        // The NIF, digits only — the schema rejects anything else.
-        tag('CompanyID', _digits(company.legalId));
-        tag('TaxRegistrationNumber', _digits(company.vatId.isEmpty
-            ? company.legalId
-            : company.vatId));
-        // 'F' = faturação. The whole reason this file can be produced
-        // honestly by an app that keeps no ledger.
-        tag('TaxAccountingBasis', 'F');
-        tag('CompanyName', company.name);
-        builder.element('CompanyAddress', nest: () {
-          if (company.street.isNotEmpty) {
-            tag('AddressDetail', company.street.replaceAll('\n', ', '));
-          }
-          if (company.city.isNotEmpty) tag('City', company.city);
-          if (company.postalCode.isNotEmpty) {
-            tag('PostalCode', company.postalCode);
-          }
-          tag('Country', company.country.toUpperCase());
-        });
-        tag('FiscalYear', '${from.year}');
-        tag('StartDate', day(from));
-        tag('EndDate', day(to));
-        tag('CurrencyCode', currency);
-        tag('DateCreated', day(createdAt));
-        // 'Global' — the whole entity, not a branch.
-        tag('TaxEntity', 'Global');
-        tag('ProductCompanyTaxID', _digits(company.legalId));
-        // 0 is the DEFINED value for software that is not certified in
-        // Portugal, and DesKilo is not. Writing a plausible-looking
-        // number here would be a false statement about the producer.
-        tag('SoftwareCertificateNumber', '0');
-        tag('ProductID', 'DesKilo/DesKilo');
-        tag('ProductVersion', softwareVersion);
-      });
-    } else {
-      builder.element('Header', nest: () {
-        tag('AuditFileVersion', '2.00');
-        tag('AuditFileCountry', company.country.toUpperCase());
-        tag('AuditFileDateCreated', day(createdAt));
-        tag('SoftwareCompanyName', 'DesKilo');
-        tag('SoftwareID', 'DesKilo');
-        tag('SoftwareVersion', softwareVersion);
-        builder.element('Company', nest: () {
-          if (company.legalId.isNotEmpty) {
-            tag('RegistrationNumber', company.legalId);
-          }
-          tag('Name', company.name);
-          address(company);
-          if (company.vatId.isNotEmpty) {
-            builder.element('TaxRegistration', nest: () {
-              tag('TaxRegistrationNumber', company.vatId);
-            });
-          }
-        });
-        tag('DefaultCurrencyCode', currency);
-        builder.element('SelectionCriteria', nest: () {
-          tag('SelectionStartDate', day(from));
-          tag('SelectionEndDate', day(to));
-        });
-        // Says out loud what this file is and is not. The two cases
-        // differ in a way that MATTERS to whoever receives it: a file
-        // with postings must not be read as a complete set of books.
-        tag(
-          'HeaderComment',
-          bookPostings != null
-              ? 'Invoicing subset with the postings of the local book. '
-                  'GeneralLedgerEntries are the entries its posting engine '
-                  'computed (sales, bank, purchases and other journals) on '
-                  'the book\'s own chart. They are the complete books of the '
-                  'entity only if every operation of the entity passes '
-                  'through this system.'
-              : ledgerAccounts == null
-              ? 'Invoicing subset: Header, MasterFiles and SourceDocuments. '
-                  'GeneralLedgerEntries and customer account numbers are '
-                  'omitted on purpose — the chart of accounts belongs to '
-                  'the accountant.'
-              : 'Invoicing subset with derived postings. '
-                  'GeneralLedgerEntries covers the SALES CYCLE ONLY — '
-                  'invoices and the settlements against them, booked to '
-                  'the accounts named at export time. It is NOT the '
-                  'complete books of the entity: purchases, payroll, bank '
-                  'charges and fixed assets never pass through this '
-                  'system and are absent. Credit notes reverse the sale; '
-                  'expense reimbursements and goodwill adjustments netted '
-                  'on an invoice, and write-offs, are not posted.',
-        );
-      });
-    }
+    builder.element('Header', nest:
+        profile == SafTProfile.portugal ? _portugueseHeader : _genericHeader);
   }
+
+  void _portugueseHeader() {
+    tag('AuditFileVersion', '1.04_01');
+    // The NIF, digits only — the schema rejects anything else.
+    tag('CompanyID', _digits(company.legalId));
+    tag('TaxRegistrationNumber',
+        _digits(company.vatId.isEmpty ? company.legalId : company.vatId));
+    // 'F' = faturação. The whole reason this file can be produced
+    // honestly by an app that keeps no ledger.
+    tag('TaxAccountingBasis', 'F');
+    tag('CompanyName', company.name);
+    builder.element('CompanyAddress', nest: _portugueseAddress);
+    tag('FiscalYear', '${from.year}');
+    tag('StartDate', day(from));
+    tag('EndDate', day(to));
+    tag('CurrencyCode', currency);
+    tag('DateCreated', day(createdAt));
+    // 'Global' — the whole entity, not a branch.
+    tag('TaxEntity', 'Global');
+    tag('ProductCompanyTaxID', _digits(company.legalId));
+    // 0 is the DEFINED value for software that is not certified in
+    // Portugal, and DesKilo is not. Writing a plausible-looking
+    // number here would be a false statement about the producer.
+    tag('SoftwareCertificateNumber', '0');
+    tag('ProductID', 'DesKilo/DesKilo');
+    tag('ProductVersion', softwareVersion);
+  }
+
+  void _portugueseAddress() {
+    if (company.street.isNotEmpty) {
+      tag('AddressDetail', company.street.replaceAll('\n', ', '));
+    }
+    if (company.city.isNotEmpty) tag('City', company.city);
+    if (company.postalCode.isNotEmpty) tag('PostalCode', company.postalCode);
+    tag('Country', company.country.toUpperCase());
+  }
+
+  void _genericHeader() {
+    tag('AuditFileVersion', '2.00');
+    tag('AuditFileCountry', company.country.toUpperCase());
+    tag('AuditFileDateCreated', day(createdAt));
+    tag('SoftwareCompanyName', 'DesKilo');
+    tag('SoftwareID', 'DesKilo');
+    tag('SoftwareVersion', softwareVersion);
+    builder.element('Company', nest: _company);
+    tag('DefaultCurrencyCode', currency);
+    builder.element('SelectionCriteria', nest: () {
+      tag('SelectionStartDate', day(from));
+      tag('SelectionEndDate', day(to));
+    });
+    tag('HeaderComment', _headerComment);
+  }
+
+  void _company() {
+    if (company.legalId.isNotEmpty) tag('RegistrationNumber', company.legalId);
+    tag('Name', company.name);
+    address(company);
+    _taxRegistration(company.vatId);
+  }
+
+  void _taxRegistration(String vatId) {
+    if (vatId.isEmpty) return;
+    builder.element('TaxRegistration', nest: () {
+      tag('TaxRegistrationNumber', vatId);
+    });
+  }
+
+  // Says out loud what this file is and is not. The two cases
+  // differ in a way that MATTERS to whoever receives it: a file
+  // with postings must not be read as a complete set of books.
+  String get _headerComment => bookPostings != null
+      ? 'Invoicing subset with the postings of the local book. '
+          'GeneralLedgerEntries are the entries its posting engine '
+          'computed (sales, bank, purchases and other journals) on '
+          'the book\'s own chart. They are the complete books of the '
+          'entity only if every operation of the entity passes '
+          'through this system.'
+      : ledgerAccounts == null
+      ? 'Invoicing subset: Header, MasterFiles and SourceDocuments. '
+          'GeneralLedgerEntries and customer account numbers are '
+          'omitted on purpose — the chart of accounts belongs to '
+          'the accountant.'
+      : 'Invoicing subset with derived postings. '
+          'GeneralLedgerEntries covers the SALES CYCLE ONLY — '
+          'invoices and the settlements against them, booked to '
+          'the accounts named at export time. It is NOT the '
+          'complete books of the entity: purchases, payroll, bank '
+          'charges and fixed assets never pass through this '
+          'system and are absent. Credit notes reverse the sale; '
+          'expense reimbursements and goodwill adjustments netted '
+          'on an invoice, and write-offs, are not posted.';
 
   void masterFiles() {
     // ── Master files: the parties and the tax treatment ────────────────
     builder.element('MasterFiles', nest: () {
-      for (final entry in customers.entries) {
-        final invoice = entry.value;
-        final buyer = invoice.buyerParty ??
-            InvoiceParty(
-              name: invoice.memberName,
-              street: invoice.memberAddress,
-              country: company.country,
-            );
-        builder.element('Customer', nest: () {
-          tag('CustomerID', entry.key);
-          tag('Name', buyer.name.isEmpty ? invoice.memberName : buyer.name);
-          address(buyer);
-          if (buyer.vatId.isNotEmpty) {
-            builder.element('TaxRegistration', nest: () {
-              tag('TaxRegistrationNumber', buyer.vatId);
-            });
-          }
-        });
-      }
-      // Every rate the file actually uses, once — a TaxTable listing a
-      // rate no line carries invites the question of why it is there.
-      final rates = <double>{
-        for (final invoice in ordered)
-          for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
-            total.percent,
-      }.toList()
-        ..sort((a, b) => b.compareTo(a));
-      builder.element('TaxTable', nest: () {
-        for (final percent in rates.isEmpty ? const [0.0] : rates) {
-          builder.element('TaxTableEntry', nest: () {
-            tag('TaxType', 'VAT');
-            tag('TaxCode', taxCode(percent));
-            tag(
-              'Description',
-              percent > 0
-                  ? 'VAT ${percentText(percent)}%'
-                  : company.taxExemptionReason.isEmpty
-                      ? 'No VAT charged'
-                      : company.taxExemptionReason,
-            );
-            tag('TaxPercentage', percentage(percent));
-          });
-        }
-      });
+      customers.forEach(_customer);
+      _taxTable();
     });
   }
 
-  void generalLedger() {
-    // ── General ledger: the postings, when there is a mapping ─────────
-    //
-    // Between MasterFiles and SourceDocuments — the schema fixes the
-    // order, and an importer that reads positionally silently mis-parses
-    // a file that puts them the other way round.
-    //
-    // Omitted entirely without a mapping. A section of invented account
-    // numbers would look complete and create work: every wrong code is
-    // unbooked by hand.
+  void _customer(String memberId, Invoice invoice) {
+    final buyer = invoice.buyerParty ??
+        InvoiceParty(
+          name: invoice.memberName,
+          street: invoice.memberAddress,
+          country: company.country,
+        );
+    builder.element('Customer', nest: () {
+      tag('CustomerID', memberId);
+      tag('Name', buyer.name.isEmpty ? invoice.memberName : buyer.name);
+      address(buyer);
+      _taxRegistration(buyer.vatId);
+    });
+  }
+
+  void _taxTable() {
+    // Every rate the file actually uses, once — a TaxTable listing a
+    // rate no line carries invites the question of why it is there.
+    final rates = <double>{
+      for (final invoice in ordered)
+        for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
+          total.percent,
+    }.toList()
+      ..sort((a, b) => b.compareTo(a));
+    builder.element('TaxTable', nest: () {
+      for (final percent in rates.isEmpty ? const [0.0] : rates) {
+        builder.element('TaxTableEntry', nest: () {
+          tag('TaxType', 'VAT');
+          tag('TaxCode', taxCode(percent));
+          tag('Description', _taxDescription(percent));
+          tag('TaxPercentage', percentage(percent));
+        });
+      }
+    });
+  }
+
+  String _taxDescription(double percent) => percent > 0
+      ? 'VAT ${percentText(percent)}%'
+      : company.taxExemptionReason.isEmpty
+          ? 'No VAT charged'
+          : company.taxExemptionReason;
+
+  /// The journals of the general ledger: the local book's, the two the
+  /// FEC writes (sales and bank) when there is a mapping, else none.
+  List<(String, String, List<SafTLedgerTransaction>)>? get _journals {
     final accounts = ledgerAccounts;
-    final journals = switch (bookPostings) {
+    return switch (bookPostings) {
       final posted? => safTPostedJournals(posted),
       null when accounts != null => [
         // Two journals, matching what the FEC writes: sales and bank.
@@ -315,49 +310,64 @@ class SafTWriter {
       ],
       null => null,
     };
-    if (journals != null) {
-      var lineNo = 0;
-      // Built first: SAF-T states the totals BEFORE the entries, so they
-      // are the sums of the transactions about to be written.
-      final all = [for (final j in journals) ...j.$3];
+  }
 
-      builder.element('GeneralLedgerEntries', nest: () {
-        tag('NumberOfEntries', '${all.length}');
-        tag('TotalDebit', amount(all.fold(0, (s, t) => s + t.debitTotal)));
-        tag('TotalCredit', amount(all.fold(0, (s, t) => s + t.creditTotal)));
+  void generalLedger() {
+    // ── General ledger: the postings, when there is a mapping ─────────
+    //
+    // Between MasterFiles and SourceDocuments — the schema fixes the
+    // order, and an importer that reads positionally silently mis-parses
+    // a file that puts them the other way round.
+    //
+    // Omitted entirely without a mapping. A section of invented account
+    // numbers would look complete and create work: every wrong code is
+    // unbooked by hand.
+    final journals = _journals;
+    if (journals == null) return;
+    // Built first: SAF-T states the totals BEFORE the entries, so they
+    // are the sums of the transactions about to be written.
+    final all = [for (final j in journals) ...j.$3];
+    builder.element('GeneralLedgerEntries', nest: () {
+      tag('NumberOfEntries', '${all.length}');
+      tag('TotalDebit', amount(all.fold(0, (s, t) => s + t.debitTotal)));
+      tag('TotalCredit', amount(all.fold(0, (s, t) => s + t.creditTotal)));
+      for (final (id, name, txs) in journals) {
+        _journal(id, name, txs);
+      }
+    });
+  }
 
-        void journal(String id, String name, List<SafTLedgerTransaction> txs) {
-          builder.element('Journal', nest: () {
-            tag('JournalID', id);
-            tag('Description', name);
-            for (final t in txs) {
-              builder.element('Transaction', nest: () {
-                tag('TransactionID', t.id);
-                tag('Period', '${t.date.month}');
-                tag('TransactionDate', day(t.date));
-                tag('Description', t.description);
-                for (final l in t.lines) {
-                  lineNo++;
-                  builder.element(l.debit > 0 ? 'DebitLine' : 'CreditLine',
-                      nest: () {
-                    tag('RecordID', '$lineNo');
-                    tag('AccountID', l.account);
-                    tag('SystemEntryDate', day(createdAt));
-                    tag('Description', l.text);
-                    tag(l.debit > 0 ? 'DebitAmount' : 'CreditAmount',
-                        amount(l.debit > 0 ? l.debit : l.credit));
-                  });
-                }
-              });
-            }
-          });
-        }
+  /// The running `RecordID` of the ledger lines, across journals.
+  int _lineNo = 0;
 
-        for (final (id, name, txs) in journals) {
-          journal(id, name, txs);
-        }
-      });
-    }
+  void _journal(String id, String name, List<SafTLedgerTransaction> txs) {
+    builder.element('Journal', nest: () {
+      tag('JournalID', id);
+      tag('Description', name);
+      txs.forEach(_transaction);
+    });
+  }
+
+  void _transaction(SafTLedgerTransaction t) {
+    builder.element('Transaction', nest: () {
+      tag('TransactionID', t.id);
+      tag('Period', '${t.date.month}');
+      tag('TransactionDate', day(t.date));
+      tag('Description', t.description);
+      t.lines.forEach(_ledgerLine);
+    });
+  }
+
+  void _ledgerLine(SafTLedgerLine l) {
+    _lineNo++;
+    builder.element(l.debit > 0 ? 'DebitLine' : 'CreditLine', nest: () {
+      tag('RecordID', '$_lineNo');
+      tag('AccountID', l.account);
+      tag('SystemEntryDate', day(createdAt));
+      tag('Description', l.text);
+      tag(l.debit > 0 ? 'DebitAmount' : 'CreditAmount',
+          amount(l.debit > 0 ? l.debit : l.credit));
+    });
   }
 
   void sourceDocuments() {
