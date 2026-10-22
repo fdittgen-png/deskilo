@@ -161,5 +161,37 @@
   "purchasesPickDate": "Choose a date",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
+  },
+  "purchaseSettlementNothingOwed": "Nothing owed",
+  "@purchaseSettlementNothingOwed": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseSettlementUnpaid": "Unpaid",
+  "@purchaseSettlementUnpaid": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseSettlementPartly": "Partly settled",
+  "@purchaseSettlementPartly": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseSettlementSettled": "Settled",
+  "@purchaseSettlementSettled": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseQualified": "Accounting qualified",
+  "@purchaseQualified": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseNeedsReview": "Needs review",
+  "@purchaseNeedsReview": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseTaxNotQualified": "Tax not qualified",
+  "@purchaseTaxNotQualified": {
+    "description": "#2577 the three status chips of a purchase document"
+  },
+  "purchaseUnverified": "Unverified (filed before purchases)",
+  "@purchaseUnverified": {
+    "description": "#2577 the three status chips of a purchase document"
   }
 }

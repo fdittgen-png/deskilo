@@ -10307,6 +10307,14 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
+  "purchaseNeedsReview": "Da rivedere",
+  "purchaseQualified": "Contabilità qualificata",
+  "purchaseSettlementNothingOwed": "Nulla di dovuto",
+  "purchaseSettlementPartly": "Saldato in parte",
+  "purchaseSettlementSettled": "Saldato",
+  "purchaseSettlementUnpaid": "Non pagato",
+  "purchaseTaxNotQualified": "Imposta non qualificata",
+  "purchaseUnverified": "Non verificato (archiviato prima degli acquisti)",
   "purchasesAddBill": "Aggiungi fattura fornitore",
   "@purchasesAddBill": {
     "description": "#2573 purchases"
