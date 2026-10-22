@@ -175,46 +175,70 @@ String datevFileName(int year, int month) =>
 /// come from the accountant — DATEV refuses an import whose numbers do
 /// not match the target client, which is a good refusal: it stops a file
 /// landing in the wrong company's books.
-String buildDatevFile({
-  required List<Invoice> invoices,
-  required Map<String, InvoiceMatch> matches,
-  required DatevAccounts accounts,
-  required DateTime from,
-  required DateTime to,
-  required DateTime generatedAt,
-  required String consultantNumber,
-  required String clientNumber,
-  String currency = 'EUR',
-  String batchName = 'DesKilo',
-  /// Length of the account numbers in the target chart (DATEV field 14).
-  int accountLength = 4,
-  // #936 — the purchases side, and the development mark.
-  List<LedgerEntry> ledger = const [],
-  List<ExpenseRepartition> repartitions = const [],
-  bool development = false,
-  List<VatTaxPointAmount>? taxPoints,
-  DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
-}) {
+String buildDatevFile(DatevRequest request) {
   final writer = DatevWriter(
-    invoices: invoices,
-    matches: matches,
-    accounts: accounts,
-    from: from,
-    to: to,
-    generatedAt: generatedAt,
-    consultantNumber: consultantNumber,
-    clientNumber: clientNumber,
-    currency: currency,
-    batchName: batchName,
-    accountLength: accountLength,
-    ledger: ledger,
-    repartitions: repartitions,
-    development: development,
-    taxPoints: taxPoints,
-    dayOf: dayOf,
+    invoices: request.invoices,
+    matches: request.matches,
+    accounts: request.accounts,
+    from: request.from,
+    to: request.to,
+    generatedAt: request.generatedAt,
+    consultantNumber: request.consultantNumber,
+    clientNumber: request.clientNumber,
+    currency: request.currency,
+    batchName: request.batchName,
+    accountLength: request.accountLength,
+    ledger: request.ledger,
+    repartitions: request.repartitions,
+    development: request.development,
+    taxPoints: request.taxPoints,
+    dayOf: request.dayOf,
   )
     ..bookInvoices()
     ..bookExpenses()
     ..bookRepartitions();
   return '$_datevBom${writer.lines()}';
+}
+
+/// #2492 — what one Buchungsstapel is built from.
+class DatevRequest {
+  const DatevRequest({
+    required this.invoices,
+    required this.matches,
+    required this.accounts,
+    required this.from,
+    required this.to,
+    required this.generatedAt,
+    required this.consultantNumber,
+    required this.clientNumber,
+    this.currency = 'EUR',
+    this.batchName = 'DesKilo',
+    this.accountLength = 4,
+    this.ledger = const [],
+    this.repartitions = const [],
+    this.development = false,
+    this.taxPoints,
+    this.dayOf = WorkspaceTime.dateOf,
+  });
+
+  final List<Invoice> invoices;
+  final Map<String, InvoiceMatch> matches;
+  final DatevAccounts accounts;
+  final DateTime from;
+  final DateTime to;
+  final DateTime generatedAt;
+  final String consultantNumber;
+  final String clientNumber;
+  final String currency;
+  final String batchName;
+
+  /// Length of the account numbers in the target chart (DATEV field 14).
+  final int accountLength;
+
+  /// #936 — the purchases side, and the development mark.
+  final List<LedgerEntry> ledger;
+  final List<ExpenseRepartition> repartitions;
+  final bool development;
+  final List<VatTaxPointAmount>? taxPoints;
+  final DateTime Function(DateTime instant) dayOf;
 }

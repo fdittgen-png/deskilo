@@ -66,5 +66,7 @@
   "readinessSetAsideAction": "Später",
   "readinessSetAside": "Für später zurückgestellt",
   "readinessSetAsideUndo": "Rückgängig",
-  "readinessSetAsideFailed": "Das konnte nicht gespeichert werden. Bitte erneut versuchen."
+  "readinessSetAsideFailed": "Das konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "readinessGrantMembers": "Mitglieder buchen lassen",
+  "readinessGrantMembersDone": "Mitglieder können jetzt buchen, den Kalender sehen, einander schreiben und ihr eigenes Konto sehen."
 }

@@ -23320,6 +23320,12 @@ abstract class AppLocalizations {
   /// **'All indicators'**
   String get overviewAllIndicators;
 
+  /// #2583 the overview's own figures
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s figure: no history of it is kept for a past period.'**
+  String get overviewCurrentState;
+
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
@@ -23356,11 +23362,35 @@ abstract class AppLocalizations {
   /// **'Key indicators'**
   String get overviewIndicators;
 
+  /// #2583 the overview's own figures
+  ///
+  /// In en, this message translates to:
+  /// **'The memberships of the space that are active today, each role included: memberships, not distinct people.'**
+  String get overviewMembershipsDefinition;
+
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
   /// **'Needs attention'**
   String get overviewNeedsAttention;
+
+  /// #2583 the overview's own figures
+  ///
+  /// In en, this message translates to:
+  /// **'{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart'**
+  String overviewOverdueBasis(String count, String unknown, String held);
+
+  /// #2583 the overview's own figures
+  ///
+  /// In en, this message translates to:
+  /// **'What members still owe on issued invoices past their proven due date, after credit notes, part payments and write-offs, by the reminder rules. An invoice with no proven due date, or on hold, is counted apart and is not in the amount.'**
+  String get overviewOverdueDefinition;
+
+  /// #2583 the overview's own figures
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue receivables'**
+  String get overviewOverdueTitle;
 
   /// #2583 the workspace overview
   ///
@@ -27371,6 +27401,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready for a first booking'**
   String get readinessFirstBookingReady;
+
+  /// #2865 — one-tap button on the setup card granting the members role the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book'**
+  String get readinessGrantMembers;
+
+  /// #2865 — confirmation after the members role got the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Members can now book, see the calendar, write to each other and see their own account.'**
+  String get readinessGrantMembersDone;
 
   /// #1636 workspace_readiness
   ///
