@@ -2604,6 +2604,8 @@
   "@bookRoleBank": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleCashDiscount": "Discounts granted",
+  "bookRoleClearing": "Payment provider (in transit)",
   "bookRoleCustomers": "Customers (receivable)",
   "@bookRoleCustomers": {
     "description": "#1869 B chart of accounts"
@@ -2612,10 +2614,12 @@
   "@bookRoleExpenses": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleFees": "Payment provider fees",
   "bookRoleRevenue": "Revenue",
   "@bookRoleRevenue": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleSuppliers": "Suppliers",
   "bookRoleVatInput": "Input VAT",
   "@bookRoleVatInput": {
     "description": "#2357 input VAT: bookRoleVatInput"
@@ -2624,6 +2628,8 @@
   "@bookRoleVatOutput": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleVatPending": "Output tax not yet due",
+  "bookRoleWriteOff": "Bad debts written off",
   "bookSaveFailed": "The book was not saved. Check the connection and try again.",
   "@bookSaveFailed": {
     "description": "#1869 the save failed (connection or server)"

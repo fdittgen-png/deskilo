@@ -36,5 +36,11 @@
   "bookAccountName": "Nombre de la cuenta",
   "bookAccountPosting": "Admite asientos",
   "bookMappingsTitle": "La cuenta de cada asiento",
-  "bookProblemUnmapped": "Asigne estas cuentas antes de iniciar un libro local: {roles}."
+  "bookProblemUnmapped": "Asigne estas cuentas antes de iniciar un libro local: {roles}.",
+  "bookRoleSuppliers": "Proveedores",
+  "bookRoleVatPending": "IVA repercutido no devengado",
+  "bookRoleWriteOff": "Créditos incobrables",
+  "bookRoleCashDiscount": "Descuentos concedidos",
+  "bookRoleClearing": "Proveedor de pagos (en tránsito)",
+  "bookRoleFees": "Comisiones del proveedor de pagos"
 }

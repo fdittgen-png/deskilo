@@ -176,5 +176,11 @@
         "type": "String"
       }
     }
-  }
+  },
+  "bookRoleSuppliers": "Suppliers",
+  "bookRoleVatPending": "Output tax not yet due",
+  "bookRoleWriteOff": "Bad debts written off",
+  "bookRoleCashDiscount": "Discounts granted",
+  "bookRoleClearing": "Payment provider (in transit)",
+  "bookRoleFees": "Payment provider fees"
 }

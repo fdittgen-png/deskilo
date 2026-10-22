@@ -24,6 +24,12 @@ String bookRoleLabel(AppLocalizations l10n, BookRole r) => switch (r) {
   BookRole.vatOutput => l10n.bookRoleVatOutput,
   BookRole.vatInput => vatWords(l10n).bookRoleVatInput,
   BookRole.expenses => l10n.bookRoleExpenses,
+  BookRole.suppliers => l10n.bookRoleSuppliers,
+  BookRole.vatPending => l10n.bookRoleVatPending,
+  BookRole.writeOff => l10n.bookRoleWriteOff,
+  BookRole.cashDiscount => l10n.bookRoleCashDiscount,
+  BookRole.clearing => l10n.bookRoleClearing,
+  BookRole.fees => l10n.bookRoleFees,
 };
 
 String _accountTypeLabel(AppLocalizations l10n, AccountType t) => switch (t) {

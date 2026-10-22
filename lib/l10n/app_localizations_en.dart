@@ -2201,19 +2201,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookRoleBank => 'Bank';
 
   @override
+  String get bookRoleCashDiscount => 'Discounts granted';
+
+  @override
+  String get bookRoleClearing => 'Payment provider (in transit)';
+
+  @override
   String get bookRoleCustomers => 'Customers (receivable)';
 
   @override
   String get bookRoleExpenses => 'Expenses';
 
   @override
+  String get bookRoleFees => 'Payment provider fees';
+
+  @override
   String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleSuppliers => 'Suppliers';
 
   @override
   String get bookRoleVatInput => 'Input VAT';
 
   @override
   String get bookRoleVatOutput => 'Output VAT';
+
+  @override
+  String get bookRoleVatPending => 'Output tax not yet due';
+
+  @override
+  String get bookRoleWriteOff => 'Bad debts written off';
 
   @override
   String get bookSaveFailed =>

@@ -36,5 +36,11 @@
   "bookAccountName": "Nome del conto",
   "bookAccountPosting": "Riceve registrazioni",
   "bookMappingsTitle": "Il conto di ogni registrazione",
-  "bookProblemUnmapped": "Associ questi conti prima di avviare un libro locale: {roles}."
+  "bookProblemUnmapped": "Associ questi conti prima di avviare un libro locale: {roles}.",
+  "bookRoleSuppliers": "Fornitori",
+  "bookRoleVatPending": "IVA a debito non ancora esigibile",
+  "bookRoleWriteOff": "Perdite su crediti",
+  "bookRoleCashDiscount": "Sconti concessi",
+  "bookRoleClearing": "Fornitore di pagamenti (in transito)",
+  "bookRoleFees": "Commissioni del fornitore di pagamenti"
 }

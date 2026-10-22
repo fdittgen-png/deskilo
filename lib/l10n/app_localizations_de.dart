@@ -2223,19 +2223,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookRoleBank => 'Bank';
 
   @override
+  String get bookRoleCashDiscount => 'Gewährte Skonti';
+
+  @override
+  String get bookRoleClearing => 'Zahlungsdienst (unterwegs)';
+
+  @override
   String get bookRoleCustomers => 'Kunden (Forderungen)';
 
   @override
   String get bookRoleExpenses => 'Aufwand';
 
   @override
+  String get bookRoleFees => 'Gebühren des Zahlungsdienstes';
+
+  @override
   String get bookRoleRevenue => 'Erlöse';
+
+  @override
+  String get bookRoleSuppliers => 'Lieferanten';
 
   @override
   String get bookRoleVatInput => 'Vorsteuer';
 
   @override
   String get bookRoleVatOutput => 'Umsatzsteuer';
+
+  @override
+  String get bookRoleVatPending => 'Noch nicht fällige Umsatzsteuer';
+
+  @override
+  String get bookRoleWriteOff => 'Forderungsverluste';
 
   @override
   String get bookSaveFailed =>

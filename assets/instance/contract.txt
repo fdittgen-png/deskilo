@@ -147,7 +147,7 @@ constraint book_mappings.book_mappings_issuer_role_version UNIQUE (issuer_site_i
 constraint book_mappings.book_mappings_issuer_site_id_fkey FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT
 constraint book_mappings.book_mappings_pkey PRIMARY KEY (id)
 constraint book_mappings.book_mappings_revision_check CHECK ((revision >= 1))
-constraint book_mappings.book_mappings_role_check CHECK ((role = ANY (ARRAY['customers'::text, 'revenue'::text, 'bank'::text, 'vat_output'::text, 'vat_input'::text, 'expenses'::text])))
+constraint book_mappings.book_mappings_role_check CHECK ((role ~ '^(customers|suppliers|revenue|bank|vat_output|vat_input|vat_pending|expenses|write_off|cash_discount|clearing|fees)(:[A-Za-z0-9_.-]{1,40})?$'::text))
 constraint book_mappings.book_mappings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_mappings.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_mappings.system_company_present CHECK ((company_id IS NOT NULL))
@@ -1700,6 +1700,7 @@ routine public.book_period_vat_close() -> trigger | function | definer | volatil
 routine public.book_period_void_guard() -> trigger | function | definer | volatile | exec:service_role | body:3433704ee819
 routine public.book_periods_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e4ac451a0495
 routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
+routine public.book_role_account_type(p_role text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:f9fbed874d07
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
@@ -2347,7 +2348,7 @@ routine public.sales_tax_status(p_state text, p_kind text, p_supply text, p_on d
 routine public.sales_tax_zip(p_postal text) -> text | function | invoker | immutable | exec:service_role | body:dbc6a0ce027e
 routine public.sales_tax_zip_rate(p_postal text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:7ad97ea5cbcf
 routine public.save_book_account(p_workspace_id uuid, p_issuer_site_id uuid, p_id uuid, p_code text, p_name text, p_account_type text, p_is_posting boolean, p_origin text, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2c67bbfdc2b4
-routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_role text, p_account_id uuid, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:63208e564185
+routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_role text, p_account_id uuid, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:870ab38fe6fa
 routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a8c6b0169bf2
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
