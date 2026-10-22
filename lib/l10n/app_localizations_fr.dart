@@ -277,6 +277,73 @@ class AppLocalizationsFr extends AppLocalizations {
   String get agreementExtraHalfDay => 'Demi-journée supplémentaire';
 
   @override
+  String get allocationRuleBasis => 'Base (pourquoi ces poids)';
+
+  @override
+  String get allocationRuleCategory => 'Catégorie d\'achat';
+
+  @override
+  String get allocationRuleEdit => 'Modifier la règle';
+
+  @override
+  String get allocationRuleFrom => 'En vigueur à partir du';
+
+  @override
+  String get allocationRuleNeedsBasis => 'Expliquez ces poids.';
+
+  @override
+  String get allocationRuleNeedsCategory =>
+      'Indiquez la catégorie d\'achat que la règle répartit.';
+
+  @override
+  String get allocationRuleNeedsWeight =>
+      'Donnez un poids à au moins un niveau ou un bureau.';
+
+  @override
+  String get allocationRuleNew => 'Nouvelle règle';
+
+  @override
+  String get allocationRuleOneLine => 'Une ligne d\'achat';
+
+  @override
+  String allocationRulePreview(String amount, String shares) {
+    return '$amount serait réparti : $shares';
+  }
+
+  @override
+  String get allocationRuleRetire => 'Arrêter la règle';
+
+  @override
+  String get allocationRuleRetireBody =>
+      'À partir de ce mois, la règle ne répartit plus rien. Les mois précédents la gardent.';
+
+  @override
+  String get allocationRuleRetired => 'arrêtée';
+
+  @override
+  String get allocationRuleSaveFailed =>
+      'La règle n\'a pas été enregistrée. Elle a peut-être changé entre-temps : rouvrez-la et réessayez.';
+
+  @override
+  String allocationRuleSummary(String basis, String from, String revision) {
+    return '$basis · depuis le $from · révision $revision';
+  }
+
+  @override
+  String get allocationRuleWeights =>
+      'Poids (nombres entiers ; vide ou 0 : aucune part)';
+
+  @override
+  String get allocationRulesButton => 'Règles de répartition';
+
+  @override
+  String get allocationRulesEmpty =>
+      'Aucune règle : toutes les charges d\'exploitation restent non réparties.';
+
+  @override
+  String get allocationRulesTitle => 'Règles de répartition';
+
+  @override
   String get amenityDock => 'Station d\'accueil';
 
   @override
@@ -1281,6 +1348,42 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biAfterDepreciationTitle =>
       'Facturé moins charges d\'exploitation et amortissements';
+
+  @override
+  String biAllocationBasis(String direct, String shared, String unallocated) {
+    return '$direct direct, $shared partagé, $unallocated non réparti';
+  }
+
+  @override
+  String biAllocationConflicts(String count) {
+    return '$count lignes sont revendiquées par deux règles et restent non réparties tant que l\'une d\'elles demeure.';
+  }
+
+  @override
+  String get biAllocationDefinition =>
+      'Les charges d\'exploitation des mois, réparties entre niveaux et bureaux selon la règle en vigueur à la date de chaque document, au plus fort reste au centime près. Direct, partagé et non réparti font toujours le total des charges d\'exploitation.';
+
+  @override
+  String get biAllocationNotBilled =>
+      'Une analyse : aucun membre n\'est facturé et aucun document ni écriture ne change.';
+
+  @override
+  String biAllocationRevision(String basis, String revision) {
+    return '$basis (révision $revision)';
+  }
+
+  @override
+  String biAllocationRevisions(String rules) {
+    return 'Réparti par : $rules';
+  }
+
+  @override
+  String get biAllocationTitle => 'Charges partagées par ressource';
+
+  @override
+  String biAllocationUnallocated(String amount) {
+    return '$amount n\'est réparti par aucune règle : il reste non réparti, jamais divisé à parts égales.';
+  }
 
   @override
   String get biAreaCapacity => 'Espaces et capacité';
