@@ -9487,6 +9487,10 @@
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
   "pendingSwitchWorkspace": "Bereich wechseln",
   "percentValue": "{value} %",
+  "periodReservationsEmpty": "Keine Buchung in diesen Monaten.",
+  "periodReservationsFailed": "Die Buchungen konnten nicht gelesen werden.",
+  "periodReservationsTitle": "Buchungen von {period}",
+  "periodReservationsUnnamed": "(Platz ohne Namen)",
   "permAccessProd": "Den Produktionsraum betreten",
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"

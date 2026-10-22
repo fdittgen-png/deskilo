@@ -9487,6 +9487,10 @@
   "pendingStillWaiting": "Toujours en attente d’approbation.",
   "pendingSwitchWorkspace": "Changer d’espace",
   "percentValue": "{value} %",
+  "periodReservationsEmpty": "Aucune réservation ces mois-ci.",
+  "periodReservationsFailed": "Les réservations n'ont pas pu être lues.",
+  "periodReservationsTitle": "Réservations de {period}",
+  "periodReservationsUnnamed": "(lieu sans nom)",
   "permAccessProd": "Entrer dans l'espace de production",
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"

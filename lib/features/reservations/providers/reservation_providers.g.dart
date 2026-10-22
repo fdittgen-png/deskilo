@@ -576,3 +576,149 @@ final class CalendarFilesProvider
 }
 
 String _$calendarFilesHash() => r'083bd828b2c0ed92cef2fb39213fa7c6e04218be';
+
+/// #2578 — the place names a list of bookings shows (seat, office, level by
+/// id), read from the plan once for the active workspace.
+
+@ProviderFor(bookingTargetNames)
+final bookingTargetNamesProvider = BookingTargetNamesProvider._();
+
+/// #2578 — the place names a list of bookings shows (seat, office, level by
+/// id), read from the plan once for the active workspace.
+
+final class BookingTargetNamesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// #2578 — the place names a list of bookings shows (seat, office, level by
+  /// id), read from the plan once for the active workspace.
+  BookingTargetNamesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingTargetNamesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingTargetNamesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return bookingTargetNames(ref);
+  }
+}
+
+String _$bookingTargetNamesHash() =>
+    r'e78fa00a1f52b64ae63c953466a06697326b746c';
+
+/// The bookings of the months, earliest first; empty for a malformed
+/// period or a [toMonth] before [fromMonth].
+
+@ProviderFor(periodReservations)
+final periodReservationsProvider = PeriodReservationsFamily._();
+
+/// The bookings of the months, earliest first; empty for a malformed
+/// period or a [toMonth] before [fromMonth].
+
+final class PeriodReservationsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Reservation>>,
+          List<Reservation>,
+          FutureOr<List<Reservation>>
+        >
+    with
+        $FutureModifier<List<Reservation>>,
+        $FutureProvider<List<Reservation>> {
+  /// The bookings of the months, earliest first; empty for a malformed
+  /// period or a [toMonth] before [fromMonth].
+  PeriodReservationsProvider._({
+    required PeriodReservationsFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'periodReservationsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$periodReservationsHash();
+
+  @override
+  String toString() {
+    return r'periodReservationsProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Reservation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Reservation>> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return periodReservations(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PeriodReservationsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$periodReservationsHash() =>
+    r'498dec164da59f3ab08942cf6b62c69012aac853';
+
+/// The bookings of the months, earliest first; empty for a malformed
+/// period or a [toMonth] before [fromMonth].
+
+final class PeriodReservationsFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<Reservation>>,
+          (String, String)
+        > {
+  PeriodReservationsFamily._()
+    : super(
+        retry: null,
+        name: r'periodReservationsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The bookings of the months, earliest first; empty for a malformed
+  /// period or a [toMonth] before [fromMonth].
+
+  PeriodReservationsProvider call(String fromMonth, String toMonth) =>
+      PeriodReservationsProvider._(argument: (fromMonth, toMonth), from: this);
+
+  @override
+  String toString() => r'periodReservationsProvider';
+}
