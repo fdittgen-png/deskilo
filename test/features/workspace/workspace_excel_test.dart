@@ -26,7 +26,31 @@ void main() {
     final plan = await plans.fetchPlan(levels.first.id);
     final start = DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 9);
 
-    final sheets = buildWorkspaceExcelExport(
+    final ledger = [
+      LedgerEntry(
+        id: 'led-1',
+        memberId: 'member-1',
+        kind: LedgerKind.credit,
+        category: LedgerCategory.payment,
+        amountCents: 4250,
+        description: 'bank transfer',
+        period: kTestPeriod,
+        createdAt: kTestNow,
+      ),
+      // A subscription charge: the first workbook never wrote charges;
+      // the Ledger tab (#2860) carries every row.
+      LedgerEntry(
+        id: 'led-2',
+        memberId: 'member-1',
+        kind: LedgerKind.charge,
+        category: LedgerCategory.subscription,
+        amountCents: 20000,
+        description: 'subscription',
+        period: kTestPeriod,
+        createdAt: kTestNow,
+      ),
+    ];
+    final base = buildWorkspaceExcelExport(
       workspace: workspace,
       enabledFeatures: const {'moneyTab', 'dataExport'},
       levels: levels,
@@ -46,30 +70,7 @@ void main() {
           checkedOutAt: start.add(const Duration(hours: 4)),
         ),
       ],
-      ledger: [
-        LedgerEntry(
-          id: 'led-1',
-          memberId: 'member-1',
-          kind: LedgerKind.credit,
-          category: LedgerCategory.payment,
-          amountCents: 4250,
-          description: 'bank transfer',
-          period: kTestPeriod,
-          createdAt: kTestNow,
-        ),
-        // A subscription charge: the workbook does not write charges yet
-        // (#2860), which is why ledger_entries is declared partial.
-        LedgerEntry(
-          id: 'led-2',
-          memberId: 'member-1',
-          kind: LedgerKind.charge,
-          category: LedgerCategory.subscription,
-          amountCents: 20000,
-          description: 'subscription',
-          period: kTestPeriod,
-          createdAt: kTestNow,
-        ),
-      ],
+      ledger: ledger,
       pendingEvents: const [],
       paymentIntents: [
         PaymentIntent(
@@ -87,10 +88,24 @@ void main() {
       invoices: const [],
       transmissionsByInvoice: const {},
     );
+    final sheets = [
+      ...base,
+      ...buildWorkspaceExcelDetailSheets(WorkspaceExportDetails(
+        workspace: workspace,
+        levels: levels,
+        plansByLevel: {levels.first.id: plan},
+        memberName: const {'member-1': 'Me'},
+        ledger: ledger,
+        events: const [],
+        decisions: const {},
+        invoices: const [],
+      )),
+    ];
 
     expect(sheets.map((s) => s.name).toList(), [
       'Workspace', 'Levels', 'Desks', 'Seats', 'Users', 'Reservations',
       'Check-ins', 'Payments', 'Services', 'Service catalog', 'Invoices',
+      'Offices', 'Ledger', 'Events', 'Decisions', 'Invoice lines',
     ]);
 
     Map<String, Object?> row(String tab, int index) {
@@ -133,11 +148,11 @@ void main() {
       'reservations': (rowsOf('Reservations'), 1),
       'payment_intents':
           (rowsOf('Payments', (r) => '${r.first}'.startsWith('online')), 1),
-      'ledger_entries': (
-        rowsOf('Payments', (r) => r.first == 'confirmed') +
-            rowsOf('Services', (r) => r.first == 'confirmed'),
-        2,
-      ),
+      'ledger_entries': (rowsOf('Ledger'), ledger.length),
+      'offices': (rowsOf('Offices'), plan.offices.length),
+      'events': (rowsOf('Events'), 0),
+      'event_decisions': (rowsOf('Decisions'), 0),
+      'invoice_maturities': (rowsOf('Invoices'), 0),
       'services': (rowsOf('Service catalog'), 0),
       'invoices': (rowsOf('Invoices'), 0),
     };
@@ -148,5 +163,15 @@ void main() {
       final (actual, given) = written[source.table]!;
       expect(actual, given, reason: '${source.table} lost rows');
     }
+
+    // The signed amounts of one member's ledger sum to their balance:
+    // 200.00 owed, 42.50 paid.
+    final signed = sheets
+        .singleWhere((s) => s.name == 'Ledger')
+        .rows
+        .skip(1)
+        .map((r) => r[5]! as double)
+        .fold(0.0, (a, b) => a + b);
+    expect(signed, 157.5);
   });
 }
