@@ -173,5 +173,13 @@
   "purchaseLinkInbox": "Vincular una factura recibida",
   "purchaseLinkInboxTitle": "Facturas recibidas",
   "purchaseLinkInboxEmpty": "Ninguna factura recibida para vincular.",
-  "purchaseLinkInboxFailed": "La factura no se vinculó. Puede que el documento haya cambiado entretanto: vuelva a abrirlo e inténtelo de nuevo."
+  "purchaseLinkInboxFailed": "La factura no se vinculó. Puede que el documento haya cambiado entretanto: vuelva a abrirlo e inténtelo de nuevo.",
+  "purchaseEntryAdd": "Añadir compra / gasto",
+  "purchaseEntryWhoPaid": "¿Quién pagó?",
+  "purchaseEntryMe": "Pagué yo",
+  "purchaseEntryMeHint": "Preséntelo como su gasto: una vez aprobado, el espacio se lo debe.",
+  "purchaseEntryUnpaid": "Aún sin pagar",
+  "purchaseEntryUnpaidHint": "Una factura de proveedor que el espacio aún debe pagar.",
+  "purchaseEntryPaid": "El espacio ya pagó",
+  "purchaseEntryPaidHint": "Registre la factura; una vez aprobada, registre su pago desde «Por pagar»."
 }
