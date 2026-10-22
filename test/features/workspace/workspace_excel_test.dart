@@ -157,7 +157,8 @@ void main() {
       'invoices': (rowsOf('Invoices'), 0),
     };
     for (final source in workspaceExportSources) {
-      if (source.partial != null) continue;
+      // A table the server writes whole has no model-built sheet here.
+      if (source.partial != null || source.everyColumn) continue;
       expect(written, contains(source.table),
           reason: '${source.table} is declared whole: count its rows here');
       final (actual, given) = written[source.table]!;
