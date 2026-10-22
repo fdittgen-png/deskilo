@@ -89,7 +89,24 @@ Map<String, Object?> _answer() => {
         _profile('p-1', 's-1', 1, '2025-01-01', 1),
         _profile('p-2', 's-1', 4, '2026-01-01', 2),
       ],
+      // #2587: one approved bill of 1.20 + 0.60, in the same snapshot.
+      'purchases': [
+        {
+          'id': 'pd-1',
+          'kind': 'bill',
+          'currency': 'EUR',
+          'original_date': '2026-03-10',
+          'received_on': null,
+          'lines': [
+            {'line_no': 1, 'gross_cents': 120, 'net_cents': 100, 'tax_cents': 20,
+             'recognition_kind': 'operating'},
+            {'line_no': 2, 'gross_cents': 60, 'net_cents': 50, 'tax_cents': 10,
+             'recognition_kind': 'operating'},
+          ],
+        },
+      ],
       'totals': {
+        'purchases': {'count': 1, 'line_count': 2, 'gross_cents': 180},
         'book_profiles': {'count': 2, 'revision_sum': 3},
         'invoices': {'count': 2, 'total_cents': 19000},
         'matches': {'count': 1, 'paid_cents': 12000},
@@ -171,6 +188,21 @@ void main() {
     final c = _answer();
     (c['book_profiles']! as List).removeLast();
     _refused(c, AccountingSourceFailure.inconsistent);
+  });
+
+  test('#2587: the purchases come with their lines; missing or off their '
+      'totals stops', () {
+    final ok = _parse(_answer());
+    expect(ok.purchases.single.id, 'pd-1');
+    expect(ok.purchases.single.lines.map((l) => l.grossCents), [120, 60]);
+    expect(ok.purchases.single.dated, DateTime(2026, 3, 10));
+    _refused(_answer()..remove('purchases'), AccountingSourceFailure.inconsistent);
+    final a = _answer();
+    ((a['totals']! as Map)['purchases']! as Map)['gross_cents'] = 170;
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    (((b['purchases']! as List)[0]! as Map)['lines']! as List).removeLast();
+    _refused(b, AccountingSourceFailure.inconsistent);
   });
 
   test('an over-budget scope is a named refusal with no rows', () {

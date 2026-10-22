@@ -34,6 +34,27 @@ class AccountingSourceException implements Exception {
 /// The identity and value of one invoice as the source holds it.
 typedef SourceInvoice = ({String id, String number, int totalCents});
 
+/// #2587 — one line of an approved purchase document, as the source
+/// delivered it: its gross always, its net and tax when it was split.
+typedef SourcePurchaseLine = ({
+  int lineNo,
+  int grossCents,
+  int? netCents,
+  int? taxCents,
+  String recognitionKind,
+});
+
+/// #2587 — an approved purchase document of the period (a supplier bill, a
+/// credit note or a member's receipt), read in the same snapshot as the
+/// sales side, with its lines.
+typedef SourcePurchase = ({
+  String id,
+  String kind,
+  String currency,
+  DateTime? dated,
+  List<SourcePurchaseLine> lines,
+});
+
 /// The books of one workspace and period as ONE server response under ONE
 /// statement snapshot (`accounting_source_snapshot_v1`, #2365): the ledger
 /// and repartitions an export is built from, the invoice headers they sit
@@ -48,6 +69,7 @@ class AccountingSourceSnapshot {
     required this.repartitions,
     required this.bookProfiles,
     required this.matchedCents,
+    required this.purchases,
   });
 
   /// The in-memory demo workspace has no server to snapshot: its books are
@@ -57,6 +79,7 @@ class AccountingSourceSnapshot {
     required this.ledger,
     required this.repartitions,
     this.bookProfiles = const [],
+    this.purchases = const [],
   })  : provenance = const ReadProvenance.traversal(
           reason: 'in-memory demo books',
         ),
@@ -75,6 +98,9 @@ class AccountingSourceSnapshot {
 
   /// Sum of the matches of the in-scope invoices, as delivered.
   final int matchedCents;
+
+  /// The approved purchase documents of the period with their lines (#2587).
+  final List<SourcePurchase> purchases;
 
   /// Parses the answer to a request for [workspaceId] and `[from, to]`
   /// made by [principal]. Strict: an unknown ledger kind or category, a
@@ -129,6 +155,11 @@ class AccountingSourceSnapshot {
       return profile;
     });
 
+    // An answer without the purchases is an older producer: stop, never
+    // read it as "nothing was bought".
+    if (r.raw('purchases') is! List) bad('no purchases in the answer');
+    final purchases = r.objects('purchases', _purchase);
+
     final totals = r.objectOrAbsent('totals');
     void agree(String what, JsonReader t, int count, int value, String key) {
       if (t.integer('count') != count || t.integer(key) != value) {
@@ -157,6 +188,13 @@ class AccountingSourceSnapshot {
     agree('repartition', totals.objectOrAbsent('repartitions'),
         repartitions.length, sum(repartitions.map((x) => x.amountCents)),
         'amount_cents');
+    final lines = [for (final p in purchases) ...p.lines];
+    final pu = totals.objectOrAbsent('purchases');
+    if (pu.integer('count') != purchases.length ||
+        pu.integer('line_count') != lines.length ||
+        pu.integer('gross_cents') != sum(lines.map((l) => l.grossCents))) {
+      bad('purchase totals disagree with the rows');
+    }
     final pt = totals.objectOrAbsent('book_profiles');
     if (pt.integer('count') != profiles.length ||
         pt.integer('revision_sum') != sum(profiles.map((p) => p.revision))) {
@@ -175,6 +213,7 @@ class AccountingSourceSnapshot {
       repartitions: repartitions,
       bookProfiles: profiles,
       matchedCents: sum(matched),
+      purchases: purchases,
     );
   }
 
@@ -193,6 +232,26 @@ class AccountingSourceSnapshot {
       }
     }
   }
+}
+
+SourcePurchase _purchase(JsonReader row) {
+  final dated = row.stringOrNull('original_date') ?? row.stringOrNull('received_on');
+  return (
+    id: row.string('id'),
+    kind: row.string('kind'),
+    currency: row.string('currency'),
+    dated: dated == null ? null : DateTime.parse(dated),
+    lines: row.objects(
+      'lines',
+      (l) => (
+        lineNo: l.integer('line_no'),
+        grossCents: l.integer('gross_cents'),
+        netCents: l.intOrNull('net_cents'),
+        taxCents: l.intOrNull('tax_cents'),
+        recognitionKind: l.string('recognition_kind'),
+      ),
+    ),
+  );
 }
 
 LedgerEntry _strictLedger(JsonReader row) {
