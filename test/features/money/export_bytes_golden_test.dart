@@ -180,14 +180,14 @@ String _lineText(InvoiceLine line) =>
     invoiceLineText(const ReportStrings(), line);
 
 Map<String, String Function()> _files() => {
-  'fec.txt': () => buildFecFile(
+  'fec.txt': () => buildFecFile(FecRequest(
     invoices: _invoices,
     matches: _matches,
     company: _seller,
     accounts: const FecAccounts(),
     lineText: _lineText,
-  ),
-  'datev.csv': () => buildDatevFile(
+  )),
+  'datev.csv': () => buildDatevFile(DatevRequest(
     invoices: _invoices,
     matches: _matches,
     accounts: const DatevAccounts(),
@@ -196,7 +196,7 @@ Map<String, String Function()> _files() => {
     generatedAt: DateTime.utc(2026, 5, 1, 9, 7, 3),
     consultantNumber: '1234567',
     clientNumber: '54321',
-  ),
+  )),
   'sage.csv': () => buildSageFile(
     invoices: _invoices,
     matches: _matches,
@@ -214,7 +214,7 @@ Map<String, String Function()> _files() => {
     generatedAt: DateTime.utc(2026, 5, 1, 9),
     workspaceName: 'Pézenas Lab',
   ),
-  'saf_t.xml': () => buildSafTFile(
+  'saf_t.xml': () => buildSafTFile(SafTRequest(
     invoices: _invoices,
     matches: _matches,
     company: _seller,
@@ -222,7 +222,7 @@ Map<String, String Function()> _files() => {
     softwareVersion: '1.0.0',
     createdAt: DateTime.utc(2026, 5, 1, 9),
     lineText: _lineText,
-  ),
+  )),
   'invoice_ubl.xml': () => buildInvoiceUbl(EInvoiceInput(invoice: _invoices.first,
     seller: _seller,
     buyer: _buyer,
