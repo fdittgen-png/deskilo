@@ -1,5 +1,5 @@
 {
-  "recordedSha": "8a94b55203f6e91088421f7bd4b8bce1844ee593",
+  "recordedSha": "49b90ad9c4d430044f997b49db70c74d4b945c08",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
   "totals": {"files":1781,"functions":9972,"cyclomatic>=9":1061,"cyclomatic>=25":107,"cognitive>=15":430,"cognitive>=30":98,"length>=150":73,"parameters>=5":484,"parameters>=7":153,"partOfFiles":43},
@@ -2078,7 +2078,7 @@
     {"p":"lib/features/task_recorder/data/recorder_log_backends.dart","loc":99,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":7,"cyc":5,"len":13,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/data/recorder_store.dart","loc":296,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":48,"cyc":40,"len":134,"params":5,"nest":3,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/domain/action_registry.dart","loc":309,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/domain/coverage_manifest.dart","loc":363,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":6,"len":13,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/domain/coverage_manifest.dart","loc":365,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":6,"len":13,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/domain/recording_edit.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/domain/recording_reference.dart","loc":33,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":12,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/domain/recording_sink.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
