@@ -28,6 +28,7 @@ Future<void> showPurchasesSheet(
   bool canPay = false,
   bool canDecide = false,
   bool canOffset = false,
+  bool toPay = false,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -37,6 +38,7 @@ Future<void> showPurchasesSheet(
     canPay: canPay,
     canDecide: canDecide,
     canOffset: canOffset,
+    toPay: toPay,
   ),
 );
 
@@ -49,8 +51,12 @@ class PurchasesView extends ConsumerStatefulWidget {
     this.canPay = false,
     this.canDecide = false,
     this.canOffset = false,
+    this.toPay = false,
     super.key,
   });
+
+  /// #2577 — opened on what is still to pay (the Cash page).
+  final bool toPay;
 
   final String workspaceId;
 
@@ -72,7 +78,7 @@ class PurchasesView extends ConsumerStatefulWidget {
 }
 
 class _PurchasesViewState extends ConsumerState<PurchasesView> {
-  var _toPay = false;
+  late var _toPay = widget.toPay;
 
   String get workspaceId => widget.workspaceId;
 

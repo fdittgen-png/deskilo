@@ -654,5 +654,21 @@
   "hubSalesSubtitle": "What the space sells and invoices: services, invoices, billing",
   "@hubSalesSubtitle": {
     "description": "#2577 the sales and purchases pages"
+  },
+  "hubCashTitle": "Cash",
+  "@hubCashTitle": {
+    "description": "#2577 the cash page"
+  },
+  "hubCashSubtitle": "Recorded money in and out, and what is still to pay",
+  "@hubCashSubtitle": {
+    "description": "#2577 the cash page"
+  },
+  "cashHubInOut": "Money in and out by month",
+  "@cashHubInOut": {
+    "description": "#2577 the cash page"
+  },
+  "cashHubToPay": "To pay",
+  "@cashHubToPay": {
+    "description": "#2577 the cash page"
   }
 }
