@@ -362,6 +362,7 @@ const Set<String> demoOverriddenProviders = {
   'financeKpiRepositoryProvider', // #1924
   'purchaseKpiRepositoryProvider', // #2582
   'costKpiRepositoryProvider', // #2582 C2
+  'costAllocationRepositoryProvider', // #2582 C2
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

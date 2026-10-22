@@ -31,6 +31,8 @@ public.asset_valuation_batches.mcp_delegated_deny
 public.asset_valuation_rows.asset_valuation_rows_select
 public.asset_valuation_rows.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
+public.bi_cost_allocation_rules.bi_cost_allocation_rules_select
+public.bi_cost_allocation_rules.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny
 public.book_exports.book_exports_select

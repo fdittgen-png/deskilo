@@ -276,6 +276,73 @@ class AppLocalizationsEs extends AppLocalizations {
   String get agreementExtraHalfDay => 'Media jornada extra';
 
   @override
+  String get allocationRuleBasis => 'Base (por qué estos pesos)';
+
+  @override
+  String get allocationRuleCategory => 'Categoría de compra';
+
+  @override
+  String get allocationRuleEdit => 'Cambiar la regla';
+
+  @override
+  String get allocationRuleFrom => 'Vigente desde';
+
+  @override
+  String get allocationRuleNeedsBasis => 'Explique estos pesos.';
+
+  @override
+  String get allocationRuleNeedsCategory =>
+      'Indique la categoría de compra que reparte la regla.';
+
+  @override
+  String get allocationRuleNeedsWeight =>
+      'Dé un peso al menos a una planta u oficina.';
+
+  @override
+  String get allocationRuleNew => 'Nueva regla';
+
+  @override
+  String get allocationRuleOneLine => 'Una línea de compra';
+
+  @override
+  String allocationRulePreview(String amount, String shares) {
+    return '$amount se repartiría: $shares';
+  }
+
+  @override
+  String get allocationRuleRetire => 'Detener la regla';
+
+  @override
+  String get allocationRuleRetireBody =>
+      'Desde este mes la regla no reparte nada. Los meses anteriores la conservan.';
+
+  @override
+  String get allocationRuleRetired => 'detenida';
+
+  @override
+  String get allocationRuleSaveFailed =>
+      'La regla no se guardó. Puede que haya cambiado entretanto: vuelva a abrirla e inténtelo de nuevo.';
+
+  @override
+  String allocationRuleSummary(String basis, String from, String revision) {
+    return '$basis · desde el $from · revisión $revision';
+  }
+
+  @override
+  String get allocationRuleWeights =>
+      'Pesos (números enteros; vacío o 0: sin parte)';
+
+  @override
+  String get allocationRulesButton => 'Reglas de reparto';
+
+  @override
+  String get allocationRulesEmpty =>
+      'Aún no hay reglas: todos los gastos de explotación quedan sin repartir.';
+
+  @override
+  String get allocationRulesTitle => 'Reglas de reparto';
+
+  @override
   String get amenityDock => 'Estación de acoplamiento';
 
   @override
@@ -1279,6 +1346,42 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biAfterDepreciationTitle =>
       'Facturado menos gastos de explotación y amortización';
+
+  @override
+  String biAllocationBasis(String direct, String shared, String unallocated) {
+    return '$direct directo, $shared compartido, $unallocated sin repartir';
+  }
+
+  @override
+  String biAllocationConflicts(String count) {
+    return '$count líneas las reclaman dos reglas y quedan sin repartir mientras sigan ambas.';
+  }
+
+  @override
+  String get biAllocationDefinition =>
+      'Los gastos de explotación de los meses, repartidos entre plantas y oficinas según la regla vigente en la fecha de cada documento, por el mayor resto al céntimo. Directo, compartido y sin repartir suman siempre los gastos de explotación.';
+
+  @override
+  String get biAllocationNotBilled =>
+      'Un análisis: no se factura a ningún miembro y no cambia ningún documento ni asiento.';
+
+  @override
+  String biAllocationRevision(String basis, String revision) {
+    return '$basis (revisión $revision)';
+  }
+
+  @override
+  String biAllocationRevisions(String rules) {
+    return 'Repartido por: $rules';
+  }
+
+  @override
+  String get biAllocationTitle => 'Costes compartidos por recurso';
+
+  @override
+  String biAllocationUnallocated(String amount) {
+    return '$amount no lo reparte ninguna regla: queda sin repartir, nunca dividido a partes iguales.';
+  }
 
   @override
   String get biAreaCapacity => 'Espacios y capacidad';

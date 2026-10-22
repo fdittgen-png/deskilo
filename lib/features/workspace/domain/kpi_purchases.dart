@@ -209,6 +209,24 @@ const _unbilledCommitmentsKpi = KpiDefinition(
   minCohort: null,
 );
 
+const _costAllocationKpi = KpiDefinition(
+  id: 'finance.cost_allocation',
+  version: 1,
+  unit: 'currency_minor',
+  timeBasis:
+      'the operating costs of [from, to] by the document\'s date, spread over '
+      'levels, offices, desks and seats by the rule revision in force that '
+      'day; direct, shared and unallocated add up to the operating costs',
+  dimensions: ['resource'],
+  numerator: 'shared_minor',
+  denominator: '',
+  aggregation: KpiAggregation.sum,
+  permissions: ['viewAnalytics', 'viewFinances'],
+  disclosure: KpiDisclosure.financial,
+  prerequisites: ['purchases', 'an allocation rule', 'the workspace currency'],
+  minCohort: null,
+);
+
 /// The purchase figures, in catalogue order.
 const purchaseKpis = <KpiDefinition>[
   _apOutstandingKpi,
@@ -224,6 +242,8 @@ const purchaseKpis = <KpiDefinition>[
   _bookDepreciationKpi,
   _afterDepreciationKpi,
   _unbilledCommitmentsKpi,
+  // #2582 C2 — the cost allocation over resources (0531).
+  _costAllocationKpi,
 ];
 
 /// What `kpi_purchases_summary` returned for the whole months
