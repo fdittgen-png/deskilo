@@ -15388,6 +15388,33 @@ class AppLocalizationsIt extends AppLocalizations {
   String get publicProfileTitle => 'Profilo pubblico';
 
   @override
+  String get purchaseEntryAdd => 'Aggiungi acquisto / spesa';
+
+  @override
+  String get purchaseEntryMe => 'Ho pagato io';
+
+  @override
+  String get purchaseEntryMeHint =>
+      'La presenti come sua spesa: una volta approvata, lo spazio gliela deve.';
+
+  @override
+  String get purchaseEntryPaid => 'Lo spazio ha già pagato';
+
+  @override
+  String get purchaseEntryPaidHint =>
+      'Registri la fattura; una volta approvata, registri il pagamento da «Da pagare».';
+
+  @override
+  String get purchaseEntryUnpaid => 'Non ancora pagato';
+
+  @override
+  String get purchaseEntryUnpaidHint =>
+      'Una fattura fornitore che lo spazio deve ancora pagare.';
+
+  @override
+  String get purchaseEntryWhoPaid => 'Chi ha pagato?';
+
+  @override
   String get purchaseLinkInbox => 'Collega una fattura ricevuta';
 
   @override

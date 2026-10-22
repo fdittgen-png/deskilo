@@ -146,6 +146,14 @@ class MoneyActionSet {
 
   bool get hasWorkspaceTools => workspaceTools.isNotEmpty;
 
+  /// #2577 — whether the person may capture supplier bills: purchases on
+  /// and managePurchases.
+  static bool canCaptureBills(WidgetRef ref, MoneyViewData data) =>
+      data.purchasesOn &&
+      ref
+          .watch(myPermissionsProvider)
+          .any((p) => p.wireName == purchaseManagePermission);
+
   /// #2577 — the purchase side's doors, for the purchases page.
   static List<Widget> purchaseDoors(
     BuildContext context,

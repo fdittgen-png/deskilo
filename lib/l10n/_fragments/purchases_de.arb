@@ -173,5 +173,13 @@
   "purchaseLinkInbox": "Empfangene Rechnung verknüpfen",
   "purchaseLinkInboxTitle": "Empfangene Rechnungen",
   "purchaseLinkInboxEmpty": "Keine empfangene Rechnung zum Verknüpfen.",
-  "purchaseLinkInboxFailed": "Die Rechnung wurde nicht verknüpft. Der Beleg hat sich vielleicht inzwischen geändert: öffnen Sie ihn erneut und versuchen Sie es noch einmal."
+  "purchaseLinkInboxFailed": "Die Rechnung wurde nicht verknüpft. Der Beleg hat sich vielleicht inzwischen geändert: öffnen Sie ihn erneut und versuchen Sie es noch einmal.",
+  "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
+  "purchaseEntryWhoPaid": "Wer hat bezahlt?",
+  "purchaseEntryMe": "Ich habe selbst bezahlt",
+  "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",
+  "purchaseEntryUnpaid": "Noch nicht bezahlt",
+  "purchaseEntryUnpaidHint": "Eine Lieferantenrechnung, die der Raum noch bezahlen muss.",
+  "purchaseEntryPaid": "Der Raum hat schon bezahlt",
+  "purchaseEntryPaidHint": "Erfassen Sie die Rechnung; nach der Genehmigung buchen Sie die Zahlung unter „Zu zahlen“."
 }

@@ -173,5 +173,13 @@
   "purchaseLinkInbox": "Collega una fattura ricevuta",
   "purchaseLinkInboxTitle": "Fatture ricevute",
   "purchaseLinkInboxEmpty": "Nessuna fattura ricevuta da collegare.",
-  "purchaseLinkInboxFailed": "La fattura non è stata collegata. Il documento potrebbe essere cambiato nel frattempo: lo riapra e riprovi."
+  "purchaseLinkInboxFailed": "La fattura non è stata collegata. Il documento potrebbe essere cambiato nel frattempo: lo riapra e riprovi.",
+  "purchaseEntryAdd": "Aggiungi acquisto / spesa",
+  "purchaseEntryWhoPaid": "Chi ha pagato?",
+  "purchaseEntryMe": "Ho pagato io",
+  "purchaseEntryMeHint": "La presenti come sua spesa: una volta approvata, lo spazio gliela deve.",
+  "purchaseEntryUnpaid": "Non ancora pagato",
+  "purchaseEntryUnpaidHint": "Una fattura fornitore che lo spazio deve ancora pagare.",
+  "purchaseEntryPaid": "Lo spazio ha già pagato",
+  "purchaseEntryPaidHint": "Registri la fattura; una volta approvata, registri il pagamento da «Da pagare»."
 }
