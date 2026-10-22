@@ -182,6 +182,25 @@ Future<void> _showDetailSheet(
   ),
 );
 
+/// #2573 — one document, read only, opened from elsewhere (the decision on
+/// the expense request it was filed from): paying, capturing and deciding
+/// stay on the purchases page.
+Future<void> showPurchaseDetail(
+  BuildContext context,
+  String workspaceId,
+  String purchaseId,
+) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => _PurchaseDetailView(
+    workspaceId: workspaceId,
+    purchaseId: purchaseId,
+    canPay: false,
+    canCapture: false,
+    canDecide: false,
+  ),
+);
+
 /// One purchase document as the server read it.
 class _PurchaseDetailView extends ConsumerWidget {
   const _PurchaseDetailView({

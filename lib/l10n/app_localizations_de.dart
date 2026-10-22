@@ -5449,6 +5449,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventOpenSource => 'Einkaufsbeleg öffnen';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor hat eine Zahlung von $amount erfasst';
   }
@@ -5531,6 +5534,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String eventServiceChargeTitle(String name, int quantity, String amount) {
     return '$name ×$quantity — $amount';
   }
+
+  @override
+  String get eventSourceNotFound =>
+      'Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.';
 
   @override
   String get eventSystemDecider => 'System';

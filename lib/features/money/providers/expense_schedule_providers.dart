@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/navigation/event_sources.dart';
 import '../../../core/trace/traced.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/expense_schedule.dart';
+import '../presentation/purchase_source_opener.dart';
 import 'money_providers.dart';
+import 'purchase_providers.dart';
 
 part 'expense_schedule_providers.g.dart';
 
@@ -38,3 +41,13 @@ Future<int> expenseScheduleSweep(Ref ref, String workspaceId) async {
     () => ref.read(expenseRepositoryProvider).sweepExpenseSchedules(workspaceId),
   );
 }
+
+/// #2573 — an expense request opens the purchase document it was filed as,
+/// while purchases are on. Put in the scope's overrides by the composition
+/// root (main and the demonstration).
+final eventSourceOpenersFromMoney = eventSourceOpenersProvider.overrideWith(
+  (ref) =>
+      ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.purchases)
+      ? {'expense': PurchaseSourceOpener(ref.watch(purchaseRepositoryProvider))}
+      : const <String, EventSourceOpener>{},
+);

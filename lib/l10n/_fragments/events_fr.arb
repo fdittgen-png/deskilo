@@ -114,5 +114,7 @@
   "eventTypeUnknown": "Activité",
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
-  }
+  },
+  "eventOpenSource": "Ouvrir le document d'achat",
+  "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir."
 }

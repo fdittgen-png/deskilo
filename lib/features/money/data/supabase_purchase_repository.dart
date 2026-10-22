@@ -41,6 +41,24 @@ class SupabasePurchaseRepository implements PurchaseRepository {
     return PurchaseDetail.fromJson(json);
   }
 
+  @override
+  Future<String?> purchaseFiledFrom(
+    String workspaceId, {
+    required String sourceKind,
+    required String sourceId,
+  }) async {
+    final row = await _client
+        .from('purchase_sources')
+        .select('purchase_id')
+        .eq('workspace_id', workspaceId)
+        .eq('source_kind', sourceKind)
+        .eq('source_id', sourceId)
+        .maybeSingle();
+    return row == null
+        ? null
+        : JsonReader(row, context: 'purchase_sources').string('purchase_id');
+  }
+
   /// Every page, newest first. A workspace's claims are few; the cap stops a
   /// server that never ends its cursor.
   @override

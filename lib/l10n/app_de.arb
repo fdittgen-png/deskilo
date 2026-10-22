@@ -4100,6 +4100,7 @@
       }
     }
   },
+  "eventOpenSource": "Einkaufsbeleg öffnen",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -4177,6 +4178,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
   "eventTypeCommitmentVariance": "Mietabweichung",
