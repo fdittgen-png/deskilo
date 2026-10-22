@@ -15418,6 +15418,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseEntryWhoPaid => 'Wer hat bezahlt?';
 
   @override
+  String get purchaseLinkInbox => 'Empfangene Rechnung verknüpfen';
+
+  @override
+  String get purchaseLinkInboxEmpty =>
+      'Keine empfangene Rechnung zum Verknüpfen.';
+
+  @override
+  String get purchaseLinkInboxFailed =>
+      'Die Rechnung wurde nicht verknüpft. Der Beleg hat sich vielleicht inzwischen geändert: öffnen Sie ihn erneut und versuchen Sie es noch einmal.';
+
+  @override
+  String get purchaseLinkInboxTitle => 'Empfangene Rechnungen';
+
+  @override
   String get purchaseNeedsReview => 'Zu prüfen';
 
   @override

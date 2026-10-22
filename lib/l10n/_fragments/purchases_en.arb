@@ -194,6 +194,22 @@
   "@purchaseUnverified": {
     "description": "#2577 the three status chips of a purchase document"
   },
+  "purchaseLinkInbox": "Link a received invoice",
+  "@purchaseLinkInbox": {
+    "description": "#2573 link a received e-invoice to a purchase document"
+  },
+  "purchaseLinkInboxTitle": "Received invoices",
+  "@purchaseLinkInboxTitle": {
+    "description": "#2573 link a received e-invoice to a purchase document"
+  },
+  "purchaseLinkInboxEmpty": "No received invoice to link.",
+  "@purchaseLinkInboxEmpty": {
+    "description": "#2573 link a received e-invoice to a purchase document"
+  },
+  "purchaseLinkInboxFailed": "The invoice was not linked. It may have changed meanwhile: reopen the document and try again.",
+  "@purchaseLinkInboxFailed": {
+    "description": "#2573 link a received e-invoice to a purchase document"
+  },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
     "description": "#2577 the guided purchase / expense entry"

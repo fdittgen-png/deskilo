@@ -42,6 +42,25 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   }
 
   @override
+  Future<void> linkInboxDocument(
+    String workspaceId,
+    String purchaseId, {
+    required int revision,
+    required String documentId,
+    required String requestId,
+  }) => _client.rpc<Object?>(
+    'link_purchase_source_v1',
+    params: {
+      'p_workspace_id': workspaceId,
+      'p_purchase_id': purchaseId,
+      'p_source_kind': 'inbox',
+      'p_source_id': documentId,
+      'p_revision': revision,
+      'p_request_id': requestId,
+    },
+  );
+
+  @override
   Future<String?> purchaseFiledFrom(
     String workspaceId, {
     required String sourceKind,

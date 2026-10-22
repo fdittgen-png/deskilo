@@ -15272,6 +15272,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseEntryWhoPaid => 'Who paid?';
 
   @override
+  String get purchaseLinkInbox => 'Link a received invoice';
+
+  @override
+  String get purchaseLinkInboxEmpty => 'No received invoice to link.';
+
+  @override
+  String get purchaseLinkInboxFailed =>
+      'The invoice was not linked. It may have changed meanwhile: reopen the document and try again.';
+
+  @override
+  String get purchaseLinkInboxTitle => 'Received invoices';
+
+  @override
   String get purchaseNeedsReview => 'Needs review';
 
   @override
