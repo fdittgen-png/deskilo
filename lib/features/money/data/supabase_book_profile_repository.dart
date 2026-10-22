@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/date_text.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
+import '../domain/posting.dart';
 
 /// #1869 — book profiles through their two definer functions (0335).
 class SupabaseBookProfileRepository implements BookProfileRepository {
@@ -124,5 +126,24 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       if (e.code == '40001') return null;
       Error.throwWithStackTrace(e, st);
     }
+  }
+
+  @override
+  Future<PostingSet> fetchPostings(
+    String workspaceId,
+    String issuerSiteId,
+    DateTime from,
+    DateTime to,
+  ) async {
+    final row = await _client.rpc<Object?>(
+      'compute_postings',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_issuer_site_id': issuerSiteId,
+        'p_from': isoDay(from),
+        'p_to': isoDay(to),
+      },
+    );
+    return PostingSet.fromJson(Map<String, Object?>.from(row! as Map));
   }
 }
