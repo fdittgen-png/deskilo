@@ -18,7 +18,7 @@ import '../../../reservations/domain/booking_gate.dart';
 import '../../../reservations/domain/space_act.dart';
 import '../../../reservations/presentation/widgets/space_act_form.dart';
 import '../../../workspace/domain/booking_granularity.dart';
-import '../screens/kiosk_screen.dart' show KioskAction;
+import '../../domain/kiosk_act.dart';
 
 /// Everything one badge presentation carries out of the sheet: the
 /// action, the window it books (ignored for check-out), whether a

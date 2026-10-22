@@ -1,8 +1,8 @@
 {
-  "recordedSha": "85d8d07ad541804d8125605cdaffba097632d647",
-  "recordedDate": "2026-10-22",
+  "recordedSha": "3df2ac1cbf2a8dfc7802f760d1808c169f11282d",
+  "recordedDate": "2026-10-21",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1759,"functions":9844,"cyclomatic>=9":1046,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":471,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1760,"functions":9847,"cyclomatic>=9":1045,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":472,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -42,7 +42,7 @@
 
       "lib/features/directory/presentation/messenger/context_thread_screen.dart": 631,
 
-      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 609,
+      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 589,
 
       "lib/features/members/presentation/widgets/member_page_cards.dart": 863,
 
@@ -1275,8 +1275,9 @@
     {"p":"lib/features/help/presentation/screens/support_bundle_screen.dart","loc":237,"part":false,"setState":7,"repositoryReads":0,"fn":6,"cog":19,"cyc":19,"len":89,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/help/providers/help_providers.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/device_pin.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":9,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/kiosk/domain/kiosk_act.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":12,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/presentation/screens/kiosk_gate_screen.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":66,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":481,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":469,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart","loc":308,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":10,"cyc":16,"len":101,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_success_card.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":45,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/providers/kiosk_mode.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1992,7 +1993,7 @@
     {"p":"lib/features/reservations/domain/room_offer.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":14,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/seat_state_logic.dart","loc":257,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":17,"cyc":12,"len":44,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/domain/series_preview.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/domain/space_act.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/domain/space_act.dart","loc":33,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":16,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/space_code.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":9,"len":20,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/walk_up_window.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":10,"cyc":8,"len":43,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/week_tap_window.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":5,"len":50,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
