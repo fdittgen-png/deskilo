@@ -1,8 +1,8 @@
 {
-  "recordedSha": "b8f3223c0f37a7da747c364fae093a9197fa7645",
+  "recordedSha": "b154300260f5acb1a3369478417b58b0ad9caeab",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1796,"functions":10038,"cyclomatic>=9":1068,"cyclomatic>=25":106,"cognitive>=15":434,"cognitive>=30":98,"length>=150":74,"parameters>=5":489,"parameters>=7":153,"partOfFiles":43},
+  "totals": {"files":1796,"functions":10040,"cyclomatic>=9":1070,"cyclomatic>=25":106,"cognitive>=15":435,"cognitive>=30":98,"length>=150":74,"parameters>=5":489,"parameters>=7":153,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -2315,7 +2315,7 @@
     {"p":"lib/features/workspace/domain/workspace_field_answer.dart","loc":108,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":15,"cyc":14,"len":19,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_fields_repository.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_identity_repository.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_import.dart","loc":209,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":27,"cyc":9,"len":81,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/workspace_import.dart","loc":226,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":27,"cyc":9,"len":85,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_lifecycle_repository.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_overview.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":0,"cyc":7,"len":11,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_permission.dart","loc":144,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":14,"cyc":10,"len":34,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2326,10 +2326,10 @@
     {"p":"lib/features/workspace/domain/workspace_roles_repository.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_settings_save.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":14,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_template.dart","loc":155,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":6,"cyc":11,"len":18,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_xml.dart","loc":182,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":19,"cyc":12,"len":34,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/workspace_xml.dart","loc":209,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":19,"cyc":12,"len":41,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_xml_configuration.dart","loc":159,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":10,"cyc":15,"len":45,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_xml_part1.dart","loc":216,"part":true,"setState":0,"repositoryReads":0,"fn":15,"cog":1,"cyc":11,"len":13,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_xml_part2.dart","loc":360,"part":true,"setState":0,"repositoryReads":0,"fn":16,"cog":24,"cyc":10,"len":68,"params":7,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/workspace/domain/workspace_xml_part1.dart","loc":231,"part":true,"setState":0,"repositoryReads":0,"fn":15,"cog":1,"cyc":15,"len":17,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/workspace_xml_part2.dart","loc":381,"part":true,"setState":0,"repositoryReads":0,"fn":16,"cog":24,"cyc":11,"len":68,"params":7,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/presentation/application_status_label.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":6,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/capability_labels.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":11,"len":24,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/country_change_confirm.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":37,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
