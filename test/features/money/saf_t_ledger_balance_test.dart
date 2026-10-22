@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
 
-String _build() => buildSafTFile(
+String _build() => buildSafTFile(SafTRequest(
   invoices: SeededExportYear.invoices,
   matches: SeededExportYear.matches,
   company: seededCompany,
@@ -22,7 +22,7 @@ String _build() => buildSafTFile(
     bank: '512',
     vat: '4457',
   ),
-);
+));
 
 int _sum(String xml, String tag) =>
     RegExp('<$tag>([^<]*)</$tag>')
