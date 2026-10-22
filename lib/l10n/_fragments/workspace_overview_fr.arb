@@ -1,0 +1,16 @@
+{
+  "featureWorkspaceOverviewTitle": "Vue d'ensemble de l'espace",
+  "featureWorkspaceOverviewDesc": "Une page avec ce qui attend la personne et les indicateurs qu'elle peut lire — capacité, ventes, achats et trésorerie — chacun ouvrant sa source. Désactivé : la liste d'attention et la page d'analyses restent inchangées.",
+  "overviewTitle": "Vue d'ensemble",
+  "overviewNeedsAttention": "À traiter",
+  "overviewIndicators": "Indicateurs clés",
+  "overviewGroupCapacity": "Capacité",
+  "overviewGroupSales": "Ventes",
+  "overviewGroupPurchases": "Achats",
+  "overviewGroupCash": "Trésorerie",
+  "overviewGroupPeople": "Personnes",
+  "overviewAllIndicators": "Tous les indicateurs",
+  "overviewActiveMemberships": "Adhésions actives",
+  "overviewThisMonth": "Ce mois-ci",
+  "overviewUnavailable": "Non disponible"
+}

@@ -223,6 +223,7 @@
         "workingHours": true,
         "workspaceBranding": false,
         "workspaceLibrary": false,
+        "workspaceOverview": false,
         "workspaceStatus": false,
         "workspaceVocabulary": true
       }

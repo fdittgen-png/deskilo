@@ -1,0 +1,16 @@
+{
+  "featureWorkspaceOverviewTitle": "Überblick über den Raum",
+  "featureWorkspaceOverviewDesc": "Eine Seite mit dem, was die Person erwartet, und den Kennzahlen, die sie lesen darf — Kapazität, Verkauf, Einkauf und Geld — jede öffnet ihre Quelle. Aus: Die Liste der offenen Punkte und die Analyseseite bleiben, wie sie sind.",
+  "overviewTitle": "Überblick",
+  "overviewNeedsAttention": "Zu erledigen",
+  "overviewIndicators": "Kennzahlen",
+  "overviewGroupCapacity": "Kapazität",
+  "overviewGroupSales": "Verkauf",
+  "overviewGroupPurchases": "Einkauf",
+  "overviewGroupCash": "Geld",
+  "overviewGroupPeople": "Personen",
+  "overviewAllIndicators": "Alle Kennzahlen",
+  "overviewActiveMemberships": "Aktive Mitgliedschaften",
+  "overviewThisMonth": "Dieser Monat",
+  "overviewUnavailable": "Nicht verfügbar"
+}

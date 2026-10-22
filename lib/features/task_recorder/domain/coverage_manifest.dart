@@ -356,6 +356,11 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/settings/questions', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/attention', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
+    '/workspace-overview',
+    CoverageStatus.planned,
+    owner: '#1884',
+  ),
+  RouteCoverage(
     '/settings/number-sequences',
     CoverageStatus.planned,
     owner: '#1884',

@@ -103,6 +103,7 @@ signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
 signed-out on  /vat-declarations -> /auth
 signed-out on  /workspace-code -> /auth
+signed-out on  /workspace-overview -> /auth
 signed-out on  /workspace-settings -> /auth
 signed-out off /accessories -> /auth
 signed-out off /account-activity -> /auth
@@ -209,6 +210,7 @@ signed-out off /validation -> /auth
 signed-out off /vat -> /auth
 signed-out off /vat-declarations -> /auth
 signed-out off /workspace-code -> /auth
+signed-out off /workspace-overview -> /auth
 signed-out off /workspace-settings -> /auth
 no-space on  /accessories -> /me
 no-space on  /account-activity -> (open)
@@ -315,6 +317,7 @@ no-space on  /validation -> /me
 no-space on  /vat -> /me
 no-space on  /vat-declarations -> /me
 no-space on  /workspace-code -> /me
+no-space on  /workspace-overview -> /me
 no-space on  /workspace-settings -> /me
 no-space off /accessories -> /me
 no-space off /account-activity -> (open)
@@ -421,6 +424,7 @@ no-space off /validation -> /me
 no-space off /vat -> /me
 no-space off /vat-declarations -> /me
 no-space off /workspace-code -> /me
+no-space off /workspace-overview -> /me
 no-space off /workspace-settings -> /me
 member on  /accessories -> /calendar
 member on  /account-activity -> (open)
@@ -527,6 +531,7 @@ member on  /validation -> /calendar
 member on  /vat -> /calendar
 member on  /vat-declarations -> /calendar
 member on  /workspace-code -> /calendar
+member on  /workspace-overview -> /
 member on  /workspace-settings -> /calendar
 member off /accessories -> /messages
 member off /account-activity -> (open)
@@ -633,6 +638,7 @@ member off /validation -> /messages
 member off /vat -> /messages
 member off /vat-declarations -> /messages
 member off /workspace-code -> /messages
+member off /workspace-overview -> /
 member off /workspace-settings -> /messages
 admin on  /accessories -> /calendar
 admin on  /account-activity -> (open)
@@ -739,6 +745,7 @@ admin on  /validation -> /calendar
 admin on  /vat -> /calendar
 admin on  /vat-declarations -> /money
 admin on  /workspace-code -> /calendar
+admin on  /workspace-overview -> /
 admin on  /workspace-settings -> /calendar
 admin off /accessories -> /messages
 admin off /account-activity -> (open)
@@ -845,6 +852,7 @@ admin off /validation -> /messages
 admin off /vat -> /messages
 admin off /vat-declarations -> /messages
 admin off /workspace-code -> /messages
+admin off /workspace-overview -> /
 admin off /workspace-settings -> /messages
 owner on  /accessories -> /calendar
 owner on  /account-activity -> (open)
@@ -951,6 +959,7 @@ owner on  /validation -> (open)
 owner on  /vat -> (open)
 owner on  /vat-declarations -> (open)
 owner on  /workspace-code -> (open)
+owner on  /workspace-overview -> /
 owner on  /workspace-settings -> (open)
 owner off /accessories -> /messages
 owner off /account-activity -> (open)
@@ -1057,4 +1066,5 @@ owner off /validation -> (open)
 owner off /vat -> /messages
 owner off /vat-declarations -> /messages
 owner off /workspace-code -> (open)
+owner off /workspace-overview -> /
 owner off /workspace-settings -> (open)
