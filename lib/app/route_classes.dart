@@ -153,6 +153,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/status', RouteClass.workspace),
   RouteRule('/money/purchases', RouteClass.workspace),
   RouteRule('/money/sales', RouteClass.workspace),
+  RouteRule('/money/cash', RouteClass.workspace),
   RouteRule('/money/repartition-wizard', RouteClass.workspace),
   RouteRule('/settings/wording', RouteClass.workspace),
   RouteRule('/settings/colours', RouteClass.workspace),

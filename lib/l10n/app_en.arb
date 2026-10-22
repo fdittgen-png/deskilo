@@ -3839,6 +3839,14 @@
   "@carnetsTitle": {
     "description": "#1279 carnets: carnetsTitle"
   },
+  "cashHubInOut": "Money in and out by month",
+  "@cashHubInOut": {
+    "description": "#2577 the cash page"
+  },
+  "cashHubToPay": "To pay",
+  "@cashHubToPay": {
+    "description": "#2577 the cash page"
+  },
   "chBareLetting": "We only let bare rooms",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -9307,6 +9315,14 @@
   "holidayWhitMonday": "Whit Monday",
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "hubCashSubtitle": "Recorded money in and out, and what is still to pay",
+  "@hubCashSubtitle": {
+    "description": "#2577 the cash page"
+  },
+  "hubCashTitle": "Cash",
+  "@hubCashTitle": {
+    "description": "#2577 the cash page"
   },
   "hubPurchasesSubtitle": "What the space buys and owes: expenses, supplier bills, suppliers, the lease, equipment",
   "@hubPurchasesSubtitle": {

@@ -71,3 +71,35 @@ class SalesHubScreen extends ConsumerWidget {
     );
   }
 }
+
+/// `/money/cash` — recorded money in and out, and what is still to pay;
+/// never a bank balance (matching a statement is #2380's).
+class CashHubScreen extends ConsumerWidget {
+  const CashHubScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final doors = MoneyActionSet.cashDoors(
+      context,
+      ref,
+      MoneyViewData.gates(ref),
+    );
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.hubCashTitle)),
+      body: ListView(
+        key: const ValueKey('cash-hub'),
+        padding: AppSpacing.mdAll,
+        children: [
+          Text(
+            l10n.biCashNotBankBalance,
+            key: const ValueKey('cash-hub-recorded'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          ...doors,
+        ],
+      ),
+    );
+  }
+}

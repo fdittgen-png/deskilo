@@ -3183,6 +3183,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get carnetsTitle => 'Bonos';
 
   @override
+  String get cashHubInOut => 'Entradas y salidas por mes';
+
+  @override
+  String get cashHubToPay => 'Por pagar';
+
+  @override
   String get chBareLetting => 'Solo alquilamos locales desnudos';
 
   @override
@@ -7984,6 +7990,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Lunes de Pentecostés';
+
+  @override
+  String get hubCashSubtitle =>
+      'Entradas y salidas registradas, y lo que queda por pagar';
+
+  @override
+  String get hubCashTitle => 'Tesorería';
 
   @override
   String get hubPurchasesSubtitle =>
