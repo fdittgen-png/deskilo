@@ -142,7 +142,7 @@ class MoneyActionSet {
 
   /// The workspace tools in their order.
   List<Widget> get workspaceTools =>
-      [?salesHub, ?purchasesHub, ?invoices, ?status, ?wizard];
+      [?invoices, ?status, ?wizard, ?salesHub, ?purchasesHub];
 
   bool get hasWorkspaceTools => workspaceTools.isNotEmpty;
 
