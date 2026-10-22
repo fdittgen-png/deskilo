@@ -16,6 +16,7 @@ import 'purchase_decision_bar.dart';
 import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
 import 'purchase_payables.dart';
+import 'purchase_status_chips.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
 /// offer it; the server shows a member their own documents and a manager all.
@@ -243,11 +244,8 @@ class _PurchaseDetailView extends ConsumerWidget {
       title: purchaseKindLabel(l10n, s.kind),
       children: [
         const SizedBox(height: AppSpacing.sm),
-        Text(
-          purchaseStateLabel(l10n, s.state),
-          key: const ValueKey('purchase-state'),
-          style: theme.textTheme.titleSmall,
-        ),
+        // #2577 — approval, settlement and qualification, apart.
+        PurchaseStatusChips(detail: detail),
         if (s.state == PurchaseState.draft &&
             s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),
