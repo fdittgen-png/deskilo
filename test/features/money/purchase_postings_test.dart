@@ -3,8 +3,9 @@
 // #2365 — the purchase side of the posting rules, worked by hand: a supplier
 // bill of 180.00 (120.00 at 20 % fully recoverable, 60.00 at 20 % with 5.00
 // of its 10.00 tax recoverable), paid 180.00 on 2 April; a supplier credit
-// note of 30.00; a member's receipt (booked through the invoice that nets
-// it, never here) and a draft bill (nothing until approved).
+// note of 30.00; a member's receipt of 12.00 credited to the member's
+// account and reimbursed on 20 March (0524); a draft bill (nothing until
+// approved).
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
@@ -37,12 +38,14 @@ BookMapping _map(BookRole role, String code) => BookMapping(
 PostingBook _book({bool suppliers = true}) => PostingBook(
   accounts: [
     _account('401', AccountType.liability),
+    _account('411', AccountType.asset),
     _account('512', AccountType.asset),
     _account('606', AccountType.expense),
     _account('44566', AccountType.asset),
   ],
   mappings: [
     if (suppliers) _map(BookRole.suppliers, '401'),
+    _map(BookRole.customers, '411'),
     _map(BookRole.bank, '512'),
     _map(BookRole.expenses, '606'),
     _map(BookRole.vatInput, '44566'),
@@ -127,9 +130,22 @@ void main() {
         ],
       ),
       _doc('CN-S1', PurchaseKind.creditNote, [_l(1, 2500, 500, 500)]),
-      _doc('R-M1', PurchaseKind.memberReceipt, [
-        _l(1, 1000, 200, 200),
-      ], creditor: CreditorKind.member),
+      _doc(
+        'R-M1',
+        PurchaseKind.memberReceipt,
+        [_l(1, 1000, 200, 200)],
+        creditor: CreditorKind.member,
+        paid: [
+          SettlementAllocation(
+            id: 'back',
+            isReversal: false,
+            amountCents: 1200,
+            method: 'transfer',
+            reference: 'refund',
+            paidOn: DateTime(2026, 3, 20),
+          ),
+        ],
+      ),
       _doc('B-DRAFT', PurchaseKind.bill, [
         _l(1, 100, 20, 20),
       ], state: PurchaseState.draft),
@@ -138,11 +154,16 @@ void main() {
     groupOf: (p) => p >= 20 ? 'standard' : 'reduced',
   );
 
-  test('only the approved supplier documents and the money paid post', () {
+  Posting only(String number, PostingKind kind) =>
+      postings.singleWhere((p) => p.documentNumber == number && p.kind == kind);
+
+  test('only the approved documents and the money paid post', () {
     expect(postings.map((p) => (p.documentNumber, p.kind)), [
       ('B-1', PostingKind.supplierBill),
       ('B-1', PostingKind.supplierPayment),
       ('CN-S1', PostingKind.supplierCreditNote),
+      ('R-M1', PostingKind.memberReceipt),
+      ('R-M1', PostingKind.reimbursement),
     ]);
     expect(postings.every((p) => p.balanced), isTrue);
   });
@@ -169,7 +190,26 @@ void main() {
   });
 
   test('a supplier credit note mirrors a bill', () {
-    expect(_lines(postings.last), ['606:C2500', '44566:C500', '401:D3000']);
+    expect(_lines(only('CN-S1', PostingKind.supplierCreditNote)), [
+      '606:C2500',
+      '44566:C500',
+      '401:D3000',
+    ]);
+  });
+
+  test('a member receipt credits the member\'s account, and the money '
+      'paid back debits it (0524)', () {
+    expect(_lines(only('R-M1', PostingKind.memberReceipt)), [
+      '606:D1000',
+      '44566:D200',
+      '411:C1200',
+    ]);
+    final back = only('R-M1', PostingKind.reimbursement);
+    expect(
+      (back.journal, back.date),
+      (PostingJournal.bank, DateTime(2026, 3, 20)),
+    );
+    expect(_lines(back), ['411:D1200', '512:C1200']);
   });
 
   test('a missing suppliers mapping blocks with its name', () {

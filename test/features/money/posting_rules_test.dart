@@ -2,7 +2,8 @@
 //
 // #2365 — the posting rules over the seeded year every exporter is driven
 // over. Expected entries are worked by hand: INV-1 at 20 % and 5.5 % with a
-// netted payment (40.00) and a netted expense (30.00) then paid 155.50;
+// netted payment (40.00) and a netted expense (30.00, booked by its
+// receipt, never here: 0524) then paid 155.50;
 // INV-2 part-paid; INV-3 paid 60.00 and the rest written off; CN-1 a credit
 // note of 50.00. Every entry balances; a qualified role is used where it is
 // mapped and its base elsewhere; a missing base blocks with its name.
@@ -10,6 +11,7 @@ import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
@@ -47,6 +49,7 @@ final _accounts = [
   _account('445712', AccountType.liability),
   _account('625', AccountType.expense),
   _account('654', AccountType.expense),
+  _account('44574', AccountType.liability),
 ];
 
 List<BookMapping> _chart({bool writeOff = true}) => [
@@ -58,20 +61,23 @@ List<BookMapping> _chart({bool writeOff = true}) => [
   _map(BookRole.vatOutput, '445712', qualifier: 'reduced'),
   _map(BookRole.expenses, '625'),
   if (writeOff) _map(BookRole.writeOff, '654'),
+  _map(BookRole.vatPending, '44574'),
 ];
 
 String _group(InvoiceVatTotal t) => t.percent >= 20 ? 'standard' : 'reduced';
 
-PostingSet _post({bool writeOff = true}) => postingsOf(
-  invoices: SeededExportYear.invoices,
-  matches: SeededExportYear.matches,
-  book: PostingBook(
-    accounts: _accounts,
-    mappings: _chart(writeOff: writeOff),
-    issuerSiteId: 'site',
-  ),
-  groupOf: _group,
-);
+PostingSet _post({bool writeOff = true, VatTaxPointIndex? taxPoints}) =>
+    postingsOf(
+      invoices: SeededExportYear.invoices,
+      matches: SeededExportYear.matches,
+      book: PostingBook(
+        accounts: _accounts,
+        mappings: _chart(writeOff: writeOff),
+        issuerSiteId: 'site',
+      ),
+      groupOf: _group,
+      taxPoints: taxPoints,
+    );
 
 /// "account:D1234" / "account:C1234" for each line, in order.
 List<String> _lines(Posting p) => [
@@ -93,7 +99,7 @@ void main() {
     'the full chart books the year without a blocker, every entry balanced',
     () {
       expect(set.blockers, isEmpty);
-      expect(set.postings, hasLength(10));
+      expect(set.postings, hasLength(9));
       expect(set.postings.every((p) => p.balanced), isTrue);
     },
   );
@@ -110,12 +116,6 @@ void main() {
       PostingKind.receipt,
       PostingJournal.bank,
       ['512:D4000', '411:C4000'],
-    ),
-    'its netted expense is one purchase entry, never the bank (#2542)': (
-      'INV-1',
-      PostingKind.expense,
-      PostingJournal.purchases,
-      ['625:D3000', '411:C3000'],
     ),
     'INV-3 written off: 40.00 left, 6.66 of output tax regularised': (
       'INV-3',
@@ -154,6 +154,60 @@ void main() {
       }
     }
     expect(owed, 8000);
+  });
+
+  test('a netted expense credit books no expense: the member\'s receipt '
+      'did (0524)', () {
+    expect(set.postings.where((p) => p.kind == PostingKind.expense), isEmpty);
+  });
+
+  test('on receipts, the tax waits on vat_pending and leaves it on its tax '
+      'point, one entry per rate group (0521)', () {
+    final inv1 = SeededExportYear.invoices.singleWhere(
+      (i) => i.number == 'INV-1',
+    );
+    final paid = DateTime(2026, 3, 20);
+    final deferred = _post(
+      taxPoints: VatTaxPointIndex([
+        for (final (percent, gross, net) in [
+          (20.0, 12000, 10000),
+          (5.5, 10550, 10000),
+        ])
+          VatTaxPointAmount(
+            invoiceId: inv1.id,
+            on: paid,
+            percent: percent,
+            grossCents: gross,
+            netCents: net,
+            vatCents: gross - net,
+          ),
+      ]),
+    );
+    Posting only(PostingKind kind) => deferred.postings.singleWhere(
+      (p) => p.documentNumber == 'INV-1' && p.kind == kind,
+    );
+    expect(_lines(only(PostingKind.invoice)), [
+      '411:D22550',
+      '706:C10000',
+      '44574:C2000',
+      '7061:C10000',
+      '44574:C550',
+    ]);
+    expect(
+      [
+        for (final p in deferred.postings)
+          if (p.kind == PostingKind.vatRelease) (p.date, _lines(p).join(',')),
+      ],
+      [
+        (paid, '44574:D2000,44571:C2000'),
+        (paid, '44574:D550,445712:C550'),
+      ],
+    );
+    expect(
+      set.postings.where((p) => p.kind == PostingKind.vatRelease),
+      isEmpty,
+      reason: 'without tax points everything is due when issued',
+    );
   });
 
   test('a missing base blocks with its name and posts nothing for it', () {

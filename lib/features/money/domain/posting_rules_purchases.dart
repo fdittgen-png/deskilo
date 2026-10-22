@@ -14,8 +14,10 @@
 //   * a taxed line whose deductible share is not qualified yet blocks its
 //     bill (unclassifiedTax, named by the reference): never guessed.
 //
-// A member's receipt is not posted here: its expense is the credit the
-// invoice nets (posting_rules.dart), so it is never booked twice.
+// A member's receipt (0524) is the same entry credited to the member's
+// account (`customers`) instead of `suppliers`; the invoice that later nets
+// that credit books no expense (posting_rules.dart), so it is booked once.
+// A reimbursement paid to the member is Dr `customers` / Cr `bank`.
 
 import 'accounting_amount.dart';
 import 'book_chart.dart';
@@ -32,8 +34,10 @@ List<Posting> purchasePostingsOf({
 }) => [
   for (final d in purchases)
     if (d.summary.state == PurchaseState.approved &&
-        d.summary.kind != PurchaseKind.memberReceipt &&
-        d.obligations.any((o) => o.creditorKind == CreditorKind.supplier)) ...[
+        (d.summary.kind == PurchaseKind.memberReceipt ||
+            d.obligations.any(
+              (o) => o.creditorKind == CreditorKind.supplier,
+            ))) ...[
       ?_bill(d, book, groupOf),
       ..._payments(d, book),
     ],
@@ -84,17 +88,23 @@ Posting? _bill(
         ),
     ]);
   }
-  final suppliers = postingLine(
-    BookRole.suppliers,
-    book.code(BookRole.suppliers, day),
+  final member = d.summary.kind == PurchaseKind.memberReceipt;
+  final owed = member ? BookRole.customers : BookRole.suppliers;
+  final creditor = postingLine(
+    owed,
+    book.code(owed, day),
     _amount(d, sign * gross),
     debitSide: false,
   );
-  if (suppliers != null) lines.add(suppliers);
+  if (creditor != null) lines.add(creditor);
   return Posting(
     journal: PostingJournal.purchases,
     date: day,
-    kind: sign < 0 ? PostingKind.supplierCreditNote : PostingKind.supplierBill,
+    kind: member
+        ? PostingKind.memberReceipt
+        : sign < 0
+        ? PostingKind.supplierCreditNote
+        : PostingKind.supplierBill,
     documentId: d.summary.id,
     documentNumber: d.summary.reference,
     lines: lines,
@@ -103,29 +113,42 @@ Posting? _bill(
 
 List<Posting> _payments(PurchaseDetail d, PostingBook book) => [
   for (final o in d.obligations)
-    if (o.creditorKind == CreditorKind.supplier)
-      for (final a in o.allocations)
-        if (a.paidOn case final day?
-            when !a.isReversal && !a.isOffset && !a.isCredit && !a.reversed)
-          Posting(
-            journal: PostingJournal.bank,
-            date: day,
-            kind: PostingKind.supplierPayment,
-            documentId: d.summary.id,
-            documentNumber: d.summary.reference,
-            lines: [
-              ?postingLine(
-                BookRole.suppliers,
-                book.code(BookRole.suppliers, day),
-                _amount(d, a.amountCents),
-                debitSide: true,
-              ),
-              ?postingLine(
-                BookRole.bank,
-                book.code(BookRole.bank, day),
-                _amount(d, a.amountCents),
-                debitSide: false,
-              ),
-            ],
-          ),
+    for (final a in o.allocations)
+      if (a.paidOn case final day?
+          when !a.isReversal && !a.isOffset && !a.isCredit && !a.reversed)
+        _paid(d, o.creditorKind, a.amountCents, day, book),
 ];
+
+/// [cents] paid to the creditor of [d] on [day]: a supplier, or the member
+/// whose receipt it reimburses.
+Posting _paid(
+  PurchaseDetail d,
+  CreditorKind creditor,
+  int cents,
+  DateTime day,
+  PostingBook book,
+) {
+  final member = creditor == CreditorKind.member;
+  final owed = member ? BookRole.customers : BookRole.suppliers;
+  return Posting(
+    journal: PostingJournal.bank,
+    date: day,
+    kind: member ? PostingKind.reimbursement : PostingKind.supplierPayment,
+    documentId: d.summary.id,
+    documentNumber: d.summary.reference,
+    lines: [
+      ?postingLine(
+        owed,
+        book.code(owed, day),
+        _amount(d, cents),
+        debitSide: true,
+      ),
+      ?postingLine(
+        BookRole.bank,
+        book.code(BookRole.bank, day),
+        _amount(d, cents),
+        debitSide: false,
+      ),
+    ],
+  );
+}

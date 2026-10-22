@@ -7,6 +7,7 @@ import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'billing_rules.dart';
 import 'datev_fields.dart';
+import 'datev_revenue.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'invoice_line_cash.dart';
@@ -92,8 +93,13 @@ class DatevAccounts {
   final String? _givenChart;
   final String? _givenExpenses;
 
+  TaxReferenceSet get _ref => reference ?? ActiveTaxReference.current;
+
+  /// #2365 — the SKR04 plan's own row when the chart given is SKR04
+  /// ([datevChartAccount]), the German chart's otherwise.
   String _default(String role) =>
-      (reference ?? ActiveTaxReference.current).accountOf('coa', role, 'DE');
+      (_givenChart == null ? null : datevChartAccount(_ref, _givenChart, role)) ??
+      _ref.accountOf('coa', role, 'DE');
 
   /// SKR03 debtor range starts at 10000. A real chart numbers each
   /// customer; one collective account keeps the export honest about
@@ -122,7 +128,13 @@ class DatevAccounts {
   /// #2365 — SKR03 2400, Forderungsverluste: what the owner gave up of an
   /// invoice, booked at the gross amount it was still owed.
   String get writeOff =>
-      (reference ?? ActiveTaxReference.current).accountOf('datev', 'write_off', 'DE');
+      datevChartAccount(_ref, chart, 'write_off') ??
+      _ref.accountOf('datev', 'write_off', 'DE');
+
+  /// #2365 — the automatic revenue account of the rate [percent]
+  /// ([datevRevenueAt]).
+  String revenueAt(double percent) =>
+      datevRevenueAt(_ref, percent, revenue, chart: chart);
 
   /// #2365 — header field 27, the Standardkontenrahmen as DATEV writes it:
   /// the digits of the chart's name ('03' for SKR03), empty when it has
@@ -304,13 +316,11 @@ String buildDatevFile({
     // #936 — a credit note is a sale reversed: the accounts swap and the
     // amount is positive, as a Buchungsstapel wants it.
     if (invoice.isCreditNote) {
-      bookSale(
-        invoice: invoice,
-        cents: -invoice.totalCents,
-        debit: accounts.revenue,
-        credit: accounts.customers,
-        text: 'Gutschrift ${invoice.number}',
-      );
+      for (final (account, cents) in datevRevenueParts(
+          invoice, -invoice.totalCents, accounts.revenueAt)) {
+        bookSale(invoice: invoice, cents: cents, debit: account,
+            credit: accounts.customers, text: 'Gutschrift ${invoice.number}');
+      }
       _bookRefund(book, invoice, matches[invoice.id], accounts);
       continue;
     }
@@ -328,13 +338,12 @@ String buildDatevFile({
     // base under it. The FEC has always split these; this did not.
     final charges = invoice.chargesCents;
     if (charges == 0) continue;
-    bookSale(
-      invoice: invoice,
-      cents: charges,
-      debit: accounts.customers,
-      credit: accounts.revenue,
-      text: 'Rechnung ${invoice.number}',
-    );
+    // #2365 — one booking per automatic revenue account (datev_revenue.dart).
+    for (final (account, cents)
+        in datevRevenueParts(invoice, charges, accounts.revenueAt)) {
+      bookSale(invoice: invoice, cents: cents, debit: accounts.customers,
+          credit: account, text: 'Rechnung ${invoice.number}');
+    }
     // The credits the document itself carries: money in, receivable
     // cleared, on the invoice's own date. The FEC's BQ journal books
     // exactly these.

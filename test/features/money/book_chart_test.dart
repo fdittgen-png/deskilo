@@ -214,6 +214,7 @@ void main() {
         ('654000', AccountType.expense, BookRole.writeOff, null),
         ('445712', AccountType.liability, BookRole.vatOutput, 'intermediate'),
         ('445713', AccountType.liability, BookRole.vatOutput, 'reduced'),
+        ('445740', AccountType.liability, BookRole.vatPending, null),
       ],
     );
     expect(

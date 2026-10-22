@@ -100,7 +100,7 @@ void main() {
     };
     expect(
       numbers,
-      containsAll(['VE-0001', 'VE-0004', 'BQ-0001', 'HA-0001', 'OD-0001']),
+      containsAll(['VE-0001', 'VE-0004', 'BQ-0001', 'OD-0001']),
     );
   });
 
