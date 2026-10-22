@@ -4,6 +4,7 @@ import 'package:xml/xml.dart';
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import 'invoice.dart';
+import 'posting.dart';
 import 'saf_t_ledger.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -48,6 +49,7 @@ class SafTWriter {
     required this.fallbackDescription,
     required this.profile,
     required this.ledgerAccounts,
+    this.bookPostings,
   });
 
   final List<Invoice> invoices;
@@ -60,6 +62,10 @@ class SafTWriter {
   final String fallbackDescription;
   final SafTProfile profile;
   final SafTLedgerAccounts? ledgerAccounts;
+
+  /// #2365 — a local book's postings: the ledger section is then the book's
+  /// own entries, every journal, instead of the derived sales cycle.
+  final List<Posting>? bookPostings;
 
   final XmlBuilder builder = XmlBuilder();
 
@@ -207,7 +213,14 @@ class SafTWriter {
         // with postings must not be read as a complete set of books.
         tag(
           'HeaderComment',
-          ledgerAccounts == null
+          bookPostings != null
+              ? 'Invoicing subset with the postings of the local book. '
+                  'GeneralLedgerEntries are the entries its posting engine '
+                  'computed (sales, bank, purchases and other journals) on '
+                  'the book\'s own chart. They are the complete books of the '
+                  'entity only if every operation of the entity passes '
+                  'through this system.'
+              : ledgerAccounts == null
               ? 'Invoicing subset: Header, MasterFiles and SourceDocuments. '
                   'GeneralLedgerEntries and customer account numbers are '
                   'omitted on purpose — the chart of accounts belongs to '
@@ -286,19 +299,29 @@ class SafTWriter {
     // Omitted entirely without a mapping. A section of invented account
     // numbers would look complete and create work: every wrong code is
     // unbooked by hand.
-    if (ledgerAccounts case final accounts?) {
+    final accounts = ledgerAccounts;
+    final journals = switch (bookPostings) {
+      final posted? => safTPostedJournals(posted),
+      null when accounts != null => [
+        // Two journals, matching what the FEC writes: sales and bank.
+        ('VE', 'Sales', [
+          ...safTSalesTransactions(live, accounts),
+          ...safTWriteOffs(settled, accounts),
+        ]),
+        ('BQ', 'Bank', [
+          ...safTNettedReceipts(live, accounts),
+          ...safTSettlements(settled, accounts),
+        ]),
+      ],
+      null => null,
+    };
+    if (journals != null) {
       var lineNo = 0;
       // Built first: SAF-T states the totals BEFORE the entries, so they
       // are the sums of the transactions about to be written.
-      final sales = [...safTSalesTransactions(live, accounts), ...safTWriteOffs(settled, accounts)];
-      final bank = [
-        ...safTNettedReceipts(live, accounts),
-        ...safTSettlements(settled, accounts),
-      ];
-      final all = [...sales, ...bank];
+      final all = [for (final j in journals) ...j.$3];
 
       builder.element('GeneralLedgerEntries', nest: () {
-        // Two journals, matching what the FEC writes: sales and bank.
         tag('NumberOfEntries', '${all.length}');
         tag('TotalDebit', amount(all.fold(0, (s, t) => s + t.debitTotal)));
         tag('TotalCredit', amount(all.fold(0, (s, t) => s + t.creditTotal)));
@@ -330,8 +353,9 @@ class SafTWriter {
           });
         }
 
-        journal('VE', 'Sales', sales);
-        journal('BQ', 'Bank', bank);
+        for (final (id, name, txs) in journals) {
+          journal(id, name, txs);
+        }
       });
     }
   }

@@ -68,7 +68,7 @@ class AccountingCapability {
 }
 
 /// The reviewed decision for every offered format. Keyed by the format id so
-/// a format added to [accountingFormats] without a decision is caught by the
+/// a target added to [accountingTargets] without a decision is caught by the
 /// qualification test rather than defaulting to "fine".
 @visibleForTesting
 const Map<String, AccountingCapability> accountingCapabilities = {
@@ -118,16 +118,22 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'accountant_csv',
     state: QualificationState.implemented,
     obligations: {},
+    // #2370 — DesKilo defines this file; its definition is the spec.
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
   'generic_journal_csv': AccountingCapability(
     formatId: 'generic_journal_csv',
     state: QualificationState.implemented,
     obligations: {},
+    // #2370 — DesKilo defines this file; its definition is the spec.
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
   'audit_trail': AccountingCapability(
     formatId: 'audit_trail',
     state: QualificationState.implemented,
     obligations: {},
+    // #2370 — DesKilo defines this file; its definition is the spec.
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
   // The flows' structure; a plateforme agréée maps it, and the live
   // round-trip waits on a sandbox.
@@ -140,6 +146,8 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'bundle',
     state: QualificationState.implemented,
     obligations: {},
+    // #2370 — DesKilo defines this file; its definition is the spec.
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
 };
 
