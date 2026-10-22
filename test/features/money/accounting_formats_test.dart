@@ -217,7 +217,7 @@ void main() {
   });
 
   group('DATEV gets the traps right', () {
-    String build({DateTime? issuedAt}) => buildDatevFile(
+    String build({DateTime? issuedAt}) => buildDatevFile(DatevRequest(
           invoices: [inv(issuedAt: issuedAt, vat: _vat20)],
           matches: {'i1': match()},
           accounts: const DatevAccounts(),
@@ -226,7 +226,7 @@ void main() {
           generatedAt: DateTime(2026, 5, 1, 9),
           consultantNumber: '1234567',
           clientNumber: '54321',
-        );
+        ));
 
     test('Belegdatum is DDMM — a full date lands in the wrong period', () {
       // The year comes from the header's fiscal-year start. This is the
@@ -251,7 +251,7 @@ void main() {
     });
 
     test('a voided invoice is not booked', () {
-      final file = buildDatevFile(
+      final file = buildDatevFile(DatevRequest(
         invoices: [inv(voidedAt: DateTime(2026, 3, 20), vat: _vat20)],
         matches: const {},
         accounts: const DatevAccounts(),
@@ -260,14 +260,14 @@ void main() {
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
-      );
+      ));
       expect(file, isNot(contains('INV-1')));
     });
 
     test('a PENDING settlement is not booked', () {
       // Booking it would put money in the ledger the workspace has not
       // agreed it received (0067).
-      final file = buildDatevFile(
+      final file = buildDatevFile(DatevRequest(
         invoices: [inv(vat: _vat20)],
         matches: {'i1': match(status: 'pending')},
         accounts: const DatevAccounts(),
@@ -276,7 +276,7 @@ void main() {
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
-      );
+      ));
       expect('Zahlung'.allMatches(file).length, 0);
     });
   });

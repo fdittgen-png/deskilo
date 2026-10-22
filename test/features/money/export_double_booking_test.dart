@@ -38,7 +38,7 @@ void main() {
   });
 
   test('DATEV: the netted expense is no Zahlung', () {
-    final file = buildDatevFile(
+    final file = buildDatevFile(DatevRequest(
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       accounts: const DatevAccounts(),
@@ -48,7 +48,7 @@ void main() {
       consultantNumber: '1001',
       clientNumber: '20002',
       ledger: SeededExportYear.ledger,
-    );
+    ));
     final zahlung = file
         .split('\r\n')
         .where((l) => l.contains('Zahlung INV-1'))

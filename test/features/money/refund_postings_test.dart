@@ -65,7 +65,7 @@ void main() {
 
   test('DATEV: the refund debits the customers and credits the bank', () {
     const accounts = DatevAccounts();
-    final rows = buildDatevFile(
+    final rows = buildDatevFile(DatevRequest(
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       accounts: accounts,
@@ -75,7 +75,7 @@ void main() {
       consultantNumber: '1001',
       clientNumber: '20002',
       ledger: SeededExportYear.ledger,
-    ).split('\r\n').where((l) => l.contains('Erstattung CN-1')).toList();
+    )).split('\r\n').where((l) => l.contains('Erstattung CN-1')).toList();
     expect(rows, hasLength(1));
     final f = rows.single.split(';');
     expect(f[0], '50,00');

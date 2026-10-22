@@ -316,7 +316,7 @@ void main() {
       // DATEV reads an unmarked file as Windows-1252. "Bürogemeinschaft
       // München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in the
       // accountant's books, and nothing errors anywhere.
-      final file = buildDatevFile(
+      final file = buildDatevFile(DatevRequest(
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -325,7 +325,7 @@ void main() {
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
         clientNumber: '54321',
-      );
+      ));
       final bytes = utf8.encode(file);
       expect(bytes.take(3).toList(), [0xEF, 0xBB, 0xBF],
           reason: 'the three bytes that decide whether a German '
@@ -340,7 +340,7 @@ void main() {
       // bills members called Škoda, and that charset cannot spell the
       // second one. Transcoding would substitute or drop it silently.
       const name = 'Bürogemeinschaft Škoda';
-      final file = buildDatevFile(
+      final file = buildDatevFile(DatevRequest(
         invoices: const [],
         matches: const {},
         accounts: const DatevAccounts(),
@@ -350,7 +350,7 @@ void main() {
         consultantNumber: '1',
         clientNumber: '2',
         batchName: name,
-      );
+      ));
       expect(file, contains(name));
 
       // And it is still there as bytes. `utf8.decode` strips a leading
@@ -377,7 +377,7 @@ void main() {
     late List<String> columns;
 
     setUp(() {
-      final file = buildDatevFile(
+      final file = buildDatevFile(DatevRequest(
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -386,7 +386,7 @@ void main() {
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
         clientNumber: '54321',
-      );
+      ));
       final lines =
           file.substring(1).split('\r\n').where((l) => l.isNotEmpty).toList();
       header = lines.first.split(';');
@@ -519,7 +519,7 @@ void main() {
           .where((r) => r['CompteNum'] == '445710')
           .fold<int>(0, (sum, r) => sum + _cents(r['Credit']!) - _cents(r['Debit']!));
 
-      final datev = buildDatevFile(
+      final datev = buildDatevFile(DatevRequest(
         invoices: year,
         matches: const {},
         accounts: const DatevAccounts(),
@@ -528,7 +528,7 @@ void main() {
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
-      );
+      ));
       final datevRevenue = datev
           .substring(1)
           .split('\r\n')

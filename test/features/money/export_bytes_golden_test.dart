@@ -187,7 +187,7 @@ Map<String, String Function()> _files() => {
     accounts: const FecAccounts(),
     lineText: _lineText,
   )),
-  'datev.csv': () => buildDatevFile(
+  'datev.csv': () => buildDatevFile(DatevRequest(
     invoices: _invoices,
     matches: _matches,
     accounts: const DatevAccounts(),
@@ -196,7 +196,7 @@ Map<String, String Function()> _files() => {
     generatedAt: DateTime.utc(2026, 5, 1, 9, 7, 3),
     consultantNumber: '1234567',
     clientNumber: '54321',
-  ),
+  )),
   'sage.csv': () => buildSageFile(
     invoices: _invoices,
     matches: _matches,

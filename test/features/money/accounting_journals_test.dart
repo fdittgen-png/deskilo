@@ -112,12 +112,12 @@ void main() {
   });
 
   group('DATEV', () {
-    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(
+    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(
           invoices: invoices ?? [_invoice()], matches: const {},
           accounts: const DatevAccounts(), from: DateTime(2026), to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 9, 6, 10), consultantNumber: '1', clientNumber: '2',
           ledger: [_reimbursement], repartitions: [_rent], development: development,
-        );
+        ));
 
     test('a credit note swaps the accounts and stays positive', () {
       final rows = build(invoices: [_invoice(number: 'CN-1', total: -25000)]).split('\r\n');

@@ -83,7 +83,7 @@ void main() {
   });
 
   group('DATEV', () {
-    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(
+    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(
       invoices: SeededExportYear.invoices,
       matches: matches ?? SeededExportYear.matches,
       accounts: const DatevAccounts(),
@@ -93,7 +93,7 @@ void main() {
       consultantNumber: '1001',
       clientNumber: '20002',
       ledger: SeededExportYear.ledger,
-    ).split('\r\n');
+    )).split('\r\n');
 
     test('the written-off rest is a Forderungsverlust on the write-off day', () {
       final rows = datev().where((l) => l.contains('Forderungsverlust INV-3')).toList();

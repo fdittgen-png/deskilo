@@ -267,7 +267,7 @@ class AccountingExportRun {
       message: 'DATEV export failed',
       errorText: l10n.workspaceGenericError,
       action: () async => save(
-        buildDatevFile(
+        buildDatevFile(DatevRequest(
           invoices: exported,
           matches: matches,
           accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
@@ -282,7 +282,7 @@ class AccountingExportRun {
           currency: workspace.currencyCode,
           batchName: workspace.name,
           taxPoints: taxPoints,
-        ),
+        )),
         datevFileName(year, invoices.last.issuedAt.month),
       ),
     );
