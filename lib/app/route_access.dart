@@ -36,6 +36,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/directory': {_P.viewDirectory},
   '/money': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
   '/money/status': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
+  '/money/purchases': {_P.viewMyMoney, _P.viewFinances, _P.managePurchases},
+  '/money/sales': {_P.viewFinances, _P.issueInvoices, _P.manageBilling},
   '/invoices': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
   '/invoice-register': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices},
   '/documents': {_P.viewDocuments, _P.manageDocuments},

@@ -121,8 +121,10 @@ class MoneyFaceContent {
         MoneyActionGrid(actions.purchaseButtons),
       ],
       sectionLabel(_l10n.moneySectionDocuments),
-      for (final tile in [actions.invoices, actions.status, actions.wizard])
-        if (tile != null) ...[tile, const SizedBox(height: 8)],
+      for (final tile in actions.workspaceTools) ...[
+        tile,
+        const SizedBox(height: 8),
+      ],
       // #494 — member self-service reports: the standing financial
       // agreement and the month's payments, viewable/downloadable/
       // shareable without asking anyone. Gated by memberReports (#502).
@@ -170,11 +172,7 @@ class MoneyFaceContent {
       ],
       MoneyFace.invoices: [
         if (actions.hasWorkspaceTools)
-          MoneyWorkspaceTools(actions: [
-            ?actions.invoices,
-            ?actions.status,
-            ?actions.wizard,
-          ]),
+          MoneyWorkspaceTools(actions: actions.workspaceTools),
         if (exposure != null) ...[
           InvoiceSummaryCard(exposure: exposure),
           const SizedBox(height: 8),

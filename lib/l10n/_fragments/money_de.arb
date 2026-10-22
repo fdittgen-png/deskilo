@@ -375,5 +375,9 @@
   "scheduleUnitMonths": "Monate",
   "scheduleUnitYears": "Jahre",
   "moneyFaceUsage": "Nutzung",
-  "moneySectionPurchases": "Einkauf und Buchhaltung"
+  "moneySectionPurchases": "Einkauf und Buchhaltung",
+  "hubPurchasesTitle": "Einkauf",
+  "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",
+  "hubSalesTitle": "Verkauf",
+  "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung"
 }
