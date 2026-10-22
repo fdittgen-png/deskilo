@@ -6958,6 +6958,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureWorkspaceLibraryTitle => 'Raumbibliothek';
 
   @override
+  String get featureWorkspaceOverviewDesc =>
+      'Eine Seite mit dem, was die Person erwartet, und den Kennzahlen, die sie lesen darf — Kapazität, Verkauf, Einkauf und Geld — jede öffnet ihre Quelle. Aus: Die Liste der offenen Punkte und die Analyseseite bleiben, wie sie sind.';
+
+  @override
+  String get featureWorkspaceOverviewTitle => 'Überblick über den Raum';
+
+  @override
   String get featureWorkspaceStatus => 'Lage des Arbeitsbereichs';
 
   @override
@@ -13731,6 +13738,42 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get overagePolicyPayg => 'Mehrverbrauch berechnen (nach Verbrauch)';
+
+  @override
+  String get overviewActiveMemberships => 'Aktive Mitgliedschaften';
+
+  @override
+  String get overviewAllIndicators => 'Alle Kennzahlen';
+
+  @override
+  String get overviewGroupCapacity => 'Kapazität';
+
+  @override
+  String get overviewGroupCash => 'Geld';
+
+  @override
+  String get overviewGroupPeople => 'Personen';
+
+  @override
+  String get overviewGroupPurchases => 'Einkauf';
+
+  @override
+  String get overviewGroupSales => 'Verkauf';
+
+  @override
+  String get overviewIndicators => 'Kennzahlen';
+
+  @override
+  String get overviewNeedsAttention => 'Zu erledigen';
+
+  @override
+  String get overviewThisMonth => 'Dieser Monat';
+
+  @override
+  String get overviewTitle => 'Überblick';
+
+  @override
+  String get overviewUnavailable => 'Nicht verfügbar';
 
   @override
   String get payConfigConfigured => 'Eingerichtet';

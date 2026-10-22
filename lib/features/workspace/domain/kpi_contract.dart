@@ -465,20 +465,6 @@ class KpiUnavailable implements Exception {
   String toString() => 'KpiUnavailable: $reason';
 }
 
-/// The demonstration has no server to compute capacity on: the tile
-/// says so rather than inventing a figure.
-class UnavailableKpiRepository implements KpiRepository {
-  const UnavailableKpiRepository();
-
-  @override
-  Future<SeatCapacityKpi> seatCapacity(
-    String workspaceId, {
-    required DateTime from,
-    required DateTime to,
-    String? levelId,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}
-
 /// #1921 — the server's copy of the catalogue: per KPI its version, what
 /// it discloses and the permissions it needs. `kpi_registry()` in the
 /// latest migration must hold exactly this (kpi_registry_sql_test).

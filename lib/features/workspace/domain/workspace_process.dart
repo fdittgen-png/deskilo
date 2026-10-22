@@ -222,6 +222,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1247 — what needs a person, ranked. Under operations because
       // it is how an administrator starts their day, not a setting.
       WorkspaceFeature.decisionSurface,
+      // #2583 — the overview: the same question plus the figures.
+      WorkspaceFeature.workspaceOverview,
       WorkspaceFeature.formHelpHints,
       // #1654 — beside the help hints, for the same reason: optional
       // guidance on an existing screen, not a right anybody holds.

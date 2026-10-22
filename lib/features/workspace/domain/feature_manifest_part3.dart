@@ -330,4 +330,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.purchases,
     defaultOn: false,
   ),
+  // #2583 — the workspace overview: what needs the person and the figures
+  // they may read, on one page. A root; asked for, never assumed.
+  WorkspaceFeature.workspaceOverview: FeatureManifestEntry(
+    feature: WorkspaceFeature.workspaceOverview,
+    surface: FeatureSurface.reports,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

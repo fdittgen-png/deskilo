@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-31 literal(s) in 5 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+33 literal(s) in 6 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -14,11 +14,11 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:138` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:175` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:178` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:184` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:190` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:206` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:212` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:215` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:227` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:243` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:137` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:145` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:153` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
@@ -27,6 +27,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:181` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:188` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:276` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:320` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:327` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:12` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:13` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:14` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
@@ -46,6 +48,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 - **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
+- **`lib/core/demo/seed/demo_second_space_seed.dart`** (2) — demo records: the German space's document titles as it stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

@@ -28,6 +28,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/unavailable_kpi_repository.dart';
 
 Map<String, dynamic> _row({
   String from = '2026-03',

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2313 — the bookings beyond the three the plan story needs: a weekly
-// series, half-days, a whole meeting room and a cancellation. The years
+// series, half-days, a whole meeting room (one waiting for its validator)
+// and a cancellation. The years
 // before and the months ahead are demo_history_seed.dart's.
 // Placed relative to the seeded instant; never on the plan's first seat
 // at "now", so a visitor can always book there.
@@ -81,6 +82,17 @@ void seedDemoBookings(
       2,
       14,
       16,
+      office: DemoSpace.meetingRoom,
+    ),
+    // Bruno asks for the meeting room next Tuesday: a whole room needs a
+    // validator here, so the booking holds the room and waits for the
+    // decision (demo_decision_seed.dart).
+    booking(
+      'demo-room-request',
+      'member-2',
+      6,
+      10,
+      12,
       office: DemoSpace.meetingRoom,
     ),
     // A booking Chiara cancelled.

@@ -75,7 +75,7 @@ class AttentionScreen extends ConsumerWidget {
                 key: listKey,
                 padding: AppSpacing.gutterAll,
                 itemCount: list.length,
-                itemBuilder: (context, index) => _Row(
+                itemBuilder: (context, index) => AttentionRow(
                   key: rowKeyFor(index),
                   item: list[index],
                 ),
@@ -90,8 +90,9 @@ class AttentionScreen extends ConsumerWidget {
 ///
 /// The line IS the button — the design forbids a detail page between a
 /// person and the decision — so a tap opens the screen where it is made.
-class _Row extends StatelessWidget {
-  const _Row({super.key, required this.item});
+/// #2583 — the overview shows the same lines.
+class AttentionRow extends StatelessWidget {
+  const AttentionRow({super.key, required this.item});
 
   final Attention item;
 

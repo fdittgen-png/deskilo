@@ -29,6 +29,7 @@ import '../demo_clock.dart';
 import '../demo_dataset.dart';
 import '../demo_persona.dart';
 import 'demo_people_seed.dart';
+import 'demo_second_space_seed.dart';
 
 /// The second space: a whole public page, from its presentation to its
 /// conditions and the hosts who answer (#2405).
@@ -223,12 +224,53 @@ FakeMessengerRepository demoMessenger(
         createdAt: asked,
       ),
     ]
+    // Ada's unread conversations in each of her spaces, as Me lists them:
+    // each space's card on Me › Home counts its own.
+    ..inboxRows.addAll([
+      _spaceRow(
+        ('ws-1', demoSpaceName),
+        'demo-conv-bruno',
+        demoCast[1].name,
+        'Thank you! I will bring the coffee.',
+        now.subtract(const Duration(hours: 2)),
+      ),
+      _spaceRow(
+        (demoSecondSpaceId, demoSecondSpaceName),
+        'de-conv-jonas',
+        'Jonas Becker',
+        'Willkommen zurück! Dein Schlüssel liegt am Empfang.',
+        now.subtract(const Duration(hours: 1)),
+      ),
+    ])
     ..inboxVisible = actingMember == null
         ? null
         : (row) =>
-              row['context_kind'] != MessageContextKind.inquiryIn.wire ||
-              hosts.contains(actingMember());
+              (row['context_kind'] != MessageContextKind.inquiryIn.wire ||
+                  hosts.contains(actingMember())) &&
+              (row[_forMember] == null || row[_forMember] == actingMember());
 }
+
+/// The demo's own key on an inbox row: whose inbox it is in (the server
+/// answers `my_inbox` per person; the demo has one list for every persona).
+const _forMember = 'demo_for_member';
+
+Map<String, Object?> _spaceRow(
+  (String, String) space,
+  String conversationId,
+  String title,
+  String body,
+  DateTime at,
+) => {
+  'context_kind': MessageContextKind.space.wire,
+  'context_id': conversationId,
+  'workspace_id': space.$1,
+  'workspace_name': space.$2,
+  'title': title,
+  'last_body': body,
+  'last_at': at.toUtc().toIso8601String(),
+  'unread': 1,
+  _forMember: DemoPersona.owner.memberId,
+};
 
 /// Two analyses the team saved on the business-analytics page. Neither
 /// is the default, so a bare page still opens on the standard view.
