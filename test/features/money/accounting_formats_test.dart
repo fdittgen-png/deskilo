@@ -89,7 +89,7 @@ void main() {
             .readAsStringSync();
 
     test('the export switch handles every registry format', () {
-      for (final format in accountingFormats) {
+      for (final format in accountingTargets.map((t) => t.format).nonNulls) {
         expect(export, contains("case '${format.id}':"),
             reason: '${format.id} is in the registry but nothing exports '
                 'it — that is how DATEV shipped as dead code');
@@ -174,7 +174,7 @@ void main() {
   group('no format claims more than it can support', () {
     test('only files an authority actually asks for are regulatory', () {
       final regulatory = [
-        for (final f in accountingFormats)
+        for (final f in accountingTargets.map((t) => t.format).nonNulls)
           if (f.claim == FormatClaim.regulatory) f.id,
       ];
       expect(regulatory, unorderedEquals(['fec', 'saft_pt']),
