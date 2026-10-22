@@ -37,6 +37,29 @@ authority. Widening one needs the authority's own spec in hand.
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip |
 
+## The target registry
+
+Every file and connection target is a descriptor in `accounting_format.dart`
+(`AccountingTarget`, #2370): its countries, what it receives, how it is
+reached and how far it is qualified. The table below is generated from it;
+`accounting_coverage_test.dart` fails when the two disagree.
+
+<!-- BEGIN GENERATED TARGETS (dart run tool/build_accounting_coverage.dart) -->
+| target | product | transport | payload | countries | qualification | specification |
+|---|---|---|---|---|---|---|
+| `fec` | DGFiP · FEC · BIC/IS, art. A47 A-1 LPF | file | journal | FR | locallyValidated | DGFiP fichiers standards des écritures comptables |
+| `fr_ereporting` | DGFiP · e-reporting · flows 10.1-10.4 | file | documents | FR | implemented | DGFiP e-reporting flows 10.1-10.4 (structure only) |
+| `saft_pt` | Autoridade Tributária · SAF-T (PT) · 1.04_01, TaxAccountingBasis F | file | documents | PT | locallyValidated | SAF-T PT, TaxAccountingBasis F |
+| `datev` | DATEV · Rechnungswesen · EXTF 700 Buchungsstapel | file | journal | AT, DE | locallyValidated | not named yet |
+| `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
+| `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
+| `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
+| `accountant_csv` | DesKilo · Accountant CSV · format 2 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `audit_trail` | DesKilo · Audit trail · CSV | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `bundle` | DesKilo · Fiscal-year archive · PDF/A-3 bundle | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+<!-- END GENERATED TARGETS -->
+
 Write-offs are posted **gross**, as a loss, on the day they were given up:
 the VAT correction (bad debt relief, e.g. art. 272 CGI, §17 UStG, Sage's relief
 claim) has its own conditions and stays with the accountant. The loss accounts

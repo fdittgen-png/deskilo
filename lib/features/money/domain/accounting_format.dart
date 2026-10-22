@@ -36,6 +36,10 @@ library;
 
 import 'package:meta/meta.dart';
 
+import 'accounting_target.dart';
+
+export 'accounting_target.dart';
+
 /// What a produced file claims about itself. Never widen one of these
 /// without the authority's own spec in hand.
 enum FormatClaim { regulatory, exchange, subset }
@@ -45,7 +49,6 @@ class AccountingFormat {
   const AccountingFormat({
     required this.id,
     required this.claim,
-    required this.countries,
     required this.extension,
     this.needsAccounts = false,
     this.needsLegalId = false,
@@ -56,12 +59,6 @@ class AccountingFormat {
   final String id;
 
   final FormatClaim claim;
-
-  /// Uppercase ISO country codes this format is offered in. Empty means
-  /// everywhere: a format with no national tie is useful to any
-  /// accountant, and hiding it behind a country list would only make it
-  /// unreachable for the ten countries that mandate nothing.
-  final Set<String> countries;
 
   final String extension;
 
@@ -90,9 +87,6 @@ class AccountingFormat {
   /// their obligation would be exactly the overclaim this whole registry
   /// exists to prevent.
   final bool uncertifiedSoftware;
-
-  bool offeredIn(String countryCode) =>
-      countries.isEmpty || countries.contains(countryCode.toUpperCase());
 }
 
 /// SAF-T, invoicing subset — the OECD tree, ledger omitted on purpose.
@@ -100,7 +94,6 @@ class AccountingFormat {
 const safTFormat = AccountingFormat(
   id: 'saft',
   claim: FormatClaim.subset,
-  countries: {},
   extension: 'xml',
 );
 
@@ -116,7 +109,6 @@ const safTFormat = AccountingFormat(
 const safTPtFormat = AccountingFormat(
   id: 'saft_pt',
   claim: FormatClaim.regulatory,
-  countries: {'PT'},
   extension: 'xml',
   needsLegalId: true,
   // See the field's own comment: the SPEC is met, the CERTIFICATION
@@ -129,7 +121,6 @@ const safTPtFormat = AccountingFormat(
 const fecFormat = AccountingFormat(
   id: 'fec',
   claim: FormatClaim.regulatory,
-  countries: {'FR'},
   extension: 'txt',
   needsAccounts: true,
   needsLegalId: true,
@@ -141,7 +132,6 @@ const fecFormat = AccountingFormat(
 const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
-  countries: {'DE', 'AT'},
   extension: 'csv',
   needsAccounts: true,
 );
@@ -150,7 +140,6 @@ const _datevFormat = AccountingFormat(
 const _sageFormat = AccountingFormat(
   id: 'sage50',
   claim: FormatClaim.exchange,
-  countries: {'GB', 'IE'},
   extension: 'csv',
   needsAccounts: true,
 );
@@ -161,7 +150,6 @@ const _sageFormat = AccountingFormat(
 const _swissKmuFormat = AccountingFormat(
   id: 'ch_kmu',
   claim: FormatClaim.exchange,
-  countries: {'CH'},
   extension: 'csv',
   needsAccounts: true,
 );
@@ -182,7 +170,6 @@ const _swissKmuFormat = AccountingFormat(
 const _accountantCsvFormat = AccountingFormat(
   id: 'accountant_csv',
   claim: FormatClaim.exchange,
-  countries: {},
   extension: 'csv',
 );
 
@@ -192,7 +179,6 @@ const _accountantCsvFormat = AccountingFormat(
 const _genericJournalFormat = AccountingFormat(
   id: 'generic_journal_csv',
   claim: FormatClaim.exchange,
-  countries: {},
   extension: 'csv',
 );
 
@@ -208,15 +194,9 @@ const _genericJournalFormat = AccountingFormat(
 const auditTrailFormat = AccountingFormat(
   id: 'audit_trail',
   claim: FormatClaim.exchange,
-  countries: {},
   extension: 'csv',
 );
 
-/// Every format, in the order the sheet lists them: the country's own
-/// regulatory file first when there is one, then exchange formats, then
-/// the generic fallbacks. Someone under audit is looking for one
-/// specific file and should not have to read past three alternatives to
-/// find it.
 /// #957 — one download per fiscal year: every invoice as PDF/A-3 with its
 /// embedded e-invoice, the register, the FEC and the audit trail. Not a
 /// filing — an archive an auditor opens; offered everywhere.
@@ -224,7 +204,6 @@ const auditTrailFormat = AccountingFormat(
 const archiveBundleFormat = AccountingFormat(
   id: 'bundle',
   claim: FormatClaim.exchange,
-  countries: <String>{},
   extension: 'zip',
   needsLegalId: true,
 );
@@ -236,27 +215,160 @@ const archiveBundleFormat = AccountingFormat(
 const _frEReportingFormat = AccountingFormat(
   id: 'fr_ereporting',
   claim: FormatClaim.subset,
-  countries: {'FR'},
   extension: 'xml',
 );
 
-@visibleForTesting
-const List<AccountingFormat> accountingFormats = [
-  fecFormat,
-  _frEReportingFormat,
-  safTPtFormat,
-  _datevFormat,
-  _sageFormat,
-  _swissKmuFormat,
-  safTFormat,
-  _accountantCsvFormat,
-  _genericJournalFormat,
-  auditTrailFormat,
-  archiveBundleFormat,
-];
-
 /// What to offer in [countryCode], most specific first.
 List<AccountingFormat> formatsFor(String countryCode) => [
-      for (final format in accountingFormats)
-        if (format.offeredIn(countryCode)) format,
-    ];
+  for (final t in targetsFor(countryCode))
+    ?t.format,
+];
+
+/// #2370 — every target, in the order the sheet lists them: the country's
+/// own regulatory file first when there is one, then exchange formats,
+/// then the generic fallbacks. Someone under audit is looking for one
+/// specific file and should not have to read past three alternatives to
+/// find it.
+const List<AccountingTarget> accountingTargets = [
+  AccountingTarget(
+    id: 'fec',
+    vendor: 'DGFiP',
+    product: 'FEC',
+    edition: 'BIC/IS, art. A47 A-1 LPF',
+    countries: {'FR'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
+    format: fecFormat,
+  ),
+  AccountingTarget(
+    id: 'fr_ereporting',
+    vendor: 'DGFiP',
+    product: 'e-reporting',
+    edition: 'flows 10.1-10.4',
+    countries: {'FR'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _frEReportingFormat,
+  ),
+  AccountingTarget(
+    id: 'saft_pt',
+    vendor: 'Autoridade Tributária',
+    product: 'SAF-T (PT)',
+    edition: '1.04_01, TaxAccountingBasis F',
+    countries: {'PT'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: safTPtFormat,
+  ),
+  AccountingTarget(
+    id: 'datev',
+    vendor: 'DATEV',
+    product: 'Rechnungswesen',
+    edition: 'EXTF 700 Buchungsstapel',
+    countries: {'DE', 'AT'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _datevFormat,
+    customerIdRule: CustomerIdRule(maxLength: 9, numericRange: (10000, 699999999)),
+  ),
+  AccountingTarget(
+    id: 'sage50',
+    vendor: 'Sage',
+    product: 'Sage 50 Accounts',
+    edition: 'audit trail CSV',
+    countries: {'GB', 'IE'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _sageFormat,
+    customerIdRule: CustomerIdRule(maxLength: 8, charset: r'[A-Z0-9]+'),
+  ),
+  AccountingTarget(
+    id: 'ch_kmu',
+    vendor: 'KMU-Kontenrahmen',
+    product: 'Swiss booking journal',
+    edition: 'CSV, Ziffer per row',
+    countries: {'CH'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _swissKmuFormat,
+  ),
+  AccountingTarget(
+    id: 'saft',
+    vendor: 'OECD',
+    product: 'SAF-T',
+    edition: '2.0, ledger omitted',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: safTFormat,
+  ),
+  AccountingTarget(
+    id: 'accountant_csv',
+    vendor: 'DesKilo',
+    product: 'Accountant CSV',
+    edition: 'format 2',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund},
+    taxCodeModel: TaxCodeModel.none,
+    format: _accountantCsvFormat,
+  ),
+  AccountingTarget(
+    id: 'generic_journal_csv',
+    vendor: 'DesKilo',
+    product: 'Generic journal CSV',
+    edition: 'compute_postings',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.perRate,
+    format: _genericJournalFormat,
+  ),
+  AccountingTarget(
+    id: 'audit_trail',
+    vendor: 'DesKilo',
+    product: 'Audit trail',
+    edition: 'CSV',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
+    taxCodeModel: TaxCodeModel.none,
+    format: auditTrailFormat,
+  ),
+  AccountingTarget(
+    id: 'bundle',
+    vendor: 'DesKilo',
+    product: 'Fiscal-year archive',
+    edition: 'PDF/A-3 bundle',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
+    taxCodeModel: TaxCodeModel.none,
+    format: archiveBundleFormat,
+  ),
+];
+
+/// #2370 — the targets offered in [countryCode], in registry order.
+@visibleForTesting
+List<AccountingTarget> targetsFor(String countryCode) => [
+  for (final t in accountingTargets)
+    if (t.offeredIn(countryCode)) t,
+];
