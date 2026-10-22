@@ -1,0 +1,10 @@
+{
+  "eventTypeCommitmentVariance": "Differenza di affitto",
+  "eventCommitmentVarianceLine": "{actor} accetta una differenza di {amount} su {reference} (scadenza {date}): {reason}",
+  "leaseVarianceAccept": "Accetta la differenza",
+  "leaseVarianceTitle": "Accettare una differenza di {amount}",
+  "leaseVarianceReason": "Perché la fattura è diversa",
+  "leaseVarianceDone": "La differenza è accettata",
+  "leaseVarianceSent": "Inviato ai validatori: nulla cambia finché non decidono",
+  "leaseVarianceLineText": "{reference}: differenza accettata {amount}"
+}

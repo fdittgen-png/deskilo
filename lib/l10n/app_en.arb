@@ -6015,6 +6015,27 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventCommitmentVarianceLine": "{actor} accepts a difference of {amount} on {reference} (due {date}): {reason}",
+  "@eventCommitmentVarianceLine": {
+    "description": "Events feed (#2575): what the validators decide on",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} distributes “{title}” — {amount} over {count} members",
   "@eventExpenseRepartitionLine": {
@@ -6335,6 +6356,10 @@
   "eventTypeAdjustment": "Adjustment",
   "@eventTypeAdjustment": {
     "description": "Event type label / filter chip"
+  },
+  "eventTypeCommitmentVariance": "Rent difference",
+  "@eventTypeCommitmentVariance": {
+    "description": "Validation domain (#2575): a bill above the rent a contract expects"
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {
@@ -12124,6 +12149,29 @@
   "leaseTitle": "Premises lease",
   "@leaseTitle": {
     "description": "#2569 premises lease"
+  },
+  "leaseVarianceAccept": "Accept the difference",
+  "leaseVarianceDone": "The difference is accepted",
+  "leaseVarianceLineText": "{reference}: accepted difference {amount}",
+  "@leaseVarianceLineText": {
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaseVarianceReason": "Why the bill differs",
+  "leaseVarianceSent": "Sent to the validators: nothing changes until they decide",
+  "leaseVarianceTitle": "Accept a difference of {amount}",
+  "@leaseVarianceTitle": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "ledgerCategoryAdjustment": "Adjustment",
   "@ledgerCategoryAdjustment": {

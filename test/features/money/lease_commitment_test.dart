@@ -226,4 +226,79 @@ void main() {
     expect(back.matchedCents, 0, reason: 'January expects its rent again');
     expect(back.state, CommitmentState.expected);
   });
+
+  testWidgets('a bill above a month matched in full: the difference is accepted with a reason', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1000, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final commitments = FakeLeaseCommitmentRepository({
+      'L': [
+        _occurrence(
+          'o1',
+          1,
+          matched: 100000,
+          matches: const [
+            CommitmentMatch(
+              id: 'm1',
+              purchaseId: 'b1',
+              lineNo: 1,
+              allocatedCents: 100000,
+              reference: 'R-JAN',
+              lineGrossCents: 105000,
+              lineUnallocatedCents: 5000,
+            ),
+          ],
+        ),
+        _occurrence('o2', 2),
+      ],
+    });
+    expect(
+      await CommitmentCommands(commitments).acceptVariance(
+        'ws',
+        occurrenceId: 'o1',
+        match: (await commitments.fetchCommitments('ws', 'L'))
+            .occurrences
+            .first
+            .matches
+            .single,
+        reason: ' ',
+        requestId: 'r0',
+      ),
+      isNull,
+      reason: 'no reason, nothing sent',
+    );
+    await tester.pumpWidget(
+      _app(
+        const LeaseCommitmentsView(
+          workspaceId: 'ws',
+          leaseId: 'L',
+          currencyCode: 'EUR',
+          canMatch: true,
+        ),
+        [leaseCommitmentRepositoryProvider.overrideWithValue(commitments)],
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.byKey(const ValueKey('commitment-variance-m1')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.enterText(
+      find.byKey(const ValueKey('match-reverse-reason')),
+      'indexation applied by the lessor',
+    );
+    await tester.tap(find.byKey(const ValueKey('match-reverse-confirm')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    final page = await commitments.fetchCommitments('ws', 'L');
+    final january = page.occurrences.first;
+    final variance = january.matches.singleWhere((m) => m.isVariance);
+    expect(variance.allocatedCents, 5000);
+    expect(variance.reason, 'indexation applied by the lessor');
+    expect(page.occurrences.last.matchedCents, 0, reason: 'February is untouched');
+    expect(find.textContaining('accepted difference'), findsOneWidget);
+    expect(find.byKey(const ValueKey('commitment-variance-m1')), findsNothing);
+  });
 }

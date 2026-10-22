@@ -1,0 +1,10 @@
+{
+  "eventTypeCommitmentVariance": "Écart de loyer",
+  "eventCommitmentVarianceLine": "{actor} accepte un écart de {amount} sur {reference} (échéance {date}) : {reason}",
+  "leaseVarianceAccept": "Accepter l'écart",
+  "leaseVarianceTitle": "Accepter un écart de {amount}",
+  "leaseVarianceReason": "Pourquoi la facture diffère",
+  "leaseVarianceDone": "L'écart est accepté",
+  "leaseVarianceSent": "Envoyé aux validateurs : rien ne change avant leur décision",
+  "leaseVarianceLineText": "{reference} : écart accepté {amount}"
+}

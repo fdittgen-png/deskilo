@@ -5117,6 +5117,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventAutoValidated => 'Automatisch bestätigt';
 
   @override
+  String eventCommitmentVarianceLine(
+    String actor,
+    String amount,
+    String reference,
+    String date,
+    String reason,
+  ) {
+    return '$actor akzeptiert eine Abweichung von $amount auf $reference (fällig $date): $reason';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validiert $scheduled — $reason';
   }
@@ -5265,6 +5276,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Korrektur';
+
+  @override
+  String get eventTypeCommitmentVariance => 'Mietabweichung';
 
   @override
   String get eventTypeExpense => 'Ausgabe';
@@ -10306,6 +10320,29 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get leaseTitle => 'Mietvertrag';
+
+  @override
+  String get leaseVarianceAccept => 'Abweichung akzeptieren';
+
+  @override
+  String get leaseVarianceDone => 'Die Abweichung ist akzeptiert';
+
+  @override
+  String leaseVarianceLineText(String reference, String amount) {
+    return '$reference: akzeptierte Abweichung $amount';
+  }
+
+  @override
+  String get leaseVarianceReason => 'Warum die Rechnung abweicht';
+
+  @override
+  String get leaseVarianceSent =>
+      'An die Prüfer gesendet: bis zu ihrer Entscheidung ändert sich nichts';
+
+  @override
+  String leaseVarianceTitle(String amount) {
+    return 'Eine Abweichung von $amount akzeptieren';
+  }
 
   @override
   String get ledgerCategoryAdjustment => 'Korrektur';

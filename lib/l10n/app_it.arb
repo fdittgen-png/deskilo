@@ -3860,6 +3860,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventCommitmentVarianceLine": "{actor} accetta una differenza di {amount} su {reference} (scadenza {date}): {reason}",
   "eventExpenseDeviation": "validato {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} ripartisce «{title}»: {amount} tra {count} membri",
   "@eventExpenseRepartitionLine": {
@@ -4020,6 +4021,7 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Rettifica",
+  "eventTypeCommitmentVariance": "Differenza di affitto",
   "eventTypeExpense": "Spesa",
   "eventTypeExpenseRepartition": "Spesa condivisa",
   "eventTypeExpenseSchedule": "Spesa programmata",
@@ -7675,6 +7677,12 @@
   "@leaseTitle": {
     "description": "#2569 premises lease"
   },
+  "leaseVarianceAccept": "Accetta la differenza",
+  "leaseVarianceDone": "La differenza è accettata",
+  "leaseVarianceLineText": "{reference}: differenza accettata {amount}",
+  "leaseVarianceReason": "Perché la fattura è diversa",
+  "leaseVarianceSent": "Inviato ai validatori: nulla cambia finché non decidono",
+  "leaseVarianceTitle": "Accettare una differenza di {amount}",
   "ledgerCategoryAdjustment": "Rettifica",
   "ledgerCategoryExpense": "Rimborso spesa",
   "ledgerCategoryOverage": "Eccedenza",

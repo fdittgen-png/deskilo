@@ -61,6 +61,8 @@ const _cardTypes = [
   EventType.matrixChange,
   // #2569 — a lease's notice, and a rent change above a minimum.
   EventType.leaseChange,
+  // #2575 — a bill above the rent a contract expects.
+  EventType.commitmentVariance,
 ];
 
 /// A pickable validator: an active non-owner admin (owners always may
