@@ -867,6 +867,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
             .length >=
         3,
   ),
+  WorkspaceFeature.workspaceOverview: _state(
+    _owner,
+    'what waits for Ada, then the figures she may read',
+    (w) =>
+        w.f.events.events.any((e) => e.status == EventStatus.pending) &&
+        w.f.money.invoices.isNotEmpty,
+  ),
   WorkspaceFeature.formHelpHints: _toggle('help beside every form'),
   WorkspaceFeature.memberGettingStarted: _toggle('the getting-started card'),
   WorkspaceFeature.placeFeedback: _action(
