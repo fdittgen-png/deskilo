@@ -8863,6 +8863,18 @@ abstract class AppLocalizations {
   /// **'Auto-validated'**
   String get eventAutoValidated;
 
+  /// Events feed (#2575): what the validators decide on
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} accepts a difference of {amount} on {reference} (due {date}): {reason}'**
+  String eventCommitmentVarianceLine(
+    String actor,
+    String amount,
+    String reference,
+    String date,
+    String reason,
+  );
+
   /// No description provided for @eventExpenseDeviation.
   ///
   /// In en, this message translates to:
@@ -9052,6 +9064,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adjustment'**
   String get eventTypeAdjustment;
+
+  /// Validation domain (#2575): a bill above the rent a contract expects
+  ///
+  /// In en, this message translates to:
+  /// **'Rent difference'**
+  String get eventTypeCommitmentVariance;
 
   /// Event type label / filter chip
   ///
@@ -17523,6 +17541,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Premises lease'**
   String get leaseTitle;
+
+  /// No description provided for @leaseVarianceAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept the difference'**
+  String get leaseVarianceAccept;
+
+  /// No description provided for @leaseVarianceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'The difference is accepted'**
+  String get leaseVarianceDone;
+
+  /// No description provided for @leaseVarianceLineText.
+  ///
+  /// In en, this message translates to:
+  /// **'{reference}: accepted difference {amount}'**
+  String leaseVarianceLineText(String reference, String amount);
+
+  /// No description provided for @leaseVarianceReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Why the bill differs'**
+  String get leaseVarianceReason;
+
+  /// No description provided for @leaseVarianceSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to the validators: nothing changes until they decide'**
+  String get leaseVarianceSent;
+
+  /// No description provided for @leaseVarianceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept a difference of {amount}'**
+  String leaseVarianceTitle(String amount);
 
   /// Ledger entry category
   ///

@@ -5072,6 +5072,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventAutoValidated => 'Auto-validated';
 
   @override
+  String eventCommitmentVarianceLine(
+    String actor,
+    String amount,
+    String reference,
+    String date,
+    String reason,
+  ) {
+    return '$actor accepts a difference of $amount on $reference (due $date): $reason';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validated $scheduled — $reason';
   }
@@ -5220,6 +5231,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Adjustment';
+
+  @override
+  String get eventTypeCommitmentVariance => 'Rent difference';
 
   @override
   String get eventTypeExpense => 'Expense';
@@ -10218,6 +10232,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaseTitle => 'Premises lease';
+
+  @override
+  String get leaseVarianceAccept => 'Accept the difference';
+
+  @override
+  String get leaseVarianceDone => 'The difference is accepted';
+
+  @override
+  String leaseVarianceLineText(String reference, String amount) {
+    return '$reference: accepted difference $amount';
+  }
+
+  @override
+  String get leaseVarianceReason => 'Why the bill differs';
+
+  @override
+  String get leaseVarianceSent =>
+      'Sent to the validators: nothing changes until they decide';
+
+  @override
+  String leaseVarianceTitle(String amount) {
+    return 'Accept a difference of $amount';
+  }
 
   @override
   String get ledgerCategoryAdjustment => 'Adjustment';

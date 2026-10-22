@@ -1,0 +1,10 @@
+{
+  "eventTypeCommitmentVariance": "Mietabweichung",
+  "eventCommitmentVarianceLine": "{actor} akzeptiert eine Abweichung von {amount} auf {reference} (fällig {date}): {reason}",
+  "leaseVarianceAccept": "Abweichung akzeptieren",
+  "leaseVarianceTitle": "Eine Abweichung von {amount} akzeptieren",
+  "leaseVarianceReason": "Warum die Rechnung abweicht",
+  "leaseVarianceDone": "Die Abweichung ist akzeptiert",
+  "leaseVarianceSent": "An die Prüfer gesendet: bis zu ihrer Entscheidung ändert sich nichts",
+  "leaseVarianceLineText": "{reference}: akzeptierte Abweichung {amount}"
+}

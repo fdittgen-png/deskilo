@@ -5117,6 +5117,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventAutoValidated => 'Validé automatiquement';
 
   @override
+  String eventCommitmentVarianceLine(
+    String actor,
+    String amount,
+    String reference,
+    String date,
+    String reason,
+  ) {
+    return '$actor accepte un écart de $amount sur $reference (échéance $date) : $reason';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -5265,6 +5276,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Ajustement';
+
+  @override
+  String get eventTypeCommitmentVariance => 'Écart de loyer';
 
   @override
   String get eventTypeExpense => 'Dépense';
@@ -10317,6 +10331,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get leaseTitle => 'Bail des locaux';
+
+  @override
+  String get leaseVarianceAccept => 'Accepter l\'écart';
+
+  @override
+  String get leaseVarianceDone => 'L\'écart est accepté';
+
+  @override
+  String leaseVarianceLineText(String reference, String amount) {
+    return '$reference : écart accepté $amount';
+  }
+
+  @override
+  String get leaseVarianceReason => 'Pourquoi la facture diffère';
+
+  @override
+  String get leaseVarianceSent =>
+      'Envoyé aux validateurs : rien ne change avant leur décision';
+
+  @override
+  String leaseVarianceTitle(String amount) {
+    return 'Accepter un écart de $amount';
+  }
 
   @override
   String get ledgerCategoryAdjustment => 'Ajustement';

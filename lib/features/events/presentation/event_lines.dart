@@ -164,7 +164,10 @@ String eventLine(
                         as String? ??
                     ''),
           ),
-    (EventType.usageRecordDelete || EventType.leaseChange, _) =>
+    (EventType.usageRecordDelete ||
+            EventType.leaseChange ||
+            EventType.commitmentVariance,
+        _) =>
       _recordOrLeaseLine(l10n, event, actor, currency),
     _ => '${eventTypeLabel(l10n, event.type)} · ${event.action.name}',
   };
@@ -193,6 +196,16 @@ String _recordOrLeaseLine(
   final p = event.payload;
   if (event.type == EventType.usageRecordDelete) {
     return l10n.eventUsageRecordDeleteLine(actor, p['space_label'] as String? ?? '');
+  }
+  // #2575 — validators decide on the difference, the bill and the reason.
+  if (event.type == EventType.commitmentVariance) {
+    return l10n.eventCommitmentVarianceLine(
+      actor,
+      currency.formatMinor((p['amount_cents'] as num?)?.toInt() ?? 0),
+      p['reference'] as String? ?? '',
+      p['due_on'] as String? ?? '',
+      p['reason'] as String? ?? '',
+    );
   }
   final premises = p['premises'] as String? ?? '';
   if (p['fn'] == 'notice') {

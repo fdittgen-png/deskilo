@@ -19,6 +19,8 @@ class CommitmentMatch {
     this.lineGrossCents = 0,
     this.lineUnallocatedCents = 0,
     this.reversed = false,
+    this.isVariance = false,
+    this.reason = '',
   });
 
   factory CommitmentMatch.fromJson(Object? raw) {
@@ -32,6 +34,8 @@ class CommitmentMatch {
       lineGrossCents: r.intOrNull('line_gross_cents') ?? 0,
       lineUnallocatedCents: r.intOrNull('line_unallocated_cents') ?? 0,
       reversed: r.boolOr('reversed', fallback: false),
+      isVariance: r.stringOr('kind', 'match') == 'variance',
+      reason: r.stringOr('reason'),
     );
   }
 
@@ -46,6 +50,11 @@ class CommitmentMatch {
   final int lineGrossCents;
   final int lineUnallocatedCents;
   final bool reversed;
+
+  /// #2575 — an accepted difference above the expectation, with its reason,
+  /// rather than a part of the bill matched to it.
+  final bool isVariance;
+  final String reason;
 }
 
 class CommitmentOccurrence {
@@ -149,6 +158,16 @@ abstract interface class LeaseCommitmentRepository {
   Future<void> reverseMatch(
     String workspaceId, {
     required String matchId,
+    required String reason,
+    required String requestId,
+  });
+
+  /// #2575 — accepts what is left of a bill line above a fully matched
+  /// occurrence. The validators' event id when a policy holds it, else null.
+  Future<String?> acceptVariance(
+    String workspaceId, {
+    required String occurrenceId,
+    required CommitmentMatch match,
     required String reason,
     required String requestId,
   });

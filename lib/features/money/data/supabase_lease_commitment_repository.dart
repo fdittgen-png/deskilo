@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
 import '../domain/lease_commitment.dart';
 
@@ -66,5 +67,33 @@ class SupabaseLeaseCommitmentRepository implements LeaseCommitmentRepository {
         'p_request_id': requestId,
       },
     );
+  }
+
+  @override
+  Future<String?> acceptVariance(
+    String workspaceId, {
+    required String occurrenceId,
+    required CommitmentMatch match,
+    required String reason,
+    required String requestId,
+  }) async {
+    final answer = JsonReader.of(
+      await _client.rpc<Object?>(
+        'accept_commitment_variance_v1',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_occurrence_id': occurrenceId,
+          'p_purchase_id': match.purchaseId,
+          'p_line_no': match.lineNo,
+          'p_amount_cents': match.lineUnallocatedCents,
+          'p_reason': reason,
+          'p_request_id': requestId,
+        },
+      ),
+      context: 'commitment variance',
+    );
+    return answer.boolOr('pending', fallback: false)
+        ? answer.stringOrNull('event_id')
+        : null;
   }
 }

@@ -3860,6 +3860,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventCommitmentVarianceLine": "{actor} accepte un écart de {amount} sur {reference} (échéance {date}) : {reason}",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} répartit « {title} » — {amount} entre {count} membres",
   "@eventExpenseRepartitionLine": {
@@ -4020,6 +4021,7 @@
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "eventSystemDecider": "Système",
   "eventTypeAdjustment": "Ajustement",
+  "eventTypeCommitmentVariance": "Écart de loyer",
   "eventTypeExpense": "Dépense",
   "eventTypeExpenseRepartition": "Dépense partagée",
   "eventTypeExpenseSchedule": "Dépense programmée",
@@ -7675,6 +7677,12 @@
   "@leaseTitle": {
     "description": "#2569 premises lease"
   },
+  "leaseVarianceAccept": "Accepter l'écart",
+  "leaseVarianceDone": "L'écart est accepté",
+  "leaseVarianceLineText": "{reference} : écart accepté {amount}",
+  "leaseVarianceReason": "Pourquoi la facture diffère",
+  "leaseVarianceSent": "Envoyé aux validateurs : rien ne change avant leur décision",
+  "leaseVarianceTitle": "Accepter un écart de {amount}",
   "ledgerCategoryAdjustment": "Ajustement",
   "ledgerCategoryExpense": "Remboursement de dépense",
   "ledgerCategoryOverage": "Dépassement",

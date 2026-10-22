@@ -37,4 +37,24 @@ class CommitmentCommands {
     );
     return true;
   }
+
+  /// #2575 — accepts what is left of [match]'s line; a reason is required.
+  /// Null when nothing was sent, else whether the validators hold it.
+  Future<({bool held})?> acceptVariance(
+    String workspaceId, {
+    required String occurrenceId,
+    required CommitmentMatch match,
+    required String reason,
+    required String requestId,
+  }) async {
+    if (reason.trim().isEmpty || match.lineUnallocatedCents <= 0) return null;
+    final event = await _repository.acceptVariance(
+      workspaceId,
+      occurrenceId: occurrenceId,
+      match: match,
+      reason: reason.trim(),
+      requestId: requestId,
+    );
+    return (held: event != null);
+  }
 }
