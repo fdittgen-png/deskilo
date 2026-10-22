@@ -85,7 +85,10 @@ enum PostingKind {
   receipt('receipt'),
   refund('refund'),
   writeOff('write_off'),
-  expense('expense');
+  expense('expense'),
+  supplierBill('supplier_bill'),
+  supplierCreditNote('supplier_credit_note'),
+  supplierPayment('supplier_payment');
 
   const PostingKind(this.wire);
   final String wire;
