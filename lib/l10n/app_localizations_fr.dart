@@ -15416,6 +15416,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicProfileTitle => 'Profil public';
 
   @override
+  String get purchaseLinkInbox => 'Lier une facture reçue';
+
+  @override
+  String get purchaseLinkInboxEmpty => 'Aucune facture reçue à lier.';
+
+  @override
+  String get purchaseLinkInboxFailed =>
+      'La facture n\'a pas été liée. Le document a peut-être changé entre-temps : rouvrez-le et réessayez.';
+
+  @override
+  String get purchaseLinkInboxTitle => 'Factures reçues';
+
+  @override
   String get purchaseNeedsReview => 'À revoir';
 
   @override

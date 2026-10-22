@@ -15383,6 +15383,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get publicProfileTitle => 'Profilo pubblico';
 
   @override
+  String get purchaseLinkInbox => 'Collega una fattura ricevuta';
+
+  @override
+  String get purchaseLinkInboxEmpty => 'Nessuna fattura ricevuta da collegare.';
+
+  @override
+  String get purchaseLinkInboxFailed =>
+      'La fattura non è stata collegata. Il documento potrebbe essere cambiato nel frattempo: lo riapra e riprovi.';
+
+  @override
+  String get purchaseLinkInboxTitle => 'Fatture ricevute';
+
+  @override
   String get purchaseNeedsReview => 'Da rivedere';
 
   @override

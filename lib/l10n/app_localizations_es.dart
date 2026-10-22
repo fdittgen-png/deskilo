@@ -15368,6 +15368,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get publicProfileTitle => 'Perfil público';
 
   @override
+  String get purchaseLinkInbox => 'Vincular una factura recibida';
+
+  @override
+  String get purchaseLinkInboxEmpty =>
+      'Ninguna factura recibida para vincular.';
+
+  @override
+  String get purchaseLinkInboxFailed =>
+      'La factura no se vinculó. Puede que el documento haya cambiado entretanto: vuelva a abrirlo e inténtelo de nuevo.';
+
+  @override
+  String get purchaseLinkInboxTitle => 'Facturas recibidas';
+
+  @override
   String get purchaseNeedsReview => 'Por revisar';
 
   @override
