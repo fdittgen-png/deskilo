@@ -169,5 +169,13 @@
   "purchaseQualified": "Buchhaltung qualifiziert",
   "purchaseNeedsReview": "Zu prüfen",
   "purchaseTaxNotQualified": "Steuer nicht qualifiziert",
-  "purchaseUnverified": "Ungeprüft (vor dem Einkauf abgelegt)"
+  "purchaseUnverified": "Ungeprüft (vor dem Einkauf abgelegt)",
+  "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
+  "purchaseEntryWhoPaid": "Wer hat bezahlt?",
+  "purchaseEntryMe": "Ich habe selbst bezahlt",
+  "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",
+  "purchaseEntryUnpaid": "Noch nicht bezahlt",
+  "purchaseEntryUnpaidHint": "Eine Lieferantenrechnung, die der Raum noch bezahlen muss.",
+  "purchaseEntryPaid": "Der Raum hat schon bezahlt",
+  "purchaseEntryPaidHint": "Erfassen Sie die Rechnung; nach der Genehmigung buchen Sie die Zahlung unter „Zu zahlen“."
 }

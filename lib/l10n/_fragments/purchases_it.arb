@@ -169,5 +169,13 @@
   "purchaseQualified": "Contabilità qualificata",
   "purchaseNeedsReview": "Da rivedere",
   "purchaseTaxNotQualified": "Imposta non qualificata",
-  "purchaseUnverified": "Non verificato (archiviato prima degli acquisti)"
+  "purchaseUnverified": "Non verificato (archiviato prima degli acquisti)",
+  "purchaseEntryAdd": "Aggiungi acquisto / spesa",
+  "purchaseEntryWhoPaid": "Chi ha pagato?",
+  "purchaseEntryMe": "Ho pagato io",
+  "purchaseEntryMeHint": "La presenti come sua spesa: una volta approvata, lo spazio gliela deve.",
+  "purchaseEntryUnpaid": "Non ancora pagato",
+  "purchaseEntryUnpaidHint": "Una fattura fornitore che lo spazio deve ancora pagare.",
+  "purchaseEntryPaid": "Lo spazio ha già pagato",
+  "purchaseEntryPaidHint": "Registri la fattura; una volta approvata, registri il pagamento da «Da pagare»."
 }

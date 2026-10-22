@@ -169,5 +169,13 @@
   "purchaseQualified": "Comptabilité qualifiée",
   "purchaseNeedsReview": "À revoir",
   "purchaseTaxNotQualified": "TVA non qualifiée",
-  "purchaseUnverified": "Non vérifié (classé avant les achats)"
+  "purchaseUnverified": "Non vérifié (classé avant les achats)",
+  "purchaseEntryAdd": "Ajouter un achat / une dépense",
+  "purchaseEntryWhoPaid": "Qui a payé ?",
+  "purchaseEntryMe": "J'ai payé moi-même",
+  "purchaseEntryMeHint": "Déclarez-la comme votre dépense : une fois validée, l'espace vous la doit.",
+  "purchaseEntryUnpaid": "Pas encore payé",
+  "purchaseEntryUnpaidHint": "Une facture fournisseur que l'espace doit encore régler.",
+  "purchaseEntryPaid": "L'espace a déjà payé",
+  "purchaseEntryPaidHint": "Saisissez la facture ; une fois validée, enregistrez son paiement depuis « À payer »."
 }

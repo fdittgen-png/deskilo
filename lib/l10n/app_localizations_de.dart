@@ -15348,6 +15348,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicProfileTitle => 'Öffentliches Profil';
 
   @override
+  String get purchaseEntryAdd => 'Einkauf / Ausgabe hinzufügen';
+
+  @override
+  String get purchaseEntryMe => 'Ich habe selbst bezahlt';
+
+  @override
+  String get purchaseEntryMeHint =>
+      'Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.';
+
+  @override
+  String get purchaseEntryPaid => 'Der Raum hat schon bezahlt';
+
+  @override
+  String get purchaseEntryPaidHint =>
+      'Erfassen Sie die Rechnung; nach der Genehmigung buchen Sie die Zahlung unter „Zu zahlen“.';
+
+  @override
+  String get purchaseEntryUnpaid => 'Noch nicht bezahlt';
+
+  @override
+  String get purchaseEntryUnpaidHint =>
+      'Eine Lieferantenrechnung, die der Raum noch bezahlen muss.';
+
+  @override
+  String get purchaseEntryWhoPaid => 'Wer hat bezahlt?';
+
+  @override
   String get purchaseNeedsReview => 'Zu prüfen';
 
   @override

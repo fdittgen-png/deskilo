@@ -26034,6 +26034,54 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'Add purchase / expense'**
+  String get purchaseEntryAdd;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'I paid personally'**
+  String get purchaseEntryMe;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'Submit it as your expense: once approved, the space owes it to you.'**
+  String get purchaseEntryMeHint;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'The space already paid'**
+  String get purchaseEntryPaid;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'Capture the bill; once it is approved, record its payment from To pay.'**
+  String get purchaseEntryPaidHint;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'Not paid yet'**
+  String get purchaseEntryUnpaid;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier bill the space still has to pay.'**
+  String get purchaseEntryUnpaidHint;
+
+  /// #2577 the guided purchase / expense entry
+  ///
+  /// In en, this message translates to:
+  /// **'Who paid?'**
+  String get purchaseEntryWhoPaid;
+
   /// #2577 the three status chips of a purchase document
   ///
   /// In en, this message translates to:
