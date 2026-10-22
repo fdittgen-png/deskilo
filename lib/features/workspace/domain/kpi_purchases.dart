@@ -186,3 +186,16 @@ abstract interface class PurchaseKpiRepository {
     required String toMonth,
   });
 }
+
+/// No server to read the purchases from (the demonstration): the cards say
+/// so instead of showing 0.
+class UnavailablePurchaseKpiRepository implements PurchaseKpiRepository {
+  const UnavailablePurchaseKpiRepository();
+
+  @override
+  Future<PurchaseSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+}
