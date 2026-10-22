@@ -34,6 +34,7 @@ import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/money_repository.dart';
+import '../domain/posting.dart';
 import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
@@ -343,6 +344,20 @@ class AccountingExportRun {
     // ledger sections are not part of the declaration at all, so
     // adding them would break the very thing that makes that file
     // valid.
+    String file({SafTLedgerAccounts? accounts, List<Posting>? posted}) => buildSafTFile(
+          invoices: exported, matches: matches, company: company, currency: workspace.currencyCode,
+          softwareVersion: safTSoftwareVersion, createdAt: now,
+          lineText: (line) => invoiceLineText(words, line, association: association),
+          fallbackDescription: l10n.invoicesTitle,
+          profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
+          ledgerAccounts: accounts, bookPostings: posted);
+    // #2365 — a local book's ledger is its postings; no mapping is asked.
+    if (!portugal && localBookOf(bookProfiles, year) != null) {
+      final books = ref.read(genericJournalExportProvider);
+      return exportGenericJournal(context,
+          () => books.postedFile(workspace.id, bookProfiles, year, (p) => file(posted: p)),
+          save: (content) => save(content, named('saf-t')));
+    }
     SafTLedgerAccounts? postings;
     if (!portugal) {
       final accounts = await showSafTLedgerDialog(
@@ -372,23 +387,7 @@ class AccountingExportRun {
       domain: 'money',
       message: 'accounting export failed',
       errorText: l10n.workspaceGenericError,
-      action: () => save(
-        buildSafTFile(
-          invoices: exported,
-          matches: matches,
-          company: company,
-          currency: workspace.currencyCode,
-          softwareVersion: safTSoftwareVersion,
-          createdAt: now,
-          lineText: (line) => invoiceLineText(words, line,
-              association: association),
-          fallbackDescription: l10n.invoicesTitle,
-          profile:
-              portugal ? SafTProfile.portugal : SafTProfile.generic,
-          ledgerAccounts: postings,
-        ),
-        named(portugal ? 'saft pt' : 'saf-t'),
-      ),
+      action: () => save(file(accounts: postings), named(portugal ? 'saft pt' : 'saf-t')),
     );
   }
 
