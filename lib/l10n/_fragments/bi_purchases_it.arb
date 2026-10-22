@@ -156,5 +156,7 @@
   "allocationRuleNeedsCategory": "Indichi la categoria di acquisto che la regola ripartisce.",
   "allocationRuleNeedsBasis": "Spieghi questi pesi.",
   "allocationRuleNeedsWeight": "Dia un peso ad almeno un piano o un ufficio.",
-  "allocationRuleSaveFailed": "La regola non è stata salvata. Potrebbe essere cambiata nel frattempo: la riapra e riprovi."
+  "allocationRuleSaveFailed": "La regola non è stata salvata. Potrebbe essere cambiata nel frattempo: la riapra e riprovi.",
+  "biForecastTitle": "Previsto da pagare (dovuto + contratti)",
+  "biForecastDefinition": "Ciò che è dovuto ai fornitori alla fine dei mesi, più ciò che le locazioni e le sale prese in affitto prevedono ancora in quei mesi. Una fattura già abbinata a un contratto conta una volta sola: nel dovuto."
 }

@@ -197,4 +197,13 @@ final purchaseModuleViews = <String, BiModuleView>{
     always: (l10n) => l10n.biCommitmentsNotForecast,
   ),
   'finance.cost_allocation': _allocationView,
+  'purchases.forecast_outflows': _costView(
+    (l10n) => l10n.biForecastTitle,
+    (l10n) => l10n.biForecastDefinition,
+    basis: (k, l10n, locale) => l10n.biCommitmentsBasis(
+      biMoneyCell(k.unbilledOverdueMinor, locale, k.currency),
+      biMoneyCell(k.unbilledUpcomingMinor, locale, k.currency),
+    ),
+    always: (l10n) => l10n.biCommitmentsNotForecast,
+  ),
 };

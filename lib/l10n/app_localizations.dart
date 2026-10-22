@@ -2905,6 +2905,18 @@ abstract class AppLocalizations {
   /// **'You may not read this analysis in this workspace.'**
   String get biForbidden;
 
+  /// #2582 forecast ladder
+  ///
+  /// In en, this message translates to:
+  /// **'What is owed to suppliers at the end of the months, plus what the leases and rented rooms still expect in them. A bill already matched to a contract counts once: in what is owed.'**
+  String get biForecastDefinition;
+
+  /// #2582 forecast ladder
+  ///
+  /// In en, this message translates to:
+  /// **'Expected to pay (owed + contracts)'**
+  String get biForecastTitle;
+
   /// No description provided for @biFutureBasis.
   ///
   /// In en, this message translates to:

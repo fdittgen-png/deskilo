@@ -156,5 +156,7 @@
   "allocationRuleNeedsCategory": "Indiquez la catégorie d'achat que la règle répartit.",
   "allocationRuleNeedsBasis": "Expliquez ces poids.",
   "allocationRuleNeedsWeight": "Donnez un poids à au moins un niveau ou un bureau.",
-  "allocationRuleSaveFailed": "La règle n'a pas été enregistrée. Elle a peut-être changé entre-temps : rouvrez-la et réessayez."
+  "allocationRuleSaveFailed": "La règle n'a pas été enregistrée. Elle a peut-être changé entre-temps : rouvrez-la et réessayez.",
+  "biForecastTitle": "À payer attendu (dû + contrats)",
+  "biForecastDefinition": "Ce qui est dû aux fournisseurs à la fin des mois, plus ce que les baux et les salles louées prévoient encore sur ces mois. Une facture déjà rapprochée d'un contrat compte une seule fois : dans le dû."
 }
