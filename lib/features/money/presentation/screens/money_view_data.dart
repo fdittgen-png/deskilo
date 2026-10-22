@@ -69,6 +69,20 @@ class MoneyViewData {
     );
   }
 
+  /// #2577 — only the gates, for a page that shows doors and no statement:
+  /// nothing of the month is read.
+  factory MoneyViewData.gates(WidgetRef ref) => MoneyViewData._(
+    workspace: ref.watch(currentWorkspaceProvider).value,
+    member: ref.watch(myMemberProvider).value,
+    statementAsync: const AsyncValue.data(null),
+    settlement: null,
+    ledger: const [],
+    pendingEvents: const [],
+    onlineAttempts: const [],
+    account: null,
+    features: ref.watch(enabledFeaturesSyncProvider),
+  );
+
   final Workspace? workspace;
   final Member? member;
   final AsyncValue<Statement?> statementAsync;

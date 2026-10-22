@@ -12,6 +12,7 @@ import '../../features/money/presentation/screens/invoice_register_screen.dart';
 import '../../features/money/presentation/screens/invoices_screen.dart';
 import '../../features/money/presentation/screens/invoicing_wizard_screen.dart';
 import '../../features/money/presentation/screens/legal_identity_screen.dart';
+import '../../features/money/presentation/screens/money_hubs_screen.dart';
 import '../../features/money/presentation/screens/my_finances_screen.dart';
 import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
@@ -136,6 +137,21 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
 
 List<RouteBase> _financeRoutes(RouteEnv env) {
   return [
+    // #2577 — the purchase and the sales side, each on its own page.
+    GoRoute(
+      path: '/money/purchases',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
+      ),
+      builder: (context, state) => const PurchasesHubScreen(),
+    ),
+    GoRoute(
+      path: '/money/sales',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
+      ),
+      builder: (context, state) => const SalesHubScreen(),
+    ),
     // #934 — the treasurer's view, and the guided repartition.
     GoRoute(
       path: '/money/status',
