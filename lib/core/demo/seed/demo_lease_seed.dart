@@ -50,7 +50,9 @@ FakePremisesLeaseRepository seedDemoLease(DateTime now) {
 
 /// The rent the demo lease expects, one occurrence a month from its start to
 /// this month: the older months matched by the lessor's bills, this month
-/// still expected.
+/// still expected. Last month's bill already carries the July indexation
+/// the lease does not state yet: the occurrence is matched in full and the
+/// 30.00 left on the bill line is a difference waiting to be accepted.
 FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
   final starts = DateTime(now.year - 1, 7);
   final months = (now.year - starts.year) * 12 + now.month - starts.month + 1;
@@ -58,6 +60,7 @@ FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
   for (var k = months - 1; k >= 0; k--) {
     final due = DateTime(starts.year, starts.month + k);
     final matched = k < months - 1;
+    final indexed = k == months - 2;
     out.add(
       CommitmentOccurrence(
         id: 'demo-occ-$k',
@@ -73,7 +76,8 @@ FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
               allocatedCents: 222000,
               reference:
                   'LOY-${yearMonth(due.year, due.month)}',
-              lineGrossCents: 222000,
+              lineGrossCents: indexed ? 225000 : 222000,
+              lineUnallocatedCents: indexed ? 3000 : 0,
             ),
         ],
       ),

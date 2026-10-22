@@ -5,7 +5,14 @@
 // 15.00 a half day, and a second room nobody has rented yet.
 import '../../../features/money/domain/room_level_kind.dart';
 import '../../../features/money/domain/room_rental.dart';
+import '../../../features/plan/domain/grid_geometry.dart';
+import '../../../features/plan/domain/level.dart';
+import '../../../features/plan/domain/office.dart';
+import '../../../features/reservations/domain/reservation.dart';
+import '../data/floor_plan_repository.dart';
+import '../data/reservation_repository.dart';
 import '../data/room_rental_repository.dart';
+import '../demo_clock.dart';
 
 FakeRoomRentalRepository seedDemoRooms(DateTime now) =>
     FakeRoomRentalRepository(
@@ -54,3 +61,55 @@ FakeRoomRentalRepository seedDemoRooms(DateTime now) =>
         ),
       ],
     );
+
+/// The annex on the floor plan: the level next door and its two rooms, the
+/// rented Studio bookable as a whole, and Ada's half-day in it the day
+/// after tomorrow — what renting a room is for.
+void seedDemoAnnex(
+  FakeFloorPlanRepository plan,
+  FakeReservationRepository reservations,
+  DateTime now,
+) {
+  const ws = 'ws-1';
+  plan.levels.add(
+    const Level(
+      id: 'demo-level-annex',
+      workspaceId: ws,
+      name: 'Annex, 1st floor',
+      sortOrder: 3,
+    ),
+  );
+  plan.offices.addAll(const [
+    Office(
+      id: 'demo-room-studio',
+      workspaceId: ws,
+      levelId: 'demo-level-annex',
+      name: 'Studio',
+      color: 6,
+      bookableAsWhole: true,
+      priceCents: 1500,
+      rect: GridRect(x: 0, y: 0, w: 14, h: 10),
+    ),
+    Office(
+      id: 'demo-room-loft',
+      workspaceId: ws,
+      levelId: 'demo-level-annex',
+      name: 'Loft',
+      color: 7,
+      bookableAsWhole: false,
+      rect: GridRect(x: 16, y: 0, w: 14, h: 10),
+    ),
+  ]);
+  final day = demoDateOf(now);
+  reservations.reservations.add(
+    Reservation(
+      id: 'demo-annex-studio',
+      workspaceId: ws,
+      officeId: 'demo-room-studio',
+      memberId: 'member-1',
+      startsAt: demoAt(day.year, day.month, day.day + 2, 9),
+      endsAt: demoAt(day.year, day.month, day.day + 2, 13),
+      status: ReservationStatus.reserved,
+    ),
+  );
+}

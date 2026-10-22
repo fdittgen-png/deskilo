@@ -40,6 +40,7 @@ DemoPurchasing seedDemoPurchasing(DateTime now, {FakeMoneyRepository? money}) {
   }
   _seedInbox(inbox, today);
   _seedBills(purchases, today);
+  _seedReimbursedReceipt(purchases, today);
   return DemoPurchasing(
     suppliers: suppliers,
     inbox: inbox,
@@ -103,6 +104,14 @@ const _suppliers = [
     taxIdEntered: 'FR 55 123 456 789',
     taxIdentifier: 'FR55123456789',
     city: 'Montpellier',
+    countryCode: 'FR',
+  ),
+  // The lessor of the rented annex room (demo_room_seed.dart).
+  Supplier(
+    id: 'demo-supplier-immo',
+    number: '7',
+    name: 'Immobilière du Midi',
+    city: 'Pézenas',
     countryCode: 'FR',
   ),
 ];
@@ -324,6 +333,23 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         ),
       ],
     )
+    // Approved and not paid yet: the first line of To pay.
+    ..addApprovedBill(
+      _document(
+        'demo-bill-internet',
+        bill,
+        draft,
+        _meta(
+          'OT-2026-4380',
+          ago(12),
+          supplier: _suppliers[2],
+          dueOn: inDays(10),
+        ),
+        [_bought(1, 'Internet and phone, month', 4790, 20)],
+      ),
+      'demo-supplier-telecom',
+    )
+    // Captured by Chiara and sent for approval: the owner decides it.
     ..addPendingBill(
       _document(
         'demo-bill-catering',
@@ -333,6 +359,48 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         [_bought(1, 'Catering, open evening', 22000, 10)],
       ),
     );
+}
+
+/// A receipt Chiara paid out of pocket, approved and reimbursed in full:
+/// the end of a member's expense claim.
+void _seedReimbursedReceipt(FakePurchaseRepository purchases, DateTime today) {
+  final paidOn = today.subtract(const Duration(days: 8));
+  final receipt = _document(
+    'demo-receipt-ink',
+    PurchaseKind.memberReceipt,
+    PurchaseState.approved,
+    _meta('', today.subtract(const Duration(days: 14))),
+    [_bought(1, 'Printer ink', 4200, 20)],
+  );
+  purchases
+    ..add(receipt)
+    ..payables.add(
+      PayableRow(
+        obligation: PurchaseObligation(
+          id: 'demo-claim-ink',
+          purchaseId: receipt.summary.id,
+          creditorKind: CreditorKind.member,
+          creditorId: 'member-3',
+          amountCents: 4200,
+          currency: 'EUR',
+          paidCents: 4200,
+          appliedCents: 0,
+          remainingCents: 0,
+          allocations: [
+            SettlementAllocation(
+              id: 'demo-allocation-ink',
+              isReversal: false,
+              amountCents: 4200,
+              method: 'bank_transfer',
+              reference: 'Reimbursement, printer ink',
+              paidOn: paidOn,
+            ),
+          ],
+        ),
+        purchase: receipt.summary,
+      ),
+    )
+    ..claimRates['demo-receipt-ink'] = 20;
 }
 
 /// An offset settles an invoice: a standing partial until the last cent.

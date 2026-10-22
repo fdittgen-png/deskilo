@@ -3,14 +3,11 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
-import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
-import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
-import 'package:deskilo/core/demo/data/series_previewer.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
 import 'package:deskilo/core/demo/data/vies_repository.dart';
@@ -67,16 +64,9 @@ import '../../app/realtime_invalidations.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
-import '../../features/calendar/providers/calendar_providers.dart';
-import '../../features/events/providers/event_providers.dart';
 import '../../features/mcp/providers/assistant_setup_providers.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
-import '../../features/money/providers/credit_providers.dart';
-import '../../features/money/providers/money_providers.dart';
-import '../../features/plan/providers/accessory_providers.dart';
-import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/default_level_controller.dart';
-import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/profile/providers/personal_preferences_providers.dart';
 import '../../features/profile/providers/profile_providers.dart';
 import '../../features/reservations/domain/booking_intent.dart';
@@ -86,7 +76,6 @@ import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
-import '../../features/workspace/domain/kpi_contract.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
@@ -95,11 +84,9 @@ import '../../features/workspace/providers/instance_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
-import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../backend/backend_settings.dart';
 import '../backend/schema_version.dart';
 import '../badge/app_badge.dart';
@@ -128,6 +115,7 @@ import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
+import 'data/kpi_repositories.dart';
 import 'data/local_setup_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
@@ -135,25 +123,17 @@ import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
-import 'data/plan_resource_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_valuation_seed.dart';
-
-/// #2631 — rooms, parking areas and chargers live in memory.
-List<Override> _resourceOverrides(DemoFixture fixture) => [
-      planResourceRepositoryProvider
-          .overrideWithValue(FakePlanResourceRepository(fixture.floorPlan)),
-      chargingStationRepositoryProvider
-          .overrideWithValue(fixture.chargingStations),
-    ];
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
@@ -192,6 +172,13 @@ List<Override> _purchasingOverrides(DemoFixture fixture) {
     ),
     leaseCommitmentRepositoryProvider.overrideWithValue(
       seedDemoCommitments(fixture.seededAt),
+    ),
+    // #2582 — the purchase figures over these documents.
+    purchaseKpiRepositoryProvider.overrideWithValue(
+      DemoPurchaseKpiRepository(
+        purchases: purchasing.purchases,
+        now: fixture.seededAt,
+      ),
     ),
   ];
 }
@@ -243,28 +230,16 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(FakeTemplateSearchRepository(source: () => fixture.workspaces.templates)),
       secondFactorRepositoryProvider
           .overrideWithValue(FakeSecondFactorRepository()),
-      workspaceRepositoryProvider.overrideWithValue(fixture.workspaces),
+      // The list of spaces is the installation's; everything one space
+      // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
-      floorPlanRepositoryProvider.overrideWithValue(fixture.floorPlan),
-      ..._resourceOverrides(fixture),
-      reservationRepositoryProvider.overrideWithValue(fixture.reservations), seriesPreviewerProvider.overrideWithValue(FakeSeriesPreviewer(fixture.reservations)), // #2575
+      ...demoSpaceOverrides(fixture),
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
-      eventRepositoryProvider.overrideWithValue(fixture.events),
-      calendarRepositoryProvider.overrideWithValue(fixture.calendar),
-      moneyRepositoryProvider.overrideWithValue(fixture.money),
-      invoiceQueriesProvider.overrideWithValue(fixture.money), // #2591
-      memberAccountQueriesProvider.overrideWithValue(fixture.money), usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2591, #2590
-      reportTemplateRepositoryProvider.overrideWithValue(fixture.money), // #2591
-      invoiceCommandsProvider.overrideWithValue(fixture.money), invoiceActionCommandsProvider.overrideWithValue(FakeInvoiceActionCommands(fixture.money)), // #2591, #2585
-      taxReportingRepositoryProvider.overrideWithValue(fixture.money), // #2591
-      commercialTermsProvider.overrideWithValue(fixture.money), // #2591
-      expenseRepositoryProvider.overrideWithValue(fixture.money), accountingSourceQueriesProvider.overrideWithValue(fixture.money), // #2591, #2365
+      usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       ..._purchasingOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
-      creditRepositoryProvider.overrideWithValue(fixture.credits),
-      accessoryRepositoryProvider.overrideWithValue(fixture.accessories),
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>[]),
@@ -295,14 +270,16 @@ List<Override> demoOverrides(DemoFixture fixture) {
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
-      workspaceFieldsRepositoryProvider.overrideWithValue(fixture.fields),
-      workspaceRolesRepositoryProvider.overrideWithValue(fixture.roles),
-      // #1918 — no server to compute capacity on: the tile says so.
-      kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
-      // #2582 — nor the purchase figures.
-      purchaseKpiRepositoryProvider.overrideWithValue(
-        const UnavailablePurchaseKpiRepository(),
+      // #1918 — capacity over the demo's own plan and bookings.
+      kpiRepositoryProvider.overrideWithValue(
+        DemoCapacityKpiRepository(
+          plan: fixture.floorPlan,
+          reservations: fixture.reservations,
+          now: fixture.seededAt,
+        ),
       ),
+      // #2582 — the purchase figures are _purchasingOverrides'; the cost
+      // figures need the server's ledger of every source.
       costKpiRepositoryProvider.overrideWithValue(
         const UnavailableCostKpiRepository(),
       ),
@@ -311,15 +288,6 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
-      // #1924 — the finance cards sum the demo's own invoices and
-      // matches, with the server's predicates.
-      financeKpiRepositoryProvider.overrideWithValue(
-        DemoFinanceKpiRepository(
-          money: fixture.money,
-          workspaces: fixture.workspaces,
-          now: fixture.seededAt,
-        ),
-      ),
 
       // #1377 — the ways an effect could leave the app, each pointed at
       // something inert. A payment, an invitation, an e-invoice and a
