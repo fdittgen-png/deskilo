@@ -1,10 +1,10 @@
 {
-  "recordedSha": "dc86e21e8f17335b12c8afe463632293208d0076",
+  "recordedSha": "84306e2ea0b0afdde82cc4f7b637275ed6982c44",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1793,"functions":10030,"cyclomatic>=9":1063,"cyclomatic>=25":107,"cognitive>=15":431,"cognitive>=30":95,"length>=150":74,"parameters>=5":486,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1795,"functions":10043,"cyclomatic>=9":1063,"cyclomatic>=25":107,"cognitive>=15":431,"cognitive>=30":95,"length>=150":74,"parameters>=5":486,"parameters>=7":151,"partOfFiles":42},
   "budgets": {
-    "partOfFiles": 43,
+    "partOfFiles": 42,
     "fileLength": {
       "lib/core/backend/backend_settings.dart": 572,
 
@@ -49,8 +49,6 @@
       "lib/features/money/domain/fec_writer.dart": 529,
 
       "lib/features/money/domain/invoice.dart": 518,
-
-      "lib/features/money/domain/invoice_pdf_part2.dart": 772,
 
       "lib/features/money/domain/invoice_pdf_template.dart": 568,
 
@@ -1524,9 +1522,11 @@
     {"p":"lib/features/money/domain/invoice_line_cash.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":6,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_line_snapshot.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":9,"len":11,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_line_text.dart","loc":61,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":15,"len":33,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/invoice_pdf.dart","loc":259,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":7,"len":40,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
-    {"p":"lib/features/money/domain/invoice_pdf_part2.dart","loc":642,"part":true,"setState":0,"repositoryReads":0,"fn":36,"cog":17,"cyc":11,"len":103,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/invoice_pdf.dart","loc":249,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":7,"len":40,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/money/domain/invoice_pdf_body.dart","loc":353,"part":false,"setState":0,"repositoryReads":0,"fn":20,"cog":17,"cyc":11,"len":103,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_pdf_sales_tax.dart","loc":111,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":7,"len":71,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/invoice_pdf_sheet.dart","loc":330,"part":false,"setState":0,"repositoryReads":0,"fn":29,"cog":8,"cyc":5,"len":62,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/domain/invoice_pdf_style.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_pdf_template.dart","loc":391,"part":false,"setState":0,"repositoryReads":0,"fn":27,"cog":17,"cyc":17,"len":40,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_queries.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/invoice_report.dart","loc":205,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":43,"cyc":18,"len":60,"params":2,"nest":7,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
