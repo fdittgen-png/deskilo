@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `759aa6f3e38ad6e882200eb18f483b3a4130ee70` on 2026-10-22.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7e1987592af4f210551fd41cc0ada1395a1552c4` on 2026-10-22.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,9 +10,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1803 |
-| functions | 10070 |
-| cyclomatic>=9 | 1067 |
+| files | 1804 |
+| functions | 10073 |
+| cyclomatic>=9 | 1068 |
 | cyclomatic>=25 | 106 |
 | cognitive>=15 | 430 |
 | cognitive>=30 | 94 |
@@ -46,8 +46,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 46 | 20 | 87 | 2 | `lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen.build` |
 | 45 | 33 | 199 | 3 | `lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid` |
 | 45 | 39 | 198 | 6 | `lib/features/mcp/application/connect_checklist.dart#ConnectChecklist.new.derive` |
+| 45 | 36 | 170 | 2 | `lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build` |
 | 44 | 50 | 140 | 3 | `lib/features/task_recorder/guide/guide_codec.dart#_GuideDecoder._step` |
 | 43 | 21 | 118 | 1 | `lib/core/ui/wizard_scaffold.dart#WizardScaffold.build` |
 | 43 | 18 | 60 | 1 | `lib/features/money/domain/invoice_report.dart#_parseLines` |
-| 43 | 31 | 68 | 4 | `lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction` |
 

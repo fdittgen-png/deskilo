@@ -18923,6 +18923,14 @@
   "@readinessFirstBookingReady": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessGrantMembers": "Let members book",
+  "@readinessGrantMembers": {
+    "description": "#2865 — one-tap button on the setup card granting the members role the everyday permissions"
+  },
+  "readinessGrantMembersDone": "Members can now book, see the calendar, write to each other and see their own account.",
+  "@readinessGrantMembersDone": {
+    "description": "#2865 — confirmation after the members role got the everyday permissions"
+  },
   "readinessLater": "Needed later",
   "@readinessLater": {
     "description": "#1636 workspace_readiness"

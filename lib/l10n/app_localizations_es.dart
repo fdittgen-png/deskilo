@@ -16090,6 +16090,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get readinessFirstBookingReady => 'Listo para una primera reserva';
 
   @override
+  String get readinessGrantMembers => 'Permitir que los miembros reserven';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Los miembros ya pueden reservar, ver el calendario, escribirse y ver su propia cuenta.';
+
+  @override
   String get readinessLater => 'Necesario más adelante';
 
   @override
