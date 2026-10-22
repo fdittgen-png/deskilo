@@ -2,7 +2,8 @@
 //
 // #2365 — the posting rules over the seeded year every exporter is driven
 // over. Expected entries are worked by hand: INV-1 at 20 % and 5.5 % with a
-// netted payment (40.00) and a netted expense (30.00) then paid 155.50;
+// netted payment (40.00) and a netted expense (30.00, booked by its
+// receipt, never here: 0524) then paid 155.50;
 // INV-2 part-paid; INV-3 paid 60.00 and the rest written off; CN-1 a credit
 // note of 50.00. Every entry balances; a qualified role is used where it is
 // mapped and its base elsewhere; a missing base blocks with its name.
@@ -98,7 +99,7 @@ void main() {
     'the full chart books the year without a blocker, every entry balanced',
     () {
       expect(set.blockers, isEmpty);
-      expect(set.postings, hasLength(10));
+      expect(set.postings, hasLength(9));
       expect(set.postings.every((p) => p.balanced), isTrue);
     },
   );
@@ -115,12 +116,6 @@ void main() {
       PostingKind.receipt,
       PostingJournal.bank,
       ['512:D4000', '411:C4000'],
-    ),
-    'its netted expense is one purchase entry, never the bank (#2542)': (
-      'INV-1',
-      PostingKind.expense,
-      PostingJournal.purchases,
-      ['625:D3000', '411:C3000'],
     ),
     'INV-3 written off: 40.00 left, 6.66 of output tax regularised': (
       'INV-3',
@@ -159,6 +154,11 @@ void main() {
       }
     }
     expect(owed, 8000);
+  });
+
+  test('a netted expense credit books no expense: the member\'s receipt '
+      'did (0524)', () {
+    expect(set.postings.where((p) => p.kind == PostingKind.expense), isEmpty);
   });
 
   test('on receipts, the tax waits on vat_pending and leaves it on its tax '

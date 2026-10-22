@@ -8,9 +8,11 @@
 -- an issuer with no chart is blocked with the role named; a plain member
 -- reads nothing. 0521: the year is on the debits, but INV-4 printed « on
 -- receipts »: its tax waits on 44574 and half of it is released when half
--- is paid.
+-- is paid. 0524: the member's receipt of 60.00 (20 %, fully recoverable)
+-- books its expense against the member's account on its day, and is paid
+-- back on 20 August; INV-1's netted expense books nothing.
 begin;
-select plan(20);
+select plan(22);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002365'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -74,6 +76,18 @@ insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolu
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e1',15550,'exact','2026-03-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e2',12000,'under_accepted','2026-04-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e3',6000,'under_accepted','2026-05-20 10:00+00','2026-05-25 10:00+00');
+
+-- 0524: an approved expense of the plain member; the bridge files its
+-- receipt, the approval's credit completes its claim.
+insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status,
+                           decided_at, created_at) values
+ ('00000000-0000-4000-8000-0000002365a9','00000000-0000-4000-8000-0000002365b1','expense','submitted',
+  '00000000-0000-4000-8000-0000002365c2','00000000-0000-4000-8000-0000002365c2',
+  '{"amount_cents": 6000, "category": "coffee", "note": "Coffee", "vat": {"percent": 20, "deductible_pct": 100}}',
+  'confirmed', '2026-08-11 10:00+00', '2026-08-10 10:00+00');
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, event_id)
+values ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365c2','credit','expense',6000,
+        'Coffee','2026-08','00000000-0000-4000-8000-0000002365a9');
 
 create function pg_temp.acc(code text, kind text) returns text language sql as $$
   select public.save_book_account('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365d1',
@@ -146,12 +160,18 @@ select pg_temp.call('00000000-0000-4000-8000-0000002365a1',
       'original_reference', 'F-DRAFT', 'original_date', '2026-03-11', 'payer_kind', 'unpaid',
       'lines', jsonb_build_array(jsonb_build_object('description', 'x', 'gross_cents', 120, 'net_cents', 100,
         'tax_cents', 20, 'tax_rate_percent', 20)))::text));
+select pg_temp.call('00000000-0000-4000-8000-0000002365a1',
+  format('select public.record_member_reimbursement_v1(%L, %L, 6000, %s, %L, %L)',
+    '00000000-0000-4000-8000-0000002365b1',
+    (select id from public.purchase_obligations where creditor_member_id = '00000000-0000-4000-8000-0000002365c2'),
+    (select revision from public.purchase_obligations where creditor_member_id = '00000000-0000-4000-8000-0000002365c2'),
+    gen_random_uuid(), '2026-08-20'));
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002365a1","role":"authenticated"}',true);
 
 select set_config('t.r', public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-01-01', '2026-12-31')::text, true);
 
-select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 15, 'the year is fifteen entries');
+select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 16, 'the year is sixteen entries');
 select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'blockers'), 0, 'with the full chart nothing blocks');
 select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l ->> 'credit_cents')::bigint)
                               from jsonb_array_elements(p -> 'lines') l))
@@ -159,7 +179,7 @@ select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l -
 select is(pg_temp.lines('INV-1','invoice'), '411:D22550,706:C10000,44571:C2000,7061:C10000,445712:C550',
   'INV-1 per rate group; the reduced rate on its qualified accounts');
 select is(pg_temp.lines('INV-1','receipt','2026-03-05'), '512:D4000,411:C4000', 'its netted payment is money in on the invoice day');
-select is(pg_temp.lines('INV-1','expense'), '625:D3000,411:C3000', 'its netted expense is one purchase entry, never the bank');
+select is(pg_temp.lines('INV-1','expense'), null, 'its netted expense books nothing: its receipt did (0524)');
 select is(pg_temp.lines('INV-1','receipt','2026-03-20'), '512:D15550,411:C15550', 'the receipt is dated on its match');
 select is(pg_temp.lines('INV-3','write_off'), '654:D3334,44571:D666,411:C4000', 'INV-3 written off with 6.66 of output tax regularised');
 select is(pg_temp.lines('CN-1','credit_note'), '411:C5000,706:D4167,44571:D833', 'CN-1 mirrors an invoice');
@@ -178,6 +198,10 @@ select is(pg_temp.lines('F-77','supplier_bill'), '625:D10000,44566:D2000,625:D55
   'the supplier bill: the cost with what cannot be recovered, the recoverable tax apart, the supplier owed the gross');
 select is(pg_temp.lines('F-77','supplier_payment'), '401:D18000,512:C18000', 'the supplier is paid on the day it was paid');
 select is(pg_temp.lines('F-DRAFT','supplier_bill'), null, 'a draft bill posts nothing');
+select is(pg_temp.lines('','member_receipt'), '625:D5000,44566:D1000,411:C6000',
+  'the member''s receipt: the cost and the recoverable tax, the member''s account credited');
+select is(pg_temp.lines('','reimbursement','2026-08-20'), '411:D6000,512:C6000',
+  'the money paid back to the member on the day it was paid');
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d2', '2026-03-01', '2026-03-31') -> 'postings'), 1,
   'another issuer than the default one books no purchase');
