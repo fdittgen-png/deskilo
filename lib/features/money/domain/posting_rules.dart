@@ -112,7 +112,13 @@ PostingSet postingsOf({
     final deferred = _deferred(invoice, taxPoints);
     postings.addAll([
       ..._document(invoice, book, groupOf, deferred: deferred),
-      ..._settled(invoice, view.matches[invoice.id], book, groupOf),
+      ..._settled(
+        invoice,
+        view.matches[invoice.id],
+        book,
+        groupOf,
+        deferred: deferred,
+      ),
       if (deferred) ..._released(invoice, taxPoints!, book, groupOf),
     ]);
   }
@@ -342,8 +348,9 @@ List<Posting> _settled(
   Invoice i,
   InvoiceMatch? m,
   PostingBook book,
-  String Function(InvoiceVatTotal) groupOf,
-) {
+  String Function(InvoiceVatTotal) groupOf, {
+  bool deferred = false,
+}) {
   if (m == null || m.pending) return const [];
   return [
     if (m.paidCents != 0)
@@ -369,20 +376,29 @@ List<Posting> _settled(
         ],
       ),
     if (m.writeoffAt case final day? when i.totalCents - m.paidCents > 0)
-      _writeOff(i, i.totalCents - m.paidCents, day, book, groupOf),
+      _writeOff(
+        i,
+        i.totalCents - m.paidCents,
+        day,
+        book,
+        groupOf,
+        deferred: deferred,
+      ),
   ];
 }
 
 /// [rest] of [i] written off on [day]: split over the rate groups by their
 /// gross (the last group takes the rounding), each part into net and tax by
-/// its own ratio.
+/// its own ratio. The tax of a [deferred] invoice is cleared from
+/// `vat_pending`, where its unpaid share still waits (0526).
 Posting _writeOff(
   Invoice i,
   int rest,
   DateTime day,
   PostingBook book,
-  String Function(InvoiceVatTotal) groupOf,
-) {
+  String Function(InvoiceVatTotal) groupOf, {
+  bool deferred = false,
+}) {
   final parts = _parts(i, groupOf);
   final gross = _gross(parts);
   final lines = <PostingLine>[];
@@ -401,13 +417,22 @@ Posting _writeOff(
         _amount(i, part - tax),
         debitSide: true,
       ),
-      ?postingLine(
-        BookRole.vatOutput,
-        book.code(BookRole.vatOutput, day, qualifier: t.group),
-        _amount(i, tax),
-        debitSide: true,
-        qualifier: t.group,
-      ),
+      // A deferred invoice's unpaid tax never left `vat_pending` (0526).
+      if (deferred)
+        ?postingLine(
+          BookRole.vatPending,
+          book.code(BookRole.vatPending, day),
+          _amount(i, tax),
+          debitSide: true,
+        )
+      else
+        ?postingLine(
+          BookRole.vatOutput,
+          book.code(BookRole.vatOutput, day, qualifier: t.group),
+          _amount(i, tax),
+          debitSide: true,
+          qualifier: t.group,
+        ),
     ]);
   }
   final customers = postingLine(
