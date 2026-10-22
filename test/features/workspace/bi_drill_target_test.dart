@@ -53,12 +53,16 @@ void main() {
       );
     });
 
-    test('only the finance modules carry a period', () {
+    test('the finance modules and the capacity figure carry a period', () {
       final carrying = {
         for (final m in biModules)
           if (m.drill?.carriesPeriod ?? false) m.id,
       };
-      expect(carrying, {'finance.invoiced', 'finance.collected'});
+      expect(carrying, {
+        'finance.invoiced',
+        'finance.collected',
+        'capacity.seat_utilisation',
+      });
     });
   });
 

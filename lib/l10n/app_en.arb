@@ -16536,6 +16536,27 @@
       }
     }
   },
+  "periodReservationsEmpty": "No booking in these months.",
+  "@periodReservationsEmpty": {
+    "description": "#2578 the bookings behind the capacity figure"
+  },
+  "periodReservationsFailed": "The bookings could not be read.",
+  "@periodReservationsFailed": {
+    "description": "#2578 the bookings behind the capacity figure"
+  },
+  "periodReservationsTitle": "Bookings of {period}",
+  "@periodReservationsTitle": {
+    "description": "#2578 the bookings behind the capacity figure",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "periodReservationsUnnamed": "(unnamed place)",
+  "@periodReservationsUnnamed": {
+    "description": "#2578 the bookings behind the capacity figure"
+  },
   "permAccessProd": "Enter the production workspace",
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
