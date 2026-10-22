@@ -72,12 +72,16 @@ class GenericJournalExport {
     year,
     (set, issuer) async {
       final chart = await _books.fetchBookChart(workspaceId);
+      final parties = await _books.fetchPostingParties(workspaceId, [
+        ...{for (final p in set.postings) p.documentId},
+      ]);
       return buildFecFromPostings(
         set.postings,
         accountNames: {
           for (final a in chart.accounts)
             if (a.issuerSiteId == issuer) a.code: a.name,
         },
+        parties: parties,
       );
     },
   );

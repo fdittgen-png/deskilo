@@ -13,6 +13,9 @@
 //     its document when that document's lines on the account balance in the
 //     file; DateLet is then the date of the last of them
 //     ([withLetteringDates]). An open balance stays unlettered.
+//   * #2376 — a receivable or payable line names its third party in the
+//     auxiliary columns (CompAuxNum / CompAuxLib): the member or supplier of
+//     its document, by number and name ([PostingParty]).
 import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
@@ -51,6 +54,7 @@ const _lettered = {BookRole.customers, BookRole.suppliers};
 String buildFecFromPostings(
   List<Posting> postings, {
   required Map<String, String> accountNames,
+  Map<String, PostingParty> parties = const {},
 }) {
   String clean(String text) =>
       text.replaceAll(RegExp(r'[\t\r\n]+'), ' ').trim();
@@ -78,7 +82,9 @@ String buildFecFromPostings(
     final label = '${_kindLabels[p.kind] ?? p.kind.wire} $ref';
     for (final l in p.lines) {
       final key = '${l.accountCode}|$ref';
-      final letter = _lettered.contains(l.role) && open[key] == 0;
+      final third = _lettered.contains(l.role);
+      final letter = third && open[key] == 0;
+      final party = third ? parties[p.documentId] : null;
       rows.add([
         p.journal.code,
         _journalLabels[p.journal]!,
@@ -86,8 +92,8 @@ String buildFecFromPostings(
         ymd(p.date),
         l.accountCode,
         clean(accountNames[l.accountCode] ?? l.accountCode),
-        '',
-        '',
+        clean(party?.number ?? ''),
+        clean(party?.name ?? ''),
         clean(ref),
         ymd(p.date),
         clean(label),

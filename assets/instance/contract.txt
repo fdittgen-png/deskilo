@@ -2180,6 +2180,7 @@ routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_not
 routine public.posting_account(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date) -> TABLE(code text, problem text) | function | definer | stable | exec:service_role | body:5adcca634cb9
 routine public.posting_entry(p_journal text, p_kind text, p_day date, p_document_id uuid, p_number text, p_currency text, p_lines jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:8e672093efdd
 routine public.posting_line(p_issuer_site_id uuid, p_role text, p_qualifier text, p_day date, p_amount bigint, p_debit_side boolean) -> jsonb | function | definer | stable | exec:service_role | body:71003e824439
+routine public.posting_parties(p_workspace_id uuid, p_document_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e4f9d362bfe8
 routine public.posting_rate_group(p_country text, p_percent numeric, p_category text, p_day date) -> text | function | definer | stable | exec:service_role | body:851fb12021ea
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:4ceaa1e215ca
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1

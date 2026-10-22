@@ -147,4 +147,20 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
     );
     return PostingSet.fromJson(Map<String, Object?>.from(row! as Map));
   }
+
+  @override
+  Future<Map<String, PostingParty>> fetchPostingParties(
+    String workspaceId,
+    List<String> documentIds,
+  ) async {
+    final row = await _client.rpc<Object?>(
+      'posting_parties',
+      params: {'p_workspace_id': workspaceId, 'p_document_ids': documentIds},
+    );
+    return {
+      for (final MapEntry(:key, :value)
+          in Map<String, Object?>.from(row! as Map).entries)
+        key: PostingParty.fromJson(Map<String, Object?>.from(value! as Map)),
+    };
+  }
 }

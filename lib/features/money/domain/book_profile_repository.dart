@@ -43,4 +43,11 @@ abstract class BookProfileRepository {
     DateTime from,
     DateTime to,
   );
+
+  /// #2376 — the third party of each of [documentIds] that has one
+  /// (`posting_parties`, 0525), by document id.
+  Future<Map<String, PostingParty>> fetchPostingParties(
+    String workspaceId,
+    List<String> documentIds,
+  );
 }
