@@ -7928,6 +7928,14 @@
   },
   "featureSettlementFoldDesc": "Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.",
   "featureSettlementFoldTitle": "Regrouped invoices fold",
+  "featureSetupGuideDesc": "One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.",
+  "@featureSetupGuideDesc": {
+    "description": "#2869 setup guide feature description"
+  },
+  "featureSetupGuideTitle": "Setup guide",
+  "@featureSetupGuideTitle": {
+    "description": "#2869 setup guide feature name"
+  },
   "featureSingleRoomLevelNamesDesc": "When a level holds only one room, the booking views name the level instead of the room — “2nd floor · Table 3”, not “Room 1 · Table 3”. Adding a second room brings both names back; the plan editor always shows the rooms.",
   "@featureSingleRoomLevelNamesDesc": {
     "description": "#1273 single-room level names: the feature switch description"

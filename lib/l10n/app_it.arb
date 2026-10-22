@@ -4958,6 +4958,8 @@
   "featureServicesDesc": "Catalogo dei servizi e registrazione dei consumi.",
   "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",
   "featureSettlementFoldTitle": "Fatture raggruppate ripiegate",
+  "featureSetupGuideDesc": "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che scegli per ogni parte dello spazio.",
+  "featureSetupGuideTitle": "Guida alla configurazione",
   "featureSingleRoomLevelNamesDesc": "Quando un piano ha una sola stanza, le viste di prenotazione indicano il piano invece della stanza — «2° piano · Tavolo 3», non «Ufficio 1 · Tavolo 3». Una seconda stanza riporta entrambi i nomi; l’editor della planimetria mostra sempre le stanze.",
   "@featureSingleRoomLevelNamesDesc": {
     "description": "#1273 single-room level names: the feature switch description"

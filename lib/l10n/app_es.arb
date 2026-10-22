@@ -4958,6 +4958,8 @@
   "featureServicesDesc": "Catálogo de servicios y registro de consumos.",
   "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.",
   "featureSettlementFoldTitle": "Facturas reagrupadas plegadas",
+  "featureSetupGuideDesc": "Una sola lista de tareas, desde crear el espacio hasta abrirlo: qué está hecho, qué sigue y por qué, con el nivel que elija para cada parte del espacio.",
+  "featureSetupGuideTitle": "Guía de configuración",
   "featureSingleRoomLevelNamesDesc": "Cuando una planta tiene una sola sala, las vistas de reserva nombran la planta en lugar de la sala: «2.ª planta · Mesa 3», no «Despacho 1 · Mesa 3». Una segunda sala recupera ambos nombres; el editor del plano muestra siempre las salas.",
   "@featureSingleRoomLevelNamesDesc": {
     "description": "#1273 single-room level names: the feature switch description"

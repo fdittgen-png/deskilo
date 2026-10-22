@@ -6708,6 +6708,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zusammengefasste Rechnungen eingeklappt';
 
   @override
+  String get featureSetupGuideDesc =>
+      'Eine Aufgabenliste von der Gründung des Bereichs bis zur Eröffnung: was erledigt ist, was als Nächstes kommt und warum, in dem Umfang, den Sie für jeden Teil wählen.';
+
+  @override
+  String get featureSetupGuideTitle => 'Einrichtungsassistent';
+
+  @override
   String get featureSingleRoomLevelNamesDesc =>
       'Hat eine Etage nur einen Raum, nennen die Buchungsansichten die Etage statt des Raums — „2. Etage · Tisch 3“ statt „Büro 1 · Tisch 3“. Ein zweiter Raum bringt beide Namen zurück; der Planeditor zeigt immer die Räume.';
 

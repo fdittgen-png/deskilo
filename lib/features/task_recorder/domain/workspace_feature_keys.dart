@@ -152,4 +152,5 @@ const Set<String> workspaceFeatureKeys = {
   'biReportDesigner',
   'purchaseAnalytics',
   'workspaceOverview',
+  'setupGuide',
 };

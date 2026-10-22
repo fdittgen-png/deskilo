@@ -6703,6 +6703,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureSettlementFoldTitle => 'Facturas reagrupadas plegadas';
 
   @override
+  String get featureSetupGuideDesc =>
+      'Una sola lista de tareas, desde crear el espacio hasta abrirlo: qué está hecho, qué sigue y por qué, con el nivel que elija para cada parte del espacio.';
+
+  @override
+  String get featureSetupGuideTitle => 'Guía de configuración';
+
+  @override
   String get featureSingleRoomLevelNamesDesc =>
       'Cuando una planta tiene una sola sala, las vistas de reserva nombran la planta en lugar de la sala: «2.ª planta · Mesa 3», no «Despacho 1 · Mesa 3». Una segunda sala recupera ambos nombres; el editor del plano muestra siempre las salas.';
 

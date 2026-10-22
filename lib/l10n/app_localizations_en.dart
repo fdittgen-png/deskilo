@@ -6652,6 +6652,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureSettlementFoldTitle => 'Regrouped invoices fold';
 
   @override
+  String get featureSetupGuideDesc =>
+      'One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.';
+
+  @override
+  String get featureSetupGuideTitle => 'Setup guide';
+
+  @override
   String get featureSingleRoomLevelNamesDesc =>
       'When a level holds only one room, the booking views name the level instead of the room — “2nd floor · Table 3”, not “Room 1 · Table 3”. Adding a second room brings both names back; the plan editor always shows the rooms.';
 

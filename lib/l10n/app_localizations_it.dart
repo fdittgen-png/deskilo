@@ -6700,6 +6700,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureSettlementFoldTitle => 'Fatture raggruppate ripiegate';
 
   @override
+  String get featureSetupGuideDesc =>
+      'Un\'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che scegli per ogni parte dello spazio.';
+
+  @override
+  String get featureSetupGuideTitle => 'Guida alla configurazione';
+
+  @override
   String get featureSingleRoomLevelNamesDesc =>
       'Quando un piano ha una sola stanza, le viste di prenotazione indicano il piano invece della stanza — «2° piano · Tavolo 3», non «Ufficio 1 · Tavolo 3». Una seconda stanza riporta entrambi i nomi; l’editor della planimetria mostra sempre le stanze.';
 

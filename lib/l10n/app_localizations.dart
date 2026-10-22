@@ -11465,6 +11465,18 @@ abstract class AppLocalizations {
   /// **'Regrouped invoices fold'**
   String get featureSettlementFoldTitle;
 
+  /// #2869 setup guide feature description
+  ///
+  /// In en, this message translates to:
+  /// **'One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.'**
+  String get featureSetupGuideDesc;
+
+  /// #2869 setup guide feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Setup guide'**
+  String get featureSetupGuideTitle;
+
   /// #1273 single-room level names: the feature switch description
   ///
   /// In en, this message translates to:

@@ -262,6 +262,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
       'basic',
       features: {
         WorkspaceFeature.formHelpHints,
+        WorkspaceFeature.setupGuide,
         WorkspaceFeature.memberGettingStarted,
         WorkspaceFeature.placeFeedback,
         WorkspaceFeature.uiAnimations,

@@ -263,7 +263,8 @@ window.SETUP_PROCESSES=[
      "configurationTransfer",
      "configurableSettings",
      "workspaceLibrary",
-     "instanceWizard"
+     "instanceWizard",
+     "setupGuide"
     ]
    },
    {

@@ -6718,6 +6718,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureSettlementFoldTitle => 'Factures regroupées repliées';
 
   @override
+  String get featureSetupGuideDesc =>
+      'Une seule liste de tâches, de la création de l\'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l\'espace.';
+
+  @override
+  String get featureSetupGuideTitle => 'Guide de mise en place';
+
+  @override
   String get featureSingleRoomLevelNamesDesc =>
       'Quand un étage ne contient qu’une salle, les vues de réservation nomment l’étage plutôt que la salle — « 2e étage · Table 3 » au lieu de « Bureau 1 · Table 3 ». Une deuxième salle fait revenir les deux noms ; l’éditeur du plan montre toujours les salles.';
 

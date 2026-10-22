@@ -4958,6 +4958,8 @@
   "featureServicesDesc": "Leistungskatalog und Verbrauchserfassung.",
   "featureSettlementFoldDesc": "Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.",
   "featureSettlementFoldTitle": "Zusammengefasste Rechnungen eingeklappt",
+  "featureSetupGuideDesc": "Eine Aufgabenliste von der Gründung des Bereichs bis zur Eröffnung: was erledigt ist, was als Nächstes kommt und warum, in dem Umfang, den Sie für jeden Teil wählen.",
+  "featureSetupGuideTitle": "Einrichtungsassistent",
   "featureSingleRoomLevelNamesDesc": "Hat eine Etage nur einen Raum, nennen die Buchungsansichten die Etage statt des Raums — „2. Etage · Tisch 3“ statt „Büro 1 · Tisch 3“. Ein zweiter Raum bringt beide Namen zurück; der Planeditor zeigt immer die Räume.",
   "@featureSingleRoomLevelNamesDesc": {
     "description": "#1273 single-room level names: the feature switch description"

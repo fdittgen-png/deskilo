@@ -1,0 +1,10 @@
+{
+  "featureSetupGuideTitle": "Setup guide",
+  "@featureSetupGuideTitle": {
+    "description": "#2869 setup guide feature name"
+  },
+  "featureSetupGuideDesc": "One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.",
+  "@featureSetupGuideDesc": {
+    "description": "#2869 setup guide feature description"
+  }
+}
