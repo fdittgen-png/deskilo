@@ -86,6 +86,20 @@ class GenericJournalExport {
     },
   );
 
+  /// #2365 — any file written from [year]'s postings of the local book
+  /// (the SAF-T ledger section).
+  Future<GenericJournal> postedFile(
+    String workspaceId,
+    List<BookProfile> profiles,
+    int year,
+    String Function(List<Posting> postings) write,
+  ) => _posted(
+    workspaceId,
+    profiles,
+    year,
+    (set, _) async => write(set.postings),
+  );
+
   Future<GenericJournal> _posted(
     String workspaceId,
     List<BookProfile> profiles,

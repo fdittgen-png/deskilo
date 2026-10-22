@@ -11,9 +11,12 @@
 -- is paid. 0524: the member's receipt of 60.00 (20 %, fully recoverable)
 -- books its expense against the member's account on its day, and is paid
 -- back on 20 August; INV-1's netted expense books nothing. 0526: INV-4's
--- open half is written off on 25 July and its tax leaves 44574.
+-- open half is written off on 25 July and its tax leaves 44574. The year's
+-- VAT return equals the collected-VAT lines the books carry, write-off relief
+-- apart (a separate line of the return, the accountant's) and the other
+-- issuer's ANX-1 (2.00) apart (its book has no chart, so no line).
 begin;
-select plan(23);
+select plan(24);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002365'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -214,6 +217,14 @@ select is((public.compute_postings('00000000-0000-4000-8000-0000002365b1',
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d2', '2026-01-01', '2026-12-31') -> 'postings' -> 0 -> 'lines'), 0,
   'and posts no guessed line');
+
+select is((select sum((l ->> 'credit_cents')::bigint - (l ->> 'debit_cents')::bigint)
+             from jsonb_array_elements(current_setting('t.r')::jsonb -> 'postings') p,
+                  jsonb_array_elements(p -> 'lines') l
+            where l ->> 'role' = 'vat_output' and p ->> 'kind' <> 'write_off') + 200,
+          (select sum(vat_cents) from public.compute_vat_return('00000000-0000-4000-8000-0000002365b1',
+             '2026-01-01', '2026-12-31') where direction = 'output'),
+          'the year''s VAT return equals the books'' collected-VAT lines (write-off relief and the other issuer apart)');
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002365a2","role":"authenticated"}',true);
 select throws_ok($$select public.compute_postings('00000000-0000-4000-8000-0000002365b1',
