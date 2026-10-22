@@ -191,8 +191,8 @@ class AccountingExportRun {
       case 'audit_trail':
         await _auditTrail();
       case 'generic_journal_csv':
-        await exportGenericJournal(context, ref.read(genericJournalExportProvider), workspaceId: workspace.id,
-            profiles: bookProfiles, year: year,
+        final books = ref.read(genericJournalExportProvider);
+        await exportGenericJournal(context, () => books.of(workspace.id, bookProfiles, year),
             save: (content) => save(content, named('journal')));
     }
   }
@@ -208,6 +208,12 @@ class AccountingExportRun {
   String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
   Future<void> _fec() async {
+    // #2365 — a local book's FEC is its postings, on its own chart.
+    if (localBookOf(bookProfiles, year) != null) {
+      final books = ref.read(genericJournalExportProvider);
+      return exportGenericJournal(context, () => books.fecOf(workspace.id, bookProfiles, year), save: (content) =>
+          save(content, fecFileName(company.legalId, DateTime(year, 12, 31), development: development)));
+    }
     // The owner's own VAT account (0072) if they set one — the dialog
     // is where it can still be corrected.
     final accounts = await showFecAccountsDialog(
