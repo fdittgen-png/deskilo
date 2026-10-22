@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import '../../../core/files/xlsx.dart';
 import '../../../core/i18n/currencies.dart';
+import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../money/domain/invoice.dart';
 import '../../money/domain/ledger_entry.dart';
@@ -123,8 +124,8 @@ class _ExcelExport {
   }
 
   // #1140 — the workspace currency's minor digits, never a literal 100.
-  double major(int cents) =>
-      cents / Currencies.minorPerMajor(workspace.currencyCode);
+  XlsxAmount major(int cents) => XlsxAmount(
+      cents / Currencies.minorPerMajor(workspace.currencyCode));
 
   List<XlsxSheet> sheets() => [
         _workspace(),
@@ -201,7 +202,7 @@ class _ExcelExport {
               .map((d) => d.name)
               .firstOrNull,
           s.name, s.x, s.y, s.orientation.name, s.chair,
-          s.amenities.join(', '), s.blockedFrom, s.blockedTo,
+          s.amenities.join(', '), _at(s.blockedFrom), _at(s.blockedTo),
           s.resourceKind.name, s.capacity, s.parkingKind?.name,
           s.slotMinutes,
         ],
@@ -229,9 +230,9 @@ class _ExcelExport {
         profilesByUserId[m.userId]?.vatId,
         profilesByUserId[m.userId]?.address,
         profilesByUserId[m.userId]?.whatsapp,
-        profilesByUserId[m.userId]?.lastSeenAt,
+        _at(profilesByUserId[m.userId]?.lastSeenAt),
         if (m.memberNumber.isEmpty) null else m.memberNumber,
-        m.joinedAt,
+        _at(m.joinedAt),
         m.coOwner.name,
         m.vatTreatment,
         m.paymentTerms?.paymentTerms,
@@ -247,9 +248,9 @@ class _ExcelExport {
     ],
     for (final r in reservations)
       [
-        r.id, memberName[r.memberId], spaceOf(r), r.startsAt, r.endsAt,
-        r.status.name, r.seriesId, r.seriesPattern, r.checkedInAt,
-        r.checkedOutAt,
+        r.id, memberName[r.memberId], spaceOf(r), _at(r.startsAt),
+        _at(r.endsAt), r.status.name, r.seriesId, r.seriesPattern,
+        _at(r.checkedInAt), _at(r.checkedOutAt),
       ],
   ]);
 
@@ -261,8 +262,8 @@ class _ExcelExport {
     ],
     for (final r in attended)
       [
-        r.id, memberName[r.memberId], spaceOf(r), r.checkedInAt,
-        r.checkedOutAt,
+        r.id, memberName[r.memberId], spaceOf(r), _at(r.checkedInAt),
+        _at(r.checkedOutAt),
         r.checkedOutAt?.difference(r.checkedInAt!).inMinutes,
       ],
   ]);
@@ -281,7 +282,7 @@ class _ExcelExport {
         [
           'confirmed', memberName[entry.memberId],
           major(entry.amountCents), workspace.currencyCode, entry.period,
-          entry.occurredOn, entry.createdAt, entry.description, null,
+          _day(entry.occurredOn), _at(entry.createdAt), entry.description, null,
           null,
         ],
     for (final event in pendingEvents)
@@ -290,14 +291,14 @@ class _ExcelExport {
           'pending', memberName[event.subjectMemberId],
           if (event.payload['amount_cents'] is int) major(event.payload['amount_cents'] as int) else null,
           workspace.currencyCode,
-          event.payload['period'], null, event.createdAt,
+          event.payload['period'], null, _at(event.createdAt),
           event.payload['note'], null, null,
         ],
     for (final intent in paymentIntents)
       [
         'online (${intent.status})', memberName[intent.memberId],
         major(intent.amountCents), workspace.currencyCode, intent.period,
-        null, intent.createdAt, null, intent.provider, intent.orderId,
+        null, _at(intent.createdAt), null, intent.provider, intent.orderId,
       ],
   ]);
 
@@ -312,7 +313,7 @@ class _ExcelExport {
         [
           'confirmed', memberName[entry.memberId], entry.description,
           major(entry.amountCents), workspace.currencyCode, entry.period,
-          entry.createdAt,
+          _at(entry.createdAt),
         ],
     for (final event in pendingEvents)
       if (event.type == EventType.serviceCharge)
@@ -324,7 +325,7 @@ class _ExcelExport {
                       ? event.payload['quantity'] as int
                       : 1)) else null,
           workspace.currencyCode, event.payload['period'],
-          event.createdAt,
+          _at(event.createdAt),
         ],
   ]);
 
@@ -344,16 +345,16 @@ class _ExcelExport {
     ],
     for (final i in invoices)
       [
-        i.number, memberName[i.memberId], i.period, i.issuedAt,
-        major(i.totalCents), i.currency, i.voidedAt,
+        i.number, memberName[i.memberId], i.period, _at(i.issuedAt),
+        major(i.totalCents), i.currency, _at(i.voidedAt),
         if (i.replacesNumber.isEmpty) null else i.replacesNumber, i.detailed,
-        transmissionsByInvoice[i.id],
+        _at(transmissionsByInvoice[i.id]),
         i.kind.name, i.title, major(i.netCents), major(i.vatCents),
         [
           for (final t in i.vatTotals)
-            '${t.percent}%: ${major(t.vatCents)}',
+            '${t.percent}%: ${major(t.vatCents).value.toStringAsFixed(2)}',
         ].join('; '),
-        i.dueOn, i.issuerName,
+        _day(i.dueOn), i.issuerName,
       ],
   ]);
 
@@ -412,8 +413,8 @@ class WorkspaceExportDetails {
 
 /// The detail sheets, in workbook order.
 List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
-  double major(int cents) =>
-      cents / Currencies.minorPerMajor(d.workspace.currencyCode);
+  XlsxAmount major(int cents) => XlsxAmount(
+      cents / Currencies.minorPerMajor(d.workspace.currencyCode));
   String? name(String? memberId) =>
       memberId == null ? null : d.memberName[memberId] ?? memberId;
   final levelName = {for (final l in d.levels) l.id: l.name};
@@ -445,7 +446,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
           e.id, name(e.memberId), e.kind.name, e.category.name,
           major(e.amountCents),
           major(e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents),
-          d.workspace.currencyCode, e.period, e.occurredOn, e.createdAt,
+          d.workspace.currencyCode, e.period, _day(e.occurredOn), _at(e.createdAt),
           e.description,
         ],
     ]),
@@ -457,8 +458,8 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
       for (final e in d.events)
         [
           e.id, e.type.dbName, e.action.name, e.status.name,
-          name(e.subjectMemberId), name(e.actorMemberId), e.createdAt,
-          e.decidedAt, d.decisions[e.id]?.length ?? 0,
+          name(e.subjectMemberId), name(e.actorMemberId), _at(e.createdAt),
+          _at(e.decidedAt), d.decisions[e.id]?.length ?? 0,
           if (e.payload.isEmpty) null else jsonEncode(e.payload),
         ],
     ]),
@@ -469,7 +470,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
         for (final x in d.decisions[e.id] ?? const <ExportedDecision>[])
           [
             e.id, e.type.dbName, name(x.memberId),
-            if (x.accept) 'accepted' else 'declined', x.bySystem, x.at,
+            if (x.accept) 'accepted' else 'declined', x.bySystem, _at(x.at),
           ],
     ]),
     XlsxSheet(name: 'Invoice lines', rows: [
@@ -487,3 +488,11 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
     ]),
   ];
 }
+
+/// #2861 — an instant at the workspace's wall-clock time, so a 09:00
+/// booking in Paris reads 09:00 in the sheet.
+DateTime? _at(DateTime? instant) =>
+    instant == null ? null : WorkspaceTime.wall(instant);
+
+/// #2861 — a calendar day, written without a time.
+XlsxDate? _day(DateTime? day) => day == null ? null : XlsxDate(day);
