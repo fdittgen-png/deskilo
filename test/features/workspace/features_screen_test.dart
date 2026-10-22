@@ -67,7 +67,8 @@ void main() {
     // #1835 — guestParticipation is the thirty-sixth: a space admits
     // guests deliberately.
     // #2579 — biReportDesigner: authoring reports is asked for.
-    expect(onCount, featureManifest.length - 45);
+    // #2582 — purchaseAnalytics: the purchase figures are asked for.
+    expect(onCount, featureManifest.length - 46);
   });
 
   testWidgets(

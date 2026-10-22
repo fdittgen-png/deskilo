@@ -1,0 +1,10 @@
+{
+  "featurePurchaseAnalyticsTitle": "Indicadores de compras (análisis)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsDesc": "Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  }
+}

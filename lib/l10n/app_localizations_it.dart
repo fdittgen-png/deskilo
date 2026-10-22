@@ -6303,6 +6303,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.';
 
   @override
+  String get featurePurchaseAnalyticsDesc =>
+      'Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti.';
+
+  @override
+  String get featurePurchaseAnalyticsTitle =>
+      'Indicatori degli acquisti (analisi)';
+
+  @override
   String get featurePurchasesDesc =>
       'Un solo documento per ciò che lo spazio acquista: le fatture dei fornitori vengono registrate e collegate ai loro giustificativi, e ogni ricevuta di un membro è già il documento della sua spesa. Disattivato: gli accessi agli Acquisti scompaiono; i documenti salvati restano invariati.';
 

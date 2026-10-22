@@ -1239,6 +1239,10 @@ window.SETUP_L10N={
    "biReportDesigner": [
     "Report designer (analytics)",
     "Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read."
+   ],
+   "purchaseAnalytics": [
+    "Purchase figures (analytics)",
+    "What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure."
    ]
   },
   "process": {
@@ -2702,6 +2706,10 @@ window.SETUP_L10N={
    "biReportDesigner": [
     "Concepteur de rapports (analyses)",
     "Transformez une analyse enregistrée en rapport modifiable, fait de pages et de cartes. Un rapport garde la question, jamais les chiffres : chacun ne voit que ce que ses propres droits permettent. Désactivé : les vues enregistrées restent telles quelles et les rapports existants restent lisibles."
+   ],
+   "purchaseAnalytics": [
+    "Indicateurs d'achats (analyses)",
+    "Ce que l'espace doit à ses fournisseurs, doit rembourser à ses membres, a encore à examiner et a payé, sur la page d'analyses, à partir des achats eux-mêmes. Désactivé : les achats restent tels quels et la page d'analyses n'affiche aucun indicateur d'achats."
    ]
   },
   "process": {
@@ -4165,6 +4173,10 @@ window.SETUP_L10N={
    "biReportDesigner": [
     "Berichtsdesigner (Analysen)",
     "Macht aus einer gespeicherten Analyse einen bearbeitbaren Bericht aus Seiten und Karten. Ein Bericht speichert die Frage, nie die Zahlen: Jede Person sieht nur, was ihre eigenen Rechte erlauben. Aus: Gespeicherte Ansichten bleiben unverändert, vorhandene Berichte bleiben lesbar."
+   ],
+   "purchaseAnalytics": [
+    "Einkaufskennzahlen (Analysen)",
+    "Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl."
    ]
   },
   "process": {
@@ -5628,6 +5640,10 @@ window.SETUP_L10N={
    "biReportDesigner": [
     "Diseñador de informes (análisis)",
     "Convierte un análisis guardado en un informe editable de páginas y tarjetas. Un informe guarda la pregunta, nunca las cifras: cada persona solo ve lo que permiten sus propios derechos. Desactivado: las vistas guardadas no cambian y los informes existentes siguen siendo legibles."
+   ],
+   "purchaseAnalytics": [
+    "Indicadores de compras (análisis)",
+    "Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras."
    ]
   },
   "process": {
@@ -7091,6 +7107,10 @@ window.SETUP_L10N={
    "biReportDesigner": [
     "Editor di report (analisi)",
     "Trasforma un'analisi salvata in un report modificabile fatto di pagine e schede. Un report conserva la domanda, mai le cifre: ognuno vede solo ciò che i propri diritti consentono. Disattivato: le viste salvate restano invariate e i report esistenti restano leggibili."
+   ],
+   "purchaseAnalytics": [
+    "Indicatori degli acquisti (analisi)",
+    "Ciò che lo spazio deve ai fornitori, deve rimborsare ai membri, deve ancora esaminare e ha pagato, nella pagina delle analisi, a partire dagli acquisti stessi. Disattivato: gli acquisti restano come sono e la pagina delle analisi non mostra alcun indicatore degli acquisti."
    ]
   },
   "process": {

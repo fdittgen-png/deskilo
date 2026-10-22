@@ -80,7 +80,7 @@ BiChange changeBetween(num? now, num? then, KpiAggregation aggregation) {
   if (now == null || then == null) return const BiChange();
   return switch (aggregation) {
     KpiAggregation.ratioOfSums => BiChange(points: (now - then) * 100),
-    KpiAggregation.sum => BiChange(
+    KpiAggregation.sum || KpiAggregation.lastAtCutoff => BiChange(
       absolute: now - then,
       relative: then == 0 ? null : (now - then) / then.abs(),
     ),

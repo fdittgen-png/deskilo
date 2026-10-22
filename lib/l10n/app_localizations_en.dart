@@ -6259,6 +6259,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.';
 
   @override
+  String get featurePurchaseAnalyticsDesc =>
+      'What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure.';
+
+  @override
+  String get featurePurchaseAnalyticsTitle => 'Purchase figures (analytics)';
+
+  @override
   String get featurePurchasesDesc =>
       'One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.';
 

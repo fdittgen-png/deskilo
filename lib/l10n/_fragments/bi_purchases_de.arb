@@ -1,0 +1,10 @@
+{
+  "featurePurchaseAnalyticsTitle": "Einkaufskennzahlen (Analysen)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsDesc": "Was der Space seinen Lieferanten schuldet, seinen Mitgliedern erstatten muss, noch prüfen muss und ausgezahlt hat, auf der Analyseseite, aus den Einkaufsbelegen selbst. Aus: Die Einkäufe bleiben, wie sie sind, und die Analyseseite zeigt keine Einkaufskennzahl.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  }
+}

@@ -7442,6 +7442,14 @@
   },
   "featurePublicListings": "Public workspace listing",
   "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.",
+  "featurePurchaseAnalyticsDesc": "What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure.",
+  "@featurePurchaseAnalyticsDesc": {
+    "description": "#2582 purchase analytics"
+  },
+  "featurePurchaseAnalyticsTitle": "Purchase figures (analytics)",
+  "@featurePurchaseAnalyticsTitle": {
+    "description": "#2582 purchase analytics"
+  },
   "featurePurchasesDesc": "One document for what the space buys: supplier bills are captured and linked to their evidence, and each member receipt is already the document of its expense. Off: the Purchases entry points disappear; stored documents stay untouched.",
   "@featurePurchasesDesc": {
     "description": "#2573 purchases"

@@ -6306,6 +6306,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Publica solo los datos y planos elegidos, con propietarios visibles y contactos opcionales de administradores.';
 
   @override
+  String get featurePurchaseAnalyticsDesc =>
+      'Lo que el espacio debe a sus proveedores, tiene que reembolsar a sus miembros, aún tiene que revisar y ha pagado, en la página de análisis, a partir de las propias compras. Desactivado: las compras quedan como están y la página de análisis no muestra ningún indicador de compras.';
+
+  @override
+  String get featurePurchaseAnalyticsTitle =>
+      'Indicadores de compras (análisis)';
+
+  @override
   String get featurePurchasesDesc =>
       'Un único documento para lo que compra el espacio: las facturas de proveedor se registran y se vinculan a sus justificantes, y cada recibo de un miembro ya es el documento de su gasto. Desactivado: desaparecen los accesos a Compras; los documentos guardados no cambian.';
 

@@ -192,7 +192,8 @@ window.SETUP_PROCESSES=[
      "expenseRepartition",
      "purchases",
      "premisesLease",
-     "assetRegister"
+     "assetRegister",
+     "purchaseAnalytics"
     ]
    },
    {

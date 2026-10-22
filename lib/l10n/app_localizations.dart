@@ -10829,6 +10829,18 @@ abstract class AppLocalizations {
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
   String get featurePublicListingsDesc;
 
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure.'**
+  String get featurePurchaseAnalyticsDesc;
+
+  /// #2582 purchase analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase figures (analytics)'**
+  String get featurePurchaseAnalyticsTitle;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:

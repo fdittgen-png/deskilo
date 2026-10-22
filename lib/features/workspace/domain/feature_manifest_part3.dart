@@ -321,4 +321,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // #2582 — the purchase side of the figures: what is owed, to reimburse,
+  // to review and paid out. A purchases feature, never a BI root.
+  WorkspaceFeature.purchaseAnalytics: FeatureManifestEntry(
+    feature: WorkspaceFeature.purchaseAnalytics,
+    surface: FeatureSurface.reports,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.purchases,
+    defaultOn: false,
+  ),
 };
