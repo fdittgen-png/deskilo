@@ -489,8 +489,8 @@ void main() {
       // obligation, and a wrong one is a false statement to a tax
       // authority — worse than shipping nothing.
       final regulatory = {
-        for (final f in accountingFormats)
-          if (f.claim == FormatClaim.regulatory) f.id: f.countries,
+        for (final t in accountingTargets)
+          if (t.format?.claim == FormatClaim.regulatory) t.id: t.countries,
       };
       expect(regulatory, {
         'fec': {'FR'},

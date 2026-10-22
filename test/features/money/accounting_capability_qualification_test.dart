@@ -13,9 +13,9 @@ void main() {
   test('every offered format has one reviewed decision, and no stray ones', () {
     expect(
       accountingCapabilities.keys.toSet(),
-      accountingFormats.map((f) => f.id).toSet(),
+      accountingTargets.map((t) => t.format).nonNulls.map((f) => f.id).toSet(),
     );
-    for (final f in accountingFormats) {
+    for (final f in accountingTargets.map((t) => t.format).nonNulls) {
       expect(capabilityOf(f).producible, isTrue, reason: f.id);
     }
   });
@@ -34,7 +34,7 @@ void main() {
   });
 
   test('no format is recorded as accepted by a target', () {
-    for (final f in accountingFormats) {
+    for (final f in accountingTargets.map((t) => t.format).nonNulls) {
       expect(
         capabilityOf(f).state,
         isNot(QualificationState.targetAccepted),
@@ -44,7 +44,7 @@ void main() {
   });
 
   test('every regulatory format carries an open obligation', () {
-    for (final f in accountingFormats.where(
+    for (final f in accountingTargets.map((t) => t.format).nonNulls.where(
       (f) => f.claim == FormatClaim.regulatory,
     )) {
       expect(capabilityOf(f).obligations, isNotEmpty, reason: f.id);
@@ -55,7 +55,6 @@ void main() {
     const stray = AccountingFormat(
       id: 'stray',
       claim: FormatClaim.exchange,
-      countries: {},
       extension: 'csv',
     );
     expect(capabilityOf(stray).state, QualificationState.unsupported);
