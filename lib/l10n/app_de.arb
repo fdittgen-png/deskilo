@@ -11070,6 +11070,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Bereit für eine erste Buchung",
+  "readinessGrantMembers": "Mitglieder buchen lassen",
+  "readinessGrantMembersDone": "Mitglieder können jetzt buchen, den Kalender sehen, einander schreiben und ihr eigenes Konto sehen.",
   "readinessLater": "Später nötig",
   "readinessNeededFirst": "Nötig für eine erste Buchung",
   "readinessNeededInvoicing": "Vor der Rechnungsstellung nötig",

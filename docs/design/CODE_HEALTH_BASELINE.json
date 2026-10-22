@@ -1,8 +1,8 @@
 {
-  "recordedSha": "fce361968db4538b53d96db2055276b60d30ad3d",
+  "recordedSha": "6d844619f500befb0352daf4747b10edd316f883",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1803,"functions":10068,"cyclomatic>=9":1066,"cyclomatic>=25":106,"cognitive>=15":430,"cognitive>=30":94,"length>=150":73,"parameters>=5":488,"parameters>=7":150,"partOfFiles":42},
+  "totals": {"files":1804,"functions":10071,"cyclomatic>=9":1067,"cyclomatic>=25":106,"cognitive>=15":430,"cognitive>=30":94,"length>=150":73,"parameters>=5":488,"parameters>=7":150,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -2172,6 +2172,7 @@
     {"p":"lib/features/workspace/application/deploy_configuration.dart","loc":74,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":10,"cyc":6,"len":29,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/application/feature_switch.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":18,"cyc":14,"len":39,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/application/generate_public_holidays.dart","loc":20,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":9,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/application/grant_member_essentials.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":11,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/application/import_public_holidays.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/application/instance_roles.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":6,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/application/pending_invitation.dart","loc":86,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":6,"cyc":11,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2432,7 +2433,7 @@
     {"p":"lib/features/workspace/presentation/widgets/invite_roles_picker.dart","loc":81,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":16,"cyc":12,"len":62,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/invite_sheet.dart","loc":338,"part":false,"setState":3,"repositoryReads":1,"fn":14,"cog":7,"cyc":7,"len":121,"params":9,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/presentation/widgets/legend_profile_tile.dart","loc":62,"part":false,"setState":0,"repositoryReads":1,"fn":2,"cog":3,"cyc":4,"len":35,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/local_setup_views.dart","loc":117,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":7,"cyc":9,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/local_setup_views.dart","loc":129,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":11,"cyc":11,"len":52,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/member_note_actions.dart","loc":97,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":7,"cyc":7,"len":42,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/member_note_body.dart","loc":127,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":11,"len":89,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/member_note_composer.dart","loc":514,"part":false,"setState":4,"repositoryReads":1,"fn":14,"cog":28,"cyc":23,"len":195,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -2487,7 +2488,7 @@
     {"p":"lib/features/workspace/presentation/widgets/workspace_fields_section.dart","loc":262,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":31,"cyc":26,"len":127,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/workspace_form_group.dart","loc":122,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":6,"cyc":7,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/workspace_own_screens.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":53,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/workspace_readiness_card.dart","loc":291,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":43,"cyc":33,"len":159,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/workspace_readiness_card.dart","loc":321,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":45,"cyc":36,"len":170,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/workspace_reports.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":25,"cyc":28,"len":53,"params":4,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/workbook_labels.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":6,"len":26,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/workspace_configuration_report_strings.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":2,"len":36,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2832,7 +2833,7 @@
     {"id":"lib/features/workspace/presentation/widgets/save_template_sheet.dart#_SaveTemplateSheetState.build(BuildContext context)","cog":43,"cyc":26,"len":161,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build(BuildContext context)","cog":51,"cyc":19,"len":111,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/workspace_fields_section.dart#_WorkspaceFieldsSectionState._control(WorkspaceField field,FieldProblem? problem,AppLocalizations l10n,ThemeData theme)","cog":31,"cyc":26,"len":127,"params":4},
-    {"id":"lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build(BuildContext context,WidgetRef ref)","cog":43,"cyc":33,"len":159,"params":2},
+    {"id":"lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build(BuildContext context,WidgetRef ref)","cog":45,"cyc":36,"len":170,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/workspace_reports.dart#WorkspaceReports.build(BuildContext context,WidgetRef ref)","cog":25,"cyc":28,"len":53,"params":2},
     {"id":"lib/features/workspace/providers/attention_providers.dart#attention(Ref ref)","cog":33,"cyc":20,"len":127,"params":1}
   ]
