@@ -88,7 +88,10 @@ enum PostingKind {
   expense('expense'),
   supplierBill('supplier_bill'),
   supplierCreditNote('supplier_credit_note'),
-  supplierPayment('supplier_payment');
+  supplierPayment('supplier_payment'),
+
+  /// #2365 (0521) — output tax leaving `vat_pending` on its tax point.
+  vatRelease('vat_release');
 
   const PostingKind(this.wire);
   final String wire;

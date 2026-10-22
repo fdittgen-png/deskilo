@@ -374,6 +374,10 @@ class VatTaxPointIndex {
 
   final _byInvoice = <String, List<VatTaxPointAmount>>{};
 
+  /// #2365 — every dated amount of [invoiceId].
+  List<VatTaxPointAmount> amountsOf(String invoiceId) =>
+      _byInvoice[invoiceId] ?? const [];
+
   /// [invoiceId]'s amounts summed per tax point day by [of], in date
   /// order; empty when nothing of it is due yet.
   Map<DateTime, int> byDay(

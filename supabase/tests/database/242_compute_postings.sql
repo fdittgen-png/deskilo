@@ -6,18 +6,20 @@
 -- rest written off; CN-1 a credit note. Every entry balances; the reduced
 -- rate books to its qualified accounts; a period keeps only its own events;
 -- an issuer with no chart is blocked with the role named; a plain member
--- reads nothing.
+-- reads nothing. 0521: the year is on the debits, but INV-4 printed « on
+-- receipts »: its tax waits on 44574 and half of it is released when half
+-- is paid.
 begin;
-select plan(17);
+select plan(20);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002365'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
  'authenticated','authenticated',suffix||'@postings.test','',now(),now(),now()
   from unnest(array['a1','a2','a3']) suffix;
-insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags) values
+insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags,invoice_legal) values
  ('00000000-0000-4000-8000-0000002365b1','Postings','FR','EUR','Europe/Paris','00000000-0000-4000-8000-0000002365a1','dev',
   '{"moneyTab":true,"invoicing":true,"accountingBook":true,"purchases":true,"supplyExpenses":true,
-    "scheduledExpenses":true,"inputVat":true,"vatManagement":true}');
+    "scheduledExpenses":true,"inputVat":true,"vatManagement":true}', '{"vat_tax_point":"invoice","vat_exigibility":"invoice"}');
 insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
  ('00000000-0000-4000-8000-0000002365c1','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a1',true,true,'active'),
  ('00000000-0000-4000-8000-0000002365c2','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365a2',false,false,'active'),
@@ -58,7 +60,17 @@ insert into public.invoices (id, workspace_id, member_id, issuer_member_id, numb
   '00000000-0000-4000-8000-0000002365c1','ANX-1','T', jsonb_build_array(pg_temp.ln('subscription',1200,20)),
   1200,'EUR','Ana','w','Flo','sig','2026-03-05 10:00+00','00000000-0000-4000-8000-0000002365d2',
   jsonb_build_array(pg_temp.vt(20,1200,1000,200)));
+-- The space returns to the French default (on receipts) before INV-4: the
+-- invoice freezes it in its legal snapshot.
+update public.workspaces set invoice_legal = '{}' where id = '00000000-0000-4000-8000-0000002365b1';
+insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents, currency,
+                             member_name, workspace_name, issuer_name, signature, issued_at, site_id, vat_totals) values
+ ('00000000-0000-4000-8000-0000002365e6','00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365c1',
+  '00000000-0000-4000-8000-0000002365c1','INV-4','T', jsonb_build_array(pg_temp.ln('subscription',12000,20)),
+  12000,'EUR','Ana','w','Flo','sig','2026-07-05 10:00+00','00000000-0000-4000-8000-0000002365d1',
+  jsonb_build_array(pg_temp.vt(20,12000,10000,2000)));
 insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, matched_at, writeoff_at) values
+ ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e6',6000,'under_accepted','2026-07-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e1',15550,'exact','2026-03-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e2',12000,'under_accepted','2026-04-20 10:00+00',null),
  ('00000000-0000-4000-8000-0000002365b1','00000000-0000-4000-8000-0000002365e3',6000,'under_accepted','2026-05-20 10:00+00','2026-05-25 10:00+00');
@@ -103,6 +115,7 @@ select pg_temp.map('write_off','654','expense');
 
 select pg_temp.map('suppliers','401','liability');
 select pg_temp.map('vat_input','44566','asset');
+select pg_temp.map('vat_pending','44574','liability');
 
 -- 0519: a supplier bill of 180.00 dated 10 March, decided by a second admin,
 -- paid 180.00 on 2 April; a second bill left in draft posts nothing.
@@ -138,7 +151,7 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000023
 select set_config('t.r', public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-01-01', '2026-12-31')::text, true);
 
-select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 12, 'the year is twelve entries');
+select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'postings'), 15, 'the year is fifteen entries');
 select is(jsonb_array_length(current_setting('t.r')::jsonb -> 'blockers'), 0, 'with the full chart nothing blocks');
 select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l ->> 'credit_cents')::bigint)
                               from jsonb_array_elements(p -> 'lines') l))
@@ -150,6 +163,13 @@ select is(pg_temp.lines('INV-1','expense'), '625:D3000,411:C3000', 'its netted e
 select is(pg_temp.lines('INV-1','receipt','2026-03-20'), '512:D15550,411:C15550', 'the receipt is dated on its match');
 select is(pg_temp.lines('INV-3','write_off'), '654:D3334,44571:D666,411:C4000', 'INV-3 written off with 6.66 of output tax regularised');
 select is(pg_temp.lines('CN-1','credit_note'), '411:C5000,706:D4167,44571:D833', 'CN-1 mirrors an invoice');
+select is(pg_temp.lines('INV-4','invoice'), '411:D12000,706:C10000,44574:C2000',
+  'INV-4 on receipts: its tax waits on the pending account');
+select is(pg_temp.lines('INV-4','vat_release'), '44574:D1000,44571:C1000',
+  'half of it is due when half is paid, on the day of the payment');
+select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
+  '00000000-0000-4000-8000-0000002365d1', '2026-07-01', '2026-07-31') -> 'postings'), 3,
+  'July: INV-4, its receipt and the tax it released');
 
 select is(jsonb_array_length(public.compute_postings('00000000-0000-4000-8000-0000002365b1',
   '00000000-0000-4000-8000-0000002365d1', '2026-04-01', '2026-04-30') -> 'postings'), 3,
