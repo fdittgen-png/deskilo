@@ -634,5 +634,9 @@
   "moneyFaceUsage": "Usage",
   "@moneyFaceUsage": {
     "description": "#833 - the Money tab face showing usage records"
+  },
+  "moneySectionPurchases": "Purchases and books",
+  "@moneySectionPurchases": {
+    "description": "Money tab (#2577): what the space buys and owes, apart from a member's own requests"
   }
 }

@@ -21790,6 +21790,12 @@ abstract class AppLocalizations {
   /// **'Pay'**
   String get moneySectionPay;
 
+  /// Money tab (#2577): what the space buys and owes, apart from a member's own requests
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases and books'**
+  String get moneySectionPurchases;
+
   /// Finance/settings UX + workspace language (#486)
   ///
   /// In en, this message translates to:

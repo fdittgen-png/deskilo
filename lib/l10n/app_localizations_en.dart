@@ -12732,6 +12732,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneySectionPay => 'Pay';
 
   @override
+  String get moneySectionPurchases => 'Purchases and books';
+
+  @override
   String get moneySectionRequests => 'Requests';
 
   @override

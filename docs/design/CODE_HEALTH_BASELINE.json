@@ -1,8 +1,8 @@
 {
-  "recordedSha": "3df2ac1cbf2a8dfc7802f760d1808c169f11282d",
-  "recordedDate": "2026-10-21",
+  "recordedSha": "cbad9215b2937149117835e6c238fc4ac49c451f",
+  "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1760,"functions":9847,"cyclomatic>=9":1045,"cyclomatic>=25":107,"cognitive>=15":425,"cognitive>=30":97,"length>=150":72,"parameters>=5":472,"parameters>=7":151,"partOfFiles":43},
+  "totals": {"files":1760,"functions":9848,"cyclomatic>=9":1045,"cyclomatic>=25":107,"cognitive>=15":424,"cognitive>=30":97,"length>=150":72,"parameters>=5":472,"parameters>=7":151,"partOfFiles":43},
   "budgets": {
     "partOfFiles": 43,
     "fileLength": {
@@ -1660,9 +1660,9 @@
     {"p":"lib/features/money/presentation/screens/invoices_screen.dart","loc":361,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":24,"cyc":28,"len":306,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/screens/invoicing_wizard_screen.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":10,"len":45,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/legal_identity_screen.dart","loc":455,"part":false,"setState":9,"repositoryReads":0,"fn":4,"cog":34,"cyc":34,"len":364,"params":1,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/money/presentation/screens/money_action_set.dart","loc":228,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":19,"cyc":19,"len":122,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/screens/money_action_set.dart","loc":241,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":14,"cyc":16,"len":86,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_body.dart","loc":129,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":6,"len":57,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/screens/money_face_content.dart","loc":202,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":13,"cyc":15,"len":69,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/screens/money_face_content.dart","loc":210,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":13,"cyc":15,"len":69,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_member_documents.dart","loc":253,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":9,"cyc":14,"len":67,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_online_payment.dart","loc":232,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":11,"cyc":13,"len":68,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_payment_forms.dart","loc":231,"part":false,"setState":4,"repositoryReads":0,"fn":12,"cog":5,"cyc":3,"len":39,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

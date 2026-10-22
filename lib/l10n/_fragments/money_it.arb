@@ -374,5 +374,6 @@
   "scheduleUnitWeeks": "settimane",
   "scheduleUnitMonths": "mesi",
   "scheduleUnitYears": "anni",
-  "moneyFaceUsage": "Utilizzo"
+  "moneyFaceUsage": "Utilizzo",
+  "moneySectionPurchases": "Acquisti e contabilità"
 }

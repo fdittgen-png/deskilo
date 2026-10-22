@@ -8772,6 +8772,7 @@
   "@moneySectionPay": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
+  "moneySectionPurchases": "Compras y contabilidad",
   "moneySectionRequests": "Solicitudes",
   "@moneySectionRequests": {
     "description": "Finance/settings UX + workspace language (#486)"

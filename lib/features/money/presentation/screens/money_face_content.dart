@@ -116,6 +116,10 @@ class MoneyFaceContent {
       if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
       sectionLabel(_l10n.moneySectionRequests),
       MoneyActionGrid(actions.requestButtons),
+      if (actions.purchaseButtons.isNotEmpty) ...[
+        sectionLabel(_l10n.moneySectionPurchases),
+        MoneyActionGrid(actions.purchaseButtons),
+      ],
       sectionLabel(_l10n.moneySectionDocuments),
       for (final tile in [actions.invoices, actions.status, actions.wizard])
         if (tile != null) ...[tile, const SizedBox(height: 8)],
@@ -220,6 +224,10 @@ class MoneyFaceContent {
         if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
         moneySectionLabel(context, _l10n.moneySectionRequests),
         MoneyActionGrid(actions.requestButtons),
+        if (actions.purchaseButtons.isNotEmpty) ...[
+          moneySectionLabel(context, _l10n.moneySectionPurchases),
+          MoneyActionGrid(actions.purchaseButtons),
+        ],
         financesLink(),
       ],
       MoneyFace.invoices: [financesLink()],
