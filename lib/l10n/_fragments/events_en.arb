@@ -247,5 +247,13 @@
   "eventTypeUnknown": "Activity",
   "@eventTypeUnknown": {
     "description": "#1088 an event type this build does not know: the row still shows"
+  },
+  "eventOpenSource": "Open the purchase document",
+  "eventSourceNotFound": "No purchase document was filed for this request, or you may not see it.",
+  "@eventOpenSource": {
+    "description": "#2573 open the purchase an expense request was filed as"
+  },
+  "@eventSourceNotFound": {
+    "description": "#2573 open the purchase an expense request was filed as"
   }
 }

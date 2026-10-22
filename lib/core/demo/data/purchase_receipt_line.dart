@@ -23,3 +23,13 @@ PurchaseLine claimReceiptLine(PayableRow row, double? rate) {
     recoverableTaxCents: split.vatCents,
   );
 }
+
+/// #2573 — the demonstration files no expense request as a document.
+mixin NoFiledPurchases implements PurchaseRepository {
+  @override
+  Future<String?> purchaseFiledFrom(
+    String workspaceId, {
+    required String sourceKind,
+    required String sourceId,
+  }) async => null;
+}

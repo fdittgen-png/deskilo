@@ -161,5 +161,13 @@
   "purchasesPickDate": "Datum wählen",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
-  }
+  },
+  "purchaseSettlementNothingOwed": "Nichts geschuldet",
+  "purchaseSettlementUnpaid": "Unbezahlt",
+  "purchaseSettlementPartly": "Teilweise beglichen",
+  "purchaseSettlementSettled": "Beglichen",
+  "purchaseQualified": "Buchhaltung qualifiziert",
+  "purchaseNeedsReview": "Zu prüfen",
+  "purchaseTaxNotQualified": "Steuer nicht qualifiziert",
+  "purchaseUnverified": "Ungeprüft (vor dem Einkauf abgelegt)"
 }

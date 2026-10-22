@@ -5439,6 +5439,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventOpenSource => 'Abrir el documento de compra';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor registró un pago de $amount';
   }
@@ -5521,6 +5524,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String eventServiceChargeTitle(String name, int quantity, String amount) {
     return '$name ×$quantity — $amount';
   }
+
+  @override
+  String get eventSourceNotFound =>
+      'No se archivó ningún documento de compra para esta solicitud, o no puede verlo.';
 
   @override
   String get eventSystemDecider => 'Sistema';
@@ -15288,6 +15295,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get publicProfileTitle => 'Perfil público';
+
+  @override
+  String get purchaseNeedsReview => 'Por revisar';
+
+  @override
+  String get purchaseQualified => 'Contabilidad cualificada';
+
+  @override
+  String get purchaseSettlementNothingOwed => 'Nada adeudado';
+
+  @override
+  String get purchaseSettlementPartly => 'Saldado en parte';
+
+  @override
+  String get purchaseSettlementSettled => 'Saldado';
+
+  @override
+  String get purchaseSettlementUnpaid => 'Sin pagar';
+
+  @override
+  String get purchaseTaxNotQualified => 'Impuesto no cualificado';
+
+  @override
+  String get purchaseUnverified =>
+      'Sin verificar (archivado antes de las compras)';
 
   @override
   String get purchasesAddBill => 'Añadir factura de proveedor';

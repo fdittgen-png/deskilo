@@ -94,6 +94,7 @@ import '../cache/cache_store.dart';
 import '../files/file_saver.dart';
 import '../links/link_launcher.dart';
 import '../locale/locale_controller.dart';
+import '../navigation/event_sources.dart';
 import '../navigation/navigation_style.dart';
 import '../notifications/notification_providers.dart';
 import '../push/push_opt_out.dart';
@@ -270,6 +271,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
       workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
+      // #2573 — the demo files no expense request as a purchase document,
+      // and the app's opener reads the server: none here.
+      eventSourceOpenersProvider.overrideWithValue(const {}),
       // #1918 — capacity over the demo's own plan and bookings.
       kpiRepositoryProvider.overrideWithValue(
         DemoCapacityKpiRepository(

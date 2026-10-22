@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/event_sources.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -58,9 +59,23 @@ class PendingDecisionsSection extends ConsumerWidget {
     AppSnack.error(context, reason.isEmpty ? base : '$base\n$reason');
   }
 
+  /// #2573 — the record the request was filed as (an expense's purchase
+  /// document), read only; a request filed as nothing the reader may see
+  /// says so.
+  Future<void> _openSource(BuildContext context, EventSourceOpener opener,
+      String workspaceId, WorkspaceEvent event) async {
+    final l10n = context.l10n;
+    final opened = await opener.open(context, workspaceId, event.id);
+    if (!opened && context.mounted) {
+      AppSnack.info(context, l10n.eventSourceNotFound);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final openers = ref.watch(eventSourceOpenersProvider);
+    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final decisions = ref.watch(eventDecisionsProvider).value ??
@@ -149,6 +164,14 @@ class PendingDecisionsSection extends ConsumerWidget {
                 // accept green. Decline is an icon (48dp,
                 // tooltip); Accept keeps its word — a money
                 // decision deserves a labeled button.
+                if ((openers[event.type.dbName], workspaceId)
+                    case (final opener?, final ws?))
+                  IconButton(
+                    key: ValueKey('pending-decisions-section-event-source-${event.id}'),
+                    tooltip: l10n.eventOpenSource,
+                    onPressed: () => _openSource(context, opener, ws, event),
+                    icon: const Icon(Icons.receipt_long_outlined),
+                  ),
                 IconButton(
                   key: ValueKey('pending-decisions-section-event-reject-${event.id}'),
                   tooltip: l10n.eventReject,

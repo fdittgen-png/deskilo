@@ -16,6 +16,7 @@ import 'purchase_decision_bar.dart';
 import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
 import 'purchase_payables.dart';
+import 'purchase_status_chips.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
 /// offer it; the server shows a member their own documents and a manager all.
@@ -181,6 +182,25 @@ Future<void> _showDetailSheet(
   ),
 );
 
+/// #2573 — one document, read only, opened from elsewhere (the decision on
+/// the expense request it was filed from): paying, capturing and deciding
+/// stay on the purchases page.
+Future<void> showPurchaseDetail(
+  BuildContext context,
+  String workspaceId,
+  String purchaseId,
+) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => _PurchaseDetailView(
+    workspaceId: workspaceId,
+    purchaseId: purchaseId,
+    canPay: false,
+    canCapture: false,
+    canDecide: false,
+  ),
+);
+
 /// One purchase document as the server read it.
 class _PurchaseDetailView extends ConsumerWidget {
   const _PurchaseDetailView({
@@ -224,11 +244,8 @@ class _PurchaseDetailView extends ConsumerWidget {
       title: purchaseKindLabel(l10n, s.kind),
       children: [
         const SizedBox(height: AppSpacing.sm),
-        Text(
-          purchaseStateLabel(l10n, s.state),
-          key: const ValueKey('purchase-state'),
-          style: theme.textTheme.titleSmall,
-        ),
+        // #2577 — approval, settlement and qualification, apart.
+        PurchaseStatusChips(detail: detail),
         if (s.state == PurchaseState.draft &&
             s.kind != PurchaseKind.memberReceipt)
           Text(l10n.purchasesDraftNote),

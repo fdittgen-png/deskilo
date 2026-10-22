@@ -5,7 +5,7 @@ import 'purchase_receipt_line.dart';
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
 /// what the dialog saved, replaying a request id as the server does.
-class FakePurchaseRepository implements PurchaseRepository {
+class FakePurchaseRepository with NoFiledPurchases implements PurchaseRepository {
   FakePurchaseRepository();
 
   /// The demo space: two approved claims of the demo members, one untouched
