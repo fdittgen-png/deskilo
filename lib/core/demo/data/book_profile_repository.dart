@@ -194,4 +194,24 @@ class FakeBookProfileRepository implements BookProfileRepository {
       book.blockers,
     );
   }
+
+  /// #2376 — the demo's invoices name their member; its purchases none.
+  @override
+  Future<Map<String, PostingParty>> fetchPostingParties(
+    String workspaceId,
+    List<String> documentIds,
+  ) async {
+    final m = money;
+    if (m == null) return const {};
+    final wanted = documentIds.toSet();
+    return {
+      for (final i in await m.fetchInvoices(workspaceId))
+        if (wanted.contains(i.id))
+          i.id: PostingParty(
+            kind: 'member',
+            number: i.memberId,
+            name: i.memberName,
+          ),
+    };
+  }
 }

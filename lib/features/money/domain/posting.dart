@@ -180,3 +180,28 @@ PostingLine _lineFromJson(JsonReader r, String currency) => PostingLine(
   debit: AccountingAmount(currency, r.integer('debit_cents')),
   credit: AccountingAmount(currency, r.integer('credit_cents')),
 );
+
+/// #2376 (0525) — the third party of a posted document: the member of an
+/// invoice or of a receipt, the supplier of a bill, by number and name. The
+/// FEC's auxiliary account (CompAuxNum / CompAuxLib).
+class PostingParty {
+  const PostingParty({
+    required this.kind,
+    required this.number,
+    required this.name,
+  });
+
+  factory PostingParty.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'posting_parties');
+    return PostingParty(
+      kind: r.string('kind'),
+      number: r.stringOr('number'),
+      name: r.stringOr('name'),
+    );
+  }
+
+  /// `member` or `supplier`.
+  final String kind;
+  final String number;
+  final String name;
+}
