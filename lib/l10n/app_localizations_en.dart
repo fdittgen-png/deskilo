@@ -19132,6 +19132,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideLater => 'For a later milestone';
 
   @override
+  String get setupGuideLevelsLink => 'Choose what your space does';
+
+  @override
   String get setupGuideNext => 'Next';
 
   @override
@@ -19164,12 +19167,172 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String setupLevelName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings_simple': 'Shared places',
+      'bookings_resources': 'Rooms and resources',
+      'bookings_measured': 'Measured use',
+      'community_basic': 'Basic',
+      'community_organised': 'Organised',
+      'money_none': 'No money',
+      'money_statements': 'Statements',
+      'money_invoices': 'Invoices',
+      'payments_off': 'By transfer',
+      'payments_online': 'Online',
+      'tax_none': 'No VAT',
+      'tax_vat': 'VAT',
+      'tax_books': 'Books',
+      'purchases_none': 'None',
+      'purchases_expenses': 'Expenses',
+      'purchases_full': 'Full purchasing',
+      'presentation_basic': 'Basic',
+      'presentation_branded': 'Your colours',
+      'presentation_public': 'Public page',
+      'operations_basic': 'Basic',
+      'operations_insight': 'Figures',
+      'operations_advanced': 'Advanced',
+      'assistant_off': 'Off',
+      'assistant_on': 'On',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLevelsApplied => 'Your space now does what you chose.';
+
+  @override
+  String get setupLevelsApply => 'Apply';
+
+  @override
+  String setupLevelsBecause(String reason) {
+    return 'Because $reason';
+  }
+
+  @override
+  String get setupLevelsChoice => 'What it needs';
+
+  @override
+  String get setupLevelsConfirmOff =>
+      'Some features will be switched off. What they hold stays, but they stop working until they are switched on again.';
+
+  @override
+  String get setupLevelsConflict =>
+      'The features changed meanwhile. Look again, then apply.';
+
+  @override
+  String setupLevelsGap(String level, String needed) {
+    return '$level needs $needed';
+  }
+
+  @override
+  String get setupLevelsIntro =>
+      'Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.';
+
+  @override
+  String get setupLevelsNoChange =>
+      'Nothing changes: the space already does this.';
+
+  @override
+  String get setupLevelsPresets => 'Quick start';
+
+  @override
+  String get setupLevelsQuestions => 'About your space';
+
+  @override
+  String setupLevelsSwitchOff(String features) {
+    return 'Switches off: $features';
+  }
+
+  @override
+  String setupLevelsSwitchOn(String features) {
+    return 'Switches on: $features';
+  }
+
+  @override
+  String get setupLevelsTitle => 'What your space does';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Take bookings',
       'money': 'Ready for money',
       'invoice': 'Ready to invoice',
       'live': 'Live',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupPresetName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'essentiel': 'Essential',
+      'standard': 'Standard',
+      'complet': 'Complete',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupProcessName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings': 'Bookings',
+      'community': 'Community',
+      'money': 'Money',
+      'payments': 'Payments',
+      'tax': 'Tax',
+      'purchases': 'Purchases',
+      'presentation': 'Presentation',
+      'operations': 'Operations',
+      'assistant': 'Assistant',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupQuestion(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members_owe_money': 'Members owe the space money (rent, passes, extras)',
+      'issue_invoices': 'You issue invoices',
+      'pay_online': 'Members pay online',
+      'vat_registered': 'The space is registered for VAT',
+      'keep_books': 'You keep accounting books',
+      'tracks_purchases': 'You track what the space buys',
+      'several_rooms_or_sites':
+          'Several rooms, a meeting room or several sites',
+      'door_tablet': 'A tablet at the door checks people in',
+      'public_page': 'A public page shows the space',
+      'organised': 'Committees, own roles or approvals by several people',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupReason(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'door_tablet': 'a tablet at the door checks people in',
+      'keeps_books': 'you keep accounting books',
+      'later': 'an assistant can come later',
+      'members_only': 'only members see the space',
+      'members_owe': 'members owe the space money',
+      'no_money': 'no money changes hands',
+      'no_purchases': 'the space buys nothing it tracks',
+      'no_vat': 'the space is not registered for VAT',
+      'organised': 'several people decide together',
+      'pay_by_transfer': 'members pay by transfer',
+      'pay_online': 'members pay online',
+      'public_page': 'the space has a public page',
+      'several_rooms': 'there are several rooms or sites',
+      'shared_places': 'members share the places',
+      'small_community': 'a small community',
+      'start_simple': 'start simple',
+      'tracks_purchases': 'you track what the space buys',
+      'vat_registered': 'the space is registered for VAT',
+      'issues_invoices': 'you issue invoices',
       'other': '$key',
     });
     return '$_temp0';
