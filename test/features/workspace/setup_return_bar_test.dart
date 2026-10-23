@@ -132,9 +132,9 @@ void main() {
   });
 
   // #2870 — the app's router re-reads where the person is whenever a
-  // membership, a feature or the session changes, and rebuilds the stack
-  // from it: the step's push never answers then. The guide still reads
-  // the status again on the way back, and the bar still goes.
+  // membership, a feature or the session changes. #2911 — the refresh
+  // keeps the step's page and its push's answer, so the guide reads the
+  // status again on the way back, and the bar goes.
   testWidgets('a router refresh while a step is open: Back still reads the '
       'status again and lowers the bar', (tester) async {
     final local = FakeLocalSetupRepository(status: _status);
@@ -171,8 +171,7 @@ void main() {
 
     // The step did its work, and the app's router refreshed meanwhile.
     local.status = _placesReady;
-    reportCurrentLocation(router);
-    router.refresh();
+    reaskRedirect(router);
     await _frames(tester);
     expect(find.text('editor'), findsOneWidget);
 
