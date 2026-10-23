@@ -37,127 +37,12 @@ import 'backend_settings.dart';
 import 'connected_installations.dart';
 import 'federation_authority.dart';
 import 'federation_handoff.dart';
+import 'identity_connect.dart';
 import 'installation_auth_storage.dart';
 import 'native_federation_flow.dart' show NativeFederationFlow;
 import 'schema_version.dart' show isMissingFunction;
 
-/// What the person was about to do on the other server. Kept while the
-/// browser is open, so the screen resumes exactly that — with its normal
-/// confirmation — and never anything else.
-enum SecondaryConnectAction { contact, inquiry, apply }
-
-class SecondaryConnectIntent {
-  const SecondaryConnectIntent({
-    required this.target,
-    required this.workspaceId,
-    required this.action,
-  });
-
-  /// The other server, as its public card names it.
-  final BackendEndpoint target;
-  final String workspaceId;
-  final SecondaryConnectAction action;
-}
-
-/// Who the person is at the identity authority.
-class CanonicalIdentity {
-  const CanonicalIdentity(this.issuer, this.subject);
-  final String issuer;
-  final String subject;
-}
-
-/// Why connecting with the identity is not possible for this target.
-/// Each is a named answer; none of them creates an account anywhere.
-enum IdentityConnectUnsupported {
-  /// This app's own server does not tell who the person is at an
-  /// authority another server could accept.
-  noSharedIdentity,
-
-  /// The other server does not offer "Continue with Deskilo".
-  targetWithoutDeskiloSignIn,
-
-  /// The other server accepts a DIFFERENT identity authority.
-  differentAuthority,
-
-  /// The other server speaks no connection protocol this build speaks.
-  serverUnsupported,
-
-  /// The other server is this app's own server.
-  currentServer,
-
-  /// Nothing answered.
-  unavailable,
-}
-
-class IdentityConnectUnavailable implements Exception {
-  const IdentityConnectUnavailable(this.reason);
-  final IdentityConnectUnsupported reason;
-
-  @override
-  String toString() => 'IdentityConnectUnavailable(${reason.name})';
-}
-
-/// The other server checked before anything opens: its address, the
-/// identity authority it accepts and the installation it is.
-class IdentityConnectReadiness {
-  const IdentityConnectReadiness({
-    required this.target,
-    required this.authority,
-    required this.identity,
-  });
-  final BackendEndpoint target;
-  final FederationAuthority authority;
-  final CanonicalIdentity identity;
-
-  /// The host the person is about to sign in to.
-  String get host => Uri.parse(target.url).host;
-}
-
-enum SecondaryConnectStatus {
-  /// Bound on the other server and saved in the connection registry.
-  connected,
-
-  /// Nothing was saved; [SecondaryConnectEvent.failure] says why.
-  failed,
-
-  /// The other server accepted the person, but this device could not keep
-  /// the connection. Nothing was submitted; connecting again is safe.
-  notSaved,
-
-  /// The person (or a newer flow) gave up before the browser returned.
-  cancelled,
-}
-
-class SecondaryConnectEvent {
-  const SecondaryConnectEvent(
-    this.flow,
-    this.intent,
-    this.status, {
-    this.failure,
-    this.notSaved,
-  });
-  final String flow;
-  final SecondaryConnectIntent intent;
-  final SecondaryConnectStatus status;
-  final FederationFailure? failure;
-  final ConnectionFailure? notSaved;
-}
-
-/// The connection journey as screens see it. [SecondaryFederation] runs
-/// it against real servers; tests and Demo answer it in memory.
-abstract interface class IdentityConnector {
-  /// Checks the other server without launching anything.
-  Future<IdentityConnectReadiness> assess(BackendEndpoint target);
-
-  /// Opens the other server's own sign-in ONCE; answers the flow id. The
-  /// outcome arrives later on [events].
-  Future<String> begin(SecondaryConnectIntent intent);
-
-  /// Abandons [flow] if its browser has not come back yet.
-  Future<void> cancel(String flow);
-
-  Stream<SecondaryConnectEvent> get events;
-}
+export 'identity_connect.dart';
 
 /// The person's identity at the authority, read from this app's server.
 /// Null when this server does not say (an anonymous or federated account
@@ -170,7 +55,7 @@ Future<CanonicalIdentity?> _canonicalIdentityOf(SupabaseClient active) async {
   );
   if (authority != null) {
     // A federated server: the person's subject is their Deskilo identity.
-    final sub = _deskiloSubjectOf(user);
+    final sub = deskiloSubjectOf(user);
     return sub == null ? null : CanonicalIdentity(authority.issuer, sub);
   }
   // This server is its own identity authority: other servers that accept
@@ -181,23 +66,33 @@ Future<CanonicalIdentity?> _canonicalIdentityOf(SupabaseClient active) async {
   );
 }
 
-/// The subject [user] holds at the Deskilo provider, if any.
-String? _deskiloSubjectOf(User user) {
-  for (final identity in user.identities ?? const <UserIdentity>[]) {
-    if (identity.provider != NativeFederationFlow.provider.name) continue;
-    final sub = identity.identityData?['sub'];
-    if (sub is String && sub.isNotEmpty) return sub;
-  }
-  return null;
+/// #2562 C1b -- the personal session a flow was started in: the account
+/// AND its sign-in. Signing out and in again (even as the same person)
+/// starts another epoch, and a browser return of the earlier one is
+/// refused before anything is exchanged. A token refresh is the same epoch.
+String? _personalEpochOf(SupabaseClient active) {
+  final user = active.auth.currentUser;
+  if (user == null) return null;
+  return '${user.id}\n${user.lastSignInAt ?? ''}';
 }
 
+/// One callback intent: the captured target (inside [readiness]) and the
+/// personal epoch (account and sign-in) it was begun in.
 class _Pending {
-  _Pending(this.flow, this.intent, this.guard, this.readiness, this.account);
+  _Pending(
+    this.flow,
+    this.intent,
+    this.guard,
+    this.readiness,
+    this.epoch,
+  );
   final String flow;
   final SecondaryConnectIntent intent;
   final AuthCallbackGuard guard;
   final IdentityConnectReadiness readiness;
-  final String account;
+
+  /// Names the account too: see [_personalEpochOf].
+  final String epoch;
 }
 
 class SecondaryFederation implements IdentityConnector {
@@ -339,7 +234,8 @@ class SecondaryFederation implements IdentityConnector {
   @override
   Future<String> begin(SecondaryConnectIntent intent) async {
     final account = active.auth.currentUser?.id;
-    if (account == null) {
+    final epoch = _personalEpochOf(active);
+    if (account == null || epoch == null) {
       throw const FederationStartFailure(FederationFailure.wrongAccount);
     }
     final readiness = await assess(intent.target);
@@ -366,10 +262,10 @@ class SecondaryFederation implements IdentityConnector {
         redirectTo: redirect,
         scopes: 'openid profile',
       );
-      if (active.auth.currentUser?.id != account) {
+      if (_personalEpochOf(active) != epoch) {
         throw const FederationStartFailure(FederationFailure.wrongAccount);
       }
-      _pending = _Pending(flow, intent, guard, readiness, account);
+      _pending = _Pending(flow, intent, guard, readiness, epoch);
       dispatcher?.routeSecondary(guard, complete);
       if (!await launch(Uri.parse(url.url))) {
         throw const FederationStartFailure(
@@ -413,11 +309,18 @@ class SecondaryFederation implements IdentityConnector {
       }
       final code = uri.queryParameters['code'];
       if (code == null || code.isEmpty) throw const _Refused();
+      // #2562 C1b -- a return from an earlier personal session is refused
+      // BEFORE its code is exchanged: no target session is ever created
+      // for a sign-in that has ended here.
+      if (!_sameSignIn(pending)) {
+        throw const _Refused(FederationFailure.wrongAccount);
+      }
       final session = (await client.auth.exchangeCodeForSession(code)).session;
       final user = (await client.auth.getUser()).user;
       if (user == null || user.id != session.user.id) throw const _Refused();
-      // The person who started is still the one signed in here.
-      if (active.auth.currentUser?.id != pending.account) {
+      // The person who started is still the one signed in here, in the
+      // same sign-in (the epoch names the account).
+      if (!_sameSignIn(pending)) {
         throw const _Refused(FederationFailure.wrongAccount);
       }
       final authority = FederationAuthority.parse(
@@ -429,7 +332,7 @@ class SecondaryFederation implements IdentityConnector {
         throw const _Refused(FederationFailure.incompatibleServer);
       }
       // The SAME person at the SAME authority — never an e-mail match.
-      if (_deskiloSubjectOf(user) != pending.readiness.identity.subject) {
+      if (deskiloSubjectOf(user) != pending.readiness.identity.subject) {
         throw const _Refused(FederationFailure.wrongAccount);
       }
       final binding = await client.rpc<Object?>('finalize_identity_binding');
@@ -441,31 +344,8 @@ class SecondaryFederation implements IdentityConnector {
         throw const _Refused(FederationFailure.incompatibleServer);
       }
       if (_pending?.flow != flow) throw const _Refused();
-      try {
-        await registry.adopt(
-          target,
-          session,
-          installationId: authority.installationId,
-        );
-        keep = true;
-        outcome = SecondaryConnectEvent(
-          flow,
-          pending.intent,
-          SecondaryConnectStatus.connected,
-        );
-      } on ConnectionFailure catch (failure, stack) {
-        TraceLogger.instance.warn(
-          'connections',
-          'identity connection not kept: ${failure.reason.name}',
-          stackTrace: stack,
-        );
-        outcome = SecondaryConnectEvent(
-          flow,
-          pending.intent,
-          SecondaryConnectStatus.notSaved,
-          notSaved: failure,
-        );
-      }
+      outcome = await _adopt(pending, session, authority);
+      keep = outcome.status == SecondaryConnectStatus.connected;
     } on _Refused catch (refusal, stack) {
       TraceLogger.instance.warn(
         'connections',
@@ -514,6 +394,58 @@ class SecondaryFederation implements IdentityConnector {
       await _release(flow, pending.guard);
       final event = outcome;
       if (event != null) _events.add(event);
+    }
+  }
+
+  bool _sameSignIn(_Pending pending) =>
+      _personalEpochOf(active) == pending.epoch;
+
+  /// #2562 C1b -- adopts [session] into the pool under the canonical
+  /// identity and the verified installation; a refusal there keeps nothing.
+  Future<SecondaryConnectEvent> _adopt(
+    _Pending pending,
+    Session session,
+    FederationAuthority authority,
+  ) async {
+    if (!_sameSignIn(pending)) throw const _Refused();
+    try {
+      await registry.adopt(
+        pending.readiness.target,
+        session,
+        installationId: authority.installationId,
+        issuer: authority.issuer,
+        subject: pending.readiness.identity.subject,
+      );
+      return SecondaryConnectEvent(
+        pending.flow,
+        pending.intent,
+        SecondaryConnectStatus.connected,
+      );
+    } on ConnectionFailure catch (failure, stack) {
+      TraceLogger.instance.warn(
+        'connections',
+        'identity connection not kept: ${failure.reason.name}',
+        stackTrace: stack,
+      );
+      // A target that refused or ended the session is a refusal with its
+      // own next step; only this device failing to keep it is notSaved.
+      return switch (failure.reason) {
+        ConnectionFailureReason.expired =>
+          _failed(pending, FederationFailure.expired),
+        ConnectionFailureReason.changedIdentity ||
+        ConnectionFailureReason.unsupported =>
+          _failed(pending, FederationFailure.incompatibleServer),
+        ConnectionFailureReason.denied =>
+          _failed(pending, FederationFailure.refused),
+        ConnectionFailureReason.cancelled =>
+          _failed(pending, FederationFailure.wrongAccount),
+        _ => SecondaryConnectEvent(
+          pending.flow,
+          pending.intent,
+          SecondaryConnectStatus.notSaved,
+          notSaved: failure,
+        ),
+      };
     }
   }
 
