@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/supabase_local_setup_repository.dart';
 import '../domain/local_setup.dart';
+import '../domain/setup_status.dart';
 import '../domain/workspace_readiness.dart';
 import 'operation_context_providers.dart';
 
@@ -36,6 +37,11 @@ Future<List<LocalSlot>> workspaceLocalSlots(Ref ref, String workspaceId) async =
   for (final s in await ref.watch(localSetupRepositoryProvider).readiness(workspaceId))
     if (s.kind != LocalSlotKind.unknown) s,
 ];
+
+/// #2869 — the setup guide's status: every step and the four milestones.
+@riverpod
+Future<SetupStatus> workspaceSetupStatus(Ref ref, String workspaceId) =>
+    ref.watch(localSetupRepositoryProvider).setupStatus(workspaceId);
 
 /// #1636 — every setup section of the space, in the server's order.
 @riverpod

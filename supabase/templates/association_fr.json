@@ -181,6 +181,7 @@
         "seriesBooking": true,
         "services": true,
         "settlementFold": false,
+        "setupGuide": true,
         "singleRoomLevelNames": true,
         "siteDocuments": false,
         "spaceInquiries": true,

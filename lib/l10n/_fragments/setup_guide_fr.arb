@@ -1,0 +1,23 @@
+{
+  "featureSetupGuideTitle": "Guide de mise en place",
+  "featureSetupGuideDesc": "Une seule liste de tâches, de la création de l'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l'espace.",
+  "setupStepTitle": "{key, select, basics{Nom, pays et fuseau horaire} hours{Horaires d'ouverture} places{Places sur le plan} member_rights{Ce que les membres peuvent faire} invite{Inviter des membres} pricing{Tarifs et formules} services{Services} payment_methods{Comment les membres paient} online_payments{Paiement en ligne} approvals{Validations} new_members{Nouveaux membres} kiosk{Borne et badges} purchases{Fournisseurs et achats} lease{Votre bail} assets{Équipements} look{Couleurs et vocabulaire} public_page{Page publique} legal_identity{Identité légale} vat{TVA} numbering{Numérotation des factures} documents{Présentation des factures} einvoicing{Facturation électronique} accounting{Comptabilité} reminders{Relances} first_booking{Une première réservation} recovery{Une copie de vos données} assistant{Assistant} other{{key}}}",
+  "setupStepHint": "{key, select, basics{Le nom de l'espace et son lieu : les dates, la monnaie et les jours fériés en découlent.} hours{Quand les membres peuvent réserver : jours, heures et fermetures.} places{Dessinez les salles, bureaux et places que les membres réservent.} member_rights{Permettez aux membres de réserver, de voir le calendrier et leur compte.} invite{Partagez le code de l'espace ou envoyez des invitations.} pricing{Ce que coûte une place, un abonnement ou une journée.} services{Café, impressions, casiers : ce que les membres peuvent ajouter.} payment_methods{Vos coordonnées bancaires et vos instructions de paiement.} online_payments{Paiement par carte via un prestataire que votre opérateur connecte.} approvals{Qui valide les demandes, et combien de personnes doivent être d'accord.} new_members{Ce avec quoi commence un nouveau membre.} kiosk{Une tablette à l'entrée et des badges pour les membres.} purchases{Ce que l'espace achète, et auprès de qui.} lease{Le loyer et les charges que l'espace paie.} assets{Ce que l'espace possède et comment cela se déprécie.} look{Les couleurs de l'espace et ses propres mots.} public_page{Ce que les personnes extérieures à l'espace peuvent voir.} legal_identity{Les mentions que chaque facture doit porter.} vat{Les taux que vous appliquez et vos déclarations.} numbering{Comment les numéros de facture sont construits.} documents{Votre en-tête sur les factures et les courriers.} einvoicing{L'envoi des factures par la plateforme de facturation électronique.} accounting{Le plan comptable et les exports pour votre comptable.} reminders{Quand et comment les factures impayées sont relancées.} first_booking{Réservez une place comme le ferait un membre.} recovery{Exportez une fois les données de l'espace.} assistant{Laissez un assistant IA aider, toujours avec votre confirmation.} other{{key}}}",
+  "setupMilestoneName": "{key, select, bookable{Prendre des réservations} money{Prêt pour l'argent} invoice{Prêt à facturer} live{En service} other{{key}}}",
+  "setupStateName": "{key, select, ready{Fait} needsConfiguration{À faire} blocked{Attend une autre étape} needsOperator{Votre opérateur intervient} notApplicable{Non utilisé} deferred{Mis de côté} unknown{Inconnu} other{{key}}}",
+  "setupGuideTitle": "Guide de mise en place",
+  "setupGuideNext": "Ensuite",
+  "setupGuideToDo": "Ce qu'il reste à faire",
+  "setupGuideLater": "Pour une étape suivante",
+  "setupGuideWaiting": "En attente",
+  "setupGuideDeferred": "Mis de côté",
+  "setupGuideOptional": "Plus pour votre espace",
+  "setupGuideDone": "Fait",
+  "setupGuideAllDone": "Votre espace a tout ce que vous avez choisi.",
+  "setupGuideUnavailable": "L'état de la mise en place n'a pas pu être lu. Réessayez dans un instant.",
+  "setupGuideResume": "Reprendre",
+  "setupGuideProgress": "{ready} sur {required} faits",
+  "setupGuideEstimate": "environ {minutes} min",
+  "setupGuideWaitsFor": "Attend : {steps}",
+  "setupGuideBanner": "{milestone} : {ready} sur {required} faits · Ensuite : {step}"
+}

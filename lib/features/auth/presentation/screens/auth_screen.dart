@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
+import '../../../../core/demo/demo_link.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
@@ -26,13 +27,16 @@ import '../widgets/verification_pending_view.dart';
 /// Email + password sign-in / sign-up. Navigation after success is handled
 /// by the router's auth redirect, not by this screen.
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key, this.offerDemo = false});
+  const AuthScreen({super.key, this.offerDemo = false, this.demoLink});
 
   /// #2400 — `/auth?demo=1`, the welcome page's "Try the demo": the
   /// demonstration's explanation opens by itself, so a visitor does not
   /// have to find the button first. It is the same sheet, and it still
   /// asks before anything starts.
   final bool offerDemo;
+
+  /// #2872 — where the demo starts once the visitor agreed.
+  final DemoLink? demoLink;
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
@@ -78,7 +82,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   }
 
   void _offerDemo() => WidgetsBinding.instance.addPostFrameCallback(
-      (_) => mounted ? offerDemoEntry(context, ref) : null);
+      (_) => mounted ? offerDemoEntry(context, ref, link: widget.demoLink) : null);
 
   @override
   void dispose() {

@@ -15,6 +15,8 @@ import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
 import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
+import '../demo_link.dart';
+import '../demo_session.dart';
 
 /// The button that offers the demonstration space.
 class DemoEntryButton extends ConsumerWidget {
@@ -37,24 +39,32 @@ class DemoEntryButton extends ConsumerWidget {
       key: buttonKey,
       icon: const Icon(Icons.play_circle_outline),
       label: Text(l10n.demoEntryAction),
-      onPressed: () => _showDemoEntrySheet(context, ref),
+      onPressed: () => _showDemoEntrySheet(context, ref, null),
     );
   }
 }
 
 /// #2400 — opens the explanation without the tap, for a link that asked
 /// for the demo (`/auth?demo=1`); only where the button would be offered.
-Future<void> offerDemoEntry(BuildContext context, WidgetRef ref) async {
+Future<void> offerDemoEntry(
+  BuildContext context,
+  WidgetRef ref, {
+  DemoLink? link,
+}) async {
   if (!ref
       .read(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.demoMode)) {
     return;
   }
-  await _showDemoEntrySheet(context, ref);
+  await _showDemoEntrySheet(context, ref, link);
 }
 
 /// Explains the demonstration space, and enters it if the visitor agrees.
-Future<void> _showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
+Future<void> _showDemoEntrySheet(
+  BuildContext context,
+  WidgetRef ref,
+  DemoLink? link,
+) async {
   final l10n = context.l10n;
   final start = await showAppSheet<bool>(
     context: context,
@@ -94,5 +104,12 @@ Future<void> _showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
       ),
     ),
   );
-  if (start ?? false) ref.read(demoEntryProvider.notifier).enter();
+  if (!(start ?? false)) return;
+  // #2872 — the link's viewpoint first, then its space and screen once
+  // the demo scope exists (DemoWorkspace applies them).
+  if (link?.persona case final persona?) {
+    ref.read(demoSessionControllerProvider.notifier).viewAs(persona);
+  }
+  if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
+  ref.read(demoEntryProvider.notifier).enter();
 }

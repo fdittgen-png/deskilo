@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/local_setup.dart';
+import '../domain/setup_status.dart';
 import '../domain/workspace_readiness.dart';
 
 /// #1656 — template_local_needs and workspace_local_readiness (0280).
@@ -23,6 +24,15 @@ class SupabaseLocalSetupRepository implements LocalSetupRepository {
       LocalSlot.listFromJson(
         await _client.rpc<Object?>(
           'workspace_local_readiness',
+          params: {'p_workspace_id': workspaceId},
+        ),
+      );
+
+  @override
+  Future<SetupStatus> setupStatus(String workspaceId) async =>
+      SetupStatus.fromJson(
+        await _client.rpc<Object?>(
+          'workspace_setup_status',
           params: {'p_workspace_id': workspaceId},
         ),
       );
