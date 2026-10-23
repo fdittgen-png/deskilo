@@ -19297,6 +19297,104 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.';
 
   @override
+  String get setupApprovalsApply => 'Diese Regel verwenden';
+
+  @override
+  String get setupApprovalsApplyFailed =>
+      'Die Freigaberegel konnte nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
+  String get setupApprovalsFlowOutcome => 'Sie gilt';
+
+  @override
+  String setupApprovalsFlowOutcomeBody(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Sobald $required Freigaben vorliegen.',
+      one: 'Sobald eine Freigabe vorliegt.',
+    );
+    return '$_temp0 Eine Ablehnung schließt sie, und niemand gibt die eigene Anfrage frei.';
+  }
+
+  @override
+  String get setupApprovalsFlowRequest => 'Ein Mitglied fragt an';
+
+  @override
+  String get setupApprovalsFlowRequestBody =>
+      'Eine Erstattung, eine gelöschte Buchung, eine Ausgabe …';
+
+  @override
+  String setupApprovalsFlowValidators(int required, int people) {
+    return '$required von $people geben frei';
+  }
+
+  @override
+  String setupApprovalsFlowWho(int owners, int admins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      owners,
+      locale: localeName,
+      other: '$owners Eigentümer',
+      one: 'Der Eigentümer',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      admins,
+      locale: localeName,
+      other: '$admins Administratoren',
+      one: '1 Administrator',
+      zero: 'kein Administrator',
+    );
+    return '$_temp0 und $_temp1';
+  }
+
+  @override
+  String get setupApprovalsOpenRules => 'Regeln je Art von Anfrage';
+
+  @override
+  String setupApprovalsPeople(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Personen können freigeben.',
+      one: '1 Person kann freigeben.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsPresetBody =>
+      'Eine Regel für jede Anfrage ohne eigene Regel: Erstattungen, gelöschte Buchungen, Ausgaben, Änderungen der Mitgliedschaft.';
+
+  @override
+  String get setupApprovalsPresetTitle =>
+      'Der Eigentümer oder ein Administrator gibt frei';
+
+  @override
+  String get setupApprovalsPreviewRequest => 'Ihre Anfrage';
+
+  @override
+  String setupApprovalsPreviewWaiting(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Wartet auf $required Freigaben',
+      one: 'Wartet auf 1 Freigabe',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsTooMany(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'nur $people Personen können',
+      one: 'nur 1 Person kann',
+    );
+    return '$required Freigaben kommen nie zusammen: $_temp0 freigeben. Verlangen Sie weniger, oder machen Sie weitere Mitglieder zu Administratoren.';
+  }
+
+  @override
   String get setupBasicsPreviewDate => 'Das heutige Datum';
 
   @override
@@ -19518,6 +19616,33 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineOpenConfig => 'Einstellungen für Online-Zahlungen';
+
+  @override
+  String get setupOnlineOperatorNotice =>
+      'Ihr Betreiber verbindet den Zahlungsanbieter und trägt dessen geheimen Schlüssel ein. Sie werden nie danach gefragt, und nach dem Speichern sieht ihn niemand mehr.';
+
+  @override
+  String get setupOnlinePreviewOff =>
+      'Noch kein Anbieter verbunden: Mitglieder zahlen nur nach den Zahlungshinweisen.';
+
+  @override
+  String get setupOnlinePreviewOn =>
+      'Ein Anbieter ist verbunden: Mitglieder können ihre Abrechnung online bezahlen.';
+
+  @override
+  String get setupPaymentsPreviewEmpty =>
+      'Mitglieder sehen keine Zahlungshinweise, bis Sie einen eintragen.';
+
+  @override
+  String get setupPaymentsPreviewNote =>
+      'Auf einer offenen Abrechnung, unter dem geschuldeten Betrag:';
+
+  @override
+  String get setupPaymentsSaveFailed =>
+      'Die Zahlungshinweise konnten nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
   String setupPlacesCounts(int rooms, int desks, int seats) {
     String _temp0 = intl.Intl.pluralLogic(
       rooms,
@@ -19573,6 +19698,51 @@ class AppLocalizationsDe extends AppLocalizations {
       'other': '$key',
     });
     return '$_temp0';
+  }
+
+  @override
+  String setupPricingBand(int from, int to, String fee, String extra) {
+    return '$from–$to %: $fee im Monat, $extra je zusätzlichem Halbtag';
+  }
+
+  @override
+  String setupPricingLevel(int pct) {
+    return 'Mitgliedschaft zu $pct %';
+  }
+
+  @override
+  String get setupPricingLevelsBody =>
+      'Die Stufen, die Mitglieder wählen können. Jede kostet, was ihr Preisband vorgibt.';
+
+  @override
+  String get setupPricingNoBands =>
+      'Noch kein Preis: Legen Sie die Monatsbeiträge unter Abrechnung fest.';
+
+  @override
+  String get setupPricingNoLevels =>
+      'Keine Stufe angeboten: Mitglieder können keine Mitgliedschaft wählen.';
+
+  @override
+  String get setupPricingNoPrice =>
+      'Für diese Stufe gibt es noch keinen Preis.';
+
+  @override
+  String get setupPricingOffer => 'Diese Stufen anbieten';
+
+  @override
+  String get setupPricingOpenBilling =>
+      'Beiträge, Pakete und Karten unter Abrechnung';
+
+  @override
+  String get setupPricingPreviewTitle => 'Was ein Mitglied zahlt';
+
+  @override
+  String get setupPricingSaveFailed =>
+      'Die Stufen konnten nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
+  String setupPricingTerms(String monthly, String half, String day) {
+    return '$monthly im Monat\nEin zusätzlicher Halbtag $half · ein zusätzlicher Tag $day';
   }
 
   @override

@@ -1,0 +1,203 @@
+{
+  "setupPricingLevelsBody": "The levels members can choose. Each one is priced by the fee band it falls into.",
+  "@setupPricingLevelsBody": {
+    "description": "#2871 setup run steps: setupPricingLevelsBody"
+  },
+  "setupPricingOffer": "Offer these levels",
+  "@setupPricingOffer": {
+    "description": "#2871 setup run steps: setupPricingOffer"
+  },
+  "setupPricingSaveFailed": "The levels could not be saved. Try again.",
+  "@setupPricingSaveFailed": {
+    "description": "#2871 setup run steps: setupPricingSaveFailed"
+  },
+  "setupPricingNoBands": "No price yet: set the monthly fees in Billing.",
+  "@setupPricingNoBands": {
+    "description": "#2871 setup run steps: setupPricingNoBands"
+  },
+  "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
+  "@setupPricingBand": {
+    "description": "#2871 setup run steps: setupPricingBand",
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "fee": {
+        "type": "String"
+      },
+      "extra": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPricingOpenBilling": "Fees, packages and carnets in Billing",
+  "@setupPricingOpenBilling": {
+    "description": "#2871 setup run steps: setupPricingOpenBilling"
+  },
+  "setupPricingPreviewTitle": "What a member pays",
+  "@setupPricingPreviewTitle": {
+    "description": "#2871 setup run steps: setupPricingPreviewTitle"
+  },
+  "setupPricingNoLevels": "No level is offered: members cannot choose a membership.",
+  "@setupPricingNoLevels": {
+    "description": "#2871 setup run steps: setupPricingNoLevels"
+  },
+  "setupPricingLevel": "Membership at {pct} %",
+  "@setupPricingLevel": {
+    "description": "#2871 setup run steps: setupPricingLevel",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "setupPricingNoPrice": "No price for this level yet.",
+  "@setupPricingNoPrice": {
+    "description": "#2871 setup run steps: setupPricingNoPrice"
+  },
+  "setupPricingTerms": "{monthly} a month\nAn extra half-day {half} · an extra day {day}",
+  "@setupPricingTerms": {
+    "description": "#2871 setup run steps: setupPricingTerms",
+    "placeholders": {
+      "monthly": {
+        "type": "String"
+      },
+      "half": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPaymentsSaveFailed": "The payment instructions could not be saved. Try again.",
+  "@setupPaymentsSaveFailed": {
+    "description": "#2871 setup run steps: setupPaymentsSaveFailed"
+  },
+  "setupPaymentsPreviewEmpty": "Members see no payment instructions until you fill one in.",
+  "@setupPaymentsPreviewEmpty": {
+    "description": "#2871 setup run steps: setupPaymentsPreviewEmpty"
+  },
+  "setupPaymentsPreviewNote": "On an unpaid statement, under what the member owes:",
+  "@setupPaymentsPreviewNote": {
+    "description": "#2871 setup run steps: setupPaymentsPreviewNote"
+  },
+  "setupOnlineOperatorNotice": "Your operator connects the payment provider and enters its secret key. It is never asked of you, and nobody sees it again once it is saved.",
+  "@setupOnlineOperatorNotice": {
+    "description": "#2871 setup run steps: setupOnlineOperatorNotice"
+  },
+  "setupOnlineOpenConfig": "Online payment settings",
+  "@setupOnlineOpenConfig": {
+    "description": "#2871 setup run steps: setupOnlineOpenConfig"
+  },
+  "setupOnlinePreviewOn": "A provider is connected: members can pay their statement online.",
+  "@setupOnlinePreviewOn": {
+    "description": "#2871 setup run steps: setupOnlinePreviewOn"
+  },
+  "setupOnlinePreviewOff": "No provider is connected yet: members pay by the instructions alone.",
+  "@setupOnlinePreviewOff": {
+    "description": "#2871 setup run steps: setupOnlinePreviewOff"
+  },
+  "setupApprovalsApplyFailed": "The approval rule could not be saved. Try again.",
+  "@setupApprovalsApplyFailed": {
+    "description": "#2871 setup run steps: setupApprovalsApplyFailed"
+  },
+  "setupApprovalsPresetTitle": "The owner or an administrator approves",
+  "@setupApprovalsPresetTitle": {
+    "description": "#2871 setup run steps: setupApprovalsPresetTitle"
+  },
+  "setupApprovalsPresetBody": "One rule for every request without a rule of its own: refunds, booking deletions, expenses, membership changes.",
+  "@setupApprovalsPresetBody": {
+    "description": "#2871 setup run steps: setupApprovalsPresetBody"
+  },
+  "setupApprovalsPeople": "{count, plural, =1{1 person can approve.} other{{count} people can approve.}}",
+  "@setupApprovalsPeople": {
+    "description": "#2871 setup run steps: setupApprovalsPeople",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsTooMany": "{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
+  "@setupApprovalsTooMany": {
+    "description": "#2871 setup run steps: setupApprovalsTooMany",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsApply": "Use this rule",
+  "@setupApprovalsApply": {
+    "description": "#2871 setup run steps: setupApprovalsApply"
+  },
+  "setupApprovalsOpenRules": "Rules for each kind of request",
+  "@setupApprovalsOpenRules": {
+    "description": "#2871 setup run steps: setupApprovalsOpenRules"
+  },
+  "setupApprovalsFlowRequest": "A member asks",
+  "@setupApprovalsFlowRequest": {
+    "description": "#2871 setup run steps: setupApprovalsFlowRequest"
+  },
+  "setupApprovalsFlowRequestBody": "A refund, a booking deletion, an expense…",
+  "@setupApprovalsFlowRequestBody": {
+    "description": "#2871 setup run steps: setupApprovalsFlowRequestBody"
+  },
+  "setupApprovalsFlowValidators": "{required} of {people} approve",
+  "@setupApprovalsFlowValidators": {
+    "description": "#2871 setup run steps: setupApprovalsFlowValidators",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsFlowWho": "{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}",
+  "@setupApprovalsFlowWho": {
+    "description": "#2871 setup run steps: setupApprovalsFlowWho",
+    "placeholders": {
+      "owners": {
+        "type": "int"
+      },
+      "admins": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsFlowOutcome": "It applies",
+  "@setupApprovalsFlowOutcome": {
+    "description": "#2871 setup run steps: setupApprovalsFlowOutcome"
+  },
+  "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
+  "@setupApprovalsFlowOutcomeBody": {
+    "description": "#2871 setup run steps: setupApprovalsFlowOutcomeBody",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsPreviewRequest": "Your request",
+  "@setupApprovalsPreviewRequest": {
+    "description": "#2871 setup run steps: setupApprovalsPreviewRequest"
+  },
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}",
+  "@setupApprovalsPreviewWaiting": {
+    "description": "#2871 setup run steps: setupApprovalsPreviewWaiting",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      }
+    }
+  }
+}

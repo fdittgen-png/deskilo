@@ -250,11 +250,11 @@ void main() {
       routes: [
         GoRoute(
           path: '/',
-          builder: (_, _) => const SetupStepScreen(stepId: 'pricing'),
+          builder: (_, _) => const SetupStepScreen(stepId: 'services'),
         ),
         GoRoute(
-          path: '/billing',
-          builder: (_, _) => const Text('billing screen'),
+          path: '/services',
+          builder: (_, _) => const Text('services screen'),
         ),
       ],
     );
@@ -270,6 +270,6 @@ void main() {
     expect(find.byKey(const ValueKey('setup-step-elsewhere')), findsOneWidget);
     await tester.tap(find.text('Open it'));
     await tester.pumpAndSettle();
-    expect(find.text('billing screen'), findsOneWidget);
+    expect(find.text('services screen'), findsOneWidget);
   });
 }

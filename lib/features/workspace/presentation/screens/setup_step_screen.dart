@@ -22,9 +22,15 @@ import '../widgets/setup_basics_step.dart';
 import '../widgets/setup_hours_step.dart';
 import '../widgets/setup_invite_step.dart';
 import '../widgets/setup_member_rights_step.dart';
+import '../widgets/setup_run_pages.dart';
 
 class SetupStepScreen extends ConsumerWidget {
-  const SetupStepScreen({super.key, required this.stepId, this.placesStep});
+  const SetupStepScreen({
+    super.key,
+    required this.stepId,
+    this.placesStep,
+    this.runPages,
+  });
 
   /// The catalogue id of the step (`setup_steps.dart`).
   final String stepId;
@@ -33,6 +39,10 @@ class SetupStepScreen extends ConsumerWidget {
   /// one in the feature graph (`test/lint/feature_layers.yaml`), so the
   /// router hands the builder in; without it the step opens the editor.
   final SetupPlacesBuilder? placesStep;
+
+  /// The Run steps' pages, handed in by the router for the same reason;
+  /// without them those steps open their own screens.
+  final SetupRunPages? runPages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +62,7 @@ class SetupStepScreen extends ConsumerWidget {
     },
     'member_rights' => SetupMemberRightsStep(workspace: workspace),
     'invite' => SetupInviteStep(workspace: workspace),
-    _ => _Elsewhere(stepId: stepId),
+    _ => runPages?.pageFor(stepId, workspace) ?? _Elsewhere(stepId: stepId),
   };
 }
 

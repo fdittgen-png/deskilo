@@ -19280,6 +19280,104 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.';
 
   @override
+  String get setupApprovalsApply => 'Usare questa regola';
+
+  @override
+  String get setupApprovalsApplyFailed =>
+      'Non è stato possibile salvare la regola di approvazione. Riprovi.';
+
+  @override
+  String get setupApprovalsFlowOutcome => 'Si applica';
+
+  @override
+  String setupApprovalsFlowOutcomeBody(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Non appena ci sono $required approvazioni.',
+      one: 'Non appena c\'è un\'approvazione.',
+    );
+    return '$_temp0 Un rifiuto la chiude, e nessuno approva la propria richiesta.';
+  }
+
+  @override
+  String get setupApprovalsFlowRequest => 'Un membro chiede';
+
+  @override
+  String get setupApprovalsFlowRequestBody =>
+      'Un rimborso, la cancellazione di una prenotazione, una spesa…';
+
+  @override
+  String setupApprovalsFlowValidators(int required, int people) {
+    return '$required su $people approvano';
+  }
+
+  @override
+  String setupApprovalsFlowWho(int owners, int admins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      owners,
+      locale: localeName,
+      other: '$owners proprietari',
+      one: 'Il proprietario',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      admins,
+      locale: localeName,
+      other: '$admins amministratori',
+      one: '1 amministratore',
+      zero: 'nessun amministratore',
+    );
+    return '$_temp0 e $_temp1';
+  }
+
+  @override
+  String get setupApprovalsOpenRules => 'Regole per tipo di richiesta';
+
+  @override
+  String setupApprovalsPeople(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count persone possono approvare.',
+      one: '1 persona può approvare.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsPresetBody =>
+      'Una regola per ogni richiesta senza una regola propria: rimborsi, cancellazioni di prenotazioni, spese, modifiche dell\'abbonamento.';
+
+  @override
+  String get setupApprovalsPresetTitle =>
+      'Il proprietario o un amministratore approva';
+
+  @override
+  String get setupApprovalsPreviewRequest => 'La Sua richiesta';
+
+  @override
+  String setupApprovalsPreviewWaiting(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'In attesa di $required approvazioni',
+      one: 'In attesa di 1 approvazione',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsTooMany(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'solo $people persone possono',
+      one: 'solo 1 persona può',
+    );
+    return '$required approvazioni non potranno mai essere raccolte: $_temp0 approvare. Ne chieda meno, oppure nomini amministratori altri membri.';
+  }
+
+  @override
   String get setupBasicsPreviewDate => 'La data di oggi';
 
   @override
@@ -19498,6 +19596,33 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineOpenConfig => 'Impostazioni dei pagamenti online';
+
+  @override
+  String get setupOnlineOperatorNotice =>
+      'Il Suo operatore collega il fornitore di pagamenti e inserisce la sua chiave segreta. Non Le viene mai chiesta e, una volta salvata, nessuno la rivede.';
+
+  @override
+  String get setupOnlinePreviewOff =>
+      'Nessun fornitore è ancora collegato: i membri pagano solo secondo le istruzioni.';
+
+  @override
+  String get setupOnlinePreviewOn =>
+      'Un fornitore è collegato: i membri possono pagare l\'estratto online.';
+
+  @override
+  String get setupPaymentsPreviewEmpty =>
+      'I membri non vedono alcuna istruzione di pagamento finché Lei non ne compila una.';
+
+  @override
+  String get setupPaymentsPreviewNote =>
+      'Su un estratto non pagato, sotto quanto il membro deve:';
+
+  @override
+  String get setupPaymentsSaveFailed =>
+      'Non è stato possibile salvare le istruzioni di pagamento. Riprovi.';
+
+  @override
   String setupPlacesCounts(int rooms, int desks, int seats) {
     String _temp0 = intl.Intl.pluralLogic(
       rooms,
@@ -19553,6 +19678,50 @@ class AppLocalizationsIt extends AppLocalizations {
       'other': '$key',
     });
     return '$_temp0';
+  }
+
+  @override
+  String setupPricingBand(int from, int to, String fee, String extra) {
+    return '$from–$to %: $fee al mese, $extra per mezza giornata in più';
+  }
+
+  @override
+  String setupPricingLevel(int pct) {
+    return 'Abbonamento al $pct %';
+  }
+
+  @override
+  String get setupPricingLevelsBody =>
+      'I livelli che i membri possono scegliere. Ognuno ha il prezzo della fascia in cui rientra.';
+
+  @override
+  String get setupPricingNoBands =>
+      'Ancora nessun prezzo: imposti le quote mensili in Fatturazione.';
+
+  @override
+  String get setupPricingNoLevels =>
+      'Nessun livello offerto: i membri non possono scegliere un abbonamento.';
+
+  @override
+  String get setupPricingNoPrice => 'Ancora nessun prezzo per questo livello.';
+
+  @override
+  String get setupPricingOffer => 'Offrire questi livelli';
+
+  @override
+  String get setupPricingOpenBilling =>
+      'Quote, pacchetti e carnet in Fatturazione';
+
+  @override
+  String get setupPricingPreviewTitle => 'Quanto paga un membro';
+
+  @override
+  String get setupPricingSaveFailed =>
+      'Non è stato possibile salvare i livelli. Riprovi.';
+
+  @override
+  String setupPricingTerms(String monthly, String half, String day) {
+    return '$monthly al mese\nMezza giornata in più $half · una giornata in più $day';
   }
 
   @override

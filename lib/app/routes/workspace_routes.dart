@@ -42,6 +42,7 @@ import '../../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'setup_run_pages.dart';
 
 /// Routes of the workspace feature.
 List<RouteBase> workspaceRoutes(RouteEnv env) => [
@@ -324,6 +325,7 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
           SetupStepScreen(
             stepId: state.pathParameters['id'] ?? '',
             placesStep: SetupPlacesStep.new,
+            runPages: setupRunPages,
           ),
     ),
     // #2583 — the overview: what needs the person, then the figures.
