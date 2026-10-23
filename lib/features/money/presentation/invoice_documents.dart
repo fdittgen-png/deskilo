@@ -169,8 +169,8 @@ InvoiceReport renderLetterDoc(
   final bands = template.docBands(docId) ?? defaultBandsForDoc(docId, l10n);
   // #880 — the owner's texts ride beside the data for every document.
   final texted = withOwnerTexts(data, template.texts);
-  return renderReportBands(bands: bands, data: texted) ??
-      renderReportBands(bands: defaultBandsForDoc(docId, l10n), data: texted)!;
+  return (renderReportBands(bands: bands, data: texted) ?? renderReportBands(
+      bands: defaultBandsForDoc(docId, l10n), data: texted)!).numberedFor(docId);
 }
 
 /// #917 — the word every document of a DEVELOPMENT workspace carries,

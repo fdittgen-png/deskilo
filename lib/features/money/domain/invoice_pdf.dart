@@ -228,6 +228,7 @@ Future<Uint8List> buildBandedLetterPdf({
           (context) => reportBlockWidgets(report.continuation, images: reportImages),
       footer: (context) => reportBlockWidgets(report.footer, images: reportImages),
       body: (context) => reportBlockWidgets(report.body, images: reportImages),
+      numberFirstPage: report.numberFirstPage,
     ),
   );
   return doc.save();
