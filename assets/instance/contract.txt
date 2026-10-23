@@ -1784,6 +1784,7 @@ routine public.configuration_group_states(p_set jsonb) -> jsonb | function | inv
 routine public.confirm_asset_valuations_v1(p_workspace_id uuid, p_batch_id uuid, p_revision integer, p_supersedes uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:49cf3011d081
 routine public.confirm_expense_occurrence(p_occurrence_id uuid, p_amount_cents integer, p_reason text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:b46d31268d4e
 routine public.confirm_tax_reference(p_id uuid, p_source text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c66188a7e04a
+routine public.confirmed_account_email() -> text | function | definer | stable | exec:authenticated,service_role | body:6ae2907bb1de
 routine public.conversation_details(p_conversation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b69531430df5
 routine public.convert_to_series(p_reservation_id uuid, p_pattern text, p_until timestamp with time zone, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1bc75036b58
 routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:622f770f2792
@@ -1898,7 +1899,7 @@ routine public.handle_new_user() -> trigger | function | definer | volatile | ex
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
 routine public.has_permission_raw(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c89e4a3763c3
-routine public.holds_template_grant(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a6279099b1a5
+routine public.holds_template_grant(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9497ef467747
 routine public.identity_binding_revoked_cascade() -> trigger | function | definer | volatile | exec:service_role | body:9f261f2a737d
 routine public.identity_binding_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:dfbda10ae4a1
 routine public.identity_bindings_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:faaf73ca1142
@@ -2612,7 +2613,7 @@ routine public.upsert_usage_record(p_reservation_id uuid) -> uuid | function | d
 routine public.usage_record_on_reservation() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:96dd21fe166c
 routine public.usage_records_for(p_workspace_id uuid, p_period text, p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b424f38a06f7
 routine public.usage_records_read_v1(p_workspace_id uuid, p_period text, p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:31759c408b90
-routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:96b330bb6f32
+routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:d235bec5f1fa
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:service_role | body:a772dde0819a
 routine public.valuation_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:371af9a55e5b
@@ -2638,7 +2639,7 @@ routine public.vat_tax_point_basis(p_country text, p_option text) -> TABLE(rule 
 routine public.vat_tax_point_policy(p_country text) -> TABLE(standard text, invoice_option boolean, cash_option boolean, cash_backstop text) | function | definer | stable | exec:authenticated,service_role | body:27d45d7d186e
 routine public.vat_zero_category(p_workspace_id uuid, p_regime text, p_on date) -> text | function | definer | stable | exec:service_role | body:11653c3f2162
 routine public.vat_zero_exemption_reason(p_workspace_id uuid, p_on date) -> text | function | definer | stable | exec:service_role | body:8761ea42ca18
-routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:65e617ac44a2
+routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:ab96a6f606ed
 routine public.vies_check_subject(p_workspace_id uuid, p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ab9bc99a5395
 routine public.vies_vat_parts(p_vat_id text, p_country text) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:fe4c5a47ee99
 routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5f4b79b2c75b

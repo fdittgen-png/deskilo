@@ -35,6 +35,9 @@ const callerGuards = [
   'has_permission',
   'shares_workspace_with',
   'is_platform_admin',
+  // The invoice read rule: the recipient, or viewFinances/issueInvoices
+  // (#2941, `verify_invoice_signature` through `may_view_invoice`).
+  'may_view_member_finances',
   'auth.uid()',
 ];
 
