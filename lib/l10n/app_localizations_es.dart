@@ -3905,6 +3905,68 @@ class AppLocalizationsEs extends AppLocalizations {
       'La condición del cliente no se ha guardado.';
 
   @override
+  String get dataReportArchived => 'Archivado';
+
+  @override
+  String dataReportColumn(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'month': 'Mes',
+      'bookings': 'Reservas',
+      'held': 'Mantenidas',
+      'attended': 'Asistencias',
+      'cancelled': 'Canceladas',
+      'hours': 'Horas',
+      'paid': 'Pagado',
+      'open': 'Pendiente',
+      'charges': 'Cargado',
+      'credits': 'Abonado',
+      'balance': 'Saldo',
+      'seats': 'Plazas',
+      'reference': 'Referencia',
+      'role': 'Función',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportContents => 'Índice';
+
+  @override
+  String get dataReportFailed =>
+      'No se pudo crear el informe de datos. Inténtelo de nuevo en un momento.';
+
+  @override
+  String get dataReportNo => 'No';
+
+  @override
+  String get dataReportNone => 'Nada registrado';
+
+  @override
+  String dataReportPart(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members': 'Miembros',
+      'bookings': 'Reservas por mes',
+      'invoices': 'Registro de facturas',
+      'payments': 'Pagos y saldos',
+      'purchases': 'Compras y proveedores',
+      'plan': 'Plano y precios',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportSubtitle =>
+      'Miembros, reservas, facturas, pagos, compras y el plano con sus precios, con totales, para leer o imprimir.';
+
+  @override
+  String get dataReportTitle => 'Informe de datos del espacio';
+
+  @override
+  String get dataReportYes => 'Sí';
+
+  @override
   String get datevAccountsIntro =>
       'Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.';
 
@@ -6271,6 +6333,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureDataExportDesc =>
       'Descargar todos los datos del espacio en un libro de Excel.';
+
+  @override
+  String get featureDataReportDesc =>
+      'Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales.';
+
+  @override
+  String get featureDataReportTitle => 'Informe de datos (PDF)';
 
   @override
   String get featureDecisionSurfaceDesc =>

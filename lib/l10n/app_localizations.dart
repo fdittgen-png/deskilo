@@ -6703,6 +6703,66 @@ abstract class AppLocalizations {
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
 
+  /// #2862 data report: dataReportArchived
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get dataReportArchived;
+
+  /// #2862 data report column header by key; other keys fall back to the export column names
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}'**
+  String dataReportColumn(String key);
+
+  /// #2862 data report: dataReportContents
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get dataReportContents;
+
+  /// #2862 data report: the report could not be made
+  ///
+  /// In en, this message translates to:
+  /// **'The data report could not be made. Try again in a moment.'**
+  String get dataReportFailed;
+
+  /// #2862 data report: dataReportNo
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get dataReportNo;
+
+  /// #2862 data report: dataReportNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded'**
+  String get dataReportNone;
+
+  /// #2862 data report section title by key
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}'**
+  String dataReportPart(String key);
+
+  /// #2862 data report: dataReportSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Members, bookings, invoices, payments, purchases and the plan with its prices, with totals, to read or print.'**
+  String get dataReportSubtitle;
+
+  /// #2862 data report: dataReportTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace data report'**
+  String get dataReportTitle;
+
+  /// #2862 data report: dataReportYes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get dataReportYes;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -10336,6 +10396,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download all workspace data as an Excel workbook.'**
   String get featureDataExportDesc;
+
+  /// #2862 data report feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.'**
+  String get featureDataReportDesc;
+
+  /// #2862 data report feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Data report (PDF)'**
+  String get featureDataReportTitle;
 
   /// #1247: featureDecisionSurfaceDesc
   ///

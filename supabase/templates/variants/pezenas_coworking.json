@@ -111,6 +111,7 @@
         "customRoles": true,
         "dataAccessLog": false,
         "dataExport": true,
+        "dataReport": true,
         "decisionSurface": false,
         "deletionRequests": true,
         "demoMode": false,

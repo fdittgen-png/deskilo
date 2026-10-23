@@ -272,6 +272,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.documents,
         WorkspaceFeature.pdfExport,
         WorkspaceFeature.dataExport,
+        WorkspaceFeature.dataReport,
         WorkspaceFeature.memberDataExport,
       },
     ),
