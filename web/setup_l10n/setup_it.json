@@ -669,5 +669,10 @@
  "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
  "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
  "featuresAvailabilityEu": "gli Stati membri dell'UE",
- "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla."
+ "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla.",
+ "levelsWhy": "Semplici domande sul Suo spazio fissano il livello di ogni processo: ciò che fa, mai di più. Il passo successivo conserva ogni interruttore per gli esperti.",
+ "levelsOffline": "Questa pagina prepara un file e funziona offline: non vede il Suo spazio e non dice nulla su ciò che è pronto. Lo mostra l’app una volta importato il file.",
+ "levelsExpertHint": "Ogni risposta fissa di nuovo tutti i livelli. Regoli i singoli interruttori nel passo successivo; i livelli qui li seguono.",
+ "levelsOk": "Livelli: {list}.",
+ "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo."
 }

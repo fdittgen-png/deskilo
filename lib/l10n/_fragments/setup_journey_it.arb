@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "setupObligationsTitle": "Cosa chiede la legge in {country}",
+  "setupObligationThreshold": "{effect, select, immediate{Il regime IVA delle piccole imprese termina con l’operazione che porta il fatturato netto dell’anno oltre {limit}.} other{Il regime IVA delle piccole imprese termina con l’anno il cui fatturato netto supera {limit}.}}",
+  "setupObligationUnconfirmed": "Non confermato per questo paese — chieda al Suo commercialista.",
+  "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",
+  "setupObligationSource": "Fonte: {source}",
+  "setupJourneyConflict": "Nel frattempo qualcun altro ha salvato altre risposte. Eccole: le verifichi, poi applichi.",
+  "setupJourneySavedBy": "Salvato per ultimo da {name}."
+}

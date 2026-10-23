@@ -171,8 +171,14 @@ void main() {
       const prefix = 'window.SETUP_PROCESSES=';
       final js = File(setupCatalogueOutput).readAsStringSync();
       final start = js.indexOf(prefix);
+      // #2868 — the levels and obligations follow in the same file.
       final decoded =
-          jsonDecode(js.substring(start + prefix.length, js.lastIndexOf(';')))
+          jsonDecode(
+                js.substring(
+                  start + prefix.length,
+                  js.indexOf('\n];\n', start) + 2,
+                ),
+              )
               as List<dynamic>;
       final want = [
         for (final p in workspaceProcesses)

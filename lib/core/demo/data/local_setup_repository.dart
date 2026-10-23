@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/workspace/domain/local_setup.dart';
+import '../../../features/workspace/domain/setup_journey.dart';
+import '../../../features/workspace/domain/setup_levels.dart';
 import '../../../features/workspace/domain/setup_status.dart';
 import '../../../features/workspace/domain/setup_step_draft.dart';
 import '../../../features/workspace/domain/workspace_readiness.dart';
@@ -119,6 +121,40 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
       updatedAt: kTestNow,
     );
     return true;
+  }
+
+  /// #2868 — the journeys by workspace, and each save's request id.
+  final Map<String, (SetupJourney, String)> _journeys = {};
+
+  @override
+  Future<SetupJourney?> setupJourney(String workspaceId) async =>
+      _journeys[workspaceId]?.$1;
+
+  /// Like save_setup_journey: idempotent per request, refused when the
+  /// stored version is not the one the write was made against.
+  @override
+  Future<int> saveSetupJourney(
+    String workspaceId, {
+    required SetupAnswers answers,
+    required SetupLevelVector levels,
+    required int? expectedVersion,
+    required String requestId,
+  }) async {
+    final stored = _journeys[workspaceId];
+    if (stored != null && stored.$2 == requestId) return stored.$1.version;
+    if (stored?.$1.version != expectedVersion) {
+      throw SetupJourneyConflict(
+        '${SetupJourneyConflict.messagePrefix} $workspaceId is at version '
+        '${stored?.$1.version}',
+      );
+    }
+    final next = SetupJourney(
+      answers: answers,
+      levels: {...levels},
+      version: (stored?.$1.version ?? 0) + 1,
+    );
+    _journeys[workspaceId] = (next, requestId);
+    return next.version;
   }
 
   @override
