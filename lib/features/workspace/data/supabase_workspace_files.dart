@@ -59,4 +59,11 @@ class SupabaseWorkspaceFiles implements WorkspaceFilesRepository {
         'p_sha256': sha256,
         'p_row_count': rowCount,
       });
+
+  @override
+  Future<List<ExportedTable>> fetchRecords(String workspaceId) async =>
+      exportedTablesFromJson(await _client.rpc<Object?>(
+        'export_workspace_records',
+        params: {'p_workspace_id': workspaceId},
+      ));
 }

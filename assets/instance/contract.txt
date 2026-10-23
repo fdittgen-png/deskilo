@@ -1826,6 +1826,7 @@ routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb 
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5cfd64cf3676
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db0b5a4b3900
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a66f863dc003
+routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:414fe35adf1b
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
 routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:1d4c5b503042
@@ -2482,6 +2483,7 @@ routine public.settle_invoices(p_workspace_id uuid, p_member_id uuid, p_invoice_
 routine public.settle_invoices_v1(p_workspace_id uuid, p_member_id uuid, p_invoice_ids uuid[], p_request_id uuid, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6799c4081d49
 routine public.settle_lease_charges_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_period_start date, p_period_end date, p_actual_cents bigint, p_due_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8768f6aaadf
 routine public.settle_online_payment(p_provider text, p_order_id text, p_capture_id text, p_amount_cents integer) -> void | function | definer | volatile | exec:service_role | body:a0e1b0cafb37
+routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:46e6d65afaeb
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
 routine public.shares_workspace_with(other uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e85ad0fc6fb5
@@ -2605,6 +2607,7 @@ routine public.workspace_public_defaults(p_workspace uuid) -> jsonb | function |
 routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b72b851eefba
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:28a091daecbb
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:a549d56c2116
+routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7f151a021708
 routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:05ed87a12d72
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:service_role | body:3cebd09878ca
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:7fcabe234314

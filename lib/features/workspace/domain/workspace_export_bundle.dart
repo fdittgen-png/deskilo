@@ -7,6 +7,9 @@ import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/files/xlsx.dart';
+import '../../../core/i18n/currencies.dart';
+import '../../../core/time/workspace_time.dart';
+import 'workspace_export_labels.dart';
 
 /// #1310 S2 — the workspace export describes itself.
 ///
@@ -84,17 +87,24 @@ Uint8List buildWorkspaceExportZip({
   required DateTime createdAt,
   required List<XlsxSheet> sheets,
   List<ExportedFile> files = const [],
+  List<XlsxSheet> dataSheets = const [],
 }) {
   final archive = Archive();
   void add(String path, List<int> bytes) =>
       archive.addFile(ArchiveFile(path, bytes.length, bytes));
 
   add('workspace.xlsx', buildXlsx(sheets));
+  // #2861 — the machine copy: one CSV per sheet under its stable key, the
+  // same in every language, for formulas and importers.
+  for (final sheet in dataSheets) {
+    add('data/${exportKeyOf(sheet.name)}.csv',
+        utf8.encode(exportSheetCsv(sheet)));
+  }
   final manifest = _workspaceExportManifest(
     workspaceId: workspaceId,
     schemaVersion: schemaVersion,
     createdAt: createdAt,
-    sheets: sheets,
+    sheets: dataSheets.isEmpty ? sheets : dataSheets,
     files: files,
   );
   add('manifest.json',
@@ -112,6 +122,72 @@ Uint8List buildWorkspaceExportZip({
 /// Avatars are not here: a photo belongs to a person's profile, which is
 /// global across workspaces, and leaves with that person's subject-access
 /// export rather than with a space.
+/// #2860 — one table of the export: its columns in schema order and its
+/// rows, as `export_workspace_records` (0540) answers them.
+typedef ExportedTable = ({
+  String table,
+  List<String> columns,
+  List<List<Object?>> rows,
+});
+
+/// The tables of [json] (0540's answer), in the server's order.
+List<ExportedTable> exportedTablesFromJson(Object? json) => [
+  for (final t in json is List ? json : const <Object?>[])
+    if (t is Map)
+      (
+        table: '${t['table']}',
+        columns: [for (final c in t['columns'] as List? ?? const []) '$c'],
+        rows: [
+          for (final r in t['rows'] as List? ?? const [])
+            [for (final v in r as List) v],
+        ],
+      ),
+];
+
+/// One sheet per exported table: the column names, then the rows. A nested
+/// value (a jsonb object or list) is written as its JSON text; #2861 — a
+/// timestamp as a real date at the workspace's wall-clock time, a day as a
+/// date, and a `*_cents` column as an amount in [currencyCode].
+List<XlsxSheet> exportedTableSheets(
+  List<ExportedTable> tables, {
+  required String currencyCode,
+}) => [
+  for (final t in tables)
+    XlsxSheet(name: t.table, rows: [
+      t.columns,
+      for (final r in t.rows)
+        [
+          for (final (i, v) in r.indexed)
+            _recordCell(
+              i < t.columns.length ? t.columns[i] : '',
+              v,
+              currencyCode,
+            ),
+        ],
+    ]),
+];
+
+final _instant = RegExp(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}');
+final _day = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+
+Object? _recordCell(String column, Object? value, String currencyCode) =>
+    switch (value) {
+      final Map<Object?, Object?> _ || final List<Object?> _ => jsonEncode(value),
+      final int cents when column.endsWith('_cents') =>
+        XlsxAmount(cents / Currencies.minorPerMajor(currencyCode)),
+      final String text when _instant.hasMatch(text) =>
+        switch (DateTime.tryParse(text)) {
+          final instant? => WorkspaceTime.wall(instant),
+          null => text,
+        },
+      final String text when _day.hasMatch(text) =>
+        switch (DateTime.tryParse(text)) {
+          final day? => XlsxDate(day),
+          null => text,
+        },
+      _ => value,
+    };
+
 abstract interface class WorkspaceFilesRepository {
   /// Every file path under the workspace's prefix, relative to it,
   /// sorted. Folders are walked, never returned.
@@ -128,4 +204,9 @@ abstract interface class WorkspaceFilesRepository {
     required String sha256,
     required int rowCount,
   });
+
+  /// #2860 — every row of the tables the app has no model of: the
+  /// configuration, the purchase, lease, asset and accounting side and the
+  /// member-account records (`export_workspace_records`, 0540).
+  Future<List<ExportedTable>> fetchRecords(String workspaceId);
 }

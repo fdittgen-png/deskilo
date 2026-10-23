@@ -159,6 +159,13 @@ class FakeWorkspaceFiles implements WorkspaceFilesRepository {
   }) async =>
       recordedExports.add(
           (workspaceId: workspaceId, sha256: sha256, rowCount: rowCount));
+
+  /// #2860 — the tables the demo answers for `export_workspace_records`.
+  List<ExportedTable> records = const [];
+
+  @override
+  Future<List<ExportedTable>> fetchRecords(String workspaceId) async =>
+      records;
 }
 
 /// #1373 — the configuration import and export, in memory.

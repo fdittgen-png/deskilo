@@ -5736,6 +5736,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseVatRate => 'IVA su questa spesa';
 
   @override
+  String get exportAboutContents => 'Cosa contiene questo file';
+
+  @override
+  String get exportAboutCurrency => 'Importi in';
+
+  @override
+  String get exportAboutGeneratedOn => 'Generato il';
+
+  @override
+  String get exportAboutMachineCopy =>
+      'La cartella data/ dello ZIP contiene le stesse tabelle in file CSV con nomi di colonna stabili, per formule e altri programmi.';
+
+  @override
+  String get exportAboutRows => 'Righe';
+
+  @override
+  String get exportAboutSchema => 'Versione del database';
+
+  @override
+  String get exportAboutSheet => 'Foglio';
+
+  @override
+  String get exportAboutTimeZone => 'Orari nel fuso orario';
+
+  @override
+  String get exportAboutTitle => 'Informazioni sull\'esportazione';
+
+  @override
+  String get exportAboutWorkspace => 'Spazio';
+
+  @override
   String get exportClaimExchange =>
       'Perché il suo commercialista lo importi e lo verifichi — non è una dichiarazione.';
 
@@ -5748,8 +5779,201 @@ class AppLocalizationsIt extends AppLocalizations {
       'Solo fatture e pagamenti, senza libro mastro. Il file lo dichiara nella propria intestazione.';
 
   @override
+  String exportColumnName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'action': 'Azione',
+      'active': 'Attivo',
+      'actor': 'Eseguito da',
+      'address': 'Indirizzo',
+      'admin': 'Amministratore',
+      'amenities': 'Dotazioni',
+      'amount': 'Importo',
+      'area_kind': 'Tipo di area',
+      'blocked_from': 'Bloccato dal',
+      'blocked_to': 'Bloccato fino al',
+      'bookable_as_whole': 'Prenotabile per intero',
+      'by_system': 'Automatico',
+      'capacity': 'Capienza',
+      'category': 'Categoria',
+      'chair': 'Sedia',
+      'checked_in_at': 'Arrivo',
+      'checked_out_at': 'Uscita',
+      'city': 'Città',
+      'co_owner': 'Comproprietario',
+      'color': 'Colore',
+      'company': 'Azienda',
+      'country': 'Paese',
+      'created_at': 'Registrato il',
+      'currency': 'Valuta',
+      'decided_at': 'Deciso il',
+      'decided_by': 'Deciso da',
+      'decision': 'Decisione',
+      'decisions': 'Decisioni',
+      'description': 'Descrizione',
+      'desk': 'Scrivania',
+      'detailed': 'Dettagliata',
+      'details': 'Dettagli',
+      'due_on': 'Scadenza',
+      'email': 'E-mail',
+      'enabled_features': 'Funzioni attive',
+      'ends_at': 'Fine',
+      'event_id': 'Richiesta',
+      'event_type': 'Tipo di richiesta',
+      'first_name': 'Nome',
+      'height': 'Altezza',
+      'id': 'ID',
+      'invoice': 'Fattura',
+      'issued_at': 'Emessa il',
+      'issued_by': 'Emessa da',
+      'joined_at': 'Membro dal',
+      'kind': 'Tipo',
+      'kiosk': 'Chiosco',
+      'label': 'Voce',
+      'last_name': 'Cognome',
+      'last_seen': 'Ultima visita',
+      'last_sent_at': 'Ultimo invio',
+      'legal_id': 'Numero di registrazione',
+      'level': 'Piano',
+      'line': 'Riga',
+      'member': 'Membro',
+      'member_id': 'ID membro',
+      'member_number': 'N. di membro',
+      'minutes_present': 'Minuti di presenza',
+      'name': 'Nome',
+      'net': 'Imponibile',
+      'number': 'Numero',
+      'occurred_on': 'Data',
+      'office': 'Sala',
+      'order_id': 'Ordine',
+      'orientation': 'Orientamento',
+      'overage_policy': 'Oltre la quota',
+      'owner': 'Proprietario',
+      'parking_kind': 'Tipo di posto auto',
+      'payment_terms': 'Termini di pagamento',
+      'period': 'Periodo',
+      'phone': 'Telefono',
+      'postal_code': 'CAP',
+      'price': 'Prezzo',
+      'provider': 'Fornitore',
+      'quantity': 'Quantità',
+      'recorded_at': 'Registrato il',
+      'replaces': 'Sostituisce',
+      'reservation_id': 'Prenotazione',
+      'resource_kind': 'Tipo di posto',
+      'series_id': 'Serie',
+      'series_pattern': 'Ripetizione',
+      'signed_amount': 'Effetto sul saldo',
+      'slot_minutes': 'Fascia (minuti)',
+      'sort_order': 'Ordine',
+      'source_invoice': 'Fattura di origine',
+      'space': 'Posto',
+      'starts_at': 'Inizio',
+      'state': 'Stato',
+      'status': 'Stato',
+      'street': 'Via',
+      'subject': 'Riguarda',
+      'subscription_pct': 'Abbonamento (%)',
+      'timezone': 'Fuso orario',
+      'title': 'Titolo',
+      'total': 'Totale',
+      'type': 'Tipo',
+      'vat': 'IVA',
+      'vat_by_rate': 'IVA per aliquota',
+      'vat_category': 'Categoria IVA',
+      'vat_id': 'Partita IVA',
+      'vat_percent': 'IVA %',
+      'vat_regime': 'Regime IVA',
+      'vat_treatment': 'Trattamento IVA',
+      'voided_at': 'Annullata il',
+      'whatsapp': 'WhatsApp',
+      'width': 'Larghezza',
+      'workspace_code': 'Codice dello spazio',
+      'x': 'X',
+      'y': 'Y',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get exportNoCompleteBooks =>
       'Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i suoi libri completi. Il suo commercialista li completa.';
+
+  @override
+  String exportSheetName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'about': 'Informazioni sull\'esportazione',
+      'workspace': 'Spazio',
+      'levels': 'Piani',
+      'desks': 'Scrivanie',
+      'seats': 'Posti',
+      'users': 'Membri',
+      'reservations': 'Prenotazioni',
+      'check_ins': 'Presenze',
+      'payments': 'Pagamenti',
+      'services': 'Servizi usati',
+      'service_catalog': 'Prezzi dei servizi',
+      'invoices': 'Fatture',
+      'offices': 'Sale',
+      'ledger': 'Conti dei membri',
+      'events': 'Richieste',
+      'decisions': 'Decisioni',
+      'invoice_lines': 'Righe di fattura',
+      'sites': 'Sedi',
+      'plans': 'Piani tariffari',
+      'fee_bands': 'Fasce tariffarie',
+      'packages': 'Pacchetti',
+      'credit_products': 'Tipi di carnet',
+      'vat_rates': 'Aliquote IVA',
+      'accessories': 'Accessori',
+      'seat_accessories': 'Accessori per posto',
+      'closure_days': 'Giorni di chiusura',
+      'validation_policies': 'Regole di approvazione',
+      'workspace_roles': 'Ruoli',
+      'workspace_role_members': 'Titolari dei ruoli',
+      'workspace_field_definitions': 'Domande',
+      'workspace_field_values': 'Risposte',
+      'number_sequences': 'Serie di numerazione',
+      'charging_stations': 'Colonnine di ricarica',
+      'plan_images': 'Immagini della pianta',
+      'setting_values': 'Impostazioni',
+      'member_credits': 'Carnet',
+      'member_credit_uses': 'Utilizzi dei carnet',
+      'price_negotiations': 'Trattative di prezzo',
+      'quota_extensions': 'Estensioni di quota',
+      'usage_records': 'Utilizzo',
+      'invoice_matches': 'Saldo delle fatture',
+      'invoice_reminders': 'Solleciti',
+      'invoice_dunning_holds': 'Solleciti sospesi',
+      'tax_exemption_certificates': 'Certificati di esenzione',
+      'suppliers': 'Fornitori',
+      'purchase_documents': 'Documenti d\'acquisto',
+      'purchase_lines': 'Righe d\'acquisto',
+      'purchase_obligations': 'Importi da pagare',
+      'outgoing_payments': 'Pagamenti in uscita',
+      'expense_schedules': 'Spese programmate',
+      'expense_occurrences': 'Scadenze di spesa',
+      'expense_repartitions': 'Costi condivisi',
+      'premises_leases': 'Contratti di locazione',
+      'lease_terms': 'Condizioni di locazione',
+      'lease_settlements': 'Conguagli di locazione',
+      'room_rentals': 'Affitti di sale',
+      'room_rental_fees': 'Tariffe di affitto',
+      'workspace_assets': 'Cespiti',
+      'asset_valuation_batches': 'Valutazioni dei cespiti',
+      'asset_valuation_rows': 'Righe di valutazione',
+      'book_profiles': 'Profili contabili',
+      'book_accounts': 'Piano dei conti',
+      'book_mappings': 'Mappatura dei conti',
+      'book_periods': 'Periodi contabili',
+      'vat_declarations': 'Dichiarazioni IVA',
+      'einvoice_inbox': 'Fatture elettroniche ricevute',
+      'guest_participations': 'Visite di ospiti',
+      'rights_requests': 'Richieste privacy',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get exportUncertifiedSoftware =>
