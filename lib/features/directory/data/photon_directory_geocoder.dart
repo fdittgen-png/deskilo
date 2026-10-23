@@ -5,19 +5,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../domain/directory_location.dart';
+import '../domain/discovery_view.dart';
 
 /// Only user-requested public addresses; no autocomplete or bulk geocoding.
 /// Photon permits moderate use; deployments can supply their own endpoint.
 class PhotonDirectoryGeocoder implements DirectoryGeocoder {
   PhotonDirectoryGeocoder(this.client, {Uri? endpoint})
-    : endpoint =
-          endpoint ??
-          Uri.parse(
-            const String.fromEnvironment(
-              'DIRECTORY_GEOCODER_URL',
-              defaultValue: 'https://photon.komoot.io/api/',
-            ),
-          );
+    : endpoint = endpoint ?? Uri.parse(MapServices.configured.geocoder);
   final http.Client client;
   final Uri endpoint;
   static const cacheLimit = 128;

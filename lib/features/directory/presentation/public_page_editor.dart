@@ -13,6 +13,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
 import 'directory_pages.dart';
 import 'public_workspace_view.dart';
 
@@ -110,7 +111,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     setState(() => _busy = false);
     if (ok) {
       ref
-        ..invalidate(publicDirectoryProvider)
+        ..invalidate(discoveryListingProvider)
         ..invalidate(currentWorkspaceProvider);
       await publicWorkspacePage.open<void>(
         context,
@@ -162,7 +163,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       }
       _following = publicFollowing(answer);
     });
-    if (page != null) ref.invalidate(publicDirectoryProvider);
+    if (page != null) ref.invalidate(discoveryListingProvider);
   }
 
   Future<bool> _confirmResetAll(AppLocalizations l) async {

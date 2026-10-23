@@ -4441,6 +4441,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoveryBookmark => 'Guardar';
 
   @override
+  String discoveryLoadedCount(
+    int loaded,
+    int shown,
+    int answered,
+    int sources,
+  ) {
+    return 'Lugares cargados: $loaded · mostrados: $shown · directorios que respondieron: $answered de $sources';
+  }
+
+  @override
+  String get discoveryMapContinue => 'Continuar al mapa';
+
+  @override
+  String discoveryMapDisclosureBody(String tiles, String geocoder) {
+    return 'El mapa lo dibuja $tiles y las direcciones sin coordenadas las sitúa $geocoder. El proveedor del mapa recibe información de conexión y del área visualizada: la dirección IP de su dispositivo y la parte del mapa que usted mira. No se le envía nada si usted no continúa.';
+  }
+
+  @override
+  String get discoveryMapDisclosureTitle => 'Antes de abrir el mapa';
+
+  @override
+  String get discoveryMapRemembered =>
+      'Su elección se guarda en este dispositivo para este proveedor de mapas.';
+
+  @override
+  String get discoveryMapStay => 'Quedarse en la lista';
+
+  @override
+  String get discoveryMoreDirectoriesFailed =>
+      'No se pudieron cargar más directorios.';
+
+  @override
   String get discoveryNoSaved =>
       'Todavía no hay espacios guardados en este dispositivo.';
 
@@ -4452,6 +4484,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get discoverySavedFilter => 'Guardados';
+
+  @override
+  String discoveryShowMoreFrom(String source) {
+    return 'Mostrar más de $source';
+  }
+
+  @override
+  String discoverySourceFailed(String source) {
+    return '$source no respondió. Los lugares ya mostrados se mantienen.';
+  }
 
   @override
   String get discoveryTitle => 'Descubrir espacios';

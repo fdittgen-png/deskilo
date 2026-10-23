@@ -7579,6 +7579,48 @@ abstract class AppLocalizations {
   /// **'Bookmark'**
   String get discoveryBookmark;
 
+  /// No description provided for @discoveryLoadedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}'**
+  String discoveryLoadedCount(int loaded, int shown, int answered, int sources);
+
+  /// No description provided for @discoveryMapContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to the map'**
+  String get discoveryMapContinue;
+
+  /// No description provided for @discoveryMapDisclosureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device\'s IP address and the part of the map you look at. Nothing is sent to them unless you continue.'**
+  String discoveryMapDisclosureBody(String tiles, String geocoder);
+
+  /// No description provided for @discoveryMapDisclosureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before the map opens'**
+  String get discoveryMapDisclosureTitle;
+
+  /// No description provided for @discoveryMapRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Your choice is kept on this device for this map provider.'**
+  String get discoveryMapRemembered;
+
+  /// No description provided for @discoveryMapStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay with the list'**
+  String get discoveryMapStay;
+
+  /// No description provided for @discoveryMoreDirectoriesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'More directories could not be loaded.'**
+  String get discoveryMoreDirectoriesFailed;
+
   /// No description provided for @discoveryNoSaved.
   ///
   /// In en, this message translates to:
@@ -7602,6 +7644,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved'**
   String get discoverySavedFilter;
+
+  /// No description provided for @discoveryShowMoreFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more from {source}'**
+  String discoveryShowMoreFrom(String source);
+
+  /// No description provided for @discoverySourceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'{source} did not answer. The places already shown stay.'**
+  String discoverySourceFailed(String source);
 
   /// No description provided for @discoveryTitle.
   ///
