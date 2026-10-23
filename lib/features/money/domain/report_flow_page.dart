@@ -13,6 +13,7 @@ pw.MultiPage reportFlowPage({
   required pw.BuildListCallback firstHeader,
   required pw.BuildListCallback footer,
   pw.BuildListCallback? continuation,
+  bool numberFirstPage = false,
 }) => pw.MultiPage(
   pageTheme: pageTheme,
   header: (context) => pw.Column(
@@ -26,7 +27,8 @@ pw.MultiPage reportFlowPage({
                 pw.Divider(),
               ],
   ),
-  footer: (context) =>
-      reportPageFooter(context, content: footer(context), pageLabel: pageLabel),
+  footer: (context) => reportPageFooter(context,
+      content: footer(context), pageLabel: pageLabel,
+      numberFirstPage: numberFirstPage),
   build: body,
 );
