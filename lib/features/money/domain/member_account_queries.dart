@@ -30,4 +30,10 @@ abstract interface class MemberAccountQueries {
   /// of the data export (#395). RLS already grants admins the full table
   /// (0008); a worker calling this gets only their own rows back.
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId);
+
+  /// Whether the space has issued a document or recorded money: from then
+  /// on its country and currency are fixed (0399's guard, SQLSTATE DK423).
+  /// A caller who may not read the money rows sees false; the server still
+  /// refuses the change.
+  Future<bool> hasRecordedMoney(String workspaceId);
 }

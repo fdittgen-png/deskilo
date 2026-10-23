@@ -19789,6 +19789,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupGuideNext => 'Als Nächstes';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'Rechnungen sind nicht gewählt: Mitglieder erhalten Kontoauszüge über das, was sie schulden, und zahlen darauf. Weder Umsatzsteuer noch Rechnungsnummern noch E-Rechnung sind nötig, daher fragt der Leitfaden nicht danach.',
+      'other': 'Rechnungen sind nicht gewählt: Weder Umsatzsteuer noch Rechnungsnummern noch E-Rechnung sind nötig, daher fragt der Leitfaden nicht danach.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideOptional => 'Mehr für Ihren Bereich';
 
   @override
@@ -20049,6 +20058,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupLevelsTitle => 'Was Ihr Raum tut';
+
+  @override
+  String get setupLockConfirmTitle => 'Vor dem Speichern';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country und $currency stehen endgültig fest, sobald dieser Space ein Dokument ausstellt oder Geld erfasst: Danach lässt sich keines von beiden mehr ändern. Prüfen Sie sie im Zweifel mit Ihrer Steuerberatung.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Festgelegt: Dieser Space hat bereits ein Dokument ausgestellt oder Geld erfasst, daher lassen sich Land und Währung nicht mehr ändern.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'Die nächste Rechnung erhält die Nummer $number. Sobald eine Rechnung eine Nummer aus dieser Reihe erhält, bleibt diese Nummer für immer, die Reihe läuft nie zurück, und ein Datum in der Nummer lässt sich nur zusammen mit einem neuen Präfix oder Suffix entfernen.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Jede Rechnung behält für immer das Steuerregime, mit dem sie ausgestellt wird: „$regime“ gilt ab der nächsten Rechnung, und bereits ausgestellte Rechnungen ändern sich nicht.';
+  }
 
   @override
   String get setupLookMore => 'Muster, Raumfarben und Logo';

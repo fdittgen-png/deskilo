@@ -1,0 +1,8 @@
+{
+  "setupGuideNoInvoicing": "{money, select, statements{La facturation n'est pas choisie : les membres reçoivent des relevés de ce qu'ils doivent et paient sur cette base. Ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.} other{La facturation n'est pas choisie : ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.}}",
+  "setupLockMoneyLocaleFixed": "Figé : cet espace a déjà émis un document ou enregistré de l'argent, le pays et la devise ne peuvent donc plus changer.",
+  "setupLockConfirmTitle": "Avant d'enregistrer",
+  "setupLockMoneyLocaleConfirm": "{country} et {currency} seront figés pour de bon dès que cet espace émettra un document ou enregistrera de l'argent : ensuite, ni l'un ni l'autre ne pourra changer. En cas de doute, vérifiez-les avec votre comptable.",
+  "setupLockRegimeConfirm": "Chaque facture garde pour toujours le régime de TVA sous lequel elle est émise : « {regime} » s'applique à partir de la prochaine facture, et les factures déjà émises ne changent pas.",
+  "setupLockNumberingConfirm": "La prochaine facture portera le numéro {number}. Dès qu'une facture prend un numéro de cette série, ce numéro est gardé pour toujours, la série ne revient jamais en arrière, et une date dans le numéro ne peut être retirée qu'avec un nouveau préfixe ou suffixe."
+}

@@ -53,8 +53,11 @@ class NumberSequencesScreen extends ConsumerWidget {
 /// One series: its format, the next number it would draw, and its own
 /// Save. The setup guide's numbering step shows the invoice series' card.
 class NumberSequenceCard extends ConsumerStatefulWidget {
-  const NumberSequenceCard({super.key, required this.sequence});
+  const NumberSequenceCard({super.key, required this.sequence, this.confirmSave});
   final NumberSequence sequence;
+
+  /// Asked with the series about to be saved; false saves nothing.
+  final Future<bool> Function(NumberSequence draft)? confirmSave;
   @override
   ConsumerState<NumberSequenceCard> createState() => _SequenceCardState();
 }
@@ -83,6 +86,14 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    final draft = _draft.copyWith(
+      prefix: _prefix.text.trim(),
+      suffix: _suffix.text.trim(),
+    );
+    if (widget.confirmSave case final confirm? when !await confirm(draft)) {
+      return;
+    }
+    if (!mounted) return;
     setState(() => _saving = true);
     final saved = await runGuarded(
       context,
@@ -92,13 +103,7 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
           l10n.workspaceGenericError,
       action: () => ref
           .read(moneyRepositoryProvider)
-          .setNumberSequence(
-            workspace.id,
-            _draft.copyWith(
-              prefix: _prefix.text.trim(),
-              suffix: _suffix.text.trim(),
-            ),
-          ),
+          .setNumberSequence(workspace.id, draft),
     );
     if (!mounted) return;
     setState(() => _saving = false);
