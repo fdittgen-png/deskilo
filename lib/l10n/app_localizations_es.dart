@@ -19265,6 +19265,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.';
 
   @override
+  String get setupBasicsPreviewDate => 'La fecha de hoy';
+
+  @override
+  String get setupBasicsPreviewMoney => 'Un importe';
+
+  @override
+  String get setupBasicsPreviewTime => 'La hora actual';
+
+  @override
+  String setupBasicsPreviewTimeIn(String time, String offset) {
+    return '$time ($offset)';
+  }
+
+  @override
+  String get setupBasicsSaveFailed =>
+      'No se han podido guardar los datos básicos. Inténtelo de nuevo.';
+
+  @override
   String get setupGuideAllDone => 'Su espacio tiene todo lo que eligió.';
 
   @override
@@ -19325,6 +19343,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String setupGuideWaitsFor(String steps) {
     return 'Espera: $steps';
   }
+
+  @override
+  String get setupHoursClosed => 'Cerrado';
+
+  @override
+  String get setupHoursNextClosures => 'Próximos cierres y festivos';
+
+  @override
+  String get setupHoursNoClosures => 'No hay cierres ni festivos previstos.';
+
+  @override
+  String get setupHoursOpenAvailability =>
+      'Unidad y reglas de reserva en Disponibilidad';
+
+  @override
+  String setupHoursRange(String from, String to) {
+    return '$from–$to';
+  }
+
+  @override
+  String get setupHoursWeekTitle => 'Cuándo pueden reservar los miembros';
 
   @override
   String get setupInvitePreviewNote =>
@@ -19434,6 +19473,53 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String setupPlacesCounts(int rooms, int desks, int seats) {
+    String _temp0 = intl.Intl.pluralLogic(
+      rooms,
+      locale: localeName,
+      other: '$rooms salas',
+      one: '1 sala',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      desks,
+      locale: localeName,
+      other: '$desks mesas',
+      one: '1 mesa',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      seats,
+      locale: localeName,
+      other: '$seats puestos',
+      one: '1 puesto',
+    );
+    return '$_temp0 · $_temp1 · $_temp2';
+  }
+
+  @override
+  String get setupPlacesEmpty =>
+      'Todavía no hay plazas. Dibuje las salas, las mesas y los puestos en el editor, o empiece con una plantilla.';
+
+  @override
+  String get setupPlacesFromTemplate => 'Empezar con una plantilla';
+
+  @override
+  String get setupPlacesOpenEditor => 'Abrir el editor';
+
+  @override
+  String setupPlacesPlanLabel(String level) {
+    return 'Plano de $level';
+  }
+
+  @override
+  String get setupPlacesPreviewNone => 'Todavía no hay nada que reservar.';
+
+  @override
+  String get setupPlacesPreviewTitle => 'Lo que un miembro puede reservar';
+
+  @override
+  String get setupPlacesWholeSpace => 'Se reserva entero';
 
   @override
   String setupPresetName(String key) {
@@ -19598,6 +19684,10 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepLoadFailed =>
+      'No se ha podido cargar este paso. Inténtelo más tarde.';
 
   @override
   String get setupStepOpenScreen => 'Abrirlo';

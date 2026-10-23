@@ -15,13 +15,13 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/grant_member_essentials.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/roles_screen_labels.dart';
-import 'setup_step_layout.dart';
 
 class SetupMemberRightsStep extends ConsumerWidget {
   const SetupMemberRightsStep({super.key, required this.workspace});

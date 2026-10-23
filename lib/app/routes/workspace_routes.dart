@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -320,7 +321,10 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) =>
-          SetupStepScreen(stepId: state.pathParameters['id'] ?? ''),
+          SetupStepScreen(
+            stepId: state.pathParameters['id'] ?? '',
+            placesStep: SetupPlacesStep.new,
+          ),
     ),
     // #2583 — the overview: what needs the person, then the figures.
     GoRoute(

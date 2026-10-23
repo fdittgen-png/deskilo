@@ -58,5 +58,117 @@
   "setupInviteShareFailed": "The QR code could not be shared. Try again.",
   "@setupInviteShareFailed": {
     "description": "#2870 setup steps: setupInviteShareFailed"
+  },
+  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
+  "@setupStepLoadFailed": {
+    "description": "#2870 setup steps: setupStepLoadFailed"
+  },
+  "setupBasicsSaveFailed": "The basics could not be saved. Try again.",
+  "@setupBasicsSaveFailed": {
+    "description": "#2870 setup steps: setupBasicsSaveFailed"
+  },
+  "setupBasicsPreviewDate": "Today's date",
+  "@setupBasicsPreviewDate": {
+    "description": "#2870 setup steps: setupBasicsPreviewDate"
+  },
+  "setupBasicsPreviewTime": "The time now",
+  "@setupBasicsPreviewTime": {
+    "description": "#2870 setup steps: setupBasicsPreviewTime"
+  },
+  "setupBasicsPreviewTimeIn": "{time} ({offset})",
+  "@setupBasicsPreviewTimeIn": {
+    "description": "#2870 setup steps: setupBasicsPreviewTimeIn",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "offset": {
+        "type": "String"
+      }
+    }
+  },
+  "setupBasicsPreviewMoney": "An amount",
+  "@setupBasicsPreviewMoney": {
+    "description": "#2870 setup steps: setupBasicsPreviewMoney"
+  },
+  "setupHoursOpenAvailability": "Booking unit and rules in Availability",
+  "@setupHoursOpenAvailability": {
+    "description": "#2870 setup steps: setupHoursOpenAvailability"
+  },
+  "setupHoursWeekTitle": "When members can book",
+  "@setupHoursWeekTitle": {
+    "description": "#2870 setup steps: setupHoursWeekTitle"
+  },
+  "setupHoursNextClosures": "Next closures and holidays",
+  "@setupHoursNextClosures": {
+    "description": "#2870 setup steps: setupHoursNextClosures"
+  },
+  "setupHoursNoClosures": "No closures or holidays planned.",
+  "@setupHoursNoClosures": {
+    "description": "#2870 setup steps: setupHoursNoClosures"
+  },
+  "setupHoursRange": "{from}–{to}",
+  "@setupHoursRange": {
+    "description": "#2870 setup steps: setupHoursRange",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "setupHoursClosed": "Closed",
+  "@setupHoursClosed": {
+    "description": "#2870 setup steps: setupHoursClosed"
+  },
+  "setupPlacesEmpty": "No places yet. Draw the rooms, desks and seats in the editor, or start from a template.",
+  "@setupPlacesEmpty": {
+    "description": "#2870 setup steps: setupPlacesEmpty"
+  },
+  "setupPlacesCounts": "{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "@setupPlacesCounts": {
+    "description": "#2870 setup steps: setupPlacesCounts",
+    "placeholders": {
+      "rooms": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "setupPlacesOpenEditor": "Open the editor",
+  "@setupPlacesOpenEditor": {
+    "description": "#2870 setup steps: setupPlacesOpenEditor"
+  },
+  "setupPlacesFromTemplate": "Start from a template",
+  "@setupPlacesFromTemplate": {
+    "description": "#2870 setup steps: setupPlacesFromTemplate"
+  },
+  "setupPlacesPlanLabel": "Plan of {level}",
+  "@setupPlacesPlanLabel": {
+    "description": "#2870 setup steps: setupPlacesPlanLabel",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPlacesPreviewTitle": "What a member can book",
+  "@setupPlacesPreviewTitle": {
+    "description": "#2870 setup steps: setupPlacesPreviewTitle"
+  },
+  "setupPlacesPreviewNone": "Nothing to book yet.",
+  "@setupPlacesPreviewNone": {
+    "description": "#2870 setup steps: setupPlacesPreviewNone"
+  },
+  "setupPlacesWholeSpace": "Booked as a whole",
+  "@setupPlacesWholeSpace": {
+    "description": "#2870 setup steps: setupPlacesWholeSpace"
   }
 }

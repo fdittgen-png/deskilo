@@ -6,8 +6,8 @@
 // top to bottom and never squeezes two panes side by side.
 import 'package:flutter/material.dart';
 
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
+import '../l10n/context_l10n.dart';
+import '../theme/app_spacing.dart';
 
 class SetupStepLayout extends StatelessWidget {
   const SetupStepLayout({super.key, required this.form, required this.preview});

@@ -32442,6 +32442,36 @@ abstract class AppLocalizations {
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
 
+  /// #2870 setup steps: setupBasicsPreviewDate
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s date'**
+  String get setupBasicsPreviewDate;
+
+  /// #2870 setup steps: setupBasicsPreviewMoney
+  ///
+  /// In en, this message translates to:
+  /// **'An amount'**
+  String get setupBasicsPreviewMoney;
+
+  /// #2870 setup steps: setupBasicsPreviewTime
+  ///
+  /// In en, this message translates to:
+  /// **'The time now'**
+  String get setupBasicsPreviewTime;
+
+  /// #2870 setup steps: setupBasicsPreviewTimeIn
+  ///
+  /// In en, this message translates to:
+  /// **'{time} ({offset})'**
+  String setupBasicsPreviewTimeIn(String time, String offset);
+
+  /// #2870 setup steps: setupBasicsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The basics could not be saved. Try again.'**
+  String get setupBasicsSaveFailed;
+
   /// #2869 setup guide: setupGuideAllDone
   ///
   /// In en, this message translates to:
@@ -32542,6 +32572,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waits for: {steps}'**
   String setupGuideWaitsFor(String steps);
+
+  /// #2870 setup steps: setupHoursClosed
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get setupHoursClosed;
+
+  /// #2870 setup steps: setupHoursNextClosures
+  ///
+  /// In en, this message translates to:
+  /// **'Next closures and holidays'**
+  String get setupHoursNextClosures;
+
+  /// #2870 setup steps: setupHoursNoClosures
+  ///
+  /// In en, this message translates to:
+  /// **'No closures or holidays planned.'**
+  String get setupHoursNoClosures;
+
+  /// #2870 setup steps: setupHoursOpenAvailability
+  ///
+  /// In en, this message translates to:
+  /// **'Booking unit and rules in Availability'**
+  String get setupHoursOpenAvailability;
+
+  /// #2870 setup steps: setupHoursRange
+  ///
+  /// In en, this message translates to:
+  /// **'{from}–{to}'**
+  String setupHoursRange(String from, String to);
+
+  /// #2870 setup steps: setupHoursWeekTitle
+  ///
+  /// In en, this message translates to:
+  /// **'When members can book'**
+  String get setupHoursWeekTitle;
 
   /// #2870 setup steps: setupInvitePreviewNote
   ///
@@ -32657,6 +32723,54 @@ abstract class AppLocalizations {
   /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
   String setupMilestoneName(String key);
 
+  /// #2870 setup steps: setupPlacesCounts
+  ///
+  /// In en, this message translates to:
+  /// **'{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
+  String setupPlacesCounts(int rooms, int desks, int seats);
+
+  /// #2870 setup steps: setupPlacesEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No places yet. Draw the rooms, desks and seats in the editor, or start from a template.'**
+  String get setupPlacesEmpty;
+
+  /// #2870 setup steps: setupPlacesFromTemplate
+  ///
+  /// In en, this message translates to:
+  /// **'Start from a template'**
+  String get setupPlacesFromTemplate;
+
+  /// #2870 setup steps: setupPlacesOpenEditor
+  ///
+  /// In en, this message translates to:
+  /// **'Open the editor'**
+  String get setupPlacesOpenEditor;
+
+  /// #2870 setup steps: setupPlacesPlanLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Plan of {level}'**
+  String setupPlacesPlanLabel(String level);
+
+  /// #2870 setup steps: setupPlacesPreviewNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to book yet.'**
+  String get setupPlacesPreviewNone;
+
+  /// #2870 setup steps: setupPlacesPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What a member can book'**
+  String get setupPlacesPreviewTitle;
+
+  /// #2870 setup steps: setupPlacesWholeSpace
+  ///
+  /// In en, this message translates to:
+  /// **'Booked as a whole'**
+  String get setupPlacesWholeSpace;
+
   /// #2868 setup levels: setupPresetName
   ///
   /// In en, this message translates to:
@@ -32752,6 +32866,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
   String setupStepHint(String key);
+
+  /// #2870 setup steps: setupStepLoadFailed
+  ///
+  /// In en, this message translates to:
+  /// **'This step could not be loaded. Try again later.'**
+  String get setupStepLoadFailed;
 
   /// #2870 setup steps: setupStepOpenScreen
   ///

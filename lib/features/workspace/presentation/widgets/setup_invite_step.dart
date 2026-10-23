@@ -17,11 +17,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/setup_step_layout.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
 import '../qr_png.dart';
 import 'invite_sheet.dart';
-import 'setup_step_layout.dart';
 
 class SetupInviteStep extends ConsumerStatefulWidget {
   const SetupInviteStep({super.key, required this.workspace});
