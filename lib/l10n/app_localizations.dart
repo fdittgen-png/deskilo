@@ -32712,6 +32712,48 @@ abstract class AppLocalizations {
   /// **'Saving draft…'**
   String get setupDraftSaving;
 
+  /// #2875 setup grow steps: setupGrowBooksAccrual
+  ///
+  /// In en, this message translates to:
+  /// **'Income counts when it is invoiced.'**
+  String get setupGrowBooksAccrual;
+
+  /// #2875 setup grow steps: setupGrowBooksCash
+  ///
+  /// In en, this message translates to:
+  /// **'Income counts when it is paid.'**
+  String get setupGrowBooksCash;
+
+  /// #2875 setup grow steps: setupGrowBooksCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts are kept in {currency}.'**
+  String setupGrowBooksCurrency(String currency);
+
+  /// #2875 setup grow steps: setupGrowBooksExternal
+  ///
+  /// In en, this message translates to:
+  /// **'{system} keeps the official books; what DesKilo shows is derived and says so.'**
+  String setupGrowBooksExternal(String system);
+
+  /// #2875 setup grow steps: setupGrowBooksLocal
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps the books: invoices and payments are posted to the chart of accounts.'**
+  String get setupGrowBooksLocal;
+
+  /// #2875 setup grow steps: setupGrowBooksPre
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps the member balances and the invoices; nothing is posted to a ledger.'**
+  String get setupGrowBooksPre;
+
+  /// #2875 setup grow steps: setupGrowBooksPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'What the books will show:'**
+  String get setupGrowBooksPreviewNote;
+
   /// #2875 setup grow steps: setupGrowDocumentsApply
   ///
   /// In en, this message translates to:
@@ -32759,6 +32801,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The invoice look is saved.'**
   String get setupGrowDocumentsSaved;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingChannel
+  ///
+  /// In en, this message translates to:
+  /// **'Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.'**
+  String get setupGrowEinvoicingChannel;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingIncomplete
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is saved, but it cannot send yet: some of its fields are still missing.'**
+  String setupGrowEinvoicingIncomplete(String provider);
+
+  /// #2875 setup grow steps: setupGrowEinvoicingLawTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What the law asks in your country'**
+  String get setupGrowEinvoicingLawTitle;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingNoMandate
+  ///
+  /// In en, this message translates to:
+  /// **'The tax reference data records no e-invoicing obligation for this country. Ask your accountant whether one applies: the operator records it in the tax reference data.'**
+  String get setupGrowEinvoicingNoMandate;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingNoSandbox
+  ///
+  /// In en, this message translates to:
+  /// **'No test environment is saved yet, and this platform has no shared test address: ask it for yours.'**
+  String get setupGrowEinvoicingNoSandbox;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingNone
+  ///
+  /// In en, this message translates to:
+  /// **'No e-invoicing platform is set up yet.'**
+  String get setupGrowEinvoicingNone;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the e-invoicing platform'**
+  String get setupGrowEinvoicingOpen;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingReady
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices are sent through {provider}.'**
+  String setupGrowEinvoicingReady(String provider);
+
+  /// #2875 setup grow steps: setupGrowEinvoicingSandboxIntro
+  ///
+  /// In en, this message translates to:
+  /// **'No test environment is saved yet. Rehearse on the platform\'s test address before the real one:'**
+  String get setupGrowEinvoicingSandboxIntro;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingTestReady
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for test sends: {environments}.'**
+  String setupGrowEinvoicingTestReady(String environments);
+
+  /// #2875 setup grow steps: setupGrowEinvoicingTestSend
+  ///
+  /// In en, this message translates to:
+  /// **'The guide sends nothing. A test send starts from an issued invoice: choose Send e-invoice, then a test environment. That choice appears once developer mode is on and a test environment is saved.'**
+  String get setupGrowEinvoicingTestSend;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingTestTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Test environment'**
+  String get setupGrowEinvoicingTestTitle;
+
+  /// #2875 setup grow steps: setupGrowEinvoicingUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet confirmed against the law it cites: the operator confirms these dates in the tax reference data, and your accountant tells you which apply to the space.'**
+  String get setupGrowEinvoicingUnconfirmed;
 
   /// #2875 setup grow steps: setupGrowLegalAskForm
   ///
@@ -32831,6 +32951,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your next invoice will carry the number'**
   String get setupGrowNumberingPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowRemindersAuto
+  ///
+  /// In en, this message translates to:
+  /// **'The app sends each reminder by itself once a day, for the amount still owed.'**
+  String get setupGrowRemindersAuto;
+
+  /// #2875 setup grow steps: setupGrowRemindersFirst
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder 1: {days} days after the invoice, once its payment term has passed.'**
+  String setupGrowRemindersFirst(String days);
+
+  /// #2875 setup grow steps: setupGrowRemindersManual
+  ///
+  /// In en, this message translates to:
+  /// **'You send each reminder yourself; the app shows when one is due.'**
+  String get setupGrowRemindersManual;
+
+  /// #2875 setup grow steps: setupGrowRemindersNext
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}: {days} days after the previous one.'**
+  String setupGrowRemindersNext(String level, String days);
+
+  /// #2875 setup grow steps: setupGrowRemindersNoTerms
+  ///
+  /// In en, this message translates to:
+  /// **'No payment conditions are written yet: the letter cites none.'**
+  String get setupGrowRemindersNoTerms;
+
+  /// #2875 setup grow steps: setupGrowRemindersPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'The first reminder a member receives, with the letter attached:'**
+  String get setupGrowRemindersPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowRemindersTerms
+  ///
+  /// In en, this message translates to:
+  /// **'Payment conditions and late-payment clauses'**
+  String get setupGrowRemindersTerms;
+
+  /// #2875 setup grow steps: setupGrowRemindersTermsPrinted
+  ///
+  /// In en, this message translates to:
+  /// **'The letter recalls your payment conditions: {terms}'**
+  String setupGrowRemindersTermsPrinted(String terms);
 
   /// #2875 setup grow steps: setupGrowSampleBadge
   ///
