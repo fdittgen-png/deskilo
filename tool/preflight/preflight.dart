@@ -65,7 +65,10 @@ const List<({String command, String owns})> _order = [
     command: 'dart run tool/build_builtin_templates.dart',
     owns: 'supabase/templates/*.json and variants/*.{json,md}',
   ),
-  (command: 'dart run tool/build_setup_l10n.dart', owns: 'web/setup_*.js'),
+  (
+    command: 'dart run tool/build_setup_l10n.dart',
+    owns: 'web/setup_l10n.js and web/setup_catalogue.js',
+  ),
   (
     command: 'dart run tool/build_mcp_contract.dart',
     owns: 'contracts/mcp/generated/*, lib/core/mcp/mcp_operations.dart, _shared/mcp_contract.ts',
@@ -150,9 +153,14 @@ List<Step> preflightSteps(
       select('dart run tool/build_process_catalogue.dart', p);
       select('dart run tool/build_process_labels.dart', p);
     }
-    // The setup page quotes the feature and process copy, so its own
-    // sources select the catalogue that feeds it.
-    if (p == 'web/setup.html' || p.startsWith('lib/features/workspace/presentation/feature_')) {
+    // The setup page quotes the feature and process copy, and (#2923) reads
+    // the permission, country and validation-domain registries generated
+    // from these sources, so they select the catalogue that feeds it.
+    if (p.startsWith('lib/features/workspace/presentation/feature_') ||
+        p == 'lib/features/workspace/domain/workspace_permission.dart' ||
+        p == 'lib/core/country/country_catalog.dart' ||
+        p == 'tool/build_setup_l10n.dart' ||
+        p.startsWith('web/setup_l10n/')) {
       select('dart run tool/build_setup_l10n.dart', p);
     }
     // #1609 — the operation contract renders into Dart, TypeScript, the
